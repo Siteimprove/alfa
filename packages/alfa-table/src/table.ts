@@ -4,7 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import {None, Option, Some} from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -29,14 +29,7 @@ export class Table implements Equatable, Serializable {
     rowGroups: Array<RowGroup> = [],
     columnGroups: Array<ColumnGroup> = []
   ): Table {
-    return new Table(
-      element,
-      width,
-      height,
-      cells,
-      rowGroups,
-      columnGroups
-    );
+    return new Table(element, width, height, cells, rowGroups, columnGroups);
   }
 
   private readonly _width: number;
@@ -170,14 +163,7 @@ export namespace Table {
       rowGroups: Array<RowGroup>,
       colGroups: Array<ColumnGroup>
     ) {
-      this._table = Table.of(
-        element,
-        width,
-        height,
-        [],
-        rowGroups,
-        colGroups
-      );
+      this._table = Table.of(element, width, height, [], rowGroups, colGroups);
       this._cells = cells;
       this._slots = slots;
     }
@@ -221,59 +207,48 @@ export namespace Table {
       );
     }
 
-    /**
-     * Update a table builder
-     * Cells can't be updated as they must be kept in sync with slots. Use #addCells or side effect on the cell itself.
-     */
     public update(update: {
       element?: Element;
       width?: number;
       height?: number;
+      cells?: Array<Cell.Builder>;
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Array<RowGroup>;
       colGroups?: Array<ColumnGroup>;
     }): Builder {
-      return Builder.of(
+      const builder = Builder.of(
         update.element !== undefined ? update.element : this.element,
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
-        this._cells,
+        update.cells !== undefined ? update.cells : this.cells,
         update.slots !== undefined ? update.slots : this._slots,
         update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
         update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
       );
+
+      return update.cells !== undefined
+        ? // keep slots in sync if cells have been modified.
+          builder.updateSlots(...update.cells)
+        : builder;
     }
 
-    public addCells(...cells: Array<Cell.Builder>): Builder {
-        this.updateSlots(...cells)
-
-      return Builder.of(
-        this.element,
-        this.width,
-        this.height,
-        this._cells.concat(...cells),
-        this.slots,
-        [...this.rowGroups],
-        [...this.colGroups]
-      );
-    }
-
-    public updateSlots(...cells: Array<Cell.Builder>): void {
+    public updateSlots(...cells: Array<Cell.Builder>): Builder {
       for (const cell of cells) {
         for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
           if (this._slots[x] === undefined) {
             this._slots[x] = [];
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            if (this._slots[x][y] === undefined || this._slots[x][y].isNone()) {
-              this._slots[x][y] = Some.of(cell);
-            } else {
-              // the slot is covered twice
-              // ignoring for now as it is checked once full table is built.
-            }
+            this._slots[x][y] = Some.of(cell);
           }
         }
       }
+
+      return this; // for chaining
+    }
+
+    public addCells(cells: Iterable<Cell.Builder>): Builder {
+      return this.update({ cells: this._cells.concat(...cells) });
     }
 
     public addRowGroupFromElement(
@@ -284,17 +259,15 @@ export namespace Table {
         .map((rowGroup) => rowGroup.anchorAt(yCurrent))
         .map((rowGroup) => {
           if (rowGroup.height > 0) {
-            return (
-              this.update({
-                // adjust table height and width
-                height: Math.max(this.height, this.height + rowGroup.height),
-                width: Math.max(this.width, rowGroup.width),
-                // add new group
-                rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup),
-              })
-                // merge in new cells
-                .addCells(...rowGroup.cells)
-            );
+            return this.update({
+              // adjust table height and width
+              height: Math.max(this.height, this.height + rowGroup.height),
+              width: Math.max(this.width, rowGroup.width),
+              // merge in new cells
+              cells: this._cells.concat(...rowGroup.cells),
+              // add new group
+              rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup),
+            });
           } else {
             return this;
           }
@@ -387,10 +360,10 @@ export namespace Table {
           growingCellsList = [...row.downwardGrowingCells];
           table = table
             .update({
+              cells: table.cells.concat(...row.cells),
               height: Math.max(table.height, yCurrent + 1),
               width: Math.max(table.width, row.width),
-            })
-            .addCells(...row.cells);
+            });
           // row processing steps 4/16
           yCurrent++;
 
@@ -404,7 +377,7 @@ export namespace Table {
         );
         yCurrent = table.height;
         // Ending row group 2
-        table = table.addCells(...growingCellsList);
+        table = table.addCells(growingCellsList);
         growingCellsList = [];
 
         if (currentElement.name === "tfoot") {
