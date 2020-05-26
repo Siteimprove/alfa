@@ -297,15 +297,25 @@ export namespace Table {
     }
 
     public addHeadersVariants(): Builder {
-      this.cells.forEach((cell) =>
-        cell.addHeaderVariant(
-          this.hasDataCellCoveringArea.bind(this),
-          this.width,
-          this.height
-        )
-      );
+      return this.update({
+        cells: this.cells.map((cell) =>
+          cell.addHeaderVariant(
+            this.hasDataCellCoveringArea.bind(this),
+            this.width,
+            this.height
+          )
+        ),
+      });
 
-      return this;
+      // this.cells.forEach((cell) =>
+      //   cell.addHeaderVariant(
+      //     this.hasDataCellCoveringArea.bind(this),
+      //     this.width,
+      //     this.height
+      //   )
+      // );
+
+      // return this;
     }
 
     public toJSON(): Builder.JSON {
@@ -480,10 +490,6 @@ export namespace Table {
 
       // Next, we need to compute all headers variant.
       // This need to be done separately so that the updated table is used in assignHeaders.
-      // table.update({
-      //   cells: table.cells.map((cell) => cell.addHeaderVariant(table)),
-      // });
-      // table.cells.forEach((cell) => cell.addHeaderVariant(table));
       table = table.addHeadersVariants();
       // Next, we assign headers to cells
       // table.update({

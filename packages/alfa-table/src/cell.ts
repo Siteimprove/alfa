@@ -459,11 +459,27 @@ export namespace Cell {
       width: number,
       height: number
     ): Builder {
-      return this._update({
-        variant: this._scope.flatMap((scope) =>
+      return Builder.of(
+        this.kind,
+        this.anchor.x,
+        this.anchor.y,
+        this.width,
+        this.height,
+        this.element,
+        this._scope.flatMap((scope) =>
           this._scopeToState(scope, existsDataCellCoveringArea, width, height)
         ),
-      });
+        this.downwardGrowing,
+        this.scope,
+        this.explicitHeaders,
+        this.implicitHeaders
+      );
+
+      // return this._update({
+      //   variant: this._scope.flatMap((scope) =>
+      //     this._scopeToState(scope, existsDataCellCoveringArea, width, height)
+      //   ),
+      // });
     }
 
     /**
@@ -673,7 +689,9 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     public assignHeaders(table: Table.Builder): Cell.Builder {
-      return this._assignExplicitHeaders(table.element)._assignImplicitHeaders(table);
+      return this._assignExplicitHeaders(table.element)._assignImplicitHeaders(
+        table
+      );
     }
 
     public equals(value: unknown): value is this {
