@@ -8,12 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasDescendant } from "../common/predicate/has-descendant";
+import { hasInclusiveDescendant } from "../common/predicate/has-inclusive-descendant";
 import { isVisible } from "../common/predicate/is-visible";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 const { isElement, hasNamespace } = Element;
-const { and, or } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r84.html",
@@ -37,12 +37,9 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            or(
-              isTabbable(device),
-              hasDescendant(and(isElement, isTabbable(device)), {
-                flattened: true,
-              })
-            )(target),
+            hasInclusiveDescendant(and(isElement, isTabbable(device)), {
+              flattened: true,
+            })(target),
             () => Outcomes.IsReachable,
             () => Outcomes.IsNotReachable
           ),
