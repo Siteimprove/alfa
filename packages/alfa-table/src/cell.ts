@@ -391,7 +391,7 @@ export namespace Cell {
       return false;
     }
 
-    private _isDataCoveringArea(
+    public isDataCoveringArea(
       x: number,
       y: number,
       w: number,
@@ -423,34 +423,30 @@ export namespace Cell {
           // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
           // means "for any x" or just for the x of the cell. Using "for all x"
           if (
-            some(table.cells, (cell) =>
-              cell._isDataCoveringArea(
-                0,
-                this.anchor.y,
-                table.width,
-                this.height
-              )
+            table.hasDataCellCoveringArea(
+              0,
+              this.anchor.y,
+              table.width,
+              this.height
             )
           ) {
-            // there are *some* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+            // there are *SOME* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
             if (
-              some(table.cells, (cell) =>
-                cell._isDataCoveringArea(
-                  this.anchor.x,
-                  0,
-                  this.width,
-                  table.height
-                )
+              table.hasDataCellCoveringArea(
+                this.anchor.x,
+                0,
+                this.width,
+                table.height
               )
             ) {
-              // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+              // there are *SOME* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
               return None;
             } else {
-              // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+              // there are *NO* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
               return Option.of(Scope.Row);
             }
           } else {
-            // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+            // there are *NO* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
             return Option.of(Scope.Column);
           }
       }

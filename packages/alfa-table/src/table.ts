@@ -16,6 +16,7 @@ import { Row } from "./row";
 import { RowGroup } from "./row-group";
 
 const { compare } = Comparable;
+const { some } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
@@ -272,6 +273,15 @@ export namespace Table {
             return this;
           }
         });
+    }
+
+    public hasDataCellCoveringArea(
+      x: number,
+      y: number,
+      w: number,
+      h: number
+    ): boolean {
+      return some(this.cells, (cell) => cell.isDataCoveringArea(x, y, w, h));
     }
 
     public equals(value: unknown): value is this {
