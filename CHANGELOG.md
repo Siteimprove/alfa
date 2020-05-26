@@ -41,7 +41,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa/rules): For rules that deal with `<video>` and `<audtio>` elements, the `is-streaming` question has been split into `is-video-streaming` and `is-audio-streaming` to better facilitate messaging. ([#181](../../pull/181))
+- [@siteimprove/alfa-rules](packages/alfa/rules): For rules that deal with `<video>` and `<audio>` elements, the `is-streaming` question has been split into `is-video-streaming` and `is-audio-streaming` to better facilitate messaging. ([#181](../../pull/181))
 
 ### Fixed
 
