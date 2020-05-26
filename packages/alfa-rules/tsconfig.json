@@ -15,6 +15,7 @@
     "src/common/predicate/has-descendant.ts",
     "src/common/predicate/has-heading-level.ts",
     "src/common/predicate/has-id.ts",
+    "src/common/predicate/has-inclusive-descendant.ts",
     "src/common/predicate/has-input-type.ts",
     "src/common/predicate/has-name-from.ts",
     "src/common/predicate/has-nondefault-role.ts",

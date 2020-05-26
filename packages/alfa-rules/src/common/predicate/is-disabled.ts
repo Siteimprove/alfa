@@ -1,9 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { hasName } = Element;
-const { some, find } = Iterable;
 const { and, not, equals } = Predicate;
 
 /**
@@ -29,12 +27,9 @@ export const isDisabled: Predicate<Element> = (element) => {
         )
         .filter(not(isDisabled))
         .flatMap((fieldset) =>
-          find(
-            fieldset.descendants(),
-            and(Element.isElement, hasName("legend"))
-          )
+          fieldset.descendants().find(and(Element.isElement, hasName("legend")))
         )
-        .some((legend) => some(legend.descendants(), equals(element)));
+        .some((legend) => legend.descendants().some(equals(element)));
 
     // https://html.spec.whatwg.org/#attr-option-disabled
     case "option":
