@@ -118,6 +118,9 @@ export namespace Outcomes {
 }
 
 /**
+ * @todo For links in table cells, account for the text in the associated table
+ *       header cell.
+ *
  * @see https://www.w3.org/TR/WCAG/#dfn-programmatically-determined-link-context
  */
 function linkContext(element: Element): Set<dom.Node> {
