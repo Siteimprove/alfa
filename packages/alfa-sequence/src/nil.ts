@@ -35,6 +35,10 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
+  public reject(): Nil {
+    return this;
+  }
+
   public find(): None {
     return None;
   }

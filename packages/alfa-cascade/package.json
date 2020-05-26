@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-cascade",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "Functionality for working with the CSS cascade and scalable selector matching",
   "repository": {
@@ -18,18 +18,18 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-cache": "^0.0.1",
-    "@siteimprove/alfa-css": "^0.0.1",
-    "@siteimprove/alfa-device": "^0.0.1",
-    "@siteimprove/alfa-dom": "^0.0.1",
-    "@siteimprove/alfa-iterable": "^0.0.1",
-    "@siteimprove/alfa-media": "^0.0.1",
-    "@siteimprove/alfa-option": "^0.0.1",
-    "@siteimprove/alfa-predicate": "^0.0.1",
-    "@siteimprove/alfa-selector": "^0.0.1"
+    "@siteimprove/alfa-cache": "^0.1.0",
+    "@siteimprove/alfa-css": "^0.1.0",
+    "@siteimprove/alfa-device": "^0.1.0",
+    "@siteimprove/alfa-dom": "^0.1.0",
+    "@siteimprove/alfa-iterable": "^0.1.0",
+    "@siteimprove/alfa-media": "^0.1.0",
+    "@siteimprove/alfa-option": "^0.1.0",
+    "@siteimprove/alfa-predicate": "^0.1.0",
+    "@siteimprove/alfa-selector": "^0.1.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.1"
+    "@siteimprove/alfa-test": "^0.1.0"
   },
   "publishConfig": {
     "access": "public",

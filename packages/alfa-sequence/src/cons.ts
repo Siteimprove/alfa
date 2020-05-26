@@ -109,14 +109,21 @@ export class Cons<T> implements Sequence<T> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): Sequence<U> {
+  public filter<U extends T>(
+    predicate: Predicate<T, U, [number]>,
+    index = 0
+  ): Sequence<U> {
     let next: Cons<T> = this;
 
     while (true) {
-      if (predicate(next._head)) {
+      if (predicate(next._head, index)) {
         return new Cons(
           next._head,
-          next._tail.map((tail) => tail.filter(predicate))
+          next._tail.map((tail) =>
+            Cons.isCons<T>(tail)
+              ? tail.filter(predicate, index + 1)
+              : tail.filter(predicate)
+          )
         );
       }
 
@@ -130,13 +137,18 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
+  public reject(predicate: Predicate<T, T, [number]>): Sequence<T> {
+    return this.filter(not(predicate));
+  }
+
+  public find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U> {
     let next: Cons<T> = this;
+    let index = 0;
 
     while (true) {
       const head = next._head;
 
-      if (predicate(head)) {
+      if (predicate(head, index++)) {
         return Option.of(head);
       }
 

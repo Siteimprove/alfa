@@ -1289,7 +1289,8 @@ export namespace Selector {
 
           case Combinator.DirectSibling:
             return element
-              .previous(Element.isElement)
+              .preceding()
+              .find(Element.isElement)
               .some((element) => this._left.matches(element));
         }
       }
