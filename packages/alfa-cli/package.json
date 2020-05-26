@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-cli",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "The tool for all your accessibility needs on the command line",
   "repository": {
@@ -30,18 +30,18 @@
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.13.3",
     "@oclif/plugin-help": "^2.2.1",
-    "@siteimprove/alfa-act": "^0.0.1",
-    "@siteimprove/alfa-device": "^0.0.1",
-    "@siteimprove/alfa-json-ld": "^0.0.1",
-    "@siteimprove/alfa-rules": "^0.0.1",
-    "@siteimprove/alfa-scraper": "^0.0.1",
-    "@siteimprove/alfa-time": "^0.0.1",
-    "@siteimprove/alfa-web": "^0.0.1",
+    "@siteimprove/alfa-act": "^0.1.0",
+    "@siteimprove/alfa-device": "^0.1.0",
+    "@siteimprove/alfa-json-ld": "^0.1.0",
+    "@siteimprove/alfa-rules": "^0.1.0",
+    "@siteimprove/alfa-scraper": "^0.1.0",
+    "@siteimprove/alfa-time": "^0.1.0",
+    "@siteimprove/alfa-web": "^0.1.0",
     "enquirer": "^2.3.0",
     "tempy": "^0.5.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.1"
+    "@siteimprove/alfa-test": "^0.1.0"
   },
   "publishConfig": {
     "access": "public",
