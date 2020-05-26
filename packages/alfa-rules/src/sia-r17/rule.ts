@@ -7,10 +7,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasDescendant } from "../common/predicate/has-descendant";
+import { hasInclusiveDescendant } from "../common/predicate/has-inclusive-descendant";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
-const { and, nor, equals } = Predicate;
+const { and, not, equals } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -28,9 +28,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            nor(
-              isTabbable(device),
-              hasDescendant(and(isElement, isTabbable(device)), {
+            not(
+              hasInclusiveDescendant(and(isElement, isTabbable(device)), {
                 flattened: true,
               })
             )(target),
