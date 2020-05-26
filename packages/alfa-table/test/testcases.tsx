@@ -55,22 +55,6 @@ const getDescendantById = (node: Node) => (id: string) =>
     .find(and(isElement, hasId(id)))
     .get();
 
-function makeSlotArray(
-  width: number,
-  height: number,
-  cells: Array<Cell>
-): Array<Array<Option<Cell>>> {
-  const slots: Array<Array<Option<Cell>>> = new Array(width);
-  for (let x = 0; x < width; x++) {
-    slots[x] = new Array(height);
-    for (let y = 0; y < height; y++) {
-      slots[x][y] = Option.from(cells.find((cell) => cell.isCovering(x, y)));
-    }
-  }
-
-  return slots;
-}
-
 // processing simple row
 export namespace simpleRow {
   export const element = Element.fromElement(
