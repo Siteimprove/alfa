@@ -470,7 +470,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
      */
     private _internalHeaderScanning(
-      table: Table.Builder,
+      slots: Array<Array<Option<Cell.Builder>>>,
       initialX: number,
       initialY: number,
       decreaseX: boolean
@@ -497,7 +497,7 @@ export namespace Cell {
         x += deltaX, y += deltaY
       ) {
         // 7
-        const covering = table.slots[x][y];
+        const covering = slots[x][y];
         if (covering.isNone()) {
           // More than one cell covering a slot is a table model error. Not sure why the test is in the algorithm…
           // (0 cell is possible, more than one is not)
@@ -600,13 +600,13 @@ export namespace Cell {
       // 3.3: find row headers in the row(s) covered by the principal cell
       for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
         headersList.push(
-          ...this._internalHeaderScanning(table, this.anchor.x, y, true)
+          ...this._internalHeaderScanning(table.slots, this.anchor.x, y, true)
         );
       }
       // 3.4: find column headers in the column(s) covered by the principal cell
       for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
         headersList.push(
-          ...this._internalHeaderScanning(table, x, this.anchor.y, false)
+          ...this._internalHeaderScanning(table.slots, x, this.anchor.y, false)
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
