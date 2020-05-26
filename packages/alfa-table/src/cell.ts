@@ -547,7 +547,7 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    private _assignExplicitHeaders(table: Table.Builder): Cell.Builder {
+    private _assignExplicitHeaders(table: Element): Cell.Builder {
       const headers = this.element.attribute("headers");
 
       if (headers.isNone()) {
@@ -577,7 +577,7 @@ export namespace Cell {
               (element) =>
                 element
                   .closest(and(isElement, hasName("table")))
-                  .some(equals(table.element)),
+                  .some(equals(table)),
               // Remove principal cell
               not(equals(this.element)),
               // Remove empty cells
@@ -673,7 +673,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     public assignHeaders(table: Table.Builder): Cell.Builder {
-      return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
+      return this._assignExplicitHeaders(table.element)._assignImplicitHeaders(table);
     }
 
     public equals(value: unknown): value is this {
