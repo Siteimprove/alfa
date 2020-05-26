@@ -402,7 +402,14 @@ export namespace Cell {
 
     private _scopeToState(
       scope: Scope,
-      table: Table.Builder
+      existsDataCellCoveringArea: (
+        x: number,
+        y: number,
+        w: number,
+        h: number
+      ) => boolean,
+      width: number,
+      height: number
     ): Option<Scope.Resolved> {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
@@ -423,21 +430,11 @@ export namespace Cell {
           // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
           // means "for any x" or just for the x of the cell. Using "for all x"
           if (
-            table.hasDataCellCoveringArea(
-              0,
-              this.anchor.y,
-              table.width,
-              this.height
-            )
+            existsDataCellCoveringArea(0, this.anchor.y, width, this.height)
           ) {
             // there are *SOME* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
             if (
-              table.hasDataCellCoveringArea(
-                this.anchor.x,
-                0,
-                this.width,
-                table.height
-              )
+              existsDataCellCoveringArea(this.anchor.x, 0, this.width, height)
             ) {
               // there are *SOME* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
               return None;
@@ -452,23 +449,19 @@ export namespace Cell {
       }
     }
 
-    public addHeaderVariant(table: Table.Builder): Builder {
-      // return Builder.of(
-      //   this.kind,
-      //   this.anchor.x,
-      //   this.anchor.y,
-      //   this.width,
-      //   this.height,
-      //   this.element,
-      //   this._scope.flatMap((scope) => this._scopeToState(scope, table)),
-      //   this.downwardGrowing,
-      //   this.scope,
-      //   this.explicitHeaders,
-      //   this.implicitHeaders
-      // );
+    public addHeaderVariant(
+      existsDataCellCoveringArea: (
+        x: number,
+        y: number,
+        w: number,
+        h: number
+      ) => boolean,
+      width: number,
+      height: number
+    ): Builder {
       return this._update({
         variant: this._scope.flatMap((scope) =>
-          this._scopeToState(scope, table)
+          this._scopeToState(scope, existsDataCellCoveringArea, width, height)
         ),
       });
     }

@@ -296,6 +296,18 @@ export namespace Table {
       );
     }
 
+    public addHeadersVariants(): Builder {
+      this.cells.forEach((cell) =>
+        cell.addHeaderVariant(
+          this.hasDataCellCoveringArea.bind(this),
+          this.width,
+          this.height
+        )
+      );
+
+      return this;
+    }
+
     public toJSON(): Builder.JSON {
       return {
         table: this._table.toJSON(),
@@ -471,7 +483,8 @@ export namespace Table {
       // table.update({
       //   cells: table.cells.map((cell) => cell.addHeaderVariant(table)),
       // });
-      table.cells.forEach((cell) => cell.addHeaderVariant(table));
+      // table.cells.forEach((cell) => cell.addHeaderVariant(table));
+      table = table.addHeadersVariants();
       // Next, we assign headers to cells
       // table.update({
       //   cells: table.cells.map((cell) => cell.assignHeaders(table)),
