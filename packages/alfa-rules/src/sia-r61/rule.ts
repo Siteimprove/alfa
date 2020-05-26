@@ -45,6 +45,6 @@ export namespace Outcomes {
   );
 
   export const StartWithHigherLevelHeading = Err.of(
-    "The document starts with a level 2 or more heading"
+    "The document does not start with a level 1 heading"
   );
 }

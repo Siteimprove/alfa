@@ -6,7 +6,7 @@ import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 
 export abstract class Grouping extends Rule {
-  protected readonly _rules: Iterable<Rule>;
+  protected readonly _rules: Array<Rule>;
 
   protected constructor(
     rules: Mapper<Grouping, Iterable<Rule>>,
@@ -15,7 +15,7 @@ export abstract class Grouping extends Rule {
   ) {
     super(owner, parent);
 
-    this._rules = rules(this);
+    this._rules = Array.from(rules(this));
   }
 
   public get rules(): Iterable<Rule> {
@@ -30,11 +30,11 @@ export abstract class Grouping extends Rule {
 }
 
 export namespace Grouping {
-  export function isGrouping(value: unknown): value is Grouping {
-    return value instanceof Grouping;
-  }
-
   export interface JSON extends Rule.JSON {
     rules: Array<Rule.JSON>;
+  }
+
+  export function isGrouping(value: unknown): value is Grouping {
+    return value instanceof Grouping;
   }
 }

@@ -47,12 +47,12 @@ export class Media extends Condition {
 }
 
 export namespace Media {
-  export function isMedia(value: unknown): value is Media {
-    return value instanceof Media;
-  }
-
   export interface JSON extends Condition.JSON {
     type: "media";
+  }
+
+  export function isMedia(value: unknown): value is Media {
+    return value instanceof Media;
   }
 
   export function fromMedia(

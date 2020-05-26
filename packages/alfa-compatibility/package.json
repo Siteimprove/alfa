@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-compatibility",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "Funtionality for answering user agent compatibility questions based on MDN compatibility data",
   "repository": {
@@ -21,13 +21,13 @@
     "generate": "node scripts/features.js && node scripts/browsers.js"
   },
   "dependencies": {
-    "@siteimprove/alfa-iterable": "^0.0.1",
-    "@siteimprove/alfa-json": "^0.0.1",
+    "@siteimprove/alfa-iterable": "^0.1.0",
+    "@siteimprove/alfa-json": "^0.1.0",
     "@types/browserslist": "^4.4.0",
     "browserslist": "^4.4.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.1",
+    "@siteimprove/alfa-test": "^0.1.0",
     "mdn-browser-compat-data": "0.0.94"
   },
   "publishConfig": {

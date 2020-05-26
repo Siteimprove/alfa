@@ -1,9 +1,12 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Sheet } from "./sheet";
 
-export abstract class Rule implements json.Serializable {
+export abstract class Rule implements Equatable, Serializable {
   protected readonly _owner: Sheet;
   protected readonly _parent: Option<Rule>;
 
@@ -34,6 +37,10 @@ export abstract class Rule implements json.Serializable {
       yield parent;
       yield* parent.ancestors();
     }
+  }
+
+  public equals(value: unknown): value is this {
+    return value === this;
   }
 
   public abstract toJSON(): Rule.JSON;

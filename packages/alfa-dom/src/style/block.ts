@@ -1,13 +1,12 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Declaration } from "./declaration";
 import { Rule } from "./rule";
 
-const { map, find, join } = Iterable;
-
-export class Block implements Iterable<Declaration> {
+export class Block implements Iterable<Declaration>, Equatable, Serializable {
   public static of(declarations: Iterable<Declaration>): Block {
     return new Block(declarations);
   }
@@ -25,11 +24,22 @@ export class Block implements Iterable<Declaration> {
   public declaration(
     predicate: string | Predicate<Declaration>
   ): Option<Declaration> {
-    return find(
-      this._declarations,
-      typeof predicate === "string"
-        ? (declaration) => declaration.name === predicate
-        : predicate
+    return Option.from(
+      this._declarations.find(
+        typeof predicate === "string"
+          ? (declaration) => declaration.name === predicate
+          : predicate
+      )
+    );
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Block &&
+      value._declarations.length === this._declarations.length &&
+      value._declarations.every((declaration, i) =>
+        declaration.equals(this._declarations[i])
+      )
     );
   }
 
@@ -42,10 +52,7 @@ export class Block implements Iterable<Declaration> {
   }
 
   public toString(): string {
-    return join(
-      map(this._declarations, (declaration) => declaration.toString()),
-      ";\n"
-    );
+    return this._declarations.join(";\n");
   }
 }
 

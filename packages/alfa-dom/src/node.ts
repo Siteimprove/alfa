@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-const { and, equals } = Predicate;
+const { equals } = Predicate;
 
 export abstract class Node
   implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
@@ -61,57 +61,104 @@ export abstract class Node
   }
 
   /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant
+   */
+  public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
+    return Sequence.of(
+      this,
+      Lazy.of(() => this.descendants(options))
+    );
+  }
+
+  /**
    * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) =>
-        Sequence.of(
-          parent,
-          Lazy.of(() => parent.ancestors(options))
-        )
-      )
-      .getOrElse(() => Sequence.empty());
+    for (const parent of this.parent(options)) {
+      return Sequence.of(
+        parent,
+        Lazy.of(() => parent.ancestors(options))
+      );
+    }
+
+    return Sequence.empty();
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor
+   */
+  public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
+    return Sequence.of(
+      this,
+      Lazy.of(() => this.ancestors(options))
+    );
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-sibling
+   */
+  public siblings(options: Node.Traversal = {}): Sequence<Node> {
+    return this.inclusiveSiblings(options).reject(equals(this));
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling
+   */
+  public inclusiveSiblings(options: Node.Traversal = {}): Sequence<Node> {
+    for (const parent of this.parent(options)) {
+      return parent.children(options);
+    }
+
+    return Sequence.empty();
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-preceding
    */
   public preceding(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) =>
-        parent.children(options).takeUntil(equals(this)).reverse()
-      )
-      .getOrElse(() => Sequence.empty());
-  }
-
-  /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-previous-sibling
-   */
-  public previous<T extends Node>(
-    predicate: Predicate<Node, T> = () => true,
-    options: Node.Traversal = {}
-  ): Option<T> {
-    return this.preceding(options).find(predicate);
+    return this.inclusiveSiblings(options).takeUntil(equals(this)).reverse();
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-following
    */
   public following(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) => parent.children(options).skipUntil(equals(this)).skip(1))
-      .getOrElse(() => Sequence.empty());
+    return this.inclusiveSiblings(options).skipUntil(equals(this)).rest();
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-first-child
+   */
+  public first(options: Node.Traversal = {}): Option<Node> {
+    return this.children(options).first();
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-last-child
+   */
+  public last(options: Node.Traversal = {}): Option<Node> {
+    return this.children(options).last();
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-previous-sibling
+   */
+  public previous(options: Node.Traversal = {}): Option<Node> {
+    return this.preceding(options).first();
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-next-sibling
    */
-  public next<T extends Node>(
-    predicate: Predicate<Node, T> = () => true,
-    options: Node.Traversal = {}
-  ): Option<T> {
-    return this.following(options).find(predicate);
+  public next(options: Node.Traversal = {}): Option<Node> {
+    return this.following(options).first();
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-index
+   */
+  public index(options: Node.Traversal = {}): number {
+    return this.preceding(options).size;
   }
 
   /**
@@ -121,11 +168,13 @@ export abstract class Node
     predicate: Predicate<Node, T>,
     options: Node.Traversal = {}
   ): Option<T> {
-    return predicate(this)
-      ? Option.of(this)
-      : this.parent(options).flatMap((parent) =>
-          parent.closest(predicate, options)
-        );
+    if (predicate(this)) {
+      return Option.of(this);
+    }
+
+    return this.parent(options).flatMap((parent) =>
+      parent.closest(predicate, options)
+    );
   }
 
   /**
@@ -144,10 +193,7 @@ export abstract class Node
 
     path += path === "/" ? "" : "/";
     path += "node()";
-
-    const index = this.preceding().count(Node.isNode);
-
-    path += `[${index + 1}]`;
+    path += `[${this.index() + 1}]`;
 
     return path;
   }

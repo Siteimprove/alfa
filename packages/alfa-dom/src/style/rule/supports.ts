@@ -49,12 +49,12 @@ export class Supports extends Condition {
 }
 
 export namespace Supports {
-  export function isSupports(value: unknown): value is Supports {
-    return value instanceof Supports;
-  }
-
   export interface JSON extends Condition.JSON {
     type: "supports";
+  }
+
+  export function isSupports(value: unknown): value is Supports {
+    return value instanceof Supports;
   }
 
   export function fromSupports(

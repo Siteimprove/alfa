@@ -84,6 +84,10 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.filter(this, predicate));
   }
 
+  public reject(predicate: Predicate<T, T, [number]>): List<T> {
+    return this.filter(not(predicate));
+  }
+
   public find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U> {
     return Iterable.find(this, predicate);
   }

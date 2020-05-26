@@ -12,6 +12,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Empty, Node } from "./node";
 
+const { not } = Predicate;
+
 export class Map<K, V> implements Collection.Keyed<K, V> {
   public static of<K, V>(...entries: Array<[K, V]>): Map<K, V> {
     return entries.reduce(
@@ -70,6 +72,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
       (map, value, key) => (predicate(value, key) ? map.set(key, value) : map),
       Map.empty<K, U>()
     );
+  }
+
+  public reject(predicate: Predicate<V, V, [K]>): Map<K, V> {
+    return this.filter(not(predicate));
   }
 
   public find<U extends V>(predicate: Predicate<V, U, [K]>): Option<U> {
