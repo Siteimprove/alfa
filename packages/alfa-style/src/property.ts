@@ -164,6 +164,7 @@ export namespace Property {
     display: Display,
     "font-family": Font.Family,
     "font-size": Font.Size,
+    "font-style": Font.Style,
     "font-weight": Font.Weight,
     height: Height,
     "line-height": Line.Height,
