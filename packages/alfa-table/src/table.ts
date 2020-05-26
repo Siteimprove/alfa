@@ -358,12 +358,11 @@ export namespace Table {
             table.width
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
-          table = table
-            .update({
-              cells: table.cells.concat(...row.cells),
-              height: Math.max(table.height, yCurrent + 1),
-              width: Math.max(table.width, row.width),
-            });
+          table = table.update({
+            cells: table.cells.concat(...row.cells),
+            height: Math.max(table.height, yCurrent + 1),
+            width: Math.max(table.width, row.width),
+          });
           // row processing steps 4/16
           yCurrent++;
 
@@ -372,11 +371,13 @@ export namespace Table {
 
         // 14
         // Ending row group 1
+        // Slots are NOT in sync after this step.
         growingCellsList = growingCellsList.map((cell) =>
           cell.growDownward(table.height - 1)
         );
         yCurrent = table.height;
         // Ending row group 2
+        // Slots are sync again during this step.
         table = table.addCells(growingCellsList);
         growingCellsList = [];
 
@@ -457,8 +458,14 @@ export namespace Table {
 
       // Next, we need to compute all headers variant.
       // This need to be done separately so that the updated table is used in assignHeaders.
+      // table.update({
+      //   cells: table.cells.map((cell) => cell.addHeaderVariant(table)),
+      // });
       table.cells.forEach((cell) => cell.addHeaderVariant(table));
       // Next, we assign headers to cells
+      // table.update({
+      //   cells: table.cells.map((cell) => cell.assignHeaders(table)),
+      // });
       table.cells.forEach((cell) => cell.assignHeaders(table));
 
       // Finally, we sort lists and export the result.

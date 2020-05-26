@@ -297,6 +297,7 @@ export namespace Cell {
         this.width,
         this.height,
         this.element,
+        // The scope of the product is the resolved scope (the variant) of the builder.
         this.variant,
         // the presence of a "headers" attribute is enough to use explicit headers, even if this is an empty list
         // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
@@ -456,6 +457,19 @@ export namespace Cell {
     }
 
     public addHeaderVariant(table: Table.Builder): Builder {
+      // return Builder.of(
+      //   this.kind,
+      //   this.anchor.x,
+      //   this.anchor.y,
+      //   this.width,
+      //   this.height,
+      //   this.element,
+      //   this._scope.flatMap((scope) => this._scopeToState(scope, table)),
+      //   this.downwardGrowing,
+      //   this.scope,
+      //   this.explicitHeaders,
+      //   this.implicitHeaders
+      // );
       return this._update({
         variant: this._scope.flatMap((scope) =>
           this._scopeToState(scope, table)
