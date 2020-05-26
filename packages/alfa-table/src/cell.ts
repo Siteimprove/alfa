@@ -607,17 +607,17 @@ export namespace Cell {
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
-      const principalRowGroup = table.rowGroups.find( (rg) =>
+      const principalRowGroup = Iterable.find(table.rowGroups, (rg) =>
         rg.isCovering(this.anchor.y)
       );
-      if (principalRowGroup !== undefined) {
+      if (principalRowGroup.isSome()) {
         // if the principal cell is in a rowgroup,
         const headers = table.cells
           // get all rowgroup headers
           .filter((cell) => cell.variant.equals(Some.of(Scope.RowGroup)))
           // keep the ones inside the rowgroup of the principal cell
           .filter((rowGroupHeader) =>
-            principalRowGroup.isCovering(rowGroupHeader.anchor.y)
+            principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
           )
           // keep the ones that are top and left of the principal cell
           .filter(
@@ -629,17 +629,17 @@ export namespace Cell {
         headersList.push(...headers);
       }
       // 3.6: find column group headers for the colgroup of the principal cell
-      const principalColGroup = table.colGroups.find( (cg) =>
+      const principalColGroup = Iterable.find(table.colGroups, (cg) =>
         cg.isCovering(this.anchor.x)
       );
-      if (principalColGroup !== undefined) {
+      if (principalColGroup.isSome()) {
         // if the principal cell is in a colgroup,
         const headers = table.cells
           // get all colgroup headers
           .filter((cell) => cell.variant.equals(Some.of(Scope.ColumnGroup)))
           // keep the ones inside the colgroup of the principal cell
           .filter((colGroupHeader) =>
-            principalColGroup.isCovering(colGroupHeader.anchor.x)
+            principalColGroup.get().isCovering(colGroupHeader.anchor.x)
           )
           // keep the ones that are top and left of the principal cell
           .filter(
