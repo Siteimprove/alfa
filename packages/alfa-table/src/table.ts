@@ -244,33 +244,36 @@ export namespace Table {
       );
     }
 
-    public addCells(cells: Iterable<Cell.Builder>): Builder {
-      const slots = this._slots;
-      for (const cell of cells) {
-        for (let x=cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-          if (slots[x] === undefined) {
-            slots[x] = [];
-          }
-          for (let y=cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            if (slots[x][y] === undefined || slots[x][y].isNone()) {
-              slots[x][y] = Some.of(cell);
-            } else {
-              // the slot is covered twice
-              // ignoring for now…
-            }
-          }
-        }
-      }
+    public addCells(...cells: Array<Cell.Builder>): Builder {
+        this.updateSlots(...cells)
 
       return Builder.of(
         this.element,
         this.width,
         this.height,
         this._cells.concat(...cells),
-        slots,
+        this.slots,
         [...this.rowGroups],
         [...this.colGroups]
       );
+    }
+
+    public updateSlots(...cells: Array<Cell.Builder>): void {
+      for (const cell of cells) {
+        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+          if (this._slots[x] === undefined) {
+            this._slots[x] = [];
+          }
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            if (this._slots[x][y] === undefined || this._slots[x][y].isNone()) {
+              this._slots[x][y] = Some.of(cell);
+            } else {
+              // the slot is covered twice
+              // ignoring for now as it is checked once full table is built.
+            }
+          }
+        }
+      }
     }
 
     public addRowGroupFromElement(
@@ -290,7 +293,7 @@ export namespace Table {
                 rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup),
               })
                 // merge in new cells
-                .addCells(rowGroup.cells)
+                .addCells(...rowGroup.cells)
             );
           } else {
             return this;
@@ -387,7 +390,7 @@ export namespace Table {
               height: Math.max(table.height, yCurrent + 1),
               width: Math.max(table.width, row.width),
             })
-            .addCells(row.cells);
+            .addCells(...row.cells);
           // row processing steps 4/16
           yCurrent++;
 
@@ -401,7 +404,7 @@ export namespace Table {
         );
         yCurrent = table.height;
         // Ending row group 2
-        table = table.addCells(growingCellsList);
+        table = table.addCells(...growingCellsList);
         growingCellsList = [];
 
         if (currentElement.name === "tfoot") {
