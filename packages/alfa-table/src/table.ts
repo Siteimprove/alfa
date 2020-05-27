@@ -549,17 +549,12 @@ export namespace Table {
       table = table.assignHeaders();
 
       // Finally, we sort lists and export the result.
-      return Ok.of(
-        Builder.of(
-          table.element,
-          table.width,
-          table.height,
-          table.cells.sort(compare),
-          table.slots,
-          [...table.rowGroups].sort(compare),
-          [...table.colGroups].sort(compare)
-        )
-      );
+      table = table.update({
+        cells: table.cells.sort(compare),
+        rowGroups: [...table.rowGroups].sort(compare),
+        colGroups: [...table.colGroups].sort(compare),
+      });
+      return Ok.of(table);
     }
   }
 }
