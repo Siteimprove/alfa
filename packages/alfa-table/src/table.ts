@@ -217,7 +217,7 @@ export namespace Table {
       rowGroups?: Array<RowGroup>;
       colGroups?: Array<ColumnGroup>;
     }): Builder {
-      const builder = Builder.of(
+      const table = Builder.of(
         update.element !== undefined ? update.element : this.element,
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
@@ -228,9 +228,9 @@ export namespace Table {
       );
 
       return update.cells !== undefined
-        ? // keep slots in sync if cells have been modified.
-          builder.updateSlots(...update.cells)
-        : builder;
+        ? // aggressively keep slots in sync if any cells has been modified.
+          table.updateSlots(...update.cells)
+        : table;
     }
 
     public updateSlots(...cells: Array<Cell.Builder>): Builder {
@@ -284,18 +284,6 @@ export namespace Table {
       return some(this.cells, (cell) => cell.isDataCoveringArea(x, y, w, h));
     }
 
-    public equals(value: unknown): value is this {
-      if (!(value instanceof Builder)) return false;
-      return (
-        this._cells.length === value._cells.length &&
-        this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
-        this._slots.every((array, x) =>
-          array.every((option, y) => option.equals(value._slots[x][y]))
-        ) &&
-        this._table.equals(value._table)
-      );
-    }
-
     public addHeadersVariants(): Builder {
       return this.update({
         cells: this.cells.map((cell) =>
@@ -306,16 +294,24 @@ export namespace Table {
           )
         ),
       });
+    }
 
-      // this.cells.forEach((cell) =>
-      //   cell.addHeaderVariant(
-      //     this.hasDataCellCoveringArea.bind(this),
-      //     this.width,
-      //     this.height
-      //   )
-      // );
+    public assignHeaders(): Builder {
+      return this.update({
+        cells: this.cells.map((cell) => cell.assignHeaders(this)),
+      });
+    }
 
-      // return this;
+    public equals(value: unknown): value is this {
+      if (!(value instanceof Builder)) return false;
+      return (
+        this._cells.length === value._cells.length &&
+        this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
+        this._slots.every((array, x) =>
+          array.every((option, y) => option.equals(value._slots[x][y]))
+        ) &&
+        this._table.equals(value._table)
+      );
     }
 
     public toJSON(): Builder.JSON {
@@ -488,14 +484,11 @@ export namespace Table {
       }
       table = table.update({ slots });
 
-      // Next, we need to compute all headers variant.
+      // Second, we need to compute all headers variant.
       // This need to be done separately so that the updated table is used in assignHeaders.
       table = table.addHeadersVariants();
-      // Next, we assign headers to cells
-      // table.update({
-      //   cells: table.cells.map((cell) => cell.assignHeaders(table)),
-      // });
-      table.cells.forEach((cell) => cell.assignHeaders(table));
+      // Third, we assign headers to cells
+      table = table.assignHeaders();
 
       // Finally, we sort lists and export the result.
       return Ok.of(

@@ -184,11 +184,11 @@ export namespace Cell {
     // Any update to a Cell.Builder thus has to go through side effects :-(
 
     // The product always has empty headers while building. Correct headers are filled in by the final export.
-    private _cell: Cell;
-    private _downwardGrowing: boolean;
+    private readonly _cell: Cell;
+    private readonly _downwardGrowing: boolean;
     // This is the scope attribute, once correctly parsed.
     // The actual variant of the header is stored in the cell and can only be computed once the table is built.
-    private _scope: Option<Scope>;
+    private readonly _scope: Option<Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
     //         all over the place. Storing here elements instead of Cell is easier to avoid potential infinite loop when
     //         converting Cell.Builder to Cell.
@@ -197,8 +197,8 @@ export namespace Cell {
     //         Currently not exposing both to final cell, but easy to do if needed.
     // Note 3: Headers are empty when building the cell, they are filled in once the table is built because we need
     //         to know the full table in order to find both explicit and implicit headers.
-    private _explicitHeaders: Array<Element>;
-    private _implicitHeaders: Array<Element>;
+    private readonly _explicitHeaders: Array<Element>;
+    private readonly _implicitHeaders: Array<Element>;
 
     public static of(
       kind: Cell.Kind,
@@ -261,32 +261,25 @@ export namespace Cell {
       explicitHeaders?: Array<Element>;
       implicitHeaders?: Array<Element>;
     }): Builder {
-      const cell = Cell.of(
+      return Builder.of(
         update.kind !== undefined ? update.kind : this.kind,
         update.x !== undefined ? update.x : this.anchor.x,
         update.y !== undefined ? update.y : this.anchor.y,
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
         update.element !== undefined ? update.element : this.element,
-        update.variant !== undefined ? update.variant : this.variant
-      );
-
-      this._cell = cell;
-      this._downwardGrowing =
+        update.variant !== undefined ? update.variant : this.variant,
         update.downwardGrowing !== undefined
           ? update.downwardGrowing
-          : this._downwardGrowing;
-      this._scope = update.scope !== undefined ? update.scope : this.scope;
-      this._explicitHeaders =
+          : this._downwardGrowing,
+        update.scope !== undefined ? update.scope : this.scope,
         update.explicitHeaders !== undefined
           ? update.explicitHeaders
-          : this._explicitHeaders;
-      this._implicitHeaders =
+          : this._explicitHeaders,
         update.implicitHeaders !== undefined
           ? update.implicitHeaders
-          : this._implicitHeaders;
-
-      return this; // for chaining
+          : this._implicitHeaders
+      );
     }
 
     public get cell(): Cell {
@@ -459,27 +452,11 @@ export namespace Cell {
       width: number,
       height: number
     ): Builder {
-      return Builder.of(
-        this.kind,
-        this.anchor.x,
-        this.anchor.y,
-        this.width,
-        this.height,
-        this.element,
-        this._scope.flatMap((scope) =>
+      return this._update({
+        variant: this._scope.flatMap((scope) =>
           this._scopeToState(scope, existsDataCellCoveringArea, width, height)
         ),
-        this.downwardGrowing,
-        this.scope,
-        this.explicitHeaders,
-        this.implicitHeaders
-      );
-
-      // return this._update({
-      //   variant: this._scope.flatMap((scope) =>
-      //     this._scopeToState(scope, existsDataCellCoveringArea, width, height)
-      //   ),
-      // });
+      });
     }
 
     /**
