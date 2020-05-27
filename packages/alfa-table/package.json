@@ -24,8 +24,10 @@
     "@siteimprove/alfa-equatable": "^0.0.1",
     "@siteimprove/alfa-iterable": "^0.0.1",
     "@siteimprove/alfa-json": "^0.0.1",
+    "@siteimprove/alfa-list": "^0.0.1",
     "@siteimprove/alfa-option": "^0.0.1",
-    "@siteimprove/alfa-predicate": "^0.0.1"
+    "@siteimprove/alfa-predicate": "^0.0.1",
+    "@siteimprove/alfa-set": "^0.0.1"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.1"

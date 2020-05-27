@@ -7,6 +7,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -157,6 +158,8 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
 }
 
 export namespace Cell {
+  import compare = Comparable.compare;
+
   export interface JSON {
     [key: string]: json.JSON;
     kind: Kind;
@@ -592,38 +595,38 @@ export namespace Cell {
       ) => Iterable<Builder>
     ): Builder {
       // 1
-      let headersList: Array<Builder> = [];
+      let headersSet: Set<Builder> = Set.empty();
       // 2 principal cell = this, nothing to do.
       // 3 / no header attribute (3.1, 3.2: use this)
       // 3.3: find row headers in the row(s) covered by the principal cell
       for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
-        headersList.push(
-          ...this._internalHeaderScanning(cover, this.anchor.x, y, true)
+        headersSet = headersSet.concat(
+          this._internalHeaderScanning(cover, this.anchor.x, y, true)
         );
       }
       // 3.4: find column headers in the column(s) covered by the principal cell
       for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
-        headersList.push(
-          ...this._internalHeaderScanning(cover, x, this.anchor.y, false)
+        headersSet = headersSet.concat(
+          this._internalHeaderScanning(cover, x, this.anchor.y, false)
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
-      headersList.push(...getAboveLeftRowGroupHeaders(this));
+      headersSet = headersSet.concat(getAboveLeftRowGroupHeaders(this));
       // 3.6: find column group headers for the colgroup of the principal cell
-      headersList.push(...getAboveLeftColumnGroupHeaders(this));
+      headersSet = headersSet.concat(getAboveLeftColumnGroupHeaders(this));
 
-      headersList = headersList.filter(
-        (cell, idx) =>
+      headersSet = headersSet.filter(
+        (cell) =>
           // 4 (remove empty cells)
           !cell.element.children().isEmpty() &&
           // 6 remove principal cell
-          !cell.equals(this) &&
-          // 5 (remove duplicates)
-          headersList.indexOf(cell) === idx
+          !cell.equals(this)
+        // 5 (remove duplicates) is not needed by virtue of using set.
+        // headersSet.indexOf(cell) === idx
       );
 
       return this._update({
-        implicitHeaders: headersList.map((cell) => cell.element),
+        implicitHeaders: [...headersSet].sort(compare).map((cell) => cell.element),
       });
     }
 
