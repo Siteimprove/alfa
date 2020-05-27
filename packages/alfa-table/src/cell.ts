@@ -331,11 +331,11 @@ export namespace Cell {
       return this._downwardGrowing;
     }
 
-    public get explicitHeaders(): Array<Element> {
+    public get explicitHeaders(): Iterable<Element> {
       return this._explicitHeaders;
     }
 
-    public get implicitHeaders(): Array<Element> {
+    public get implicitHeaders(): Iterable<Element> {
       return this._implicitHeaders;
     }
 
