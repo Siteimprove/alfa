@@ -3,7 +3,6 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
-import {None} from "@siteimprove/alfa-option/src/none";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Cell } from "../src/cell";
