@@ -7,6 +7,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
+import { Covering } from "./covering";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 
@@ -15,7 +16,8 @@ const { compare } = Comparable;
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
  */
-export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
+export class RowGroup
+  implements Comparable<RowGroup>, Covering, Equatable, Serializable {
   public static of(y: number, h: number, element: Element): RowGroup {
     return new RowGroup(y, h, element);
   }

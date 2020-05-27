@@ -9,12 +9,13 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
+import { Covering } from "./covering";
 
 import { Scope } from "./scope";
 import { Table } from "./table";
 import { parseSpan } from "./helpers";
 
-const { some } = Iterable;
+const { filter, find } = Iterable;
 const { and, equals, not } = Predicate;
 const { isElement, hasName, hasNamespace, hasId } = Element;
 
@@ -583,6 +584,34 @@ export namespace Cell {
     }
 
     /**
+     * If this is in a group, get all group headers that are in this group and above+lift of this.
+     */
+    private _getAboveLeftGroupHeaders(
+      anchor: "x" | "y",
+      groups: Iterable<Covering>,
+      groupHeaders: Iterable<Builder>
+    ): Iterable<Builder> {
+      // The group covering the same anchor as the cell
+      const myGroup = find(groups, (group) =>
+        group.isCovering(this.anchor[anchor])
+      );
+
+      return myGroup.isSome()
+        ? // if the cell is in a group,
+          filter(
+            // get all group headers
+            groupHeaders,
+            (cell) =>
+              // keep the ones inside the group of the cell
+              myGroup.get().isCovering(cell.anchor[anchor]) &&
+              // keep the ones that are above and left of the cell
+              cell.anchor.x < this.anchor.x + this.width &&
+              cell.anchor.y < this.anchor.y + this.height
+          )
+        : [];
+    }
+
+    /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignImplicitHeaders(
@@ -607,55 +636,9 @@ export namespace Cell {
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
-      const principalRowGroup = Iterable.find(table.rowGroups, (rg) =>
-        rg.isCovering(this.anchor.y)
-      );
-      if (principalRowGroup.isSome()) {
-        // if the principal cell is in a rowgroup,
-        const headers =
-          // table.cells
-          // get all rowgroup headers
-          // .filter((cell) => cell.variant.equals(Some.of(Scope.RowGroup)))
-          Iterable.filter(
-            Iterable
-              // keep the ones inside the rowgroup of the principal cell
-              .filter(rowGroupHeaders, (rowGroupHeader) =>
-                principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
-              ),
-            // keep the ones that are above and left of the principal cell
-            // .filter(
-            (cell) =>
-              cell.anchor.x < this.anchor.x + this.width &&
-              cell.anchor.y < this.anchor.y + this.height
-          );
-
-        headersList.push(...headers);
-      }
+      headersList.push(...this._getAboveLeftGroupHeaders("y", table.rowGroups, rowGroupHeaders));
       // 3.6: find column group headers for the colgroup of the principal cell
-      const principalColGroup = Iterable.find(table.colGroups, (cg) =>
-        cg.isCovering(this.anchor.x)
-      );
-      if (principalColGroup.isSome()) {
-        // if the principal cell is in a colgroup,
-        const headers =
-          // table.cells
-          // get all colgroup headers
-          // .filter((cell) => cell.variant.equals(Some.of(Scope.ColumnGroup)))
-          Iterable.filter(
-            Iterable
-              // keep the ones inside the colgroup of the principal cell
-              .filter(columnGroupHeaders, (colGroupHeader) =>
-                principalColGroup.get().isCovering(colGroupHeader.anchor.x)
-              ),
-            // keep the ones that are above and left of the principal cell
-            // .filter(
-            (cell) =>
-              cell.anchor.x < this.anchor.x + this.width &&
-              cell.anchor.y < this.anchor.y + this.height
-          );
-
-        headersList.push(...headers);
-      }
+      headersList.push(...this._getAboveLeftGroupHeaders("x", table.colGroups, columnGroupHeaders));
 
       headersList = headersList.filter(
         (cell, idx) =>

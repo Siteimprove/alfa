@@ -4,6 +4,7 @@
   "files": [
     "src/cell.ts",
     "src/column-group.ts",
+    "src/covering.ts",
     "src/helpers.ts",
     "src/index.ts",
     "src/microsyntaxes.ts",
