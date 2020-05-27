@@ -464,7 +464,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
      */
     private _internalHeaderScanning(
-      cover: ((x: number, y: number) => Option<Builder>),
+      cover: (x: number, y: number) => Option<Builder>,
       initialX: number,
       initialY: number,
       decreaseX: boolean
@@ -584,41 +584,12 @@ export namespace Cell {
     }
 
     /**
-     * If this is in a group, get all group headers that are in this group and above+lift of this.
-     */
-    private _getAboveLeftGroupHeaders(
-      anchor: "x" | "y",
-      groups: Iterable<Covering>,
-      groupHeaders: Iterable<Builder>
-    ): Iterable<Builder> {
-      // The group covering the same anchor as the cell
-      const myGroup = find(groups, (group) =>
-        group.isCovering(this.anchor[anchor])
-      );
-
-      return myGroup.isSome()
-        ? // if the cell is in a group,
-          filter(
-            // get all group headers
-            groupHeaders,
-            (cell) =>
-              // keep the ones inside the group of the cell
-              myGroup.get().isCovering(cell.anchor[anchor]) &&
-              // keep the ones that are above and left of the cell
-              cell.anchor.x < this.anchor.x + this.width &&
-              cell.anchor.y < this.anchor.y + this.height
-          )
-        : [];
-    }
-
-    /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignImplicitHeaders(
-      table: Table.Builder,
-      cover: ((x: number, y: number) => Option<Builder>),
-      rowGroupHeaders: Iterable<Builder>,
-      columnGroupHeaders: Iterable<Builder>
+      cover: (x: number, y: number) => Option<Builder>,
+      getAboveLeftRowGroupHeaders: () => Iterable<Builder>,
+      getAboveLeftColumnGroupHeaders: () => Iterable<Builder>
     ): Builder {
       // 1
       let headersList: Array<Builder> = [];
@@ -637,9 +608,9 @@ export namespace Cell {
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
-      headersList.push(...this._getAboveLeftGroupHeaders("y", table.rowGroups, rowGroupHeaders));
+      headersList.push(...getAboveLeftRowGroupHeaders());
       // 3.6: find column group headers for the colgroup of the principal cell
-      headersList.push(...this._getAboveLeftGroupHeaders("x", table.colGroups, columnGroupHeaders));
+      headersList.push(...getAboveLeftColumnGroupHeaders());
 
       headersList = headersList.filter(
         (cell, idx) =>
@@ -667,12 +638,16 @@ export namespace Cell {
         cell.variant.equals(Some.of(Scope.ColumnGroup))
       );
       const cover = (x: number, y: number) => table.slots[x][y];
+      const getAboveLeftRowGroupHeaders = () =>
+      table.getAboveLeftGroupHeaders(this, "y", table.rowGroups, rowGroupHeaders);
+      const getAboveLeftColumnGroupHeaders = () =>
+        table.getAboveLeftGroupHeaders(this, "x", table.colGroups, columnGroupHeaders);
+
 
       return this._assignExplicitHeaders(table.element)._assignImplicitHeaders(
-        table,
         cover,
-        rowGroupHeaders,
-        columnGroupHeaders
+        getAboveLeftRowGroupHeaders,
+        getAboveLeftColumnGroupHeaders
       );
     }
 

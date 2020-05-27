@@ -11,6 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
 import { ColumnGroup } from "./column-group";
+import { Covering } from "./covering";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 import { RowGroup } from "./row-group";
@@ -294,6 +295,35 @@ export namespace Table {
           )
         ),
       });
+    }
+
+    /**
+     * If cell is in a group, get all group headers that are in this group and above+lift of cell.
+     */
+    public getAboveLeftGroupHeaders(
+      builder: Cell.Builder,
+      anchor: "x" | "y",
+      groups: Iterable<Covering>,
+      groupHeaders: Iterable<Cell.Builder>
+    ): Iterable<Cell.Builder> {
+      // The group covering the same anchor as the cell
+      const myGroup = Iterable.find(groups, (group) =>
+        group.isCovering(builder.anchor[anchor])
+      );
+
+      return myGroup.isSome()
+        ? // if the cell is in a group,
+          Iterable.filter(
+            // get all group headers
+            groupHeaders,
+            (cell) =>
+              // keep the ones inside the group of the cell
+              myGroup.get().isCovering(cell.anchor[anchor]) &&
+              // keep the ones that are above and left of the cell
+              cell.anchor.x < builder.anchor.x + builder.width &&
+              cell.anchor.y < builder.anchor.y + builder.height
+          )
+        : [];
     }
 
     public assignHeaders(): Builder {
