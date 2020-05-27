@@ -585,7 +585,11 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    private _assignImplicitHeaders(table: Table.Builder): Builder {
+    private _assignImplicitHeaders(
+      table: Table.Builder,
+      rowGroupHeaders: Iterable<Builder>,
+      columnGroupHeaders: Iterable<Builder>
+    ): Builder {
       // 1
       let headersList: Array<Builder> = [];
       // 2 principal cell = this, nothing to do.
@@ -608,15 +612,18 @@ export namespace Cell {
       );
       if (principalRowGroup.isSome()) {
         // if the principal cell is in a rowgroup,
-        const headers = table.cells
+        const headers =
+          // table.cells
           // get all rowgroup headers
-          .filter((cell) => cell.variant.equals(Some.of(Scope.RowGroup)))
-          // keep the ones inside the rowgroup of the principal cell
-          .filter((rowGroupHeader) =>
-            principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
-          )
-          // keep the ones that are above and left of the principal cell
-          .filter(
+          // .filter((cell) => cell.variant.equals(Some.of(Scope.RowGroup)))
+          Iterable.filter(
+            Iterable
+              // keep the ones inside the rowgroup of the principal cell
+              .filter(rowGroupHeaders, (rowGroupHeader) =>
+                principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
+              ),
+            // keep the ones that are above and left of the principal cell
+            // .filter(
             (cell) =>
               cell.anchor.x < this.anchor.x + this.width &&
               cell.anchor.y < this.anchor.y + this.height
@@ -630,15 +637,18 @@ export namespace Cell {
       );
       if (principalColGroup.isSome()) {
         // if the principal cell is in a colgroup,
-        const headers = table.cells
+        const headers =
+          // table.cells
           // get all colgroup headers
-          .filter((cell) => cell.variant.equals(Some.of(Scope.ColumnGroup)))
-          // keep the ones inside the colgroup of the principal cell
-          .filter((colGroupHeader) =>
-            principalColGroup.get().isCovering(colGroupHeader.anchor.x)
-          )
-          // keep the ones that are above and left of the principal cell
-          .filter(
+          // .filter((cell) => cell.variant.equals(Some.of(Scope.ColumnGroup)))
+          Iterable.filter(
+            Iterable
+              // keep the ones inside the colgroup of the principal cell
+              .filter(columnGroupHeaders, (colGroupHeader) =>
+                principalColGroup.get().isCovering(colGroupHeader.anchor.x)
+              ),
+            // keep the ones that are above and left of the principal cell
+            // .filter(
             (cell) =>
               cell.anchor.x < this.anchor.x + this.width &&
               cell.anchor.y < this.anchor.y + this.height
@@ -666,8 +676,17 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     public assignHeaders(table: Table.Builder): Cell.Builder {
+      const rowGroupHeaders = table.cells.filter((cell) =>
+        cell.variant.equals(Some.of(Scope.RowGroup))
+      );
+      const columnGroupHeaders = table.cells.filter((cell) =>
+        cell.variant.equals(Some.of(Scope.ColumnGroup))
+      );
+
       return this._assignExplicitHeaders(table.element)._assignImplicitHeaders(
-        table
+        table,
+        rowGroupHeaders,
+        columnGroupHeaders
       );
     }
 
