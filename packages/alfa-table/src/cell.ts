@@ -588,8 +588,12 @@ export namespace Cell {
      */
     private _assignImplicitHeaders(
       cover: (x: number, y: number) => Option<Builder>,
-      getAboveLeftRowGroupHeaders: () => Iterable<Builder>,
-      getAboveLeftColumnGroupHeaders: () => Iterable<Builder>
+      getAboveLeftRowGroupHeaders: (
+        principalCell: Builder
+      ) => Iterable<Builder>,
+      getAboveLeftColumnGroupHeaders: (
+        principalCell: Builder
+      ) => Iterable<Builder>
     ): Builder {
       // 1
       let headersList: Array<Builder> = [];
@@ -608,9 +612,9 @@ export namespace Cell {
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
-      headersList.push(...getAboveLeftRowGroupHeaders());
+      headersList.push(...getAboveLeftRowGroupHeaders(this));
       // 3.6: find column group headers for the colgroup of the principal cell
-      headersList.push(...getAboveLeftColumnGroupHeaders());
+      headersList.push(...getAboveLeftColumnGroupHeaders(this));
 
       headersList = headersList.filter(
         (cell, idx) =>
@@ -630,21 +634,17 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(table: Table.Builder): Cell.Builder {
-      const rowGroupHeaders = table.cells.filter((cell) =>
-        cell.variant.equals(Some.of(Scope.RowGroup))
-      );
-      const columnGroupHeaders = table.cells.filter((cell) =>
-        cell.variant.equals(Some.of(Scope.ColumnGroup))
-      );
-      const cover = (x: number, y: number) => table.slots[x][y];
-      const getAboveLeftRowGroupHeaders = () =>
-      table.getAboveLeftGroupHeaders(this, "y", table.rowGroups, rowGroupHeaders);
-      const getAboveLeftColumnGroupHeaders = () =>
-        table.getAboveLeftGroupHeaders(this, "x", table.colGroups, columnGroupHeaders);
-
-
-      return this._assignExplicitHeaders(table.element)._assignImplicitHeaders(
+    public assignHeaders(
+      element: Element,
+      cover: (x: number, y: number) => Option<Builder>,
+      getAboveLeftRowGroupHeaders: (
+        principalCell: Builder
+      ) => Iterable<Builder>,
+      getAboveLeftColumnGroupHeaders: (
+        principalCell: Builder
+      ) => Iterable<Builder>
+    ): Cell.Builder {
+      return this._assignExplicitHeaders(element)._assignImplicitHeaders(
         cover,
         getAboveLeftRowGroupHeaders,
         getAboveLeftColumnGroupHeaders

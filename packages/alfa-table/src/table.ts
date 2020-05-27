@@ -15,6 +15,7 @@ import { Covering } from "./covering";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 import { RowGroup } from "./row-group";
+import { Scope } from "./scope";
 
 const { compare } = Comparable;
 const { some } = Iterable;
@@ -298,37 +299,63 @@ export namespace Table {
     }
 
     /**
-     * If cell is in a group, get all group headers that are in this group and above+lift of cell.
+     * If principal cell is in a group, get all group headers that are in this group and above+lift of principal cell.
      */
     public getAboveLeftGroupHeaders(
-      builder: Cell.Builder,
-      anchor: "x" | "y",
-      groups: Iterable<Covering>,
-      groupHeaders: Iterable<Cell.Builder>
-    ): Iterable<Cell.Builder> {
-      // The group covering the same anchor as the cell
-      const myGroup = Iterable.find(groups, (group) =>
-        group.isCovering(builder.anchor[anchor])
-      );
+      kind: "row" | "column"
+    ): (principalCell: Cell.Builder) => Iterable<Cell.Builder> {
+      let anchor: "x" | "y",
+        groups: Iterable<Covering>,
+        groupHeaders: Iterable<Cell.Builder>;
 
-      return myGroup.isSome()
-        ? // if the cell is in a group,
-          Iterable.filter(
-            // get all group headers
-            groupHeaders,
-            (cell) =>
-              // keep the ones inside the group of the cell
-              myGroup.get().isCovering(cell.anchor[anchor]) &&
-              // keep the ones that are above and left of the cell
-              cell.anchor.x < builder.anchor.x + builder.width &&
-              cell.anchor.y < builder.anchor.y + builder.height
-          )
-        : [];
+      switch (kind) {
+        case "row":
+          anchor = "y";
+          groups = this.rowGroups;
+          groupHeaders = this.cells.filter((cell) =>
+            cell.variant.equals(Some.of(Scope.RowGroup))
+          );
+          break;
+        case "column":
+          anchor = "x";
+          groups = this.colGroups;
+          groupHeaders = this.cells.filter((cell) =>
+            cell.variant.equals(Some.of(Scope.ColumnGroup))
+          );
+      }
+
+      return (principalCell) => {
+        // The group covering the same anchor as the principal cell
+        const principalGroup = Iterable.find(groups, (group) =>
+          group.isCovering(principalCell.anchor[anchor])
+        );
+
+        return principalGroup.isSome()
+          ? // if the cell is in a group,
+            Iterable.filter(
+              // get all group headers
+              groupHeaders,
+              (cell) =>
+                // keep the ones inside the group of the cell
+                principalGroup.get().isCovering(cell.anchor[anchor]) &&
+                // keep the ones that are above and left of the cell
+                cell.anchor.x < principalCell.anchor.x + principalCell.width &&
+                cell.anchor.y < principalCell.anchor.y + principalCell.height
+            )
+          : [];
+      };
     }
 
     public assignHeaders(): Builder {
       return this.update({
-        cells: this.cells.map((cell) => cell.assignHeaders(this)),
+        cells: this.cells.map((cell) =>
+          cell.assignHeaders(
+            this.element,
+            (x: number, y: number) => this.slots[x][y],
+            this.getAboveLeftGroupHeaders("row"),
+            this.getAboveLeftGroupHeaders("column")
+          )
+        ),
       });
     }
 
