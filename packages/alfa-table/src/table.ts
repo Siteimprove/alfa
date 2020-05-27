@@ -175,10 +175,6 @@ export namespace Table {
       return this._cells;
     }
 
-    public get slots(): Array<Array<Option<Cell.Builder>>> {
-      return this._slots;
-    }
-
     public get width(): number {
       return this._table.width;
     }
@@ -208,6 +204,12 @@ export namespace Table {
         [...this.rowGroups],
         [...this.colGroups]
       );
+    }
+
+    public slot(x: number, y: number): Option<Cell.Builder> {
+      return this._slots[x] !== undefined || this._slots[x][y] !== undefined
+        ? None
+        : this._slots[x][y];
     }
 
     public update(update: {
@@ -352,7 +354,7 @@ export namespace Table {
         cells: this.cells.map((cell) =>
           cell.assignHeaders(
             this.element,
-            (x: number, y: number) => this.slots[x][y],
+            (x: number, y: number) => this._slots[x][y],
             this.getAboveLeftGroupHeaders("row"),
             this.getAboveLeftGroupHeaders("column")
           )
@@ -533,11 +535,7 @@ export namespace Table {
       for (let x = 0; x < table.width; x++) {
         slots[x] = new Array(table.height);
         for (let y = 0; y < table.height; y++) {
-          slots[x][y] =
-            // line shouldn't be empty or it would have 0 cell anchored to it…
-            table.slots[x] !== undefined && table.slots[x][y] !== undefined
-              ? table.slots[x][y]
-              : None;
+          slots[x][y] = table.slot(x, y);
         }
       }
       table = table.update({ slots });
