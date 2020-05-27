@@ -9,13 +9,10 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
-import { Covering } from "./covering";
 
 import { Scope } from "./scope";
-import { Table } from "./table";
 import { parseSpan } from "./helpers";
 
-const { filter, find } = Iterable;
 const { and, equals, not } = Predicate;
 const { isElement, hasName, hasNamespace, hasId } = Element;
 
@@ -191,8 +188,7 @@ export namespace Cell {
     // The actual variant of the header is stored in the cell and can only be computed once the table is built.
     private readonly _scope: Option<Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
-    //         all over the place. Storing here elements instead of Cell is easier to avoid potential infinite loop when
-    //         converting Cell.Builder to Cell.
+    //         all over the place. Storing here elements instead of Cell is easier as it never changes.
     // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
     //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
     //         Currently not exposing both to final cell, but easy to do if needed.
@@ -635,7 +631,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     public assignHeaders(
-      element: Element,
+      table: Element,
       cover: (x: number, y: number) => Option<Builder>,
       getAboveLeftRowGroupHeaders: (
         principalCell: Builder
@@ -644,7 +640,7 @@ export namespace Cell {
         principalCell: Builder
       ) => Iterable<Builder>
     ): Cell.Builder {
-      return this._assignExplicitHeaders(element)._assignImplicitHeaders(
+      return this._assignExplicitHeaders(table)._assignImplicitHeaders(
         cover,
         getAboveLeftRowGroupHeaders,
         getAboveLeftColumnGroupHeaders

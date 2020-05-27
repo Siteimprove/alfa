@@ -322,6 +322,7 @@ export namespace Table {
           groupHeaders = this.cells.filter((cell) =>
             cell.variant.equals(Some.of(Scope.ColumnGroup))
           );
+          break;
       }
 
       return (principalCell) => {
