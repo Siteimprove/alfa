@@ -479,20 +479,20 @@ export namespace Cell {
       initialX: number,
       initialY: number,
       decreaseX: boolean
-    ): Array<Builder> {
+    ): List<Builder> {
       // The principal cell is this.
       const deltaX = decreaseX ? -1 : 0;
       const deltaY = decreaseX ? 0 : -1;
-      let headersList: Array<Builder> = []; // new headers found by this algorithm
+      let headersList: List<Builder> = List.empty(); // new headers found by this algorithm
 
       // 3
-      let opaqueHeaders: Array<Builder> = [];
+      let opaqueHeaders: List<Builder> = List.empty();
       // 4
       let inHeaderBlock = false;
-      let headersFromCurrentBlock: Array<Builder> = [];
+      let headersFromCurrentBlock: List<Builder> = List.empty();
       if (this.kind === Cell.Kind.Header) {
         inHeaderBlock = true;
-        headersFromCurrentBlock.push(this);
+        headersFromCurrentBlock = headersFromCurrentBlock.append(this);
       }
 
       // 1, 2, 5, 6, 10
@@ -515,7 +515,7 @@ export namespace Cell {
           // 9.1
           inHeaderBlock = true;
           // 9.2
-          headersFromCurrentBlock.push(currentCell);
+          headersFromCurrentBlock = headersFromCurrentBlock.append(currentCell);
           // 9.3
           let blocked;
           // 9.4
@@ -537,12 +537,14 @@ export namespace Cell {
               ) || !variant.equals(Some.of(Scope.Row));
           }
           // 9.5
-          if (!blocked) headersList.push(currentCell);
+          if (!blocked) {
+            headersList = headersList.append(currentCell)
+          };
         }
         if (currentCell.kind === Cell.Kind.Data && inHeaderBlock) {
           inHeaderBlock = false;
-          opaqueHeaders.push(...headersFromCurrentBlock);
-          headersFromCurrentBlock = [];
+          opaqueHeaders = opaqueHeaders.concat(headersFromCurrentBlock);
+          headersFromCurrentBlock = List.empty();
         }
       }
 
