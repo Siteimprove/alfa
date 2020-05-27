@@ -3,6 +3,7 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { List } from "@siteimprove/alfa-list";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -29,7 +30,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     height: number,
     element: Element,
     scope: Option<Scope.Resolved> = None,
-    headers: Array<Element> = []
+    headers: List<Element> = List.empty()
   ): Cell {
     return new Cell(kind, x, y, width, height, element, scope, headers);
   }
@@ -41,7 +42,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
   private readonly _height: number;
   private readonly _element: Element;
   private readonly _scope: Option<Scope.Resolved>;
-  private readonly _headers: Array<Element>;
+  private readonly _headers: List<Element>;
 
   private constructor(
     kind: Cell.Kind,
@@ -51,7 +52,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     height: number,
     element: Element,
     scope: Option<Scope.Resolved>,
-    headers: Array<Element>
+    headers: List<Element>
   ) {
     this._kind = kind;
     this._x = x;
@@ -152,7 +153,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
       height: this._height,
       element: this._element.toJSON(),
       scope: this._scope.getOr(null),
-      headers: this._headers.map((header) => header.toJSON()),
+      headers: this._headers.toJSON(), // map((header) => header.toJSON()),
     };
   }
 }
@@ -171,7 +172,7 @@ export namespace Cell {
     height: number;
     element: Element.JSON;
     scope: Scope.Resolved | null;
-    headers: Element.JSON[];
+    headers: List.JSON;
   }
 
   export enum Kind {
@@ -197,8 +198,8 @@ export namespace Cell {
     //         Currently not exposing both to final cell, but easy to do if needed.
     // Note 3: Headers are empty when building the cell, they are filled in once the table is built because we need
     //         to know the full table in order to find both explicit and implicit headers.
-    private readonly _explicitHeaders: Array<Element>;
-    private readonly _implicitHeaders: Array<Element>;
+    private readonly _explicitHeaders: List<Element>;
+    private readonly _implicitHeaders: List<Element>;
 
     public static of(
       kind: Cell.Kind,
@@ -210,8 +211,8 @@ export namespace Cell {
       variant: Option<Scope.Resolved> = None,
       downwardGrowing: boolean = false,
       scope: Option<Scope> = None,
-      explicitHeaders: Array<Element> = [],
-      implicitHeaders: Array<Element> = []
+      explicitHeaders: List<Element> = List.empty(),
+      implicitHeaders: List<Element> = List.empty()
     ): Builder {
       return new Builder(
         kind,
@@ -238,10 +239,19 @@ export namespace Cell {
       variant: Option<Scope.Resolved>,
       downwardGrowing: boolean,
       scope: Option<Scope>,
-      explicitHeaders: Array<Element>,
-      implicitHeaders: Array<Element>
+      explicitHeaders: List<Element>,
+      implicitHeaders: List<Element>
     ) {
-      this._cell = Cell.of(kind, x, y, width, height, element, variant, []);
+      this._cell = Cell.of(
+        kind,
+        x,
+        y,
+        width,
+        height,
+        element,
+        variant,
+        List.empty()
+      );
       this._downwardGrowing = downwardGrowing;
       this._scope = scope;
       this._explicitHeaders = explicitHeaders;
@@ -258,8 +268,8 @@ export namespace Cell {
       variant?: Option<Scope.Resolved>;
       downwardGrowing?: boolean;
       scope?: Option<Scope>;
-      explicitHeaders?: Array<Element>;
-      implicitHeaders?: Array<Element>;
+      explicitHeaders?: List<Element>;
+      implicitHeaders?: List<Element>;
     }): Builder {
       return Builder.of(
         update.kind !== undefined ? update.kind : this.kind,
@@ -296,9 +306,11 @@ export namespace Cell {
         // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
         // some browsers use fallback implicit headers when explicit resolve to nothing. We may want to do this
         // and use some browser specific, either here or by exporting both list to the product and selecting later.
-        this.element.attribute("headers") === None
-          ? this._implicitHeaders
-          : this._explicitHeaders
+        List.from(
+          this.element.attribute("headers") === None
+            ? this._implicitHeaders
+            : this._explicitHeaders
+        )
       );
     }
 
@@ -579,7 +591,7 @@ export namespace Cell {
           )
         );
 
-      return this._update({ explicitHeaders: elements.toArray() });
+      return this._update({ explicitHeaders: List.from(elements) });
     }
 
     /**
@@ -626,7 +638,9 @@ export namespace Cell {
       );
 
       return this._update({
-        implicitHeaders: [...headersSet].sort(compare).map((cell) => cell.element),
+        implicitHeaders: List.from([...headersSet].sort(compare)).map(
+          (cell) => cell.element
+        ),
       });
     }
 
@@ -658,8 +672,8 @@ export namespace Cell {
       return {
         cell: this._cell.toJSON(),
         state: this._scope.toJSON(),
-        explicitHeaders: this._explicitHeaders.map((header) => header.toJSON()),
-        implicitHeaders: this._implicitHeaders.map((header) => header.toJSON()),
+        explicitHeaders: this._explicitHeaders.toJSON(), // .map((header) => header.toJSON()),
+        implicitHeaders: this._implicitHeaders.toJSON() //.map((header) => header.toJSON()),
       };
     }
   }
@@ -669,8 +683,8 @@ export namespace Cell {
       [key: string]: json.JSON;
       cell: Cell.JSON;
       state: Option.JSON;
-      explicitHeaders: Element.JSON[];
-      implicitHeaders: Element.JSON[];
+      explicitHeaders: List.JSON;
+      implicitHeaders: List.JSON;
     }
 
     /**

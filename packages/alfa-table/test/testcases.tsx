@@ -2,6 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { List } from "@siteimprove/alfa-list";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -34,7 +35,7 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
     height,
     getElt(elt),
     Option.from(variant),
-    headers.map(getElt)
+    List.from(headers.map(getElt))
   );
 
 function toBuildingCell(cell: Cell) {
