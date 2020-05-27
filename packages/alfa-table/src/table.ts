@@ -465,7 +465,7 @@ export namespace Table {
         );
         yCurrent = table.height;
         // Ending row group 2
-        // Slots are sync again during this step.
+        // Slots are sync again after this step.
         table = table.addCells(growingCellsList);
         growingCellsList = [];
 
