@@ -19,7 +19,7 @@ import { RowGroup } from "./row-group";
 import { Scope } from "./scope";
 
 const { compare } = Comparable;
-const { some } = Iterable;
+const { filter, map, some } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
@@ -315,14 +315,14 @@ export namespace Table {
         case "row":
           anchor = "y";
           groups = this.rowGroups;
-          groupHeaders = List.from(this.cells).filter((cell) =>
+          groupHeaders = filter(this.cells, (cell) =>
             cell.variant.equals(Some.of(Scope.RowGroup))
           );
           break;
         case "column":
           anchor = "x";
           groups = this.colGroups;
-          groupHeaders = List.from(this.cells).filter((cell) =>
+          groupHeaders = filter(this.cells, (cell) =>
             cell.variant.equals(Some.of(Scope.ColumnGroup))
           );
           break;
