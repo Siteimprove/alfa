@@ -30,7 +30,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     height: number,
     element: Element,
     scope: Option<Scope.Resolved> = None,
-    headers: List<Element> = List.empty()
+    headers: Iterable<Element> = List.empty()
   ): Cell {
     return new Cell(kind, x, y, width, height, element, scope, headers);
   }
@@ -52,7 +52,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     height: number,
     element: Element,
     scope: Option<Scope.Resolved>,
-    headers: List<Element>
+    headers: Iterable<Element>
   ) {
     this._kind = kind;
     this._x = x;
@@ -61,7 +61,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     this._height = height;
     this._element = element;
     this._scope = scope;
-    this._headers = headers;
+    this._headers = List.from(headers);
   }
 
   public get kind(): Cell.Kind {
@@ -211,8 +211,8 @@ export namespace Cell {
       variant: Option<Scope.Resolved> = None,
       downwardGrowing: boolean = false,
       scope: Option<Scope> = None,
-      explicitHeaders: List<Element> = List.empty(),
-      implicitHeaders: List<Element> = List.empty()
+      explicitHeaders: Iterable<Element> = List.empty(),
+      implicitHeaders: Iterable<Element> = List.empty()
     ): Builder {
       return new Builder(
         kind,
@@ -239,8 +239,8 @@ export namespace Cell {
       variant: Option<Scope.Resolved>,
       downwardGrowing: boolean,
       scope: Option<Scope>,
-      explicitHeaders: List<Element>,
-      implicitHeaders: List<Element>
+      explicitHeaders: Iterable<Element>,
+      implicitHeaders: Iterable<Element>
     ) {
       this._cell = Cell.of(
         kind,
@@ -254,8 +254,8 @@ export namespace Cell {
       );
       this._downwardGrowing = downwardGrowing;
       this._scope = scope;
-      this._explicitHeaders = explicitHeaders;
-      this._implicitHeaders = implicitHeaders;
+      this._explicitHeaders = List.from(explicitHeaders);
+      this._implicitHeaders = List.from(implicitHeaders);
     }
 
     private _update(update: {
@@ -268,8 +268,8 @@ export namespace Cell {
       variant?: Option<Scope.Resolved>;
       downwardGrowing?: boolean;
       scope?: Option<Scope>;
-      explicitHeaders?: List<Element>;
-      implicitHeaders?: List<Element>;
+      explicitHeaders?: Iterable<Element>;
+      implicitHeaders?: Iterable<Element>;
     }): Builder {
       return Builder.of(
         update.kind !== undefined ? update.kind : this.kind,
