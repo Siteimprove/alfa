@@ -4,6 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import {List} from "@siteimprove/alfa-list";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
@@ -440,8 +441,8 @@ export namespace Table {
 
           const row = Row.Builder.from(
             currentElement,
-            table.cells,
-            growingCellsList,
+            List.from(table.cells),
+            List.from(growingCellsList),
             yCurrent,
             table.width
           ).get();

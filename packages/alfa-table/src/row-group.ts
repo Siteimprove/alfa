@@ -2,6 +2,7 @@ import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+import {List} from "@siteimprove/alfa-list";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -230,8 +231,8 @@ export namespace RowGroup {
       for (const tr of group.children().filter(isHtmlElementWithName("tr"))) {
         const row = Row.Builder.from(
           tr,
-          rowgroup.cells,
-          growingCellsList,
+          List.from(rowgroup.cells),
+          List.from(growingCellsList) ,
           yCurrent,
           rowgroup.width
         ).get();
