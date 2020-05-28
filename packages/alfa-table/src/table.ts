@@ -208,7 +208,7 @@ export namespace Table {
     }
 
     public slot(x: number, y: number): Option<Cell.Builder> {
-      return this._slots[x] !== undefined || this._slots[x][y] !== undefined
+      return this._slots[x] === undefined || this._slots[x][y] === undefined
         ? None
         : this._slots[x][y];
     }
