@@ -285,8 +285,8 @@ export namespace Row {
       width: number;
       height: number;
       element: Element.JSON;
-      cells: List.JSON;
-      downwardGrowingCells: List.JSON;
+      cells: Cell.JSON[];
+      downwardGrowingCells: Cell.JSON[];
     }
   }
 }
