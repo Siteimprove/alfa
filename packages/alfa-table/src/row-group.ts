@@ -116,7 +116,7 @@ export namespace RowGroup {
       height: number,
       element: Element,
       width: number = 0,
-      cells: List<Cell.Builder> = List.empty()
+      cells: Iterable<Cell.Builder> = List.empty()
     ): Builder {
       return new Builder(y, height, element, width, cells);
     }
@@ -126,11 +126,11 @@ export namespace RowGroup {
       height: number,
       element: Element,
       width: number,
-      cells: List<Cell.Builder>
+      cells: Iterable<Cell.Builder>
     ) {
       this._rowGroup = RowGroup.of(y, height, element);
       this._width = width;
-      this._cells = cells;
+      this._cells = List.from(cells);
     }
 
     public update(update: {
@@ -138,7 +138,7 @@ export namespace RowGroup {
       width?: number;
       height?: number;
       element?: Element;
-      cells?: List<Cell.Builder>;
+      cells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
         update.y !== undefined ? update.y : this._rowGroup.anchor.y,
