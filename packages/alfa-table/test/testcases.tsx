@@ -2,7 +2,7 @@ import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { List } from "@siteimprove/alfa-list";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Cell } from "../src/cell";
@@ -34,7 +34,7 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
     height,
     getElt(elt),
     Option.from(variant),
-    List.from(headers.map(getElt))
+    headers.map(getElt)
   );
 
 const makeCellBuilderFromGetter = (getElt: (elt: string) => Element) => (
@@ -42,10 +42,6 @@ const makeCellBuilderFromGetter = (getElt: (elt: string) => Element) => (
   kind: Cell.Kind,
   x: number,
   y: number,
-  explicitHeaders: Array<string> = [],
-  implicitHeaders: Array<string> = [],
-  variant: Scope.Resolved | undefined = undefined,
-  downwardGrowing: boolean = false,
   scope: Scope | undefined = undefined,
   width: number = 1,
   height: number = 1
@@ -57,11 +53,9 @@ const makeCellBuilderFromGetter = (getElt: (elt: string) => Element) => (
     width,
     height,
     getElt(elt),
-    Option.from(variant),
-    downwardGrowing,
-    Option.from(scope),
-    List.from(explicitHeaders.map(getElt)),
-    List.from(implicitHeaders.map(getElt))
+    None,
+    false,
+    Option.from(scope)
   );
 
 function toBuildingCell(cell: Cell) {
@@ -99,17 +93,7 @@ export namespace simpleRow {
     1,
     element,
     List.of(
-      makeCell(
-        "first",
-        Cell.Kind.Header,
-        0,
-        0,
-        [],
-        [],
-        undefined,
-        false,
-        Scope.Auto
-      ),
+      makeCell("first", Cell.Kind.Header, 0, 0, Scope.Auto),
       makeCell("second", Cell.Kind.Data, 1, 0)
     )
   );
@@ -147,71 +131,20 @@ export namespace complexRow {
     2,
     element,
     List.of(
-      makeCell(
-        "grade",
-        Cell.Kind.Header,
-        0,
-        0,
-        [],
-        [],
-        undefined,
-        false,
-        Scope.Auto,
-        1,
-        2
-      ),
+      makeCell("grade", Cell.Kind.Header, 0, 0, Scope.Auto, 1, 2),
       makeCell(
         "yield",
         Cell.Kind.Header,
         1,
         0,
-        [],
-        [],
-        undefined,
-        false,
+
         Scope.Auto,
         1,
         2
       ),
-      makeCell(
-        "strength",
-        Cell.Kind.Header,
-        2,
-        0,
-        [],
-        [],
-        undefined,
-        false,
-        Scope.Auto,
-        2,
-        1
-      ),
-      makeCell(
-        "elong",
-        Cell.Kind.Header,
-        4,
-        0,
-        [],
-        [],
-        undefined,
-        false,
-        Scope.Auto,
-        1,
-        2
-      ),
-      makeCell(
-        "reduct",
-        Cell.Kind.Header,
-        5,
-        0,
-        [],
-        [],
-        undefined,
-        false,
-        Scope.Auto,
-        1,
-        2
-      )
+      makeCell("strength", Cell.Kind.Header, 2, 0, Scope.Auto, 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, Scope.Auto, 1, 2),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, Scope.Auto, 1, 2)
     )
   );
 }
