@@ -538,11 +538,13 @@ export namespace Table {
       // The slots array might be sparse (or at least have holes) if some slots are not covered.
       // We first turn it into a dense array to allow array-operation optimisations
       // and make access easier to handle (slots[x][y] is never undefined after this).
-      const slots: Array<Array<Option<Cell.Builder>>> = new Array(table.width);
+      // To get a PACKED_ELEMENTS array, we actually need to push to it:
+      // @see https://v8.dev/blog/elements-kinds#avoid-creating-holes
+      const slots: Array<Array<Option<Cell.Builder>>> = [];
       for (let x = 0; x < table.width; x++) {
-        slots[x] = new Array(table.height);
+        slots.push([]);
         for (let y = 0; y < table.height; y++) {
-          slots[x][y] = table.slot(x, y);
+          slots[x].push(table.slot(x, y));
         }
       }
       table = table.update({ slots });
