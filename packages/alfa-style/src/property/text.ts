@@ -34,4 +34,15 @@ export namespace Text {
       inherits: true,
     }
   );
+
+  export type Overflow = Keyword<"clip" | "ellipsis">;
+
+  /**
+   * @see https://drafts.csswg.org/css-overflow/#text-overflow
+   */
+  export const Overflow: Property<Overflow> = Property.of(
+    Keyword.of("clip"),
+    Keyword.parse("clip", "ellipsis"),
+    (style) => style.specified("text-overflow")
+  );
 }
