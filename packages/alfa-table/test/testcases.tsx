@@ -255,17 +255,19 @@ export namespace simpleRowGroup {
     2,
     element,
     6,
-    [
-      makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 2),
-      makeCell("kg-mm", Cell.Kind.Header, 2, 1),
-      makeCell("lb-in", Cell.Kind.Header, 3, 1),
-    ]
-      .map(toBuildingCell)
-      .sort(compare)
+    List.from(
+      [
+        makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 2),
+        makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
+        makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
+        makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
+        makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 2),
+        makeCell("kg-mm", Cell.Kind.Header, 2, 1),
+        makeCell("lb-in", Cell.Kind.Header, 3, 1),
+      ]
+        .map(toBuildingCell)
+        .sort(compare)
+    )
   );
 }
 
@@ -312,19 +314,21 @@ export namespace downwardGrowing {
     3,
     element,
     6,
-    [
-      makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 3),
-      makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
-      makeCell("lb-in", Cell.Kind.Header, 3, 1),
-      makeCell("foo", Cell.Kind.Header, 1, 2, [], undefined, 1, 1),
-      makeCell("bar", Cell.Kind.Header, 3, 2, [], undefined, 1, 1),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 3),
-      makeCell("kg-mm", Cell.Kind.Header, 2, 1, [], undefined, 1, 2),
-    ]
-      .map(toBuildingCell)
-      .sort(compare)
+    List.from(
+      [
+        makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 3),
+        makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
+        makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
+        makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
+        makeCell("lb-in", Cell.Kind.Header, 3, 1),
+        makeCell("foo", Cell.Kind.Header, 1, 2, [], undefined, 1, 1),
+        makeCell("bar", Cell.Kind.Header, 3, 2, [], undefined, 1, 1),
+        makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 3),
+        makeCell("kg-mm", Cell.Kind.Header, 2, 1, [], undefined, 1, 2),
+      ]
+        .map(toBuildingCell)
+        .sort(compare)
+    )
   );
 }
 
