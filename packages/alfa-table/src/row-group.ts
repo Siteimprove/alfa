@@ -221,7 +221,7 @@ export namespace RowGroup {
         return Err.of("This element is not a row group");
       }
 
-      let growingCellsList: Array<Cell.Builder> = [];
+      let growingCellsList: List<Cell.Builder> = List.empty();
       let rowgroup = Builder.of(-1, 0, group);
       let yCurrent = 0; // y position inside the rowgroup
       // 1
@@ -235,7 +235,7 @@ export namespace RowGroup {
           yCurrent,
           rowgroup.width
         ).get();
-        growingCellsList = [...row.downwardGrowingCells];
+        growingCellsList = List.from(row.downwardGrowingCells);
         rowgroup = rowgroup.update({
           cells: List.from(rowgroup.cells).concat(row.cells),
           height: Math.max(rowgroup.height, yCurrent + row.height),

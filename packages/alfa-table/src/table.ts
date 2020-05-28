@@ -4,7 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import {List} from "@siteimprove/alfa-list";
+import { List } from "@siteimprove/alfa-list";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
@@ -29,9 +29,9 @@ export class Table implements Equatable, Serializable {
     element: Element,
     width: number = 0,
     height: number = 0,
-    cells: Array<Cell> = [],
-    rowGroups: Array<RowGroup> = [],
-    columnGroups: Array<ColumnGroup> = []
+    cells: Iterable<Cell> = List.empty(),
+    rowGroups: Iterable<RowGroup> = List.empty(),
+    columnGroups: Iterable<ColumnGroup> = List.empty()
   ): Table {
     return new Table(element, width, height, cells, rowGroups, columnGroups);
   }
@@ -39,24 +39,24 @@ export class Table implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
-  private readonly _cells: Array<Cell>;
-  private readonly _rowGroups: Array<RowGroup>;
-  private readonly _columnGroups: Array<ColumnGroup>;
+  private readonly _cells: List<Cell>;
+  private readonly _rowGroups: List<RowGroup>;
+  private readonly _columnGroups: List<ColumnGroup>;
 
   private constructor(
     element: Element,
     width: number,
     height: number,
-    cells: Array<Cell>,
-    rowGroups: Array<RowGroup>,
-    columnGroups: Array<ColumnGroup>
+    cells: Iterable<Cell>,
+    rowGroups: Iterable<RowGroup>,
+    columnGroups: Iterable<ColumnGroup>
   ) {
     this._width = width;
     this._height = height;
     this._element = element;
-    this._cells = cells;
-    this._rowGroups = rowGroups;
-    this._columnGroups = columnGroups;
+    this._cells = List.from(cells);
+    this._rowGroups = List.from(rowGroups);
+    this._columnGroups = List.from(columnGroups);
   }
 
   public get width(): number {
@@ -88,16 +88,9 @@ export class Table implements Equatable, Serializable {
     return (
       this._width === value._width &&
       this._height === value._height &&
-      this._cells.length === value._cells.length &&
-      this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
-      this._rowGroups.length === value._rowGroups.length &&
-      this._rowGroups.every((rowGroup, idx) =>
-        rowGroup.equals(value._rowGroups[idx])
-      ) &&
-      this._columnGroups.length === value._columnGroups.length &&
-      this._columnGroups.every((colGroup, idx) =>
-        colGroup.equals(this._columnGroups[idx])
-      )
+      this._cells.equals(value._cells) &&
+      this._rowGroups.equals(value._rowGroups) &&
+      this._columnGroups.equals(this._columnGroups)
     );
   }
 
@@ -106,9 +99,9 @@ export class Table implements Equatable, Serializable {
       height: this._height,
       width: this._width,
       element: this._element.toJSON(),
-      cells: this._cells.map((cell) => cell.toJSON()),
-      rowGroups: this._rowGroups.map((rg) => rg.toJSON()),
-      colGroups: this._columnGroups.map((cg) => cg.toJSON()),
+      cells: this._cells.toArray().map((cell) => cell.toJSON()),
+      rowGroups: this._rowGroups.toArray().map((rg) => rg.toJSON()),
+      colGroups: this._columnGroups.toArray().map((cg) => cg.toJSON()),
     };
   }
 }
@@ -137,10 +130,10 @@ export namespace Table {
       element: Element,
       width: number = 0,
       height: number = 0,
-      cells: Array<Cell.Builder> = [],
+      cells: Iterable<Cell.Builder> = List.empty(),
       slots: Array<Array<Option<Cell.Builder>>> = [[]],
-      rowGroups: Array<RowGroup> = [],
-      colGroups: Array<ColumnGroup> = []
+      rowGroups: Iterable<RowGroup> = List.empty(),
+      colGroups: Iterable<ColumnGroup> = List.empty()
     ): Builder {
       return new Builder(
         element,
@@ -155,24 +148,31 @@ export namespace Table {
 
     // The product will always have empty cells list as it's stored here
     private readonly _table: Table;
-    private readonly _cells: Array<Cell.Builder>;
+    private readonly _cells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
 
     private constructor(
       element: Element,
       width: number,
       height: number,
-      cells: Array<Cell.Builder>,
+      cells: Iterable<Cell.Builder>,
       slots: Array<Array<Option<Cell.Builder>>>,
-      rowGroups: Array<RowGroup>,
-      colGroups: Array<ColumnGroup>
+      rowGroups: Iterable<RowGroup>,
+      colGroups: Iterable<ColumnGroup>
     ) {
-      this._table = Table.of(element, width, height, [], rowGroups, colGroups);
-      this._cells = cells;
+      this._table = Table.of(
+        element,
+        width,
+        height,
+        List.empty(),
+        rowGroups,
+        colGroups
+      );
+      this._cells = List.from(cells);
       this._slots = slots;
     }
 
-    public get cells(): Array<Cell.Builder> {
+    public get cells(): Iterable<Cell.Builder> {
       return this._cells;
     }
 
@@ -202,8 +202,8 @@ export namespace Table {
         this.width,
         this.height,
         this._cells.map((cell) => cell.cell),
-        [...this.rowGroups],
-        [...this.colGroups]
+        List.from(this.rowGroups),
+        List.from(this.colGroups)
       );
     }
 
@@ -217,19 +217,23 @@ export namespace Table {
       element?: Element;
       width?: number;
       height?: number;
-      cells?: Array<Cell.Builder>;
+      cells?: List<Cell.Builder>;
       slots?: Array<Array<Option<Cell.Builder>>>;
-      rowGroups?: Array<RowGroup>;
-      colGroups?: Array<ColumnGroup>;
+      rowGroups?: List<RowGroup>;
+      colGroups?: List<ColumnGroup>;
     }): Builder {
       const table = Builder.of(
         update.element !== undefined ? update.element : this.element,
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
-        update.cells !== undefined ? update.cells : this.cells,
+        update.cells !== undefined ? update.cells : this._cells,
         update.slots !== undefined ? update.slots : this._slots,
-        update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
-        update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
+        update.rowGroups !== undefined
+          ? update.rowGroups
+          : List.from(this.rowGroups),
+        update.colGroups !== undefined
+          ? update.colGroups
+          : List.from(this.colGroups)
       );
 
       return update.cells !== undefined
@@ -254,7 +258,7 @@ export namespace Table {
     }
 
     public addCells(cells: Iterable<Cell.Builder>): Builder {
-      return this.update({ cells: this._cells.concat(...cells) });
+      return this.update({ cells: this._cells.concat(cells) });
     }
 
     public addRowGroupFromElement(
@@ -270,9 +274,9 @@ export namespace Table {
               height: Math.max(this.height, this.height + rowGroup.height),
               width: Math.max(this.width, rowGroup.width),
               // merge in new cells
-              cells: this._cells.concat(...rowGroup.cells),
+              cells: this._cells.concat(rowGroup.cells),
               // add new group
-              rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup),
+              rowGroups: List.from(this.rowGroups).append(rowGroup.rowgroup),
             });
           } else {
             return this;
@@ -291,7 +295,7 @@ export namespace Table {
 
     public addHeadersVariants(): Builder {
       return this.update({
-        cells: this.cells.map((cell) =>
+        cells: List.from(this.cells).map((cell) =>
           cell.addHeaderVariant(
             this.hasDataCellCoveringArea.bind(this),
             this.width,
@@ -315,14 +319,14 @@ export namespace Table {
         case "row":
           anchor = "y";
           groups = this.rowGroups;
-          groupHeaders = this.cells.filter((cell) =>
+          groupHeaders = List.from(this.cells).filter((cell) =>
             cell.variant.equals(Some.of(Scope.RowGroup))
           );
           break;
         case "column":
           anchor = "x";
           groups = this.colGroups;
-          groupHeaders = this.cells.filter((cell) =>
+          groupHeaders = List.from(this.cells).filter((cell) =>
             cell.variant.equals(Some.of(Scope.ColumnGroup))
           );
           break;
@@ -352,7 +356,7 @@ export namespace Table {
 
     public assignHeaders(): Builder {
       return this.update({
-        cells: this.cells.map((cell) =>
+        cells: List.from(this.cells).map((cell) =>
           cell.assignHeaders(
             this.element,
             (x: number, y: number) => this._slots[x][y],
@@ -366,8 +370,7 @@ export namespace Table {
     public equals(value: unknown): value is this {
       if (!(value instanceof Builder)) return false;
       return (
-        this._cells.length === value._cells.length &&
-        this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
+        this._cells.equals(value._cells) &&
         this._slots.every((array, x) =>
           array.every((option, y) => option.equals(value._slots[x][y]))
         ) &&
@@ -378,7 +381,7 @@ export namespace Table {
     public toJSON(): Builder.JSON {
       return {
         table: this._table.toJSON(),
-        cells: this._cells.map((cell) => cell.toJSON()),
+        cells: this._cells.toArray().map((cell) => cell.toJSON()),
       };
     }
   }
@@ -427,7 +430,7 @@ export namespace Table {
               // 9.1 (1).4 (cumulative) and (2).2
               width: Math.max(table.width, table.width + colGroup.width),
               // 9.1 (1).7 and (2).3
-              colGroups: [...table.colGroups].concat(colGroup),
+              colGroups: List.from(table.colGroups).append(colGroup),
             });
           }
           continue;
@@ -448,7 +451,7 @@ export namespace Table {
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
           table = table.update({
-            cells: table.cells.concat(...row.cells),
+            cells: List.from(table.cells).concat(row.cells),
             height: Math.max(table.height, yCurrent + 1),
             width: Math.max(table.width, row.width),
           });
@@ -500,7 +503,7 @@ export namespace Table {
         for (let col = 0; !rowCovered && col < table.width; col++) {
           rowCovered =
             rowCovered ||
-            table.cells.some(
+            List.from(table.cells).some(
               (cell) => cell.anchor.x === col && cell.anchor.y === row
             );
         }
@@ -512,7 +515,7 @@ export namespace Table {
         for (let row = 0; !colCovered && row < table.height; row++) {
           colCovered =
             colCovered ||
-            table.cells.some(
+            List.from(table.cells).some(
               (cell) => cell.anchor.x === col && cell.anchor.y === row
             );
         }
@@ -521,7 +524,7 @@ export namespace Table {
       // Checking for row forming algorithm step 13 (slot covered twice)
       for (let x = 0; x < table.width; x++) {
         for (let y = 0; y < table.height; y++) {
-          if (table.cells.filter((cell) => cell.isCovering(x, y)).length > 1) {
+          if (List.from(table.cells).filter((cell) => cell.isCovering(x, y)).size > 1) {
             return Err.of(`Slot (${x}, ${y}) is covered twice`);
           }
         }
@@ -549,9 +552,9 @@ export namespace Table {
 
       // Finally, we sort lists and export the result.
       table = table.update({
-        cells: table.cells.sort(compare),
-        rowGroups: [...table.rowGroups].sort(compare),
-        colGroups: [...table.colGroups].sort(compare),
+        cells: List.from([...table.cells].sort(compare)),
+        rowGroups: List.from([...table.rowGroups].sort(compare)),
+        colGroups: List.from([...table.colGroups].sort(compare)),
       });
       return Ok.of(table);
     }
