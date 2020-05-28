@@ -230,8 +230,8 @@ export namespace RowGroup {
       for (const tr of group.children().filter(isHtmlElementWithName("tr"))) {
         const row = Row.Builder.from(
           tr,
-          List.from(rowgroup.cells),
-          List.from(growingCellsList),
+          rowgroup.cells,
+          growingCellsList,
           yCurrent,
           rowgroup.width
         ).get();
@@ -257,7 +257,7 @@ export namespace RowGroup {
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
       return Ok.of(
-        rowgroup.update({ cells: List.from([...rowgroup.cells].sort(compare)) })
+        rowgroup.update({ cells: [...rowgroup.cells].sort(compare) })
       );
     }
   }
