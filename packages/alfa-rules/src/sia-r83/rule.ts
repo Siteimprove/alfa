@@ -40,10 +40,8 @@ export default Rule.Atomic.of<Page, Text>({
             return;
           }
 
-          if (test(and(isText, isVisible(device)), node)) {
-            if (collect) {
-              yield node;
-            }
+          if (collect && test(and(isText, isVisible(device)), node)) {
+            yield node;
           }
 
           if (test(and(isElement, isPossiblyClipped(device)), node)) {
