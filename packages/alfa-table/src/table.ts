@@ -217,10 +217,10 @@ export namespace Table {
       element?: Element;
       width?: number;
       height?: number;
-      cells?: List<Cell.Builder>;
+      cells?: Iterable<Cell.Builder>;
       slots?: Array<Array<Option<Cell.Builder>>>;
-      rowGroups?: List<RowGroup>;
-      colGroups?: List<ColumnGroup>;
+      rowGroups?: Iterable<RowGroup>;
+      colGroups?: Iterable<ColumnGroup>;
     }): Builder {
       const table = Builder.of(
         update.element !== undefined ? update.element : this.element,
@@ -228,21 +228,17 @@ export namespace Table {
         update.height !== undefined ? update.height : this.height,
         update.cells !== undefined ? update.cells : this._cells,
         update.slots !== undefined ? update.slots : this._slots,
-        update.rowGroups !== undefined
-          ? update.rowGroups
-          : List.from(this.rowGroups),
-        update.colGroups !== undefined
-          ? update.colGroups
-          : List.from(this.colGroups)
+        update.rowGroups !== undefined ? update.rowGroups : this.rowGroups,
+        update.colGroups !== undefined ? update.colGroups : this.colGroups
       );
 
       return update.cells !== undefined
         ? // aggressively keep slots in sync if any cells has been modified.
-          table.updateSlots(...update.cells)
+          table.updateSlots(update.cells)
         : table;
     }
 
-    public updateSlots(...cells: Array<Cell.Builder>): Builder {
+    public updateSlots(cells: Iterable<Cell.Builder>): Builder {
       for (const cell of cells) {
         for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
           if (this._slots[x] === undefined) {
@@ -524,7 +520,10 @@ export namespace Table {
       // Checking for row forming algorithm step 13 (slot covered twice)
       for (let x = 0; x < table.width; x++) {
         for (let y = 0; y < table.height; y++) {
-          if (List.from(table.cells).filter((cell) => cell.isCovering(x, y)).size > 1) {
+          if (
+            List.from(table.cells).filter((cell) => cell.isCovering(x, y))
+              .size > 1
+          ) {
             return Err.of(`Slot (${x}, ${y}) is covered twice`);
           }
         }
