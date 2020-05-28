@@ -29,8 +29,8 @@ export namespace Row {
       width: number,
       height: number,
       element: Element,
-      cells: List<Cell.Builder> = List.empty(),
-      growing: List<Cell.Builder> = List.empty(),
+      cells: Iterable<Cell.Builder> = List.empty(),
+      growing: Iterable<Cell.Builder> = List.empty(),
       xCurrent: number = 0
     ): Builder {
       return new Builder(y, width, height, element, cells, growing, xCurrent);
@@ -49,8 +49,8 @@ export namespace Row {
       width: number,
       height: number,
       element: Element,
-      cells: List<Cell.Builder>,
-      growing: List<Cell.Builder>,
+      cells: Iterable<Cell.Builder>,
+      growing: Iterable<Cell.Builder>,
       xCurrent: number
     ) {
       this._y = y;
@@ -58,8 +58,8 @@ export namespace Row {
       this._width = width;
       this._height = height;
       this._element = element;
-      this._cells = cells;
-      this._downwardGrowingCells = growing;
+      this._cells = List.from(cells);
+      this._downwardGrowingCells = List.from(growing);
     }
 
     public get anchor(): { y: number } {
@@ -92,8 +92,8 @@ export namespace Row {
       width?: number;
       height?: number;
       element?: Element;
-      cells?: List<Cell.Builder>;
-      downwardGrowingCells?: List<Cell.Builder>;
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
         update.y !== undefined ? update.y : this._y,
