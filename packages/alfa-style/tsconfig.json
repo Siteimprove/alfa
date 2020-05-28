@@ -8,11 +8,15 @@
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
+    "src/property/height.ts",
     "src/property/line.ts",
     "src/property/opacity.ts",
+    "src/property/overflow.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
     "src/property/visibility.ts",
+    "src/property/whitespace.ts",
+    "src/property/width.ts",
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts"
@@ -59,6 +63,9 @@
     },
     {
       "path": "../alfa-parser"
+    },
+    {
+      "path": "../alfa-record"
     },
     {
       "path": "../alfa-slice"

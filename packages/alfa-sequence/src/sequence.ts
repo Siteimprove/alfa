@@ -18,6 +18,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
   apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
   filter<U extends T>(predicate: Predicate<T, U, [number]>): Sequence<U>;
+  reject(predicate: Predicate<T, T, [number]>): Sequence<T>;
   find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U>;
   includes(value: T): boolean;
   some(predicate: Predicate<T, T, [number]>): boolean;

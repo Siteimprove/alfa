@@ -1,3 +1,5 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 
@@ -5,7 +7,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
-export class Sheet {
+export class Sheet implements Equatable, Serializable {
   public static of(
     rules: Mapper<Sheet, Iterable<Rule>>,
     disabled = false,
@@ -55,12 +57,26 @@ export class Sheet {
     }
   }
 
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Sheet &&
+      value._disabled === this._disabled &&
+      value._condition.equals(this._condition) &&
+      value._rules.length === this._rules.length &&
+      value._rules.every((rule, i) => rule.equals(this._rules[i]))
+    );
+  }
+
   public toJSON(): Sheet.JSON {
     return {
       rules: [...this._rules].map((rule) => rule.toJSON()),
       disabled: this._disabled,
       condition: this._condition.getOr(null),
     };
+  }
+
+  public toString(): string {
+    return this._rules.join("\n");
   }
 }
 

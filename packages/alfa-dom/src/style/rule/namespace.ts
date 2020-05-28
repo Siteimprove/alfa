@@ -52,14 +52,14 @@ export class Namespace extends Rule {
 }
 
 export namespace Namespace {
-  export function isNamespace(value: unknown): value is Namespace {
-    return value instanceof Namespace;
-  }
-
   export interface JSON extends Rule.JSON {
     type: "namespace";
     namespace: string;
     prefix: string | null;
+  }
+
+  export function isNamespace(value: unknown): value is Namespace {
+    return value instanceof Namespace;
   }
 
   export function fromNamespace(

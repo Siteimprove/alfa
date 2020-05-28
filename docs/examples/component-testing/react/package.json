@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "component-testing-react",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "test": "jest"
   },
@@ -21,8 +21,8 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@siteimprove/alfa-enzyme": "^0.0.1",
-    "@siteimprove/alfa-jest": "^0.0.1",
+    "@siteimprove/alfa-enzyme": "^0.1.0",
+    "@siteimprove/alfa-jest": "^0.1.0",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1",

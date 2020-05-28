@@ -55,14 +55,14 @@ export class Style extends Rule {
 }
 
 export namespace Style {
-  export function isStyle(value: unknown): value is Style {
-    return value instanceof Style;
-  }
-
   export interface JSON extends Rule.JSON {
     type: "style";
     selector: string;
     style: Block.JSON;
+  }
+
+  export function isStyle(value: unknown): value is Style {
+    return value instanceof Style;
   }
 
   export function fromStyle(

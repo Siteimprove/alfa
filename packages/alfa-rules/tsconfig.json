@@ -15,6 +15,7 @@
     "src/common/predicate/has-descendant.ts",
     "src/common/predicate/has-heading-level.ts",
     "src/common/predicate/has-id.ts",
+    "src/common/predicate/has-inclusive-descendant.ts",
     "src/common/predicate/has-input-type.ts",
     "src/common/predicate/has-name-from.ts",
     "src/common/predicate/has-nondefault-role.ts",
@@ -104,6 +105,7 @@
     "src/sia-r8/rule.ts",
     "src/sia-r80/rule.ts",
     "src/sia-r82/rule.ts",
+    "src/sia-r83/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
@@ -127,7 +129,8 @@
     "test/sia-r74/rule.spec.tsx",
     "test/sia-r75/rule.spec.tsx",
     "test/sia-r80/rule.spec.tsx",
-    "test/sia-r82/rule.spec.tsx"
+    "test/sia-r82/rule.spec.tsx",
+    "test/sia-r83/rule.spec.tsx"
   ],
   "references": [
     {

@@ -127,6 +127,16 @@ export namespace Outcome {
           "earl:outcome": {
             "@id": "earl:passed",
           },
+          "earl:info": this._expectations
+            .toArray()
+            .reduce((message, [, expectation]) => {
+              if (expectation.isSome() && expectation.get().isOk()) {
+                message += "\n" + expectation.get().get();
+              }
+
+              return message;
+            }, "")
+            .trim(),
         },
       };
 
@@ -152,6 +162,7 @@ export namespace Outcome {
         "earl:outcome": {
           "@id": "earl:passed";
         };
+        "earl:info": string;
         "earl:pointer"?: earl.EARL;
       };
     }
@@ -228,6 +239,16 @@ export namespace Outcome {
           "earl:outcome": {
             "@id": "earl:failed",
           },
+          "earl:info": this._expectations
+            .toArray()
+            .reduce((message, [, expectation]) => {
+              if (expectation.isSome() && expectation.get().isErr()) {
+                message += "\n" + expectation.get().getErr();
+              }
+
+              return message;
+            }, "")
+            .trim(),
         },
       };
 
@@ -253,6 +274,7 @@ export namespace Outcome {
         "earl:outcome": {
           "@id": "earl:failed";
         };
+        "earl:info": string;
         "earl:pointer"?: earl.EARL;
       };
     }

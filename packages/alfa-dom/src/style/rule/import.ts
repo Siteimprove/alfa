@@ -58,13 +58,13 @@ export class Import extends Condition {
 }
 
 export namespace Import {
-  export function isImport(value: unknown): value is Import {
-    return value instanceof Import;
-  }
-
   export interface JSON extends Condition.JSON {
     type: "import";
     href: string;
+  }
+
+  export function isImport(value: unknown): value is Import {
+    return value instanceof Import;
   }
 
   export function fromImport(

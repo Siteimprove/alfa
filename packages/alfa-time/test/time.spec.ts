@@ -11,8 +11,8 @@ test(".of() contructs a time using the given epoch", (t) => {
 test(".now() contructs a time using the current epoch", (t) => {
   const time = Time.now();
 
-  // Accept a divergence of +-1ms from the current now.
-  t(Math.abs(Date.now() - time.epoch) <= 1);
+  // Accept a divergence of +-2ms from the current now.
+  t(Math.abs(Date.now() - time.epoch) <= 2);
 });
 
 test("#elapsed() returns the time elapsed since epoch", (t) => {

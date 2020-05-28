@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -36,11 +37,15 @@ export default Rule.Atomic.of<Page, Attribute>({
       },
 
       expectations(target) {
-        const owner = target.owner.get();
-
         return {
           1: expectation(
-            hasRole()(owner),
+            target
+              .tokens()
+              .every((token) =>
+                Role.lookup(token).some(
+                  (role) => role.category !== Role.Category.Abstract
+                )
+              ),
             () => Outcomes.HasValidRole,
             () => Outcomes.HasNoValidRole
           ),
