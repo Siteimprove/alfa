@@ -634,7 +634,6 @@ export namespace Cell {
           // 6 remove principal cell
           !cell.equals(this)
         // 5 (remove duplicates) is not needed by virtue of using set.
-        // headersSet.indexOf(cell) === idx
       );
 
       return this._update({

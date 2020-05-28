@@ -191,10 +191,8 @@ export namespace Row {
 
     public sort(): Builder {
       return this.update({
-        cells: List.from([...this._cells].sort(compare)),
-        downwardGrowingCells: List.from(
-          [...this._downwardGrowingCells].sort(compare)
-        ),
+        cells: [...this._cells].sort(compare),
+        downwardGrowingCells: [...this._downwardGrowingCells].sort(compare),
       });
     }
 
