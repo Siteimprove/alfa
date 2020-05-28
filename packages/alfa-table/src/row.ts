@@ -1,6 +1,7 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -11,6 +12,7 @@ import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
 
 const { compare } = Comparable;
+const { some } = Iterable;
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -214,10 +216,10 @@ export namespace Row {
         width: this._width,
         height: this._height,
         element: this._element.toJSON(),
-        cells: this._cells.toJSON(), // map((cell) => cell.cell.toJSON()),
-        downwardGrowingCells: this._downwardGrowingCells.toJSON() //map((cell) =>
-          // cell.cell.toJSON()
-        // ),
+        cells: this._cells.toArray().map((cell) => cell.cell.toJSON()),
+        downwardGrowingCells: this._downwardGrowingCells
+          .toArray()
+          .map((cell) => cell.cell.toJSON()),
       };
     }
   }
@@ -228,8 +230,8 @@ export namespace Row {
      */
     export function from(
       tr: Element,
-      cells: List<Cell.Builder> = List.empty(),
-      growingCells: List<Cell.Builder> = List.empty(),
+      cells: Iterable<Cell.Builder> = List.empty(),
+      growingCells: Iterable<Cell.Builder> = List.empty(),
       yCurrent: number = 0,
       w: number = 0
     ): Result<Builder, string> {
@@ -238,8 +240,8 @@ export namespace Row {
       }
 
       if (
-        cells.some((cell) =>
-          growingCells.some((growingCell) => cell.equals(growingCell))
+        some(cells, (cell) =>
+          some(growingCells, (growingCell) => cell.equals(growingCell))
         )
       ) {
         return Err.of("Cells and growing cells must be disjoints");
@@ -256,7 +258,7 @@ export namespace Row {
           (row, currentCell) =>
             row
               // 6 (Cells)
-              .skipIfCovered(cells, yCurrent)
+              .skipIfCovered(List.from(cells), yCurrent)
               // 7
               .enlargeIfNeeded()
               // 8-14
