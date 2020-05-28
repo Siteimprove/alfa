@@ -499,7 +499,8 @@ export namespace Table {
         for (let col = 0; !rowCovered && col < table.width; col++) {
           rowCovered =
             rowCovered ||
-            List.from(table.cells).some(
+            some(
+              table.cells,
               (cell) => cell.anchor.x === col && cell.anchor.y === row
             );
         }
@@ -511,7 +512,8 @@ export namespace Table {
         for (let row = 0; !colCovered && row < table.height; row++) {
           colCovered =
             colCovered ||
-            List.from(table.cells).some(
+            some(
+              table.cells,
               (cell) => cell.anchor.x === col && cell.anchor.y === row
             );
         }
