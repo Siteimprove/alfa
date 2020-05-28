@@ -153,7 +153,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
       height: this._height,
       element: this._element.toJSON(),
       scope: this._scope.getOr(null),
-      headers: this._headers.toJSON(), // map((header) => header.toJSON()),
+      headers: this._headers.toArray().map((header) => header.toJSON()),
     };
   }
 }
@@ -172,7 +172,7 @@ export namespace Cell {
     height: number;
     element: Element.JSON;
     scope: Scope.Resolved | null;
-    headers: List.JSON;
+    headers: Element.JSON[];
   }
 
   export enum Kind {
@@ -306,11 +306,9 @@ export namespace Cell {
         // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
         // some browsers use fallback implicit headers when explicit resolve to nothing. We may want to do this
         // and use some browser specific, either here or by exporting both list to the product and selecting later.
-        List.from(
-          this.element.attribute("headers") === None
-            ? this._implicitHeaders
-            : this._explicitHeaders
-        )
+        this.element.attribute("headers") === None
+          ? this._implicitHeaders
+          : this._explicitHeaders
       );
     }
 
@@ -538,8 +536,8 @@ export namespace Cell {
           }
           // 9.5
           if (!blocked) {
-            headersList = headersList.append(currentCell)
-          };
+            headersList = headersList.append(currentCell);
+          }
         }
         if (currentCell.kind === Cell.Kind.Data && inHeaderBlock) {
           inHeaderBlock = false;
@@ -593,7 +591,7 @@ export namespace Cell {
           )
         );
 
-      return this._update({ explicitHeaders: List.from(elements) });
+      return this._update({ explicitHeaders: elements });
     }
 
     /**
@@ -640,9 +638,9 @@ export namespace Cell {
       );
 
       return this._update({
-        implicitHeaders: List.from([...headersSet].sort(compare)).map(
-          (cell) => cell.element
-        ),
+        implicitHeaders: [...headersSet]
+          .sort(compare)
+          .map((cell) => cell.element),
       });
     }
 
@@ -674,8 +672,12 @@ export namespace Cell {
       return {
         cell: this._cell.toJSON(),
         state: this._scope.toJSON(),
-        explicitHeaders: this._explicitHeaders.toJSON(), // .map((header) => header.toJSON()),
-        implicitHeaders: this._implicitHeaders.toJSON() //.map((header) => header.toJSON()),
+        explicitHeaders: this._explicitHeaders
+          .toArray()
+          .map((header) => header.toJSON()),
+        implicitHeaders: this._implicitHeaders
+          .toArray()
+          .map((header) => header.toJSON()),
       };
     }
   }
@@ -685,8 +687,8 @@ export namespace Cell {
       [key: string]: json.JSON;
       cell: Cell.JSON;
       state: Option.JSON;
-      explicitHeaders: List.JSON;
-      implicitHeaders: List.JSON;
+      explicitHeaders: Element.JSON[];
+      implicitHeaders: Element.JSON[];
     }
 
     /**
