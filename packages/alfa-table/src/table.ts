@@ -352,7 +352,7 @@ export namespace Table {
 
     public assignHeaders(): Builder {
       return this.update({
-        cells: List.from(this.cells).map((cell) =>
+        cells: map(this.cells, (cell) =>
           cell.assignHeaders(
             this.element,
             (x: number, y: number) => this._slots[x][y],
