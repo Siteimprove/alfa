@@ -291,11 +291,13 @@ export namespace Table {
 
     public addHeadersVariants(): Builder {
       return this.update({
-        cells: List.from(this.cells).map((cell) =>
-          cell.addHeaderVariant(
-            this.hasDataCellCoveringArea.bind(this),
-            this.width,
-            this.height
+        cells: List.from(
+          map(this.cells, (cell) =>
+            cell.addHeaderVariant(
+              this.hasDataCellCoveringArea.bind(this),
+              this.width,
+              this.height
+            )
           )
         ),
       });
