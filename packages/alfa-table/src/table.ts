@@ -202,8 +202,8 @@ export namespace Table {
         this.width,
         this.height,
         this._cells.map((cell) => cell.cell),
-        List.from(this.rowGroups),
-        List.from(this.colGroups)
+        this.rowGroups,
+        this.colGroups
       );
     }
 
@@ -440,8 +440,8 @@ export namespace Table {
 
           const row = Row.Builder.from(
             currentElement,
-            List.from(table.cells),
-            List.from(growingCellsList),
+            table.cells,
+            growingCellsList,
             yCurrent,
             table.width
           ).get();
@@ -551,9 +551,9 @@ export namespace Table {
 
       // Finally, we sort lists and export the result.
       table = table.update({
-        cells: List.from([...table.cells].sort(compare)),
-        rowGroups: List.from([...table.rowGroups].sort(compare)),
-        colGroups: List.from([...table.colGroups].sort(compare)),
+        cells: [...table.cells].sort(compare),
+        rowGroups: [...table.rowGroups].sort(compare),
+        colGroups: [...table.colGroups].sort(compare),
       });
       return Ok.of(table);
     }
