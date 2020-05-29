@@ -149,6 +149,7 @@ import { Overflow } from "./property/overflow";
 import { Text } from "./property/text";
 import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
+import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
 
 export namespace Property {
@@ -173,8 +174,10 @@ export namespace Property {
     "overflow-y": Overflow.Y,
     "text-align": Text.Align,
     "text-transform": Text.Transform,
+    "text-overflow": Text.Overflow,
     transform: Transform,
     visibility: Visibility,
+    "white-space": Whitespace,
     width: Width,
   };
 

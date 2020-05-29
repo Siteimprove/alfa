@@ -15,6 +15,7 @@
     "src/property/text.ts",
     "src/property/transform.ts",
     "src/property/visibility.ts",
+    "src/property/whitespace.ts",
     "src/property/width.ts",
     "src/resolver.ts",
     "src/style.ts",
