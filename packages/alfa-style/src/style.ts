@@ -167,7 +167,9 @@ export namespace Style {
 
   export function from(element: Element, device: Device): Style {
     return cache.get(device, Cache.empty).get(element, () => {
-      const declarations: Array<Declaration> = [];
+      const declarations: Array<Declaration> = element.style
+        .map((block) => [...block.declarations])
+        .getOr([]);
 
       const root = element.root();
 
@@ -183,8 +185,6 @@ export namespace Style {
           next = node.parent;
         }
       }
-
-      declarations.push(...element.style.getOr([]));
 
       return Style.of(
         declarations,
