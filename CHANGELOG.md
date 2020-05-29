@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): Styles set via the `style` attribute are now correctly applied.
+
 ## [0.1.0](../../compare/v0.0.1...v0.1.0) (2020-05-26)
 
 ### Breaking
