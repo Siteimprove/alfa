@@ -11,9 +11,10 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/expectation";
 
 import { isIgnored } from "../common/predicate/is-ignored";
+import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, not, property } = Predicate;
+const { and, not, nor, property } = Predicate;
 const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
@@ -26,7 +27,10 @@ export default Rule.Atomic.of<Page, Text>({
           .filter(
             and(
               Text.isText,
-              and(property("data", not(isEmpty)), not(isIgnored(device)))
+              and(
+                property("data", nor(isEmpty, isWhitespace)),
+                not(isIgnored(device))
+              )
             )
           );
       },

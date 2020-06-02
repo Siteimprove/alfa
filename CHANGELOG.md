@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 no longer applies to text nodes that only consist of whitespace.
+
 ### Fixed
 
 - [@siteimprove/alfa-style](packages/alfa-style): Styles set via the `style` attribute are now correctly applied.
