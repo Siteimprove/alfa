@@ -3,7 +3,10 @@ import * as temp from "tempy";
 
 import { Command, flags } from "@oclif/command";
 
+import * as parser from "@oclif/parser";
+
 import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Rules, Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
@@ -15,10 +18,13 @@ import Scrape from "./scrape";
 import { Formatter } from "../../../src/formatter";
 import { Oracle } from "../../../src/oracle";
 
-export default class Audit extends Command {
-  static description = "Perform an accessibility audit of a page";
+type Input = Page;
+type Target = Node | Iterable<Node>;
 
-  static flags = {
+export default class Audit extends Command {
+  public static description = "Perform an accessibility audit of a page";
+
+  public static flags = {
     ...Scrape.flags,
 
     help: flags.help({
@@ -54,7 +60,7 @@ export default class Audit extends Command {
     }),
   };
 
-  static args = [
+  public static args = [
     {
       name: "url",
       description:
@@ -62,27 +68,21 @@ export default class Audit extends Command {
     },
   ];
 
-  async run() {
+  public async run() {
     const { args, flags } = this.parse(Audit);
 
+    await Audit.runWithFlags(flags, args.url);
+  }
+
+  public static async runWithFlags(flags: Flags, target?: string) {
     let json: string;
 
-    if (args.url === undefined) {
+    if (target === undefined) {
       json = fs.readFileSync(0, "utf-8");
     } else {
-      const argv = [...this.argv];
-
-      const i = argv.indexOf("--output");
-
-      if (i !== -1) {
-        argv.splice(i, 2);
-      }
-
       const output = temp.file({ extension: "json" });
 
-      argv.push("--output", output);
-
-      await Scrape.run(argv);
+      await Scrape.runWithFlags({ ...flags, output }, target);
 
       json = fs.readFileSync(output, "utf-8");
 
@@ -92,8 +92,11 @@ export default class Audit extends Command {
     const page = Page.from(JSON.parse(json));
 
     const audit = Rules.reduce(
-      (audit, rule) => audit.add(rule as Rule<Page, unknown, Question>),
-      act.Audit.of(page, flags.interactive ? Oracle(page) : undefined)
+      (audit, rule) => audit.add(rule),
+      act.Audit.of<Input, Target, Question>(
+        page,
+        flags.interactive ? Oracle(page) : undefined
+      )
     );
 
     let outcomes = await audit.evaluate();
@@ -129,15 +132,17 @@ export default class Audit extends Command {
   }
 }
 
-async function report<I, T, Q>(
-  input: I,
-  outcomes: Iterable<Outcome<I, T, Q>>,
-  formatter: Formatter<I, T, Q>
+export type Flags = typeof Audit extends parser.Input<infer F> ? F : never;
+
+async function report(
+  input: Page,
+  outcomes: Iterable<Outcome<Input, Target, Question>>,
+  formatter: Formatter<Input, Target, Question>
 ): Promise<string> {
   return formatter(input, outcomes);
 }
 
-function formatter<I, T, Q>(format: string): Formatter<I, T, Q> {
+function formatter(format: string): Formatter<Input, Target, Question> {
   switch (format) {
     case "earl":
       return Formatter.EARL();
@@ -147,7 +152,7 @@ function formatter<I, T, Q>(format: string): Formatter<I, T, Q> {
 
     default:
       try {
-        return require(format) as Formatter<I, T, Q>;
+        return require(format) as Formatter<Input, Target, Question>;
       } catch (err) {
         throw new Error(`No such formatter found: ${format}`);
       }

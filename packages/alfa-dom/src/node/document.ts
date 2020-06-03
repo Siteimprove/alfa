@@ -3,32 +3,43 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
+import { Element } from "./element";
 
 export class Document extends Node {
   public static of(
     children: Mapper<Node, Iterable<Node>>,
-    style: Iterable<Sheet> = []
+    style: Iterable<Sheet> = [],
+    frame: Option<Element> = None
   ): Document {
-    return new Document(children, style);
+    return new Document(children, style, frame);
   }
 
-  public static empty(): Document {
-    return new Document(() => [], []);
+  private static _empty: Document = new Document(() => [], [], None);
+
+  public static empty(frame: Option<Element> = None): Document {
+    return frame.isNone() ? this._empty : new Document(() => [], [], frame);
   }
 
   private readonly _style: Array<Sheet>;
+  private readonly _frame: Option<Element>;
 
   private constructor(
     children: Mapper<Node, Iterable<Node>>,
-    style: Iterable<Sheet>
+    style: Iterable<Sheet>,
+    frame: Option<Element>
   ) {
     super(children, None);
 
     this._style = Array.from(style);
+    this._frame = frame;
   }
 
   public get style(): Iterable<Sheet> {
     return this._style;
+  }
+
+  public get frame(): Option<Element> {
+    return this._frame;
   }
 
   public path(options?: Node.Traversal): string {
@@ -69,13 +80,17 @@ export namespace Document {
     return value instanceof Document;
   }
 
-  export function fromDocument(document: JSON): Document {
+  export function fromDocument(
+    document: JSON,
+    frame: Option<Element> = None
+  ): Document {
     return Document.of(
       (self) => {
         const parent = Option.of(self);
         return document.children.map((child) => Node.fromNode(child, parent));
       },
-      document.style.map((style) => Sheet.fromSheet(style))
+      document.style.map((style) => Sheet.fromSheet(style)),
+      frame
     );
   }
 }

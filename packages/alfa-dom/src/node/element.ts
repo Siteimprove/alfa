@@ -28,7 +28,7 @@ export class Element extends Node implements Slot, Slotable {
     style: Option<Block> = None,
     parent: Option<Node> = None,
     shadow: Option<Mapper<Element, Shadow>> = None,
-    content: Option<Document> = None
+    content: Option<Mapper<Element, Document>> = None
   ): Element {
     return new Element(
       namespace,
@@ -62,7 +62,7 @@ export class Element extends Node implements Slot, Slotable {
     style: Option<Block>,
     parent: Option<Node>,
     shadow: Option<Mapper<Element, Shadow>>,
-    content: Option<Document>
+    content: Option<Mapper<Element, Document>>
   ) {
     super(children, parent);
 
@@ -74,7 +74,7 @@ export class Element extends Node implements Slot, Slotable {
     this._attributes = Array.from(attributes(this));
     this._style = style;
     this._shadow = self.apply(shadow);
-    this._content = content;
+    this._content = self.apply(content);
 
     this._id = this.attribute("id").map((attr) => attr.value);
 
@@ -346,8 +346,8 @@ export namespace Element {
       Option.from(element.shadow).map((shadow) => (self) =>
         Shadow.fromShadow(shadow, self)
       ),
-      Option.from(element.content).map((content) =>
-        Document.fromDocument(content)
+      Option.from(element.content).map((content) => (self) =>
+        Document.fromDocument(content, Option.of(self))
       )
     );
   }

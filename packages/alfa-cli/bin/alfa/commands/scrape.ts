@@ -3,6 +3,9 @@ import * as path from "path";
 import * as url from "url";
 
 import { Command, flags } from "@oclif/command";
+import { error } from "@oclif/errors";
+
+import * as parser from "@oclif/parser";
 
 import { Device, Display, Viewport } from "@siteimprove/alfa-device";
 import {
@@ -80,7 +83,6 @@ export default class Scrape extends Command {
 
     "await-state": flags.enum({
       options: ["ready", "loaded", "idle"],
-      default: "ready",
       exclusive: ["await-duration", "await-selector", "await-xpath"],
       description: "The state to await before considering the page loaded",
     }),
@@ -118,7 +120,7 @@ export default class Scrape extends Command {
     }),
 
     "screenshot-background": flags.boolean({
-      default: false,
+      default: true,
       allowNo: true,
       description:
         "Whether or not the screenshot should include a default white background. Only applies to PNG screenshots",
@@ -143,6 +145,10 @@ export default class Scrape extends Command {
   public async run() {
     const { args, flags } = this.parse(Scrape);
 
+    await Scrape.runWithFlags(flags, args.url);
+  }
+
+  public static async runWithFlags(flags: Flags, target: string) {
     const scraper = await Scraper.of();
 
     let awaiter: Awaiter;
@@ -209,7 +215,7 @@ export default class Scrape extends Command {
     const timeout = Timeout.of(flags.timeout);
 
     const result = await scraper.scrape(
-      new URL(args.url, url.pathToFileURL(process.cwd() + path.sep)),
+      new URL(target, url.pathToFileURL(process.cwd() + path.sep)),
       {
         timeout,
         awaiter,
@@ -223,7 +229,7 @@ export default class Scrape extends Command {
     await scraper.close();
 
     if (result.isErr()) {
-      this.error(result.getErr(), { exit: 1 });
+      error(result.getErr(), { exit: 1 });
     }
 
     const output = JSON.stringify(result.get()) + "\n";
@@ -235,3 +241,5 @@ export default class Scrape extends Command {
     }
   }
 }
+
+export type Flags = typeof Scrape extends parser.Input<infer F> ? F : never;
