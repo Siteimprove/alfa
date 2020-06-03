@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -21,7 +21,7 @@ import { Question } from "../common/question";
 
 const { reduce, some, flatMap, map, concat } = Iterable;
 const { and, or, not, equals, test } = Predicate;
-const { min, max } = Math;
+const { min, max, round } = Math;
 
 export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r69.html",
@@ -76,13 +76,22 @@ export default Rule.Atomic.of<Page, Text, Question>({
 
         const result = foregrounds.map((foregrounds) =>
           backgrounds.map((backgrounds) => {
-            const contrasts = flatMap(foregrounds, (foreground) =>
-              map(backgrounds, (background) => contrast(foreground, background))
-            );
+            const contrasts = [
+              ...flatMap(foregrounds, (foreground) =>
+                map(
+                  backgrounds,
+                  (background) =>
+                    [
+                      foreground,
+                      background,
+                      contrast(foreground, background),
+                    ] as const
+                )
+              ),
+            ];
 
-            const highest = reduce(
-              contrasts,
-              (lowest, contrast) => max(lowest, contrast),
+            const highest = contrasts.reduce(
+              (lowest, [, , contrast]) => max(lowest, contrast),
               0
             );
 
@@ -90,8 +99,10 @@ export default Rule.Atomic.of<Page, Text, Question>({
 
             return expectation(
               highest >= threshold,
-              () => Outcomes.HasSufficientContrast,
-              () => Outcomes.HasInsufficientContrast
+              () =>
+                Outcomes.HasSufficientContrast(highest, threshold, contrasts),
+              () =>
+                Outcomes.HasInsufficientContrast(highest, threshold, contrasts)
             );
           })
         );
@@ -114,13 +125,37 @@ export default Rule.Atomic.of<Page, Text, Question>({
 });
 
 export namespace Outcomes {
-  export const HasSufficientContrast = Ok.of(
-    "The highest possible contrast of the text is sufficient"
-  );
+  export const HasSufficientContrast = (
+    highest: number,
+    threshold: number,
+    contrasts: Array<readonly [RGB, RGB, number]>
+  ) =>
+    Ok.of(
+      Diagnostic.of(
+        `The highest possible contrast of the text is 1:${highest} which is
+        above the required contrast of 1:${threshold}`,
+        [
+          ["threshold", threshold],
+          ["contrasts", contrasts],
+        ]
+      )
+    );
 
-  export const HasInsufficientContrast = Err.of(
-    "The highest possible contrast of the text is insufficient"
-  );
+  export const HasInsufficientContrast = (
+    highest: number,
+    threshold: number,
+    contrasts: Array<readonly [RGB, RGB, number]>
+  ) =>
+    Err.of(
+      Diagnostic.of(
+        `The highest possible contrast of the text is 1:${highest} which is
+        below the required contrast of 1:${threshold}`,
+        [
+          ["threshold", threshold],
+          ["contrasts", contrasts],
+        ]
+      )
+    );
 }
 
 /**
@@ -384,5 +419,7 @@ function contrast(foreground: RGB, background: RGB): number {
   const lf = luminance(foreground);
   const lb = luminance(background);
 
-  return (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
+  const contrast = (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
+
+  return round(contrast * 100) / 100;
 }

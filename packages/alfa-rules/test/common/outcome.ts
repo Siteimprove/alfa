@@ -1,4 +1,4 @@
-import { Rule, Outcome } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule, Outcome } from "@siteimprove/alfa-act";
 import { Some } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
@@ -7,7 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 export function passed<T, Q>(
   rule: Rule<Page, T, Q>,
   target: T,
-  expectations: { [id: string]: Result<string, string> }
+  expectations: { [id: string]: Result<Diagnostic> }
 ): Outcome.Passed.JSON {
   return Outcome.Passed.of(
     rule,
@@ -24,7 +24,7 @@ export function passed<T, Q>(
 export function failed<T, Q>(
   rule: Rule<Page, T, Q>,
   target: T,
-  expectations: { [id: string]: Result<string, string> }
+  expectations: { [id: string]: Result<Diagnostic> }
 ): Outcome.Failed.JSON {
   return Outcome.Failed.of(
     rule,

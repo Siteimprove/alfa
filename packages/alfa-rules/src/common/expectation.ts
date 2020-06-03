@@ -1,10 +1,10 @@
-import { Interview, Question, Rule } from "@siteimprove/alfa-act";
+import { Diagnostic, Interview, Question, Rule } from "@siteimprove/alfa-act";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-type Path<Q, S> = Interview<Q, S, Option.Maybe<Result<string, string>>>;
+type Path<Q, S> = Interview<Q, S, Option.Maybe<Result<Diagnostic>>>;
 
 function toExpectation<Q, S>(
   path: Path<Q, S>

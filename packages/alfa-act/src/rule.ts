@@ -11,6 +11,7 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cache } from "./cache";
+import { Diagnostic } from "./diagnostic";
 import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
@@ -72,7 +73,7 @@ export namespace Rule {
     return value instanceof Rule;
   }
 
-  export type Expectation = Option<Result<string, string>>;
+  export type Expectation = Option<Result<Diagnostic>>;
 
   /**
    * We use a short-lived cache during audits for rules to store their outcomes.

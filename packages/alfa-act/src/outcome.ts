@@ -76,16 +76,7 @@ export namespace Outcome {
       super(rule);
 
       this._target = target;
-      this._expectations = Record.from(
-        expectations
-          .toArray()
-          .map(([id, expectation]) => [
-            id,
-            expectation.map((result) =>
-              result.map(normalize).mapErr(normalize)
-            ),
-          ])
-      );
+      this._expectations = Record.from(expectations.toArray());
     }
 
     public get target(): T {
@@ -188,16 +179,7 @@ export namespace Outcome {
       super(rule);
 
       this._target = target;
-      this._expectations = Record.from(
-        expectations
-          .toArray()
-          .map(([id, expectation]) => [
-            id,
-            expectation.map((result) =>
-              result.map(normalize).mapErr(normalize)
-            ),
-          ])
-      );
+      this._expectations = Record.from(expectations.toArray());
     }
 
     public get target(): T {
@@ -445,8 +427,4 @@ export namespace Outcome {
   ): outcome is Inapplicable<I, T, Q> {
     return outcome instanceof Inapplicable;
   }
-}
-
-function normalize(input: string): string {
-  return input.trim().replace(/\s+/g, " ");
 }
