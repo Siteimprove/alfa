@@ -23,13 +23,15 @@ export class Comment extends Node {
     return this._data;
   }
 
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "comment()";
 
-    const index = this.preceding().count(Comment.isComment);
+    const index = this.preceding(options).count(Comment.isComment);
 
     path += `[${index + 1}]`;
 

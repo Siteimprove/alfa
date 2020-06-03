@@ -249,13 +249,15 @@ export class Element extends Node implements Slot, Slotable {
     return Slot.findSlotables(this);
   }
 
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding().count(
+    const index = this.preceding(options).count(
       and(Element.isElement, (element) => element._name === this._name)
     );
 
