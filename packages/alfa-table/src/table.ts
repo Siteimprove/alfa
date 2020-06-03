@@ -12,7 +12,6 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
 import { ColumnGroup } from "./column-group";
-import { Covering } from "./covering";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 import { RowGroup } from "./row-group";
@@ -310,7 +309,7 @@ export namespace Table {
       kind: "row" | "column"
     ): (principalCell: Cell.Builder) => Iterable<Cell.Builder> {
       let anchor: "x" | "y",
-        groups: Iterable<Covering>,
+        groups: Iterable<RowGroup | ColumnGroup>,
         groupHeaders: Iterable<Cell.Builder>;
 
       switch (kind) {

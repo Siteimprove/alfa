@@ -6,14 +6,13 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Covering } from "./covering";
 import { isHtmlElementWithName, parseSpan } from "./helpers";
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
  */
 export class ColumnGroup
-  implements Comparable<ColumnGroup>, Covering, Equatable, Serializable {
+  implements Comparable<ColumnGroup>, Equatable, Serializable {
   public static of(x: number, width: number, element: Element): ColumnGroup {
     return new ColumnGroup(x, width, element);
   }
