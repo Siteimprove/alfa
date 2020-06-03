@@ -6,6 +6,7 @@ import { Document, Element, Text } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
 import R69, { Outcomes } from "../../src/sia-r69/rule";
+import { Contrast } from "../../src/sia-r69/diagnostic/contrast";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
@@ -31,7 +32,7 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
-        [rgb(1, 1, 1), rgb(0, 0, 0), 21],
+        Contrast.Pairing.of(rgb(1, 1, 1), rgb(0, 0, 0), 21),
       ]),
     }),
   ]);
@@ -57,12 +58,12 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, sufficient, {
       1: Outcomes.HasSufficientContrast(15.08, 4.5, [
-        [rgb(1, 1, 1), rgb(0.15, 0.15, 0.15), 15.08],
+        Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.15, 0.15, 0.15), 15.08),
       ]),
     }),
     failed(R69, insufficient, {
       1: Outcomes.HasInsufficientContrast(3.98, 4.5, [
-        [rgb(1, 1, 1), rgb(0.5, 0.5, 0.5), 3.98],
+        Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.5, 0.5, 0.5), 3.98),
       ]),
     }),
   ]);
@@ -86,12 +87,12 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, sufficient, {
       1: Outcomes.HasSufficientContrast(14.84, 4.5, [
-        [rgb(0.85, 0.85, 0.85), rgb(0, 0, 0), 14.84],
+        Contrast.Pairing.of(rgb(0.85, 0.85, 0.85), rgb(0, 0, 0), 14.84),
       ]),
     }),
     failed(R69, insufficient, {
       1: Outcomes.HasInsufficientContrast(3.66, 4.5, [
-        [rgb(0.4, 0.4, 0.4), rgb(0, 0, 0), 3.66],
+        Contrast.Pairing.of(rgb(0.4, 0.4, 0.4), rgb(0, 0, 0), 3.66),
       ]),
     }),
   ]);
@@ -112,7 +113,11 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(3.34, 3, [
-        [rgb(0.3764706, 0.3764706, 0.3764706), rgb(0, 0, 0), 3.34],
+        Contrast.Pairing.of(
+          rgb(0.3764706, 0.3764706, 0.3764706),
+          rgb(0, 0, 0),
+          3.34
+        ),
       ]),
     }),
   ]);
@@ -133,7 +138,11 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(3.34, 3, [
-        [rgb(0.3764706, 0.3764706, 0.3764706), rgb(0, 0, 0), 3.34],
+        Contrast.Pairing.of(
+          rgb(0.3764706, 0.3764706, 0.3764706),
+          rgb(0, 0, 0),
+          3.34
+        ),
       ]),
     }),
   ]);
@@ -149,7 +158,7 @@ test("evaluate() passes a text node using the user agent default styles", async 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
-        [rgb(0, 0, 0), rgb(1, 1, 1), 21],
+        Contrast.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
       ]),
     }),
   ]);
@@ -170,7 +179,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
-        [rgb(1, 1, 1), rgb(1, 1, 1), 1],
+        Contrast.Pairing.of(rgb(1, 1, 1), rgb(1, 1, 1), 1),
       ]),
     }),
   ]);
@@ -189,7 +198,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
-        [rgb(0, 0, 0), rgb(0, 0, 0), 1],
+        Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
       ]),
     }),
   ]);

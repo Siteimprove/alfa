@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -18,6 +18,8 @@ import { isDisabled } from "../common/predicate/is-disabled";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
+
+import { Contrast } from "./diagnostic/contrast";
 
 const { reduce, some, flatMap, map, concat } = Iterable;
 const { and, or, not, equals, test } = Predicate;
@@ -76,22 +78,20 @@ export default Rule.Atomic.of<Page, Text, Question>({
 
         const result = foregrounds.map((foregrounds) =>
           backgrounds.map((backgrounds) => {
-            const contrasts = [
+            const pairings = [
               ...flatMap(foregrounds, (foreground) =>
-                map(
-                  backgrounds,
-                  (background) =>
-                    [
-                      foreground,
-                      background,
-                      contrast(foreground, background),
-                    ] as const
+                map(backgrounds, (background) =>
+                  Contrast.Pairing.of(
+                    foreground,
+                    background,
+                    contrast(foreground, background)
+                  )
                 )
               ),
             ];
 
-            const highest = contrasts.reduce(
-              (lowest, [, , contrast]) => max(lowest, contrast),
+            const highest = pairings.reduce(
+              (lowest, pairing) => max(lowest, pairing.contrast),
               0
             );
 
@@ -100,9 +100,9 @@ export default Rule.Atomic.of<Page, Text, Question>({
             return expectation(
               highest >= threshold,
               () =>
-                Outcomes.HasSufficientContrast(highest, threshold, contrasts),
+                Outcomes.HasSufficientContrast(highest, threshold, pairings),
               () =>
-                Outcomes.HasInsufficientContrast(highest, threshold, contrasts)
+                Outcomes.HasInsufficientContrast(highest, threshold, pairings)
             );
           })
         );
@@ -128,32 +128,28 @@ export namespace Outcomes {
   export const HasSufficientContrast = (
     highest: number,
     threshold: number,
-    contrasts: Array<readonly [RGB, RGB, number]>
+    pairings: Array<Contrast.Pairing>
   ) =>
     Ok.of(
-      Diagnostic.of(
+      Contrast.of(
         `The highest possible contrast of the text is 1:${highest} which is
         above the required contrast of 1:${threshold}`,
-        [
-          ["threshold", threshold],
-          ["contrasts", contrasts],
-        ]
+        threshold,
+        pairings
       )
     );
 
   export const HasInsufficientContrast = (
     highest: number,
     threshold: number,
-    contrasts: Array<readonly [RGB, RGB, number]>
+    pairings: Array<Contrast.Pairing>
   ) =>
     Err.of(
-      Diagnostic.of(
+      Contrast.of(
         `The highest possible contrast of the text is 1:${highest} which is
         below the required contrast of 1:${threshold}`,
-        [
-          ["threshold", threshold],
-          ["contrasts", contrasts],
-        ]
+        threshold,
+        pairings
       )
     );
 }
