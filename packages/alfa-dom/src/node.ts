@@ -286,7 +286,10 @@ export namespace Node {
         return Comment.fromComment(node as Comment.JSON, parent);
 
       case "document":
-        return Document.fromDocument(node as Document.JSON);
+        return Document.fromDocument(
+          node as Document.JSON,
+          parent.filter(Element.isElement)
+        );
 
       case "type":
         return Type.fromType(node as Type.JSON, parent);
