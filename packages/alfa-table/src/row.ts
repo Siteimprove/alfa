@@ -1,7 +1,9 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { List } from "@siteimprove/alfa-list";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -10,6 +12,7 @@ import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
 
 const { compare } = Comparable;
+const { some } = Iterable;
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -28,8 +31,8 @@ export namespace Row {
       width: number,
       height: number,
       element: Element,
-      cells: Array<Cell.Builder> = [],
-      growing: Array<Cell.Builder> = [],
+      cells: Iterable<Cell.Builder> = List.empty(),
+      growing: Iterable<Cell.Builder> = List.empty(),
       xCurrent: number = 0
     ): Builder {
       return new Builder(y, width, height, element, cells, growing, xCurrent);
@@ -40,16 +43,16 @@ export namespace Row {
     private readonly _width: number;
     private readonly _height: number;
     private readonly _element: Element;
-    private readonly _cells: Array<Cell.Builder>;
-    private readonly _downwardGrowingCells: Array<Cell.Builder>;
+    private readonly _cells: List<Cell.Builder>;
+    private readonly _downwardGrowingCells: List<Cell.Builder>;
 
     private constructor(
       y: number,
       width: number,
       height: number,
       element: Element,
-      cells: Array<Cell.Builder>,
-      growing: Array<Cell.Builder>,
+      cells: Iterable<Cell.Builder>,
+      growing: Iterable<Cell.Builder>,
       xCurrent: number
     ) {
       this._y = y;
@@ -57,8 +60,8 @@ export namespace Row {
       this._width = width;
       this._height = height;
       this._element = element;
-      this._cells = cells;
-      this._downwardGrowingCells = growing;
+      this._cells = List.from(cells);
+      this._downwardGrowingCells = List.from(growing);
     }
 
     public get anchor(): { y: number } {
@@ -91,8 +94,8 @@ export namespace Row {
       width?: number;
       height?: number;
       element?: Element;
-      cells?: Array<Cell.Builder>;
-      downwardGrowingCells?: Array<Cell.Builder>;
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
         update.y !== undefined ? update.y : this._y,
@@ -116,12 +119,12 @@ export namespace Row {
     }
 
     public addNonGrowingCell(cell: Cell.Builder): Builder {
-      return this.update({ cells: this._cells.concat(cell) });
+      return this.update({ cells: this._cells.append(cell) });
     }
 
     public addGrowingCell(cell: Cell.Builder): Builder {
       return this.update({
-        downwardGrowingCells: this._downwardGrowingCells.concat(cell),
+        downwardGrowingCells: this._downwardGrowingCells.append(cell),
       });
     }
 
@@ -163,14 +166,12 @@ export namespace Row {
      * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
      * step 6
      */
-    public skipIfCovered(
-      cells: Array<Cell.Builder>,
-      yCurrent: number
-    ): Builder {
+    public skipIfCovered(cells: List<Cell.Builder>, yCurrent: number): Builder {
       if (
         this._xCurrent < this._width &&
         cells
-          .concat(this._cells, this._downwardGrowingCells)
+          .concat(this._cells)
+          .concat(this._downwardGrowingCells)
           .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
       ) {
         return this.update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
@@ -190,8 +191,8 @@ export namespace Row {
 
     public sort(): Builder {
       return this.update({
-        cells: this._cells.sort(compare),
-        downwardGrowingCells: this._downwardGrowingCells.sort(compare),
+        cells: [...this._cells].sort(compare),
+        downwardGrowingCells: [...this._downwardGrowingCells].sort(compare),
       });
     }
 
@@ -202,13 +203,8 @@ export namespace Row {
         this._height === value._height &&
         this._y === value._y &&
         this._element.equals(value._element) &&
-        this._cells.length === value._cells.length &&
-        this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
-        this._downwardGrowingCells.length ===
-          value._downwardGrowingCells.length &&
-        this._downwardGrowingCells.every((cell, idx) =>
-          cell.equals(value._downwardGrowingCells[idx])
-        )
+        this._cells.equals(value._cells) &&
+        this._downwardGrowingCells.equals(value._downwardGrowingCells)
       );
     }
 
@@ -218,10 +214,10 @@ export namespace Row {
         width: this._width,
         height: this._height,
         element: this._element.toJSON(),
-        cells: this._cells.map((cell) => cell.cell.toJSON()),
-        downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
-          cell.cell.toJSON()
-        ),
+        cells: this._cells.toArray().map((cell) => cell.cell.toJSON()),
+        downwardGrowingCells: this._downwardGrowingCells
+          .toArray()
+          .map((cell) => cell.cell.toJSON()),
       };
     }
   }
@@ -232,8 +228,8 @@ export namespace Row {
      */
     export function from(
       tr: Element,
-      cells: Array<Cell.Builder> = [],
-      growingCells: Array<Cell.Builder> = [],
+      cells: Iterable<Cell.Builder> = List.empty(),
+      growingCells: Iterable<Cell.Builder> = List.empty(),
       yCurrent: number = 0,
       w: number = 0
     ): Result<Builder, string> {
@@ -242,8 +238,8 @@ export namespace Row {
       }
 
       if (
-        cells.some((cell) =>
-          growingCells.some((growingCell) => cell.equals(growingCell))
+        some(cells, (cell) =>
+          some(growingCells, (growingCell) => cell.equals(growingCell))
         )
       ) {
         return Err.of("Cells and growing cells must be disjoints");
@@ -260,7 +256,7 @@ export namespace Row {
           (row, currentCell) =>
             row
               // 6 (Cells)
-              .skipIfCovered(cells, yCurrent)
+              .skipIfCovered(List.from(cells), yCurrent)
               // 7
               .enlargeIfNeeded()
               // 8-14
@@ -268,7 +264,7 @@ export namespace Row {
               .get(), // can't be an error because children have been filtered
           // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
           // 2 is done when creating the row, default value for xCurrent is 0.
-          Builder.of(yCurrent, w, 1, tr, [], growingCells)
+          Builder.of(yCurrent, w, 1, tr, List.empty(), growingCells)
             // 3
             .growCells(yCurrent)
             .sort()
