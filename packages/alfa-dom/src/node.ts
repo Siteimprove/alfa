@@ -257,6 +257,7 @@ import { Attribute } from "./node/attribute";
 import { Comment } from "./node/comment";
 import { Document } from "./node/document";
 import { Element } from "./node/element";
+import { Fragment } from "./node/fragment";
 import { Shadow } from "./node/shadow";
 import { Text } from "./node/text";
 import { Type } from "./node/type";
@@ -295,6 +296,9 @@ export namespace Node {
           node as Shadow.JSON,
           parent.filter(Element.isElement).get()
         );
+
+      case "fragment":
+        return Fragment.fromFragment(node as Fragment.JSON);
 
       default:
         throw new Error(`Unexpected node of type: ${node.type}`);

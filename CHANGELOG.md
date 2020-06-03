@@ -29,6 +29,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-style](packages/alfa-style): Styles set via the `style` attribute are now correctly applied.
 
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Node.fromNode()` now correctly parses `Fragment.JSON` to `Fragment`.
+
 ## [0.1.0](../../compare/v0.0.1...v0.1.0) (2020-05-26)
 
 ### Breaking
