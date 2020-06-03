@@ -49,13 +49,15 @@ export class Text extends Node implements Slotable {
     return Slotable.findSlot(this);
   }
 
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "text()";
 
-    const index = this.preceding().count(Text.isText);
+    const index = this.preceding(options).count(Text.isText);
 
     path += `[${index + 1}]`;
 

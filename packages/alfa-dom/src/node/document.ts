@@ -31,7 +31,13 @@ export class Document extends Node {
     return this._style;
   }
 
-  public path(): string {
+  public path(options?: Node.Traversal): string {
+    if (options?.nested) {
+      return this._frame
+        .map((frame) => frame.path(options) + "/document-node()")
+        .getOr("/");
+    }
+
     return "/";
   }
 
