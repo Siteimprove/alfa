@@ -5,8 +5,8 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
-import { Covering } from "./covering";
 
+import { Covering } from "./covering";
 import { isHtmlElementWithName, parseSpan } from "./helpers";
 
 /**
