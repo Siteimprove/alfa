@@ -24,7 +24,7 @@ test("Builder.from() computes correct header variants", (t) => {
   t.deepEqual(
     [...expensesTable.cells]
       .filter((cell) => cell.kind === Cell.Kind.Header)
-      .map((cell) => cell.addHeaderVariant(expensesTable).variant.get()),
+      .map((cell) => cell.variant.get()),
     expenses.headerVariants
   );
 
@@ -32,7 +32,7 @@ test("Builder.from() computes correct header variants", (t) => {
   t.deepEqual(
     [...headersTable.cells]
       .filter((cell) => cell.kind === Cell.Kind.Header)
-      .map((cell) => cell.addHeaderVariant(headersTable).variant),
+      .map((cell) => cell.variant),
     headersVariant.headerVariants
   );
 });

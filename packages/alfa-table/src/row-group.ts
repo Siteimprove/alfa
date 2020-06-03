@@ -2,6 +2,7 @@ import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { List } from "@siteimprove/alfa-list";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -15,7 +16,8 @@ const { compare } = Comparable;
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
  */
-export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
+export class RowGroup
+  implements Comparable<RowGroup>, Equatable, Serializable {
   public static of(y: number, h: number, element: Element): RowGroup {
     return new RowGroup(y, h, element);
   }
@@ -105,7 +107,7 @@ export namespace RowGroup {
    */
   export class Builder implements Equatable, Serializable {
     private readonly _width: number;
-    private readonly _cells: Array<Cell.Builder>;
+    private readonly _cells: List<Cell.Builder>;
     private readonly _rowGroup: RowGroup;
 
     public static of(
@@ -113,7 +115,7 @@ export namespace RowGroup {
       height: number,
       element: Element,
       width: number = 0,
-      cells: Array<Cell.Builder> = []
+      cells: Iterable<Cell.Builder> = List.empty()
     ): Builder {
       return new Builder(y, height, element, width, cells);
     }
@@ -123,11 +125,11 @@ export namespace RowGroup {
       height: number,
       element: Element,
       width: number,
-      cells: Array<Cell.Builder>
+      cells: Iterable<Cell.Builder>
     ) {
       this._rowGroup = RowGroup.of(y, height, element);
       this._width = width;
-      this._cells = cells;
+      this._cells = List.from(cells);
     }
 
     public update(update: {
@@ -135,7 +137,7 @@ export namespace RowGroup {
       width?: number;
       height?: number;
       element?: Element;
-      cells?: Array<Cell.Builder>;
+      cells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
         update.y !== undefined ? update.y : this._rowGroup.anchor.y,
@@ -154,7 +156,7 @@ export namespace RowGroup {
       return this._width;
     }
 
-    public get cells(): Array<Cell.Builder> {
+    public get cells(): Iterable<Cell.Builder> {
       return this._cells;
     }
 
@@ -185,8 +187,7 @@ export namespace RowGroup {
       return (
         this._rowGroup.equals(value._rowGroup) &&
         this._width === value._width &&
-        this._cells.length === value._cells.length &&
-        this._cells.every((cell, idx) => cell.equals(value._cells[idx]))
+        this._cells.equals(value._cells)
       );
     }
 
@@ -194,7 +195,7 @@ export namespace RowGroup {
       return {
         rowGroup: this._rowGroup.toJSON(),
         width: this._width,
-        cells: this._cells.map((cell) => cell.cell.toJSON()),
+        cells: this._cells.toArray().map((cell) => cell.cell.toJSON()),
       };
     }
   }
@@ -219,7 +220,7 @@ export namespace RowGroup {
         return Err.of("This element is not a row group");
       }
 
-      let growingCellsList: Array<Cell.Builder> = [];
+      let growingCellsList: List<Cell.Builder> = List.empty();
       let rowgroup = Builder.of(-1, 0, group);
       let yCurrent = 0; // y position inside the rowgroup
       // 1
@@ -233,9 +234,9 @@ export namespace RowGroup {
           yCurrent,
           rowgroup.width
         ).get();
-        growingCellsList = [...row.downwardGrowingCells];
+        growingCellsList = List.from(row.downwardGrowingCells);
         rowgroup = rowgroup.update({
-          cells: rowgroup.cells.concat(...row.cells),
+          cells: List.from(rowgroup.cells).concat(row.cells),
           height: Math.max(rowgroup.height, yCurrent + row.height),
           width: Math.max(rowgroup.width, row.width),
         });
@@ -250,11 +251,13 @@ export namespace RowGroup {
       // ending row group 2
       // When emptying the growing cells list, we need to finally add them to the group.
       rowgroup = rowgroup.update({
-        cells: rowgroup.cells.concat(growingCellsList),
+        cells: List.from(rowgroup.cells).concat(growingCellsList),
       });
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
-      return Ok.of(rowgroup.update({ cells: rowgroup.cells.sort(compare) }));
+      return Ok.of(
+        rowgroup.update({ cells: [...rowgroup.cells].sort(compare) })
+      );
     }
   }
 }
