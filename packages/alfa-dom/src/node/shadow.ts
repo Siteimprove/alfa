@@ -57,8 +57,12 @@ export class Shadow extends Node {
   }
 
   public path(options?: Node.Traversal): string {
-    if (options?.composed || options?.flattened) {
+    if (options?.composed) {
       return this._host.path(options) + "/shadow()";
+    }
+
+    if (options?.flattened) {
+      return this._host.path(options);
     }
 
     return "/";
