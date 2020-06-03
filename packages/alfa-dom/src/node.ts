@@ -188,12 +188,14 @@ export abstract class Node
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
    */
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "node()";
-    path += `[${this.index() + 1}]`;
+    path += `[${this.index(options) + 1}]`;
 
     return path;
   }

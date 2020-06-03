@@ -87,8 +87,8 @@ export class Attribute extends Node {
     }
   }
 
-  public path(): string {
-    let path = this.owner.map((owner) => owner.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += `@${this._name}`;
