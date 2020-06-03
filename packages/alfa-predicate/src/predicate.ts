@@ -12,7 +12,7 @@ export type Predicate<
 export namespace Predicate {
   export function test<
     T,
-    U extends T,
+    U extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(predicate: Predicate<T, U, A>, value: T, ...args: A): value is U;
 
@@ -24,7 +24,7 @@ export namespace Predicate {
 
   export function test<
     T,
-    U extends T,
+    U extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(predicate: Predicate<T, U, A>, value: T, ...args: A): value is U {
     return predicate(value, ...args);
@@ -32,7 +32,7 @@ export namespace Predicate {
 
   export function fold<
     T,
-    U extends T,
+    U extends T = T,
     A extends Array<unknown> = Array<unknown>,
     V = U,
     W = T
@@ -48,7 +48,7 @@ export namespace Predicate {
 
   export function not<
     T,
-    U extends T,
+    U extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(predicate: Predicate<T, U, A>): Predicate<T, T, A> {
     return (value, ...args) => !predicate(value, ...args);
@@ -56,14 +56,14 @@ export namespace Predicate {
 
   export function and<
     T,
-    U extends T,
-    V extends U,
+    U extends T = T,
+    V extends U = U,
     A extends Array<unknown> = Array<unknown>
   >(left: Predicate<T, U, A>, right: Predicate<U, V, A>): Predicate<T, V, A>;
 
   export function and<
     T,
-    U extends T,
+    U extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(
     left: Predicate<T, U, A>,
@@ -73,7 +73,7 @@ export namespace Predicate {
 
   export function and<
     T,
-    U extends T,
+    U extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(...predicates: Array<Predicate<T, U, A>>): Predicate<T, U, A> {
     return (value, ...args) =>
@@ -85,23 +85,29 @@ export namespace Predicate {
 
   export function or<
     T,
-    U extends T,
-    V extends T,
+    U extends T = T,
+    V extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(
     left: Predicate<T, U, A>,
     right: Predicate<T, V, A>
   ): Predicate<T, U | V, A>;
 
-  export function or<T, U extends T, A extends Array<unknown> = Array<unknown>>(
+  export function or<
+    T,
+    U extends T = T,
+    A extends Array<unknown> = Array<unknown>
+  >(
     left: Predicate<T, U, A>,
     right: Predicate<T, U, A>,
     ...rest: Array<Predicate<T, U, A>>
   ): Predicate<T, U, A>;
 
-  export function or<T, U extends T, A extends Array<unknown> = Array<unknown>>(
-    ...predicates: Array<Predicate<T, U, A>>
-  ): Predicate<T, U, A> {
+  export function or<
+    T,
+    U extends T = T,
+    A extends Array<unknown> = Array<unknown>
+  >(...predicates: Array<Predicate<T, U, A>>): Predicate<T, U, A> {
     return (value, ...args) =>
       predicates.reduce<boolean>(
         (holds, predicate) => holds || predicate(value, ...args),
@@ -111,8 +117,8 @@ export namespace Predicate {
 
   export function xor<
     T,
-    U extends T,
-    V extends T,
+    U extends T = T,
+    V extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(
     left: Predicate<T, U, A>,
@@ -123,8 +129,8 @@ export namespace Predicate {
 
   export function nor<
     T,
-    U extends T,
-    V extends T,
+    U extends T = T,
+    V extends T = T,
     A extends Array<unknown> = Array<unknown>
   >(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A> {
     return not(or(left, right));
@@ -132,8 +138,8 @@ export namespace Predicate {
 
   export function nand<
     T,
-    U extends T,
-    V extends U,
+    U extends T = T,
+    V extends U = U,
     A extends Array<unknown> = Array<unknown>
   >(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A> {
     return not(and(left, right));
@@ -141,7 +147,7 @@ export namespace Predicate {
 
   export function property<
     T,
-    K extends keyof T,
+    K extends keyof T = keyof T,
     A extends Array<unknown> = Array<unknown>
   >(property: K, predicate: Predicate<T[K], T[K], A>): Predicate<T, T, A> {
     return (value, ...args) => predicate(value[property], ...args);
