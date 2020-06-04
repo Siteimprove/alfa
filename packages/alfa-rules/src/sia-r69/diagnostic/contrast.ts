@@ -19,7 +19,7 @@ export class Contrast extends Diagnostic {
 
   private constructor(
     message: string,
-    threshold: number = 4.5,
+    threshold: number,
     pairings: Array<Contrast.Pairing>
   ) {
     super(message);
