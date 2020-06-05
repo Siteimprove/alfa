@@ -9,6 +9,11 @@ import { Header } from "./header";
 
 export class Headers
   implements Iterable<Header>, json.Serializable, earl.Serializable {
+  /**
+   * @remarks
+   * If the iterable contains headers with duplicate names, the last header with
+   * a given name will take precedence.
+   */
   public static of(headers: Iterable<Header>): Headers {
     return new Headers(
       Map.from(Iterable.map(headers, (header) => [header.name, header]))

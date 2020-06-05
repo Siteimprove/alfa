@@ -6,6 +6,11 @@ import { Option } from "@siteimprove/alfa-option";
 import { Cookie } from "./cookie";
 
 export class Cookies implements Iterable<Cookie>, Serializable {
+  /**
+   * @remarks
+   * If the iterable contains cookies with duplicate names, the last cookie with
+   * a given name will take precedence.
+   */
   public static of(cookies: Iterable<Cookie>): Cookies {
     return new Cookies(
       Map.from(Iterable.map(cookies, (cookie) => [cookie.name, cookie]))
