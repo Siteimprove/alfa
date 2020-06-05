@@ -1,6 +1,5 @@
+import { Formatter } from "@siteimprove/alfa-formatter";
 import { Serializable } from "@siteimprove/alfa-json";
-
-import { Formatter } from "../formatter";
 
 const { stringify } = JSON;
 
