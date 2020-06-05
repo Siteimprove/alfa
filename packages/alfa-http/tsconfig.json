@@ -3,6 +3,9 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/body.ts",
+    "src/cookie.ts",
+    "src/cookies.ts",
+    "src/header.ts",
     "src/headers.ts",
     "src/index.ts",
     "src/request.ts",
