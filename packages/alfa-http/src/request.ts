@@ -95,6 +95,16 @@ export class Request implements Body, json.Serializable, earl.Serializable {
       },
     };
   }
+
+  public toString(): string {
+    let request = `${this._method} ${this._url} HTTP/1.1`;
+
+    request += "\n" + this._headers.toString();
+    request += "\n";
+    request += Decoder.decode(new Uint8Array(this._body));
+
+    return request;
+  }
 }
 
 export namespace Request {

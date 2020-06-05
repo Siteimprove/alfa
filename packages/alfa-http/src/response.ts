@@ -94,6 +94,16 @@ export class Response implements Body, json.Serializable, earl.Serializable {
       },
     };
   }
+
+  public toString(): string {
+    let response = `HTTP/1.1 ${this._status}`;
+
+    response += "\n" + this._headers.toString();
+    response += "\n";
+    response += Decoder.decode(new Uint8Array(this._body));
+
+    return response;
+  }
 }
 
 export namespace Response {
