@@ -1,58 +1,58 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-/**
- * @see https://fetch.spec.whatwg.org/#headers-class
- */
+import { Header } from "./header";
+
 export class Headers
-  implements Iterable<[string, string]>, json.Serializable, earl.Serializable {
-  public static of(headers: Map<string, string>): Headers {
-    return new Headers(headers);
+  implements Iterable<Header>, json.Serializable, earl.Serializable {
+  public static of(headers: Iterable<Header>): Headers {
+    return new Headers(
+      Map.from(Iterable.map(headers, (header) => [header.name, header]))
+    );
   }
+
+  private static _empty = new Headers(Map.empty());
 
   public static empty(): Headers {
-    return new Headers(Map.empty());
+    return this._empty;
   }
 
-  private readonly _headers: Map<string, string>;
+  private readonly _headers: Map<string, Header>;
 
-  private constructor(headers: Map<string, string>) {
+  private constructor(headers: Map<string, Header>) {
     this._headers = headers;
   }
 
-  /**
-   * @see https://fetch.spec.whatwg.org/#dom-headers-get
-   */
-  public get(header: string): Option<string> {
-    return this._headers.get(header);
+  public get(name: string): Option<Header> {
+    return this._headers.get(name);
   }
 
-  /**
-   * @see https://fetch.spec.whatwg.org/#dom-headers-has
-   */
-  public has(header: string): boolean {
-    return this._headers.has(header);
+  public has(name: string): boolean {
+    return this._headers.has(name);
   }
 
-  /**
-   * @see https://fetch.spec.whatwg.org/#dom-headers-set
-   */
-  public set(header: string, value: string): Headers {
-    return new Headers(this._headers.set(header, value));
+  public add(header: Header): Headers {
+    return new Headers(this._headers.set(header.name, header));
   }
 
-  /**
-   * @see https://fetch.spec.whatwg.org/#dom-headers-delete
-   */
-  public delete(header: string): Headers {
-    return new Headers(this._headers.delete(header));
+  public delete(name: string): Headers {
+    return new Headers(this._headers.delete(name));
+  }
+
+  public *[Symbol.iterator](): Iterator<Header> {
+    yield* this._headers.values();
+  }
+
+  public toArray(): Array<Header> {
+    return [...this];
   }
 
   public toJSON(): Headers.JSON {
-    return [...this._headers];
+    return this.toArray().map((header) => header.toJSON());
   }
 
   public toEARL(): Headers.EARL {
@@ -60,39 +60,29 @@ export class Headers
       "@context": {
         http: "http://www.w3.org/2011/http#",
       },
-      "@list": [
-        ...Iterable.map(this._headers, ([name, value]) => {
-          return {
-            "@type": "http:MessageHeader" as const,
-            "http:fieldName": name,
-            "http:fieldValue": value,
-          };
-        }),
-      ],
+      "@list": this.toArray().map((header) => header.toEARL()),
     };
   }
 
-  public *[Symbol.iterator](): Iterator<[string, string]> {
-    yield* this._headers;
+  public toString(): string {
+    return this.toArray()
+      .map((header) => header.toString())
+      .join("\n");
   }
 }
 
 export namespace Headers {
-  export interface JSON extends Array<[string, string]> {}
+  export interface JSON extends Array<Header.JSON> {}
 
   export interface EARL extends earl.EARL {
     "@context": {
       http: "http://www.w3.org/2011/http#";
     };
-    "@list": Array<{
-      "@type": "http:MessageHeader";
-      "http:fieldName": string;
-      "http:fieldValue": string;
-    }>;
+    "@list": Array<Header.EARL>;
   }
 
   export function from(json: JSON): Headers {
-    return Headers.of(Map.from(json));
+    return Headers.of(json.map((header) => Header.from(header)));
   }
 
   export function isHeaders(value: unknown): value is Headers {

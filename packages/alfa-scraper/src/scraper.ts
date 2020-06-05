@@ -1,7 +1,13 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
-import { Headers, Request, Response } from "@siteimprove/alfa-http";
+import {
+  Cookie,
+  Header,
+  Headers,
+  Request,
+  Response,
+} from "@siteimprove/alfa-http";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
 import { Result, Ok } from "@siteimprove/alfa-result";
 import { Timeout } from "@siteimprove/alfa-time";
@@ -47,6 +53,8 @@ export class Scraper {
       credentials = null,
       screenshot = null,
       javascript = true,
+      headers = [],
+      cookies = [],
     } = options;
 
     let page: puppeteer.Page | undefined;
@@ -67,6 +75,13 @@ export class Scraper {
       await page.authenticate(credentials);
 
       await page.setJavaScriptEnabled(javascript);
+
+      await page.setExtraHTTPHeaders(
+        [...headers].reduce((headers, header) => {
+          headers[header.name] = header.value;
+          return headers;
+        }, {} as Record<string, string>)
+      );
 
       let request: Request | null = null;
       let response: Response | null | Promise<Response | null> = null;
@@ -106,6 +121,18 @@ export class Scraper {
       // Attempt navigating to the origin until we either have a parsed
       // request and response, or the timeout is reached.
       while (request === null || response === null) {
+        if (origin.protocol === "http:" || origin.protocol === "https:") {
+          await page.setCookie(
+            ...[...cookies].map((cookie) => {
+              return {
+                name: cookie.name,
+                value: cookie.value,
+                url: origin.href,
+              };
+            })
+          );
+        }
+
         page
           .goto(origin.href, {
             timeout: timeout.remaining(),
@@ -177,6 +204,8 @@ export namespace Scraper {
       readonly credentials?: Credentials;
       readonly screenshot?: Screenshot;
       readonly javascript?: boolean;
+      readonly headers?: Iterable<Header>;
+      readonly cookies?: Iterable<Cookie>;
     }
   }
 }
@@ -185,7 +214,9 @@ function parseRequest(request: puppeteer.Request): Request {
   return Request.of(
     request.method(),
     request.url(),
-    Headers.from(entries(request.headers()))
+    Headers.of(
+      entries(request.headers()).map(([name, value]) => Header.of(name, value))
+    )
   );
 }
 
@@ -193,7 +224,9 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
   return Response.of(
     response.url(),
     response.status(),
-    Headers.from(entries(response.headers())),
+    Headers.of(
+      entries(response.headers()).map(([name, value]) => Header.of(name, value))
+    ),
     response.ok() ? await response.buffer() : new ArrayBuffer(0)
   );
 }
