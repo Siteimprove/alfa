@@ -84,9 +84,9 @@ export default class Scrape extends Command {
     }),
 
     headers: flags.string({
-      helpValue: "name=value or path",
+      helpValue: "name:value or path",
       multiple: true,
-      description: `Additional headers to set, either as name=value pairs or a path to a JSON file`,
+      description: `Additional headers to set, either as name:value pairs or a path to a JSON file`,
     }),
 
     cookies: flags.string({
@@ -227,7 +227,7 @@ export default class Scrape extends Command {
     }
 
     const headers = Sequence.from(flags.headers ?? []).flatMap((header) => {
-      const index = header.indexOf("=");
+      const index = header.indexOf(":");
 
       if (index === -1) {
         try {
