@@ -10,12 +10,13 @@ export type Formatter<I, T, Q> = (
 
 export namespace Formatter {
   export function load<I, T, Q>(
-    name: string
+    name: string,
+    defaultScope: string = "@siteimprove"
   ): Result<Formatter<I, T, Q>, string> {
     let scope: string | undefined;
 
     if (name.startsWith("@")) {
-      const match = name.match(/^@([^/]+)\/(.+)$/);
+      const match = name.match(/^(@[^/]+)\/(.+)$/);
 
       if (match !== null) {
         scope = match[1];
@@ -26,7 +27,7 @@ export namespace Formatter {
     const patterns: Array<string> = [...candidates(name, scope)];
 
     if (scope === undefined) {
-      patterns.push(...candidates(name, "siteimprove"));
+      patterns.push(...candidates(name, defaultScope));
     }
 
     for (const pattern of patterns) {
@@ -48,7 +49,7 @@ export namespace Formatter {
 const prefix = "alfa-formatter-";
 
 function* candidates(name: string, scope?: string): Iterable<string> {
-  scope = scope === undefined ? "" : `@${scope}/`;
+  scope = scope === undefined ? "" : scope + "/";
 
   if (!name.startsWith(prefix)) {
     yield scope + prefix + name;
