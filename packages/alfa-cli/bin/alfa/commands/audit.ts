@@ -1,12 +1,16 @@
+/// <reference types="node" />
+
 import * as fs from "fs";
 import * as temp from "tempy";
 
 import { Command, flags } from "@oclif/command";
+import { error } from "@oclif/errors";
 
 import * as parser from "@oclif/parser";
 
-import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Outcome } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-dom";
+import { Formatter } from "@siteimprove/alfa-formatter";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Rules, Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
@@ -15,7 +19,6 @@ import * as act from "@siteimprove/alfa-act";
 
 import Scrape from "./scrape";
 
-import { Formatter } from "../../../src/formatter";
 import { Oracle } from "../../../src/oracle";
 
 type Input = Page;
@@ -75,6 +78,12 @@ export default class Audit extends Command {
   }
 
   public static async runWithFlags(flags: Flags, target?: string) {
+    const formatter = Formatter.load<Input, Target, Question>(flags.format);
+
+    if (formatter.isErr()) {
+      error(formatter.getErr(), { exit: 1 });
+    }
+
     let json: string;
 
     if (target === undefined) {
@@ -121,8 +130,7 @@ export default class Audit extends Command {
       });
     }
 
-    const output =
-      (await report(page, outcomes, formatter(flags.format))) + "\n";
+    const output = formatter.get()(page, outcomes) + "\n";
 
     if (flags.output === undefined) {
       process.stdout.write(output);
@@ -133,28 +141,3 @@ export default class Audit extends Command {
 }
 
 export type Flags = typeof Audit extends parser.Input<infer F> ? F : never;
-
-async function report(
-  input: Page,
-  outcomes: Iterable<Outcome<Input, Target, Question>>,
-  formatter: Formatter<Input, Target, Question>
-): Promise<string> {
-  return formatter(input, outcomes);
-}
-
-function formatter(format: string): Formatter<Input, Target, Question> {
-  switch (format) {
-    case "earl":
-      return Formatter.EARL();
-
-    case "json":
-      return Formatter.JSON();
-
-    default:
-      try {
-        return require(format) as Formatter<Input, Target, Question>;
-      } catch (err) {
-        throw new Error(`No such formatter found: ${format}`);
-      }
-  }
-}

@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
@@ -8,12 +10,14 @@ import { error } from "@oclif/errors";
 import * as parser from "@oclif/parser";
 
 import { Device, Display, Viewport } from "@siteimprove/alfa-device";
+import { Header, Cookie } from "@siteimprove/alfa-http";
 import {
-  Scraper,
   Awaiter,
-  Screenshot,
   Credentials,
+  Scraper,
+  Screenshot,
 } from "@siteimprove/alfa-scraper";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Timeout } from "@siteimprove/alfa-time";
 
 export default class Scrape extends Command {
@@ -79,6 +83,18 @@ export default class Scrape extends Command {
       char: "p",
       dependsOn: ["username"],
       description: "The password to use for HTTP Basic authentication",
+    }),
+
+    headers: flags.string({
+      helpValue: "name:value or path",
+      multiple: true,
+      description: `Additional headers to set, either as name:value pairs or a path to a JSON file`,
+    }),
+
+    cookies: flags.string({
+      helpValue: "name=value or path",
+      multiple: true,
+      description: `Additional cookies to set, either as name=value pairs or a path to a JSON file`,
     }),
 
     "await-state": flags.enum({
@@ -212,6 +228,46 @@ export default class Scrape extends Command {
       }
     }
 
+    const headers = Sequence.from(flags.headers ?? []).flatMap((header) => {
+      const index = header.indexOf(":");
+
+      if (index === -1) {
+        try {
+          const headers = Sequence.from<Header.JSON>(
+            JSON.parse(fs.readFileSync(header, "utf-8"))
+          );
+
+          return headers.map((header) => Header.of(header.name, header.value));
+        } catch (err) {
+          error(err.message, { exit: 1 });
+        }
+      }
+
+      return Sequence.of(
+        Header.of(header.substring(0, index), header.substring(index + 1))
+      );
+    });
+
+    const cookies = Sequence.from(flags.cookies ?? []).flatMap((cookie) => {
+      const index = cookie.indexOf("=");
+
+      if (index === -1) {
+        try {
+          const cookies = Sequence.from<Cookie.JSON>(
+            JSON.parse(fs.readFileSync(cookie, "utf-8"))
+          );
+
+          return cookies.map((cookie) => Cookie.of(cookie.name, cookie.value));
+        } catch (err) {
+          error(err.message, { exit: 1 });
+        }
+      }
+
+      return Sequence.of(
+        Cookie.of(cookie.substring(0, index), cookie.substring(index + 1))
+      );
+    });
+
     const timeout = Timeout.of(flags.timeout);
 
     const result = await scraper.scrape(
@@ -222,6 +278,8 @@ export default class Scrape extends Command {
         device,
         credentials,
         screenshot,
+        headers,
+        cookies,
         javascript: flags.javascript,
       }
     );
