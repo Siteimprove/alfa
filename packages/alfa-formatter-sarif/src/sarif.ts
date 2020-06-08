@@ -32,33 +32,37 @@ export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
       let kind = "notApplicable";
       let level = "none";
       let locations: Array<unknown> = [];
-      let message = "This rule did not apply to the test subject";
+      let message = "The rule did not apply to the test subject";
 
       if (Outcome.isPassed(outcome)) {
         kind = "pass";
+        message = "The test target passes all requirements:\n\n";
+        message += outcome.expectations
+          .toArray()
+          .map(([, expectation]) => {
+            return `- ${expectation.map((result) => result.get()).get()}`;
+          })
+          .join("\n");
       }
 
       if (Outcome.isFailed(outcome)) {
         kind = "fail";
         level = "error";
+        message = "The test target fails the following requirements:\n\n";
+        message += outcome.expectations
+          .toArray()
+          .filter(([, expectation]) => expectation.get().isErr())
+          .map(([, expectation]) => {
+            return `- ${expectation.map((result) => result.getErr()).get()}`;
+          })
+          .join("\n");
       }
 
       if (Outcome.isCantTell(outcome)) {
         kind = "review";
         level = "warning";
         message =
-          "This rule has outstanding questions that must be answered for the test target";
-      }
-
-      if (Outcome.isPassed(outcome) || Outcome.isFailed(outcome)) {
-        message = outcome.expectations
-          .toArray()
-          .map(([id, expectation]) => {
-            return `${id}. ${expectation
-              .map((result) => (result.isOk() ? result.get() : result.getErr()))
-              .get()}`;
-          })
-          .join("\n");
+          "The rule has outstanding questions that must be answered for the test target";
       }
 
       if (Outcome.isApplicable(outcome)) {
@@ -106,8 +110,8 @@ export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
 
     return stringify(
       {
-        version: "2.1.0",
         $schema: "https://json.schemastore.org/sarif-2.1.0-rtm.5.json",
+        version: "2.1.0",
         runs: [
           {
             tool: {
