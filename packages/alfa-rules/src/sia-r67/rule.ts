@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -41,11 +41,15 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Err.of(
-    "The image is marked as decorative but has a non-empty accessible name"
+  export const HasNoName = Ok.of(
+    Diagnostic.of(
+      `The image is marked as decorative and does not have an accessible name`
+    )
   );
 
-  export const HasNoName = Ok.of(
-    "The image is marked as decorative and has an empty accessible name"
+  export const HasName = Err.of(
+    Diagnostic.of(
+      `The image is marked as decorative but has an accessible name`
+    )
   );
 }

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -64,10 +64,12 @@ const hasRequiredValues: Predicate<Element> = (element) => {
 
 export namespace Outcomes {
   export const HasAllStates = Ok.of(
-    "The element has all required states and properties"
+    Diagnostic.of(`The element has all required states and properties`)
   );
 
   export const HasNotAllStates = Err.of(
-    "The element does not have all required states and properties"
+    Diagnostic.of(
+      `The element does not have all required states and properties`
+    )
   );
 }

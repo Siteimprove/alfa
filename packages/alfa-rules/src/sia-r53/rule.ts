@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -45,7 +45,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsStructured = Ok.of("This heading is correctly numbered.");
+  export const IsStructured = Ok.of(
+    Diagnostic.of(`The heading is correctly ordered`)
+  );
 
-  export const IsNotStructured = Err.of("This heading is skipping levels.");
+  export const IsNotStructured = Err.of(
+    Diagnostic.of(`The heading skips one or more levels`)
+  );
 }

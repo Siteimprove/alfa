@@ -18,7 +18,7 @@ import { Outcome } from "./outcome";
 
 const { flatMap, flatten, reduce } = Iterable;
 
-export abstract class Rule<I, T, Q>
+export abstract class Rule<I, T = unknown, Q = unknown>
   implements Equatable, json.Serializable, earl.Serializable {
   protected readonly _uri: string;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
@@ -73,8 +73,6 @@ export namespace Rule {
     return value instanceof Rule;
   }
 
-  export type Expectation = Option<Result<Diagnostic>>;
-
   /**
    * We use a short-lived cache during audits for rules to store their outcomes.
    * It effectively acts as a memoization layer on top of each rule evaluation
@@ -102,8 +100,8 @@ export namespace Rule {
     >;
   }
 
-  export class Atomic<I, T, Q> extends Rule<I, T, Q> {
-    public static of<I, T, Q = unknown>(properties: {
+  export class Atomic<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = unknown>(properties: {
       uri: string;
       evaluate: Atomic.Evaluate<I, T, Q>;
     }): Atomic<I, T, Q> {
@@ -154,7 +152,7 @@ export namespace Rule {
         applicability(): Iterable<Interview<Q, T, T | Option<T>>>;
         expectations(
           target: T
-        ): { [key: string]: Interview<Q, T, Expectation> };
+        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
       };
     }
   }
@@ -163,8 +161,8 @@ export namespace Rule {
     return value instanceof Atomic;
   }
 
-  export class Composite<I, T, Q> extends Rule<I, T, Q> {
-    public static of<I, T, Q = unknown>(properties: {
+  export class Composite<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = unknown>(properties: {
       uri: string;
       composes: Iterable<Rule<I, T, Q>>;
       evaluate: Composite.Evaluate<I, T, Q>;
@@ -185,7 +183,7 @@ export namespace Rule {
     ) {
       super(uri, (input, oracle, outcomes) =>
         outcomes.get(this, () =>
-          Future.traverse(composes, (rule) =>
+          Future.traverse(this._composes, (rule) =>
             rule.evaluate(input, oracle, outcomes)
           )
             .map((outcomes) =>
@@ -247,7 +245,7 @@ export namespace Rule {
       (input: Readonly<I>): {
         expectations(
           outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): { [key: string]: Interview<Q, T, Expectation> };
+        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
       };
     }
   }
@@ -261,7 +259,9 @@ export namespace Rule {
 
 function resolve<I, T, Q>(
   target: T,
-  expectations: Record<{ [key: string]: Interview<Q, T, Rule.Expectation> }>,
+  expectations: Record<{
+    [key: string]: Interview<Q, T, Option<Result<Diagnostic>>>;
+  }>,
   rule: Rule<I, T, Q>,
   oracle: Oracle<Q>
 ): Future<Outcome.Applicable<I, T, Q>> {
@@ -278,7 +278,7 @@ function resolve<I, T, Q>(
             expectations.append([id, expectation])
           )
         ),
-      Option.of(List.empty<[string, Rule.Expectation]>())
+      Option.of(List.empty<[string, Option<Result<Diagnostic>>]>())
     )
       .map((expectations) => {
         return Outcome.from(rule, target, Record.from(expectations));

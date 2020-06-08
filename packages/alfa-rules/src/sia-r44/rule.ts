@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
@@ -55,7 +55,7 @@ export default Rule.Atomic.of<Page, Element>({
         return document.descendants({ flattened: true, nested: true }).filter(
           and(
             Element.isElement,
-            and(
+            and<Element>(
               isVisible(device),
               (element) =>
                 hasConditionalRotation(element, landscape) ||
@@ -83,6 +83,16 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
+
+export namespace Outcomes {
+  export const RotationNotLocked = Ok.of(
+    Diagnostic.of(`The element is not locked in orientation`)
+  );
+
+  export const RotationLocked = Err.of(
+    Diagnostic.of(`The element is locked in orientation`)
+  );
+}
 
 function hasConditionalRotation(element: Element, device: Device): boolean {
   const { value, source } = Style.from(element, device).computed("transform");
@@ -221,12 +231,4 @@ function getRelativeRotation(
   return getRotation(element, left).flatMap((left) =>
     getRotation(element, right).map((right) => mod(abs(left - right), 360))
   );
-}
-
-export namespace Outcomes {
-  export const RotationNotLocked = Ok.of(
-    "The element is not orientation locked"
-  );
-
-  export const RotationLocked = Err.of("The element is orientation locked");
 }

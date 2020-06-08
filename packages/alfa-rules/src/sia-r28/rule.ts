@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -49,10 +49,14 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasName = Ok.of(
-    `The <input type="button"> element has an accessible name`
+    Diagnostic.of(
+      `The \`<input type="button">\` element has an accessible name`
+    )
   );
 
   export const HasNoName = Err.of(
-    `The <input type="button"> element has no accessible name`
+    Diagnostic.of(
+      `The \`<input type="button">\` element does not have an accessible name`
+    )
   );
 }

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -44,10 +44,12 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsNotTabbable = Ok.of(
-    "The element is neither tabbable nor has tabbable descendants"
+    Diagnostic.of(
+      `The element is neither tabbable nor has tabbable descendants`
+    )
   );
 
   export const IsTabbable = Err.of(
-    "The element is either tabbable or has tabbable descendants"
+    Diagnostic.of(`The element is either tabbable or has tabbable descendants`)
   );
 }

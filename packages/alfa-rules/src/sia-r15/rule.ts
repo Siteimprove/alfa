@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -92,14 +92,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
 export namespace Outcomes {
   export const EmbedSameResources = Ok.of(
-    "The <iframe> elements embed the same resource"
+    Diagnostic.of(`The \`<iframe>\` elements embed the same resource`)
   );
 
   export const EmbedEquivalentResources = Ok.of(
-    "The <iframe> elements embed equivalent resources"
+    Diagnostic.of(`The \`<iframe>\` elements embed equivalent resources`)
   );
 
   export const EmbedDifferentResources = Err.of(
-    "The <iframe> elements do not embed the same or equivalent resources"
+    Diagnostic.of(
+      `The \`<iframe>\` elements do not embed the same or equivalent resources`
+    )
   );
 }

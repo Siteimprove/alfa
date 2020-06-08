@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -47,9 +47,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Ok.of("The <iframe> has an accessible name");
+  export const HasName = Ok.of(
+    Diagnostic.of(`The \`<iframe>\` has an accessible name`)
+  );
 
   export const HasNoName = Err.of(
-    "The <iframe> does not have an accessible name"
+    Diagnostic.of(`The \`<iframe>\` does not have an accessible name`)
   );
 }

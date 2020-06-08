@@ -1,4 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-trilean";
@@ -7,6 +9,7 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as trilean from "@siteimprove/alfa-trilean";
 
+import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
 
 export abstract class Outcome<I, T, Q = unknown>
@@ -60,18 +63,20 @@ export namespace Outcome {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Rule.Expectation }>
+      expectations: Record<{ [key: string]: Result<Diagnostic> }>
     ): Passed<I, T, Q> {
       return new Passed(rule, target, expectations);
     }
 
     private readonly _target: T;
-    private readonly _expectations: Record<{ [key: string]: Rule.Expectation }>;
+    private readonly _expectations: Record<{
+      [key: string]: Result<Diagnostic>;
+    }>;
 
     private constructor(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Rule.Expectation }>
+      expectations: Record<{ [key: string]: Result<Diagnostic> }>
     ) {
       super(rule);
 
@@ -83,7 +88,7 @@ export namespace Outcome {
       return this._target;
     }
 
-    public get expectations(): Record<{ [key: string]: Rule.Expectation }> {
+    public get expectations(): Record<{ [key: string]: Result<Diagnostic> }> {
       return this._expectations;
     }
 
@@ -103,10 +108,7 @@ export namespace Outcome {
         target: json.Serializable.toJSON(this._target),
         expectations: this._expectations
           .toArray()
-          .map(([id, expectation]) => [
-            id,
-            expectation.map((expectation) => expectation.toJSON()).getOr(null),
-          ]),
+          .map(([id, expectation]) => [id, expectation.toJSON()]),
       };
     }
 
@@ -120,13 +122,10 @@ export namespace Outcome {
           },
           "earl:info": this._expectations
             .toArray()
-            .reduce((message, [, expectation]) => {
-              if (expectation.isSome() && expectation.get().isOk()) {
-                message += "\n" + expectation.get().get();
-              }
-
-              return message;
-            }, "")
+            .reduce(
+              (message, [, expectation]) => message + "\n" + expectation.get(),
+              ""
+            )
             .trim(),
         },
       };
@@ -144,7 +143,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.JSON;
-      expectations: Array<[string, Result.JSON | null]>;
+      expectations: Array<[string, Result.JSON]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -163,18 +162,20 @@ export namespace Outcome {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Rule.Expectation }>
+      expectations: Record<{ [key: string]: Result<Diagnostic> }>
     ): Failed<I, T, Q> {
       return new Failed(rule, target, expectations);
     }
 
     private readonly _target: T;
-    private readonly _expectations: Record<{ [key: string]: Rule.Expectation }>;
+    private readonly _expectations: Record<{
+      [key: string]: Result<Diagnostic>;
+    }>;
 
     private constructor(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Rule.Expectation }>
+      expectations: Record<{ [key: string]: Result<Diagnostic> }>
     ) {
       super(rule);
 
@@ -186,7 +187,7 @@ export namespace Outcome {
       return this._target;
     }
 
-    public get expectations(): Record<{ [key: string]: Rule.Expectation }> {
+    public get expectations(): Record<{ [key: string]: Result<Diagnostic> }> {
       return this._expectations;
     }
 
@@ -206,10 +207,7 @@ export namespace Outcome {
         target: json.Serializable.toJSON(this._target),
         expectations: this._expectations
           .toArray()
-          .map(([id, expectation]) => [
-            id,
-            expectation.map((expectation) => expectation.toJSON()).getOr(null),
-          ]),
+          .map(([id, expectation]) => [id, expectation.toJSON()]),
       };
     }
 
@@ -224,8 +222,8 @@ export namespace Outcome {
           "earl:info": this._expectations
             .toArray()
             .reduce((message, [, expectation]) => {
-              if (expectation.isSome() && expectation.get().isErr()) {
-                message += "\n" + expectation.get().getErr();
+              if (expectation.isErr()) {
+                message += "\n" + expectation.getErr();
               }
 
               return message;
@@ -247,7 +245,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.JSON;
-      expectations: Array<[string, Result.JSON | null]>;
+      expectations: Array<[string, Result.JSON]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -385,15 +383,35 @@ export namespace Outcome {
   export function from<I, T, Q>(
     rule: Rule<I, T, Q>,
     target: T,
-    expectations: Record<{ [key: string]: Rule.Expectation }>
+    expectations: Record<{ [key: string]: Option<Result<Diagnostic>> }>
   ): Outcome.Applicable<I, T, Q> {
     return Predicate.fold(
       trilean.every((expectation) =>
         expectation.isNone() ? undefined : expectation.get().isOk()
       ),
       expectations.values(),
-      () => Passed.of(rule, target, expectations),
-      () => Failed.of(rule, target, expectations),
+      () =>
+        Passed.of(
+          rule,
+          target,
+          Record.from(
+            Iterable.map(expectations.entries(), ([id, expectation]) => [
+              id,
+              expectation.get(),
+            ])
+          )
+        ),
+      () =>
+        Failed.of(
+          rule,
+          target,
+          Record.from(
+            Iterable.map(expectations.entries(), ([id, expectation]) => [
+              id,
+              expectation.get(),
+            ])
+          )
+        ),
       () => CantTell.of(rule, target)
     );
   }

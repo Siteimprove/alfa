@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -37,7 +37,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasUniqueId = Ok.of("The element has a unique ID");
+  export const HasUniqueId = Ok.of(
+    Diagnostic.of(`The element has a unique ID`)
+  );
 
-  export const HasNonUniqueId = Err.of("The element does not have a unique ID");
+  export const HasNonUniqueId = Err.of(
+    Diagnostic.of(`The element does not have a unique ID`)
+  );
 }

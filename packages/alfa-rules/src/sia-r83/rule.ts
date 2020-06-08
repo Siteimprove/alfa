@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -70,9 +70,11 @@ export default Rule.Atomic.of<Page, Text>({
 });
 
 export namespace Outcomes {
-  export const WrapsText = Ok.of("The text is wrapped without being clipped");
+  export const WrapsText = Ok.of(
+    Diagnostic.of(`The text is wrapped without being clipped`)
+  );
 
-  export const ClipsText = Err.of("The text is clipped");
+  export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
 }
 
 function isPossiblyClipped(device: Device): Predicate<Element> {

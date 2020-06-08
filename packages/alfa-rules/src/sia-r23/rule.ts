@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -29,14 +29,15 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "transcript",
             "node",
             target,
-            "Where is the transcript of the <audio> element?"
+            `Where is the transcript of the \`<audio>\` element?`
           ).map((transcript) => {
             if (transcript.isNone()) {
               return Question.of(
                 "transcript-link",
                 "node",
                 target,
-                "Where is the link pointing to the transcript of the <audio> element?"
+                `Where is the link pointing to the transcript of the \`<audio>\`
+                element?`
               ).map((transcriptLink) => {
                 if (transcriptLink.isNone()) {
                   return Some.of(Outcomes.HasNoTranscript);
@@ -54,7 +55,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "transcript-perceivable",
                   "boolean",
                   target,
-                  "Is the transcript of the <audio> element perceivable?"
+                  `Is the transcript of the \`<audio>\` element perceivable?`
                 ).map((isPerceivable) =>
                   expectation(
                     isPerceivable,
@@ -79,18 +80,24 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const HasPerceivableTranscript = Ok.of(
-    "The <audio> element has a transcript that is perceivable"
+    Diagnostic.of(
+      `The \`<audio>\` element has a transcript that is perceivable`
+    )
   );
 
   export const HasNoTranscript = Err.of(
-    "The <audio> element has no transcript"
+    Diagnostic.of(`The \`<audio>\` element has no transcript`)
   );
 
   export const HasNonPerceivableTranscriptLink = Err.of(
-    "The <audio> has a link to transcript, but the link is not perceivable"
+    Diagnostic.of(
+      `The \`<audio>\` has a link to transcript, but the link is not perceivable`
+    )
   );
 
   export const HasNonPerceivableTranscript = Err.of(
-    "The <audio> element has a transcript that is not perceivable"
+    Diagnostic.of(
+      `The \`<audio>\` element has a transcript that is not perceivable`
+    )
   );
 }

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -39,7 +39,9 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 export namespace Outcomes {
-  export const IsDefined = Ok.of("The attribute is defined");
+  export const IsDefined = Ok.of(Diagnostic.of(`The attribute is defined`));
 
-  export const IsNotDefined = Err.of("The attribute is not defined");
+  export const IsNotDefined = Err.of(
+    Diagnostic.of(`The attribute is not defined`)
+  );
 }

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -37,10 +37,14 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasLanguage = Ok.of(
-    "The lang attribute exists and is neither empty nor only whitespace"
+    Diagnostic.of(
+      `The \`lang\` attribute exists and is neither empty nor only whitespace`
+    )
   );
 
   export const HasNoLanguage = Err.of(
-    "The lang attribute is either missing, empty, or only whitespace"
+    Diagnostic.of(
+      `The \`lang\` attribute is either missing, empty, or only whitespace`
+    )
   );
 }

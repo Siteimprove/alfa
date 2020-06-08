@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -46,7 +46,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasAccessibleName = Ok.of("The image has an accessible name");
+  export const HasAccessibleName = Ok.of(
+    Diagnostic.of(`The image has an accessible name`)
+  );
 
-  export const HasNoAccessibleName = Err.of("The image has no accessible name");
+  export const HasNoAccessibleName = Err.of(
+    Diagnostic.of(`The image does not have an accessible name`)
+  );
 }

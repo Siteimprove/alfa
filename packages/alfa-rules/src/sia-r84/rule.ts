@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -51,11 +51,15 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsReachable = Ok.of(
-    `The scrollable element is reachable through keyboard navigation`
+    Diagnostic.of(
+      `The scrollable element is reachable through keyboard navigation`
+    )
   );
 
   export const IsNotReachable = Err.of(
-    `The scrollable element is not reachable through keyboard navigation`
+    Diagnostic.of(
+      `The scrollable element is not reachable through keyboard navigation`
+    )
   );
 }
 

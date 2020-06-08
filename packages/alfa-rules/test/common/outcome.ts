@@ -1,5 +1,4 @@
 import { Diagnostic, Rule, Outcome } from "@siteimprove/alfa-act";
-import { Some } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -12,12 +11,7 @@ export function passed<T, Q>(
   return Outcome.Passed.of(
     rule,
     target,
-    Record.from(
-      Object.entries(expectations).map(([id, expectation]) => [
-        id,
-        Some.of(expectation),
-      ])
-    )
+    Record.from(Object.entries(expectations))
   ).toJSON();
 }
 
@@ -29,12 +23,7 @@ export function failed<T, Q>(
   return Outcome.Failed.of(
     rule,
     target,
-    Record.from(
-      Object.entries(expectations).map(([id, expectation]) => [
-        id,
-        Some.of(expectation),
-      ])
-    )
+    Record.from(Object.entries(expectations))
   ).toJSON();
 }
 
