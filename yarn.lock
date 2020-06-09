@@ -2246,6 +2246,7 @@ __metadata:
     "@siteimprove/alfa-assert": ^0.2.0
     "@siteimprove/alfa-highlight": ^0.2.0
     "@siteimprove/alfa-mapper": ^0.2.0
+    "@siteimprove/alfa-option": ^0.2.0
     "@siteimprove/alfa-predicate": ^0.2.0
     "@siteimprove/alfa-sequence": ^0.2.0
     "@siteimprove/alfa-test": ^0.2.0
