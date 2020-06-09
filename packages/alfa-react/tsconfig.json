@@ -20,6 +20,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-http"
     },
     {

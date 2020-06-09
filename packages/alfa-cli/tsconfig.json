@@ -13,7 +13,13 @@
       "path": "../alfa-act"
     },
     {
+      "path": "../alfa-cache"
+    },
+    {
       "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
     },
     {
       "path": "../alfa-formatter"
@@ -25,10 +31,25 @@
       "path": "../alfa-formatter-json"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-rules"
     },
     {
       "path": "../alfa-scraper"
+    },
+    {
+      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"
@@ -38,6 +59,9 @@
     },
     {
       "path": "../alfa-web"
+    },
+    {
+      "path": "../alfa-xpath"
     }
   ]
 }

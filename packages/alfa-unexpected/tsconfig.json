@@ -7,13 +7,16 @@
       "path": "../alfa-assert"
     },
     {
-      "path": "../alfa-dom"
+      "path": "../alfa-mapper"
     },
     {
-      "path": "../alfa-highlight"
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

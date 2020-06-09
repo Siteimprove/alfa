@@ -68,6 +68,12 @@
     },
     {
       "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-slice"
+    },
+    {
+      "path": "../alfa-test"
     }
   ]
 }

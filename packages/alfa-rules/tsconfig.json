@@ -153,6 +153,9 @@
       "path": "../alfa-branched"
     },
     {
+      "path": "../alfa-cache"
+    },
+    {
       "path": "../alfa-compatibility"
     },
     {
@@ -165,13 +168,25 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-http"
     },
     {
       "path": "../alfa-iana"
     },
     {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-list"
     },
     {
       "path": "../alfa-map"
@@ -195,6 +210,12 @@
       "path": "../alfa-result"
     },
     {
+      "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-set"
+    },
+    {
       "path": "../alfa-style"
     },
     {
@@ -202,6 +223,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
     },
     {
       "path": "../alfa-trilean"

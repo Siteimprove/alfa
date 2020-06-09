@@ -19,6 +19,12 @@
       "path": "../alfa-encoding"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-json"
     },
     {
