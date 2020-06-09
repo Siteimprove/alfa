@@ -113,9 +113,9 @@ export default Rule.Atomic.of<Page, Text, Question>({
           1: getForeground(parent, device)
             .map((foreground) => result.answer(foreground))
             .flatMap((result) =>
-              getBackground(parent, device).map((background) =>
-                result.answer(background)
-              )
+              getBackground(parent, device)
+                .map((background) => result.answer(background))
+                .orElse(() => Option.of(result))
             )
             .getOr(result),
         };
