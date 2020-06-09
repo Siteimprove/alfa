@@ -10,13 +10,16 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-future"
     },
     {
-      "path": "../alfa-highlight"
+      "path": "../alfa-iterable"
     },
     {
-      "path": "../alfa-iterable"
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-list"

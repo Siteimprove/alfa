@@ -13,6 +13,9 @@
       "path": "../alfa-functor"
     },
     {
+      "path": "../alfa-json"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {

@@ -23,6 +23,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-http"
     },
     {
@@ -32,10 +35,19 @@
       "path": "../alfa-jest"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-test"
     },
     {
       "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }
