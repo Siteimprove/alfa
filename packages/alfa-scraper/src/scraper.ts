@@ -48,7 +48,7 @@ export class Scraper {
   ): Promise<Result<Page, string>> {
     const {
       timeout = Timeout.of(10000),
-      awaiter = Awaiter.ready(),
+      awaiter = Awaiter.loaded(),
       device = Device.standard(),
       credentials = null,
       screenshot = null,
