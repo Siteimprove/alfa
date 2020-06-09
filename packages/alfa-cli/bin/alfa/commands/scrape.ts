@@ -167,11 +167,10 @@ export default class Scrape extends Command {
   public static async runWithFlags(flags: Flags, target: string) {
     const scraper = await Scraper.of();
 
-    let awaiter: Awaiter;
+    let awaiter: Awaiter | undefined;
 
     switch (flags["await-state"]) {
       case "ready":
-      default:
         awaiter = Awaiter.ready();
         break;
       case "loaded":
