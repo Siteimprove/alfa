@@ -1,10 +1,11 @@
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Timeout } from "@siteimprove/alfa-time";
 
 import * as puppeteer from "puppeteer";
 
 export type Awaiter<T = unknown> = (
   page: puppeteer.Page,
-  timeout: number
+  timeout: Timeout
 ) => Promise<Result<T, string>>;
 
 export namespace Awaiter {
@@ -14,7 +15,7 @@ export namespace Awaiter {
         return Ok.of(
           await page.waitForNavigation({
             waitUntil: "domcontentloaded",
-            timeout,
+            timeout: timeout.remaining(),
           })
         );
       } catch {
@@ -29,7 +30,10 @@ export namespace Awaiter {
     return async (page, timeout) => {
       try {
         return Ok.of(
-          await page.waitForNavigation({ waitUntil: "load", timeout })
+          await page.waitForNavigation({
+            waitUntil: "load",
+            timeout: timeout.remaining(),
+          })
         );
       } catch {
         return Err.of(
@@ -43,7 +47,10 @@ export namespace Awaiter {
     return async (page, timeout) => {
       try {
         return Ok.of(
-          await page.waitForNavigation({ waitUntil: "networkidle0", timeout })
+          await page.waitForNavigation({
+            waitUntil: "networkidle0",
+            timeout: timeout.remaining(),
+          })
         );
       } catch {
         return Err.of(
@@ -73,7 +80,9 @@ export namespace Awaiter {
   ): Awaiter<puppeteer.ElementHandle<Element>> {
     return async (page, timeout) => {
       try {
-        return Ok.of(await page.waitForSelector(selector, { timeout }));
+        return Ok.of(
+          await page.waitForSelector(selector, { timeout: timeout.remaining() })
+        );
       } catch {
         return Err.of(
           `Timeout exceeded while waiting for the selector "${selector}"`
@@ -87,7 +96,9 @@ export namespace Awaiter {
   ): Awaiter<puppeteer.ElementHandle<Element>> {
     return async (page, timeout) => {
       try {
-        return Ok.of(await page.waitForXPath(expression, { timeout }));
+        return Ok.of(
+          await page.waitForXPath(expression, { timeout: timeout.remaining() })
+        );
       } catch {
         return Err.of(
           `Timeout exceeded while waiting for the expression "${selector}"`

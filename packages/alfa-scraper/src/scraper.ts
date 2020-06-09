@@ -140,7 +140,7 @@ export class Scraper {
           })
           .catch(() => {});
 
-        const result = await awaiter(page, timeout.remaining());
+        const result = await awaiter(page, timeout);
 
         if (result.isErr()) {
           return result;
