@@ -11,6 +11,8 @@ import { Contrast } from "../../src/sia-r69/diagnostic/contrast";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
+import { oracle } from "../common/oracle";
+
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(
     Percentage.of(r),
@@ -243,4 +245,64 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
   ]);
 
   t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+});
+
+test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html style="color: #000; background-image: url('foo.png')">
+        Hello world
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document.descendants().find(Text.isText).get();
+
+  t.deepEqual(
+    await evaluate(
+      R69,
+      { document },
+      oracle({
+        "background-colors": [rgb(1, 1, 1)],
+      })
+    ),
+    [
+      passed(R69, target, {
+        1: Outcomes.HasSufficientContrast(21, 4.5, [
+          Contrast.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
+        ]),
+      }),
+    ]
+  );
+});
+
+test("evaluate() fails when a background color with insufficient contrast is input", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html style="color: #000; background-image: url('foo.png')">
+        Hello world
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document.descendants().find(Text.isText).get();
+
+  t.deepEqual(
+    await evaluate(
+      R69,
+      { document },
+      oracle({
+        "background-colors": [rgb(0, 0, 0)],
+      })
+    ),
+    [
+      failed(R69, target, {
+        1: Outcomes.HasInsufficientContrast(1, 4.5, [
+          Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+        ]),
+      }),
+    ]
+  );
 });
