@@ -40,7 +40,7 @@ export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
         message += outcome.expectations
           .toArray()
           .map(([, expectation]) => {
-            return `- ${expectation.map((result) => result.get()).get()}`;
+            return `- ${expectation.get().message}`;
           })
           .join("\n");
       }
@@ -51,9 +51,9 @@ export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
         message = "The test target fails the following requirements:\n\n";
         message += outcome.expectations
           .toArray()
-          .filter(([, expectation]) => expectation.get().isErr())
+          .filter(([, expectation]) => expectation.isErr())
           .map(([, expectation]) => {
-            return `- ${expectation.map((result) => result.getErr()).get()}`;
+            return `- ${expectation.getErr().message}`;
           })
           .join("\n");
       }
