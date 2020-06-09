@@ -1,4 +1,5 @@
 import { Oracle } from "@siteimprove/alfa-act";
+import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -7,25 +8,34 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Question } from "../../src/common/question";
 
-const { isBoolean } = Predicate;
-const { isOption } = Option;
-const { isIterable } = Iterable;
-
 export function oracle(answers: {
-  [uri: string]: boolean | Option<Node> | Iterable<Node>;
+  [uri: string]:
+    | boolean
+    | Option<Node>
+    | Iterable<Node>
+    | Option<RGB>
+    | Iterable<RGB>;
 }): Oracle<Question> {
   return (rule, question) => {
     const answer = answers[question.uri];
 
-    if (question.type === "boolean" && isBoolean(answer)) {
+    if (question.type === "boolean" && Predicate.isBoolean(answer)) {
       return Future.now(Option.of(question.answer(answer)));
     }
 
-    if (question.type === "node" && isOption(answer)) {
+    if (question.type === "node" && Option.isOption<Node>(answer)) {
       return Future.now(Option.of(question.answer(answer)));
     }
 
-    if (question.type === "node[]" && isIterable(answer)) {
+    if (question.type === "node[]" && Iterable.isIterable<Node>(answer)) {
+      return Future.now(Option.of(question.answer(answer)));
+    }
+
+    if (question.type === "color" && Option.isOption<RGB>(answer)) {
+      return Future.now(Option.of(question.answer(answer)));
+    }
+
+    if (question.type === "color[]" && Iterable.isIterable<RGB>(answer)) {
       return Future.now(Option.of(question.answer(answer)));
     }
 
