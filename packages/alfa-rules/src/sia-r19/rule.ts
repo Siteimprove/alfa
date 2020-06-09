@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -50,9 +50,11 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 export namespace Outcomes {
-  export const HasValidValue = Ok.of("The attribute has a valid value");
+  export const HasValidValue = Ok.of(
+    Diagnostic.of(`The attribute has a valid value`)
+  );
 
   export const HasNoValidValue = Err.of(
-    "The attribute does not have a valid value"
+    Diagnostic.of(`The attribute does not have a valid value`)
   );
 }

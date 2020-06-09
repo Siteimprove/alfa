@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -23,7 +23,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "has-audio-track",
             "boolean",
             target,
-            "Does the <video> element have an audio track that describes its visual information?"
+            `Does the \`<video>\` element have an audio track that describes its
+            visual information?`
           ).map((hasAudioTrack) =>
             expectation(
               hasAudioTrack,
@@ -39,10 +40,16 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const HasDescriptiveAudio = Ok.of(
-    "The <video> element has an audio track that describes its visual information"
+    Diagnostic.of(
+      `The \`<video>\` element has an audio track that describes its visual
+      information`
+    )
   );
 
   export const HasNoDescriptiveAudio = Err.of(
-    "The <video> element does not have an audio track that describes its visual information"
+    Diagnostic.of(
+      `The \`<video>\` element does not have an audio track that describes its
+      visual information`
+    )
   );
 }

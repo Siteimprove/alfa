@@ -95,6 +95,7 @@
     "src/sia-r64/rule.ts",
     "src/sia-r67/rule.ts",
     "src/sia-r68/rule.ts",
+    "src/sia-r69/diagnostic/contrast.ts",
     "src/sia-r69/rule.ts",
     "src/sia-r7/rule.ts",
     "src/sia-r71/rule.ts",

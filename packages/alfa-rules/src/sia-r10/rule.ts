@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -234,10 +234,10 @@ function isAppropriateField(field: string): Predicate<Element> {
 
 export namespace Outcomes {
   export const HasValidValue = Ok.of(
-    "The autocomplete attribute has a valid value"
+    Diagnostic.of(`The \`autocomplete\` attribute has a valid value`)
   );
 
   export const HasNoValidValue = Err.of(
-    "The autocomplete attribute does not have a valid value"
+    Diagnostic.of(`The \`autocomplete\` attribute does not have a valid value`)
   );
 }

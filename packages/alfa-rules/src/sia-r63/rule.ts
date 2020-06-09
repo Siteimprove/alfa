@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -37,7 +37,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Ok.of("The object has a non-empty accessible name");
+  export const HasName = Ok.of(
+    Diagnostic.of(`The \`<object>\` element has an accessible name`)
+  );
 
-  export const HasNoName = Err.of("The object has an empty accessible name");
+  export const HasNoName = Err.of(
+    Diagnostic.of(`The \`<object>\` element does not have an accessible name`)
+  );
 }

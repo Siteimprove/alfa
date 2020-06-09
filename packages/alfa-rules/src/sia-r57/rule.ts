@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -58,10 +58,10 @@ export default Rule.Atomic.of<Page, Text>({
 
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
-    "The text is included in a landmark region"
+    Diagnostic.of(`The text is included in a landmark region`)
   );
 
   export const IsNotIncludedInLandmark = Err.of(
-    "The text is not included in a landmark region"
+    Diagnostic.of(`The text is not included in a landmark region`)
   );
 }

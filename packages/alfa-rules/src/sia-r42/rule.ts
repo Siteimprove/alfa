@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
@@ -50,11 +50,15 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsOwnedByContextRole = Ok.of(
-    "The element is owned by an element of its required context role"
+    Diagnostic.of(
+      `The element is owned by an element of its required context role`
+    )
   );
 
   export const IsNotOwnedByContextRole = Err.of(
-    "The element is not owned by an element of its required context role"
+    Diagnostic.of(
+      `The element is not owned by an element of its required context role`
+    )
   );
 }
 

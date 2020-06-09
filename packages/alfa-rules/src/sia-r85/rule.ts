@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -48,7 +48,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsNotItalic = Ok.of("The paragraph text is not all italic");
+  export const IsNotItalic = Ok.of(
+    Diagnostic.of(`The text of the \`<p>\` element is not all italic`)
+  );
 
-  export const IsItalic = Err.of("The paragraph text is all italic");
+  export const IsItalic = Err.of(
+    Diagnostic.of(`The text of the \`<p>\` element is all italic`)
+  );
 }

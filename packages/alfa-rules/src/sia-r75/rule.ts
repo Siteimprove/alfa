@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Unit } from "@siteimprove/alfa-css";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -56,10 +56,10 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    "The font size is not smaller than 9 pixels"
+    Diagnostic.of(`The font size is not smaller than 9 pixels`)
   );
 
   export const IsInsufficient = Err.of(
-    "The font size is smaller than 9 pixels"
+    Diagnostic.of(`The font size is smaller than 9 pixels`)
   );
 }

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Unit } from "@siteimprove/alfa-css";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -57,10 +57,10 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasRelativeUnit = Ok.of(
-    "The line height is specified using a relative unit"
+    Diagnostic.of(`The line height is specified using a relative unit`)
   );
 
   export const HasAbsoluteUnit = Err.of(
-    "The line height is specified using an absolute unit"
+    Diagnostic.of(`The line height is specified using an absolute unit`)
   );
 }

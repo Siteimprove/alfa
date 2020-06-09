@@ -1,6 +1,5 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { None } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { some } from "@siteimprove/alfa-trilean";
 import { Page } from "@siteimprove/alfa-web";
@@ -33,10 +32,10 @@ export default Rule.Composite.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const HasTextAlternative = Ok.of(
-    "The <audio> element has a text alternative"
+    Diagnostic.of(`The \`<audio>\` element has a text alternative`)
   );
 
   export const HasNoTextAlternative = Err.of(
-    "The <audio> element has no text alternative"
+    Diagnostic.of(`The \`<audio>\` element does not have a text alternative`)
   );
 }

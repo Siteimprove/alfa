@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -60,18 +60,26 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+export namespace Outcomes {
+  export const MetaDoesNotPreventZoom = Ok.of(
+    Diagnostic.of(
+      `The \`<meta>\` element does not restrict the ability to zoom`
+    )
+  );
+
+  export const MedatDoesPreventZoom = Err.of(
+    Diagnostic.of(`The \`<meta>\` element restricts the ability to zoom`)
+  );
+}
+
 /*
- * Parses a list of "name=value" properties according to https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
+ * Parses a list of "name=value" properties according to
+ * https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
  *
  * @remarks
- * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
- * The algorithm considers "foo bar =  = === foobar" as a valid string for "foo=foobar"
- *
- * @param propertiesList - The list to be parsed
- * @param ignored - A list of characters that are ignored (considered as whitespace)
- * @param separator - A list of characters that are allowed to separate "name=value" pairs
- * @param equal - A list of characters that are considered as equal sign
- * @returns a Map where each correctly formed "name=value" pair has a "name" key with value "value"
+ * This seems to be the iOS/Safari algorithm and other browsers might handle it
+ * in unknown ways. The algorithm considers "foo bar =  = === foobar" as a valid
+ * string for "foo=foobar"
  */
 export function parsePropertiesList(
   propertiesList: string,
@@ -175,14 +183,4 @@ export function parseUserScalable(
         scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed"
       );
   }
-}
-
-export namespace Outcomes {
-  export const MetaDoesNotPreventZoom = Ok.of(
-    "The <meta> element does not restrict the ability to zoom"
-  );
-
-  export const MedatDoesPreventZoom = Err.of(
-    "The <meta> element restricts the ability to zoom"
-  );
 }

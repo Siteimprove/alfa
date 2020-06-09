@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "transcript",
             "node",
             target,
-            "Where is the transcript of the <video> element?"
+            `Where is the transcript of the \`<video>\` element?`
           ).map((transcript) =>
             expectation(
               transcript.isSome(),
@@ -33,7 +33,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "transcript-link",
                   "node",
                   target,
-                  "Where is the link pointing to the transcript of the <video> element?"
+                  `Where is the link pointing to the transcript of the \`<video>\`
+                  element?`
                 ).map((transcriptLink) =>
                   expectation(
                     transcriptLink.isSome(),
@@ -50,9 +51,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const HasTranscript = Ok.of("The <video> element has a transcript");
+  export const HasTranscript = Ok.of(
+    Diagnostic.of(`The \`<video>\` element has a transcript`)
+  );
 
   export const HasNoTranscript = Err.of(
-    "The <video> element does not have a transcript"
+    Diagnostic.of(`The \`<video>\` element does not have a transcript`)
   );
 }

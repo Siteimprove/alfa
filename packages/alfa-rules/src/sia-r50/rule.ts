@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -33,14 +33,18 @@ export default Rule.Composite.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const AutoplayGood = Ok.of(
-    `The total duration of the autoplaying audio output of the
-                element either lasts no longer than 3 seconds or a mechanism to
-                pause or stop the audio is available`
+    Diagnostic.of(
+      `The total duration of the autoplaying audio output of the element either
+      lasts no longer than 3 seconds or a mechanism to pause or stop the audio
+      is available`
+    )
   );
 
   export const AutoplayBad = Err.of(
-    `The total duration of the autoplaying audio output of the
-                element lasts longer than 3 seconds and no mechanism to pause or
-                stop the audio is available`
+    Diagnostic.of(
+      `The total duration of the autoplaying audio output of the element lasts
+      longer than 3 seconds and no mechanism to pause or stop the audio is
+      available`
+    )
   );
 }

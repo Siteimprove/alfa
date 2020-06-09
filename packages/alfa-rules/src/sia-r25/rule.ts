@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -23,7 +23,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "has-description",
             "boolean",
             target,
-            "Is the visual information of the <video> available through its audio or a separate audio description track?"
+            `Is the visual information of the \`<video>\` available through its
+            audio or a separate audio description track?`
           ).map((hasAudio) =>
             expectation(
               hasAudio,
@@ -39,10 +40,14 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const HasInformativeAudio = Ok.of(
-    "The visual information of the <video> element is available through audio"
+    Diagnostic.of(
+      `The visual information of the \`<video>\` element is available through audio`
+    )
   );
 
   export const HasNoInformativeAudio = Err.of(
-    "The visual information of the <video> element is not available through audio"
+    Diagnostic.of(
+      `The visual information of the \`<video>\` element is not available through audio`
+    )
   );
 }

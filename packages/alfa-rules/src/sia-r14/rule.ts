@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
@@ -96,14 +96,20 @@ function getVisibleTextContent(element: Element, device: Device): string {
 
 export namespace Outcomes {
   export const VisibleIsInName = Ok.of(
-    "The visible text content of the element is included within its accessible name"
+    Diagnostic.of(
+      `The visible text content of the element is included within its accessible name`
+    )
   );
 
   export const NameIsNotLanguage = Ok.of(
-    "The accessible name of the element does not express anything in human language"
+    Diagnostic.of(
+      `The accessible name of the element does not express anything in human language`
+    )
   );
 
   export const VisibleIsNotInName = Err.of(
-    "The visible text content of the element is not included within its accessible name"
+    Diagnostic.of(
+      `The visible text content of the element is not included within its accessible name`
+    )
   );
 }

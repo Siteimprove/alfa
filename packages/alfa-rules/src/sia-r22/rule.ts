@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "has-captions",
             "boolean",
             target,
-            "Does the <video> element have captions?"
+            `Does the \`<video>\` element have captions?`
           ).map((hasCaptions) =>
             expectation(
               hasCaptions,
@@ -38,9 +38,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const HasCaptions = Ok.of("The <video> element has captions");
+  export const HasCaptions = Ok.of(
+    Diagnostic.of(`The \`<video>\` element has captions`)
+  );
 
   export const HasNoCaptions = Err.of(
-    "The <video> element does not have captions"
+    Diagnostic.of(`The \`<video>\` element does not have captions`)
   );
 }

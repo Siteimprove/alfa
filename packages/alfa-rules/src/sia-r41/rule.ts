@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -83,7 +83,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 "reference-equivalent-resources",
                 "boolean",
                 target,
-                "Do the links resolve to equivalent resources?"
+                `Do the links resolve to equivalent resources?`
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
@@ -100,14 +100,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
 export namespace Outcomes {
   export const ResolveSameResource = Ok.of(
-    "The links resolve to the same resource"
+    Diagnostic.of(`The links resolve to the same resource`)
   );
 
   export const ResolveEquivalentResource = Ok.of(
-    "The links resolve to equivalent resources"
+    Diagnostic.of(`The links resolve to equivalent resources`)
   );
 
   export const ResolveDifferentResource = Err.of(
-    "The links do not resolve to the same or equivalent resources"
+    Diagnostic.of(
+      `The links do not resolve to the same or equivalent resources`
+    )
   );
 }

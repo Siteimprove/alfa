@@ -9,7 +9,7 @@ export class Cache {
     return new Cache();
   }
 
-  private readonly storage = new WeakMap<object, unknown>();
+  private readonly _storage = new WeakMap<object, unknown>();
 
   private constructor() {}
 
@@ -17,13 +17,13 @@ export class Cache {
     rule: Rule<I, T, Q>,
     ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q>>>>
   ): Future<Iterable<Outcome<I, T, Q>>> {
-    let outcomes = this.storage.get(rule) as
+    let outcomes = this._storage.get(rule) as
       | Future<Iterable<Outcome<I, T, Q>>>
       | undefined;
 
     if (outcomes === undefined) {
       outcomes = ifMissing();
-      this.storage.set(rule, outcomes);
+      this._storage.set(rule, outcomes);
     }
 
     return outcomes;

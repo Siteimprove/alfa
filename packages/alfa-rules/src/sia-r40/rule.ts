@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -45,9 +45,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Ok.of("The region has an accessible name");
+  export const HasName = Ok.of(
+    Diagnostic.of(`The region has an accessible name`)
+  );
 
   export const HasNoName = Err.of(
-    "The region does not have an accessible name"
+    Diagnostic.of(`The region does not have an accessible name`)
   );
 }

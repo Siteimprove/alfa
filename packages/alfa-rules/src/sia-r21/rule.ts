@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -56,9 +56,11 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 export namespace Outcomes {
-  export const HasValidRole = Ok.of("The element has a valid role");
+  export const HasValidRole = Ok.of(
+    Diagnostic.of(`The element has a valid role`)
+  );
 
   export const HasNoValidRole = Err.of(
-    "The element does not have a valid role"
+    Diagnostic.of(`The element does not have a valid role`)
   );
 }

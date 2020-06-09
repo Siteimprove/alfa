@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -56,10 +56,14 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
-    "The attribute is allowed for the element on which it is specified"
+    Diagnostic.of(
+      `The attribute is allowed for the element on which it is specified`
+    )
   );
 
   export const IsNotAllowed = Err.of(
-    "The attribute is not allowed for the element on which it is specified"
+    Diagnostic.of(
+      `The attribute is not allowed for the element on which it is specified`
+    )
   );
 }

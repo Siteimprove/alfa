@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -48,7 +48,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsNotUppercased = Ok.of("The paragraph text is not uppercased");
+  export const IsNotUppercased = Ok.of(
+    Diagnostic.of(`The text of the \`<p>\` element is not uppercased`)
+  );
 
-  export const IsUppercased = Err.of("The paragraph text is uppercased");
+  export const IsUppercased = Err.of(
+    Diagnostic.of(`The text of the \`<p>\` element is uppercased`)
+  );
 }

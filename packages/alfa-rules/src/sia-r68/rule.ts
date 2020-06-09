@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
@@ -50,11 +50,13 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasCorrectOwnedElements = Ok.of(
-    "The element only owns elements as required by its semantic role"
+    Diagnostic.of(
+      `The element only owns elements as required by its semantic role`
+    )
   );
 
   export const HasIncorrectOwnedElements = Err.of(
-    "The element owns elements not required by its semantic role"
+    Diagnostic.of(`The element owns elements not required by its semantic role`)
   );
 }
 

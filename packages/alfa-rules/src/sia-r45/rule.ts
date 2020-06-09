@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -93,17 +93,24 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const HeadersRefersToCellInTable = Ok.of(
-    "The headers attribute refers to cells in the same <table>."
+    Diagnostic.of(
+      `The \`headers\` attribute refers to cells in the same \`<table>\``
+    )
   );
 
   export const HeadersDoesNotReferToCellsInTable = Err.of(
-    "The headers attribute refers to cells not present in the same <table>."
+    Diagnostic.of(
+      `The \`headers\` attribute refers to cells not present in the same \`<table>\``
+    )
   );
 
   export const HeadersDoesNotRefersToSelf = Ok.of(
-    "The headers attribute does not refer to the cell defining it"
+    Diagnostic.of(
+      `The \`headers\` attribute does not refer to the cell defining it`
+    )
   );
+
   export const HeadersRefersToSelf = Err.of(
-    "The headers attribute refers to the cell defining it"
+    Diagnostic.of(`The \`headers\` attribute refers to the cell defining it`)
   );
 }

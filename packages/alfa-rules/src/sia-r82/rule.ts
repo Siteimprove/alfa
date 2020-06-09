@@ -1,4 +1,4 @@
-import { Rule, Interview } from "@siteimprove/alfa-act";
+import { Rule, Interview, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -51,7 +51,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
           "error-indicators",
           "node[]",
           target,
-          "Where are the error indicators, if any, for the form field?"
+          `Where are the error indicators, if any, for the form field?`
         ).map((indicators) => [...indicators]);
 
         return {
@@ -88,43 +88,53 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const HasNoErrorIndicator = Ok.of(
-    "The form field has no error indicator"
+    Diagnostic.of(`The form field has no error indicator`)
   );
 
   export const ErrorIndicatorIdentifiesTarget = Ok.of(
-    "At least one error indicator that is perceivable identifies the form field"
+    Diagnostic.of(
+      `At least one error indicator that is perceivable identifies the form field`
+    )
   );
 
   export const ErrorIndicatorIdentifiesTargetButIsNotPerceivable = Err.of(
-    `At least one error indicator identifies the form field, but the error
+    Diagnostic.of(
+      `At least one error indicator identifies the form field, but the error
     indicator is not perceivable`
+    )
   );
 
   export const NoErrorIndicatorIdentifiesTarget = Err.of(
-    "None of the error indicators identify the form field"
+    Diagnostic.of(`None of the error indicators identify the form field`)
   );
 
   export const ErrorIndicatorDescribesResolution = Ok.of(
-    `At least one error indicator that is perceivable describes the cause of the
+    Diagnostic.of(
+      `At least one error indicator that is perceivable describes the cause of the
     error or how to resolve it`
+    )
   );
 
   export const ErrorIndicatorDescribesResolutionButIsNotPerceivable = Err.of(
-    `At least one error indicator describes the cause of the error or how to
+    Diagnostic.of(
+      `At least one error indicator describes the cause of the error or how to
     resolve it, but the error indicator is not perceivable`
+    )
   );
 
   export const NoErrorIndicatorDescribesResolution = Err.of(
-    `None of the error indicators describe the cause of the error or how to
+    Diagnostic.of(
+      `None of the error indicators describe the cause of the error or how to
     resolve it`
+    )
   );
 }
 
 function identifiesTarget(
   indicators: Array<Node>,
-  error: Err<string>,
+  error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Option.Maybe<Result<string, string>>> {
+): Interview<Question, Node, Option.Maybe<Result<Diagnostic>>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {
@@ -151,9 +161,9 @@ function identifiesTarget(
 
 function describesResolution(
   indicators: Array<Node>,
-  error: Err<string>,
+  error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Option.Maybe<Result<string, string>>> {
+): Interview<Question, Node, Option.Maybe<Result<Diagnostic>>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {

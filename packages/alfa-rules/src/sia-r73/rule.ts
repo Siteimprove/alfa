@@ -1,8 +1,8 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -36,7 +36,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         const { value: lineHeight } = style.computed("line-height");
 
-        let outcome: Ok<string> | Err<string> = Outcomes.IsNormal;
+        let outcome: Result<Diagnostic> = Outcomes.IsNormal;
 
         switch (lineHeight.type) {
           case "number":
@@ -66,15 +66,17 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    "The line height of the paragraph is at least 1.5"
+    Diagnostic.of(`The line height of the \`<p>\` element is at least 1.5`)
   );
 
   export const IsInsufficient = Err.of(
-    "The line height of the paragraph is less than 1.5"
+    Diagnostic.of(`The line height of the \`<p>\` element is less than 1.5`)
   );
 
   export const IsNormal = Err.of(
-    `The line height of the paragraph is "normal", which will result in an
-    effective line height of 1.2`
+    Diagnostic.of(
+      `The line height of the \`<p>\` element is \`normal\` which will result in
+      a line height of less than 1.5`
+    )
   );
 }

@@ -1,9 +1,9 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -46,14 +46,15 @@ export default Rule.Atomic.of<Page, Element, Question>({
               "has-audio",
               "boolean",
               element,
-              `Does the <${element.name}> element contain audio?`
+              `Does the \`<${element.name}>\` element contain audio?`
             ).map((hasAudio) =>
               hasAudio
                 ? Question.of(
                     "is-above-duration-threshold",
                     "boolean",
                     element,
-                    `Does the <${element.name}> element have a duration of more than 3 seconds?`
+                    `Does the \`<${element.name}>\` element have a duration of
+                    more than 3 seconds?`
                   ).map((isAboveDurationThreshold) =>
                     isAboveDurationThreshold ? Option.of(element) : None
                   )
@@ -68,7 +69,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "audio-control-mechanism",
             "node",
             target,
-            `Where is the mechanism that can pause or stop the audio of the <${target.name}> element?`
+            `Where is the mechanism that can pause or stop the audio of the
+            \`<${target.name}>\` element?`
           ).map((mechanism) =>
             expectation(
               mechanism.isSome(),
@@ -94,22 +96,27 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const HasPerceivablePauseMechanism = (
-    name: string
-  ): Result<string, string> =>
+  export const HasPerceivablePauseMechanism = (name: string) =>
     Ok.of(
-      `The <${name}> element has a mechanism to pause or stop audio and the mechanism is perceivable`
+      Diagnostic.of(
+        `The \`<${name}>\` element has a mechanism to pause or stop audio and
+        the mechanism is perceivable`
+      )
     );
 
-  export const HasNonPerceivablePauseMechanism = (
-    name: string
-  ): Result<string, string> =>
+  export const HasNonPerceivablePauseMechanism = (name: string) =>
     Err.of(
-      `The <${name}> element has a mechanism to pause or stop audio but the mechanism is not perceivable`
+      Diagnostic.of(
+        `The \`<${name}>\` element has a mechanism to pause or stop audio but
+        the mechanism is not perceivable`
+      )
     );
 
-  export const HasNoPauseMechanism = (name: string): Result<string, string> =>
+  export const HasNoPauseMechanism = (name: string) =>
     Err.of(
-      `The <${name}> element does not have a mechanism to pause or stop audio`
+      Diagnostic.of(
+        `The \`<${name}>\` element does not have a mechanism to pause or stop
+        audio`
+      )
     );
 }
