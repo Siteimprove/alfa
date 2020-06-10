@@ -115,8 +115,8 @@ export namespace Preference {
     "prefers-reduced-transparency": "no-preference" | "reduce";
   }
 
-  export function initial<N extends Name>(name: N): Value<N> {
-    function initial(name: Name): Value {
+  export function unset<N extends Name>(name: N): Value<N> {
+    function unset(name: Name): Value {
       switch (name) {
         case "forced-colors":
         case "inverted":
@@ -130,6 +130,6 @@ export namespace Preference {
       }
     }
 
-    return initial(name) as Value<N>;
+    return unset(name) as Value<N>;
   }
 }
