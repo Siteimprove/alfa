@@ -157,6 +157,15 @@ export namespace Media {
               value.type === "string" &&
               value.value === device.viewport.orientation
           );
+
+        case "scripting":
+          return device.scripting.enabled
+            ? this._value.every(
+                (value) => value.type === "string" && value.value === "enabled"
+              )
+            : this._value.some(
+                (value) => value.type === "string" && value.value === "none"
+              );
       }
 
       return false;
