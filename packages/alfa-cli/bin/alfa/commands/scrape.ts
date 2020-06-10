@@ -9,7 +9,7 @@ import { error } from "@oclif/errors";
 
 import * as parser from "@oclif/parser";
 
-import { Device, Display, Viewport } from "@siteimprove/alfa-device";
+import { Device, Display, Scripting, Viewport } from "@siteimprove/alfa-device";
 import { Header, Cookie } from "@siteimprove/alfa-http";
 import {
   Awaiter,
@@ -67,10 +67,10 @@ export default class Scrape extends Command {
       description: "The pixel density of the browser",
     }),
 
-    javascript: flags.boolean({
+    scripting: flags.boolean({
       default: true,
       allowNo: true,
-      description: "Whether or not JavaScript is enabled",
+      description: "Whether or not scripts, such as JavaScript, are evaluated",
     }),
 
     username: flags.string({
@@ -200,7 +200,8 @@ export default class Scrape extends Command {
     const device = Device.of(
       Device.Type.Screen,
       Viewport.of(flags.width, flags.height, orientation),
-      Display.of(flags.resolution)
+      Display.of(flags.resolution),
+      Scripting.of(flags.scripting)
     );
 
     const credentials =
@@ -279,7 +280,6 @@ export default class Scrape extends Command {
         screenshot,
         headers,
         cookies,
-        javascript: flags.javascript,
       }
     );
 
