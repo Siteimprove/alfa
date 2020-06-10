@@ -9,7 +9,7 @@ import {
   Response,
 } from "@siteimprove/alfa-http";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
-import { Result, Ok } from "@siteimprove/alfa-result";
+import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Timeout } from "@siteimprove/alfa-time";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -52,7 +52,6 @@ export class Scraper {
       device = Device.standard(),
       credentials = null,
       screenshot = null,
-      javascript = true,
       headers = [],
       cookies = [],
     } = options;
@@ -65,6 +64,17 @@ export class Scraper {
         device.type === Device.Type.Print ? "print" : "screen"
       );
 
+      // Puppeteer doesn't yet support all available media features and so might
+      // throw if passed an unsupported feature. Catch these errors and pass
+      // them on to the caller to deal with.
+      try {
+        await page.emulateMediaFeatures(
+          [...device.preferences].map((preference) => preference.toJSON())
+        );
+      } catch (err) {
+        return Err.of(err.message);
+      }
+
       await page.setViewport({
         width: device.viewport.width,
         height: device.viewport.width,
@@ -72,9 +82,9 @@ export class Scraper {
         isLandscape: device.viewport.isLandscape(),
       });
 
-      await page.authenticate(credentials);
+      await page.setJavaScriptEnabled(device.scripting.enabled);
 
-      await page.setJavaScriptEnabled(javascript);
+      await page.authenticate(credentials);
 
       await page.setExtraHTTPHeaders(
         [...headers].reduce((headers, header) => {
@@ -203,7 +213,6 @@ export namespace Scraper {
       readonly device?: Device;
       readonly credentials?: Credentials;
       readonly screenshot?: Screenshot;
-      readonly javascript?: boolean;
       readonly headers?: Iterable<Header>;
       readonly cookies?: Iterable<Cookie>;
     }
