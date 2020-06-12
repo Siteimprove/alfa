@@ -10,8 +10,8 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasExplicitRole } from "../common/predicate/has-role";
 import { hasValue } from "../common/predicate/has-value";
-import { isDecorative } from "../common/predicate/is-decorative";
 import equals = Predicate.equals;
+import not = Predicate.not;
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, or } = Predicate;
@@ -26,7 +26,12 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               isElement,
-              and(hasNamespace(Namespace.HTML), hasName("img"), isDecorative)
+              and(
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                isEmbeddedContent,
+                not(hasName("iframe")),
+                isMarkedAsDecorative
+              )
             )
           );
       },
@@ -47,13 +52,13 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const HasNoName = Ok.of(
     Diagnostic.of(
-      `The image is marked as decorative and does not have an accessible name`
+      `The element is marked as decorative and does not have an accessible name`
     )
   );
 
   export const HasName = Err.of(
     Diagnostic.of(
-      `The image is marked as decorative but has an accessible name`
+      `The element is marked as decorative but has an accessible name`
     )
   );
 }
