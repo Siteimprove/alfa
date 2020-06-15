@@ -1,4 +1,3 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -288,34 +287,58 @@ export namespace Flag {
   }
 }
 
-function parse<T>(names: Array<string>, inner: Flag.Parser<T>): Flag.Parser<T> {
+/**
+ * Construct a flag parser that will parse a flag with one of several possible
+ * names.
+ *
+ * @remarks
+ * The parser works by first looking through the argument list for the name of
+ * the flag to parse, prefixed with either `-` for single-letter names or `--`
+ * otherwise. Once found, the parser grabs all arguments up until the next flag
+ * begins as indicated by a `-` prefix. The arguments found are then passed to
+ * the supplied parser which is tasked with determining the value, if any, of
+ * the flag. The remaining arguments not consumed by the supplied parser are put
+ * back into the argument list.
+ */
+function parse<T>(
+  names: Array<string>,
+  parser: Flag.Parser<T>
+): Flag.Parser<T> {
   return (argv) => {
+    const { length } = argv;
+
     for (const name of names) {
       const start = argv.indexOf(name.length === 1 ? `-${name}` : `--${name}`);
 
-      if (start !== -1) {
-        let end =
-          start +
-          1 +
-          argv.slice(start + 1).findIndex((arg) => arg.startsWith("-"));
-
-        if (end <= start) {
-          end = argv.length;
-        }
-
-        const result = inner(argv.slice(start + 1, end));
-
-        if (result.isErr()) {
-          return result;
-        }
-
-        const [remainder, value] = result.get();
-
-        return Ok.of([
-          argv.slice(0, start).concat(remainder).concat(argv.slice(end)),
-          value,
-        ] as const);
+      if (start === -1) {
+        continue;
       }
+
+      const values: Array<string> = [];
+
+      let end = start + 1;
+
+      while (end < length) {
+        const value = argv[end++];
+
+        if (value.startsWith("-")) {
+          break;
+        }
+
+        values.push(value);
+      }
+
+      const result = parser(values);
+
+      if (result.isErr()) {
+        return result;
+      }
+
+      const [remainder, value] = result.get();
+
+      argv = argv.slice(0, start).concat(remainder).concat(argv.slice(end));
+
+      return Ok.of([argv, value] as const);
     }
 
     return Err.of(Flag.Error.NotSpecified);
