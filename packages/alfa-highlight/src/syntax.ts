@@ -1,6 +1,6 @@
 /// <reference path="../types/emphasize.d.ts" />
 
-import * as emphasize from "emphasize";
+import * as emphasize from "emphasize/lib/core";
 
 import { mark } from "./marker";
 
@@ -49,6 +49,28 @@ const sheet: emphasize.Sheet = {
   formula: mark.inverse,
 };
 
-export function syntax(language: string, value: string): string {
+export async function syntax(language: string, value: string): Promise<string> {
+  // Register the syntax for the language to highlight. By default, _every_
+  // supported language from highlight.js is loaded, which is fairly expensive.
+  // We therefore only load languages as they're needed.
+  await syntax.register(language);
+
   return mark.reset(emphasize.highlight(language, value, sheet).value);
+}
+
+export namespace syntax {
+  const registered = new Set<string>();
+
+  export async function register(language: string): Promise<void> {
+    if (registered.has(language)) {
+      return;
+    }
+
+    registered.add(language);
+
+    emphasize.registerLanguage(
+      language,
+      await import(`highlight.js/lib/languages/${language}`)
+    );
+  }
 }
