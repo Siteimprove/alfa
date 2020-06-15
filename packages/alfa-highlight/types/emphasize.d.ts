@@ -1,4 +1,10 @@
 declare module "emphasize" {
+  import * as emphasize from "emphasize/lib/core";
+
+  export = emphasize;
+}
+
+declare module "emphasize/lib/core" {
   namespace emphasize {
     interface Sheet {
       readonly [key: string]: (value: string) => string;
@@ -15,6 +21,8 @@ declare module "emphasize" {
       value: string,
       sheet?: Sheet
     ): HighlightResult;
+
+    function registerLanguage(name: string, syntax: unknown): void;
   }
 
   export = emphasize;
