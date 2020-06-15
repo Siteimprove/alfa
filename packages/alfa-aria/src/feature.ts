@@ -10,12 +10,12 @@ import { Scope, Table } from "@siteimprove/alfa-table";
 import { Role } from "./role";
 
 const { hasName, isElement } = Element;
-const { and, equals, test } = Predicate;
+const { and } = Predicate;
 
 export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
-    role: Feature.Aspect<Option<string>> = () => None,
+    role: Feature.Aspect<Option<string>, Role.feature.Options> = () => None,
     attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
@@ -23,13 +23,13 @@ export class Feature<N extends string = string> {
   }
 
   private readonly _name: N;
-  private readonly _role: Feature.Aspect<Option<string>>;
+  private readonly _role: Feature.Aspect<Option<string>, Role.feature.Options>;
   private readonly _attributes: Feature.Aspect<Map<string, string>>;
   private readonly _status: Feature.Status;
 
   private constructor(
     name: N,
-    role: Feature.Aspect<Option<string>>,
+    role: Feature.Aspect<Option<string>, Role.feature.Options>,
     attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
@@ -43,7 +43,7 @@ export class Feature<N extends string = string> {
     return this._name;
   }
 
-  public get role(): Feature.Aspect<Option<string>> {
+  public get role(): Feature.Aspect<Option<string>, Role.feature.Options> {
     return this._role;
   }
 
@@ -57,7 +57,11 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T> = Mapper<Element, T>;
+  export type Aspect<T, U extends unknown = unknown> = Mapper<
+    Element,
+    T,
+    Array<U>
+  >;
 
   export interface Status {
     readonly obsolete: boolean;
@@ -298,9 +302,9 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", (element) =>
+  Feature.of("img", (element, { allowPresentational}) =>
     Option.of(
-      element.attribute("alt").some((alt) => alt.value === "")
+      element.attribute("alt").some((alt) => alt.value === "") && allowPresentational
         ? "presentation"
         : "img"
     )
