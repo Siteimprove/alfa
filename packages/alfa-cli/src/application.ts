@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import * as path from "path";
 
 import { Marker } from "@siteimprove/alfa-highlight";

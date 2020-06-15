@@ -1,4 +1,7 @@
+/// <reference types="node" />
+
 import * as path from "path";
+import * as process from "process";
 
 import { Marker } from "@siteimprove/alfa-highlight";
 import { Serializable } from "@siteimprove/alfa-json";

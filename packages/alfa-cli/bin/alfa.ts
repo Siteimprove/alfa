@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/// <reference types="node" />
+
+import * as process from "process";
+
 import { Application } from "../src/application";
 
 import * as pkg from "../package.json";
@@ -22,6 +26,6 @@ application.run(process.argv.slice(2)).then((result) => {
     process.stdout.write(result.get());
   } else {
     process.stderr.write(result.getErr());
-    process.exitCode = 1;
+    process.exit(1);
   }
 });
