@@ -229,8 +229,7 @@ export namespace Role {
    */
   export function from(
     element: Element,
-    options: from.Options = {},
-    featureOptions: feature.Options = {}
+    options: from.Options = {}
   ): Branched<Option<Role>, Browser> {
     const role = element.attribute("role").map((attr) => attr.value.trim());
 
@@ -269,7 +268,11 @@ export namespace Role {
                   const feature = Feature.lookup(namespace, element.name);
 
                   return feature.flatMap((feature) =>
-                    feature.role(element, featureOptions).flatMap(Role.lookup)
+                    feature
+                      .role(element, {
+                        allowPresentational: options.allowPresentational,
+                      })
+                      .flatMap(Role.lookup)
                   );
                 });
               }
@@ -284,11 +287,6 @@ export namespace Role {
     export interface Options {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
-    }
-  }
-
-  export namespace feature {
-    export interface Options {
       readonly allowPresentational?: boolean;
     }
   }

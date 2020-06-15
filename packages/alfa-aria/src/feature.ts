@@ -15,7 +15,7 @@ const { and } = Predicate;
 export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
-    role: Feature.Aspect<Option<string>, Role.feature.Options> = () => None,
+    role: Feature.Aspect<Option<string>, Feature.roleOptions> = () => None,
     attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
@@ -23,13 +23,13 @@ export class Feature<N extends string = string> {
   }
 
   private readonly _name: N;
-  private readonly _role: Feature.Aspect<Option<string>, Role.feature.Options>;
+  private readonly _role: Feature.Aspect<Option<string>, Feature.roleOptions>;
   private readonly _attributes: Feature.Aspect<Map<string, string>>;
   private readonly _status: Feature.Status;
 
   private constructor(
     name: N,
-    role: Feature.Aspect<Option<string>, Role.feature.Options>,
+    role: Feature.Aspect<Option<string>, Feature.roleOptions>,
     attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
@@ -43,7 +43,7 @@ export class Feature<N extends string = string> {
     return this._name;
   }
 
-  public get role(): Feature.Aspect<Option<string>, Role.feature.Options> {
+  public get role(): Feature.Aspect<Option<string>, Feature.roleOptions> {
     return this._role;
   }
 
@@ -65,6 +65,10 @@ export namespace Feature {
 
   export interface Status {
     readonly obsolete: boolean;
+  }
+
+  export interface roleOptions {
+    readonly allowPresentational?: boolean;
   }
 
   const features = Cache.empty<Namespace, Cache<string, Feature>>();
@@ -302,9 +306,10 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", (element, { allowPresentational}) =>
+  Feature.of("img", (element, { allowPresentational }) =>
     Option.of(
-      element.attribute("alt").some((alt) => alt.value === "") && allowPresentational
+      element.attribute("alt").some((alt) => alt.value === "") &&
+        allowPresentational
         ? "presentation"
         : "img"
     )
