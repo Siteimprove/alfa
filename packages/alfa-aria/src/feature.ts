@@ -309,7 +309,7 @@ Feature.register(
   Feature.of("img", (element, { allowPresentational }) =>
     Option.of(
       element.attribute("alt").some((alt) => alt.value === "") &&
-        allowPresentational
+        (allowPresentational ?? true)
         ? "presentation"
         : "img"
     )
