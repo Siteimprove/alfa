@@ -29,11 +29,11 @@ export const Flags = {
   outcomes: Flag.string(
     "outcome",
     `The type of outcome to include in the results. If not provided, all types
-    of outcomes are included. This flag can be set multiple times to include
-    multiple types of outcomes.`
+    of outcomes are included. This flag can be repeated to include multiple
+    types of outcomes.`
   )
     .type("passed|failed|inapplication|cantTell")
-    .repeat()
+    .repeatable()
     .optional(),
 
   ...scrape.Flags,

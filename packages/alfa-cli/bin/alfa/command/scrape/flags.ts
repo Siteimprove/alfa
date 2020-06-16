@@ -64,11 +64,11 @@ export const Flags = {
 
   headers: Flag.string(
     "header",
-    `An additional header to set as a name:value pair. This flag can be set
-    multiple times to set multiple headers.`
+    `An additional header to set as a name:value pair. This flag can be repeated
+    to set multiple headers.`
   )
     .type("name:value")
-    .repeat()
+    .repeatable()
     .default([]),
 
   headersPath: Flag.string(
@@ -81,11 +81,11 @@ export const Flags = {
 
   cookies: Flag.string(
     "cookie",
-    `An additional cookie to set as a name=value pair. This flag can be set
-    multiple times to set multiple cookies.`
+    `An additional cookie to set as a name=value pair. This flag can be repeated
+    to set multiple cookies.`
   )
     .type("name=value")
-    .repeat()
+    .repeatable()
     .default([]),
 
   cookiesPath: Flag.string(

@@ -22,7 +22,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
       type: None,
       aliases: [],
       optional: false,
-      repeat: false,
+      repeatable: false,
       default: None,
     };
 
@@ -113,11 +113,11 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     );
   }
 
-  public repeat(): Flag<Iterable<T>> {
+  public repeatable(): Flag<Iterable<T>> {
     return new Flag(
       this._name,
       this._description,
-      this._options.set("repeat", true),
+      this._options.set("repeatable", true),
       (names) => (argv) => {
         const values: Array<T> = [];
 
@@ -204,7 +204,7 @@ export namespace Flag {
     type: Option<string>;
     aliases: Array<string>;
     optional: boolean;
-    repeat: boolean;
+    repeatable: boolean;
     default: Option<unknown>;
   }
 
