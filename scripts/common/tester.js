@@ -1,5 +1,5 @@
 const os = require("os");
-const execa = require("execa");
+const child_process = require("child_process");
 
 const { system } = require("./system");
 
@@ -14,17 +14,20 @@ exports.tester = {
       while (queue.length > 0) {
         const fileName = queue.shift().replace(/\.tsx?$/, ".js");
 
-        try {
-          await execa.node(fileName, [], {
-            nodeOptions: [
-              ...process.execArgv,
-              ...["--require", require.resolve("source-map-support/register")],
-            ],
-            stdio: "inherit",
-          });
-        } catch {
-          system.exit(1);
-        }
+        const child = child_process.fork(fileName, [], {
+          execArgv: [...process.execArgv, "--enable-source-maps"],
+          stdio: "inherit",
+        });
+
+        await new Promise((resolve) =>
+          child.on("close", (code) => {
+            if (code !== 0) {
+              system.exit(1);
+            } else {
+              resolve();
+            }
+          })
+        );
       }
     });
   },

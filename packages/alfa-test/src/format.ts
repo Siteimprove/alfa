@@ -3,18 +3,24 @@
 import * as assert from "assert";
 import * as path from "path";
 
-import * as stack from "error-stack-parser";
-
 import { mark } from "@siteimprove/alfa-highlight";
+
+import { stack } from "./stack";
 
 /**
  * @internal
  */
 export function format(name: string, error: Error): string {
-  const [{ fileName, lineNumber, columnNumber }] = stack.parse(error);
+  const [callsite] = stack(error);
 
-  const filePath =
-    fileName === undefined ? "unknown" : path.relative(process.cwd(), fileName);
+  const [file, line, column] =
+    callsite.type === "native"
+      ? ["native", -1, -1]
+      : [
+          path.relative(process.cwd(), callsite.file),
+          callsite.line,
+          callsite.column,
+        ];
 
   let message: string;
 
@@ -41,7 +47,7 @@ export function format(name: string, error: Error): string {
   }
 
   const output = `
-${mark.underline(`${filePath}(${lineNumber},${columnNumber}):`)} ${mark.bold(
+${mark.underline(`${file}(${line},${column}):`)} ${mark.bold(
     name.trim().replace(/\s+/g, " ")
   )}
 ${message}

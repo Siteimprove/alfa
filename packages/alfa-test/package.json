@@ -19,8 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-highlight": "^0.2.0",
-    "@types/node": "^13.1.6",
-    "error-stack-parser": "^2.0.2"
+    "@types/node": "^13.1.6"
   },
   "publishConfig": {
     "access": "public",
