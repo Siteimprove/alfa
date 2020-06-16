@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { round } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -14,7 +14,7 @@ export abstract class Numeric implements Equatable, Hashable, Serializable {
   protected readonly _value: number;
 
   protected constructor(value: number) {
-    this._value = round(value, Numeric.Decimals);
+    this._value = Real.round(value, Numeric.Decimals);
   }
 
   public get value(): number {

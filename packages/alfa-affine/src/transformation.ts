@@ -1,190 +1,147 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Matrix, Vector } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 
 const { cos, sin, tan, sqrt, max } = Math;
+const { norm, normalize, dot, cross } = Vector;
+const { determinant, multiply, inverse, transpose } = Matrix;
 
-export type Transformation = Matrix<4, 4>;
+export class Transformation implements Equatable, Serializable {
+  public static of(matrix: Matrix): Transformation {
+    const [
+      [a = 1, b = 0, c = 0, d = 0] = [],
+      [e = 0, f = 1, g = 0, h = 0] = [],
+      [i = 0, j = 0, k = 1, l = 0] = [],
+      [m = 0, n = 0, o = 0, p = 1] = [],
+    ] = matrix;
 
-export namespace Transformation {
-  export function multiply(
-    a: Transformation,
-    b: Transformation
-  ): Transformation {
-    return Matrix.multiply(a, b);
+    return new Transformation([
+      [a, b, c, d],
+      [e, f, g, h],
+      [i, j, k, l],
+      [m, n, o, p],
+    ]);
   }
 
-  export function identity(): Transformation {
-    return Matrix.identity(4, 4);
+  private static _empty = new Transformation(Matrix.identity(4));
+
+  public static empty(): Transformation {
+    return this._empty;
   }
 
-  export function translate(tx: number, ty = 0, tz = 0): Transformation {
-    return [
-      [1, 0, 0, tx],
-      [0, 1, 0, ty],
-      [0, 0, 1, tz],
-      [0, 0, 0, 1],
-    ];
+  private readonly _matrix: Matrix;
+
+  private constructor(matrix: Matrix) {
+    this._matrix = matrix;
   }
 
-  export function scale(sx: number, sy: number, sz = 1): Transformation {
-    return [
-      [sx, 0, 0, 0],
-      [0, sy, 0, 0],
-      [0, 0, sz, 0],
-      [0, 0, 0, 1],
-    ];
+  public apply(transformation: Transformation): Transformation {
+    return new Transformation(multiply(this._matrix, transformation._matrix));
   }
 
-  export function rotate(a: number, u: Vector<3> = [0, 0, 1]): Transformation {
-    const [x, y, z] = Vector.normalize(u);
-
-    return [
-      [
-        cos(a) + x ** 2 * (1 - cos(a)),
-        x * y * (1 - cos(a)) - z * sin(a),
-        x * z * (1 - cos(a)) + y * sin(a),
-        0,
-      ],
-      [
-        y * x * (1 - cos(a)) + z * sin(a),
-        cos(a) + y ** 2 * (1 - cos(a)),
-        y * z * (1 - cos(a)) - x * sin(a),
-        0,
-      ],
-      [
-        z * x * (1 - cos(a)) - y * sin(a),
-        z * y * (1 - cos(a)) + x * sin(a),
-        cos(a) + z ** 2 * (1 - cos(a)),
-        0,
-      ],
-      [0, 0, 0, 1],
-    ];
+  public translate(tx: number, ty: number = 0, tz: number = 0): Transformation {
+    return this.apply(Transformation.translate(tx, ty, tz));
   }
 
-  export function skew(a: number, b: number): Transformation {
-    return [
-      [1, tan(a), 0, 0],
-      [tan(b), 1, 0, 0],
-      [0, 0, 1, 0],
-      [0, 0, 0, 1],
-    ];
+  public scale(sx: number, sy: number, sz: number = 1): Transformation {
+    return this.apply(Transformation.scale(sy, sx));
   }
 
-  export function project(d: number): Transformation {
-    return [
-      [1, 0, 0, 0],
-      [0, 1, 0, 0],
-      [0, 0, 1, 0],
-      [0, 0, -1 / d, 1],
-    ];
+  public skew(a: number, b: number): Transformation {
+    return this.apply(Transformation.skew(a, b));
   }
 
-  export interface Decomposed {
-    /**
-     * A vector representing [x, y, z] translation.
-     */
-    translate: Vector<3>;
+  public rotate(a: number, u?: [number, number, number]): Transformation {
+    return this.apply(Transformation.rotate(a, u));
+  }
 
-    /**
-     * A vector representing [x, y, z] scaling.
-     */
-    scale: Vector<3>;
-
-    /**
-     * A vector representing [xy, xz, yz] skewing.
-     */
-    skew: Vector<3>;
-
-    /**
-     * A quaternion representing [x, y, z, w] rotation.
-     */
-    rotate: Vector<4>;
-
-    /**
-     * A quaternion representing [x, y, z, w] perspective.
-     */
-    perspective: Vector<4>;
+  public project(d: number): Transformation {
+    return this.apply(Transformation.project(d));
   }
 
   /**
    * @see https://drafts.csswg.org/css-transforms-2/#decomposing-a-3d-matrix
    */
-  export function decompose(
-    transformation: Transformation
-  ): Option<Decomposed> {
-    if (transformation[3][3] === 0) {
+  public decompose(): Option<Transformation.Components> {
+    const m = this._matrix;
+
+    if (m[3][3] === 0) {
       return None;
     }
-
-    const t = Matrix.clone(transformation);
 
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        t[i][j] /= t[3][3];
+        m[i][j] /= m[3][3];
       }
     }
 
-    let perspective: Matrix<4, 4> | Vector<4> = Matrix.clone(t);
+    // Perspective
+    let p: Matrix | Vector = Matrix.clone(m);
 
     for (let i = 0; i < 3; i++) {
-      perspective[3][i] = 0;
+      p[3][i] = 0;
     }
 
-    perspective[3][3] = 1;
+    p[3][3] = 1;
 
-    if (Matrix.determinant(perspective) === 0) {
+    if (determinant(p) === 0) {
       return None;
     }
 
-    if (t[3][0] !== 0 || t[3][1] !== 0 || t[3][2] !== 0) {
-      perspective = Matrix.multiply(
-        Matrix.transpose(Matrix.inverse(perspective)),
-        transformation[3]
-      );
+    if (m[3][0] !== 0 || m[3][1] !== 0 || m[3][2] !== 0) {
+      p = multiply(
+        transpose(inverse(p)),
+        m[3].map((v) => [v])
+      ).map(([v]) => v);
     } else {
-      perspective = [0, 0, 0, 1];
+      p = [0, 0, 0, 1];
     }
 
-    const translate: Vector<3> = [t[0][3], t[1][3], t[2][3]];
+    // Translate
+    const t = [m[0][3], m[1][3], m[2][3]];
 
-    const u: Matrix<3, 3> = [
-      [t[0][0], t[0][1], t[0][2]],
-      [t[1][0], t[1][1], t[1][2]],
-      [t[2][0], t[2][1], t[2][2]],
+    const u = [
+      [m[0][0], m[0][1], m[0][2]],
+      [m[1][0], m[1][1], m[1][2]],
+      [m[2][0], m[2][1], m[2][2]],
     ];
 
-    const scale: Vector<3> = [Vector.norm(u[0]), 0, 0];
+    // Scale
+    const s = [norm(u[0]), 0, 0];
 
-    u[0] = Vector.normalize(u[0]);
+    u[0] = normalize(u[0]);
 
-    const skew: Vector<3> = [Vector.multiply(u[0], u[1]), 0, 0];
+    // Skew
+    const z = [dot(u[0], u[1]), 0, 0];
 
-    u[1] = combine(u[1], u[0], 1, -skew[0]);
+    u[1] = combine(u[1], u[0], 1, -z[0]);
 
-    scale[1] = Vector.norm(u[1]);
-    u[1] = Vector.normalize(u[1]);
-    skew[0] /= scale[1];
+    s[1] = norm(u[1]);
+    u[1] = normalize(u[1]);
+    z[0] /= s[1];
 
-    skew[1] = Vector.multiply(u[0], u[2]);
-    u[2] = combine(u[2], u[0], 1.0, -skew[1]);
-    skew[2] = Vector.multiply(u[1], u[2]);
-    u[2] = combine(u[2], u[1], 1.0, -skew[2]);
+    z[1] = dot(u[0], u[2]);
+    u[2] = combine(u[2], u[0], 1.0, -z[1]);
+    z[2] = dot(u[1], u[2]);
+    u[2] = combine(u[2], u[1], 1.0, -z[2]);
 
-    scale[2] = Vector.norm(u[2]);
-    u[2] = Vector.normalize(u[2]);
-    skew[1] /= scale[2];
-    skew[2] /= scale[2];
+    s[2] = norm(u[2]);
+    u[2] = normalize(u[2]);
+    z[1] /= s[2];
+    z[2] /= s[2];
 
-    if (Vector.multiply(u[0], Vector.cross(u[1], u[2])) < 0) {
+    if (dot(u[0], cross(u[1], u[2])) < 0) {
       for (let i = 0; i < 3; i++) {
-        scale[i] *= -1;
+        s[i] *= -1;
         u[i][0] *= -1;
         u[i][1] *= -1;
         u[i][2] *= -1;
       }
     }
 
-    const rotate: Vector<4> = [
+    // Rotate
+    const r = [
       0.5 * sqrt(max(1 + u[0][0] - u[1][1] - u[2][2], 0)),
       0.5 * sqrt(max(1 - u[0][0] + u[1][1] - u[2][2], 0)),
       0.5 * sqrt(max(1 - u[0][0] - u[1][1] + u[2][2], 0)),
@@ -192,30 +149,143 @@ export namespace Transformation {
     ];
 
     if (u[2][1] > u[1][2]) {
-      rotate[0] = -rotate[0];
+      r[0] = -r[0];
     }
 
     if (u[0][2] > u[2][0]) {
-      rotate[1] = -rotate[1];
+      r[1] = -r[1];
     }
 
     if (u[1][0] > u[0][1]) {
-      rotate[2] = -rotate[2];
+      r[2] = -r[2];
     }
 
-    return Option.of({ translate, scale, skew, rotate, perspective });
+    return Option.of({
+      translate: t,
+      scale: s,
+      skew: z,
+      rotate: r,
+      perspective: p,
+    });
   }
 
-  function combine(
-    a: Vector<3>,
-    b: Vector<3>,
-    ascl: number,
-    bscl: number
-  ): Vector<3> {
-    return [
-      ascl * a[0] + bscl * b[0],
-      ascl * a[1] + bscl * b[1],
-      ascl * a[2] + bscl * b[2],
-    ];
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Transformation &&
+      Matrix.equals(value._matrix, this._matrix)
+    );
   }
+
+  public toArray(): Array<Array<number>> {
+    return Matrix.clone(this._matrix);
+  }
+
+  public toJSON(): Transformation.JSON {
+    return Matrix.clone(this._matrix);
+  }
+}
+
+export namespace Transformation {
+  export type JSON = Array<Array<number>>;
+
+  export interface Components {
+    /**
+     * A vector representing [x, y, z] translation.
+     */
+    translate: Vector;
+
+    /**
+     * A vector representing [x, y, z] scaling.
+     */
+    scale: Vector;
+
+    /**
+     * A vector representing [xy, xz, yz] skewing.
+     */
+    skew: Vector;
+
+    /**
+     * A quaternion representing [x, y, z, w] rotation.
+     */
+    rotate: Vector;
+
+    /**
+     * A quaternion representing [x, y, z, w] perspective.
+     */
+    perspective: Vector;
+  }
+
+  export function translate(
+    tx: number,
+    ty: number = 0,
+    tz: number = 0
+  ): Transformation {
+    return Transformation.of([
+      [1, 0, 0, tx],
+      [0, 1, 0, ty],
+      [0, 0, 1, tz],
+      [0, 0, 0, 1],
+    ]);
+  }
+
+  export function scale(
+    sx: number,
+    sy: number,
+    sz: number = 1
+  ): Transformation {
+    return Transformation.of([
+      [sx, 0, 0],
+      [0, sy, 0],
+      [0, 0, sz],
+    ]);
+  }
+
+  export function skew(a: number, b: number): Transformation {
+    return Transformation.of([
+      [1, tan(a)],
+      [tan(b), 1],
+    ]);
+  }
+
+  export function rotate(
+    a: number,
+    u: [number, number, number] = [0, 0, 1]
+  ): Transformation {
+    const [x, y, z] = normalize(u);
+
+    return Transformation.of([
+      [
+        cos(a) + x ** 2 * (1 - cos(a)),
+        x * y * (1 - cos(a)) - z * sin(a),
+        x * z * (1 - cos(a)) + y * sin(a),
+      ],
+      [
+        y * x * (1 - cos(a)) + z * sin(a),
+        cos(a) + y ** 2 * (1 - cos(a)),
+        y * z * (1 - cos(a)) - x * sin(a),
+      ],
+      [
+        z * x * (1 - cos(a)) - y * sin(a),
+        z * y * (1 - cos(a)) + x * sin(a),
+        cos(a) + z ** 2 * (1 - cos(a)),
+      ],
+    ]);
+  }
+
+  export function project(d: number): Transformation {
+    return Transformation.of([
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, -1 / d, 1],
+    ]);
+  }
+}
+
+function combine(a: Vector, b: Vector, ascl: number, bscl: number): Vector {
+  return [
+    ascl * a[0] + bscl * b[0],
+    ascl * a[1] + bscl * b[1],
+    ascl * a[2] + bscl * b[2],
+  ];
 }

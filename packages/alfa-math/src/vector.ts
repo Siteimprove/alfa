@@ -1,51 +1,81 @@
-import * as math from "mathjs";
+import { Real } from "./real";
 
-export type Vector<N extends number = number> = [number, ...Array<number>] & {
-  readonly length: N;
-};
+const { sqrt } = Math;
+
+/**
+ * @see https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)
+ */
+export type Vector = Array<number>;
 
 export namespace Vector {
-  export function of<N extends number>(vector: Vector<N>): Vector<N> {
-    return vector;
+  export function isVector(value: unknown): value is Vector {
+    return Array.isArray(value) && value.every((n) => typeof n === "number");
   }
 
-  export function clone<N extends number>(vector: Vector<N>): Vector<N> {
-    return vector.slice(0) as Vector<N>;
+  export function clone(v: Vector): Vector {
+    return v.slice(0);
   }
 
-  export function multiply<N extends number>(
-    vector: Vector<N>,
-    scalar: number
-  ): Vector<N>;
-
-  export function multiply<N extends number>(
-    a: Vector<N>,
-    b: Vector<N>
-  ): number;
-
-  export function multiply<N extends number>(
-    a: Vector<N>,
-    b: Vector<N> | number
-  ): Vector<N> | number {
-    return math.multiply(a, b) as Vector<N> | number;
+  export function equals(v: Vector, u: Vector, e: number): boolean {
+    return v.length === u.length && v.every((n, i) => Real.equals(n, u[i], e));
   }
 
-  export function divide<N extends number>(
-    vector: Vector<N>,
-    scalar: number
-  ): Vector<N> {
-    return math.divide(vector, scalar) as Vector<N>;
+  export function size(v: Vector): number {
+    return v.length;
   }
 
-  export function cross(a: Vector<3>, b: Vector<3>): Vector<3> {
-    return math.cross(a, b) as Vector<3>;
+  export function add(v: Vector, u: Vector): Vector {
+    return v.map((n, i) => n + u[i]);
   }
 
-  export function norm(vector: Vector): number {
-    return math.norm(vector) as number;
+  export function subtract(v: Vector, u: Vector): Vector {
+    return v.map((n, i) => n - u[i]);
   }
 
-  export function normalize<N extends number>(vector: Vector<N>): Vector<N> {
-    return divide(vector, norm(vector));
+  export function multiply(v: Vector, s: number): Vector {
+    return v.map((n) => n * s);
+  }
+
+  export function divide(v: Vector, d: number): Vector {
+    return v.map((n) => n / d);
+  }
+
+  /**
+   * Compute the dot product of two non-empty, equal length vectors.
+   *
+   * @see https://en.wikipedia.org/wiki/Dot_product
+   */
+  export function dot(v: Vector, u: Vector): number {
+    return v.reduce((s, n, i) => s + n * u[i], 0);
+  }
+
+  /**
+   * Compute the cross product of two 3-dimensional vectors.
+   *
+   * @see https://en.wikipedia.org/wiki/Cross_product
+   */
+  export function cross(v: Vector, u: Vector): Vector {
+    const [vx, vy, vz] = v;
+    const [ux, uy, uz] = u;
+
+    return [vy * uz - vz * uy, vz * ux - vx * uz, vx * uy - vy * ux];
+  }
+
+  /**
+   * Compute the norm of a vector.
+   *
+   * @see https://en.wikipedia.org/wiki/Norm_(mathematics)
+   */
+  export function norm(v: Vector): number {
+    return sqrt(v.reduce((s, n) => s + n ** 2, 0));
+  }
+
+  /**
+   * Compute a unit vector corresponding to a vector.
+   *
+   * @see https://en.wikipedia.org/wiki/Unit_vector
+   */
+  export function normalize(v: Vector): Vector {
+    return divide(v, norm(v));
   }
 }
