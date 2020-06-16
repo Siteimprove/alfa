@@ -5,6 +5,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
 import { isIgnored } from "../common/predicate/is-ignored";
@@ -56,9 +58,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
             `Does the accessible name of the \`<${target.name}>\` element
             describe its purpose?`
           ).map((nameDescribesPurpose) =>
-            nameDescribesPurpose
-              ? Some.of(Outcomes.NameIsDescriptive(target.name))
-              : Some.of(Outcomes.NameIsNotDescriptive(target.name))
+            expectation(
+              nameDescribesPurpose,
+              () => Outcomes.NameIsDescriptive(target.name),
+              () => Outcomes.NameIsNotDescriptive(target.name)
+            )
           ),
         };
       },
