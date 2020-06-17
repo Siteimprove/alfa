@@ -311,8 +311,7 @@ Feature.register(
   Namespace.HTML,
   Feature.of("img", (element, { allowPresentational = true }) =>
     Option.of(
-      element.attribute("alt").some((alt) => alt.value === "") &&
-        (allowPresentational ?? true)
+      allowPresentational && element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"
     )
