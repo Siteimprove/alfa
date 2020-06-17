@@ -3,6 +3,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Ok, Err } from "@siteimprove/alfa-result";
 
@@ -70,6 +71,16 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   public map<U>(mapper: Mapper<T, U>): Flag<U> {
     return new Flag(this._name, this._description, this._options, (names) =>
       Parser.map(this._parse(names), mapper)
+    );
+  }
+
+  public filter<U extends T>(predicate: Predicate<T, U>): Flag<U> {
+    return new Flag(this._name, this._description, this._options, (names) =>
+      Parser.filter(
+        this._parse(names),
+        predicate,
+        () => Flag.Error.InvalidValue
+      )
     );
   }
 
@@ -172,6 +183,10 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     );
   }
 
+  public choices<U extends T>(...choices: Array<U>): Flag<U> {
+    return this.filter(Predicate.equals(...choices)).type(choices.join("|"));
+  }
+
   public toJSON(): Flag.JSON {
     return {
       name: this._name,
@@ -223,43 +238,17 @@ export namespace Flag {
   }
 
   export function number(name: string, description: string): Flag<number> {
-    return Flag.of(name, description, (names) =>
-      parse(names, (argv) => {
-        const [value] = argv;
-
-        if (value === undefined) {
-          return Err.of(Error.MissingValue);
-        }
-
-        const number = Number(value);
-
-        if (!Number.isFinite(number)) {
-          return Err.of(Error.InvalidValue);
-        }
-
-        return Ok.of([argv.slice(1), number] as const);
-      })
-    ).type("number");
+    return string(name, description)
+      .type("number")
+      .map(Number)
+      .filter(Number.isFinite);
   }
 
   export function integer(name: string, description: string): Flag<number> {
-    return Flag.of(name, description, (names) =>
-      parse(names, (argv) => {
-        const [value] = argv;
-
-        if (value === undefined) {
-          return Err.of(Error.MissingValue);
-        }
-
-        const number = Number(value);
-
-        if (!Number.isInteger(number)) {
-          return Err.of(Error.InvalidValue);
-        }
-
-        return Ok.of([argv.slice(1), number] as const);
-      })
-    ).type("integer");
+    return string(name, description)
+      .type("integer")
+      .map(Number)
+      .filter(Number.isInteger);
   }
 
   export function boolean(name: string, description: string): Flag<boolean> {

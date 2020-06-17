@@ -39,6 +39,7 @@
     "@siteimprove/alfa-mapper": "^0.2.0",
     "@siteimprove/alfa-option": "^0.2.0",
     "@siteimprove/alfa-parser": "^0.2.0",
+    "@siteimprove/alfa-predicate": "^0.2.0",
     "@siteimprove/alfa-record": "^0.2.0",
     "@siteimprove/alfa-result": "^0.2.0",
     "@siteimprove/alfa-rules": "^0.2.0",

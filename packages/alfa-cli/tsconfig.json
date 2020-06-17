@@ -74,6 +74,9 @@
       "path": "../alfa-parser"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-record"
     },
     {

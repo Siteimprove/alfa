@@ -33,7 +33,7 @@ export const Flags = {
     "orientation",
     "The orientation of the browser viewport."
   )
-    .type("landscape|portrait")
+    .choices("landscape", "portrait")
     .default("landscape"),
 
   resolution: Flag.integer(
@@ -100,7 +100,7 @@ export const Flags = {
     "await-state",
     "The state to await before considering the page loaded."
   )
-    .type("ready|loaded|idle")
+    .choices("ready", "loaded", "idle")
     .default("loaded"),
 
   awaitDuration: Flag.integer(
@@ -137,7 +137,7 @@ export const Flags = {
     "screenshot-type",
     "The file type of the screenshot"
   )
-    .type("png|jpeg")
+    .choices("png", "jpeg")
     .default("png"),
 
   screenshotBackground: Flag.boolean(
@@ -151,5 +151,6 @@ export const Flags = {
     "The quality of the screenshot. Only applies to JPEG screenshots."
   )
     .type("0-100")
+    .filter((value) => value >= 0 && value <= 100)
     .default(100),
 };
