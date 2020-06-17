@@ -67,7 +67,10 @@ export namespace Feature {
     readonly obsolete: boolean;
   }
 
-  export interface roleOptions {
+  export interface RoleOptions {
+    /**
+     * @internal
+     */
     readonly allowPresentational?: boolean;
   }
 
