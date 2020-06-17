@@ -15,7 +15,7 @@ const { and } = Predicate;
 export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
-    role: Feature.Aspect<Option<string>, Feature.roleOptions> = () => None,
+    role: Feature.Aspect<Option<string>, [Feature.RoleOptions]> = () => None,
     attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
