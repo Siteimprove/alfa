@@ -8,11 +8,10 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { isVisible } from "../predicate/is-visible";
 
 import { Question } from "../question";
-import { hasAttribute } from "../predicate/has-attribute";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { filter, map, some } = Iterable;
-const { and, equals } = Predicate;
+const { and } = Predicate;
 
 export function video(
   document: Document,
