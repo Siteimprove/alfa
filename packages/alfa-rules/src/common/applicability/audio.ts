@@ -18,7 +18,7 @@ export function audio(
   document: Document,
   device: Device,
   options: audio.Options = {}
-): Iterable<Interview<Question, Element, Element | Option<Element>>> {
+): Iterable<Interview<Question, Element, Option<Element>>> {
   return map(
     filter(
       document.descendants({ flattened: true, nested: true }),
