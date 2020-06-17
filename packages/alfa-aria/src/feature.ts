@@ -57,10 +57,10 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T, U extends unknown = unknown> = Mapper<
+  export type Aspect<T, A extends Array<unknown> = []> = Mapper<
     Element,
     T,
-    Array<U>
+    A
   >;
 
   export interface Status {
