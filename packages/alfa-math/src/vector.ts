@@ -25,11 +25,11 @@ export namespace Vector {
   }
 
   export function add(v: Vector, u: Vector): Vector {
-    return v.map((n, i) => n + u[i]);
+    return v.map((n, i) => n + u?.[i]);
   }
 
   export function subtract(v: Vector, u: Vector): Vector {
-    return v.map((n, i) => n - u[i]);
+    return v.map((n, i) => n - u?.[i]);
   }
 
   export function multiply(v: Vector, s: number): Vector {
@@ -46,7 +46,7 @@ export namespace Vector {
    * @see https://en.wikipedia.org/wiki/Dot_product
    */
   export function dot(v: Vector, u: Vector): number {
-    return v.reduce((s, n, i) => s + n * u[i], 0);
+    return v.reduce((s, n, i) => s + n * u?.[i], 0);
   }
 
   /**

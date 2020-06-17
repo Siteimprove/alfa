@@ -63,11 +63,11 @@ export namespace Matrix {
   }
 
   export function add(m: Matrix, n: Matrix): Matrix {
-    return m.map((r, i) => r.map((v, j) => v + n[i][j]));
+    return m.map((r, i) => r.map((v, j) => v + n?.[i]?.[j]));
   }
 
   export function subtract(m: Matrix, n: Matrix): Matrix {
-    return m.map((r, i) => r.map((v, j) => v - n[i][j]));
+    return m.map((r, i) => r.map((v, j) => v - n?.[i]?.[j]));
   }
 
   /**
@@ -77,7 +77,9 @@ export namespace Matrix {
     return typeof n === "number"
       ? m.map((r) => r.map((v) => v * n))
       : m.map((r, i) =>
-          n[0].map((_, j) => r.reduce((s, _, k) => s + m[i][k] * n[k][j], 0))
+          n[0].map((_, j) =>
+            r.reduce((s, _, k) => s + m[i][k] * n?.[k]?.[j], 0)
+          )
         );
   }
 
@@ -110,10 +112,10 @@ export namespace Matrix {
       // The determinant of a 2x2 matrix is fairly short to write out and so
       // this is done as an optimization.
       case 2:
-        return m[0][0] * m[1][1] - m[0][1] * m[1][0];
+        return m[0]?.[0] * m[1]?.[1] - m[0]?.[1] * m[1]?.[0];
 
       default:
-        return m.reduce((d, _, i) => d + m[0][i] * cofactor(m, 0, i), 0);
+        return m.reduce((d, _, i) => d + m[0]?.[i] * cofactor(m, 0, i), 0);
     }
   }
 
