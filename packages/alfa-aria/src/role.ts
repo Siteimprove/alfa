@@ -284,7 +284,7 @@ export namespace Role {
   }
 
   export namespace from {
-    export interface Options extends Feature.roleOptions {
+    export interface Options extends Feature.RoleOptions {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
