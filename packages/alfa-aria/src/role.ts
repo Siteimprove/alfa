@@ -268,7 +268,11 @@ export namespace Role {
                   const feature = Feature.lookup(namespace, element.name);
 
                   return feature.flatMap((feature) =>
-                    feature.role(element).flatMap(Role.lookup)
+                    feature
+                      .role(element, {
+                        allowPresentational: options.allowPresentational,
+                      })
+                      .flatMap(Role.lookup)
                   );
                 });
               }
@@ -280,7 +284,7 @@ export namespace Role {
   }
 
   export namespace from {
-    export interface Options {
+    export interface Options extends Feature.RoleOptions {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
