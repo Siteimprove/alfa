@@ -23,7 +23,7 @@ export class Feature<N extends string = string> {
   }
 
   private readonly _name: N;
-  private readonly _role: Feature.Aspect<Option<string>, Feature.roleOptions>;
+  private readonly _role: Feature.Aspect<Option<string>, [Feature.RoleOptions]>;
   private readonly _attributes: Feature.Aspect<Map<string, string>>;
   private readonly _status: Feature.Status;
 
