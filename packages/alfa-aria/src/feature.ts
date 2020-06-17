@@ -10,12 +10,12 @@ import { Scope, Table } from "@siteimprove/alfa-table";
 import { Role } from "./role";
 
 const { hasName, isElement } = Element;
-const { and, equals, test } = Predicate;
+const { and } = Predicate;
 
 export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
-    role: Feature.Aspect<Option<string>> = () => None,
+    role: Feature.Aspect<Option<string>, [Feature.RoleOptions]> = () => None,
     attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
@@ -23,13 +23,13 @@ export class Feature<N extends string = string> {
   }
 
   private readonly _name: N;
-  private readonly _role: Feature.Aspect<Option<string>>;
+  private readonly _role: Feature.Aspect<Option<string>, [Feature.RoleOptions]>;
   private readonly _attributes: Feature.Aspect<Map<string, string>>;
   private readonly _status: Feature.Status;
 
   private constructor(
     name: N,
-    role: Feature.Aspect<Option<string>>,
+    role: Feature.Aspect<Option<string>, [Feature.RoleOptions]>,
     attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
@@ -43,7 +43,7 @@ export class Feature<N extends string = string> {
     return this._name;
   }
 
-  public get role(): Feature.Aspect<Option<string>> {
+  public get role(): Feature.Aspect<Option<string>, [Feature.RoleOptions]> {
     return this._role;
   }
 
@@ -57,10 +57,21 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T> = Mapper<Element, T>;
+  export type Aspect<T, A extends Array<unknown> = []> = Mapper<
+    Element,
+    T,
+    A
+  >;
 
   export interface Status {
     readonly obsolete: boolean;
+  }
+
+  export interface RoleOptions {
+    /**
+     * @internal
+     */
+    readonly allowPresentational?: boolean;
   }
 
   const features = Cache.empty<Namespace, Cache<string, Feature>>();
@@ -298,9 +309,9 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", (element) =>
+  Feature.of("img", (element, { allowPresentational = true }) =>
     Option.of(
-      element.attribute("alt").some((alt) => alt.value === "")
+      allowPresentational && element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"
     )
