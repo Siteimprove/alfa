@@ -39,7 +39,22 @@ export function video(
                   Element.isElement,
                   and(
                     hasName("track"),
-                    hasAttribute("kind", equals(track.kind))
+                    (trackElement) =>
+                      trackElement
+                        .attribute("kind")
+                        .map(
+                          (kind) =>
+                            kind
+                              .enumerate(
+                                "subtitles",
+                                "captions",
+                                "descriptions",
+                                "chapters",
+                                "metadata"
+                              )
+                              .getOr("metadata") // invalid value default
+                        )
+                        .getOr("subtitles") === track.kind // missing value default
                   )
                 )
               )
