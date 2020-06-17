@@ -29,7 +29,7 @@ export class Feature<N extends string = string> {
 
   private constructor(
     name: N,
-    role: Feature.Aspect<Option<string>, Feature.roleOptions>,
+    role: Feature.Aspect<Option<string>, [Feature.RoleOptions]>,
     attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
