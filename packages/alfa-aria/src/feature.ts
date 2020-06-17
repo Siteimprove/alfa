@@ -43,7 +43,7 @@ export class Feature<N extends string = string> {
     return this._name;
   }
 
-  public get role(): Feature.Aspect<Option<string>, Feature.roleOptions> {
+  public get role(): Feature.Aspect<Option<string>, [Feature.RoleOptions]> {
     return this._role;
   }
 
