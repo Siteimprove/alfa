@@ -32,7 +32,7 @@ export const Flags = {
     of outcomes are included. This flag can be repeated to include multiple
     types of outcomes.`
   )
-    .choices("passed", "failed", "inapplication", "cantTell")
+    .choices("passed", "failed", "inapplicable", "cantTell")
     .repeatable()
     .optional(),
 
