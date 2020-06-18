@@ -1,6 +1,5 @@
+import { Command } from "@siteimprove/alfa-command";
 import { Option } from "@siteimprove/alfa-option";
-
-import { Command } from "../../../src/command";
 
 import { Arguments } from "./audit/arguments";
 import { Flags } from "./audit/flags";

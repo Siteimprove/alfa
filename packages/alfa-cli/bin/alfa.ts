@@ -5,10 +5,8 @@
 import * as path from "path";
 import * as process from "process";
 
+import { Command, Flag } from "@siteimprove/alfa-command";
 import { None } from "@siteimprove/alfa-option";
-
-import { Command } from "../src/command";
-import { Flag } from "../src/flag";
 
 import * as pkg from "../package.json";
 

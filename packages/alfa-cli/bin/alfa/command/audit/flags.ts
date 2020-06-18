@@ -1,4 +1,4 @@
-import { Flag } from "../../../../src/flag";
+import { Flag } from "@siteimprove/alfa-command";
 
 import * as scrape from "../scrape/flags";
 

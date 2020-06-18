@@ -4,6 +4,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
 
+import type { Command } from "@siteimprove/alfa-command";
 import { Device, Display, Scripting, Viewport } from "@siteimprove/alfa-device";
 import { Header, Cookie } from "@siteimprove/alfa-http";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -13,10 +14,7 @@ import {
   Scraper,
   Screenshot,
 } from "@siteimprove/alfa-scraper";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Timeout } from "@siteimprove/alfa-time";
-
-import type { Command } from "../../../../src/command";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
@@ -102,7 +100,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   for (const path of flags.headersPath) {
     try {
-      const parsed = Sequence.from<Header.JSON>(
+      const parsed = Array.from<Header.JSON>(
         JSON.parse(fs.readFileSync(path, "utf-8"))
       );
 
@@ -126,7 +124,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   for (const path of flags.cookiesPath) {
     try {
-      const parsed = Sequence.from<Cookie.JSON>(
+      const parsed = Array.from<Cookie.JSON>(
         JSON.parse(fs.readFileSync(path, "utf-8"))
       );
 

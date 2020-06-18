@@ -15,13 +15,7 @@
     "bin/alfa/command/scrape/arguments.ts",
     "bin/alfa/command/scrape/flags.ts",
     "bin/alfa/command/scrape/run.ts",
-    "bin/alfa/oracle.ts",
-    "src/argument.ts",
-    "src/command.ts",
-    "src/flag.ts",
-    "src/index.ts",
-    "src/text.ts",
-    "test/text.spec.ts"
+    "bin/alfa/oracle.ts"
   ],
   "references": [
     {

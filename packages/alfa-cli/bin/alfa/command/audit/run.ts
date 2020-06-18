@@ -3,6 +3,7 @@
 import * as fs from "fs";
 
 import { Audit, Outcome } from "@siteimprove/alfa-act";
+import { Command } from "@siteimprove/alfa-command";
 import { Node } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -10,8 +11,6 @@ import { None } from "@siteimprove/alfa-option";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Rules, Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
-
-import { Command } from "../../../../src/command";
 
 import { Oracle } from "../../oracle";
 

@@ -19,6 +19,7 @@
     { "path": "alfa-cli" },
     { "path": "alfa-clone" },
     { "path": "alfa-collection" },
+    { "path": "alfa-command" },
     { "path": "alfa-comparable" },
     { "path": "alfa-compatibility" },
     { "path": "alfa-continuation" },

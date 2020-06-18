@@ -1,4 +1,4 @@
-import { Argument } from "../../../../src/argument";
+import { Argument } from "@siteimprove/alfa-command";
 
 export const Arguments = {
   url: Argument.string(
