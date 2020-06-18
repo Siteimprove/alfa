@@ -44,8 +44,8 @@ export class Transformation implements Equatable, Serializable {
     return this.apply(Transformation.translate(tx, ty, tz));
   }
 
-  public scale(sx: number, sy: number, sz: number = 1): Transformation {
-    return this.apply(Transformation.scale(sy, sx));
+  public scale(sx: number, sy: number = sx, sz: number = 1): Transformation {
+    return this.apply(Transformation.scale(sx, sy, sz));
   }
 
   public skew(a: number, b: number): Transformation {
@@ -56,8 +56,8 @@ export class Transformation implements Equatable, Serializable {
     return this.apply(Transformation.rotate(a, u));
   }
 
-  public project(d: number): Transformation {
-    return this.apply(Transformation.project(d));
+  public perspective(d: number): Transformation {
+    return this.apply(Transformation.perspective(d));
   }
 
   /**
@@ -230,7 +230,7 @@ export namespace Transformation {
 
   export function scale(
     sx: number,
-    sy: number,
+    sy: number = sx,
     sz: number = 1
   ): Transformation {
     return Transformation.of([
@@ -272,7 +272,7 @@ export namespace Transformation {
     ]);
   }
 
-  export function project(d: number): Transformation {
+  export function perspective(d: number): Transformation {
     return Transformation.of([
       [1, 0, 0, 0],
       [0, 1, 0, 0],
