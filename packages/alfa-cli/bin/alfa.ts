@@ -15,11 +15,20 @@ import * as pkg from "../package.json";
 import audit from "./alfa/command/audit";
 import scrape from "./alfa/command/scrape";
 
+const {
+  argv: [node, bin],
+  platform,
+  arch,
+  version,
+} = process;
+
 const application = Command.withSubcommands(
-  path.basename(process.argv[1]),
+  path.basename(bin),
+  `${pkg.name}/${pkg.version} ${platform}-${arch} node-${version}`,
   `The tool for all your accessibility needs on the command line.`,
   {
-    help: Flag.help("Display this command help."),
+    help: Flag.help("Display the help information."),
+    version: Flag.version("Output the current version."),
   },
   (self) => ({
     audit: audit(self),

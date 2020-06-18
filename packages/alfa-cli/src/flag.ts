@@ -377,10 +377,26 @@ export namespace Flag {
     return Flag.of(name, description, parse).type("boolean");
   }
 
-  export function help(description: string): Flag<Option<undefined>> {
-    const parse: Flag.Parser<undefined> = (argv) =>
+  export function empty(name: string, description: string): Flag<void> {
+    const parse: Flag.Parser<void> = (argv) =>
       Ok.of([argv, Flag.Set.of(undefined, () => parse)] as const);
 
-    return Flag.of("help", description, parse).optional();
+    return Flag.of(name, description, parse);
+  }
+
+  export const Help = Symbol("--help");
+
+  export function help(description: string): Flag<Option<symbol>> {
+    return empty("help", description)
+      .map(() => Help)
+      .optional();
+  }
+
+  export const Version = Symbol("--version");
+
+  export function version(description: string): Flag<Option<symbol>> {
+    return empty("version", description)
+      .map(() => Version)
+      .optional();
   }
 }

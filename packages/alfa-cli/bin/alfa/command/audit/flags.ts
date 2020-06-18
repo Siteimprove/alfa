@@ -3,7 +3,7 @@ import { Flag } from "../../../../src/flag";
 import * as scrape from "../scrape/flags";
 
 export const Flags = {
-  help: Flag.help("Display this command help."),
+  help: Flag.help("Display the help information."),
 
   interactive: Flag.boolean(
     "interactive",

@@ -1,7 +1,7 @@
 import { Flag } from "../../../../src/flag";
 
 export const Flags = {
-  help: Flag.help("Display this command help."),
+  help: Flag.help("Display the help information."),
 
   output: Flag.string(
     "output",

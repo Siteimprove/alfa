@@ -11,11 +11,12 @@ import { Flags } from "./scrape/flags";
 export default (parent: Command) =>
   Command.withArguments(
     "scrape",
+    parent.version,
     "Scrape a page and output it in a serialisable format.",
     Flags,
     Arguments,
     Option.of(parent),
-    async (...args) => {
+    () => async (...args) => {
       const { run } = await import("./scrape/run");
       return run(...args);
     }

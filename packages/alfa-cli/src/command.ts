@@ -25,13 +25,23 @@ export class Command<
     A extends Command.Arguments
   >(
     name: string,
+    version: string,
     description: string,
     flags: F,
     args: A,
     parent: Option<Command> = None,
-    run?: Command.Runner<F, A>
+    run?: (command: Command<F, A, {}>) => Command.Runner<F, A>
   ): Command<F, A, {}> {
-    return new Command(name, description, flags, args, () => ({}), parent, run);
+    return new Command(
+      name,
+      version,
+      description,
+      flags,
+      args,
+      () => ({}),
+      parent,
+      run
+    );
   }
 
   public static withSubcommands<
@@ -39,16 +49,27 @@ export class Command<
     S extends Command.Subcommands
   >(
     name: string,
+    version: string,
     description: string,
     flags: F,
     subcommands: Mapper<Command, S>,
     parent: Option<Command> = None,
-    run?: Command.Runner<F, {}>
+    run?: (command: Command<F, {}, S>) => Command.Runner<F, {}>
   ): Command<F, {}, S> {
-    return new Command(name, description, flags, {}, subcommands, parent, run);
+    return new Command(
+      name,
+      version,
+      description,
+      flags,
+      {},
+      subcommands,
+      parent,
+      run
+    );
   }
 
   private readonly _name: string;
+  private readonly _version: string;
   private readonly _description: string;
   private readonly _flags: F;
   private readonly _arguments: A;
@@ -58,24 +79,30 @@ export class Command<
 
   private constructor(
     name: string,
+    version: string,
     description: string,
     flags: F,
     args: A,
     subcommands: Mapper<Command, S>,
     parent: Option<Command>,
-    run?: Command.Runner<F, A>
+    run?: (command: Command<F, A, S>) => Command.Runner<F, A>
   ) {
     this._name = name;
+    this._version = version;
     this._description = description;
     this._flags = flags;
     this._arguments = args;
     this._subcommands = subcommands((this as unknown) as Command);
     this._parent = parent;
-    this._run = run ?? (async () => Ok.of(this.help() + "\n"));
+    this._run = run?.(this) ?? (async () => Ok.of(this.help() + "\n"));
   }
 
   public get name(): string {
     return this._name;
+  }
+
+  public get version(): string {
+    return this._version;
   }
 
   public get description(): string {
@@ -141,8 +168,16 @@ export class Command<
         if (flag.name === "help" && name in parsed.flags) {
           const { value } = parsed.flags[name];
 
-          if (Option.isOption(value) && value.isSome()) {
+          if (Option.isOption(value) && value.includes(Flag.Help)) {
             return Ok.of(this.help() + "\n");
+          }
+        }
+
+        if (flag.name === "version" && name in parsed.flags) {
+          const { value } = parsed.flags[name];
+
+          if (Option.isOption(value) && value.includes(Flag.Version)) {
+            return Ok.of(this.version + "\n");
           }
         }
       }
@@ -224,6 +259,13 @@ ${Marker.bold("Usage:")}
           : `<${argument.name}>`
       )
       .join(" ")}
+    `.trim();
+  }
+
+  private _helpVersion(): string {
+    return `
+${Marker.bold("Version:")}
+  ${this._version}
     `.trim();
   }
 
@@ -350,6 +392,7 @@ ${[...values(this._flags)]
   public help(): string {
     return [
       this._description,
+      this._helpVersion(),
       this._helpUsage(),
       ...this._helpArguments(),
       ...this._helpCommands(),

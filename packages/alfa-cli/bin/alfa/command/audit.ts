@@ -11,11 +11,12 @@ import { Flags } from "./audit/flags";
 export default (parent: Command) =>
   Command.withArguments(
     "audit",
+    parent.version,
     "Perform an accessibility audit of a page.",
     Flags,
     Arguments,
     Option.of(parent),
-    async (...args) => {
+    () => async (...args) => {
       const { run } = await import("./audit/run");
       return run(...args);
     }
