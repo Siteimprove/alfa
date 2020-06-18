@@ -25,6 +25,9 @@
       "path": "../alfa-cache"
     },
     {
+      "path": "../alfa-command"
+    },
+    {
       "path": "../alfa-device"
     },
     {
