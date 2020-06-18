@@ -96,7 +96,10 @@ export class Command<
 
   public async run(input: Array<string> | Command.Input<F, A>): Command.Output {
     if (Array.isArray(input)) {
-      const parsed = { flags: {}, args: {} } as Command.Input<F, A>;
+      const parsed = {
+        flags: {} as Record<string, any>,
+        args: {} as Record<string, any>,
+      };
 
       outer: while (input.length > 0) {
         const [arg] = input;
@@ -112,21 +115,19 @@ export class Command<
             continue;
           }
 
-          const value = flag.parse(input.slice(1));
+          let value: Result<readonly [Array<string>, Flag.Set<any>], string>;
+
+          if (name in parsed.flags) {
+            value = parsed.flags[name].parse(input.slice(1));
+          } else {
+            value = flag.parse(input.slice(1));
+          }
 
           if (value.isErr()) {
             return Err.of(`error: ${arg}: ${value.getErr()}\n`);
           }
 
-          [input, parsed.flags[name]] = value
-            .map(
-              ([input, value]) =>
-                [
-                  input,
-                  flag.join(Option.from(parsed.flags[name]), value),
-                ] as const
-            )
-            .get();
+          [input, parsed.flags[name]] = value.get();
 
           continue outer;
         }
@@ -137,8 +138,8 @@ export class Command<
       for (const name in this._flags) {
         const flag = this._flags[name];
 
-        if (flag.name === "help") {
-          const value = parsed.flags[name];
+        if (flag.name === "help" && name in parsed.flags) {
+          const { value } = parsed.flags[name];
 
           if (Option.isOption(value) && value.isSome()) {
             return Ok.of(this.help() + "\n");
@@ -152,10 +153,11 @@ export class Command<
         if (name in parsed.flags === false) {
           if (flag.options.default.isSome()) {
             parsed.flags[name] = flag.options.default.get();
-            continue;
+          } else {
+            return Err.of(`error: missing flag: --${flag.name}\n`);
           }
-
-          return Err.of(`error: missing flag: --${flag.name}\n`);
+        } else {
+          parsed.flags[name] = parsed.flags[name].value;
         }
       }
 
@@ -182,7 +184,7 @@ export class Command<
             continue;
           }
 
-          return Err.of(`error: ${argument.name}: ${value.getErr()}`);
+          return Err.of(`error: ${argument.name}: ${value.getErr()}\n`);
         }
 
         [input, parsed.args[name]] = value.get();
@@ -196,7 +198,7 @@ export class Command<
         );
       }
 
-      input = parsed;
+      input = parsed as Command.Input<F, A>;
     }
 
     return this._run(input);
