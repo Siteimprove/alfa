@@ -126,9 +126,8 @@ export namespace Matrix {
    * @see https://en.wikipedia.org/wiki/Cramers_rule
    *
    * @remarks
-   * This function uses Cramer's rule for computing the determinant which
-   * has a time complexity of O(n!) and is therefore not practical for large
-   * matrices.
+   * This function uses Cramer's rule for computing the inverse which has a time
+   * complexity of O(n!) and is therefore not practical for large matrices.
    */
   export function inverse(m: Matrix): Matrix {
     return multiply(adjugate(m), 1 / determinant(m));
