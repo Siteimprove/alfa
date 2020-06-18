@@ -3,8 +3,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Record } from "@siteimprove/alfa-record";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
@@ -18,7 +19,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     description: string,
     parse: Argument.Parser<T>
   ): Argument<T> {
-    const options: Argument.Options = {
+    const options: Argument.Options<T> = {
       optional: false,
       default: None,
     };
@@ -26,20 +27,20 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return new Argument(
       name,
       description.replace(/\s+/g, " ").trim(),
-      Record.of(options),
+      options,
       parse
     );
   }
 
   private readonly _name: string;
   private readonly _description: string;
-  private readonly _options: Record<Argument.Options>;
+  private readonly _options: Argument.Options<T>;
   private readonly _parse: Argument.Parser<T>;
 
   private constructor(
     name: string,
     description: string,
-    options: Record<Argument.Options>,
+    options: Argument.Options<T>,
     parse: Argument.Parser<T>
   ) {
     this._name = name;
@@ -56,7 +57,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return this._description;
   }
 
-  public get options(): Record<Argument.Options> {
+  public get options(): Argument.Options<T> {
     return this._options;
   }
 
@@ -68,8 +69,26 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return new Argument(
       this._name,
       this._description,
-      this._options,
+      {
+        ...this._options,
+        default: this._options.default.map(mapper),
+      },
       Parser.map(this._parse, mapper)
+    );
+  }
+
+  public filter<U extends T>(
+    predicate: Predicate<T, U>,
+    ifError: Thunk<string> = () => "incorrect value"
+  ): Argument<U> {
+    return new Argument(
+      this._name,
+      this._description,
+      {
+        ...this._options,
+        default: this._options.default.filter(predicate),
+      },
+      Parser.filter(this._parse, predicate, ifError)
     );
   }
 
@@ -77,18 +96,14 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return new Argument(
       this._name,
       this._description,
-      this._options.set("optional", true),
-      (argv) => {
-        const result = this._parse(argv).map(
-          ([argv, result]) => [argv, Option.of(result)] as const
-        );
-
-        if (result.isErr() && result.getErr() === Argument.Error.NotSpecified) {
-          return Ok.of([argv, None] as const);
-        }
-
-        return result;
-      }
+      {
+        ...this._options,
+        optional: true,
+        default: this._options.default
+          .map(Option.of)
+          .orElse(() => Option.of(None)),
+      },
+      Parser.map(this._parse, Option.of)
     );
   }
 
@@ -96,24 +111,27 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return new Argument(
       this._name,
       this._description,
-      this._options.set("default", Option.of(value)).set("optional", true),
-      (argv) => {
-        const result = this._parse(argv);
-
-        if (result.isErr() && result.getErr() === Argument.Error.NotSpecified) {
-          return Ok.of([argv, value] as const);
-        }
-
-        return result;
-      }
+      {
+        ...this._options,
+        optional: true,
+        default: Option.of(value),
+      },
+      this._parse
     );
+  }
+
+  public choices<U extends T>(...choices: Array<U>): Argument<U> {
+    return this.filter(Predicate.equals(...choices));
   }
 
   public toJSON(): Argument.JSON {
     return {
       name: this._name,
       description: this._description,
-      options: this._options.toJSON(),
+      options: {
+        ...this._options,
+        default: this._options.default.map(Serializable.toJSON).getOr(null),
+      },
     };
   }
 }
@@ -126,19 +144,18 @@ export namespace Argument {
     [key: string]: json.JSON;
     name: string;
     description: string;
-    options: Record.JSON;
+    options: {
+      [key: string]: json.JSON;
+      optional: boolean;
+      default: json.JSON | null;
+    };
   }
 
-  export type Parser<T> = parser.Parser<Array<string>, T, Error>;
+  export type Parser<T> = parser.Parser<Array<string>, T, string>;
 
-  export enum Error {
-    NotSpecified,
-    InvalidValue,
-  }
-
-  export interface Options {
+  export interface Options<T> {
     optional: boolean;
-    default: Option<unknown>;
+    default: Option<T>;
   }
 
   export function string(name: string, description: string): Argument<string> {
@@ -146,7 +163,7 @@ export namespace Argument {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of(Error.NotSpecified);
+        return Err.of("missing required value");
       }
 
       return Ok.of([argv.slice(1), value] as const);
@@ -158,13 +175,13 @@ export namespace Argument {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of(Error.NotSpecified);
+        return Err.of("missing required value");
       }
 
       const number = Number(value);
 
       if (!Number.isFinite(number)) {
-        return Err.of(Error.InvalidValue);
+        return Err.of(`${value} is not a number`);
       }
 
       return Ok.of([argv.slice(1), number] as const);

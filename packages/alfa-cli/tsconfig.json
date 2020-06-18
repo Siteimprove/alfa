@@ -16,7 +16,6 @@
     "bin/alfa/command/scrape/flags.ts",
     "bin/alfa/command/scrape/run.ts",
     "bin/alfa/oracle.ts",
-    "src/application.ts",
     "src/argument.ts",
     "src/command.ts",
     "src/flag.ts",

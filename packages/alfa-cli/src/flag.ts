@@ -4,8 +4,8 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Record } from "@siteimprove/alfa-record";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
@@ -17,9 +17,9 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   public static of<T>(
     name: string,
     description: string,
-    parse: (names: Array<string>) => Flag.Parser<T>
+    parse: Flag.Parser<T>
   ): Flag<T> {
-    const options: Flag.Options = {
+    const options: Flag.Options<T> = {
       type: None,
       aliases: [],
       optional: false,
@@ -30,26 +30,30 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(
       name,
       description.replace(/\s+/g, " ").trim(),
-      Record.of(options),
-      parse
+      options,
+      parse,
+      (_, next) => next
     );
   }
 
   private readonly _name: string;
   private readonly _description: string;
-  private readonly _options: Record<Flag.Options>;
-  private readonly _parse: (names: Array<string>) => Flag.Parser<T>;
+  private readonly _options: Flag.Options<T>;
+  private readonly _parse: Flag.Parser<T>;
+  private readonly _join: Flag.Joiner<T>;
 
   private constructor(
     name: string,
     description: string,
-    options: Record<Flag.Options>,
-    parse: (names: Array<string>) => Flag.Parser<T>
+    options: Flag.Options<T>,
+    parse: Flag.Parser<T>,
+    join: Flag.Joiner<T>
   ) {
     this._name = name;
     this._description = description;
     this._options = options;
     this._parse = parse;
+    this._join = join;
   }
 
   public get name(): string {
@@ -60,27 +64,61 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return this._description;
   }
 
-  public get options(): Record<Flag.Options> {
+  public get options(): Flag.Options<T> {
     return this._options;
   }
 
   public get parse(): Flag.Parser<T> {
-    return this._parse([this._name].concat(...this._options.get("aliases")));
+    return this._parse;
   }
 
-  public map<U>(mapper: Mapper<T, U>): Flag<U> {
-    return new Flag(this._name, this._description, this._options, (names) =>
-      Parser.map(this._parse(names), mapper)
+  public get join(): Flag.Joiner<T> {
+    return this._join;
+  }
+
+  public matches(name: string): boolean {
+    name = name.length === 1 ? name.replace(/^-/, "") : name.replace(/^--/, "");
+
+    return (
+      this._name === name ||
+      this._options.aliases.some((alias) => alias === name)
     );
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): Flag<U> {
-    return new Flag(this._name, this._description, this._options, (names) =>
-      Parser.filter(
-        this._parse(names),
-        predicate,
-        () => Flag.Error.InvalidValue
-      )
+  public map<U>(mapper: Mapper<T, U>): Flag<U> {
+    return new Flag(
+      this._name,
+      this._description,
+      {
+        ...this._options,
+        default: this._options.default.map(mapper),
+      },
+      Parser.map(this._parse, mapper),
+      (_, next) => next
+    );
+  }
+
+  public filter<U extends T>(
+    predicate: Predicate<T, U>,
+    ifError: Thunk<string> = () => "incorrect value"
+  ): Flag<U> {
+    return new Flag(
+      this._name,
+      this._description,
+      {
+        ...this._options,
+        default: this._options.default.filter(predicate),
+      },
+      Parser.filter(this._parse, predicate, ifError),
+      (previous, next) => {
+        const joined = this._join(previous, next);
+
+        if (predicate(joined)) {
+          return joined;
+        }
+
+        return next;
+      }
     );
   }
 
@@ -88,8 +126,12 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(
       this._name,
       this._description,
-      this._options.set("type", Option.of(type)),
-      this._parse
+      {
+        ...this._options,
+        type: Option.of(type),
+      },
+      this._parse,
+      this._join
     );
   }
 
@@ -97,11 +139,12 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(
       this._name,
       this._description,
-      this._options.set("aliases", [
-        ...this._options.get("aliases").get(),
-        alias,
-      ]),
-      this._parse
+      {
+        ...this._options,
+        aliases: [...this._options.aliases, alias],
+      },
+      this._parse,
+      this._join
     );
   }
 
@@ -109,60 +152,33 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(
       this._name,
       this._description,
-      this._options.set("optional", true),
-      (names) => (argv) => {
-        const result = this._parse(names)(argv).map(
-          ([argv, value]) => [argv, Option.of(value)] as const
-        );
-
-        if (result.isErr() && result.getErr() === Flag.Error.NotSpecified) {
-          return Ok.of([argv, None] as const);
-        }
-
-        return result;
-      }
+      {
+        ...this._options,
+        optional: true,
+        default: this._options.default
+          .map(Option.of)
+          .orElse(() => Option.of(None)),
+      },
+      Parser.map(this._parse, Option.of),
+      (previous, next) =>
+        next.map((next) =>
+          previous.map((previous) => this._join(previous, next)).getOr(next)
+        )
     );
   }
 
-  public repeatable(): Flag<Iterable<T>> {
+  public repeatable(): Flag<Array<T>> {
     return new Flag(
       this._name,
       this._description,
-      this._options.set("repeatable", true),
-      (names) => (argv) => {
-        const values: Array<T> = [];
-
-        while (true) {
-          const result = this._parse(names)(argv);
-
-          if (result.isErr()) {
-            if (result.getErr() === Flag.Error.NotSpecified) {
-              break;
-            } else {
-              return result;
-            }
-          }
-
-          const [remainder, value] = result.get();
-
-          if (remainder.length === argv.length) {
-            if (values.length === 0) {
-              values.push(value);
-            }
-
-            break;
-          }
-
-          values.push(value);
-          argv = remainder;
-        }
-
-        if (values.length === 0) {
-          return Err.of(Flag.Error.NotSpecified);
-        }
-
-        return Ok.of([argv, values] as const);
-      }
+      {
+        ...this._options,
+        repeatable: true,
+        default: this._options.default.map((value) => [value]),
+      },
+      Parser.map(this._parse, (value) => [value]),
+      (previous, next) =>
+        previous.map((previous) => [...previous, ...next]).getOr(next)
     );
   }
 
@@ -170,28 +186,35 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(
       this._name,
       this._description,
-      this._options.set("default", Option.of(value)).set("optional", true),
-      (names) => (argv) => {
-        const result = this._parse(names)(argv);
-
-        if (result.isErr() && result.getErr() === Flag.Error.NotSpecified) {
-          return Ok.of([argv, value] as const);
-        }
-
-        return result;
-      }
+      {
+        ...this._options,
+        optional: true,
+        default: Option.of(value),
+      },
+      this._parse,
+      this._join
     );
   }
 
   public choices<U extends T>(...choices: Array<U>): Flag<U> {
-    return this.filter(Predicate.equals(...choices)).type(choices.join("|"));
+    return this.filter(
+      Predicate.equals(...choices),
+      () =>
+        `incorrect value, expected one of ${choices
+          .map((choice) => `"${choice}"`)
+          .join(", ")}`
+    ).type(choices.join("|"));
   }
 
   public toJSON(): Flag.JSON {
     return {
       name: this._name,
       description: this._description,
-      options: this._options.toJSON(),
+      options: {
+        ...this._options,
+        type: this._options.type.getOr(null),
+        default: this._options.default.map(Serializable.toJSON).getOr(null),
+      },
     };
   }
 }
@@ -204,132 +227,95 @@ export namespace Flag {
     [key: string]: json.JSON;
     name: string;
     description: string;
-    options: Record.JSON;
+    options: {
+      [key: string]: json.JSON;
+      type: string | null;
+      aliases: Array<string>;
+      optional: boolean;
+      repeatable: boolean;
+      default: json.JSON | null;
+    };
   }
 
-  export type Parser<T> = parser.Parser<Array<string>, T, Error>;
+  export type Parser<T> = parser.Parser<Array<string>, T, string>;
 
-  export enum Error {
-    NotSpecified,
-    MissingValue,
-    InvalidValue,
-  }
+  export type Joiner<T> = (previous: Option<T>, next: T) => T;
 
-  export interface Options {
+  export interface Options<T> {
     type: Option<string>;
     aliases: Array<string>;
     optional: boolean;
     repeatable: boolean;
-    default: Option<unknown>;
+    default: Option<T>;
   }
 
   export function string(name: string, description: string): Flag<string> {
-    return Flag.of(name, description, (names) =>
-      parse(names, (argv) => {
-        const [value] = argv;
+    return Flag.of(name, description, (argv) => {
+      const [value] = argv;
 
-        if (value === undefined) {
-          return Err.of(Error.MissingValue);
-        }
+      if (value === undefined) {
+        return Err.of("missing required value");
+      }
 
-        return Ok.of([argv.slice(1), value] as const);
-      })
-    ).type("string");
+      return Ok.of([argv.slice(1), value] as const);
+    }).type("string");
   }
 
   export function number(name: string, description: string): Flag<number> {
-    return string(name, description)
-      .type("number")
-      .map(Number)
-      .filter(Number.isFinite);
+    return Flag.of(name, description, (argv) => {
+      const [value] = argv;
+
+      if (value === undefined) {
+        return Err.of("missing required value");
+      }
+
+      const number = Number(value);
+
+      if (!Number.isFinite(number)) {
+        return Err.of(`${value} is not a number`);
+      }
+
+      return Ok.of([argv.slice(1), number] as const);
+    }).type("number");
   }
 
   export function integer(name: string, description: string): Flag<number> {
-    return string(name, description)
-      .type("integer")
-      .map(Number)
-      .filter(Number.isInteger);
+    return Flag.of(name, description, (argv) => {
+      const [value] = argv;
+
+      if (value === undefined) {
+        return Err.of("missing required value");
+      }
+
+      const number = Number(value);
+
+      if (!Number.isInteger(number)) {
+        return Err.of(`${value} is not an integer`);
+      }
+
+      return Ok.of([argv.slice(1), number] as const);
+    }).type("integer");
   }
 
   export function boolean(name: string, description: string): Flag<boolean> {
-    return Flag.of(name, description, (names) =>
-      parse(names, (argv) => {
-        const [value] = argv;
+    return Flag.of(name, description, (argv) => {
+      const [value] = argv;
 
-        if (value === undefined) {
-          return Ok.of([argv, true] as const);
-        }
+      if (value === undefined) {
+        return Ok.of([argv, true] as const);
+      }
 
-        if (value !== "true" && value !== "false") {
-          return Err.of(Flag.Error.InvalidValue);
-        }
+      if (value !== "true" && value !== "false") {
+        return Err.of(`incorrect value, expected one of "true", "false"`);
+      }
 
-        return Ok.of([argv.slice(1), value === "true"] as const);
-      })
-    ).type("boolean");
+      return Ok.of([argv.slice(1), value === "true"] as const);
+    }).type("boolean");
   }
 
-  export function help(description: string): Flag<Option<void>> {
-    return Flag.of("help", description, (names) =>
-      parse(names, (argv) => Ok.of([argv, undefined] as const))
+  export function help(description: string): Flag<Option<undefined>> {
+    return Flag.of("help", description, (argv) =>
+      Ok.of([argv, undefined] as const)
     ).optional();
   }
-}
-
-/**
- * Construct a flag parser that will parse a flag with one of several possible
- * names.
- *
- * @remarks
- * The parser works by first looking through the argument list for the name of
- * the flag to parse, prefixed with either `-` for single-letter names or `--`
- * otherwise. Once found, the parser grabs all arguments up until the next flag
- * begins as indicated by a `-` prefix. The arguments found are then passed to
- * the supplied parser which is tasked with determining the value, if any, of
- * the flag. The remaining arguments not consumed by the supplied parser are put
- * back into the argument list.
- */
-function parse<T>(
-  names: Array<string>,
-  parser: Flag.Parser<T>
-): Flag.Parser<T> {
-  return (argv) => {
-    const { length } = argv;
-
-    for (const name of names) {
-      const start = argv.indexOf(name.length === 1 ? `-${name}` : `--${name}`);
-
-      if (start === -1) {
-        continue;
-      }
-
-      const values: Array<string> = [];
-
-      let end = start + 1;
-
-      while (end < length) {
-        const value = argv[end++];
-
-        if (value.startsWith("-")) {
-          break;
-        }
-
-        values.push(value);
-      }
-
-      const result = parser(values);
-
-      if (result.isErr()) {
-        return result;
-      }
-
-      const [remainder, value] = result.get();
-
-      argv = argv.slice(0, start).concat(remainder).concat(argv.slice(end));
-
-      return Ok.of([argv, value] as const);
-    }
-
-    return Err.of(Flag.Error.NotSpecified);
-  };
 }
