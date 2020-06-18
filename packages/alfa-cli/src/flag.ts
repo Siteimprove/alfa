@@ -85,7 +85,10 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     );
   }
 
-  public map<U>(mapper: Mapper<T, U>): Flag<U> {
+  public map<U>(
+    mapper: Mapper<T, U>,
+    join: Flag.Joiner<U> = (_, next) => next
+  ): Flag<U> {
     return new Flag(
       this._name,
       this._description,
@@ -94,7 +97,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
         default: this._options.default.map(mapper),
       },
       Parser.map(this._parse, mapper),
-      (_, next) => next
+      join
     );
   }
 
