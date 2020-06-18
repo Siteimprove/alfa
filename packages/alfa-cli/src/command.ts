@@ -130,6 +130,8 @@ export class Command<
 
           continue outer;
         }
+
+        break;
       }
 
       for (const name in this._flags) {
