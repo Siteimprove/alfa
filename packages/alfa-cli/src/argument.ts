@@ -21,6 +21,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
   ): Argument<T> {
     const options: Argument.Options<T> = {
       optional: false,
+      repeatable: false,
       default: None,
     };
 
@@ -107,6 +108,19 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     );
   }
 
+  public repeatable(): Argument<Array<T>> {
+    return new Argument(
+      this._name,
+      this._description,
+      {
+        ...this._options,
+        repeatable: true,
+        default: this._options.default.map((value) => [value]),
+      },
+      Parser.map(Parser.oneOrMore(this._parse), (values) => [...values])
+    );
+  }
+
   public default(value: T): Argument<T> {
     return new Argument(
       this._name,
@@ -147,6 +161,7 @@ export namespace Argument {
     options: {
       [key: string]: json.JSON;
       optional: boolean;
+      repeatable: boolean;
       default: json.JSON | null;
     };
   }
@@ -155,6 +170,7 @@ export namespace Argument {
 
   export interface Options<T> {
     optional: boolean;
+    repeatable: boolean;
     default: Option<T>;
   }
 
