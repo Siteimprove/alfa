@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -155,7 +155,9 @@ export function parseMaximumScale(scale: string | undefined): Option<number> {
       return Option.of(0.1);
     default:
       const scaleValue = Number(scale);
-      return Option.of(isNaN(scaleValue) ? 0.1 : clamp(scaleValue, 0.1, 10));
+      return Option.of(
+        isNaN(scaleValue) ? 0.1 : Real.clamp(scaleValue, 0.1, 10)
+      );
   }
 }
 

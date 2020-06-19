@@ -4,7 +4,7 @@ import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Matrix, mod, round } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -70,7 +70,7 @@ export default Rule.Atomic.of<Page, Element>({
           target,
           landscape,
           portrait
-        ).map((rotation) => round(rotation));
+        ).map((rotation) => Real.round(rotation));
 
         return {
           1: expectation(
@@ -195,12 +195,9 @@ function getRotation(element: Element, device: Device): Option<number> {
         }
 
         case "matrix": {
-          const decomposed = Transformation.decompose(
-            fn.values.map((row) => row.map((number) => number.value)) as Matrix<
-              4,
-              4
-            >
-          );
+          const decomposed = Transformation.of(
+            fn.values.map((row) => row.map((number) => number.value))
+          ).decompose();
 
           if (decomposed.isNone()) {
             continue;
@@ -219,7 +216,7 @@ function getRotation(element: Element, device: Device): Option<number> {
       }
     }
 
-    return Option.of(mod(rotation, 360));
+    return Option.of(Real.modulo(rotation, 360));
   });
 }
 
@@ -229,6 +226,8 @@ function getRelativeRotation(
   right: Device
 ): Option<number> {
   return getRotation(element, left).flatMap((left) =>
-    getRotation(element, right).map((right) => mod(abs(left - right), 360))
+    getRotation(element, right).map((right) =>
+      Real.modulo(abs(left - right), 360)
+    )
   );
 }
