@@ -4,9 +4,11 @@
 
 import * as path from "path";
 import * as process from "process";
+import * as tty from "tty";
 
 import { Command, Flag } from "@siteimprove/alfa-command";
 import { None } from "@siteimprove/alfa-option";
+import { Err } from "@siteimprove/alfa-result";
 
 import * as pkg from "../package.json";
 
@@ -35,20 +37,26 @@ const application = Command.withSubcommands(
   None
 );
 
-application.run(process.argv.slice(2)).then((result) => {
-  if (result.isOk()) {
-    let output = result.get().trimRight();
+application
+  .run(process.argv.slice(2))
+  .catch((err: Error) => Err.of(`${err.message}`))
+  .then((result) => {
+    let stream: tty.WriteStream;
+    let output: string;
+
+    if (result.isOk()) {
+      stream = process.stdout;
+      output = result.get();
+    } else {
+      stream = process.stderr;
+      output = result.getErr();
+    }
+
+    output = output.trimRight();
 
     if (output.length > 0) {
-      process.stdout.write(output + "\n");
-    }
-  } else {
-    let output = result.getErr().trimRight();
-
-    if (output.length > 0) {
-      process.stderr.write(output + "\n");
+      stream.write(output + "\n");
     }
 
-    process.exit(1);
-  }
-});
+    process.exit(result.isOk() ? 0 : 1);
+  });
