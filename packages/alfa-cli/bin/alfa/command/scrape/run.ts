@@ -157,12 +157,12 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     return result;
   }
 
-  const output = JSON.stringify(result.get()) + "\n";
+  const output = JSON.stringify(result.get());
 
   if (flags.output.isNone()) {
     return Ok.of(output);
   } else {
-    fs.writeFileSync(flags.output.get(), output);
+    fs.writeFileSync(flags.output.get() + "\n", output);
     return Ok.of("");
   }
 };

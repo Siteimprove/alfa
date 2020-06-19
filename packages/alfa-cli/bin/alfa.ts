@@ -37,9 +37,18 @@ const application = Command.withSubcommands(
 
 application.run(process.argv.slice(2)).then((result) => {
   if (result.isOk()) {
-    process.stdout.write(result.get());
+    let output = result.get().trimRight();
+
+    if (output.length > 0) {
+      process.stdout.write(output + "\n");
+    }
   } else {
-    process.stderr.write(result.getErr());
+    let output = result.getErr().trimRight();
+
+    if (output.length > 0) {
+      process.stderr.write(output + "\n");
+    }
+
     process.exit(1);
   }
 });

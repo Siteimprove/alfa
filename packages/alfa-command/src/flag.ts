@@ -88,7 +88,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
 
   public filter<U extends T>(
     predicate: Predicate<T, U>,
-    ifError: Thunk<string> = () => "incorrect value"
+    ifError: Thunk<string> = () => "Incorrect value"
   ): Flag<U> {
     const parse: Flag.Parser<U> = (argv) => {
       const result = this._parse(argv);
@@ -203,7 +203,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return this.filter(
       Predicate.equals(...choices),
       () =>
-        `incorrect value, expected one of ${choices
+        `Incorrect value, expected one of ${choices
           .map((choice) => `"${choice}"`)
           .join(", ")}`
     ).type(choices.join("|"));
@@ -301,7 +301,7 @@ export namespace Flag {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of("missing required value");
+        return Err.of("Missing required value");
       }
 
       return Ok.of([argv.slice(1), Flag.Set.of(value, () => parse)] as const);
@@ -315,7 +315,7 @@ export namespace Flag {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of("missing required value");
+        return Err.of("Missing required value");
       }
 
       const number = Number(value);
@@ -335,7 +335,7 @@ export namespace Flag {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of("missing required value");
+        return Err.of("Missing required value");
       }
 
       const number = Number(value);
@@ -359,7 +359,7 @@ export namespace Flag {
       }
 
       if (value !== "true" && value !== "false") {
-        return Err.of(`incorrect value, expected one of "true", "false"`);
+        return Err.of(`Incorrect value, expected one of "true", "false"`);
       }
 
       return Ok.of([

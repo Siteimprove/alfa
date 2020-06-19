@@ -10,7 +10,7 @@ import { Argument } from "./argument";
 import { Flag } from "./flag";
 import { Text } from "./text";
 
-const { values } = Object;
+const { values, entries } = Object;
 
 export class Command<
   F extends Command.Flags = {},
@@ -91,7 +91,7 @@ export class Command<
     this._arguments = args;
     this._subcommands = subcommands((this as unknown) as Command);
     this._parent = parent;
-    this._run = run?.(this) ?? (async () => Ok.of(this._help() + "\n"));
+    this._run = run?.(this) ?? (async () => Ok.of(this._help()));
   }
 
   public get name(): string {
@@ -120,117 +120,56 @@ export class Command<
 
   public async run(input: Array<string> | Command.Input<F, A>): Command.Output {
     if (Array.isArray(input)) {
-      const parsed = {
-        flags: {} as Record<string, any>,
-        args: {} as Record<string, any>,
-      };
+      let argv = input;
 
-      outer: while (input.length > 0) {
-        const [arg] = input;
+      input = {} as Command.Input<F, A>;
 
-        if (!arg.startsWith("-")) {
-          break;
-        }
+      const flags = this._parseFlags(argv);
 
-        for (const name in this._flags) {
-          const flag = this._flags[name];
-
-          if (!flag.matches(arg)) {
-            continue;
-          }
-
-          let value: Result<readonly [Array<string>, Flag.Set<any>], string>;
-
-          if (name in parsed.flags) {
-            value = parsed.flags[name].parse(input.slice(1));
-          } else {
-            value = flag.parse(input.slice(1));
-          }
-
-          if (value.isErr()) {
-            return Err.of(`error: ${arg}: ${value.getErr()}\n`);
-          }
-
-          [input, parsed.flags[name]] = value.get();
-
-          continue outer;
-        }
-
-        break;
+      if (flags.isErr()) {
+        return flags;
       }
+
+      [argv, input.flags] = flags.get();
 
       for (const name in this._flags) {
-        const flag = this._flags[name];
+        const value = input.flags[name];
 
-        if (flag.name === "help" && name in parsed.flags) {
-          const { value } = parsed.flags[name];
-
-          if (Option.isOption(value) && value.includes(Flag.Help)) {
-            return Ok.of(this._help() + "\n");
-          }
-        }
-
-        if (flag.name === "version" && name in parsed.flags) {
-          const { value } = parsed.flags[name];
-
-          if (Option.isOption(value) && value.includes(Flag.Version)) {
-            return Ok.of(this.version + "\n");
+        if (Option.isOption(value) && value.isSome()) {
+          switch (value.get()) {
+            case Flag.Help:
+              return Ok.of(this._help());
+            case Flag.Version:
+              return Ok.of(this._version);
           }
         }
       }
 
-      for (const name in this._flags) {
-        const flag = this._flags[name];
+      if (argv[0] === "--") {
+        argv = argv.slice(1);
+      }
 
-        if (name in parsed.flags === false) {
-          if (flag.options.default.isSome()) {
-            parsed.flags[name] = flag.options.default.get();
-          } else {
-            return Err.of(`error: missing flag: --${flag.name}\n`);
-          }
-        } else {
-          parsed.flags[name] = parsed.flags[name].value;
+      for (const command of values(this._subcommands)) {
+        if (command.name === argv[0]) {
+          return command.run(argv.slice(1));
         }
       }
 
-      if (input[0] === "--") {
-        input = input.slice(1);
+      const args = this._parseArguments(argv);
+
+      if (args.isErr()) {
+        return args;
       }
 
-      for (const name in this._subcommands) {
-        const command = this._subcommands[name];
+      [argv, input.args] = args.get();
 
-        if (command.name === input[0]) {
-          return command.run(input.slice(1));
-        }
-      }
-
-      for (const name in this._arguments) {
-        const argument = this._arguments[name];
-
-        const value = argument.parse(input);
-
-        if (value.isErr()) {
-          if (argument.options.default.isSome()) {
-            parsed.args[name] = argument.options.default.get();
-            continue;
-          }
-
-          return Err.of(`error: ${argument.name}: ${value.getErr()}\n`);
-        }
-
-        [input, parsed.args[name]] = value.get();
-      }
-
-      if (input.length !== 0) {
-        const [arg] = input;
+      if (argv.length !== 0) {
+        const [argument] = argv;
 
         return Err.of(
-          `unknown ${arg.startsWith("-") ? "flag" : "argument"}: ${arg}\n`
+          `Unknown ${argument[0] === "-" ? "flag" : "argument"}: ${argument}`
         );
       }
-
-      input = parsed as Command.Input<F, A>;
     }
 
     return this._run(input);
@@ -244,6 +183,80 @@ export class Command<
       arguments: values(this._arguments).map((argument) => argument.toJSON()),
       subcommands: values(this._subcommands).map((command) => command.toJSON()),
     };
+  }
+
+  private _parseFlags(
+    argv: Array<string>
+  ): Result<readonly [Array<string>, Command.Flags.Values<F>], string> {
+    const flags = entries(this._flags);
+
+    const sets: Record<string, Flag.Set<unknown>> = {};
+
+    while (argv.length > 0) {
+      const [argument] = argv;
+
+      if (argument[0] !== "-") {
+        break;
+      }
+
+      const match = flags.find(([, flag]) => flag.matches(argument));
+
+      if (match === undefined) {
+        return Err.of(`Unknown flag: ${argument}`);
+      }
+
+      const [name, flag] = match;
+
+      const parse = name in sets ? sets[name].parse : flag.parse;
+
+      const value = parse(argv.slice(1));
+
+      if (value.isOk()) {
+        [argv, sets[name]] = value.get();
+      } else {
+        return Err.of(`${argument}: ${value.getErr()}`);
+      }
+    }
+
+    const values: Record<string, unknown> = {};
+
+    for (const [name, flag] of flags) {
+      const { default: missing } = flag.options;
+
+      if (name in sets) {
+        values[name] = sets[name].value;
+      } else if (missing.isSome()) {
+        values[name] = missing.get();
+      } else {
+        return Err.of(`Missing flag: --${flag.name}`);
+      }
+    }
+
+    return Ok.of([argv, values as Command.Flags.Values<F>] as const);
+  }
+
+  private _parseArguments(
+    argv: Array<string>
+  ): Result<readonly [Array<string>, Command.Arguments.Values<A>], string> {
+    const values: Record<string, unknown> = {};
+
+    for (const [name, argument] of entries(this._arguments)) {
+      const result = argument.parse(argv);
+
+      if (result.isOk()) {
+        [argv, values[name]] = result.get();
+      } else {
+        const { default: missing } = argument.options;
+
+        if (missing.isSome()) {
+          values[name] = missing.get();
+        } else {
+          return Err.of(`${argument.name}: ${result.getErr()}`);
+        }
+      }
+    }
+
+    return Ok.of([argv, values as Command.Arguments.Values<A>] as const);
   }
 
   private _invocation(): string {

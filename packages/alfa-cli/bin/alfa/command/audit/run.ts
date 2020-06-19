@@ -8,7 +8,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None } from "@siteimprove/alfa-option";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Ok } from "@siteimprove/alfa-result";
 import { Rules, Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -29,7 +29,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   const formatter = Formatter.load<Input, Target, Question>(flags.format);
 
   if (formatter.isErr()) {
-    return Err.of(`error: ${formatter.getErr()}`);
+    return formatter;
   }
 
   let json: string;
@@ -86,12 +86,12 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     });
   }
 
-  const output = formatter.get()(page, outcomes) + "\n";
+  const output = formatter.get()(page, outcomes);
 
   if (flags.output.isNone()) {
     return Ok.of(output);
   } else {
-    fs.writeFileSync(flags.output.get(), output);
+    fs.writeFileSync(flags.output.get() + "\n", output);
     return Ok.of("");
   }
 };
