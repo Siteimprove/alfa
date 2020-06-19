@@ -1,5 +1,5 @@
-import {Node} from "@siteimprove/alfa-aria";
-import {Device} from "@siteimprove/alfa-device";
+import { Node } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -18,7 +18,7 @@ const { hasId } = Element;
 const device = Device.standard();
 
 function getElementById(document: Document): (id: string) => Element {
-  return (id: string) =>
+  return (id) =>
     document
       .descendants()
       .find(and(Element.isElement, hasId(id)))
@@ -30,8 +30,11 @@ test("evaluate() passes on elements marked as decorative with no alternative tex
     Element.fromElement(
       <html>
         <img id="empty-alt" src="foo.jpg" alt="" />
-        <video id="role-none" src="foo.mp4" role="none"/>
+        <video id="role-none" src="foo.mp4" role="none" />
         <object id="role-presentation" src="foo.jpg" role="presentation" />
+        <svg id="svg" role="none">
+          <circle cx="50" cy="50" r="40" fill="yellow"></circle>
+        </svg>
       </html>,
       Option.of(self)
     ),
@@ -40,31 +43,71 @@ test("evaluate() passes on elements marked as decorative with no alternative tex
   const emptyAlt = getById("empty-alt");
   const roleNone = getById("role-none");
   const rolePresentation = getById("role-presentation");
+  const svg = getById("svg");
 
   t.deepEqual(await evaluate(R67, { device, document }), [
     passed(R67, emptyAlt, { 1: Outcomes.HasNoName }),
     passed(R67, roleNone, { 1: Outcomes.HasNoName }),
     passed(R67, rolePresentation, { 1: Outcomes.HasNoName }),
+    passed(R67, svg, { 1: Outcomes.HasNoName }),
   ]);
 });
 
-test("evaluate() fails on elements marked as decorative with an alternative text", async t => {
+test("evaluate() fails on elements marked as decorative with an alternative text", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-      <span id="label">Foo</span>
-      {/*NEED FIX <img id="empty-alt-aria-label" src="foo.jpg" alt="" aria-label="Foo"/>*/}
-      <audio id="role-none-aria-labelledby" src="foo.mp3" role="none" aria-labelledby="label"/>
+        <span id="label">Foo</span>
+        <img id="empty-alt-aria-label" src="foo.jpg" alt="" aria-label="Foo" />
+        <audio
+          id="role-none-aria-labelledby"
+          src="foo.mp3"
+          role="none"
+          aria-labelledby="label"
+        />
       </html>,
       Option.of(self)
     ),
   ]);
   const getById = getElementById(document);
-  // const emptyAltAriaLabel = getById("empty-alt-aria-label");
+  const emptyAltAriaLabel = getById("empty-alt-aria-label");
   const roleNoneAriaLabelledby = getById("role-none-aria-labelledby");
 
   t.deepEqual(await evaluate(R67, { device, document }), [
-    // failed(R67, emptyAltAriaLabel, { 1: Outcomes.HasName }),
+    failed(R67, emptyAltAriaLabel, { 1: Outcomes.HasName }),
     failed(R67, roleNoneAriaLabelledby, { 1: Outcomes.HasName }),
   ]);
+});
+
+test("evaluate() is inapplicable on mathml, iframe and non-embedded elements", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <math role="none"></math>
+        <span role="none"></span>
+        <iframe role="presentation"></iframe>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  t.deepEqual(await evaluate(R67, { device, document }), [inapplicable(R67)]);
+});
+
+test("evaluate() is inapplicabale on elements which are not marked as decorative", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <img src="foo.jpg" alt="foo" />
+        <video src="foo.mp4" />
+        <object src="foo.jpg" />
+        <svg>
+          <circle cx="50" cy="50" r="40" fill="yellow"></circle>
+        </svg>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  t.deepEqual(await evaluate(R67, { device, document }), [inapplicable(R67)]);
 });
