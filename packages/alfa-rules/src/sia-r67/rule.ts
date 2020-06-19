@@ -10,11 +10,9 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasExplicitRole } from "../common/predicate/has-role";
 import { hasValue } from "../common/predicate/has-value";
-import equals = Predicate.equals;
-import not = Predicate.not;
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, or } = Predicate;
+const { and, equals, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",

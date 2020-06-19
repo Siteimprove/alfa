@@ -1,4 +1,3 @@
-import { Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Option } from "@siteimprove/alfa-option";
