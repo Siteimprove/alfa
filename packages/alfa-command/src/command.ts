@@ -91,7 +91,7 @@ export class Command<
     this._arguments = args;
     this._subcommands = subcommands((this as unknown) as Command);
     this._parent = parent;
-    this._run = run?.(this) ?? (async () => Ok.of(this.help() + "\n"));
+    this._run = run?.(this) ?? (async () => Ok.of(this._help() + "\n"));
   }
 
   public get name(): string {
@@ -166,7 +166,7 @@ export class Command<
           const { value } = parsed.flags[name];
 
           if (Option.isOption(value) && value.includes(Flag.Help)) {
-            return Ok.of(this.help() + "\n");
+            return Ok.of(this._help() + "\n");
           }
         }
 
@@ -236,20 +236,43 @@ export class Command<
     return this._run(input);
   }
 
-  public path(): string {
-    const path = this._name;
+  public toJSON(): Command.JSON {
+    return {
+      name: this._name,
+      description: this._description,
+      flags: values(this._flags).map((flag) => flag.toJSON()),
+      arguments: values(this._arguments).map((argument) => argument.toJSON()),
+      subcommands: values(this._subcommands).map((command) => command.toJSON()),
+    };
+  }
+
+  private _invocation(): string {
+    const invocation = this._name;
 
     for (const parent of this._parent) {
-      return parent.path() + " " + path;
+      return parent._invocation() + " " + invocation;
     }
 
-    return path;
+    return invocation;
+  }
+
+  private _help(): string {
+    return [
+      this._description,
+      this._helpVersion(),
+      this._helpUsage(),
+      ...this._helpArguments(),
+      ...this._helpCommands(),
+      ...this._helpFlags(),
+    ].join("\n\n");
   }
 
   private _helpUsage(): string {
     return `
 ${Marker.bold("Usage:")}
-  ${Marker.bold("$")} ${this.path()} [flags] ${[...values(this._arguments)]
+  ${Marker.bold("$")} ${this._invocation()} [flags] ${[
+      ...values(this._arguments),
+    ]
       .map((argument) =>
         argument.options.optional
           ? `[<${argument.name}>]`
@@ -384,27 +407,6 @@ ${[...values(this._flags)]
   .join("\n\n")}
       `.trim()
     );
-  }
-
-  public help(): string {
-    return [
-      this._description,
-      this._helpVersion(),
-      this._helpUsage(),
-      ...this._helpArguments(),
-      ...this._helpCommands(),
-      ...this._helpFlags(),
-    ].join("\n\n");
-  }
-
-  public toJSON(): Command.JSON {
-    return {
-      name: this._name,
-      description: this._description,
-      flags: values(this._flags).map((flag) => flag.toJSON()),
-      arguments: values(this._arguments).map((argument) => argument.toJSON()),
-      subcommands: values(this._subcommands).map((command) => command.toJSON()),
-    };
   }
 }
 
