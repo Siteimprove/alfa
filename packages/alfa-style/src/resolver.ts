@@ -3,9 +3,9 @@ import {
   Converter,
   Length,
   Percentage,
-  RGB
+  RGB,
 } from "@siteimprove/alfa-css";
-import { clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
 
@@ -80,10 +80,10 @@ export namespace Resolver {
         const [red, green, blue] = [
           color.red,
           color.green,
-          color.blue
-        ].map(channel =>
+          color.blue,
+        ].map((channel) =>
           Percentage.of(
-            clamp(
+            Real.clamp(
               channel.type === "number" ? channel.value / 0xff : channel.value,
               0,
               1
@@ -95,7 +95,7 @@ export namespace Resolver {
           red,
           green,
           blue,
-          Percentage.of(clamp(color.alpha.value, 0, 1))
+          Percentage.of(Real.clamp(color.alpha.value, 0, 1))
         );
       }
 

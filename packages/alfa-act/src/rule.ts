@@ -149,7 +149,7 @@ export namespace Rule {
 
     export interface Evaluate<I, T, Q> {
       (input: Readonly<I>): {
-        applicability(): Iterable<Interview<Q, T, T | Option<T>>>;
+        applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
         expectations(
           target: T
         ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };

@@ -240,7 +240,10 @@ export namespace Node {
                 role.some(isPresentational) &&
                 !isAllowedPresentational(node)
               ) {
-                return Role.from(node, { explicit: false });
+                return Role.from(node, {
+                  explicit: false,
+                  allowPresentational: false,
+                });
               }
 
               return Branched.of(role);
