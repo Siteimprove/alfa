@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { equals, or, not, property, test } = Predicate;
+const { equals, or } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
