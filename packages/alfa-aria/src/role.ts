@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { equals, or } = Predicate;
+const { equals, or, property } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -270,7 +270,9 @@ export namespace Role {
                   return feature.flatMap((feature) =>
                     feature
                       .role(element, {
-                        allowPresentational: options.allowPresentational,
+                        allowPresentational:
+                          options.allowPresentational ??
+                          isAllowedPresentational(element),
                       })
                       .flatMap(Role.lookup)
                   );
@@ -284,11 +286,16 @@ export namespace Role {
   }
 
   export namespace from {
-    export interface Options extends Feature.RoleOptions {
+    export interface Options extends Partial<Feature.RoleOptions> {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
   }
+
+  export const isPresentational: Predicate<Role> = property(
+    "name",
+    equals("presentation", "none")
+  );
 
   export function hasName(predicate: Predicate<string>): Predicate<Role>;
 
@@ -312,6 +319,27 @@ export namespace Role {
     return (role) => role.hasName(predicate);
   }
 }
+
+/**
+ * Determine if an element is allowed to be presentational.
+ *
+ * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
+ */
+const isAllowedPresentational: Predicate<Element> = (element) => {
+  if (element.tabIndex().isSome()) {
+    return false;
+  }
+
+  return Role.lookup("roletype").some((role) => {
+    for (const attribute of role.characteristics.supports) {
+      if (element.attribute(attribute).isSome()) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+};
 
 import "./role/separator";
 

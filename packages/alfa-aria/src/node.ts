@@ -233,23 +233,10 @@ export namespace Node {
         } else {
           accessibleNode = Role.from(node)
             .flatMap((role) => {
-              // If the element has a presentational role, but is not allowed to
-              // be presentational, we fall back to its implicit role by not
-              // considering its explicit role.
-              if (
-                role.some(isPresentational) &&
-                !isAllowedPresentational(node)
-              ) {
-                return Role.from(node, {
-                  explicit: false,
-                  allowPresentational: false,
-                });
-              }
-
               return Branched.of(role);
             })
             .flatMap<Node>((role) => {
-              if (role.some(isPresentational)) {
+              if (role.some(Role.isPresentational)) {
                 return Branched.of(Container.of(node));
               }
 
@@ -323,29 +310,3 @@ export namespace Node {
     });
   }
 }
-
-const isPresentational: Predicate<Role> = property(
-  "name",
-  equals("presentation", "none")
-);
-
-/**
- * Determine if an element is allowed to be presentational.
- *
- * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
- */
-const isAllowedPresentational: Predicate<dom.Element> = (element) => {
-  if (element.tabIndex().isSome()) {
-    return false;
-  }
-
-  return Role.lookup("roletype").some((role) => {
-    for (const attribute of role.characteristics.supports) {
-      if (element.attribute(attribute).isSome()) {
-        return false;
-      }
-    }
-
-    return true;
-  });
-};
