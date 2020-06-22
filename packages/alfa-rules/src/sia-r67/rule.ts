@@ -84,29 +84,12 @@ const isEmbeddedContent: Predicate<Element> = or(
 );
 
 /**
- * Check if an element is marked as decorative:
- * * if there is an explicit role, use it;
- * * otherwise, use the implicit role but without conflict resolution.
+ * Check if an element is marked as decorative by looking at its role but without conflict resolution.
  * If the result is "none" or "presentation", then the element is marked as decorative.
  */
 function isMarkedAsDecorative(element: Element): boolean {
   return (
-    Role.from(element, { implicit: false })
-      .map((explicitRole) => {
-        return explicitRole.or(
-          element.namespace.flatMap((namespace) => {
-            const feature = Feature.lookup(namespace, element.name);
-
-            return feature.flatMap((feature) =>
-              feature
-                .role(element, {
-                  allowPresentational: true, // disable conflict resolution
-                })
-                .flatMap(Role.lookup)
-            );
-          })
-        );
-      })
+    Role.from(element, { allowPresentational: true })
       // Element is marked as decorative if at least one browser thinks so.
       .some((r) => r.some(Role.hasName("none", "presentation")))
   );
