@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Feature, Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Role } from "@siteimprove/alfa-aria";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -8,12 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasExplicitRole } from "../common/predicate/has-role";
-import { hasValue } from "../common/predicate/has-value";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, equals, or, not } = Predicate;
+const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
