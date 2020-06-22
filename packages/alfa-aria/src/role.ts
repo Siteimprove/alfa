@@ -254,22 +254,22 @@ export namespace Role {
                   const role = Role.lookup(name);
 
                   if (
-                    // If the role is not abstract…
+                    // If the role is not abstract...
                     role.some(
                       (role) => role.category !== Role.Category.Abstract
                     ) &&
-                    // …and it's not a presentational role in a forbidden context…
+                    // ...and it's not a presentational role in a forbidden context...
                     !(
                       role.some(Role.isPresentational) &&
                       !isAllowedPresentational
                     )
                   ) {
-                    // …then we got ourselves a valid explicit role…
+                    // ...then we got ourselves a valid explicit role...
                     return role;
                   }
                 }
               }
-              // …otherwise, default to implicit role computation.
+              // ...otherwise, default to implicit role computation.
               return None;
             })
             .orElse(() => {
