@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Feature, Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -83,13 +84,30 @@ const isEmbeddedContent: Predicate<Element> = or(
 );
 
 /**
- * Not fully matching the Sanshikan def as <a>Foo</a> (no href) is not flagged here.
- * Hence, this is OK for SIA R67 but will need more work if moved to a common helper.
+ * Check if an element is marked as decorative:
+ * * if there is an explicit role, use it;
+ * * otherwise, use the implicit role but without conflict resolution.
+ * If the result is "none" or "presentation", then the element is marked as decorative.
  */
-export const isMarkedAsDecorative: Predicate<Element> = or(
-  hasExplicitRole("none", "presentation"),
-  and(
-    Element.hasName("img"),
-    hasAttribute(and(Attribute.hasName("alt"), hasValue(equals(""))))
-  )
-);
+function isMarkedAsDecorative(element: Element): boolean {
+  return (
+    Role.from(element, { implicit: false })
+      .map((explicitRole) => {
+        return explicitRole.or(
+          element.namespace.flatMap((namespace) => {
+            const feature = Feature.lookup(namespace, element.name);
+
+            return feature.flatMap((feature) =>
+              feature
+                .role(element, {
+                  allowPresentational: true, // disable conflict resolution
+                })
+                .flatMap(Role.lookup)
+            );
+          })
+        );
+      })
+      // Element is marked as decorative if at least one browser thinks so.
+      .some((r) => r.some(Role.hasName("none", "presentation")))
+  );
+}
