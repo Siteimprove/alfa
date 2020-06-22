@@ -209,7 +209,7 @@ export class Command<
 
       const parse = name in sets ? sets[name].parse : flag.parse;
 
-      const value = parse(argv.slice(1));
+      const value = parse(argv);
 
       if (value.isOk()) {
         [argv, sets[name]] = value.get();
@@ -221,14 +221,18 @@ export class Command<
     const values: Record<string, unknown> = {};
 
     for (const [name, flag] of flags) {
-      const { default: missing } = flag.options;
-
       if (name in sets) {
         values[name] = sets[name].value;
-      } else if (missing.isSome()) {
-        values[name] = missing.get();
       } else {
-        return Err.of(`Missing flag: --${flag.name}`);
+        const result = flag.parse([]);
+
+        if (result.isErr()) {
+          return Err.of(`--${flag.name}: ${result.getErr()}`);
+        }
+
+        const [, { value }] = result.get();
+
+        values[name] = value;
       }
     }
 
@@ -246,13 +250,7 @@ export class Command<
       if (result.isOk()) {
         [argv, values[name]] = result.get();
       } else {
-        const { default: missing } = argument.options;
-
-        if (missing.isSome()) {
-          values[name] = missing.get();
-        } else {
-          return Err.of(`${argument.name}: ${result.getErr()}`);
-        }
+        return Err.of(`${argument.name}: ${result.getErr()}`);
       }
     }
 
@@ -314,21 +312,17 @@ ${Marker.bold("Version:")}
 ${Marker.bold("Arguments:")}
 ${args
   .map((argument) => {
+    const { options } = argument;
+
     let help = "  ";
 
     help += Marker.bold(`${argument.name}`);
 
-    if (!argument.options.optional) {
+    if (!options.optional) {
       help += " " + Marker.dim("(required)");
     }
 
-    for (let value of argument.options.default) {
-      if (value === None) {
-        continue;
-      }
-
-      value = `${value}`;
-
+    for (const value of options.default) {
       if (value !== "") {
         help += " " + Marker.dim(`[default: ${value}]`);
       }
@@ -379,34 +373,30 @@ ${[...values(this._subcommands)]
 ${Marker.bold("Flags:")}
 ${[...values(this._flags)]
   .map((flag) => {
+    const { options } = flag;
+
     let help = "  ";
 
-    if (flag.options.aliases.length > 0) {
+    if (options.aliases.length > 0) {
       help +=
-        flag.options.aliases
+        options.aliases
           .map((alias) =>
             Marker.bold(alias.length === 1 ? `-${alias}` : `--${alias}`)
           )
           .join(", ") + ", ";
     }
 
-    help += Marker.bold(`--${flag.name}`);
+    help += Marker.bold(`--${options.negatable ? "[no-]" : ""}${flag.name}`);
 
-    for (const type of flag.options.type) {
+    for (const type of options.type) {
       help += ` <${Marker.underline(type)}>`;
     }
 
-    if (!flag.options.optional) {
+    if (!options.optional) {
       help += " " + Marker.dim("(required)");
     }
 
-    for (let value of flag.options.default) {
-      if (value === None) {
-        continue;
-      }
-
-      value = `${value}`;
-
+    for (const value of options.default) {
       if (value !== "") {
         help += " " + Marker.dim(`[default: ${value}]`);
       }

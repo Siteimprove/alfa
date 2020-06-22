@@ -16,10 +16,10 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     description: string,
     parse: Argument.Parser<T>
   ): Argument<T> {
-    const options: Argument.Options<T> = {
+    const options: Argument.Options = {
+      default: None,
       optional: false,
       repeatable: false,
-      default: None,
     };
 
     return new Argument(
@@ -32,13 +32,13 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
 
   private readonly _name: string;
   private readonly _description: string;
-  private readonly _options: Argument.Options<T>;
+  private readonly _options: Argument.Options;
   private readonly _parse: Argument.Parser<T>;
 
   private constructor(
     name: string,
     description: string,
-    options: Argument.Options<T>,
+    options: Argument.Options,
     parse: Argument.Parser<T>
   ) {
     this._name = name;
@@ -55,7 +55,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return this._description;
   }
 
-  public get options(): Argument.Options<T> {
+  public get options(): Argument.Options {
     return this._options;
   }
 
@@ -67,25 +67,19 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     return new Argument(
       this._name,
       this._description,
-      {
-        ...this._options,
-        default: this._options.default.map(mapper),
-      },
+      this._options,
       Parser.map(this._parse, mapper)
     );
   }
 
   public filter<U extends T>(
     predicate: Predicate<T, U>,
-    ifError: Thunk<string> = () => "incorrect value"
+    ifError: Thunk<string> = () => "Incorrect value"
   ): Argument<U> {
     return new Argument(
       this._name,
       this._description,
-      {
-        ...this._options,
-        default: this._options.default.filter(predicate),
-      },
+      this._options,
       Parser.filter(this._parse, predicate, ifError)
     );
   }
@@ -97,35 +91,31 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
       {
         ...this._options,
         optional: true,
-        default: this._options.default
-          .map(Option.of)
-          .orElse(() => Option.of(None)),
       },
-      Parser.map(this._parse, Option.of)
+      Parser.option(this._parse)
     );
   }
 
-  public repeatable(): Argument<Array<T>> {
+  public repeatable(): Argument<Iterable<T>> {
     return new Argument(
       this._name,
       this._description,
       {
         ...this._options,
         repeatable: true,
-        default: this._options.default.map((value) => [value]),
       },
-      Parser.map(Parser.oneOrMore(this._parse), (values) => [...values])
+      Parser.oneOrMore(this._parse)
     );
   }
 
-  public default(value: T): Argument<T> {
+  public default(value: T, label: string = `${value}`): Argument<T> {
     return new Argument(
       this._name,
       this._description,
       {
         ...this._options,
         optional: true,
-        default: Option.of(value),
+        default: Option.of(label),
       },
       this._parse
     );
@@ -162,10 +152,10 @@ export namespace Argument {
 
   export type Parser<T> = parser.Parser<Array<string>, T, string>;
 
-  export interface Options<T> {
+  export interface Options {
+    default: Option<string>;
     optional: boolean;
     repeatable: boolean;
-    default: Option<T>;
   }
 
   export function string(name: string, description: string): Argument<string> {
@@ -173,7 +163,7 @@ export namespace Argument {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of("missing required value");
+        return Err.of("Missing value");
       }
 
       return Ok.of([argv.slice(1), value] as const);
@@ -185,7 +175,7 @@ export namespace Argument {
       const [value] = argv;
 
       if (value === undefined) {
-        return Err.of("missing required value");
+        return Err.of("Missing value");
       }
 
       const number = Number(value);
@@ -195,6 +185,43 @@ export namespace Argument {
       }
 
       return Ok.of([argv.slice(1), number] as const);
+    });
+  }
+
+  export function integer(name: string, description: string): Argument<number> {
+    return Argument.of(name, description, (argv) => {
+      const [value] = argv;
+
+      if (value === undefined) {
+        return Err.of("Missing value");
+      }
+
+      const number = Number(value);
+
+      if (!Number.isInteger(number)) {
+        return Err.of(`${value} is not an integer`);
+      }
+
+      return Ok.of([argv.slice(1), number] as const);
+    });
+  }
+
+  export function boolean(
+    name: string,
+    description: string
+  ): Argument<boolean> {
+    return Argument.of(name, description, (argv) => {
+      const [value] = argv;
+
+      if (value === undefined) {
+        return Err.of("Missing value");
+      }
+
+      if (value !== "true" && value !== "false") {
+        return Err.of(`Incorrect value, expected one of "true", "false"`);
+      }
+
+      return Ok.of([argv.slice(1), value === "true"] as const);
     });
   }
 }

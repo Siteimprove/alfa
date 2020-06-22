@@ -4,7 +4,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
@@ -14,13 +14,14 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   public static of<T>(
     name: string,
     description: string,
-    parse: Flag.Parser<T>
+    parse: Flag.Parser<T, [Predicate<string>]>
   ): Flag<T> {
-    const options: Flag.Options<T> = {
+    const options: Flag.Options = {
       type: None,
       aliases: [],
       optional: false,
       repeatable: false,
+      negatable: false,
       default: None,
     };
 
@@ -34,14 +35,14 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
 
   private readonly _name: string;
   private readonly _description: string;
-  private readonly _options: Flag.Options<T>;
-  private readonly _parse: Flag.Parser<T>;
+  private readonly _options: Flag.Options;
+  private readonly _parse: Flag.Parser<T, [Predicate<string>]>;
 
   private constructor(
     name: string,
     description: string,
-    options: Flag.Options<T>,
-    parse: Flag.Parser<T>
+    options: Flag.Options,
+    parse: Flag.Parser<T, [Predicate<string>]>
   ) {
     this._name = name;
     this._description = description;
@@ -57,16 +58,20 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return this._description;
   }
 
-  public get options(): Flag.Options<T> {
+  public get options(): Flag.Options {
     return this._options;
   }
 
   public get parse(): Flag.Parser<T> {
-    return this._parse;
+    return (argv) => this._parse(argv, (name) => this.matches(name));
   }
 
   public matches(name: string): boolean {
-    name = name.length === 1 ? name.replace(/^-/, "") : name.replace(/^--/, "");
+    name = name.length === 2 ? name.replace(/^-/, "") : name.replace(/^--/, "");
+
+    if (this._options.negatable) {
+      name = name.replace(/^no-/, "");
+    }
 
     return (
       this._name === name ||
@@ -78,10 +83,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(
       this._name,
       this._description,
-      {
-        ...this._options,
-        default: this._options.default.map(mapper),
-      },
+      this._options,
       Parser.map(this._parse, (set) => set.map(mapper))
     );
   }
@@ -90,31 +92,31 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     predicate: Predicate<T, U>,
     ifError: Thunk<string> = () => "Incorrect value"
   ): Flag<U> {
-    const parse: Flag.Parser<U> = (argv) => {
-      const result = this._parse(argv);
+    const filter = (previous: Flag.Set<U>): Flag.Parser<U> => (argv) =>
+      previous
+        .parse(argv)
+        .flatMap(([argv, set]) =>
+          predicate(set.value)
+            ? Result.of([
+                argv,
+                Flag.Set.of(set.value, (argv) => filter(set)(argv)),
+              ])
+            : Err.of(ifError())
+        );
 
-      if (result.isErr()) {
-        return result;
-      }
+    const parse: Flag.Parser<U, [Predicate<string>]> = (argv, matches) =>
+      this._parse(argv, matches).flatMap(([argv, set]) =>
+        predicate(set.value)
+          ? Result.of([
+              argv,
+              Flag.Set.of(set.value, (argv) =>
+                filter(set as Flag.Set<U>)(argv)
+              ),
+            ])
+          : Err.of(ifError())
+      );
 
-      const [remainder, set] = result.get();
-
-      if (predicate(set.value)) {
-        return Ok.of([remainder, Flag.Set.of(set.value, () => parse)] as const);
-      }
-
-      return Err.of(ifError());
-    };
-
-    return new Flag(
-      this._name,
-      this._description,
-      {
-        ...this._options,
-        default: this._options.default.filter(predicate),
-      },
-      parse
-    );
+    return new Flag(this._name, this._description, this._options, parse);
   }
 
   public type(type: string): Flag<T> {
@@ -141,62 +143,171 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     );
   }
 
+  public default(value: T, label: string = `${value}`): Flag<T> {
+    const options = {
+      ...this._options,
+      optional: true,
+      default: Option.of(label),
+    };
+
+    const missing = (
+      previous: Flag.Set<T>
+    ): Flag.Parser<T, [Predicate<string>]> => (argv, matches) => {
+      const [name] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Result.of([
+          argv,
+          Flag.Set.of(previous.value, (argv) =>
+            missing(previous)(argv, matches)
+          ),
+        ]);
+      }
+
+      return previous
+        .parse(argv)
+        .map(([argv, set]) => [
+          argv,
+          Flag.Set.of(set.value, (argv) => missing(set)(argv, matches)),
+        ]);
+    };
+
+    const parse: Flag.Parser<T, [Predicate<string>]> = (argv, matches) => {
+      const [name] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Result.of([
+          argv,
+          Flag.Set.of(value, (argv) => parse(argv, matches)),
+        ]);
+      }
+
+      return this._parse(argv, matches).map(([argv, set]) => [
+        argv,
+        Flag.Set.of(set.value, (argv) => missing(set)(argv, matches)),
+      ]);
+    };
+
+    return new Flag(this._name, this._description, options, parse);
+  }
+
   public optional(): Flag<Option<T>> {
-    return new Flag(
-      this._name,
-      this._description,
-      {
-        ...this._options,
-        optional: true,
-        default: this._options.default
-          .map(Option.of)
-          .orElse(() => Option.of(None)),
-      },
-      Parser.map(this._parse, (set) => set.map(Option.of))
-    );
+    const options = { ...this._options, optional: true };
+
+    const missing = (
+      previous: Flag.Set<Option<T>>
+    ): Flag.Parser<Option<T>, [Predicate<string>]> => (argv, matches) => {
+      const [name] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Result.of([
+          argv,
+          Flag.Set.of(previous.value, (argv) =>
+            missing(previous)(argv, matches)
+          ),
+        ]);
+      }
+
+      return previous
+        .parse(argv)
+        .map(([argv, set]) => [
+          argv,
+          Flag.Set.of(set.value, (argv) => missing(set)(argv, matches)),
+        ]);
+    };
+
+    const parse: Flag.Parser<Option<T>, [Predicate<string>]> = (
+      argv,
+      matches
+    ) => {
+      const [name] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Result.of([
+          argv,
+          Flag.Set.of(Option.empty(), (argv) => parse(argv, matches)),
+        ]);
+      }
+
+      return this._parse(argv, matches).map(([argv, set]) => [
+        argv,
+        Flag.Set.of(Option.of(set.value), (argv) =>
+          missing(set.map(Option.of))(argv, matches)
+        ),
+      ]);
+    };
+
+    return new Flag(this._name, this._description, options, parse);
   }
 
   public repeatable(): Flag<Iterable<T>> {
-    const parse = (set: Flag.Set<Array<T>>): Flag.Parser<Array<T>> => (
+    const options = { ...this._options, repeatable: true };
+
+    const repeat = (previous: Flag.Set<Array<T>>): Flag.Parser<Array<T>> => (
       argv
-    ) => {
-      const result = this._parse(argv);
+    ) =>
+      previous
+        .parse(argv)
+        .map(([argv, set]) => [
+          argv,
+          Flag.Set.of([...previous.value, ...set.value], (argv) =>
+            repeat(set)(argv)
+          ),
+        ]);
 
-      if (result.isErr()) {
-        return result;
-      }
+    const parse: Flag.Parser<Array<T>, [Predicate<string>]> = (argv, matches) =>
+      this._parse(argv, matches).map(([argv, set]) => [
+        argv,
+        Flag.Set.of([set.value], (argv) =>
+          repeat(set.map((value) => [value]))(argv)
+        ),
+      ]);
 
-      const [remainder, { value }] = result.get();
-
-      return Ok.of([
-        remainder,
-        Flag.Set.of([...set.value, value], parse),
-      ] as const);
-    };
-
-    return new Flag(
-      this._name,
-      this._description,
-      {
-        ...this._options,
-        repeatable: true,
-        default: this._options.default.map((value) => [value]),
-      },
-      Parser.map(this._parse, (set) => Flag.Set.of([set.value], parse))
-    );
+    return new Flag(this._name, this._description, options, parse);
   }
 
-  public default(value: T): Flag<T> {
-    return new Flag(
-      this._name,
-      this._description,
-      {
-        ...this._options,
-        optional: true,
-        default: Option.of(value),
-      },
-      this._parse
-    );
+  public negatable(mapper: Mapper<T, T>): Flag<T> {
+    const options = { ...this._options, negatable: true };
+
+    const negate = (
+      previous: Flag.Set<T>
+    ): Flag.Parser<T, [Predicate<string>]> => (argv, matches) => {
+      const [name] = argv;
+
+      const isNegated = name !== undefined && name.startsWith("--no-");
+
+      if (isNegated) {
+        argv = [name.replace("--no-", "--"), ...argv.slice(1)];
+      }
+
+      return previous
+        .parse(argv)
+        .map(([argv, set]) => [
+          argv,
+          Flag.Set.of(isNegated ? mapper(set.value) : set.value, (argv) =>
+            negate(set)(argv, matches)
+          ),
+        ]);
+    };
+
+    const parse: Flag.Parser<T, [Predicate<string>]> = (argv, matches) => {
+      const [name] = argv;
+
+      const isNegated = name !== undefined && name.startsWith("--no-");
+
+      if (isNegated) {
+        argv = [name.replace("--no-", "--"), ...argv.slice(1)];
+      }
+
+      return this._parse(argv, matches).map(([argv, set]) => [
+        argv,
+        Flag.Set.of(isNegated ? mapper(set.value) : set.value, (argv) =>
+          negate(set)(argv, matches)
+        ),
+      ]);
+    };
+
+    return new Flag(this._name, this._description, options, parse);
   }
 
   public choices<U extends T>(...choices: Array<U>): Flag<U> {
@@ -231,20 +342,26 @@ export namespace Flag {
       [key: string]: json.JSON;
       type: string | null;
       aliases: Array<string>;
+      default: json.JSON | null;
       optional: boolean;
       repeatable: boolean;
-      default: json.JSON | null;
     };
   }
 
-  export type Parser<T> = parser.Parser<Array<string>, Set<T>, string>;
+  export type Parser<T, A extends Array<unknown> = []> = parser.Parser<
+    Array<string>,
+    Set<T>,
+    string,
+    A
+  >;
 
-  export interface Options<T> {
+  export interface Options {
     readonly type: Option<string>;
     readonly aliases: Array<string>;
+    readonly default: Option<string>;
     readonly optional: boolean;
     readonly repeatable: boolean;
-    readonly default: Option<T>;
+    readonly negatable: boolean;
   }
 
   /**
@@ -253,32 +370,18 @@ export namespace Flag {
    * class allows us to encapsulate the current value of a given flag and a
    * parser to parse another instance of the flag value and determine how to
    * combine the two.
-   *
-   * @remarks
-   * Conceptually, it's difficult to avoid having flag sets be invariant with
-   * respect to the type of the flag as we need some sort of function of the
-   * type `T -> string[] -> `T` that will take an existing flag value, parse a
-   * new one from the input, and combine the two to form the final value. As `T`
-   * appears in both argument and return value position in such a function, this
-   * makes `T` invariant. This class avoids that by _binding_ the first `T` to
-   * the type of the current flag set such that we only ever store a function of
-   * the type `string[] -> T`. This ensures that flag sets remain covariant with
-   * respect to the type of the flag.
    */
   export class Set<T> implements Functor<T> {
-    public static of<T>(value: T, parse: (set: Set<T>) => Flag.Parser<T>) {
+    public static of<T>(value: T, parse: Flag.Parser<T>) {
       return new Set(value, parse);
     }
 
     private readonly _value: T;
     private readonly _parse: Flag.Parser<T>;
 
-    private constructor(value: T, parse: (set: Set<T>) => Flag.Parser<T>) {
+    private constructor(value: T, parse: Flag.Parser<T>) {
       this._value = value;
-
-      // Avoid `Set<T>` becoming invariant by binding the `T` appearing in the
-      // argument list to the `T` of the current flag set.
-      this._parse = parse(this);
+      this._parse = parse;
     }
 
     public get value(): T {
@@ -290,32 +393,43 @@ export namespace Flag {
     }
 
     public map<U>(mapper: Mapper<T, U>): Set<U> {
-      return new Set(mapper(this._value), () =>
-        Parser.map(this._parse, (set) => set.map(mapper))
+      return new Set(mapper(this._value), (argv) =>
+        this._parse(argv).map(([argv, set]) => [argv, set.map(mapper)])
       );
     }
   }
 
   export function string(name: string, description: string): Flag<string> {
-    const parse: Flag.Parser<string> = (argv) => {
-      const [value] = argv;
+    const parse: Flag.Parser<string, [Predicate<string>]> = (argv, matches) => {
+      const [name, value] = argv;
 
-      if (value === undefined) {
-        return Err.of("Missing required value");
+      if (name === undefined || !matches(name)) {
+        return Err.of("Missing flag");
       }
 
-      return Ok.of([argv.slice(1), Flag.Set.of(value, () => parse)] as const);
+      if (value === undefined) {
+        return Err.of("Missing value");
+      }
+
+      return Result.of([
+        argv.slice(2),
+        Flag.Set.of(value, (argv) => parse(argv, matches)),
+      ]);
     };
 
     return Flag.of(name, description, parse).type("string");
   }
 
   export function number(name: string, description: string): Flag<number> {
-    const parse: Flag.Parser<number> = (argv) => {
-      const [value] = argv;
+    const parse: Flag.Parser<number, [Predicate<string>]> = (argv, matches) => {
+      const [name, value] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Err.of("Missing flag");
+      }
 
       if (value === undefined) {
-        return Err.of("Missing required value");
+        return Err.of("Missing value");
       }
 
       const number = Number(value);
@@ -324,18 +438,25 @@ export namespace Flag {
         return Err.of(`${value} is not a number`);
       }
 
-      return Ok.of([argv.slice(1), Flag.Set.of(number, () => parse)] as const);
+      return Result.of([
+        argv.slice(2),
+        Flag.Set.of(number, (argv) => parse(argv, matches)),
+      ]);
     };
 
     return Flag.of(name, description, parse).type("number");
   }
 
   export function integer(name: string, description: string): Flag<number> {
-    const parse: Flag.Parser<number> = (argv) => {
-      const [value] = argv;
+    const parse: Flag.Parser<number, [Predicate<string>]> = (argv, matches) => {
+      const [name, value] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Err.of("Missing flag");
+      }
 
       if (value === undefined) {
-        return Err.of("Missing required value");
+        return Err.of("Missing value");
       }
 
       const number = Number(value);
@@ -344,36 +465,61 @@ export namespace Flag {
         return Err.of(`${value} is not an integer`);
       }
 
-      return Ok.of([argv.slice(1), Flag.Set.of(number, () => parse)] as const);
+      return Result.of([
+        argv.slice(2),
+        Flag.Set.of(number, (argv) => parse(argv, matches)),
+      ]);
     };
 
     return Flag.of(name, description, parse).type("integer");
   }
 
   export function boolean(name: string, description: string): Flag<boolean> {
-    const parse: Flag.Parser<boolean> = (argv) => {
-      const [value] = argv;
+    const parse: Flag.Parser<boolean, [Predicate<string>]> = (
+      argv,
+      matches
+    ) => {
+      const [name, value] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Err.of("Missing flag");
+      }
 
       if (value === undefined) {
-        return Ok.of([argv, Flag.Set.of(true, () => parse)] as const);
+        return Result.of([
+          argv.slice(1),
+          Flag.Set.of(true, (argv) => parse(argv, matches)),
+        ]);
       }
 
       if (value !== "true" && value !== "false") {
         return Err.of(`Incorrect value, expected one of "true", "false"`);
       }
 
-      return Ok.of([
-        argv.slice(1),
-        Flag.Set.of(value === "true", () => parse),
-      ] as const);
+      return Result.of([
+        argv.slice(2),
+        Flag.Set.of(value === "true", (argv) => parse(argv, matches)),
+      ]);
     };
 
-    return Flag.of(name, description, parse).type("boolean");
+    return Flag.of(name, description, parse)
+      .type("boolean")
+      .negatable((value) => !value);
   }
 
   export function empty(name: string, description: string): Flag<void> {
-    const parse: Flag.Parser<void> = (argv) =>
-      Ok.of([argv, Flag.Set.of(undefined, () => parse)] as const);
+    const parse: Flag.Parser<void, [Predicate<string>]> = (argv, matches) => {
+      const [name] = argv;
+
+      if (name === undefined || !matches(name)) {
+        return Err.of("Missing flag");
+      }
+
+      return Result.of([
+        argv.slice(1),
+        Flag.Set.of(undefined, (argv) => parse(argv, matches)),
+      ]);
+    };
 
     return Flag.of(name, description, parse);
   }
