@@ -233,7 +233,8 @@ export namespace Role {
   ): Branched<Option<Role>, Browser> {
     const role = element.attribute("role").map((attr) => attr.value.trim());
 
-    const allowedPresentational = options.allowPresentational ?? isAllowedPresentational(element);
+    const allowedPresentational =
+      options.allowPresentational ?? isAllowedPresentational(element);
 
     return (
       Branched.of<Option<string>, Browser>(
@@ -279,8 +280,7 @@ export namespace Role {
                   return feature.flatMap((feature) =>
                     feature
                       .role(element, {
-                        allowPresentational:
-                          allowedPresentational,
+                        allowPresentational: allowedPresentational,
                       })
                       .flatMap(Role.lookup)
                   );

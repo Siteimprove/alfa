@@ -231,59 +231,58 @@ export namespace Node {
         if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
-          accessibleNode = Role.from(node)
-            .flatMap<Node>((role) => {
-              if (role.some(Role.isPresentational)) {
-                return Branched.of(Container.of(node));
-              }
+          accessibleNode = Role.from(node).flatMap<Node>((role) => {
+            if (role.some(Role.isPresentational)) {
+              return Branched.of(Container.of(node));
+            }
 
-              let attributes = Map.empty<string, string>();
+            let attributes = Map.empty<string, string>();
 
-              // First pass: Look up implicit attributes on the role.
-              if (role.isSome()) {
-                const queue = [role.get()];
+            // First pass: Look up implicit attributes on the role.
+            if (role.isSome()) {
+              const queue = [role.get()];
 
-                while (queue.length > 0) {
-                  const role = queue.pop()!;
+              while (queue.length > 0) {
+                const role = queue.pop()!;
 
-                  for (const [name, value] of role.characteristics.implicits) {
-                    attributes = attributes.set(name, value);
-                  }
+                for (const [name, value] of role.characteristics.implicits) {
+                  attributes = attributes.set(name, value);
+                }
 
-                  for (const name of role.characteristics.inherits) {
-                    for (const role of Role.lookup(name)) {
-                      queue.push(role);
-                    }
+                for (const name of role.characteristics.inherits) {
+                  for (const role of Role.lookup(name)) {
+                    queue.push(role);
                   }
                 }
               }
+            }
 
-              // Second pass: Look up implicit attributes on the feature mapping.
-              for (const namespace of node.namespace) {
-                for (const feature of Feature.lookup(namespace, node.name)) {
-                  attributes = attributes.concat(feature.attributes(node));
-                }
+            // Second pass: Look up implicit attributes on the feature mapping.
+            for (const namespace of node.namespace) {
+              for (const feature of Feature.lookup(namespace, node.name)) {
+                attributes = attributes.concat(feature.attributes(node));
               }
+            }
 
-              // Third pass: Look up explicit `aria-*` attributes and set the
-              // ones that are allowed by the role.
-              for (const attribute of node.attributes) {
-                if (
-                  attribute.name.startsWith("aria-") &&
-                  role
-                    .orElse(() => Role.lookup("roletype"))
-                    .some((role) =>
-                      role.isAllowed(property("name", equals(attribute.name)))
-                    )
-                ) {
-                  attributes = attributes.set(attribute.name, attribute.value);
-                }
+            // Third pass: Look up explicit `aria-*` attributes and set the
+            // ones that are allowed by the role.
+            for (const attribute of node.attributes) {
+              if (
+                attribute.name.startsWith("aria-") &&
+                role
+                  .orElse(() => Role.lookup("roletype"))
+                  .some((role) =>
+                    role.isAllowed(property("name", equals(attribute.name)))
+                  )
+              ) {
+                attributes = attributes.set(attribute.name, attribute.value);
               }
+            }
 
-              return getName(node, device).map((name) =>
-                Element.of(node, role, name, attributes)
-              );
-            });
+            return getName(node, device).map((name) =>
+              Element.of(node, role, name, attributes)
+            );
+          });
         }
       }
 
