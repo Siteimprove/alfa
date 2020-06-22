@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { equals, or, property } = Predicate;
+const { equals, or, not, property, test } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -129,6 +129,7 @@ export namespace Role {
   /**
    * @see https://www.w3.org/TR/wai-aria/#roles_categorization
    */
+
   export enum Category {
     /**
      * @see https://www.w3.org/TR/wai-aria/#abstract_roles
@@ -233,6 +234,8 @@ export namespace Role {
   ): Branched<Option<Role>, Browser> {
     const role = element.attribute("role").map((attr) => attr.value.trim());
 
+    const allowedPresentational = options.allowPresentational ?? isAllowedPresentational(element);
+
     return (
       Branched.of<Option<string>, Browser>(
         role.map((role) => role.toLowerCase())
@@ -251,15 +254,22 @@ export namespace Role {
                   const role = Role.lookup(name);
 
                   if (
+                    // If the role is not abstract…
                     role.some(
                       (role) => role.category !== Role.Category.Abstract
+                    ) &&
+                    // …and it's not a presentational role in a forbidden context…
+                    !(
+                      role.some(Role.isPresentational) &&
+                      !isAllowedPresentational
                     )
                   ) {
+                    // …then we got ourselves a valid explicit role…
                     return role;
                   }
                 }
               }
-
+              // …otherwise, default to implicit role computation.
               return None;
             })
             .orElse(() => {
@@ -271,8 +281,7 @@ export namespace Role {
                     feature
                       .role(element, {
                         allowPresentational:
-                          options.allowPresentational ??
-                          isAllowedPresentational(element),
+                          allowedPresentational,
                       })
                       .flatMap(Role.lookup)
                   );
@@ -292,10 +301,7 @@ export namespace Role {
     }
   }
 
-  export const isPresentational: Predicate<Role> = property(
-    "name",
-    equals("presentation", "none")
-  );
+  export const isPresentational = hasName("presentation", "none");
 
   export function hasName(predicate: Predicate<string>): Predicate<Role>;
 
