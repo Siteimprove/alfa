@@ -232,9 +232,6 @@ export namespace Node {
           accessibleNode = Branched.of(Container.of(node));
         } else {
           accessibleNode = Role.from(node)
-            .flatMap((role) => {
-              return Branched.of(role);
-            })
             .flatMap<Node>((role) => {
               if (role.some(Role.isPresentational)) {
                 return Branched.of(Container.of(node));
