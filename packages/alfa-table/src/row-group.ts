@@ -140,11 +140,11 @@ export namespace RowGroup {
       cells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
-        update.y !== undefined ? update.y : this._rowGroup.anchor.y,
-        update.height !== undefined ? update.height : this._rowGroup.height,
-        update.element !== undefined ? update.element : this._rowGroup.element,
-        update.width !== undefined ? update.width : this._width,
-        update.cells !== undefined ? update.cells : this._cells
+        update.y ?? this._rowGroup.anchor.y,
+        update.height ?? this._rowGroup.height,
+        update.element ?? this._rowGroup.element,
+        update.width ?? this._width,
+        update.cells ?? this._cells
       );
     }
 

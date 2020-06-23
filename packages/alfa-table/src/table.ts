@@ -220,13 +220,13 @@ export namespace Table {
       colGroups?: Iterable<ColumnGroup>;
     }): Builder {
       const table = Builder.of(
-        update.element !== undefined ? update.element : this.element,
-        update.width !== undefined ? update.width : this.width,
-        update.height !== undefined ? update.height : this.height,
-        update.cells !== undefined ? update.cells : this._cells,
-        update.slots !== undefined ? update.slots : this._slots,
-        update.rowGroups !== undefined ? update.rowGroups : this.rowGroups,
-        update.colGroups !== undefined ? update.colGroups : this.colGroups
+        update.element ?? this.element,
+        update.width ?? this.width,
+        update.height ?? this.height,
+        update.cells ?? this._cells,
+        update.slots ?? this._slots,
+        update.rowGroups ?? this.rowGroups,
+        update.colGroups ?? this.colGroups
       );
 
       return update.cells !== undefined

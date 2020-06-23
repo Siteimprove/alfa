@@ -272,23 +272,17 @@ export namespace Cell {
       implicitHeaders?: Iterable<Element>;
     }): Builder {
       return Builder.of(
-        update.kind !== undefined ? update.kind : this.kind,
-        update.x !== undefined ? update.x : this.anchor.x,
-        update.y !== undefined ? update.y : this.anchor.y,
-        update.width !== undefined ? update.width : this.width,
-        update.height !== undefined ? update.height : this.height,
-        update.element !== undefined ? update.element : this.element,
-        update.variant !== undefined ? update.variant : this.variant,
-        update.downwardGrowing !== undefined
-          ? update.downwardGrowing
-          : this._downwardGrowing,
-        update.scope !== undefined ? update.scope : this.scope,
-        update.explicitHeaders !== undefined
-          ? update.explicitHeaders
-          : this._explicitHeaders,
-        update.implicitHeaders !== undefined
-          ? update.implicitHeaders
-          : this._implicitHeaders
+        update.kind ?? this.kind,
+        update.x ?? this.anchor.x,
+        update.y ?? this.anchor.y,
+        update.width ?? this.width,
+        update.height ?? this.height,
+        update.element ?? this.element,
+        update.variant ?? this.variant,
+        update.downwardGrowing ?? this._downwardGrowing,
+        update.scope ?? this.scope,
+        update.explicitHeaders ?? this._explicitHeaders,
+        update.implicitHeaders ?? this._implicitHeaders
       );
     }
 

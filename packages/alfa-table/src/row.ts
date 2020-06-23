@@ -98,15 +98,13 @@ export namespace Row {
       downwardGrowingCells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
-        update.y !== undefined ? update.y : this._y,
-        update.width !== undefined ? update.width : this._width,
-        update.height !== undefined ? update.height : this._height,
-        update.element !== undefined ? update.element : this._element,
-        update.cells !== undefined ? update.cells : this._cells,
-        update.downwardGrowingCells !== undefined
-          ? update.downwardGrowingCells
-          : this._downwardGrowingCells,
-        update.xCurrent !== undefined ? update.xCurrent : this._xCurrent
+        update.y ?? this._y,
+        update.width ?? this._width,
+        update.height ?? this._height,
+        update.element ?? this._element,
+        update.cells ?? this._cells,
+        update.downwardGrowingCells ?? this._downwardGrowingCells,
+        update.xCurrent ?? this._xCurrent
       );
     }
 
