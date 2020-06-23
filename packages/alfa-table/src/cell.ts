@@ -258,7 +258,19 @@ export namespace Cell {
       this._implicitHeaders = List.from(implicitHeaders);
     }
 
-    private _update(update: {
+    private _update({
+      kind = this.kind,
+      x = this.anchor.x,
+      y = this.anchor.y,
+      width = this.width,
+      height = this.height,
+      element = this.element,
+      variant = this.variant,
+      downwardGrowing = this._downwardGrowing,
+      scope = this.scope,
+      explicitHeaders = this._explicitHeaders,
+      implicitHeaders = this._implicitHeaders,
+    }: {
       kind?: Cell.Kind;
       x?: number;
       y?: number;
@@ -272,17 +284,17 @@ export namespace Cell {
       implicitHeaders?: Iterable<Element>;
     }): Builder {
       return Builder.of(
-        update.kind ?? this.kind,
-        update.x ?? this.anchor.x,
-        update.y ?? this.anchor.y,
-        update.width ?? this.width,
-        update.height ?? this.height,
-        update.element ?? this.element,
-        update.variant ?? this.variant,
-        update.downwardGrowing ?? this._downwardGrowing,
-        update.scope ?? this.scope,
-        update.explicitHeaders ?? this._explicitHeaders,
-        update.implicitHeaders ?? this._implicitHeaders
+        kind,
+        x,
+        y,
+        width,
+        height,
+        element,
+        variant,
+        downwardGrowing,
+        scope,
+        explicitHeaders,
+        implicitHeaders
       );
     }
 

@@ -210,29 +210,32 @@ export namespace Table {
       return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
     }
 
-    public update(update: {
-      element?: Element;
-      width?: number;
-      height?: number;
-      cells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<Option<Cell.Builder>>>;
-      rowGroups?: Iterable<RowGroup>;
-      colGroups?: Iterable<ColumnGroup>;
-    }): Builder {
-      const table = Builder.of(
-        update.element ?? this.element,
-        update.width ?? this.width,
-        update.height ?? this.height,
-        update.cells ?? this._cells,
-        update.slots ?? this._slots,
-        update.rowGroups ?? this.rowGroups,
-        update.colGroups ?? this.colGroups
+    public update(
+      {
+        element = this.element,
+        width = this.width,
+        height = this.height,
+        cells = this._cells,
+        slots = this._slots,
+        rowGroups = this.rowGroups,
+        colGroups = this.colGroups,
+      }: {
+        element?: Element;
+        width?: number;
+        height?: number;
+        cells?: Iterable<Cell.Builder>;
+        slots?: Array<Array<Option<Cell.Builder>>>;
+        rowGroups?: Iterable<RowGroup>;
+        colGroups?: Iterable<ColumnGroup>;
+      },
+      modifiedCells: Iterable<Cell.Builder> = cells
+    ): Builder {
+      return (
+        Builder.of(element, width, height, cells, slots, rowGroups, colGroups)
+          // aggressively keep slots in sync.
+          // cells are modified during build, effectively creating a new Cell.Builder and requiring slots resync.
+          ._updateSlots(modifiedCells)
       );
-
-      return update.cells !== undefined
-        ? // aggressively keep slots in sync if any cells has been modified.
-          table._updateSlots(update.cells)
-        : table;
     }
 
     private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
@@ -251,7 +254,7 @@ export namespace Table {
     }
 
     public addCells(cells: Iterable<Cell.Builder>): Builder {
-      return this.update({ cells: this._cells.concat(cells) });
+      return this.update({ cells: this._cells.concat(cells) }, cells);
     }
 
     public addRowGroupFromElement(

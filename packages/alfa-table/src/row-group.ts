@@ -16,8 +16,7 @@ const { compare } = Comparable;
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
  */
-export class RowGroup
-  implements Comparable<RowGroup>, Equatable, Serializable {
+export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
   public static of(y: number, h: number, element: Element): RowGroup {
     return new RowGroup(y, h, element);
   }
@@ -132,20 +131,20 @@ export namespace RowGroup {
       this._cells = List.from(cells);
     }
 
-    public update(update: {
+    public update({
+      y = this._rowGroup.anchor.y,
+      width = this._width,
+      height = this._rowGroup.height,
+      element = this._rowGroup.element,
+      cells = this._cells,
+    }: {
       y?: number;
       width?: number;
       height?: number;
       element?: Element;
       cells?: Iterable<Cell.Builder>;
     }): Builder {
-      return Builder.of(
-        update.y ?? this._rowGroup.anchor.y,
-        update.height ?? this._rowGroup.height,
-        update.element ?? this._rowGroup.element,
-        update.width ?? this._width,
-        update.cells ?? this._cells
-      );
+      return Builder.of(y, height, element, width, cells);
     }
 
     public get rowgroup(): RowGroup {

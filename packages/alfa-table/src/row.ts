@@ -88,7 +88,15 @@ export namespace Row {
       return this._downwardGrowingCells;
     }
 
-    private _update(update: {
+    private _update({
+      y = this._y,
+      xCurrent = this._xCurrent,
+      width = this._width,
+      height = this._height,
+      element = this._element,
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
+    }: {
       y?: number;
       xCurrent?: number;
       width?: number;
@@ -98,13 +106,13 @@ export namespace Row {
       downwardGrowingCells?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
-        update.y ?? this._y,
-        update.width ?? this._width,
-        update.height ?? this._height,
-        update.element ?? this._element,
-        update.cells ?? this._cells,
-        update.downwardGrowingCells ?? this._downwardGrowingCells,
-        update.xCurrent ?? this._xCurrent
+        y,
+        width,
+        height,
+        element,
+        cells,
+        downwardGrowingCells,
+        xCurrent
       );
     }
 
