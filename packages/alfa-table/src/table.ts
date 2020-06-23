@@ -265,15 +265,18 @@ export namespace Table {
         .map((rowGroup) => rowGroup.anchorAt(yCurrent))
         .map((rowGroup) => {
           if (rowGroup.height > 0) {
-            return this.update({
-              // adjust table height and width
-              height: Math.max(this.height, this.height + rowGroup.height),
-              width: Math.max(this.width, rowGroup.width),
-              // merge in new cells
-              cells: this._cells.concat(rowGroup.cells),
-              // add new group
-              rowGroups: List.from(this.rowGroups).append(rowGroup.rowgroup),
-            });
+            return this.update(
+              {
+                // adjust table height and width
+                height: Math.max(this.height, this.height + rowGroup.height),
+                width: Math.max(this.width, rowGroup.width),
+                // merge in new cells
+                cells: this._cells.concat(rowGroup.cells),
+                // add new group
+                rowGroups: List.from(this.rowGroups).append(rowGroup.rowgroup),
+              },
+              rowGroup.cells
+            );
           } else {
             return this;
           }
@@ -429,7 +432,7 @@ export namespace Table {
               width: Math.max(table.width, table.width + colGroup.width),
               // 9.1 (1).7 and (2).3
               colGroups: List.from(table.colGroups).append(colGroup),
-            });
+            }, []);
           }
           continue;
         }
@@ -452,7 +455,7 @@ export namespace Table {
             cells: List.from(table.cells).concat(row.cells),
             height: Math.max(table.height, yCurrent + 1),
             width: Math.max(table.width, row.width),
-          });
+          }, row.cells);
           // row processing steps 4/16
           yCurrent++;
 
@@ -547,7 +550,7 @@ export namespace Table {
           slots[x].push(table.slot(x, y));
         }
       }
-      table = table.update({ slots });
+      table = table.update({ slots }, []);
 
       // Second, we need to compute all headers variant.
       // This need to be done separately so that the updated table is used in assignHeaders.
