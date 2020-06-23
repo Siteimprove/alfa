@@ -210,42 +210,57 @@ export namespace Table {
       return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
     }
 
-    public update(
-      {
-        element = this.element,
-        width = this.width,
-        height = this.height,
-        // we need to remember that no cell is modified to avoid useless slots resync.
-        cells = undefined,
-        slots = this._slots,
-        rowGroups = this.rowGroups,
-        colGroups = this.colGroups,
-      }: {
-        element?: Element;
-        width?: number;
-        height?: number;
-        cells?: Iterable<Cell.Builder>;
-        slots?: Array<Array<Option<Cell.Builder>>>;
-        rowGroups?: Iterable<RowGroup>;
-        colGroups?: Iterable<ColumnGroup>;
-      },
-      // If we're not provided a list of modified cells, we assume all the cells provided are new and need resync.
-      modifiedCells: Iterable<Cell.Builder> | undefined = cells
-    ): Builder {
-      return (
-        Builder.of(
-          element,
-          width,
-          height,
-          cells ?? this._cells,
-          slots,
-          rowGroups,
-          colGroups
-        )
-          // aggressively keep slots in sync for the cells that have been modified.
-          // cells are modified during build, effectively creating a new Cell.Builder and requiring slots resync.
-          ._updateSlots(modifiedCells ?? [])
+    /**
+     * Update by getting new value. Does not keep anything in sync, hence is highly unsafe. Use at your own risks.
+     */
+    private _updateUnsafe({
+      element = this.element,
+      width = this.width,
+      height = this.height,
+      cells = this._cells,
+      slots = this._slots,
+      rowGroups = this.rowGroups,
+      colGroups = this.colGroups,
+    }: {
+      element?: Element;
+      width?: number;
+      height?: number;
+      cells?: Iterable<Cell.Builder>;
+      slots?: Array<Array<Option<Cell.Builder>>>;
+      rowGroups?: Iterable<RowGroup>;
+      colGroups?: Iterable<ColumnGroup>;
+    }): Builder {
+      return Builder.of(
+        element,
+        width,
+        height,
+        cells,
+        slots,
+        rowGroups,
+        colGroups
       );
+    }
+
+    /**
+     * Update anything but cells, because cells need to be kept in sync.
+     */
+    public update(update: {
+      element?: Element;
+      width?: number;
+      height?: number;
+      slots?: Array<Array<Option<Cell.Builder>>>;
+      rowGroups?: Iterable<RowGroup>;
+      colGroups?: Iterable<ColumnGroup>;
+    }): Builder {
+      return this._updateUnsafe(update);
+    }
+
+    /**
+     * Update cells, and resync slots
+     * Cells are assumed to keep the same anchors, hence left/top most ones don't change.
+     */
+    public updateCells(cells: Iterable<Cell.Builder>): Builder {
+      return this._updateUnsafe({ cells })._updateSlots(cells);
     }
 
     private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
@@ -263,8 +278,13 @@ export namespace Table {
       return this; // for chaining
     }
 
+    /**
+     * Add new cells, sync slots with the new cells and update left/top most cells
+     */
     public addCells(cells: Iterable<Cell.Builder>): Builder {
-      return this.update({ cells: this._cells.concat(cells) }, cells);
+      return this._updateUnsafe({
+        cells: this._cells.concat(cells),
+      })._updateSlots(cells);
     }
 
     public addRowGroupFromElement(
@@ -275,17 +295,16 @@ export namespace Table {
         .map((rowGroup) => rowGroup.anchorAt(yCurrent))
         .map((rowGroup) => {
           if (rowGroup.height > 0) {
-            return this.update(
-              {
+            return (
+              this.update({
                 // adjust table height and width
                 height: Math.max(this.height, this.height + rowGroup.height),
                 width: Math.max(this.width, rowGroup.width),
-                // merge in new cells
-                cells: this._cells.concat(rowGroup.cells),
                 // add new group
                 rowGroups: List.from(this.rowGroups).append(rowGroup.rowgroup),
-              },
-              rowGroup.cells
+              })
+                // merge in new cells
+                .addCells(rowGroup.cells)
             );
           } else {
             return this;
@@ -303,8 +322,8 @@ export namespace Table {
     }
 
     public addHeadersVariants(): Builder {
-      return this.update({
-        cells: List.from(
+      return this.updateCells(
+        List.from(
           map(this.cells, (cell) =>
             cell.addHeaderVariant(
               this.hasDataCellCoveringArea.bind(this),
@@ -312,8 +331,8 @@ export namespace Table {
               this.height
             )
           )
-        ),
-      });
+        )
+      );
     }
 
     /**
@@ -366,16 +385,16 @@ export namespace Table {
     }
 
     public assignHeaders(): Builder {
-      return this.update({
-        cells: map(this.cells, (cell) =>
+      return this.updateCells(
+        map(this.cells, (cell) =>
           cell.assignHeaders(
             this.element,
             (x: number, y: number) => this._slots[x][y],
             this.getAboveLeftGroupHeaders("row"),
             this.getAboveLeftGroupHeaders("column")
           )
-        ),
-      });
+        )
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -437,14 +456,12 @@ export namespace Table {
             const colGroup = ColumnGroup.Builder.from(currentElement)
               .get()
               .anchorAt(table.width).columnGroup;
-            table = table.update(
-              {
-                // 9.1 (1).4 (cumulative) and (2).2
-                width: Math.max(table.width, table.width + colGroup.width),
-                // 9.1 (1).7 and (2).3
-                colGroups: List.from(table.colGroups).append(colGroup),
-              }
-            );
+            table = table.update({
+              // 9.1 (1).4 (cumulative) and (2).2
+              width: Math.max(table.width, table.width + colGroup.width),
+              // 9.1 (1).7 and (2).3
+              colGroups: List.from(table.colGroups).append(colGroup),
+            });
           }
           continue;
         }
@@ -463,14 +480,12 @@ export namespace Table {
             table.width
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
-          table = table.update(
-            {
-              cells: List.from(table.cells).concat(row.cells),
+          table = table
+            .update({
               height: Math.max(table.height, yCurrent + 1),
               width: Math.max(table.width, row.width),
-            },
-            row.cells
-          );
+            })
+            .addCells(row.cells);
           // row processing steps 4/16
           yCurrent++;
 
@@ -574,11 +589,12 @@ export namespace Table {
       table = table.assignHeaders();
 
       // Finally, we sort lists and export the result.
-      table = table.update({
-        cells: [...table.cells].sort(compare),
-        rowGroups: [...table.rowGroups].sort(compare),
-        colGroups: [...table.colGroups].sort(compare),
-      });
+      table = table
+        .update({
+          rowGroups: [...table.rowGroups].sort(compare),
+          colGroups: [...table.colGroups].sort(compare),
+        })
+        .updateCells([...table.cells].sort(compare));
       return Ok.of(table);
     }
   }
