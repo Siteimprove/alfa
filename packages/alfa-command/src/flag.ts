@@ -268,7 +268,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(this._name, this._description, options, parse);
   }
 
-  public negatable(mapper: Mapper<T, T>): Flag<T> {
+  public negatable(mapper: Mapper<T>): Flag<T> {
     const options = { ...this._options, negatable: true };
 
     const negate = (
