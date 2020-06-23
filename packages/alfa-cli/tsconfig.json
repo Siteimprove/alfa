@@ -1,12 +1,21 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "resolveJsonModule": true
+  },
   "files": [
+    "package.json",
     "bin/alfa.ts",
-    "bin/alfa/commands/audit.ts",
-    "bin/alfa/commands/scrape.ts",
-    "src/index.ts",
-    "src/oracle.ts"
+    "bin/alfa/command/audit.ts",
+    "bin/alfa/command/audit/arguments.ts",
+    "bin/alfa/command/audit/flags.ts",
+    "bin/alfa/command/audit/run.ts",
+    "bin/alfa/command/scrape.ts",
+    "bin/alfa/command/scrape/arguments.ts",
+    "bin/alfa/command/scrape/flags.ts",
+    "bin/alfa/command/scrape/run.ts",
+    "bin/alfa/oracle.ts"
   ],
   "references": [
     {
@@ -14,6 +23,9 @@
     },
     {
       "path": "../alfa-cache"
+    },
+    {
+      "path": "../alfa-command"
     },
     {
       "path": "../alfa-device"
@@ -31,7 +43,13 @@
       "path": "../alfa-formatter-json"
     },
     {
+      "path": "../alfa-functor"
+    },
+    {
       "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-highlight"
     },
     {
       "path": "../alfa-http"
@@ -40,7 +58,22 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-parser"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-result"
     },
     {
       "path": "../alfa-rules"
