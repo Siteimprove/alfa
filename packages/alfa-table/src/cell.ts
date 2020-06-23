@@ -418,7 +418,9 @@ export namespace Cell {
         h: number
       ) => boolean,
       width: number,
-      height: number
+      height: number,
+      columnHasData: Array<boolean>,
+      rowHasData: Array<boolean>
     ): Option<Scope.Resolved> {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
@@ -439,6 +441,7 @@ export namespace Cell {
           // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
           // means "for any x" or just for the x of the cell. Using "for all x"
           if (
+            // this.anchor.y + this.height-1 <= topmostDataCell
             existsDataCellCoveringArea(0, this.anchor.y, width, this.height)
           ) {
             // there are *SOME* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
@@ -466,11 +469,20 @@ export namespace Cell {
         h: number
       ) => boolean,
       width: number,
-      height: number
+      height: number,
+      columnHasData: Array<boolean>,
+      rowHasData: Array<boolean>
     ): Builder {
       return this._update({
         variant: this._scope.flatMap((scope) =>
-          this._scopeToState(scope, existsDataCellCoveringArea, width, height)
+          this._scopeToState(
+            scope,
+            existsDataCellCoveringArea,
+            width,
+            height,
+            columnHasData,
+            rowHasData
+          )
         ),
       });
     }

@@ -106,6 +106,7 @@ export class Table implements Equatable, Serializable {
 }
 
 export namespace Table {
+  import Kind = Cell.Kind;
   const cache = Cache.empty<Element, Result<Table, string>>();
 
   export function from(element: Element): Result<Table, string> {
@@ -133,8 +134,8 @@ export namespace Table {
       slots: Array<Array<Option<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
       colGroups: Iterable<ColumnGroup> = List.empty(),
-      leftmostDataCell: number = -1,
-      topmostDataCell: number = -1
+      columnHasData: Array<boolean> = [],
+      rowHasData: Array<boolean> = []
     ): Builder {
       return new Builder(
         element,
@@ -144,8 +145,8 @@ export namespace Table {
         slots,
         rowGroups,
         colGroups,
-        leftmostDataCell,
-        topmostDataCell
+        columnHasData,
+        rowHasData
       );
     }
 
@@ -153,8 +154,8 @@ export namespace Table {
     private readonly _table: Table;
     private readonly _cells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
-    private readonly _leftmostDataCell: number; // x anchor of the leftmost data cell
-    private readonly _topmostDataCell: number; // y anchor of the topmost data cell
+    private readonly _columnHasData: Array<boolean>; // Does column x contains a slot covered by a data cell?
+    private readonly _rowHasData: Array<boolean>; // Does row y contains a slot covered by a data cell?
 
     private constructor(
       element: Element,
@@ -164,8 +165,8 @@ export namespace Table {
       slots: Array<Array<Option<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
       colGroups: Iterable<ColumnGroup>,
-      leftmostDataCell: number,
-      topmostDataCell: number
+      columnHasData: Array<boolean>,
+      rowHasData: Array<boolean>
     ) {
       this._table = Table.of(
         element,
@@ -177,8 +178,8 @@ export namespace Table {
       );
       this._cells = List.from(cells);
       this._slots = slots;
-      this._leftmostDataCell = leftmostDataCell;
-      this._topmostDataCell = topmostDataCell;
+      this._columnHasData = columnHasData;
+      this._rowHasData = rowHasData;
     }
 
     public get cells(): Iterable<Cell.Builder> {
@@ -231,8 +232,8 @@ export namespace Table {
       slots = this._slots,
       rowGroups = this.rowGroups,
       colGroups = this.colGroups,
-      leftmostDataCell = this._leftmostDataCell,
-      topmostDataCell = this._topmostDataCell,
+      columnHasData = this._columnHasData,
+      rowHasData = this._rowHasData,
     }: {
       element?: Element;
       width?: number;
@@ -241,8 +242,8 @@ export namespace Table {
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
-      leftmostDataCell?: number;
-      topmostDataCell?: number;
+      columnHasData?: Array<boolean>;
+      rowHasData?: Array<boolean>;
     }): Builder {
       return Builder.of(
         element,
@@ -252,8 +253,8 @@ export namespace Table {
         slots,
         rowGroups,
         colGroups,
-        leftmostDataCell,
-        topmostDataCell
+        columnHasData,
+        rowHasData
       );
     }
 
@@ -283,21 +284,22 @@ export namespace Table {
      * Add new cells, sync slots with the new cells and update left/top most cells
      */
     public addCells(cells: Iterable<Cell.Builder>): Builder {
-      const leftmostDataCell = reduce(
-        cells,
-        (x, cell) => Math.min(x, cell.anchor.x),
-        this._leftmostDataCell
-      );
-      const topmostDataCell = reduce(
-        cells,
-        (y, cell) => Math.min(y, cell.anchor.y),
-        this._topmostDataCell
-      );
+      for (const cell of cells) {
+        if (cell.kind === Kind.Data) {
+          // If this is a data cell, update the memory of column/row with data cells.
+          for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+            this._columnHasData[x] = true;
+          }
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            this._columnHasData[y] = true;
+          }
+        }
+      }
 
       return this._updateUnsafe({
         cells: this._cells.concat(cells),
-        leftmostDataCell,
-        topmostDataCell
+        columnHasData: this._columnHasData,
+        rowHasData: this._rowHasData,
       })._updateSlots(cells);
     }
 
@@ -357,7 +359,9 @@ export namespace Table {
             cell.addHeaderVariant(
               this.hasDataCellCoveringArea.bind(this),
               this.width,
-              this.height
+              this.height,
+              this._columnHasData,
+              this._rowHasData
             )
           )
         )
