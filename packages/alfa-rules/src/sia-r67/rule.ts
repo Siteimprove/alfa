@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, or, not } = Predicate;
+const { and, or } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
@@ -23,9 +23,10 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               isElement,
               and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                isEmbeddedContent,
-                not(hasName("iframe")),
+                or(
+                  and(hasNamespace(Namespace.HTML), hasName("img")),
+                  and(hasNamespace(Namespace.SVG), hasName("svg"))
+                ),
                 isMarkedAsDecorative
               )
             )
@@ -58,27 +59,6 @@ export namespace Outcomes {
     )
   );
 }
-
-/**
- * @see https://html.spec.whatwg.org/#embedded-content-category
- */
-const isEmbeddedContent: Predicate<Element> = or(
-  and(hasNamespace(Namespace.SVG), Element.hasName("svg")),
-  and(hasNamespace(Namespace.MathML), Element.hasName("math")),
-  and(
-    hasNamespace(Namespace.HTML),
-    Element.hasName(
-      "audio",
-      "canvas",
-      "embed",
-      "iframe",
-      "img",
-      "object",
-      "picture",
-      "video"
-    )
-  )
-);
 
 /**
  * Check if an element is marked as decorative by looking at its role but without conflict resolution.

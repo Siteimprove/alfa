@@ -1,3 +1,5 @@
+import {Node} from "@siteimprove/alfa-aria";
+import {getName} from "@siteimprove/alfa-aria/src/get-name";
 import { Device } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Option } from "@siteimprove/alfa-option";
@@ -29,8 +31,8 @@ test("evaluate() passes on elements marked as decorative with no alternative tex
     Element.fromElement(
       <html>
         <img id="empty-alt" src="foo.jpg" alt="" />
-        <video id="role-none" src="foo.mp4" role="none" />
-        <object id="role-presentation" src="foo.jpg" role="presentation" />
+        <img id="role-none" src="foo.jpg" role="none" />
+        <img id="role-presentation" src="foo.jpg" role="presentation" />
         <svg id="svg" role="none">
           <circle cx="50" cy="50" r="40" fill="yellow"></circle>
         </svg>
@@ -58,9 +60,9 @@ test("evaluate() fails on elements marked as decorative with an alternative text
       <html>
         <span id="label">Foo</span>
         <img id="empty-alt-aria-label" src="foo.jpg" alt="" aria-label="Foo" />
-        <audio
+        <img
           id="role-none-aria-labelledby"
-          src="foo.mp3"
+          src="foo.jpg"
           role="none"
           aria-labelledby="label"
         />
@@ -78,7 +80,7 @@ test("evaluate() fails on elements marked as decorative with an alternative text
   ]);
 });
 
-test("evaluate() is inapplicable on mathml, iframe and non-embedded elements", async (t) => {
+test("evaluate() is inapplicable on non-img/svg elements", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -98,8 +100,8 @@ test("evaluate() is inapplicabale on elements which are not marked as decorative
     Element.fromElement(
       <html>
         <img src="foo.jpg" alt="foo" />
-        <video src="foo.mp4" />
-        <object src="foo.jpg" />
+        <img src="foo.jpg" />
+        <img src="foo.jpg" />
         <svg>
           <circle cx="50" cy="50" r="40" fill="yellow"></circle>
         </svg>
