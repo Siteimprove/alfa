@@ -229,7 +229,7 @@ export namespace Table {
         rowGroups?: Iterable<RowGroup>;
         colGroups?: Iterable<ColumnGroup>;
       },
-      // If we're not provided a list of modified cells, we assume none of them have been copied.
+      // If we're not provided a list of modified cells, we assume all the cells provided are new and need resync.
       modifiedCells: Iterable<Cell.Builder> | undefined = cells
     ): Builder {
       return (
