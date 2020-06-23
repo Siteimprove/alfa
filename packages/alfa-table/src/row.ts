@@ -88,7 +88,7 @@ export namespace Row {
       return this._downwardGrowingCells;
     }
 
-    public update(update: {
+    private _update(update: {
       y?: number;
       xCurrent?: number;
       width?: number;
@@ -109,7 +109,7 @@ export namespace Row {
     }
 
     public growCells(y: number): Builder {
-      return this.update({
+      return this._update({
         downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
           cell.growDownward(y)
         ),
@@ -117,11 +117,11 @@ export namespace Row {
     }
 
     public addNonGrowingCell(cell: Cell.Builder): Builder {
-      return this.update({ cells: this._cells.append(cell) });
+      return this._update({ cells: this._cells.append(cell) });
     }
 
     public addGrowingCell(cell: Cell.Builder): Builder {
-      return this.update({
+      return this._update({
         downwardGrowingCells: this._downwardGrowingCells.append(cell),
       });
     }
@@ -139,7 +139,7 @@ export namespace Row {
       // 8, 9, 10, 13
       return Cell.Builder.from(currentCell, this._xCurrent, yCurrent).map(
         (cell) =>
-          this.update({
+          this._update({
             // 11
             width: Math.max(this.width, this._xCurrent + cell.width),
             // 12
@@ -153,11 +153,11 @@ export namespace Row {
     }
 
     public adjustWidth(width: number): Builder {
-      return this.update({ width: Math.max(this._width, width) });
+      return this._update({ width: Math.max(this._width, width) });
     }
 
     public adjustHeight(height: number): Builder {
-      return this.update({ height: Math.max(this._height, height) });
+      return this._update({ height: Math.max(this._height, height) });
     }
 
     /**
@@ -172,7 +172,7 @@ export namespace Row {
           .concat(this._downwardGrowingCells)
           .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
       ) {
-        return this.update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
+        return this._update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
           cells,
           yCurrent
         );
@@ -188,7 +188,7 @@ export namespace Row {
     }
 
     public sort(): Builder {
-      return this.update({
+      return this._update({
         cells: [...this._cells].sort(compare),
         downwardGrowingCells: [...this._downwardGrowingCells].sort(compare),
       });
