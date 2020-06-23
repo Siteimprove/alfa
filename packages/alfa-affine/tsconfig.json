@@ -8,6 +8,12 @@
   ],
   "references": [
     {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
       "path": "../alfa-math"
     },
     {

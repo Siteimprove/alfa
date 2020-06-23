@@ -1564,6 +1564,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-affine@workspace:packages/alfa-affine"
   dependencies:
+    "@siteimprove/alfa-equatable": ^0.2.0
+    "@siteimprove/alfa-json": ^0.2.0
     "@siteimprove/alfa-math": ^0.2.0
     "@siteimprove/alfa-option": ^0.2.0
     "@siteimprove/alfa-test": ^0.2.0
