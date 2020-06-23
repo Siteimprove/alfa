@@ -215,7 +215,8 @@ export namespace Table {
         element = this.element,
         width = this.width,
         height = this.height,
-        cells = this._cells,
+        // we need to remember that no cell is modified to avoid useless slots resync.
+        cells = undefined,
         slots = this._slots,
         rowGroups = this.rowGroups,
         colGroups = this.colGroups,
@@ -228,13 +229,22 @@ export namespace Table {
         rowGroups?: Iterable<RowGroup>;
         colGroups?: Iterable<ColumnGroup>;
       },
-      modifiedCells: Iterable<Cell.Builder> = cells
+      // If we're not provided a list of modified cells, we assume none of them have been copied.
+      modifiedCells: Iterable<Cell.Builder> | undefined = cells
     ): Builder {
       return (
-        Builder.of(element, width, height, cells, slots, rowGroups, colGroups)
-          // aggressively keep slots in sync.
+        Builder.of(
+          element,
+          width,
+          height,
+          cells ?? this._cells,
+          slots,
+          rowGroups,
+          colGroups
+        )
+          // aggressively keep slots in sync for the cells that have been modified.
           // cells are modified during build, effectively creating a new Cell.Builder and requiring slots resync.
-          ._updateSlots(modifiedCells)
+          ._updateSlots(modifiedCells ?? [])
       );
     }
 
@@ -427,12 +437,14 @@ export namespace Table {
             const colGroup = ColumnGroup.Builder.from(currentElement)
               .get()
               .anchorAt(table.width).columnGroup;
-            table = table.update({
-              // 9.1 (1).4 (cumulative) and (2).2
-              width: Math.max(table.width, table.width + colGroup.width),
-              // 9.1 (1).7 and (2).3
-              colGroups: List.from(table.colGroups).append(colGroup),
-            }, []);
+            table = table.update(
+              {
+                // 9.1 (1).4 (cumulative) and (2).2
+                width: Math.max(table.width, table.width + colGroup.width),
+                // 9.1 (1).7 and (2).3
+                colGroups: List.from(table.colGroups).append(colGroup),
+              }
+            );
           }
           continue;
         }
@@ -451,11 +463,14 @@ export namespace Table {
             table.width
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
-          table = table.update({
-            cells: List.from(table.cells).concat(row.cells),
-            height: Math.max(table.height, yCurrent + 1),
-            width: Math.max(table.width, row.width),
-          }, row.cells);
+          table = table.update(
+            {
+              cells: List.from(table.cells).concat(row.cells),
+              height: Math.max(table.height, yCurrent + 1),
+              width: Math.max(table.width, row.width),
+            },
+            row.cells
+          );
           // row processing steps 4/16
           yCurrent++;
 
@@ -550,7 +565,7 @@ export namespace Table {
           slots[x].push(table.slot(x, y));
         }
       }
-      table = table.update({ slots }, []);
+      table = table.update({ slots });
 
       // Second, we need to compute all headers variant.
       // This need to be done separately so that the updated table is used in assignHeaders.
