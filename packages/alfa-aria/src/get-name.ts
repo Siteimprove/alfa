@@ -592,6 +592,42 @@ function isRendered(node: Node, device: Device): boolean {
 }
 
 /**
+ * Check if an element is a "text level elements not listed elsewhere". A few
+ * text level elements, such as anchors, are handled elsewhere and are therefore
+ * not considered by this function.
+ *
+ * @see https://w3c.github.io/html-aam/#text-level-elements-not-listed-elsewhere
+ */
+const isTextLevelElement = hasName(
+  "abbr",
+  "b",
+  "bdi",
+  "bdo",
+  "br",
+  "cite",
+  "code",
+  "dfn",
+  "em",
+  "i",
+  "kbd",
+  "mark",
+  "q",
+  "rp",
+  "rt",
+  "ruby",
+  "s",
+  "samp",
+  "small",
+  "strong",
+  "sub",
+  "sup",
+  "time",
+  "u",
+  "var",
+  "wbr"
+);
+
+/**
  * Check if an element is a "native host language text alternative element".
  * The elements that qualify as such are defined in the HTML Accessibility
  * API Mappings specification as elements whose text alternative can be
@@ -599,58 +635,7 @@ function isRendered(node: Node, device: Device): boolean {
  *
  * @see https://w3c.github.io/html-aam/#accessible-name-and-description-computation
  */
-function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (element.name) {
-    case "label":
-    case "a":
-    case "button":
-    case "legend":
-    case "output":
-    case "summary":
-    case "figcaption":
-      return true;
-  }
-
-  return isTextLevelElement(element);
-}
-
-/**
- * Check if an element is a "text level elements not listed elsewhere". A few
- * text level elements, such as anchors, are handled elsewhere and are therefore
- * not considered by this function.
- *
- * @see https://w3c.github.io/html-aam/#text-level-elements-not-listed-elsewhere
- */
-function isTextLevelElement(element: Element): boolean {
-  switch (element.name) {
-    case "abbr":
-    case "b":
-    case "bdi":
-    case "bdo":
-    case "br":
-    case "cite":
-    case "code":
-    case "dfn":
-    case "em":
-    case "i":
-    case "kbd":
-    case "mark":
-    case "q":
-    case "rp":
-    case "rt":
-    case "ruby":
-    case "s":
-    case "samp":
-    case "small":
-    case "strong":
-    case "sub":
-    case "sup":
-    case "time":
-    case "u":
-    case "var":
-    case "wbr":
-      return true;
-  }
-
-  return false;
-}
+const isNativeTextAlternativeElement = or(
+  hasName("label", "a", "button", "legend", "output", "summary", "figcaption"),
+  isTextLevelElement
+);
