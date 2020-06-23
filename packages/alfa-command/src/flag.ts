@@ -144,10 +144,12 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   }
 
   public default(value: T, label: string = `${value}`): Flag<T> {
+    label = label.replace(/\s+/g, " ").trim();
+
     const options = {
       ...this._options,
       optional: true,
-      default: Option.of(label),
+      default: label === "" ? None : Option.of(label),
     };
 
     const missing = (

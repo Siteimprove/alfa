@@ -109,13 +109,15 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
   }
 
   public default(value: T, label: string = `${value}`): Argument<T> {
+    label = label.replace(/\s+/g, " ").trim();
+
     return new Argument(
       this._name,
       this._description,
       {
         ...this._options,
         optional: true,
-        default: Option.of(label),
+        default: label === "" ? None : Option.of(label),
       },
       this._parse
     );

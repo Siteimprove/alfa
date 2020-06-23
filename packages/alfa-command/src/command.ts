@@ -323,9 +323,7 @@ ${args
     }
 
     for (const value of options.default) {
-      if (value !== "") {
-        help += " " + Marker.dim(`[default: ${value}]`);
-      }
+      help += " " + Marker.dim(`[default: ${value}]`);
     }
 
     help += "\n";
@@ -397,9 +395,7 @@ ${[...values(this._flags)]
     }
 
     for (const value of options.default) {
-      if (value !== "") {
-        help += " " + Marker.dim(`[default: ${value}]`);
-      }
+      help += " " + Marker.dim(`[default: ${value}]`);
     }
 
     help += "\n";
