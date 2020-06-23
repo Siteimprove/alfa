@@ -18,7 +18,7 @@ import { RowGroup } from "./row-group";
 import { Scope } from "./scope";
 
 const { compare } = Comparable;
-const { filter, map, some } = Iterable;
+const { filter, map, reduce, some } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
@@ -132,7 +132,9 @@ export namespace Table {
       cells: Iterable<Cell.Builder> = List.empty(),
       slots: Array<Array<Option<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
-      colGroups: Iterable<ColumnGroup> = List.empty()
+      colGroups: Iterable<ColumnGroup> = List.empty(),
+      leftmostDataCell: number = -1,
+      topmostDataCell: number = -1
     ): Builder {
       return new Builder(
         element,
@@ -141,7 +143,9 @@ export namespace Table {
         cells,
         slots,
         rowGroups,
-        colGroups
+        colGroups,
+        leftmostDataCell,
+        topmostDataCell
       );
     }
 
@@ -149,6 +153,8 @@ export namespace Table {
     private readonly _table: Table;
     private readonly _cells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
+    private readonly _leftmostDataCell: number; // x anchor of the leftmost data cell
+    private readonly _topmostDataCell: number; // y anchor of the topmost data cell
 
     private constructor(
       element: Element,
@@ -157,7 +163,9 @@ export namespace Table {
       cells: Iterable<Cell.Builder>,
       slots: Array<Array<Option<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
-      colGroups: Iterable<ColumnGroup>
+      colGroups: Iterable<ColumnGroup>,
+      leftmostDataCell: number,
+      topmostDataCell: number
     ) {
       this._table = Table.of(
         element,
@@ -169,6 +177,8 @@ export namespace Table {
       );
       this._cells = List.from(cells);
       this._slots = slots;
+      this._leftmostDataCell = leftmostDataCell;
+      this._topmostDataCell = topmostDataCell;
     }
 
     public get cells(): Iterable<Cell.Builder> {
@@ -221,6 +231,8 @@ export namespace Table {
       slots = this._slots,
       rowGroups = this.rowGroups,
       colGroups = this.colGroups,
+      leftmostDataCell = this._leftmostDataCell,
+      topmostDataCell = this._topmostDataCell,
     }: {
       element?: Element;
       width?: number;
@@ -229,6 +241,8 @@ export namespace Table {
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
+      leftmostDataCell?: number;
+      topmostDataCell?: number;
     }): Builder {
       return Builder.of(
         element,
@@ -237,7 +251,9 @@ export namespace Table {
         cells,
         slots,
         rowGroups,
-        colGroups
+        colGroups,
+        leftmostDataCell,
+        topmostDataCell
       );
     }
 
@@ -263,6 +279,28 @@ export namespace Table {
       return this._updateUnsafe({ cells })._updateSlots(cells);
     }
 
+    /**
+     * Add new cells, sync slots with the new cells and update left/top most cells
+     */
+    public addCells(cells: Iterable<Cell.Builder>): Builder {
+      const leftmostDataCell = reduce(
+        cells,
+        (x, cell) => Math.min(x, cell.anchor.x),
+        this._leftmostDataCell
+      );
+      const topmostDataCell = reduce(
+        cells,
+        (y, cell) => Math.min(y, cell.anchor.y),
+        this._topmostDataCell
+      );
+
+      return this._updateUnsafe({
+        cells: this._cells.concat(cells),
+        leftmostDataCell,
+        topmostDataCell
+      })._updateSlots(cells);
+    }
+
     private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
       for (const cell of cells) {
         for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
@@ -276,15 +314,6 @@ export namespace Table {
       }
 
       return this; // for chaining
-    }
-
-    /**
-     * Add new cells, sync slots with the new cells and update left/top most cells
-     */
-    public addCells(cells: Iterable<Cell.Builder>): Builder {
-      return this._updateUnsafe({
-        cells: this._cells.concat(cells),
-      })._updateSlots(cells);
     }
 
     public addRowGroupFromElement(
