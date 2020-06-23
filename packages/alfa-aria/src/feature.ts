@@ -57,11 +57,7 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T, A extends Array<unknown> = []> = Mapper<
-    Element,
-    T,
-    A
-  >;
+  export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element, T, A>;
 
   export interface Status {
     readonly obsolete: boolean;
@@ -71,7 +67,7 @@ export namespace Feature {
     /**
      * @internal
      */
-    readonly allowPresentational?: boolean;
+    readonly allowPresentational: boolean;
   }
 
   const features = Cache.empty<Namespace, Cache<string, Feature>>();
@@ -309,9 +305,10 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", (element, { allowPresentational = true }) =>
+  Feature.of("img", (element, { allowPresentational }) =>
     Option.of(
-      allowPresentational && element.attribute("alt").some((alt) => alt.value === "")
+      allowPresentational &&
+        element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"
     )
