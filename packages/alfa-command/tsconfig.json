@@ -7,6 +7,7 @@
     "src/flag.ts",
     "src/index.ts",
     "src/text.ts",
+    "test/flag.spec.ts",
     "test/text.spec.ts"
   ],
   "references": [
