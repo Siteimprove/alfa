@@ -231,11 +231,11 @@ export namespace Table {
 
       return update.cells !== undefined
         ? // aggressively keep slots in sync if any cells has been modified.
-          table.updateSlots(update.cells)
+          table._updateSlots(update.cells)
         : table;
     }
 
-    public updateSlots(cells: Iterable<Cell.Builder>): Builder {
+    private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
       for (const cell of cells) {
         for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
           if (this._slots[x] === undefined) {
