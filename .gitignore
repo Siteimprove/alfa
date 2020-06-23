@@ -12,8 +12,10 @@ coverage
 !**/types/**/*.d.ts
 
 .yarn/*
+!.yarn/**/*.js
 !.yarn/releases
-!.yarn/releases/*.js
+!.yarn/plugins
+!.yarn/versions
 .pnp.*
 
 .vscode
