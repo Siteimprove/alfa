@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/argument.ts",
+    "src/command.ts",
+    "src/flag.ts",
+    "src/index.ts",
+    "src/text.ts",
+    "test/flag.spec.ts",
+    "test/text.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-highlight"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-parser"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
+    }
+  ]
+}
