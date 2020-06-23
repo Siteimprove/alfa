@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { mod, clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -48,9 +48,9 @@ export class HSL<
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
     const [red, green, blue] = hslToRgb(
-      mod(degrees, 360) / 60,
-      clamp(saturation.value, 0, 1),
-      clamp(lightness.value, 0, 1)
+      Real.modulo(degrees, 360) / 60,
+      Real.clamp(saturation.value, 0, 1),
+      Real.clamp(lightness.value, 0, 1)
     );
 
     this._red = Percentage.of(red);
@@ -234,9 +234,9 @@ function hslToRgb(
   const t1 = lightness * 2 - t2;
 
   return [
-    hueToRgb(t1, t2, mod(hue + 2, 6)),
+    hueToRgb(t1, t2, Real.modulo(hue + 2, 6)),
     hueToRgb(t1, t2, hue),
-    hueToRgb(t1, t2, mod(hue - 2, 6)),
+    hueToRgb(t1, t2, Real.modulo(hue - 2, 6)),
   ];
 }
 

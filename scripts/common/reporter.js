@@ -17,5 +17,5 @@ exports.status = {
   /**
    * @type {ts.DiagnosticReporter}
    */
-  watch: ts.createWatchStatusReporter(system, flags.pretty)
+  watch: ts.createWatchStatusReporter(system, flags.pretty),
 };

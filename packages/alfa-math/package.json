@@ -17,10 +17,6 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
-  "dependencies": {
-    "@types/mathjs": "^6.0.1",
-    "mathjs": "^6.0.4"
-  },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.2.0"
   },

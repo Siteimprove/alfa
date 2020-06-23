@@ -10,6 +10,12 @@ import { Page } from "@siteimprove/alfa-web";
 import * as act from "@siteimprove/alfa-act";
 import * as xpath from "@siteimprove/alfa-xpath";
 
+/**
+ * @internal
+ *
+ * @todo Make this stuff external to the CLI so that it simply requires a package
+ *       responsible for doing the interview.
+ */
 export const Oracle = (page: Page): act.Oracle<Question> => {
   const answers = Cache.empty<unknown, Cache<string, Future<any>>>();
 

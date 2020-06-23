@@ -233,6 +233,9 @@ export namespace Role {
   ): Branched<Option<Role>, Browser> {
     const role = element.attribute("role").map((attr) => attr.value.trim());
 
+    const allowedPresentational =
+      options.allowPresentational ?? isAllowedPresentational(element);
+
     return (
       Branched.of<Option<string>, Browser>(
         role.map((role) => role.toLowerCase())
@@ -251,15 +254,22 @@ export namespace Role {
                   const role = Role.lookup(name);
 
                   if (
+                    // If the role is not abstract...
                     role.some(
                       (role) => role.category !== Role.Category.Abstract
+                    ) &&
+                    // ...and it's not a presentational role in a forbidden context...
+                    !(
+                      role.some(Role.isPresentational) &&
+                      !isAllowedPresentational
                     )
                   ) {
+                    // ...then we got ourselves a valid explicit role...
                     return role;
                   }
                 }
               }
-
+              // ...otherwise, default to implicit role computation.
               return None;
             })
             .orElse(() => {
@@ -268,7 +278,11 @@ export namespace Role {
                   const feature = Feature.lookup(namespace, element.name);
 
                   return feature.flatMap((feature) =>
-                    feature.role(element).flatMap(Role.lookup)
+                    feature
+                      .role(element, {
+                        allowPresentational: allowedPresentational,
+                      })
+                      .flatMap(Role.lookup)
                   );
                 });
               }
@@ -280,11 +294,13 @@ export namespace Role {
   }
 
   export namespace from {
-    export interface Options {
+    export interface Options extends Partial<Feature.RoleOptions> {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
   }
+
+  export const isPresentational = hasName("presentation", "none");
 
   export function hasName(predicate: Predicate<string>): Predicate<Role>;
 
@@ -308,6 +324,27 @@ export namespace Role {
     return (role) => role.hasName(predicate);
   }
 }
+
+/**
+ * Determine if an element is allowed to be presentational.
+ *
+ * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
+ */
+const isAllowedPresentational: Predicate<Element> = (element) => {
+  if (element.tabIndex().isSome()) {
+    return false;
+  }
+
+  return Role.lookup("roletype").some((role) => {
+    for (const attribute of role.characteristics.supports) {
+      if (element.attribute(attribute).isSome()) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+};
 
 import "./role/separator";
 

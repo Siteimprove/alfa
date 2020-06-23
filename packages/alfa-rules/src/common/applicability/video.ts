@@ -8,17 +8,16 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { isVisible } from "../predicate/is-visible";
 
 import { Question } from "../question";
-import { hasAttribute } from "../predicate/has-attribute";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { filter, map, some } = Iterable;
-const { and, equals } = Predicate;
+const { and } = Predicate;
 
 export function video(
   document: Document,
   device: Device,
   options: video.Options = {}
-): Iterable<Interview<Question, Element, Element | Option<Element>>> {
+): Iterable<Interview<Question, Element, Option<Element>>> {
   const { audio, track } = options;
 
   return map(
@@ -39,7 +38,23 @@ export function video(
                   Element.isElement,
                   and(
                     hasName("track"),
-                    hasAttribute("kind", equals(track.kind))
+                    (trackElement) =>
+                      trackElement
+                        .attribute("kind")
+                        // @see https://html.spec.whatwg.org/multipage/media.html#attr-track-kind
+                        .map(
+                          (kind) =>
+                            kind
+                              .enumerate(
+                                "subtitles",
+                                "captions",
+                                "descriptions",
+                                "chapters",
+                                "metadata"
+                              )
+                              .getOr("metadata") // invalid value default
+                        )
+                        .getOr("subtitles") === track.kind // missing value default
                   )
                 )
               )

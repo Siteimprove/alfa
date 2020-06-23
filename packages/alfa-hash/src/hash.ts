@@ -91,4 +91,8 @@ export namespace Hash {
   export function writeFloat64(hash: Hash, data: number): void {
     writeFloat(hash, data, 64);
   }
+
+  export function writeBoolean(hash: Hash, data: boolean): void {
+    writeUint8(hash, data ? 1 : 0);
+  }
 }

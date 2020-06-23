@@ -1,5 +1,6 @@
 import {
   Declaration,
+  MediaRule,
   Namespace,
   NamespaceRule,
   Sheet,
@@ -42,6 +43,19 @@ export const UserAgent = Sheet.of((owner) => {
     StyleRule.of(
       "input[type=hidden i]",
       (self) => [Declaration.of("display", "none", true, Option.of(self))],
+      owner
+    ),
+
+    MediaRule.of(
+      "(scripting)",
+      (self) => [
+        StyleRule.of(
+          "noscript",
+          (self) => [Declaration.of("display", "none", true, Option.of(self))],
+          owner,
+          Option.of(self)
+        ),
+      ],
       owner
     ),
 

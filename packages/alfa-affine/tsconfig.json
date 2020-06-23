@@ -1,7 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/transformation.ts"],
+  "files": [
+    "src/index.ts",
+    "src/transformation.ts",
+    "test/transformation.spec.ts"
+  ],
   "references": [
     {
       "path": "../alfa-math"

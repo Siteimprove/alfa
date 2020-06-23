@@ -110,7 +110,7 @@ export class SelectorMap {
         order++;
 
         for (const part of selector.get()) {
-          this.add(rule, part, rule.style, origin, order);
+          this._add(rule, part, rule.style, origin, order);
         }
       }
 
@@ -179,7 +179,7 @@ export class SelectorMap {
     return nodes;
   }
 
-  private add(
+  private _add(
     rule: Rule,
     selector: Selector,
     declarations: Iterable<Declaration>,
