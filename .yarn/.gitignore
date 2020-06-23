@@ -1,0 +1,8 @@
+*
+!.gitignore
+
+!**/*.js
+
+!releases
+!plugins
+!versions
