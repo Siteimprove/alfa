@@ -14,7 +14,7 @@ import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 
 const { compare } = Comparable;
-const { concat } = Iterable;
+const { concat, map } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
@@ -163,6 +163,10 @@ export namespace RowGroup {
       return this._cells;
     }
 
+    public get downwardGrowingCells(): Iterable<Cell.Builder> {
+      return this._downwardGrowingCells;
+    }
+
     public get anchor(): { y: number } {
       return this._rowGroup.anchor;
     }
@@ -240,7 +244,7 @@ export namespace RowGroup {
     /**
      * Add new cells/downward growing cells, and sync slots with the new cells only.
      */
-    private _addCells({
+    public addCells({
       cells = List.empty(),
       downwardGrowingCells = List.empty(),
     }: {
@@ -277,6 +281,9 @@ export namespace RowGroup {
     public anchorAt(y: number): Builder {
       return this.updateCells({
         cells: this._cells.map((cell) =>
+          cell.anchorAt(cell.anchor.x, y + cell.anchor.y)
+        ),
+        downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
           cell.anchorAt(cell.anchor.x, y + cell.anchor.y)
         ),
       }).update({ y });
@@ -327,18 +334,20 @@ export namespace RowGroup {
           tr,
           rowgroup.cells,
           growingCellsList,
+          // rowgroup.downwardGrowingCells,
           yCurrent,
           rowgroup.width
         ).get();
+
         growingCellsList = List.from(row.downwardGrowingCells);
         rowgroup = rowgroup
-          .updateCells({
-            cells: List.from(rowgroup.cells).concat(row.cells),
-          })
+          .addCells({ cells: row.cells })
+          // .updateCells({ downwardGrowingCells: row.downwardGrowingCells })
           .update({
             height: Math.max(rowgroup.height, yCurrent + row.height),
             width: Math.max(rowgroup.width, row.width),
           });
+
         // row processing steps 4/16
         yCurrent++;
       }
@@ -349,8 +358,11 @@ export namespace RowGroup {
       );
       // ending row group 2
       // When emptying the growing cells list, we need to finally add them to the group.
-      rowgroup = rowgroup.updateCells({
-        cells: List.from(rowgroup.cells).concat(growingCellsList),
+      rowgroup = rowgroup.addCells({
+        cells: growingCellsList,
+        // cells: map(rowgroup.downwardGrowingCells, (cell) =>
+        //   cell.growDownward(rowgroup.rowgroup.height - 1)
+        // ),
       });
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
