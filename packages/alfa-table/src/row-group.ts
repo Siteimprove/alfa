@@ -186,7 +186,7 @@ export namespace RowGroup {
     /**
      * Update by getting new values. Does not keep slots in sync, hence is highly unsafe. Use at your own risks.
      */
-    private _updateUnsafe({
+    public _updateUnsafe({
       y = this._rowGroup.anchor.y,
       width = this._width,
       height = this._rowGroup.height,
@@ -323,7 +323,6 @@ export namespace RowGroup {
         return Err.of("This element is not a row group");
       }
 
-      let growingCellsList: List<Cell.Builder> = List.empty();
       let rowgroup = Builder.of(-1, 0, group);
       let yCurrent = 0; // y position inside the rowgroup
       // 1
@@ -333,16 +332,14 @@ export namespace RowGroup {
         const row = Row.Builder.from(
           tr,
           rowgroup.cells,
-          growingCellsList,
-          // rowgroup.downwardGrowingCells,
+          rowgroup.downwardGrowingCells,
           yCurrent,
           rowgroup.width
         ).get();
 
-        growingCellsList = List.from(row.downwardGrowingCells);
         rowgroup = rowgroup
           .addCells({ cells: row.cells })
-          // .updateCells({ downwardGrowingCells: row.downwardGrowingCells })
+          ._updateUnsafe({ downwardGrowingCells: row.downwardGrowingCells })
           .update({
             height: Math.max(rowgroup.height, yCurrent + row.height),
             width: Math.max(rowgroup.width, row.width),
@@ -355,12 +352,9 @@ export namespace RowGroup {
       // ending row group 2
       // When emptying the growing cells list, we need to finally add them to the group.
       rowgroup = rowgroup.addCells({
-        cells: growingCellsList
-          // ending row group 1
-          .map((cell) => cell.growDownward(rowgroup.rowgroup.height - 1)),
-        // cells: map(rowgroup.downwardGrowingCells, (cell) =>
-        //   cell.growDownward(rowgroup.rowgroup.height - 1)
-        // ),
+        cells: map(rowgroup.downwardGrowingCells, (cell) =>
+          cell.growDownward(rowgroup.rowgroup.height - 1)
+        ),
       });
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
