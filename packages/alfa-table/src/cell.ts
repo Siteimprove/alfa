@@ -386,22 +386,9 @@ export namespace Cell {
      */
     private _scopeToState(
       scope: Scope,
-      columnHasData: Array<boolean>,
-      rowHasData: Array<boolean>
+      dataInColumns: boolean, // Is there a data cell in the columns covered by this?
+      dataInRows: boolean // Is there a data cell in the rows covered by this?
     ): Option<Scope.Resolved> {
-      let dataInColumns = false;
-      let dataInRows = false;
-      for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
-        if (columnHasData[x] ?? false) {
-          dataInColumns = true;
-        }
-      }
-      for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
-        if (rowHasData[y] ?? false) {
-          dataInRows = true;
-        }
-      }
-
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
         case Scope.ColumnGroup:
@@ -437,12 +424,12 @@ export namespace Cell {
     }
 
     public addHeaderVariant(
-      columnHasData: Array<boolean>,
-      rowHasData: Array<boolean>
+      dataInColumns: boolean, // Is there a data cell in the columns covered by this?
+      dataInRows: boolean // Is there a data cell in the rows covered by this?
     ): Builder {
       return this._update({
         variant: this._scope.flatMap((scope) =>
-          this._scopeToState(scope, columnHasData, rowHasData)
+          this._scopeToState(scope, dataInColumns, dataInRows)
         ),
       });
     }

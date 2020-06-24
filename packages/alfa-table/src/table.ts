@@ -274,14 +274,15 @@ export namespace Table {
 
     /**
      * Update cells, and resync slots
-     * Cells are assumed to keep the same anchors, hence left/top most ones don't change.
+     * Cells are assumed to keep the same anchors, width, height and kind (header/data),
+     * hence columnHasData and rowHasData don't change but slots need to be updated to the new version of their cell.
      */
     public updateCells(cells: Iterable<Cell.Builder>): Builder {
       return this._updateUnsafe({ cells })._updateSlots(cells);
     }
 
     /**
-     * Add new cells, sync slots with the new cells and update left/top most cells
+     * Add new cells, sync slots with the new cells and update columnHasData and rowHasData.
      */
     public addCells(cells: Iterable<Cell.Builder>): Builder {
       for (const cell of cells) {
@@ -346,8 +347,22 @@ export namespace Table {
     public addHeadersVariants(): Builder {
       return this.updateCells(
         List.from(
-          map(this.cells, (cell) =>
-            cell.addHeaderVariant(this._columnHasData, this._rowHasData)
+          map(this.cells, (cell) => {
+            let dataInColumns = false;
+            let dataInRows = false;
+            for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+              if (this._columnHasData[x] ?? false) {
+                dataInColumns = true;
+              }
+            }
+            for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+              if (this._rowHasData[y] ?? false) {
+                dataInRows = true;
+              }
+            }
+
+            return cell.addHeaderVariant(dataInColumns, dataInRows)
+            }
           )
         )
       );

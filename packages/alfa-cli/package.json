@@ -46,5 +46,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
+  },
+  "scripts": {
+    "test": "node script.js"
   }
 }
