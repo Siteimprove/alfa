@@ -18,7 +18,7 @@ import { RowGroup } from "./row-group";
 import { Scope } from "./scope";
 
 const { compare } = Comparable;
-const { filter, map, some } = Iterable;
+const { concat, filter, map, some } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
@@ -155,7 +155,7 @@ export namespace Table {
     // The product will always have empty cells list as it's stored here
     private readonly _table: Table;
     private readonly _cells: List<Cell.Builder>;
-    private readonly _downwardgrowingCells: List<Cell.Builder>;
+    private readonly _downwardGrowingCells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
     private readonly _columnHasData: Array<boolean>; // Does column x contains a slot covered by a data cell?
     private readonly _rowHasData: Array<boolean>; // Does row y contains a slot covered by a data cell?
@@ -181,7 +181,7 @@ export namespace Table {
         colGroups
       );
       this._cells = List.from(cells);
-      this._downwardgrowingCells = List.from(downwardGrowingCells);
+      this._downwardGrowingCells = List.from(downwardGrowingCells);
       this._slots = slots;
       this._columnHasData = columnHasData;
       this._rowHasData = rowHasData;
@@ -234,7 +234,7 @@ export namespace Table {
       width = this.width,
       height = this.height,
       cells = this._cells,
-      downwardGrowingCells = this._downwardgrowingCells,
+      downwardGrowingCells = this._downwardGrowingCells,
       slots = this._slots,
       rowGroups = this.rowGroups,
       colGroups = this.colGroups,
@@ -267,7 +267,7 @@ export namespace Table {
     }
 
     /**
-     * Update anything but cells/slots, because they need to be kept in sync.
+     * Update anything but cells/downward growing cells/slots, because these need to be kept in sync.
      */
     public update(update: {
       element?: Element;
@@ -285,8 +285,16 @@ export namespace Table {
      * Cells are assumed to keep the same anchors, width, height and kind (header/data),
      * hence columnHasData and rowHasData don't change but slots need to be updated to the new version of their cell.
      */
-    public updateCells(cells: Iterable<Cell.Builder>): Builder {
-      return this._updateUnsafe({ cells })._updateSlots(cells);
+    public updateCells({
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({ cells, downwardGrowingCells })._updateSlots(
+        concat(cells, downwardGrowingCells)
+      );
     }
 
     /**
@@ -356,8 +364,8 @@ export namespace Table {
     }
 
     public addHeadersVariants(): Builder {
-      return this.updateCells(
-        List.from(
+      return this.updateCells({
+        cells: List.from(
           map(this.cells, (cell) => {
             let dataInColumns = false;
             let dataInRows = false;
@@ -374,8 +382,8 @@ export namespace Table {
 
             return cell.addHeaderVariant(dataInColumns, dataInRows);
           })
-        )
-      );
+        ),
+      });
     }
 
     /**
@@ -428,16 +436,16 @@ export namespace Table {
     }
 
     public assignHeaders(): Builder {
-      return this.updateCells(
-        map(this.cells, (cell) =>
+      return this.updateCells({
+        cells: map(this.cells, (cell) =>
           cell.assignHeaders(
             this.element,
             this.slot.bind(this),
             this.getAboveLeftGroupHeaders("row"),
             this.getAboveLeftGroupHeaders("column")
           )
-        )
-      );
+        ),
+      });
     }
 
     public equals(value: unknown): value is this {
@@ -636,7 +644,7 @@ export namespace Table {
           rowGroups: [...table.rowGroups].sort(compare),
           colGroups: [...table.colGroups].sort(compare),
         })
-        .updateCells([...table.cells].sort(compare));
+        .updateCells({ cells: [...table.cells].sort(compare) });
       return Ok.of(table);
     }
   }
