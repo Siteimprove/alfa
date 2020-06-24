@@ -522,7 +522,6 @@ export namespace Table {
 
           const row = Row.Builder.from(
             currentElement,
-            table.cells,
             table.downwardGrowingCells,
             yCurrent,
             table.width,

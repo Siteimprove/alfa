@@ -331,7 +331,6 @@ export namespace RowGroup {
       for (const tr of group.children().filter(isHtmlElementWithName("tr"))) {
         const row = Row.Builder.from(
           tr,
-          rowgroup.cells,
           rowgroup.downwardGrowingCells,
           yCurrent,
           rowgroup.width,

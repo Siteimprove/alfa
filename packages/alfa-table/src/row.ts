@@ -253,22 +253,17 @@ export namespace Row {
      * step 6
      */
     public skipIfCovered(
-      cells: List<Cell.Builder>,
       yCurrent: number,
+      // Non-growing cells from out of the current row that may cover it.
+      // These are essentially cells with a fixed rowspan from previous rows.
       externalCover: (x: number, y: number) => Option<Cell.Builder>
     ): Builder {
-      const covering = this.slot(this._xCurrent, yCurrent).or(externalCover(this._xCurrent, yCurrent));
+      const covering = this.slot(this._xCurrent, yCurrent).or(
+        externalCover(this._xCurrent, yCurrent)
+      );
 
-      if (
-        this._xCurrent < this._width &&
-        covering.isSome()
-        // cells
-        //   .concat(this._cells)
-        //   .concat(this._downwardGrowingCells)
-        //   .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
-      ) {
+      if (this._xCurrent < this._width && covering.isSome()) {
         return this._update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
-          cells,
           yCurrent,
           externalCover
         );
@@ -322,22 +317,17 @@ export namespace Row {
      */
     export function from(
       tr: Element,
-      cells: Iterable<Cell.Builder> = List.empty(),
+      // downward growing cells that extend into the row
       growingCells: Iterable<Cell.Builder> = List.empty(),
       yCurrent: number = 0,
       w: number = 0,
-      externalCover: (x: number, y: number) => Option<Cell.Builder> = (x, y) => None
+      // Non-growing cells from out of the current row that may cover it.
+      // These are essentially cells with a fixed rowspan from previous rows.
+      externalCover: (x: number, y: number) => Option<Cell.Builder> = (x, y) =>
+        None
     ): Result<Builder, string> {
       if (tr.name !== "tr") {
         return Err.of("This element is not a table row");
-      }
-
-      if (
-        some(cells, (cell) =>
-          some(growingCells, (growingCell) => cell.equals(growingCell))
-        )
-      ) {
-        return Err.of("Cells and growing cells must be disjoints");
       }
 
       const children = tr.children().filter(isHtmlElementWithName("th", "td"));
@@ -351,7 +341,7 @@ export namespace Row {
           (row, currentCell) =>
             row
               // 6 (Cells)
-              .skipIfCovered(List.from(cells), yCurrent, externalCover)
+              .skipIfCovered(yCurrent, externalCover)
               // 7
               .enlargeIfNeeded()
               // 8-14
