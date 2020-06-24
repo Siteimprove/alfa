@@ -4,12 +4,16 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
+import { ColumnGroup } from "./column-group";
 import { isHtmlElementWithName } from "./helpers";
+import { RowGroup } from "./row-group";
+// import { Builder } from "./table";
 
 const { compare } = Comparable;
 const { some } = Iterable;
@@ -25,6 +29,8 @@ const { some } = Iterable;
  * as long as they are all based in the same way…
  */
 export namespace Row {
+  import concat = Iterable.concat;
+
   export class Builder implements Equatable, Serializable {
     public static of(
       y: number,
@@ -33,9 +39,19 @@ export namespace Row {
       element: Element,
       cells: Iterable<Cell.Builder> = List.empty(),
       growing: Iterable<Cell.Builder> = List.empty(),
-      xCurrent: number = 0
+      xCurrent: number = 0,
+      slots: Array<Array<Option<Cell.Builder>>> = [[]]
     ): Builder {
-      return new Builder(y, width, height, element, cells, growing, xCurrent);
+      return new Builder(
+        y,
+        width,
+        height,
+        element,
+        cells,
+        growing,
+        xCurrent,
+        slots
+      );
     }
 
     private readonly _y: number;
@@ -45,6 +61,8 @@ export namespace Row {
     private readonly _element: Element;
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
+    // Cell covering a given slot, either from this._cells or this._downwardGrowingCells
+    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
 
     private constructor(
       y: number,
@@ -53,7 +71,8 @@ export namespace Row {
       element: Element,
       cells: Iterable<Cell.Builder>,
       growing: Iterable<Cell.Builder>,
-      xCurrent: number
+      xCurrent: number,
+      slots: Array<Array<Option<Cell.Builder>>>
     ) {
       this._y = y;
       this._xCurrent = xCurrent;
@@ -62,6 +81,7 @@ export namespace Row {
       this._element = element;
       this._cells = List.from(cells);
       this._downwardGrowingCells = List.from(growing);
+      this._slots = slots;
     }
 
     public get anchor(): { y: number } {
@@ -88,7 +108,14 @@ export namespace Row {
       return this._downwardGrowingCells;
     }
 
-    private _update({
+    public slot(x: number, y: number): Option<Cell.Builder> {
+      return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
+    }
+
+    /**
+     * Update by getting new values. Does not keep slots in sync, hence is highly unsafe. Use at your own risks.
+     */
+    private _updateUnsafe({
       y = this._y,
       xCurrent = this._xCurrent,
       width = this._width,
@@ -96,6 +123,7 @@ export namespace Row {
       element = this._element,
       cells = this._cells,
       downwardGrowingCells = this._downwardGrowingCells,
+      slots = this._slots,
     }: {
       y?: number;
       xCurrent?: number;
@@ -104,6 +132,7 @@ export namespace Row {
       element?: Element;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
+      slots?: Array<Array<Option<Cell.Builder>>>;
     }): Builder {
       return Builder.of(
         y,
@@ -112,25 +141,89 @@ export namespace Row {
         element,
         cells,
         downwardGrowingCells,
-        xCurrent
+        xCurrent,
+        slots
       );
     }
 
+    /**
+     * Update anything but cells/downward growing cells, because these need to be kept in sync with slots.
+     */
+    private _update(update: {
+      y?: number;
+      xCurrent?: number;
+      width?: number;
+      height?: number;
+      element?: Element;
+      slots?: Array<Array<Option<Cell.Builder>>>;
+    }): Builder {
+      return this._updateUnsafe(update);
+    }
+
+    /**
+     * Update cells, and resync slots
+     */
+    private _updateCells({
+      cells = List.empty(),
+      downwardGrowingCells = List.empty(),
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({ cells, downwardGrowingCells })._updateSlots(
+        concat(cells, downwardGrowingCells)
+      );
+    }
+
+    /**
+     * Add new cells, and sync slots with the new cells.
+     */
+    private _addCells({
+      cells = List.empty(),
+      downwardGrowingCells = List.empty(),
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({
+        cells: this._cells.concat(cells),
+        downwardGrowingCells: this._downwardGrowingCells.concat(
+          downwardGrowingCells
+        ),
+      })._updateSlots(concat(cells, downwardGrowingCells));
+    }
+
+    private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
+      for (const cell of cells) {
+        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+          if (this._slots[x] === undefined) {
+            this._slots[x] = [];
+          }
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            this._slots[x][y] = Some.of(cell);
+          }
+        }
+      }
+
+      return this; // for chaining
+    }
+
     public growCells(y: number): Builder {
-      return this._update({
+      return this._updateCells({
         downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
           cell.growDownward(y)
         ),
       });
     }
 
+    // TODO make private ×n (or remove)
     public addNonGrowingCell(cell: Cell.Builder): Builder {
-      return this._update({ cells: this._cells.append(cell) });
+      return this._addCells({ cells: [cell] });
     }
 
     public addGrowingCell(cell: Cell.Builder): Builder {
-      return this._update({
-        downwardGrowingCells: this._downwardGrowingCells.append(cell),
+      return this._addCells({
+        downwardGrowingCells: [cell],
       });
     }
 
@@ -196,7 +289,7 @@ export namespace Row {
     }
 
     public sort(): Builder {
-      return this._update({
+      return this._updateCells({
         cells: [...this._cells].sort(compare),
         downwardGrowingCells: [...this._downwardGrowingCells].sort(compare),
       });

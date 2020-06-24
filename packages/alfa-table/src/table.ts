@@ -222,7 +222,7 @@ export namespace Table {
     }
 
     /**
-     * Update by getting new value. Does not keep anything in sync, hence is highly unsafe. Use at your own risks.
+     * Update by getting new values. Does not keep anything in sync, hence is highly unsafe. Use at your own risks.
      */
     private _updateUnsafe({
       element = this.element,
