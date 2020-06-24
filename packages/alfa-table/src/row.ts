@@ -158,8 +158,8 @@ export namespace Row {
      * Update cells/downward growing cells, and resync slots with all (updated) cells
      */
     private _updateCells({
-      cells = List.empty(),
-      downwardGrowingCells = List.empty(),
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
     }: {
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
