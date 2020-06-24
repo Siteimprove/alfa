@@ -131,6 +131,7 @@ export namespace Table {
       width: number = 0,
       height: number = 0,
       cells: Iterable<Cell.Builder> = List.empty(),
+      downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
       slots: Array<Array<Option<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
       colGroups: Iterable<ColumnGroup> = List.empty(),
@@ -142,6 +143,7 @@ export namespace Table {
         width,
         height,
         cells,
+        downwardGrowingCells,
         slots,
         rowGroups,
         colGroups,
@@ -153,6 +155,7 @@ export namespace Table {
     // The product will always have empty cells list as it's stored here
     private readonly _table: Table;
     private readonly _cells: List<Cell.Builder>;
+    private readonly _downwardgrowingCells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
     private readonly _columnHasData: Array<boolean>; // Does column x contains a slot covered by a data cell?
     private readonly _rowHasData: Array<boolean>; // Does row y contains a slot covered by a data cell?
@@ -162,6 +165,7 @@ export namespace Table {
       width: number,
       height: number,
       cells: Iterable<Cell.Builder>,
+      downwardGrowingCells: Iterable<Cell.Builder>,
       slots: Array<Array<Option<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
       colGroups: Iterable<ColumnGroup>,
@@ -177,6 +181,7 @@ export namespace Table {
         colGroups
       );
       this._cells = List.from(cells);
+      this._downwardgrowingCells = List.from(downwardGrowingCells);
       this._slots = slots;
       this._columnHasData = columnHasData;
       this._rowHasData = rowHasData;
@@ -229,6 +234,7 @@ export namespace Table {
       width = this.width,
       height = this.height,
       cells = this._cells,
+      downwardGrowingCells = this._downwardgrowingCells,
       slots = this._slots,
       rowGroups = this.rowGroups,
       colGroups = this.colGroups,
@@ -239,6 +245,7 @@ export namespace Table {
       width?: number;
       height?: number;
       cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
@@ -250,6 +257,7 @@ export namespace Table {
         width,
         height,
         cells,
+        downwardGrowingCells,
         slots,
         rowGroups,
         colGroups,
