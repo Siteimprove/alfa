@@ -352,14 +352,12 @@ export namespace RowGroup {
         yCurrent++;
       }
       // 4, ending the row group
-      // ending row group 1
-      growingCellsList = growingCellsList.map((cell) =>
-        cell.growDownward(rowgroup.rowgroup.height - 1)
-      );
       // ending row group 2
       // When emptying the growing cells list, we need to finally add them to the group.
       rowgroup = rowgroup.addCells({
-        cells: growingCellsList,
+        cells: growingCellsList
+          // ending row group 1
+          .map((cell) => cell.growDownward(rowgroup.rowgroup.height - 1)),
         // cells: map(rowgroup.downwardGrowingCells, (cell) =>
         //   cell.growDownward(rowgroup.rowgroup.height - 1)
         // ),

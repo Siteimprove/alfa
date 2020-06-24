@@ -529,14 +529,13 @@ export namespace Table {
 
         // 14
         // Ending row group 1
-        // Slots are NOT in sync after this step.
-        growingCellsList = growingCellsList.map((cell) =>
-          cell.growDownward(table.height - 1)
-        );
         yCurrent = table.height;
         // Ending row group 2
-        // Slots are sync again after this step.
-        table = table.addCells(growingCellsList);
+        table = table.addCells(
+          growingCellsList
+            // Ending row group 1
+            .map((cell) => cell.growDownward(table.height - 1))
+        );
         growingCellsList = [];
 
         if (currentElement.name === "tfoot") {
