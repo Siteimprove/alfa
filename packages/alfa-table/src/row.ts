@@ -213,21 +213,11 @@ export namespace Row {
       });
     }
 
-    // TODO make private ×n (or remove)
-    public addNonGrowingCell(cell: Cell.Builder): Builder {
-      return this._addCells({ cells: [cell] });
-    }
-
-    public addGrowingCell(cell: Cell.Builder): Builder {
+    private _addCell(cell: Cell.Builder): Builder {
       return this._addCells({
-        downwardGrowingCells: [cell],
+        cells: cell.downwardGrowing ? [] : [cell],
+        downwardGrowingCells: cell.downwardGrowing ? [cell] : [],
       });
-    }
-
-    public addCell(cell: Cell.Builder): Builder {
-      return cell.downwardGrowing
-        ? this.addGrowingCell(cell)
-        : this.addNonGrowingCell(cell);
     }
 
     public addCellFromElement(
@@ -244,7 +234,7 @@ export namespace Row {
             height: Math.max(this.height, cell.height),
           })
             // 14
-            .addCell(cell)
+            ._addCell(cell)
       );
       // 13
       // Double coverage check made at the end of table building to de-entangle code
@@ -262,17 +252,25 @@ export namespace Row {
      * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
      * step 6
      */
-    public skipIfCovered(cells: List<Cell.Builder>, yCurrent: number): Builder {
+    public skipIfCovered(
+      cells: List<Cell.Builder>,
+      yCurrent: number,
+      externalCover: (x: number, y: number) => Option<Cell.Builder>
+    ): Builder {
+      const covering = this.slot(this._xCurrent, yCurrent).or(externalCover(this._xCurrent, yCurrent));
+
       if (
         this._xCurrent < this._width &&
-        cells
-          .concat(this._cells)
-          .concat(this._downwardGrowingCells)
-          .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
+        covering.isSome()
+        // cells
+        //   .concat(this._cells)
+        //   .concat(this._downwardGrowingCells)
+        //   .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
       ) {
         return this._update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
           cells,
-          yCurrent
+          yCurrent,
+          externalCover
         );
       } else {
         return this;
@@ -327,7 +325,8 @@ export namespace Row {
       cells: Iterable<Cell.Builder> = List.empty(),
       growingCells: Iterable<Cell.Builder> = List.empty(),
       yCurrent: number = 0,
-      w: number = 0
+      w: number = 0,
+      externalCover: (x: number, y: number) => Option<Cell.Builder> = (x, y) => None
     ): Result<Builder, string> {
       if (tr.name !== "tr") {
         return Err.of("This element is not a table row");
@@ -352,7 +351,7 @@ export namespace Row {
           (row, currentCell) =>
             row
               // 6 (Cells)
-              .skipIfCovered(List.from(cells), yCurrent)
+              .skipIfCovered(List.from(cells), yCurrent, externalCover)
               // 7
               .enlargeIfNeeded()
               // 8-14

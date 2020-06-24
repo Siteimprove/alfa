@@ -334,7 +334,8 @@ export namespace RowGroup {
           rowgroup.cells,
           rowgroup.downwardGrowingCells,
           yCurrent,
-          rowgroup.width
+          rowgroup.width,
+          rowgroup.slot.bind(rowgroup)
         ).get();
 
         rowgroup = rowgroup

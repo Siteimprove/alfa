@@ -525,7 +525,8 @@ export namespace Table {
             table.cells,
             table.downwardGrowingCells,
             yCurrent,
-            table.width
+            table.width,
+            table.slot.bind(table)
           ).get();
           table = table
             .update({
