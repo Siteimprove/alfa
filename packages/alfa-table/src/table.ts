@@ -134,9 +134,7 @@ export namespace Table {
       downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
       slots: Array<Array<Option<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
-      colGroups: Iterable<ColumnGroup> = List.empty(),
-      columnHasData: Array<boolean> = [],
-      rowHasData: Array<boolean> = []
+      colGroups: Iterable<ColumnGroup> = List.empty()
     ): Builder {
       return new Builder(
         element,
@@ -146,9 +144,7 @@ export namespace Table {
         downwardGrowingCells,
         slots,
         rowGroups,
-        colGroups,
-        columnHasData,
-        rowHasData
+        colGroups
       );
     }
 
@@ -157,8 +153,6 @@ export namespace Table {
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
-    private readonly _columnHasData: Array<boolean>; // Does column x contains a slot covered by a data cell?
-    private readonly _rowHasData: Array<boolean>; // Does row y contains a slot covered by a data cell?
 
     private constructor(
       element: Element,
@@ -168,9 +162,7 @@ export namespace Table {
       downwardGrowingCells: Iterable<Cell.Builder>,
       slots: Array<Array<Option<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
-      colGroups: Iterable<ColumnGroup>,
-      columnHasData: Array<boolean>,
-      rowHasData: Array<boolean>
+      colGroups: Iterable<ColumnGroup>
     ) {
       this._table = Table.of(
         element,
@@ -183,8 +175,6 @@ export namespace Table {
       this._cells = List.from(cells);
       this._downwardGrowingCells = List.from(downwardGrowingCells);
       this._slots = slots;
-      this._columnHasData = columnHasData;
-      this._rowHasData = rowHasData;
     }
 
     public get cells(): Iterable<Cell.Builder> {
@@ -238,8 +228,6 @@ export namespace Table {
       slots = this._slots,
       rowGroups = this.rowGroups,
       colGroups = this.colGroups,
-      columnHasData = this._columnHasData,
-      rowHasData = this._rowHasData,
     }: {
       element?: Element;
       width?: number;
@@ -249,8 +237,6 @@ export namespace Table {
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
-      columnHasData?: Array<boolean>;
-      rowHasData?: Array<boolean>;
     }): Builder {
       return Builder.of(
         element,
@@ -260,9 +246,7 @@ export namespace Table {
         downwardGrowingCells,
         slots,
         rowGroups,
-        colGroups,
-        columnHasData,
-        rowHasData
+        colGroups
       );
     }
 
@@ -307,25 +291,11 @@ export namespace Table {
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
     }): Builder {
-      for (const cell of concat(cells, downwardGrowingCells)) {
-        if (cell.kind === Kind.Data) {
-          // If this is a data cell, update the memory of column/row with data cells.
-          for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-            this._columnHasData[x] = true;
-          }
-          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._rowHasData[y] = true;
-          }
-        }
-      }
-
       return this._updateUnsafe({
         cells: this._cells.concat(cells),
         downwardGrowingCells: this._downwardGrowingCells.concat(
           downwardGrowingCells
         ),
-        columnHasData: this._columnHasData,
-        rowHasData: this._rowHasData,
       })._updateSlots(cells);
     }
 
@@ -373,18 +343,34 @@ export namespace Table {
     }
 
     public addHeadersVariants(): Builder {
+      // We need to know which column/row contains at least one data cell. Computing this once and for all now.
+      const columnHasData: Array<boolean> = [];
+      const rowHasData: Array<boolean> = [];
+      for (const cell of this._cells) {
+        if (cell.kind === Kind.Data) {
+          // If this is a data cell, update the memory of column/row with data cells.
+          for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+            columnHasData[x] = true;
+          }
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            rowHasData[y] = true;
+          }
+        }
+      }
+
       return this.updateCells({
         cells: List.from(
           map(this.cells, (cell) => {
+            // We need to know if the cell is covering a slot with a data cell in the same column/row
             let dataInColumns = false;
             let dataInRows = false;
             for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-              if (this._columnHasData[x] ?? false) {
+              if (columnHasData[x] ?? false) {
                 dataInColumns = true;
               }
             }
             for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-              if (this._rowHasData[y] ?? false) {
+              if (rowHasData[y] ?? false) {
                 dataInRows = true;
               }
             }
@@ -545,7 +531,7 @@ export namespace Table {
               height: Math.max(table.height, yCurrent + 1),
               width: Math.max(table.width, row.width),
             })
-            .addCells({cells: row.cells});
+            .addCells({ cells: row.cells });
           // row processing steps 4/16
           yCurrent++;
 
