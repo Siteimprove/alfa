@@ -10,10 +10,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { ColumnGroup } from "./column-group";
 import { isHtmlElementWithName } from "./helpers";
-import { RowGroup } from "./row-group";
-// import { Builder } from "./table";
 
 const { compare } = Comparable;
 const { some } = Iterable;

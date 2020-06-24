@@ -18,7 +18,7 @@ import { RowGroup } from "./row-group";
 import { Scope } from "./scope";
 
 const { compare } = Comparable;
-const { filter, map, reduce, some } = Iterable;
+const { filter, map, some } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
