@@ -186,7 +186,7 @@ export namespace RowGroup {
     /**
      * Update by getting new values. Does not keep slots in sync, hence is highly unsafe. Use at your own risks.
      */
-    public _updateUnsafe({
+    private _updateUnsafe({
       y = this._rowGroup.anchor.y,
       width = this._width,
       height = this._rowGroup.height,
@@ -230,8 +230,8 @@ export namespace RowGroup {
      * Update cells/downward growing cells, and resync slots with all (updated) cells
      */
     public updateCells({
-      cells = List.empty(),
-      downwardGrowingCells = List.empty(),
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
     }: {
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
@@ -339,7 +339,7 @@ export namespace RowGroup {
 
         rowgroup = rowgroup
           .addCells({ cells: row.cells })
-          ._updateUnsafe({ downwardGrowingCells: row.downwardGrowingCells })
+          .updateCells({ downwardGrowingCells: row.downwardGrowingCells })
           .update({
             height: Math.max(rowgroup.height, yCurrent + row.height),
             width: Math.max(rowgroup.width, row.width),
