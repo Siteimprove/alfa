@@ -300,8 +300,14 @@ export namespace Table {
     /**
      * Add new cells, sync slots with the new cells and update columnHasData and rowHasData.
      */
-    public addCells(cells: Iterable<Cell.Builder>): Builder {
-      for (const cell of cells) {
+    public addCells({
+      cells = List.empty(),
+      downwardGrowingCells = List.empty(),
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      for (const cell of concat(cells, downwardGrowingCells)) {
         if (cell.kind === Kind.Data) {
           // If this is a data cell, update the memory of column/row with data cells.
           for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
@@ -315,6 +321,9 @@ export namespace Table {
 
       return this._updateUnsafe({
         cells: this._cells.concat(cells),
+        downwardGrowingCells: this._downwardGrowingCells.concat(
+          downwardGrowingCells
+        ),
         columnHasData: this._columnHasData,
         rowHasData: this._rowHasData,
       })._updateSlots(cells);
@@ -355,7 +364,7 @@ export namespace Table {
                 rowGroups: List.from(this.rowGroups).append(rowGroup.rowgroup),
               })
                 // merge in new cells
-                .addCells(rowGroup.cells)
+                .addCells({ cells: rowGroup.cells })
             );
           } else {
             return this;
@@ -536,7 +545,7 @@ export namespace Table {
               height: Math.max(table.height, yCurrent + 1),
               width: Math.max(table.width, row.width),
             })
-            .addCells(row.cells);
+            .addCells({cells: row.cells});
           // row processing steps 4/16
           yCurrent++;
 
@@ -547,11 +556,11 @@ export namespace Table {
         // Ending row group 1
         yCurrent = table.height;
         // Ending row group 2
-        table = table.addCells(
-          growingCellsList
+        table = table.addCells({
+          cells: growingCellsList
             // Ending row group 1
-            .map((cell) => cell.growDownward(table.height - 1))
-        );
+            .map((cell) => cell.growDownward(table.height - 1)),
+        });
         growingCellsList = [];
 
         if (currentElement.name === "tfoot") {
