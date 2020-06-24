@@ -181,6 +181,10 @@ export namespace Table {
       return this._cells;
     }
 
+    public get downwardGrowingCells(): Iterable<Cell.Builder> {
+      return this._downwardGrowingCells;
+    }
+
     public get width(): number {
       return this._table.width;
     }
@@ -490,8 +494,6 @@ export namespace Table {
       let yCurrent = 0;
 
       // 11
-      let growingCellsList: Array<Cell.Builder> = [];
-
       let processCG = true;
       for (const currentElement of children) {
         // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
@@ -521,16 +523,16 @@ export namespace Table {
           const row = Row.Builder.from(
             currentElement,
             table.cells,
-            growingCellsList,
+            table.downwardGrowingCells,
             yCurrent,
             table.width
           ).get();
-          growingCellsList = [...row.downwardGrowingCells];
           table = table
             .update({
               height: Math.max(table.height, yCurrent + 1),
               width: Math.max(table.width, row.width),
             })
+            .updateCells({ downwardGrowingCells: row.downwardGrowingCells })
             .addCells({ cells: row.cells });
           // row processing steps 4/16
           yCurrent++;
@@ -542,12 +544,15 @@ export namespace Table {
         // Ending row group 1
         yCurrent = table.height;
         // Ending row group 2
-        table = table.addCells({
-          cells: growingCellsList
-            // Ending row group 1
-            .map((cell) => cell.growDownward(table.height - 1)),
-        });
-        growingCellsList = [];
+        table = table
+          .addCells({
+            cells: map(
+              table.downwardGrowingCells,
+              // Ending row group 1
+              (cell) => cell.growDownward(table.height - 1)
+            ),
+          })
+          .updateCells({ downwardGrowingCells: [] });
 
         if (currentElement.name === "tfoot") {
           // 15 (add to list)
