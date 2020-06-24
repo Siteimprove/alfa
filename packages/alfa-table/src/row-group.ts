@@ -211,11 +211,7 @@ export namespace RowGroup {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
      */
     export function from(group: Element): Result<Builder, string> {
-      if (
-        group.name !== "tfoot" &&
-        group.name !== "tbody" &&
-        group.name !== "thead"
-      ) {
+      if (!Element.hasName("tfoot", "tbody", "thead")(group)) {
         return Err.of("This element is not a row group");
       }
 
