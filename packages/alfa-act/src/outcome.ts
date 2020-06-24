@@ -123,7 +123,8 @@ export namespace Outcome {
           "earl:info": this._expectations
             .toArray()
             .reduce(
-              (message, [, expectation]) => message + "\n" + expectation.get(),
+              (message, [, expectation]) =>
+                message + "\n" + expectation.get().message,
               ""
             )
             .trim(),
@@ -223,7 +224,7 @@ export namespace Outcome {
             .toArray()
             .reduce((message, [, expectation]) => {
               if (expectation.isErr()) {
-                message += "\n" + expectation.getErr();
+                message += "\n" + expectation.getErr().message;
               }
 
               return message;
