@@ -13,7 +13,7 @@ import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
 
 const { compare } = Comparable;
-const { some } = Iterable;
+const { concat, some } = Iterable;
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -26,8 +26,6 @@ const { some } = Iterable;
  * as long as they are all based in the same way…
  */
 export namespace Row {
-  import concat = Iterable.concat;
-
   export class Builder implements Equatable, Serializable {
     public static of(
       y: number,
