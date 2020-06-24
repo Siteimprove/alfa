@@ -142,7 +142,7 @@ export namespace Row {
     }
 
     /**
-     * Update anything but cells/downward growing cells, because these need to be kept in sync with slots.
+     * Update anything but cells/downward growing cells/slots, because these need to be kept in sync.
      */
     private _update(update: {
       y?: number;
@@ -150,13 +150,12 @@ export namespace Row {
       width?: number;
       height?: number;
       element?: Element;
-      slots?: Array<Array<Option<Cell.Builder>>>;
     }): Builder {
       return this._updateUnsafe(update);
     }
 
     /**
-     * Update cells, and resync slots
+     * Update cells/downward growing cells, and resync slots with all (updated) cells
      */
     private _updateCells({
       cells = List.empty(),
@@ -171,7 +170,7 @@ export namespace Row {
     }
 
     /**
-     * Add new cells, and sync slots with the new cells.
+     * Add new cells/downward growing cells, and sync slots with the new cells only.
      */
     private _addCells({
       cells = List.empty(),
@@ -188,6 +187,9 @@ export namespace Row {
       })._updateSlots(concat(cells, downwardGrowingCells));
     }
 
+    /**
+     * Resync slots with a given list of cells. Caller need to ensure that all updated/added cells are passed.
+     */
     private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
       for (const cell of cells) {
         for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {

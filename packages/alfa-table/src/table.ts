@@ -259,7 +259,7 @@ export namespace Table {
     }
 
     /**
-     * Update anything but cells, because cells need to be kept in sync.
+     * Update anything but cells/slots, because they need to be kept in sync.
      */
     public update(update: {
       element?: Element;
@@ -304,6 +304,9 @@ export namespace Table {
       })._updateSlots(cells);
     }
 
+    /**
+     * Resync slots with a given list of cells. Caller need to ensure that all updated/added cells are passed.
+     */
     private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
       for (const cell of cells) {
         for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
