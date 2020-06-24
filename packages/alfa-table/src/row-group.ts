@@ -359,7 +359,10 @@ export namespace RowGroup {
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
       return Ok.of(
-        rowgroup.updateCells({ cells: [...rowgroup.cells].sort(compare) })
+        rowgroup.updateCells({
+          cells: [...rowgroup.cells].sort(compare),
+          downwardGrowingCells: [],
+        })
       );
     }
   }
