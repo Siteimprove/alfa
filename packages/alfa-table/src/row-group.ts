@@ -215,7 +215,7 @@ export namespace RowGroup {
     }
 
     /**
-     * Update anything but cells/downward growing cells, because these need to be kept in sync with slots.
+     * Update anything but cells/downward growing cells/slots, because these need to be kept in sync.
      */
     public update(update: {
       y?: number;
