@@ -384,44 +384,24 @@ export namespace Cell {
      * see @https://html.spec.whatwg.org/multipage/tables.html#column-header
      * and following
      */
-    private _isCoveringArea(
-      x: number,
-      y: number,
-      w: number,
-      h: number
-    ): boolean {
-      for (let col = x; col < x + w; col++) {
-        for (let row = y; row < y + h; row++) {
-          if (this.isCovering(col, row)) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    public isDataCoveringArea(
-      x: number,
-      y: number,
-      w: number,
-      h: number
-    ): boolean {
-      return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
-    }
-
     private _scopeToState(
       scope: Scope,
-      existsDataCellCoveringArea: (
-        x: number,
-        y: number,
-        w: number,
-        h: number
-      ) => boolean,
-      width: number,
-      height: number,
       columnHasData: Array<boolean>,
       rowHasData: Array<boolean>
     ): Option<Scope.Resolved> {
+      let dataInColumns = false;
+      let dataInRows = false;
+      for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
+        if (columnHasData[x] ?? false) {
+          dataInColumns = true;
+        }
+      }
+      for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
+        if (rowHasData[y] ?? false) {
+          dataInRows = true;
+        }
+      }
+
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
         case Scope.ColumnGroup:
@@ -440,14 +420,9 @@ export namespace Cell {
         case Scope.Auto:
           // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
           // means "for any x" or just for the x of the cell. Using "for all x"
-          if (
-            // this.anchor.y + this.height-1 <= topmostDataCell
-            existsDataCellCoveringArea(0, this.anchor.y, width, this.height)
-          ) {
+          if (dataInRows) {
             // there are *SOME* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-            if (
-              existsDataCellCoveringArea(this.anchor.x, 0, this.width, height)
-            ) {
+            if (dataInColumns) {
               // there are *SOME* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
               return None;
             } else {
@@ -462,27 +437,12 @@ export namespace Cell {
     }
 
     public addHeaderVariant(
-      existsDataCellCoveringArea: (
-        x: number,
-        y: number,
-        w: number,
-        h: number
-      ) => boolean,
-      width: number,
-      height: number,
       columnHasData: Array<boolean>,
       rowHasData: Array<boolean>
     ): Builder {
       return this._update({
         variant: this._scope.flatMap((scope) =>
-          this._scopeToState(
-            scope,
-            existsDataCellCoveringArea,
-            width,
-            height,
-            columnHasData,
-            rowHasData
-          )
+          this._scopeToState(scope, columnHasData, rowHasData)
         ),
       });
     }

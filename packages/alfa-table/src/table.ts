@@ -291,7 +291,7 @@ export namespace Table {
             this._columnHasData[x] = true;
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._columnHasData[y] = true;
+            this._rowHasData[y] = true;
           }
         }
       }
@@ -343,26 +343,11 @@ export namespace Table {
         });
     }
 
-    public hasDataCellCoveringArea(
-      x: number,
-      y: number,
-      w: number,
-      h: number
-    ): boolean {
-      return some(this.cells, (cell) => cell.isDataCoveringArea(x, y, w, h));
-    }
-
     public addHeadersVariants(): Builder {
       return this.updateCells(
         List.from(
           map(this.cells, (cell) =>
-            cell.addHeaderVariant(
-              this.hasDataCellCoveringArea.bind(this),
-              this.width,
-              this.height,
-              this._columnHasData,
-              this._rowHasData
-            )
+            cell.addHeaderVariant(this._columnHasData, this._rowHasData)
           )
         )
       );
