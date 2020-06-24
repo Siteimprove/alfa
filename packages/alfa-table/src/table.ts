@@ -361,9 +361,8 @@ export namespace Table {
               }
             }
 
-            return cell.addHeaderVariant(dataInColumns, dataInRows)
-            }
-          )
+            return cell.addHeaderVariant(dataInColumns, dataInRows);
+          })
         )
       );
     }
@@ -422,7 +421,7 @@ export namespace Table {
         map(this.cells, (cell) =>
           cell.assignHeaders(
             this.element,
-            (x: number, y: number) => this._slots[x][y],
+            this.slot.bind(this),
             this.getAboveLeftGroupHeaders("row"),
             this.getAboveLeftGroupHeaders("column")
           )
