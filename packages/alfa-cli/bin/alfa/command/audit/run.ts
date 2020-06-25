@@ -26,7 +26,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const formatter = Formatter.load<Input, Target, Question>(flags.format);
+  const formatter = await Formatter.load<Input, Target, Question>(flags.format);
 
   if (formatter.isErr()) {
     return formatter;
