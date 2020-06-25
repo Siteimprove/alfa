@@ -138,6 +138,10 @@ export namespace RuleTree {
       children: Array<RuleTree.Node>,
       parent: Option<Node>
     ): RuleTree.Node {
+      if (parent.some((parent) => parent._selector === selector)) {
+        return parent.get();
+      }
+
       for (const child of children) {
         if (child._selector.equals(selector)) {
           return this.add(
