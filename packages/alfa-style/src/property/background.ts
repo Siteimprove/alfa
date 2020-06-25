@@ -34,6 +34,9 @@ export namespace Background {
     export type Computed = RGB<Percentage, Percentage> | Current | System;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-backgrounds/#background-color
+   */
   export const Color: Property<
     Color.Specified,
     Color.Computed
@@ -67,6 +70,9 @@ export namespace Background {
     >;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-backgrounds/#background-image
+   */
   export const Image: Property<Image.Specified, Image.Computed> = Property.of(
     List.of([Keyword.of("none")], ", "),
     map(
