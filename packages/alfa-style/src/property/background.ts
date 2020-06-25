@@ -15,6 +15,7 @@ import {
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Record } from "@siteimprove/alfa-record";
 
 import * as css from "@siteimprove/alfa-css";
 
@@ -90,6 +91,19 @@ export namespace Background {
           ", "
         )
       )
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-backgrounds/#background
+   */
+  export const Shorthand = Property.Shorthand.of(
+    ["background-image", "background-color"],
+    map(Color.parse, (color) => {
+      return Record.of({
+        "background-color": color,
+        "background-image": Image.initial as Image.Specified,
+      });
+    })
   );
 }
 
