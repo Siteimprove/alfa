@@ -1,4 +1,5 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
+
 import { Predicate } from "./predicate";
 
 export function some<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
