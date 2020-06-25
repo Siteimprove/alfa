@@ -605,47 +605,45 @@ export namespace Table {
         table = table.addRowGroupFromElement(tfoot, yCurrent).get();
         yCurrent = table.height;
       }
-      // 20
+      // 20, 21
       // Of course, errors are more or less caught and repaired by browsers.
       // Note that having a rowspan that extends out of the row group is not a table error per se!
-      // checking for rows
-      // TODO: optimize. don't some on cells
-      for (let row = 0; row < table.height; row++) {
-        let rowCovered = false;
-        for (let col = 0; !rowCovered && col < table.width; col++) {
-          rowCovered =
-            rowCovered ||
-            some(
-              table.cells,
-              (cell) => cell.anchor.x === col && cell.anchor.y === row
-            );
+
+      // Is this slot covered? If more than once => error.
+      const slotCovering: Array<Array<boolean>> = [[]];
+      // Does this row/column have a cell anchored in it?
+      const rowCovering: Array<boolean> = [];
+      const columnCovering: Array<boolean> = [];
+
+      for (const cell of table.cells) {
+        columnCovering[cell.anchor.x] = true;
+        rowCovering[cell.anchor.y] = true;
+
+        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            // Checking for row forming algorithm step 13 (slot covered twice)
+            if (slotCovering?.[x]?.[y] ?? false) {
+              return Err.of(`Slot (${x}, ${y}) is covered twice`);
+            } else {
+              if (slotCovering[x] === undefined) {
+                slotCovering[x] = [];
+              }
+              slotCovering[x][y] = true;
+            }
+          }
         }
-        if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`);
+      }
+
+      // checking for rows
+      for (let y = 0; y < table.height; y++) {
+        if (!(rowCovering[y] ?? false)) {
+          return Err.of(`row ${y} has no cell anchored in it`);
+        }
       }
       // checking for cols
-      // TODO: optimize. don't some on cells
-      for (let col = 0; col < table.width; col++) {
-        let colCovered = false;
-        for (let row = 0; !colCovered && row < table.height; row++) {
-          colCovered =
-            colCovered ||
-            some(
-              table.cells,
-              (cell) => cell.anchor.x === col && cell.anchor.y === row
-            );
-        }
-        if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
-      }
-      // TODO: optimize. Don't filter on cells.
-      // Checking for row forming algorithm step 13 (slot covered twice)
       for (let x = 0; x < table.width; x++) {
-        for (let y = 0; y < table.height; y++) {
-          if (
-            List.from(table.cells).filter((cell) => cell.isCovering(x, y))
-              .size > 1
-          ) {
-            return Err.of(`Slot (${x}, ${y}) is covered twice`);
-          }
+        if (!(columnCovering[x] ?? false)) {
+          return Err.of(`col ${x} has no cell anchored in it`);
         }
       }
 
@@ -663,7 +661,7 @@ export namespace Table {
           slots[x].push(table.slot(x, y));
         }
       }
-      
+
       table = table
         .update({ slots })
         // Second, we need to compute all headers variant.
