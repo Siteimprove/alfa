@@ -258,7 +258,19 @@ export namespace Cell {
       this._implicitHeaders = List.from(implicitHeaders);
     }
 
-    private _update(update: {
+    private _update({
+      kind = this.kind,
+      x = this.anchor.x,
+      y = this.anchor.y,
+      width = this.width,
+      height = this.height,
+      element = this.element,
+      variant = this.variant,
+      downwardGrowing = this._downwardGrowing,
+      scope = this.scope,
+      explicitHeaders = this._explicitHeaders,
+      implicitHeaders = this._implicitHeaders,
+    }: {
       kind?: Cell.Kind;
       x?: number;
       y?: number;
@@ -272,23 +284,17 @@ export namespace Cell {
       implicitHeaders?: Iterable<Element>;
     }): Builder {
       return Builder.of(
-        update.kind !== undefined ? update.kind : this.kind,
-        update.x !== undefined ? update.x : this.anchor.x,
-        update.y !== undefined ? update.y : this.anchor.y,
-        update.width !== undefined ? update.width : this.width,
-        update.height !== undefined ? update.height : this.height,
-        update.element !== undefined ? update.element : this.element,
-        update.variant !== undefined ? update.variant : this.variant,
-        update.downwardGrowing !== undefined
-          ? update.downwardGrowing
-          : this._downwardGrowing,
-        update.scope !== undefined ? update.scope : this.scope,
-        update.explicitHeaders !== undefined
-          ? update.explicitHeaders
-          : this._explicitHeaders,
-        update.implicitHeaders !== undefined
-          ? update.implicitHeaders
-          : this._implicitHeaders
+        kind,
+        x,
+        y,
+        width,
+        height,
+        element,
+        variant,
+        downwardGrowing,
+        scope,
+        explicitHeaders,
+        implicitHeaders
       );
     }
 
@@ -378,41 +384,10 @@ export namespace Cell {
      * see @https://html.spec.whatwg.org/multipage/tables.html#column-header
      * and following
      */
-    private _isCoveringArea(
-      x: number,
-      y: number,
-      w: number,
-      h: number
-    ): boolean {
-      for (let col = x; col < x + w; col++) {
-        for (let row = y; row < y + h; row++) {
-          if (this.isCovering(col, row)) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    public isDataCoveringArea(
-      x: number,
-      y: number,
-      w: number,
-      h: number
-    ): boolean {
-      return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
-    }
-
     private _scopeToState(
       scope: Scope,
-      existsDataCellCoveringArea: (
-        x: number,
-        y: number,
-        w: number,
-        h: number
-      ) => boolean,
-      width: number,
-      height: number
+      dataInColumns: boolean, // Is there a data cell in the columns covered by this?
+      dataInRows: boolean // Is there a data cell in the rows covered by this?
     ): Option<Scope.Resolved> {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
@@ -432,13 +407,9 @@ export namespace Cell {
         case Scope.Auto:
           // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
           // means "for any x" or just for the x of the cell. Using "for all x"
-          if (
-            existsDataCellCoveringArea(0, this.anchor.y, width, this.height)
-          ) {
+          if (dataInRows) {
             // there are *SOME* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-            if (
-              existsDataCellCoveringArea(this.anchor.x, 0, this.width, height)
-            ) {
+            if (dataInColumns) {
               // there are *SOME* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
               return None;
             } else {
@@ -453,18 +424,12 @@ export namespace Cell {
     }
 
     public addHeaderVariant(
-      existsDataCellCoveringArea: (
-        x: number,
-        y: number,
-        w: number,
-        h: number
-      ) => boolean,
-      width: number,
-      height: number
+      dataInColumns: boolean, // Is there a data cell in the columns covered by this?
+      dataInRows: boolean // Is there a data cell in the rows covered by this?
     ): Builder {
       return this._update({
         variant: this._scope.flatMap((scope) =>
-          this._scopeToState(scope, existsDataCellCoveringArea, width, height)
+          this._scopeToState(scope, dataInColumns, dataInRows)
         ),
       });
     }

@@ -56,10 +56,6 @@ export class Style implements Serializable {
       const { name, value } = declaration;
 
       if (Property.isName(name)) {
-        if (this._cascaded.has(name)) {
-          continue;
-        }
-
         const property = Property.get(name);
 
         for (const result of parse(property, value)) {
@@ -72,10 +68,6 @@ export class Style implements Serializable {
 
         for (const result of parseShorthand(shorthand, value)) {
           for (const [name, value] of result) {
-            if (this._cascaded.has(name)) {
-              continue;
-            }
-
             this._cascaded.set(name, Value.of(value, Option.of(declaration)));
           }
         }

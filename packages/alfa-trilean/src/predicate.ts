@@ -3,7 +3,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 
 import { Trilean } from "./trilean";
 
-export type Predicate<T, A extends Array<unknown> = Array<unknown>> = (
+export type Predicate<T, A extends Array<unknown> = []> = (
   value: T,
   ...args: A
 ) => Trilean;

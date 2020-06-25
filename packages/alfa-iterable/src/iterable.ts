@@ -50,7 +50,7 @@ export namespace Iterable {
 
   export function* flatMap<T, U = T>(
     iterable: Iterable<T>,
-    mapper: Mapper<T, Iterable<U>>
+    mapper: Mapper<T, Iterable<U>, [number]>
   ): Iterable<U> {
     let index = 0;
 
