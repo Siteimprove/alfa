@@ -134,7 +134,9 @@ export namespace Table {
       downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
       slots: Array<Array<Option<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
-      colGroups: Iterable<ColumnGroup> = List.empty()
+      colGroups: Iterable<ColumnGroup> = List.empty(),
+      rowGroupHeaders: Iterable<Cell.Builder> = List.empty(),
+      columnGroupHeaders: Iterable<Cell.Builder> = List.empty()
     ): Builder {
       return new Builder(
         element,
@@ -144,7 +146,9 @@ export namespace Table {
         downwardGrowingCells,
         slots,
         rowGroups,
-        colGroups
+        colGroups,
+        rowGroupHeaders,
+        columnGroupHeaders
       );
     }
 
@@ -153,6 +157,8 @@ export namespace Table {
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
+    private readonly _rowGroupHeaders: List<Cell.Builder>;
+    private readonly _columnGroupHeaders: List<Cell.Builder>;
 
     private constructor(
       element: Element,
@@ -162,7 +168,9 @@ export namespace Table {
       downwardGrowingCells: Iterable<Cell.Builder>,
       slots: Array<Array<Option<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
-      colGroups: Iterable<ColumnGroup>
+      colGroups: Iterable<ColumnGroup>,
+      rowGroupHeaders: Iterable<Cell.Builder>,
+      columnGroupHeaders: Iterable<Cell.Builder>
     ) {
       this._table = Table.of(
         element,
@@ -175,6 +183,8 @@ export namespace Table {
       this._cells = List.from(cells);
       this._downwardGrowingCells = List.from(downwardGrowingCells);
       this._slots = slots;
+      this._rowGroupHeaders = List.from(rowGroupHeaders);
+      this._columnGroupHeaders = List.from(columnGroupHeaders);
     }
 
     public get cells(): Iterable<Cell.Builder> {
@@ -232,6 +242,8 @@ export namespace Table {
       slots = this._slots,
       rowGroups = this.rowGroups,
       colGroups = this.colGroups,
+      rowGroupHeaders = this._rowGroupHeaders,
+      columnGroupHeaders = this._columnGroupHeaders,
     }: {
       element?: Element;
       width?: number;
@@ -241,6 +253,8 @@ export namespace Table {
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
+      rowGroupHeaders?: Iterable<Cell.Builder>;
+      columnGroupHeaders?: Iterable<Cell.Builder>;
     }): Builder {
       return Builder.of(
         element,
@@ -250,7 +264,9 @@ export namespace Table {
         downwardGrowingCells,
         slots,
         rowGroups,
-        colGroups
+        colGroups,
+        rowGroupHeaders,
+        columnGroupHeaders
       );
     }
 
@@ -264,6 +280,8 @@ export namespace Table {
       slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
+      rowGroupHeaders?: Iterable<Cell.Builder>;
+      columnGroupHeaders?: Iterable<Cell.Builder>;
     }): Builder {
       return this._updateUnsafe(update);
     }
@@ -385,10 +403,25 @@ export namespace Table {
       });
     }
 
+    public findGroupHeaders(): Builder {
+      const rowGroupHeaders: Array<Cell.Builder> = [];
+      const columnGroupHeaders: Array<Cell.Builder> = [];
+
+      for (const cell of this._cells) {
+        if (cell.variant.equals(Some.of(Scope.RowGroup))) {
+          rowGroupHeaders.push(cell);
+        }
+        if (cell.variant.equals(Some.of(Scope.ColumnGroup))) {
+          columnGroupHeaders.push(cell);
+        }
+      }
+
+      return this.update({ rowGroupHeaders, columnGroupHeaders });
+    }
+
     /**
      * If principal cell is in a group, get all group headers that are in this group and above+lift of principal cell.
      */
-    // TODO: optimize, don't filter on all cells
     public getAboveLeftGroupHeaders(
       kind: "row" | "column"
     ): (principalCell: Cell.Builder) => Iterable<Cell.Builder> {
@@ -400,16 +433,12 @@ export namespace Table {
         case "row":
           anchor = "y";
           groups = this.rowGroups;
-          groupHeaders = filter(this.cells, (cell) =>
-            cell.variant.equals(Some.of(Scope.RowGroup))
-          );
+          groupHeaders = this._rowGroupHeaders;
           break;
         case "column":
           anchor = "x";
           groups = this.colGroups;
-          groupHeaders = filter(this.cells, (cell) =>
-            cell.variant.equals(Some.of(Scope.ColumnGroup))
-          );
+          groupHeaders = this._columnGroupHeaders;
           break;
       }
 
@@ -607,7 +636,7 @@ export namespace Table {
         }
         if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
       }
-// TODO: optimize. Don't filter on cells.
+      // TODO: optimize. Don't filter on cells.
       // Checking for row forming algorithm step 13 (slot covered twice)
       for (let x = 0; x < table.width; x++) {
         for (let y = 0; y < table.height; y++) {
@@ -634,13 +663,15 @@ export namespace Table {
           slots[x].push(table.slot(x, y));
         }
       }
-      table = table.update({ slots });
-
-      // Second, we need to compute all headers variant.
-      // This need to be done separately so that the updated table is used in assignHeaders.
-      table = table.addHeadersVariants();
-      // Third, we assign headers to cells
-      table = table.assignHeaders();
+      
+      table = table
+        .update({ slots })
+        // Second, we need to compute all headers variant.
+        // This need to be done separately so that the updated table is used in assignHeaders.
+        .addHeadersVariants()
+        // Third, we assign headers to cells
+        .findGroupHeaders()
+        .assignHeaders();
 
       // Finally, we sort lists and export the result.
       table = table
