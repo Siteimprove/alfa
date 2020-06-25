@@ -4,6 +4,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -12,7 +13,7 @@ import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
 
 const { compare } = Comparable;
-const { some } = Iterable;
+const { concat, some } = Iterable;
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -33,9 +34,19 @@ export namespace Row {
       element: Element,
       cells: Iterable<Cell.Builder> = List.empty(),
       growing: Iterable<Cell.Builder> = List.empty(),
-      xCurrent: number = 0
+      xCurrent: number = 0,
+      slots: Array<Array<Option<Cell.Builder>>> = [[]]
     ): Builder {
-      return new Builder(y, width, height, element, cells, growing, xCurrent);
+      return new Builder(
+        y,
+        width,
+        height,
+        element,
+        cells,
+        growing,
+        xCurrent,
+        slots
+      );
     }
 
     private readonly _y: number;
@@ -45,6 +56,8 @@ export namespace Row {
     private readonly _element: Element;
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
+    // Cell covering a given slot, either from this._cells or this._downwardGrowingCells
+    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
 
     private constructor(
       y: number,
@@ -53,7 +66,8 @@ export namespace Row {
       element: Element,
       cells: Iterable<Cell.Builder>,
       growing: Iterable<Cell.Builder>,
-      xCurrent: number
+      xCurrent: number,
+      slots: Array<Array<Option<Cell.Builder>>>
     ) {
       this._y = y;
       this._xCurrent = xCurrent;
@@ -62,6 +76,7 @@ export namespace Row {
       this._element = element;
       this._cells = List.from(cells);
       this._downwardGrowingCells = List.from(growing);
+      this._slots = slots;
     }
 
     public get anchor(): { y: number } {
@@ -88,7 +103,23 @@ export namespace Row {
       return this._downwardGrowingCells;
     }
 
-    public update(update: {
+    public slot(x: number, y: number): Option<Cell.Builder> {
+      return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
+    }
+
+    /**
+     * Update by getting new values. Does not keep slots in sync, hence is highly unsafe. Use at your own risks.
+     */
+    private _updateUnsafe({
+      y = this._y,
+      xCurrent = this._xCurrent,
+      width = this._width,
+      height = this._height,
+      element = this._element,
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
+      slots = this._slots,
+    }: {
       y?: number;
       xCurrent?: number;
       width?: number;
@@ -96,42 +127,97 @@ export namespace Row {
       element?: Element;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
+      slots?: Array<Array<Option<Cell.Builder>>>;
     }): Builder {
       return Builder.of(
-        update.y !== undefined ? update.y : this._y,
-        update.width !== undefined ? update.width : this._width,
-        update.height !== undefined ? update.height : this._height,
-        update.element !== undefined ? update.element : this._element,
-        update.cells !== undefined ? update.cells : this._cells,
-        update.downwardGrowingCells !== undefined
-          ? update.downwardGrowingCells
-          : this._downwardGrowingCells,
-        update.xCurrent !== undefined ? update.xCurrent : this._xCurrent
+        y,
+        width,
+        height,
+        element,
+        cells,
+        downwardGrowingCells,
+        xCurrent,
+        slots
       );
     }
 
+    /**
+     * Update anything but cells/downward growing cells/slots, because these need to be kept in sync.
+     */
+    private _update(update: {
+      y?: number;
+      xCurrent?: number;
+      width?: number;
+      height?: number;
+      element?: Element;
+    }): Builder {
+      return this._updateUnsafe(update);
+    }
+
+    /**
+     * Update cells/downward growing cells, and resync slots with all (updated) cells
+     */
+    private _updateCells({
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({ cells, downwardGrowingCells })._updateSlots(
+        concat(cells, downwardGrowingCells)
+      );
+    }
+
+    /**
+     * Add new cells/downward growing cells, and sync slots with the new cells only.
+     */
+    private _addCells({
+      cells = List.empty(),
+      downwardGrowingCells = List.empty(),
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({
+        cells: this._cells.concat(cells),
+        downwardGrowingCells: this._downwardGrowingCells.concat(
+          downwardGrowingCells
+        ),
+      })._updateSlots(concat(cells, downwardGrowingCells));
+    }
+
+    /**
+     * Resync slots with a given list of cells. Caller need to ensure that all updated/added cells are passed.
+     */
+    private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
+      for (const cell of cells) {
+        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+          if (this._slots[x] === undefined) {
+            this._slots[x] = [];
+          }
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            this._slots[x][y] = Some.of(cell);
+          }
+        }
+      }
+
+      return this; // for chaining
+    }
+
     public growCells(y: number): Builder {
-      return this.update({
+      return this._updateCells({
         downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
           cell.growDownward(y)
         ),
       });
     }
 
-    public addNonGrowingCell(cell: Cell.Builder): Builder {
-      return this.update({ cells: this._cells.append(cell) });
-    }
-
-    public addGrowingCell(cell: Cell.Builder): Builder {
-      return this.update({
-        downwardGrowingCells: this._downwardGrowingCells.append(cell),
+    private _addCell(cell: Cell.Builder): Builder {
+      return this._addCells({
+        cells: cell.downwardGrowing ? [] : [cell],
+        downwardGrowingCells: cell.downwardGrowing ? [cell] : [],
       });
-    }
-
-    public addCell(cell: Cell.Builder): Builder {
-      return cell.downwardGrowing
-        ? this.addGrowingCell(cell)
-        : this.addNonGrowingCell(cell);
     }
 
     public addCellFromElement(
@@ -141,42 +227,45 @@ export namespace Row {
       // 8, 9, 10, 13
       return Cell.Builder.from(currentCell, this._xCurrent, yCurrent).map(
         (cell) =>
-          this.update({
+          this._update({
             // 11
             width: Math.max(this.width, this._xCurrent + cell.width),
             // 12
             height: Math.max(this.height, cell.height),
           })
             // 14
-            .addCell(cell)
+            ._addCell(cell)
       );
       // 13
       // Double coverage check made at the end of table building to de-entangle code
     }
 
     public adjustWidth(width: number): Builder {
-      return this.update({ width: Math.max(this._width, width) });
+      return this._update({ width: Math.max(this._width, width) });
     }
 
     public adjustHeight(height: number): Builder {
-      return this.update({ height: Math.max(this._height, height) });
+      return this._update({ height: Math.max(this._height, height) });
     }
 
     /**
      * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
      * step 6
      */
-    public skipIfCovered(cells: List<Cell.Builder>, yCurrent: number): Builder {
-      if (
-        this._xCurrent < this._width &&
-        cells
-          .concat(this._cells)
-          .concat(this._downwardGrowingCells)
-          .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
-      ) {
-        return this.update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
-          cells,
-          yCurrent
+    public skipIfCovered(
+      yCurrent: number,
+      // Non-growing cells from out of the current row that may cover it.
+      // These are essentially cells with a fixed rowspan from previous rows.
+      externalCover: (x: number, y: number) => Option<Cell.Builder>
+    ): Builder {
+      const covering = this.slot(this._xCurrent, yCurrent).or(
+        externalCover(this._xCurrent, yCurrent)
+      );
+
+      if (this._xCurrent < this._width && covering.isSome()) {
+        return this._update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
+          yCurrent,
+          externalCover
         );
       } else {
         return this;
@@ -190,7 +279,7 @@ export namespace Row {
     }
 
     public sort(): Builder {
-      return this.update({
+      return this._updateCells({
         cells: [...this._cells].sort(compare),
         downwardGrowingCells: [...this._downwardGrowingCells].sort(compare),
       });
@@ -228,21 +317,17 @@ export namespace Row {
      */
     export function from(
       tr: Element,
-      cells: Iterable<Cell.Builder> = List.empty(),
+      // downward growing cells that extend into the row
       growingCells: Iterable<Cell.Builder> = List.empty(),
       yCurrent: number = 0,
-      w: number = 0
+      w: number = 0,
+      // Non-growing cells from out of the current row that may cover it.
+      // These are essentially cells with a fixed rowspan from previous rows.
+      externalCover: (x: number, y: number) => Option<Cell.Builder> = (x, y) =>
+        None
     ): Result<Builder, string> {
       if (tr.name !== "tr") {
         return Err.of("This element is not a table row");
-      }
-
-      if (
-        some(cells, (cell) =>
-          some(growingCells, (growingCell) => cell.equals(growingCell))
-        )
-      ) {
-        return Err.of("Cells and growing cells must be disjoints");
       }
 
       const children = tr.children().filter(isHtmlElementWithName("th", "td"));
@@ -256,7 +341,7 @@ export namespace Row {
           (row, currentCell) =>
             row
               // 6 (Cells)
-              .skipIfCovered(List.from(cells), yCurrent)
+              .skipIfCovered(yCurrent, externalCover)
               // 7
               .enlargeIfNeeded()
               // 8-14
