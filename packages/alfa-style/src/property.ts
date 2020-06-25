@@ -198,6 +198,7 @@ export namespace Property {
 
     type Registered = typeof Registered;
     const Registered = {
+      background: Background.Shorthand,
       overflow: Overflow.Shorthand,
     };
 
