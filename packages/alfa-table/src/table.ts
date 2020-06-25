@@ -388,6 +388,7 @@ export namespace Table {
     /**
      * If principal cell is in a group, get all group headers that are in this group and above+lift of principal cell.
      */
+    // TODO: optimize, don't filter on all cells
     public getAboveLeftGroupHeaders(
       kind: "row" | "column"
     ): (principalCell: Cell.Builder) => Iterable<Cell.Builder> {
@@ -579,6 +580,7 @@ export namespace Table {
       // Of course, errors are more or less caught and repaired by browsers.
       // Note that having a rowspan that extends out of the row group is not a table error per se!
       // checking for rows
+      // TODO: optimize. don't some on cells
       for (let row = 0; row < table.height; row++) {
         let rowCovered = false;
         for (let col = 0; !rowCovered && col < table.width; col++) {
@@ -592,6 +594,7 @@ export namespace Table {
         if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`);
       }
       // checking for cols
+      // TODO: optimize. don't some on cells
       for (let col = 0; col < table.width; col++) {
         let colCovered = false;
         for (let row = 0; !colCovered && row < table.height; row++) {
@@ -604,6 +607,7 @@ export namespace Table {
         }
         if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
       }
+// TODO: optimize. Don't filter on cells.
       // Checking for row forming algorithm step 13 (slot covered twice)
       for (let x = 0; x < table.width; x++) {
         for (let y = 0; y < table.height; y++) {
