@@ -15,7 +15,7 @@ test(`evaluate() passes an element with a font size specified using a relative
       length`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-size: 1em">Hello world</html>,
+      <html style={{ fontSize: "1em" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -33,7 +33,7 @@ test(`evaluate() fails an element with a font size specified using an absolute
       length`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-size: 16px">Hello world</html>,
+      <html style={{ fontSize: "16px" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -49,7 +49,10 @@ test(`evaluate() fails an element with a font size specified using an absolute
 
 test("evaluate() is inapplicable to an element that has no text", async (t) => {
   const document = Document.of((self) => [
-    Element.fromElement(<html style="font-size: 16px"></html>, Option.of(self)),
+    Element.fromElement(
+      <html style={{ fontSize: "16px" }}></html>,
+      Option.of(self)
+    ),
   ]);
 
   t.deepEqual(await evaluate(R74, { document }), [inapplicable(R74)]);
@@ -58,7 +61,7 @@ test("evaluate() is inapplicable to an element that has no text", async (t) => {
 test("evaluate() is inapplicable to an element that isn't visible", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-size: 16px" hidden>
+      <html style={{ fontSize: "16px" }} hidden>
         Hello world
       </html>,
       Option.of(self)

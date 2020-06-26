@@ -15,7 +15,7 @@ const { isElement } = Element;
 test("evaluate() passes a scrollable element that is focusable", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="height: 1.5em; overflow: scroll" tabindex="0">
+      <div style={{ height: "1.5em", overflow: "scroll" }} tabindex="0">
         Hello world
       </div>,
       Option.of(self)
@@ -34,7 +34,7 @@ test("evaluate() passes a scrollable element that is focusable", async (t) => {
 test("evaluate() passes a scrollable element that has a focusable child", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="height: 1.5em; overflow: scroll">
+      <div style={{ height: "1.5em", overflow: "scroll" }}>
         <button>Hello world</button>
       </div>,
       Option.of(self)
@@ -53,7 +53,7 @@ test("evaluate() passes a scrollable element that has a focusable child", async 
 test("evaluate() passes a scrollable element that has a focusable descendant", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="height: 1.5em; overflow: scroll">
+      <div style={{ height: "1.5em", overflow: "scroll" }}>
         <div>
           <button>Hello world</button>
         </div>
@@ -75,7 +75,7 @@ test(`evaluate() fails a scrollable element that is neither focusable nor has
       focusable descendants`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="height: 1.5em; overflow: scroll">Hello world</div>,
+      <div style={{ height: "1.5em", overflow: "scroll" }}>Hello world</div>,
       Option.of(self)
     ),
   ]);

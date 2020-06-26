@@ -39,7 +39,7 @@ test("evaluate() fails a paragraph whose text is justified", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="text-align: justify">Hello world</p>
+        <p style={{ textAlign: "justify" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -60,7 +60,7 @@ test("evaluate() fails a paragraph whose text is justified", async (t) => {
 test("evaluate() fails a paragraph whose text is justified by inheritance", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="text-align: justify">
+      <html style={{ textAlign: "justify" }}>
         <p>Hello world</p>
       </html>,
       Option.of(self)
