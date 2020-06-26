@@ -26,7 +26,7 @@ test(`evaluate() passes when tokens in headers list refer to cells in the same
         </thead>
         <tbody>
           <tr>
-            <td colSpan={2} headers="header1 header2">
+            <td colspan={2} headers="header1 header2">
               15%
             </td>
           </tr>
@@ -64,7 +64,7 @@ test(`evaluate() fails when some tokens in headers list do not refer to cells in
         </thead>
         <tbody>
           <tr>
-            <td colSpan={2} headers="header1 header2">
+            <td colspan={2} headers="header1 header2">
               15%
             </td>
           </tr>
@@ -102,7 +102,7 @@ test(`evaluate() fails when some token in the headers list refer to the cell
         </thead>
         <tbody>
           <tr>
-            <td id="cell" colSpan={2} headers="header cell">
+            <td id="cell" colspan={2} headers="header cell">
               15%
             </td>
           </tr>
@@ -139,7 +139,7 @@ test("evaluate() is inapplicable when there is no headers attribute", async (t) 
         </thead>
         <tbody>
           <tr>
-            <td colSpan={2}>15%</td>
+            <td colspan={2}>15%</td>
           </tr>
         </tbody>
       </table>,
