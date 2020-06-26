@@ -31,58 +31,68 @@ export function h(
   children: Array<Node.JSON | string> = [],
   style: Array<Declaration.JSON> | Record<string, string> = []
 ): Element.JSON {
-  attributes = Array.isArray(attributes)
-    ? attributes
-    : entries(attributes).reduce<Array<Attribute.JSON>>(
-        (attributes, [name, value]) => {
-          if (value === false) {
-            return attributes;
-          }
-
-          return [
-            ...attributes,
-            h.attribute(hyphenate(name), value === true ? "" : value),
-          ];
-        },
-        []
-      );
-
-  style = h.block(style);
-
-  if (style.length > 0) {
-    attributes = [
-      ...attributes,
-      h.attribute("style", Block.fromBlock(style).toString()),
-    ];
-  }
-
-  const json: Element.JSON = {
-    type: "element",
-    namespace: Namespace.HTML,
-    prefix: null,
-    name,
-    attributes,
-    children: children.map((child) =>
-      typeof child === "string" ? h.text(child) : child
-    ),
-    style,
-    shadow: null,
-    content: null,
-  };
-
-  switch (name) {
-    case "svg":
-      rename(json, Namespace.SVG);
-      break;
-
-    case "math":
-      rename(json, Namespace.MathML);
-  }
-
-  return json;
+  return h.element(Namespace.HTML, null, name, attributes, children, style);
 }
 
 export namespace h {
+  export function element(
+    namespace: string | null,
+    prefix: string | null,
+    name: string,
+    attributes: Array<Attribute.JSON> | Record<string, string | boolean> = [],
+    children: Array<Node.JSON | string> = [],
+    style: Array<Declaration.JSON> | Record<string, string> = []
+  ): Element.JSON {
+    attributes = Array.isArray(attributes)
+      ? attributes
+      : entries(attributes).reduce<Array<Attribute.JSON>>(
+          (attributes, [name, value]) => {
+            if (value === false) {
+              return attributes;
+            }
+
+            return [
+              ...attributes,
+              h.attribute(hyphenate(name), value === true ? "" : value),
+            ];
+          },
+          []
+        );
+
+    style = h.block(style);
+
+    if (style.length > 0) {
+      attributes = [
+        ...attributes,
+        h.attribute("style", Block.fromBlock(style).toString()),
+      ];
+    }
+
+    const json: Element.JSON = {
+      type: "element",
+      namespace,
+      prefix,
+      name,
+      attributes,
+      children: children.map((child) =>
+        typeof child === "string" ? h.text(child) : child
+      ),
+      style,
+      shadow: null,
+      content: null,
+    };
+
+    switch (name) {
+      case "svg":
+        rename(json, Namespace.SVG);
+        break;
+
+      case "math":
+        rename(json, Namespace.MathML);
+    }
+
+    return json;
+  }
   export function attribute(name: string, value: string): Attribute.JSON {
     return {
       type: "attribute",
