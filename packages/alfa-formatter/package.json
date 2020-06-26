@@ -19,8 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-act": "^0.2.0",
-    "@siteimprove/alfa-result": "^0.2.0",
-    "@types/node": "^14.0.11"
+    "@siteimprove/alfa-result": "^0.2.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.2.0"
