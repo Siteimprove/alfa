@@ -39,7 +39,7 @@ test("evaluate() fails a paragraph whose text is italic", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="font-style: italic">Hello world</p>
+        <p style={{ fontStyle: "italic" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -60,7 +60,7 @@ test("evaluate() fails a paragraph whose text is italic", async (t) => {
 test("evaluate() fails a paragraph whose text is italic by inheritance", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-style: italic">
+      <html style={{ fontStyle: "italic" }}>
         <p>Hello world</p>
       </html>,
       Option.of(self)

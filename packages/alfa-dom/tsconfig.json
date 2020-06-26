@@ -42,9 +42,6 @@
   ],
   "references": [
     {
-      "path": "../alfa-css"
-    },
-    {
       "path": "../alfa-earl"
     },
     {
@@ -70,9 +67,6 @@
     },
     {
       "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-slice"
     },
     {
       "path": "../alfa-test"

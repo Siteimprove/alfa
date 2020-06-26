@@ -15,7 +15,7 @@ test(`evaluate() passes an element with a line height specified using a relative
       length`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="line-height: 1.5em">Hello world</html>,
+      <html style={{ lineHeight: "1.5em" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -33,7 +33,7 @@ test(`evaluate() fails an element with a line height specified using an absolute
       length`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="line-height: 24px">Hello world</html>,
+      <html style={{ lineHeight: "24px" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -50,7 +50,7 @@ test(`evaluate() fails an element with a line height specified using an absolute
 test("evaluate() is inapplicable to an element that has no text", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="line-height: 24px"></html>,
+      <html style={{ lineHeight: "24px" }}></html>,
       Option.of(self)
     ),
   ]);
@@ -61,7 +61,7 @@ test("evaluate() is inapplicable to an element that has no text", async (t) => {
 test("evaluate() is inapplicable to an element that isn't visible", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="line-height: 24px" hidden>
+      <html style={{ lineHeight: "24px" }} hidden>
         Hello world
       </html>,
       Option.of(self)

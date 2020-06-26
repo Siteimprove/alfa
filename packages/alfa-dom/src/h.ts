@@ -56,7 +56,7 @@ export function h(
     ];
   }
 
-  return {
+  const json: Element.JSON = {
     type: "element",
     namespace: Namespace.HTML,
     prefix: null,
@@ -69,6 +69,17 @@ export function h(
     shadow: null,
     content: null,
   };
+
+  switch (name) {
+    case "svg":
+      rename(json, Namespace.SVG);
+      break;
+
+    case "math":
+      rename(json, Namespace.MathML);
+  }
+
+  return json;
 }
 
 export namespace h {
@@ -257,4 +268,14 @@ export namespace h {
 
 function hyphenate(value: string): string {
   return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
+function rename(element: Element.JSON, namespace: Namespace): void {
+  element.namespace = namespace;
+
+  for (const child of element.children) {
+    if (child.type === "element") {
+      rename(child as Element.JSON, namespace);
+    }
+  }
 }

@@ -14,7 +14,13 @@ const { isText } = Text;
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+      <div
+        style={{
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }}
+      >
         Hello world
       </div>,
       Option.of(self)
@@ -35,7 +41,7 @@ test(`evaluate() passes a text node that hides overflow by wrapping text using
       \`line-height\` property`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="overflow: hidden; height: 1.5em; line-height: 1.5;">
+      <div style={{ overflow: "hidden", height: "1.5em", lineHeight: "1.5" }}>
         Hello world
       </div>,
       Option.of(self)
@@ -55,7 +61,9 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`white-space\` property`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap;">Hello world</div>,
+      <div style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+        Hello world
+      </div>,
       Option.of(self)
     ),
   ]);
@@ -74,7 +82,7 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
       of the \`line-height\` property`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="overflow: hidden; height: 1.5em; line-height: 1.2;">
+      <div style={{ overflow: "hidden", height: "1.5em", lineHeight: "1.2" }}>
         Hello world
       </div>,
       Option.of(self)
@@ -93,7 +101,7 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
 test("evaluate() is inapplicable to a text node that is not visible", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap;" hidden>
+      <div style={{ overflow: "hidden", whiteSpace: "nowrap" }} hidden>
         Hello world
       </div>,
       Option.of(self)
@@ -107,7 +115,10 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
       accessibility tree using the \`aria-hidden\` attribute`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap;" aria-hidden="true">
+      <div
+        style={{ overflow: "hidden", whiteSpace: "nowrap" }}
+        aria-hidden="true"
+      >
         Hello world
       </div>,
       Option.of(self)
