@@ -84,11 +84,11 @@ export namespace h {
 
     switch (name) {
       case "svg":
-        rename(json, Namespace.SVG);
+        renamespace(json, Namespace.SVG);
         break;
 
       case "math":
-        rename(json, Namespace.MathML);
+        renamespace(json, Namespace.MathML);
     }
 
     return json;
@@ -280,12 +280,12 @@ function hyphenate(value: string): string {
   return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 }
 
-function rename(element: Element.JSON, namespace: Namespace): void {
+function renamespace(element: Element.JSON, namespace: Namespace): void {
   element.namespace = namespace;
 
   for (const child of element.children) {
     if (child.type === "element") {
-      rename(child as Element.JSON, namespace);
+      renamespace(child as Element.JSON, namespace);
     }
   }
 }
