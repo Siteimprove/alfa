@@ -19,7 +19,8 @@
     "src/property/width.ts",
     "src/resolver.ts",
     "src/style.ts",
-    "src/value.ts"
+    "src/value.ts",
+    "test/style.spec.tsx"
   ],
   "references": [
     {
