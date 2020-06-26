@@ -2,7 +2,9 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
+    "h.ts",
     "jsx.ts",
+    "src/h.ts",
     "src/index.ts",
     "src/jsx.ts",
     "src/namespace.ts",
