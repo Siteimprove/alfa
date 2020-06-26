@@ -24,7 +24,9 @@ const rgb = (r: number, g: number, b: number, a: number = 1) =>
 test("evaluate() passes a text node that has sufficient contrast", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: black; color: white">Hello world</html>,
+      <html style={{ backgroundColor: "black", color: "white" }}>
+        Hello world
+      </html>,
       Option.of(self)
     ),
   ]);
@@ -43,11 +45,11 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
 test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: black; color: white">
-        <div style="background-color: rgb(100%, 100%, 100%, 15%)">
+      <html style={{ backgroundColor: "black", color: "white" }}>
+        <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 15%)" }}>
           Sufficient contrast
         </div>
-        <div style="background-color: rgb(100%, 100%, 100%, 50%)">
+        <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 50%)" }}>
           Insufficient contrast
         </div>
       </html>,
@@ -74,9 +76,11 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
 test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: black">
-        <div style="color: rgb(100%, 100%, 100%, 85%)">Sufficient contrast</div>
-        <div style="color: rgb(100%, 100%, 100%, 40%)">
+      <html style={{ backgroundColor: "black" }}>
+        <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>
+          Sufficient contrast
+        </div>
+        <div style={{ color: "rgb(100%, 100%, 100%, 40%)" }}>
           Insufficient contrast
         </div>
       </html>,
@@ -103,7 +107,9 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
 test("evaluate() passes an 18pt text node with sufficient contrast", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: black; color: #606060; font-size: 18pt">
+      <html
+        style={{ backgroundColor: "black", color: "#606060", fontSize: "18pt" }}
+      >
         Hello world
       </html>,
       Option.of(self)
@@ -128,7 +134,14 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
 test("evaluate() passes an 14pt, bold text node with sufficient contrast", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: black; color: #606060; font-size: 14pt; font-weight: bold">
+      <html
+        style={{
+          backgroundColor: "black",
+          color: "#606060",
+          fontSize: "14pt",
+          fontWeight: "bold",
+        }}
+      >
         Hello world
       </html>,
       Option.of(self)
@@ -169,7 +182,7 @@ test("evaluate() passes a text node using the user agent default styles", async 
 test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: currentcolor; color: white">
+      <html style={{ backgroundColor: "currentcolor", color: "white" }}>
         Hello world
       </html>,
       Option.of(self)
@@ -190,7 +203,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
 test("evaluate() correctly resolves the `currentcolor` keyword to the user agent default", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="background-color: currentcolor">Hello world</html>,
+      <html style={{ backgroundColor: "currentcolor" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -209,7 +222,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
 test("evaluate() correctly handles circular `currentcolor` references", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="color: currentcolor">Hello world</html>,
+      <html style={{ color: "currentcolor" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -250,7 +263,7 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="color: #000; background-image: url('foo.png')">
+      <html style={{ color: "#000", backgroundImage: "url('foo.png')" }}>
         Hello world
       </html>,
       Option.of(self)
@@ -280,7 +293,7 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
 test("evaluate() fails when a background color with insufficient contrast is input", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="color: #000; background-image: url('foo.png')">
+      <html style={{ color: "#000", backgroundImage: "url('foo.png')" }}>
         Hello world
       </html>,
       Option.of(self)

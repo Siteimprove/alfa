@@ -14,7 +14,7 @@ const { isElement, hasName } = Element;
 test("evaluate() passes an element with a font size not smaller than 9 pixels", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-size: medium">Hello world</html>,
+      <html style={{ fontSize: "medium" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -31,7 +31,7 @@ test("evaluate() passes an element with a font size not smaller than 9 pixels", 
 test("evaluate() fails an element with a font size smaller than 9 pixels", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-size: 8px">Hello world</html>,
+      <html style={{ fontSize: "8px" }}>Hello world</html>,
       Option.of(self)
     ),
   ]);
@@ -49,8 +49,8 @@ test(`evaluate() fails an element with an accumulated font size smaller than 9
       pixels`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="font-size: 10px">
-        <p style="font-size: smaller">Hello world</p>
+      <html style={{ fontSize: "10px" }}>
+        <p style={{ fontSize: "smaller" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),

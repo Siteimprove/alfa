@@ -35,7 +35,7 @@ test("getName() computes the text alternative of a button with text within a spa
 test("getName() ignores non-visible nodes", (t) => {
   const button = Element.fromElement(
     <button>
-      Button <span style="display: none">Hidden</span>
+      Button <span style={{ display: "none" }}>Hidden</span>
     </button>
   );
 

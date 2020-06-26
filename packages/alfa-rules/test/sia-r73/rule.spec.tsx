@@ -8,7 +8,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import R73, { Outcomes } from "../../src/sia-r73/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 
 const { and } = Predicate;
 const { isElement, hasName } = Element;
@@ -17,7 +17,7 @@ test("evaluate() passes a paragraph whose line height is at least 1.5", async (t
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="line-height: 1.5">Hello world</p>
+        <p style={{ lineHeight: "1.5" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -40,7 +40,7 @@ test(`evaluate() passes a paragraph whose line height is at least 1.5 times the
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="font-size: 16px; line-height: 24px">Hello world</p>
+        <p style={{ fontSize: "16px", lineHeight: "24px" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -62,7 +62,7 @@ test("evaluate() fails a paragraph whose line height is less than 1.5", async (t
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="line-height: 1.2">Hello world</p>
+        <p style={{ lineHeight: "1.2" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -85,7 +85,7 @@ test(`evaluate() fails a paragraph whose line height is less than 1.5 times the
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="font-size: 16px; line-height: 22px">Hello world</p>
+        <p style={{ fontSize: "16px", lineHeight: "22px" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -107,7 +107,7 @@ test(`evaluate() fails a paragraph whose line height is "normal"`, async (t) => 
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="line-height: normal">Hello world</p>
+        <p style={{ lineHeight: "normal" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),

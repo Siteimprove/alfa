@@ -105,19 +105,19 @@ export namespace simpleRow {
 export namespace complexRow {
   export const element = Element.fromElement(
     <tr>
-      <th id="grade" rowSpan={2}>
+      <th id="grade" rowspan={2}>
         Grade.
       </th>
-      <th id="yield" rowSpan={2}>
+      <th id="yield" rowspan={2}>
         Yield Point.
       </th>
-      <th id="strength" colSpan={2}>
+      <th id="strength" colspan={2}>
         Ultimate tensile strength
       </th>
-      <th id="elong" rowSpan={2}>
+      <th id="elong" rowspan={2}>
         Per cent elong. 50.8mm or 2 in.
       </th>
-      <th id="reduct" rowSpan={2}>
+      <th id="reduct" rowspan={2}>
         Per cent reduct. area.
       </th>
     </tr>
@@ -154,19 +154,19 @@ export namespace simpleRowGroup {
   export const element = Element.fromElement(
     <thead id="thead">
       <tr id="first">
-        <th id="grade" rowSpan={2}>
+        <th id="grade" rowspan={2}>
           Grade.
         </th>
-        <th id="yield" rowSpan={2}>
+        <th id="yield" rowspan={2}>
           Yield Point.
         </th>
-        <th id="strength" colSpan={2}>
+        <th id="strength" colspan={2}>
           Ultimate tensile strength
         </th>
-        <th id="elong" rowSpan={2}>
+        <th id="elong" rowspan={2}>
           Per cent elong. 50.8mm or 2 in.
         </th>
-        <th id="reduct" rowSpan={2}>
+        <th id="reduct" rowspan={2}>
           Per cent reduct. area.
         </th>
       </tr>
@@ -209,24 +209,24 @@ export namespace downwardGrowing {
   export const element = Element.fromElement(
     <thead id="thead">
       <tr id="first">
-        <th id="grade" rowSpan={3}>
+        <th id="grade" rowspan={3}>
           Grade.
         </th>
-        <th id="yield" rowSpan={2}>
+        <th id="yield" rowspan={2}>
           Yield Point.
         </th>
-        <th id="strength" colSpan={2}>
+        <th id="strength" colspan={2}>
           Ultimate tensile strength
         </th>
-        <th id="elong" rowSpan={2}>
+        <th id="elong" rowspan={2}>
           Per cent elong. 50.8mm or 2 in.
         </th>
-        <th id="reduct" rowSpan={0}>
+        <th id="reduct" rowspan={0}>
           Per cent reduct. area.
         </th>
       </tr>
       <tr id="second">
-        <th id="kg-mm" rowSpan={0}>
+        <th id="kg-mm" rowspan={0}>
           kg/mm<sup>2</sup>
         </th>
         <th id="lb-in">
@@ -275,19 +275,19 @@ export namespace smithonian {
       </caption>
       <thead id="thead">
         <tr>
-          <th id="grade" rowSpan={2}>
+          <th id="grade" rowspan={2}>
             Grade.
           </th>
-          <th id="yield" rowSpan={2}>
+          <th id="yield" rowspan={2}>
             Yield Point.
           </th>
-          <th id="strength" colSpan={2}>
+          <th id="strength" colspan={2}>
             Ultimate tensile strength
           </th>
-          <th id="elong" rowSpan={2}>
+          <th id="elong" rowspan={2}>
             Per cent elong. 50.8mm or 2 in.
           </th>
-          <th id="reduct" rowSpan={2}>
+          <th id="reduct" rowspan={2}>
             Per cent reduct. area.
           </th>
         </tr>
@@ -702,7 +702,7 @@ export namespace errors {
   export const emptyCol = Element.fromElement(
     <table>
       <tr>
-        <td id="one-two" colSpan={2}>
+        <td id="one-two" colspan={2}>
           2 columns
         </td>
         <td id="three">third column</td>
@@ -714,7 +714,7 @@ export namespace errors {
   export const emptyRow = Element.fromElement(
     <table>
       <tr>
-        <td rowSpan={2}>2 rows</td>
+        <td rowspan={2}>2 rows</td>
       </tr>
       <tr />
       <tr>
@@ -728,10 +728,10 @@ export namespace errors {
     <table>
       <tr>
         <td>1 row, 1 col</td>
-        <td rowSpan={2}>2 rows</td>
+        <td rowspan={2}>2 rows</td>
       </tr>
       <tr>
-        <td colSpan={2}>2 cols</td>
+        <td colspan={2}>2 cols</td>
       </tr>
     </table>
   );
@@ -1087,11 +1087,11 @@ export namespace colGroupImplicitHeaders {
       <colgroup id="group-mars" span={2} />
       <colgroup id="group-venus" span={2} />
       <tr>
-        <td id="empty" rowSpan={2} />
-        <th id="mars" colSpan={2} scope="colgroup">
+        <td id="empty" rowspan={2} />
+        <th id="mars" colspan={2} scope="colgroup">
           Mars
         </th>
-        <th id="venus" colSpan={2} scope="colgroup">
+        <th id="venus" colspan={2} scope="colgroup">
           Venus
         </th>
       </tr>
@@ -1209,17 +1209,17 @@ export namespace allWeirdImplicitHeaders {
       <colgroup id="group-venus" span={2} />
       <thead id="thead">
         <tr>
-          <th id="empty" rowSpan={2} colSpan={2} />
-          <th id="mars" rowSpan={2} scope="colgroup">
+          <th id="empty" rowspan={2} colspan={2} />
+          <th id="mars" rowspan={2} scope="colgroup">
             Mars
           </th>
-          <th id="mars-produced" rowSpan={2} scope="col">
+          <th id="mars-produced" rowspan={2} scope="col">
             Produced
           </th>
-          <th id="mars-sold" rowSpan={2} scope="col">
+          <th id="mars-sold" rowspan={2} scope="col">
             Sold
           </th>
-          <th id="venus" colSpan={2} scope="colgroup">
+          <th id="venus" colspan={2} scope="colgroup">
             Venus
           </th>
         </tr>
@@ -1234,7 +1234,7 @@ export namespace allWeirdImplicitHeaders {
       </thead>
       <tbody id="stuffed-animals">
         <tr>
-          <th id="stuffed" rowSpan={2} scope="rowgroup">
+          <th id="stuffed" rowspan={2} scope="rowgroup">
             Stuffed animals
           </th>
           <th id="bears">Bears</th>
@@ -1255,7 +1255,7 @@ export namespace allWeirdImplicitHeaders {
       </tbody>
       <tbody id="games-rg">
         <tr>
-          <th id="games" colSpan={2} scope="rowgroup">
+          <th id="games" colspan={2} scope="rowgroup">
             Games
           </th>
           <td id="mars-empty-games" />
@@ -1265,7 +1265,7 @@ export namespace allWeirdImplicitHeaders {
           <td id="venus-sold-games" />
         </tr>
         <tr>
-          <th id="board" colSpan={2} scope="row">
+          <th id="board" colspan={2} scope="row">
             Board Games
           </th>
           <td id="mars-empty-board" />
@@ -1275,7 +1275,7 @@ export namespace allWeirdImplicitHeaders {
           <td id="venus-sold-board">9,000</td>
         </tr>
         <tr>
-          <th id="cards" colSpan={2} scope="row">
+          <th id="cards" colspan={2} scope="row">
             Cards Games
           </th>
           <td id="mars-empty-cards" />

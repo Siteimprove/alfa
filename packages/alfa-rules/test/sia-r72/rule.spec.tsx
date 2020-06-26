@@ -39,7 +39,7 @@ test("evaluate() fails a paragraph whose text is uppercased", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
-        <p style="text-transform: uppercase">Hello world</p>
+        <p style={{ textTransform: "uppercase" }}>Hello world</p>
       </html>,
       Option.of(self)
     ),
@@ -60,7 +60,7 @@ test("evaluate() fails a paragraph whose text is uppercased", async (t) => {
 test("evaluate() fails a paragraph whose text is uppercased by inheritance", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
-      <html style="text-transform: uppercase">
+      <html style={{ textTransform: "uppercase" }}>
         <p>Hello world</p>
       </html>,
       Option.of(self)
