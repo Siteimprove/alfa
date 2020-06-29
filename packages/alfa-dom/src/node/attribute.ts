@@ -1,7 +1,8 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -15,32 +16,29 @@ export class Attribute extends Node {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    value: string,
-    owner: Option<Element> = None
+    value: string
   ): Attribute {
-    return new Attribute(namespace, prefix, name, value, owner);
+    return new Attribute(namespace, prefix, name, value);
   }
 
   private readonly _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
   private readonly _name: string;
   private readonly _value: string;
-  private readonly _owner: Option<Element>;
+  private _owner: Option<Element> = None;
 
   private constructor(
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    value: string,
-    owner: Option<Element>
+    value: string
   ) {
-    super(() => [], None);
+    super([]);
 
     this._namespace = namespace;
     this._prefix = prefix;
-    this._name = foldCase(name, owner);
+    this._name = name;
     this._value = value;
-    this._owner = owner;
   }
 
   public get namespace(): Option<Namespace> {
@@ -52,7 +50,7 @@ export class Attribute extends Node {
   }
 
   public get name(): string {
-    return this._name;
+    return foldCase(this._name, this._owner);
   }
 
   public get value(): string {
@@ -64,14 +62,14 @@ export class Attribute extends Node {
   }
 
   public hasName(name: string): boolean {
-    return this._name === foldCase(name, this._owner);
+    return foldCase(this._name, this.owner) === foldCase(name, this._owner);
   }
 
   /**
    * @see https://html.spec.whatwg.org/#boolean-attribute
    */
   public isBoolean(): boolean {
-    switch (this._name) {
+    switch (foldCase(this._name, this._owner)) {
       case "allowfullscreen":
       case "allowpaymentrequest":
       case "async":
@@ -91,7 +89,7 @@ export class Attribute extends Node {
     let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
     path += path === "/" ? "" : "/";
-    path += `@${this._name}`;
+    path += `@${foldCase(this._name, this._owner)}`;
 
     return path;
   }
@@ -118,7 +116,9 @@ export class Attribute extends Node {
   public enumerate(...valid: Array<string>): Option<string> {
     const value = this._value.toLowerCase();
 
-    return valid.length === 0 || valid.includes(value) ? Some.of(value) : None;
+    return valid.length === 0 || valid.includes(value)
+      ? Option.of(value)
+      : None;
   }
 
   public toJSON(): Attribute.JSON {
@@ -132,11 +132,26 @@ export class Attribute extends Node {
   }
 
   public toString(): string {
+    const name = foldCase(this._name, this._owner);
+
     if (this.isBoolean()) {
-      return this._name;
+      return name;
     }
 
-    return `${this._name}="${this._value.replace(/"/g, "&quot;")}"`;
+    return `${name}="${this._value.replace(/"/g, "&quot;")}"`;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachOwner(owner: Element): boolean {
+    if (this._owner.isSome()) {
+      return false;
+    }
+
+    this._owner = Option.of(owner);
+
+    return true;
   }
 }
 
@@ -153,16 +168,17 @@ export namespace Attribute {
     return value instanceof Attribute;
   }
 
-  export function fromAttribute(
-    attribute: JSON,
-    owner: Option<Element> = None
-  ): Attribute {
-    return Attribute.of(
-      Option.from(attribute.namespace as Namespace | null),
-      Option.from(attribute.prefix),
-      attribute.name,
-      attribute.value,
-      owner
+  /**
+   * @internal
+   */
+  export function fromAttribute(attribute: JSON): Trampoline<Attribute> {
+    return Trampoline.done(
+      Attribute.of(
+        Option.from(attribute.namespace as Namespace | null),
+        Option.from(attribute.prefix),
+        attribute.name,
+        attribute.value
+      )
     );
   }
 }

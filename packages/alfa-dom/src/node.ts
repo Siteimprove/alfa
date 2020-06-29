@@ -1,9 +1,9 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -13,14 +13,10 @@ const { equals } = Predicate;
 export abstract class Node
   implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
   protected readonly _children: Array<Node>;
-  protected readonly _parent: Option<Node>;
+  protected _parent: Option<Node> = None;
 
-  protected constructor(
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
-  ) {
-    this._children = Array.from(children(this));
-    this._parent = parent;
+  protected constructor(children: Array<Node>) {
+    this._children = children.filter((child) => child._attachParent(this));
   }
 
   /**
@@ -224,6 +220,19 @@ export abstract class Node
       "ptr:expression": this.path(),
     };
   }
+
+  /**
+   * @internal
+   */
+  public _attachParent(parent: Node): boolean {
+    if (this._parent.isSome()) {
+      return false;
+    }
+
+    this._parent = Option.of(parent);
+
+    return true;
+  }
 }
 
 export namespace Node {
@@ -270,43 +279,54 @@ export namespace Node {
     type: string;
   }
 
-  export function fromNode(node: JSON, parent: Option<Node> = None): Node {
-    switch (node.type) {
+  export function from(json: Element.JSON): Element;
+
+  export function from(json: Attribute.JSON): Attribute;
+
+  export function from(json: Text.JSON): Text;
+
+  export function from(json: Comment.JSON): Comment;
+
+  export function from(json: Document.JSON): Document;
+
+  export function from(json: Type.JSON): Document;
+
+  export function from(json: Fragment.JSON): Fragment;
+
+  export function from(json: JSON): Node;
+
+  export function from(json: JSON): Node {
+    return fromNode(json).run();
+  }
+
+  /**
+   * @internal
+   */
+  export function fromNode(json: JSON): Trampoline<Node> {
+    switch (json.type) {
       case "element":
-        return Element.fromElement(node as Element.JSON, parent);
+        return Element.fromElement(json as Element.JSON);
 
       case "attribute":
-        return Attribute.fromAttribute(
-          node as Attribute.JSON,
-          parent.filter(Element.isElement)
-        );
+        return Attribute.fromAttribute(json as Attribute.JSON);
 
       case "text":
-        return Text.fromText(node as Text.JSON, parent);
+        return Text.fromText(json as Text.JSON);
 
       case "comment":
-        return Comment.fromComment(node as Comment.JSON, parent);
+        return Comment.fromComment(json as Comment.JSON);
 
       case "document":
-        return Document.fromDocument(
-          node as Document.JSON,
-          parent.filter(Element.isElement)
-        );
+        return Document.fromDocument(json as Document.JSON);
 
       case "type":
-        return Type.fromType(node as Type.JSON, parent);
-
-      case "shadow":
-        return Shadow.fromShadow(
-          node as Shadow.JSON,
-          parent.filter(Element.isElement).get()
-        );
+        return Type.fromType(json as Type.JSON);
 
       case "fragment":
-        return Fragment.fromFragment(node as Fragment.JSON);
+        return Fragment.fromFragment(json as Fragment.JSON);
 
       default:
-        throw new Error(`Unexpected node of type: ${node.type}`);
+        throw new Error(`Unexpected node of type: ${json.type}`);
     }
   }
 

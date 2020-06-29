@@ -1,21 +1,19 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Sheet } from "./sheet";
 
 export abstract class Rule implements Equatable, Serializable {
-  protected readonly _owner: Sheet;
-  protected readonly _parent: Option<Rule>;
+  protected _owner: Option<Sheet> = None;
+  protected _parent: Option<Rule> = None;
 
-  protected constructor(owner: Sheet, parent: Option<Rule>) {
-    this._owner = owner;
-    this._parent = parent;
-  }
+  protected constructor() {}
 
-  public get owner(): Sheet {
+  public get owner(): Option<Sheet> {
     return this._owner;
   }
 
@@ -44,6 +42,32 @@ export abstract class Rule implements Equatable, Serializable {
   }
 
   public abstract toJSON(): Rule.JSON;
+
+  /**
+   * @internal
+   */
+  public _attachOwner(owner: Sheet): boolean {
+    if (this._owner.isSome()) {
+      return false;
+    }
+
+    this._owner = Option.of(owner);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachParent(parent: Rule): boolean {
+    if (this._parent.isSome()) {
+      return false;
+    }
+
+    this._parent = Option.of(parent);
+
+    return true;
+  }
 }
 
 import { FontFace } from "./rule/font-face";
@@ -55,6 +79,7 @@ import { Namespace } from "./rule/namespace";
 import { Page } from "./rule/page";
 import { Style } from "./rule/style";
 import { Supports } from "./rule/supports";
+import { Declaration } from "./declaration";
 
 // Export CSSOM rules with a `Rule` postfix to avoid clashes with DOM nodes such
 // as `Namespace`.
@@ -76,41 +101,64 @@ export namespace Rule {
     type: string;
   }
 
-  export function fromRule(
-    rule: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Rule {
-    switch (rule.type) {
+  export function from(json: Style.JSON): Style;
+
+  export function from(json: Import.JSON): Import;
+
+  export function from(json: Media.JSON): Media;
+
+  export function from(json: FontFace.JSON): FontFace;
+
+  export function from(json: Page.JSON): Page;
+
+  export function from(json: Keyframe.JSON): Keyframe;
+
+  export function from(json: Keyframes.JSON): Keyframes;
+
+  export function from(json: Namespace.JSON): Namespace;
+
+  export function from(json: Supports.JSON): Supports;
+
+  export function from(json: JSON): Rule;
+
+  export function from(json: JSON): Rule {
+    return fromRule(json).run();
+  }
+
+  /**
+   * @internal
+   */
+  export function fromRule(json: JSON): Trampoline<Rule> {
+    switch (json.type) {
       case "style":
-        return Style.fromStyle(rule as Style.JSON, owner, parent);
+        return Style.fromStyle(json as Style.JSON);
 
       case "import":
-        return Import.fromImport(rule as Import.JSON, owner, parent);
+        return Import.fromImport(json as Import.JSON);
 
       case "media":
-        return Media.fromMedia(rule as Media.JSON, owner, parent);
+        return Media.fromMedia(json as Media.JSON);
 
       case "font-face":
-        return FontFace.fromFontFace(rule as FontFace.JSON, owner, parent);
+        return FontFace.fromFontFace(json as FontFace.JSON);
 
       case "page":
-        return Page.fromPage(rule as Page.JSON, owner, parent);
+        return Page.fromPage(json as Page.JSON);
 
       case "keyframes":
-        return Keyframes.fromKeyframes(rule as Keyframes.JSON, owner, parent);
+        return Keyframes.fromKeyframes(json as Keyframes.JSON);
 
       case "keyframe":
-        return Keyframe.fromKeyframe(rule as Keyframe.JSON, owner, parent);
+        return Keyframe.fromKeyframe(json as Keyframe.JSON);
 
       case "namespace":
-        return Namespace.fromNamespace(rule as Namespace.JSON, owner, parent);
+        return Namespace.fromNamespace(json as Namespace.JSON);
 
       case "supports":
-        return Supports.fromSupports(rule as Supports.JSON, owner, parent);
+        return Supports.fromSupports(json as Supports.JSON);
 
       default:
-        throw new Error(`Unexpected rule of type: ${rule.type}`);
+        throw new Error(`Unexpected rule of type: ${json.type}`);
     }
   }
 }

@@ -1,8 +1,8 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -23,33 +23,27 @@ export class Element extends Node implements Slot, Slotable {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>> = () => [],
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    style: Option<Block> = None,
-    parent: Option<Node> = None,
-    shadow: Option<Mapper<Element, Shadow>> = None,
-    content: Option<Mapper<Element, Document>> = None
+    attributes: Iterable<Attribute> = [],
+    children: Iterable<Node> = [],
+    style: Option<Block> = None
   ): Element {
     return new Element(
       namespace,
       prefix,
       name,
-      attributes,
-      children,
-      style,
-      parent,
-      shadow,
-      content
+      Array.from(attributes),
+      Array.from(children),
+      style
     );
   }
 
-  private readonly _namespace: Option<Namespace>;
+  private _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
   private readonly _name: string;
   private readonly _attributes: Array<Attribute>;
   private readonly _style: Option<Block>;
-  private readonly _shadow: Option<Shadow>;
-  private readonly _content: Option<Document>;
+  private _shadow: Option<Shadow> = None;
+  private _content: Option<Document> = None;
   private readonly _id: Option<string>;
   private readonly _classes: Array<string>;
 
@@ -57,24 +51,19 @@ export class Element extends Node implements Slot, Slotable {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>>,
-    children: Mapper<Node, Iterable<Node>>,
-    style: Option<Block>,
-    parent: Option<Node>,
-    shadow: Option<Mapper<Element, Shadow>>,
-    content: Option<Mapper<Element, Document>>
+    attributes: Array<Attribute>,
+    children: Array<Node>,
+    style: Option<Block>
   ) {
-    super(children, parent);
-
-    const self = Option.of(this);
+    super(children);
 
     this._namespace = namespace;
     this._prefix = prefix;
     this._name = name;
-    this._attributes = Array.from(attributes(this));
+    this._attributes = attributes.filter((attribute) =>
+      attribute._attachOwner(this)
+    );
     this._style = style;
-    this._shadow = self.apply(shadow);
-    this._content = self.apply(content);
 
     this._id = this.attribute("id").map((attr) => attr.value);
 
@@ -129,7 +118,7 @@ export class Element extends Node implements Slot, Slotable {
     if (options.flattened === true) {
       return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
-          return Option.of(parent.host);
+          return parent.host;
         }
 
         if (Element.isElement(parent) && parent.shadow.isSome()) {
@@ -304,6 +293,54 @@ export class Element extends Node implements Slot, Slotable {
       children === "" ? "" : `\n${children}\n`
     }</${name}>`;
   }
+
+  /**
+   * @internal
+   */
+  public _attachParent(parent: Node): boolean {
+    if (!super._attachParent(parent)) {
+      return false;
+    }
+
+    if (Element.isElement(parent)) {
+      switch (this._name) {
+        case "svg":
+        case "math":
+          break;
+
+        default:
+          this._namespace = parent._namespace;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachShadow(shadow: Shadow): boolean {
+    if (this._shadow.isSome()) {
+      return false;
+    }
+
+    this._shadow = Option.of(shadow);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachContent(document: Document): boolean {
+    if (this._content.isSome()) {
+      return false;
+    }
+
+    this._content = Option.of(document);
+
+    return true;
+  }
 }
 
 export namespace Element {
@@ -323,33 +360,32 @@ export namespace Element {
     return value instanceof Element;
   }
 
-  export function fromElement(
-    element: JSON,
-    parent: Option<Node> = None
-  ): Element {
-    return Element.of(
-      Option.from(element.namespace as Namespace | null),
-      Option.from(element.prefix),
-      element.name,
-      (self) => {
-        const owner = Option.of(self);
-        return element.attributes.map((attribute) =>
-          Attribute.fromAttribute(attribute, owner)
-        );
-      },
-      (self) => {
-        const parent = Option.of(self);
-        return element.children.map((child) => Node.fromNode(child, parent));
-      },
-      Option.from(element.style).map((style) => Block.fromBlock(style)),
-      parent,
-      Option.from(element.shadow).map((shadow) => (self) =>
-        Shadow.fromShadow(shadow, self)
-      ),
-      Option.from(element.content).map((content) => (self) =>
-        Document.fromDocument(content, Option.of(self))
-      )
-    );
+  /**
+   * @internal
+   */
+  export function fromElement(json: JSON): Trampoline<Element> {
+    return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
+      const element = Element.of(
+        Option.from(json.namespace as Namespace | null),
+        Option.from(json.prefix),
+        json.name,
+        json.attributes.map((attribute) =>
+          Attribute.fromAttribute(attribute).run()
+        ),
+        children,
+        Option.from(json.style).map(Block.from)
+      );
+
+      if (json.shadow !== null) {
+        element._attachShadow(Shadow.fromShadow(json.shadow).run());
+      }
+
+      if (json.content !== null) {
+        element._attachContent(Document.fromDocument(json.content).run());
+      }
+
+      return element;
+    });
   }
 
   export const hasName = predicate.hasName;

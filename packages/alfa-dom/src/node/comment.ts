@@ -1,20 +1,19 @@
-import { Option, None } from "@siteimprove/alfa-option";
-
 import { Node } from "../node";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Comment extends Node {
-  public static of(data: string, parent: Option<Node> = None): Comment {
-    return new Comment(data, parent);
+  public static of(data: string): Comment {
+    return new Comment(data);
   }
 
-  public static empty(parent: Option<Node> = None): Comment {
-    return new Comment("", parent);
+  public static empty(): Comment {
+    return new Comment("");
   }
 
   private readonly _data: string;
 
-  private constructor(data: string, parent: Option<Node>) {
-    super(() => [], parent);
+  private constructor(data: string) {
+    super([]);
 
     this._data = data;
   }
@@ -60,10 +59,10 @@ export namespace Comment {
     return value instanceof Comment;
   }
 
-  export function fromComment(
-    comment: JSON,
-    parent: Option<Node> = None
-  ): Comment {
-    return Comment.of(comment.data, parent);
+  /**
+   * @internal
+   */
+  export function fromComment(json: JSON): Trampoline<Comment> {
+    return Trampoline.done(Comment.of(json.data));
   }
 }

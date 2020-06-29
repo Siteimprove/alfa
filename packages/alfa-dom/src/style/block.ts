@@ -1,20 +1,19 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Declaration } from "./declaration";
-import { Rule } from "./rule";
 
 export class Block implements Iterable<Declaration>, Equatable, Serializable {
   public static of(declarations: Iterable<Declaration>): Block {
-    return new Block(declarations);
+    return new Block(Array.from(declarations));
   }
 
-  private readonly _declarations: Array<Declaration>;
+  private _declarations: Array<Declaration>;
 
-  private constructor(declarations: Iterable<Declaration>) {
-    this._declarations = Array.from(declarations);
+  private constructor(declarations: Array<Declaration>) {
+    this._declarations = declarations;
   }
 
   public get declarations(): Iterable<Declaration> {
@@ -59,9 +58,7 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
 export namespace Block {
   export type JSON = Array<Declaration.JSON>;
 
-  export function fromBlock(block: JSON, parent: Option<Rule> = None): Block {
-    return Block.of(
-      [...block].map((json) => Declaration.fromDeclaration(json, parent))
-    );
+  export function from(json: JSON): Block {
+    return Block.of(json.map(Declaration.from));
   }
 }
