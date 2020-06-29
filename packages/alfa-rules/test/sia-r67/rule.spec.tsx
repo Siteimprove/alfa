@@ -26,7 +26,7 @@ function getElementById(document: Document): (id: string) => Element {
       .get();
 }
 
-test("evaluate() passes on elements marked as decorative with no alternative text", async (t) => {
+test("evaluate() passes on elements marked as decorative and not exposed", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -36,6 +36,8 @@ test("evaluate() passes on elements marked as decorative with no alternative tex
         <svg id="svg" role="none">
           <circle cx="50" cy="50" r="40" fill="yellow"></circle>
         </svg>
+      <img id="aria-hidden" src="foo.jpg" role="none" aria-hidden="true" />
+      <div aria-hidden="true"><img id="aria-hidden-inherit" src="foo.jpg" role="none" /></div>
       </html>,
       Option.of(self)
     ),
@@ -45,16 +47,20 @@ test("evaluate() passes on elements marked as decorative with no alternative tex
   const roleNone = getById("role-none");
   const rolePresentation = getById("role-presentation");
   const svg = getById("svg");
+  const ariaHidden = getById("aria-hidden");
+  const ariaHiddenInherit = getById("aria-hidden-inherit");
 
   t.deepEqual(await evaluate(R67, { device, document }), [
-    passed(R67, emptyAlt, { 1: Outcomes.HasNoName }),
-    passed(R67, roleNone, { 1: Outcomes.HasNoName }),
-    passed(R67, rolePresentation, { 1: Outcomes.HasNoName }),
-    passed(R67, svg, { 1: Outcomes.HasNoName }),
+    passed(R67, emptyAlt, { 1: Outcomes.IsNotExposed }),
+    passed(R67, roleNone, { 1: Outcomes.IsNotExposed }),
+    passed(R67, rolePresentation, { 1: Outcomes.IsNotExposed }),
+    passed(R67, svg, { 1: Outcomes.IsNotExposed }),
+    passed(R67, ariaHidden, { 1: Outcomes.IsNotExposed }),
+    passed(R67, ariaHiddenInherit, { 1: Outcomes.IsNotExposed }),
   ]);
 });
 
-test("evaluate() fails on elements marked as decorative with an alternative text", async (t) => {
+test("evaluate() fails on elements marked as decorative but exposed", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -75,8 +81,8 @@ test("evaluate() fails on elements marked as decorative with an alternative text
   const roleNoneAriaLabelledby = getById("role-none-aria-labelledby");
 
   t.deepEqual(await evaluate(R67, { device, document }), [
-    failed(R67, emptyAltAriaLabel, { 1: Outcomes.HasName }),
-    failed(R67, roleNoneAriaLabelledby, { 1: Outcomes.HasName }),
+    failed(R67, emptyAltAriaLabel, { 1: Outcomes.IsExposed }),
+    failed(R67, roleNoneAriaLabelledby, { 1: Outcomes.IsExposed }),
   ]);
 });
 
