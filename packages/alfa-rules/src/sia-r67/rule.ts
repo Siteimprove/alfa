@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -36,9 +36,16 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device)(target),
-            () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            Node.from(target, device).every((accNode) => {
+              const role = accNode.role();
+
+              return (
+                role.isNone() ||
+                Role.hasName("none", "presentation")(role.get())
+              );
+            }),
+            () => Outcomes.IsNotExposed,
+            () => Outcomes.IsExposed
           ),
         };
       },
@@ -47,15 +54,15 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasNoName = Ok.of(
+  export const IsNotExposed = Ok.of(
     Diagnostic.of(
-      `The element is marked as decorative and does not have an accessible name`
+      `The element is marked as decorative and is not exposed`
     )
   );
 
-  export const HasName = Err.of(
+  export const IsExposed = Err.of(
     Diagnostic.of(
-      `The element is marked as decorative but has an accessible name`
+      `The element is marked as decorative but is exposed`
     )
   );
 }
