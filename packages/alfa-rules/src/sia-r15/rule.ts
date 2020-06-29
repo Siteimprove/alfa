@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -13,14 +13,13 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { map, flatMap, isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
@@ -31,16 +30,12 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasName(equals("iframe")),
-                and(
-                  hasNamespace(equals(Namespace.HTML)),
-                  and(
-                    not(isIgnored(device)),
-                    hasAccessibleName(device, not(isEmpty))
-                  )
-                )
+                hasName("iframe"),
+                hasNamespace(Namespace.HTML),
+                not(isIgnored(device)),
+                hasAccessibleName(device, not(isEmpty))
               )
             )
           );
@@ -56,7 +51,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                   groups
                     .get(node.name())
                     .getOrElse(() => List.empty<Element>())
-                    .push(iframe)
+                    .append(iframe)
                 );
               }
 
@@ -97,14 +92,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
 export namespace Outcomes {
   export const EmbedSameResources = Ok.of(
-    "The <iframe> elements embed the same resource"
+    Diagnostic.of(`The \`<iframe>\` elements embed the same resource`)
   );
 
   export const EmbedEquivalentResources = Ok.of(
-    "The <iframe> elements embed equivalent resources"
+    Diagnostic.of(`The \`<iframe>\` elements embed equivalent resources`)
   );
 
   export const EmbedDifferentResources = Err.of(
-    "The <iframe> elements do not embed the same or equivalent resources"
+    Diagnostic.of(
+      `The \`<iframe>\` elements do not embed the same or equivalent resources`
+    )
   );
 }

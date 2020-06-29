@@ -42,7 +42,7 @@ export function format(name: string, error: Error): string {
 
   const output = `
 ${mark.underline(`${filePath}(${lineNumber},${columnNumber}):`)} ${mark.bold(
-    name
+    name.trim().replace(/\s+/g, " ")
   )}
 ${message}
   `;

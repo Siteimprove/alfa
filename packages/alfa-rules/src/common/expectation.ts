@@ -1,14 +1,14 @@
-import { Interview, Question, Rule } from "@siteimprove/alfa-act";
+import { Diagnostic, Interview, Question, Rule } from "@siteimprove/alfa-act";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-type Path<Q, S> = Interview<Q, S, Option.Maybe<Result<string, string>>>;
+type Path<Q, S> = Interview<Q, S, Option.Maybe<Result<Diagnostic>>>;
 
 function toExpectation<Q, S>(
   path: Path<Q, S>
-): Interview<Q, S, Rule.Expectation> {
+): Interview<Q, S, Option<Result<Diagnostic>>> {
   if (path instanceof Question) {
     return path.map(toExpectation);
   }
@@ -25,7 +25,7 @@ export function expectation<Q, S>(
   ifTrue: Thunk<Path<Q, S>>,
   ifFalse: Thunk<Path<Q, S>>,
   ifUnknown: Thunk<Path<Q, S>> = Thunk.of(None)
-): Interview<Q, S, Rule.Expectation> {
+): Interview<Q, S, Option<Result<Diagnostic>>> {
   switch (test) {
     case true:
       return toExpectation(ifTrue());

@@ -28,9 +28,10 @@ export enum Namespace {
   XML = "http://www.w3.org/XML/1998/namespace",
 
   /**
-   * NB: The trailing slash is not a typo! For some reason it snuck its way into
-   * the specification and whether or not it is strictly required is an awfully
-   * good question.
+   * @remarks
+   * The trailing slash is not a typo! For some reason it snuck its way into the
+   * specification and whether or not it is strictly required is an awfully good
+   * question.
    *
    * @see https://infra.spec.whatwg.org/#xmlns-namespace
    */

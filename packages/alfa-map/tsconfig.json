@@ -13,13 +13,13 @@
       "path": "../alfa-bits"
     },
     {
+      "path": "../alfa-collection"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-fnv"
-    },
-    {
-      "path": "../alfa-foldable"
     },
     {
       "path": "../alfa-functor"
@@ -35,9 +35,6 @@
     },
     {
       "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-monad"
     },
     {
       "path": "../alfa-option"

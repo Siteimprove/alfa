@@ -67,40 +67,44 @@ test("#set() and #get() work within the head of a list", (t) => {
   t.equal(list.get(2).get(), 42);
 });
 
-test("#push() appends a value to a list", (t) => {
-  t.deepEqual([...list.push(5)], [1, 2, 3, 4, 5]);
+test("#append() appends a value to a list", (t) => {
+  t.deepEqual([...list.append(5)], [1, 2, 3, 4, 5]);
 });
 
-test("#push() behaves for large lists", (t) => {
+test("#append() behaves for large lists", (t) => {
   let list = List.empty<number>();
 
   for (let i = 0; i < 100000; i++) {
-    list = list.push(i);
+    list = list.append(i);
     t.equal(list.get(i).get(), i);
   }
 });
 
-test("#pop() removes the last value of a list", (t) => {
-  t.deepEqual([...list.pop()], [1, 2, 3]);
+test("#prepend() prepends a value to a list", (t) => {
+  t.deepEqual([...list.prepend(0)], [0, 1, 2, 3, 4]);
 });
 
-test("#pop() does nothing to an empty list", (t) => {
+test("#skipLast() removes the last value of a list", (t) => {
+  t.deepEqual([...list.skipLast()], [1, 2, 3]);
+});
+
+test("#skipLast() does nothing to an empty list", (t) => {
   const list = List.empty<number>();
 
-  t.equal(list.pop(), list);
+  t.equal(list.skipLast(), list);
 });
 
-test("#pop() removes the last value of a singleton list", (t) => {
+test("#skipLast() removes the last value of a singleton list", (t) => {
   const list = List.of(1);
 
-  t.equal(list.pop(), List.empty());
+  t.equal(list.skipLast(), List.empty());
 });
 
-test("#pop() behaves for large lists", (t) => {
+test("#skipLast() behaves for large lists", (t) => {
   let list = List.from(array(100000));
 
   for (let i = 100000; i-- >= 0; i) {
-    list = list.pop();
+    list = list.skipLast();
     t(list.get(i).isNone());
   }
 });

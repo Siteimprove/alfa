@@ -1,5 +1,5 @@
-import { Rule } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -13,15 +13,15 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasNamespace } = Element;
 const { map, flatMap, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { and, or, not } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
@@ -32,20 +32,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(
-                  hasRole(
-                    or(hasName(equals("link")), (role) =>
-                      role.inheritsFrom(hasName(equals("link")))
-                    )
-                  ),
-                  and(
-                    not(isIgnored(device)),
-                    hasAccessibleName(device, not(isEmpty))
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                hasRole(
+                  or(hasName("link"), (role) =>
+                    role.inheritsFrom(hasName("link"))
                   )
-                )
+                ),
+                not(isIgnored(device)),
+                hasAccessibleName(device, not(isEmpty))
               )
             )
           );
@@ -61,7 +57,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                   groups
                     .get(node.name())
                     .getOrElse(() => List.empty<Element>())
-                    .push(element)
+                    .append(element)
                 );
               }
 
@@ -87,7 +83,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 "reference-equivalent-resources",
                 "boolean",
                 target,
-                "Do the links resolve to equivalent resources?"
+                `Do the links resolve to equivalent resources?`
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
@@ -104,14 +100,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
 export namespace Outcomes {
   export const ResolveSameResource = Ok.of(
-    "The links resolve to the same resource"
+    Diagnostic.of(`The links resolve to the same resource`)
   );
 
   export const ResolveEquivalentResource = Ok.of(
-    "The links resolve to equivalent resources"
+    Diagnostic.of(`The links resolve to equivalent resources`)
   );
 
   export const ResolveDifferentResource = Err.of(
-    "The links do not resolve to the same or equivalent resources"
+    Diagnostic.of(
+      `The links do not resolve to the same or equivalent resources`
+    )
   );
 }

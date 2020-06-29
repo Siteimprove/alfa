@@ -21,7 +21,7 @@ test("evaluate() passes a heading that has an accessible name", async (t) => {
     .get();
 
   t.deepEqual(await evaluate(R64, { document }), [
-    passed(R64, heading, [["1", Outcomes.HasAccessibleName]]),
+    passed(R64, heading, { 1: Outcomes.HasAccessibleName }),
   ]);
 });
 
@@ -37,7 +37,7 @@ test("evaluate() fails a heading that has no accessible name", async (t) => {
     .get();
 
   t.deepEqual(await evaluate(R64, { document }), [
-    failed(R64, heading, [["1", Outcomes.HasNoAccessibleName]]),
+    failed(R64, heading, { 1: Outcomes.HasNoAccessibleName }),
   ]);
 });
 

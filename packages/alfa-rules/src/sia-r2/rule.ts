@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -7,11 +7,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, equals, property } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -22,13 +22,11 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasRole(property("name", equals("img"))),
-                  not(isIgnored(device))
-                )
+                hasNamespace(Namespace.HTML),
+                hasRole("img"),
+                not(isIgnored(device))
               )
             )
           );
@@ -48,7 +46,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasAccessibleName = Ok.of("The image has an accessible name");
+  export const HasAccessibleName = Ok.of(
+    Diagnostic.of(`The image has an accessible name`)
+  );
 
-  export const HasNoAccessibleName = Err.of("The image has no accessible name");
+  export const HasNoAccessibleName = Err.of(
+    Diagnostic.of(`The image does not have an accessible name`)
+  );
 }

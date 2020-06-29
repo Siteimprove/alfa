@@ -1,99 +1,52 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Slice } from "@siteimprove/alfa-slice";
+import { h } from "./h";
 
-import * as css from "@siteimprove/alfa-css";
-
-import { Namespace } from "./namespace";
 import { Node } from "./node";
-import { Attribute } from "./node/attribute";
 import { Element } from "./node/element";
-import { Text } from "./node/text";
-import { Block } from "./style/block";
-import { Declaration } from "./style/declaration";
 
-const { keys } = Object;
+const { entries } = Object;
 
 export function jsx(
   name: string,
-  attributes?: { [name: string]: unknown } | null,
+  properties: jsx.JSX.IntrinsicProps | null = null,
   ...children: Array<Node.JSON | string>
 ): Element.JSON {
-  const json = Element.of(Option.of(Namespace.HTML), None, name).toJSON();
+  const attributes: Record<string, string | boolean> = {};
+  const style: Record<string, string> = {};
 
-  if (attributes !== null && attributes !== undefined) {
-    for (const name of keys(attributes)) {
-      const value = attributes[name];
-
-      if (value === false || value === null || value === undefined) {
-        continue;
-      }
-
-      json.attributes.push(
-        Attribute.of(
-          None,
-          None,
-          name,
-          value === true ? "" : `${value}`
-        ).toJSON()
-      );
+  for (const [name, value] of entries(properties ?? {})) {
+    if (value === null || value === undefined) {
+      continue;
     }
 
-    json.style = Option.from(
-      json.attributes.find((attribute) => attribute.name === "style")
-    )
-      .flatMap((attribute) =>
-        css.Declaration.parseList(Slice.of(css.Lexer.lex(attribute.value)))
-          .map((result) => result[1])
-          .map((declarations) =>
-            Iterable.map(declarations, (declaration) =>
-              Declaration.of(
-                declaration.name,
-                declaration.value.join(""),
-                declaration.important
-              )
-            )
-          )
-          .ok()
-      )
-      .map((declarations) => Block.of(declarations).toJSON())
-      .getOr(null);
+    switch (name) {
+      case "style":
+        const properties = value as Record<string, string>;
+
+        for (const [name, value] of entries(properties)) {
+          style[name] = value;
+        }
+
+        continue;
+
+      default:
+        attributes[name] = value === true ? value : `${value}`;
+    }
   }
 
-  for (const child of children) {
-    json.children.push(
-      typeof child === "string" ? Text.of(child).toJSON() : child
-    );
-  }
-
-  switch (json.name) {
-    case "svg":
-      adjustNamespace(json, Namespace.SVG);
-      break;
-
-    case "math":
-      adjustNamespace(json, Namespace.MathML);
-  }
-
-  return json;
+  return h(name, attributes, children, style);
 }
 
 export namespace jsx {
   export namespace JSX {
     export type Element = import("./node/element").Element.JSON;
 
-    export interface IntrinsicElements {
-      [tag: string]: {} | { readonly [attribute: string]: unknown };
+    export interface IntrinsicProps {
+      [attribute: string]: unknown;
+      style?: Record<string, string>;
     }
-  }
-}
 
-function adjustNamespace(element: Element.JSON, namespace: Namespace): void {
-  element.namespace = namespace;
-
-  for (const child of element.children) {
-    if (child.type === "element") {
-      adjustNamespace(child as Element.JSON, namespace);
+    export interface IntrinsicElements {
+      [tag: string]: IntrinsicProps;
     }
   }
 }

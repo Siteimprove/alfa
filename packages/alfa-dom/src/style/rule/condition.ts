@@ -28,11 +28,11 @@ export abstract class Condition extends Grouping {
 }
 
 export namespace Condition {
-  export function isCondition(value: unknown): value is Condition {
-    return value instanceof Condition;
-  }
-
   export interface JSON extends Grouping.JSON {
     condition: string;
+  }
+
+  export function isCondition(value: unknown): value is Condition {
+    return value instanceof Condition;
   }
 }

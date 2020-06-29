@@ -20,6 +20,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-jasmine"
     },
     {
@@ -33,6 +36,9 @@
     },
     {
       "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

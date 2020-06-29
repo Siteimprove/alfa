@@ -231,72 +231,58 @@ export namespace Node {
         if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
-          accessibleNode = Role.from(node)
-            .flatMap((role) => {
-              // If the element has a presentational role, but is not allowed to
-              // be presentational, we fall back to its implicit role by not
-              // considering its explicit role.
+          accessibleNode = Role.from(node).flatMap<Node>((role) => {
+            if (role.some(Role.isPresentational)) {
+              return Branched.of(Container.of(node));
+            }
+
+            let attributes = Map.empty<string, string>();
+
+            // First pass: Look up implicit attributes on the role.
+            if (role.isSome()) {
+              const queue = [role.get()];
+
+              while (queue.length > 0) {
+                const role = queue.pop()!;
+
+                for (const [name, value] of role.characteristics.implicits) {
+                  attributes = attributes.set(name, value);
+                }
+
+                for (const name of role.characteristics.inherits) {
+                  for (const role of Role.lookup(name)) {
+                    queue.push(role);
+                  }
+                }
+              }
+            }
+
+            // Second pass: Look up implicit attributes on the feature mapping.
+            for (const namespace of node.namespace) {
+              for (const feature of Feature.lookup(namespace, node.name)) {
+                attributes = attributes.concat(feature.attributes(node));
+              }
+            }
+
+            // Third pass: Look up explicit `aria-*` attributes and set the
+            // ones that are allowed by the role.
+            for (const attribute of node.attributes) {
               if (
-                role.some(isPresentational) &&
-                !isAllowedPresentational(node)
+                attribute.name.startsWith("aria-") &&
+                role
+                  .orElse(() => Role.lookup("roletype"))
+                  .some((role) =>
+                    role.isAllowed(property("name", equals(attribute.name)))
+                  )
               ) {
-                return Role.from(node, { explicit: false });
+                attributes = attributes.set(attribute.name, attribute.value);
               }
+            }
 
-              return Branched.of(role);
-            })
-            .flatMap<Node>((role) => {
-              if (role.some(isPresentational)) {
-                return Branched.of(Container.of(node));
-              }
-
-              let attributes = Map.empty<string, string>();
-
-              // First pass: Look up implicit attributes on the role.
-              if (role.isSome()) {
-                const queue = [role.get()];
-
-                while (queue.length > 0) {
-                  const role = queue.pop()!;
-
-                  for (const [name, value] of role.characteristics.implicits) {
-                    attributes = attributes.set(name, value);
-                  }
-
-                  for (const name of role.characteristics.inherits) {
-                    for (const role of Role.lookup(name)) {
-                      queue.push(role);
-                    }
-                  }
-                }
-              }
-
-              // Second pass: Look up implicit attributes on the feature mapping.
-              for (const namespace of node.namespace) {
-                for (const feature of Feature.lookup(namespace, node.name)) {
-                  attributes = attributes.concat(feature.attributes(node));
-                }
-              }
-
-              // Third pass: Look up explicit `aria-*` attributes and set the
-              // ones that are allowed by the role.
-              for (const attribute of node.attributes) {
-                if (
-                  attribute.name.startsWith("aria-") &&
-                  role
-                    .orElse(() => Role.lookup("roletype"))
-                    .some((role) =>
-                      role.isAllowed(property("name", equals(attribute.name)))
-                    )
-                ) {
-                  attributes = attributes.set(attribute.name, attribute.value);
-                }
-              }
-
-              return getName(node, device).map((name) =>
-                Element.of(node, role, name, attributes)
-              );
-            });
+            return getName(node, device).map((name) =>
+              Element.of(node, role, name, attributes)
+            );
+          });
         }
       }
 
@@ -320,29 +306,3 @@ export namespace Node {
     });
   }
 }
-
-const isPresentational: Predicate<Role> = property(
-  "name",
-  equals("presentation", "none")
-);
-
-/**
- * Determine if an element is allowed to be presentational.
- *
- * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
- */
-const isAllowedPresentational: Predicate<dom.Element> = (element) => {
-  if (element.tabIndex().isSome()) {
-    return false;
-  }
-
-  return Role.lookup("roletype").some((role) => {
-    for (const attribute of role.characteristics.supports) {
-      if (element.attribute(attribute).isSome()) {
-        return false;
-      }
-    }
-
-    return true;
-  });
-};

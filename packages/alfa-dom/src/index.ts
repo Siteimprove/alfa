@@ -1,3 +1,5 @@
+export * from "./h";
+export * from "./jsx";
 export * from "./namespace";
 export * from "./node";
 export * from "./node/attribute";

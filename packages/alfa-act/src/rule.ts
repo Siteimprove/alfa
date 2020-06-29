@@ -1,3 +1,4 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -10,14 +11,15 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cache } from "./cache";
+import { Diagnostic } from "./diagnostic";
 import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 
 const { flatMap, flatten, reduce } = Iterable;
 
-export abstract class Rule<I, T, Q>
-  implements json.Serializable, earl.Serializable {
+export abstract class Rule<I, T = unknown, Q = unknown>
+  implements Equatable, json.Serializable, earl.Serializable {
   protected readonly _uri: string;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
 
@@ -36,6 +38,10 @@ export abstract class Rule<I, T, Q>
     outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q>>> {
     return this._evaluate(input, oracle, outcomes);
+  }
+
+  public equals(value: unknown): value is this {
+    return value instanceof Rule && value._uri === this._uri;
   }
 
   public abstract toJSON(): Rule.JSON;
@@ -67,8 +73,6 @@ export namespace Rule {
     return value instanceof Rule;
   }
 
-  export type Expectation = Option<Result<string, string>>;
-
   /**
    * We use a short-lived cache during audits for rules to store their outcomes.
    * It effectively acts as a memoization layer on top of each rule evaluation
@@ -96,8 +100,8 @@ export namespace Rule {
     >;
   }
 
-  export class Atomic<I, T, Q> extends Rule<I, T, Q> {
-    public static of<I, T, Q = unknown>(properties: {
+  export class Atomic<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = unknown>(properties: {
       uri: string;
       evaluate: Atomic.Evaluate<I, T, Q>;
     }): Atomic<I, T, Q> {
@@ -105,8 +109,8 @@ export namespace Rule {
     }
 
     private constructor(uri: string, evaluate: Atomic.Evaluate<I, T, Q>) {
-      super(uri, (input, oracle, outcomes) => {
-        return outcomes.get(this, () => {
+      super(uri, (input, oracle, outcomes) =>
+        outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
 
           return Future.traverse(applicability(), (interview) =>
@@ -126,8 +130,8 @@ export namespace Rule {
                 resolve(target, Record.of(expectations(target)), this, oracle)
               );
             });
-        });
-      });
+        })
+      );
     }
 
     public toJSON(): Atomic.JSON {
@@ -145,10 +149,10 @@ export namespace Rule {
 
     export interface Evaluate<I, T, Q> {
       (input: Readonly<I>): {
-        applicability(): Iterable<Interview<Q, T, T | Option<T>>>;
+        applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
         expectations(
           target: T
-        ): { [key: string]: Interview<Q, T, Expectation> };
+        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
       };
     }
   }
@@ -157,8 +161,8 @@ export namespace Rule {
     return value instanceof Atomic;
   }
 
-  export class Composite<I, T, Q> extends Rule<I, T, Q> {
-    public static of<I, T, Q = unknown>(properties: {
+  export class Composite<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = unknown>(properties: {
       uri: string;
       composes: Iterable<Rule<I, T, Q>>;
       evaluate: Composite.Evaluate<I, T, Q>;
@@ -177,9 +181,9 @@ export namespace Rule {
       composes: Iterable<Rule<I, T, Q>>,
       evaluate: Composite.Evaluate<I, T, Q>
     ) {
-      super(uri, (input, oracle, outcomes) => {
-        return outcomes.get(this, () => {
-          return Future.traverse(composes, (rule) =>
+      super(uri, (input, oracle, outcomes) =>
+        outcomes.get(this, () =>
+          Future.traverse(this._composes, (rule) =>
             rule.evaluate(input, oracle, outcomes)
           )
             .map((outcomes) =>
@@ -210,9 +214,9 @@ export namespace Rule {
                     oracle
                   )
               );
-            });
-        });
-      });
+            })
+        )
+      );
 
       this._composes = Array.from(composes);
     }
@@ -241,7 +245,7 @@ export namespace Rule {
       (input: Readonly<I>): {
         expectations(
           outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): { [key: string]: Interview<Q, T, Expectation> };
+        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
       };
     }
   }
@@ -255,7 +259,9 @@ export namespace Rule {
 
 function resolve<I, T, Q>(
   target: T,
-  expectations: Record<{ [key: string]: Interview<Q, T, Rule.Expectation> }>,
+  expectations: Record<{
+    [key: string]: Interview<Q, T, Option<Result<Diagnostic>>>;
+  }>,
   rule: Rule<I, T, Q>,
   oracle: Oracle<Q>
 ): Future<Outcome.Applicable<I, T, Q>> {
@@ -269,15 +275,10 @@ function resolve<I, T, Q>(
       (expectations, [id, expectation]) =>
         expectations.flatMap((expectations) =>
           expectation.map((expectation) =>
-            expectations.push([
-              id,
-              expectation.map((value) =>
-                value.map(normalize).mapErr(normalize)
-              ),
-            ])
+            expectations.append([id, expectation])
           )
         ),
-      Option.of(List.empty<[string, Rule.Expectation]>())
+      Option.of(List.empty<[string, Option<Result<Diagnostic>>]>())
     )
       .map((expectations) => {
         return Outcome.from(rule, target, Record.from(expectations));
@@ -286,8 +287,4 @@ function resolve<I, T, Q>(
         return Outcome.CantTell.of(rule, target);
       })
   );
-}
-
-function normalize(string: string): string {
-  return string.replace(/\s+/g, " ").trim();
 }

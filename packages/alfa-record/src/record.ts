@@ -88,6 +88,10 @@ export class Record<T>
     yield* this._values;
   }
 
+  public *entries(): Iterable<Record.Entry<T>> {
+    yield* this;
+  }
+
   public *[Symbol.iterator](): Iterator<Record.Entry<T>> {
     let i = 0;
 
@@ -128,6 +132,10 @@ export namespace Record {
 
   export interface JSON {
     [key: string]: json.JSON;
+  }
+
+  export function isRecord<T>(value: unknown): value is Record<T> {
+    return value instanceof Record;
   }
 
   export function from<T>(entries: Iterable<Entry<T>>): Record<T> {

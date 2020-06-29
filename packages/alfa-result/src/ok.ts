@@ -35,6 +35,10 @@ export class Ok<T> implements Result<T, never> {
     return this;
   }
 
+  public mapOrElse<E, U>(ok: Mapper<T, U>): U {
+    return ok(this._value);
+  }
+
   public flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F> {
     return mapper(this._value);
   }

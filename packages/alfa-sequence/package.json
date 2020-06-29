@@ -1,19 +1,15 @@
 {
-  "private": true,
+  "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-sequence",
-  "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
-  "keywords": [
-    "a11y",
-    "accessibility",
-    "aria",
-    "typescript",
-    "wcag"
-  ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "description": "An implementation of a lazy, immutable sequence structure, which is similar to a list but lazily evaluated",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-sequence"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -22,19 +18,22 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "^0.0.0",
-    "@siteimprove/alfa-foldable": "^0.0.0",
-    "@siteimprove/alfa-functor": "^0.0.0",
-    "@siteimprove/alfa-json": "^0.0.0",
-    "@siteimprove/alfa-lazy": "^0.0.0",
-    "@siteimprove/alfa-map": "^0.0.0",
-    "@siteimprove/alfa-mapper": "^0.0.0",
-    "@siteimprove/alfa-monad": "^0.0.0",
-    "@siteimprove/alfa-option": "^0.0.0",
-    "@siteimprove/alfa-predicate": "^0.0.0",
-    "@siteimprove/alfa-reducer": "^0.0.0"
+    "@siteimprove/alfa-collection": "^0.2.0",
+    "@siteimprove/alfa-equatable": "^0.2.0",
+    "@siteimprove/alfa-hash": "^0.2.0",
+    "@siteimprove/alfa-json": "^0.2.0",
+    "@siteimprove/alfa-lazy": "^0.2.0",
+    "@siteimprove/alfa-map": "^0.2.0",
+    "@siteimprove/alfa-mapper": "^0.2.0",
+    "@siteimprove/alfa-option": "^0.2.0",
+    "@siteimprove/alfa-predicate": "^0.2.0",
+    "@siteimprove/alfa-reducer": "^0.2.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0"
+    "@siteimprove/alfa-test": "^0.2.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }

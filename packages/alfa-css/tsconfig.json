@@ -40,6 +40,7 @@
     "src/value/transform/translate.ts",
     "src/value/unit.ts",
     "src/value/url.ts",
+    "test/syntax/declaration.spec.ts",
     "test/syntax/lexer.spec.ts"
   ],
   "references": [
@@ -54,6 +55,9 @@
     },
     {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-math"

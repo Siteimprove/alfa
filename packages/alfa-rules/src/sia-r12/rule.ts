@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,11 +9,10 @@ import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
@@ -26,16 +25,12 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 not(hasInputType(equals("image"))),
-                and(
-                  hasNamespace(equals(Namespace.HTML)),
-                  and(
-                    hasRole(hasName(equals("button"))),
-                    not(isIgnored(device))
-                  )
-                )
+                hasNamespace(Namespace.HTML),
+                hasRole("button"),
+                not(isIgnored(device))
               )
             )
           );
@@ -55,9 +50,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Ok.of("The button has an accessible name");
+  export const HasName = Ok.of(
+    Diagnostic.of(`The button has an accessible name`)
+  );
 
   export const HasNoName = Err.of(
-    "The button does not have an accessible name"
+    Diagnostic.of(`The button does not have an accessible name`)
   );
 }

@@ -7,10 +7,22 @@
       "path": "../alfa-assert"
     },
     {
-      "path": "../alfa-dom"
+      "path": "../alfa-highlight"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

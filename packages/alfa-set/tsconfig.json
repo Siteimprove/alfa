@@ -4,13 +4,10 @@
   "files": ["src/index.ts", "src/set.ts"],
   "references": [
     {
-      "path": "../alfa-equatable"
+      "path": "../alfa-collection"
     },
     {
-      "path": "../alfa-foldable"
-    },
-    {
-      "path": "../alfa-functor"
+      "path": "../alfa-hash"
     },
     {
       "path": "../alfa-iterable"
@@ -23,9 +20,6 @@
     },
     {
       "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-monad"
     },
     {
       "path": "../alfa-option"

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
@@ -9,12 +9,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { some } = Iterable;
-const { and, not, equals, isString } = Predicate;
+const { and, not, isString } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r68.html",
@@ -25,10 +25,11 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(not(isIgnored(device)), hasRole(hasOwnedElements()))
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                not(isIgnored(device)),
+                hasRole(hasOwnedElements())
               )
             )
           );
@@ -49,11 +50,13 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasCorrectOwnedElements = Ok.of(
-    "The element only owns elements as required by its semantic role"
+    Diagnostic.of(
+      `The element only owns elements as required by its semantic role`
+    )
   );
 
   export const HasIncorrectOwnedElements = Err.of(
-    "The element owns elements not required by its semantic role"
+    Diagnostic.of(`The element owns elements not required by its semantic role`)
   );
 }
 
@@ -99,7 +102,13 @@ function owns(roles: Array<string>): Predicate<Node> {
     const [next, ...remaining] = roles;
 
     if (node.role().some((role) => next === role.name)) {
-      return remaining.length === 0 || node.children().every(owns(remaining));
+      return (
+        remaining.length === 0 ||
+        node
+          .children()
+          .filter((node) => Element.isElement(node.node))
+          .every(owns(remaining))
+      );
     }
 
     return false;

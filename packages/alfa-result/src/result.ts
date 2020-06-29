@@ -10,7 +10,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
 import { Ok } from "./ok";
 
-export interface Result<T, E>
+export interface Result<T, E = T>
   extends Monad<T>,
     Functor<T>,
     Foldable<T>,
@@ -21,6 +21,7 @@ export interface Result<T, E>
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
+  mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   and<U>(result: Result<U, E>): Result<U, E>;

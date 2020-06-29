@@ -1,4 +1,5 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Role } from "@siteimprove/alfa-aria";
 import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -9,11 +10,12 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasName } from "../common/predicate/has-name";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+const { and, not, nor, property } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
@@ -25,7 +27,10 @@ export default Rule.Atomic.of<Page, Text>({
           .filter(
             and(
               Text.isText,
-              and(property("data", not(isEmpty)), not(isIgnored(device)))
+              and(
+                property("data", nor(isEmpty, isWhitespace)),
+                not(isIgnored(device))
+              )
             )
           );
       },
@@ -39,9 +44,7 @@ export default Rule.Atomic.of<Page, Text>({
                 .some((ancestor) =>
                   ancestor
                     .role()
-                    .some((role) =>
-                      role.inheritsFrom(hasName(equals("landmark")))
-                    )
+                    .some((role) => role.inheritsFrom(hasName("landmark")))
                 )
             ),
             () => Outcomes.IsIncludedInLandmark,
@@ -55,10 +58,10 @@ export default Rule.Atomic.of<Page, Text>({
 
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
-    "The text is included in a landmark region"
+    Diagnostic.of(`The text is included in a landmark region`)
   );
 
   export const IsNotIncludedInLandmark = Err.of(
-    "The text is not included in a landmark region"
+    Diagnostic.of(`The text is not included in a landmark region`)
   );
 }

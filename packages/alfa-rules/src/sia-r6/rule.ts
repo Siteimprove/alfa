@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -21,13 +21,10 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document.children().filter(
           and(
-            Element.isElement,
+            isDocumentElement,
             and(
-              isDocumentElement(),
-              and(
-                hasAttribute("lang", (value) => Language.parse(value).isSome()),
-                hasAttribute("xml:lang", not(isEmpty))
-              )
+              hasAttribute("lang", (value) => Language.parse(value).isSome()),
+              hasAttribute("xml:lang", not(isEmpty))
             )
           )
         );
@@ -56,10 +53,14 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasMatchingLanguages = Ok.of(
-    "The lang and xml:lang attributes have matching primary language subtags"
+    Diagnostic.of(
+      `The \`lang\` and \`xml:lang\` attributes have matching primary language subtags`
+    )
   );
 
   export const HasNonMatchingLanguages = Err.of(
-    "The lang and xml:lang attributes do not have matching primary language subtags"
+    Diagnostic.of(
+      `The \`lang\` and \`xml:lang\` attributes do not have matching primary language subtags`
+    )
   );
 }

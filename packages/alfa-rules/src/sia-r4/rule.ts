@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,16 +12,14 @@ import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, nor } = Predicate;
+const { nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r4.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return document
-          .children()
-          .filter(and(Element.isElement, isDocumentElement()));
+        return document.children().filter(isDocumentElement);
       },
 
       expectations(target) {
@@ -39,10 +37,14 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasLanguage = Ok.of(
-    "The lang attribute exists and is neither empty nor only whitespace"
+    Diagnostic.of(
+      `The \`lang\` attribute exists and is neither empty nor only whitespace`
+    )
   );
 
   export const HasNoLanguage = Err.of(
-    "The lang attribute is either missing, empty, or only whitespace"
+    Diagnostic.of(
+      `The \`lang\` attribute is either missing, empty, or only whitespace`
+    )
   );
 }

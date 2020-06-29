@@ -47,14 +47,14 @@ export class FontFace extends Rule {
 }
 
 export namespace FontFace {
-  export function isFontFace(value: unknown): value is FontFace {
-    return value instanceof FontFace;
-  }
-
   export interface JSON {
     [key: string]: json.JSON;
     type: "font-face";
     style: Block.JSON;
+  }
+
+  export function isFontFace(value: unknown): value is FontFace {
+    return value instanceof FontFace;
   }
 
   export function fromFontFace(

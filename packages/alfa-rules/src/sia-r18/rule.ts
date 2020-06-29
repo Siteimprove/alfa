@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -11,11 +11,10 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, equals, test } = Predicate;
+const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
@@ -41,7 +40,9 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             global.has(target.name) ||
               test(
-                hasRole((role) => role.isAllowed(hasName(equals(target.name)))),
+                hasRole((role) =>
+                  role.isAllowed((attribute) => attribute.name === target.name)
+                ),
                 target.owner.get()
               ),
             () => Outcomes.IsAllowed,
@@ -55,10 +56,14 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
-    "The attribute is allowed for the element on which it is specified"
+    Diagnostic.of(
+      `The attribute is allowed for the element on which it is specified`
+    )
   );
 
   export const IsNotAllowed = Err.of(
-    "The attribute is not allowed for the element on which it is specified"
+    Diagnostic.of(
+      `The attribute is not allowed for the element on which it is specified`
+    )
   );
 }

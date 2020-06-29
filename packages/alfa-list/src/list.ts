@@ -1,11 +1,9 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
+import { Collection } from "@siteimprove/alfa-collection";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
@@ -16,32 +14,25 @@ import { Branch, Empty, Leaf, Node } from "./node";
 
 const { not } = Predicate;
 
-export class List<T>
-  implements
-    Monad<T>,
-    Functor<T>,
-    Foldable<T>,
-    Iterable<T>,
-    Equatable,
-    Serializable {
+export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
-    return values.reduce((list, value) => list.push(value), List.empty<T>());
+    return values.reduce((list, value) => list._push(value), List.empty<T>());
   }
 
-  private static _empty = new List<never>(Empty.empty(), Empty.empty(), 0, 0);
+  private static _empty = new List<never>(Empty, Empty, 0, 0);
 
   public static empty<T = never>(): List<T> {
     return this._empty;
   }
 
-  private readonly _head: Empty<T> | Leaf<T> | Branch<T>;
-  private readonly _tail: Empty<T> | Leaf<T>;
+  private readonly _head: Empty | Leaf<T> | Branch<T>;
+  private readonly _tail: Empty | Leaf<T>;
   private readonly _shift: number;
   private readonly _size: number;
 
   private constructor(
-    head: Empty<T> | Leaf<T> | Branch<T>,
-    tail: Empty<T> | Leaf<T>,
+    head: Empty | Leaf<T> | Branch<T>,
+    tail: Empty | Leaf<T>,
     shift: number,
     size: number
   ) {
@@ -59,32 +50,46 @@ export class List<T>
     return this._tail.isEmpty();
   }
 
-  public map<U>(mapper: Mapper<T, U>): List<U> {
-    return new List<U>(
-      (this._head as Node<T>).map(mapper) as Empty<U> | Leaf<U> | Branch<U>,
-      (this._tail as Node<T>).map(mapper) as Empty<U> | Leaf<U>,
+  public map<U>(mapper: Mapper<T, U, [number]>): List<U> {
+    let index = 0;
+
+    const tail = (this._tail as Node<T>).map((value) => mapper(value, index++));
+
+    const head = (this._head as Node<T>).map((value) => mapper(value, index++));
+
+    return new List(
+      head as Empty | Leaf<U> | Branch<U>,
+      tail as Empty | Leaf<U>,
       this._shift,
       this._size
     );
   }
 
-  public flatMap<U>(mapper: Mapper<T, List<U>>): List<U> {
+  public flatMap<U>(mapper: Mapper<T, List<U>, [number]>): List<U> {
     return this.reduce(
-      (list, value) => list.concat(mapper(value)),
+      (list, value, index) => list.concat(mapper(value, index)),
       List.empty<U>()
     );
   }
 
-  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+  public reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U {
     return Iterable.reduce(this, reducer, accumulator);
   }
 
-  public concat(iterable: Iterable<T>): List<T> {
-    return Iterable.reduce<T, List<T>>(
-      iterable,
-      (list, value) => list.push(value),
-      this
-    );
+  public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
+  public filter<U extends T>(predicate: Predicate<T, U, [number]>): List<U> {
+    return List.from(Iterable.filter(this, predicate));
+  }
+
+  public reject(predicate: Predicate<T, T, [number]>): List<T> {
+    return this.filter(not(predicate));
+  }
+
+  public find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U> {
+    return Iterable.find(this, predicate);
   }
 
   public includes(value: T): boolean {
@@ -99,16 +104,99 @@ export class List<T>
     return Iterable.every(this, predicate);
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): List<U> {
-    return List.from(Iterable.filter(this, predicate));
-  }
-
-  public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return Iterable.find(this, predicate);
-  }
-
-  public count(predicate: Predicate<T>): number {
+  public count(predicate: Predicate<T, T, [number]>): number {
     return Iterable.count(this, predicate);
+  }
+
+  public get(index: number): Option<T> {
+    if (index < 0 || index >= this._size || this._tail.isEmpty()) {
+      return None;
+    }
+
+    const offset = this._size - this._tail.values.length;
+
+    let value: Option<T>;
+
+    if (index < offset) {
+      value = this._head.get(index, this._shift - Node.Bits);
+    } else {
+      value = this._tail.get(index - offset);
+    }
+
+    return value;
+  }
+
+  public has(index: number): boolean {
+    return index >= 0 && index < this._size;
+  }
+
+  public set(index: number, value: T): List<T> {
+    if (index < 0 || index >= this._size || this._tail.isEmpty()) {
+      return this;
+    }
+
+    const offset = this._size - this._tail.values.length;
+
+    let head = this._head;
+    let tail = this._tail;
+
+    if (index < offset) {
+      if (head.isEmpty()) {
+        return this;
+      }
+
+      head = head.set(index, value, this._shift);
+
+      if (head === this._head) {
+        return this;
+      }
+    } else {
+      tail = tail.set(index - offset, value);
+
+      if (tail === this._tail) {
+        return this;
+      }
+    }
+
+    return new List(head, tail, this._shift, this._size);
+  }
+
+  public insert(index: number, value: T): List<T> {
+    if (index < 0 || index > this.size) {
+      return this;
+    }
+
+    if (index === 0) {
+      return this.prepend(value);
+    }
+
+    if (index === this.size) {
+      return this.append(value);
+    }
+
+    return List.from(
+      Iterable.concat(
+        Iterable.take(this, index),
+        Iterable.from([value]),
+        Iterable.skip(this, index)
+      )
+    );
+  }
+
+  public append(value: T): List<T> {
+    return this._push(value);
+  }
+
+  public prepend(value: T): List<T> {
+    return List.of(value).concat(this);
+  }
+
+  public concat(iterable: Iterable<T>): List<T> {
+    return Iterable.reduce<T, List<T>>(
+      iterable,
+      (list, value) => list._push(value),
+      this
+    );
   }
 
   public first(): Option<T> {
@@ -123,24 +211,38 @@ export class List<T>
     return this.takeWhile(() => count-- > 0);
   }
 
-  public takeWhile(predicate: Predicate<T>): List<T> {
+  public takeWhile(predicate: Predicate<T, T, [number]>): List<T> {
     return List.from(Iterable.takeWhile(this, predicate));
   }
 
-  public takeUntil(predicate: Predicate<T>): List<T> {
+  public takeUntil(predicate: Predicate<T, T, [number]>): List<T> {
     return this.takeWhile(not(predicate));
+  }
+
+  public takeLast(count: number = 1): List<T> {
+    return List.from(Iterable.takeLast(this, count));
   }
 
   public skip(count: number): List<T> {
     return this.skipWhile(() => count-- > 0);
   }
 
-  public skipWhile(predicate: Predicate<T>): List<T> {
+  public skipWhile(predicate: Predicate<T, T, [number]>): List<T> {
     return List.from(Iterable.skipWhile(this, predicate));
   }
 
-  public skipUntil(predicate: Predicate<T>): List<T> {
+  public skipUntil(predicate: Predicate<T, T, [number]>): List<T> {
     return this.skipWhile(not(predicate));
+  }
+
+  public skipLast(count: number = 1): List<T> {
+    let list: List<T> = this;
+
+    while (count-- > 0) {
+      list = list._pop();
+    }
+
+    return list;
   }
 
   public rest(): List<T> {
@@ -168,7 +270,7 @@ export class List<T>
         groups
           .get(group)
           .getOrElse(() => List.empty<T>())
-          .push(value)
+          ._push(value)
       );
     }, Map.empty<K, List<T>>());
   }
@@ -181,52 +283,43 @@ export class List<T>
     return List.from(Iterable.intersect(this, list));
   }
 
-  public get(index: number): Option<T> {
-    if (index < 0 || index >= this._size || this._tail.isEmpty()) {
-      return None;
-    }
-
-    const offset = this._size - this._tail.values.length;
-
-    let value: Option<T>;
-
-    if (index < offset) {
-      value = this._head.get(index, this._shift - Node.Bits);
-    } else {
-      value = this._tail.get(index - offset);
-    }
-
-    return value;
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof List &&
+      value._size === this._size &&
+      value._head.equals(this._head) &&
+      value._tail.equals(this._tail)
+    );
   }
 
-  public set(index: number, value: T): List<T> {
-    if (index < 0 || index >= this._size || this._tail.isEmpty()) {
-      return this;
+  public hash(hash: Hash): void {
+    for (const value of this) {
+      Hashable.hash(hash, value);
     }
 
-    const offset = this._size - this._tail.values.length;
-
-    let head = this._head;
-    let tail = this._tail;
-
-    if (index < offset) {
-      head = head.set(index, value, this._shift);
-
-      if (head === this._head) {
-        return this;
-      }
-    } else {
-      tail = tail.set(index - offset, value);
-
-      if (tail === this._tail) {
-        return this;
-      }
-    }
-
-    return new List(head, tail, this._shift, this._size);
+    Hash.writeUint32(hash, this._size);
   }
 
-  public push(value: T): List<T> {
+  public *[Symbol.iterator](): Iterator<T> {
+    yield* this._head;
+    yield* this._tail;
+  }
+
+  public toArray(): Array<T> {
+    return [...this];
+  }
+
+  public toJSON(): List.JSON {
+    return this.toArray().map(Serializable.toJSON);
+  }
+
+  public toString(): string {
+    const values = this.join(", ");
+
+    return `List [${values === "" ? "" : ` ${values} `}]`;
+  }
+
+  private _push(value: T): List<T> {
     // If no tail exists yet, this means that the list is empty. We therefore
     // create a new tail with the pushed value. As the current list is empty,
     // it won't have a head. As such, there's no need to pass the head along.
@@ -235,7 +328,7 @@ export class List<T>
     // Out: List { head: Empty, tail: Leaf(value) }
     //
     if (this._tail.isEmpty()) {
-      return new List(Empty.empty(), Leaf.of([value]), 0, 1);
+      return new List(Empty, Leaf.of([value]), 0, 1);
     }
 
     // If the tail has capacity for another value, we concatenate the pushed
@@ -318,7 +411,7 @@ export class List<T>
     return new List(head, Leaf.of([value]), shift, this._size + 1);
   }
 
-  public pop(): List<T> {
+  private _pop(): List<T> {
     // If the list has no tail then it is empty. We therefore return the list
     // itself as the pop has no effect.
     if (this._tail.isEmpty()) {
@@ -353,7 +446,7 @@ export class List<T>
 
     if (this._head.isLeaf() || this._head.isEmpty()) {
       return new List(
-        Empty.empty(),
+        Empty,
         this._head,
         this._shift - Node.Bits,
         this._size - 1
@@ -406,34 +499,6 @@ export class List<T>
     //
     return new List(head, tail, shift, this._size - 1);
   }
-
-  public equals(value: unknown): value is this {
-    return (
-      value instanceof List &&
-      value._size === this._size &&
-      value._head.equals(this._head) &&
-      value._tail.equals(this._tail)
-    );
-  }
-
-  public *[Symbol.iterator](): Iterator<T> {
-    yield* this._head;
-    yield* this._tail;
-  }
-
-  public toArray(): Array<T> {
-    return [...this];
-  }
-
-  public toJSON(): List.JSON {
-    return this.toArray().map(Serializable.toJSON);
-  }
-
-  public toString(): string {
-    const values = this.join(", ");
-
-    return `List [${values === "" ? "" : ` ${values} `}]`;
-  }
 }
 
 export namespace List {
@@ -444,6 +509,12 @@ export namespace List {
   }
 
   export function from<T>(iterable: Iterable<T>): List<T> {
-    return isList<T>(iterable) ? iterable : List.of(...iterable);
+    return isList<T>(iterable)
+      ? iterable
+      : Iterable.reduce(
+          iterable,
+          (list, value) => list.append(value),
+          List.empty<T>()
+        );
   }
 }

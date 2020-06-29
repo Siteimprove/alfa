@@ -13,6 +13,8 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
+import * as predicate from "./element/predicate";
+
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -26,7 +28,7 @@ export class Element extends Node implements Slot, Slotable {
     style: Option<Block> = None,
     parent: Option<Node> = None,
     shadow: Option<Mapper<Element, Shadow>> = None,
-    content: Option<Document> = None
+    content: Option<Mapper<Element, Document>> = None
   ): Element {
     return new Element(
       namespace,
@@ -60,7 +62,7 @@ export class Element extends Node implements Slot, Slotable {
     style: Option<Block>,
     parent: Option<Node>,
     shadow: Option<Mapper<Element, Shadow>>,
-    content: Option<Document>
+    content: Option<Mapper<Element, Document>>
   ) {
     super(children, parent);
 
@@ -72,7 +74,7 @@ export class Element extends Node implements Slot, Slotable {
     this._attributes = Array.from(attributes(this));
     this._style = style;
     this._shadow = self.apply(shadow);
-    this._content = content;
+    this._content = self.apply(content);
 
     this._id = this.attribute("id").map((attr) => attr.value);
 
@@ -247,13 +249,15 @@ export class Element extends Node implements Slot, Slotable {
     return Slot.findSlotables(this);
   }
 
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding().count(
+    const index = this.preceding(options).count(
       and(Element.isElement, (element) => element._name === this._name)
     );
 
@@ -342,11 +346,17 @@ export namespace Element {
       Option.from(element.shadow).map((shadow) => (self) =>
         Shadow.fromShadow(shadow, self)
       ),
-      Option.from(element.content).map((content) =>
-        Document.fromDocument(content)
+      Option.from(element.content).map((content) => (self) =>
+        Document.fromDocument(content, Option.of(self))
       )
     );
   }
+
+  export const hasName = predicate.hasName;
+
+  export const hasNamespace = predicate.hasNamespace;
+
+  export const hasId = predicate.hasId;
 }
 
 function indent(input: string): string {

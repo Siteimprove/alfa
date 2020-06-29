@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
@@ -12,48 +12,38 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasCategory } from "../common/predicate/has-category";
 import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasNameFrom } from "../common/predicate/has-name-from";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 
-const { and, not, equals, test } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { and, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(
+        return document.descendants({ flattened: true, nested: true }).filter(
+          and(
+            isElement,
             and(
-              Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole(
                 and(
-                  hasRole(
-                    and(
-                      hasCategory(equals(Role.Category.Widget)),
-                      hasNameFrom(equals("content"))
-                    )
-                  ),
-                  and(
-                    hasDescendant(
-                      and(
-                        Text.isText,
-                        and(isVisible(device), not(isIgnored(device)))
-                      ),
-                      { flattened: true }
-                    ),
-                    hasAccessibleName(device)
-                  )
+                  hasCategory(equals(Role.Category.Widget)),
+                  hasNameFrom(equals("content"))
                 )
-              )
+              ),
+              hasDescendant(and(Text.isText, isPerceivable(device)), {
+                flattened: true,
+              }),
+              hasAccessibleName(device)
             )
-          );
+          )
+        );
       },
 
       expectations(target) {
@@ -106,14 +96,20 @@ function getVisibleTextContent(element: Element, device: Device): string {
 
 export namespace Outcomes {
   export const VisibleIsInName = Ok.of(
-    "The visible text content of the element is included within its accessible name"
+    Diagnostic.of(
+      `The visible text content of the element is included within its accessible name`
+    )
   );
 
   export const NameIsNotLanguage = Ok.of(
-    "The accessible name of the element does not express anything in human language"
+    Diagnostic.of(
+      `The accessible name of the element does not express anything in human language`
+    )
   );
 
   export const VisibleIsNotInName = Err.of(
-    "The visible text content of the element is not included within its accessible name"
+    Diagnostic.of(
+      `The visible text content of the element is not included within its accessible name`
+    )
   );
 }

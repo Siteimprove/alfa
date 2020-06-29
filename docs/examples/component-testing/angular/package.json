@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "component-testing-angular",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "scripts": {
     "test": "jest"
   },
@@ -34,8 +34,8 @@
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-angular": "^0.0.0",
-    "@siteimprove/alfa-jest": "^0.0.0",
+    "@siteimprove/alfa-angular": "^0.2.0",
+    "@siteimprove/alfa-jest": "^0.2.0",
     "@types/jest": "^24.0.13",
     "jest": "^24.8.0",
     "jest-preset-angular": "^7.1.1"

@@ -4,17 +4,15 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-const { not } = Predicate;
+const { not, isObject } = Predicate;
 
-export interface Iterable<T> {
-  [Symbol.iterator](): Iterator<T>;
-}
+// Re-export the global `Iterable` interface to ensure that it merges with the
+// `Iterable` namespace.
+export type Iterable<T> = globalThis.Iterable<T>;
 
 export namespace Iterable {
   export function isIterable<T>(value: unknown): value is Iterable<T> {
-    return (
-      typeof value === "object" && value !== null && Symbol.iterator in value
-    );
+    return isObject(value) && Symbol.iterator in value;
   }
 
   export function* from<T>(arrayLike: ArrayLike<T>): Iterable<T> {
@@ -25,7 +23,13 @@ export namespace Iterable {
 
   export function* empty<T>(): Iterable<T> {}
 
-  export function isEmpty<T>(iterable: Iterable<T>): boolean {
+  export function size<T>(iterable: Iterable<T>): number {
+    return reduce(iterable, (size) => size + 1, 0);
+  }
+
+  export function isEmpty<T>(
+    iterable: Iterable<T>
+  ): iterable is Iterable<never> {
     for (const _ of iterable) {
       return false;
     }
@@ -33,68 +37,74 @@ export namespace Iterable {
     return true;
   }
 
-  export function size<T>(iterable: Iterable<T>): number {
-    return reduce(iterable, (size) => size + 1, 0);
-  }
-
   export function* map<T, U = T>(
     iterable: Iterable<T>,
-    mapper: Mapper<T, U>
+    mapper: Mapper<T, U, [number]>
   ): Iterable<U> {
+    let index = 0;
+
     for (const value of iterable) {
-      yield mapper(value);
+      yield mapper(value, index);
     }
   }
 
   export function* flatMap<T, U = T>(
     iterable: Iterable<T>,
-    mapper: Mapper<T, Iterable<U>>
+    mapper: Mapper<T, Iterable<U>, [number]>
   ): Iterable<U> {
+    let index = 0;
+
     for (const value of iterable) {
-      yield* mapper(value);
+      yield* mapper(value, index++);
     }
   }
 
-  export function flatten<T>(iterable: Iterable<Iterable<T>>): Iterable<T> {
-    return flatMap(iterable, (iterable) => iterable);
+  export function* flatten<T>(iterable: Iterable<Iterable<T>>): Iterable<T> {
+    for (const value of iterable) {
+      yield* value;
+    }
   }
 
   export function reduce<T, U = T>(
     iterable: Iterable<T>,
-    reducer: Reducer<T, U>,
+    reducer: Reducer<T, U, [number]>,
     accumulator: U
   ): U {
+    let index = 0;
+
     for (const value of iterable) {
-      accumulator = reducer(accumulator, value);
+      accumulator = reducer(accumulator, value, index++);
     }
 
     return accumulator;
   }
 
-  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
-    const ita = a[Symbol.iterator]();
-    const itb = b[Symbol.iterator]();
+  export function* filter<T, U extends T = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, U, [number]>
+  ): Iterable<U> {
+    let index = 0;
 
-    while (true) {
-      const a = ita.next();
-      const b = itb.next();
-
-      switch (a.done) {
-        case true:
-          return b.done === true;
-
-        default:
-          if (b.done === true || !Equatable.equals(a.value, b.value)) {
-            return false;
-          }
+    for (const value of iterable) {
+      if (predicate(value, index++)) {
+        yield value;
       }
     }
   }
 
-  export function* concat<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
-    for (const iterable of iterables) {
-      yield* iterable;
+  export function find<T, U extends T = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, U, [number]>
+  ): Option<U> {
+    let index = 0;
+
+    for (const value of iterable) {
+      if (predicate(value, index++)) {
+        return Some.of(value);
+      }
     }
+
+    return None;
   }
 
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
@@ -103,10 +113,12 @@ export namespace Iterable {
 
   export function some<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): boolean {
+    let index = 0;
+
     for (const value of iterable) {
-      if (predicate(value)) {
+      if (predicate(value, index++)) {
         return true;
       }
     }
@@ -116,10 +128,12 @@ export namespace Iterable {
 
   export function every<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): boolean {
+    let index = 0;
+
     for (const value of iterable) {
-      if (!predicate(value)) {
+      if (!predicate(value, index++)) {
         return false;
       }
     }
@@ -127,43 +141,29 @@ export namespace Iterable {
     return true;
   }
 
-  export function* filter<T, U extends T = T>(
-    iterable: Iterable<T>,
-    predicate: Predicate<T, U>
-  ): Iterable<U> {
-    for (const value of iterable) {
-      if (predicate(value)) {
-        yield value;
-      }
-    }
-  }
-
-  export function find<T, U extends T = T>(
-    iterable: Iterable<T>,
-    predicate: Predicate<T, U>
-  ): Option<U> {
-    for (const value of iterable) {
-      if (predicate(value)) {
-        return Some.of(value);
-      }
-    }
-
-    return None;
-  }
-
   export function count<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): number {
     return reduce(
       iterable,
-      (count, value) => (predicate(value) ? count + 1 : count),
+      (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
     );
   }
 
   export function get<T>(iterable: Iterable<T>, index: number): Option<T> {
     return index < 0 ? None : first(skip(iterable, index));
+  }
+
+  export function has<T>(iterable: Iterable<T>, index: number): boolean {
+    return index < 0 ? false : !isEmpty(skip(iterable, index));
+  }
+
+  export function* concat<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
+    for (const iterable of iterables) {
+      yield* iterable;
+    }
   }
 
   export function first<T>(iterable: Iterable<T>): Option<T> {
@@ -184,16 +184,28 @@ export namespace Iterable {
     return Option.from(last);
   }
 
-  export function take<T>(iterable: Iterable<T>, count: number): Iterable<T> {
-    return takeWhile(iterable, () => count-- > 0);
+  export function* take<T>(iterable: Iterable<T>, count: number): Iterable<T> {
+    const iterator = iterable[Symbol.iterator]();
+
+    while (count-- > 0) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
   }
 
   export function* takeWhile<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): Iterable<T> {
+    let index = 0;
+
     for (const value of iterable) {
-      if (predicate(value)) {
+      if (predicate(value, index++)) {
         yield value;
       } else {
         break;
@@ -203,23 +215,63 @@ export namespace Iterable {
 
   export function takeUntil<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): Iterable<T> {
     return takeWhile(iterable, not(predicate));
   }
 
-  export function skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
-    return skipWhile(iterable, () => count-- > 0);
+  export function* takeLast<T>(
+    iterable: Iterable<T>,
+    count: number = 1
+  ): Iterable<T> {
+    if (count <= 0) {
+      return;
+    }
+
+    const last: Array<T> = [];
+
+    for (const value of iterable) {
+      last.push(value);
+
+      if (last.length > count) {
+        last.shift();
+      }
+    }
+
+    yield* last;
+  }
+
+  export function* skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
+    const iterator = iterable[Symbol.iterator]();
+
+    while (count-- > 0) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+    }
+
+    while (true) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
   }
 
   export function* skipWhile<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): Iterable<T> {
+    let index = 0;
     let skipped = false;
 
     for (const value of iterable) {
-      if (!skipped && predicate(value)) {
+      if (!skipped && predicate(value, index++)) {
         continue;
       } else {
         skipped = true;
@@ -230,9 +282,40 @@ export namespace Iterable {
 
   export function skipUntil<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T>
+    predicate: Predicate<T, T, [number]>
   ): Iterable<T> {
     return skipWhile(iterable, not(predicate));
+  }
+
+  export function* skipLast<T>(
+    iterable: Iterable<T>,
+    count: number = 1
+  ): Iterable<T> {
+    const iterator = iterable[Symbol.iterator]();
+
+    const first: Array<T> = [];
+
+    while (count-- > 0) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      first.push(next.value);
+    }
+
+    while (true) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      first.push(next.value);
+
+      yield first.shift()!;
+    }
   }
 
   export function rest<T>(iterable: Iterable<T>): Iterable<T> {
@@ -261,29 +344,6 @@ export namespace Iterable {
     }
   }
 
-  export function groupBy<T, K>(
-    iterable: Iterable<T>,
-    grouper: Mapper<T, K>
-  ): Iterable<[K, Iterable<T>]> {
-    const groups: Array<[K, Array<T>]> = [];
-
-    for (const value of iterable) {
-      const group = grouper(value);
-
-      const existing = groups.find(([existing]) =>
-        Equatable.equals(group, existing)
-      );
-
-      if (existing === undefined) {
-        groups.push([group, [value]]);
-      } else {
-        existing[1].push(value);
-      }
-    }
-
-    return groups;
-  }
-
   export function join<T>(iterable: Iterable<T>, separator: string): string {
     const iterator = iterable[Symbol.iterator]();
 
@@ -304,6 +364,26 @@ export namespace Iterable {
     return result;
   }
 
+  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
+    const ita = a[Symbol.iterator]();
+    const itb = b[Symbol.iterator]();
+
+    while (true) {
+      const a = ita.next();
+      const b = itb.next();
+
+      switch (a.done) {
+        case true:
+          return b.done === true;
+
+        default:
+          if (b.done === true || !Equatable.equals(a.value, b.value)) {
+            return false;
+          }
+      }
+    }
+  }
+
   export function subtract<T>(
     left: Iterable<T>,
     right: Iterable<T>
@@ -316,5 +396,30 @@ export namespace Iterable {
     right: Iterable<T>
   ): Iterable<T> {
     return filter(left, (left) => includes(right, left));
+  }
+
+  export function groupBy<T, K>(
+    iterable: Iterable<T>,
+    grouper: Mapper<T, K, [number]>
+  ): Iterable<[K, Iterable<T>]> {
+    const groups: Array<[K, Array<T>]> = [];
+
+    let index = 0;
+
+    for (const value of iterable) {
+      const group = grouper(value, index++);
+
+      const existing = groups.find(([existing]) =>
+        Equatable.equals(group, existing)
+      );
+
+      if (existing === undefined) {
+        groups.push([group, [value]]);
+      } else {
+        existing[1].push(value);
+      }
+    }
+
+    return groups;
   }
 }

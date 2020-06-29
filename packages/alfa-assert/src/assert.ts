@@ -67,10 +67,8 @@ export namespace Assert {
           const reasons = reduce(
             expectations,
             (reasons, [id, expectation]) =>
-              expectation.isNone()
-                ? reasons
-                : expectation.get().isOk()
-                ? reasons.push(expectation.get().get())
+              expectation.isOk()
+                ? reasons.append(expectation.get().message)
                 : reasons,
             List.empty<string>()
           );

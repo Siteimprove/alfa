@@ -27,6 +27,20 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
     }
   }
 
+  public get(): T {
+    let step: Future<T> = this;
+
+    while (true) {
+      const next = step.step();
+
+      if (step !== next) {
+        step = next;
+      } else {
+        return next.get();
+      }
+    }
+  }
+
   public isNow(): boolean {
     return this instanceof Now;
   }
@@ -51,6 +65,8 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
 }
 
 export namespace Future {
+  export type Maybe<T> = T | Future<T>;
+
   export function isFuture<T>(value: unknown): value is Future<T> {
     return value instanceof Future;
   }
@@ -71,8 +87,10 @@ export namespace Future {
     return suspend(() => now(thunk()));
   }
 
-  export function from<T>(promise: Promise<T>): Future<T> {
-    return Future.defer((callback) => promise.then(callback));
+  export function from<T>(promise: Promise<T> | Thunk<Promise<T>>): Future<T> {
+    return Future.defer((callback) =>
+      (typeof promise === "function" ? promise() : promise).then(callback)
+    );
   }
 
   export function traverse<T, U>(
@@ -83,7 +101,7 @@ export namespace Future {
       values,
       (values, value) =>
         mapper(value).flatMap((value) =>
-          values.map((values) => values.push(value))
+          values.map((values) => values.append(value))
         ),
       now(List.empty())
     );
@@ -116,6 +134,10 @@ class Now<T> extends Future<T> {
     callback(this._value);
   }
 
+  public get(): T {
+    return this._value;
+  }
+
   public map<U>(mapper: Mapper<T, U>): Future<U> {
     return new Now(mapper(this._value));
   }
@@ -143,6 +165,10 @@ class Defer<T> extends Future<T> {
 
   public then(callback: Callback<T>): void {
     this._continuation((value) => defer(() => callback(value)));
+  }
+
+  public get(): never {
+    throw new Error("Attempted to .get() from deferred future");
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -179,6 +205,10 @@ namespace Defer {
       this._continuation((value) =>
         defer(() => this._mapper(value).then(callback))
       );
+    }
+
+    public get(): never {
+      throw new Error("Attempted to .get() from deferred future");
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {

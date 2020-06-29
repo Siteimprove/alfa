@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make
-// changes, do so in `scripts/features.js` and run `yarn prepare` to rebuild this
+// changes, do so in `scripts/features.js` and run `yarn generate` to rebuild this
 // file.
 
 export type Data = typeof Data;

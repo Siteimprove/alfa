@@ -157,6 +157,15 @@ export namespace Media {
               value.type === "string" &&
               value.value === device.viewport.orientation
           );
+
+        case "scripting":
+          return device.scripting.enabled
+            ? this._value.every(
+                (value) => value.type === "string" && value.value === "enabled"
+              )
+            : this._value.some(
+                (value) => value.type === "string" && value.value === "none"
+              );
       }
 
       return false;
@@ -220,9 +229,11 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-value
    */
   const parseFeatureValue = either(
-    map(Token.parseNumber(), (number) => Number.of(number.value)),
     either(
-      map(Token.parseIdent(), (ident) => String.of(ident.value.toLowerCase())),
+      map(Token.parseNumber(), (number) => Number.of(number.value)),
+      map(Token.parseIdent(), (ident) => String.of(ident.value.toLowerCase()))
+    ),
+    either(
       map(
         pair(
           Token.parseNumber((number) => number.isInteger),
@@ -236,7 +247,8 @@ export namespace Media {
 
           return Percentage.of(left.value / right.value);
         }
-      )
+      ),
+      Length.parse
     )
   );
 
@@ -591,7 +603,7 @@ export namespace Media {
     ),
     map(
       pair(
-        pair(option(parseModifier), parseType),
+        pair(option(left(parseModifier, Token.parseWhitespace)), parseType),
         option(
           right(
             delimited(Token.parseWhitespace, Token.parseIdent("and")),

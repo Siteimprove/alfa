@@ -65,7 +65,7 @@ export namespace Trampoline {
       values,
       (values, value) =>
         mapper(value).flatMap((value) =>
-          values.map((values) => values.push(value))
+          values.map((values) => values.append(value))
         ),
       done(List.empty())
     );

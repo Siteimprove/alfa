@@ -1,6 +1,6 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -9,9 +9,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -23,16 +22,12 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants()
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("meta")),
-                  and(
-                    hasAttribute("name", equals("viewport")),
-                    hasAttribute("content")
-                  )
-                )
+                hasNamespace(Namespace.HTML),
+                hasName("meta"),
+                hasAttribute("name", equals("viewport")),
+                hasAttribute("content")
               )
             )
           );
@@ -65,18 +60,26 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+export namespace Outcomes {
+  export const MetaDoesNotPreventZoom = Ok.of(
+    Diagnostic.of(
+      `The \`<meta>\` element does not restrict the ability to zoom`
+    )
+  );
+
+  export const MedatDoesPreventZoom = Err.of(
+    Diagnostic.of(`The \`<meta>\` element restricts the ability to zoom`)
+  );
+}
+
 /*
- * Parses a list of "name=value" properties according to https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
+ * Parses a list of "name=value" properties according to
+ * https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
  *
  * @remarks
- * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
- * The algorithm considers "foo bar =  = === foobar" as a valid string for "foo=foobar"
- *
- * @param propertiesList - The list to be parsed
- * @param ignored - A list of characters that are ignored (considered as whitespace)
- * @param separator - A list of characters that are allowed to separate "name=value" pairs
- * @param equal - A list of characters that are considered as equal sign
- * @returns a Map where each correctly formed "name=value" pair has a "name" key with value "value"
+ * This seems to be the iOS/Safari algorithm and other browsers might handle it
+ * in unknown ways. The algorithm considers "foo bar =  = === foobar" as a valid
+ * string for "foo=foobar"
  */
 export function parsePropertiesList(
   propertiesList: string,
@@ -152,7 +155,9 @@ export function parseMaximumScale(scale: string | undefined): Option<number> {
       return Option.of(0.1);
     default:
       const scaleValue = Number(scale);
-      return Option.of(isNaN(scaleValue) ? 0.1 : clamp(scaleValue, 0.1, 10));
+      return Option.of(
+        isNaN(scaleValue) ? 0.1 : Real.clamp(scaleValue, 0.1, 10)
+      );
   }
 }
 
@@ -180,14 +185,4 @@ export function parseUserScalable(
         scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed"
       );
   }
-}
-
-export namespace Outcomes {
-  export const MetaDoesNotPreventZoom = Ok.of(
-    "The <meta> element does not restrict the ability to zoom"
-  );
-
-  export const MedatDoesPreventZoom = Err.of(
-    "The <meta> element restricts the ability to zoom"
-  );
 }

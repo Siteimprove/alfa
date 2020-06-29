@@ -9,9 +9,8 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { Role } from "./role";
 
-const { isElement } = Element;
+const { hasName, hasId, isElement } = Element;
 const { isText } = Text;
-const { isEmpty } = Iterable;
 const { and, or, equals, test } = Predicate;
 
 /**
@@ -153,17 +152,18 @@ function getAriaLabelledbyTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const labelledBy = element
-    .attribute("aria-labelledby")
-    .map((attr) => attr.value);
+  const labelledby = element.attribute("aria-labelledby");
 
-  if (labelledBy.every(isEmpty) || options.referencing === true) {
+  if (labelledby.isNone()) {
     return Branched.of(None);
   }
 
-  const references = resolveReferences(element.root(), labelledBy.get());
+  const references = element
+    .root()
+    .descendants()
+    .filter(and(isElement, hasId(equals(...labelledby.get().tokens()))));
 
-  if (references.length === 0) {
+  if (references.isEmpty() || options.referencing === true) {
     return Branched.of(None);
   }
 
@@ -254,16 +254,25 @@ function getHtmlTextAlternative(
           .map((type) => type.value.toLowerCase())
           .flatMap((type) => {
             switch (type) {
+              // https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-url-and-textarea-element
+              case "text":
+              case "password":
+              case "search":
+              case "tel":
+              case "email":
+              case "url":
+                return None;
+
               // https://w3c.github.io/html-aam/#input-type-button-input-type-submit-and-input-type-reset
               case "button":
               case "submit":
               case "reset":
                 return element
                   .attribute("value")
-                  .andThen((value) =>
-                    value.value === ""
+                  .andThen((attribute) =>
+                    attribute.value === ""
                       ? None
-                      : Some.of(flatten(value.value, options))
+                      : Some.of(flatten(attribute.value, options))
                   )
                   .orElse(() => {
                     if (type === "submit") {
@@ -279,20 +288,18 @@ function getHtmlTextAlternative(
 
               // https://w3c.github.io/html-aam/#input-type-image
               case "image":
-              default:
                 return element
                   .attribute("alt")
-                  .andThen((alt) =>
-                    alt.value === ""
+                  .orElse(() => element.attribute("title"))
+                  .andThen((attribute) =>
+                    attribute.value === ""
                       ? None
-                      : Some.of(flatten(alt.value, options))
-                  )
-                  .orElse(() =>
-                    element.attribute("value").map((attr) => attr.value)
-                  )
-                  .andThen((value) =>
-                    value === "" ? None : Some.of(flatten(value, options))
+                      : Some.of(flatten(attribute.value, options))
                   );
+
+              // https://w3c.github.io/html-aam/#other-form-elements
+              default:
+                return None;
             }
           })
       );
@@ -301,7 +308,7 @@ function getHtmlTextAlternative(
     case "fieldset":
       return element
         .children()
-        .find(and(isElement, (element) => element.name === "legend"))
+        .find(and(isElement, hasName("legend")))
         .map((legend) =>
           getName(legend, device, visited, {
             recursing: true,
@@ -314,7 +321,7 @@ function getHtmlTextAlternative(
     case "figure": {
       return element
         .children()
-        .find(and(isElement, (element) => element.name === "figcaption"))
+        .find(and(isElement, hasName("figcaption")))
         .map((caption) =>
           getName(caption, device, visited, {
             recursing: true,
@@ -341,7 +348,7 @@ function getHtmlTextAlternative(
       return Branched.of(
         element
           .children()
-          .find(and(isElement, (element) => element.name === "caption"))
+          .find(and(isElement, hasName("caption")))
           .map((caption) =>
             flatten(caption.textContent({ flattened: true }), options)
           )
@@ -364,9 +371,7 @@ function getSvgTextAlternative(
     return Branched.of(Option.of(flatten(element.textContent(), options)));
   }
 
-  const title = element
-    .children()
-    .find(and(isElement, (child) => child.name === "title"));
+  const title = element.children().find(and(isElement, hasName("title")));
 
   if (title.isSome()) {
     return getName(title.get(), device, visited, {
@@ -541,16 +546,14 @@ function getLabel(element: Element): Option<Element> {
         const root = element.root();
 
         if (root !== element) {
-          const label = root
-            .descendants()
-            .find(
-              and(
-                Element.isElement,
-                (element) =>
-                  element.name === "label" &&
-                  element.attribute("for").some((attr) => attr.value === id)
+          const label = root.descendants().find(
+            and(
+              Element.isElement,
+              and(hasName("label"), (element) =>
+                element.attribute("for").some((attr) => attr.value === id)
               )
-            );
+            )
+          );
 
           return label.filter(() => {
             const target = root
@@ -566,11 +569,7 @@ function getLabel(element: Element): Option<Element> {
 
       return None;
     })
-    .orElse(() =>
-      element.closest(
-        and(Element.isElement, (element) => element.name === "label")
-      )
-    );
+    .orElse(() => element.closest(and(Element.isElement, hasName("label"))));
 }
 
 /**
@@ -593,6 +592,42 @@ function isRendered(node: Node, device: Device): boolean {
 }
 
 /**
+ * Check if an element is a "text level elements not listed elsewhere". A few
+ * text level elements, such as anchors, are handled elsewhere and are therefore
+ * not considered by this function.
+ *
+ * @see https://w3c.github.io/html-aam/#text-level-elements-not-listed-elsewhere
+ */
+const isTextLevelElement = hasName(
+  "abbr",
+  "b",
+  "bdi",
+  "bdo",
+  "br",
+  "cite",
+  "code",
+  "dfn",
+  "em",
+  "i",
+  "kbd",
+  "mark",
+  "q",
+  "rp",
+  "rt",
+  "ruby",
+  "s",
+  "samp",
+  "small",
+  "strong",
+  "sub",
+  "sup",
+  "time",
+  "u",
+  "var",
+  "wbr"
+);
+
+/**
  * Check if an element is a "native host language text alternative element".
  * The elements that qualify as such are defined in the HTML Accessibility
  * API Mappings specification as elements whose text alternative can be
@@ -600,74 +635,7 @@ function isRendered(node: Node, device: Device): boolean {
  *
  * @see https://w3c.github.io/html-aam/#accessible-name-and-description-computation
  */
-function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (element.name) {
-    case "label":
-    case "a":
-    case "button":
-    case "legend":
-    case "output":
-    case "summary":
-    case "figcaption":
-      return true;
-  }
-
-  return isTextLevelElement(element);
-}
-
-/**
- * Check if an element is a "text level elements not listed elsewhere". A few
- * text level elements, such as anchors, are handled elsewhere and are therefore
- * not considered by this function.
- *
- * @see https://w3c.github.io/html-aam/#text-level-elements-not-listed-elsewhere
- */
-function isTextLevelElement(element: Element): boolean {
-  switch (element.name) {
-    case "abbr":
-    case "b":
-    case "bdi":
-    case "bdo":
-    case "br":
-    case "cite":
-    case "code":
-    case "dfn":
-    case "em":
-    case "i":
-    case "kbd":
-    case "mark":
-    case "q":
-    case "rp":
-    case "rt":
-    case "ruby":
-    case "s":
-    case "samp":
-    case "small":
-    case "strong":
-    case "sub":
-    case "sup":
-    case "time":
-    case "u":
-    case "var":
-    case "wbr":
-      return true;
-  }
-
-  return false;
-}
-
-function resolveReferences(node: Node, references: string): Array<Element> {
-  const elements: Array<Element> = [];
-
-  for (const id of references.trim().split(/\s+/)) {
-    const element = node
-      .descendants()
-      .find(and(isElement, (element) => element.id.includes(id)));
-
-    if (element.isSome()) {
-      elements.push(element.get());
-    }
-  }
-
-  return elements;
-}
+const isNativeTextAlternativeElement = or(
+  hasName("label", "a", "button", "legend", "output", "summary", "figcaption"),
+  isTextLevelElement
+);

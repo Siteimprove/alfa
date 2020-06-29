@@ -1,10 +1,13 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+
 import * as json from "@siteimprove/alfa-json";
 
-export class Viewport implements Serializable {
+export class Viewport implements Equatable, Hashable, Serializable {
   public static of(
     width: number,
-    height: number,
+    height: number = width / (16 / 9),
     orientation: Viewport.Orientation = Viewport.Orientation.Landscape
   ): Viewport {
     return new Viewport(width, height, orientation);
@@ -43,6 +46,36 @@ export class Viewport implements Serializable {
    */
   public get orientation(): Viewport.Orientation {
     return this._orientation;
+  }
+
+  public isLandscape(): boolean {
+    return this._orientation === Viewport.Orientation.Landscape;
+  }
+
+  public isPortrait(): boolean {
+    return this._orientation === Viewport.Orientation.Portrait;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Viewport &&
+      value._width === this._width &&
+      value._height === this._height &&
+      value._orientation === this._orientation
+    );
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeUint32(hash, this._width);
+    Hash.writeUint32(hash, this._height);
+
+    switch (this._orientation) {
+      case Viewport.Orientation.Landscape:
+        Hash.writeUint8(hash, 1);
+        break;
+      case Viewport.Orientation.Portrait:
+        Hash.writeUint8(hash, 2);
+    }
   }
 
   public toJSON(): Viewport.JSON {

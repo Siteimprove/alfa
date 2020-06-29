@@ -1,18 +1,21 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Scope, Table } from "@siteimprove/alfa-table";
 
 import { Role } from "./role";
 
-const { and, equals, test } = Predicate;
+const { hasName, isElement } = Element;
+const { and } = Predicate;
 
 export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
-    role: Feature.Aspect<Option<string>> = () => None,
+    role: Feature.Aspect<Option<string>, [Feature.RoleOptions]> = () => None,
     attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
@@ -20,13 +23,13 @@ export class Feature<N extends string = string> {
   }
 
   private readonly _name: N;
-  private readonly _role: Feature.Aspect<Option<string>>;
+  private readonly _role: Feature.Aspect<Option<string>, [Feature.RoleOptions]>;
   private readonly _attributes: Feature.Aspect<Map<string, string>>;
   private readonly _status: Feature.Status;
 
   private constructor(
     name: N,
-    role: Feature.Aspect<Option<string>>,
+    role: Feature.Aspect<Option<string>, [Feature.RoleOptions]>,
     attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
@@ -40,7 +43,7 @@ export class Feature<N extends string = string> {
     return this._name;
   }
 
-  public get role(): Feature.Aspect<Option<string>> {
+  public get role(): Feature.Aspect<Option<string>, [Feature.RoleOptions]> {
     return this._role;
   }
 
@@ -54,10 +57,17 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T> = Mapper<Element, T>;
+  export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element, T, A>;
 
   export interface Status {
     readonly obsolete: boolean;
+  }
+
+  export interface RoleOptions {
+    /**
+     * @internal
+     */
+    readonly allowPresentational: boolean;
   }
 
   const features = Cache.empty<Namespace, Cache<string, Feature>>();
@@ -208,12 +218,7 @@ Feature.register(
   Feature.of("footer", (element) =>
     element
       .closest(
-        and(Element.isElement, (element) =>
-          test(
-            equals("article", "aside", "main", "nav", "section"),
-            element.name
-          )
-        )
+        and(isElement, hasName("article", "aside", "main", "nav", "section"))
       )
       .isNone()
       ? Option.of("contentinfo")
@@ -228,32 +233,56 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h1", () => Option.of("heading"))
+  Feature.of(
+    "h1",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "1"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h2", () => Option.of("heading"))
+  Feature.of(
+    "h2",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "2"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h3", () => Option.of("heading"))
+  Feature.of(
+    "h3",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "3"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h4", () => Option.of("heading"))
+  Feature.of(
+    "h4",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "4"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h5", () => Option.of("heading"))
+  Feature.of(
+    "h5",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "5"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h6", () => Option.of("heading"))
+  Feature.of(
+    "h6",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "6"])
+  )
 );
 
 Feature.register(
@@ -261,12 +290,7 @@ Feature.register(
   Feature.of("header", (element) =>
     element
       .closest(
-        and(Element.isElement, (element) =>
-          test(
-            equals("article", "aside", "main", "nav", "section"),
-            element.name
-          )
-        )
+        and(isElement, hasName("article", "aside", "main", "nav", "section"))
       )
       .isNone()
       ? Option.of("banner")
@@ -281,9 +305,10 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", (element) =>
+  Feature.of("img", (element, { allowPresentational }) =>
     Option.of(
-      element.attribute("alt").some((alt) => alt.value === "")
+      allowPresentational &&
+        element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"
     )
@@ -450,11 +475,7 @@ Feature.register(
     "option",
     (element) =>
       element
-        .closest(
-          and(Element.isElement, (element) =>
-            test(equals("select", "optgroup", "datalist"), element.name)
-          )
-        )
+        .closest(and(isElement, hasName("select", "optgroup", "datalist")))
         .isSome()
         ? Option.of("option")
         : None,
@@ -542,7 +563,7 @@ Feature.register(
     "td",
     (element) =>
       element
-        .closest(and(Element.isElement, (element) => element.name === "table"))
+        .closest(and(Element.isElement, hasName("table")))
         .flatMap((table) => {
           for (const [role] of Role.from(table)) {
             if (role.isSome()) {
@@ -617,19 +638,45 @@ Feature.register(
   Namespace.HTML,
   Feature.of(
     "th",
-    (element) =>
-      element.attribute("scope").flatMap((scope) => {
-        switch (scope.value.toLowerCase()) {
-          case "row":
-          case "rowgroup":
-            return Option.of("RowHeader");
-          case "col":
-          case "colgroup":
-            return Option.of("ColumnHeader");
-          default:
-            return None;
+    (element) => {
+      const table = element.closest(and(isElement, hasName("table")));
+
+      // If the <th> is not in a <table>, it doesn't really have a role…
+      if (table.isNone()) {
+        return None;
+      }
+
+      const tableModel = Table.from(table.get());
+
+      // If the <th> is within a <table> with errors, it doesn't really have a role.
+      if (tableModel.isErr()) {
+        return None;
+      }
+
+      const cell = Iterable.find(tableModel.get().cells, (cell) =>
+        cell.element.equals(element)
+      );
+
+      // If the current element is not a cell in the table, something weird happened and it doesn't have a role.
+      if (cell.isNone()) {
+        return None;
+      }
+
+      // This is not fully correct. If the header has no variant, its role should be computed as a <td>
+      // @see https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
+      //     "th (is neither column header nor row header, and ancestor table element has table role)"
+      // and "th (is neither column header nor row header, and ancestor table element has grid role)"
+      return cell.get().scope.map((scope) => {
+        switch (scope) {
+          case Scope.Column:
+          case Scope.ColumnGroup:
+            return "columnheader";
+          case Scope.Row:
+          case Scope.RowGroup:
+            return "rowheader";
         }
-      }),
+      });
+    },
 
     (element) => {
       let attributes = Map.empty<string, string>();

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 import { some } from "@siteimprove/alfa-trilean";
@@ -35,10 +35,12 @@ export default Rule.Composite.of<Page, Element, Question>({
 
 export namespace Outcomes {
   export const HasAlternative = Ok.of(
-    "The <video> element has an audio or text alternative"
+    Diagnostic.of(`The \`<video>\` element has an audio or text alternative`)
   );
 
   export const HasNoAlternative = Err.of(
-    "The <video> element does not have an audio or text alternative"
+    Diagnostic.of(
+      `The \`<video>\` element does not have an audio or text alternative`
+    )
   );
 }

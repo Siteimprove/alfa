@@ -5,38 +5,38 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "../predicate/has-name";
-import { hasNamespace } from "../predicate/has-namespace";
 import { isIgnored } from "../predicate/is-ignored";
 import { isPerceivable } from "../predicate/is-perceivable";
 
 import { Question } from "../question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, map } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export function audio(
   document: Document,
   device: Device,
   options: audio.Options = {}
-): Iterable<Interview<Question, Element, Element | Option<Element>>> {
+): Iterable<Interview<Question, Element, Option<Element>>> {
   return map(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
-          hasNamespace(equals(Namespace.HTML)),
-          and(hasName(equals("audio")), not(isIgnored(device)))
+          hasNamespace(Namespace.HTML),
+          hasName("audio"),
+          not(isIgnored(device))
         )
       )
     ),
     (element) =>
       Question.of(
-        "is-streaming",
+        "is-audio-streaming",
         "boolean",
         element,
-        "Is the <audio> element streaming?"
+        `Is the \`<audio>\` element streaming?`
       ).map((isStreaming) =>
         isStreaming
           ? None
@@ -44,7 +44,7 @@ export function audio(
               "is-playing",
               "boolean",
               element,
-              "Is the <audio> element currently playing?"
+              `Is the \`<audio>\` element currently playing?`
             ).map((isPlaying) =>
               isPlaying
                 ? Option.of(element)
@@ -52,7 +52,8 @@ export function audio(
                     "play-button",
                     "node",
                     element,
-                    "Where is the button that controls playback of the <audio> element?"
+                    `Where is the button that controls playback of the \`<audio>\`
+                    element?`
                   ).map((playButton) =>
                     playButton.some(
                       and(Element.isElement, isPerceivable(device))

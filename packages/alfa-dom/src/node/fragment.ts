@@ -4,22 +4,18 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Node } from "../node";
 
 export class Fragment extends Node {
-  public static of(
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node> = None
-  ): Fragment {
-    return new Fragment(children, parent);
+  public static of(children: Mapper<Node, Iterable<Node>>): Fragment {
+    return new Fragment(children);
   }
 
-  public static empty(parent: Option<Node> = None): Fragment {
-    return new Fragment(() => [], parent);
+  private static _empty = new Fragment(() => []);
+
+  public static empty(): Fragment {
+    return this._empty;
   }
 
-  private constructor(
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
-  ) {
-    super(children, parent);
+  private constructor(children: Mapper<Node, Iterable<Node>>) {
+    super(children, None);
   }
 
   public path(): string {
@@ -52,14 +48,11 @@ export namespace Fragment {
     return value instanceof Fragment;
   }
 
-  export function fromFragment(
-    fragment: JSON,
-    parent: Option<Node> = None
-  ): Fragment {
+  export function fromFragment(fragment: JSON): Fragment {
     return Fragment.of((self) => {
       const parent = Option.of(self);
       return fragment.children.map((child) => Node.fromNode(child, parent));
-    }, parent);
+    });
   }
 }
 

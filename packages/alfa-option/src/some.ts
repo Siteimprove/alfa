@@ -38,12 +38,16 @@ export class Some<T> implements Option<T> {
     return mapper(this._value);
   }
 
+  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+    return reducer(accumulator, this._value);
+  }
+
   public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
     return mapper.map((mapper) => mapper(this._value));
   }
 
-  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reducer(accumulator, this._value);
+  public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
+    return test(predicate, this._value) ? new Some(this._value) : None;
   }
 
   public includes(value: T): boolean {
@@ -56,10 +60,6 @@ export class Some<T> implements Option<T> {
 
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
-  }
-
-  public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return test(predicate, this._value) ? new Some(this._value) : None;
   }
 
   public and<U>(option: Option<U>): Option<U> {
@@ -100,6 +100,10 @@ export class Some<T> implements Option<T> {
 
   public *[Symbol.iterator](): Iterator<T> {
     yield this._value;
+  }
+
+  public toArray(): [T] {
+    return [this._value];
   }
 
   public toJSON(): Some.JSON {

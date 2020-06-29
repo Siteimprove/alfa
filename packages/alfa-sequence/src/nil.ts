@@ -2,6 +2,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
 import { Sequence } from "./sequence";
+import { Cons } from "./cons";
 
 export interface Nil extends Sequence<never> {}
 
@@ -10,7 +11,7 @@ export const Nil: Nil = new (class Nil {
     return 0;
   }
 
-  public isEmpty(): this is Nil {
+  public isEmpty(): this is Sequence<never> {
     return true;
   }
 
@@ -26,6 +27,26 @@ export const Nil: Nil = new (class Nil {
     return accumulator;
   }
 
+  public apply(): Nil {
+    return this;
+  }
+
+  public filter(): Nil {
+    return this;
+  }
+
+  public reject(): Nil {
+    return this;
+  }
+
+  public find(): None {
+    return None;
+  }
+
+  public includes(): boolean {
+    return false;
+  }
+
   public some(): boolean {
     return false;
   }
@@ -34,28 +55,40 @@ export const Nil: Nil = new (class Nil {
     return true;
   }
 
-  public concat<T>(iterable: Iterable<T>): Sequence<T> {
-    if (iterable === this) {
-      return this;
-    }
-
-    return Sequence.from(iterable);
-  }
-
-  public filter(): Nil {
-    return this;
-  }
-
-  public find(): None {
-    return None;
-  }
-
   public count(): number {
     return 0;
   }
 
   public get(): None {
     return None;
+  }
+
+  public has(): boolean {
+    return false;
+  }
+
+  public set(): Nil {
+    return this;
+  }
+
+  public insert<T>(index: number, value: T): Sequence<T> {
+    return index === 0 ? Cons.of(value) : this;
+  }
+
+  public append<T>(value: T): Sequence<T> {
+    return Cons.of(value);
+  }
+
+  public prepend<T>(value: T): Sequence<T> {
+    return Cons.of(value);
+  }
+
+  public concat<T>(iterable: Iterable<T>): Sequence<T> {
+    if (iterable === this) {
+      return this;
+    }
+
+    return Sequence.from(iterable);
   }
 
   public first(): None {
@@ -78,6 +111,10 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
+  public takeLast(): Nil {
+    return this;
+  }
+
   public skip(): Nil {
     return this;
   }
@@ -87,6 +124,10 @@ export const Nil: Nil = new (class Nil {
   }
 
   public skipUntil(): Nil {
+    return this;
+  }
+
+  public skipLast(): Nil {
     return this;
   }
 
@@ -114,13 +155,19 @@ export const Nil: Nil = new (class Nil {
     return value instanceof Nil;
   }
 
-  public *[Symbol.iterator](): Iterator<never> {}
+  public hash(): void {}
+
+  public *iterator(): Iterator<never> {}
+
+  public [Symbol.iterator](): Iterator<never> {
+    return this.iterator();
+  }
 
   public toArray(): Array<never> {
     return [];
   }
 
-  public toJSON(): Array<never> {
+  public toJSON(): Nil.JSON {
     return [];
   }
 
@@ -128,3 +175,7 @@ export const Nil: Nil = new (class Nil {
     return "Sequence []";
   }
 })();
+
+export namespace Nil {
+  export type JSON = Array<never>;
+}

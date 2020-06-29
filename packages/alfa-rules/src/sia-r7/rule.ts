@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -9,12 +9,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
-import { isWhitespace } from "../common/predicate/is-whitespace";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
@@ -24,17 +22,12 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants()
           .filter(
-            and(
-              Element.isElement,
-              and(hasNamespace(equals(Namespace.HTML)), hasName(equals("body")))
-            )
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("body")))
           )
           .flatMap((body) =>
             body
               .descendants()
-              .filter(
-                and(Element.isElement, hasAttribute("lang", not(isEmpty)))
-              )
+              .filter(and(isElement, hasAttribute("lang", not(isEmpty))))
               .map((element) => element.attribute("lang").get())
           );
       },
@@ -54,10 +47,12 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const HasValidLanguage = Ok.of(
-    "The lang attribute has a valid primary language subtag"
+    Diagnostic.of(`The \`lang\` attribute has a valid primary language subtag`)
   );
 
   export const HasNoValidLanguage = Err.of(
-    "The lang attribute does not have a valid primary language subtag"
+    Diagnostic.of(
+      `The \`lang\` attribute does not have a valid primary language subtag`
+    )
   );
 }

@@ -110,7 +110,7 @@ export class SelectorMap {
         order++;
 
         for (const part of selector.get()) {
-          this.add(rule, part, rule.style, origin, order);
+          this._add(rule, part, rule.style, origin, order);
         }
       }
 
@@ -120,6 +120,18 @@ export class SelectorMap {
     };
 
     for (const sheet of sheets) {
+      if (sheet.disabled) {
+        continue;
+      }
+
+      if (sheet.condition.isSome()) {
+        const query = Media.parse(sheet.condition.get());
+
+        if (query.isNone() || !query.get().matches(device)) {
+          continue;
+        }
+      }
+
       for (const rule of sheet.children()) {
         visit(rule);
       }
@@ -167,7 +179,7 @@ export class SelectorMap {
     return nodes;
   }
 
-  private add(
+  private _add(
     rule: Rule,
     selector: Selector,
     declarations: Iterable<Declaration>,

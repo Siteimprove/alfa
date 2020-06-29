@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,12 +9,11 @@ import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasChild } from "../common/predicate/has-child";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 
 import { Question } from "../common/question";
 
-const { and, or, nor, equals } = Predicate;
+const { isElement, hasName, hasNamespace } = Element;
+const { and, or, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r48.html",
@@ -25,23 +24,15 @@ export default Rule.Atomic.of<Page, Element, Question>({
           .descendants({ composed: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("audio", "video")),
-                  and(
-                    hasAttribute("autoplay"),
-                    and(
-                      nor(hasAttribute("paused"), hasAttribute("muted")),
-                      or(
-                        hasAttribute("src"),
-                        hasChild(
-                          and(Element.isElement, hasName(equals("source")))
-                        )
-                      )
-                    )
-                  )
+                hasNamespace(Namespace.HTML),
+                hasName("audio", "video"),
+                hasAttribute("autoplay"),
+                nor(hasAttribute("paused"), hasAttribute("muted")),
+                or(
+                  hasAttribute("src"),
+                  hasChild(and(isElement, hasName("source")))
                 )
               )
             )
@@ -51,14 +42,15 @@ export default Rule.Atomic.of<Page, Element, Question>({
               "has-audio",
               "boolean",
               element,
-              `Does the <${element.name}> element contain audio?`
+              `Does the \`<${element.name}>\` element contain audio?`
             ).map((hasAudio) =>
               hasAudio
                 ? Question.of(
                     "is-above-duration-threshold",
                     "boolean",
                     element,
-                    `Does the <${element.name}> element have a duration of more than 3 seconds?`
+                    `Does the \`<${element.name}>\` element have a duration of
+                    more than 3 seconds?`
                   ).map((isAboveDurationThreshold) =>
                     isAboveDurationThreshold ? Option.of(element) : None
                   )
@@ -73,7 +65,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "is-below-audio-duration-threshold",
             "boolean",
             target,
-            `Does the <${target.name}> element have a total audio duration of less than 3 seconds?`
+            `Does the \`<${target.name}>\` element have a total audio duration
+            of less than 3 seconds?`
           ).map((isBelowAudioDurationThreshold) =>
             expectation(
               isBelowAudioDurationThreshold,
@@ -88,17 +81,19 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const DurationBelowThreshold = (
-    name: string
-  ): Result<string, string> =>
+  export const DurationBelowThreshold = (name: string) =>
     Ok.of(
-      `The total duration of audio output of the <${name}> element does not exceed 3 seconds`
+      Diagnostic.of(
+        `The total duration of audio output of the \`<${name}>\` element does
+        not exceed 3 seconds`
+      )
     );
 
-  export const DurationAboveThreshold = (
-    name: string
-  ): Result<string, string> =>
+  export const DurationAboveThreshold = (name: string) =>
     Err.of(
-      `The total duration of audio output of the <${name}> element exceeds 3 seconds`
+      Diagnostic.of(
+        `The total duration of audio output of the \`<${name}>\` element exceeds
+        3 seconds`
+      )
     );
 }

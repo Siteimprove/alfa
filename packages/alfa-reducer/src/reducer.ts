@@ -1,4 +1,4 @@
-export type Reducer<T, U = T, A extends Array<unknown> = Array<unknown>> = (
+export type Reducer<T, U = T, A extends Array<unknown> = []> = (
   accumulator: U,
   value: T,
   ...args: A

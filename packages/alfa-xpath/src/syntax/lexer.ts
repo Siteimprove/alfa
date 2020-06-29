@@ -93,43 +93,19 @@ const isNumeric = isBetween(0x30, 0x39);
  */
 const isNameStart = or(
   equals(0x3a, 0x5f),
-  or(
-    isAlpha,
-    or(
-      isBetween(0xc0, 0xd6),
-      or(
-        isBetween(0xd8, 0xf6),
-        or(
-          isBetween(0xf8, 0x2ff),
-          or(
-            isBetween(0x370, 0x37d),
-            or(
-              isBetween(0x37f, 0x1fff),
-              or(
-                isBetween(0x200c, 0x200d),
-                or(
-                  isBetween(0x2070, 0x218f),
-                  or(
-                    isBetween(0x2c00, 0x2fef),
-                    or(
-                      isBetween(0x3001, 0xd7ff),
-                      or(
-                        isBetween(0xf900, 0xfdcf),
-                        or(
-                          isBetween(0xfdf0, 0xfffd),
-                          isBetween(0x10000, 0xeffff)
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
+  isAlpha,
+  isBetween(0xc0, 0xd6),
+  isBetween(0xd8, 0xf6),
+  isBetween(0xf8, 0x2ff),
+  isBetween(0x370, 0x37d),
+  isBetween(0x37f, 0x1fff),
+  isBetween(0x200c, 0x200d),
+  isBetween(0x2070, 0x218f),
+  isBetween(0x2c00, 0x2fef),
+  isBetween(0x3001, 0xd7ff),
+  isBetween(0xf900, 0xfdcf),
+  isBetween(0xfdf0, 0xfffd),
+  isBetween(0x10000, 0xeffff)
 );
 
 /**
@@ -137,10 +113,10 @@ const isNameStart = or(
  */
 const isName = or(
   equals(0x2d, 0x2e, 0xb7),
-  or(
-    isNameStart,
-    or(isNumeric, or(isBetween(0x0300, 0x036f), isBetween(0x203f, 0x2040)))
-  )
+  isNameStart,
+  isNumeric,
+  isBetween(0x0300, 0x036f),
+  isBetween(0x203f, 0x2040)
 );
 
 /**

@@ -1,12 +1,13 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer, Keyword } from "@siteimprove/alfa-css";
+import { Lexer, Keyword, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Record } from "@siteimprove/alfa-record";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -14,8 +15,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { find, isEmpty } = Iterable;
-const { either } = Parser;
+const { either, left, eof } = Parser;
 
 type Name = Property.Name;
 
@@ -25,7 +25,7 @@ export class Style implements Serializable {
     device: Device,
     parent: Option<Style> = None
   ): Style {
-    return new Style(declarations, device, parent);
+    return new Style(Array.from(declarations), device, parent);
   }
 
   private static _empty = new Style([], Device.standard(), None);
@@ -34,7 +34,6 @@ export class Style implements Serializable {
     return this._empty;
   }
 
-  private readonly _declarations: Array<Declaration>;
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
 
@@ -42,17 +41,52 @@ export class Style implements Serializable {
   // these are inexpensive to resolve from cascaded and computed properties.
   // Cascaded properties on the other hand require parsing, which is expensive,
   // and computed properties require absolutization, which is also expensive.
-  private readonly _cascaded = Cache.empty<Name, Option<Value>>();
-  private readonly _computed = Cache.empty<Name, Value>();
+  private readonly _cascaded = new Map<Name, Value>();
+  private readonly _computed = new Map<Name, Value>();
 
   private constructor(
-    declarations: Iterable<Declaration>,
+    declarations: Array<Declaration>,
     device: Device,
     parent: Option<Style>
   ) {
-    this._declarations = Array.from(declarations);
     this._device = device;
     this._parent = parent;
+
+    for (const declaration of declarations) {
+      const { name, value } = declaration;
+
+      if (Property.isName(name)) {
+        const previous = this._cascaded.get(name);
+
+        if (
+          previous === undefined ||
+          shouldOverride(previous.source, declaration)
+        ) {
+          const property = Property.get(name);
+
+          for (const result of parse(property, value)) {
+            this._cascaded.set(name, Value.of(result, Option.of(declaration)));
+          }
+        }
+      }
+
+      if (Property.Shorthand.isName(name)) {
+        const shorthand = Property.Shorthand.get(name);
+
+        for (const result of parseShorthand(shorthand, value)) {
+          for (const [name, value] of result) {
+            const previous = this._cascaded.get(name);
+
+            if (
+              previous === undefined ||
+              shouldOverride(previous.source, declaration)
+            ) {
+              this._cascaded.set(name, Value.of(value, Option.of(declaration)));
+            }
+          }
+        }
+      }
+    }
   }
 
   public get device(): Device {
@@ -67,37 +101,19 @@ export class Style implements Serializable {
     return this._parent.map((parent) => parent.root()).getOr(this);
   }
 
-  public initial<N extends Name>(name: N): Style.Initial<N>;
+  public initial<N extends Name>(name: N): Value<Style.Initial<N>>;
   public initial<N extends Name>(name: N): Value {
-    const property: Property = Property.get(name);
+    const property = Property.get(name);
 
     return Value.of(property.initial);
   }
 
-  public cascaded<N extends Name>(name: N): Option<Style.Cascaded<N>>;
+  public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
   public cascaded<N extends Name>(name: N): Option<Value> {
-    return this._cascaded.get(name, () => {
-      const property: Property = Property.get(name);
-
-      return find(
-        this._declarations,
-        (declaration) => declaration.name === name
-      ).flatMap((declaration) =>
-        either(
-          Keyword.parse("initial", "inherit"),
-          property.parse
-        )(Slice.of(Lexer.lex(declaration.value)))
-          .map(([remainder, value]) =>
-            isEmpty(remainder)
-              ? Option.of(Value.of(value, Option.of(declaration)))
-              : None
-          )
-          .getOr(None)
-      );
-    });
+    return Option.from(this._cascaded.get(name));
   }
 
-  public specified<N extends Name>(name: N): Style.Specified<N>;
+  public specified<N extends Name>(name: N): Value<Style.Specified<N>>;
   public specified<N extends Name>(name: N): Value {
     return this.cascaded(name)
       .map((cascaded) => {
@@ -114,7 +130,7 @@ export class Style implements Serializable {
         return cascaded;
       })
       .getOrElse(() => {
-        const property: Property = Property.get(name);
+        const property = Property.get(name);
 
         if (property.options.inherits === false) {
           return this.initial(name);
@@ -126,39 +142,40 @@ export class Style implements Serializable {
       });
   }
 
-  public computed<N extends Name>(name: N): Style.Computed<N>;
+  public computed<N extends Name>(name: N): Value<Style.Computed<N>>;
   public computed<N extends Name>(name: N): Value {
-    if (this._parent.isNone() && this._declarations.length === 0) {
+    if (this === Style._empty) {
       return this.initial(name);
     }
 
-    return this._computed.get(name, () => {
-      const property: Property = Property.get(name);
+    let value = this._computed.get(name);
 
-      return property.compute(this);
-    });
+    if (value === undefined) {
+      value = Property.get(name).compute(this);
+
+      this._computed.set(name, value);
+    }
+
+    return value;
   }
 
   public toJSON(): Style.JSON {
-    return {
-      declarations: this._declarations.map((declaration) =>
-        declaration.toJSON()
-      ),
-    };
+    return {};
   }
 }
 
 export namespace Style {
   export interface JSON {
     [key: string]: json.JSON;
-    declarations: Array<Declaration.JSON>;
   }
 
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
     return cache.get(device, Cache.empty).get(element, () => {
-      const declarations: Array<Declaration> = [];
+      const declarations: Array<Declaration> = element.style
+        .map((block) => [...block.declarations].reverse())
+        .getOr([]);
 
       const root = element.root();
 
@@ -170,12 +187,10 @@ export namespace Style {
         while (next.isSome()) {
           const node = next.get();
 
-          declarations.push(...node.declarations);
+          declarations.push(...[...node.declarations].reverse());
           next = node.parent;
         }
       }
-
-      declarations.push(...element.style.getOr([]));
 
       return Style.of(
         declarations,
@@ -188,19 +203,62 @@ export namespace Style {
     });
   }
 
-  export type Initial<N extends Name> = Property.Value.Initial<
-    Property.Longhand[N]
-  >;
+  export type Initial<N extends Name> = Property.Value.Initial<N>;
 
-  export type Cascaded<N extends Name> = Property.Value.Cascaded<
-    Property.Longhand[N]
-  >;
+  export type Cascaded<N extends Name> = Property.Value.Cascaded<N>;
 
-  export type Specified<N extends Name> = Property.Value.Specified<
-    Property.Longhand[N]
-  >;
+  export type Specified<N extends Name> = Property.Value.Specified<N>;
 
-  export type Computed<N extends Name> = Property.Value.Computed<
-    Property.Longhand[N]
-  >;
+  export type Computed<N extends Name> = Property.Value.Computed<N>;
+}
+
+function parse<N extends Property.Name>(
+  property: Property.WithName<N>,
+  value: string
+) {
+  return left(
+    either(
+      Keyword.parse("initial", "inherit"),
+      property.parse as Parser<Slice<Token>, Property.Value.Parsed<N>, string>
+    ),
+    eof(() => "Expected end of input")
+  )(Slice.of(Lexer.lex(value)))
+    .map(([, value]) => value)
+    .ok();
+}
+
+function parseShorthand<N extends Property.Shorthand.Name>(
+  shorthand: Property.Shorthand.WithName<N>,
+  value: string
+) {
+  return left(
+    either(
+      Keyword.parse("initial", "inherit"),
+      shorthand.parse as Parser<
+        Slice<Token>,
+        Record<{ [N in Property.Name]?: Property.Value.Parsed<N> }>,
+        string
+      >
+    ),
+    eof(() => "Expected end of input")
+  )(Slice.of(Lexer.lex(value)))
+    .map(([, value]) => {
+      if (Keyword.isKeyword(value)) {
+        return Record.from(
+          Iterable.map(shorthand.properties, (property) => [property, value])
+        );
+      }
+
+      return value;
+    })
+    .ok();
+}
+
+function shouldOverride(
+  previous: Option<Declaration>,
+  next: Declaration
+): boolean {
+  return (
+    next.important && previous.every((declaration) => !declaration.important)
+  );
 }

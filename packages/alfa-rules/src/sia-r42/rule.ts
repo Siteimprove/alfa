@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
@@ -9,12 +9,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { some } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r42.html",
@@ -25,10 +25,11 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(not(isIgnored(device)), hasRole(hasContext()))
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                not(isIgnored(device)),
+                hasRole(hasContext())
               )
             )
           );
@@ -49,11 +50,15 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsOwnedByContextRole = Ok.of(
-    "The element is owned by an element of its required context role"
+    Diagnostic.of(
+      `The element is owned by an element of its required context role`
+    )
   );
 
   export const IsNotOwnedByContextRole = Err.of(
-    "The element is not owned by an element of its required context role"
+    Diagnostic.of(
+      `The element is not owned by an element of its required context role`
+    )
   );
 }
 

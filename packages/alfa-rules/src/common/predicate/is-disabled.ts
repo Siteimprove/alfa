@@ -1,10 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "./has-name";
-
-const { some, find } = Iterable;
+const { hasName } = Element;
 const { and, not, equals } = Predicate;
 
 /**
@@ -26,16 +23,13 @@ export const isDisabled: Predicate<Element> = (element) => {
       return element
         .parent()
         .flatMap((parent) =>
-          parent.closest(and(Element.isElement, hasName(equals("fieldset"))))
+          parent.closest(and(Element.isElement, hasName("fieldset")))
         )
         .filter(not(isDisabled))
         .flatMap((fieldset) =>
-          find(
-            fieldset.descendants(),
-            and(Element.isElement, hasName(equals("legend")))
-          )
+          fieldset.descendants().find(and(Element.isElement, hasName("legend")))
         )
-        .some((legend) => some(legend.descendants(), equals(element)));
+        .some((legend) => legend.descendants().some(equals(element)));
 
     // https://html.spec.whatwg.org/#attr-option-disabled
     case "option":
@@ -44,7 +38,7 @@ export const isDisabled: Predicate<Element> = (element) => {
       }
 
       return element
-        .closest(and(Element.isElement, hasName(equals("optgroup"))))
+        .closest(and(Element.isElement, hasName("optgroup")))
         .some(isDisabled);
 
     // https://html.spec.whatwg.org/#attr-optgroup-disabled

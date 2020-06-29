@@ -54,13 +54,13 @@ export class Keyframes extends Grouping {
 }
 
 export namespace Keyframes {
-  export function isKeyframes(value: unknown): value is Keyframes {
-    return value instanceof Keyframes;
-  }
-
   export interface JSON extends Grouping.JSON {
     type: "keyframes";
     name: string;
+  }
+
+  export function isKeyframes(value: unknown): value is Keyframes {
+    return value instanceof Keyframes;
   }
 
   export function fromKeyframes(

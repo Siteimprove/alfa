@@ -1,6 +1,5 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { None } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { some } from "@siteimprove/alfa-trilean";
 import { Page } from "@siteimprove/alfa-web";
@@ -34,9 +33,11 @@ export default Rule.Composite.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const HasAlternative = Ok.of("The <video> element has an alternative");
+  export const HasAlternative = Ok.of(
+    Diagnostic.of(`The \`<video>\` element has an alternative`)
+  );
 
   export const HasNoAlternative = Err.of(
-    "The <video> element does not have an alternative"
+    Diagnostic.of(`The \`<video>\` element does not have an alternative`)
   );
 }
