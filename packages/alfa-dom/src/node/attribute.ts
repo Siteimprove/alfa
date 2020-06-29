@@ -61,8 +61,26 @@ export class Attribute extends Node {
     return this._owner;
   }
 
-  public hasName(name: string): boolean {
-    return foldCase(this._name, this.owner) === foldCase(name, this._owner);
+  public hasName(predicate: Predicate<string>): boolean;
+
+  public hasName(name: string, ...rest: Array<string>): boolean;
+
+  public hasName(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): boolean {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      const namesWithCases = [nameOrPredicate, ...names].map((name) =>
+        foldCase(name, this._owner)
+      );
+      predicate = equals(...namesWithCases);
+    }
+
+    return predicate(foldCase(this._name, this._owner));
   }
 
   /**
@@ -180,6 +198,24 @@ export namespace Attribute {
         attribute.value
       )
     );
+  }
+
+  export function hasName(predicate: Predicate<string>): Predicate<Attribute>;
+
+  export function hasName(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Attribute>;
+
+  export function hasName(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Attribute> {
+    if (typeof nameOrPredicate === "function") {
+      return (attribute) => attribute.hasName(nameOrPredicate);
+    } else {
+      return (attribute) => attribute.hasName(nameOrPredicate, ...names);
+    }
   }
 }
 
