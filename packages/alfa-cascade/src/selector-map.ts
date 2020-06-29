@@ -104,8 +104,9 @@ export class SelectorMap {
           return;
         }
 
-        const origin =
-          rule.owner === UserAgent ? Origin.UserAgent : Origin.Author;
+        const origin = rule.owner.includes(UserAgent)
+          ? Origin.UserAgent
+          : Origin.Author;
 
         order++;
 
