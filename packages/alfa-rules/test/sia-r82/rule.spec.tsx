@@ -1,10 +1,8 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-
 import { Document, Element } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R82, { Outcomes } from "../../src/sia-r82/rule";
 
@@ -15,19 +13,16 @@ import { passed, failed } from "../common/outcome";
 const { isElement, hasName } = Element;
 const { and } = Predicate;
 
-const document = Document.of((self) => [
-  Element.fromElement(
-    <form>
-      <label>
-        Input
-        <input type="text"></input>
-      </label>
-      <span>Visible error</span>
-      <span hidden>Invisible error</span>
-      <span aria-hidden="true">Ignored error</span>
-    </form>,
-    Option.of(self)
-  ),
+const document = Document.of([
+  <form>
+    <label>
+      Input
+      <input type="text"></input>
+    </label>
+    <span>Visible error</span>
+    <span hidden>Invisible error</span>
+    <span aria-hidden="true">Ignored error</span>
+  </form>,
 ]);
 
 const input = document

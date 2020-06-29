@@ -1,10 +1,8 @@
-import {Node} from "@siteimprove/alfa-aria";
-import {getName} from "@siteimprove/alfa-aria/src/get-name";
-import { Device } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
+
+import { Device } from "@siteimprove/alfa-device";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
 
@@ -27,20 +25,19 @@ function getElementById(document: Document): (id: string) => Element {
 }
 
 test("evaluate() passes on elements marked as decorative and not exposed", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <img id="empty-alt" src="foo.jpg" alt="" />
-        <img id="role-none" src="foo.jpg" role="none" />
-        <img id="role-presentation" src="foo.jpg" role="presentation" />
-        <svg id="svg" role="none">
-          <circle cx="50" cy="50" r="40" fill="yellow"></circle>
-        </svg>
+  const document = Document.of([
+    <html>
+      <img id="empty-alt" src="foo.jpg" alt="" />
+      <img id="role-none" src="foo.jpg" role="none" />
+      <img id="role-presentation" src="foo.jpg" role="presentation" />
+      <svg id="svg" role="none">
+        <circle cx="50" cy="50" r="40" fill="yellow"></circle>
+      </svg>
       <img id="aria-hidden" src="foo.jpg" role="none" aria-hidden="true" />
-      <div aria-hidden="true"><img id="aria-hidden-inherit" src="foo.jpg" role="none" /></div>
-      </html>,
-      Option.of(self)
-    ),
+      <div aria-hidden="true">
+        <img id="aria-hidden-inherit" src="foo.jpg" role="none" />
+      </div>
+    </html>,
   ]);
   const getById = getElementById(document);
   const emptyAlt = getById("empty-alt");
@@ -61,20 +58,17 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
 });
 
 test("evaluate() fails on elements marked as decorative but exposed", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <span id="label">Foo</span>
-        <img id="empty-alt-aria-label" src="foo.jpg" alt="" aria-label="Foo" />
-        <img
-          id="role-none-aria-labelledby"
-          src="foo.jpg"
-          role="none"
-          aria-labelledby="label"
-        />
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <span id="label">Foo</span>
+      <img id="empty-alt-aria-label" src="foo.jpg" alt="" aria-label="Foo" />
+      <img
+        id="role-none-aria-labelledby"
+        src="foo.jpg"
+        role="none"
+        aria-labelledby="label"
+      />
+    </html>,
   ]);
   const getById = getElementById(document);
   const emptyAltAriaLabel = getById("empty-alt-aria-label");
@@ -87,33 +81,27 @@ test("evaluate() fails on elements marked as decorative but exposed", async (t) 
 });
 
 test("evaluate() is inapplicable on non-img/svg elements", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <math role="none"></math>
-        <span role="none"></span>
-        <iframe role="presentation"></iframe>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <math role="none"></math>
+      <span role="none"></span>
+      <iframe role="presentation"></iframe>
+    </html>,
   ]);
 
   t.deepEqual(await evaluate(R67, { device, document }), [inapplicable(R67)]);
 });
 
 test("evaluate() is inapplicabale on elements which are not marked as decorative", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <img src="foo.jpg" alt="foo" />
-        <img src="foo.jpg" />
-        <img src="foo.jpg" />
-        <svg>
-          <circle cx="50" cy="50" r="40" fill="yellow"></circle>
-        </svg>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <img src="foo.jpg" alt="foo" />
+      <img src="foo.jpg" />
+      <img src="foo.jpg" />
+      <svg>
+        <circle cx="50" cy="50" r="40" fill="yellow"></circle>
+      </svg>
+    </html>,
   ]);
 
   t.deepEqual(await evaluate(R67, { device, document }), [inapplicable(R67)]);

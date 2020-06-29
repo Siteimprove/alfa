@@ -2,7 +2,6 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R81, { Outcomes } from "../../src/sia-r81/rule";
@@ -16,16 +15,13 @@ const { and } = Predicate;
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource in the same context`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>
-          <a href="foo.html">Foo</a>
-          <a href="foo.html">Foo</a>
-        </p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p>
+        <a href="foo.html">Foo</a>
+        <a href="foo.html">Foo</a>
+      </p>
+    </html>,
   ]);
 
   const links = document.descendants().filter(and(isElement, hasName("a")));
@@ -39,16 +35,13 @@ test(`evaluate() passes two links that have the same name and reference the same
 
 test(`evaluate() fails two links that have the same name, but reference
       different resources in the same context`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>
-          <a href="foo.html">Foo</a>
-          <a href="bar.html">Foo</a>
-        </p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p>
+        <a href="foo.html">Foo</a>
+        <a href="bar.html">Foo</a>
+      </p>
+    </html>,
   ]);
 
   const links = document.descendants().filter(and(isElement, hasName("a")));
@@ -71,16 +64,13 @@ test(`evaluate() fails two links that have the same name, but reference
 
 test(`evaluate() passes two links that have the same name and reference
       equivalent resources in the same context`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>
-          <a href="foo.html">Foo</a>
-          <a href="bar.html">Foo</a>
-        </p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p>
+        <a href="foo.html">Foo</a>
+        <a href="bar.html">Foo</a>
+      </p>
+    </html>,
   ]);
 
   const links = document.descendants().filter(and(isElement, hasName("a")));
@@ -103,18 +93,15 @@ test(`evaluate() passes two links that have the same name and reference
 
 test(`evaluate() is inapplicable to two links that have the same name and
       reference the same resource, but have different contexts`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>
-          <a href="foo.html">Foo</a>
-        </p>
-        <p>
-          <a href="foo.html">Foo</a>
-        </p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p>
+        <a href="foo.html">Foo</a>
+      </p>
+      <p>
+        <a href="foo.html">Foo</a>
+      </p>
+    </html>,
   ]);
 
   t.deepEqual(await evaluate(R81, { document }), [inapplicable(R81)]);
