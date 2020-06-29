@@ -261,7 +261,7 @@ export namespace Role {
                     // ...and it's not a presentational role in a forbidden context...
                     !(
                       role.some(Role.isPresentational) &&
-                      !isAllowedPresentational
+                      !allowedPresentational
                     )
                   ) {
                     // ...then we got ourselves a valid explicit role...
