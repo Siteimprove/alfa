@@ -37,7 +37,7 @@ export class Element extends Node implements Slot, Slotable {
     );
   }
 
-  private _namespace: Option<Namespace>;
+  private readonly _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
   private readonly _name: string;
   private readonly _attributes: Array<Attribute>;
@@ -292,28 +292,6 @@ export class Element extends Node implements Slot, Slotable {
     return `<${name}${attributes}>${
       children === "" ? "" : `\n${children}\n`
     }</${name}>`;
-  }
-
-  /**
-   * @internal
-   */
-  public _attachParent(parent: Node): boolean {
-    if (!super._attachParent(parent)) {
-      return false;
-    }
-
-    if (Element.isElement(parent)) {
-      switch (this._name) {
-        case "svg":
-        case "math":
-          break;
-
-        default:
-          this._namespace = parent._namespace;
-      }
-    }
-
-    return true;
   }
 
   /**
