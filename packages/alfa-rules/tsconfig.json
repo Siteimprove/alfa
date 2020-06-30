@@ -110,6 +110,7 @@
     "src/sia-r83/rule.ts",
     "src/sia-r84/rule.ts",
     "src/sia-r85/rule.ts",
+    "src/sia-r86/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
