@@ -162,12 +162,20 @@ export class Attribute extends Node {
   /**
    * @internal
    */
+  public _attachParent(): boolean {
+    return false;
+  }
+
+  /**
+   * @internal
+   */
   public _attachOwner(owner: Element): boolean {
-    if (this._owner.isSome()) {
+    if (this._frozen || this._owner.isSome()) {
       return false;
     }
 
     this._owner = Option.of(owner);
+    this._frozen = true;
 
     return true;
   }

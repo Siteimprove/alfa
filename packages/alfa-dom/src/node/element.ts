@@ -320,7 +320,7 @@ export class Element extends Node implements Slot, Slotable {
    * @internal
    */
   public _attachShadow(shadow: Shadow): boolean {
-    if (this._shadow.isSome()) {
+    if (this._frozen || this._shadow.isSome()) {
       return false;
     }
 
@@ -333,7 +333,7 @@ export class Element extends Node implements Slot, Slotable {
    * @internal
    */
   public _attachContent(document: Document): boolean {
-    if (this._content.isSome()) {
+    if (this._frozen || this._content.isSome()) {
       return false;
     }
 

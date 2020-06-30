@@ -15,8 +15,34 @@ export abstract class Node
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
 
+  /**
+   * Whether or not the node is frozen.
+   *
+   * @remarks
+   * As nodes are initialized without a parent and possibly attached to a parent
+   * after construction, this makes hierarchies of nodes mutable. That is, a
+   * node without a parent node may be assigned one by being passed as a child
+   * to a parent node. When this happens, a node becomes frozen. Nodes can also
+   * become frozen before being assigned a parent by using the `Node#freeze()`
+   * method.
+   */
+  protected _frozen: boolean = false;
+
   protected constructor(children: Array<Node>) {
     this._children = children.filter((child) => child._attachParent(this));
+  }
+
+  public get frozen(): boolean {
+    return this._frozen;
+  }
+
+  /**
+   * Freeze the node. This prevents further expansion of the node hierarchy,
+   * meaning that the node can no longer be passed as a child to a parent node.
+   */
+  public freeze(): this {
+    this._frozen = this._frozen || true;
+    return this;
   }
 
   /**
@@ -225,11 +251,12 @@ export abstract class Node
    * @internal
    */
   public _attachParent(parent: Node): boolean {
-    if (this._parent.isSome()) {
+    if (this._frozen || this._parent.isSome()) {
       return false;
     }
 
     this._parent = Option.of(parent);
+    this._frozen = true;
 
     return true;
   }

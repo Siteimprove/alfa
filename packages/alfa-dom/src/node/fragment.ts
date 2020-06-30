@@ -32,6 +32,13 @@ export class Fragment extends Node {
 
     return `#document-fragment${children === "" ? "" : `\n${children}`}`;
   }
+
+  /**
+   * @internal
+   */
+  public _attachParent(): boolean {
+    return false;
+  }
 }
 
 export namespace Fragment {

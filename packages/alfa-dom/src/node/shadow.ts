@@ -90,12 +90,20 @@ export class Shadow extends Node {
   /**
    * @internal
    */
+  public _attachParent(): boolean {
+    return false;
+  }
+
+  /**
+   * @internal
+   */
   public _attachHost(host: Element): boolean {
-    if (this._host.isSome()) {
+    if (this._frozen || this._host.isSome()) {
       return false;
     }
 
     this._host = Option.of(host);
+    this._frozen = true;
 
     return true;
   }

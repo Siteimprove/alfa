@@ -63,12 +63,20 @@ export class Document extends Node {
   /**
    * @internal
    */
+  public _attachParent(): boolean {
+    return false;
+  }
+
+  /**
+   * @internal
+   */
   public _attachFrame(frame: Element): boolean {
-    if (this._frame.isSome()) {
+    if (this._frozen || this._frame.isSome()) {
       return false;
     }
 
     this._frame = Option.of(frame);
+    this._frozen = true;
 
     return true;
   }
