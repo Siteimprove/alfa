@@ -14,7 +14,6 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Page } from "@siteimprove/alfa-web";
 
 import { ComponentFixture } from "@angular/core/testing";
@@ -32,9 +31,7 @@ export namespace Angular {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [
-        Element.fromElement(toElement(nativeElement), Option.of(self)),
-      ]),
+      Document.of([Element.from(toElement(nativeElement))]),
       Device.standard()
     );
   }

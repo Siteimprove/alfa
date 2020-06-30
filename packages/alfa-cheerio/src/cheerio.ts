@@ -8,7 +8,6 @@ import {
   Namespace,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as cheerio from "cheerio";
@@ -30,7 +29,7 @@ export namespace Cheerio {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [Node.fromNode(toNode(value[0]), Option.of(self))]),
+      Document.of([Node.from(toNode(value[0]))]),
       Device.standard()
     );
   }

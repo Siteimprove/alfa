@@ -26,7 +26,6 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { JQuery } from "@siteimprove/alfa-jquery";
-import { Option } from "@siteimprove/alfa-option";
 import { Page } from "@siteimprove/alfa-web";
 
 export namespace Cypress {
@@ -47,8 +46,8 @@ export namespace Cypress {
       Request.empty(),
       Response.empty(),
       node.type === "document"
-        ? Document.fromDocument(node as Document.JSON)
-        : Document.of((self) => [Node.fromNode(node, Option.of(self))]),
+        ? Document.from(node as Document.JSON)
+        : Document.of([Node.from(node)]),
       Device.standard()
     );
   }
