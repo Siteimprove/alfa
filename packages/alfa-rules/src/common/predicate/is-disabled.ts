@@ -46,7 +46,5 @@ export const isDisabled: Predicate<Element> = (element) => {
       return element.attribute("disabled").isSome();
   }
 
-  return element
-    .attribute("aria-disabled")
-    .some((disabled) => disabled.value === "true");
+  return false;
 };
