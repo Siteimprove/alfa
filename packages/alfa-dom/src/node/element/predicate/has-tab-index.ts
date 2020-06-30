@@ -1,4 +1,4 @@
-import { Element } from "@siteimprove/alfa-dom";
+import { Element } from "../../element";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 export function hasTabIndex(

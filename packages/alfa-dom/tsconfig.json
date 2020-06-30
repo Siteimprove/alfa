@@ -17,6 +17,7 @@
     "src/node/element/predicate/has-id.ts",
     "src/node/element/predicate/has-name.ts",
     "src/node/element/predicate/has-namespace.ts",
+    "src/node/element/predicate/has-tab-index.ts",
     "src/node/element/predicate/is-disabled.ts",
     "src/node/fragment.ts",
     "src/node/shadow.ts",

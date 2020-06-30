@@ -356,9 +356,9 @@ const isAllowedPresentational: Predicate<Element> = (element) => {
 /**
  * @see https://html.spec.whatwg.org/#sequential-focus-navigation
  */
-export function isTabbable(device: Device): Predicate<Element> {
+function isTabbable(device: Device): Predicate<Element> {
   return and(
-    hasTabIndex((tabIndex) => tabIndex >= 0),
+    Element.hasTabIndex((tabIndex) => tabIndex >= 0),
     and(
       not(redirectsFocus),
       and(not(Element.isDisabled), not(isInert(device)), isRendered(device))
@@ -390,13 +390,7 @@ const redirectsFocus: Predicate<Element> = (element) => {
   return false;
 };
 
-export function hasTabIndex(
-  predicate: Predicate<number> = () => true
-): Predicate<Element> {
-  return (element) => element.tabIndex().some(predicate);
-}
-
-export function isInert(device: Device): Predicate<Element> {
+function isInert(device: Device): Predicate<Element> {
   return (element) => {
     const visibility = Style.from(element, device).computed("visibility").value;
 
@@ -411,7 +405,7 @@ export function isInert(device: Device): Predicate<Element> {
   };
 }
 
-export function isRendered(device: Device): Predicate<Node> {
+function isRendered(device: Device): Predicate<Node> {
   return (node) => {
     if (Element.isElement(node)) {
       const display = Style.from(node, device).computed("display").value;

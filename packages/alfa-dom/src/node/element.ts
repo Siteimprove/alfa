@@ -352,7 +352,7 @@ export namespace Element {
     );
   }
 
-  export const { hasId, hasName, hasNamespace, isDisabled } = predicate;
+  export const { hasId, hasName, hasNamespace, hasTabIndex, isDisabled } = predicate;
 }
 
 function indent(input: string): string {

@@ -2,10 +2,10 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasTabIndex } from "./has-tab-index";
 import { isInert } from "./is-inert";
 import { isRendered } from "./is-rendered";
 
+const { hasTabIndex, isDisabled } = Element;
 const { and, not } = Predicate;
 
 /**
@@ -16,7 +16,7 @@ export function isTabbable(device: Device): Predicate<Element> {
     hasTabIndex((tabIndex) => tabIndex >= 0),
     and(
       not(redirectsFocus),
-      and(not(Element.isDisabled), not(isInert(device)), isRendered(device))
+      and(not(isDisabled), not(isInert(device)), isRendered(device))
     )
   );
 }

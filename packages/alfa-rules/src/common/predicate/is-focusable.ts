@@ -2,7 +2,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasTabIndex } from "./has-tab-index";
+import { hasTabIndex } from "../../../../alfa-dom/src/node/element/predicate/has-tab-index";
 import { isRendered } from "./is-rendered";
 
 const { and, not } = Predicate;
