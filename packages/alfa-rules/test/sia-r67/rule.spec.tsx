@@ -1,5 +1,3 @@
-import {Node} from "@siteimprove/alfa-aria";
-import {getName} from "@siteimprove/alfa-aria/src/get-name";
 import { Device } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Option } from "@siteimprove/alfa-option";
@@ -36,8 +34,10 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
         <svg id="svg" role="none">
           <circle cx="50" cy="50" r="40" fill="yellow"></circle>
         </svg>
-      <img id="aria-hidden" src="foo.jpg" role="none" aria-hidden="true" />
-      <div aria-hidden="true"><img id="aria-hidden-inherit" src="foo.jpg" role="none" /></div>
+        <img id="aria-hidden" src="foo.jpg" role="none" aria-hidden="true" />
+        <div aria-hidden="true">
+          <img id="aria-hidden-inherit" src="foo.jpg" role="none" />
+        </div>
       </html>,
       Option.of(self)
     ),
