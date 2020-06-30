@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Branched } from "@siteimprove/alfa-branched";
 import { Device } from "@siteimprove/alfa-device";
@@ -8,12 +8,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, equals } = Predicate;
+const { and, equals, not } = Predicate;
+const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Iterable<Element>>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r56.html",
@@ -24,22 +23,53 @@ export default Rule.Atomic.of<Page, Iterable<Element>>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              and(Element.isElement, hasNamespace(equals(Namespace.HTML))),
-              and(isPerceivable(device), hasLandmarkRole(device))
+              Element.isElement,
+              and(
+                hasNamespace(equals(Namespace.HTML)),
+                not(isIgnored(device)),
+                hasLandmarkRole(device)
+              )
             )
           );
 
         console.dir(elements.map((elt) => elt.id.get()).toJSON());
 
-        const groups = elements
-          .groupBy((landmark) => Role.from(landmark))
-          ;
+        const foo = [...elements].map((elt) => elt.id.get());
+        console.log(foo);
 
-        console.dir(groups.map(seq => seq.map(elt => elt.id.get())).toJSON(), {depth:4});
+        const groups = elements.groupBy((landmark) => {
+          const role = Role.from(landmark);
 
-        console.dir([...groups.values()].map(seq => seq.map(elt => elt.id.get()).toJSON()));
+          console.log(
+            `landmark ${landmark.id.get()} has role ${role
+              .toArray()
+              .map(([r, _]) => r.map((r) => r.name).getOr("no role"))}`
+          );
 
-        return groups.values();
+          return role;
+        });
+
+        console.log(
+          groups
+            .toArray()
+            .map(
+              ([branchedRole, group]) =>
+                `role: ${branchedRole
+                  .toArray()
+                  .map(([r, _]) =>
+                    r.map((role) => role.name).getOr("no role")
+                  )}, groups: ${group
+                  .map((element) => element.id.get())
+                  .toJSON()}.`
+            )
+        );
+
+        const result = groups.values();
+        console.dir(
+          [...result].map((seq) => seq.map((elt) => elt.id.get()).toJSON())
+        );
+
+        return result;
       },
 
       expectations(target) {
@@ -69,16 +99,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>>({
 
 export namespace Outcomes {
   export const differentNames = Ok.of(
-    "No two same landmarks have the same name."
+    Diagnostic.of("No two same landmarks have the same name.")
   );
 
   export const sameNames = Err.of(
-    "Some identical landmarks have the same name."
+    Diagnostic.of("Some identical landmarks have the same name.")
   );
 }
 
 function hasLandmarkRole(device: Device): Predicate<Element> {
-  return hasRole((role) => role.inheritsFrom(hasName(equals("landmark"))));
+  return hasRole((role) => role.inheritsFrom(Role.hasName(equals("landmark"))));
 }
 
 function addToBranchedArray<T, B>(
