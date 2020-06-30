@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, or } = Predicate;
+const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
@@ -34,16 +34,11 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            Node.from(target, device).every((accNode) => {
-              const role = accNode.role();
-
-              return (
-                role.isNone() ||
-                Role.hasName("none", "presentation")(role.get())
-              );
-            }),
-            () => Outcomes.IsNotExposed,
-            () => Outcomes.IsExposed
+            Node.from(target, device).every((accNode) =>
+              accNode.role().some(not(Role.hasName("none", "presentation")))
+            ),
+            () => Outcomes.IsExposed,
+            () => Outcomes.IsNotExposed
           ),
         };
       },
@@ -53,15 +48,11 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsNotExposed = Ok.of(
-    Diagnostic.of(
-      `The element is marked as decorative and is not exposed`
-    )
+    Diagnostic.of(`The element is marked as decorative and is not exposed`)
   );
 
   export const IsExposed = Err.of(
-    Diagnostic.of(
-      `The element is marked as decorative but is exposed`
-    )
+    Diagnostic.of(`The element is marked as decorative but is exposed`)
   );
 }
 
