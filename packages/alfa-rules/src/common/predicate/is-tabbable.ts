@@ -3,7 +3,6 @@ import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { hasTabIndex } from "./has-tab-index";
-import { isDisabled } from "./is-disabled";
 import { isInert } from "./is-inert";
 import { isRendered } from "./is-rendered";
 
@@ -17,7 +16,7 @@ export function isTabbable(device: Device): Predicate<Element> {
     hasTabIndex((tabIndex) => tabIndex >= 0),
     and(
       not(redirectsFocus),
-      and(not(isDisabled), and(not(isInert(device)), isRendered(device)))
+      and(not(Element.isDisabled), not(isInert(device)), isRendered(device))
     )
   );
 }

@@ -14,7 +14,6 @@ import { expectation } from "../common/expectation";
 
 import { hasCategory } from "../common/predicate/has-category";
 import { hasRole } from "../common/predicate/has-role";
-import { isDisabled } from "../common/predicate/is-disabled";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
@@ -40,7 +39,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
                   hasRole(hasCategory(equals(Role.Category.Widget))),
-                  and(hasRole("group"), isDisabled)
+                  and(hasRole("group"), Element.isDisabled)
                 )
               ),
               node
