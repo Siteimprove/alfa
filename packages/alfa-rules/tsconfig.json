@@ -23,7 +23,6 @@
     "src/common/predicate/has-text-content.ts",
     "src/common/predicate/has-unique-id.ts",
     "src/common/predicate/has-value.ts",
-    "src/common/predicate/is-decorative.ts",
     "src/common/predicate/is-defined.ts",
     "src/common/predicate/is-document-element.ts",
     "src/common/predicate/is-focusable.ts",

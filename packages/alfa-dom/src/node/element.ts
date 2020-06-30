@@ -228,7 +228,7 @@ export class Element extends Node implements Slot, Slotable {
       }
     }
 
-    if (isSuggestedFocusableElement(this)) {
+    if (isSuggestedFocusableElement(this) ) {
       return Some.of(0);
     }
 
