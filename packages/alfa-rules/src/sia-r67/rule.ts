@@ -7,8 +7,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-
 const { isElement, hasName, hasNamespace } = Element;
 const { and, or } = Predicate;
 
