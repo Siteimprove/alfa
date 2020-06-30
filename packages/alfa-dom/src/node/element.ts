@@ -15,7 +15,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 import * as predicate from "./element/predicate";
-import attribute = h.attribute;
+import element = h.element;
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
@@ -230,7 +230,7 @@ export class Element extends Node implements Slot, Slotable {
       }
     }
 
-    if (isSuggestedFocusableElement(this)) {
+    if (isSuggestedFocusableElement(this) && !isDisabled(this)) {
       return Some.of(0);
     }
 
@@ -365,6 +365,45 @@ function indent(input: string): string {
   return input.replace(/^/gm, "  ");
 }
 
+/**
+ * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+ */
+function isDisabled(element: Element): boolean {
+  // 1. Elements on which the disabled attribute is allowed. Presence of the attribute is enough, whatever the value
+  if (
+    Element.hasName("button", "input", "select", "textarea")(element) &&
+    element.attribute("disabled").isSome()
+  ) {
+    return true;
+  }
+  // 2. Any element, *including* ones from previous case. Is the element descendant of a disabled fieldset?
+  const fieldsets = element.ancestors().filter(
+    and(
+      Element.isElement,
+      and(Element.hasName("fieldset"), (fieldset) =>
+        fieldset.attribute("disabled").isNone()
+      )
+    )
+  );
+  // if the element is not the descendant of any disabled fieldset, it's not disabled.
+  // Otherwise, we need to figure out if it is a descendant of that fieldset first legend…
+  return fieldsets.some((fieldset) => {
+    const legend = fieldset
+      .children()
+      .filter(and(Element.isElement, Element.hasName("legend")))
+      .first();
+    if (legend.isNone()) {
+      return true;
+    }
+
+    if (legend.get().descendants().includes(element)) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
 function isSuggestedFocusableElement(element: Element): boolean {
   switch (element.name) {
     case "a":
@@ -372,12 +411,10 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return (
-        element
-          .attribute("type")
-          .flatMap((attribute) => attribute.enumerate("hidden"))
-          .isNone() || element.attribute("disabled").isNone()
-      );
+      return element
+        .attribute("type")
+        .flatMap((attribute) => attribute.enumerate("hidden"))
+        .isNone();
 
     case "audio":
     case "video":
@@ -386,7 +423,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
     case "button":
     case "select":
     case "textarea":
-      return element.attribute("disabled").isNone();
+      return true;
 
     case "summary":
       return element
