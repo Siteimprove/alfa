@@ -43,11 +43,10 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
             Siteimprove
           </a>
         </nav>
-        <button id="button" role="presentation" disabled>
+        <button id="button-disabled" role="presentation" disabled>
           Click me!
         </button>
-        <input id="hidden-lowercase" type="hidden" role="none" />
-        <input id="hidden-uppercase" type="HIDDEN" role="none" />
+        <input id="hidden-state" type="hidden" role="none" />
       </html>,
       Option.of(self)
     ),
@@ -60,9 +59,8 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
   const ariaHidden = getById("aria-hidden");
   const ariaHiddenInherit = getById("aria-hidden-inherit");
   const nav = getById("nav");
-  const button = getById("button");
-  const hiddenLowercase = getById("hidden-lowercase");
-  const hiddenUppercase = getById("hidden-uppercase");
+  const buttonDisabled = getById("button-disabled");
+  const hiddenState = getById("hidden-state");
 
   t.deepEqual(await evaluate(R86, { device, document }), [
     passed(R86, emptyAlt, { 1: Outcomes.IsNotExposed }),
@@ -72,9 +70,8 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
     passed(R86, ariaHidden, { 1: Outcomes.IsNotExposed }),
     passed(R86, ariaHiddenInherit, { 1: Outcomes.IsNotExposed }),
     passed(R86, nav, { 1: Outcomes.IsNotExposed }),
-    passed(R86, button, { 1: Outcomes.IsNotExposed }),
-    passed(R86, hiddenLowercase, { 1: Outcomes.IsNotExposed }),
-    passed(R86, hiddenUppercase, { 1: Outcomes.IsNotExposed }),
+    passed(R86, buttonDisabled, { 1: Outcomes.IsNotExposed }),
+    passed(R86, hiddenState, { 1: Outcomes.IsNotExposed }),
   ]);
 });
 
@@ -98,6 +95,7 @@ test("evaluate() fails on elements marked as decorative but exposed", async (t) 
         <button id="button" role="presentation">
           Click me!
         </button>
+        <input id="input" role="none" />
       </html>,
       Option.of(self)
     ),
@@ -107,12 +105,14 @@ test("evaluate() fails on elements marked as decorative but exposed", async (t) 
   const roleNoneAriaLabelledby = getById("role-none-aria-labelledby");
   const nav = getById("nav");
   const button = getById("button");
+  const input = getById("input");
 
   t.deepEqual(await evaluate(R86, { device, document }), [
     failed(R86, emptyAltAriaLabel, { 1: Outcomes.IsExposed }),
     failed(R86, roleNoneAriaLabelledby, { 1: Outcomes.IsExposed }),
     failed(R86, nav, { 1: Outcomes.IsExposed }),
     failed(R86, button, { 1: Outcomes.IsExposed }),
+    failed(R86, input, { 1: Outcomes.IsExposed }),
   ]);
 });
 
