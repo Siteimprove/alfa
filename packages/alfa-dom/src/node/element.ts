@@ -372,10 +372,12 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return element
-        .attribute("type")
-        .flatMap((attribute) => attribute.enumerate("hidden"))
-        .isNone();
+      return (
+        element
+          .attribute("type")
+          .flatMap((attribute) => attribute.enumerate("hidden"))
+          .isNone() || element.attribute("disabled").isNone()
+      );
 
     case "audio":
     case "video":
@@ -384,7 +386,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
     case "button":
     case "select":
     case "textarea":
-      return true;
+      return element.attribute("disabled").isNone();
 
     case "summary":
       return element

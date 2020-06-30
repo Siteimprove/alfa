@@ -43,9 +43,11 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
             Siteimprove
           </a>
         </nav>
-        {/*<button id="button" role="presentation" disabled>*/}
-        {/*  Click me!*/}
-        {/*</button>*/}
+        <button id="button" role="presentation" disabled>
+          Click me!
+        </button>
+        <input id="hidden-lowercase" type="hidden" role="none" />
+        <input id="hidden-uppercase" type="HIDDEN" role="none" />
       </html>,
       Option.of(self)
     ),
@@ -58,7 +60,9 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
   const ariaHidden = getById("aria-hidden");
   const ariaHiddenInherit = getById("aria-hidden-inherit");
   const nav = getById("nav");
-  // const button = getById("button");
+  const button = getById("button");
+  const hiddenLowercase = getById("hidden-lowercase");
+  const hiddenUppercase = getById("hidden-uppercase");
 
   t.deepEqual(await evaluate(R86, { device, document }), [
     passed(R86, emptyAlt, { 1: Outcomes.IsNotExposed }),
@@ -68,7 +72,9 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
     passed(R86, ariaHidden, { 1: Outcomes.IsNotExposed }),
     passed(R86, ariaHiddenInherit, { 1: Outcomes.IsNotExposed }),
     passed(R86, nav, { 1: Outcomes.IsNotExposed }),
-    // passed(R86, button, { 1: Outcomes.IsNotExposed }),
+    passed(R86, button, { 1: Outcomes.IsNotExposed }),
+    passed(R86, hiddenLowercase, { 1: Outcomes.IsNotExposed }),
+    passed(R86, hiddenUppercase, { 1: Outcomes.IsNotExposed }),
   ]);
 });
 
