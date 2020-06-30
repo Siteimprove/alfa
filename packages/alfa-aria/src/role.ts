@@ -335,8 +335,7 @@ export namespace Role {
 // An element is focusable if it has a tabindex and is not disabled.
 // Note that elements that are not rendered are still considered; however, these are not exposed in the accessibility
 // tree in the first place, so we should be fairly safe here.
-const isFocusable: Predicate<Element> = (element) =>
-  element.tabIndex().isSome();
+const isFocusable: Predicate<Element> = Element.hasTabIndex();
 // if (and(Element.hasTabIndex(), not(Element.isDisabled))(element)) {
 
 const hasSupportedAttribute: Predicate<Element> = (element) =>
