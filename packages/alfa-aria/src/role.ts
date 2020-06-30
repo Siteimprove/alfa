@@ -335,28 +335,27 @@ export namespace Role {
 // An element is focusable if it has a tabindex and is not disabled.
 // Note that elements that are not rendered are still considered; however, these are not exposed in the accessibility
 // tree in the first place, so we should be fairly safe here.
-const isFocusable: Predicate<Element> = (element) =>
-  element.tabIndex().isSome();
-// if (and(Element.hasTabIndex(), not(Element.isDisabled))(element)) {
+const isFocusable: Predicate<Element> = and(
+  Element.hasTabIndex(),
+  not(Element.isDisabled)
+);
 
 const hasSupportedAttribute: Predicate<Element> = (element) =>
   Role.lookup("roletype").some((role) => {
     for (const attribute of role.characteristics.supports) {
       if (element.attribute(attribute).isSome()) {
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   });
 
-const isAllowedPresentational: Predicate<Element> = (element) => {
-  if (isFocusable(element)) {
-    return false;
-  }
-
-  return hasSupportedAttribute(element);
-};
+// An element is NOT allowed to be presentational if either
+// it is focusable OR it has some aria-* attributes
+const isAllowedPresentational: Predicate<Element> = not(
+  or(isFocusable, hasSupportedAttribute)
+);
 
 import "./role/separator";
 
