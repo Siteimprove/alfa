@@ -1,14 +1,12 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import { Comment, Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Set } from "@siteimprove/alfa-set";
-import { Style } from "@siteimprove/alfa-style";
 
 import { Feature } from "./feature";
 import { Attribute } from "./attribute";
