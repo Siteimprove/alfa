@@ -2,7 +2,13 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Text,
+  Namespace,
+  Node,
+  Attribute,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,8 +18,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
+import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasCategory } from "../common/predicate/has-category";
 import { hasRole } from "../common/predicate/has-role";
+import { hasValue } from "../common/predicate/has-value";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
@@ -39,7 +47,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
                   hasRole(hasCategory(equals(Role.Category.Widget))),
-                  and(hasRole("group"), Element.isDisabled)
+                  and(hasRole("group"), isSemanticallyDisabled)
                 )
               ),
               node
@@ -418,3 +426,13 @@ function contrast(foreground: RGB, background: RGB): number {
 
   return round(contrast * 100) / 100;
 }
+
+/**
+ * @see https://act-rules.github.io/glossary/#disabled-element
+ */
+const isSemanticallyDisabled: Predicate<Element> = or(
+  Element.isDisabled,
+  hasAttribute(
+    and(Attribute.hasName("aria-disabled"), hasValue(equals("true")))
+  )
+);
