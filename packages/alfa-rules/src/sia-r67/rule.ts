@@ -6,6 +6,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { isMarkedAsDecorative } from "../common/predicate/is-marked-as-decorative";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
@@ -53,17 +54,5 @@ export namespace Outcomes {
 
   export const IsExposed = Err.of(
     Diagnostic.of(`The element is marked as decorative but is exposed`)
-  );
-}
-
-/**
- * Check if an element is marked as decorative by looking at its role but without conflict resolution.
- * If the result is "none" or "presentation", then the element is marked as decorative.
- */
-function isMarkedAsDecorative(element: Element): boolean {
-  return (
-    Role.from(element, { allowPresentational: true })
-      // Element is marked as decorative if at least one browser thinks so.
-      .some((r) => r.some(Role.hasName("none", "presentation")))
   );
 }
