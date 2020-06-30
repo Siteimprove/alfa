@@ -4,6 +4,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { hasName } = Role;
 
+// @TODO This is calling directly Role.from rather than Node.from().role
+// @TODO So this is likely not correct for elements that are hidden
+
 export function hasRole(predicate?: Predicate<Role>): Predicate<Element>;
 
 export function hasRole(

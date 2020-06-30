@@ -331,12 +331,16 @@ export namespace Role {
  *
  * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
  */
-const isAllowedPresentational: Predicate<Element> = (element) => {
-  if (element.tabIndex().isSome()) {
-    return false;
-  }
 
-  return Role.lookup("roletype").some((role) => {
+// An element is focusable if it has a tabindex and is not disabled.
+// Note that elements that are not rendered are still considered; however, these are not exposed in the accessibility
+// tree in the first place, so we should be fairly safe here.
+const isFocusable: Predicate<Element> = (element) =>
+  element.tabIndex().isSome();
+// if (and(Element.hasTabIndex(), not(Element.isDisabled))(element)) {
+
+const hasSupportedAttribute: Predicate<Element> = (element) =>
+  Role.lookup("roletype").some((role) => {
     for (const attribute of role.characteristics.supports) {
       if (element.attribute(attribute).isSome()) {
         return false;
@@ -345,89 +349,14 @@ const isAllowedPresentational: Predicate<Element> = (element) => {
 
     return true;
   });
-};
 
-/**
- * @TODO These predicates are duplicated from alfa-rules/src/common/predicate
- * They are "naturally" predicates on Element. However, they do use styling.
- * Since alfa-style already depends on alfa-dom, we can't move them to alfa-dom/src/node/element/predicate
- * We keep a duplicated version here until we find a better place to hold a DRY version
- */
-/**
- * @see https://html.spec.whatwg.org/#sequential-focus-navigation
- */
-function isTabbable(device: Device): Predicate<Element> {
-  return and(
-    Element.hasTabIndex((tabIndex) => tabIndex >= 0),
-    and(
-      not(redirectsFocus),
-      and(not(Element.isDisabled), not(isInert(device)), isRendered(device))
-    )
-  );
-}
-
-const redirectsFocus: Predicate<Element> = (element) => {
-  if (element.namespace.includes(Namespace.HTML)) {
-    switch (element.name) {
-      // Per the sequential navigation search algorithm, browsing context
-      // containers (<iframe> elements) redirect focus to either their first
-      // focusable descendant or the next element in the sequential focus
-      // navigation order.
-      //
-      // https://html.spec.whatwg.org/#browsing-context-container
-      // https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
-      case "iframe":
-        return true;
-
-      // <label> elements redirect focus to their control.
-      //
-      // https://html.spec.whatwg.org/#the-label-element
-      case "label":
-        return true;
-    }
+const isAllowedPresentational: Predicate<Element> = (element) => {
+  if (isFocusable(element)) {
+    return false;
   }
 
-  return false;
+  return hasSupportedAttribute(element);
 };
-
-function isInert(device: Device): Predicate<Element> {
-  return (element) => {
-    const visibility = Style.from(element, device).computed("visibility").value;
-
-    switch (visibility.value) {
-      case "hidden":
-      case "collapse":
-        return true;
-
-      default:
-        return false;
-    }
-  };
-}
-
-function isRendered(device: Device): Predicate<Node> {
-  return (node) => {
-    if (Element.isElement(node)) {
-      const display = Style.from(node, device).computed("display").value;
-
-      const [outside] = display;
-
-      if (outside.value === "none") {
-        return false;
-      }
-    }
-
-    if (Comment.isComment(node)) {
-      return false;
-    }
-
-    return node.parent({ flattened: true }).every(isRendered(device));
-  };
-}
-
-/**
- * @TODO end of duplicated predicates.
- */
 
 import "./role/separator";
 
