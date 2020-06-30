@@ -1,18 +1,20 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
-import { Element } from "@siteimprove/alfa-dom";
+import { Device } from "@siteimprove/alfa-device";
+import { Comment, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Set } from "@siteimprove/alfa-set";
+import { Style } from "@siteimprove/alfa-style";
 
 import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { equals, or } = Predicate;
+const { and, equals, or, not } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -260,8 +262,7 @@ export namespace Role {
                     ) &&
                     // ...and it's not a presentational role in a forbidden context...
                     !(
-                      role.some(Role.isPresentational) &&
-                      !allowedPresentational
+                      role.some(Role.isPresentational) && !allowedPresentational
                     )
                   ) {
                     // ...then we got ourselves a valid explicit role...
@@ -345,6 +346,94 @@ const isAllowedPresentational: Predicate<Element> = (element) => {
     return true;
   });
 };
+
+/**
+ * @TODO These predicates are duplicated from alfa-rules/src/common/predicate
+ * They are "naturally" predicates on Element. However, they do use styling.
+ * Since alfa-style already depends on alfa-dom, we can't move them to alfa-dom/src/node/element/predicate
+ * We keep a duplicated version here until we find a better place to hold a DRY version
+ */
+/**
+ * @see https://html.spec.whatwg.org/#sequential-focus-navigation
+ */
+export function isTabbable(device: Device): Predicate<Element> {
+  return and(
+    hasTabIndex((tabIndex) => tabIndex >= 0),
+    and(
+      not(redirectsFocus),
+      and(not(Element.isDisabled), not(isInert(device)), isRendered(device))
+    )
+  );
+}
+
+const redirectsFocus: Predicate<Element> = (element) => {
+  if (element.namespace.includes(Namespace.HTML)) {
+    switch (element.name) {
+      // Per the sequential navigation search algorithm, browsing context
+      // containers (<iframe> elements) redirect focus to either their first
+      // focusable descendant or the next element in the sequential focus
+      // navigation order.
+      //
+      // https://html.spec.whatwg.org/#browsing-context-container
+      // https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
+      case "iframe":
+        return true;
+
+      // <label> elements redirect focus to their control.
+      //
+      // https://html.spec.whatwg.org/#the-label-element
+      case "label":
+        return true;
+    }
+  }
+
+  return false;
+};
+
+export function hasTabIndex(
+  predicate: Predicate<number> = () => true
+): Predicate<Element> {
+  return (element) => element.tabIndex().some(predicate);
+}
+
+export function isInert(device: Device): Predicate<Element> {
+  return (element) => {
+    const visibility = Style.from(element, device).computed("visibility").value;
+
+    switch (visibility.value) {
+      case "hidden":
+      case "collapse":
+        return true;
+
+      default:
+        return false;
+    }
+  };
+}
+
+export function isRendered(device: Device): Predicate<Node> {
+  return (node) => {
+    if (Element.isElement(node)) {
+      const display = Style.from(node, device).computed("display").value;
+
+      const [outside] = display;
+
+      if (outside.value === "none") {
+        return false;
+      }
+    }
+
+    if (Comment.isComment(node)) {
+      return false;
+    }
+
+    return node.parent({ flattened: true }).every(isRendered(device));
+  };
+}
+
+/**
+ * @TODO end of duplicated predicates.
+ */
 
 import "./role/separator";
 
