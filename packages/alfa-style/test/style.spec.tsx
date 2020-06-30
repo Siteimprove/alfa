@@ -69,7 +69,7 @@ test("#cascaded() returns the most specific property value", (t) => {
       format: "named",
       color: "green",
     },
-    source: h.declaration("color", "green").toJSON(),
+    source: h.declaration("color", "green", true).toJSON(),
   });
 });
 
@@ -86,7 +86,7 @@ test("#cascaded() correctly handles inline styles overriding the sheet", (t) => 
       format: "named",
       color: "green",
     },
-    source: h.declaration("color", "green").toJSON(),
+    source: h.declaration("color", "green", true).toJSON(),
   });
 });
 
