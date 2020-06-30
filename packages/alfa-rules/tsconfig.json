@@ -140,7 +140,8 @@
     "test/sia-r82/rule.spec.tsx",
     "test/sia-r83/rule.spec.tsx",
     "test/sia-r84/rule.spec.tsx",
-    "test/sia-r85/rule.spec.tsx"
+    "test/sia-r85/rule.spec.tsx",
+    "test/sia-r86/rule.spec.tsx"
   ],
   "references": [
     {
