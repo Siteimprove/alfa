@@ -3,6 +3,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { h } from "../h";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -14,6 +15,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 import * as predicate from "./element/predicate";
+import attribute = h.attribute;
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
@@ -370,7 +372,10 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return element.attribute("type").every((attr) => attr.value !== "hidden");
+      return element
+        .attribute("type")
+        .flatMap((attribute) => attribute.enumerate("hidden"))
+        .isNone();
 
     case "audio":
     case "video":
