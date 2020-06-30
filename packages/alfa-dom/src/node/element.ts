@@ -3,7 +3,6 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { h } from "../h";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -353,13 +352,7 @@ export namespace Element {
     );
   }
 
-  export const hasName = predicate.hasName;
-
-  export const hasNamespace = predicate.hasNamespace;
-
-  export const hasId = predicate.hasId;
-
-  export const isDisabled = predicate.isDisabled;
+  export const { hasId, hasName, hasNamespace, isDisabled } = predicate;
 }
 
 function indent(input: string): string {
