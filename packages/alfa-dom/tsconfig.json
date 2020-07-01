@@ -72,6 +72,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-trampoline"
     }
   ]
 }

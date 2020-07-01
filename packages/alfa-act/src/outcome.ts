@@ -12,7 +12,7 @@ import * as trilean from "@siteimprove/alfa-trilean";
 import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
 
-export abstract class Outcome<I, T, Q = unknown>
+export abstract class Outcome<I, T, Q = never>
   implements Equatable, json.Serializable, earl.Serializable {
   protected readonly _rule: Rule<I, T, Q>;
 
@@ -59,7 +59,7 @@ export namespace Outcome {
     };
   }
 
-  export class Passed<I, T, Q = unknown> extends Outcome<I, T, Q> {
+  export class Passed<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
@@ -159,7 +159,7 @@ export namespace Outcome {
     }
   }
 
-  export class Failed<I, T, Q = unknown> extends Outcome<I, T, Q> {
+  export class Failed<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
@@ -261,7 +261,7 @@ export namespace Outcome {
     }
   }
 
-  export class CantTell<I, T, Q = unknown> extends Outcome<I, T, Q> {
+  export class CantTell<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T
