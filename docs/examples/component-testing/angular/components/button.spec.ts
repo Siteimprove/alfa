@@ -1,13 +1,15 @@
+/// <reference types="jest" />
 /// <reference types="@siteimprove/alfa-jest" />
 
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+
 import { ButtonComponent } from "./button";
 
 let fixture: ComponentFixture<ButtonComponent>;
 
 beforeEach(async () => {
   await TestBed.configureTestingModule({
-    declarations: [ButtonComponent]
+    declarations: [ButtonComponent],
   }).compileComponents();
 });
 
@@ -16,6 +18,6 @@ beforeEach(() => {
   fixture.detectChanges();
 });
 
-it("should be accessible", () => {
-  expect(fixture).toBeAccessible();
+it("should be accessible", async () => {
+  await expect(fixture).toBeAccessible();
 });

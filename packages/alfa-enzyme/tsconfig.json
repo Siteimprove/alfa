@@ -1,18 +1,8 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "chai.ts",
-    "jasmine.ts",
-    "jest.ts",
-    "src/enzyme.ts",
-    "src/index.ts",
-    "unexpected.ts"
-  ],
+  "files": ["src/enzyme.ts", "src/index.ts"],
   "references": [
-    {
-      "path": "../alfa-chai"
-    },
     {
       "path": "../alfa-cheerio"
     },
@@ -20,22 +10,10 @@
       "path": "../alfa-dom"
     },
     {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-jasmine"
-    },
-    {
-      "path": "../alfa-jest"
-    },
-    {
       "path": "../alfa-react"
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-unexpected"
     },
     {
       "path": "../alfa-web"

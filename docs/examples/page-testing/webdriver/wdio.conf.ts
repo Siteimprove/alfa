@@ -8,5 +8,5 @@ export const config: Config = {
   logLevel: "info",
   services: ["chromedriver"],
   framework: "mocha",
-  reporters: ["spec"]
+  reporters: ["spec"],
 };

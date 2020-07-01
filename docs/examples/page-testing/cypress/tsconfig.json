@@ -1,10 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "lib": ["es2015", "dom"],
-    "types": ["cypress"]
-  },
   "files": ["integration/page.spec.ts", "support.ts"],
   "references": [{ "path": "../../../../packages" }]
 }

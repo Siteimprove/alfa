@@ -1,10 +1,23 @@
-/// <reference types="@siteimprove/alfa-chai" />
+/// <reference types="mocha" />
 
-import alfa from "@siteimprove/alfa-puppeteer/chai";
 import * as chai from "chai";
 import * as puppeteer from "puppeteer";
 
-chai.use(alfa);
+import { Handler } from "@siteimprove/alfa-assert";
+import { Future } from "@siteimprove/alfa-future";
+import { Puppeteer } from "@siteimprove/alfa-puppeteer";
+import { Page } from "@siteimprove/alfa-web";
+
+import * as alfa from "@siteimprove/alfa-chai";
+import rules from "@siteimprove/alfa-rules";
+
+chai.use(
+  alfa.Chai.createPlugin<Puppeteer.Type, Page>(
+    (value) => Future.from(Puppeteer.toPage(value)),
+    rules,
+    [Handler.persist(() => "test/outcomes/page.spec.json")]
+  )
+);
 
 const { expect } = chai;
 
@@ -24,6 +37,6 @@ describe("page.html", () => {
   });
 
   it("should be accessible", async () => {
-    await expect(await page.$("html")).to.be.accessible;
+    await expect(await page.$("html")).to.be.accessible();
   });
 });

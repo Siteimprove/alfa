@@ -1,16 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["plugin.ts", "src/index.ts", "src/jasmine.ts"],
+  "files": ["src/index.ts", "src/jasmine.ts"],
   "references": [
     {
       "path": "../alfa-assert"
     },
     {
       "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"

@@ -19,16 +19,11 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-act": "^0.3.0",
-    "@siteimprove/alfa-dom": "^0.3.0",
-    "@siteimprove/alfa-equatable": "^0.3.0",
+    "@siteimprove/alfa-formatter": "^0.3.0",
+    "@siteimprove/alfa-formatter-earl": "^0.3.0",
     "@siteimprove/alfa-future": "^0.3.0",
-    "@siteimprove/alfa-iterable": "^0.3.0",
-    "@siteimprove/alfa-json": "^0.3.0",
-    "@siteimprove/alfa-list": "^0.3.0",
-    "@siteimprove/alfa-option": "^0.3.0",
-    "@siteimprove/alfa-rules": "^0.3.0",
-    "@siteimprove/alfa-web": "^0.3.0",
-    "@siteimprove/alfa-xpath": "^0.3.0"
+    "@siteimprove/alfa-mapper": "^0.3.0",
+    "@siteimprove/alfa-result": "^0.3.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.3.0"

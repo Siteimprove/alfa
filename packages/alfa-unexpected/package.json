@@ -14,16 +14,15 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
-    "*.js",
-    "*.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts",
     "types/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-act": "^0.3.0",
     "@siteimprove/alfa-assert": "^0.3.0",
+    "@siteimprove/alfa-future": "^0.3.0",
     "@siteimprove/alfa-mapper": "^0.3.0",
-    "@siteimprove/alfa-predicate": "^0.3.0",
     "@siteimprove/alfa-web": "^0.3.0",
     "unexpected": "^11.2.0"
   },

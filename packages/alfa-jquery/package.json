@@ -24,7 +24,6 @@
     "@siteimprove/alfa-dom": "^0.3.0",
     "@siteimprove/alfa-http": "^0.3.0",
     "@siteimprove/alfa-option": "^0.3.0",
-    "@siteimprove/alfa-predicate": "^0.3.0",
     "@siteimprove/alfa-web": "^0.3.0",
     "@types/jquery": "^3.3.29",
     "jquery": "^3.4.1"

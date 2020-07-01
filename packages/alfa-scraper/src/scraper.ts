@@ -255,7 +255,7 @@ async function parseDocument(
     html === null ? null : Decoder.decode(new Uint8Array(html))
   );
 
-  const { document } = await Puppeteer.asPage(handle);
+  const { document } = await Puppeteer.toPage(handle);
 
   return document;
 }
