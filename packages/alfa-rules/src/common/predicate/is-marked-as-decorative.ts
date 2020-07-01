@@ -2,8 +2,9 @@ import {Role} from "@siteimprove/alfa-aria";
 import {Element} from "@siteimprove/alfa-dom";
 
 /**
- * Check if an element is marked as decorative by looking at its role but without conflict resolution.
- * If the result is "none" or "presentation", then the element is marked as decorative.
+ * Check if an element is marked as decorative by looking at its role but 
+ * without conflict resolution. If the result is "none" or "presentation", then 
+ * the element is marked as decorative.
  */
 export function isMarkedAsDecorative(element: Element): boolean {
   return (
