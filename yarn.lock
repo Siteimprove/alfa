@@ -886,6 +886,7 @@ __metadata:
     "@siteimprove/alfa-predicate": ^0.3.0
     "@siteimprove/alfa-sequence": ^0.3.0
     "@siteimprove/alfa-test": ^0.3.0
+    "@siteimprove/alfa-trampoline": ^0.3.0
   languageName: unknown
   linkType: soft
 
