@@ -37,6 +37,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-dom][]: The `jsx()` now requires that the `style` attribute be passed as property-value record, `Record<string, string>`. ([#281](../../pull/281))
 
+- [@siteimprove/alfa-cli][]: The CLI has been reworked to make use of the new [@siteimprove/alfa-command][] package. This has however required a breaking change to the `--headers`, `--cookies`, and `--outcomes` flags as outlined in the associated pull request. Make sure to check out the `--help` output for up-to-date documentation on these flags. ([#265](../../pull/265))
+
 ### Added
 
 - [@siteimprove/alfa-parser][]: Additional arguments can now be defined for `Parser<I, T, E, A>` instances through a fourth type parameter, `A`.
@@ -46,6 +48,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-future][]: The `Future#get()` method has been added for synchronously resolving non-deferred futures, which was the very reason for implementing and using futures over native promises. ([#279](../../pull/279))
 
 - [@siteimprove/alfa-dom][]: A HyperScript-like DSL is now available to ease the construction of DOM. ([#281](../../pull/281))
+
+- [@siteimprove/alfa-command][]: A new package has been added with functionality for modelling command line applications, removing the previous dependence on the oclif framework. ([#265](../../pull/265))
 
 ### Changed
 
@@ -151,6 +155,7 @@ For instructions on how to get up and running with Alfa, be sure to check out th
 [@siteimprove/alfa-aria]: packages/alfa-aria
 [@siteimprove/alfa-cascade]: packages/alfa-cascade
 [@siteimprove/alfa-cli]: packages/alfa-cli
+[@siteimprove/alfa-command]: packages/alfa-command
 [@siteimprove/alfa-device]: packages/alfa-device
 [@siteimprove/alfa-dom]: packages/alfa-dom
 [@siteimprove/alfa-formatter]: packages/alfa-formatter
