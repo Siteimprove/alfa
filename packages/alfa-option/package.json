@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-option",
   "homepage": "https://siteimprove.com",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "description": "An implementation of optional values, which are values that may or may not be present",
   "repository": {
@@ -18,20 +18,20 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-applicative": "^0.2.0",
-    "@siteimprove/alfa-equatable": "^0.2.0",
-    "@siteimprove/alfa-foldable": "^0.2.0",
-    "@siteimprove/alfa-functor": "^0.2.0",
-    "@siteimprove/alfa-hash": "^0.2.0",
-    "@siteimprove/alfa-json": "^0.2.0",
-    "@siteimprove/alfa-mapper": "^0.2.0",
-    "@siteimprove/alfa-monad": "^0.2.0",
-    "@siteimprove/alfa-predicate": "^0.2.0",
-    "@siteimprove/alfa-reducer": "^0.2.0",
-    "@siteimprove/alfa-thunk": "^0.2.0"
+    "@siteimprove/alfa-applicative": "^0.3.0",
+    "@siteimprove/alfa-equatable": "^0.3.0",
+    "@siteimprove/alfa-foldable": "^0.3.0",
+    "@siteimprove/alfa-functor": "^0.3.0",
+    "@siteimprove/alfa-hash": "^0.3.0",
+    "@siteimprove/alfa-json": "^0.3.0",
+    "@siteimprove/alfa-mapper": "^0.3.0",
+    "@siteimprove/alfa-monad": "^0.3.0",
+    "@siteimprove/alfa-predicate": "^0.3.0",
+    "@siteimprove/alfa-reducer": "^0.3.0",
+    "@siteimprove/alfa-thunk": "^0.3.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.2.0"
+    "@siteimprove/alfa-test": "^0.3.0"
   },
   "publishConfig": {
     "access": "public",
