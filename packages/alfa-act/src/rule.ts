@@ -158,7 +158,7 @@ export namespace Rule {
         applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
         expectations(
           target: T
-        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
+        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
       };
     }
   }
@@ -251,7 +251,7 @@ export namespace Rule {
       (input: Readonly<I>): {
         expectations(
           outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
+        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
       };
     }
   }
@@ -266,7 +266,7 @@ export namespace Rule {
 function resolve<I, T, Q>(
   target: T,
   expectations: Record<{
-    [key: string]: Interview<Q, T, Option<Result<Diagnostic>>>;
+    [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q>,
   oracle: Oracle<Q>
@@ -281,7 +281,12 @@ function resolve<I, T, Q>(
       (expectations, [id, expectation]) =>
         expectations.flatMap((expectations) =>
           expectation.map((expectation) =>
-            expectations.append([id, expectation])
+            expectations.append([
+              id,
+              Option.isOption(expectation)
+                ? expectation
+                : Option.of(expectation),
+            ])
           )
         ),
       Option.of(List.empty<[string, Option<Result<Diagnostic>>]>())
