@@ -69,6 +69,12 @@ export namespace Rule {
     "@id": string;
   }
 
+  export type Input<R> = R extends Rule<infer I, any, any> ? I : never;
+
+  export type Target<R> = R extends Rule<any, infer T, any> ? T : never;
+
+  export type Question<R> = R extends Rule<any, any, infer Q> ? Q : never;
+
   export function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q> {
     return value instanceof Rule;
   }
