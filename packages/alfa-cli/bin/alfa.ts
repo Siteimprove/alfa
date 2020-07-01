@@ -39,7 +39,7 @@ const application = Command.withSubcommands(
 
 application
   .run(process.argv.slice(2))
-  .catch((err: Error) => Err.of(`${err.message}`))
+  .catch((err: Error) => Err.of(`${err.stack ?? err.message}`))
   .then((result) => {
     let stream: tty.WriteStream;
     let output: string;

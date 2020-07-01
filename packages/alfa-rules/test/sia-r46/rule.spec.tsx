@@ -2,7 +2,6 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R46, { Outcomes } from "../../src/sia-r46/rule";
@@ -14,18 +13,15 @@ const { and } = Predicate;
 const { isElement, hasName } = Element;
 
 test("evaluate() passes on explicit header", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <table>
-        <tr>
-          <th>Time</th>
-        </tr>
-        <tr>
-          <td>05:41</td>
-        </tr>
-      </table>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <table>
+      <tr>
+        <th>Time</th>
+      </tr>
+      <tr>
+        <td>05:41</td>
+      </tr>
+    </table>,
   ]);
 
   const target = document
@@ -41,22 +37,19 @@ test("evaluate() passes on explicit header", async (t) => {
 });
 
 test("evaluate() passes on implicit headers", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <table>
-        <tr>
-          <th id="col1">Column 1</th>
-          <th id="col2">Column 2</th>
-        </tr>
-        <tr>
-          <td></td>
-        </tr>
-        <tr>
-          <td headers="col2"></td>
-        </tr>
-      </table>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <table>
+      <tr>
+        <th id="col1">Column 1</th>
+        <th id="col2">Column 2</th>
+      </tr>
+      <tr>
+        <td></td>
+      </tr>
+      <tr>
+        <td headers="col2"></td>
+      </tr>
+    </table>,
   ]);
 
   const [col1, col2] = document
@@ -74,20 +67,17 @@ test("evaluate() passes on implicit headers", async (t) => {
 });
 
 test("evaluate() fails on headers with no data cell", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <table>
-        <tr>
-          <th>Column 1</th>
-          <th>Column 2</th>
-        </tr>
-        <tr>
-          <td />
-          <td headers="col1" />
-        </tr>
-      </table>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <table>
+      <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+      </tr>
+      <tr>
+        <td />
+        <td headers="col1" />
+      </tr>
+    </table>,
   ]);
 
   const [col1, col2] = document
@@ -105,18 +95,15 @@ test("evaluate() fails on headers with no data cell", async (t) => {
 });
 
 test("evaluate() is inapplicable if there is no header cell", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <table>
-        <tr>
-          <th role="cell">Column A</th>
-        </tr>
-        <tr>
-          <td>Cell A</td>
-        </tr>
-      </table>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <table>
+      <tr>
+        <th role="cell">Column A</th>
+      </tr>
+      <tr>
+        <td>Cell A</td>
+      </tr>
+    </table>,
   ]);
 
   t.deepEqual(await evaluate(R46, { document }), [inapplicable(R46)]);

@@ -1,37 +1,29 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Document extends Node {
   public static of(
-    children: Mapper<Node, Iterable<Node>>,
-    style: Iterable<Sheet> = [],
-    frame: Option<Element> = None
+    children: Iterable<Node>,
+    style: Iterable<Sheet> = []
   ): Document {
-    return new Document(children, style, frame);
+    return new Document(Array.from(children), style);
   }
 
-  private static _empty: Document = new Document(() => [], [], None);
-
-  public static empty(frame: Option<Element> = None): Document {
-    return frame.isNone() ? this._empty : new Document(() => [], [], frame);
+  public static empty(): Document {
+    return new Document([], []);
   }
 
   private readonly _style: Array<Sheet>;
-  private readonly _frame: Option<Element>;
+  private _frame: Option<Element> = None;
 
-  private constructor(
-    children: Mapper<Node, Iterable<Node>>,
-    style: Iterable<Sheet>,
-    frame: Option<Element>
-  ) {
-    super(children, None);
+  private constructor(children: Array<Node>, style: Iterable<Sheet>) {
+    super(children);
 
     this._style = Array.from(style);
-    this._frame = frame;
   }
 
   public get style(): Iterable<Sheet> {
@@ -67,6 +59,27 @@ export class Document extends Node {
 
     return `#document${children === "" ? "" : `\n${children}`}`;
   }
+
+  /**
+   * @internal
+   */
+  public _attachParent(): boolean {
+    return false;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachFrame(frame: Element): boolean {
+    if (this._frozen || this._frame.isSome()) {
+      return false;
+    }
+
+    this._frame = Option.of(frame);
+    this._frozen = true;
+
+    return true;
+  }
 }
 
 export namespace Document {
@@ -80,17 +93,12 @@ export namespace Document {
     return value instanceof Document;
   }
 
-  export function fromDocument(
-    document: JSON,
-    frame: Option<Element> = None
-  ): Document {
-    return Document.of(
-      (self) => {
-        const parent = Option.of(self);
-        return document.children.map((child) => Node.fromNode(child, parent));
-      },
-      document.style.map((style) => Sheet.fromSheet(style)),
-      frame
+  /**
+   * @internal
+   */
+  export function fromDocument(json: JSON): Trampoline<Document> {
+    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
+      Document.of(children, json.style.map(Sheet.from))
     );
   }
 }

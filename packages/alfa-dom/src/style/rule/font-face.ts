@@ -1,31 +1,24 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
 export class FontFace extends Rule {
-  public static of(
-    declarations: Mapper<FontFace, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): FontFace {
-    return new FontFace(declarations, owner, parent);
+  public static of(declarations: Iterable<Declaration>): FontFace {
+    return new FontFace(Array.from(declarations));
   }
 
   private readonly _style: Block;
 
-  private constructor(
-    declarations: Mapper<FontFace, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(declarations: Array<Declaration>) {
+    super();
 
-    this._style = Block.of(declarations(this));
+    this._style = Block.of(
+      declarations.filter((declaration) => declaration._attachParent(this))
+    );
   }
 
   public get style(): Block {
@@ -57,21 +50,11 @@ export namespace FontFace {
     return value instanceof FontFace;
   }
 
-  export function fromFontFace(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): FontFace {
-    return FontFace.of(
-      (self) => {
-        const parent = Option.of(self);
-        return json.style.map((declaration) =>
-          Declaration.fromDeclaration(declaration, parent)
-        );
-      },
-      owner,
-      parent
-    );
+  /**
+   * @internal
+   */
+  export function fromFontFace(json: JSON): Trampoline<FontFace> {
+    return Trampoline.done(FontFace.of(json.style.map(Declaration.from)));
   }
 }
 

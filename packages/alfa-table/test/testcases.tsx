@@ -1,6 +1,8 @@
+import { h } from "@siteimprove/alfa-dom/h";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
+
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -78,7 +80,7 @@ const getDescendantById = (node: Node) => (id: string) =>
 
 // processing simple row
 export namespace simpleRow {
-  export const element = Element.fromElement(
+  export const element = (
     <tr>
       <th id="first">1</th>
       <td id="second">2</td>
@@ -103,21 +105,21 @@ export namespace simpleRow {
 
 // processing complex row
 export namespace complexRow {
-  export const element = Element.fromElement(
+  export const element = (
     <tr>
-      <th id="grade" rowSpan={2}>
+      <th id="grade" rowspan={2}>
         Grade.
       </th>
-      <th id="yield" rowSpan={2}>
+      <th id="yield" rowspan={2}>
         Yield Point.
       </th>
-      <th id="strength" colSpan={2}>
+      <th id="strength" colspan={2}>
         Ultimate tensile strength
       </th>
-      <th id="elong" rowSpan={2}>
+      <th id="elong" rowspan={2}>
         Per cent elong. 50.8mm or 2 in.
       </th>
-      <th id="reduct" rowSpan={2}>
+      <th id="reduct" rowspan={2}>
         Per cent reduct. area.
       </th>
     </tr>
@@ -151,22 +153,22 @@ export namespace complexRow {
 
 // processing row group
 export namespace simpleRowGroup {
-  export const element = Element.fromElement(
+  export const element = (
     <thead id="thead">
       <tr id="first">
-        <th id="grade" rowSpan={2}>
+        <th id="grade" rowspan={2}>
           Grade.
         </th>
-        <th id="yield" rowSpan={2}>
+        <th id="yield" rowspan={2}>
           Yield Point.
         </th>
-        <th id="strength" colSpan={2}>
+        <th id="strength" colspan={2}>
           Ultimate tensile strength
         </th>
-        <th id="elong" rowSpan={2}>
+        <th id="elong" rowspan={2}>
           Per cent elong. 50.8mm or 2 in.
         </th>
-        <th id="reduct" rowSpan={2}>
+        <th id="reduct" rowspan={2}>
           Per cent reduct. area.
         </th>
       </tr>
@@ -206,27 +208,27 @@ export namespace simpleRowGroup {
 
 // row group with downward growing cells
 export namespace downwardGrowing {
-  export const element = Element.fromElement(
+  export const element = (
     <thead id="thead">
       <tr id="first">
-        <th id="grade" rowSpan={3}>
+        <th id="grade" rowspan={3}>
           Grade.
         </th>
-        <th id="yield" rowSpan={2}>
+        <th id="yield" rowspan={2}>
           Yield Point.
         </th>
-        <th id="strength" colSpan={2}>
+        <th id="strength" colspan={2}>
           Ultimate tensile strength
         </th>
-        <th id="elong" rowSpan={2}>
+        <th id="elong" rowspan={2}>
           Per cent elong. 50.8mm or 2 in.
         </th>
-        <th id="reduct" rowSpan={0}>
+        <th id="reduct" rowspan={0}>
           Per cent reduct. area.
         </th>
       </tr>
       <tr id="second">
-        <th id="kg-mm" rowSpan={0}>
+        <th id="kg-mm" rowspan={0}>
           kg/mm<sup>2</sup>
         </th>
         <th id="lb-in">
@@ -267,7 +269,7 @@ export namespace downwardGrowing {
 
 // table with row group, colspan and rowspan
 export namespace smithonian {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <caption>
         Specification values: <b>Steel</b>, <b>Castings</b>, Ann. A.S.T.M.
@@ -275,19 +277,19 @@ export namespace smithonian {
       </caption>
       <thead id="thead">
         <tr>
-          <th id="grade" rowSpan={2}>
+          <th id="grade" rowspan={2}>
             Grade.
           </th>
-          <th id="yield" rowSpan={2}>
+          <th id="yield" rowspan={2}>
             Yield Point.
           </th>
-          <th id="strength" colSpan={2}>
+          <th id="strength" colspan={2}>
             Ultimate tensile strength
           </th>
-          <th id="elong" rowSpan={2}>
+          <th id="elong" rowspan={2}>
             Per cent elong. 50.8mm or 2 in.
           </th>
-          <th id="reduct" rowSpan={2}>
+          <th id="reduct" rowspan={2}>
             Per cent reduct. area.
           </th>
         </tr>
@@ -372,7 +374,7 @@ export namespace smithonian {
 
 // table with a tfoot in the middle
 export namespace apple {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr id="tr">
@@ -455,7 +457,7 @@ export namespace apple {
 
 // example with colgroup
 export namespace expenses {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-head">
         <col />
@@ -583,7 +585,7 @@ export namespace expenses {
 
 // same with colgroup defined by spans
 export namespace expensesNum {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-head" span={1} />
       <colgroup id="group-body">
@@ -699,10 +701,10 @@ export namespace expensesNum {
 
 export namespace errors {
   // second column (column 1) has no cell anchored in it.
-  export const emptyCol = Element.fromElement(
+  export const emptyCol = (
     <table>
       <tr>
-        <td id="one-two" colSpan={2}>
+        <td id="one-two" colspan={2}>
           2 columns
         </td>
         <td id="three">third column</td>
@@ -711,10 +713,10 @@ export namespace errors {
   );
 
   // second row (row 1) has no cell anchored in it.
-  export const emptyRow = Element.fromElement(
+  export const emptyRow = (
     <table>
       <tr>
-        <td rowSpan={2}>2 rows</td>
+        <td rowspan={2}>2 rows</td>
       </tr>
       <tr />
       <tr>
@@ -724,14 +726,14 @@ export namespace errors {
   );
 
   // slot (1, 1) is covered twice
-  export const coveredTwice = Element.fromElement(
+  export const coveredTwice = (
     <table>
       <tr>
         <td>1 row, 1 col</td>
-        <td rowSpan={2}>2 rows</td>
+        <td rowspan={2}>2 rows</td>
       </tr>
       <tr>
-        <td colSpan={2}>2 cols</td>
+        <td colspan={2}>2 cols</td>
       </tr>
     </table>
   );
@@ -746,7 +748,7 @@ export namespace headersVariant {
   D | R
   C | C
    */
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr id="row1">
@@ -798,7 +800,7 @@ export namespace headersVariant {
 }
 
 export namespace explicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <tr>
         <th id="text-content">not empty</th>
@@ -830,25 +832,22 @@ export namespace explicitHeaders {
 
 // correctly selecting explicit header when multiple element have the same id.
 export namespace duplicateIDExplicitHeaders {
-  export const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <body>
-          <span id="dup-out" />
-          <table id="table">
-            <tr>
-              <th id="dup-out" /> <th id="dup-in">First</th>{" "}
-              <th id="dup-in">Second</th>
-            </tr>
-            <tr>
-              <td id="data-1" headers="dup-out" />{" "}
-              <td id="data-2" headers="dup-in" />
-            </tr>
-          </table>
-        </body>
-      </html>,
-      Option.of(self)
-    ),
+  export const document = h.document([
+    <html>
+      <body>
+        <span id="dup-out" />
+        <table id="table">
+          <tr>
+            <th id="dup-out" /> <th id="dup-in">First</th>{" "}
+            <th id="dup-in">Second</th>
+          </tr>
+          <tr>
+            <td id="data-1" headers="dup-out" />{" "}
+            <td id="data-2" headers="dup-in" />
+          </tr>
+        </table>
+      </body>
+    </html>,
   ]);
   export const table = getDescendantById(document)("table");
   const getById = getDescendantById(table);
@@ -885,7 +884,7 @@ export namespace duplicateIDExplicitHeaders {
 }
 
 export namespace simpleImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <tr>
         <th id="empty" />
@@ -923,7 +922,7 @@ export namespace simpleImplicitHeaders {
 
 //
 export namespace rowGroupImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr>
@@ -1081,17 +1080,17 @@ export namespace rowGroupImplicitHeaders {
 
 // https://www.w3.org/WAI/tutorials/tables/irregular/
 export namespace colGroupImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-empty" />
       <colgroup id="group-mars" span={2} />
       <colgroup id="group-venus" span={2} />
       <tr>
-        <td id="empty" rowSpan={2} />
-        <th id="mars" colSpan={2} scope="colgroup">
+        <td id="empty" rowspan={2} />
+        <th id="mars" colspan={2} scope="colgroup">
           Mars
         </th>
-        <th id="venus" colSpan={2} scope="colgroup">
+        <th id="venus" colspan={2} scope="colgroup">
           Venus
         </th>
       </tr>
@@ -1199,7 +1198,7 @@ export namespace colGroupImplicitHeaders {
 
 // A crazy one with a bit of everything
 export namespace allWeirdImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-empty">
         <col />
@@ -1209,17 +1208,17 @@ export namespace allWeirdImplicitHeaders {
       <colgroup id="group-venus" span={2} />
       <thead id="thead">
         <tr>
-          <th id="empty" rowSpan={2} colSpan={2} />
-          <th id="mars" rowSpan={2} scope="colgroup">
+          <th id="empty" rowspan={2} colspan={2} />
+          <th id="mars" rowspan={2} scope="colgroup">
             Mars
           </th>
-          <th id="mars-produced" rowSpan={2} scope="col">
+          <th id="mars-produced" rowspan={2} scope="col">
             Produced
           </th>
-          <th id="mars-sold" rowSpan={2} scope="col">
+          <th id="mars-sold" rowspan={2} scope="col">
             Sold
           </th>
-          <th id="venus" colSpan={2} scope="colgroup">
+          <th id="venus" colspan={2} scope="colgroup">
             Venus
           </th>
         </tr>
@@ -1234,7 +1233,7 @@ export namespace allWeirdImplicitHeaders {
       </thead>
       <tbody id="stuffed-animals">
         <tr>
-          <th id="stuffed" rowSpan={2} scope="rowgroup">
+          <th id="stuffed" rowspan={2} scope="rowgroup">
             Stuffed animals
           </th>
           <th id="bears">Bears</th>
@@ -1255,7 +1254,7 @@ export namespace allWeirdImplicitHeaders {
       </tbody>
       <tbody id="games-rg">
         <tr>
-          <th id="games" colSpan={2} scope="rowgroup">
+          <th id="games" colspan={2} scope="rowgroup">
             Games
           </th>
           <td id="mars-empty-games" />
@@ -1265,7 +1264,7 @@ export namespace allWeirdImplicitHeaders {
           <td id="venus-sold-games" />
         </tr>
         <tr>
-          <th id="board" colSpan={2} scope="row">
+          <th id="board" colspan={2} scope="row">
             Board Games
           </th>
           <td id="mars-empty-board" />
@@ -1275,7 +1274,7 @@ export namespace allWeirdImplicitHeaders {
           <td id="venus-sold-board">9,000</td>
         </tr>
         <tr>
-          <th id="cards" colSpan={2} scope="row">
+          <th id="cards" colspan={2} scope="row">
             Cards Games
           </th>
           <td id="mars-empty-cards" />

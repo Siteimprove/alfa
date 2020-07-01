@@ -119,6 +119,16 @@ test("#flatMap() does not overflow for long nested defer() chains", async (t) =>
   t.equal(await n, 100000);
 });
 
+test("#get() returns the value of a non-deferred future", (t) => {
+  let n = Future.now(0);
+
+  for (let i = 0; i < 10; i++) {
+    n = n.flatMap((i) => Future.now(i + 1));
+  }
+
+  t.equal(n.get(), 10);
+});
+
 test(".traverse() traverses a list of values and lifts them to a future of lists", async (t) => {
   t.deepEqual(
     await Future.traverse([1, 2, 3, 4], (n) =>
@@ -151,6 +161,12 @@ test(".from() converts a promise to a future", async (t) => {
   const future = Future.from(
     new Promise<number>((resolve) => resolve(2))
   );
+
+  t.equal(await future, 2);
+});
+
+test(".from() converts a thunked promise to a future", async (t) => {
+  const future = Future.from(async () => 2);
 
   t.equal(await future, 2);
 });

@@ -2,7 +2,6 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R71, { Outcomes } from "../../src/sia-r71/rule";
@@ -14,13 +13,10 @@ const { and } = Predicate;
 const { isElement, hasName } = Element;
 
 test("evaluate() passes a paragraph whose text is not justified", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p>Hello world</p>
+    </html>,
   ]);
 
   const target = document
@@ -36,13 +32,10 @@ test("evaluate() passes a paragraph whose text is not justified", async (t) => {
 });
 
 test("evaluate() fails a paragraph whose text is justified", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p style="text-align: justify">Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p style={{ textAlign: "justify" }}>Hello world</p>
+    </html>,
   ]);
 
   const target = document
@@ -58,13 +51,10 @@ test("evaluate() fails a paragraph whose text is justified", async (t) => {
 });
 
 test("evaluate() fails a paragraph whose text is justified by inheritance", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html style="text-align: justify">
-        <p>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html style={{ textAlign: "justify" }}>
+      <p>Hello world</p>
+    </html>,
   ]);
 
   const target = document

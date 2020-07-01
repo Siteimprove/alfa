@@ -6,7 +6,7 @@ import { parseSpan } from "../src/helpers";
 
 test("parseSpan() parses span attribute according to table specs", (t) => {
   function span(name: string, value: string): Element {
-    return Element.of(None, None, "foo", (elt) => [
+    return Element.of(None, None, "foo", [
       Attribute.of(None, None, `${name}span`, value),
     ]);
   }

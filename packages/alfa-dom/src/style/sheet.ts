@@ -1,6 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
@@ -9,27 +8,27 @@ import { Rule } from "./rule";
 
 export class Sheet implements Equatable, Serializable {
   public static of(
-    rules: Mapper<Sheet, Iterable<Rule>>,
+    rules: Iterable<Rule>,
     disabled = false,
     condition: Option<string> = None
   ): Sheet {
-    return new Sheet(rules, disabled, condition);
+    return new Sheet(Array.from(rules), disabled, condition);
   }
 
   public static empty(): Sheet {
-    return new Sheet(() => [], false, None);
+    return new Sheet([], false, None);
   }
 
-  private readonly _rules: Array<Rule>;
+  private _rules: Array<Rule>;
   private readonly _disabled: boolean;
   private readonly _condition: Option<string>;
 
   private constructor(
-    rules: Mapper<Sheet, Iterable<Rule>>,
+    rules: Array<Rule>,
     disabled: boolean,
     condition: Option<string>
   ) {
-    this._rules = Array.from(rules(this));
+    this._rules = rules.filter((rule) => rule._attachOwner(this));
     this._disabled = disabled;
     this._condition = condition;
   }
@@ -88,13 +87,11 @@ export namespace Sheet {
     condition: string | null;
   }
 
-  export function fromSheet(sheet: JSON): Sheet {
+  export function from(json: JSON): Sheet {
     return Sheet.of(
-      (self) => {
-        return sheet.rules.map((rule) => Rule.fromRule(rule, self));
-      },
-      sheet.disabled,
-      Option.from(sheet.condition)
+      json.rules.map(Rule.from),
+      json.disabled,
+      Option.from(json.condition)
     );
   }
 }

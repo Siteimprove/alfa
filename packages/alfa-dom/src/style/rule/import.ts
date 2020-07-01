@@ -1,4 +1,5 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
@@ -8,24 +9,16 @@ export class Import extends Condition {
   public static of(
     href: string,
     sheet: Sheet,
-    condition: Option<string>,
-    owner: Sheet,
-    parent: Option<Rule> = None
+    condition: Option<string>
   ): Import {
-    return new Import(href, sheet, condition, owner, parent);
+    return new Import(href, sheet, condition);
   }
 
   private readonly _href: string;
   private readonly _sheet: Sheet;
 
-  private constructor(
-    href: string,
-    sheet: Sheet,
-    condition: Option<string>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(condition.getOr("all"), () => [], owner, parent);
+  private constructor(href: string, sheet: Sheet, condition: Option<string>) {
+    super(condition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
@@ -67,19 +60,12 @@ export namespace Import {
     return value instanceof Import;
   }
 
-  export function fromImport(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Import {
-    return Import.of(
-      json.href,
-      Sheet.of((owner) => {
-        return json.rules.map((rule) => Rule.fromRule(rule, owner));
-      }),
-      Option.of(json.condition),
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromImport(json: JSON): Trampoline<Import> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      Import.of(json.href, Sheet.of(rules), Option.of(json.condition))
     );
   }
 }

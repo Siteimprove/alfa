@@ -56,14 +56,17 @@ export class Style implements Serializable {
       const { name, value } = declaration;
 
       if (Property.isName(name)) {
-        if (this._cascaded.has(name)) {
-          continue;
-        }
+        const previous = this._cascaded.get(name);
 
-        const property = Property.get(name);
+        if (
+          previous === undefined ||
+          shouldOverride(previous.source, declaration)
+        ) {
+          const property = Property.get(name);
 
-        for (const result of parse(property, value)) {
-          this._cascaded.set(name, Value.of(result, Option.of(declaration)));
+          for (const result of parse(property, value)) {
+            this._cascaded.set(name, Value.of(result, Option.of(declaration)));
+          }
         }
       }
 
@@ -72,11 +75,14 @@ export class Style implements Serializable {
 
         for (const result of parseShorthand(shorthand, value)) {
           for (const [name, value] of result) {
-            if (this._cascaded.has(name)) {
-              continue;
-            }
+            const previous = this._cascaded.get(name);
 
-            this._cascaded.set(name, Value.of(value, Option.of(declaration)));
+            if (
+              previous === undefined ||
+              shouldOverride(previous.source, declaration)
+            ) {
+              this._cascaded.set(name, Value.of(value, Option.of(declaration)));
+            }
           }
         }
       }
@@ -166,9 +172,9 @@ export namespace Style {
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
-    return cache.get(device, Cache.empty).get(element, () => {
+    return cache.get(device, Cache.empty).get(element.freeze(), () => {
       const declarations: Array<Declaration> = element.style
-        .map((block) => [...block.declarations])
+        .map((block) => [...block.declarations].reverse())
         .getOr([]);
 
       const root = element.root();
@@ -181,7 +187,7 @@ export namespace Style {
         while (next.isSome()) {
           const node = next.get();
 
-          declarations.push(...node.declarations);
+          declarations.push(...[...node.declarations].reverse());
           next = node.parent;
         }
       }
@@ -246,4 +252,13 @@ function parseShorthand<N extends Property.Shorthand.Name>(
       return value;
     })
     .ok();
+}
+
+function shouldOverride(
+  previous: Option<Declaration>,
+  next: Declaration
+): boolean {
+  return (
+    next.important && previous.every((declaration) => !declaration.important)
+  );
 }
