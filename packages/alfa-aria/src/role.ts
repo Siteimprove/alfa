@@ -352,8 +352,10 @@ const hasSupportedAttribute: Predicate<Element> = (element) =>
     return false;
   });
 
-// An element is NOT allowed to be presentational if either
-// it is focusable OR it has some aria-* attributes
+/**
+ * An element is NOT allowed to be presentational if either it is focusable OR 
+ * it has some aria-* attributes
+ */
 const isAllowedPresentational: Predicate<Element> = not(
   or(isFocusable, hasSupportedAttribute)
 );
