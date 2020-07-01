@@ -330,9 +330,12 @@ export namespace Role {
  * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
  */
 
-// An element is focusable if it has a tabindex and is not disabled.
-// Note that elements that are not rendered are still considered; however, these are not exposed in the accessibility
-// tree in the first place, so we should be fairly safe here.
+/**
+ * An element is focusable if it has a tabindex and is not disabled. Note that 
+ * elements that are not rendered are still considered; however, these are not 
+ * exposed in the accessibility tree in the first place, so we should be fairly 
+ * safe here.
+ */
 const isFocusable: Predicate<Element> = and(
   Element.hasTabIndex(),
   not(Element.isDisabled)
