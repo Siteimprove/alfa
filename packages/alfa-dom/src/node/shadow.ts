@@ -1,5 +1,5 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
@@ -8,39 +8,36 @@ import { Element } from "./element";
 export class Shadow extends Node {
   public static of(
     mode: Shadow.Mode,
-    host: Element,
-    children: Mapper<Node, Iterable<Node>>,
+    children: Iterable<Node>,
     style: Iterable<Sheet> = []
   ): Shadow {
-    return new Shadow(mode, host, children, style);
+    return new Shadow(mode, Array.from(children), Array.from(style));
   }
 
-  public static empty(host: Element): Shadow {
-    return new Shadow(Shadow.Mode.Open, host, () => [], []);
+  public static empty(): Shadow {
+    return new Shadow(Shadow.Mode.Open, [], []);
   }
 
   private readonly _mode: Shadow.Mode;
-  private readonly _host: Element;
+  private _host: Option<Element> = None;
   private readonly _style: Array<Sheet>;
 
   private constructor(
     mode: Shadow.Mode,
-    host: Element,
-    children: Mapper<Node, Iterable<Node>>,
-    style: Iterable<Sheet>
+    children: Array<Node>,
+    style: Array<Sheet>
   ) {
-    super(children, None);
+    super(children);
 
     this._mode = mode;
-    this._host = host;
-    this._style = Array.from(style);
+    this._style = style;
   }
 
   public get mode(): Shadow.Mode {
     return this._mode;
   }
 
-  public get host(): Element {
+  public get host(): Option<Element> {
     return this._host;
   }
 
@@ -50,7 +47,7 @@ export class Shadow extends Node {
 
   public parent(options: Node.Traversal = {}): Option<Node> {
     if (options.composed === true) {
-      return Option.of(this._host);
+      return this._host;
     }
 
     return None;
@@ -58,11 +55,14 @@ export class Shadow extends Node {
 
   public path(options?: Node.Traversal): string {
     if (options?.composed) {
-      return this._host.path(options) + "/shadow-root()";
+      return (
+        this._host.map((host) => host.path(options)).getOr("") +
+        "/shadow-root()"
+      );
     }
 
     if (options?.flattened) {
-      return this._host.path(options);
+      return this._host.map((host) => host.path(options)).getOr("/");
     }
 
     return "/";
@@ -86,6 +86,27 @@ export class Shadow extends Node {
       children === "" ? "" : `\n${children}`
     }`;
   }
+
+  /**
+   * @internal
+   */
+  public _attachParent(): boolean {
+    return false;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachHost(host: Element): boolean {
+    if (this._frozen || this._host.isSome()) {
+      return false;
+    }
+
+    this._host = Option.of(host);
+    this._frozen = true;
+
+    return true;
+  }
 }
 
 export namespace Shadow {
@@ -105,15 +126,12 @@ export namespace Shadow {
     return value instanceof Shadow;
   }
 
-  export function fromShadow(shadow: JSON, host: Element): Shadow {
-    return Shadow.of(
-      shadow.mode as Mode,
-      host,
-      (self) => {
-        const parent = Option.of(self);
-        return shadow.children.map((json) => Node.fromNode(json, parent));
-      },
-      shadow.style.map((sheet) => Sheet.fromSheet(sheet))
+  /**
+   * @internal
+   */
+  export function fromShadow(json: JSON): Trampoline<Shadow> {
+    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
+      Shadow.of(json.mode as Mode, children, json.style.map(Sheet.from))
     );
   }
 }

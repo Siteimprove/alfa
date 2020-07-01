@@ -67,7 +67,7 @@ export namespace Feature {
     /**
      * @internal
      */
-    readonly allowPresentational: boolean;
+    readonly allowPresentational?: boolean;
   }
 
   const features = Cache.empty<Namespace, Cache<string, Feature>>();
@@ -307,7 +307,7 @@ Feature.register(
   Namespace.HTML,
   Feature.of("img", (element, { allowPresentational }) =>
     Option.of(
-      allowPresentational &&
+      allowPresentational !== false &&
         element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"

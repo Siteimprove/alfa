@@ -100,7 +100,7 @@ export namespace Page {
     return Page.of(
       Request.from(json.request),
       Response.from(json.response),
-      Document.fromDocument(json.document),
+      Document.from(json.document),
       Device.from(json.device)
     );
   }

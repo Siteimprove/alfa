@@ -1,9 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R53, { Outcomes } from "../../src/sia-r53/rule";
@@ -15,15 +13,12 @@ const { and } = Predicate;
 const { isElement, hasName } = Element;
 
 test("evaluate() passes when the document headings are structured", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <h1>Part one</h1>
-        <h2>Chapter one</h2>
-        <h3>Section one</h3>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <h1>Part one</h1>
+      <h2>Chapter one</h2>
+      <h3>Section one</h3>
+    </html>,
   ]);
 
   const [, h2, h3] = document
@@ -41,16 +36,13 @@ test("evaluate() passes when the document headings are structured", async (t) =>
 });
 
 test("evaluate() fails when the document headings are not properly structured", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <h1>Part one</h1>
-        <h3>Chapter one</h3>
-        <h2>Part two</h2>
-        <h6>Chapter one</h6>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <h1>Part one</h1>
+      <h3>Chapter one</h3>
+      <h2>Part two</h2>
+      <h6>Chapter one</h6>
+    </html>,
   ]);
 
   const [, h3, h2, h6] = document
@@ -71,13 +63,10 @@ test("evaluate() fails when the document headings are not properly structured", 
 });
 
 test("evaluate() is inapplicable when the document has only one heading", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <h1>Lone heading</h1>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <h1>Lone heading</h1>
+    </html>,
   ]);
 
   t.deepEqual(await evaluate(R53, { document }), [inapplicable(R53)]);

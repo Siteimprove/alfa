@@ -15,7 +15,6 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -32,9 +31,7 @@ export namespace JQuery {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [
-        Element.fromElement(toElement(value.get(0)), Option.of(self)),
-      ]),
+      Document.of([Element.from(toElement(value.get(0)))]),
       Device.standard()
     );
   }

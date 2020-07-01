@@ -1,34 +1,27 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
 export class Style extends Rule {
   public static of(
     selector: string,
-    declarations: Mapper<Style, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
+    declarations: Iterable<Declaration>
   ): Style {
-    return new Style(selector, declarations, owner, parent);
+    return new Style(selector, Array.from(declarations));
   }
 
   private readonly _selector: string;
   private readonly _style: Block;
 
-  private constructor(
-    selector: string,
-    declarations: Mapper<Style, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(selector: string, declarations: Array<Declaration>) {
+    super();
 
     this._selector = selector;
-    this._style = Block.of(declarations(this));
+    this._style = Block.of(
+      declarations.filter((declaration) => declaration._attachParent(this))
+    );
   }
 
   public get selector(): string {
@@ -65,21 +58,12 @@ export namespace Style {
     return value instanceof Style;
   }
 
-  export function fromStyle(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Style {
-    return Style.of(
-      json.selector,
-      (self) => {
-        const parent = Option.of(self);
-        return json.style.map((declaration) =>
-          Declaration.fromDeclaration(declaration, parent)
-        );
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromStyle(json: JSON): Trampoline<Style> {
+    return Trampoline.done(
+      Style.of(json.selector, json.style.map(Declaration.from))
     );
   }
 }

@@ -15,7 +15,6 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -44,9 +43,7 @@ export namespace Vue {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [
-        Element.fromElement(toElement(value.element), Option.of(self)),
-      ]),
+      Document.of([Element.from(toElement(value.element))]),
       Device.standard()
     );
   }

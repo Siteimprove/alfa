@@ -1,6 +1,8 @@
+import { h } from "@siteimprove/alfa-dom/h";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
+
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -78,7 +80,7 @@ const getDescendantById = (node: Node) => (id: string) =>
 
 // processing simple row
 export namespace simpleRow {
-  export const element = Element.fromElement(
+  export const element = (
     <tr>
       <th id="first">1</th>
       <td id="second">2</td>
@@ -103,7 +105,7 @@ export namespace simpleRow {
 
 // processing complex row
 export namespace complexRow {
-  export const element = Element.fromElement(
+  export const element = (
     <tr>
       <th id="grade" rowspan={2}>
         Grade.
@@ -151,7 +153,7 @@ export namespace complexRow {
 
 // processing row group
 export namespace simpleRowGroup {
-  export const element = Element.fromElement(
+  export const element = (
     <thead id="thead">
       <tr id="first">
         <th id="grade" rowspan={2}>
@@ -206,7 +208,7 @@ export namespace simpleRowGroup {
 
 // row group with downward growing cells
 export namespace downwardGrowing {
-  export const element = Element.fromElement(
+  export const element = (
     <thead id="thead">
       <tr id="first">
         <th id="grade" rowspan={3}>
@@ -267,7 +269,7 @@ export namespace downwardGrowing {
 
 // table with row group, colspan and rowspan
 export namespace smithonian {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <caption>
         Specification values: <b>Steel</b>, <b>Castings</b>, Ann. A.S.T.M.
@@ -372,7 +374,7 @@ export namespace smithonian {
 
 // table with a tfoot in the middle
 export namespace apple {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr id="tr">
@@ -455,7 +457,7 @@ export namespace apple {
 
 // example with colgroup
 export namespace expenses {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-head">
         <col />
@@ -583,7 +585,7 @@ export namespace expenses {
 
 // same with colgroup defined by spans
 export namespace expensesNum {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-head" span={1} />
       <colgroup id="group-body">
@@ -699,7 +701,7 @@ export namespace expensesNum {
 
 export namespace errors {
   // second column (column 1) has no cell anchored in it.
-  export const emptyCol = Element.fromElement(
+  export const emptyCol = (
     <table>
       <tr>
         <td id="one-two" colspan={2}>
@@ -711,7 +713,7 @@ export namespace errors {
   );
 
   // second row (row 1) has no cell anchored in it.
-  export const emptyRow = Element.fromElement(
+  export const emptyRow = (
     <table>
       <tr>
         <td rowspan={2}>2 rows</td>
@@ -724,7 +726,7 @@ export namespace errors {
   );
 
   // slot (1, 1) is covered twice
-  export const coveredTwice = Element.fromElement(
+  export const coveredTwice = (
     <table>
       <tr>
         <td>1 row, 1 col</td>
@@ -746,7 +748,7 @@ export namespace headersVariant {
   D | R
   C | C
    */
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr id="row1">
@@ -798,7 +800,7 @@ export namespace headersVariant {
 }
 
 export namespace explicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <tr>
         <th id="text-content">not empty</th>
@@ -830,25 +832,22 @@ export namespace explicitHeaders {
 
 // correctly selecting explicit header when multiple element have the same id.
 export namespace duplicateIDExplicitHeaders {
-  export const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <body>
-          <span id="dup-out" />
-          <table id="table">
-            <tr>
-              <th id="dup-out" /> <th id="dup-in">First</th>{" "}
-              <th id="dup-in">Second</th>
-            </tr>
-            <tr>
-              <td id="data-1" headers="dup-out" />{" "}
-              <td id="data-2" headers="dup-in" />
-            </tr>
-          </table>
-        </body>
-      </html>,
-      Option.of(self)
-    ),
+  export const document = h.document([
+    <html>
+      <body>
+        <span id="dup-out" />
+        <table id="table">
+          <tr>
+            <th id="dup-out" /> <th id="dup-in">First</th>{" "}
+            <th id="dup-in">Second</th>
+          </tr>
+          <tr>
+            <td id="data-1" headers="dup-out" />{" "}
+            <td id="data-2" headers="dup-in" />
+          </tr>
+        </table>
+      </body>
+    </html>,
   ]);
   export const table = getDescendantById(document)("table");
   const getById = getDescendantById(table);
@@ -885,7 +884,7 @@ export namespace duplicateIDExplicitHeaders {
 }
 
 export namespace simpleImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <tr>
         <th id="empty" />
@@ -923,7 +922,7 @@ export namespace simpleImplicitHeaders {
 
 //
 export namespace rowGroupImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr>
@@ -1081,7 +1080,7 @@ export namespace rowGroupImplicitHeaders {
 
 // https://www.w3.org/WAI/tutorials/tables/irregular/
 export namespace colGroupImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-empty" />
       <colgroup id="group-mars" span={2} />
@@ -1199,7 +1198,7 @@ export namespace colGroupImplicitHeaders {
 
 // A crazy one with a bit of everything
 export namespace allWeirdImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-empty">
         <col />
