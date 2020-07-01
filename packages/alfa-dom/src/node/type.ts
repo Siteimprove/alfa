@@ -1,19 +1,19 @@
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Type extends Node {
   public static of(
     name: string,
     publicId: Option<string> = None,
-    systemId: Option<string> = None,
-    parent: Option<Node> = None
+    systemId: Option<string> = None
   ): Type {
-    return new Type(name, publicId, systemId, parent);
+    return new Type(name, publicId, systemId);
   }
 
-  public static empty(parent: Option<Node> = None): Type {
-    return new Type("html", None, None, parent);
+  public static empty(): Type {
+    return new Type("html", None, None);
   }
 
   private readonly _name: string;
@@ -23,10 +23,9 @@ export class Type extends Node {
   private constructor(
     name: string,
     publicId: Option<string>,
-    systemId: Option<string>,
-    parent: Option<Node>
+    systemId: Option<string>
   ) {
-    super(() => [], parent);
+    super([]);
 
     this._name = name;
     this._publicId = publicId;
@@ -71,12 +70,12 @@ export namespace Type {
     return value instanceof Type;
   }
 
-  export function fromType(type: JSON, parent: Option<Node> = None): Type {
-    return Type.of(
-      type.name,
-      Option.from(type.publicId),
-      Option.from(type.systemId),
-      parent
+  /**
+   * @internal
+   */
+  export function fromType(json: JSON): Trampoline<Type> {
+    return Trampoline.done(
+      Type.of(json.name, Option.from(json.publicId), Option.from(json.systemId))
     );
   }
 }

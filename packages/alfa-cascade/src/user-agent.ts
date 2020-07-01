@@ -1,240 +1,222 @@
-import {
-  Declaration,
-  MediaRule,
-  Namespace,
-  NamespaceRule,
-  Sheet,
-  StyleRule,
-} from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
+import { h } from "@siteimprove/alfa-dom";
 
 /**
  * @see https://html.spec.whatwg.org/#rendering
  * @internal
  */
-export const UserAgent = Sheet.of((owner) => {
-  return [
-    NamespaceRule.of(Namespace.HTML, None, owner),
+export const UserAgent = h.sheet([
+  h.rule.namespace("http://www.w3.org/1999/xhtml"),
 
-    /**
-     * @see https://html.spec.whatwg.org/#hidden-elements
-     */
+  /**
+   * @see https://html.spec.whatwg.org/#hidden-elements
+   */
 
-    StyleRule.of(
-      "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
-      (self) => [Declaration.of("display", "none", false, Option.of(self))],
-      owner
-    ),
+  h.rule.style(
+    "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
+    {
+      display: "none",
+    }
+  ),
 
-    // // <area> elements are a little special in that while they are not rendered,
-    // // they are focusable for the purpose of users interacting with the image
-    // // reference of the <area> element. To accommodate this, we assign them a
-    // // default display property of inline rather than none.
-    // cssRule("area", {
-    //   display: "inline"
-    // }),
+  // <area> elements are a little special in that while they are not rendered,
+  // they are focusable for the purpose of users interacting with the image
+  // reference of the <area> element. To accommodate this, we assign them a
+  // default display property of inline rather than none.
+  h.rule.style("area", {
+    display: "inline",
+  }),
 
-    // cssRule("embed[hidden]", {
-    //   display: "inline",
-    //   height: "0",
-    //   width: "0"
-    // }),
+  h.rule.style("embed[hidden]", {
+    display: "inline",
+    height: "0",
+    width: "0",
+  }),
 
-    StyleRule.of(
-      "input[type=hidden i]",
-      (self) => [Declaration.of("display", "none", true, Option.of(self))],
-      owner
-    ),
+  h.rule.style("input[type=hidden i]", {
+    display: "none !important",
+  }),
 
-    MediaRule.of(
-      "(scripting)",
-      (self) => [
-        StyleRule.of(
-          "noscript",
-          (self) => [Declaration.of("display", "none", true, Option.of(self))],
-          owner,
-          Option.of(self)
-        ),
-      ],
-      owner
-    ),
+  h.rule.media("(scripting)", [
+    h.rule.style("noscript", {
+      display: "none !important",
+    }),
+  ]),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#the-page
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#the-page
+   */
 
-    // cssRule("html, body", {
-    //   display: "block"
-    // }),
+  h.rule.style("html, body", {
+    display: "block",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#non-replaced-elements-flow-content
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#non-replaced-elements-flow-content
+   */
 
-    // cssRule(
-    //   "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
-    //   {
-    //     display: "block"
-    //   }
-    // ),
+  h.rule.style(
+    "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
+    {
+      display: "block",
+    }
+  ),
 
-    // cssRule("dialog:not([open])", {
-    //   display: "none"
-    // }),
+  h.rule.style("dialog:not([open])", {
+    display: "none",
+  }),
 
-    // cssRule("dialog", {
-    //   color: "black"
-    // }),
+  h.rule.style("dialog", {
+    color: "black",
+  }),
 
-    // cssRule("slot", {
-    //   display: "contents"
-    // }),
+  h.rule.style("slot", {
+    display: "contents",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#non-replaced-elements-phrasing-content
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#non-replaced-elements-phrasing-content
+   */
 
-    // cssRule("big", {
-    //   fontSize: "larger"
-    // }),
+  h.rule.style("big", {
+    fontSize: "larger",
+  }),
 
-    // cssRule("small", {
-    //   fontSize: "smaller"
-    // }),
+  h.rule.style("small", {
+    fontSize: "smaller",
+  }),
 
-    // cssRule("ruby", {
-    //   display: "ruby"
-    // }),
+  h.rule.style("ruby", {
+    display: "ruby",
+  }),
 
-    // cssRule("rt", {
-    //   display: "ruby-text"
-    // }),
+  h.rule.style("rt", {
+    display: "ruby-text",
+  }),
 
-    // cssRule(":link", {
-    //   color: "#0000ee"
-    // }),
+  h.rule.style(":link", {
+    color: "#0000ee",
+  }),
 
-    // cssRule(":visited", {
-    //   color: "#551a8b"
-    // }),
+  h.rule.style(":visited", {
+    color: "#551a8b",
+  }),
 
-    // cssRule(":link:active, :visited:active", {
-    //   color: "#ff0000"
-    // }),
+  h.rule.style(":link:active, :visited:active", {
+    color: "#ff0000",
+  }),
 
-    // cssRule("mark", {
-    //   color: "black"
-    // }),
+  h.rule.style("mark", {
+    color: "black",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#sections-and-headings
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#sections-and-headings
+   */
 
-    // cssRule("article, aside, h1, h2, h3, h4, h5, h6, hgroup, nav, section", {
-    //   display: "block"
-    // }),
+  h.rule.style("article, aside, h1, h2, h3, h4, h5, h6, hgroup, nav, section", {
+    display: "block",
+  }),
 
-    // cssRule("h1", {
-    //   fontSize: "2.00em"
-    // }),
+  h.rule.style("h1", {
+    fontSize: "2.00em",
+  }),
 
-    // cssRule("h2", {
-    //   fontSize: "1.50em"
-    // }),
+  h.rule.style("h2", {
+    fontSize: "1.50em",
+  }),
 
-    // cssRule("h3", {
-    //   fontSize: "1.17em"
-    // }),
+  h.rule.style("h3", {
+    fontSize: "1.17em",
+  }),
 
-    // cssRule("h4", {
-    //   fontSize: "1.00em"
-    // }),
+  h.rule.style("h4", {
+    fontSize: "1.00em",
+  }),
 
-    // cssRule("h5", {
-    //   fontSize: "0.83em"
-    // }),
+  h.rule.style("h5", {
+    fontSize: "0.83em",
+  }),
 
-    // cssRule("h6", {
-    //   fontSize: "0.67em"
-    // }),
+  h.rule.style("h6", {
+    fontSize: "0.67em",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#section-lists
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#section-lists
+   */
 
-    // cssRule("dir, dd, dl, dt, ol, ul", {
-    //   display: "block"
-    // }),
+  h.rule.style("dir, dd, dl, dt, ol, ul", {
+    display: "block",
+  }),
 
-    // cssRule("li", {
-    //   display: "list-item"
-    // }),
+  h.rule.style("li", {
+    display: "list-item",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#tables
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#tables
+   */
 
-    // cssRule("table", {
-    //   display: "table"
-    // }),
+  h.rule.style("table", {
+    display: "table",
+  }),
 
-    // cssRule("caption", {
-    //   display: "table-caption"
-    // }),
+  h.rule.style("caption", {
+    display: "table-caption",
+  }),
 
-    // cssRule("colgroup, colgroup[hidden]", {
-    //   display: "table-column-group"
-    // }),
+  h.rule.style("colgroup, colgroup[hidden]", {
+    display: "table-column-group",
+  }),
 
-    // cssRule("col, col[hidden]", {
-    //   display: "table-column"
-    // }),
+  h.rule.style("col, col[hidden]", {
+    display: "table-column",
+  }),
 
-    // cssRule("thead, thead[hidden]", {
-    //   display: "table-header-group"
-    // }),
+  h.rule.style("thead, thead[hidden]", {
+    display: "table-header-group",
+  }),
 
-    // cssRule("tbody, tbody[hidden]", {
-    //   display: "table-row-group"
-    // }),
+  h.rule.style("tbody, tbody[hidden]", {
+    display: "table-row-group",
+  }),
 
-    // cssRule("tfoot, tfoot[hidden]", {
-    //   display: "table-footer-group"
-    // }),
+  h.rule.style("tfoot, tfoot[hidden]", {
+    display: "table-footer-group",
+  }),
 
-    // cssRule("tr, tr[hidden]", {
-    //   display: "table-row"
-    // }),
+  h.rule.style("tr, tr[hidden]", {
+    display: "table-row",
+  }),
 
-    // cssRule("td, th, td[hidden], th[hidden]", {
-    //   display: "table-cell"
-    // }),
+  h.rule.style("td, th, td[hidden], th[hidden]", {
+    display: "table-cell",
+  }),
 
-    // cssRule(
-    //   "colgroup[hidden], col[hidden], thead[hidden], tbody[hidden], tfoot[hidden], tr[hidden], td[hidden], th[hidden]",
-    //   {
-    //     visibility: "collapse"
-    //   }
-    // ),
+  h.rule.style(
+    "colgroup[hidden], col[hidden], thead[hidden], tbody[hidden], tfoot[hidden], tr[hidden], td[hidden], th[hidden]",
+    {
+      visibility: "collapse",
+    }
+  ),
 
-    // cssRule(":matches(table, thead, tbody, tfoot, tr) > form", {
-    //   display: "none !important"
-    // }),
+  h.rule.style(":matches(table, thead, tbody, tfoot, tr) > form", {
+    display: "none !important",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#the-hr-element-rendering
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#the-hr-element-rendering
+   */
 
-    // cssRule("hr", {
-    //   color: "gray"
-    // }),
+  h.rule.style("hr", {
+    color: "gray",
+  }),
 
-    // /**
-    //  * @see https://html.spec.whatwg.org/#the-fieldset-and-legend-elements
-    //  */
+  /**
+   * @see https://html.spec.whatwg.org/#the-fieldset-and-legend-elements
+   */
 
-    // cssRule("fieldset", {
-    //   display: "block"
-    // })
-  ];
-});
+  h.rule.style("fieldset", {
+    display: "block",
+  }),
+]);

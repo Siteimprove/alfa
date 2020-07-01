@@ -2,7 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R24, { Outcomes } from "../../src/sia-r24/rule";
@@ -18,17 +18,14 @@ const { and, equals } = Predicate;
 
 test(`evaluate() passes when non-streaming video elements have all audio and
       visual information available in a transcript`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div>
-        <video controls>
-          <source src="foo.mp4" type="video/mp4" />
-          <source src="foo.webm" type="video/webm" />
-        </video>
-        <span id="transcript">Transcript</span>
-      </div>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <div>
+      <video controls>
+        <source src="foo.mp4" type="video/mp4" />
+        <source src="foo.webm" type="video/webm" />
+      </video>
+      <span id="transcript">Transcript</span>
+    </div>,
   ]);
 
   const video = document
@@ -61,14 +58,11 @@ test(`evaluate() passes when non-streaming video elements have all audio and
 
 test(`evaluate() fails when non-streaming video elements have no audio and
       visual information available in a transcript`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <video controls>
-        <source src="foo.mp4" type="video/mp4" />
-        <source src="foo.webm" type="video/webm" />
-      </video>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+    </video>,
   ]);
 
   const video = document
@@ -96,14 +90,11 @@ test(`evaluate() fails when non-streaming video elements have no audio and
 });
 
 test("evaluate() can't tell when some questions are left unanswered", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <video controls>
-        <source src="foo.mp4" type="video/mp4" />
-        <source src="foo.webm" type="video/webm" />
-      </video>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+    </video>,
   ]);
 
   const video = document
@@ -126,22 +117,17 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
 });
 
 test("evaluate() is inapplicable when element is not a video element", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(<img src="foo.mp4" />, Option.of(self)),
-  ]);
+  const document = Document.of([<img src="foo.mp4" />]);
 
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);
 });
 
 test("evaluate() is inapplicable when applicability questions are unanswered", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <video controls>
-        <source src="foo.mp4" type="video/mp4" />
-        <source src="foo.webm" type="video/webm" />
-      </video>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+    </video>,
   ]);
 
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);

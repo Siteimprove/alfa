@@ -1,8 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element, Text } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import { Document, Text } from "@siteimprove/alfa-dom";
 
 import R57, { Outcomes } from "../../src/sia-r57/rule";
 
@@ -12,11 +11,8 @@ import { passed, failed, inapplicable } from "../common/outcome";
 const { isText } = Text;
 
 test("evaluate() passes a text node that is included in a landmark", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <main>This text is included in a landmark</main>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <main>This text is included in a landmark</main>,
   ]);
 
   const text = document.descendants().find(isText).get();
@@ -29,11 +25,8 @@ test("evaluate() passes a text node that is included in a landmark", async (t) =
 });
 
 test("evaluate() fails a text node that is not included in a landmark", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div>This text is not included in a landmark</div>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <div>This text is not included in a landmark</div>,
   ]);
 
   const text = document.descendants().find(isText).get();
@@ -46,11 +39,8 @@ test("evaluate() fails a text node that is not included in a landmark", async (t
 });
 
 test("evaluate() is not applicable to text nodes not in the accessibility tree", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div hidden>This text is not in the accessibility tree</div>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <div hidden>This text is not in the accessibility tree</div>,
   ]);
 
   t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);

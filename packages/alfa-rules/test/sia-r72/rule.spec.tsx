@@ -2,7 +2,6 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R72, { Outcomes } from "../../src/sia-r72/rule";
@@ -14,13 +13,10 @@ const { and } = Predicate;
 const { isElement, hasName } = Element;
 
 test("evaluate() passes a paragraph whose text is not uppercased", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p>Hello world</p>
+    </html>,
   ]);
 
   const target = document
@@ -36,13 +32,10 @@ test("evaluate() passes a paragraph whose text is not uppercased", async (t) => 
 });
 
 test("evaluate() fails a paragraph whose text is uppercased", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p style={{ textTransform: "uppercase" }}>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html>
+      <p style={{ textTransform: "uppercase" }}>Hello world</p>
+    </html>,
   ]);
 
   const target = document
@@ -58,13 +51,10 @@ test("evaluate() fails a paragraph whose text is uppercased", async (t) => {
 });
 
 test("evaluate() fails a paragraph whose text is uppercased by inheritance", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html style={{ textTransform: "uppercase" }}>
-        <p>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <html style={{ textTransform: "uppercase" }}>
+      <p>Hello world</p>
+    </html>,
   ]);
 
   const target = document

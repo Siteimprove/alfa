@@ -32,7 +32,7 @@ export namespace Cascade {
   const cache = Cache.empty<Device, Cache<Document | Shadow, Cascade>>();
 
   export function from(node: Document | Shadow, device: Device): Cascade {
-    return cache.get(device, Cache.empty).get(node, () => {
+    return cache.get(device, Cache.empty).get(node.freeze(), () => {
       const filter = AncestorFilter.empty();
       const ruleTree = RuleTree.empty();
       const selectorMap = SelectorMap.of([UserAgent, ...node.style], device);

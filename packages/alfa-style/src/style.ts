@@ -172,7 +172,7 @@ export namespace Style {
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
-    return cache.get(device, Cache.empty).get(element, () => {
+    return cache.get(device, Cache.empty).get(element.freeze(), () => {
       const declarations: Array<Declaration> = element.style
         .map((block) => [...block.declarations].reverse())
         .getOr([]);
