@@ -18,7 +18,7 @@ import { Outcome } from "./outcome";
 
 const { flatMap, flatten, reduce } = Iterable;
 
-export abstract class Rule<I, T = unknown, Q = unknown>
+export abstract class Rule<I, T = unknown, Q = never>
   implements Equatable, json.Serializable, earl.Serializable {
   protected readonly _uri: string;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
@@ -100,8 +100,8 @@ export namespace Rule {
     >;
   }
 
-  export class Atomic<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
-    public static of<I, T = unknown, Q = unknown>(properties: {
+  export class Atomic<I, T = unknown, Q = never> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = never>(properties: {
       uri: string;
       evaluate: Atomic.Evaluate<I, T, Q>;
     }): Atomic<I, T, Q> {
@@ -161,8 +161,8 @@ export namespace Rule {
     return value instanceof Atomic;
   }
 
-  export class Composite<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
-    public static of<I, T = unknown, Q = unknown>(properties: {
+  export class Composite<I, T = unknown, Q = never> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = never>(properties: {
       uri: string;
       composes: Iterable<Rule<I, T, Q>>;
       evaluate: Composite.Evaluate<I, T, Q>;
