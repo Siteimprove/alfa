@@ -38,10 +38,10 @@ On their own, each of these packages do very little, but when put together they 
 At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). More often than not, your only interaction with Alfa will look similar to this:
 
 ```ts
-import { Audit } from "@siteimprove/alfa-act";
+import { Audit, Rule } from "@siteimprove/alfa-act";
 
-const input = {};
-const rules = [];
+const input: I;
+const rules: Iterable<Rule<I, T, Q>>;
 
 const outcomes = await Audit.of(input, rules).evaluate();
 ```
@@ -53,7 +53,7 @@ import { Audit } from "@siteimprove/alfa-act";
 
 import rules from "@siteimprove/alfa-rules";
 
-const input = {};
+const input: I;
 
 const outcomes = await Audit.of(input, rules).evaluate();
 ```
