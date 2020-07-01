@@ -67,7 +67,7 @@ const input = { ... };
 
 let audit = Audit.of(input);
 
-for (const rule of Rules) {
+for (const [, rule] of Rules) {
   audit = audit.add(rule);
 }
 
@@ -97,7 +97,7 @@ scraper
   .then((page) => {
     let audit = Audit.of(input);
 
-    for (const rule of Rules) {
+    for (const [, rule] of Rules) {
       audit = audit.add(rule);
     }
 
