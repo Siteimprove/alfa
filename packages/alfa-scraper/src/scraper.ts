@@ -8,6 +8,7 @@ import {
   Request,
   Response,
 } from "@siteimprove/alfa-http";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Timeout } from "@siteimprove/alfa-time";
@@ -34,6 +35,17 @@ export class Scraper {
     })
   ): Promise<Scraper> {
     return new Scraper(await browser);
+  }
+
+  public static async with<T>(
+    mapper: Mapper<Scraper, Promise<T>>,
+    browser?: Promise<puppeteer.Browser>
+  ): Promise<T> {
+    const scraper = await this.of(browser);
+    const result = await mapper(scraper);
+
+    await scraper.close();
+    return result;
   }
 
   private readonly _browser: puppeteer.Browser;
