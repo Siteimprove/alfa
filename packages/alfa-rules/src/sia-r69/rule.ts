@@ -221,8 +221,8 @@ function getBackground(
   element: Element,
   device: Device
 ): Option<Array<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map((layers) => {
-    return layers.reduce<Array<RGB<Percentage, Percentage>>>(
+  return getLayers(element, device).map((layers) =>
+    layers.reduce<Array<RGB<Percentage, Percentage>>>(
       (backdrops, layer) =>
         layer.reduce<Array<RGB<Percentage, Percentage>>>(
           (layers, color) =>
@@ -241,8 +241,8 @@ function getBackground(
           Percentage.of(1)
         ),
       ]
-    );
-  });
+    )
+  );
 }
 
 function getLayers(
