@@ -6,7 +6,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isMarkedAsDecorative } from "../common/predicate/is-marked-as-decorative";
+import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
 
 const { isElement } = Element;
 const { and, not } = Predicate;
@@ -18,7 +18,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(and(isElement, isMarkedAsDecorative));
+          .filter(and(isElement, isMarkedDecorative));
       },
 
       expectations(target) {

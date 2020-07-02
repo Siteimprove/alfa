@@ -6,7 +6,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isMarkedAsDecorative } from "../common/predicate/is-marked-as-decorative";
+import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
                   and(hasNamespace(Namespace.HTML), hasName("img")),
                   and(hasNamespace(Namespace.SVG), hasName("svg"))
                 ),
-                isMarkedAsDecorative
+                isMarkedDecorative
               )
             )
           );
