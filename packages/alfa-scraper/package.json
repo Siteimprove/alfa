@@ -20,7 +20,6 @@
   "dependencies": {
     "@siteimprove/alfa-device": "^0.3.0",
     "@siteimprove/alfa-dom": "^0.3.0",
-    "@siteimprove/alfa-encoding": "^0.3.0",
     "@siteimprove/alfa-equatable": "^0.3.0",
     "@siteimprove/alfa-http": "^0.3.0",
     "@siteimprove/alfa-json": "^0.3.0",
