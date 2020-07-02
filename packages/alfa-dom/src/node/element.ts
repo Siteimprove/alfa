@@ -217,7 +217,7 @@ export class Element extends Node implements Slot, Slotable {
       }
     }
 
-    if (isSuggestedFocusableElement(this)) {
+    if (isSuggestedFocusableElement(this) ) {
       return Some.of(0);
     }
 
@@ -366,11 +366,7 @@ export namespace Element {
     });
   }
 
-  export const hasName = predicate.hasName;
-
-  export const hasNamespace = predicate.hasNamespace;
-
-  export const hasId = predicate.hasId;
+  export const { hasId, hasName, hasNamespace, hasTabIndex, isDisabled } = predicate;
 }
 
 function indent(input: string): string {
@@ -384,7 +380,10 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return element.attribute("type").every((attr) => attr.value !== "hidden");
+      return element
+        .attribute("type")
+        .flatMap((attribute) => attribute.enumerate("hidden"))
+        .isNone();
 
     case "audio":
     case "video":
