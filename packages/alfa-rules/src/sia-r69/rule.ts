@@ -220,13 +220,16 @@ function getForeground(
 function getBackground(
   element: Element,
   device: Device
-): Option<Iterable<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map((layers) => [
-    ...reduce<Iterable<RGB<Percentage, Percentage>>>(
-      layers,
+): Option<Array<RGB<Percentage, Percentage>>> {
+  return getLayers(element, device).map((layers) => {
+    return layers.reduce<Array<RGB<Percentage, Percentage>>>(
       (backdrops, layer) =>
-        flatMap(layer, (color) =>
-          map(backdrops, (backdrop) => composite(color, backdrop))
+        layer.reduce<Array<RGB<Percentage, Percentage>>>(
+          (layers, color) =>
+            layers.concat(
+              backdrops.map((backdrop) => composite(color, backdrop))
+            ),
+          []
         ),
       // We make the initial backdrop solid white as this can be assumed to be
       // the color of the canvas onto which the other backgrounds are rendered.
@@ -238,15 +241,15 @@ function getBackground(
           Percentage.of(1)
         ),
       ]
-    ),
-  ]);
+    );
+  });
 }
 
 function getLayers(
   element: Element,
   device: Device
-): Option<Iterable<Iterable<RGB<Percentage, Percentage>>>> {
-  const layers: Array<Iterable<RGB<Percentage, Percentage>>> = [];
+): Option<Array<Array<RGB<Percentage, Percentage>>>> {
+  const layers: Array<Array<RGB<Percentage, Percentage>>> = [];
 
   const style = Style.from(element, device);
 
@@ -289,7 +292,7 @@ function getLayers(
     }
   }
 
-  // If any color within the current background layer is not fully opaque, we
+  // If the background layer does have a lower layer that is fully opaque, we
   // need to also locate the background layers sitting behind the current layer.
   // As Alfa does not yet implement a layout system, we have to assume that the
   // DOM tree will reflect the layout at least to some extent; we therefore
@@ -299,25 +302,29 @@ function getLayers(
   // (https://github.com/siteimprove/picasso) for spatially indexing the box
   // tree in which case the background layers sitting behind the current layer
   // can be found by issuing a range query for the box of the current element.
-  if (
-    some(layers, (layer) => some(layer, (color) => color.alpha.value !== 1))
-  ) {
-    const parent = element
-      .parent({
-        flattened: true,
-      })
-      .filter(Element.isElement);
-
-    // Only use the background layers from the parent if there is one. If there
-    // isn't, this means we're at the root. In that case, we simply return the
-    // layers we've found so far.
-    if (parent.isSome()) {
-      return parent.flatMap((parent) =>
-        getLayers(parent, device).map((parentLayers) =>
-          concat(parentLayers, layers)
-        )
-      );
+  for (const layer of layers) {
+    if (layer.every((color) => color.alpha.value === 1)) {
+      return Option.of(layers);
+    } else {
+      break;
     }
+  }
+
+  const parent = element
+    .parent({
+      flattened: true,
+    })
+    .filter(Element.isElement);
+
+  // Only use the background layers from the parent if there is one. If there
+  // isn't, this means we're at the root. In that case, we simply return the
+  // layers we've found so far.
+  if (parent.isSome()) {
+    return parent.flatMap((parent) =>
+      getLayers(parent, device).map((parentLayers) =>
+        parentLayers.concat(layers)
+      )
+    );
   }
 
   return Option.of(layers);
@@ -375,22 +382,20 @@ function resolveColor(
  * @see https://drafts.fxtf.org/compositing-1/#simplealphacompositing
  */
 function composite(
-  foreground: RGB,
-  background: RGB
+  foreground: RGB<Percentage, Percentage>,
+  background: RGB<Percentage, Percentage>
 ): RGB<Percentage, Percentage> {
+  if (foreground.alpha.value === 1) {
+    return foreground;
+  }
+
   const alpha = background.alpha.value * (1 - foreground.alpha.value);
 
   const [red, green, blue] = [
     [foreground.red, background.red],
     [foreground.green, background.green],
     [foreground.blue, background.blue],
-  ].map((components) => {
-    const [a, b] = components.map((c) =>
-      c.type === "number" ? c.value / 0xff : c.value
-    );
-
-    return a * foreground.alpha.value + b * alpha;
-  });
+  ].map(([a, b]) => a.value * foreground.alpha.value + b.value * alpha);
 
   return RGB.of(
     Percentage.of(red),
