@@ -124,11 +124,10 @@ export class Scraper {
         try {
           const response = page
             .goto(origin, { timeout: timeout.remaining() })
-            .catch(() => null)
-            .then((response) => response!);
+            .catch(() => null);
 
           const request = response
-            .then((response) => response.request())
+            .then((response) => response!.request())
             .catch(() => null);
 
           const result = await awaiter(page, timeout);
@@ -145,8 +144,8 @@ export class Scraper {
 
           return Ok.of(
             Page.of(
-              parseRequest(await request),
-              await parseResponse(await response),
+              parseRequest((await request)!),
+              await parseResponse((await response)!),
               document,
               device
             )
