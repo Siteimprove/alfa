@@ -127,7 +127,9 @@ export class Scraper {
             .catch(() => null)
             .then((response) => response!);
 
-          const request = response.then((response) => response.request());
+          const request = response
+            .then((response) => response.request())
+            .catch(() => null);
 
           const result = await awaiter(page, timeout);
 
