@@ -292,7 +292,7 @@ function getLayers(
     }
   }
 
-  // If the background layer does have a lower layer that is fully opaque, we
+  // If the background layer does not have a lower layer that is fully opaque, we
   // need to also locate the background layers sitting behind the current layer.
   // As Alfa does not yet implement a layout system, we have to assume that the
   // DOM tree will reflect the layout at least to some extent; we therefore
