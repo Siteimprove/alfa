@@ -217,7 +217,7 @@ export class Element extends Node implements Slot, Slotable {
       }
     }
 
-    if (isSuggestedFocusableElement(this) ) {
+    if (isSuggestedFocusableElement(this)) {
       return Some.of(0);
     }
 
@@ -298,7 +298,7 @@ export class Element extends Node implements Slot, Slotable {
    * @internal
    */
   public _attachShadow(shadow: Shadow): boolean {
-    if (this._frozen || this._shadow.isSome()) {
+    if (this._frozen || this._shadow.isSome() || !shadow._attachHost(this)) {
       return false;
     }
 
@@ -311,7 +311,11 @@ export class Element extends Node implements Slot, Slotable {
    * @internal
    */
   public _attachContent(document: Document): boolean {
-    if (this._frozen || this._content.isSome()) {
+    if (
+      this._frozen ||
+      this._content.isSome() ||
+      !document._attachFrame(this)
+    ) {
       return false;
     }
 
@@ -366,7 +370,13 @@ export namespace Element {
     });
   }
 
-  export const { hasId, hasName, hasNamespace, hasTabIndex, isDisabled } = predicate;
+  export const {
+    hasId,
+    hasName,
+    hasNamespace,
+    hasTabIndex,
+    isDisabled,
+  } = predicate;
 }
 
 function indent(input: string): string {
