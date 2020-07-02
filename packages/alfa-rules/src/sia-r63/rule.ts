@@ -7,9 +7,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r63.html",
@@ -19,7 +20,14 @@ export default Rule.Atomic.of<Page, Element>({
         return document
           .descendants({ flattened: true, nested: true })
           .filter(
-            and(isElement, and(hasNamespace(Namespace.HTML), hasName("object")))
+            and(
+              isElement,
+              and(
+                hasNamespace(Namespace.HTML),
+                hasName("object"),
+                not(isIgnored(device))
+              )
+            )
           );
       },
 
