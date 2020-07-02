@@ -52,32 +52,28 @@ export namespace Assert {
       page: web.Page,
       scope: Iterable<Rule<web.Page, Target, Question>> = Rules.values()
     ): Future<Option<Error<Target>>> {
-      const audit = reduce(
-        scope,
-        (audit, rule) => audit.add(rule),
-        Audit.of<web.Page, Target, Question>(page)
-      );
+      return Audit.of(page, scope)
+        .evaluate()
+        .map((outcomes) =>
+          find(outcomes, (outcome): outcome is Outcome.Failed<
+            web.Page,
+            Target,
+            Question
+          > => Outcome.isFailed(outcome)).map((outcome) => {
+            const { target, expectations } = outcome;
 
-      return audit.evaluate().map((outcomes) =>
-        find(outcomes, (outcome): outcome is Outcome.Failed<
-          web.Page,
-          Target,
-          Question
-        > => Outcome.isFailed(outcome)).map((outcome) => {
-          const { target, expectations } = outcome;
+            const reasons = reduce(
+              expectations,
+              (reasons, [id, expectation]) =>
+                expectation.isOk()
+                  ? reasons.append(expectation.get().message)
+                  : reasons,
+              List.empty<string>()
+            );
 
-          const reasons = reduce(
-            expectations,
-            (reasons, [id, expectation]) =>
-              expectation.isOk()
-                ? reasons.append(expectation.get().message)
-                : reasons,
-            List.empty<string>()
-          );
-
-          return Error.of(target, reasons);
-        })
-      );
+            return Error.of(target, reasons);
+          })
+        );
     }
   }
 }

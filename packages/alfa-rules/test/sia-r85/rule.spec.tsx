@@ -7,7 +7,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import R85, { Outcomes } from "../../src/sia-r85/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 
 const { and } = Predicate;
 const { isElement, hasName } = Element;
