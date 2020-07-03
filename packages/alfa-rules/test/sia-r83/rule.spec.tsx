@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element, Text } from "@siteimprove/alfa-dom";
+import { Document, Text } from "@siteimprove/alfa-dom";
 
 import R83, { Outcomes } from "../../src/sia-r83/rule";
 

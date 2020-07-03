@@ -20,17 +20,15 @@
     "src/common/predicate/has-name-from.ts",
     "src/common/predicate/has-nondefault-role.ts",
     "src/common/predicate/has-role.ts",
-    "src/common/predicate/has-tab-index.ts",
     "src/common/predicate/has-text-content.ts",
     "src/common/predicate/has-unique-id.ts",
     "src/common/predicate/has-value.ts",
-    "src/common/predicate/is-decorative.ts",
     "src/common/predicate/is-defined.ts",
-    "src/common/predicate/is-disabled.ts",
     "src/common/predicate/is-document-element.ts",
     "src/common/predicate/is-focusable.ts",
     "src/common/predicate/is-ignored.ts",
     "src/common/predicate/is-inert.ts",
+    "src/common/predicate/is-marked-decorative.ts",
     "src/common/predicate/is-perceivable.ts",
     "src/common/predicate/is-rendered.ts",
     "src/common/predicate/is-tabbable.ts",
@@ -110,6 +108,7 @@
     "src/sia-r83/rule.ts",
     "src/sia-r84/rule.ts",
     "src/sia-r85/rule.ts",
+    "src/sia-r86/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
@@ -138,7 +137,8 @@
     "test/sia-r82/rule.spec.tsx",
     "test/sia-r83/rule.spec.tsx",
     "test/sia-r84/rule.spec.tsx",
-    "test/sia-r85/rule.spec.tsx"
+    "test/sia-r85/rule.spec.tsx",
+    "test/sia-r86/rule.spec.tsx"
   ],
   "references": [
     {

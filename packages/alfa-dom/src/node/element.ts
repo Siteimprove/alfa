@@ -298,7 +298,7 @@ export class Element extends Node implements Slot, Slotable {
    * @internal
    */
   public _attachShadow(shadow: Shadow): boolean {
-    if (this._frozen || this._shadow.isSome()) {
+    if (this._frozen || this._shadow.isSome() || !shadow._attachHost(this)) {
       return false;
     }
 
@@ -311,7 +311,11 @@ export class Element extends Node implements Slot, Slotable {
    * @internal
    */
   public _attachContent(document: Document): boolean {
-    if (this._frozen || this._content.isSome()) {
+    if (
+      this._frozen ||
+      this._content.isSome() ||
+      !document._attachFrame(this)
+    ) {
       return false;
     }
 
@@ -366,11 +370,13 @@ export namespace Element {
     });
   }
 
-  export const hasName = predicate.hasName;
-
-  export const hasNamespace = predicate.hasNamespace;
-
-  export const hasId = predicate.hasId;
+  export const {
+    hasId,
+    hasName,
+    hasNamespace,
+    hasTabIndex,
+    isDisabled,
+  } = predicate;
 }
 
 function indent(input: string): string {
@@ -384,7 +390,10 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return element.attribute("type").every((attr) => attr.value !== "hidden");
+      return element
+        .attribute("type")
+        .flatMap((attribute) => attribute.enumerate("hidden"))
+        .isNone();
 
     case "audio":
     case "video":

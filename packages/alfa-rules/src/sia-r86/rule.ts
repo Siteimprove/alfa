@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -8,8 +8,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
 
-const { isElement, hasName, hasNamespace } = Element;
-const { and, or, not } = Predicate;
+const { isElement } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
@@ -18,18 +18,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(
-            and(
-              isElement,
-              and(
-                or(
-                  and(hasNamespace(Namespace.HTML), hasName("img")),
-                  and(hasNamespace(Namespace.SVG), hasName("svg"))
-                ),
-                isMarkedDecorative
-              )
-            )
-          );
+          .filter(and(isElement, isMarkedDecorative));
       },
 
       expectations(target) {
