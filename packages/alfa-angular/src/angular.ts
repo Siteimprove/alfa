@@ -21,7 +21,7 @@ import { ComponentFixture } from "@angular/core/testing";
 export namespace Angular {
   export type Type = ComponentFixture<unknown>;
 
-  export function asPage(value: Type): Page {
+  export function toPage(value: Type): Page {
     const { nativeElement } = value;
 
     return Page.of(
