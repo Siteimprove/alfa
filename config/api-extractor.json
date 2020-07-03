@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "mainEntryPointFilePath": "<projectFolder>/src/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "../docs/review/api/",
+    "reportTempFolder": "../docs/review/api/compare/"
+  },
+  "docModel": {
+    "enabled": true,
+    "apiJsonFilePath": "../docs/data/api/<unscopedPackageName>.api.json"
+  },
+  "dtsRollup": {
+    "enabled": false
+  },
+  "tsdocMetadata": {
+    "enabled": false
+  }
+}

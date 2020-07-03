@@ -15,13 +15,16 @@
     "build": "node scripts/build.js --pretty",
     "clean": "node scripts/clean.js --pretty",
     "test": "node scripts/test.js --pretty",
-    "watch": "node scripts/watch.js --pretty"
+    "watch": "node scripts/watch.js --pretty",
+    "document": "node scripts/document.js --pretty"
   },
   "workspaces": [
     "packages/*",
     "docs/**/*"
   ],
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.8.20",
+    "@microsoft/api-extractor": "^7.9.0",
     "@types/node": "^12.12.24",
     "axios": "^0.19.0",
     "execa": "^4.0.0",
