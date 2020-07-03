@@ -91,7 +91,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   if (flags.output.isNone()) {
     return Ok.of(output);
   } else {
-    fs.writeFileSync(flags.output.get() + "\n", output);
+    fs.writeFileSync(flags.output.get(), output + "\n");
     return Ok.of("");
   }
 };
