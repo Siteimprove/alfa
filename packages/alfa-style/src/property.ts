@@ -152,62 +152,62 @@ import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
 
+type Longhands = typeof Longhands;
+const Longhands = {
+  "background-color": Background.Color,
+  "background-image": Background.Image,
+  color: Color,
+  display: Display,
+  "font-family": Font.Family,
+  "font-size": Font.Size,
+  "font-style": Font.Style,
+  "font-weight": Font.Weight,
+  height: Height,
+  "line-height": Line.Height,
+  opacity: Opacity,
+  "overflow-x": Overflow.X,
+  "overflow-y": Overflow.Y,
+  "text-align": Text.Align,
+  "text-transform": Text.Transform,
+  "text-overflow": Text.Overflow,
+  transform: Transform,
+  visibility: Visibility,
+  "white-space": Whitespace,
+  width: Width,
+};
+
+type Shorthands = typeof Shorthands;
+const Shorthands = {
+  background: Background.Shorthand,
+  overflow: Overflow.Shorthand,
+};
+
 export namespace Property {
-  export type Name = keyof Registered;
+  export type Name = keyof Longhands;
 
-  export type WithName<N extends Name> = Registered[N];
-
-  type Registered = typeof Registered;
-  const Registered = {
-    "background-color": Background.Color,
-    "background-image": Background.Image,
-    color: Color,
-    display: Display,
-    "font-family": Font.Family,
-    "font-size": Font.Size,
-    "font-style": Font.Style,
-    "font-weight": Font.Weight,
-    height: Height,
-    "line-height": Line.Height,
-    opacity: Opacity,
-    "overflow-x": Overflow.X,
-    "overflow-y": Overflow.Y,
-    "text-align": Text.Align,
-    "text-transform": Text.Transform,
-    "text-overflow": Text.Overflow,
-    transform: Transform,
-    visibility: Visibility,
-    "white-space": Whitespace,
-    width: Width,
-  };
+  export type WithName<N extends Name> = Longhands[N];
 
   export function isName(name: string): name is Name {
-    return name in Registered;
+    return name in Longhands;
   }
 
   export function get<N extends Name>(name: N): WithName<N> {
-    return Registered[name];
+    return Longhands[name];
   }
 }
 
 export namespace Property {
   export namespace Shorthand {
-    export type Name = keyof Registered;
+    export type Name = keyof Shorthands;
 
-    export type WithName<N extends Name> = Registered[N];
-
-    type Registered = typeof Registered;
-    const Registered = {
-      background: Background.Shorthand,
-      overflow: Overflow.Shorthand,
-    };
+    export type WithName<N extends Name> = Shorthands[N];
 
     export function isName(name: string): name is Name {
-      return name in Registered;
+      return name in Shorthands;
     }
 
     export function get<N extends Name>(name: N): WithName<N> {
-      return Registered[name];
+      return Shorthands[name];
     }
   }
 }
