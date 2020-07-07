@@ -41,3 +41,11 @@ test(".consume() consumes an important declaration", (t) => {
     important: true,
   });
 });
+
+test(".consume() consumes custom properties", (t) => {
+  consume(t, "--no-display: none", {
+    name: "--no-display",
+    value: [{ type: "ident", value: "none" }],
+    important: false,
+  });
+});
