@@ -201,14 +201,14 @@ export class Style implements Serializable {
     const value = this.specified(name);
     if (Foo.isFoo(value.value)) {
       console.log("Mais vous êtes Foo!");
-      const fooDeclared: Value<string> = this.computed("--foo");
+      const fooDeclared = this.computed("--foo");
       console.log(fooDeclared.toJSON());
 
       if (Property.isName(name)) { // @TODO nested substitution of --foo: var(--bar)
         const fooParsed = parse(Property.get(name), fooDeclared.value, true)
         console.log(fooParsed);
 
-        return Value.of(Named.of("blue"), value.source);
+        return Value.of(fooParsed.getOr(value.value), value.source);
       }
     }
 
@@ -230,7 +230,7 @@ export class Style implements Serializable {
 
         this._computed.set(name, value);
       } else {
-        value = Value.of(this.substituted(name))
+        value = this.substituted(name)
       }
     }
 
@@ -301,7 +301,7 @@ function parse<N extends Property.Name>(
   if (debug) {
     console.log(`Parsing value: ${value}`);
   }
-  const tokens = Slice.of(Lexer.lex(value, debug));
+  const tokens = Slice.of(Lexer.lex(value));
   if (debug) {
     console.log(`Got tokens: ${tokens.toString()}`);
   }
