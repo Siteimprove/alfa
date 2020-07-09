@@ -1,6 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer, Keyword, Token } from "@siteimprove/alfa-css";
+import { Lexer, Keyword, Token, Named } from "@siteimprove/alfa-css";
+import { Foo } from "@siteimprove/alfa-css/src/value/color/foo";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -23,9 +24,10 @@ export class Style implements Serializable {
   public static of(
     declarations: Iterable<Declaration>,
     device: Device,
-    parent: Option<Style> = None
+    parent: Option<Style> = None,
+    debug: boolean = false
   ): Style {
-    return new Style(Array.from(declarations), device, parent);
+    return new Style(Array.from(declarations), device, parent, debug);
   }
 
   private static _empty = new Style([], Device.standard(), None);
@@ -41,14 +43,23 @@ export class Style implements Serializable {
   // these are inexpensive to resolve from cascaded and computed properties.
   // Cascaded properties on the other hand require parsing, which is expensive,
   // and computed properties require absolutization, which is also expensive.
-  private readonly _cascaded = new Map<Name, Value>();
-  private readonly _computed = new Map<Name, Value>();
+  private readonly _cascaded = new Map<Name | Property.Custom.Name, Value>();
+  private readonly _computed = new Map<Name | Property.Custom.Name, Value>();
+
+  private readonly _debug: boolean;
 
   private constructor(
     declarations: Array<Declaration>,
     device: Device,
-    parent: Option<Style>
+    parent: Option<Style>,
+    debug: boolean = false
   ) {
+    this._debug = debug;
+    if (debug) {
+      console.log("Declarations:");
+      console.log(declarations.map((dec) => dec.toJSON()));
+    }
+
     this._device = device;
     this._parent = parent;
 
@@ -56,6 +67,7 @@ export class Style implements Serializable {
       const { name, value } = declaration;
 
       if (Property.isName(name)) {
+        if (debug) console.log(`Got longhand ${name}`);
         const previous = this._cascaded.get(name);
 
         if (
@@ -64,7 +76,8 @@ export class Style implements Serializable {
         ) {
           const property = Property.get(name);
 
-          for (const result of parse(property, value)) {
+          for (const result of parse(property, value, debug)) {
+            if (debug) console.log(`Processing parsed value: ${result}`);
             this._cascaded.set(name, Value.of(result, Option.of(declaration)));
           }
         }
@@ -86,6 +99,22 @@ export class Style implements Serializable {
           }
         }
       }
+
+      if (Property.Custom.isName(name)) {
+        if (debug) console.log(`Got custom ${name}`);
+        const previous = this._cascaded.get(name);
+
+        if (
+          previous === undefined ||
+          shouldOverride(previous.source, declaration)
+        ) {
+          // const property = Property.get(name);
+
+          // for (const result of parse(property, value)) {
+          this._cascaded.set(name, Value.of(value, Option.of(declaration)));
+          // }
+        }
+      }
     }
   }
 
@@ -103,9 +132,13 @@ export class Style implements Serializable {
 
   public initial<N extends Name>(name: N): Value<Style.Initial<N>>;
   public initial<N extends Name>(name: N): Value {
-    const property = Property.get(name);
+    if (Property.isName(name)) {
+      const property = Property.get(name);
 
-    return Value.of(property.initial);
+      return Value.of(property.initial);
+    }
+
+    return Value.of("guaranteed invalid");
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
@@ -130,16 +163,38 @@ export class Style implements Serializable {
         return cascaded;
       })
       .getOrElse(() => {
-        const property = Property.get(name);
+        if (Property.isName(name)) {
+          const property = Property.get(name);
 
-        if (property.options.inherits === false) {
-          return this.initial(name);
+          if (property.options.inherits === false) {
+            return this.initial(name);
+          }
         }
 
         return this._parent
           .map((parent) => parent.computed(name))
           .getOrElse(() => this.initial(name));
       });
+  }
+
+  private _substitute(): Style {
+    // Perform var() and attr() substitutions
+    for (const [name, value] of this._cascaded.entries()) {
+      if (this._debug) {
+        console.log(`Substituting for ${name}`);
+      }
+
+      if (Foo.isFoo(value.value)) {
+        console.log("Mais vous êtes Foo!");
+        this._computed.set(name, Value.of(Named.of("blue"), value.source));
+      }
+    }
+    return this;
+  }
+
+  private _calc(): Style {
+    // Perform calc() simplification
+    return this;
   }
 
   public computed<N extends Name>(name: N): Value<Style.Computed<N>>;
@@ -151,9 +206,13 @@ export class Style implements Serializable {
     let value = this._computed.get(name);
 
     if (value === undefined) {
-      value = Property.get(name).compute(this);
+      if (Property.isName(name)) {
+        value = Property.get(name).compute(this._substitute()._calc());  // TODO get the specified value here, as it depends on name only.
 
-      this._computed.set(name, value);
+        this._computed.set(name, value);
+      } else {
+        value = Value.of(this._substitute().specified(name))
+      }
     }
 
     return value;
@@ -172,6 +231,8 @@ export namespace Style {
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
+    const debug = element.id.getOr("") === "target";
+
     return cache.get(device, Cache.empty).get(element.freeze(), () => {
       const declarations: Array<Declaration> = element.style
         .map((block) => [...block.declarations].reverse())
@@ -198,7 +259,8 @@ export namespace Style {
         element
           .parent({ flattened: true })
           .filter(Element.isElement)
-          .map((parent) => from(parent, device))
+          .map((parent) => from(parent, device)),
+        debug
       );
     });
   }
@@ -214,15 +276,21 @@ export namespace Style {
 
 function parse<N extends Property.Name>(
   property: Property.WithName<N>,
-  value: string
+  value: string,
+  debug: boolean = false
 ) {
+  const tokens = Slice.of(Lexer.lex(value));
+  if (debug) {
+    console.log(`Parsing value: ${value}`);
+    console.log(`Got tokens: ${tokens.toString()}`);
+  }
   return left(
     either(
       Keyword.parse("initial", "inherit"),
       property.parse as Parser<Slice<Token>, Property.Value.Parsed<N>, string>
     ),
     eof(() => "Expected end of input")
-  )(Slice.of(Lexer.lex(value)))
+  )(tokens)
     .map(([, value]) => value)
     .ok();
 }
