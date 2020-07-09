@@ -1,7 +1,8 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Angle } from "./angle";
-import {Foo} from "./color/foo";
+import { Foo } from "./color/foo";
+import { Var } from "./color/var";
 import { Number } from "./number";
 import { Percentage } from "./percentage";
 import { Keyword } from "./keyword";
@@ -15,10 +16,17 @@ import { System } from "./color/system";
 
 const { either } = Parser;
 
-export type Color = Foo | Hex | Named | HSL | RGB | Current | System;
+export type Color = Foo | Hex | Named | HSL | RGB | Current | System | Var;
 
 export namespace Color {
-  export type JSON = Foo.JSON | Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+  export type JSON =
+    | Foo.JSON
+    | Hex.JSON
+    | Named.JSON
+    | HSL.JSON
+    | RGB.JSON
+    | Keyword.JSON
+    | Var.JSON;
 
   export const current: Current = Keyword.of("currentcolor");
 
@@ -61,7 +69,7 @@ export namespace Color {
         Named.parse,
         either(
           either(RGB.parse, HSL.parse),
-          either(Current.parse, System.parse)
+          either(Current.parse, either(System.parse, Var.parse))
         )
       )
     )

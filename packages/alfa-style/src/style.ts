@@ -1,7 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
 import { Lexer, Keyword, Token, Named } from "@siteimprove/alfa-css";
-import { Foo } from "@siteimprove/alfa-css/src/value/color/foo";
+import { Var } from "@siteimprove/alfa-css/src/value/color/var";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -129,7 +129,9 @@ export class Style implements Serializable {
   }
 
   public initial<N extends Name>(name: N): Value<Style.Initial<N>>;
-  public initial<N extends Property.Custom.Name>(name: N): Value<"guaranteed invalid">
+  public initial<N extends Property.Custom.Name>(
+    name: N
+  ): Value<"guaranteed invalid">;
   public initial<N extends NameOrCustom>(name: N): Value {
     if (Property.isName(name)) {
       const property = Property.get(name);
@@ -141,13 +143,15 @@ export class Style implements Serializable {
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
-  public cascaded<N extends Property.Custom.Name>(name: N): Option<Value<string>>;
+  public cascaded<N extends Property.Custom.Name>(
+    name: N
+  ): Option<Value<string>>;
   public cascaded<N extends NameOrCustom>(name: N): Option<Value> {
     return Option.from(this._cascaded.get(name));
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>>;
-  public specified<N extends Property.Custom.Name>(name: N): Value<string>
+  public specified<N extends Property.Custom.Name>(name: N): Value<string>;
   public specified<N extends NameOrCustom>(name: N): Value {
     return this.cascaded(name)
       .map((cascaded) => {
@@ -191,21 +195,25 @@ export class Style implements Serializable {
    * @TODO attr() substitution should likely happen here too
    * @see https://drafts.csswg.org/css-values-4/#attr-substitution
    */
-  public substituted<N extends Name>(name: N): Value<Style.Specified<N>>
-  public substituted<N extends Property.Custom.Name>(name: N): Value<string>
+  public substituted<N extends Name>(name: N): Value<Style.Specified<N>>;
+  public substituted<N extends Property.Custom.Name>(name: N): Value<string>;
   public substituted<N extends NameOrCustom>(name: N): Value {
+    const value = this.specified(name);
+
     if (this._debug) {
       console.log(`Substituting for ${name}`);
+      console.log(value);
     }
 
-    const value = this.specified(name);
-    if (Foo.isFoo(value.value)) {
-      console.log("Mais vous êtes Foo!");
-      const fooDeclared = this.computed("--foo");
+    if (Var.isVar(value.value)) {
+      console.log("Mais vous êtes Var!");
+      // @TODO use fallback if property is not here.
+      const fooDeclared = this.computed(value.value.customProperty);
       console.log(fooDeclared.toJSON());
 
-      if (Property.isName(name)) { // @TODO nested substitution of --foo: var(--bar)
-        const fooParsed = parse(Property.get(name), fooDeclared.value, true)
+      if (Property.isName(name)) {
+        // @TODO nested substitution of --foo: var(--bar)
+        const fooParsed = parse(Property.get(name), fooDeclared.value, true);
         console.log(fooParsed);
 
         return Value.of(fooParsed.getOr(value.value), value.source);
@@ -216,7 +224,7 @@ export class Style implements Serializable {
   }
 
   public computed<N extends Name>(name: N): Value<Style.Computed<N>>;
-  public computed<N extends Property.Custom.Name>(name: N): Value<string>
+  public computed<N extends Property.Custom.Name>(name: N): Value<string>;
   public computed<N extends NameOrCustom>(name: N): Value {
     if (this === Style._empty) {
       return this.initial(name);
@@ -230,7 +238,7 @@ export class Style implements Serializable {
 
         this._computed.set(name, value);
       } else {
-        value = this.substituted(name)
+        value = this.substituted(name);
       }
     }
 

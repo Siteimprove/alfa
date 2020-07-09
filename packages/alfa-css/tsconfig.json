@@ -18,6 +18,7 @@
     "src/value/color/hsl.ts",
     "src/value/color/named.ts",
     "src/value/color/rgb.ts",
+    "src/value/color/var.ts",
     "src/value/color/system.ts",
     "src/value/converter.ts",
     "src/value/gradient.ts",
