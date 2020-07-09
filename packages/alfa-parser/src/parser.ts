@@ -131,6 +131,9 @@ export namespace Parser {
     };
   }
 
+  /**
+   * Tries to parse using left. If it fails, parses using right.
+   */
   export function either<I, T, U, E, A extends Array<unknown>>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
@@ -146,6 +149,9 @@ export namespace Parser {
     };
   }
 
+  /**
+   * Parses left, then right. Returns the pair of results.
+   */
   export function pair<I, T, U, E, A extends Array<unknown>>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
@@ -153,6 +159,10 @@ export namespace Parser {
     return flatMap(left, (left) => map(right, (right) => [left, right]));
   }
 
+  /**
+   * Parses left, then right. Only returns left.
+   * Useful, e.g. if right is a closing parenthesis.
+   */
   export function left<I, T, U, E, A extends Array<unknown>>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
@@ -160,6 +170,10 @@ export namespace Parser {
     return flatMap(left, (left) => map(right, () => left));
   }
 
+  /**
+   * Parses left, then right. Only returns right.
+   * Useful, e.g. if left is on opening parenthesis.
+   */
   export function right<I, T, U, E, A extends Array<unknown>>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
@@ -167,6 +181,10 @@ export namespace Parser {
     return flatMap(left, () => map(right, (right) => right));
   }
 
+  /**
+   * Parses left, separator, right. Only return separator.
+   * Useful, e.g. if left and right are whitespaces (=> parses a spaces delimited word).
+   */
   export function delimited<I, T, E, A extends Array<unknown>>(
     left: Parser<I, unknown, E, A>,
     separator: Parser<I, T, E, A>,
@@ -177,6 +195,9 @@ export namespace Parser {
     );
   }
 
+  /**
+   * Parses left, separator, right. Returns the pair left, right.
+   */
   export function separated<I, T, U, E, A extends Array<unknown>>(
     left: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>,
