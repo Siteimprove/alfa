@@ -1,6 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Angle } from "./angle";
+import {Foo} from "./color/foo";
 import { Number } from "./number";
 import { Percentage } from "./percentage";
 import { Keyword } from "./keyword";
@@ -14,10 +15,10 @@ import { System } from "./color/system";
 
 const { either } = Parser;
 
-export type Color = Hex | Named | HSL | RGB | Current | System;
+export type Color = Foo | Hex | Named | HSL | RGB | Current | System;
 
 export namespace Color {
-  export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+  export type JSON = Foo.JSON | Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
 
   export const current: Current = Keyword.of("currentcolor");
 
@@ -53,10 +54,16 @@ export namespace Color {
    * @see https://drafts.csswg.org/css-color/#typedef-color
    */
   export const parse = either(
-    Hex.parse,
+    Foo.parse,
     either(
-      Named.parse,
-      either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
+      Hex.parse,
+      either(
+        Named.parse,
+        either(
+          either(RGB.parse, HSL.parse),
+          either(Current.parse, System.parse)
+        )
+      )
     )
   );
 }
