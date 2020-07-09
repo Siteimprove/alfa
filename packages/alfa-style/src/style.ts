@@ -19,6 +19,7 @@ import { Value } from "./value";
 const { either, left, eof } = Parser;
 
 type Name = Property.Name;
+type NameOrCustom = Name | Property.Custom.Name; // this is essentially string :-(
 
 export class Style implements Serializable {
   public static of(
@@ -43,8 +44,8 @@ export class Style implements Serializable {
   // these are inexpensive to resolve from cascaded and computed properties.
   // Cascaded properties on the other hand require parsing, which is expensive,
   // and computed properties require absolutization, which is also expensive.
-  private readonly _cascaded = new Map<Name | Property.Custom.Name, Value>();
-  private readonly _computed = new Map<Name | Property.Custom.Name, Value>();
+  private readonly _cascaded = new Map<NameOrCustom, Value>();
+  private readonly _computed = new Map<NameOrCustom, Value>();
 
   private readonly _debug: boolean;
 
@@ -108,9 +109,6 @@ export class Style implements Serializable {
           previous === undefined ||
           shouldOverride(previous.source, declaration)
         ) {
-          // const property = Property.get(name);
-
-          // for (const result of parse(property, value)) {
           this._cascaded.set(name, Value.of(value, Option.of(declaration)));
           // }
         }
@@ -131,7 +129,8 @@ export class Style implements Serializable {
   }
 
   public initial<N extends Name>(name: N): Value<Style.Initial<N>>;
-  public initial<N extends Name>(name: N): Value {
+  public initial<N extends Property.Custom.Name>(name: N): Value<"guaranteed invalid">
+  public initial<N extends NameOrCustom>(name: N): Value {
     if (Property.isName(name)) {
       const property = Property.get(name);
 
@@ -142,12 +141,14 @@ export class Style implements Serializable {
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
-  public cascaded<N extends Name>(name: N): Option<Value> {
+  public cascaded<N extends Property.Custom.Name>(name: N): Option<Value<string>>;
+  public cascaded<N extends NameOrCustom>(name: N): Option<Value> {
     return Option.from(this._cascaded.get(name));
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>>;
-  public specified<N extends Name>(name: N): Value {
+  public specified<N extends Property.Custom.Name>(name: N): Value<string>
+  public specified<N extends NameOrCustom>(name: N): Value {
     return this.cascaded(name)
       .map((cascaded) => {
         if (Keyword.isKeyword(cascaded.value)) {
@@ -191,7 +192,8 @@ export class Style implements Serializable {
    * @see https://drafts.csswg.org/css-values-4/#attr-substitution
    */
   public substituted<N extends Name>(name: N): Value<Style.Specified<N>>
-  public substituted<N extends Name>(name: N): Value {
+  public substituted<N extends Property.Custom.Name>(name: N): Value<string>
+  public substituted<N extends NameOrCustom>(name: N): Value {
     if (this._debug) {
       console.log(`Substituting for ${name}`);
     }
@@ -199,14 +201,23 @@ export class Style implements Serializable {
     const value = this.specified(name);
     if (Foo.isFoo(value.value)) {
       console.log("Mais vous êtes Foo!");
-      return Value.of(Named.of("blue"), value.source);
+      const fooDeclared: Value<string> = this.computed("--foo");
+      console.log(fooDeclared.toJSON());
+
+      if (Property.isName(name)) { // @TODO nested substitution of --foo: var(--bar)
+        const fooParsed = parse(Property.get(name), fooDeclared.value, true)
+        console.log(fooParsed);
+
+        return Value.of(Named.of("blue"), value.source);
+      }
     }
 
     return value;
   }
 
   public computed<N extends Name>(name: N): Value<Style.Computed<N>>;
-  public computed<N extends Name>(name: N): Value {
+  public computed<N extends Property.Custom.Name>(name: N): Value<string>
+  public computed<N extends NameOrCustom>(name: N): Value {
     if (this === Style._empty) {
       return this.initial(name);
     }
@@ -287,9 +298,11 @@ function parse<N extends Property.Name>(
   value: string,
   debug: boolean = false
 ) {
-  const tokens = Slice.of(Lexer.lex(value));
   if (debug) {
     console.log(`Parsing value: ${value}`);
+  }
+  const tokens = Slice.of(Lexer.lex(value, debug));
+  if (debug) {
     console.log(`Got tokens: ${tokens.toString()}`);
   }
   return left(

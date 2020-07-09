@@ -7,12 +7,15 @@ import { Device } from "@siteimprove/alfa-device";
 import { Style } from "../src/style";
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
-  const element = <div id="target" style={{ color: "red", "--foo": "blue", backgroundColor: "foo" }}></div>;
+  const element = <div id="target" style={{ color: "red", "--foo": "green", backgroundColor: "foo" }}></div>;
 
+  console.log("-----   Creating style  -----");
   const style = Style.from(element, Device.standard());
 
-  console.log("BG:");
-  console.log(style.computed("background-color").toJSON());
+  console.log("-----   Triggering substitution  -----");
+  const bgComputed = style.computed("background-color").toJSON();
+  console.log("-----   Computed BG color  -----");
+  console.log(bgComputed);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {

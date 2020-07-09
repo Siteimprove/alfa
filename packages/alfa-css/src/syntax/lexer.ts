@@ -9,12 +9,14 @@ const { zeroOrMore } = Parser;
 const { and, or, not, equals, test } = Predicate;
 
 export namespace Lexer {
-  export function lex(input: string): Array<Token> {
+  export function lex(input: string, debug: boolean = false): Array<Token> {
+    if (debug) console.log(`  Lexing for ${input}`);
     const points = new Array(input.length);
 
     for (let i = 0, n = input.length; i < n; i++) {
       points[i] = input.charCodeAt(i);
     }
+    if (debug) console.log(`  Got points ${points}`);
 
     const tokens: Array<Token> = [];
 
@@ -33,6 +35,8 @@ export namespace Lexer {
         break;
       }
     }
+
+    if (debug) console.log(`  Got tokens ${tokens}`);
 
     return tokens;
   }
