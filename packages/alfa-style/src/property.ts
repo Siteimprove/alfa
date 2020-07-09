@@ -211,3 +211,19 @@ export namespace Property {
     }
   }
 }
+
+export namespace Property {
+  export namespace Custom {
+    export type Name = string;
+
+    export type WithName<N extends Name> = N; // TODO ?
+
+    export function isName(name: string): name is Name {
+      return name.startsWith("--");
+    }
+
+    export function get<N extends Name>(name: N): WithName<N> {
+      return name;
+    }
+  }
+}
