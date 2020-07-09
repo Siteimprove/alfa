@@ -19,8 +19,8 @@ export namespace Color {
 export const Color: Property<Color.Specified, Color.Computed> = Property.of(
   css.Color.system("canvastext"),
   css.Color.parse,
-  style => style.specified("color").map(color => Resolver.color(color)),
+  (style) => style.specified("color").map((color) => Resolver.color(color)),
   {
-    inherits: true
+    inherits: true,
   }
 );
