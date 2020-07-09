@@ -7,9 +7,12 @@ import { Device } from "@siteimprove/alfa-device";
 import { Style } from "../src/style";
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
-  const element = <div style={{ color: "red" }}></div>;
+  const element = <div id="target" style={{ color: "red", "--foo": "blue", backgroundColor: "foo" }}></div>;
 
   const style = Style.from(element, Device.standard());
+
+  console.log("BG:");
+  console.log(style.computed("background-color").toJSON());
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -185,3 +188,4 @@ test(`#cascaded() correctly handles a longhand declaration overriding a
     source: h.declaration("overflow-x", "visible").toJSON(),
   });
 });
+
