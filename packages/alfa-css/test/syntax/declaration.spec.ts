@@ -48,4 +48,37 @@ test(".consume() consumes custom properties", (t) => {
     value: [{ type: "ident", value: "none" }],
     important: false,
   });
+
+  consume(t, "--no-display: none !important", {
+    name: "--no-display",
+    value: [{ type: "ident", value: "none" }],
+    important: true,
+  });
+});
+
+test(".consume() consumes var properties", (t) => {
+  consume(t, "display: var(--no-display, default)", {
+    name: "display",
+    value: [
+      { type: "function", value: "var" },
+      {
+        type: "ident",
+        value: "--no-display",
+      },
+      {
+        type: "comma",
+      },
+      {
+        type: "whitespace",
+      },
+      {
+        type: "ident",
+        value: "default",
+      },
+      {
+        type: "close-parenthesis",
+      },
+    ],
+    important: false,
+  });
 });
