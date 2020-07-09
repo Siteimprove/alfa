@@ -13,6 +13,7 @@
     "src/value/angle.ts",
     "src/value/color.ts",
     "src/value/color/current.ts",
+    "src/value/color/foo.ts",
     "src/value/color/hex.ts",
     "src/value/color/hsl.ts",
     "src/value/color/named.ts",
