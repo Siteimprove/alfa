@@ -45,7 +45,7 @@ export namespace Font {
       ),
       (families) => [...families]
     ),
-    (style) => style.specified("font-family"),
+    (style) => style.substituted("font-family"),
     {
       inherits: true,
     }
@@ -128,7 +128,7 @@ export namespace Font {
       either(Percentage.parse, Length.parse)
     ),
     (style) =>
-      style.specified("font-size").map((size) => {
+      style.substituted("font-size").map((size) => {
         switch (size.type) {
           case "length":
             return Resolver.length(size, style.parent);
@@ -176,7 +176,7 @@ export namespace Font {
   export const Style: Property<Style> = Property.of(
     Keyword.of("normal"),
     Keyword.parse("normal", "italic", "oblique"),
-    (style) => style.specified("font-style"),
+    (style) => style.substituted("font-style"),
     {
       inherits: true,
     }
@@ -210,7 +210,7 @@ export namespace Font {
       )
     ),
     (style) =>
-      style.specified("font-weight").map((weight) => {
+      style.substituted("font-weight").map((weight) => {
         switch (weight.type) {
           case "number":
             return weight;

@@ -53,7 +53,7 @@ export const Transform: Property<
   Keyword.of("none"),
   either(Keyword.parse("none"), css.Transform.parseList),
   (style) =>
-    style.specified("transform").map((transform) => {
+    style.substituted("transform").map((transform) => {
       switch (transform.type) {
         case "keyword":
           return transform;

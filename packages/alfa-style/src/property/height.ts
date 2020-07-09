@@ -23,7 +23,7 @@ export const Height: Property<Height.Specified, Height.Computed> = Property.of(
   Keyword.of("auto"),
   either(Keyword.parse("auto"), either(Length.parse, Percentage.parse)),
   (style) =>
-    style.specified("height").map((height) => {
+    style.substituted("height").map((height) => {
       switch (height.type) {
         case "keyword":
         case "percentage":

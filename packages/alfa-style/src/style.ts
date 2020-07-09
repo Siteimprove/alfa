@@ -177,24 +177,32 @@ export class Style implements Serializable {
       });
   }
 
-  private _substitute(): Style {
-    // Perform var() and attr() substitutions
-    for (const [name, value] of this._cascaded.entries()) {
-      if (this._debug) {
-        console.log(`Substituting for ${name}`);
-      }
-
-      if (Foo.isFoo(value.value)) {
-        console.log("Mais vous êtes Foo!");
-        this._computed.set(name, Value.of(Named.of("blue"), value.source));
-      }
+  /**
+   * @see https://drafts.csswg.org/css-variables/#substitute-a-var
+   * "var() functions are substituted at computed-value time."
+   * However, properties like overflow-y and overflow-y may mutually depend on each other for their computed value.
+   * Thus, when computing a property, we may need to access the *specified* value of another property.
+   * This is bad if that other property has a var() that needs to be substituted.
+   *
+   * In order to not move var() substitution at specified-value time, this new step is introduced.
+   * Given that this is an artificial step, no caching is done.
+   *
+   * @TODO attr() substitution should likely happen here too
+   * @see https://drafts.csswg.org/css-values-4/#attr-substitution
+   */
+  public substituted<N extends Name>(name: N): Value<Style.Specified<N>>
+  public substituted<N extends Name>(name: N): Value {
+    if (this._debug) {
+      console.log(`Substituting for ${name}`);
     }
-    return this;
-  }
 
-  private _calc(): Style {
-    // Perform calc() simplification
-    return this;
+    const value = this.specified(name);
+    if (Foo.isFoo(value.value)) {
+      console.log("Mais vous êtes Foo!");
+      return Value.of(Named.of("blue"), value.source);
+    }
+
+    return value;
   }
 
   public computed<N extends Name>(name: N): Value<Style.Computed<N>>;
@@ -207,11 +215,11 @@ export class Style implements Serializable {
 
     if (value === undefined) {
       if (Property.isName(name)) {
-        value = Property.get(name).compute(this._substitute()._calc());  // TODO get the specified value here, as it depends on name only.
+        value = Property.get(name).compute(this);
 
         this._computed.set(name, value);
       } else {
-        value = Value.of(this._substitute().specified(name))
+        value = Value.of(this.substituted(name))
       }
     }
 

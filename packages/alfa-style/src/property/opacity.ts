@@ -25,7 +25,7 @@ export const Opacity: Property<
   either(Number.parse, Percentage.parse),
   (style) =>
     style
-      .specified("opacity")
+      .substituted("opacity")
       .map((opacity) => Number.of(Real.clamp(opacity.value, 0, 1))),
   {
     inherits: true,

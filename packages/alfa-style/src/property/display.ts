@@ -65,5 +65,5 @@ export const Display: Property<Display> = Property.of(
       Keyword.of("flow"),
     ])
   ),
-  (style) => style.specified("display")
+  (style) => style.substituted("display")
 );

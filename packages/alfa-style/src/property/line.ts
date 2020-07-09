@@ -28,7 +28,7 @@ export namespace Line {
       either(Number.parse, either(Length.parse, Percentage.parse))
     ),
     (style) =>
-      style.specified("line-height").map((height) => {
+      style.substituted("line-height").map((height) => {
         switch (height.type) {
           case "keyword":
           case "number":

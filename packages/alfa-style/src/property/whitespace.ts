@@ -19,7 +19,7 @@ export const Whitespace: Property<Whitespace> = Property.of(
     "break-spaces",
     "pre-line"
   ),
-  (style) => style.specified("white-space"),
+  (style) => style.substituted("white-space"),
   {
     inherits: true,
   }

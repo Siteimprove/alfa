@@ -49,7 +49,7 @@ export namespace Background {
     ),
     css.Color.parse,
     (style) =>
-      style.specified("background-color").map((color) => Resolver.color(color))
+      style.substituted("background-color").map((color) => Resolver.color(color))
   );
 
   export namespace Image {
@@ -83,7 +83,7 @@ export namespace Background {
       (images) => List.of(images, ", ")
     ),
     (style) =>
-      style.specified("background-image").map((images) =>
+      style.substituted("background-image").map((images) =>
         List.of(
           Iterable.map(images, (image) => {
             switch (image.type) {

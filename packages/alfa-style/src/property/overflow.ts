@@ -16,12 +16,12 @@ export namespace Overflow {
     Keyword.of("visible"),
     Keyword.parse("visible", "hidden", "clip", "scroll", "auto"),
     (style) =>
-      style.specified("overflow-x").map((x) => {
+      style.substituted("overflow-x").map((x) => {
         if (x.value !== "visible" && x.value !== "clip") {
           return x;
         }
 
-        const { value: y } = style.specified("overflow-y");
+        const { value: y } = style.substituted("overflow-y");
 
         if (y.value === "visible" || y.value === "clip") {
           return x;
@@ -40,12 +40,12 @@ export namespace Overflow {
     Keyword.of("visible"),
     Keyword.parse("visible", "hidden", "clip", "scroll", "auto"),
     (style) =>
-      style.specified("overflow-y").map((y) => {
+      style.substituted("overflow-y").map((y) => {
         if (y.value !== "visible" && y.value !== "clip") {
           return y;
         }
 
-        const { value: x } = style.specified("overflow-x");
+        const { value: x } = style.substituted("overflow-x");
 
         if (x.value === "visible" || x.value === "clip") {
           return y;
