@@ -5,10 +5,18 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Number } from "../number";
+import { Current } from "./current";
+import { Hex } from "./hex";
+import { HSL } from "./hsl";
+import { Named } from "./named";
+import { RGB } from "./rgb";
+import { System } from "./system";
 
 const { map } = Parser;
 
@@ -106,6 +114,8 @@ export namespace Var {
   import delimited = Parser.delimited;
   import option = Parser.option;
   import either = Parser.either;
+  import not = Predicate.not;
+  import zeroOrMore = Parser.zeroOrMore;
 
   export interface JSON {
     [key: string]: json.JSON;
@@ -131,6 +141,29 @@ export namespace Var {
       Token.parseCloseParenthesis
     );
 
+  const parseNonVarColor = either(
+    Hex.parse,
+    either(
+      Named.parse,
+      either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
+    )
+  );
+
+  // @TODO duplicated from token.ts but many of he helpers do not belong here anyway…
+  function parseToken<T extends Token>(
+    predicate: Predicate<Token, T>
+  ): Parser<Slice<Token>, T, string> {
+    return (input) =>
+      input
+        .get(0)
+        .filter(predicate)
+        .map((token) => Ok.of([input.slice(1), token] as const))
+        .getOrElse(() => Err.of("Expected token"));
+  }
+  // @TODO end duplicated from token.ts
+
+  const parseNonClosingParenthesis = parseToken(not(Token.isCloseParenthesis));
+
   const parseTwoArgs = left(
     // first component: custom property name, second: fallback value
     separated(
@@ -139,11 +172,17 @@ export namespace Var {
         Token.parseIdent((ident) => ident.value.startsWith("--"))
       ),
       parseSpaceDelimited(Token.parseComma),
-      // second component: everything, assuming only an ident for now
+      // second component: everything
       // @TODO fix me, this should be any <declaration-value>
+      // @TODO this is currently BROKEN if there are nested parenthesis, including a var() in the fallback!
       // @see https://drafts.csswg.org/css-variables/#using-variables
       // @see https://drafts.csswg.org/css-syntax-3/#typedef-declaration-value
-      parseSpaceDelimited(Token.parseIdent(() => true))
+      // Here, we return the string that was matched as it will be reparsed after substitution
+      parseSpaceDelimited(
+        map(zeroOrMore(parseNonClosingParenthesis), (tokens) =>
+          [...tokens].map((token) => token.toString()).join()
+        )
+      )
     ),
     Token.parseCloseParenthesis
   );
@@ -157,6 +196,6 @@ export namespace Var {
     (result) =>
       Token.isIdent(result)
         ? Var.of(result.value, None)
-        : Var.of(result[0].value, Some.of(result[1].value))
+        : Var.of(result[0].value, Some.of(result[1]))
   );
 }

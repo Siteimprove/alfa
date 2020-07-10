@@ -70,7 +70,7 @@ test("#computed() substitute an inherited custom property", (t) => {
   });
 });
 
-test("#computed() uses fallback if a custom property does not exist", (t) => {
+test("#computed() uses fallback if a custom property does not exist (named fallback)", (t) => {
   const element = <div style={{ backgroundColor: "var(--foo, lime)" }}></div>;
 
   const style = Style.from(element, Device.standard());
@@ -81,13 +81,24 @@ test("#computed() uses fallback if a custom property does not exist", (t) => {
   });
 });
 
+test("#computed() uses fallback if a custom property does not exist (rgb fallback)", (t) => {
+  const element = <div style={{ backgroundColor: "var(--foo, rgb(0, 1, 0)" }}></div>;
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.computed("background-color").toJSON(), {
+    value: lime,
+    source: h.declaration("background-color", "var(--foo, rgb(0, 1, 0))").toJSON(),
+  });
+});
+
 test("#computed() use default value if property is invalid at computed-value time", (t) => {
   const elements = [
     <div style={{ backgroundColor: "var(--foo)" }}></div>, // no custom, no fallback
     <div
       style={{ "--foo": "invalid", backgroundColor: "var(--foo, cyan)" }}
     ></div>, // invalid custom (fallback is ignored)
-    <div style={{ backgroundColor: "var(--foo, invalid)" }}></div>, // no custom, invalid fallback
+    <div style={{ backgroundColor: "var(--foo, this is invalid)" }}></div>, // no custom, invalid fallback
   ];
 
   for (const element of elements) {
