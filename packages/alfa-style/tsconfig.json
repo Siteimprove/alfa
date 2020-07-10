@@ -20,7 +20,8 @@
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts",
-    "test/style.spec.tsx"
+    "test/cascaded.spec.tsx",
+    "test/computed.spec.tsx"
   ],
   "references": [
     {
