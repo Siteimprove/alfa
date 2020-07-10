@@ -225,5 +225,8 @@ export namespace Property {
     export function get<N extends Name>(name: N): WithName<N> {
       return name;
     }
+
+    export type GuaranteedInvalid = "guaranteed invalid";
+    export const guaranteedInvalid: GuaranteedInvalid = "guaranteed invalid";
   }
 }
