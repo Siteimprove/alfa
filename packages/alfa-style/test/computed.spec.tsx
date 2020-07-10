@@ -38,7 +38,7 @@ test("#computed() substitute a custom property defined at the same time", (t) =>
 });
 
 test("#computed() uses fallback if a custom property does not exist", (t) => {
-  const element = <div id="target" style={{ backgroundColor: "var(--foo, lime)" }}></div>;
+  const element = <div style={{ backgroundColor: "var(--foo, lime)" }}></div>;
 
   const style = Style.from(element, Device.standard());
 
