@@ -14,6 +14,8 @@ export class Value<T = unknown>
   }
 
   private readonly _value: T;
+  // @TODO With custom props, the source may be not unique (both "--foo: bar" and "var(--foo)" are source.
+  // @TODO Should we have an Iterable<Declaration> as source instead?
   private readonly _source: Option<Declaration>;
 
   private constructor(value: T, source: Option<Declaration>) {
