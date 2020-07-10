@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import {None, Option, Some} from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -105,6 +105,7 @@ export namespace Var {
   import separated = Parser.separated;
   import delimited = Parser.delimited;
   import option = Parser.option;
+  import either = Parser.either;
 
   export interface JSON {
     [key: string]: json.JSON;
@@ -121,29 +122,41 @@ export namespace Var {
   const parseSpaceDelimited = <T>(parser: Parser<Slice<Token>, T, string>) =>
     delimited(option(Token.parseWhitespace), parser);
 
+  const parseOneArg =
+    // first component: --custom-property-name
+    left(
+      parseSpaceDelimited(
+        Token.parseIdent((ident) => ident.value.startsWith("--"))
+      ),
+      Token.parseCloseParenthesis
+    );
+
+  const parseTwoArgs = left(
+    // first component: custom property name, second: fallback value
+    separated(
+      // first component: --custom-property-name
+      parseSpaceDelimited(
+        Token.parseIdent((ident) => ident.value.startsWith("--"))
+      ),
+      parseSpaceDelimited(Token.parseComma),
+      // second component: everything, assuming only an ident for now
+      // @TODO fix me, this should be any <declaration-value>
+      // @see https://drafts.csswg.org/css-variables/#using-variables
+      // @see https://drafts.csswg.org/css-syntax-3/#typedef-declaration-value
+      parseSpaceDelimited(Token.parseIdent(() => true))
+    ),
+    Token.parseCloseParenthesis
+  );
+
   export const parse = map(
     // function name + the rest, drop the function name.
     right(
       Token.parseFunction((fn) => fn.value === "var"),
-      // everything until ')', drop the ')'
-      left(
-        // @TODO handle case with no fallback value.
-        // first component: custom property name, second: fallback value
-        separated(
-          // first component: --custom-property-name
-          parseSpaceDelimited(
-            Token.parseIdent((ident) => ident.value.startsWith("--"))
-          ),
-          parseSpaceDelimited(Token.parseComma),
-          // second component: everything, assuming only an ident for now
-          // @TODO fix me, this should be any <declaration-value>
-          // @see https://drafts.csswg.org/css-variables/#using-variables
-          // @see https://drafts.csswg.org/css-syntax-3/#typedef-declaration-value
-          parseSpaceDelimited(Token.parseIdent(() => true))
-        ),
-        Token.parseCloseParenthesis
-      )
+      either(parseOneArg, parseTwoArgs)
     ),
-    ([customProperty, fallbackValue]) => Var.of(customProperty.value, Some.of(fallbackValue.value))
+    (result) =>
+      Token.isIdent(result)
+        ? Var.of(result.value, None)
+        : Var.of(result[0].value, Some.of(result[1].value))
   );
 }
