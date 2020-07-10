@@ -6,7 +6,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Record } from "@siteimprove/alfa-record";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -234,49 +234,25 @@ export class Style implements Serializable {
 
       // @TODO only replacing in longhand properties. Need to work for shorthand and custom.
       if (Property.isName(name)) {
-        if (customComputed.value !== Property.Custom.guaranteedInvalid) {
-          // 2. sustituting for the custom prop value
-          const customParsed = parse(
-            Property.get(name),
-            customComputed.value,
-            this._debug
-          );
-          if (this._debug) console.log(customParsed);
+        // 2., 3. If the value of the custom pro is invalid at compute time, the fallback is *not* used,
+        // so we're good with choosing what to parse once.
+        const customValue =
+          customComputed.value !== Property.Custom.guaranteedInvalid
+            ? Some.of(customComputed.value)
+            : value.value.fallbackValue;
 
-          if (customParsed.isSome()) {
-            // The custom prop is a correct value for this property
-            return Value.of(customParsed.get(), value.source);
-          } else {
-            // The custom prop as a value but an incorrect one. The property is invalid at compute time
+        return (
+          customValue
+            .flatMap((custom) =>
+              // If the string parses correctly, we're happy and use the result.
+              parse(Property.get(name), custom, this._debug).map((computed) =>
+                Value.of(computed, value.source)
+              )
+            )
+            // Otherwise (4. no string, or 2. doesn't parse), this is invalid at computed-value time and we fallback
             // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
-            return this._fallback(name);
-          }
-        }
-        if (value.value.fallbackValue.isSome()) {
-          // 3. custom prop is guaranteed invalid, fetching fallback.
-          if (this._debug) {
-            console.log(
-              `Getting fallback value ${value.value.fallbackValue.get()}`
-            );
-          }
-          const fallbackParsed = parse(
-            Property.get(name),
-            value.value.fallbackValue.get(),
-            this._debug
-          );
-          if (this._debug) console.log(fallbackParsed);
-          if (fallbackParsed.isSome()) {
-            // fallback is corrcect, yay!
-            return Value.of(fallbackParsed.get(), value.source);
-          } else {
-            // fallback is incorrect, property is invalid at computed-value time
-            return this._fallback(name);
-          }
-        } else {
-          // 4. there is no fallback, property is invalid at computed-value time
-          // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
-          return this._fallback(name);
-        }
+            .getOrElse(() => this._fallback(name))
+        );
       }
     }
 
