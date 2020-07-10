@@ -7,7 +7,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Style } from "../src/style";
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
-  const element = <div id="target" style={{ color: "red" }}></div>;
+  const element = <div style={{ color: "red" }}></div>;
 
   const style = Style.from(element, Device.standard());
 
