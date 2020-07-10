@@ -226,6 +226,8 @@ export namespace Property {
       return name;
     }
 
+    // @TODO these should maybe not be string as we run into a corner case if the actual value of a custom property
+    // @TODO is the string "guaranteed invalid"…
     export type GuaranteedInvalid = "guaranteed invalid";
     export const guaranteedInvalid: GuaranteedInvalid = "guaranteed invalid";
   }
