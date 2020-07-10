@@ -173,11 +173,11 @@ export namespace Var {
       ),
       parseSpaceDelimited(Token.parseComma),
       // second component: everything
-      // @TODO fix me, this should be any <declaration-value>
-      // @TODO this is currently BROKEN if there are nested parenthesis, including a rgb() in the fallback!
+      // Here, we return the string that was matched as it will be reparsed after substitution
+      // @TODO this should be any <declaration-value>
       // @see https://drafts.csswg.org/css-variables/#using-variables
       // @see https://drafts.csswg.org/css-syntax-3/#typedef-declaration-value
-      // Here, we return the string that was matched as it will be reparsed after substitution
+      // @TODO this is currently BROKEN if there are nested parenthesis, including a rgb() in the fallback!
       parseSpaceDelimited(
         map(zeroOrMore(parseNonClosingParenthesis), (tokens) =>
           [...tokens].map((token) => token.toString()).join("")
