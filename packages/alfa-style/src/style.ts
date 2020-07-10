@@ -213,6 +213,8 @@ export class Style implements Serializable {
    *
    * In order to not move var() substitution at specified-value time, this new step is introduced.
    * Given that this is an artificial step, no caching is done.
+   * @TODO This does create a risk of individual properties using the specified value instead of the
+   * @TODO substituted value in their own compute() function! Should we fix this?
    *
    * @TODO attr() substitution should likely happen here too
    * @see https://drafts.csswg.org/css-values-4/#attr-substitution
@@ -224,6 +226,9 @@ export class Style implements Serializable {
     // @TODO i.e., this substitute "foo: var(--foo)" but not "foo: foo var(--bar)" or "foo: var(--foo) bar
     // @TODO e.g. "color: var(--blue)" works, "color: rgb(var(--red-percent), 0, 0)" doesn't
     // @TODO Special care might be needed for nested custom properties ("--foo: var(--bar)").
+    //
+    // @TODO handle cycle in custom variable definitions.
+    // @see https://drafts.csswg.org/css-variables/#cycles
     // 1.
     // @TODO Ignoring animation taint for now.
     const value = this.specified(name);
@@ -234,11 +239,10 @@ export class Style implements Serializable {
     }
 
     if (Var.isVar(value.value)) {
-      console.log("Mais vous êtes Var!");
-      // @TODO use fallback if property is not here.
+      if (this._debug) console.log("Mais vous êtes Var!");
       // It is not clear which value of the custom prop needs to be replaced. computed makes more sense.
       const customComputed = this.computed(value.value.customProperty);
-      console.log(customComputed.toJSON());
+      if (this._debug) console.log(customComputed.toJSON());
 
       // @TODO only replacing in longhand properties. Need to work for shorthand and custom.
       if (Property.isName(name)) {
@@ -247,9 +251,9 @@ export class Style implements Serializable {
           const customParsed = parse(
             Property.get(name),
             customComputed.value,
-            true
+            this._debug
           );
-          console.log(customParsed);
+          if (this._debug) console.log(customParsed);
 
           if (customParsed.isSome()) {
             // The custom prop is a correct value for this property
@@ -268,12 +272,30 @@ export class Style implements Serializable {
         }
         if (value.value.fallbackValue.isSome()) {
           // 3. custom prop is guaranteed invalid, fetching fallback.
+          if (this._debug) {
+            console.log(
+              `Getting fallback value ${value.value.fallbackValue.get()}`
+            );
+          }
           const fallbackParsed = parse(
             Property.get(name),
             value.value.fallbackValue.get(),
-            true
+            this._debug
           );
-          return Value.of(fallbackParsed, value.source);
+          if (this._debug) console.log(fallbackParsed);
+          if (fallbackParsed.isSome()) {
+            // fallback is corrcect, yay!
+            return Value.of(fallbackParsed.get(), value.source);
+          } else {
+            // fallback is incorrect, property is invalid at computed-value time
+            if (Property.get(name).options.inherits === false) {
+              return this.initial(name);
+            }
+
+            return this._parent
+              .map((parent) => parent.computed(name))
+              .getOrElse(() => this.initial(name));
+          }
         } else {
           // 4. there is no fallback, property is invalid at computed-value time
           // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
