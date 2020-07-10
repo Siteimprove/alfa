@@ -81,14 +81,14 @@ test("#computed() uses fallback if a custom property does not exist (named fallb
   });
 });
 
-test("#computed() uses fallback if a custom property does not exist (rgb fallback)", (t) => {
-  const element = <div style={{ backgroundColor: "var(--foo, rgb(0, 1, 0)" }}></div>;
+test("#computed() uses fallback if a custom property does not exist (hex fallback)", (t) => {
+  const element = <div style={{ backgroundColor: "var(--foo, #00FF00)" }}></div>;
 
   const style = Style.from(element, Device.standard());
 
   t.deepEqual(style.computed("background-color").toJSON(), {
     value: lime,
-    source: h.declaration("background-color", "var(--foo, rgb(0, 1, 0))").toJSON(),
+    source: h.declaration("background-color", "var(--foo, #00FF00)").toJSON(),
   });
 });
 
