@@ -131,7 +131,7 @@ export class Style implements Serializable {
   public initial<N extends Name>(name: N): Value<Style.Initial<N>>;
   public initial<N extends Property.Custom.Name>(
     name: N
-  ): Value<"guaranteed invalid">;
+  ): Value<Property.Custom.GuaranteedInvalid>;
   public initial<N extends NameOrCustom>(name: N): Value {
     if (Property.isName(name)) {
       const property = Property.get(name);
@@ -139,7 +139,7 @@ export class Style implements Serializable {
       return Value.of(property.initial);
     }
 
-    return Value.of("guaranteed invalid");
+    return Value.of(Property.Custom.guaranteedInvalid);
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
@@ -148,6 +148,28 @@ export class Style implements Serializable {
   ): Option<Value<string>>;
   public cascaded<N extends NameOrCustom>(name: N): Option<Value> {
     return Option.from(this._cascaded.get(name));
+  }
+
+  /**
+   * Get the fallback value is nothing is specified, or if specified value is invalid at computed-value time
+   * Can be either initial or inherit, depending on property.
+   * @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
+   */
+  private _fallback<N extends Name>(name: N): Value<Style.Specified<N>>;
+  private _fallback<N extends Property.Custom.Name>(name: N): Value<string>;
+  private _fallback<N extends NameOrCustom>(name: N): Value {
+    let inherit = true; // custom props always inherit.
+    if (Property.isName(name)) {
+      inherit = Property.get(name).options.inherits === false;
+    }
+
+    if (inherit) {
+      return this._parent
+        .map((parent) => parent.computed(name))
+        .getOrElse(() => this.initial(name));
+    } else {
+      return this.initial(name);
+    }
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>>;
@@ -198,6 +220,12 @@ export class Style implements Serializable {
   public substituted<N extends Name>(name: N): Value<Style.Specified<N>>;
   public substituted<N extends Property.Custom.Name>(name: N): Value<string>;
   public substituted<N extends NameOrCustom>(name: N): Value {
+    // @TODO this only substitute properties whose full value is a var(), not properties including a var()
+    // @TODO i.e., this substitute "foo: var(--foo)" but not "foo: foo var(--bar)" or "foo: var(--foo) bar
+    // @TODO e.g. "color: var(--blue)" works, "color: rgb(var(--red-percent), 0, 0)" doesn't
+    // @TODO Special care might be needed for nested custom properties ("--foo: var(--bar)").
+    // 1.
+    // @TODO Ignoring animation taint for now.
     const value = this.specified(name);
 
     if (this._debug) {
@@ -208,15 +236,55 @@ export class Style implements Serializable {
     if (Var.isVar(value.value)) {
       console.log("Mais vous êtes Var!");
       // @TODO use fallback if property is not here.
-      const fooDeclared = this.computed(value.value.customProperty);
-      console.log(fooDeclared.toJSON());
+      // It is not clear which value of the custom prop needs to be replaced. computed makes more sense.
+      const customComputed = this.computed(value.value.customProperty);
+      console.log(customComputed.toJSON());
 
+      // @TODO only replacing in longhand properties. Need to work for shorthand and custom.
       if (Property.isName(name)) {
-        // @TODO nested substitution of --foo: var(--bar)
-        const fooParsed = parse(Property.get(name), fooDeclared.value, true);
-        console.log(fooParsed);
+        if (customComputed.value !== Property.Custom.guaranteedInvalid) {
+          // 2. sustituting for the custom prop value
+          const customParsed = parse(
+            Property.get(name),
+            customComputed.value,
+            true
+          );
+          console.log(customParsed);
 
-        return Value.of(fooParsed.getOr(value.value), value.source);
+          if (customParsed.isSome()) {
+            // The custom prop is a correct value for this property
+            return Value.of(customParsed.get(), value.source);
+          } else {
+            // The custom prop as a value but an incorrect one. The property is invalid at compute time
+            // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
+            if (Property.get(name).options.inherits === false) {
+              return this.initial(name);
+            }
+
+            return this._parent
+              .map((parent) => parent.computed(name))
+              .getOrElse(() => this.initial(name));
+          }
+        }
+        if (value.value.fallbackValue.isSome()) {
+          // 3. custom prop is guaranteed invalid, fetching fallback.
+          const fallbackParsed = parse(
+            Property.get(name),
+            value.value.fallbackValue.get(),
+            true
+          );
+          return Value.of(fallbackParsed, value.source);
+        } else {
+          // 4. there is no fallback, property is invalid at computed-value time
+          // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
+          if (Property.get(name).options.inherits === false) {
+            return this.initial(name);
+          }
+
+          return this._parent
+            .map((parent) => parent.computed(name))
+            .getOrElse(() => this.initial(name));
+        }
       }
     }
 
