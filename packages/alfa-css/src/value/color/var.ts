@@ -136,7 +136,9 @@ export namespace Var {
           ),
           parseSpaceDelimited(Token.parseComma),
           // second component: everything, assuming only an ident for now
-          // @TODO fix me
+          // @TODO fix me, this should be any <declaration-value>
+          // @see https://drafts.csswg.org/css-variables/#using-variables
+          // @see https://drafts.csswg.org/css-syntax-3/#typedef-declaration-value
           parseSpaceDelimited(Token.parseIdent(() => true))
         ),
         Token.parseCloseParenthesis
