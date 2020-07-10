@@ -1,25 +1,49 @@
-import {Device} from "@siteimprove/alfa-device";
-import {h, jsx} from "@siteimprove/alfa-dom";
-import {test} from "@siteimprove/alfa-test";
-import {Style} from "../src";
+import { Device } from "@siteimprove/alfa-device";
+import { h, jsx } from "@siteimprove/alfa-dom";
+import { test } from "@siteimprove/alfa-test";
+import { Style } from "../src";
 
-test("#cascaded() returns the cascaded value of a property", (t) => {
-  const element = <div id="target" style={{ color: "red", "--foo": "lime", backgroundColor: "var(--foo, cyan)" }}></div>;
+const lime = {
+  type: "color",
+  format: "rgb",
+  red: {
+    type: "percentage",
+    value: 0,
+  },
+  green: {
+    type: "percentage",
+    value: 1,
+  },
+  blue: {
+    type: "percentage",
+    value: 0,
+  },
+  alpha: {
+    type: "percentage",
+    value: 1,
+  },
+};
 
-  console.log("-----   Creating style  -----");
+test("#computed() substitute a custom property defined at the same time", (t) => {
+  const element = (
+    <div style={{ "--foo": "lime", backgroundColor: "var(--foo, cyan)" }}></div>
+  );
+
   const style = Style.from(element, Device.standard());
 
-  console.log("-----   Triggering substitution  -----");
-  const bgComputed = style.computed("background-color").toJSON();
-  console.log("-----   Computed BG color  -----");
-  console.log(bgComputed);
+  t.deepEqual(style.computed("background-color").toJSON(), {
+    value: lime,
+    source: h.declaration("background-color", "var(--foo, cyan)").toJSON(),
+  });
+});
 
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
-    source: h.declaration("color", "red").toJSON(),
+test("#computed() uses fallback if a custom property does not exist", (t) => {
+  const element = <div id="target" style={{ backgroundColor: "var(--foo, lime)" }}></div>;
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.computed("background-color").toJSON(), {
+    value: lime,
+    source: h.declaration("background-color", "var(--foo, lime)").toJSON(),
   });
 });
