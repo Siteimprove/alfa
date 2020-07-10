@@ -1,7 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Angle } from "./angle";
-import { Foo } from "./color/foo";
 import { Var } from "./color/var";
 import { Number } from "./number";
 import { Percentage } from "./percentage";
@@ -16,11 +15,10 @@ import { System } from "./color/system";
 
 const { either } = Parser;
 
-export type Color = Foo | Hex | Named | HSL | RGB | Current | System | Var;
+export type Color = Hex | Named | HSL | RGB | Current | System | Var;
 
 export namespace Color {
   export type JSON =
-    | Foo.JSON
     | Hex.JSON
     | Named.JSON
     | HSL.JSON
@@ -62,15 +60,12 @@ export namespace Color {
    * @see https://drafts.csswg.org/css-color/#typedef-color
    */
   export const parse = either(
-    Foo.parse,
+    Hex.parse,
     either(
-      Hex.parse,
+      Named.parse,
       either(
-        Named.parse,
-        either(
-          either(RGB.parse, HSL.parse),
-          either(Current.parse, either(System.parse, Var.parse))
-        )
+        either(RGB.parse, HSL.parse),
+        either(Current.parse, either(System.parse, Var.parse))
       )
     )
   );
