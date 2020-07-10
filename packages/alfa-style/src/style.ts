@@ -160,7 +160,7 @@ export class Style implements Serializable {
   private _fallback<N extends NameOrCustom>(name: N): Value {
     let inherit = true; // custom props always inherit.
     if (Property.isName(name)) {
-      inherit = Property.get(name).options.inherits === false;
+      inherit = Property.get(name).options.inherits;
     }
 
     if (inherit) {
@@ -189,19 +189,7 @@ export class Style implements Serializable {
 
         return cascaded;
       })
-      .getOrElse(() => {
-        if (Property.isName(name)) {
-          const property = Property.get(name);
-
-          if (property.options.inherits === false) {
-            return this.initial(name);
-          }
-        }
-
-        return this._parent
-          .map((parent) => parent.computed(name))
-          .getOrElse(() => this.initial(name));
-      });
+      .getOrElse(() => this._fallback(name));
   }
 
   /**
@@ -261,13 +249,7 @@ export class Style implements Serializable {
           } else {
             // The custom prop as a value but an incorrect one. The property is invalid at compute time
             // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
-            if (Property.get(name).options.inherits === false) {
-              return this.initial(name);
-            }
-
-            return this._parent
-              .map((parent) => parent.computed(name))
-              .getOrElse(() => this.initial(name));
+            return this._fallback(name);
           }
         }
         if (value.value.fallbackValue.isSome()) {
@@ -288,24 +270,12 @@ export class Style implements Serializable {
             return Value.of(fallbackParsed.get(), value.source);
           } else {
             // fallback is incorrect, property is invalid at computed-value time
-            if (Property.get(name).options.inherits === false) {
-              return this.initial(name);
-            }
-
-            return this._parent
-              .map((parent) => parent.computed(name))
-              .getOrElse(() => this.initial(name));
+            return this._fallback(name);
           }
         } else {
           // 4. there is no fallback, property is invalid at computed-value time
           // @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
-          if (Property.get(name).options.inherits === false) {
-            return this.initial(name);
-          }
-
-          return this._parent
-            .map((parent) => parent.computed(name))
-            .getOrElse(() => this.initial(name));
+          return this._fallback(name);
         }
       }
     }
@@ -348,7 +318,7 @@ export namespace Style {
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
-    const debug = element.id.getOr("") === "target";
+    const debug = element.id.getOr("") === "debug";
 
     return cache.get(device, Cache.empty).get(element.freeze(), () => {
       const declarations: Array<Declaration> = element.style
