@@ -1,6 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer, Keyword, Token, Named } from "@siteimprove/alfa-css";
+import { Lexer, Keyword, Token } from "@siteimprove/alfa-css";
 import { Var } from "@siteimprove/alfa-css/src/value/color/var";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
@@ -25,10 +25,9 @@ export class Style implements Serializable {
   public static of(
     declarations: Iterable<Declaration>,
     device: Device,
-    parent: Option<Style> = None,
-    debug: boolean = false
+    parent: Option<Style> = None
   ): Style {
-    return new Style(Array.from(declarations), device, parent, debug);
+    return new Style(Array.from(declarations), device, parent);
   }
 
   private static _empty = new Style([], Device.standard(), None);
@@ -47,20 +46,11 @@ export class Style implements Serializable {
   private readonly _cascaded = new Map<NameOrCustom, Value>();
   private readonly _computed = new Map<NameOrCustom, Value>();
 
-  private readonly _debug: boolean;
-
   private constructor(
     declarations: Array<Declaration>,
     device: Device,
-    parent: Option<Style>,
-    debug: boolean = false
+    parent: Option<Style>
   ) {
-    this._debug = debug;
-    if (debug) {
-      console.log("Declarations:");
-      console.log(declarations.map((dec) => dec.toJSON()));
-    }
-
     this._device = device;
     this._parent = parent;
 
@@ -68,7 +58,6 @@ export class Style implements Serializable {
       const { name, value } = declaration;
 
       if (Property.isName(name)) {
-        if (debug) console.log(`Got longhand ${name}`);
         const previous = this._cascaded.get(name);
 
         if (
@@ -77,8 +66,7 @@ export class Style implements Serializable {
         ) {
           const property = Property.get(name);
 
-          for (const result of parse(property, value, debug)) {
-            if (debug) console.log(`Processing parsed value: ${result}`);
+          for (const result of parse(property, value)) {
             this._cascaded.set(name, Value.of(result, Option.of(declaration)));
           }
         }
@@ -102,7 +90,6 @@ export class Style implements Serializable {
       }
 
       if (Property.Custom.isName(name)) {
-        if (debug) console.log(`Got custom ${name}`);
         const previous = this._cascaded.get(name);
 
         if (
@@ -213,24 +200,19 @@ export class Style implements Serializable {
     // @TODO this only substitute properties whose full value is a var(), not properties including a var()
     // @TODO i.e., this substitute "foo: var(--foo)" but not "foo: foo var(--bar)" or "foo: var(--foo) bar
     // @TODO e.g. "color: var(--blue)" works, "color: rgb(var(--red-percent), 0, 0)" doesn't
-    // @TODO Special care might be needed for nested custom properties ("--foo: var(--bar)").
+    // @TODO Special care might be needed for nested custom properties ("--foo: var(--bar)"). Not tested.
     //
     // @TODO handle cycle in custom variable definitions.
     // @see https://drafts.csswg.org/css-variables/#cycles
+    // @TODO handle may size of var() substitution to avoid billion lol attack
+    // @see https://drafts.csswg.org/css-variables/#long-variables
     // 1.
     // @TODO Ignoring animation taint for now.
     const value = this.specified(name);
 
-    if (this._debug) {
-      console.log(`Substituting for ${name}`);
-      console.log(value);
-    }
-
     if (Var.isVar(value.value)) {
-      if (this._debug) console.log("Mais vous êtes Var!");
       // It is not clear which value of the custom prop needs to be replaced. computed makes more sense.
       const customComputed = this.computed(value.value.customProperty);
-      if (this._debug) console.log(customComputed.toJSON());
 
       // @TODO only replacing in longhand properties. Need to work for shorthand and custom.
       if (Property.isName(name)) {
@@ -245,7 +227,7 @@ export class Style implements Serializable {
           customValue
             .flatMap((custom) =>
               // If the string parses correctly, we're happy and use the result.
-              parse(Property.get(name), custom, this._debug).map((computed) =>
+              parse(Property.get(name), custom).map((computed) =>
                 Value.of(computed, value.source)
               )
             )
@@ -294,8 +276,6 @@ export namespace Style {
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
-    const debug = element.id.getOr("") === "debug";
-
     return cache.get(device, Cache.empty).get(element.freeze(), () => {
       const declarations: Array<Declaration> = element.style
         .map((block) => [...block.declarations].reverse())
@@ -322,8 +302,7 @@ export namespace Style {
         element
           .parent({ flattened: true })
           .filter(Element.isElement)
-          .map((parent) => from(parent, device)),
-        debug
+          .map((parent) => from(parent, device))
       );
     });
   }
@@ -339,23 +318,15 @@ export namespace Style {
 
 function parse<N extends Property.Name>(
   property: Property.WithName<N>,
-  value: string,
-  debug: boolean = false
+  value: string
 ) {
-  if (debug) {
-    console.log(`Parsing value: ${value}`);
-  }
-  const tokens = Slice.of(Lexer.lex(value));
-  if (debug) {
-    console.log(`Got tokens: ${tokens.toString()}`);
-  }
   return left(
     either(
       Keyword.parse("initial", "inherit"),
       property.parse as Parser<Slice<Token>, Property.Value.Parsed<N>, string>
     ),
     eof(() => "Expected end of input")
-  )(tokens)
+  )(Slice.of(Lexer.lex(value)))
     .map(([, value]) => value)
     .ok();
 }
