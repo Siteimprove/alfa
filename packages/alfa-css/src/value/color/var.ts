@@ -18,7 +18,8 @@ import { Named } from "./named";
 import { RGB } from "./rgb";
 import { System } from "./system";
 
-const { map } = Parser;
+const { delimited, either, left, map, option, right, separated, zeroOrMore } = Parser;
+const { not } = Predicate;
 
 export class Var implements Equatable, Hashable, Serializable {
   public static of(
@@ -52,11 +53,11 @@ export class Var implements Equatable, Hashable, Serializable {
     return this._fallbackValue;
   }
 
-  // Hack
   public get color(): "var" {
     return "var";
   }
 
+  // Hack
   public get red(): Number {
     return Number.of(255);
   }
@@ -70,8 +71,6 @@ export class Var implements Equatable, Hashable, Serializable {
   }
 
   public get alpha(): Number {
-    // The "transparent" color has an alpha of 0 as it's, well, transparent. All
-    // other named colors are fully opaque and therefore have an alpha of 1.
     return Number.of(0);
   }
   // End hack
@@ -108,15 +107,6 @@ export class Var implements Equatable, Hashable, Serializable {
 }
 
 export namespace Var {
-  import right = Parser.right;
-  import left = Parser.left;
-  import separated = Parser.separated;
-  import delimited = Parser.delimited;
-  import option = Parser.option;
-  import either = Parser.either;
-  import not = Predicate.not;
-  import zeroOrMore = Parser.zeroOrMore;
-
   export interface JSON {
     [key: string]: json.JSON;
     type: "color";
@@ -149,7 +139,7 @@ export namespace Var {
     )
   );
 
-  // @TODO duplicated from token.ts but many of he helpers do not belong here anyway…
+  // @TODO duplicated from token.ts but many of the previous helpers do not belong here anyway…
   function parseToken<T extends Token>(
     predicate: Predicate<Token, T>
   ): Parser<Slice<Token>, T, string> {
