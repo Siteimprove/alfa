@@ -19,7 +19,10 @@ import { Value } from "./value";
 const { either, left, eof } = Parser;
 
 type Name = Property.Name;
-type NameOrCustom = Name | Property.Custom.Name; // this is essentially string :-(
+// @TODO this is essentially string (=Property.Custom.Name). :-(
+// @TODO we might want to wrap Property.Custom.Name in a constructor to avoid this.
+// @TODO This would especially avoids the fact that any Name is a Property.Custom.Name which is bad for type inference.
+type NameOrCustom = Name | Property.Custom.Name;
 
 export class Style implements Serializable {
   public static of(
@@ -138,7 +141,7 @@ export class Style implements Serializable {
   }
 
   /**
-   * Get the fallback value is nothing is specified, or if specified value is invalid at computed-value time
+   * Get the fallback value is nothing is cascaded, or if specified value is invalid at computed-value time
    * Can be either initial or inherit, depending on property.
    * @see https://drafts.csswg.org/css-variables/#invalid-at-computed-value-time
    */
@@ -204,7 +207,7 @@ export class Style implements Serializable {
     //
     // @TODO handle cycle in custom variable definitions.
     // @see https://drafts.csswg.org/css-variables/#cycles
-    // @TODO handle may size of var() substitution to avoid billion lol attack
+    // @TODO handle max size of var() substitution to avoid billion lol attack
     // @see https://drafts.csswg.org/css-variables/#long-variables
     // 1.
     // @TODO Ignoring animation taint for now.
@@ -216,8 +219,8 @@ export class Style implements Serializable {
 
       // @TODO only replacing in longhand properties. Need to work for shorthand and custom.
       if (Property.isName(name)) {
-        // 2., 3. If the value of the custom pro is invalid at compute time, the fallback is *not* used,
-        // so we're good with choosing what to parse once.
+        // 2., 3. If the value of the custom prop is invalid at computed-value time, the fallback is *not* used,
+        // so we're good with choosing what to parse once and used the result even if parsing fails.
         const customValue =
           customComputed.value !== Property.Custom.guaranteedInvalid
             ? Some.of(customComputed.value)
