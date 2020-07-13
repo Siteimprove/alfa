@@ -185,3 +185,349 @@ test(`#cascaded() correctly handles a longhand declaration overriding a
     source: h.declaration("overflow-x", "visible").toJSON(),
   });
 });
+
+test(`#cascaded() expands a var() function`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          "--hidden": "hidden",
+          overflowX: "var(--hidden)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() expands a var() function with a fallback`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--hidden, hidden)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden, hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() expands a var() function with an inherited value`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("main", {
+          "--hidden": "hidden",
+        }),
+
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() expands a var() function with an overridden value`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("main", {
+          "--hidden": "hidden",
+        }),
+
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "visible",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "visible",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() expands a var() function with a value that contains another
+      var() function`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "var(--really-hidden)",
+          "--really-hidden": "hidden",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() expands multiple var() functions in the same declaration`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "var(--hidden) var(--visible)",
+
+          "--hidden": "hidden",
+          "--visible": "visible",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow", "var(--hidden) var(--visible)").toJSON(),
+  });
+
+  t.deepEqual(style.cascaded("overflow-y").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "visible",
+    },
+    source: h.declaration("overflow", "var(--hidden) var(--visible)").toJSON(),
+  });
+});
+
+test(`#cascaded() returns "unset" when a var() function variable isn't defined`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--visible)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--visible)").toJSON(),
+  });
+});
+
+test(`#cascaded() returns "unset" when a var() function fallback is empty`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--visible,)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--visible,)").toJSON(),
+  });
+});
+
+test(`#cascaded() returns "unset" when declaration with a var() function is
+      invalid after substitution`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--visible)",
+
+          "--visible": "foo",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--visible)").toJSON(),
+  });
+});
+
+test(`#cascaded() returns "unset" when a var() function is invalid`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "var(foo)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() returns "unset" when var() functions contain cyclic references`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "var(--really-hidden)",
+          "--really-hidden": "var(--hidden)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() correctly resolves var() function references within context
+      of the corresponding element`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("main", {
+          "--really-hidden": "var(--hidden)",
+          "--hidden": "hidden",
+        }),
+
+        // This declaration references `--really-hidden`, but inherits its value
+        // from `main` above. The substitution of `--really-hidden` therefore
+        // happens within context of `main` and the `--hidden` variable defined
+        // for `div` will therefore not apply.
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "var(--really-hidden)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
