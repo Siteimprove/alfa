@@ -95,9 +95,7 @@ export namespace Property {
      *
      * @see https://drafts.csswg.org/css-cascade/#cascaded
      */
-    export type Cascaded<N extends Name> =
-      | Parsed<N>
-      | Keyword<"initial" | "inherit" | "unset">;
+    export type Cascaded<N extends Name> = Declared<N>;
 
     /**
      * Extract the specified type of a named property.
