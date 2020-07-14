@@ -9,6 +9,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Record } from "@siteimprove/alfa-record";
+import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -282,12 +283,12 @@ export class Style implements Serializable {
   private _variable(
     name: string,
     fallback: Option<Array<Token>> = None,
-    visited?: Set<string>
+    visited = Set.empty<string>()
   ): Option<Array<Token>> {
     return Option.from(this._variables.get(name))
       .or(fallback)
       .map((tokens) =>
-        this._substitute(tokens, visited).map((substituted) =>
+        this._substitute(tokens, visited.add(name)).map((substituted) =>
           substituted.get()
         )
       )
@@ -301,6 +302,14 @@ export class Style implements Serializable {
         )
       );
   }
+
+  /**
+   * The maximum allowed number of tokens that declaration values with `var()`
+   * functions may expand to.
+   *
+   * @see https://drafts.csswg.org/css-variables/#long-variables
+   */
+  private static _substitutionLimit = 1024;
 
   /**
    * Substitute `var()` functions in an array of tokens. If any tokens are
@@ -318,7 +327,7 @@ export class Style implements Serializable {
    */
   private _substitute(
     tokens: Array<Token>,
-    visited = new Set<string>()
+    visited = Set.empty<string>()
   ): Option<Either<Array<Token>>> {
     const replaced: Array<Token> = [];
 
@@ -341,8 +350,6 @@ export class Style implements Serializable {
           return None;
         }
 
-        visited.add(name.value);
-
         const value = this._variable(name.value, fallback, visited);
 
         if (value.isNone()) {
@@ -356,6 +363,12 @@ export class Style implements Serializable {
         replaced.push(next);
         offset++;
       }
+    }
+
+    // If substitution occurred and the number of replaced tokens has exceeded
+    // the substitution limit, bail out.
+    if (substituted && replaced.length > Style._substitutionLimit) {
+      return None;
     }
 
     return Option.of(

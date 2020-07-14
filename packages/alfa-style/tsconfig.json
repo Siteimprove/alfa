@@ -72,6 +72,9 @@
       "path": "../alfa-record"
     },
     {
+      "path": "../alfa-set"
+    },
+    {
       "path": "../alfa-slice"
     },
     {

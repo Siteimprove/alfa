@@ -362,6 +362,41 @@ test(`#cascaded() expands multiple var() functions in the same declaration`, (t)
   });
 });
 
+test(`#cascaded() expands several var() function references to the same variable`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "var(--hidden) var(--hidden)",
+
+          "--hidden": "hidden",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow", "var(--hidden) var(--hidden)").toJSON(),
+  });
+
+  t.deepEqual(style.cascaded("overflow-y").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow", "var(--hidden) var(--hidden)").toJSON(),
+  });
+});
+
 test(`#cascaded() returns "unset" when a var() function variable isn't defined`, (t) => {
   const element = <div />;
 
@@ -492,6 +527,62 @@ test(`#cascaded() returns "unset" when var() functions contain cyclic references
       value: "unset",
     },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() returns "unset" when confronted with a billion laughs`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--prop30)",
+
+          "--prop1": "lol",
+          "--prop2": "var(--prop1) var(--prop1)",
+          "--prop3": "var(--prop2) var(--prop2)",
+          "--prop4": "var(--prop3) var(--prop3)",
+          "--prop5": "var(--prop4) var(--prop4)",
+          "--prop6": "var(--prop5) var(--prop5)",
+          "--prop7": "var(--prop6) var(--prop6)",
+          "--prop8": "var(--prop7) var(--prop7)",
+          "--prop9": "var(--prop8) var(--prop8)",
+          "--prop10": "var(--prop9) var(--prop9)",
+          "--prop11": "var(--prop10) var(--prop10)",
+          "--prop12": "var(--prop11) var(--prop11)",
+          "--prop13": "var(--prop12) var(--prop12)",
+          "--prop14": "var(--prop13) var(--prop13)",
+          "--prop15": "var(--prop14) var(--prop14)",
+          "--prop16": "var(--prop15) var(--prop15)",
+          "--prop17": "var(--prop16) var(--prop16)",
+          "--prop18": "var(--prop17) var(--prop17)",
+          "--prop19": "var(--prop18) var(--prop18)",
+          "--prop20": "var(--prop19) var(--prop19)",
+          "--prop21": "var(--prop20) var(--prop20)",
+          "--prop22": "var(--prop21) var(--prop21)",
+          "--prop23": "var(--prop22) var(--prop22)",
+          "--prop24": "var(--prop23) var(--prop23)",
+          "--prop25": "var(--prop24) var(--prop24)",
+          "--prop26": "var(--prop25) var(--prop25)",
+          "--prop27": "var(--prop26) var(--prop26)",
+          "--prop28": "var(--prop27) var(--prop27)",
+          "--prop29": "var(--prop28) var(--prop28)",
+          "--prop30": "var(--prop29) var(--prop29)",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--prop30)").toJSON(),
   });
 });
 
