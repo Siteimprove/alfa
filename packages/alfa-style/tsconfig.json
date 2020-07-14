@@ -39,6 +39,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-either"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
@@ -67,6 +70,9 @@
     },
     {
       "path": "../alfa-record"
+    },
+    {
+      "path": "../alfa-set"
     },
     {
       "path": "../alfa-slice"

@@ -61,7 +61,7 @@ export namespace Overflow {
   export const Shorthand = Property.Shorthand.of(
     ["overflow-x", "overflow-y"],
     map(
-      pair(X.parse, option(delimited(Token.parseWhitespace, Y.parse))),
+      pair(X.parse, option(delimited(option(Token.parseWhitespace), Y.parse))),
       (result) => {
         const [x, y] = result;
 

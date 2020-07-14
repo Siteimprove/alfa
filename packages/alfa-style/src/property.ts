@@ -62,6 +62,14 @@ export namespace Property {
   export type Parser<T> = parser.Parser<Slice<Token>, T, string>;
 
   export namespace Value {
+    /**
+     * Extract the parsed type of a named property.
+     *
+     * @remarks
+     * The parsed type differs from the declared type in that the parsed type
+     * must not include the defaulting keywords as these are handled globally
+     * rather than individually.
+     */
     export type Parsed<N extends Name> = WithName<N> extends Property<
       infer T,
       infer U
@@ -69,33 +77,54 @@ export namespace Property {
       ? T
       : never;
 
-    export type Initial<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? U
-      : never;
+    /**
+     * Extract the declared type of a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#declared
+     *
+     * @remarks
+     * The declared type includes the parsed type in addition to the defaulting
+     * keywords recognised by all properties.
+     */
+    export type Declared<N extends Name> =
+      | Parsed<N>
+      | Keyword<"initial" | "inherit" | "unset">;
 
-    export type Cascaded<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? T | Keyword<"initial" | "inherit">
-      : never;
+    /**
+     * Extract the cascaded type of a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#cascaded
+     */
+    export type Cascaded<N extends Name> = Declared<N>;
 
-    export type Specified<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? T | U
-      : never;
+    /**
+     * Extract the specified type of a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#specified
+     */
+    export type Specified<N extends Name> = Parsed<N> | Computed<N>;
 
+    /**
+     * Extract the computed type a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#computed
+     */
     export type Computed<N extends Name> = WithName<N> extends Property<
       infer T,
       infer U
     >
       ? U
       : never;
+
+    /**
+     * Extract the initial type of a named property.
+     */
+    export type Initial<N extends Name> = Computed<N>;
+
+    /**
+     * Extract the inherited type of a named property.
+     */
+    export type Inherited<N extends Name> = Computed<N>;
   }
 }
 
