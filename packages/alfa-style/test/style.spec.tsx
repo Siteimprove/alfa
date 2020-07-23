@@ -397,6 +397,34 @@ test(`#cascaded() expands several var() function references to the same variable
   });
 });
 
+test(`#cascaded() expands a var() function with a fallback with a var() function
+      with a fallback`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--foo, var(--bar, hidden))",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h
+      .declaration("overflow-x", "var(--foo, var(--bar, hidden))")
+      .toJSON(),
+  });
+});
+
 test(`#cascaded() returns "unset" when a var() function variable isn't defined`, (t) => {
   const element = <div />;
 
