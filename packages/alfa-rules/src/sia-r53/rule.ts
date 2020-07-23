@@ -13,7 +13,7 @@ const { and, equals } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r53.html",
   evaluate({ device, document }) {
     const headings = document
       .descendants({ flattened: true })
