@@ -31,6 +31,7 @@ export interface Option<T>
   filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;
+  none(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;

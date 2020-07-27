@@ -4,12 +4,13 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { None } from "./none";
 import { Option } from "./option";
 
-const { test } = Predicate;
+const { not, test } = Predicate;
 
 export class Some<T> implements Option<T> {
   public static of<T>(value: T): Some<T> {
@@ -56,6 +57,10 @@ export class Some<T> implements Option<T> {
 
   public some(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
+  }
+
+  public none(predicate: Predicate<T>): boolean {
+    return test(not(predicate), this._value);
   }
 
   public every(predicate: Predicate<T>): boolean {
