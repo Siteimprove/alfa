@@ -21,6 +21,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.3.1](../../compare/v0.3.0...v0.3.1) (2020-07-03)
+
+### Fixed
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): Newlines are now correctly appended to the output, not the filename, when using the `--output` flag.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R47 now correctly handles negative `maximum-scale` values. SIA-R67 now only applies to `<object>` elements that are in the accessibility tree.
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): `Scraper#scrape()` now correctly scrapes pages whose URL contains a hash fragment. ([#288](../../pull/288))
+
 ## [0.3.0](../../compare/v0.2.0...v0.3.0) (2020-07-01)
 
 ### Breaking

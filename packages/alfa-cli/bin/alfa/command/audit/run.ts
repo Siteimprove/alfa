@@ -9,7 +9,7 @@ import { Formatter } from "@siteimprove/alfa-formatter";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None } from "@siteimprove/alfa-option";
 import { Ok } from "@siteimprove/alfa-result";
-import { Rules, Question } from "@siteimprove/alfa-rules";
+import rules, { Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
 
 import { Oracle } from "../../oracle";
@@ -19,14 +19,11 @@ import type { Flags } from "./flags";
 
 import * as scrape from "../scrape/run";
 
-type Input = Page;
-type Target = Node | Iterable<Node>;
-
 export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const formatter = await Formatter.load<Input, Target, Question>(flags.format);
+  const formatter = await Formatter.load(flags.format);
 
   if (formatter.isErr()) {
     return formatter;
@@ -56,12 +53,10 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   const page = Page.from(JSON.parse(json));
 
-  const audit = Rules.reduce(
-    (audit, rule) => audit.add(rule),
-    Audit.of<Input, Target, Question>(
-      page,
-      flags.interactive ? Oracle(page) : undefined
-    )
+  const audit = Audit.of(
+    page,
+    rules,
+    flags.interactive ? Oracle(page) : undefined
   );
 
   let outcomes = await audit.evaluate();
@@ -91,7 +86,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   if (flags.output.isNone()) {
     return Ok.of(output);
   } else {
-    fs.writeFileSync(flags.output.get() + "\n", output);
+    fs.writeFileSync(flags.output.get(), output + "\n");
     return Ok.of("");
   }
 };

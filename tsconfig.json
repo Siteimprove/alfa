@@ -1,7 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "alwaysStrict": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,

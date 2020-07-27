@@ -140,7 +140,13 @@ export namespace h {
 
             value = value.replace(/!important$/, "").trim();
 
-            return Declaration.of(hyphenate(name), value, important);
+            // Hyphenate the declaration name unless it's the name of a custom
+            // property; these we keep as-is.
+            if (!name.startsWith("--")) {
+              name = hyphenate(name);
+            }
+
+            return Declaration.of(name, value, important);
           })
     );
   }

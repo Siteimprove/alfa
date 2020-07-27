@@ -21,13 +21,11 @@ const rgb = (r: number, g: number, b: number, a: number = 1) =>
   );
 
 test("evaluate() passes a text node that has sufficient contrast", async (t) => {
-  const document = Document.of([
-    <html style={{ backgroundColor: "black", color: "white" }}>
-      Hello world
-    </html>,
-  ]);
+  const target = Text.of("Hello world");
 
-  const target = document.descendants().find(Text.isText).get();
+  const document = Document.of([
+    <html style={{ backgroundColor: "black", color: "white" }}>{target}</html>,
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
@@ -39,18 +37,19 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
 });
 
 test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
+  const sufficient = Text.of("Sufficient contrast");
+  const insufficient = Text.of("Insufficient contrast");
+
   const document = Document.of([
     <html style={{ backgroundColor: "black", color: "white" }}>
       <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 15%)" }}>
-        Sufficient contrast
+        {sufficient}
       </div>
       <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 50%)" }}>
-        Insufficient contrast
+        {insufficient}
       </div>
     </html>,
   ]);
-
-  const [sufficient, insufficient] = document.descendants().filter(Text.isText);
 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, sufficient, {
@@ -67,18 +66,15 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
 });
 
 test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
+  const sufficient = Text.of("Sufficient contrast");
+  const insufficient = Text.of("Insufficient contrast");
+
   const document = Document.of([
     <html style={{ backgroundColor: "black" }}>
-      <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>
-        Sufficient contrast
-      </div>
-      <div style={{ color: "rgb(100%, 100%, 100%, 40%)" }}>
-        Insufficient contrast
-      </div>
+      <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>{sufficient}</div>
+      <div style={{ color: "rgb(100%, 100%, 100%, 40%)" }}>{insufficient}</div>
     </html>,
   ]);
-
-  const [sufficient, insufficient] = document.descendants().filter(Text.isText);
 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, sufficient, {
@@ -95,15 +91,15 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
 });
 
 test("evaluate() passes an 18pt text node with sufficient contrast", async (t) => {
+  const target = Text.of("Hello world");
+
   const document = Document.of([
     <html
       style={{ backgroundColor: "black", color: "#606060", fontSize: "18pt" }}
     >
-      Hello world
+      {target}
     </html>,
   ]);
-
-  const target = document.descendants().find(Text.isText).get();
 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
@@ -119,6 +115,8 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
 });
 
 test("evaluate() passes an 14pt, bold text node with sufficient contrast", async (t) => {
+  const target = Text.of("Hello world");
+
   const document = Document.of([
     <html
       style={{
@@ -128,11 +126,9 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
         fontWeight: "bold",
       }}
     >
-      Hello world
+      {target}
     </html>,
   ]);
-
-  const target = document.descendants().find(Text.isText).get();
 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
@@ -148,9 +144,9 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
 });
 
 test("evaluate() passes a text node using the user agent default styles", async (t) => {
-  const document = Document.of([<html>Hello world</html>]);
+  const target = Text.of("Hello world");
 
-  const target = document.descendants().find(Text.isText).get();
+  const document = Document.of([<html>{target}</html>]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
@@ -162,13 +158,13 @@ test("evaluate() passes a text node using the user agent default styles", async 
 });
 
 test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
+  const target = Text.of("Hello world");
+
   const document = Document.of([
     <html style={{ backgroundColor: "currentcolor", color: "white" }}>
-      Hello world
+      {target}
     </html>,
   ]);
-
-  const target = document.descendants().find(Text.isText).get();
 
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
@@ -180,11 +176,11 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
 });
 
 test("evaluate() correctly resolves the `currentcolor` keyword to the user agent default", async (t) => {
-  const document = Document.of([
-    <html style={{ backgroundColor: "currentcolor" }}>Hello world</html>,
-  ]);
+  const target = Text.of("Hello world");
 
-  const target = document.descendants().find(Text.isText).get();
+  const document = Document.of([
+    <html style={{ backgroundColor: "currentcolor" }}>{target}</html>,
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
@@ -196,11 +192,11 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
 });
 
 test("evaluate() correctly handles circular `currentcolor` references", async (t) => {
-  const document = Document.of([
-    <html style={{ color: "currentcolor" }}>Hello world</html>,
-  ]);
+  const target = Text.of("Hello world");
 
-  const target = document.descendants().find(Text.isText).get();
+  const document = Document.of([
+    <html style={{ color: "currentcolor" }}>{target}</html>,
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
 });
@@ -228,13 +224,13 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
 });
 
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
+  const target = Text.of("Hello world");
+
   const document = Document.of([
     <html style={{ color: "#000", backgroundImage: "url('foo.png')" }}>
-      Hello world
+      {target}
     </html>,
   ]);
-
-  const target = document.descendants().find(Text.isText).get();
 
   t.deepEqual(
     await evaluate(
@@ -255,13 +251,13 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
 });
 
 test("evaluate() fails when a background color with insufficient contrast is input", async (t) => {
+  const target = Text.of("Hello world");
+
   const document = Document.of([
     <html style={{ color: "#000", backgroundImage: "url('foo.png')" }}>
-      Hello world
+      {target}
     </html>,
   ]);
-
-  const target = document.descendants().find(Text.isText).get();
 
   t.deepEqual(
     await evaluate(
@@ -279,4 +275,54 @@ test("evaluate() fails when a background color with insufficient contrast is inp
       }),
     ]
   );
+});
+
+test("evaluate() passes when a linear gradient has sufficient contrast in the best case", async (t) => {
+  const target = Text.of("Hello world");
+
+  const document = Document.of([
+    <html
+      style={{
+        color: "#000",
+        backgroundImage: "linear-gradient(#fff 50%, transparent 50%)",
+        backgroundColor: "#000",
+      }}
+    >
+      {target}
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(21, 4.5, [
+        Contrast.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
+        Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+      ]),
+    }),
+  ]);
+});
+
+test("evaluate() fails when a linear gradient has insufficient contrast in the best case", async (t) => {
+  const target = Text.of("Hello world");
+
+  const document = Document.of([
+    <html
+      style={{
+        color: "#000",
+        backgroundImage: "linear-gradient(#000 50%, transparent 50%)",
+        backgroundColor: "#000",
+      }}
+    >
+      {target}
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    failed(R69, target, {
+      1: Outcomes.HasInsufficientContrast(1, 4.5, [
+        Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+        Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+      ]),
+    }),
+  ]);
 });

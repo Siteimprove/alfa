@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { equals, or } = Predicate;
+const { and, equals, or, not } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -260,8 +260,7 @@ export namespace Role {
                     ) &&
                     // ...and it's not a presentational role in a forbidden context...
                     !(
-                      role.some(Role.isPresentational) &&
-                      !allowedPresentational
+                      role.some(Role.isPresentational) && !allowedPresentational
                     )
                   ) {
                     // ...then we got ourselves a valid explicit role...
@@ -330,21 +329,36 @@ export namespace Role {
  *
  * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
  */
-const isAllowedPresentational: Predicate<Element> = (element) => {
-  if (element.tabIndex().isSome()) {
-    return false;
-  }
 
-  return Role.lookup("roletype").some((role) => {
+/**
+ * An element is focusable if it has a tabindex and is not disabled. Note that 
+ * elements that are not rendered are still considered; however, these are not 
+ * exposed in the accessibility tree in the first place, so we should be fairly 
+ * safe here.
+ */
+const isFocusable: Predicate<Element> = and(
+  Element.hasTabIndex(),
+  not(Element.isDisabled)
+);
+
+const hasSupportedAttribute: Predicate<Element> = (element) =>
+  Role.lookup("roletype").some((role) => {
     for (const attribute of role.characteristics.supports) {
       if (element.attribute(attribute).isSome()) {
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   });
-};
+
+/**
+ * An element is NOT allowed to be presentational if either it is focusable OR 
+ * it has some aria-* attributes
+ */
+const isAllowedPresentational: Predicate<Element> = not(
+  or(isFocusable, hasSupportedAttribute)
+);
 
 import "./role/separator";
 

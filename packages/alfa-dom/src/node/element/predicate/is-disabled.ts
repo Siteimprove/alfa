@@ -1,7 +1,8 @@
-import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-const { hasName } = Element;
+import { Element } from "../../element";
+import { hasName} from "./has-name";
+
 const { and, not, equals } = Predicate;
 
 /**
@@ -46,7 +47,5 @@ export const isDisabled: Predicate<Element> = (element) => {
       return element.attribute("disabled").isSome();
   }
 
-  return element
-    .attribute("aria-disabled")
-    .some((disabled) => disabled.value === "true");
+  return false;
 };

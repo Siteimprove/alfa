@@ -18,7 +18,7 @@ import { Outcome } from "./outcome";
 
 const { flatMap, flatten, reduce } = Iterable;
 
-export abstract class Rule<I, T = unknown, Q = unknown>
+export abstract class Rule<I, T = unknown, Q = never>
   implements Equatable, json.Serializable, earl.Serializable {
   protected readonly _uri: string;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
@@ -69,6 +69,12 @@ export namespace Rule {
     "@id": string;
   }
 
+  export type Input<R> = R extends Rule<infer I, any, any> ? I : never;
+
+  export type Target<R> = R extends Rule<any, infer T, any> ? T : never;
+
+  export type Question<R> = R extends Rule<any, any, infer Q> ? Q : never;
+
   export function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q> {
     return value instanceof Rule;
   }
@@ -100,8 +106,8 @@ export namespace Rule {
     >;
   }
 
-  export class Atomic<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
-    public static of<I, T = unknown, Q = unknown>(properties: {
+  export class Atomic<I, T = unknown, Q = never> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = never>(properties: {
       uri: string;
       evaluate: Atomic.Evaluate<I, T, Q>;
     }): Atomic<I, T, Q> {
@@ -152,7 +158,7 @@ export namespace Rule {
         applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
         expectations(
           target: T
-        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
+        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
       };
     }
   }
@@ -161,8 +167,8 @@ export namespace Rule {
     return value instanceof Atomic;
   }
 
-  export class Composite<I, T = unknown, Q = unknown> extends Rule<I, T, Q> {
-    public static of<I, T = unknown, Q = unknown>(properties: {
+  export class Composite<I, T = unknown, Q = never> extends Rule<I, T, Q> {
+    public static of<I, T = unknown, Q = never>(properties: {
       uri: string;
       composes: Iterable<Rule<I, T, Q>>;
       evaluate: Composite.Evaluate<I, T, Q>;
@@ -245,7 +251,7 @@ export namespace Rule {
       (input: Readonly<I>): {
         expectations(
           outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): { [key: string]: Interview<Q, T, Option<Result<Diagnostic>>> };
+        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
       };
     }
   }
@@ -260,7 +266,7 @@ export namespace Rule {
 function resolve<I, T, Q>(
   target: T,
   expectations: Record<{
-    [key: string]: Interview<Q, T, Option<Result<Diagnostic>>>;
+    [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q>,
   oracle: Oracle<Q>
@@ -275,7 +281,12 @@ function resolve<I, T, Q>(
       (expectations, [id, expectation]) =>
         expectations.flatMap((expectations) =>
           expectation.map((expectation) =>
-            expectations.append([id, expectation])
+            expectations.append([
+              id,
+              Option.isOption(expectation)
+                ? expectation
+                : Option.of(expectation),
+            ])
           )
         ),
       Option.of(List.empty<[string, Option<Result<Diagnostic>>]>())

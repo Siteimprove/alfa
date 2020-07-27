@@ -2,7 +2,13 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Text,
+  Namespace,
+  Node,
+  Attribute,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,9 +18,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
+import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasCategory } from "../common/predicate/has-category";
 import { hasRole } from "../common/predicate/has-role";
-import { isDisabled } from "../common/predicate/is-disabled";
+import { hasValue } from "../common/predicate/has-value";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
@@ -40,7 +47,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
                   hasRole(hasCategory(equals(Role.Category.Widget))),
-                  and(hasRole("group"), isDisabled)
+                  and(hasRole("group"), isSemanticallyDisabled)
                 )
               ),
               node
@@ -213,13 +220,16 @@ function getForeground(
 function getBackground(
   element: Element,
   device: Device
-): Option<Iterable<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map((layers) => [
-    ...reduce<Iterable<RGB<Percentage, Percentage>>>(
-      layers,
+): Option<Array<RGB<Percentage, Percentage>>> {
+  return getLayers(element, device).map((layers) =>
+    layers.reduce<Array<RGB<Percentage, Percentage>>>(
       (backdrops, layer) =>
-        flatMap(layer, (color) =>
-          map(backdrops, (backdrop) => composite(color, backdrop))
+        layer.reduce<Array<RGB<Percentage, Percentage>>>(
+          (layers, color) =>
+            layers.concat(
+              backdrops.map((backdrop) => composite(color, backdrop))
+            ),
+          []
         ),
       // We make the initial backdrop solid white as this can be assumed to be
       // the color of the canvas onto which the other backgrounds are rendered.
@@ -231,15 +241,15 @@ function getBackground(
           Percentage.of(1)
         ),
       ]
-    ),
-  ]);
+    )
+  );
 }
 
 function getLayers(
   element: Element,
   device: Device
-): Option<Iterable<Iterable<RGB<Percentage, Percentage>>>> {
-  const layers: Array<Iterable<RGB<Percentage, Percentage>>> = [];
+): Option<Array<Array<RGB<Percentage, Percentage>>>> {
+  const layers: Array<Array<RGB<Percentage, Percentage>>> = [];
 
   const style = Style.from(element, device);
 
@@ -282,7 +292,7 @@ function getLayers(
     }
   }
 
-  // If any color within the current background layer is not fully opaque, we
+  // If the background layer does not have a lower layer that is fully opaque, we
   // need to also locate the background layers sitting behind the current layer.
   // As Alfa does not yet implement a layout system, we have to assume that the
   // DOM tree will reflect the layout at least to some extent; we therefore
@@ -292,25 +302,29 @@ function getLayers(
   // (https://github.com/siteimprove/picasso) for spatially indexing the box
   // tree in which case the background layers sitting behind the current layer
   // can be found by issuing a range query for the box of the current element.
-  if (
-    some(layers, (layer) => some(layer, (color) => color.alpha.value !== 1))
-  ) {
-    const parent = element
-      .parent({
-        flattened: true,
-      })
-      .filter(Element.isElement);
-
-    // Only use the background layers from the parent if there is one. If there
-    // isn't, this means we're at the root. In that case, we simply return the
-    // layers we've found so far.
-    if (parent.isSome()) {
-      return parent.flatMap((parent) =>
-        getLayers(parent, device).map((parentLayers) =>
-          concat(parentLayers, layers)
-        )
-      );
+  for (const layer of layers) {
+    if (layer.every((color) => color.alpha.value === 1)) {
+      return Option.of(layers);
+    } else {
+      break;
     }
+  }
+
+  const parent = element
+    .parent({
+      flattened: true,
+    })
+    .filter(Element.isElement);
+
+  // Only use the background layers from the parent if there is one. If there
+  // isn't, this means we're at the root. In that case, we simply return the
+  // layers we've found so far.
+  if (parent.isSome()) {
+    return parent.flatMap((parent) =>
+      getLayers(parent, device).map((parentLayers) =>
+        parentLayers.concat(layers)
+      )
+    );
   }
 
   return Option.of(layers);
@@ -368,22 +382,20 @@ function resolveColor(
  * @see https://drafts.fxtf.org/compositing-1/#simplealphacompositing
  */
 function composite(
-  foreground: RGB,
-  background: RGB
+  foreground: RGB<Percentage, Percentage>,
+  background: RGB<Percentage, Percentage>
 ): RGB<Percentage, Percentage> {
+  if (foreground.alpha.value === 1) {
+    return foreground;
+  }
+
   const alpha = background.alpha.value * (1 - foreground.alpha.value);
 
   const [red, green, blue] = [
     [foreground.red, background.red],
     [foreground.green, background.green],
     [foreground.blue, background.blue],
-  ].map((components) => {
-    const [a, b] = components.map((c) =>
-      c.type === "number" ? c.value / 0xff : c.value
-    );
-
-    return a * foreground.alpha.value + b * alpha;
-  });
+  ].map(([a, b]) => a.value * foreground.alpha.value + b.value * alpha);
 
   return RGB.of(
     Percentage.of(red),
@@ -419,3 +431,13 @@ function contrast(foreground: RGB, background: RGB): number {
 
   return round(contrast * 100) / 100;
 }
+
+/**
+ * @see https://act-rules.github.io/glossary/#disabled-element
+ */
+const isSemanticallyDisabled: Predicate<Element> = or(
+  Element.isDisabled,
+  hasAttribute(
+    and(Attribute.hasName("aria-disabled"), hasValue(equals("true")))
+  )
+);

@@ -62,6 +62,14 @@ export namespace Property {
   export type Parser<T> = parser.Parser<Slice<Token>, T, string>;
 
   export namespace Value {
+    /**
+     * Extract the parsed type of a named property.
+     *
+     * @remarks
+     * The parsed type differs from the declared type in that the parsed type
+     * must not include the defaulting keywords as these are handled globally
+     * rather than individually.
+     */
     export type Parsed<N extends Name> = WithName<N> extends Property<
       infer T,
       infer U
@@ -69,33 +77,54 @@ export namespace Property {
       ? T
       : never;
 
-    export type Initial<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? U
-      : never;
+    /**
+     * Extract the declared type of a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#declared
+     *
+     * @remarks
+     * The declared type includes the parsed type in addition to the defaulting
+     * keywords recognised by all properties.
+     */
+    export type Declared<N extends Name> =
+      | Parsed<N>
+      | Keyword<"initial" | "inherit" | "unset">;
 
-    export type Cascaded<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? T | Keyword<"initial" | "inherit">
-      : never;
+    /**
+     * Extract the cascaded type of a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#cascaded
+     */
+    export type Cascaded<N extends Name> = Declared<N>;
 
-    export type Specified<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? T | U
-      : never;
+    /**
+     * Extract the specified type of a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#specified
+     */
+    export type Specified<N extends Name> = Parsed<N> | Computed<N>;
 
+    /**
+     * Extract the computed type a named property.
+     *
+     * @see https://drafts.csswg.org/css-cascade/#computed
+     */
     export type Computed<N extends Name> = WithName<N> extends Property<
       infer T,
       infer U
     >
       ? U
       : never;
+
+    /**
+     * Extract the initial type of a named property.
+     */
+    export type Initial<N extends Name> = Computed<N>;
+
+    /**
+     * Extract the inherited type of a named property.
+     */
+    export type Inherited<N extends Name> = Computed<N>;
   }
 }
 
@@ -152,62 +181,62 @@ import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
 
+type Longhands = typeof Longhands;
+const Longhands = {
+  "background-color": Background.Color,
+  "background-image": Background.Image,
+  color: Color,
+  display: Display,
+  "font-family": Font.Family,
+  "font-size": Font.Size,
+  "font-style": Font.Style,
+  "font-weight": Font.Weight,
+  height: Height,
+  "line-height": Line.Height,
+  opacity: Opacity,
+  "overflow-x": Overflow.X,
+  "overflow-y": Overflow.Y,
+  "text-align": Text.Align,
+  "text-transform": Text.Transform,
+  "text-overflow": Text.Overflow,
+  transform: Transform,
+  visibility: Visibility,
+  "white-space": Whitespace,
+  width: Width,
+};
+
+type Shorthands = typeof Shorthands;
+const Shorthands = {
+  background: Background.Shorthand,
+  overflow: Overflow.Shorthand,
+};
+
 export namespace Property {
-  export type Name = keyof Registered;
+  export type Name = keyof Longhands;
 
-  export type WithName<N extends Name> = Registered[N];
-
-  type Registered = typeof Registered;
-  const Registered = {
-    "background-color": Background.Color,
-    "background-image": Background.Image,
-    color: Color,
-    display: Display,
-    "font-family": Font.Family,
-    "font-size": Font.Size,
-    "font-style": Font.Style,
-    "font-weight": Font.Weight,
-    height: Height,
-    "line-height": Line.Height,
-    opacity: Opacity,
-    "overflow-x": Overflow.X,
-    "overflow-y": Overflow.Y,
-    "text-align": Text.Align,
-    "text-transform": Text.Transform,
-    "text-overflow": Text.Overflow,
-    transform: Transform,
-    visibility: Visibility,
-    "white-space": Whitespace,
-    width: Width,
-  };
+  export type WithName<N extends Name> = Longhands[N];
 
   export function isName(name: string): name is Name {
-    return name in Registered;
+    return name in Longhands;
   }
 
   export function get<N extends Name>(name: N): WithName<N> {
-    return Registered[name];
+    return Longhands[name];
   }
 }
 
 export namespace Property {
   export namespace Shorthand {
-    export type Name = keyof Registered;
+    export type Name = keyof Shorthands;
 
-    export type WithName<N extends Name> = Registered[N];
-
-    type Registered = typeof Registered;
-    const Registered = {
-      background: Background.Shorthand,
-      overflow: Overflow.Shorthand,
-    };
+    export type WithName<N extends Name> = Shorthands[N];
 
     export function isName(name: string): name is Name {
-      return name in Registered;
+      return name in Shorthands;
     }
 
     export function get<N extends Name>(name: N): WithName<N> {
-      return Registered[name];
+      return Shorthands[name];
     }
   }
 }

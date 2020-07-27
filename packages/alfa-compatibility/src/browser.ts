@@ -1,4 +1,4 @@
-import browserslist = require("browserslist");
+import * as browserslist from "browserslist";
 
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -30,29 +30,40 @@ export namespace Browser {
       return new Release(browser, version, date);
     }
 
-    public readonly browser: N;
-    public readonly version: V;
+    private readonly _browser: N;
+    private readonly _version: V;
+    private readonly _date: number;
+
+    private constructor(browser: N, version: V, date: number) {
+      this._browser = browser;
+      this._version = version;
+      this._date = date;
+    }
+
+    public get browser(): N {
+      return this._browser;
+    }
+
+    public get version(): V {
+      return this._version;
+    }
 
     /**
      * @internal
      */
-    public readonly date: number;
-
-    private constructor(browser: N, version: V, date: number) {
-      this.browser = browser;
-      this.version = version;
-      this.date = date;
+    public get date(): number {
+      return this._date;
     }
 
     public toJSON(): Release.JSON {
       return {
-        browser: this.browser,
-        version: this.version,
+        browser: this._browser,
+        version: this._version,
       };
     }
 
     public toString(): string {
-      return `Release { ${this.browser} ${this.version} }`;
+      return `Release { ${this._browser} ${this._version} }`;
     }
   }
 

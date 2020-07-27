@@ -57,6 +57,9 @@ export namespace Component {
 
     const value = [next];
 
+    // If we encounter a the opening of a block as marked by a (, [, or { token,
+    // consume a block and use it as the component value.
+    // https://drafts.csswg.org/css-syntax/#consume-a-simple-block
     if (
       Token.isOpenParenthesis(next) ||
       Token.isOpenSquareBracket(next) ||
@@ -66,7 +69,36 @@ export namespace Component {
 
       input = remainder;
       value.push(...block.value);
-    } else {
+    }
+
+    // Otherwise, if we encounter a function, consume a function and use it as
+    // the component value.
+    // https://drafts.csswg.org/css-syntax/#consume-a-function
+    else if (Token.isFunction(next)) {
+      input = input.slice(1);
+
+      while (true) {
+        const next = input.get(0);
+
+        if (next.isNone()) {
+          break;
+        }
+
+        if (next.some(Token.isCloseParenthesis)) {
+          input = input.slice(1);
+          value.push(next.get());
+          break;
+        }
+
+        const [remainder, component] = Component.consume(input).get();
+
+        input = remainder;
+        value.push(...component);
+      }
+    }
+
+    // Otherwise, we simply advance the input.
+    else {
       input = input.slice(1);
     }
 

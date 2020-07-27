@@ -2,7 +2,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Result, Err } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 export type Parser<I, T, E = never, A extends Array<unknown> = []> = (
@@ -16,9 +16,10 @@ export namespace Parser {
     mapper: Mapper<T, U>
   ): Parser<I, U, E, A> {
     return (input, ...args) =>
-      parser(input, ...args).map(
-        ([remainder, value]) => [remainder, mapper(value)] as const
-      );
+      parser(input, ...args).map(([remainder, value]) => [
+        remainder,
+        mapper(value),
+      ]);
   }
 
   export function flatMap<I, T, U, E, A extends Array<unknown>>(
@@ -38,7 +39,7 @@ export namespace Parser {
   ): Parser<I, U, E, A> {
     return flatMap(parser, (value) => (input, ..._) => {
       const result: Result<readonly [I, U], E> = predicate(value)
-        ? Ok.of([input, value] as const)
+        ? Result.of([input, value])
         : Err.of(ifError());
 
       return result;
@@ -64,7 +65,7 @@ export namespace Parser {
         }
       }
 
-      return Ok.of([input, values] as const);
+      return Result.of([input, values]);
     };
   }
 
@@ -96,7 +97,33 @@ export namespace Parser {
         }
       }
 
-      return Ok.of([input, values] as const);
+      return Result.of([input, values]);
+    };
+  }
+
+  export function takeUntil<I, T, U, E, A extends Array<unknown>>(
+    parser: Parser<I, T, E, A>,
+    condition: Parser<I, unknown, E, A>
+  ): Parser<I, Iterable<T>, E, A> {
+    return (input, ...args) => {
+      const values: Array<T> = [];
+
+      while (true) {
+        if (condition(input, ...args).isOk()) {
+          return Result.of([input, values]);
+        }
+
+        const result = parser(input, ...args);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+
+          values.push(value);
+          input = remainder;
+        } else if (result.isErr()) {
+          return result;
+        }
+      }
     };
   }
 
@@ -127,22 +154,40 @@ export namespace Parser {
         return result;
       }
 
-      return Ok.of([input, None] as const);
+      return Result.of([input, None]);
     };
   }
 
   export function either<I, T, U, E, A extends Array<unknown>>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
-  ): Parser<I, T | U, E, A> {
-    return (input, ...args) => {
-      const result = left(input, ...args);
+  ): Parser<I, T | U, E, A>;
 
-      if (result.isOk()) {
-        return result;
+  export function either<I, T, E, A extends Array<unknown>>(
+    parser: Parser<I, T, E, A>,
+    ...rest: Array<Parser<I, T, E, A>>
+  ): Parser<I, T, E, A>;
+
+  export function either<I, T, E, A extends Array<unknown>>(
+    ...parsers: Array<Parser<I, T, E, A>>
+  ): Parser<I, T, E, A> {
+    return (input, ...args) => {
+      let error: Err<E>;
+
+      for (const parser of parsers) {
+        const result = parser(input, ...args);
+
+        if (result.isErr()) {
+          error = result;
+        } else {
+          return result;
+        }
       }
 
-      return right(input, ...args);
+      // Per the function overloads, there will always be at least one parser
+      // specified. It is therefore safe to assert that if we get this far, at
+      // least one parser will have produced an error.
+      return error!;
     };
   }
 
@@ -205,7 +250,7 @@ export namespace Parser {
         return Err.of(ifError());
       }
 
-      return Ok.of([input, undefined] as const);
+      return Result.of([input, undefined]);
     };
   }
 }
