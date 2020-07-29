@@ -31,6 +31,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): Style sheets referenced through `@import` rules are now correctly included when computing cascade.
 
+- [@siteimprove/alfa-cli](packages/alfa-cli): Avoid exiting prematurely on buffered socket writes.
+
 ## [0.3.1](../../compare/v0.3.0...v0.3.1) (2020-07-03)
 
 ### Fixed
