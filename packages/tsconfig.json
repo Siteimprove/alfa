@@ -82,6 +82,7 @@
     { "path": "alfa-trilean" },
     { "path": "alfa-unexpected" },
     { "path": "alfa-vue" },
+    { "path": "alfa-wcag" },
     { "path": "alfa-web" },
     { "path": "alfa-webdriver" },
     { "path": "alfa-xpath" }

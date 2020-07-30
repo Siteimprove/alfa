@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-wcag",
+  "homepage": "https://siteimprove.com",
+  "version": "0.3.1",
+  "license": "MIT",
+  "description": "Types for working with WCAG-related information in a structured manner",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-wcag"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "scripts": {
+    "generate": "node scripts/criteria.js"
+  },
+  "dependencies": {
+    "@siteimprove/alfa-act": "^0.3.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.3.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}

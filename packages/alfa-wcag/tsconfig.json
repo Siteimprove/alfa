@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/criterion.ts", "src/criterion/data.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
