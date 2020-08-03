@@ -301,7 +301,7 @@ export namespace Node {
 
                 if (
                   attribute.isGlobal() ||
-                  role.some((role) => role.isSupported(attribute.name))
+                  role.some((role) => role.isAttributeSupported(attribute.name))
                 ) {
                   attributes = attributes.set(name, attribute);
                 }

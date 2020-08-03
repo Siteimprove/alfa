@@ -38,7 +38,7 @@ puppeteer.launch().then(async (browser) => {
           return [
             key,
             {
-              index: i,
+              index: 0,
               type,
               value,
               options,
@@ -49,6 +49,12 @@ puppeteer.launch().then(async (browser) => {
       )
     )
   );
+
+  let index = 0;
+
+  for (const name in attributes) {
+    attributes[name].index = index++;
+  }
 
   let code = `
 // This file has been automatically generated based on the WAI-ARIA specification.

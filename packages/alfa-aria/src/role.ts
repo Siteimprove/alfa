@@ -32,25 +32,48 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   /**
-   * Check if this role is an instance of a role with the specified name.
-   *
-   * @remarks
-   * This method looks up the inheritance chain of the role and
+   * Check if this role has the specified name.
    */
-  public is(name: Role.Name): boolean {
-    if (this._name === name) {
-      return true;
-    }
+  public hasName<N extends Role.Name>(name: N): this is Role<N> {
+    return this._name === (name as Role.Name);
+  }
 
-    const { inherited } = Roles[this._name];
+  /**
+   * Check if this role is a superclass of the role with the specified name.
+   */
+  public isSuperclassOf(name: Role.Name): boolean {
+    const { inherited } = Roles[name];
 
     for (const parent of inherited) {
-      if (Role.of(parent).is(name)) {
+      if (parent === this._name || this.isSuperclassOf(parent)) {
         return true;
       }
     }
 
     return false;
+  }
+
+  /**
+   * Check if this role is a subclass of the role with the specified name.
+   */
+  public isSubclassOf(name: Role.Name): boolean {
+    const { inherited } = Roles[this._name];
+
+    for (const parent of inherited) {
+      if (parent === name || Role.of(parent).isSubclassOf(name)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if this role either is, or is a subclass of, the role with the
+   * specified name.
+   */
+  public is<N extends Role.Name>(name: N): boolean {
+    return this.hasName(name) || this.isSubclassOf(name);
   }
 
   /**
@@ -71,53 +94,51 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role is presentational.
    */
   public isPresentational(): this is Role<Role.Presentational> {
-    return this._name === "presentation" || this._name === "none";
+    return this.hasName("presentation") || this.hasName("none");
   }
 
   /**
-   * Check if this role is a superclass of another role.
+   * Check if this role is a widget.
    */
-  public isSuperclassOf(role: Role.Name): boolean {
-    const { inherited } = Roles[role];
-
-    for (const parent of inherited) {
-      if (parent === this._name || this.isSuperclassOf(parent)) {
-        return true;
-      }
-    }
-
-    return false;
+  public isWidget(): this is Role<Role.Widget> {
+    return this.isSubclassOf("widget");
   }
 
   /**
-   * Check if this role is a subclass of another role.
+   * Check if this role supports naming by the specified method.
    */
-  public isSubclassOf(role: Role.Name): boolean {
-    const { inherited } = Roles[this._name];
+  public isNamedBy(method: Role.NamedBy): boolean {
+    return Roles[this._name].name.from[method];
+  }
 
-    for (const parent of inherited) {
-      if (parent === role || Role.of(parent).isSubclassOf(role)) {
-        return true;
-      }
-    }
+  /**
+   * Check if this role prohibits naming.
+   */
+  public isNameProhibited(): boolean {
+    return Roles[this._name].name.prohibited;
+  }
 
-    return false;
+  /**
+   * Check if this role has presentational children.
+   */
+  public hasPresentationalChildren(): boolean {
+    return Roles[this._name].children.presentational;
   }
 
   /**
    * Check if this role requires the specified attribute.
    */
-  public isRequired(attribute: Attribute.Name): boolean {
+  public isAttributeRequired(name: Attribute.Name): boolean {
     const { inherited, attributes } = Roles[this._name];
 
     for (const found of attributes.required) {
-      if (attribute === found) {
+      if (name === found) {
         return true;
       }
     }
 
     for (const parent of inherited) {
-      if (Role.of(parent).isRequired(attribute)) {
+      if (Role.of(parent).isAttributeRequired(name)) {
         return true;
       }
     }
@@ -128,17 +149,17 @@ export class Role<N extends Role.Name = Role.Name>
   /**
    * Check if this role supports the specified attribute.
    */
-  public isSupported(attribute: Attribute.Name): boolean {
+  public isAttributeSupported(name: Attribute.Name): boolean {
     const { inherited, attributes } = Roles[this._name];
 
     for (const found of attributes.supported) {
-      if (attribute === found) {
+      if (name === found) {
         return true;
       }
     }
 
     for (const parent of inherited) {
-      if (Role.of(parent).isSupported(attribute)) {
+      if (Role.of(parent).isAttributeSupported(name)) {
         return true;
       }
     }
@@ -187,6 +208,20 @@ export class Role<N extends Role.Name = Role.Name>
     return defaults;
   }
 
+  /**
+   * Get the required parent of this role.
+   */
+  public *requiredParent(): Iterable<Role.Name> {
+    yield* Roles[this._name].parent.required;
+  }
+
+  /**
+   * Get the required children of this role.
+   */
+  public *requiredChildren(): Iterable<Iterable<Role.Name>> {
+    yield* Roles[this._name].children.required;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Role && value._name === this._name;
   }
@@ -210,11 +245,15 @@ export namespace Role {
 
   export type Name = keyof Roles;
 
+  export function isName(value: string): value is Name {
+    return value in Roles;
+  }
+
   /**
    * The names of all abstract roles.
    */
   export type Abstract = {
-    [M in Name]: Roles[M]["abstract"] extends true ? M : never;
+    [N in Name]: Roles[N]["abstract"] extends true ? N : never;
   }[Name];
 
   /**
@@ -227,35 +266,57 @@ export namespace Role {
    */
   export type Presentational = "presentation" | "none";
 
-  type Members<T> = T extends Iterable<infer T> ? T : never;
+  /**
+   * The names of all widget roles.
+   */
+  export type Widget = SubclassOf<"widget">;
 
   /**
-   * Get the inherited roles for a given role name.
+   * The inherited roles for the specified role.
    */
   export type Inherited<N extends Name> = Members<Roles[N]["inherited"]>;
 
+  /**
+   * All roles that are subclasses of the specified role.
+   */
+  export type SubclassOf<N extends Name> = {
+    [M in Name]: N extends SuperclassOf<M> ? M : never;
+  }[Name];
+
+  /**
+   * All roles that are superclasses of the specified role.
+   */
+  export type SuperclassOf<N extends Name> =
+    | Inherited<N>
+    | { [M in Inherited<N>]: SuperclassOf<M> }[Inherited<N>];
+
+  /**
+   * The methods by which the element assigned to the specified role may receive
+   * its name.
+   */
+  export type NamedBy<N extends Name = Name> = keyof Roles[N]["name"]["from"];
+
   export namespace Attribute {
     /**
-     * Get all required attributes for a given role name.
+     * All required attributes for the specified role.
      */
     export type Required<N extends Name> =
       | Members<Roles[N]["attributes"]["required"]>
-
-      // Recursively get required attributes of inherited roles as well.
-      | { [M in Role.Inherited<N>]: Required<M> }[Role.Inherited<N>];
+      | { [M in Inherited<N>]: Required<M> }[Inherited<N>];
 
     /**
-     * Get all supported attributes for a given role name.
+     * All supported attributes for the specified role.
      */
     export type Supported<N extends Name> =
       | Members<Roles[N]["attributes"]["supported"]>
-
-      // Recursively get supported attributes of inherited roles as well.
-      | { [M in Role.Inherited<N>]: Supported<M> }[Role.Inherited<N>];
+      | { [M in Inherited<N>]: Supported<M> }[Inherited<N>];
   }
 
-  export function isName(value: string): value is Name {
-    return value in Roles;
+  export function isRole<N extends Name>(
+    value: unknown,
+    name?: N
+  ): value is Role<Name> {
+    return value instanceof Role && (name === undefined || value.name === name);
   }
 
   /**
@@ -330,3 +391,5 @@ export namespace Role {
 
   export const { hasName } = predicate;
 }
+
+type Members<T> = T extends Iterable<infer T> ? T : never;

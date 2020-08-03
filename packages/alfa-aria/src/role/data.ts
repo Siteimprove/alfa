@@ -2735,7 +2735,7 @@ export const Roles = {
     },
   },
   "graphics-document": {
-    index: 0,
+    index: 94,
     abstract: false,
     inherited: ["document"],
     attributes: {
@@ -2762,7 +2762,7 @@ export const Roles = {
     },
   },
   "graphics-object": {
-    index: 1,
+    index: 95,
     abstract: false,
     inherited: ["group"],
     attributes: {
@@ -2789,7 +2789,7 @@ export const Roles = {
     },
   },
   "graphics-symbol": {
-    index: 2,
+    index: 96,
     abstract: false,
     inherited: ["img"],
     attributes: {
@@ -2816,7 +2816,7 @@ export const Roles = {
     },
   },
   "doc-abstract": {
-    index: 0,
+    index: 97,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -2843,7 +2843,7 @@ export const Roles = {
     },
   },
   "doc-acknowledgments": {
-    index: 1,
+    index: 98,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -2870,7 +2870,7 @@ export const Roles = {
     },
   },
   "doc-afterword": {
-    index: 2,
+    index: 99,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -2897,7 +2897,7 @@ export const Roles = {
     },
   },
   "doc-appendix": {
-    index: 3,
+    index: 100,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -2924,7 +2924,7 @@ export const Roles = {
     },
   },
   "doc-backlink": {
-    index: 4,
+    index: 101,
     abstract: false,
     inherited: ["link"],
     attributes: {
@@ -2951,7 +2951,7 @@ export const Roles = {
     },
   },
   "doc-biblioentry": {
-    index: 5,
+    index: 102,
     abstract: false,
     inherited: ["listitem"],
     attributes: {
@@ -2978,7 +2978,7 @@ export const Roles = {
     },
   },
   "doc-bibliography": {
-    index: 6,
+    index: 103,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3005,7 +3005,7 @@ export const Roles = {
     },
   },
   "doc-biblioref": {
-    index: 7,
+    index: 104,
     abstract: false,
     inherited: ["link"],
     attributes: {
@@ -3032,7 +3032,7 @@ export const Roles = {
     },
   },
   "doc-chapter": {
-    index: 8,
+    index: 105,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3059,7 +3059,7 @@ export const Roles = {
     },
   },
   "doc-colophon": {
-    index: 9,
+    index: 106,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3086,7 +3086,7 @@ export const Roles = {
     },
   },
   "doc-conclusion": {
-    index: 10,
+    index: 107,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3113,7 +3113,7 @@ export const Roles = {
     },
   },
   "doc-cover": {
-    index: 11,
+    index: 108,
     abstract: false,
     inherited: ["img"],
     attributes: {
@@ -3140,7 +3140,7 @@ export const Roles = {
     },
   },
   "doc-credit": {
-    index: 12,
+    index: 109,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3167,7 +3167,7 @@ export const Roles = {
     },
   },
   "doc-credits": {
-    index: 13,
+    index: 110,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3194,7 +3194,7 @@ export const Roles = {
     },
   },
   "doc-dedication": {
-    index: 14,
+    index: 111,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3221,7 +3221,7 @@ export const Roles = {
     },
   },
   "doc-endnote": {
-    index: 15,
+    index: 112,
     abstract: false,
     inherited: ["listitem"],
     attributes: {
@@ -3248,7 +3248,7 @@ export const Roles = {
     },
   },
   "doc-endnotes": {
-    index: 16,
+    index: 113,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3275,7 +3275,7 @@ export const Roles = {
     },
   },
   "doc-epigraph": {
-    index: 17,
+    index: 114,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3302,7 +3302,7 @@ export const Roles = {
     },
   },
   "doc-epilogue": {
-    index: 18,
+    index: 115,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3329,7 +3329,7 @@ export const Roles = {
     },
   },
   "doc-errata": {
-    index: 19,
+    index: 116,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3356,7 +3356,7 @@ export const Roles = {
     },
   },
   "doc-example": {
-    index: 20,
+    index: 117,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3383,7 +3383,7 @@ export const Roles = {
     },
   },
   "doc-footnote": {
-    index: 21,
+    index: 118,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3410,7 +3410,7 @@ export const Roles = {
     },
   },
   "doc-foreword": {
-    index: 22,
+    index: 119,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3437,7 +3437,7 @@ export const Roles = {
     },
   },
   "doc-glossary": {
-    index: 23,
+    index: 120,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3464,7 +3464,7 @@ export const Roles = {
     },
   },
   "doc-glossref": {
-    index: 24,
+    index: 121,
     abstract: false,
     inherited: ["link"],
     attributes: {
@@ -3491,7 +3491,7 @@ export const Roles = {
     },
   },
   "doc-index": {
-    index: 25,
+    index: 122,
     abstract: false,
     inherited: ["navigation"],
     attributes: {
@@ -3518,7 +3518,7 @@ export const Roles = {
     },
   },
   "doc-introduction": {
-    index: 26,
+    index: 123,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3545,7 +3545,7 @@ export const Roles = {
     },
   },
   "doc-noteref": {
-    index: 27,
+    index: 124,
     abstract: false,
     inherited: ["link"],
     attributes: {
@@ -3572,7 +3572,7 @@ export const Roles = {
     },
   },
   "doc-notice": {
-    index: 28,
+    index: 125,
     abstract: false,
     inherited: ["note"],
     attributes: {
@@ -3599,7 +3599,7 @@ export const Roles = {
     },
   },
   "doc-pagebreak": {
-    index: 29,
+    index: 126,
     abstract: false,
     inherited: ["separator"],
     attributes: {
@@ -3626,7 +3626,7 @@ export const Roles = {
     },
   },
   "doc-pagelist": {
-    index: 30,
+    index: 127,
     abstract: false,
     inherited: ["navigation"],
     attributes: {
@@ -3653,7 +3653,7 @@ export const Roles = {
     },
   },
   "doc-part": {
-    index: 31,
+    index: 128,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3680,7 +3680,7 @@ export const Roles = {
     },
   },
   "doc-preface": {
-    index: 32,
+    index: 129,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3707,7 +3707,7 @@ export const Roles = {
     },
   },
   "doc-prologue": {
-    index: 33,
+    index: 130,
     abstract: false,
     inherited: ["landmark"],
     attributes: {
@@ -3734,7 +3734,7 @@ export const Roles = {
     },
   },
   "doc-pullquote": {
-    index: 34,
+    index: 131,
     abstract: false,
     inherited: ["none"],
     attributes: {
@@ -3761,7 +3761,7 @@ export const Roles = {
     },
   },
   "doc-qna": {
-    index: 35,
+    index: 132,
     abstract: false,
     inherited: ["section"],
     attributes: {
@@ -3788,7 +3788,7 @@ export const Roles = {
     },
   },
   "doc-subtitle": {
-    index: 36,
+    index: 133,
     abstract: false,
     inherited: ["sectionhead"],
     attributes: {
@@ -3815,7 +3815,7 @@ export const Roles = {
     },
   },
   "doc-tip": {
-    index: 37,
+    index: 134,
     abstract: false,
     inherited: ["note"],
     attributes: {
@@ -3842,7 +3842,7 @@ export const Roles = {
     },
   },
   "doc-toc": {
-    index: 38,
+    index: 135,
     abstract: false,
     inherited: ["navigation"],
     attributes: {

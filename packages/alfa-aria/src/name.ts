@@ -36,6 +36,10 @@ export class Name implements Equatable, Serializable {
     return this._source;
   }
 
+  public isEmpty(): boolean {
+    return this._value === "";
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Name &&

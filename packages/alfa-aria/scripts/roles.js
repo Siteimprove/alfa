@@ -24,7 +24,7 @@ puppeteer.launch().then(async (browser) => {
         }
 
         return Object.fromEntries(
-          [...document.querySelectorAll(".role")].map((role, i) => {
+          [...document.querySelectorAll(".role")].map((role) => {
             const key = role.querySelector(".role-name").getAttribute("title");
 
             const abstract =
@@ -121,7 +121,7 @@ puppeteer.launch().then(async (browser) => {
             return [
               key,
               {
-                index: i,
+                index: 0,
                 abstract,
                 inherited,
                 attributes: {
@@ -138,6 +138,12 @@ puppeteer.launch().then(async (browser) => {
         );
       })
     );
+  }
+
+  let index = 0;
+
+  for (const name in roles) {
+    roles[name].index = index++;
   }
 
   let code = `
