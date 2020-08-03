@@ -41,7 +41,9 @@ export class Role<N extends Role.Name = Role.Name>
   /**
    * Check if this role is a superclass of the role with the specified name.
    */
-  public isSuperclassOf(name: Role.Name): boolean {
+  public isSuperclassOf<N extends Role.Name>(
+    name: N
+  ): this is Role<Role.SuperclassOf<N>> {
     const { inherited } = Roles[name];
 
     for (const parent of inherited) {
@@ -56,23 +58,19 @@ export class Role<N extends Role.Name = Role.Name>
   /**
    * Check if this role is a subclass of the role with the specified name.
    */
-  public isSubclassOf(name: Role.Name): boolean {
-    const { inherited } = Roles[this._name];
-
-    for (const parent of inherited) {
-      if (parent === name || Role.of(parent).isSubclassOf(name)) {
-        return true;
-      }
-    }
-
-    return false;
+  public isSubclassOf<N extends Role.Name>(
+    name: N
+  ): this is Role<Role.SubclassOf<N>> {
+    return Role.of(name).isSuperclassOf(this._name);
   }
 
   /**
    * Check if this role either is, or is a subclass of, the role with the
    * specified name.
    */
-  public is<N extends Role.Name>(name: N): boolean {
+  public is<N extends Role.Name>(
+    name: N
+  ): this is Role<N | Role.SubclassOf<N>> {
     return this.hasName(name) || this.isSubclassOf(name);
   }
 
@@ -101,7 +99,14 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role is a widget.
    */
   public isWidget(): this is Role<Role.Widget> {
-    return this.isSubclassOf("widget");
+    return this.is("widget");
+  }
+
+  /**
+   * Check if this role is a landmark.
+   */
+  public isLandmark(): this is Role<Role.Landmark> {
+    return this.is("landmark");
   }
 
   /**
@@ -272,6 +277,11 @@ export namespace Role {
   export type Widget = SubclassOf<"widget">;
 
   /**
+   * The names of all landmark roles.
+   */
+  export type Landmark = SubclassOf<"landmark">;
+
+  /**
    * The inherited roles for the specified role.
    */
   export type Inherited<N extends Name> = Members<Roles[N]["inherited"]>;
@@ -285,10 +295,15 @@ export namespace Role {
 
   /**
    * All roles that are superclasses of the specified role.
+   *
+   * @remarks
+   * The super roles `roletype` and `none` act as base conditions of the
+   * recursive type construction in order to avoid the TypeScript compiler
+   * infinitely recursing while instantiating the type.
    */
-  export type SuperclassOf<N extends Name> =
-    | Inherited<N>
-    | { [M in Inherited<N>]: SuperclassOf<M> }[Inherited<N>];
+  export type SuperclassOf<N extends Name> = N extends "roletype" | "none"
+    ? never
+    : Inherited<N> | { [M in Inherited<N>]: SuperclassOf<M> }[Inherited<N>];
 
   /**
    * The methods by which the element assigned to the specified role may receive
