@@ -18,6 +18,8 @@ import { Name } from "./name";
 import { Role } from "./role";
 import { Feature } from "./feature";
 
+import * as predicate from "./node/predicate";
+
 const { and, not, nor, equals } = Predicate;
 
 /**
@@ -319,6 +321,8 @@ export namespace Node {
       })
     );
   }
+
+  export const { hasName, hasRole } = predicate;
 }
 
 const hasGlobalAttributes: Predicate<dom.Element> = (element) => {
