@@ -16,9 +16,9 @@ puppeteer.launch().then(async (browser) => {
             .querySelector(".property-name, .state-name")
             .getAttribute("title");
 
-          const type = attribute.matches(".property") ? "property" : "state";
+          const kind = attribute.matches(".property") ? "property" : "state";
 
-          const value = attribute
+          const type = attribute
             .querySelector(".property-value, .state-value")
             .textContent.toLowerCase()
             .replace(/[\s//]/g, "-");
@@ -29,18 +29,19 @@ puppeteer.launch().then(async (browser) => {
               ?.textContent.replace(/\(default\):?/, "")
               .trim() ?? null;
 
-          const options = [
-            ...attribute.querySelectorAll(".value-name"),
-          ].map((option) =>
-            option.textContent.replace(/\(default\):?/, "").trim()
-          );
+          const options =
+            type === "token" || type === "token-list"
+              ? [...attribute.querySelectorAll(".value-name")].map((option) =>
+                  option.textContent.replace(/\(default\):?/, "").trim()
+                )
+              : null;
 
           return [
             key,
             {
               index: 0,
+              kind,
               type,
-              value,
               options,
               default: fallback,
             },

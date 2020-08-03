@@ -279,7 +279,7 @@ export namespace Node {
 
             // First pass: Look up implicit attributes on the role.
             if (role.isSome()) {
-              for (const [name, value] of role.get().defaults()) {
+              for (const [name, value] of role.get().defaults) {
                 attributes = attributes.set(name, Attribute.of(name, value));
               }
             }
@@ -322,7 +322,7 @@ export namespace Node {
 }
 
 const hasGlobalAttributes: Predicate<dom.Element> = (element) => {
-  for (const attribute of Role.of("roletype").attributes()) {
+  for (const attribute of Role.of("roletype").attributes) {
     if (element.attribute(attribute).isSome()) {
       return true;
     }

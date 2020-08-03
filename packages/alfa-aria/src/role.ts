@@ -32,6 +32,61 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   /**
+   * Get all attributes supported by this role and its inherited roles.
+   */
+  public get attributes(): Iterable<Attribute.Name> {
+    const {
+      inherited,
+      attributes: { required, supported },
+    } = Roles[this._name];
+
+    const attributes = new Set([...required, ...supported]);
+
+    for (const parent of inherited) {
+      for (const attribute of Role.of(parent).attributes) {
+        attributes.add(attribute);
+      }
+    }
+
+    return attributes;
+  }
+
+  /**
+   * Get all attribute defaults specified by this role and its inherited roles.
+   */
+  public get defaults(): Iterable<[Attribute.Name, string]> {
+    const { inherited, attributes } = Roles[this._name];
+
+    const defaults = new Map<Attribute.Name, string>(attributes.defaults);
+
+    for (const parent of inherited) {
+      for (const [attribute, value] of Role.of(parent).defaults) {
+        if (defaults.has(attribute)) {
+          continue;
+        }
+
+        defaults.set(attribute, value);
+      }
+    }
+
+    return defaults;
+  }
+
+  /**
+   * Get the required parent of this role.
+   */
+  public get requiredParent(): Iterable<Role.Name> {
+    return Roles[this._name].parent.required;
+  }
+
+  /**
+   * Get the required children of this role.
+   */
+  public get requiredChildren(): Iterable<Iterable<Role.Name>> {
+    return Roles[this._name].children.required;
+  }
+
+  /**
    * Check if this role has the specified name.
    */
   public hasName<N extends Role.Name>(name: N): this is Role<N> {
@@ -170,61 +225,6 @@ export class Role<N extends Role.Name = Role.Name>
     }
 
     return false;
-  }
-
-  /**
-   * Get all attributes supported by this role and its inherited roles.
-   */
-  public attributes(): Iterable<Attribute.Name> {
-    const {
-      inherited,
-      attributes: { required, supported },
-    } = Roles[this._name];
-
-    const attributes = new Set([...required, ...supported]);
-
-    for (const parent of inherited) {
-      for (const attribute of Role.of(parent).attributes()) {
-        attributes.add(attribute);
-      }
-    }
-
-    return attributes;
-  }
-
-  /**
-   * Get all attribute defaults specified by this role and its inherited roles.
-   */
-  public defaults(): Iterable<[Attribute.Name, string]> {
-    const { inherited, attributes } = Roles[this._name];
-
-    const defaults = new Map<Attribute.Name, string>(attributes.defaults);
-
-    for (const parent of inherited) {
-      for (const [attribute, value] of Role.of(parent).defaults()) {
-        if (defaults.has(attribute)) {
-          continue;
-        }
-
-        defaults.set(attribute, value);
-      }
-    }
-
-    return defaults;
-  }
-
-  /**
-   * Get the required parent of this role.
-   */
-  public *requiredParent(): Iterable<Role.Name> {
-    yield* Roles[this._name].parent.required;
-  }
-
-  /**
-   * Get the required children of this role.
-   */
-  public *requiredChildren(): Iterable<Iterable<Role.Name>> {
-    yield* Roles[this._name].children.required;
   }
 
   public equals(value: unknown): value is this {

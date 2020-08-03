@@ -32,14 +32,15 @@ export class Attribute<N extends Attribute.Name = Attribute.Name>
     return this._value;
   }
 
-  /**
-   * @see https://www.w3.org/TR/wai-aria/#global_states
-   */
-  public isGlobal(): this is Attribute<Attribute.Global> {
-    return Role.of("roletype").isAttributeSupported(this._name);
+  public get kind(): Attribute.Kind<N> {
+    return Attributes[this._name].kind;
   }
 
-  public default(): Option<Attribute.Default<N>> {
+  public get type(): Attribute.Type<N> {
+    return Attributes[this._name].type;
+  }
+
+  public get default(): Option<Attribute.Default<N>> {
     const value = Attributes[this._name].default;
 
     if (value === null) {
@@ -49,10 +50,11 @@ export class Attribute<N extends Attribute.Name = Attribute.Name>
     return Option.of(value as Attribute.Default<N>);
   }
 
-  public *options(): Iterable<Attribute.Option<N>> {
-    for (const option of Attributes[this._name].options) {
-      yield option as Attribute.Option<N>;
-    }
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#global_states
+   */
+  public isGlobal(): this is Attribute<Attribute.Global> {
+    return Role.of("roletype").isAttributeSupported(this._name);
   }
 
   public equals(value: unknown): value is this {
@@ -90,14 +92,14 @@ export namespace Attribute {
   export type Global = Role.Attribute.Supported<"roletype">;
 
   /**
+   * The kind of the specified attribute.
+   */
+  export type Kind<N extends Name = Name> = Attributes[N]["kind"];
+
+  /**
    * The type of the specified attribute.
    */
   export type Type<N extends Name = Name> = Attributes[N]["type"];
-
-  /**
-   * The value type of the specified attribute.
-   */
-  export type Value<N extends Name = Name> = Attributes[N]["value"];
 
   /**
    * The default value, if any, of the specified attribute.
@@ -114,11 +116,9 @@ export namespace Attribute {
   /**
    * The type of the options allowed by the specified attribute.
    *
-   * @see https://html.spec.whatwg.org/#enumerated-attribute
-   *
    * @remarks
-   * Only attributes that map to HTML enumerated attributes have a corresponding
-   * option type.
+   * Currently, this type is only defined for attributes with values that are
+   * tokens or lists of tokens.
    */
   export type Option<N extends Name = Name> = Members<Attributes[N]["options"]>;
 }
