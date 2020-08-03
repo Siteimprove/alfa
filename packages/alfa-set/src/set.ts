@@ -90,6 +90,15 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return Iterable.count(this, predicate);
   }
 
+  /**
+   * @remarks
+   * As sets don't contain duplicate values, they will only ever contain
+   * distinct values.
+   */
+  public distinct(): Set<T> {
+    return this;
+  }
+
   public get(value: T): Option<T> {
     return this._values.get(value);
   }

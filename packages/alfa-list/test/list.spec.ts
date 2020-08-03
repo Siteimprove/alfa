@@ -25,6 +25,10 @@ test("#flatMap() applies a function to every value of a list and flattens the re
   );
 });
 
+test("#distinct() removes duplicate values from a list", (t) => {
+  t.deepEqual([...List.of(1, 1, 1, 2, 3, 3, 3, 4, 4).distinct()], [1, 2, 3, 4]);
+});
+
 test("#get() looks up the value at an index if it exists", (t) => {
   t.deepEqual(list.get(2).get(), 3);
 });

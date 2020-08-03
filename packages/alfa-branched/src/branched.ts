@@ -170,6 +170,15 @@ export class Branched<T, B = never>
     );
   }
 
+  /**
+   * @remarks
+   * As branched values merges branches with duplicate values, they will only
+   * ever contain distinct values.
+   */
+  public distinct(): Branched<T, B> {
+    return this;
+  }
+
   public branch(value: T, ...branches: Array<B>): Branched<T, B> {
     return new Branched(
       merge(

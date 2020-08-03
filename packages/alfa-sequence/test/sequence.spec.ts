@@ -131,6 +131,13 @@ test("#count() counts the number of values of a sequence that satisfy a predicat
   );
 });
 
+test("#distinct() removes duplicate values from a sequence", (t) => {
+  t.deepEqual(
+    [...Sequence.from([1, 1, 2, 3, 3, 3, 4, 4]).distinct()],
+    [1, 2, 3, 4]
+  );
+});
+
 test("#get() returns the value at a given index of a sequence", (t) => {
   t.equal(seq.get(0).get(), 1);
   t.equal(seq.get(3).get(), 4);
