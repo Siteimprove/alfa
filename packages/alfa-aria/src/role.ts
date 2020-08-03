@@ -1,453 +1,332 @@
 import { Branched } from "@siteimprove/alfa-branched";
-import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Set } from "@siteimprove/alfa-set";
+import { Hashable, Hash } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Feature } from "./feature";
+import * as json from "@siteimprove/alfa-json";
+
 import { Attribute } from "./attribute";
+import { Feature } from "./feature";
 
-const { some } = Iterable;
-const { and, equals, or, not } = Predicate;
+import { Roles } from "./role/data";
 
-export class Role<N extends string = string> implements Equatable {
-  public static of<N extends string>(
-    name: N,
-    category: Role.Category,
-    characteristics: Partial<Role.Characteristics> = {}
-  ): Role<N> {
-    return new Role(name, category, {
-      requires: [],
-      supports: [],
-      inherits: [],
-      owns: [],
-      context: [],
-      name: { from: [], required: false },
-      presentational: false,
-      implicits: [],
+import * as predicate from "./role/predicate";
 
-      ...characteristics,
-    });
+export class Role<N extends Role.Name = Role.Name>
+  implements Equatable, Hashable, Serializable {
+  public static of<N extends Role.Name>(name: N): Role<N> {
+    return new Role(name);
   }
 
-  public readonly name: N;
-  public readonly category: Role.Category;
-  public readonly characteristics: Role.Characteristics;
+  private readonly _name: N;
 
-  private constructor(
-    name: N,
-    category: Role.Category,
-    characteristics: Role.Characteristics
-  ) {
-    this.name = name;
-    this.category = category;
-    this.characteristics = characteristics;
+  private constructor(name: N) {
+    this._name = name;
   }
 
-  public inheritsFrom(predicate: Predicate<Role>): boolean {
-    return some(this.characteristics.inherits, (name) =>
-      Role.lookup(name).some(
-        or(predicate, (role) => role.inheritsFrom(predicate))
-      )
-    );
-  }
-
-  public required(): Iterable<Attribute> {
-    return Set.from(
-      Iterable.flatMap(this.characteristics.requires, (name) =>
-        Attribute.lookup(name)
-      )
-    ).concat(
-      Iterable.flatten(
-        Iterable.flatMap(this.characteristics.requires, (name) =>
-          Role.lookup(name).map((role) => role.required())
-        )
-      )
-    );
-  }
-
-  public isRequired(predicate: Predicate<Attribute>): boolean {
-    return some(this.required(), predicate);
-  }
-
-  public supported(): Iterable<Attribute> {
-    return Set.from(
-      Iterable.flatMap(this.characteristics.supports, (name) =>
-        Attribute.lookup(name)
-      )
-    ).concat(
-      Iterable.flatten(
-        Iterable.flatMap(this.characteristics.inherits, (name) =>
-          Role.lookup(name).map((role) => role.supported())
-        )
-      )
-    );
-  }
-
-  public isSupported(predicate: Predicate<Attribute>): boolean {
-    return some(this.supported(), predicate);
-  }
-
-  public isAllowed(predicate: Predicate<Attribute>): boolean {
-    return this.isRequired(predicate) || this.isSupported(predicate);
-  }
-
-  public hasContext(predicate: Predicate<Role> = () => true): boolean {
-    return (
-      some(this.characteristics.context, (name) =>
-        Role.lookup(name).some(predicate)
-      ) || this.inheritsFrom((role) => role.hasContext(predicate))
-    );
-  }
-
-  public hasNameFrom(predicate: Predicate<"contents" | "author">): boolean {
-    return some(this.characteristics.name.from, predicate);
-  }
-
-  public hasName(predicate: Predicate<string>): boolean {
-    return predicate(this.name);
-  }
-
-  public equals(value: unknown): value is this {
-    return value instanceof Role && value.name === this.name;
-  }
-
-  public toJSON() {
-    return {
-      name: this.name,
-      category: this.category,
-      characteristics: this.characteristics,
-    };
-  }
-}
-
-export namespace Role {
-  /**
-   * @see https://www.w3.org/TR/wai-aria/#roles_categorization
-   */
-  export enum Category {
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#abstract_roles
-     */
-    Abstract = "abstract",
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#widget_roles
-     */
-    Widget = "widget",
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#document_structure_roles
-     */
-    Structure = "structure",
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#landmark_roles
-     */
-    Landmark = "landmark",
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#live_region_roles
-     */
-    LiveRegion = "live-region",
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#window_roles
-     */
-    Window = "window",
-
-    /**
-     * @see https://www.w3.org/TR/graphics-aria/
-     */
-    Graphic = "graphic",
-  }
-
-  export interface Characteristics {
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#requiredState
-     */
-    readonly requires: Iterable<string>;
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#supportedState
-     */
-    readonly supports: Iterable<string>;
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#superclassrole
-     */
-    readonly inherits: Iterable<string>;
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#mustContain
-     */
-    readonly owns: Iterable<
-      string | readonly [string, string, ...Array<string>]
-    >;
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#scope
-     */
-    readonly context: Iterable<string>;
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#namecalculation
-     */
-    readonly name: {
-      readonly from: Readonly<Array<"contents" | "author">>;
-      readonly required: boolean;
-    };
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#childrenArePresentational
-     */
-    readonly presentational: boolean;
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#implictValueForRole
-     */
-    readonly implicits: Iterable<readonly [string, string]>;
-  }
-
-  const roles = Cache.empty<string, Role>();
-
-  export function register<N extends string>(role: Role<N>): Role<N> {
-    roles.set(role.name, role);
-    return role;
-  }
-
-  export function lookup<N extends string>(name: N): Option<Role<N>> {
-    return roles.get(name) as Option<Role<N>>;
+  public get name(): N {
+    return this._name;
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#attr-aria-role
+   * Check if this role is an instance of a role with the specified name.
+   *
+   * @remarks
+   * This method looks up the inheritance chain of the role and
    */
-  export function from(
-    element: Element,
-    options: from.Options = {}
-  ): Branched<Option<Role>, Browser> {
-    const role = element.attribute("role").map((attr) => attr.value.trim());
-
-    const allowedPresentational =
-      options.allowPresentational ?? isAllowedPresentational(element);
-
-    return (
-      Branched.of<Option<string>, Browser>(
-        role.map((role) => role.toLowerCase())
-      )
-
-        // Firefox currently treats the `role` attribute as case-sensitive so it
-        // is not lowercased.
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
-        .branch(role, ...Browser.query(["firefox"]))
-
-        .map((role) =>
-          role
-            .andThen((role) => {
-              if (options.explicit !== false) {
-                for (const name of role.split(/\s+/)) {
-                  const role = Role.lookup(name);
-
-                  if (
-                    // If the role is not abstract...
-                    role.some(
-                      (role) => role.category !== Role.Category.Abstract
-                    ) &&
-                    // ...and it's not a presentational role in a forbidden context...
-                    !(
-                      role.some(Role.isPresentational) && !allowedPresentational
-                    )
-                  ) {
-                    // ...then we got ourselves a valid explicit role...
-                    return role;
-                  }
-                }
-              }
-              // ...otherwise, default to implicit role computation.
-              return None;
-            })
-            .orElse(() => {
-              if (options.implicit !== false) {
-                return element.namespace.flatMap((namespace) => {
-                  const feature = Feature.lookup(namespace, element.name);
-
-                  return feature.flatMap((feature) =>
-                    feature
-                      .role(element, {
-                        allowPresentational: allowedPresentational,
-                      })
-                      .flatMap(Role.lookup)
-                  );
-                });
-              }
-
-              return None;
-            })
-        )
-    );
-  }
-
-  export namespace from {
-    export interface Options extends Partial<Feature.RoleOptions> {
-      readonly explicit?: boolean;
-      readonly implicit?: boolean;
-    }
-  }
-
-  export const isPresentational = hasName("presentation", "none");
-
-  export function hasName(predicate: Predicate<string>): Predicate<Role>;
-
-  export function hasName(
-    name: string,
-    ...rest: Array<string>
-  ): Predicate<Role>;
-
-  export function hasName(
-    nameOrPredicate: string | Predicate<string>,
-    ...names: Array<string>
-  ): Predicate<Role> {
-    let predicate: Predicate<string>;
-
-    if (typeof nameOrPredicate === "function") {
-      predicate = nameOrPredicate;
-    } else {
-      predicate = equals(nameOrPredicate, ...names);
+  public is(name: Role.Name): boolean {
+    if (this._name === name) {
+      return true;
     }
 
-    return (role) => role.hasName(predicate);
-  }
-}
+    const { inherited } = Roles[this._name];
 
-/**
- * Determine if an element is allowed to be presentational.
- *
- * @see https://w3c.github.io/aria/#conflict_resolution_presentation_none
- */
-
-/**
- * An element is focusable if it has a tabindex and is not disabled. Note that 
- * elements that are not rendered are still considered; however, these are not 
- * exposed in the accessibility tree in the first place, so we should be fairly 
- * safe here.
- */
-const isFocusable: Predicate<Element> = and(
-  Element.hasTabIndex(),
-  not(Element.isDisabled)
-);
-
-const hasSupportedAttribute: Predicate<Element> = (element) =>
-  Role.lookup("roletype").some((role) => {
-    for (const attribute of role.characteristics.supports) {
-      if (element.attribute(attribute).isSome()) {
+    for (const parent of inherited) {
+      if (Role.of(parent).is(name)) {
         return true;
       }
     }
 
     return false;
-  });
+  }
 
-/**
- * An element is NOT allowed to be presentational if either it is focusable OR 
- * it has some aria-* attributes
- */
-const isAllowedPresentational: Predicate<Element> = not(
-  or(isFocusable, hasSupportedAttribute)
-);
+  /**
+   * Check if this role is abstract.
+   */
+  public isAbstract(): this is Role<Role.Abstract> {
+    return Roles[this._name].abstract;
+  }
 
-import "./role/separator";
+  /**
+   * Check if this role is non-abstract.
+   */
+  public isConcrete(): this is Role<Role.Concrete> {
+    return !this.isAbstract();
+  }
 
-import "./role/abstract/command";
-import "./role/abstract/composite";
-import "./role/abstract/input";
-import "./role/abstract/landmark";
-import "./role/abstract/range";
-import "./role/abstract/roletype";
-import "./role/abstract/section";
-import "./role/abstract/section-head";
-import "./role/abstract/select";
-import "./role/abstract/structure";
-import "./role/abstract/widget";
-import "./role/abstract/window";
+  /**
+   * Check if this role is presentational.
+   */
+  public isPresentational(): this is Role<Role.Presentational> {
+    return this._name === "presentation" || this._name === "none";
+  }
 
-import "./role/graphic/document";
-import "./role/graphic/object";
-import "./role/graphic/symbol";
+  /**
+   * Check if this role is a superclass of another role.
+   */
+  public isSuperclassOf(role: Role.Name): boolean {
+    const { inherited } = Roles[role];
 
-import "./role/landmark/banner";
-import "./role/landmark/complementary";
-import "./role/landmark/content-info";
-import "./role/landmark/form";
-import "./role/landmark/main";
-import "./role/landmark/navigation";
-import "./role/landmark/region";
-import "./role/landmark/search";
+    for (const parent of inherited) {
+      if (parent === this._name || this.isSuperclassOf(parent)) {
+        return true;
+      }
+    }
 
-import "./role/live-region/alert";
-import "./role/live-region/log";
-import "./role/live-region/marquee";
-import "./role/live-region/status";
-import "./role/live-region/timer";
+    return false;
+  }
 
-import "./role/structure/application";
-import "./role/structure/article";
-import "./role/structure/cell";
-import "./role/structure/column-header";
-import "./role/structure/definition";
-import "./role/structure/directory";
-import "./role/structure/document";
-import "./role/structure/feed";
-import "./role/structure/figure";
-import "./role/structure/group";
-import "./role/structure/heading";
-import "./role/structure/img";
-import "./role/structure/list";
-import "./role/structure/list-item";
-import "./role/structure/math";
-import "./role/structure/none";
-import "./role/structure/note";
-import "./role/structure/presentation";
-import "./role/structure/row";
-import "./role/structure/row-group";
-import "./role/structure/row-header";
-import "./role/structure/table";
-import "./role/structure/term";
-import "./role/structure/toolbar";
-import "./role/structure/tooltip";
+  /**
+   * Check if this role is a subclass of another role.
+   */
+  public isSubclassOf(role: Role.Name): boolean {
+    const { inherited } = Roles[this._name];
 
-import "./role/widget/button";
-import "./role/widget/checkbox";
-import "./role/widget/combobox";
-import "./role/widget/grid";
-import "./role/widget/grid-cell";
-import "./role/widget/link";
-import "./role/widget/list-box";
-import "./role/widget/menu";
-import "./role/widget/menu-bar";
-import "./role/widget/menu-item";
-import "./role/widget/menu-item-checkbox";
-import "./role/widget/menu-item-radio";
-import "./role/widget/option";
-import "./role/widget/progress-bar";
-import "./role/widget/radio";
-import "./role/widget/radio-group";
-import "./role/widget/scroll-bar";
-import "./role/widget/search-box";
-import "./role/widget/slider";
-import "./role/widget/spin-button";
-import "./role/widget/switch";
-import "./role/widget/tab";
-import "./role/widget/tab-list";
-import "./role/widget/tab-panel";
-import "./role/widget/text-box";
-import "./role/widget/tree";
-import "./role/widget/tree-grid";
-import "./role/widget/tree-item";
+    for (const parent of inherited) {
+      if (parent === role || Role.of(parent).isSubclassOf(role)) {
+        return true;
+      }
+    }
 
-import "./role/window/alert-dialog";
-import "./role/window/dialog";
+    return false;
+  }
+
+  /**
+   * Check if this role requires the specified attribute.
+   */
+  public isRequired(attribute: Attribute.Name): boolean {
+    const { inherited, attributes } = Roles[this._name];
+
+    for (const found of attributes.required) {
+      if (attribute === found) {
+        return true;
+      }
+    }
+
+    for (const parent of inherited) {
+      if (Role.of(parent).isRequired(attribute)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if this role supports the specified attribute.
+   */
+  public isSupported(attribute: Attribute.Name): boolean {
+    const { inherited, attributes } = Roles[this._name];
+
+    for (const found of attributes.supported) {
+      if (attribute === found) {
+        return true;
+      }
+    }
+
+    for (const parent of inherited) {
+      if (Role.of(parent).isSupported(attribute)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Get all attributes supported by this role and its inherited roles.
+   */
+  public attributes(): Iterable<Attribute.Name> {
+    const {
+      inherited,
+      attributes: { required, supported },
+    } = Roles[this._name];
+
+    const attributes = new Set([...required, ...supported]);
+
+    for (const parent of inherited) {
+      for (const attribute of Role.of(parent).attributes()) {
+        attributes.add(attribute);
+      }
+    }
+
+    return attributes;
+  }
+
+  /**
+   * Get all attribute defaults specified by this role and its inherited roles.
+   */
+  public defaults(): Iterable<[Attribute.Name, string]> {
+    const { inherited, attributes } = Roles[this._name];
+
+    const defaults = new Map<Attribute.Name, string>(attributes.defaults);
+
+    for (const parent of inherited) {
+      for (const [attribute, value] of Role.of(parent).defaults()) {
+        if (defaults.has(attribute)) {
+          continue;
+        }
+
+        defaults.set(attribute, value);
+      }
+    }
+
+    return defaults;
+  }
+
+  public equals(value: unknown): value is this {
+    return value instanceof Role && value._name === this._name;
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeUint8(hash, Roles[this._name].index);
+  }
+
+  public toJSON(): Role.JSON {
+    return {
+      name: this._name,
+    };
+  }
+}
+
+export namespace Role {
+  export interface JSON {
+    [key: string]: json.JSON;
+    name: Name;
+  }
+
+  export type Name = keyof Roles;
+
+  /**
+   * The names of all abstract roles.
+   */
+  export type Abstract = {
+    [M in Name]: Roles[M]["abstract"] extends true ? M : never;
+  }[Name];
+
+  /**
+   * The names of all non-abstract roles.
+   */
+  export type Concrete = Exclude<Name, Abstract>;
+
+  /**
+   * The names of all presentational roles.
+   */
+  export type Presentational = "presentation" | "none";
+
+  type Members<T> = T extends Iterable<infer T> ? T : never;
+
+  /**
+   * Get the inherited roles for a given role name.
+   */
+  export type Inherited<N extends Name> = Members<Roles[N]["inherited"]>;
+
+  export namespace Attribute {
+    /**
+     * Get all required attributes for a given role name.
+     */
+    export type Required<N extends Name> =
+      | Members<Roles[N]["attributes"]["required"]>
+
+      // Recursively get required attributes of inherited roles as well.
+      | { [M in Role.Inherited<N>]: Required<M> }[Role.Inherited<N>];
+
+    /**
+     * Get all supported attributes for a given role name.
+     */
+    export type Supported<N extends Name> =
+      | Members<Roles[N]["attributes"]["supported"]>
+
+      // Recursively get supported attributes of inherited roles as well.
+      | { [M in Role.Inherited<N>]: Supported<M> }[Role.Inherited<N>];
+  }
+
+  export function isName(value: string): value is Name {
+    return value in Roles;
+  }
+
+  /**
+   * Get the roles assigned both explicitly and implicitly to an element.
+   */
+  export function from(element: Element): Branched<Sequence<Role>, Browser> {
+    return (
+      fromExplicit(element)
+        .flatMap((explicit) =>
+          fromImplicit(element).map((implicit) => explicit.concat(implicit))
+        )
+
+        // There may be an overlap between the explicit and implicit roles so
+        // we filter out duplicates.
+        .distinct()
+    );
+  }
+
+  /**
+   * Get the roles explicitly assigned to an element.
+   */
+  export function fromExplicit(
+    element: Element
+  ): Branched<Sequence<Role>, Browser> {
+    const roles: Sequence<string> = element
+      .attribute("role")
+      .map((attribute) => attribute.tokens())
+      .getOrElse(() => Sequence.empty());
+
+    return (
+      Branched.of<Sequence<string>, Browser>(
+        roles.map((role) => role.toLowerCase())
+      )
+
+        // Firefox currently treats the `role` attribute as case-sensitive so it
+        // is not lowercased.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
+        .branch(roles, ...Browser.query(["firefox"]))
+
+        .map((roles) =>
+          roles
+            .filter(isName)
+            .map(Role.of)
+
+            // Abstract roles are only used for ontological purposes and are not
+            // allowed to be used by authors; we therefore filter them out.
+            .reject((role) => role.isAbstract())
+
+            // The same role may be passed multiple times so we filter out
+            // duplicates.
+            .distinct()
+        )
+    );
+  }
+
+  /**
+   * Get the roles implicitly assigned to an element.
+   */
+  export function fromImplicit(
+    element: Element
+  ): Branched<Sequence<Role>, Browser> {
+    return Branched.of(
+      element.namespace
+        .flatMap((namespace) =>
+          Feature.lookup(namespace, element.name).map((feature) =>
+            Sequence.from(feature.role(element))
+          )
+        )
+        .getOrElse(() => Sequence.empty())
+    );
+  }
+
+  export const { hasName } = predicate;
+}

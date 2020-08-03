@@ -1,519 +1,122 @@
-/// <reference lib="dom" />
-
-import { Cache } from "@siteimprove/alfa-cache";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option, None } from "@siteimprove/alfa-option";
 
-const { some } = Iterable;
-const { equals } = Predicate;
+import * as dom from "@siteimprove/alfa-dom";
+import * as json from "@siteimprove/alfa-json";
 
-export class Attribute<N extends string = string> implements Equatable {
-  public static of<N extends string>(
+import { Attributes } from "./attribute/data";
+import { Role } from "./role";
+
+export class Attribute<N extends Attribute.Name = Attribute.Name>
+  implements Equatable, Serializable {
+  public static of<N extends Attribute.Name>(
     name: N,
-    type: Attribute.Type,
-    value: Attribute.Value,
-    valid: Option<Iterable<string>> = None,
-    implicit: Option<string> = None,
-    status: Attribute.Status = { deprecated: false }
+    value: string
   ): Attribute<N> {
-    return new Attribute(name, type, value, valid, implicit, status);
+    return new Attribute(name, value);
   }
 
-  public readonly name: N;
-  public readonly type: Attribute.Type;
-  public readonly value: Attribute.Value;
-  public readonly valid: Option<Iterable<string>>;
-  public readonly implicit: Option<string>;
-  public readonly status: Attribute.Status;
+  private readonly _name: N;
+  private readonly _value: string;
 
-  private constructor(
-    name: N,
-    type: Attribute.Type,
-    value: Attribute.Value,
-    valid: Option<Iterable<string>>,
-    implicit: Option<string>,
-    status: Attribute.Status
-  ) {
-    this.name = name;
-    this.type = type;
-    this.valid = valid;
-    this.value = value;
-    this.implicit = implicit;
-    this.status = status;
+  private constructor(name: N, value: string) {
+    this._name = name;
+    this._value = value;
   }
 
-  public isValid(value: string): boolean {
-    switch (this.value) {
-      case "true-false":
-        return value === "true" || value === "false";
+  public get name(): N {
+    return this._name;
+  }
 
-      case "true-false-undefined":
-        return value === "true" || value === "false" || value === "undefined";
+  public get value(): string {
+    return this._value;
+  }
 
-      case "tristate":
-        return value === "true" || value === "false" || value === "mixed";
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#global_states
+   */
+  public isGlobal(): boolean {
+    return Role.of("roletype").isSupported(this._name);
+  }
 
-      case "id-reference":
-        return !/\s+/.test(value);
+  public default(): Option<Attribute.Default<N>> {
+    const value = Attributes[this._name].default;
 
-      case "id-reference-list":
-        return true;
+    if (value === null) {
+      return None;
+    }
 
-      case "integer":
-        return /^\d+$/.test(value);
+    return Option.of(value as Attribute.Default<N>);
+  }
 
-      case "number":
-        return /^\d+(\.\d+)?$/.test(value);
-
-      case "string":
-        return true;
-
-      case "token":
-        return (
-          value === "undefined" ||
-          this.valid.some((valid) => some(valid, equals(value)))
-        );
-
-      case "token-list":
-        return value
-          .split(/\s+/)
-          .every((token) =>
-            this.valid.some((valid) => some(valid, equals(token)))
-          );
-
-      case "uri":
-        try {
-          return new URL(value) instanceof URL;
-        } catch (err) {
-          return false;
-        }
+  public *options(): Iterable<Attribute.Option<N>> {
+    for (const option of Attributes[this._name].options) {
+      yield option as Attribute.Option<N>;
     }
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Attribute && value.name === this.name;
+    return (
+      value instanceof Attribute &&
+      value._name === this._name &&
+      value._value === this._value
+    );
+  }
+
+  public toJSON(): Attribute.JSON {
+    return {
+      name: this._name,
+      value: this._value,
+    };
   }
 }
 
 export namespace Attribute {
-  export enum Type {
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#dfn-state
-     */
-    State = "state",
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#dfn-property
-     */
-    Property = "property",
+  export interface JSON {
+    [key: string]: json.JSON;
+    name: Name;
+    value: string;
   }
 
-  export type Value =
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_true-false
-     */
-    | "true-false"
+  export type Name = keyof Attributes;
 
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_true-false-undefined
-     */
-    | "true-false-undefined"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_tristate
-     */
-    | "tristate"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_idref
-     */
-    | "id-reference"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_idref_list
-     */
-    | "id-reference-list"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_integer
-     */
-    | "integer"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_number
-     */
-    | "number"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_string
-     */
-    | "string"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_token
-     */
-    | "token"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_token_list
-     */
-    | "token-list"
-
-    /**
-     * @see https://www.w3.org/TR/wai-aria/#valuetype_uri
-     */
-    | "uri";
-
-  export interface Status {
-    readonly deprecated: boolean;
+  export function isName(value: string): value is Name {
+    return value in Attributes;
   }
 
-  const attributes = Cache.empty<string, Attribute>();
+  /**
+   * Get the type of a named attribute.
+   */
+  export type Type<N extends Name = Name> = Attributes[N]["type"];
 
-  export function register<N extends string>(
-    attribute: Attribute<N>
-  ): Attribute<N> {
-    attributes.set(attribute.name, attribute);
-    return attribute;
-  }
+  /**
+   * Get the value type of a named attribute.
+   */
+  export type Value<N extends Name = Name> = Attributes[N]["value"];
 
-  export function lookup<N extends string>(name: N): Option<Attribute<N>> {
-    return attributes.get(name) as Option<Attribute<N>>;
-  }
+  /**
+   * Get the default value, if any, of a named attribute.
+   *
+   * @remarks
+   * Attributes with no default are marked with `default: null`; we therefore
+   * exclude `null` from the type as it corresponds to `never`.
+   */
+  export type Default<N extends Name = Name> = Exclude<
+    Attributes[N]["default"],
+    null
+  >;
+
+  type Members<T> = T extends Iterable<infer T> ? T : never;
+
+  /**
+   * Get the type of the options allowed by a named attribute.
+   *
+   * @see https://html.spec.whatwg.org/#enumerated-attribute
+   *
+   * @remarks
+   * Only attributes that map to HTML enumerated attributes have a corresponding
+   * option type.
+   */
+  export type Option<N extends Name = Name> = Members<Attributes[N]["options"]>;
 }
-
-namespace State {
-  export function of<N extends string>(
-    name: N,
-    value: Attribute.Value,
-    valid?: Option<Iterable<string>>,
-    implicit?: Option<string>,
-    status?: Attribute.Status
-  ): Attribute<N> {
-    return Attribute.of(
-      name,
-      Attribute.Type.State,
-      value,
-      valid,
-      implicit,
-      status
-    );
-  }
-}
-
-namespace Property {
-  export function of<N extends string>(
-    name: N,
-    value: Attribute.Value,
-    valid?: Option<Iterable<string>>,
-    implicit?: Option<string>,
-    status?: Attribute.Status
-  ): Attribute<N> {
-    return Attribute.of(
-      name,
-      Attribute.Type.Property,
-      value,
-      valid,
-      implicit,
-      status
-    );
-  }
-}
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-activedescendant
- */
-Attribute.register(Property.of("aria-activedescendant", "id-reference"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-atomic
- */
-Attribute.register(Property.of("aria-atomic", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-autocomplete
- */
-Attribute.register(
-  Property.of(
-    "aria-autocomplete",
-    "token",
-    Option.of(["inline", "list", "both", "none"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-busy
- */
-Attribute.register(State.of("aria-busy", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-checked
- */
-Attribute.register(State.of("aria-checked", "tristate"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-colcount
- */
-Attribute.register(Property.of("aria-colcount", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-colindex
- */
-Attribute.register(Property.of("aria-colindex", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-colspan
- */
-Attribute.register(Property.of("aria-colspan", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-controls
- */
-Attribute.register(Property.of("aria-controls", "id-reference-list"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-current
- */
-Attribute.register(
-  State.of(
-    "aria-current",
-    "token",
-    Option.of(["page", "step", "location", "date", "time", "true", "false"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-describedby
- */
-Attribute.register(Property.of("aria-describedby", "id-reference-list"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-details
- */
-Attribute.register(Property.of("aria-details", "id-reference"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-disabled
- */
-Attribute.register(State.of("aria-disabled", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-dropeffect
- */
-Attribute.register(
-  Property.of(
-    "aria-dropeffect",
-    "token-list",
-    Option.of(["copy", "execute", "link", "move", "none", "popup"]),
-    None,
-    { deprecated: true }
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-errormessage
- */
-Attribute.register(Property.of("aria-errormessage", "id-reference"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-expanded
- */
-Attribute.register(State.of("aria-expanded", "true-false-undefined"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-flowto
- */
-Attribute.register(Property.of("aria-flowto", "id-reference-list"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-grabbed
- */
-Attribute.register(
-  State.of("aria-grabbed", "true-false-undefined", None, None, {
-    deprecated: true,
-  })
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-haspopup
- */
-Attribute.register(
-  Property.of(
-    "aria-haspopup",
-    "token",
-    Option.of(["false", "true", "menu", "listbox", "tree", "grid", "dialog"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-hidden
- */
-Attribute.register(State.of("aria-hidden", "true-false-undefined"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-invalid
- */
-Attribute.register(
-  State.of(
-    "aria-invalid",
-    "token",
-    Option.of(["grammar", "false", "spelling", "true"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-keyshortcuts
- */
-Attribute.register(Property.of("aria-keyshortcuts", "string"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-label
- */
-Attribute.register(Property.of("aria-label", "string"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-labelledby
- */
-Attribute.register(Property.of("aria-labelledby", "id-reference-list"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-level
- */
-Attribute.register(Property.of("aria-level", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-live
- */
-Attribute.register(
-  Property.of("aria-live", "token", Option.of(["assertive", "off", "polite"]))
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-modal
- */
-Attribute.register(Property.of("aria-modal", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-multiline
- */
-Attribute.register(Property.of("aria-multiline", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-multiselectable
- */
-Attribute.register(Property.of("aria-multiselectable", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-orientation
- */
-Attribute.register(
-  Property.of(
-    "aria-orientation",
-    "token",
-    Option.of(["horizontal", "undefined", "vertical"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-owns
- */
-Attribute.register(Property.of("aria-owns", "id-reference-list"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-placeholder
- */
-Attribute.register(Property.of("aria-placeholder", "string"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-posinset
- */
-Attribute.register(Property.of("aria-posinset", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-pressed
- */
-Attribute.register(State.of("aria-pressed", "tristate"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-readonly
- */
-Attribute.register(Property.of("aria-readonly", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-relevant
- */
-Attribute.register(
-  Property.of(
-    "aria-relevant",
-    "token-list",
-    Option.of(["additions", "all", "removals", "text"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-required
- */
-Attribute.register(Property.of("aria-required", "true-false"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-roledescription
- */
-Attribute.register(Property.of("aria-roledescription", "string"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-rowcount
- */
-Attribute.register(Property.of("aria-rowcount", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-rowindex
- */
-Attribute.register(Property.of("aria-rowindex", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-rowspan
- */
-Attribute.register(Property.of("aria-rowspan", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-selected
- */
-Attribute.register(State.of("aria-selected", "true-false-undefined"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-setsize
- */
-Attribute.register(Property.of("aria-setsize", "integer"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-sort
- */
-Attribute.register(
-  Property.of(
-    "aria-sort",
-    "token",
-    Option.of(["ascending", "descending", "none", "other"])
-  )
-);
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-valuemax
- */
-Attribute.register(Property.of("aria-valuemax", "number"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-valuemin
- */
-Attribute.register(Property.of("aria-valuemin", "number"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-valuenow
- */
-Attribute.register(Property.of("aria-valuenow", "number"));
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#aria-valuetext
- */
-Attribute.register(Property.of("aria-valuetext", "string"));

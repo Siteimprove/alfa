@@ -2,40 +2,28 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { Role } from "../role";
+import { Name } from "../name";
 import { Node } from "../node";
 
 export class Text extends Node {
-  public static of(
-    owner: dom.Node,
-    name: string,
-    parent: Option<Node> = None
-  ): Text {
-    return new Text(owner, name, parent);
+  public static of(owner: dom.Node, name: Name): Text {
+    return new Text(owner, name);
   }
 
-  private readonly _name: string;
+  private readonly _name: Name;
 
-  private constructor(owner: dom.Node, name: string, parent: Option<Node>) {
-    super(owner, () => [], parent);
+  private constructor(owner: dom.Node, name: Name) {
+    super(owner, []);
 
     this._name = name;
   }
 
-  public name(): Option<string> {
+  public get name(): Option<Name> {
     return Option.of(this._name);
   }
 
-  public role(): Option<Role> {
-    return None;
-  }
-
-  public attribute(name: string): Option<string> {
-    return None;
-  }
-
-  public clone(parent: Option<Node> = None): Text {
-    return new Text(this._node, this._name, parent);
+  public clone(): Text {
+    return new Text(this._node, this._name);
   }
 
   public isIgnored(): boolean {
@@ -45,8 +33,7 @@ export class Text extends Node {
   public toJSON(): Text.JSON {
     return {
       type: "text",
-      node: this._node.toJSON(),
-      name: this._name,
+      name: this._name.value,
       children: this._children.map((child) => child.toJSON()),
     };
   }
