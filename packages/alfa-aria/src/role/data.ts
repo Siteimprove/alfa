@@ -21,12 +21,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -48,12 +43,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -82,12 +72,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -109,12 +94,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -136,12 +116,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -163,12 +138,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -195,12 +165,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -222,12 +187,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: ["figure", "grid", "table"],
@@ -254,12 +214,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["row"],
@@ -288,12 +243,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -315,12 +265,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -342,12 +287,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["row"],
@@ -382,12 +322,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -409,12 +344,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -436,12 +366,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -463,12 +388,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -490,12 +410,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -517,12 +432,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -544,12 +454,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -571,12 +476,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -598,12 +498,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -625,12 +520,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -652,12 +542,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -679,12 +564,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -706,12 +586,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -733,12 +608,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -760,12 +630,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -787,12 +652,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -823,12 +683,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["row"],
@@ -850,12 +705,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -877,12 +727,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -904,12 +749,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -931,12 +771,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -958,12 +793,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -985,12 +815,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1012,12 +837,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -1039,12 +859,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1073,12 +888,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1100,12 +910,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: ["directory", "list"],
@@ -1127,12 +932,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1154,12 +954,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1181,12 +976,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1208,12 +998,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1235,12 +1020,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1262,12 +1042,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1296,12 +1071,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1336,12 +1106,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["group", "menu", "menubar"],
@@ -1363,12 +1128,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["group", "menu", "menubar"],
@@ -1390,12 +1150,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["group", "menu", "menubar"],
@@ -1417,12 +1172,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1444,12 +1194,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -1471,12 +1216,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1503,12 +1243,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -1530,12 +1265,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -1557,12 +1287,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -1584,12 +1309,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1611,12 +1331,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -1643,12 +1358,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1675,12 +1385,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1702,12 +1407,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1747,12 +1447,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -1782,12 +1477,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["grid", "rowgroup", "table", "treegrid"],
@@ -1809,12 +1499,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["grid", "table", "treegrid"],
@@ -1836,12 +1521,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["row"],
@@ -1874,12 +1554,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1901,12 +1576,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1928,12 +1598,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1955,12 +1620,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -1982,12 +1642,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -2009,12 +1664,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2047,12 +1697,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2087,12 +1732,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2127,12 +1767,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2157,12 +1792,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2184,12 +1814,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -2211,12 +1836,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -2238,12 +1858,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -2265,12 +1880,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: true,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -2292,12 +1902,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -2326,12 +1931,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["tablist"],
@@ -2353,12 +1953,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2380,12 +1975,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2407,12 +1997,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2434,12 +2019,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2471,12 +2051,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2498,12 +2073,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2525,12 +2095,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2552,12 +2117,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2579,12 +2139,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -2611,12 +2166,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2638,12 +2188,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2665,12 +2210,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: ["group", "tree"],
@@ -2692,12 +2232,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: false,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: [],
     },
     parent: {
       required: [],
@@ -2719,12 +2254,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2746,12 +2276,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2773,12 +2298,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -2800,12 +2320,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2827,12 +2342,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2854,12 +2364,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2881,12 +2386,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2908,12 +2408,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2935,12 +2430,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -2962,12 +2452,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: ["doc-bibliography"],
@@ -2989,12 +2474,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3016,12 +2496,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -3043,12 +2518,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3070,12 +2540,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3097,12 +2562,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3124,12 +2584,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3151,12 +2606,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3178,12 +2628,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3205,12 +2650,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3232,12 +2672,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: ["doc-endnotes"],
@@ -3259,12 +2694,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3286,12 +2716,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3313,12 +2738,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3340,12 +2760,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3367,12 +2782,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3394,12 +2804,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3421,12 +2826,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3448,12 +2848,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3475,12 +2870,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -3502,12 +2892,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3529,12 +2914,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3556,12 +2936,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: true,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["contents", "author"],
     },
     parent: {
       required: [],
@@ -3583,12 +2958,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3610,12 +2980,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3637,12 +3002,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3664,12 +3024,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3691,12 +3046,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3718,12 +3068,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3745,12 +3090,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3772,12 +3112,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3799,12 +3134,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3826,12 +3156,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -3853,12 +3178,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: {
-        author: true,
-        content: false,
-        encapsulation: false,
-        legend: false,
-      },
+      from: ["author"],
     },
     parent: {
       required: [],

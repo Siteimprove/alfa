@@ -81,12 +81,7 @@ puppeteer.launch().then(async (browser) => {
 
               prohibited: from.includes("prohibited"),
 
-              from: {
-                author: from.includes("author"),
-                content: from.includes("contents"),
-                encapsulation: from.includes("encapsulation"),
-                legend: from.includes("legend"),
-              },
+              from: from.filter((method) => method !== "prohibited"),
             };
 
             const parent = {

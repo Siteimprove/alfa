@@ -168,7 +168,13 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role supports naming by the specified method.
    */
   public isNamedBy(method: Role.NamedBy): boolean {
-    return Roles[this._name].name.from[method];
+    for (const found of Roles[this._name].name.from) {
+      if (found === method) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -309,7 +315,9 @@ export namespace Role {
    * The methods by which the element assigned to the specified role may receive
    * its name.
    */
-  export type NamedBy<N extends Name = Name> = keyof Roles[N]["name"]["from"];
+  export type NamedBy<N extends Name = Name> = Members<
+    Roles[N]["name"]["from"]
+  >;
 
   export namespace Attribute {
     /**
