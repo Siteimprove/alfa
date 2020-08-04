@@ -185,6 +185,11 @@ type Longhands = typeof Longhands;
 const Longhands = {
   "background-color": Background.Color,
   "background-image": Background.Image,
+  "background-repeat-x": Background.Repeat.X,
+  "background-repeat-y": Background.Repeat.Y,
+  "background-attachment": Background.Attachment,
+  "background-position-x": Background.Position.X,
+  "background-position-y": Background.Position.Y,
   color: Color,
   display: Display,
   "font-family": Font.Family,
@@ -207,7 +212,9 @@ const Longhands = {
 
 type Shorthands = typeof Shorthands;
 const Shorthands = {
-  background: Background.Shorthand,
+  // background: Background.Shorthand,
+  "background-repeat": Background.Repeat.Shorthand,
+  "background-position": Background.Position.Shorthand,
   overflow: Overflow.Shorthand,
 };
 

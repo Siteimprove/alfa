@@ -1,16 +1,11 @@
+import { Value } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-/**
- * The list value type is used for consistency with the rest of the value types
- * when representing lists of things, namely by providing a `type` property and
- * implementing the `equals()` and `toJSON()` methods. It also provides a means
- * of configuring the value separator used in the `toString()` method.
- */
-export class List<T> implements Iterable<T>, Equatable, Hashable, Serializable {
+export class List<T> extends Value<"list"> implements Iterable<T> {
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(values, separator);
   }
@@ -19,6 +14,7 @@ export class List<T> implements Iterable<T>, Equatable, Hashable, Serializable {
   private readonly _separator: string;
 
   private constructor(values: Iterable<T>, separator: string) {
+    super();
     this._values = [...values];
     this._separator = separator;
   }
@@ -68,8 +64,7 @@ export class List<T> implements Iterable<T>, Equatable, Hashable, Serializable {
 }
 
 export namespace List {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "list";
     values: Array<json.JSON>;
     separator: string;
