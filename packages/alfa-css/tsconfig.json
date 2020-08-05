@@ -7,6 +7,7 @@
     "src/syntax/block.ts",
     "src/syntax/component.ts",
     "src/syntax/declaration.ts",
+    "src/syntax/function.ts",
     "src/syntax/lexer.ts",
     "src/syntax/token.ts",
     "src/value.ts",

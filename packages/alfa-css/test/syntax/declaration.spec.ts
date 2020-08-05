@@ -41,3 +41,22 @@ test(".consume() consumes an important declaration", (t) => {
     important: true,
   });
 });
+
+test(".consume() consumes a declaration value with a block", (t) => {
+  consume(t, "foo: (bar) !important", {
+    name: "foo",
+    value: [
+      {
+        type: "open-parenthesis",
+      },
+      {
+        type: "ident",
+        value: "bar",
+      },
+      {
+        type: "close-parenthesis",
+      },
+    ],
+    important: true,
+  });
+});

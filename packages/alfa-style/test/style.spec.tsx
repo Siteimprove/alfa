@@ -558,6 +558,34 @@ test(`#cascaded() returns "unset" when var() functions contain cyclic references
   });
 });
 
+test(`#cascaded() returns "unset" when a custom property referenced by a var()
+      function has its guaranteed-invalid initial value`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
 test(`#cascaded() returns "unset" when confronted with a billion laughs`, (t) => {
   const element = <div />;
 
@@ -648,5 +676,102 @@ test(`#cascaded() correctly resolves var() function references within context
       value: "hidden",
     },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() gives precedence to !important custom properties used in var()
+      function references`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          "--hidden": "hidden !important",
+        }),
+
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "visible",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() does not fall back on the inherited value of a custom property
+      referenced by a var() function if the first value is invalid`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("main", {
+          "--hidden": "hidden",
+        }),
+
+        h.rule.style("div", {
+          overflowX: "var(--hidden)",
+
+          "--hidden": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test(`#cascaded() does not fall back on the inherited value of a custom property
+      referenced by a var() function if the first value is invalid and its
+      fallback is also invalid`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("main", {
+          "--hidden": "hidden",
+        }),
+
+        h.rule.style("div", {
+          overflowX: "var(--hidden, foo)",
+
+          "--hidden": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("overflow-x", "var(--hidden, foo)").toJSON(),
   });
 });
