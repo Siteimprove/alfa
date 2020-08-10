@@ -258,3 +258,23 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
     source: h.declaration("background", `12px 0`).toJSON(),
   });
 });
+
+test(`#cascaded() parses \`background: 0 / cover\``, (t) => {
+  const element = <div style={{ background: `0 / cover` }}></div>;
+
+  const style = Style.from(element, Device.standard());
+
+  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+    value: {
+      type: "list",
+      values: [
+        {
+          type: "keyword",
+          value: "cover",
+        },
+      ],
+      separator: ", ",
+    },
+    source: h.declaration("background", `0 / cover`).toJSON(),
+  });
+});
