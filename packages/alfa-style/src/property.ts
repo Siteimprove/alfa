@@ -1,6 +1,5 @@
 import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Record } from "@siteimprove/alfa-record";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as parser from "@siteimprove/alfa-parser";
@@ -59,7 +58,7 @@ export namespace Property {
     readonly inherits: boolean;
   }
 
-  export type Parser<T> = parser.Parser<Slice<Token>, T, string>;
+  export type Parser<T = Value.Parsed> = parser.Parser<Slice<Token>, T, string>;
 
   export namespace Value {
     /**
@@ -70,7 +69,7 @@ export namespace Property {
      * must not include the defaulting keywords as these are handled globally
      * rather than individually.
      */
-    export type Parsed<N extends Name> = WithName<N> extends Property<
+    export type Parsed<N extends Name = Name> = WithName<N> extends Property<
       infer T,
       infer U
     >
@@ -88,7 +87,9 @@ export namespace Property {
      */
     export type Declared<N extends Name> =
       | Parsed<N>
-      | Keyword<"initial" | "inherit" | "unset">;
+      | Keyword<"initial">
+      | Keyword<"inherit">
+      | Keyword<"unset">;
 
     /**
      * Extract the cascaded type of a named property.
@@ -155,12 +156,12 @@ export namespace Property {
   }
 
   export namespace Shorthand {
-    export type Parser<N extends Property.Name> = parser.Parser<
+    export type Parser<N extends Property.Name = Property.Name> = parser.Parser<
       Slice<Token>,
-      Record<
+      Iterable<
         {
-          [M in N]: Property.Value.Parsed<M>;
-        }
+          [M in N]: [M, Property.Value.Declared<M>];
+        }[N]
       >,
       string
     >;
@@ -190,6 +191,9 @@ const Longhands = {
   "background-attachment": Background.Attachment,
   "background-position-x": Background.Position.X,
   "background-position-y": Background.Position.Y,
+  "background-clip": Background.Clip,
+  "background-origin": Background.Origin,
+  "background-size": Background.Size,
   color: Color,
   display: Display,
   "font-family": Font.Family,
@@ -212,7 +216,7 @@ const Longhands = {
 
 type Shorthands = typeof Shorthands;
 const Shorthands = {
-  // background: Background.Shorthand,
+  background: Background.Shorthand,
   "background-repeat": Background.Repeat.Shorthand,
   "background-position": Background.Position.Shorthand,
   overflow: Overflow.Shorthand,

@@ -9,7 +9,6 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Record } from "@siteimprove/alfa-record";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -337,7 +336,7 @@ function parseLonghand<N extends Property.Name>(
   const result = left(
     either(
       Keyword.parse("initial", "inherit", "unset"),
-      property.parse as Parser<Slice<Token>, Property.Value.Parsed<N>, string>
+      property.parse as Property.Parser
     ),
     eof(() => "Expected end of input")
   )(Slice.of(trim(tokens.get().get())))
@@ -361,11 +360,9 @@ function parseShorthand<N extends Property.Shorthand.Name>(
 
   if (tokens.isNone()) {
     return Option.of(
-      Record.from(
-        Iterable.map(shorthand.properties, (property) => [
-          property,
-          Keyword.of("unset"),
-        ])
+      Iterable.map(
+        shorthand.properties,
+        (property) => [property, Keyword.of("unset")] as const
       )
     );
   }
@@ -373,18 +370,15 @@ function parseShorthand<N extends Property.Shorthand.Name>(
   const result = left(
     either(
       Keyword.parse("initial", "inherit", "unset"),
-      shorthand.parse as Parser<
-        Slice<Token>,
-        Record<{ [N in Property.Name]?: Property.Value.Parsed<N> }>,
-        string
-      >
+      shorthand.parse as Property.Shorthand.Parser
     ),
     eof(() => "Expected end of input")
   )(Slice.of(trim(tokens.get().get())))
     .map(([, value]) => {
       if (Keyword.isKeyword(value)) {
-        return Record.from(
-          Iterable.map(shorthand.properties, (property) => [property, value])
+        return Iterable.map(
+          shorthand.properties,
+          (property) => [property, value] as const
         );
       }
 
@@ -394,11 +388,9 @@ function parseShorthand<N extends Property.Shorthand.Name>(
 
   if (result.isNone() && tokens.get().isRight()) {
     return Option.of(
-      Record.from(
-        Iterable.map(shorthand.properties, (property) => [
-          property,
-          Keyword.of("unset"),
-        ])
+      Iterable.map(
+        shorthand.properties,
+        (property) => [property, Keyword.of("unset")] as const
       )
     );
   }

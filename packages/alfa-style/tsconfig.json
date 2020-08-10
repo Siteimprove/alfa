@@ -6,6 +6,7 @@
     "src/property.ts",
     "src/property/background.ts",
     "src/property/color.ts",
+    "src/property/combinator/any.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/height.ts",
