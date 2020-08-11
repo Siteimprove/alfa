@@ -13,7 +13,7 @@ test(`.from() determines the name of a text node`, (t) => {
   const text = h.text("Hello world");
 
   t.deepEqual(Name.from(text, device).toArray(), [
-    [Option.of(Name.of("Hello world", Name.Source.data(text))), []],
+    [Option.of(Name.of("Hello world", [Name.Source.data(text)])), []],
   ]);
 });
 
@@ -24,12 +24,12 @@ test(`.from() determines the name of a <button> element with child text content`
   t.deepEqual(Name.from(button, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.content(button, [
-            Name.of("Hello world", Name.Source.data(text)),
-          ])
-        )
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            button,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
       ),
       [],
     ],
@@ -45,17 +45,17 @@ test(`.from() determines the name of a <button> element with a <span> child
   t.deepEqual(Name.from(button, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.content(button, [
-            Name.of(
-              "Hello world",
-              Name.Source.content(span, [
-                Name.of("Hello world", Name.Source.data(text)),
-              ])
-            ),
-          ])
-        )
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            button,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                span,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
       ),
       [],
     ],
@@ -69,10 +69,9 @@ test(`.from() determines the name of a <button> element with an aria-label
   t.deepEqual(Name.from(button, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.label(button.attribute("aria-label").get())
-        )
+        Name.of("Hello world", [
+          Name.Source.label(button.attribute("aria-label").get()),
+        ])
       ),
       [],
     ],
@@ -93,17 +92,17 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
   t.deepEqual(Name.from(button, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.reference(button.attribute("aria-labelledby").get(), [
-            Name.of(
-              "Hello world",
-              Name.Source.content(paragraph, [
-                Name.of("Hello world", Name.Source.data(text)),
-              ])
-            ),
-          ])
-        )
+        Name.of("Hello world", [
+          Name.Source.reference(
+            button.attribute("aria-labelledby").get(),
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                paragraph,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
       ),
       [],
     ],
@@ -124,26 +123,31 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
     {paragraph2}
   </div>;
 
+  const attribute = button.attribute("aria-labelledby").get();
+
   t.deepEqual(Name.from(button, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.reference(button.attribute("aria-labelledby").get(), [
-            Name.of(
-              "Hello",
-              Name.Source.content(paragraph1, [
-                Name.of("Hello", Name.Source.data(text1)),
-              ])
-            ),
-            Name.of(
-              "world",
-              Name.Source.content(paragraph2, [
-                Name.of("world", Name.Source.data(text2)),
-              ])
-            ),
-          ])
-        )
+        Name.of("Hello world", [
+          Name.Source.reference(
+            attribute,
+            Name.of("Hello", [
+              Name.Source.descendant(
+                paragraph1,
+                Name.of("Hello", [Name.Source.data(text1)])
+              ),
+            ])
+          ),
+          Name.Source.reference(
+            attribute,
+            Name.of("world", [
+              Name.Source.descendant(
+                paragraph2,
+                Name.of("world", [Name.Source.data(text2)])
+              ),
+            ])
+          ),
+        ])
       ),
       [],
     ],
@@ -161,10 +165,9 @@ test(`.from() determines the name of a <button> element with a title attribute
   t.deepEqual(Name.from(button, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.label(button.attribute("title").get())
-        )
+        Name.of("Hello world", [
+          Name.Source.label(button.attribute("title").get()),
+        ])
       ),
       [],
     ],
@@ -177,7 +180,7 @@ test(`.from() determines the name of an <img> element with an alt attribute`, (t
   t.deepEqual(Name.from(img, device).toArray(), [
     [
       Option.of(
-        Name.of("Hello world", Name.Source.label(img.attribute("alt").get()))
+        Name.of("Hello world", [Name.Source.label(img.attribute("alt").get())])
       ),
       [],
     ],
@@ -190,7 +193,7 @@ test(`.from() determines the name of an <area> element with an alt attribute`, (
   t.deepEqual(Name.from(area, device).toArray(), [
     [
       Option.of(
-        Name.of("Hello world", Name.Source.label(area.attribute("alt").get()))
+        Name.of("Hello world", [Name.Source.label(area.attribute("alt").get())])
       ),
       [],
     ],
@@ -213,12 +216,12 @@ test(`.from() determines the name of a <fieldset> element with a <legend> child
   t.deepEqual(Name.from(fieldset, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.content(legend, [
-            Name.of("Hello world", Name.Source.data(text)),
-          ])
-        )
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            legend,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
       ),
       [],
     ],
@@ -241,12 +244,131 @@ test(`.from() determines the name of a <figure> element with a <figcaption>
   t.deepEqual(Name.from(fieldset, device).toArray(), [
     [
       Option.of(
-        Name.of(
-          "Hello world",
-          Name.Source.content(caption, [
-            Name.of("Hello world", Name.Source.data(text)),
-          ])
-        )
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            caption,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input> element with a <label> parent
+      element with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const input = <input />;
+
+  const label = (
+    <label>
+      {text}
+      {input}
+    </label>
+  );
+
+  <form>{label}</form>;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.ancestor(
+            label,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                label,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input> element with a <label> element
+      whose for attribute points to the <input> element`, (t) => {
+  const text = h.text("Hello world");
+
+  const input = <input id="foo" />;
+
+  const label = <label for="foo">{text}</label>;
+
+  <form>
+    {label}
+    {input}
+  </form>;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.reference(
+            label.attribute("for").get(),
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                label,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input> element with both a <label>
+      parent element with child text content and a <label> element whose for
+      attribute points to the <input> element`, (t) => {
+  const text1 = h.text("Hello world");
+  const text2 = h.text("!");
+
+  const input = <input id="foo" />;
+
+  const label1 = (
+    <label>
+      {text1}
+      {input}
+    </label>
+  );
+
+  const label2 = <label for="foo">{text2}</label>;
+
+  <form>
+    {label1}
+    {label2}
+  </form>;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world !", [
+          Name.Source.ancestor(
+            label1,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                label1,
+                Name.of("Hello world", [Name.Source.data(text1)])
+              ),
+            ])
+          ),
+          Name.Source.reference(
+            label2.attribute("for").get(),
+            Name.of("!", [
+              Name.Source.descendant(
+                label2,
+                Name.of("!", [Name.Source.data(text2)])
+              ),
+            ])
+          ),
+        ])
       ),
       [],
     ],

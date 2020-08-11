@@ -19,24 +19,24 @@ const { isText } = Text;
 const { and, or, equals } = Predicate;
 
 export class Name implements Equatable, Serializable {
-  public static of(value: string, source: Name.Source): Name {
-    return new Name(value, source);
+  public static of(value: string, sources: Iterable<Name.Source>): Name {
+    return new Name(value, Array.from(sources));
   }
 
   private readonly _value: string;
-  private readonly _source: Name.Source;
+  private readonly _sources: Array<Name.Source>;
 
-  private constructor(value: string, source: Name.Source) {
+  private constructor(value: string, sources: Array<Name.Source>) {
     this._value = value;
-    this._source = source;
+    this._sources = sources;
   }
 
   public get value(): string {
     return this._value;
   }
 
-  public get source(): Name.Source {
-    return this._source;
+  public get source(): Iterable<Name.Source> {
+    return this._sources[Symbol.iterator]();
   }
 
   public isEmpty(): boolean {
@@ -47,14 +47,15 @@ export class Name implements Equatable, Serializable {
     return (
       value instanceof Name &&
       value._value === this._value &&
-      value._source.equals(this._source)
+      value._sources.length === this._sources.length &&
+      value._sources.every((source, i) => source.equals(this._sources[i]))
     );
   }
 
   public toJSON(): Name.JSON {
     return {
       value: this._value,
-      source: this._source.toJSON(),
+      sources: this._sources.map((source) => source.toJSON()),
     };
   }
 }
@@ -63,23 +64,23 @@ export namespace Name {
   export interface JSON {
     [key: string]: json.JSON;
     value: string;
-    source: Source.JSON;
+    sources: Array<Source.JSON>;
   }
 
   export type Source =
     | Source.Data
-    | Source.Content
+    | Source.Descendant
+    | Source.Ancestor
     | Source.Label
-    | Source.Reference
-    | Source.Title;
+    | Source.Reference;
 
   export namespace Source {
     export type JSON =
       | Data.JSON
-      | Content.JSON
+      | Descendant.JSON
+      | Ancestor.JSON
       | Label.JSON
-      | Reference.JSON
-      | Title.JSON;
+      | Reference.JSON;
 
     export class Data implements Equatable, Serializable {
       public static of(text: Text): Data {
@@ -122,58 +123,110 @@ export namespace Name {
       return Data.of(text);
     }
 
-    export class Content implements Equatable, Serializable {
-      public static of(element: Element, names: Iterable<Name>): Content {
-        return new Content(element, Array.from(names));
+    export class Descendant implements Equatable, Serializable {
+      public static of(element: Element, name: Name): Descendant {
+        return new Descendant(element, name);
       }
 
       private readonly _element: Element;
-      private readonly _names: Array<Name>;
+      private readonly _name: Name;
 
-      private constructor(element: Element, names: Array<Name>) {
+      private constructor(element: Element, name: Name) {
         this._element = element;
-        this._names = names;
+        this._name = name;
       }
 
-      public get type(): "content" {
-        return "content";
+      public get type(): "descendants" {
+        return "descendants";
       }
 
       public get element(): Element {
         return this._element;
       }
 
-      public get names(): Iterable<Name> {
-        return this._names;
+      public get name(): Name {
+        return this._name;
       }
 
       public equals(value: unknown): value is this {
         return (
-          value instanceof Content &&
+          value instanceof Descendant &&
           value._element.equals(this._element) &&
-          value._names.length === this._names.length &&
-          value._names.every((name, i) => name.equals(this._names[i]))
+          value._name.equals(this._name)
         );
       }
 
-      public toJSON(): Content.JSON {
+      public toJSON(): Descendant.JSON {
         return {
-          type: "content",
-          names: this._names.map((name) => name.toJSON()),
+          type: "descendant",
+          name: this._name.toJSON(),
         };
       }
     }
 
-    export namespace Content {
+    export namespace Descendant {
       export interface JSON {
         [key: string]: json.JSON;
-        type: "content";
-        names: Array<Name.JSON>;
+        type: "descendant";
+        name: Name.JSON;
       }
     }
 
-    export function content(element: Element, names: Iterable<Name>): Content {
-      return Content.of(element, names);
+    export function descendant(element: Element, name: Name): Descendant {
+      return Descendant.of(element, name);
+    }
+
+    export class Ancestor implements Equatable, Serializable {
+      public static of(element: Element, name: Name): Ancestor {
+        return new Ancestor(element, name);
+      }
+
+      private readonly _element: Element;
+      private readonly _name: Name;
+
+      private constructor(element: Element, name: Name) {
+        this._element = element;
+        this._name = name;
+      }
+
+      public get type(): "ancestor" {
+        return "ancestor";
+      }
+
+      public get element(): Element {
+        return this._element;
+      }
+
+      public get name(): Name {
+        return this._name;
+      }
+
+      public equals(value: unknown): value is this {
+        return (
+          value instanceof Ancestor &&
+          value._element.equals(this._element) &&
+          value._name.equals(this._name)
+        );
+      }
+
+      public toJSON(): Ancestor.JSON {
+        return {
+          type: "ancestor",
+          name: this._name.toJSON(),
+        };
+      }
+    }
+
+    export namespace Ancestor {
+      export interface JSON {
+        [key: string]: json.JSON;
+        type: "ancestor";
+        name: Name.JSON;
+      }
+    }
+
+    export function ancestor(element: Element, name: Name): Ancestor {
+      return Ancestor.of(element, name);
     }
 
     export class Label implements Equatable, Serializable {
@@ -222,16 +275,16 @@ export namespace Name {
     }
 
     export class Reference implements Equatable, Serializable {
-      public static of(attribute: Attribute, names: Iterable<Name>): Reference {
-        return new Reference(attribute, Array.from(names));
+      public static of(attribute: Attribute, name: Name): Reference {
+        return new Reference(attribute, name);
       }
 
       private readonly _attribute: Attribute;
-      private readonly _names: Array<Name>;
+      private readonly _name: Name;
 
-      private constructor(attribute: Attribute, names: Array<Name>) {
+      private constructor(attribute: Attribute, name: Name) {
         this._attribute = attribute;
-        this._names = names;
+        this._name = name;
       }
 
       public get type(): "reference" {
@@ -242,8 +295,8 @@ export namespace Name {
         return this._attribute;
       }
 
-      public get names(): Iterable<Name> {
-        return this._names;
+      public get name(): Name {
+        return this._name;
       }
 
       public equals(value: unknown): value is this {
@@ -256,7 +309,7 @@ export namespace Name {
         return {
           type: "reference",
           attribute: this._attribute.name,
-          names: this._names.map((name) => name.toJSON()),
+          name: this._name.toJSON(),
         };
       }
     }
@@ -266,60 +319,12 @@ export namespace Name {
         [key: string]: json.JSON;
         type: "reference";
         attribute: string;
-        names: Array<Name.JSON>;
+        name: Name.JSON;
       }
     }
 
-    export function reference(
-      attribute: Attribute,
-      names: Iterable<Name>
-    ): Reference {
-      return Reference.of(attribute, Array.from(names));
-    }
-
-    export class Title implements Equatable, Serializable {
-      public static of(attribute: Attribute): Title {
-        return new Title(attribute);
-      }
-
-      private readonly _attribute: Attribute;
-
-      private constructor(attribute: Attribute) {
-        this._attribute = attribute;
-      }
-
-      public get type(): "title" {
-        return "title";
-      }
-
-      public get attribute(): Attribute {
-        return this._attribute;
-      }
-
-      public equals(value: unknown): value is this {
-        return (
-          value instanceof Title && value._attribute.equals(this._attribute)
-        );
-      }
-
-      public toJSON(): Title.JSON {
-        return {
-          type: "title",
-          attribute: this._attribute.name,
-        };
-      }
-    }
-
-    export namespace Title {
-      export interface JSON {
-        [key: string]: json.JSON;
-        type: "title";
-        attribute: string;
-      }
-    }
-
-    export function title(attribute: Attribute): Title {
-      return Title.of(attribute);
+    export function reference(attribute: Attribute, name: Name): Reference {
+      return Reference.of(attribute, name);
     }
   }
 
@@ -369,7 +374,7 @@ export namespace Name {
           return empty;
         }
 
-        return fromReference(attribute.get(), device, visited);
+        return fromReferences(attribute.get(), device, visited);
       },
 
       // Step 2C: Use the `aria-label` attribute, if present.
@@ -403,7 +408,7 @@ export namespace Name {
       // Step 2F: Use the subtree content, if allowed.
       // https://w3c.github.io/accname/#step2F
       () => {
-        return fromContent(element, device, visited);
+        return fromDescendants(element, device, visited);
       },
 
       // Step 2I: Use a tooltip attribute, if present.
@@ -434,7 +439,7 @@ export namespace Name {
   /**
    * @internal
    */
-  export function fromContent(
+  export function fromDescendants(
     element: Element,
     device: Device,
     visited: Set<Element>
@@ -456,7 +461,12 @@ export namespace Name {
           return None;
         }
 
-        return Option.of(Name.of(data, Source.Content.of(element, names)));
+        return Option.of(
+          Name.of(
+            data,
+            names.map((name) => Source.descendant(element, name))
+          )
+        );
       });
   }
 
@@ -472,13 +482,13 @@ export namespace Name {
       return Branched.of(None);
     }
 
-    return Branched.of(Option.of(Name.of(data, Source.Label.of(attribute))));
+    return Branched.of(Option.of(Name.of(data, [Source.label(attribute)])));
   }
 
   /**
    * @internal
    */
-  export function fromReference(
+  export function fromReferences(
     attribute: Attribute,
     device: Device,
     visited: Set<Element>
@@ -505,7 +515,12 @@ export namespace Name {
           return None;
         }
 
-        return Option.of(Name.of(data, Source.Reference.of(attribute, names)));
+        return Option.of(
+          Name.of(
+            data,
+            names.map((name) => Source.reference(attribute, name))
+          )
+        );
       });
   }
 
@@ -519,7 +534,7 @@ export namespace Name {
       return Branched.of(None);
     }
 
-    return Branched.of(Option.of(Name.of(data, Source.Data.of(text))));
+    return Branched.of(Option.of(Name.of(data, [Source.data(text)])));
   }
 
   /**

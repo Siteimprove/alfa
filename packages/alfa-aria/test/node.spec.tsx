@@ -24,15 +24,15 @@ test(`.from() constructs an accessible node from an element`, (t) => {
         element,
         Option.of(Role.of("button")),
         Option.of(
-          Name.of(
-            "Hello world",
-            Name.Source.content(element, [
-              Name.of("Hello world", Name.Source.data(text)),
-            ])
-          )
+          Name.of("Hello world", [
+            Name.Source.descendant(
+              element,
+              Name.of("Hello world", [Name.Source.data(text)])
+            ),
+          ])
         ),
         [],
-        [Text.of(text, Name.of("Hello world", Name.Source.data(text)))]
+        [Text.of(text, Name.of("Hello world", [Name.Source.data(text)]))]
       ),
       [],
     ],

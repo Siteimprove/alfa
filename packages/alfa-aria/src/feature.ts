@@ -16,7 +16,7 @@ import { Role } from "./role";
 import type * as aria from ".";
 
 const { hasName, isElement } = Element;
-const { and } = Predicate;
+const { and, or } = Predicate;
 
 export class Feature {
   public static of(
@@ -73,6 +73,118 @@ export namespace Feature {
   }
 }
 
+const nameFromAlt = (element: Element) => {
+  for (const attribute of element.attribute("alt")) {
+    if (attribute.value !== "") {
+      return Name.fromLabel(attribute);
+    }
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromTitle = (element: Element) => {
+  for (const attribute of element.attribute("title")) {
+    if (attribute.value !== "") {
+      return Name.fromLabel(attribute);
+    }
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromPlaceholder = (element: Element) => {
+  for (const attribute of element.attribute("placeholder")) {
+    if (attribute.value !== "") {
+      return Name.fromLabel(attribute);
+    }
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromChild = (predicate: Predicate<Element>) => (
+  element: Element,
+  device: Device,
+  visited: Set<Element>
+) => {
+  for (const child of element.children().find(and(isElement, predicate))) {
+    return Name.fromDescendants(child, device, visited.add(child));
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromLabel = (
+  element: Element,
+  device: Device,
+  visited: Set<Element>
+) => {
+  const root = element.root();
+
+  for (const id of element.id) {
+    const target = root
+      .descendants()
+      .find(and(isElement, (element) => element.id.includes(id)));
+
+    if (target.includes(element)) {
+      continue;
+    } else {
+      return Branched.of(None);
+    }
+  }
+
+  const labels = root.descendants().filter(
+    and(
+      isElement,
+      and(
+        hasName("label"),
+        or(
+          (label) => label.descendants().includes(element),
+          (label) =>
+            label
+              .attribute("for")
+              .some((attribute) => element.id.includes(attribute.value))
+        )
+      )
+    )
+  );
+
+  return Branched.traverse(labels, (element) =>
+    Name.fromNode(element, device, visited).map(
+      (name) => [name, element] as const
+    )
+  )
+    .map((names) =>
+      [...names]
+        .filter(([name]) => name.isSome())
+        .map(([name, element]) => [name.get(), element] as const)
+    )
+    .map((names) => {
+      const data = names
+        .map(([name]) => name.value)
+        .join(" ")
+        .trim();
+
+      if (data === "") {
+        return None;
+      }
+
+      return Option.of(
+        Name.of(
+          data,
+          names.map(([name, element]) => {
+            for (const attribute of element.attribute("for")) {
+              return Name.Source.reference(attribute, name);
+            }
+
+            return Name.Source.ancestor(element, name);
+          })
+        )
+      );
+    });
+};
+
 type Features = {
   [N in Namespace]?: {
     [element: string]: Feature | undefined;
@@ -89,17 +201,7 @@ const Features: Features = {
       (element) =>
         element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
       () => [],
-      (element) => {
-        for (const attribute of element.attribute("alt")) {
-          if (attribute.value !== "") {
-            return Branched.of(
-              Option.of(Name.of(attribute.value, Name.Source.label(attribute)))
-            );
-          }
-        }
-
-        return Branched.of(None);
-      }
+      nameFromAlt
     ),
 
     article: Feature.of(() => Option.of(Role.of("article"))),
@@ -154,29 +256,13 @@ const Features: Features = {
           yield Attribute.of("aria-disabled", "true");
         }
       },
-      (element, device, visited) => {
-        for (const child of element
-          .children()
-          .find(and(isElement, hasName("legend")))) {
-          return Name.fromContent(child, device, visited.add(child));
-        }
-
-        return Branched.of(None);
-      }
+      nameFromChild(hasName("legend"))
     ),
 
     figure: Feature.of(
       () => Option.of(Role.of("figure")),
       () => [],
-      (element, device, visited) => {
-        for (const child of element
-          .children()
-          .find(and(isElement, hasName("figcaption")))) {
-          return Name.fromContent(child, device, visited.add(child));
-        }
-
-        return Branched.of(None);
-      }
+      nameFromChild(hasName("figcaption"))
     ),
 
     footer: Feature.of((element) =>
@@ -244,65 +330,69 @@ const Features: Features = {
         yield Role.of("img");
       },
       () => [],
-      (element) => {
-        for (const attribute of element.attribute("alt")) {
-          if (attribute.value !== "") {
-            return Branched.of(
-              Option.of(Name.of(attribute.value, Name.Source.label(attribute)))
-            );
-          }
-        }
-
-        return Branched.of(None);
-      }
+      nameFromAlt
     ),
 
     input: Feature.of(
-      (element) =>
-        element
+      (element): Option<Role> => {
+        const type = element
           .attribute("type")
-          .andThen<Role>((type) => {
-            switch (type.value.toLowerCase()) {
-              case "button":
-              case "image":
-              case "reset":
-              case "submit":
-                return Option.of(Role.of("button"));
+          .flatMap((attribute) =>
+            attribute.enumerate(
+              "button",
+              "image",
+              "reset",
+              "submit",
+              "checkbox",
+              "number",
+              "radio",
+              "range",
+              "search",
+              "email",
+              "tel",
+              "text",
+              "url"
+            )
+          )
+          .getOr("text");
 
-              case "checkbox":
-                return Option.of(Role.of("checkbox"));
+        switch (type) {
+          case "button":
+          case "image":
+          case "reset":
+          case "submit":
+            return Option.of(Role.of("button"));
 
-              case "number":
-                return Option.of(Role.of("spinbutton"));
+          case "checkbox":
+            return Option.of(Role.of("checkbox"));
 
-              case "radio":
-                return Option.of(Role.of("radio"));
+          case "number":
+            return Option.of(Role.of("spinbutton"));
 
-              case "range":
-                return Option.of(Role.of("slider"));
+          case "radio":
+            return Option.of(Role.of("radio"));
 
-              case "search":
-                return Option.of(
-                  Role.of(
-                    element.attribute("list").isSome()
-                      ? "combobox"
-                      : "searchbox"
-                  )
-                );
+          case "range":
+            return Option.of(Role.of("slider"));
 
-              case "email":
-              case "tel":
-              case "text":
-              case "url":
-              default:
-                return Option.of(
-                  Role.of(
-                    element.attribute("list").isSome() ? "combobox" : "textbox"
-                  )
-                );
-            }
-          })
-          .orElse(() => Option.of(Role.of("textbox"))),
+          case "search":
+            return Option.of(
+              Role.of(
+                element.attribute("list").isSome() ? "combobox" : "searchbox"
+              )
+            );
+
+          case "email":
+          case "tel":
+          case "text":
+          case "url":
+            return Option.of(
+              Role.of(
+                element.attribute("list").isSome() ? "combobox" : "textbox"
+              )
+            );
+        }
+      },
       function* (element) {
         // https://w3c.github.io/html-aam/#att-checked
         yield Attribute.of(
@@ -344,7 +434,8 @@ const Features: Features = {
         for (const { value } of element.attribute("placeholder")) {
           yield Attribute.of("aria-placeholder", value);
         }
-      }
+      },
+      nameFromLabel
     ),
 
     li: Feature.of((element) =>
@@ -493,7 +584,8 @@ const Features: Features = {
         for (const { value } of element.attribute("placeholder")) {
           yield Attribute.of("aria-placeholder", value);
         }
-      }
+      },
+      nameFromLabel
     ),
 
     tfoot: Feature.of(() => Option.of(Role.of("rowgroup"))),
