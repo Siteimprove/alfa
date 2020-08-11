@@ -32,6 +32,26 @@ test("#size returns the size of a map", (t) => {
   t.equal(map.size, 4);
 });
 
+test("#distinct() removes duplicate values from a map", (t) => {
+  t.deepEqual(
+    [
+      ...Map.of(
+        ["a", 1],
+        ["b", 1],
+        ["c", 1],
+        ["d", 2],
+        ["e", 3],
+        ["f", 3]
+      ).distinct(),
+    ],
+    [
+      ["e", 3],
+      ["b", 1],
+      ["d", 2],
+    ]
+  );
+});
+
 test("#has() returns true if a key exists in a map", (t) => {
   t(map.has("foo"));
 });

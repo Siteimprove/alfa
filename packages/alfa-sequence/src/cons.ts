@@ -7,6 +7,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -209,6 +210,31 @@ export class Cons<T> implements Sequence<T> {
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
     );
+  }
+
+  public distinct(seen: Set<T> = Set.empty()): Sequence<T> {
+    let next: Cons<T> = this;
+
+    while (true) {
+      if (seen.has(next._head)) {
+        const tail = next._tail.force();
+
+        if (Cons.isCons<T>(tail)) {
+          next = tail;
+        } else {
+          return Nil;
+        }
+      } else {
+        return Cons.of(
+          next._head,
+          this._tail.map((tail) =>
+            Cons.isCons<T>(tail)
+              ? tail.distinct(seen.add(next._head))
+              : tail.distinct()
+          )
+        );
+      }
+    }
   }
 
   public get(index: number): Option<T> {

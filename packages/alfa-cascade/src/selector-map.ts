@@ -6,6 +6,7 @@ import {
   StyleRule,
   Sheet,
   MediaRule,
+  ImportRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
@@ -89,34 +90,60 @@ export class SelectorMap {
     let order = 0;
 
     const visit = (rule: Rule) => {
-      if (MediaRule.isMedia(rule)) {
+      if (StyleRule.isStyle(rule)) {
+        // Style rules with empty style blocks aren't relevant and so can be
+        // skipped entirely.
+        if (rule.style.isEmpty()) {
+          return;
+        }
+
+        for (const selector of Selector.parse(rule.selector)) {
+          const origin = rule.owner.includes(UserAgent)
+            ? Origin.UserAgent
+            : Origin.Author;
+
+          order++;
+
+          for (const part of selector) {
+            this._add(rule, part, rule.style, origin, order);
+          }
+        }
+      }
+
+      // For media rules, we recurse into the child rules if and only if the
+      // media condition matches the device.
+      else if (MediaRule.isMedia(rule)) {
         const query = Media.parse(rule.condition);
 
-        if (query.isNone() || !query.get().matches(device)) {
-          return;
-        }
-      }
-
-      if (StyleRule.isStyle(rule)) {
-        const selector = Selector.parse(rule.selector);
-
-        if (selector.isNone() || Iterable.isEmpty(rule.style)) {
+        if (query.none((query) => query.matches(device))) {
           return;
         }
 
-        const origin = rule.owner.includes(UserAgent)
-          ? Origin.UserAgent
-          : Origin.Author;
-
-        order++;
-
-        for (const part of selector.get()) {
-          this._add(rule, part, rule.style, origin, order);
+        for (const child of rule.children()) {
+          visit(child);
         }
       }
 
-      for (const child of rule.children()) {
-        visit(child);
+      // For import rules, we recurse into the imported style sheet if and only
+      // if the import condition matches the device.
+      else if (ImportRule.isImport(rule)) {
+        const query = Media.parse(rule.condition);
+
+        if (query.none((query) => query.matches(device))) {
+          return;
+        }
+
+        for (const child of rule.sheet.children()) {
+          visit(child);
+        }
+      }
+
+      // Otherwise, we recurse into whichever child rules are declared by the
+      // current rule.
+      else {
+        for (const child of rule.children()) {
+          visit(child);
+        }
       }
     };
 

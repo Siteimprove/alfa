@@ -152,6 +152,20 @@ export namespace Iterable {
     );
   }
 
+  export function* distinct<T>(iterable: Iterable<T>): Iterable<T> {
+    const seen: Array<T> = [];
+
+    for (const value of iterable) {
+      if (seen.some(Predicate.equals(value))) {
+        continue;
+      }
+
+      seen.push(value);
+
+      yield value;
+    }
+  }
+
   export function get<T>(iterable: Iterable<T>, index: number): Option<T> {
     return index < 0 ? None : first(skip(iterable, index));
   }

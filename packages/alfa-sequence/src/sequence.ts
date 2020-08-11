@@ -24,6 +24,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   some(predicate: Predicate<T, T, [number]>): boolean;
   every(predicate: Predicate<T, T, [number]>): boolean;
   count(predicate: Predicate<T, T, [number]>): number;
+  distinct(): Sequence<T>;
 
   // Indexed<T> methods
 

@@ -29,8 +29,10 @@ export interface Option<T>
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
+  reject(predicate: Predicate<T>): Option<T>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;
+  none(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;

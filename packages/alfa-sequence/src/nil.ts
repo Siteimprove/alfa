@@ -59,6 +59,10 @@ export const Nil: Nil = new (class Nil {
     return 0;
   }
 
+  public distinct(): Nil {
+    return this;
+  }
+
   public get(): None {
     return None;
   }

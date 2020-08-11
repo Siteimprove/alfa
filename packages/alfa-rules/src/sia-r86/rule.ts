@@ -12,7 +12,7 @@ const { isElement } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r86.html",
   evaluate({ device, document }) {
     return {
       applicability() {

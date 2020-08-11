@@ -1,4 +1,5 @@
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Option } from "./option";
@@ -35,12 +36,20 @@ export const None: None = new (class None {
     return this;
   }
 
+  public reject(): None {
+    return this;
+  }
+
   public includes(): boolean {
     return false;
   }
 
   public some(): boolean {
     return false;
+  }
+
+  public none(): boolean {
+    return true;
   }
 
   public every(): boolean {
