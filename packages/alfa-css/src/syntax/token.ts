@@ -155,6 +155,10 @@ export namespace Token {
       return this._value;
     }
 
+    public get mirror(): CloseParenthesis {
+      return CloseParenthesis.of();
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Function && value._value === this._value;
     }
@@ -908,6 +912,10 @@ export namespace Token {
       return "open-parenthesis";
     }
 
+    public get mirror(): CloseParenthesis {
+      return CloseParenthesis.of();
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof OpenParenthesis;
     }
@@ -946,6 +954,10 @@ export namespace Token {
 
     public get type(): "close-parenthesis" {
       return "close-parenthesis";
+    }
+
+    public get mirror(): OpenParenthesis {
+      return OpenParenthesis.of();
     }
 
     public equals(value: unknown): value is this {
@@ -990,6 +1002,10 @@ export namespace Token {
       return "open-square-bracket";
     }
 
+    public get mirror(): CloseSquareBracket {
+      return CloseSquareBracket.of();
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof OpenSquareBracket;
     }
@@ -1030,6 +1046,10 @@ export namespace Token {
 
     public get type(): "close-square-bracket" {
       return "close-square-bracket";
+    }
+
+    public get mirror(): OpenSquareBracket {
+      return OpenSquareBracket.of();
     }
 
     public equals(value: unknown): value is this {
@@ -1074,6 +1094,10 @@ export namespace Token {
       return "open-curly-bracket";
     }
 
+    public get mirror(): CloseCurlyBracket {
+      return CloseCurlyBracket.of();
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof OpenCurlyBracket;
     }
@@ -1114,6 +1138,10 @@ export namespace Token {
 
     public get type(): "close-curly-bracket" {
       return "close-curly-bracket";
+    }
+
+    public get mirror(): OpenCurlyBracket {
+      return OpenCurlyBracket.of();
     }
 
     public equals(value: unknown): value is this {
