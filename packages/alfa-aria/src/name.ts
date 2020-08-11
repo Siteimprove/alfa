@@ -7,9 +7,12 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Set } from "@siteimprove/alfa-set";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
+
+import { Feature } from "./feature";
 
 const { hasId, isElement } = Element;
 const { isText } = Text;
@@ -37,7 +40,7 @@ export class Name implements Equatable, Serializable {
   }
 
   public isEmpty(): boolean {
-    return this._value === "";
+    return this._value.length === 0;
   }
 
   public equals(value: unknown): value is this {
@@ -324,16 +327,39 @@ export namespace Name {
     node: Element | Text,
     device: Device
   ): Branched<Option<Name>, Browser> {
-    return isElement(node) ? fromElement(node, device) : fromText(node, device);
+    return fromNode(node, device, Set.empty());
   }
 
-  function fromElement(
+  /**
+   * @internal
+   */
+  export function fromNode(
+    node: Element | Text,
+    device: Device,
+    visited: Set<Element>
+  ): Branched<Option<Name>, Browser> {
+    return isElement(node)
+      ? fromElement(node, device, visited)
+      : fromText(node);
+  }
+
+  /**
+   * @internal
+   */
+  export function fromElement(
     element: Element,
-    device: Device
+    device: Device,
+    visited: Set<Element>
   ): Branched<Option<Name>, Browser> {
     const empty = Branched.of(None);
 
-    return fromSteps([
+    if (visited.has(element)) {
+      return empty;
+    } else {
+      visited = visited.add(element);
+    }
+
+    return fromSteps(
       // Step 2B: Use the `aria-labelledby` attribute, if present.
       // https://w3c.github.io/accname/#step2B
       () => {
@@ -343,7 +369,7 @@ export namespace Name {
           return empty;
         }
 
-        return fromReference(attribute.get(), device);
+        return fromReference(attribute.get(), device, visited);
       },
 
       // Step 2C: Use the `aria-label` attribute, if present.
@@ -355,33 +381,67 @@ export namespace Name {
           return empty;
         }
 
-        return fromLabel(attribute.get(), device);
+        return fromLabel(attribute.get());
+      },
+
+      // Step 2D: Use native features, if present.
+      // https://w3c.github.io/accname/#step2D
+      () => {
+        if (element.namespace.isNone()) {
+          return empty;
+        }
+
+        const feature = Feature.lookup(element.namespace.get(), element.name);
+
+        if (feature.isNone()) {
+          return empty;
+        }
+
+        return feature.get().name(element, device, visited);
       },
 
       // Step 2F: Use the subtree content, if allowed.
       // https://w3c.github.io/accname/#step2F
       () => {
-        return fromContent(element, device);
+        return fromContent(element, device, visited);
       },
-    ]);
+
+      // Step 2I: Use a tooltip attribute, if present.
+      // https://w3c.github.io/accname/#step2I
+      () => {
+        // The only known tooltip attribute is `title`, which is accepted by
+        // both HTML and SVG elements.
+        const attribute = element.attribute("title");
+
+        if (attribute.isNone()) {
+          return empty;
+        }
+
+        return fromLabel(attribute.get());
+      }
+    );
   }
 
-  function fromText(
-    text: Text,
-    device: Device
-  ): Branched<Option<Name>, Browser> {
+  /**
+   * @internal
+   */
+  export function fromText(text: Text): Branched<Option<Name>, Browser> {
     // Step 2G: Use the data of the text node.
     // https://w3c.github.io/accname/#step2G
-    return fromData(text, device);
+    return fromData(text);
   }
 
-  function fromContent(
+  /**
+   * @internal
+   */
+  export function fromContent(
     element: Element,
-    device: Device
+    device: Device,
+    visited: Set<Element>
   ): Branched<Option<Name>, Browser> {
     return Branched.traverse(
       element.children().filter(or(isText, isElement)),
-      (element) => from(element, device)
+      (element) => fromNode(element, device, visited)
     )
       .map((names) =>
         [...names].filter((name) => name.isSome()).map((name) => name.get())
@@ -400,9 +460,11 @@ export namespace Name {
       });
   }
 
-  function fromLabel(
-    attribute: Attribute,
-    device: Device
+  /**
+   * @internal
+   */
+  export function fromLabel(
+    attribute: Attribute
   ): Branched<Option<Name>, Browser> {
     const data = flatten(attribute.value).trim();
 
@@ -413,9 +475,13 @@ export namespace Name {
     return Branched.of(Option.of(Name.of(data, Source.Label.of(attribute))));
   }
 
-  function fromReference(
+  /**
+   * @internal
+   */
+  export function fromReference(
     attribute: Attribute,
-    device: Device
+    device: Device,
+    visited: Set<Element>
   ): Branched<Option<Name>, Browser> {
     const root = attribute.owner.get().root();
 
@@ -423,7 +489,9 @@ export namespace Name {
       .descendants()
       .filter(and(isElement, hasId(equals(...attribute.tokens()))));
 
-    return Branched.traverse(references, (element) => from(element, device))
+    return Branched.traverse(references, (element) =>
+      fromNode(element, device, visited)
+    )
       .map((names) =>
         [...names].filter((name) => name.isSome()).map((name) => name.get())
       )
@@ -441,10 +509,10 @@ export namespace Name {
       });
   }
 
-  function fromData(
-    text: Text,
-    device: Device
-  ): Branched<Option<Name>, Browser> {
+  /**
+   * @internal
+   */
+  export function fromData(text: Text): Branched<Option<Name>, Browser> {
     const data = flatten(text.data);
 
     if (data === "") {
@@ -454,8 +522,11 @@ export namespace Name {
     return Branched.of(Option.of(Name.of(data, Source.Data.of(text))));
   }
 
-  function fromSteps(
-    steps: Array<Thunk<Branched<Option<Name>, Browser>>>
+  /**
+   * @internal
+   */
+  export function fromSteps(
+    ...steps: Array<Thunk<Branched<Option<Name>, Browser>>>
   ): Branched<Option<Name>, Browser> {
     const step = (
       name: Branched<Option<Name>, Browser>,
