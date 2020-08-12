@@ -23,6 +23,7 @@
     "src/style.ts",
     "src/value.ts",
     "test/property/background.spec.tsx",
+    "test/property/combinator/any.spec.ts",
     "test/style.spec.tsx"
   ],
   "references": [
