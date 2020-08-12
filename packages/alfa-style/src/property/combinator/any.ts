@@ -14,34 +14,31 @@ export function any<I, T, E = never, A extends [] = []>(
     const seen = parsers.map(() => false);
     const values: Array<T> = [];
 
-    outer: while (true) {
-      let error: Err<E> | undefined;
+    let error: Err<E> | undefined;
 
-      for (let i = 0, n = parsers.length; i < n; i++) {
-        if (seen[i]) {
-          continue;
-        }
-
-        const result = parsers[i](input, ...args);
-
-        if (result.isErr()) {
-          error = error ?? result;
-        } else {
-          const [remainder, value] = result.get();
-
-          values.push(value);
-          input = remainder;
-          seen[i] = true;
-
-          continue outer;
-        }
+    for (let i = 0, n = parsers.length; i < n; i++) {
+      if (seen[i]) {
+        continue;
       }
 
-      if (values.length === 0) {
-        return error!;
-      }
+      const result = parsers[i](input, ...args);
 
-      return Result.of([input, values]);
+      if (result.isErr()) {
+        error = error ?? result;
+      } else {
+        const [remainder, value] = result.get();
+
+        values.push(value);
+        input = remainder;
+        seen[i] = true;
+        i = -1; // Restart the loop
+      }
     }
+
+    if (values.length === 0) {
+      return error!;
+    }
+
+    return Result.of([input, values]);
   };
 }
