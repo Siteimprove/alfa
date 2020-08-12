@@ -6,10 +6,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
 
 import { Angle } from "../angle";
 import { Gradient } from "../gradient";
-import { Position } from "../position";
 
 const { map, either, pair, option, left, right, delimited } = Parser;
 
@@ -19,7 +19,7 @@ const { map, either, pair, option, left, right, delimited } = Parser;
 export class Linear<
   I extends Gradient.Item = Gradient.Item,
   D extends Linear.Direction = Linear.Direction
-> implements Equatable, Hashable, Serializable {
+> extends Value<"gradient"> {
   public static of<I extends Gradient.Item, D extends Linear.Direction>(
     direction: D,
     items: Iterable<I>,
@@ -33,6 +33,7 @@ export class Linear<
   private readonly _repeats: boolean;
 
   private constructor(direction: D, items: Iterable<I>, repeats: boolean) {
+    super();
     this._direction = direction;
     this._items = [...items];
     this._repeats = repeats;
@@ -96,8 +97,7 @@ export class Linear<
 }
 
 export namespace Linear {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "gradient";
     kind: "linear";
     direction: Direction.JSON;
@@ -109,6 +109,30 @@ export namespace Linear {
 
   export namespace Direction {
     export type JSON = Angle.JSON | Side.JSON | Corner.JSON;
+  }
+
+  export type Position = Position.Vertical | Position.Horizontal;
+
+  export namespace Position {
+    export type Vertical = "top" | "bottom";
+
+    export type Horizontal = "left" | "right";
+
+    export const parseVertical = map(
+      Token.parseIdent(
+        (ident) => ident.value === "top" || ident.value === "left"
+      ),
+      (ident) => ident.value as Vertical
+    );
+
+    export const parseHorizontal = map(
+      Token.parseIdent(
+        (ident) => ident.value === "left" || ident.value === "right"
+      ),
+      (ident) => ident.value as Horizontal
+    );
+
+    export const parse = either(parseVertical, parseHorizontal);
   }
 
   export class Side implements Equatable, Hashable, Serializable {
@@ -230,10 +254,7 @@ export namespace Linear {
   const parseSide = map(
     right(
       Token.parseIdent("to"),
-      right(
-        Token.parseWhitespace,
-        either(Position.parseVertical, Position.parseHorizontal)
-      )
+      right(option(Token.parseWhitespace), Position.parse)
     ),
     (side) => Side.of(side)
   );
@@ -249,14 +270,14 @@ export namespace Linear {
         map(
           pair(
             Position.parseVertical,
-            right(Token.parseWhitespace, Position.parseHorizontal)
+            right(option(Token.parseWhitespace), Position.parseHorizontal)
           ),
           ([vertical, horizontal]) => Corner.of(vertical, horizontal)
         ),
         map(
           pair(
             Position.parseHorizontal,
-            right(Token.parseWhitespace, Position.parseVertical)
+            right(option(Token.parseWhitespace), Position.parseVertical)
           ),
           ([horizontal, vertical]) => Corner.of(vertical, horizontal)
         )

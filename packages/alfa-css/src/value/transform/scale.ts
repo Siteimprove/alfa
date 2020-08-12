@@ -1,15 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Number } from "../number";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Scale implements Equatable, Serializable {
+export class Scale extends Value<"transform"> {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x, y);
   }
@@ -18,11 +17,16 @@ export class Scale implements Equatable, Serializable {
   private readonly _y: Number;
 
   private constructor(x: Number, y: Number) {
+    super();
     this._x = x;
     this._y = y;
   }
 
-  public get type(): "scale" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "scale" {
     return "scale";
   }
 
@@ -42,9 +46,15 @@ export class Scale implements Equatable, Serializable {
     );
   }
 
+  public hash(hash: Hash): void {
+    this._x.hash(hash);
+    this._y.hash(hash);
+  }
+
   public toJSON(): Scale.JSON {
     return {
-      type: "scale",
+      type: "transform",
+      kind: "scale",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
     };
@@ -68,9 +78,9 @@ export class Scale implements Equatable, Serializable {
 }
 
 export namespace Scale {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "scale";
+  export interface JSON extends Value.JSON {
+    type: "transform";
+    kind: "scale";
     x: Number.JSON;
     y: Number.JSON;
   }

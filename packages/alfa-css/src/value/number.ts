@@ -8,7 +8,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#numbers
  */
-export class Number extends Numeric {
+export class Number extends Numeric<"number"> {
   public static of(value: number): Number {
     return new Number(value);
   }
@@ -30,10 +30,6 @@ export class Number extends Numeric {
       type: "number",
       value: this._value,
     };
-  }
-
-  public toString(): string {
-    return `${this._value}`;
   }
 }
 

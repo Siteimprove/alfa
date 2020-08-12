@@ -106,7 +106,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
   }
 
   for (const transform of value) {
-    switch (transform.type) {
+    switch (transform.kind) {
       case "rotate":
       case "matrix":
         return true;
@@ -179,7 +179,7 @@ function getRotation(element: Element, device: Device): Option<number> {
     }
 
     for (const fn of transform) {
-      switch (fn.type) {
+      switch (fn.kind) {
         case "rotate": {
           const { x, y, z, angle } = fn;
 
