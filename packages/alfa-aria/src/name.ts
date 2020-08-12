@@ -1,18 +1,20 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Text } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Set } from "@siteimprove/alfa-set";
+import { Style } from "@siteimprove/alfa-style";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Feature } from "./feature";
+import { Role } from "./role";
 
 const { hasId, isElement } = Element;
 const { isText } = Text;
@@ -328,11 +330,51 @@ export namespace Name {
     }
   }
 
+  /**
+   * @internal
+   */
+  export interface State {
+    /**
+     * The elements that have been seen by the name computation so far. This is
+     * used for detecting circular references resulting from things such as the
+     * `aria-labelledby` attribute and form controls that get their name from
+     * a containing `<label>` element.
+     */
+    readonly visited: Set<Element>;
+
+    /**
+     * Whether or not the name computation is the result of recursion.
+     */
+    readonly isRecursing: boolean;
+
+    /**
+     * Whether or not the name computation is the result of a reference.
+     */
+    readonly isReferencing: boolean;
+
+    /**
+     * Whether or not the name computation is descending into a subtree.
+     */
+    readonly isDescending: boolean;
+  }
+
+  export namespace State {
+    /**
+     * The initial, empty state of the name computation.
+     */
+    export const empty: State = {
+      visited: Set.empty(),
+      isRecursing: false,
+      isReferencing: false,
+      isDescending: false,
+    };
+  }
+
   export function from(
     node: Element | Text,
     device: Device
   ): Branched<Option<Name>, Browser> {
-    return fromNode(node, device, Set.empty());
+    return fromNode(node, device, State.empty);
   }
 
   /**
@@ -341,11 +383,9 @@ export namespace Name {
   export function fromNode(
     node: Element | Text,
     device: Device,
-    visited: Set<Element>
+    state: State
   ): Branched<Option<Name>, Browser> {
-    return isElement(node)
-      ? fromElement(node, device, visited)
-      : fromText(node);
+    return isElement(node) ? fromElement(node, device, state) : fromText(node);
   }
 
   /**
@@ -354,77 +394,115 @@ export namespace Name {
   export function fromElement(
     element: Element,
     device: Device,
-    visited: Set<Element>
+    state: State
   ): Branched<Option<Name>, Browser> {
     const empty = Branched.of(None);
 
-    if (visited.has(element)) {
+    if (state.visited.has(element)) {
       return empty;
     } else {
-      visited = visited.add(element);
+      state = { ...state, visited: state.visited.add(element) };
     }
 
-    return fromSteps(
-      // Step 2B: Use the `aria-labelledby` attribute, if present.
-      // https://w3c.github.io/accname/#step2B
-      () => {
-        const attribute = element.attribute("aria-labelledby");
-
-        if (attribute.isNone()) {
-          return empty;
-        }
-
-        return fromReferences(attribute.get(), device, visited);
-      },
-
-      // Step 2C: Use the `aria-label` attribute, if present.
-      // https://w3c.github.io/accname/#step2C
-      () => {
-        const attribute = element.attribute("aria-label");
-
-        if (attribute.isNone()) {
-          return empty;
-        }
-
-        return fromLabel(attribute.get());
-      },
-
-      // Step 2D: Use native features, if present.
-      // https://w3c.github.io/accname/#step2D
-      () => {
-        if (element.namespace.isNone()) {
-          return empty;
-        }
-
-        const feature = Feature.lookup(element.namespace.get(), element.name);
-
-        if (feature.isNone()) {
-          return empty;
-        }
-
-        return feature.get().name(element, device, visited);
-      },
-
-      // Step 2F: Use the subtree content, if allowed.
-      // https://w3c.github.io/accname/#step2F
-      () => {
-        return fromDescendants(element, device, visited);
-      },
-
-      // Step 2I: Use a tooltip attribute, if present.
-      // https://w3c.github.io/accname/#step2I
-      () => {
-        // The only known tooltip attribute is `title`, which is accepted by
-        // both HTML and SVG elements.
-        const attribute = element.attribute("title");
-
-        if (attribute.isNone()) {
-          return empty;
-        }
-
-        return fromLabel(attribute.get());
+    return Role.from(element).flatMap((role) => {
+      // Step 1: Does the role prohibit naming?
+      // https://w3c.github.io/accname/#step1
+      if (role.some((role) => role.isNameProhibited())) {
+        return empty;
       }
-    );
+
+      // Step 2A: Is the element hidden and not referenced?
+      // https://w3c.github.io/accname/#step2A
+      if (!state.isReferencing && !isRendered(element, device)) {
+        return empty;
+      }
+
+      return fromSteps(
+        // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
+        // https://w3c.github.io/accname/#step2B
+        () => {
+          if (state.isReferencing) {
+            return empty;
+          }
+
+          const attribute = element.attribute("aria-labelledby");
+
+          if (attribute.isNone()) {
+            return empty;
+          }
+
+          return fromReferences(attribute.get(), device, state);
+        },
+
+        // Step 2C: Use the `aria-label` attribute, if present.
+        // https://w3c.github.io/accname/#step2C
+        () => {
+          const attribute = element.attribute("aria-label");
+
+          if (attribute.isNone()) {
+            return empty;
+          }
+
+          return fromLabel(attribute.get());
+        },
+
+        // Step 2D: Use native features, if present and allowed.
+        // https://w3c.github.io/accname/#step2D
+        () => {
+          if (
+            role.some((role) => role.isPresentational()) ||
+            element.namespace.isNone()
+          ) {
+            return empty;
+          }
+
+          const feature = Feature.lookup(element.namespace.get(), element.name);
+
+          if (feature.isNone()) {
+            return empty;
+          }
+
+          return feature.get().name(element, device, state);
+        },
+
+        // Step 2F: Use the subtree content, if referencing and allowed.
+        // https://w3c.github.io/accname/#step2F
+        () => {
+          if (
+            !state.isReferencing &&
+            !role.every((role) => role.isNamedBy("contents"))
+          ) {
+            return empty;
+          }
+
+          return fromDescendants(element, device, state);
+        },
+
+        // Step 2H: Use the subtree content, if descending.
+        // https://w3c.github.io/accname/#step2H
+        () => {
+          if (!state.isDescending) {
+            return empty;
+          }
+
+          return fromDescendants(element, device, state);
+        },
+
+        // Step 2I: Use a tooltip attribute, if present.
+        // https://w3c.github.io/accname/#step2I
+        () => {
+          // The only known tooltip attribute is `title`, which is accepted by
+          // both HTML and SVG elements.
+          const attribute = element.attribute("title");
+
+          if (attribute.isNone()) {
+            return empty;
+          }
+
+          return fromLabel(attribute.get());
+        }
+      );
+    });
   }
 
   /**
@@ -442,11 +520,16 @@ export namespace Name {
   export function fromDescendants(
     element: Element,
     device: Device,
-    visited: Set<Element>
+    state: State
   ): Branched<Option<Name>, Browser> {
     return Branched.traverse(
       element.children().filter(or(isText, isElement)),
-      (element) => fromNode(element, device, visited)
+      (element) =>
+        fromNode(element, device, {
+          ...state,
+          isRecursing: true,
+          isDescending: true,
+        })
     )
       .map((names) =>
         [...names].filter((name) => name.isSome()).map((name) => name.get())
@@ -491,7 +574,7 @@ export namespace Name {
   export function fromReferences(
     attribute: Attribute,
     device: Device,
-    visited: Set<Element>
+    state: State
   ): Branched<Option<Name>, Browser> {
     const root = attribute.owner.get().root();
 
@@ -500,7 +583,12 @@ export namespace Name {
       .filter(and(isElement, hasId(equals(...attribute.tokens()))));
 
     return Branched.traverse(references, (element) =>
-      fromNode(element, device, visited)
+      fromNode(element, device, {
+        ...state,
+        isRecursing: true,
+        isReferencing: true,
+        isDescending: false,
+      })
     )
       .map((names) =>
         [...names].filter((name) => name.isSome()).map((name) => name.get())
@@ -566,4 +654,20 @@ export namespace Name {
 
 function flatten(string: string): string {
   return string.replace(/\s+/g, " ");
+}
+
+function isRendered(node: Node, device: Device): boolean {
+  if (Element.isElement(node)) {
+    const display = Style.from(node, device).computed("display").value;
+
+    const [outside] = display;
+
+    if (outside.value === "none") {
+      return false;
+    }
+  }
+
+  return node
+    .parent({ flattened: true })
+    .every((parent) => isRendered(parent, device));
 }

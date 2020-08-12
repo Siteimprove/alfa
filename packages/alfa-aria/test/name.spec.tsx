@@ -3,7 +3,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 
 import { Name } from "../src/name";
 
@@ -368,6 +368,48 @@ test(`.from() determines the name of an <input> element with both a <label>
               ),
             ])
           ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of a <button> element with a role of
+      presentation`, (t) => {
+  const text = h.text("Hello world");
+
+  // Due to presentational role conflict resolution, the role of `presentation`
+  // is ignored to ensure that the button, which is focusable, remains operable.
+  const button = <button role="presentation">{text}</button>;
+
+  t.deepEqual(Name.from(button, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            button,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of a <img> element with a an empty alt
+      attribute and an aria-label attribute`, (t) => {
+  // Due to presentational role conflict resolution, the role of `presentation`
+  // is ignored to ensure that the `aria-label` attribute, which is a global
+  // `aria-*` attribute, is exposed.
+  const img = <img alt="" aria-label="Hello world" />;
+
+  t.deepEqual(Name.from(img, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.label(img.attribute("aria-label").get()),
         ])
       ),
       [],

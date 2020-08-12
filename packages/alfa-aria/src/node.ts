@@ -264,15 +264,7 @@ export namespace Node {
             return Branched.of(Container.of(node, children));
           }
 
-          return Role.from(node).flatMap<Node>((roles) => {
-            // If the role is not allowed to be presentational, reject all
-            // presentational roles.
-            if (!isAllowedPresentational(node)) {
-              roles = roles.reject((role) => role.isPresentational());
-            }
-
-            const role = roles.first();
-
+          return Role.from(node).flatMap<Node>((role) => {
             if (role.some((role) => role.isPresentational())) {
               return Branched.of(Container.of(node, children));
             }
@@ -324,23 +316,3 @@ export namespace Node {
 
   export const { hasName, hasRole } = predicate;
 }
-
-const hasGlobalAttributes: Predicate<dom.Element> = (element) => {
-  for (const attribute of Role.of("roletype").attributes) {
-    if (element.attribute(attribute).isSome()) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-const isFocusable: Predicate<dom.Element> = and(
-  dom.Element.hasTabIndex(),
-  not(dom.Element.isDisabled)
-);
-
-const isAllowedPresentational: Predicate<dom.Element> = nor(
-  hasGlobalAttributes,
-  isFocusable
-);

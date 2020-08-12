@@ -3,7 +3,10 @@ import { Browser } from "@siteimprove/alfa-compatibility";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
@@ -14,6 +17,8 @@ import { Feature } from "./feature";
 import { Roles } from "./role/data";
 
 import * as predicate from "./role/predicate";
+
+const { and, not, nor } = Predicate;
 
 export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable {
@@ -274,6 +279,11 @@ export namespace Role {
 
   /**
    * The names of all presentational roles.
+   *
+   * @remarks
+   * In WAI-ARIA, the role `none` is defined to be synonymous with the role
+   * `presentation`. We therefore refer collectively to the two roles as the
+   * presentational roles.
    */
   export type Presentational = "presentation" | "none";
 
@@ -343,27 +353,21 @@ export namespace Role {
   }
 
   /**
-   * Get the roles assigned both explicitly and implicitly to an element.
+   * Get the role assigned either explicitly and implicitly to an element, if
+   * any.
    */
-  export function from(element: Element): Branched<Sequence<Role>, Browser> {
-    return (
-      fromExplicit(element)
-        .flatMap((explicit) =>
-          fromImplicit(element).map((implicit) => explicit.concat(implicit))
-        )
-
-        // There may be an overlap between the explicit and implicit roles so
-        // we filter out duplicates.
-        .distinct()
+  export function from(element: Element): Branched<Option<Role>, Browser> {
+    return fromExplicit(element).flatMap((explicit) =>
+      fromImplicit(element).map((implicit) => explicit.or(implicit))
     );
   }
 
   /**
-   * Get the roles explicitly assigned to an element.
+   * Get the role explicitly assigned to an element, if any.
    */
   export function fromExplicit(
     element: Element
-  ): Branched<Sequence<Role>, Browser> {
+  ): Branched<Option<Role>, Browser> {
     const roles: Sequence<string> = element
       .attribute("role")
       .map((attribute) => attribute.tokens())
@@ -388,27 +392,37 @@ export namespace Role {
             // allowed to be used by authors; we therefore filter them out.
             .reject((role) => role.isAbstract())
 
-            // The same role may be passed multiple times so we filter out
-            // duplicates.
-            .distinct()
+            // If the element is not allowed to be presentational, reject all
+            // presentational roles.
+            .reject((role) =>
+              isAllowedPresentational(element) ? false : role.isPresentational()
+            )
+
+            .first()
         )
     );
   }
 
   /**
-   * Get the roles implicitly assigned to an element.
+   * Get the role implicitly assigned to an element, if any.
    */
   export function fromImplicit(
     element: Element
-  ): Branched<Sequence<Role>, Browser> {
+  ): Branched<Option<Role>, Browser> {
     return Branched.of(
-      element.namespace
-        .flatMap((namespace) =>
-          Feature.lookup(namespace, element.name).map((feature) =>
-            Sequence.from(feature.role(element))
-          )
+      element.namespace.flatMap((namespace) =>
+        Feature.lookup(namespace, element.name).flatMap((feature) =>
+          Sequence.from(feature.role(element))
+
+            // If the element is not allowed to be presentational, reject all
+            // presentational roles.
+            .reject((role) =>
+              isAllowedPresentational(element) ? false : role.isPresentational()
+            )
+
+            .first()
         )
-        .getOrElse(() => Sequence.empty())
+      )
     );
   }
 
@@ -416,3 +430,28 @@ export namespace Role {
 }
 
 type Members<T> = T extends Iterable<infer T> ? T : never;
+
+/**
+ * Check if an element has one or more global `aria-*` attributes.
+ */
+const hasGlobalAttributes: Predicate<Element> = (element) =>
+  Iterable.some(Role.of("roletype").attributes, (attribute) =>
+    element.attribute(attribute).isSome()
+  );
+
+/**
+ * Check if an element is potentially focusable, not accounting for whether or
+ * not the element is rendered.
+ */
+const isPotentiallyFocusable: Predicate<Element> = and(
+  Element.hasTabIndex(),
+  not(Element.isDisabled)
+);
+
+/**
+ * Check if an element is allowed to be assigned a presentational role.
+ */
+const isAllowedPresentational: Predicate<Element> = nor(
+  hasGlobalAttributes,
+  isPotentiallyFocusable
+);

@@ -18,6 +18,9 @@ import type * as aria from ".";
 const { hasName, isElement } = Element;
 const { and, or } = Predicate;
 
+/**
+ * @internal
+ */
 export class Feature {
   public static of(
     role: Feature.Aspect.Role = () => [],
@@ -54,6 +57,9 @@ export class Feature {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Feature {
   export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element, T, A>;
 
@@ -64,7 +70,7 @@ export namespace Feature {
 
     export type Name = Aspect<
       Branched<Option<aria.Name>, Browser>,
-      [Device, Set<Element>]
+      [Device, aria.Name.State]
     >;
   }
 
@@ -106,20 +112,19 @@ const nameFromPlaceholder = (element: Element) => {
 const nameFromChild = (predicate: Predicate<Element>) => (
   element: Element,
   device: Device,
-  visited: Set<Element>
+  state: Name.State
 ) => {
   for (const child of element.children().find(and(isElement, predicate))) {
-    return Name.fromDescendants(child, device, visited.add(child));
+    return Name.fromDescendants(child, device, {
+      ...state,
+      visited: state.visited.add(child),
+    });
   }
 
   return Branched.of(None);
 };
 
-const nameFromLabel = (
-  element: Element,
-  device: Device,
-  visited: Set<Element>
-) => {
+const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   const root = element.root();
 
   for (const id of element.id) {
@@ -151,9 +156,12 @@ const nameFromLabel = (
   );
 
   return Branched.traverse(labels, (element) =>
-    Name.fromNode(element, device, visited).map(
-      (name) => [name, element] as const
-    )
+    Name.fromNode(element, device, {
+      ...state,
+      isRecursing: true,
+      isReferencing: false,
+      isDescending: false,
+    }).map((name) => [name, element] as const)
   )
     .map((names) =>
       [...names]
@@ -322,7 +330,7 @@ const Features: Features = {
     img: Feature.of(
       function* (element) {
         for (const attribute of element.attribute("alt")) {
-          if (attribute.value !== "") {
+          if (attribute.value === "") {
             yield Role.of("presentation");
           }
         }
@@ -534,9 +542,7 @@ const Features: Features = {
         element
           .closest(and(Element.isElement, hasName("table")))
           .flatMap<Role>((table) => {
-            for (const [roles] of Role.from(table)) {
-              const role = roles.first();
-
+            for (const [role] of Role.from(table)) {
               if (role.isSome()) {
                 switch (role.get().name) {
                   case "table":
