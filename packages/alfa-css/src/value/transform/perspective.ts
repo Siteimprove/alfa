@@ -1,16 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Length } from "../length";
 
 const { map, left, right, filter, delimited, option } = Parser;
 
-export class Perspective<D extends Length = Length>
-  implements Equatable, Serializable {
+export class Perspective<D extends Length = Length> extends Value<"transform"> {
   public static of<D extends Length>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }
@@ -18,10 +16,15 @@ export class Perspective<D extends Length = Length>
   private readonly _depth: D;
 
   private constructor(depth: D) {
+    super();
     this._depth = depth;
   }
 
-  public get type(): "perspective" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "perspective" {
     return "perspective";
   }
 
@@ -33,9 +36,14 @@ export class Perspective<D extends Length = Length>
     return value instanceof Perspective && value._depth.equals(this._depth);
   }
 
+  public hash(hash: Hash): void {
+    this._depth.hash(hash);
+  }
+
   public toJSON(): Perspective.JSON {
     return {
-      type: "perspective",
+      type: "transform",
+      kind: "perspective",
       depth: this._depth.toJSON(),
     };
   }
@@ -46,9 +54,9 @@ export class Perspective<D extends Length = Length>
 }
 
 export namespace Perspective {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "perspective";
+  export interface JSON extends Value.JSON {
+    type: "transform";
+    kind: "perspective";
     depth: Length.JSON;
   }
 
