@@ -416,3 +416,47 @@ test(`.from() determines the name of a <img> element with a an empty alt
     ],
   ]);
 });
+
+test(`.from() correctly handles aria-labelledby references to hidden elements
+      with child elements with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const span = <span>{text}</span>;
+
+  const div = (
+    <div id="foo" hidden>
+      {span}
+    </div>
+  );
+
+  const label = <label aria-labelledby="foo"></label>;
+
+  <div>
+    {label}
+    {div}
+  </div>;
+
+  t.deepEqual(Name.from(label, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.reference(
+            label.attribute("aria-labelledby").get(),
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                div,
+                Name.of("Hello world", [
+                  Name.Source.descendant(
+                    span,
+                    Name.of("Hello world", [Name.Source.data(text)])
+                  ),
+                ])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
