@@ -1,7 +1,10 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-export function any<I, T, E, A extends [] = []>(
+/**
+ * @see https://drafts.csswg.org/css-values/#comb-any
+ */
+export function any<I, T, E = never, A extends [] = []>(
   parser: Parser<I, T, E, A>,
   ...rest: Array<Parser<I, T, E, A>>
 ): Parser<I, Iterable<T>, E, A> {
@@ -12,7 +15,7 @@ export function any<I, T, E, A extends [] = []>(
     const values: Array<T> = [];
 
     outer: while (true) {
-      let error: Err<E>;
+      let error: Err<E> | undefined;
 
       for (let i = 0, n = parsers.length; i < n; i++) {
         if (seen[i]) {
@@ -22,7 +25,7 @@ export function any<I, T, E, A extends [] = []>(
         const result = parsers[i](input, ...args);
 
         if (result.isErr()) {
-          error = result;
+          error = error ?? result;
         } else {
           const [remainder, value] = result.get();
 

@@ -611,6 +611,9 @@ export namespace Background {
     >;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-layer
+   */
   const parseBackgroundLayer = map(
     any<
       Slice<Token>,
@@ -628,10 +631,12 @@ export namespace Background {
       >,
       string
     >(
+      // <color>
       map(delimited(option(Token.parseWhitespace), parseColor), (color) => [
         ["background-color", color],
       ]),
 
+      // <image>
       map(
         option(delimited(option(Token.parseWhitespace), parseImage)),
         (image) => [
@@ -639,12 +644,15 @@ export namespace Background {
         ]
       ),
 
+      // <position> [ / <size> ]?
       map(
         option(
           delimited(
             option(Token.parseWhitespace),
             pair(
+              // <position>
               parsePosition,
+              // [ / <side> ]?
               option(
                 delimited(
                   option(Token.parseWhitespace),
@@ -682,6 +690,7 @@ export namespace Background {
         ]
       ),
 
+      // <repeat>
       map(
         option(delimited(option(Token.parseWhitespace), parseRepeat)),
         (repeat) => [
@@ -700,6 +709,7 @@ export namespace Background {
         ]
       ),
 
+      // <attachment>
       map(
         option(delimited(option(Token.parseWhitespace), parseAttachment)),
         (attachment) => [
@@ -710,6 +720,7 @@ export namespace Background {
         ]
       ),
 
+      // <origin> <clip>?
       map(
         option(
           delimited(
