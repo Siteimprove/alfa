@@ -8,7 +8,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#percentages
  */
-export class Percentage extends Numeric {
+export class Percentage extends Numeric<"percentage"> {
   public static of(value: number): Percentage {
     return new Percentage(value);
   }
