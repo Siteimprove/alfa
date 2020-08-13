@@ -1,52 +1,53 @@
 const fs = require("fs");
 const path = require("path");
 const prettier = require("prettier");
-const axios = require("axios");
+const puppeteer = require("puppeteer");
 
-const url =
-  "https://raw.githubusercontent.com/w3c/wai-wcag-quickref/gh-pages/_data/wcag21.json";
+puppeteer.launch().then(async (browser) => {
+  const page = await browser.newPage();
 
-axios.get(url).then(({ data }) => {
-  const criteria = data.principles.flatMap((p) =>
-    p.guidelines.flatMap((g) =>
-      g.successcriteria.map((c) => {
+  await page.goto("https://www.w3.org/TR/WCAG/");
+
+  const criteria = await page.evaluate(() =>
+    Object.fromEntries(
+      [...document.querySelectorAll(".sc")].map((criterion, i) => {
+        const [, chapter, title] = criterion
+          .querySelector("h4")
+          .textContent.match(/Success Criterion (\d\.\d\.\d{1,2}) (.+)§/);
+
+        const uri = criterion.querySelector(".permalink a").href;
+
+        const [, level] = criterion
+          .querySelector(".conformance-level")
+          .textContent.match(/\(Level (A{1,3})\)/);
+
         return [
-          c.num,
+          chapter,
           {
-            uri: c.id.replace("WCAG2:", "https://www.w3.org/TR/WCAG/#"),
-            title: c.handle,
-            level: c.level,
-            versions: c.versions,
+            index: 0,
+            uri,
+            title,
+            level,
           },
         ];
       })
     )
   );
 
+  let index = 0;
+
+  for (const name in criteria) {
+    criteria[name].index = index++;
+  }
+
   let code = `
-    // This file has been automatically generated based on the WCAG Quick Reference
-    // data. Do therefore not modify it directly! If you wish to make changes, do so
-    // in \`scripts/criteria.js\` and run \`yarn generate\` to rebuild this file.
+// This file has been automatically generated based on the WCAG specification.
+// Do therefore not modify it directly! If you wish to make changes, do so in
+// \`scripts/criteria.js\` and run \`yarn generate\` to rebuild this file.
 
-    import { Criterion } from "../criterion";
+export type Criteria = typeof Criteria;
 
-    export type Criteria = typeof Criteria;
-
-    export const Criteria = {
-      ${criteria
-        .map(
-          ([chapter, criterion]) =>
-            `"${chapter}": {
-              uri: "${criterion.uri}",
-              title: "${criterion.title}",
-              level: "${criterion.level}" as Criterion.Level,
-              versions: [${criterion.versions
-                .map((version) => `"${version}"`)
-                .join(", ")}] as Array<Criterion.Version>,
-            },`
-        )
-        .join("\n\n")}
-    };
+export const Criteria = ${JSON.stringify(criteria, null, 2)} as const;
   `;
 
   code = prettier.format(code, {
@@ -54,4 +55,6 @@ axios.get(url).then(({ data }) => {
   });
 
   fs.writeFileSync(path.join(__dirname, "../src/criterion/data.ts"), code);
+
+  browser.close();
 });
