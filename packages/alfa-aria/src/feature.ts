@@ -81,7 +81,8 @@ export namespace Feature {
 
 const nameFromAlt = (element: Element) => {
   for (const attribute of element.attribute("alt")) {
-    if (attribute.value !== "") {
+    // The `alt` attribute is used as long as it's not completely empty.
+    if (attribute.value.length > 0) {
       return Name.fromLabel(attribute);
     }
   }
@@ -91,7 +92,8 @@ const nameFromAlt = (element: Element) => {
 
 const nameFromTitle = (element: Element) => {
   for (const attribute of element.attribute("title")) {
-    if (attribute.value !== "") {
+    // The `title` attribute is used as long as it's not completely empty.
+    if (attribute.value.length > 0) {
       return Name.fromLabel(attribute);
     }
   }
@@ -101,7 +103,8 @@ const nameFromTitle = (element: Element) => {
 
 const nameFromPlaceholder = (element: Element) => {
   for (const attribute of element.attribute("placeholder")) {
-    if (attribute.value !== "") {
+    // The `placeholder` attribute is used as long as it's not completely empty.
+    if (attribute.value.length > 0) {
       return Name.fromLabel(attribute);
     }
   }

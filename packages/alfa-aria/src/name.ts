@@ -421,6 +421,8 @@ export namespace Name {
         // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
         // https://w3c.github.io/accname/#step2B
         () => {
+          // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
+          // are not allowed.
           if (state.isReferencing) {
             return empty;
           }

@@ -460,3 +460,86 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
     ],
   ]);
 });
+
+test(`.from() correctly handles circular aria-labelledby references`, (t) => {
+  const text = h.text("Bar");
+
+  const foo = (
+    <div id="foo" aria-labelledby="bar">
+      Foo
+    </div>
+  );
+
+  const bar = (
+    <div id="bar" aria-labelledby="foo">
+      {text}
+    </div>
+  );
+
+  <div>
+    {foo}
+    {bar}
+  </div>;
+
+  t.deepEqual(Name.from(foo, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Bar", [
+          Name.Source.reference(
+            foo.attribute("aria-labelledby").get(),
+            Name.of("Bar", [
+              Name.Source.descendant(
+                bar,
+                Name.of("Bar", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() correctly handles chained aria-labelledby references`, (t) => {
+  const text = h.text("Bar");
+
+  const foo = (
+    <div id="foo" aria-labelledby="bar">
+      Foo
+    </div>
+  );
+
+  const bar = (
+    <div id="bar" aria-labelledby="baz">
+      {text}
+    </div>
+  );
+
+  const baz = <div id="baz">Baz</div>;
+
+  <div>
+    {foo}
+    {bar}
+    {baz}
+  </div>;
+
+  t.deepEqual(Name.from(foo, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Bar", [
+          Name.Source.reference(
+            foo.attribute("aria-labelledby").get(),
+            Name.of("Bar", [
+              Name.Source.descendant(
+                bar,
+                Name.of("Bar", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
