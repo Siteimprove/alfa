@@ -11,11 +11,13 @@ puppeteer.launch().then(async (browser) => {
   const criteria = await page.evaluate(() =>
     Object.fromEntries(
       [...document.querySelectorAll(".sc")].map((criterion, i) => {
-        const [, chapter, title] = criterion
-          .querySelector("h4")
-          .textContent.match(/Success Criterion (\d\.\d\.\d{1,2}) (.+)§/);
+        const heading = criterion.querySelector("h4");
 
-        const uri = criterion.querySelector(".permalink a").href;
+        const [, chapter, title] = heading.textContent.match(
+          /Success Criterion (\d\.\d\.\d{1,2}) ([^§]+)/
+        );
+
+        const uri = heading.querySelector("a").href;
 
         const [, level] = criterion
           .querySelector(".conformance-level")
