@@ -28,6 +28,7 @@
     "@siteimprove/alfa-functor": "^0.3.0",
     "@siteimprove/alfa-iterable": "^0.3.0",
     "@siteimprove/alfa-json": "^0.3.0",
+    "@siteimprove/alfa-map": "^0.3.0",
     "@siteimprove/alfa-mapper": "^0.3.0",
     "@siteimprove/alfa-math": "^0.3.0",
     "@siteimprove/alfa-monad": "^0.3.0",

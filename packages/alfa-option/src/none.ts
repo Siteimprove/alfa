@@ -36,6 +36,10 @@ export const None: None = new (class None {
     return this;
   }
 
+  public reject(): None {
+    return this;
+  }
+
   public includes(): boolean {
     return false;
   }

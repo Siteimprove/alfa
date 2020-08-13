@@ -1,9 +1,7 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
+import { Value } from "../value";
 
 import { URL } from "./url";
 import { Gradient } from "./gradient";
@@ -13,8 +11,9 @@ const { map, either } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#images
  */
-export class Image<I extends URL | Gradient = URL | Gradient>
-  implements Equatable, Hashable, Serializable {
+export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
+  "image"
+> {
   public static of<I extends URL | Gradient>(image: I): Image<I> {
     return new Image(image);
   }
@@ -22,6 +21,7 @@ export class Image<I extends URL | Gradient = URL | Gradient>
   private readonly _image: I;
 
   private constructor(image: I) {
+    super();
     this._image = image;
   }
 
@@ -54,8 +54,7 @@ export class Image<I extends URL | Gradient = URL | Gradient>
 }
 
 export namespace Image {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "image";
     image: URL.JSON | Gradient.JSON;
   }

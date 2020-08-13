@@ -5,7 +5,9 @@ import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
 
-export abstract class Numeric implements Equatable, Hashable, Serializable {
+import { Value } from "../value";
+
+export abstract class Numeric<T extends string = string> extends Value<T> {
   /**
    * The number of decimals stored for every numeric value.
    */
@@ -14,6 +16,7 @@ export abstract class Numeric implements Equatable, Hashable, Serializable {
   protected readonly _value: number;
 
   protected constructor(value: number) {
+    super();
     this._value = Real.round(value, Numeric.Decimals);
   }
 
@@ -37,9 +40,8 @@ export abstract class Numeric implements Equatable, Hashable, Serializable {
 }
 
 export namespace Numeric {
-  export interface JSON {
+  export interface JSON extends Value.JSON {
     [key: string]: json.JSON;
-    type: string;
     value: number;
   }
 

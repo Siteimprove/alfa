@@ -32,6 +32,7 @@ export interface Collection<T>
   some(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
   count(predicate: Predicate<T>): number;
+  distinct(): Collection<T>;
 }
 
 export namespace Collection {
@@ -50,6 +51,7 @@ export namespace Collection {
     some(predicate: Predicate<V, V, [K]>): boolean;
     every(predicate: Predicate<V, V, [K]>): boolean;
     count(predicate: Predicate<V, V, [K]>): number;
+    distinct(): Keyed<K, V>;
 
     // Keyed<K, V> methods
 
@@ -75,6 +77,7 @@ export namespace Collection {
     some(predicate: Predicate<T>): boolean;
     every(predicate: Predicate<T>): boolean;
     count(predicate: Predicate<T>): number;
+    distinct(): Unkeyed<T>;
 
     // Unkeyed<T> methods
 
@@ -100,6 +103,7 @@ export namespace Collection {
     some(predicate: Predicate<T, T, [number]>): boolean;
     every(predicate: Predicate<T, T, [number]>): boolean;
     count(predicate: Predicate<T, T, [number]>): number;
+    distinct(): Indexed<T>;
 
     // Indexed<T> methods
 

@@ -51,6 +51,10 @@ export class Some<T> implements Option<T> {
     return test(predicate, this._value) ? new Some(this._value) : None;
   }
 
+  public reject(predicate: Predicate<T>): Option<T> {
+    return this.filter(not(predicate));
+  }
+
   public includes(value: T): boolean {
     return Equatable.equals(value, this._value);
   }

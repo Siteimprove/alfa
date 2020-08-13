@@ -100,6 +100,30 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.count(this, ([key, value]) => predicate(value, key));
   }
 
+  /**
+   * @remarks
+   * As the order of maps is undefined, it is also undefined which keys are
+   * deleted when duplicate values are encountered.
+   */
+  public distinct(): Map<K, V> {
+    let seen = Map.empty<V, V>();
+
+    // We optimize for the case where there are more distinct values than there
+    // are duplicate values by starting with the current map and removing
+    // duplicates as we find them.
+    let map: Map<K, V> = this;
+
+    for (const [key, value] of map) {
+      if (seen.has(value)) {
+        map = map.delete(key);
+      } else {
+        seen = seen.set(value, value);
+      }
+    }
+
+    return map;
+  }
+
   public get(key: K): Option<V> {
     return this._root.get(key, this._hash(key), 0);
   }

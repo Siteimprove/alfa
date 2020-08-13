@@ -6,6 +6,7 @@
     "src/property.ts",
     "src/property/background.ts",
     "src/property/color.ts",
+    "src/property/combinator/any.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/height.ts",
@@ -14,12 +15,15 @@
     "src/property/overflow.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
+    "src/property/value/list.ts",
     "src/property/visibility.ts",
     "src/property/whitespace.ts",
     "src/property/width.ts",
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts",
+    "test/property/background.spec.tsx",
+    "test/property/combinator/any.spec.ts",
     "test/style.spec.tsx"
   ],
   "references": [
@@ -52,6 +56,9 @@
     },
     {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-map"
     },
     {
       "path": "../alfa-mapper"
