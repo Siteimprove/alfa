@@ -6,7 +6,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Set } from "@siteimprove/alfa-set";
 import { Scope, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";

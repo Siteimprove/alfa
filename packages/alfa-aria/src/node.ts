@@ -297,7 +297,10 @@ export namespace Node {
                 for (const value of role
                   .get()
                   .implicitAttributeValue(attribute)) {
-                  attributes = attributes.set(name, Attribute.of(name, value));
+                  attributes = attributes.set(
+                    attribute,
+                    Attribute.of(attribute, value)
+                  );
                 }
               }
             }

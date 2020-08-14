@@ -1,4 +1,4 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 
 import * as dom from "@siteimprove/alfa-dom";
 

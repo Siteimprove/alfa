@@ -1,4 +1,3 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import * as dom from "@siteimprove/alfa-dom";
