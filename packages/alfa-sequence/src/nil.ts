@@ -47,6 +47,14 @@ export const Nil: Nil = new (class Nil {
     return false;
   }
 
+  public collect(): Nil {
+    return this;
+  }
+
+  public collectFirst(): None {
+    return None;
+  }
+
   public some(): boolean {
     return false;
   }

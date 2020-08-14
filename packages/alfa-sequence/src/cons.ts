@@ -167,6 +167,57 @@ export class Cons<T> implements Sequence<T> {
     return this.some(equals(value));
   }
 
+  public collect<U>(
+    mapper: Mapper<T, Option<U>, [number]>,
+    index: number = 0
+  ): Sequence<U> {
+    let next: Cons<T> = this;
+
+    while (true) {
+      const value = mapper(next._head, index);
+
+      if (value.isSome()) {
+        return new Cons(
+          value.get(),
+          next._tail.map((tail) =>
+            Cons.isCons<T>(tail)
+              ? tail.collect(mapper, index + 1)
+              : tail.collect(mapper)
+          )
+        );
+      }
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons<T>(tail)) {
+        next = tail;
+      } else {
+        return Nil;
+      }
+    }
+  }
+
+  public collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U> {
+    let next: Cons<T> = this;
+    let index = 0;
+
+    while (true) {
+      const value = mapper(next._head, index);
+
+      if (value.isSome()) {
+        return value;
+      }
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons<T>(tail)) {
+        next = tail;
+      } else {
+        return None;
+      }
+    }
+  }
+
   public some(predicate: Predicate<T, T, [number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;

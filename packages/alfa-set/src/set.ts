@@ -78,6 +78,14 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return Iterable.includes(this, value);
   }
 
+  public collect<U>(mapper: Mapper<T, Option<U>>): Set<U> {
+    return Set.from(Iterable.collect(this, mapper));
+  }
+
+  public collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U> {
+    return Iterable.collectFirst(this, mapper);
+  }
+
   public some(predicate: Predicate<T>): boolean {
     return Iterable.some(this, predicate);
   }

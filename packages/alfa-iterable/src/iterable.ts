@@ -111,6 +111,20 @@ export namespace Iterable {
     return some(iterable, Predicate.equals(value));
   }
 
+  export function collect<T, U>(
+    iterable: Iterable<T>,
+    mapper: Mapper<T, Option<U>, [number]>
+  ): Iterable<U> {
+    return flatMap(iterable, mapper);
+  }
+
+  export function collectFirst<T, U>(
+    iterable: Iterable<T>,
+    mapper: Mapper<T, Option<U>, [number]>
+  ): Option<U> {
+    return first(collect(iterable, mapper));
+  }
+
   export function some<T>(
     iterable: Iterable<T>,
     predicate: Predicate<T, T, [number]>
