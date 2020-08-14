@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { Name } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -23,7 +24,7 @@ import { Question } from "../common/question";
 
 const { isElement, hasNamespace, hasId } = Element;
 const { map, flatMap, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r81.html",
@@ -37,13 +38,9 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
               isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole(
-                  or(Role.hasName("link"), (role) =>
-                    role.inheritsFrom(Role.hasName("link"))
-                  )
-                ),
+                hasRole((role) => role.is("link")),
                 not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
+                hasAccessibleName(device, Name.hasValue(not(isEmpty)))
               )
             )
           );
@@ -56,10 +53,12 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           elements
             .reduce((groups, element) => {
               for (const [node] of aria.Node.from(element, device)) {
+                const name = node.name.map((name) => name.value);
+
                 groups = groups.set(
-                  node.name(),
+                  name,
                   groups
-                    .get(node.name())
+                    .get(name)
                     .getOrElse(() => List.empty<Element>())
                     .append(element)
                 );

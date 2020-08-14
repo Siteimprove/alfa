@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Name } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -80,7 +81,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                     Element.isElement,
                     and(
                       isPerceivable(device),
-                      hasAccessibleName(device, not(isEmpty))
+                      hasAccessibleName(device, Name.hasValue(not(isEmpty)))
                     )
                   )(mechanism.get()),
                   () => Outcomes.HasPerceivablePauseMechanism(target.name),

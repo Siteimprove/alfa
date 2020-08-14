@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -49,6 +50,16 @@ export class Attribute<N extends Attribute.Name = Attribute.Name>
     }
 
     return Option.of(value as Attribute.Default<N>);
+  }
+
+  public get options(): Sequence<Attribute.Option<N>> {
+    const options = Attributes[this._name].options;
+
+    if (options === null) {
+      return Sequence.empty();
+    }
+
+    return Sequence.from(options as Iterable<Attribute.Option<N>>);
   }
 
   /**

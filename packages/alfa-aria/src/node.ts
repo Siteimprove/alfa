@@ -135,6 +135,16 @@ export abstract class Node implements Serializable {
   }
 
   /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant
+   */
+  public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
+    return Sequence.of(
+      this,
+      Lazy.of(() => this.descendants(options))
+    );
+  }
+
+  /**
    * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
@@ -146,6 +156,16 @@ export abstract class Node implements Serializable {
         )
       )
       .getOrElse(() => Sequence.empty());
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor
+   */
+  public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
+    return Sequence.of(
+      this,
+      Lazy.of(() => this.ancestors(options))
+    );
   }
 
   public abstract clone(parent?: Option<Node>): Node;

@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { Name, Role } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device, not(isEmpty))(target),
+            hasAccessibleName(device, Name.hasValue(not(isEmpty)))(target),
             () => Outcomes.HasName,
             () => Outcomes.HasNoName
           ),

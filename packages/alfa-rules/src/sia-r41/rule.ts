@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
+import { Name, Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -35,13 +35,9 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
               isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole(
-                  or(hasName("link"), (role) =>
-                    role.inheritsFrom(hasName("link"))
-                  )
-                ),
+                hasRole((role) => role.is("link")),
                 not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
+                hasAccessibleName(device, Name.hasValue(not(isEmpty)))
               )
             )
           );
@@ -52,10 +48,12 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           elements
             .reduce((groups, element) => {
               for (const [node] of Node.from(element, device)) {
+                const name = node.name.map((name) => name.value);
+
                 groups = groups.set(
-                  node.name(),
+                  name,
                   groups
-                    .get(node.name())
+                    .get(name)
                     .getOrElse(() => List.empty<Element>())
                     .append(element)
                 );

@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { Name, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 hasName("iframe"),
                 hasNamespace(Namespace.HTML),
                 not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
+                hasAccessibleName(device, Name.hasValue(not(isEmpty)))
               )
             )
           );
@@ -46,10 +46,12 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           iframes
             .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
+                const name = node.name.map((name) => name.value);
+
                 groups = groups.set(
-                  node.name(),
+                  name,
                   groups
-                    .get(node.name())
+                    .get(name)
                     .getOrElse(() => List.empty<Element>())
                     .append(iframe)
                 );

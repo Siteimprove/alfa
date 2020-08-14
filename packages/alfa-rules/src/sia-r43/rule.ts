@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Name } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasExplicitRole } from "../common/predicate/has-role";
+import { hasExplicitRole } from "../common/predicate/has-explicit-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
@@ -37,7 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device, not(isEmpty))(target),
+            hasAccessibleName(device, Name.hasValue(not(isEmpty)))(target),
             () => Outcomes.HasName(target.name),
             () => Outcomes.HasNoName(target.name)
           ),
