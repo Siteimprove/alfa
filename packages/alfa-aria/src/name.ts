@@ -16,6 +16,8 @@ import * as json from "@siteimprove/alfa-json";
 import { Feature } from "./feature";
 import { Role } from "./role";
 
+import * as predicate from "./name/predicate";
+
 const { hasId, isElement } = Element;
 const { isText } = Text;
 const { and, or, equals } = Predicate;
@@ -652,6 +654,8 @@ export namespace Name {
 
     return step(Branched.of(None));
   }
+
+  export const { hasValue } = predicate;
 }
 
 function flatten(string: string): string {

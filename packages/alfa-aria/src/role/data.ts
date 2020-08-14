@@ -10,14 +10,22 @@ export const Roles = {
     index: 0,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [
-        ["aria-atomic", "true"],
-        ["aria-live", "assertive"],
+    attributes: [
+      [
+        "aria-atomic",
+        {
+          required: false,
+          value: "true",
+        },
       ],
-    },
+      [
+        "aria-live",
+        {
+          required: false,
+          value: "assertive",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -35,11 +43,7 @@ export const Roles = {
     index: 1,
     abstract: false,
     inherited: ["alert", "dialog"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -57,18 +61,50 @@ export const Roles = {
     index: 2,
     abstract: false,
     inherited: ["structure"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-activedescendant",
-        "aria-disabled",
-        "aria-errormessage",
-        "aria-expanded",
-        "aria-haspopup",
-        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -86,11 +122,22 @@ export const Roles = {
     index: 3,
     abstract: false,
     inherited: ["document"],
-    attributes: {
-      supported: ["aria-posinset", "aria-setsize"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -108,11 +155,7 @@ export const Roles = {
     index: 4,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -130,11 +173,7 @@ export const Roles = {
     index: 5,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -152,16 +191,36 @@ export const Roles = {
     index: 6,
     abstract: false,
     inherited: ["command"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-disabled",
-        "aria-expanded",
-        "aria-haspopup",
-        "aria-pressed",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-pressed",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -179,11 +238,7 @@ export const Roles = {
     index: 7,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -201,16 +256,36 @@ export const Roles = {
     index: 8,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-colindex",
-        "aria-colspan",
-        "aria-rowindex",
-        "aria-rowspan",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-colspan",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-rowindex",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-rowspan",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -228,18 +303,50 @@ export const Roles = {
     index: 9,
     abstract: false,
     inherited: ["input"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-checked",
-        "aria-errormessage",
-        "aria-expanded",
-        "aria-invalid",
-        "aria-readonly",
-        "aria-required",
+        {
+          required: true,
+          value: null,
+        },
       ],
-      required: ["aria-checked"],
-      defaults: [],
-    },
+      [
+        "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -257,11 +364,7 @@ export const Roles = {
     index: 10,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -279,11 +382,15 @@ export const Roles = {
     index: 11,
     abstract: false,
     inherited: ["cell", "gridcell", "sectionhead"],
-    attributes: {
-      supported: ["aria-sort"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-sort",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -301,24 +408,71 @@ export const Roles = {
     index: 12,
     abstract: false,
     inherited: ["input"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-activedescendant",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-autocomplete",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-controls",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+      [
         "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-expanded",
+        {
+          required: true,
+          value: "false",
+        },
+      ],
+      [
         "aria-haspopup",
+        {
+          required: false,
+          value: "listbox",
+        },
+      ],
+      [
         "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-required",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: ["aria-controls", "aria-expanded"],
-      defaults: [
-        ["aria-expanded", "false"],
-        ["aria-haspopup", "listbox"],
-      ],
-    },
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -336,11 +490,7 @@ export const Roles = {
     index: 13,
     abstract: true,
     inherited: ["widget"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -358,11 +508,7 @@ export const Roles = {
     index: 14,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -380,11 +526,22 @@ export const Roles = {
     index: 15,
     abstract: true,
     inherited: ["widget"],
-    attributes: {
-      supported: ["aria-activedescendant", "aria-disabled"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-activedescendant",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -402,11 +559,7 @@ export const Roles = {
     index: 16,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -424,11 +577,7 @@ export const Roles = {
     index: 17,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -446,11 +595,7 @@ export const Roles = {
     index: 18,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -468,11 +613,7 @@ export const Roles = {
     index: 19,
     abstract: false,
     inherited: ["window"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -490,11 +631,7 @@ export const Roles = {
     index: 20,
     abstract: false,
     inherited: ["list"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -512,11 +649,7 @@ export const Roles = {
     index: 21,
     abstract: false,
     inherited: ["structure"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -534,11 +667,7 @@ export const Roles = {
     index: 22,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -556,11 +685,7 @@ export const Roles = {
     index: 23,
     abstract: false,
     inherited: ["list"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -578,11 +703,7 @@ export const Roles = {
     index: 24,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -600,11 +721,7 @@ export const Roles = {
     index: 25,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -622,11 +739,7 @@ export const Roles = {
     index: 26,
     abstract: false,
     inherited: ["structure"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -644,11 +757,22 @@ export const Roles = {
     index: 27,
     abstract: false,
     inherited: ["composite", "table"],
-    attributes: {
-      supported: ["aria-multiselectable", "aria-readonly"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-multiselectable",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -666,20 +790,64 @@ export const Roles = {
     index: 28,
     abstract: false,
     inherited: ["cell", "widget"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-disabled",
-        "aria-errormessage",
-        "aria-expanded",
-        "aria-haspopup",
-        "aria-invalid",
-        "aria-readonly",
-        "aria-required",
-        "aria-selected",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-selected",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -697,11 +865,22 @@ export const Roles = {
     index: 29,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: ["aria-activedescendant", "aria-disabled"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-activedescendant",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -719,11 +898,15 @@ export const Roles = {
     index: 30,
     abstract: false,
     inherited: ["sectionhead"],
-    attributes: {
-      supported: ["aria-level"],
-      required: ["aria-level"],
-      defaults: [["aria-level", "2"]],
-    },
+    attributes: [
+      [
+        "aria-level",
+        {
+          required: true,
+          value: "2",
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -741,11 +924,7 @@ export const Roles = {
     index: 31,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -763,11 +942,15 @@ export const Roles = {
     index: 32,
     abstract: true,
     inherited: ["widget"],
-    attributes: {
-      supported: ["aria-disabled"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -785,11 +968,7 @@ export const Roles = {
     index: 33,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -807,11 +986,7 @@ export const Roles = {
     index: 34,
     abstract: true,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -829,11 +1004,22 @@ export const Roles = {
     index: 35,
     abstract: false,
     inherited: ["command"],
-    attributes: {
-      supported: ["aria-disabled", "aria-expanded"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -851,11 +1037,7 @@ export const Roles = {
     index: 36,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -873,18 +1055,57 @@ export const Roles = {
     index: 37,
     abstract: false,
     inherited: ["select"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-errormessage",
-        "aria-expanded",
-        "aria-invalid",
-        "aria-multiselectable",
-        "aria-readonly",
-        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [["aria-orientation", "vertical"]],
-    },
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-multiselectable",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: "vertical",
+        },
+      ],
+      [
+        "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -902,11 +1123,29 @@ export const Roles = {
     index: 38,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: ["aria-level", "aria-posinset", "aria-setsize"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-level",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -924,11 +1163,15 @@ export const Roles = {
     index: 39,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [["aria-live", "polite"]],
-    },
+    attributes: [
+      [
+        "aria-live",
+        {
+          required: false,
+          value: "polite",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -946,11 +1189,7 @@ export const Roles = {
     index: 40,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -968,11 +1207,7 @@ export const Roles = {
     index: 41,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -990,11 +1225,7 @@ export const Roles = {
     index: 42,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1012,11 +1243,29 @@ export const Roles = {
     index: 43,
     abstract: false,
     inherited: ["range"],
-    attributes: {
-      supported: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
-      required: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-valuemax",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-valuemin",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-valuenow",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1034,11 +1283,15 @@ export const Roles = {
     index: 44,
     abstract: false,
     inherited: ["select"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [["aria-orientation", "vertical"]],
-    },
+    attributes: [
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: "vertical",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1063,11 +1316,15 @@ export const Roles = {
     index: 45,
     abstract: false,
     inherited: ["menu"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [["aria-orientation", "horizontal"]],
-    },
+    attributes: [
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: "horizontal",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1092,17 +1349,43 @@ export const Roles = {
     index: 46,
     abstract: false,
     inherited: ["command"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-disabled",
-        "aria-expanded",
-        "aria-haspopup",
-        "aria-posinset",
-        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1120,11 +1403,7 @@ export const Roles = {
     index: 47,
     abstract: false,
     inherited: ["checkbox", "menuitem"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -1142,11 +1421,7 @@ export const Roles = {
     index: 48,
     abstract: false,
     inherited: ["menuitemcheckbox", "radio"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -1164,11 +1439,7 @@ export const Roles = {
     index: 49,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1186,11 +1457,7 @@ export const Roles = {
     index: 50,
     abstract: false,
     inherited: [],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1208,11 +1475,7 @@ export const Roles = {
     index: 51,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1230,16 +1493,36 @@ export const Roles = {
     index: 52,
     abstract: false,
     inherited: ["input"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-checked",
-        "aria-posinset",
-        "aria-selected",
-        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: ["aria-selected"],
-      defaults: [["aria-selected", "false"]],
-    },
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-selected",
+        {
+          required: true,
+          value: "false",
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1257,11 +1540,7 @@ export const Roles = {
     index: 53,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -1279,11 +1558,7 @@ export const Roles = {
     index: 54,
     abstract: false,
     inherited: ["structure"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -1301,11 +1576,7 @@ export const Roles = {
     index: 55,
     abstract: false,
     inherited: ["range", "widget", "status"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -1323,11 +1594,29 @@ export const Roles = {
     index: 56,
     abstract: false,
     inherited: ["input"],
-    attributes: {
-      supported: ["aria-checked", "aria-posinset", "aria-setsize"],
-      required: ["aria-checked"],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-checked",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1345,16 +1634,36 @@ export const Roles = {
     index: 57,
     abstract: false,
     inherited: ["select"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-errormessage",
-        "aria-invalid",
-        "aria-readonly",
-        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1372,16 +1681,36 @@ export const Roles = {
     index: 58,
     abstract: true,
     inherited: ["structure"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-valuemax",
-        "aria-valuemin",
-        "aria-valuenow",
-        "aria-valuetext",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-valuemin",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-valuenow",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-valuetext",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1399,11 +1728,7 @@ export const Roles = {
     index: 59,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -1421,29 +1746,127 @@ export const Roles = {
     index: 60,
     abstract: true,
     inherited: [],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-atomic",
-        "aria-busy",
-        "aria-controls",
-        "aria-current",
-        "aria-describedby",
-        "aria-details",
-        "aria-dropeffect",
-        "aria-flowto",
-        "aria-grabbed",
-        "aria-hidden",
-        "aria-keyshortcuts",
-        "aria-label",
-        "aria-labelledby",
-        "aria-live",
-        "aria-owns",
-        "aria-relevant",
-        "aria-roledescription",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-busy",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-controls",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-current",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-describedby",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-details",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-dropeffect",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-flowto",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-grabbed",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-hidden",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-keyshortcuts",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-label",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-live",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-owns",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-relevant",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-roledescription",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1461,19 +1884,57 @@ export const Roles = {
     index: 61,
     abstract: false,
     inherited: ["group", "widget"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-colindex",
-        "aria-expanded",
-        "aria-level",
-        "aria-posinset",
-        "aria-rowindex",
-        "aria-selected",
-        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-level",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-rowindex",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-selected",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1491,11 +1952,7 @@ export const Roles = {
     index: 62,
     abstract: false,
     inherited: ["structure"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1513,11 +1970,22 @@ export const Roles = {
     index: 63,
     abstract: false,
     inherited: ["cell", "gridcell", "sectionhead"],
-    attributes: {
-      supported: ["aria-expanded", "aria-sort"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-sort",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1535,22 +2003,50 @@ export const Roles = {
     index: 64,
     abstract: false,
     inherited: ["range", "widget"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-controls",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+      [
         "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-orientation",
+        {
+          required: false,
+          value: "vertical",
+        },
+      ],
+      [
         "aria-valuemax",
+        {
+          required: false,
+          value: "100",
+        },
+      ],
+      [
         "aria-valuemin",
+        {
+          required: false,
+          value: "0",
+        },
+      ],
+      [
         "aria-valuenow",
+        {
+          required: true,
+          value: null,
+        },
       ],
-      required: ["aria-controls", "aria-valuenow"],
-      defaults: [
-        ["aria-orientation", "vertical"],
-        ["aria-valuemax", "100"],
-        ["aria-valuemin", "0"],
-      ],
-    },
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1568,11 +2064,7 @@ export const Roles = {
     index: 65,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1590,11 +2082,7 @@ export const Roles = {
     index: 66,
     abstract: false,
     inherited: ["textbox"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -1612,11 +2100,7 @@ export const Roles = {
     index: 67,
     abstract: true,
     inherited: ["structure"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1634,11 +2118,7 @@ export const Roles = {
     index: 68,
     abstract: true,
     inherited: ["structure"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1656,11 +2136,15 @@ export const Roles = {
     index: 69,
     abstract: true,
     inherited: ["composite", "group"],
-    attributes: {
-      supported: ["aria-orientation"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1678,22 +2162,50 @@ export const Roles = {
     index: 70,
     abstract: false,
     inherited: ["structure", "widget"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-orientation",
+        {
+          required: false,
+          value: "horizontal",
+        },
+      ],
+      [
         "aria-valuemax",
+        {
+          required: false,
+          value: "100",
+        },
+      ],
+      [
         "aria-valuemin",
+        {
+          required: false,
+          value: "0",
+        },
+      ],
+      [
         "aria-valuenow",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+      [
         "aria-valuetext",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: ["aria-valuenow"],
-      defaults: [
-        ["aria-orientation", "horizontal"],
-        ["aria-valuemax", "100"],
-        ["aria-valuemin", "0"],
-      ],
-    },
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1711,24 +2223,64 @@ export const Roles = {
     index: 71,
     abstract: false,
     inherited: ["input", "range"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-orientation",
+        {
+          required: false,
+          value: "horizontal",
+        },
+      ],
+      [
         "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-valuemax",
+        {
+          required: false,
+          value: "100",
+        },
+      ],
+      [
         "aria-valuemin",
+        {
+          required: false,
+          value: "0",
+        },
+      ],
+      [
         "aria-valuenow",
+        {
+          required: true,
+          value: null,
+        },
       ],
-      required: ["aria-valuenow"],
-      defaults: [
-        ["aria-orientation", "horizontal"],
-        ["aria-valuemax", "100"],
-        ["aria-valuemin", "0"],
-      ],
-    },
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1746,24 +2298,64 @@ export const Roles = {
     index: 72,
     abstract: false,
     inherited: ["composite", "input", "range"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-valuemax",
+        {
+          required: false,
+          value: "",
+        },
+      ],
+      [
         "aria-valuemin",
+        {
+          required: false,
+          value: "",
+        },
+      ],
+      [
         "aria-valuenow",
+        {
+          required: false,
+          value: "0",
+        },
+      ],
+      [
         "aria-valuetext",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [
-        ["aria-valuemax", ""],
-        ["aria-valuemin", ""],
-        ["aria-valuenow", "0"],
-      ],
-    },
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1781,14 +2373,22 @@ export const Roles = {
     index: 73,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [
-        ["aria-atomic", "true"],
-        ["aria-live", "polite"],
+    attributes: [
+      [
+        "aria-atomic",
+        {
+          required: false,
+          value: "true",
+        },
       ],
-    },
+      [
+        "aria-live",
+        {
+          required: false,
+          value: "polite",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1806,11 +2406,7 @@ export const Roles = {
     index: 74,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -1828,11 +2424,7 @@ export const Roles = {
     index: 75,
     abstract: true,
     inherited: ["roletype"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -1850,11 +2442,7 @@ export const Roles = {
     index: 76,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -1872,11 +2460,7 @@ export const Roles = {
     index: 77,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: true,
@@ -1894,11 +2478,15 @@ export const Roles = {
     index: 78,
     abstract: false,
     inherited: ["checkbox"],
-    attributes: {
-      supported: ["aria-checked"],
-      required: ["aria-checked"],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-checked",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1916,18 +2504,50 @@ export const Roles = {
     index: 79,
     abstract: false,
     inherited: ["sectionhead", "widget"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-disabled",
-        "aria-expanded",
-        "aria-haspopup",
-        "aria-posinset",
-        "aria-selected",
-        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [["aria-selected", "false"]],
-    },
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-selected",
+        {
+          required: false,
+          value: "false",
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1945,11 +2565,22 @@ export const Roles = {
     index: 80,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: ["aria-colcount", "aria-rowcount"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-colcount",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-rowcount",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1967,11 +2598,29 @@ export const Roles = {
     index: 81,
     abstract: false,
     inherited: ["composite"],
-    attributes: {
-      supported: ["aria-level", "aria-multiselectable", "aria-orientation"],
-      required: [],
-      defaults: [["aria-orientation", "horizontal"]],
-    },
+    attributes: [
+      [
+        "aria-level",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-multiselectable",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: "horizontal",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -1989,11 +2638,7 @@ export const Roles = {
     index: 82,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2011,11 +2656,7 @@ export const Roles = {
     index: 83,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2033,21 +2674,71 @@ export const Roles = {
     index: 84,
     abstract: false,
     inherited: ["input"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-activedescendant",
-        "aria-autocomplete",
-        "aria-errormessage",
-        "aria-haspopup",
-        "aria-invalid",
-        "aria-multiline",
-        "aria-placeholder",
-        "aria-readonly",
-        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [],
-    },
+      [
+        "aria-autocomplete",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-errormessage",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-multiline",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-placeholder",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-readonly",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -2065,11 +2756,7 @@ export const Roles = {
     index: 85,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2087,11 +2774,7 @@ export const Roles = {
     index: 86,
     abstract: false,
     inherited: ["status"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2109,11 +2792,15 @@ export const Roles = {
     index: 87,
     abstract: false,
     inherited: ["group"],
-    attributes: {
-      supported: ["aria-orientation"],
-      required: [],
-      defaults: [["aria-orientation", "horizontal"]],
-    },
+    attributes: [
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: "horizontal",
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -2131,11 +2818,7 @@ export const Roles = {
     index: 88,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2153,16 +2836,43 @@ export const Roles = {
     index: 89,
     abstract: false,
     inherited: ["select"],
-    attributes: {
-      supported: [
+    attributes: [
+      [
         "aria-errormessage",
-        "aria-invalid",
-        "aria-multiselectable",
-        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
       ],
-      required: [],
-      defaults: [["aria-orientation", "vertical"]],
-    },
+      [
+        "aria-invalid",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-multiselectable",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-orientation",
+        {
+          required: false,
+          value: "vertical",
+        },
+      ],
+      [
+        "aria-required",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -2180,11 +2890,7 @@ export const Roles = {
     index: 90,
     abstract: false,
     inherited: ["grid", "tree"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2202,11 +2908,22 @@ export const Roles = {
     index: 91,
     abstract: false,
     inherited: ["listitem", "option"],
-    attributes: {
-      supported: ["aria-expanded", "aria-haspopup"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-expanded",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -2224,11 +2941,7 @@ export const Roles = {
     index: 92,
     abstract: true,
     inherited: ["roletype"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2246,11 +2959,15 @@ export const Roles = {
     index: 93,
     abstract: true,
     inherited: ["roletype"],
-    attributes: {
-      supported: ["aria-modal"],
-      required: [],
-      defaults: [],
-    },
+    attributes: [
+      [
+        "aria-modal",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: false,
@@ -2268,11 +2985,7 @@ export const Roles = {
     index: 94,
     abstract: false,
     inherited: ["document"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2290,11 +3003,7 @@ export const Roles = {
     index: 95,
     abstract: false,
     inherited: ["group"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2312,11 +3021,7 @@ export const Roles = {
     index: 96,
     abstract: false,
     inherited: ["img"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2334,11 +3039,7 @@ export const Roles = {
     index: 97,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2356,11 +3057,7 @@ export const Roles = {
     index: 98,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2378,11 +3075,7 @@ export const Roles = {
     index: 99,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2400,11 +3093,7 @@ export const Roles = {
     index: 100,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2422,11 +3111,7 @@ export const Roles = {
     index: 101,
     abstract: false,
     inherited: ["link"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2444,11 +3129,7 @@ export const Roles = {
     index: 102,
     abstract: false,
     inherited: ["listitem"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2466,11 +3147,7 @@ export const Roles = {
     index: 103,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2488,11 +3165,7 @@ export const Roles = {
     index: 104,
     abstract: false,
     inherited: ["link"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2510,11 +3183,7 @@ export const Roles = {
     index: 105,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2532,11 +3201,7 @@ export const Roles = {
     index: 106,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2554,11 +3219,7 @@ export const Roles = {
     index: 107,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2576,11 +3237,7 @@ export const Roles = {
     index: 108,
     abstract: false,
     inherited: ["img"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2598,11 +3255,7 @@ export const Roles = {
     index: 109,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2620,11 +3273,7 @@ export const Roles = {
     index: 110,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2642,11 +3291,7 @@ export const Roles = {
     index: 111,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2664,11 +3309,7 @@ export const Roles = {
     index: 112,
     abstract: false,
     inherited: ["listitem"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2686,11 +3327,7 @@ export const Roles = {
     index: 113,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2708,11 +3345,7 @@ export const Roles = {
     index: 114,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2730,11 +3363,7 @@ export const Roles = {
     index: 115,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2752,11 +3381,7 @@ export const Roles = {
     index: 116,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2774,11 +3399,7 @@ export const Roles = {
     index: 117,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2796,11 +3417,7 @@ export const Roles = {
     index: 118,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2818,11 +3435,7 @@ export const Roles = {
     index: 119,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2840,11 +3453,7 @@ export const Roles = {
     index: 120,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2862,11 +3471,7 @@ export const Roles = {
     index: 121,
     abstract: false,
     inherited: ["link"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2884,11 +3489,7 @@ export const Roles = {
     index: 122,
     abstract: false,
     inherited: ["navigation"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2906,11 +3507,7 @@ export const Roles = {
     index: 123,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2928,11 +3525,7 @@ export const Roles = {
     index: 124,
     abstract: false,
     inherited: ["link"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2950,11 +3543,7 @@ export const Roles = {
     index: 125,
     abstract: false,
     inherited: ["note"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -2972,11 +3561,7 @@ export const Roles = {
     index: 126,
     abstract: false,
     inherited: ["separator"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -2994,11 +3579,7 @@ export const Roles = {
     index: 127,
     abstract: false,
     inherited: ["navigation"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3016,11 +3597,7 @@ export const Roles = {
     index: 128,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
@@ -3038,11 +3615,7 @@ export const Roles = {
     index: 129,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3060,11 +3633,7 @@ export const Roles = {
     index: 130,
     abstract: false,
     inherited: ["landmark"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3082,11 +3651,7 @@ export const Roles = {
     index: 131,
     abstract: false,
     inherited: ["none"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3104,11 +3669,7 @@ export const Roles = {
     index: 132,
     abstract: false,
     inherited: ["section"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3126,11 +3687,7 @@ export const Roles = {
     index: 133,
     abstract: false,
     inherited: ["sectionhead"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3148,11 +3705,7 @@ export const Roles = {
     index: 134,
     abstract: false,
     inherited: ["note"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,
@@ -3170,11 +3723,7 @@ export const Roles = {
     index: 135,
     abstract: false,
     inherited: ["navigation"],
-    attributes: {
-      supported: [],
-      required: [],
-      defaults: [],
-    },
+    attributes: [],
     name: {
       required: false,
       prohibited: false,

@@ -6,6 +6,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Attributes } from "./attribute/data";
 import { Role } from "./role";
+import { Roles } from "./role/data";
 
 export class Attribute<N extends Attribute.Name = Attribute.Name>
   implements Equatable, Serializable {
@@ -89,7 +90,7 @@ export namespace Attribute {
   /**
    * The names of all global attributes.
    */
-  export type Global = Role.Attribute.Supported<"roletype">;
+  export type Global = Members<Roles["roletype"]["attributes"]>[0];
 
   /**
    * The kind of the specified attribute.

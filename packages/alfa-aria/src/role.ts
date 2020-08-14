@@ -5,7 +5,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
@@ -40,12 +40,11 @@ export class Role<N extends Role.Name = Role.Name>
    * Get all attributes supported by this role and its inherited roles.
    */
   public get attributes(): Iterable<Attribute.Name> {
-    const {
-      inherited,
-      attributes: { required, supported },
-    } = Roles[this._name];
+    const { inherited } = Roles[this._name];
 
-    const attributes = new Set([...required, ...supported]);
+    const attributes = new Set(
+      [...Roles[this._name].attributes].map(([attribute]) => attribute)
+    );
 
     for (const parent of inherited) {
       for (const attribute of Role.of(parent).attributes) {
@@ -54,27 +53,6 @@ export class Role<N extends Role.Name = Role.Name>
     }
 
     return attributes;
-  }
-
-  /**
-   * Get all attribute defaults specified by this role and its inherited roles.
-   */
-  public get defaults(): Iterable<[Attribute.Name, string]> {
-    const { inherited, attributes } = Roles[this._name];
-
-    const defaults = new Map<Attribute.Name, string>(attributes.defaults);
-
-    for (const parent of inherited) {
-      for (const [attribute, value] of Role.of(parent).defaults) {
-        if (defaults.has(attribute)) {
-          continue;
-        }
-
-        defaults.set(attribute, value);
-      }
-    }
-
-    return defaults;
   }
 
   /**
@@ -190,10 +168,45 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   /**
+   * Check if this role has a required parent.
+   */
+  public hasRequiredParent(): boolean {
+    return Roles[this._name].parent.required.length > 0;
+  }
+
+  /**
    * Check if this role has presentational children.
    */
   public hasPresentationalChildren(): boolean {
     return Roles[this._name].children.presentational;
+  }
+
+  /**
+   * Check if this role has required children.
+   */
+  public hasRequiredChildren(): boolean {
+    return Roles[this._name].children.required.length > 0;
+  }
+
+  /**
+   * Check if this role supports the specified attribute.
+   */
+  public isAttributeSupported(name: Attribute.Name): boolean {
+    const { inherited, attributes } = Roles[this._name];
+
+    for (const [found] of attributes) {
+      if (name === found) {
+        return true;
+      }
+    }
+
+    for (const parent of inherited) {
+      if (Role.of(parent).isAttributeSupported(name)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -202,8 +215,8 @@ export class Role<N extends Role.Name = Role.Name>
   public isAttributeRequired(name: Attribute.Name): boolean {
     const { inherited, attributes } = Roles[this._name];
 
-    for (const found of attributes.required) {
-      if (name === found) {
+    for (const [found, { required }] of attributes) {
+      if (name === found && required) {
         return true;
       }
     }
@@ -218,24 +231,24 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   /**
-   * Check if this role supports the specified attribute.
+   * Get the implicit value of the specified attribute, if any.
    */
-  public isAttributeSupported(name: Attribute.Name): boolean {
+  public implicitAttributeValue(name: Attribute.Name): Option<string> {
     const { inherited, attributes } = Roles[this._name];
 
-    for (const found of attributes.supported) {
-      if (name === found) {
-        return true;
+    for (const [found, { value }] of attributes) {
+      if (name === found && value !== null) {
+        return Option.from(value);
       }
     }
 
     for (const parent of inherited) {
-      if (Role.of(parent).isAttributeSupported(name)) {
-        return true;
+      for (const value of Role.of(parent).implicitAttributeValue(name)) {
+        return Option.of(value);
       }
     }
 
-    return false;
+    return None;
   }
 
   public equals(value: unknown): value is this {
@@ -300,7 +313,9 @@ export namespace Role {
   /**
    * The inherited roles for the specified role.
    */
-  export type Inherited<N extends Name> = Members<Roles[N]["inherited"]>;
+  export type Inherited<N extends Name> = N extends "roletype" | "none"
+    ? never
+    : Members<Roles[N]["inherited"]>;
 
   /**
    * All roles that are subclasses of the specified role.
@@ -328,22 +343,6 @@ export namespace Role {
   export type NamedBy<N extends Name = Name> = Members<
     Roles[N]["name"]["from"]
   >;
-
-  export namespace Attribute {
-    /**
-     * All required attributes for the specified role.
-     */
-    export type Required<N extends Name> =
-      | Members<Roles[N]["attributes"]["required"]>
-      | { [M in Inherited<N>]: Required<M> }[Inherited<N>];
-
-    /**
-     * All supported attributes for the specified role.
-     */
-    export type Supported<N extends Name> =
-      | Members<Roles[N]["attributes"]["supported"]>
-      | { [M in Inherited<N>]: Supported<M> }[Inherited<N>];
-  }
 
   export function isRole<N extends Name>(
     value: unknown,

@@ -35,37 +35,45 @@ puppeteer.launch().then(async (browser) => {
               ...role.querySelectorAll(".role-parent code"),
             ].map((code) => code.textContent);
 
-            const required = [
-              ...role.querySelectorAll(`
-              .role-required-properties .property-reference,
-              .role-required-properties .state-reference
-            `),
-            ]
-              .map((reference) => hash(reference.getAttribute("href")))
-              .sort();
-
             const supported = [
               ...role.querySelectorAll(`
-              .role-properties .property-reference,
-              .role-properties .state-reference
-            `),
-            ]
-              .map((reference) => hash(reference.getAttribute("href")))
-              .sort();
+                .role-properties .property-reference,
+                .role-properties .state-reference
+              `),
+            ].map((reference) => hash(reference.getAttribute("href")));
 
-            const defaults = [
+            const required = [
               ...role.querySelectorAll(`
-              .implicit-values .property-reference,
-              .implicit-values .state-reference
-            `),
-            ]
-              .map((reference) => {
+                .role-required-properties .property-reference,
+                .role-required-properties .state-reference
+              `),
+            ].map((reference) => hash(reference.getAttribute("href")));
+
+            const values = new Map(
+              [
+                ...role.querySelectorAll(`
+                .implicit-values .property-reference,
+                .implicit-values .state-reference
+              `),
+              ].map((reference) => {
                 const key = hash(reference.getAttribute("href"));
                 const value = reference.nextElementSibling.textContent;
 
                 return [key, value];
               })
-              .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+            );
+
+            const attributes = [
+              ...new Set([...supported, ...required, ...values.keys()].sort()),
+            ].map((attribute) => {
+              return [
+                attribute,
+                {
+                  required: required.includes(attribute),
+                  value: values.get(attribute) ?? null,
+                },
+              ];
+            });
 
             const from =
               role
@@ -119,11 +127,7 @@ puppeteer.launch().then(async (browser) => {
                 index: 0,
                 abstract,
                 inherited,
-                attributes: {
-                  supported: supported.concat(required).sort(),
-                  required,
-                  defaults,
-                },
+                attributes,
                 name,
                 parent,
                 children,
