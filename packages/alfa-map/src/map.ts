@@ -88,6 +88,18 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.includes(this.values(), value);
   }
 
+  public collect<U>(mapper: Mapper<V, Option<U>, [K]>): Map<K, U> {
+    return Map.from(
+      Iterable.collect(this, ([key, value]) =>
+        mapper(value, key).map((value) => [key, value])
+      )
+    );
+  }
+
+  public collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U> {
+    return Iterable.collectFirst(this, ([key, value]) => mapper(value, key));
+  }
+
   public some(predicate: Predicate<V, V, [K]>): boolean {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
   }
