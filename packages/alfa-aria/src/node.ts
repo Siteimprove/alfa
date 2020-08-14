@@ -232,113 +232,114 @@ export namespace Node {
   }
 
   function build(node: dom.Node, device: Device): Branched<Node, Browser> {
-    return cache.get(device, Cache.empty).get(node, () =>
-      Branched.traverse(node.children({ flattened: true }), (child) =>
-        build(child, device)
-      ).flatMap((children) => {
-        // Text nodes are _always_ exposed in the accessibility tree.
-        if (dom.Text.isText(node)) {
-          return Name.from(node, device).map((name) =>
-            Text.of(node, name.get())
-          );
+    return cache.get(device, Cache.empty).get(node, () => {
+      // Text nodes are _always_ exposed in the accessibility tree.
+      if (dom.Text.isText(node)) {
+        return Name.from(node, device).map((name) => Text.of(node, name.get()));
+      }
+
+      const children = () =>
+        Branched.traverse(node.children({ flattened: true }), (child) =>
+          build(child, device)
+        );
+
+      // Element nodes are _sometimes_ exposed in the accessibility tree.
+      if (dom.Element.isElement(node)) {
+        // Elements that are explicitly excluded from the accessibility tree
+        // by means of `aria-hidden=true` are never exposed in the
+        // accessibility tree, nor are their descendants.
+        //
+        // This behaviour is unfortunately not consistent across browsers,
+        // which we may or may not want to deal with. For now, we pretend that
+        // all browsers act consistently.
+        //
+        // https://github.com/Siteimprove/alfa/issues/184#issuecomment-593878009
+        if (
+          node
+            .attribute("aria-hidden")
+            .some((attribute) =>
+              attribute.enumerate("true", "false").some(equals("true"))
+            )
+        ) {
+          return Branched.of(Inert.of(node));
         }
 
-        // Element nodes are _sometimes_ exposed in the accessibility tree.
-        if (dom.Element.isElement(node)) {
-          // Elements that are explicitly excluded from the accessibility tree
-          // by means of `aria-hidden=true` are never exposed in the
-          // accessibility tree, nor are their descendants.
-          //
-          // This behaviour is unfortunately not consistent across browsers,
-          // which we may or may not want to deal with. For now, we pretend that
-          // all browsers act consistently.
-          //
-          // https://github.com/Siteimprove/alfa/issues/184#issuecomment-593878009
-          if (
-            node
-              .attribute("aria-hidden")
-              .some((attribute) =>
-                attribute.enumerate("true", "false").some(equals("true"))
-              )
-          ) {
-            return Branched.of(Inert.of(node));
+        const style = Style.from(node, device);
+
+        // Elements that are not rendered at all by means of `display: none`
+        // are never exposed in the accessibility tree, nor are their
+        // descendants.
+        //
+        // As we're building the accessibility tree top-down, we only need to
+        // check the element itself for `display: none` and can safely
+        // disregard its ancestors as they will already have been checked.
+        if (style.computed("display").value[0].value === "none") {
+          return Branched.of(Inert.of(node));
+        }
+
+        // Elements that are not visible by means of `visibility: hidden` or
+        // `visibility: collapse`, are exposed in the accessibility tree as
+        // containers as they may contain visible descendants.
+        if (style.computed("visibility").value.value !== "visible") {
+          return children().map((children) => Container.of(node, children));
+        }
+
+        return Role.from(node).flatMap<Node>((role) => {
+          if (role.some((role) => role.isPresentational())) {
+            return children().map((children) => Container.of(node, children));
           }
 
-          const style = Style.from(node, device);
+          let attributes = Map.empty<Attribute.Name, Attribute>();
 
-          // Elements that are not rendered at all by means of `display: none`
-          // are never exposed in the accessibility tree, nor are their
-          // descendants.
-          //
-          // As we're building the accessibility tree top-down, we only need to
-          // check the element itself for `display: none` and can safely
-          // disregard its ancestors as they will already have been checked.
-          if (style.computed("display").value[0].value === "none") {
-            return Branched.of(Inert.of(node));
+          // First pass: Look up implicit attributes on the role.
+          if (role.isSome()) {
+            for (const attribute of role.get().attributes) {
+              for (const value of role
+                .get()
+                .implicitAttributeValue(attribute)) {
+                attributes = attributes.set(
+                  attribute,
+                  Attribute.of(attribute, value)
+                );
+              }
+            }
           }
 
-          // Elements that are not visible by means of `visibility: hidden` or
-          // `visibility: collapse`, are exposed in the accessibility tree as
-          // containers as they may contain visible descendants.
-          if (style.computed("visibility").value.value !== "visible") {
-            return Branched.of(Container.of(node, children));
+          // Second pass: Look up implicit attributes on the feature mapping.
+          for (const namespace of node.namespace) {
+            for (const feature of Feature.lookup(namespace, node.name)) {
+              for (const attribute of feature.attributes(node)) {
+                attributes = attributes.set(attribute.name, attribute);
+              }
+            }
           }
 
-          return Role.from(node).flatMap<Node>((role) => {
-            if (role.some((role) => role.isPresentational())) {
-              return Branched.of(Container.of(node, children));
-            }
+          // Third pass: Look up explicit `aria-*` attributes and set the
+          // ones that are either global or supported by the role.
+          for (const { name, value } of node.attributes) {
+            if (Attribute.isName(name)) {
+              const attribute = Attribute.of(name, value);
 
-            let attributes = Map.empty<Attribute.Name, Attribute>();
-
-            // First pass: Look up implicit attributes on the role.
-            if (role.isSome()) {
-              for (const attribute of role.get().attributes) {
-                for (const value of role
-                  .get()
-                  .implicitAttributeValue(attribute)) {
-                  attributes = attributes.set(
-                    attribute,
-                    Attribute.of(attribute, value)
-                  );
-                }
+              if (
+                attribute.isGlobal() ||
+                role.some((role) => role.isAttributeSupported(attribute.name))
+              ) {
+                attributes = attributes.set(name, attribute);
               }
             }
+          }
 
-            // Second pass: Look up implicit attributes on the feature mapping.
-            for (const namespace of node.namespace) {
-              for (const feature of Feature.lookup(namespace, node.name)) {
-                for (const attribute of feature.attributes(node)) {
-                  attributes = attributes.set(attribute.name, attribute);
-                }
-              }
-            }
-
-            // Third pass: Look up explicit `aria-*` attributes and set the
-            // ones that are either global or supported by the role.
-            for (const { name, value } of node.attributes) {
-              if (Attribute.isName(name)) {
-                const attribute = Attribute.of(name, value);
-
-                if (
-                  attribute.isGlobal() ||
-                  role.some((role) => role.isAttributeSupported(attribute.name))
-                ) {
-                  attributes = attributes.set(name, attribute);
-                }
-              }
-            }
-
-            return Name.from(node, device).map((name) =>
+          return children().flatMap((children) =>
+            Name.from(node, device).map((name) =>
               Element.of(node, role, name, attributes.values(), children)
-            );
-          });
-        }
+            )
+          );
+        });
+      }
 
-        // Other nodes are _never_ exposed in the accessibility tree.
-        return Branched.of(Container.of(node, children));
-      })
-    );
+      // Other nodes are _never_ exposed in the accessibility tree.
+      return children().map((children) => Container.of(node, children));
+    });
   }
 
   export const { hasName, hasRole } = predicate;
