@@ -73,9 +73,46 @@ export namespace Feature {
     >;
   }
 
-  export function lookup(namespace: Namespace, name: string): Option<Feature> {
-    return Option.from(Features[namespace]?.[name]);
+  export function from(namespace: Namespace, name: string): Option<Feature> {
+    return Option.from(Features[namespace]?.[name]).orElse(() => {
+      switch (namespace) {
+        case Namespace.HTML:
+          return Option.of(html());
+
+        case Namespace.SVG:
+          return Option.of(svg());
+      }
+
+      return None;
+    });
   }
+}
+
+function html(
+  role: Feature.Aspect.Role = () => [],
+  attributes: Feature.Aspect.Attributes = () => [],
+  name: Feature.Aspect.Name = () => Branched.of(None)
+): Feature {
+  return Feature.of(role, attributes, (element, device, state) =>
+    Name.fromSteps(
+      () => name(element, device, state),
+      () => nameFromTitle(element)
+    )
+  );
+}
+
+function svg(
+  role: Feature.Aspect.Role = () => [],
+  attributes: Feature.Aspect.Attributes = () => [],
+  name: Feature.Aspect.Name = () => Branched.of(None)
+): Feature {
+  return Feature.of(role, attributes, (element, device, state) =>
+    Name.fromSteps(
+      () => name(element, device, state),
+      () => nameFromChild(hasName("title"))(element, device, state),
+      () => nameFromTitle(element)
+    )
+  );
 }
 
 const nameFromAlt = (element: Element) => {
@@ -120,7 +157,11 @@ const nameFromChild = (predicate: Predicate<Element>) => (
     return Name.fromDescendants(child, device, {
       ...state,
       visited: state.visited.add(child),
-    });
+    }).map((name) =>
+      name.map((name) =>
+        Name.of(name.value, [Name.Source.descendant(element, name)])
+      )
+    );
   }
 
   return Branched.of(None);
@@ -203,22 +244,22 @@ type Features = {
 
 const Features: Features = {
   [Namespace.HTML]: {
-    a: Feature.of((element) =>
+    a: html((element) =>
       element.attribute("href").isSome() ? Option.of(Role.of("link")) : None
     ),
 
-    area: Feature.of(
+    area: html(
       (element) =>
         element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
       () => [],
       nameFromAlt
     ),
 
-    article: Feature.of(() => Option.of(Role.of("article"))),
+    article: html(() => Option.of(Role.of("article"))),
 
-    aside: Feature.of(() => Option.of(Role.of("complementary"))),
+    aside: html(() => Option.of(Role.of("complementary"))),
 
-    button: Feature.of(
+    button: html(
       () => Option.of(Role.of("button")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
@@ -228,13 +269,13 @@ const Features: Features = {
       }
     ),
 
-    datalist: Feature.of(() => Option.of(Role.of("listbox"))),
+    datalist: html(() => Option.of(Role.of("listbox"))),
 
-    dd: Feature.of(() => Option.of(Role.of("definition"))),
+    dd: html(() => Option.of(Role.of("definition"))),
 
-    dfn: Feature.of(() => Option.of(Role.of("term"))),
+    dfn: html(() => Option.of(Role.of("term"))),
 
-    dialog: Feature.of(
+    dialog: html(
       () => Option.of(Role.of("dialog")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-open-dialog
@@ -245,7 +286,7 @@ const Features: Features = {
       }
     ),
 
-    details: Feature.of(
+    details: html(
       () => None,
       function* (element) {
         // https://w3c.github.io/html-aam/#att-open-details
@@ -256,9 +297,9 @@ const Features: Features = {
       }
     ),
 
-    dt: Feature.of(() => Option.of(Role.of("term"))),
+    dt: html(() => Option.of(Role.of("term"))),
 
-    fieldset: Feature.of(
+    fieldset: html(
       () => Option.of(Role.of("group")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
@@ -269,13 +310,13 @@ const Features: Features = {
       nameFromChild(hasName("legend"))
     ),
 
-    figure: Feature.of(
+    figure: html(
       () => Option.of(Role.of("figure")),
       () => [],
       nameFromChild(hasName("figcaption"))
     ),
 
-    footer: Feature.of((element) =>
+    footer: html((element) =>
       element
         .closest(
           and(isElement, hasName("article", "aside", "main", "nav", "section"))
@@ -285,39 +326,39 @@ const Features: Features = {
         : None
     ),
 
-    form: Feature.of(() => Option.of(Role.of("form"))),
+    form: html(() => Option.of(Role.of("form"))),
 
-    h1: Feature.of(
+    h1: html(
       () => Option.of(Role.of("heading")),
       () => [Attribute.of("aria-level", "1")]
     ),
 
-    h2: Feature.of(
+    h2: html(
       () => Option.of(Role.of("heading")),
       () => [Attribute.of("aria-level", "2")]
     ),
 
-    h3: Feature.of(
+    h3: html(
       () => Option.of(Role.of("heading")),
       () => [Attribute.of("aria-level", "3")]
     ),
 
-    h4: Feature.of(
+    h4: html(
       () => Option.of(Role.of("heading")),
       () => [Attribute.of("aria-level", "4")]
     ),
 
-    h5: Feature.of(
+    h5: html(
       () => Option.of(Role.of("heading")),
       () => [Attribute.of("aria-level", "5")]
     ),
 
-    h6: Feature.of(
+    h6: html(
       () => Option.of(Role.of("heading")),
       () => [Attribute.of("aria-level", "6")]
     ),
 
-    header: Feature.of((element) =>
+    header: html((element) =>
       element
         .closest(
           and(isElement, hasName("article", "aside", "main", "nav", "section"))
@@ -327,9 +368,9 @@ const Features: Features = {
         : None
     ),
 
-    hr: Feature.of(() => Option.of(Role.of("separator"))),
+    hr: html(() => Option.of(Role.of("separator"))),
 
-    img: Feature.of(
+    img: html(
       function* (element) {
         for (const attribute of element.attribute("alt")) {
           if (attribute.value === "") {
@@ -343,7 +384,7 @@ const Features: Features = {
       nameFromAlt
     ),
 
-    input: Feature.of(
+    input: html(
       (element): Option<Role> => {
         const type = element
           .attribute("type")
@@ -448,7 +489,7 @@ const Features: Features = {
       nameFromLabel
     ),
 
-    li: Feature.of((element) =>
+    li: html((element) =>
       element
         .parent()
         .filter(Element.isElement)
@@ -464,17 +505,17 @@ const Features: Features = {
         })
     ),
 
-    main: Feature.of(() => Option.of(Role.of("main"))),
+    main: html(() => Option.of(Role.of("main"))),
 
-    math: Feature.of(() => Option.of(Role.of("math"))),
+    math: html(() => Option.of(Role.of("math"))),
 
-    menu: Feature.of(() => Option.of(Role.of("list"))),
+    menu: html(() => Option.of(Role.of("list"))),
 
-    nav: Feature.of(() => Option.of(Role.of("navigation"))),
+    nav: html(() => Option.of(Role.of("navigation"))),
 
-    ol: Feature.of(() => Option.of(Role.of("list"))),
+    ol: html(() => Option.of(Role.of("list"))),
 
-    optgroup: Feature.of(
+    optgroup: html(
       () => Option.of(Role.of("group")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
@@ -484,7 +525,7 @@ const Features: Features = {
       }
     ),
 
-    option: Feature.of(
+    option: html(
       (element) =>
         element
           .closest(and(isElement, hasName("select", "optgroup", "datalist")))
@@ -505,11 +546,11 @@ const Features: Features = {
       }
     ),
 
-    output: Feature.of(() => Option.of(Role.of("status"))),
+    output: html(() => Option.of(Role.of("status"))),
 
-    section: Feature.of(() => Option.of(Role.of("region"))),
+    section: html(() => Option.of(Role.of("region"))),
 
-    select: Feature.of(
+    select: html(
       () =>
         // Despite what the HTML AAM specifies, we always map <select> elements
         // to a listbox widget as they currently have no way of mapping to a valid
@@ -535,11 +576,15 @@ const Features: Features = {
       }
     ),
 
-    table: Feature.of(() => Option.of(Role.of("table"))),
+    table: html(
+      () => Option.of(Role.of("table")),
+      () => [],
+      nameFromChild(hasName("caption"))
+    ),
 
-    tbody: Feature.of(() => Option.of(Role.of("rowgroup"))),
+    tbody: html(() => Option.of(Role.of("rowgroup"))),
 
-    td: Feature.of(
+    td: html(
       (element) =>
         element
           .closest(and(Element.isElement, hasName("table")))
@@ -570,7 +615,7 @@ const Features: Features = {
       }
     ),
 
-    textarea: Feature.of(
+    textarea: html(
       () => Option.of(Role.of("textbox")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
@@ -596,9 +641,9 @@ const Features: Features = {
       nameFromLabel
     ),
 
-    tfoot: Feature.of(() => Option.of(Role.of("rowgroup"))),
+    tfoot: html(() => Option.of(Role.of("rowgroup"))),
 
-    th: Feature.of(
+    th: html(
       (element) => {
         const table = element.closest(and(isElement, hasName("table")));
 
@@ -651,13 +696,13 @@ const Features: Features = {
       }
     ),
 
-    thead: Feature.of(() => Option.of(Role.of("rowgroup"))),
+    thead: html(() => Option.of(Role.of("rowgroup"))),
 
-    tr: Feature.of(() => Option.of(Role.of("row"))),
+    tr: html(() => Option.of(Role.of("row"))),
 
-    ul: Feature.of(() => Option.of(Role.of("list"))),
+    ul: html(() => Option.of(Role.of("list"))),
 
-    meter: Feature.of(
+    meter: html(
       () => None,
       function* (element) {
         // https://w3c.github.io/html-aam/#att-max
@@ -677,7 +722,7 @@ const Features: Features = {
       }
     ),
 
-    progress: Feature.of(
+    progress: html(
       () => Option.of(Role.of("progressbar")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-max
@@ -694,40 +739,40 @@ const Features: Features = {
   },
 
   [Namespace.SVG]: {
-    a: Feature.of((element) =>
+    a: svg((element) =>
       Option.of(Role.of(element.attribute("href").isSome() ? "link" : "group"))
     ),
 
-    circle: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    circle: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    ellipse: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    ellipse: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    foreignObject: Feature.of(() => Option.of(Role.of("group"))),
+    foreignObject: svg(() => Option.of(Role.of("group"))),
 
-    g: Feature.of(() => Option.of(Role.of("group"))),
+    g: svg(() => Option.of(Role.of("group"))),
 
-    image: Feature.of(() => Option.of(Role.of("img"))),
+    image: svg(() => Option.of(Role.of("img"))),
 
-    line: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    line: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    mesh: Feature.of(() => Option.of(Role.of("img"))),
+    mesh: svg(() => Option.of(Role.of("img"))),
 
-    path: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    path: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    polygon: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    polygon: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    polyline: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    polyline: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    rect: Feature.of(() => Option.of(Role.of("graphics-symbol"))),
+    rect: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-    svg: Feature.of(() => Option.of(Role.of("graphics-document"))),
+    svg: svg(() => Option.of(Role.of("graphics-document"))),
 
-    symbol: Feature.of(() => Option.of(Role.of("graphics-object"))),
+    symbol: svg(() => Option.of(Role.of("graphics-object"))),
 
-    text: Feature.of(() => Option.of(Role.of("group"))),
+    text: svg(() => Option.of(Role.of("group"))),
 
-    textPath: Feature.of(() => Option.of(Role.of("group"))),
+    textPath: svg(() => Option.of(Role.of("group"))),
 
-    use: Feature.of(() => Option.of(Role.of("graphics-object"))),
+    use: svg(() => Option.of(Role.of("graphics-object"))),
   },
 };

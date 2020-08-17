@@ -410,7 +410,7 @@ export namespace Role {
   ): Branched<Option<Role>, Browser> {
     return Branched.of(
       element.namespace.flatMap((namespace) =>
-        Feature.lookup(namespace, element.name).flatMap((feature) =>
+        Feature.from(namespace, element.name).flatMap((feature) =>
           Sequence.from(feature.role(element))
 
             // If the element is not allowed to be presentational, reject all

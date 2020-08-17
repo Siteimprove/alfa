@@ -407,6 +407,10 @@ export namespace Name {
     }
 
     return Role.from(element).flatMap((role) => {
+      // The following code handles the _generic_ steps of the accessible name
+      // computation, that is any steps that are shared for all namespaces. All
+      // remaining steps are handled by namespace-specific feature mappings.
+
       // Step 1: Does the role prohibit naming?
       // https://w3c.github.io/accname/#step1
       if (role.some((role) => role.isNameProhibited())) {
@@ -460,7 +464,7 @@ export namespace Name {
             return empty;
           }
 
-          const feature = Feature.lookup(element.namespace.get(), element.name);
+          const feature = Feature.from(element.namespace.get(), element.name);
 
           if (feature.isNone()) {
             return empty;
@@ -490,20 +494,6 @@ export namespace Name {
           }
 
           return fromDescendants(element, device, state);
-        },
-
-        // Step 2I: Use a tooltip attribute, if present.
-        // https://w3c.github.io/accname/#step2I
-        () => {
-          // The only known tooltip attribute is `title`, which is accepted by
-          // both HTML and SVG elements.
-          const attribute = element.attribute("title");
-
-          if (attribute.isNone()) {
-            return empty;
-          }
-
-          return fromLabel(attribute.get());
         }
       );
     });
@@ -532,6 +522,7 @@ export namespace Name {
         fromNode(element, device, {
           ...state,
           isRecursing: true,
+          isReferencing: false,
           isDescending: true,
         })
     )

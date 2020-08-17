@@ -307,7 +307,7 @@ export namespace Node {
 
           // Second pass: Look up implicit attributes on the feature mapping.
           for (const namespace of node.namespace) {
-            for (const feature of Feature.lookup(namespace, node.name)) {
+            for (const feature of Feature.from(namespace, node.name)) {
               for (const attribute of feature.attributes(node)) {
                 attributes = attributes.set(attribute.name, attribute);
               }

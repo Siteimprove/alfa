@@ -3,7 +3,8 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Namespace } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
 
 import { Name } from "../src/name";
 
@@ -19,6 +20,7 @@ test(`.from() determines the name of a text node`, (t) => {
 
 test(`.from() determines the name of a <button> element with child text content`, (t) => {
   const text = h.text("Hello world");
+
   const button = <button>{text}</button>;
 
   t.deepEqual(Name.from(button, device).toArray(), [
@@ -36,10 +38,66 @@ test(`.from() determines the name of a <button> element with child text content`
   ]);
 });
 
+test(`.from() determines the name of a <div> element with a role of button and
+      with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const button = <div role="button">{text}</div>;
+
+  t.deepEqual(Name.from(button, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            button,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of a <button> element with partially hidden
+      children`, (t) => {
+  const text = h.text("Hello world");
+
+  const span = <span>{text}</span>;
+
+  const button = (
+    <button>
+      {span}
+      <span style={{ display: "none" }}>!</span>
+    </button>
+  );
+
+  t.deepEqual(Name.from(button, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            button,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                span,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
 test(`.from() determines the name of a <button> element with a <span> child
       element with child text content`, (t) => {
   const text = h.text("Hello world");
+
   const span = <span>{text}</span>;
+
   const button = <button>{span}</button>;
 
   t.deepEqual(Name.from(button, device).toArray(), [
@@ -78,10 +136,33 @@ test(`.from() determines the name of a <button> element with an aria-label
   ]);
 });
 
+test(`.from() determines the name of a <button> element with an empty aria-label
+      attribute and child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const button = <button aria-label="">{text}</button>;
+
+  t.deepEqual(Name.from(button, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            button,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
 test(`.from() determines the name of a <button> element with an aria-labelledby
       attribute that points to a <p> element with child text content`, (t) => {
   const button = <button aria-labelledby="foo" />;
+
   const text = h.text("Hello world");
+
   const paragraph = <p id="foo">{text}</p>;
 
   <div>
@@ -112,9 +193,13 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
 test(`.from() determines the name of a <button> element with an aria-labelledby
       attribute that points to two <p> elements with child text content`, (t) => {
   const button = <button aria-labelledby="foo bar" />;
+
   const text1 = h.text("Hello");
+
   const text2 = h.text("world");
+
   const paragraph1 = <p id="foo">{text1}</p>;
+
   const paragraph2 = <p id="bar">{text2}</p>;
 
   <div>
@@ -218,8 +303,13 @@ test(`.from() determines the name of a <fieldset> element with a <legend> child
       Option.of(
         Name.of("Hello world", [
           Name.Source.descendant(
-            legend,
-            Name.of("Hello world", [Name.Source.data(text)])
+            fieldset,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                legend,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
           ),
         ])
       ),
@@ -234,20 +324,60 @@ test(`.from() determines the name of a <figure> element with a <figcaption>
 
   const caption = <figcaption>{text}</figcaption>;
 
-  const fieldset = (
+  const figure = (
     <figure>
       <img alt="This is an image"></img>
       {caption}
     </figure>
   );
 
-  t.deepEqual(Name.from(fieldset, device).toArray(), [
+  t.deepEqual(Name.from(figure, device).toArray(), [
     [
       Option.of(
         Name.of("Hello world", [
           Name.Source.descendant(
-            caption,
-            Name.of("Hello world", [Name.Source.data(text)])
+            figure,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                caption,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of a <table> element with a <caption> child
+      element with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const caption = <caption>{text}</caption>;
+
+  const table = (
+    <table>
+      {caption}
+      <tr>
+        <td>This is a table cell</td>
+      </tr>
+    </table>
+  );
+
+  t.deepEqual(Name.from(table, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            table,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                caption,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
           ),
         ])
       ),
@@ -410,6 +540,62 @@ test(`.from() determines the name of a <img> element with a an empty alt
       Option.of(
         Name.of("Hello world", [
           Name.Source.label(img.attribute("aria-label").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an SVG <svg> element with a <title> child
+      element with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const title = <title xmlns={Namespace.SVG}>{text}</title>;
+
+  const svg = <svg xmlns={Namespace.SVG}>{title}</svg>;
+
+  t.equal(svg.namespace.get(), Namespace.SVG);
+
+  t.deepEqual(Name.from(svg, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            svg,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                title,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an SVG <a> element with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const a = (
+    <a xmlns={Namespace.SVG} href="#">
+      {text}
+    </a>
+  );
+
+  t.equal(a.namespace.get(), Namespace.SVG);
+
+  t.deepEqual(Name.from(a, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
         ])
       ),
       [],
