@@ -553,10 +553,10 @@ const Features: Features = {
     select: html(
       () =>
         // Despite what the HTML AAM specifies, we always map <select> elements
-        // to a listbox widget as they currently have no way of mapping to a valid
-        // combobo widget. As a combobox requires an owned textarea and a list of
-        // options, we will always end up mapping <select> elements to an invalid
-        // combobox widget.
+        // to a listbox widget as they currently have no way of mapping to a
+        // valid combobo widget. As a combobox requires an owned textarea and a
+        // list of options, we will always end up mapping <select> elements to
+        // an invalid combobox widget.
         Option.of(Role.of("listbox")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
@@ -654,7 +654,8 @@ const Features: Features = {
 
         const tableModel = Table.from(table.get());
 
-        // If the <th> is within a <table> with errors, it doesn't really have a role.
+        // If the <th> is within a <table> with errors, it doesn't really have a
+        // role.
         if (tableModel.isErr()) {
           return None;
         }
@@ -663,15 +664,15 @@ const Features: Features = {
           cell.element.equals(element)
         );
 
-        // If the current element is not a cell in the table, something weird happened and it doesn't have a role.
+        // If the current element is not a cell in the table, something weird
+        // happened and it doesn't have a role.
         if (cell.isNone()) {
           return None;
         }
 
-        // This is not fully correct. If the header has no variant, its role should be computed as a <td>
-        // @see https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
-        //     "th (is neither column header nor row header, and ancestor table element has table role)"
-        // and "th (is neither column header nor row header, and ancestor table element has grid role)"
+        // This is not fully correct. If the header has no variant, its role
+        // should be computed as a <td>
+        // https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
         return cell.get().scope.map((scope) => {
           switch (scope) {
             case Scope.Column:
