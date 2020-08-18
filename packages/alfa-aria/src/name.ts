@@ -473,7 +473,7 @@ export namespace Name {
           return feature.get().name(element, device, state);
         },
 
-        // Step 2F: Use the subtree content, if referencing and allowed.
+        // Step 2F: Use the subtree content, if referencing or allowed.
         // https://w3c.github.io/accname/#step2F
         () => {
           if (
