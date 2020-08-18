@@ -232,6 +232,9 @@
       "path": "../alfa-trilean"
     },
     {
+      "path": "../alfa-wcag"
+    },
+    {
       "path": "../alfa-web"
     }
   ]
