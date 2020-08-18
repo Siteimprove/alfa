@@ -7,7 +7,6 @@ export type Roles = typeof Roles;
 
 export const Roles = {
   alert: {
-    index: 0,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -40,7 +39,6 @@ export const Roles = {
     },
   },
   alertdialog: {
-    index: 1,
     abstract: false,
     inherited: ["alert", "dialog"],
     attributes: [],
@@ -58,7 +56,6 @@ export const Roles = {
     },
   },
   application: {
-    index: 2,
     abstract: false,
     inherited: ["structure"],
     attributes: [
@@ -119,7 +116,6 @@ export const Roles = {
     },
   },
   article: {
-    index: 3,
     abstract: false,
     inherited: ["document"],
     attributes: [
@@ -152,7 +148,6 @@ export const Roles = {
     },
   },
   banner: {
-    index: 4,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -170,7 +165,6 @@ export const Roles = {
     },
   },
   blockquote: {
-    index: 5,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -188,7 +182,6 @@ export const Roles = {
     },
   },
   button: {
-    index: 6,
     abstract: false,
     inherited: ["command"],
     attributes: [
@@ -235,7 +228,6 @@ export const Roles = {
     },
   },
   caption: {
-    index: 7,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -253,7 +245,6 @@ export const Roles = {
     },
   },
   cell: {
-    index: 8,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -300,7 +291,6 @@ export const Roles = {
     },
   },
   checkbox: {
-    index: 9,
     abstract: false,
     inherited: ["input"],
     attributes: [
@@ -361,7 +351,6 @@ export const Roles = {
     },
   },
   code: {
-    index: 10,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -379,7 +368,6 @@ export const Roles = {
     },
   },
   columnheader: {
-    index: 11,
     abstract: false,
     inherited: ["cell", "gridcell", "sectionhead"],
     attributes: [
@@ -405,7 +393,6 @@ export const Roles = {
     },
   },
   combobox: {
-    index: 12,
     abstract: false,
     inherited: ["input"],
     attributes: [
@@ -487,7 +474,6 @@ export const Roles = {
     },
   },
   command: {
-    index: 13,
     abstract: true,
     inherited: ["widget"],
     attributes: [],
@@ -505,7 +491,6 @@ export const Roles = {
     },
   },
   complementary: {
-    index: 14,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -523,7 +508,6 @@ export const Roles = {
     },
   },
   composite: {
-    index: 15,
     abstract: true,
     inherited: ["widget"],
     attributes: [
@@ -556,7 +540,6 @@ export const Roles = {
     },
   },
   contentinfo: {
-    index: 16,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -574,7 +557,6 @@ export const Roles = {
     },
   },
   definition: {
-    index: 17,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -592,7 +574,6 @@ export const Roles = {
     },
   },
   deletion: {
-    index: 18,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -610,7 +591,6 @@ export const Roles = {
     },
   },
   dialog: {
-    index: 19,
     abstract: false,
     inherited: ["window"],
     attributes: [],
@@ -628,7 +608,6 @@ export const Roles = {
     },
   },
   directory: {
-    index: 20,
     abstract: false,
     inherited: ["list"],
     attributes: [],
@@ -646,7 +625,6 @@ export const Roles = {
     },
   },
   document: {
-    index: 21,
     abstract: false,
     inherited: ["structure"],
     attributes: [],
@@ -664,7 +642,6 @@ export const Roles = {
     },
   },
   emphasis: {
-    index: 22,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -682,7 +659,6 @@ export const Roles = {
     },
   },
   feed: {
-    index: 23,
     abstract: false,
     inherited: ["list"],
     attributes: [],
@@ -700,7 +676,6 @@ export const Roles = {
     },
   },
   figure: {
-    index: 24,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -718,7 +693,6 @@ export const Roles = {
     },
   },
   form: {
-    index: 25,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -736,7 +710,6 @@ export const Roles = {
     },
   },
   generic: {
-    index: 26,
     abstract: false,
     inherited: ["structure"],
     attributes: [],
@@ -754,7 +727,6 @@ export const Roles = {
     },
   },
   grid: {
-    index: 27,
     abstract: false,
     inherited: ["composite", "table"],
     attributes: [
@@ -787,7 +759,6 @@ export const Roles = {
     },
   },
   gridcell: {
-    index: 28,
     abstract: false,
     inherited: ["cell", "widget"],
     attributes: [
@@ -862,7 +833,6 @@ export const Roles = {
     },
   },
   group: {
-    index: 29,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -895,7 +865,6 @@ export const Roles = {
     },
   },
   heading: {
-    index: 30,
     abstract: false,
     inherited: ["sectionhead"],
     attributes: [
@@ -921,7 +890,6 @@ export const Roles = {
     },
   },
   img: {
-    index: 31,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -939,7 +907,6 @@ export const Roles = {
     },
   },
   input: {
-    index: 32,
     abstract: true,
     inherited: ["widget"],
     attributes: [
@@ -965,7 +932,6 @@ export const Roles = {
     },
   },
   insertion: {
-    index: 33,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -983,7 +949,6 @@ export const Roles = {
     },
   },
   landmark: {
-    index: 34,
     abstract: true,
     inherited: ["section"],
     attributes: [],
@@ -1001,7 +966,6 @@ export const Roles = {
     },
   },
   link: {
-    index: 35,
     abstract: false,
     inherited: ["command"],
     attributes: [
@@ -1034,7 +998,6 @@ export const Roles = {
     },
   },
   list: {
-    index: 36,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -1052,7 +1015,6 @@ export const Roles = {
     },
   },
   listbox: {
-    index: 37,
     abstract: false,
     inherited: ["select"],
     attributes: [
@@ -1120,7 +1082,6 @@ export const Roles = {
     },
   },
   listitem: {
-    index: 38,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -1160,7 +1121,6 @@ export const Roles = {
     },
   },
   log: {
-    index: 39,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -1186,7 +1146,6 @@ export const Roles = {
     },
   },
   main: {
-    index: 40,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -1204,7 +1163,6 @@ export const Roles = {
     },
   },
   marquee: {
-    index: 41,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -1222,7 +1180,6 @@ export const Roles = {
     },
   },
   math: {
-    index: 42,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -1240,7 +1197,6 @@ export const Roles = {
     },
   },
   meter: {
-    index: 43,
     abstract: false,
     inherited: ["range"],
     attributes: [
@@ -1280,7 +1236,6 @@ export const Roles = {
     },
   },
   menu: {
-    index: 44,
     abstract: false,
     inherited: ["select"],
     attributes: [
@@ -1313,7 +1268,6 @@ export const Roles = {
     },
   },
   menubar: {
-    index: 45,
     abstract: false,
     inherited: ["menu"],
     attributes: [
@@ -1346,7 +1300,6 @@ export const Roles = {
     },
   },
   menuitem: {
-    index: 46,
     abstract: false,
     inherited: ["command"],
     attributes: [
@@ -1400,7 +1353,6 @@ export const Roles = {
     },
   },
   menuitemcheckbox: {
-    index: 47,
     abstract: false,
     inherited: ["checkbox", "menuitem"],
     attributes: [],
@@ -1418,7 +1370,6 @@ export const Roles = {
     },
   },
   menuitemradio: {
-    index: 48,
     abstract: false,
     inherited: ["menuitemcheckbox", "radio"],
     attributes: [],
@@ -1436,7 +1387,6 @@ export const Roles = {
     },
   },
   navigation: {
-    index: 49,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -1454,7 +1404,6 @@ export const Roles = {
     },
   },
   none: {
-    index: 50,
     abstract: false,
     inherited: [],
     attributes: [],
@@ -1472,7 +1421,6 @@ export const Roles = {
     },
   },
   note: {
-    index: 51,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -1490,7 +1438,6 @@ export const Roles = {
     },
   },
   option: {
-    index: 52,
     abstract: false,
     inherited: ["input"],
     attributes: [
@@ -1537,7 +1484,6 @@ export const Roles = {
     },
   },
   paragraph: {
-    index: 53,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -1555,7 +1501,6 @@ export const Roles = {
     },
   },
   presentation: {
-    index: 54,
     abstract: false,
     inherited: ["structure"],
     attributes: [],
@@ -1573,7 +1518,6 @@ export const Roles = {
     },
   },
   progressbar: {
-    index: 55,
     abstract: false,
     inherited: ["range", "widget", "status"],
     attributes: [],
@@ -1591,7 +1535,6 @@ export const Roles = {
     },
   },
   radio: {
-    index: 56,
     abstract: false,
     inherited: ["input"],
     attributes: [
@@ -1631,7 +1574,6 @@ export const Roles = {
     },
   },
   radiogroup: {
-    index: 57,
     abstract: false,
     inherited: ["select"],
     attributes: [
@@ -1678,7 +1620,6 @@ export const Roles = {
     },
   },
   range: {
-    index: 58,
     abstract: true,
     inherited: ["structure"],
     attributes: [
@@ -1725,7 +1666,6 @@ export const Roles = {
     },
   },
   region: {
-    index: 59,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -1743,7 +1683,6 @@ export const Roles = {
     },
   },
   roletype: {
-    index: 60,
     abstract: true,
     inherited: [],
     attributes: [
@@ -1881,7 +1820,6 @@ export const Roles = {
     },
   },
   row: {
-    index: 61,
     abstract: false,
     inherited: ["group", "widget"],
     attributes: [
@@ -1949,7 +1887,6 @@ export const Roles = {
     },
   },
   rowgroup: {
-    index: 62,
     abstract: false,
     inherited: ["structure"],
     attributes: [],
@@ -1967,7 +1904,6 @@ export const Roles = {
     },
   },
   rowheader: {
-    index: 63,
     abstract: false,
     inherited: ["cell", "gridcell", "sectionhead"],
     attributes: [
@@ -2000,7 +1936,6 @@ export const Roles = {
     },
   },
   scrollbar: {
-    index: 64,
     abstract: false,
     inherited: ["range", "widget"],
     attributes: [
@@ -2061,7 +1996,6 @@ export const Roles = {
     },
   },
   search: {
-    index: 65,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -2079,7 +2013,6 @@ export const Roles = {
     },
   },
   searchbox: {
-    index: 66,
     abstract: false,
     inherited: ["textbox"],
     attributes: [],
@@ -2097,7 +2030,6 @@ export const Roles = {
     },
   },
   section: {
-    index: 67,
     abstract: true,
     inherited: ["structure"],
     attributes: [],
@@ -2115,7 +2047,6 @@ export const Roles = {
     },
   },
   sectionhead: {
-    index: 68,
     abstract: true,
     inherited: ["structure"],
     attributes: [],
@@ -2133,7 +2064,6 @@ export const Roles = {
     },
   },
   select: {
-    index: 69,
     abstract: true,
     inherited: ["composite", "group"],
     attributes: [
@@ -2159,7 +2089,6 @@ export const Roles = {
     },
   },
   separator: {
-    index: 70,
     abstract: false,
     inherited: ["structure", "widget"],
     attributes: [
@@ -2220,7 +2149,6 @@ export const Roles = {
     },
   },
   slider: {
-    index: 71,
     abstract: false,
     inherited: ["input", "range"],
     attributes: [
@@ -2295,7 +2223,6 @@ export const Roles = {
     },
   },
   spinbutton: {
-    index: 72,
     abstract: false,
     inherited: ["composite", "input", "range"],
     attributes: [
@@ -2370,7 +2297,6 @@ export const Roles = {
     },
   },
   status: {
-    index: 73,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -2403,7 +2329,6 @@ export const Roles = {
     },
   },
   strong: {
-    index: 74,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2421,7 +2346,6 @@ export const Roles = {
     },
   },
   structure: {
-    index: 75,
     abstract: true,
     inherited: ["roletype"],
     attributes: [],
@@ -2439,7 +2363,6 @@ export const Roles = {
     },
   },
   subscript: {
-    index: 76,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2457,7 +2380,6 @@ export const Roles = {
     },
   },
   superscript: {
-    index: 77,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2475,7 +2397,6 @@ export const Roles = {
     },
   },
   switch: {
-    index: 78,
     abstract: false,
     inherited: ["checkbox"],
     attributes: [
@@ -2501,7 +2422,6 @@ export const Roles = {
     },
   },
   tab: {
-    index: 79,
     abstract: false,
     inherited: ["sectionhead", "widget"],
     attributes: [
@@ -2562,7 +2482,6 @@ export const Roles = {
     },
   },
   table: {
-    index: 80,
     abstract: false,
     inherited: ["section"],
     attributes: [
@@ -2595,7 +2514,6 @@ export const Roles = {
     },
   },
   tablist: {
-    index: 81,
     abstract: false,
     inherited: ["composite"],
     attributes: [
@@ -2635,7 +2553,6 @@ export const Roles = {
     },
   },
   tabpanel: {
-    index: 82,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2653,7 +2570,6 @@ export const Roles = {
     },
   },
   term: {
-    index: 83,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2671,7 +2587,6 @@ export const Roles = {
     },
   },
   textbox: {
-    index: 84,
     abstract: false,
     inherited: ["input"],
     attributes: [
@@ -2753,7 +2668,6 @@ export const Roles = {
     },
   },
   time: {
-    index: 85,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2771,7 +2685,6 @@ export const Roles = {
     },
   },
   timer: {
-    index: 86,
     abstract: false,
     inherited: ["status"],
     attributes: [],
@@ -2789,7 +2702,6 @@ export const Roles = {
     },
   },
   toolbar: {
-    index: 87,
     abstract: false,
     inherited: ["group"],
     attributes: [
@@ -2815,7 +2727,6 @@ export const Roles = {
     },
   },
   tooltip: {
-    index: 88,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -2833,7 +2744,6 @@ export const Roles = {
     },
   },
   tree: {
-    index: 89,
     abstract: false,
     inherited: ["select"],
     attributes: [
@@ -2887,7 +2797,6 @@ export const Roles = {
     },
   },
   treegrid: {
-    index: 90,
     abstract: false,
     inherited: ["grid", "tree"],
     attributes: [],
@@ -2905,7 +2814,6 @@ export const Roles = {
     },
   },
   treeitem: {
-    index: 91,
     abstract: false,
     inherited: ["listitem", "option"],
     attributes: [
@@ -2938,7 +2846,6 @@ export const Roles = {
     },
   },
   widget: {
-    index: 92,
     abstract: true,
     inherited: ["roletype"],
     attributes: [],
@@ -2956,7 +2863,6 @@ export const Roles = {
     },
   },
   window: {
-    index: 93,
     abstract: true,
     inherited: ["roletype"],
     attributes: [
@@ -2982,7 +2888,6 @@ export const Roles = {
     },
   },
   "graphics-document": {
-    index: 94,
     abstract: false,
     inherited: ["document"],
     attributes: [],
@@ -3000,7 +2905,6 @@ export const Roles = {
     },
   },
   "graphics-object": {
-    index: 95,
     abstract: false,
     inherited: ["group"],
     attributes: [],
@@ -3018,7 +2922,6 @@ export const Roles = {
     },
   },
   "graphics-symbol": {
-    index: 96,
     abstract: false,
     inherited: ["img"],
     attributes: [],
@@ -3036,7 +2939,6 @@ export const Roles = {
     },
   },
   "doc-abstract": {
-    index: 97,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3054,7 +2956,6 @@ export const Roles = {
     },
   },
   "doc-acknowledgments": {
-    index: 98,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3072,7 +2973,6 @@ export const Roles = {
     },
   },
   "doc-afterword": {
-    index: 99,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3090,7 +2990,6 @@ export const Roles = {
     },
   },
   "doc-appendix": {
-    index: 100,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3108,7 +3007,6 @@ export const Roles = {
     },
   },
   "doc-backlink": {
-    index: 101,
     abstract: false,
     inherited: ["link"],
     attributes: [],
@@ -3126,7 +3024,6 @@ export const Roles = {
     },
   },
   "doc-biblioentry": {
-    index: 102,
     abstract: false,
     inherited: ["listitem"],
     attributes: [],
@@ -3144,7 +3041,6 @@ export const Roles = {
     },
   },
   "doc-bibliography": {
-    index: 103,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3162,7 +3058,6 @@ export const Roles = {
     },
   },
   "doc-biblioref": {
-    index: 104,
     abstract: false,
     inherited: ["link"],
     attributes: [],
@@ -3180,7 +3075,6 @@ export const Roles = {
     },
   },
   "doc-chapter": {
-    index: 105,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3198,7 +3092,6 @@ export const Roles = {
     },
   },
   "doc-colophon": {
-    index: 106,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3216,7 +3109,6 @@ export const Roles = {
     },
   },
   "doc-conclusion": {
-    index: 107,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3234,7 +3126,6 @@ export const Roles = {
     },
   },
   "doc-cover": {
-    index: 108,
     abstract: false,
     inherited: ["img"],
     attributes: [],
@@ -3252,7 +3143,6 @@ export const Roles = {
     },
   },
   "doc-credit": {
-    index: 109,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3270,7 +3160,6 @@ export const Roles = {
     },
   },
   "doc-credits": {
-    index: 110,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3288,7 +3177,6 @@ export const Roles = {
     },
   },
   "doc-dedication": {
-    index: 111,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3306,7 +3194,6 @@ export const Roles = {
     },
   },
   "doc-endnote": {
-    index: 112,
     abstract: false,
     inherited: ["listitem"],
     attributes: [],
@@ -3324,7 +3211,6 @@ export const Roles = {
     },
   },
   "doc-endnotes": {
-    index: 113,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3342,7 +3228,6 @@ export const Roles = {
     },
   },
   "doc-epigraph": {
-    index: 114,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3360,7 +3245,6 @@ export const Roles = {
     },
   },
   "doc-epilogue": {
-    index: 115,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3378,7 +3262,6 @@ export const Roles = {
     },
   },
   "doc-errata": {
-    index: 116,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3396,7 +3279,6 @@ export const Roles = {
     },
   },
   "doc-example": {
-    index: 117,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3414,7 +3296,6 @@ export const Roles = {
     },
   },
   "doc-footnote": {
-    index: 118,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3432,7 +3313,6 @@ export const Roles = {
     },
   },
   "doc-foreword": {
-    index: 119,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3450,7 +3330,6 @@ export const Roles = {
     },
   },
   "doc-glossary": {
-    index: 120,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3468,7 +3347,6 @@ export const Roles = {
     },
   },
   "doc-glossref": {
-    index: 121,
     abstract: false,
     inherited: ["link"],
     attributes: [],
@@ -3486,7 +3364,6 @@ export const Roles = {
     },
   },
   "doc-index": {
-    index: 122,
     abstract: false,
     inherited: ["navigation"],
     attributes: [],
@@ -3504,7 +3381,6 @@ export const Roles = {
     },
   },
   "doc-introduction": {
-    index: 123,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3522,7 +3398,6 @@ export const Roles = {
     },
   },
   "doc-noteref": {
-    index: 124,
     abstract: false,
     inherited: ["link"],
     attributes: [],
@@ -3540,7 +3415,6 @@ export const Roles = {
     },
   },
   "doc-notice": {
-    index: 125,
     abstract: false,
     inherited: ["note"],
     attributes: [],
@@ -3558,7 +3432,6 @@ export const Roles = {
     },
   },
   "doc-pagebreak": {
-    index: 126,
     abstract: false,
     inherited: ["separator"],
     attributes: [],
@@ -3576,7 +3449,6 @@ export const Roles = {
     },
   },
   "doc-pagelist": {
-    index: 127,
     abstract: false,
     inherited: ["navigation"],
     attributes: [],
@@ -3594,7 +3466,6 @@ export const Roles = {
     },
   },
   "doc-part": {
-    index: 128,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3612,7 +3483,6 @@ export const Roles = {
     },
   },
   "doc-preface": {
-    index: 129,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3630,7 +3500,6 @@ export const Roles = {
     },
   },
   "doc-prologue": {
-    index: 130,
     abstract: false,
     inherited: ["landmark"],
     attributes: [],
@@ -3648,7 +3517,6 @@ export const Roles = {
     },
   },
   "doc-pullquote": {
-    index: 131,
     abstract: false,
     inherited: ["none"],
     attributes: [],
@@ -3666,7 +3534,6 @@ export const Roles = {
     },
   },
   "doc-qna": {
-    index: 132,
     abstract: false,
     inherited: ["section"],
     attributes: [],
@@ -3684,7 +3551,6 @@ export const Roles = {
     },
   },
   "doc-subtitle": {
-    index: 133,
     abstract: false,
     inherited: ["sectionhead"],
     attributes: [],
@@ -3702,7 +3568,6 @@ export const Roles = {
     },
   },
   "doc-tip": {
-    index: 134,
     abstract: false,
     inherited: ["note"],
     attributes: [],
@@ -3720,7 +3585,6 @@ export const Roles = {
     },
   },
   "doc-toc": {
-    index: 135,
     abstract: false,
     inherited: ["navigation"],
     attributes: [],

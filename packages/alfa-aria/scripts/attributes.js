@@ -6,7 +6,7 @@ const puppeteer = require("puppeteer");
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
 
-  await page.goto("https://www.w3.org/TR/wai-aria/");
+  await page.goto("https://www.w3.org/TR/wai-aria-1.2/");
 
   const attributes = await page.evaluate(() =>
     Object.fromEntries(
@@ -39,7 +39,6 @@ puppeteer.launch().then(async (browser) => {
           return [
             key,
             {
-              index: 0,
               kind,
               type,
               options,
@@ -50,12 +49,6 @@ puppeteer.launch().then(async (browser) => {
       )
     )
   );
-
-  let index = 0;
-
-  for (const name in attributes) {
-    attributes[name].index = index++;
-  }
 
   let code = `
 // This file has been automatically generated based on the WAI-ARIA specification.

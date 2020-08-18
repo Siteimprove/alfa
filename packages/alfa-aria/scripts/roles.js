@@ -124,7 +124,6 @@ puppeteer.launch().then(async (browser) => {
             return [
               key,
               {
-                index: 0,
                 abstract,
                 inherited,
                 attributes,
@@ -137,12 +136,6 @@ puppeteer.launch().then(async (browser) => {
         );
       })
     );
-  }
-
-  let index = 0;
-
-  for (const name in roles) {
-    roles[name].index = index++;
   }
 
   let code = `
