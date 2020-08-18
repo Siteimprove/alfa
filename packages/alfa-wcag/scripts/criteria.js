@@ -26,7 +26,6 @@ puppeteer.launch().then(async (browser) => {
         return [
           chapter,
           {
-            index: 0,
             uri,
             title,
             level,
@@ -35,12 +34,6 @@ puppeteer.launch().then(async (browser) => {
       })
     )
   );
-
-  let index = 0;
-
-  for (const name in criteria) {
-    criteria[name].index = index++;
-  }
 
   let code = `
 // This file has been automatically generated based on the WCAG specification.
