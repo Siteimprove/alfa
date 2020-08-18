@@ -11,7 +11,7 @@ puppeteer.launch().then(async (browser) => {
   const attributes = await page.evaluate(() =>
     Object.fromEntries(
       [...document.querySelectorAll(".property, .state")].map(
-        (attribute, i) => {
+        (attribute) => {
           const key = attribute
             .querySelector(".property-name, .state-name")
             .getAttribute("title");
