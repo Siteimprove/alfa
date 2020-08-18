@@ -352,7 +352,7 @@ export namespace Role {
   }
 
   /**
-   * Get the role assigned either explicitly and implicitly to an element, if
+   * Get the role assigned either explicitly or implicitly to an element, if
    * any.
    */
   export function from(element: Element): Branched<Option<Role>, Browser> {
