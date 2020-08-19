@@ -1,6 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Name } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -16,14 +14,14 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
 const { isElement, hasNamespace, hasId } = Element;
-const { map, flatMap, isEmpty } = Iterable;
+const { map, flatMap } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -40,7 +38,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasRole((role) => role.is("link")),
                 not(isIgnored(device)),
-                hasAccessibleName(device, Name.hasValue(not(isEmpty)))
+                hasNonEmptyAccessibleName(device)
               )
             )
           );

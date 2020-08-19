@@ -6,7 +6,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasName, hasNamespace } = Element;
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device)(target),
+            hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
             () => Outcomes.HasNoName
           ),

@@ -10,45 +10,45 @@ puppeteer.launch().then(async (browser) => {
 
   const attributes = await page.evaluate(() =>
     Object.fromEntries(
-      [...document.querySelectorAll(".property, .state")].map(
-        (attribute) => {
-          const key = attribute
-            .querySelector(".property-name, .state-name")
-            .getAttribute("title");
+      [...document.querySelectorAll(".property, .state")].map((attribute) => {
+        const key = attribute
+          .querySelector(".property-name, .state-name")
+          .getAttribute("title");
 
-          const kind = attribute.matches(".property") ? "property" : "state";
+        const kind = attribute.matches(".property") ? "property" : "state";
 
-          const type = attribute
-            .querySelector(".property-value, .state-value")
-            .textContent.toLowerCase()
-            .replace(/[\s//]/g, "-");
+        const type = attribute
+          .querySelector(".property-value, .state-value")
+          .textContent.toLowerCase()
+          .replace(/[\s//]/g, "-");
 
-          const fallback =
-            attribute
-              .querySelector(".value-name .default")
-              ?.textContent.replace(/\(default\):?/, "")
-              .trim() ?? null;
+        const fallback =
+          attribute
+            .querySelector(".value-name .default")
+            ?.textContent.replace(/\(default\):?/, "")
+            .trim() ?? null;
 
-          const options =
-            type === "token" || type === "token-list"
-              ? [...attribute.querySelectorAll(".value-name")].map((option) =>
-                  option.textContent.replace(/\(default\):?/, "").trim()
-                )
-              : null;
+        const options =
+          type === "token" || type === "token-list"
+            ? [...attribute.querySelectorAll(".value-name")].map((option) =>
+                option.textContent.replace(/\(default\):?/, "").trim()
+              )
+            : null;
 
-          return [
-            key,
-            {
-              kind,
-              type,
-              options,
-              default: fallback,
-            },
-          ];
-        }
-      )
+        return [
+          key,
+          {
+            kind,
+            type,
+            options,
+            default: fallback,
+          },
+        ];
+      })
     )
   );
+
+  browser.close();
 
   let code = `
 // This file has been automatically generated based on the WAI-ARIA specification.
@@ -65,6 +65,4 @@ export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
   });
 
   fs.writeFileSync(path.join(__dirname, "../src/attribute/data.ts"), code);
-
-  browser.close();
 });

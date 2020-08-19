@@ -17,6 +17,9 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
+  "scripts": {
+    "generate": "node scripts/attributes.js && node scripts/roles.js"
+  },
   "dependencies": {
     "@siteimprove/alfa-branched": "^0.3.0",
     "@siteimprove/alfa-cache": "^0.3.0",

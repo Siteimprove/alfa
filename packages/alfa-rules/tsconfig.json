@@ -18,6 +18,7 @@
     "src/common/predicate/has-implicit-role.ts",
     "src/common/predicate/has-inclusive-descendant.ts",
     "src/common/predicate/has-input-type.ts",
+    "src/common/predicate/has-non-empty-accessible-name.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-text-content.ts",
     "src/common/predicate/has-unique-id.ts",

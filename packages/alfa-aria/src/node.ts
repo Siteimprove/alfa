@@ -71,7 +71,7 @@ export abstract class Node implements Serializable {
    * meaning that the node can no longer be passed as a child to a parent node.
    */
   public freeze(): this {
-    this._frozen = this._frozen || true;
+    this._frozen = true;
     return this;
   }
 
@@ -178,7 +178,7 @@ export abstract class Node implements Serializable {
    * @internal
    */
   public _attachParent(parent: Node): boolean {
-    if (this._parent.isSome()) {
+    if (this._frozen || this._parent.isSome()) {
       return false;
     }
 

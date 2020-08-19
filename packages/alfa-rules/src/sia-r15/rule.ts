@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Name, Node } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -12,13 +12,13 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { map, flatMap, isEmpty } = Iterable;
+const { map, flatMap } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 hasName("iframe"),
                 hasNamespace(Namespace.HTML),
                 not(isIgnored(device)),
-                hasAccessibleName(device, Name.hasValue(not(isEmpty)))
+                hasNonEmptyAccessibleName(device)
               )
             )
           );

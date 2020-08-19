@@ -1,7 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Name } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -9,7 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasChild } from "../common/predicate/has-child";
 import { isPerceivable } from "../common/predicate/is-perceivable";
@@ -17,8 +15,7 @@ import { isPerceivable } from "../common/predicate/is-perceivable";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { isEmpty } = Iterable;
-const { and, or, nor, not } = Predicate;
+const { and, or, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r49.html",
@@ -81,7 +78,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                     Element.isElement,
                     and(
                       isPerceivable(device),
-                      hasAccessibleName(device, Name.hasValue(not(isEmpty)))
+                      hasNonEmptyAccessibleName(device)
                     )
                   )(mechanism.get()),
                   () => Outcomes.HasPerceivablePauseMechanism(target.name),

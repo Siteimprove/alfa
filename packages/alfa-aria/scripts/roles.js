@@ -138,6 +138,8 @@ puppeteer.launch().then(async (browser) => {
     );
   }
 
+  browser.close();
+
   let code = `
 // This file has been automatically generated based on the various WAI-ARIA
 // specifications. Do therefore not modify it directly! If you wish to make
@@ -154,6 +156,4 @@ export const Roles = ${JSON.stringify(roles, null, 2)} as const;
   });
 
   fs.writeFileSync(path.join(__dirname, "../src/role/data.ts"), code);
-
-  browser.close();
 });

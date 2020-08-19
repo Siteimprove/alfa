@@ -428,7 +428,8 @@ export namespace Name {
         // https://w3c.github.io/accname/#step2B
         () => {
           // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
-          // are not allowed.
+          // are not allowed. If the element is therefore being referenced
+          // already then this step produces an empty name.
           if (state.isReferencing) {
             return empty;
           }
@@ -457,6 +458,11 @@ export namespace Name {
         // Step 2D: Use native features, if present and allowed.
         // https://w3c.github.io/accname/#step2D
         () => {
+          // Using native features is only allowed if the role, if any, of the
+          // element is not presentational and the element has a namespace with
+          // which to look up its feature mapping, if it exists. If the role of
+          // element therefore is presentational or the element has no namespace
+          // then this step produces an empty name.
           if (
             role.some((role) => role.isPresentational()) ||
             element.namespace.isNone()
@@ -476,6 +482,11 @@ export namespace Name {
         // Step 2F: Use the subtree content, if referencing or allowed.
         // https://w3c.github.io/accname/#step2F
         () => {
+          // Using the subtree content is only allowed if the element is either
+          // being referenced or the role, if any, of the element allows it to
+          // be named by its content. If the element therefore isn't being
+          // referenced and is not allowed to be named by its content then this
+          // step produces an empty name.
           if (
             !state.isReferencing &&
             !role.every((role) => role.isNamedBy("contents"))
@@ -489,6 +500,8 @@ export namespace Name {
         // Step 2H: Use the subtree content, if descending.
         // https://w3c.github.io/accname/#step2H
         () => {
+          // Unless we're already descending then this step produces an empty
+          // name.
           if (!state.isDescending) {
             return empty;
           }
