@@ -1,4 +1,5 @@
 import { Requirement } from "@siteimprove/alfa-act";
+import { Branched } from "@siteimprove/alfa-branched";
 
 import { Criteria } from "./criterion/data";
 
@@ -12,40 +13,69 @@ export class Criterion<
   private readonly _chapter: C;
 
   private constructor(chapter: C) {
-    super(Criteria[chapter].uri);
+    const { versions } = Criteria[chapter];
+
+    // Use the criterion URI from the recommendation, if available, otherwise
+    // use the URI from the draft. This ensures that the most stable identifier
+    // is used when avaiable.
+    const { uri } =
+      versions[Criterion.Version.Recommendation] ??
+      versions[Criterion.Version.Draft];
+
+    super(uri);
 
     this._chapter = chapter;
   }
 
+  /**
+   * The chapter of this criterion.
+   */
   public get chapter(): C {
     return this._chapter;
   }
 
+  /**
+   * The title of this criterion.
+   */
   public get title(): string {
     return Criteria[this._chapter].title;
   }
 
-  public get level(): Criterion.Level<C> {
-    return Criteria[this._chapter].level;
+  /**
+   * The versions in which this criterion is defined.
+   */
+  public get versions(): Iterable<Criterion.Version> {
+    return Object.keys(Criteria[this._chapter].versions) as Array<
+      Criterion.Version
+    >;
   }
 
-  public hasLevel(level: Criterion.Level): boolean {
-    return Criteria[this._chapter].level <= level;
+  /**
+   * The level of this criterion.
+   *
+   * @remarks
+   * The level may be different between versions.
+   */
+  public get level(): Branched<Criterion.Level, Criterion.Version> {
+    const { versions } = Criteria[this._chapter];
+
+    return Branched.from(
+      [...this.versions].map((version) => [versions[version]!.level, [version]])
+    );
   }
 
   public toJSON(): Criterion.JSON {
-    const { title, level } = Criteria[this._chapter];
+    const { title } = Criteria[this._chapter];
 
     return {
       ...super.toJSON(),
       chapter: this._chapter,
       title,
-      level,
     };
   }
 
   public toEARL(): Criterion.EARL {
-    const { title, uri } = Criteria[this._chapter];
+    const { title } = Criteria[this._chapter];
 
     return {
       ...super.toEARL(),
@@ -53,7 +83,6 @@ export class Criterion<
         earl: "http://www.w3.org/ns/earl#",
         dct: "http://purl.org/dc/terms/",
       },
-      "@id": uri,
       "dct:title": title,
       "dct:isPartOf": "https://www.w3.org/TR/WCAG/",
     };
@@ -64,7 +93,6 @@ export namespace Criterion {
   export interface JSON extends Requirement.JSON {
     chapter: Chapter;
     title: string;
-    level: Level;
   }
 
   export interface EARL extends Requirement.EARL {
@@ -72,28 +100,95 @@ export namespace Criterion {
       earl: "http://www.w3.org/ns/earl#";
       dct: "http://purl.org/dc/terms/";
     };
-    "@id": string;
     "dct:title": string;
     "dct:isPartOf": "https://www.w3.org/TR/WCAG/";
   }
 
+  /**
+   * The chapters of all criteria.
+   */
   export type Chapter = keyof Criteria;
 
   export function isChapter(value: string): value is Chapter {
     return value in Criteria;
   }
 
-  export type Level<C extends Chapter = Chapter> = Criteria[C]["level"];
+  /**
+   * The different versions of the WCAG.
+   */
+  export type Version = keyof Criteria[Chapter]["versions"];
 
-  type WithLevel<L extends Level> = {
-    [C in Chapter]: L extends Criteria[C]["level"] ? C : never;
-  }[Chapter];
+  export namespace Version {
+    /**
+     * The current version of the WCAG Recommendation.
+     */
+    export const Recommendation = "2.1";
 
-  export type A = WithLevel<"A">;
+    /**
+     * The current version of the WCAG Recommendation.
+     */
+    export type Recommendation = typeof Recommendation;
 
-  export type AA = WithLevel<"AA">;
+    /**
+     * The current version of the WCAG Working Draft.
+     */
+    export const Draft = "2.2";
 
-  export type AAA = WithLevel<"AAA">;
+    /**
+     * The current version of the WCAG Working Draft.
+     */
+    export type Draft = typeof Draft;
+  }
+
+  /**
+   * The level of the specified criterion under the specified version.
+   */
+  export type Level<
+    C extends Chapter = Chapter,
+    V extends Version = Version
+  > = {
+    [U in V]: Criteria[C]["versions"][U] extends { readonly level: infer L }
+      ? L
+      : never;
+  }[V];
+
+  export namespace Level {
+    /**
+     * All criteria of the specified level under the specific version.
+     */
+    type Of<L extends Level, V extends Version = Version.Recommendation> = {
+      [C in Chapter]: Criteria[C]["versions"][V] extends { readonly level: L }
+        ? C
+        : never;
+    }[Chapter];
+
+    /**
+     * All criteria of level A.
+     *
+     * @remarks
+     * Note that criteria levels are different from conformance levels! While
+     * criteria levels are disjoint, conformance levels stack.
+     */
+    export type A<V extends Version = Version.Recommendation> = Of<"A", V>;
+
+    /**
+     * All criteria of level AA.
+     *
+     * @remarks
+     * Note that criteria levels are different from conformance levels! While
+     * criteria levels are disjoint, conformance levels stack.
+     */
+    export type AA<V extends Version = Version.Recommendation> = Of<"AA", V>;
+
+    /**
+     * All criteria of level AAA.
+     *
+     * @remarks
+     * Note that criteria levels are different from conformance levels! While
+     * criteria levels are disjoint, conformance levels stack.
+     */
+    export type AAA<V extends Version = Version.Recommendation> = Of<"AAA", V>;
+  }
 
   export function isCriterion(value: unknown): value is Criterion {
     return value instanceof Criterion;

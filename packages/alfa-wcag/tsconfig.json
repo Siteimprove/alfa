@@ -12,6 +12,12 @@
       "path": "../alfa-act"
     },
     {
+      "path": "../alfa-branched"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
