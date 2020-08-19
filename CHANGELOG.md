@@ -33,6 +33,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-option](packages/alfa-option): `Option#reject()` is now available.
 
+- [@siteimprove/alfa-branched](packages/alfa-branched): `Branched#from()` is now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): Style sheets referenced through `@import` rules are now correctly included when computing cascade.
