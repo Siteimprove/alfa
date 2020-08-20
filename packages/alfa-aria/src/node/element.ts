@@ -1,68 +1,79 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Map } from "@siteimprove/alfa-map";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { Role } from "../role";
+import { Attribute } from "../attribute";
+import { Name } from "../name";
 import { Node } from "../node";
-
-const { isEmpty } = Iterable;
-const { not } = Predicate;
+import { Role } from "../role";
 
 export class Element extends Node {
   public static of(
     owner: dom.Node,
     role: Option<Role> = None,
-    name: Option<string> = None,
-    attributes: Map<string, string> = Map.empty(),
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    parent: Option<Node> = None
+    name: Option<Name> = None,
+    attributes: Iterable<Attribute> = [],
+    children: Iterable<Node> = []
   ): Element {
-    return new Element(owner, role, name, attributes, children, parent);
+    return new Element(
+      owner,
+      role,
+      name,
+      Array.from(attributes),
+      Array.from(children)
+    );
   }
 
   private readonly _role: Option<Role>;
-  private readonly _name: Option<string>;
-  private readonly _attributes: Map<string, string>;
+  private readonly _name: Option<Name>;
+  private readonly _attributes: Array<Attribute>;
 
   private constructor(
     owner: dom.Node,
     role: Option<Role>,
-    name: Option<string>,
-    attributes: Map<string, string>,
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
+    name: Option<Name>,
+    attributes: Array<Attribute>,
+    children: Array<Node>
   ) {
-    super(owner, children, parent);
+    super(owner, children);
 
     this._role = role;
-    this._name = name.map((name) => name.trim()).filter(not(isEmpty));
+    this._name = name;
     this._attributes = attributes;
   }
 
-  public attribute(name: string): Option<string> {
-    return this._attributes.get(name);
-  }
-
-  public name(): Option<string> {
-    return this._name;
-  }
-
-  public role(): Option<Role> {
+  public get role(): Option<Role> {
     return this._role;
   }
 
-  public clone(parent: Option<Node> = None): Element {
+  public get name(): Option<Name> {
+    return this._name;
+  }
+
+  public get attributes(): Iterable<Attribute> {
+    return this._attributes[Symbol.iterator]();
+  }
+
+  public attribute<N extends Attribute.Name>(
+    predicate: N | Predicate<Attribute, Attribute<N>>
+  ): Option<Attribute<N>> {
+    return Iterable.find(
+      this._attributes,
+      typeof predicate === "string"
+        ? (attribute) => attribute.name === predicate
+        : predicate
+    );
+  }
+
+  public clone(): Element {
     return new Element(
       this._node,
       this._role,
       this._name,
       this._attributes,
-      (self) => this._children.map((child) => child.clone(Option.of(self))),
-      parent
+      this._children.map((child) => child.clone())
     );
   }
 
@@ -73,10 +84,9 @@ export class Element extends Node {
   public toJSON(): Element.JSON {
     return {
       type: "element",
-      node: this._node.toJSON(),
       role: this._role.map((role) => role.name).getOr(null),
-      name: this._name.getOr(null),
-      attributes: this._attributes.toArray(),
+      name: this._name.map((name) => name.value).getOr(null),
+      attributes: this._attributes.map((attribute) => attribute.toJSON()),
       children: this._children.map((child) => child.toJSON()),
     };
   }
@@ -97,7 +107,7 @@ export namespace Element {
     type: "element";
     role: string | null;
     name: string | null;
-    attributes: Array<[string, string]>;
+    attributes: Array<Attribute.JSON>;
   }
 }
 

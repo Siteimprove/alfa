@@ -2,101 +2,24 @@ import { Role } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-const { hasName } = Role;
-
-// @TODO This is calling directly Role.from rather than Node.from().role
-// @TODO So this is likely not correct for elements that are hidden
-
 export function hasRole(predicate?: Predicate<Role>): Predicate<Element>;
 
-export function hasRole(
-  name: string,
-  ...rest: Array<string>
+export function hasRole<N extends Role.Name>(
+  name: N,
+  ...rest: Array<N>
 ): Predicate<Element>;
 
 export function hasRole(
-  nameOrPredicate: undefined | string | Predicate<Role>,
-  ...names: Array<string>
-): Predicate<Element> {
-  const options = {};
-
-  return typeof nameOrPredicate === "function" ||
-    typeof nameOrPredicate === "undefined"
-    ? hasRoleWithOptions(options, nameOrPredicate)
-    : hasRoleWithOptions(options, nameOrPredicate, ...names);
-}
-
-export function hasExplicitRole(
-  predicate?: Predicate<Role>
-): Predicate<Element>;
-
-export function hasExplicitRole(
-  name: string,
-  ...rest: Array<string>
-): Predicate<Element>;
-
-export function hasExplicitRole(
-  nameOrPredicate: undefined | string | Predicate<Role>,
-  ...names: Array<string>
-): Predicate<Element> {
-  const options = { implicit: false };
-
-  return typeof nameOrPredicate === "function" ||
-    typeof nameOrPredicate === "undefined"
-    ? hasRoleWithOptions(options, nameOrPredicate)
-    : hasRoleWithOptions(options, nameOrPredicate, ...names);
-}
-
-export function hasImplicitRole(
-  predicate?: Predicate<Role>
-): Predicate<Element>;
-
-export function hasImplicitRole(
-  name: string,
-  ...rest: Array<string>
-): Predicate<Element>;
-
-export function hasImplicitRole(
-  nameOrPredicate: undefined | string | Predicate<Role>,
-  ...names: Array<string>
-): Predicate<Element> {
-  const options = { explicit: false };
-
-  return typeof nameOrPredicate === "function" ||
-    typeof nameOrPredicate === "undefined"
-    ? hasRoleWithOptions(options, nameOrPredicate)
-    : hasRoleWithOptions(options, nameOrPredicate, ...names);
-}
-
-function hasRoleWithOptions(
-  options: Role.from.Options,
-  predicate?: Predicate<Role>
-): Predicate<Element>;
-
-function hasRoleWithOptions(
-  options: Role.from.Options,
-  name: string,
-  ...rest: Array<string>
-): Predicate<Element>;
-
-function hasRoleWithOptions(
-  options: Role.from.Options,
-  nameOrPredicate: undefined | string | Predicate<Role>,
-  ...names: Array<string>
+  nameOrPredicate: Predicate<Role> | Role.Name = () => true,
+  ...names: Array<Role.Name>
 ): Predicate<Element> {
   let predicate: Predicate<Role>;
 
-  switch (typeof nameOrPredicate) {
-    case "function":
-      predicate = nameOrPredicate;
-      break;
-    case "undefined":
-      predicate = () => true;
-      break;
-    default:
-      predicate = hasName(nameOrPredicate, ...names);
+  if (typeof nameOrPredicate === "function") {
+    predicate = nameOrPredicate;
+  } else {
+    predicate = Role.hasName(nameOrPredicate, ...names);
   }
 
-  return (element) =>
-    Role.from(element, options).some((role) => role.some(predicate));
+  return (element) => Role.from(element).some((role) => role.some(predicate));
 }

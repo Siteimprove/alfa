@@ -2,6 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
@@ -30,8 +31,14 @@ test("evaluate() passes on elements marked as decorative and not exposed", async
       <img id="empty-alt" src="foo.jpg" alt="" />
       <img id="role-none" src="foo.jpg" role="none" />
       <img id="role-presentation" src="foo.jpg" role="presentation" />
-      <svg id="svg" role="none">
-        <circle cx="50" cy="50" r="40" fill="yellow"></circle>
+      <svg xmlns={Namespace.SVG} id="svg" role="none">
+        <circle
+          xmlns={Namespace.SVG}
+          cx="50"
+          cy="50"
+          r="40"
+          fill="yellow"
+        ></circle>
       </svg>
       <img id="aria-hidden" src="foo.jpg" role="none" aria-hidden="true" />
       <div aria-hidden="true">
