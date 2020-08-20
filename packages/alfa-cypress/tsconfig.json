@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/cypress.ts", "src/index.ts"],
+  "files": ["src/cypress.ts", "src/cypress/add-command.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-device"

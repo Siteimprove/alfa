@@ -52,9 +52,11 @@ export class Assertion<I, T, Q> {
 
         const count = failures.length;
 
-        const message = `${count} failed outcome${
-          count === 1 ? "" : "s"
-        } were found`;
+        const outcome = count === 1 ? "outcome" : "outcomes";
+
+        const was = count === 1 ? "was" : "were";
+
+        const message = `${count} failed ${outcome} ${was} found`;
 
         if (count === 0) {
           return Future.now(Result.of(message));

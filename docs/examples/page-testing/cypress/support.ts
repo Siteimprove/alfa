@@ -1,16 +1,12 @@
-/// <reference types="node" />
-
 import * as alfa from "@siteimprove/alfa-cypress";
 
 import rules from "@siteimprove/alfa-rules";
-import earl from "@siteimprove/alfa-formatter-earl";
+import json from "@siteimprove/alfa-formatter-json";
 
-Cypress.Commands.add(
-  ...alfa.Cypress.createCommand(rules, [
-    (input, outcomes, message) => {
-      cy.writeFile("outcomes/page.spec.json", earl()(input, outcomes));
+alfa.Cypress.createPlugin(rules, [
+  (input, outcomes, message) => {
+    cy.writeFile("outcomes/page.spec.json", json()(input, outcomes));
 
-      return `${message}, see the full report in the log`;
-    },
-  ])
-);
+    return `${message}, see the full report at outcomes/page.spec.json`;
+  },
+]);

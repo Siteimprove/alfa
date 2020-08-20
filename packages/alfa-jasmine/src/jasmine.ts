@@ -4,6 +4,8 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
+import { addAsyncMatcher } from "./jasmine/add-async-matcher";
+
 declare global {
   namespace jasmine {
     interface Matchers<T> {
@@ -21,32 +23,24 @@ export namespace Jasmine {
   ): void {
     const asserter = Asserter.of(rules, handlers, options);
 
-    beforeEach(() => {
-      jasmine.addAsyncMatchers({
-        toBeAccessible(util) {
+    addAsyncMatcher("toBeAccessible", (util) => {
+      return {
+        async compare(value: I) {
+          const target = await transform(value);
+
+          const error = await asserter.expect(target).to.be.accessible();
+
+          const message = error.isOk() ? error.get() : error.getErr();
+
           return {
-            async compare(value: I) {
-              const target = await transform(value);
-
-              const error = await asserter.expect(target).to.be.accessible();
-
-              const message = error.isOk() ? error.get() : error.getErr();
-
-              return {
-                pass: error.isOk(),
-                message:
-                  util.buildFailureMessage(
-                    "toBeAccessible",
-                    error.isOk(),
-                    value
-                  ) +
-                  " " +
-                  message,
-              };
-            },
+            pass: error.isOk(),
+            message:
+              util.buildFailureMessage("toBeAccessible", error.isOk(), value) +
+              " " +
+              message,
           };
         },
-      });
+      };
     });
   }
 }

@@ -1,7 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/jasmine.ts"],
+  "files": [
+    "src/index.ts",
+    "src/jasmine.ts",
+    "src/jasmine/add-async-matcher.ts"
+  ],
   "references": [
     {
       "path": "../alfa-assert"

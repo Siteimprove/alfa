@@ -32,6 +32,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as act from "@siteimprove/alfa-act";
 
+import { addCommand } from "./cypress/add-command";
+
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
@@ -41,11 +43,11 @@ declare global {
 }
 
 export namespace Cypress {
-  export function createCommand<T = unknown, Q = never>(
+  export function createPlugin<T = unknown, Q = never>(
     rules: Iterable<act.Rule<Page, T, Q>>,
     handlers: Iterable<Handler<Page, T, Q>> = [],
     options: Asserter.Options = {}
-  ) {
+  ): void {
     const asserter = Asserter.of(rules, handlers, options);
 
     const command = (value: Type) =>
@@ -59,7 +61,7 @@ export namespace Cypress {
         assert.isTrue(error.isOk(), message);
       });
 
-    return ["audit", { prevSubject: true }, command] as const;
+    addCommand("audit", { prevSubject: true }, command);
   }
 
   export type Type = globalThis.Node | JQuery.Type;
