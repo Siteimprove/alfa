@@ -40,15 +40,16 @@ puppeteer.launch().then(async (browser) => {
     for (const { chapter, id, title, level } of data) {
       criteria[chapter] = criteria[chapter] ?? {
         title,
-        versions: Object.fromEntries(
-          specifications.map(([version]) => [version, null])
-        ),
+        versions: [],
       };
 
-      criteria[chapter].versions[version] = {
-        uri: `${specification}#${id}`,
-        level,
-      };
+      criteria[chapter].versions.push([
+        version,
+        {
+          uri: `${specification}#${id}`,
+          level,
+        },
+      ]);
     }
   }
 

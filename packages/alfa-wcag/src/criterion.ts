@@ -13,14 +13,14 @@ export class Criterion<
   private readonly _chapter: C;
 
   private constructor(chapter: C) {
-    const { versions } = Criteria[chapter];
-
     // Use the criterion URI from the recommendation, if available, otherwise
     // use the URI from the draft. This ensures that the most stable identifier
     // is used when avaiable.
-    const { uri } =
-      versions[Criterion.Version.Recommendation] ??
-      versions[Criterion.Version.Draft];
+    const [, { uri }] = [...Criteria[chapter].versions].find(
+      ([version]) =>
+        version === Criterion.Version.Recommendation ||
+        version === Criterion.Version.Draft
+    )!;
 
     super(uri);
 
@@ -45,9 +45,7 @@ export class Criterion<
    * The versions in which this criterion is defined.
    */
   public get versions(): Iterable<Criterion.Version> {
-    return Object.keys(Criteria[this._chapter].versions) as Array<
-      Criterion.Version
-    >;
+    return [...Criteria[this._chapter].versions].map(([version]) => version);
   }
 
   /**
@@ -57,10 +55,11 @@ export class Criterion<
    * The level may be different between versions.
    */
   public get level(): Branched<Criterion.Level, Criterion.Version> {
-    const { versions } = Criteria[this._chapter];
-
     return Branched.from(
-      [...this.versions].map((version) => [versions[version]!.level, [version]])
+      [...Criteria[this._chapter].versions].map(([version, { level }]) => [
+        level,
+        [version],
+      ])
     );
   }
 
@@ -116,7 +115,7 @@ export namespace Criterion {
   /**
    * The different versions of the WCAG.
    */
-  export type Version = keyof Criteria[Chapter]["versions"];
+  export type Version = "2.0" | "2.1" | "2.2";
 
   export namespace Version {
     /**
@@ -146,20 +145,18 @@ export namespace Criterion {
   export type Level<
     C extends Chapter = Chapter,
     V extends Version = Version
-  > = {
-    [U in V]: Criteria[C]["versions"][U] extends { readonly level: infer L }
+  > = Criteria[C]["versions"] extends Iterable<infer T>
+    ? T extends readonly [V, { readonly level: infer L }]
       ? L
-      : never;
-  }[V];
+      : never
+    : never;
 
   export namespace Level {
     /**
      * All criteria of the specified level under the specific version.
      */
     type Of<L extends Level, V extends Version = Version.Recommendation> = {
-      [C in Chapter]: Criteria[C]["versions"][V] extends { readonly level: L }
-        ? C
-        : never;
+      [C in Chapter]: L extends Level<C, V> ? C : never;
     }[Chapter];
 
     /**
