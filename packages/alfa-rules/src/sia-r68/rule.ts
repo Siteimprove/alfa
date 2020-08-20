@@ -13,32 +13,29 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
-const { some } = Iterable;
-const { and, not, isString } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r68.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(
+        return document.descendants({ flattened: true, nested: true }).filter(
+          and(
+            isElement,
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                not(isIgnored(device)),
-                hasRole(hasOwnedElements())
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              not(isIgnored(device)),
+              hasRole((role) => role.hasRequiredChildren())
             )
-          );
+          )
+        );
       },
 
       expectations(target) {
         return {
           1: expectation(
-            hasRequiredOwnedElements(device)(target),
+            hasRequiredChildren(device)(target),
             () => Outcomes.HasCorrectOwnedElements,
             () => Outcomes.HasIncorrectOwnedElements
           ),
@@ -60,57 +57,43 @@ export namespace Outcomes {
   );
 }
 
-function hasOwnedElements(
-  predicate: Predicate<
-    string | readonly [string, string, ...Array<string>]
-  > = () => true
-): Predicate<Role> {
-  return function hasOwnedElements(role) {
-    return (
-      some(role.characteristics.owns, predicate) ||
-      role.inheritsFrom(hasOwnedElements)
-    );
-  };
-}
-
-function hasRequiredOwnedElements(device: Device): Predicate<Element> {
+function hasRequiredChildren(device: Device): Predicate<Element> {
   return (element) =>
     Node.from(element, device).every((node) =>
-      node
-        .children()
-        .filter((node) => Element.isElement(node.node))
-        .every((child) =>
-          child
-            .role()
-            .some((childRole) =>
-              node
-                .role()
-                .some((role) =>
-                  hasOwnedElements((roles) =>
-                    isString(roles)
-                      ? roles === childRole.name
-                      : owns([...roles])(child)
-                  )(role)
-                )
-            )
+      node.role
+        .filter((role) => role.hasRequiredChildren())
+        .every((role) =>
+          node
+            .children()
+            .filter((node) => isElement(node.node))
+            .every(isRequiredChild(role.requiredChildren))
         )
     );
 }
 
-function owns(roles: Array<string>): Predicate<Node> {
-  return (node) => {
-    const [next, ...remaining] = roles;
+function isRequiredChild(
+  requiredChildren: Iterable<Iterable<Role.Name>>
+): Predicate<Node> {
+  return (node) =>
+    [...requiredChildren].some((roles) => isRequiredChild(roles)(node));
 
-    if (node.role().some((role) => next === role.name)) {
-      return (
-        remaining.length === 0 ||
-        node
-          .children()
-          .filter((node) => Element.isElement(node.node))
-          .every(owns(remaining))
-      );
-    }
+  function isRequiredChild(
+    requiredChildren: Iterable<Role.Name>
+  ): Predicate<Node> {
+    return (node) => {
+      const [role, ...rest] = requiredChildren;
 
-    return false;
-  };
+      if (node.role.some(Role.hasName(role))) {
+        return (
+          rest.length === 0 ||
+          node
+            .children()
+            .filter((node) => isElement(node.node))
+            .every(isRequiredChild(rest))
+        );
+      }
+
+      return false;
+    };
+  }
 }

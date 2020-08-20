@@ -1,8 +1,5 @@
-import { None, Option } from "@siteimprove/alfa-option";
-
 import * as dom from "@siteimprove/alfa-dom";
 
-import { Role } from "../role";
 import { Node } from "../node";
 
 export class Inert extends Node {
@@ -11,19 +8,7 @@ export class Inert extends Node {
   }
 
   private constructor(owner: dom.Node) {
-    super(owner, () => [], None);
-  }
-
-  public name(): Option<string> {
-    return None;
-  }
-
-  public role(): Option<Role> {
-    return None;
-  }
-
-  public attribute(name: string): Option<string> {
-    return None;
+    super(owner, []);
   }
 
   public clone(): Inert {
@@ -37,7 +22,6 @@ export class Inert extends Node {
   public toJSON(): Inert.JSON {
     return {
       type: "inert",
-      node: this._node.toJSON(),
       children: this._children.map((child) => child.toJSON()),
     };
   }

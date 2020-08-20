@@ -1,46 +1,22 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { Role } from "../role";
 import { Node } from "../node";
 
 export class Container extends Node {
-  public static of(
-    owner: dom.Node,
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    parent: Option<Node> = None
-  ): Container {
-    return new Container(owner, children, parent);
+  public static of(owner: dom.Node, children: Iterable<Node> = []): Container {
+    return new Container(owner, Array.from(children));
   }
 
-  private constructor(
-    owner: dom.Node,
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
-  ) {
-    super(owner, children, parent);
-  }
-
-  public name(): Option<string> {
-    return None;
-  }
-
-  public role(): Option<Role> {
-    return None;
-  }
-
-  public attribute(name: string): Option<string> {
-    return None;
+  private constructor(owner: dom.Node, children: Array<Node>) {
+    super(owner, children);
   }
 
   public clone(parent: Option<Node> = None): Container {
     return new Container(
       this._node,
-      (self) => this._children.map((child) => child.clone(Option.of(self))),
-      parent
+      this._children.map((child) => child.clone())
     );
   }
 
@@ -51,7 +27,6 @@ export class Container extends Node {
   public toJSON(): Container.JSON {
     return {
       type: "container",
-      node: this._node.toJSON(),
       children: this._children.map((child) => child.toJSON()),
     };
   }

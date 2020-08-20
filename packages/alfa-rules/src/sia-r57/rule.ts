@@ -42,9 +42,7 @@ export default Rule.Atomic.of<Page, Text>({
               node
                 .ancestors()
                 .some((ancestor) =>
-                  ancestor
-                    .role()
-                    .some((role) => role.inheritsFrom(hasName("landmark")))
+                  ancestor.role.some((role) => role.isLandmark())
                 )
             ),
             () => Outcomes.IsIncludedInLandmark,
