@@ -262,6 +262,21 @@ export namespace Branched {
     return value instanceof Branched;
   }
 
+  export function from<T, B>(
+    values: Iterable<[T, Iterable<B>]>
+  ): Branched<T, B> {
+    if (isBranched<T, B>(values)) {
+      return values;
+    }
+
+    const [[value, branches], ...rest] = values;
+
+    return rest.reduce(
+      (result, [value, branches]) => result.branch(value, ...branches),
+      Branched.of(value, ...branches)
+    );
+  }
+
   export function traverse<T, U, B>(
     values: Iterable<T>,
     mapper: Mapper<T, Branched<U, B>>
