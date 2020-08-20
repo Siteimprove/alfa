@@ -5,7 +5,9 @@
     "src/conformance.ts",
     "src/criterion.ts",
     "src/criterion/data.ts",
-    "src/index.ts"
+    "src/index.ts",
+    "src/technique.ts",
+    "src/technique/data.ts"
   ],
   "references": [
     {
