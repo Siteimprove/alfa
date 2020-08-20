@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -8,7 +7,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasCategory } from "../common/predicate/has-category";
 import { hasInputType } from "../common/predicate/has-input-type";
 import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
@@ -41,7 +39,7 @@ export default Rule.Atomic.of<Page, Attribute>({
                 not(hasAttribute("aria-disabled", equals("true"))),
                 or(
                   isTabbable(device),
-                  hasRole(hasCategory(equals(Role.Category.Widget)))
+                  hasRole((role) => role.isWidget())
                 )
               )
             )

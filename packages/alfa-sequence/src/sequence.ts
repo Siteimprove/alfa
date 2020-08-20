@@ -21,6 +21,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   reject(predicate: Predicate<T, T, [number]>): Sequence<T>;
   find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U>;
   includes(value: T): boolean;
+  collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
+  collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
   some(predicate: Predicate<T, T, [number]>): boolean;
   every(predicate: Predicate<T, T, [number]>): boolean;
   count(predicate: Predicate<T, T, [number]>): number;

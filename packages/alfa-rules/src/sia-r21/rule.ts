@@ -41,10 +41,8 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             target
               .tokens()
-              .every((token) =>
-                Role.lookup(token).some(
-                  (role) => role.category !== Role.Category.Abstract
-                )
+              .every(
+                (token) => Role.isName(token) && Role.of(token).isConcrete()
               ),
             () => Outcomes.HasValidRole,
             () => Outcomes.HasNoValidRole
