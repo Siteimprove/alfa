@@ -12,8 +12,7 @@ export class Technique<
   private readonly _name: N;
 
   private constructor(name: N) {
-    super(Techniques[name].uri);
-
+    super();
     this._name = name;
   }
 

@@ -13,17 +13,7 @@ export class Criterion<
   private readonly _chapter: C;
 
   private constructor(chapter: C) {
-    // Use the criterion URI from the recommendation, if available, otherwise
-    // use the URI from the draft. This ensures that the most stable identifier
-    // is used when avaiable.
-    const [, { uri }] = [...Criteria[chapter].versions].find(
-      ([version]) =>
-        version === Criterion.Version.Recommendation ||
-        version === Criterion.Version.Draft
-    )!;
-
-    super(uri);
-
+    super();
     this._chapter = chapter;
   }
 
@@ -37,8 +27,29 @@ export class Criterion<
   /**
    * The title of this criterion.
    */
-  public get title(): string {
+  public get title(): Criterion.Title<C> {
     return Criteria[this._chapter].title;
+  }
+
+  /**
+   * The URI of this criterion.
+   *
+   * @remarks
+   * The `Requirement` class requires a single URI for each requirement and so
+   * we can't branch of the criterion version. We therefore pick the most stable
+   * URI and use that.
+   */
+  public get uri(): Criterion.URI<C, "2.1" | "2.2"> {
+    // Use the criterion URI from the recommendation, if available, otherwise
+    // use the URI from the draft. This ensures that the most stable identifier
+    // is used when avaiable.
+    const [, { uri }] = [...Criteria[this._chapter].versions].find(
+      ([version]) =>
+        version === Criterion.Version.Recommendation ||
+        version === Criterion.Version.Draft
+    )!;
+
+    return uri as Criterion.URI<C, "2.1" | "2.2">;
   }
 
   /**
@@ -113,6 +124,11 @@ export namespace Criterion {
   }
 
   /**
+   * The title of the specified criterion.
+   */
+  export type Title<C extends Chapter = Chapter> = Criteria[C]["title"];
+
+  /**
    * The different versions of the WCAG.
    */
   export type Version = "2.0" | "2.1" | "2.2";
@@ -138,6 +154,18 @@ export namespace Criterion {
      */
     export type Draft = typeof Draft;
   }
+
+  /**
+   * The URI of the specified criterion.
+   */
+  export type URI<
+    C extends Chapter = Chapter,
+    V extends Version = Version
+  > = Criteria[C]["versions"] extends Iterable<infer T>
+    ? T extends readonly [V, { readonly uri: infer U }]
+      ? U
+      : never
+    : never;
 
   /**
    * The level of the specified criterion under the specified version.

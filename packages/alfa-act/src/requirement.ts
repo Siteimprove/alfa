@@ -5,23 +5,17 @@ import * as json from "@siteimprove/alfa-json";
 
 export abstract class Requirement
   implements Equatable, json.Serializable, earl.Serializable {
-  protected readonly _uri: string;
+  protected constructor() {}
 
-  protected constructor(uri: string) {
-    this._uri = uri;
-  }
-
-  public get uri(): string {
-    return this._uri;
-  }
+  public abstract get uri(): string;
 
   public equals(value: unknown): value is this {
-    return value instanceof Requirement && value._uri === this._uri;
+    return value instanceof Requirement && value.uri === this.uri;
   }
 
   public toJSON(): Requirement.JSON {
     return {
-      uri: this._uri,
+      uri: this.uri,
     };
   }
 
@@ -31,7 +25,7 @@ export abstract class Requirement
         earl: "http://www.w3.org/ns/earl#",
       },
       "@type": ["earl:TestCriterion", "earl:TestRequirement"],
-      "@id": this._uri,
+      "@id": this.uri,
     };
   }
 }

@@ -5,23 +5,17 @@ import * as json from "@siteimprove/alfa-json";
 
 export abstract class Tag<T extends string = string>
   implements Equatable, Serializable {
-  protected readonly _type: T;
+  protected constructor() {}
 
-  protected constructor(type: T) {
-    this._type = type;
-  }
-
-  public get type(): T {
-    return this._type;
-  }
+  public abstract get type(): T;
 
   public equals(value: unknown): value is this {
-    return value instanceof Tag && value._type === this._type;
+    return value instanceof Tag && value.type === this.type;
   }
 
   public toJSON(): Tag.JSON {
     return {
-      type: this._type,
+      type: this.type,
     };
   }
 }
