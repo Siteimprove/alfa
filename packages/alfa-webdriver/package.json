@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-webdriver",
   "homepage": "https://siteimprove.com",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "description": "Integrations and utilities for the WebdriverIO browser automation library",
   "repository": {

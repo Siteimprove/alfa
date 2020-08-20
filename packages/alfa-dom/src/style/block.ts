@@ -20,6 +20,14 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
     return this._declarations;
   }
 
+  public get size(): number {
+    return this._declarations.length;
+  }
+
+  public isEmpty(): boolean {
+    return this._declarations.length === 0;
+  }
+
   public declaration(
     predicate: string | Predicate<Declaration>
   ): Option<Declaration> {

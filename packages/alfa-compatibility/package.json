@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-compatibility",
   "homepage": "https://siteimprove.com",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "description": "Funtionality for answering user agent compatibility questions based on MDN compatibility data",
   "repository": {

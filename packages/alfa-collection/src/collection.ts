@@ -29,9 +29,12 @@ export interface Collection<T>
   reject(predicate: Predicate<T>): Collection<T>;
   find<U extends T>(predicate: Predicate<T, U>): Option<U>;
   includes(value: T): boolean;
+  collect<U>(mapper: Mapper<T, Option<U>>): Collection<U>;
+  collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   some(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
   count(predicate: Predicate<T>): number;
+  distinct(): Collection<T>;
 }
 
 export namespace Collection {
@@ -47,9 +50,12 @@ export namespace Collection {
     reject(predicate: Predicate<V, V, [K]>): Keyed<K, V>;
     find<U extends V>(predicate: Predicate<V, U, [K]>): Option<U>;
     includes(value: V): boolean;
+    collect<U>(mapper: Mapper<V, Option<U>, [K]>): Keyed<K, U>;
+    collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U>;
     some(predicate: Predicate<V, V, [K]>): boolean;
     every(predicate: Predicate<V, V, [K]>): boolean;
     count(predicate: Predicate<V, V, [K]>): number;
+    distinct(): Keyed<K, V>;
 
     // Keyed<K, V> methods
 
@@ -72,9 +78,12 @@ export namespace Collection {
     reject(predicate: Predicate<T>): Unkeyed<T>;
     find<U extends T>(predicate: Predicate<T, U>): Option<U>;
     includes(value: T): boolean;
+    collect<U>(mapper: Mapper<T, Option<U>>): Unkeyed<U>;
+    collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
     some(predicate: Predicate<T>): boolean;
     every(predicate: Predicate<T>): boolean;
     count(predicate: Predicate<T>): number;
+    distinct(): Unkeyed<T>;
 
     // Unkeyed<T> methods
 
@@ -97,9 +106,12 @@ export namespace Collection {
     reject(predicate: Predicate<T, T, [number]>): Indexed<T>;
     find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U>;
     includes(value: T): boolean;
+    collect<U>(mapper: Mapper<T, Option<U>, [number]>): Indexed<U>;
+    collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
     some(predicate: Predicate<T, T, [number]>): boolean;
     every(predicate: Predicate<T, T, [number]>): boolean;
     count(predicate: Predicate<T, T, [number]>): number;
+    distinct(): Indexed<T>;
 
     // Indexed<T> methods
 

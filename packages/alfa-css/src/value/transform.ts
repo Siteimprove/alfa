@@ -4,7 +4,6 @@ import { Token } from "../syntax/token";
 
 import { Angle } from "./angle";
 import { Length } from "./length";
-import { List } from "./list";
 import { Number } from "./number";
 import { Percentage } from "./percentage";
 
@@ -79,8 +78,7 @@ export namespace Transform {
   /**
    * @see https://drafts.csswg.org/css-transforms/#typedef-transform-list
    */
-  export const parseList = map(
-    oneOrMore(delimited(option(Token.parseWhitespace), parse)),
-    (transforms) => List.of([...transforms], " ")
+  export const parseList = oneOrMore(
+    delimited(option(Token.parseWhitespace), parse)
   );
 }

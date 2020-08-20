@@ -1,11 +1,9 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Number } from "../number";
 import { Percentage } from "../percentage";
 
@@ -14,7 +12,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
-> implements Equatable, Hashable, Serializable {
+> extends Value<"color"> {
   public static of<
     C extends Number | Percentage,
     A extends Number | Percentage
@@ -28,6 +26,7 @@ export class RGB<
   private readonly _alpha: A;
 
   private constructor(red: C, green: C, blue: C, alpha: A) {
+    super();
     this._red = red;
     this._green = green;
     this._blue = blue;
@@ -94,8 +93,7 @@ export class RGB<
 }
 
 export namespace RGB {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "color";
     format: "rgb";
     red: Number.JSON | Percentage.JSON;

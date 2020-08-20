@@ -7,6 +7,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -166,6 +167,57 @@ export class Cons<T> implements Sequence<T> {
     return this.some(equals(value));
   }
 
+  public collect<U>(
+    mapper: Mapper<T, Option<U>, [number]>,
+    index: number = 0
+  ): Sequence<U> {
+    let next: Cons<T> = this;
+
+    while (true) {
+      const value = mapper(next._head, index);
+
+      if (value.isSome()) {
+        return new Cons(
+          value.get(),
+          next._tail.map((tail) =>
+            Cons.isCons<T>(tail)
+              ? tail.collect(mapper, index + 1)
+              : tail.collect(mapper)
+          )
+        );
+      }
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons<T>(tail)) {
+        next = tail;
+      } else {
+        return Nil;
+      }
+    }
+  }
+
+  public collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U> {
+    let next: Cons<T> = this;
+    let index = 0;
+
+    while (true) {
+      const value = mapper(next._head, index);
+
+      if (value.isSome()) {
+        return value;
+      }
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons<T>(tail)) {
+        next = tail;
+      } else {
+        return None;
+      }
+    }
+  }
+
   public some(predicate: Predicate<T, T, [number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
@@ -209,6 +261,31 @@ export class Cons<T> implements Sequence<T> {
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
     );
+  }
+
+  public distinct(seen: Set<T> = Set.empty()): Sequence<T> {
+    let next: Cons<T> = this;
+
+    while (true) {
+      if (seen.has(next._head)) {
+        const tail = next._tail.force();
+
+        if (Cons.isCons<T>(tail)) {
+          next = tail;
+        } else {
+          return Nil;
+        }
+      } else {
+        return Cons.of(
+          next._head,
+          this._tail.map((tail) =>
+            Cons.isCons<T>(tail)
+              ? tail.distinct(seen.add(next._head))
+              : tail.distinct()
+          )
+        );
+      }
+    }
   }
 
   public get(index: number): Option<T> {

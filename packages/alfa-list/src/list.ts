@@ -7,6 +7,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -96,6 +97,14 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.includes(this, value);
   }
 
+  public collect<U>(mapper: Mapper<T, Option<U>, [number]>): List<U> {
+    return List.from(Iterable.collect(this, mapper));
+  }
+
+  public collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U> {
+    return Iterable.collectFirst(this, mapper);
+  }
+
   public some(predicate: Predicate<T>): boolean {
     return Iterable.some(this, predicate);
   }
@@ -106,6 +115,22 @@ export class List<T> implements Collection.Indexed<T> {
 
   public count(predicate: Predicate<T, T, [number]>): number {
     return Iterable.count(this, predicate);
+  }
+
+  public distinct(): List<T> {
+    let seen = Set.empty<T>();
+    let list = List.empty<T>();
+
+    for (const value of this) {
+      if (seen.has(value)) {
+        continue;
+      }
+
+      seen = seen.add(value);
+      list = list.append(value);
+    }
+
+    return list;
   }
 
   public get(index: number): Option<T> {

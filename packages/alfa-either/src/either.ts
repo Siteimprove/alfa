@@ -10,7 +10,7 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Left } from "./left";
 import { Right } from "./right";
 
-export interface Either<L, R>
+export interface Either<L, R = L>
   extends Monad<L | R>,
     Functor<L | R>,
     Foldable<L | R>,
@@ -34,5 +34,13 @@ export namespace Either {
 
   export function isEither<L, R>(value: unknown): value is Either<L, R> {
     return Left.isLeft(value) || Right.isRight(value);
+  }
+
+  export function left<L>(value: L): Either<L, never> {
+    return Left.of(value);
+  }
+
+  export function right<R>(value: R): Either<never, R> {
+    return Right.of(value);
   }
 }

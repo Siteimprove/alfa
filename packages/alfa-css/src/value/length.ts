@@ -7,12 +7,13 @@ import { Converter, Convertible } from "./converter";
 import { Unit } from "./unit";
 import { Numeric } from "./numeric";
 
-const { map } = Parser;
+const { map, either } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#lengths
  */
-export class Length<U extends Unit.Length = Unit.Length> extends Numeric
+export class Length<U extends Unit.Length = Unit.Length>
+  extends Numeric<"length">
   implements Convertible<Unit.Length.Absolute> {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
     return new Length(value, unit);
@@ -85,8 +86,14 @@ export namespace Length {
     return value instanceof Length;
   }
 
-  export const parse = map(
-    Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
-    (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)
+  export const parse = either(
+    map(
+      Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
+      (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)
+    ),
+    map(
+      Token.parseNumber((number) => number.isInteger && number.value === 0),
+      () => Length.of(0, "px")
+    )
   );
 }

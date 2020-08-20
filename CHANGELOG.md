@@ -21,6 +21,36 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option#none()` is now available as a negation of `Option#some()`.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Block#size` and `Block#isEmpty()` are now available.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-branched](alfa-branched), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Collection#distinct()`, `Collection#collect()`, and `Collection#collectFirst()` are now available and implemented by `Branched`, `List`, `Map`, `Set`, and `Sequence`.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.distinct()`, `Iterable.collect()`, and `Iterable.collectFirst()` are now available.
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option#reject()` is now available.
+
+- [@siteimprove/alfa-branched](packages/alfa-branched): `Branched#from()` is now available.
+
+### Fixed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): Style sheets referenced through `@import` rules are now correctly included when computing cascade.
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): Avoid exiting prematurely on buffered socket writes.
+
+## [0.3.1](../../compare/v0.3.0...v0.3.1) (2020-07-03)
+
+### Fixed
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): Newlines are now correctly appended to the output, not the filename, when using the `--output` flag.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R47 now correctly handles negative `maximum-scale` values. SIA-R67 now only applies to `<object>` elements that are in the accessibility tree.
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): `Scraper#scrape()` now correctly scrapes pages whose URL contains a hash fragment. ([#288](../../pull/288))
+
 ## [0.3.0](../../compare/v0.2.0...v0.3.0) (2020-07-01)
 
 ### Breaking

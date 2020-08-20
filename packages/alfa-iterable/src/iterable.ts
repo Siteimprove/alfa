@@ -111,6 +111,20 @@ export namespace Iterable {
     return some(iterable, Predicate.equals(value));
   }
 
+  export function collect<T, U>(
+    iterable: Iterable<T>,
+    mapper: Mapper<T, Option<U>, [number]>
+  ): Iterable<U> {
+    return flatMap(iterable, mapper);
+  }
+
+  export function collectFirst<T, U>(
+    iterable: Iterable<T>,
+    mapper: Mapper<T, Option<U>, [number]>
+  ): Option<U> {
+    return first(collect(iterable, mapper));
+  }
+
   export function some<T>(
     iterable: Iterable<T>,
     predicate: Predicate<T, T, [number]>
@@ -150,6 +164,20 @@ export namespace Iterable {
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
     );
+  }
+
+  export function* distinct<T>(iterable: Iterable<T>): Iterable<T> {
+    const seen: Array<T> = [];
+
+    for (const value of iterable) {
+      if (seen.some(Predicate.equals(value))) {
+        continue;
+      }
+
+      seen.push(value);
+
+      yield value;
+    }
   }
 
   export function get<T>(iterable: Iterable<T>, index: number): Option<T> {

@@ -47,6 +47,14 @@ export const Nil: Nil = new (class Nil {
     return false;
   }
 
+  public collect(): Nil {
+    return this;
+  }
+
+  public collectFirst(): None {
+    return None;
+  }
+
   public some(): boolean {
     return false;
   }
@@ -57,6 +65,10 @@ export const Nil: Nil = new (class Nil {
 
   public count(): number {
     return 0;
+  }
+
+  public distinct(): Nil {
+    return this;
   }
 
   public get(): None {

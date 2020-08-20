@@ -40,6 +40,9 @@
       "path": "../alfa-reducer"
     },
     {
+      "path": "../alfa-set"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
