@@ -37,3 +37,20 @@ export enum Namespace {
    */
   XMLNS = "http://www.w3.org/2000/xmlns/",
 }
+
+export namespace Namespace {
+  export function isNamespace(value: string): value is Namespace {
+    switch (value) {
+      case Namespace.HTML:
+      case Namespace.MathML:
+      case Namespace.SVG:
+      case Namespace.XLink:
+      case Namespace.XML:
+      case Namespace.XMLNS:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+}

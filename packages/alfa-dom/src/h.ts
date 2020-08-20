@@ -65,15 +65,12 @@ export namespace h {
       attributes = [...attributes, h.attribute("style", block.toString())];
     }
 
-    let namespace = Namespace.HTML;
-
-    switch (name) {
-      case "svg":
-        namespace = Namespace.SVG;
-        break;
-      case "math":
-        namespace = Namespace.MathML;
-    }
+    const namespace = Option.from(
+      attributes.find((attribute) => attribute.name === "xmlns")
+    )
+      .map((attribute) => attribute.value)
+      .filter(Namespace.isNamespace)
+      .getOr(Namespace.HTML);
 
     return Element.of(
       Option.of(namespace),

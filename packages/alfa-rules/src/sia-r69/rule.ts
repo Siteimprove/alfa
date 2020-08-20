@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -19,7 +18,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasCategory } from "../common/predicate/has-category";
 import { hasRole } from "../common/predicate/has-role";
 import { hasValue } from "../common/predicate/has-value";
 import { isPerceivable } from "../common/predicate/is-perceivable";
@@ -28,7 +26,7 @@ import { Question } from "../common/question";
 
 import { Contrast } from "./diagnostic/contrast";
 
-const { reduce, some, flatMap, map, concat } = Iterable;
+const { flatMap, map } = Iterable;
 const { and, or, not, equals, test } = Predicate;
 const { min, max, round } = Math;
 
@@ -46,7 +44,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
                 Element.isElement,
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
-                  hasRole(hasCategory(equals(Role.Category.Widget))),
+                  hasRole((role) => role.isWidget()),
                   and(hasRole("group"), isSemanticallyDisabled)
                 )
               ),

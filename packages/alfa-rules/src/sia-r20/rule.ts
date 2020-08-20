@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       },
 
       expectations(target) {
-        const exists = aria.Attribute.lookup(target.name).isSome();
+        const exists = aria.Attribute.isName(target.name);
 
         return {
           1: expectation(
