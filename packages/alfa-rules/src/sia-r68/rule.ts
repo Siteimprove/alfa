@@ -66,7 +66,7 @@ function hasRequiredChildren(device: Device): Predicate<Element> {
           node
             .children()
             .filter((node) => isElement(node.node))
-            .every(isRequiredChild(role.requiredChildren))
+            .some(isRequiredChild(role.requiredChildren))
         )
     );
 }
@@ -89,7 +89,7 @@ function isRequiredChild(
           node
             .children()
             .filter((node) => isElement(node.node))
-            .every(isRequiredChild(rest))
+            .some(isRequiredChild(rest))
         );
       }
 

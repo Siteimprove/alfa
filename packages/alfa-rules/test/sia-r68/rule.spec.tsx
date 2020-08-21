@@ -55,6 +55,45 @@ test("evaluate() passes a table with a row and a row group", async (t) => {
   ]);
 });
 
+test("evaluate() passes a table with a caption and a row", async (t) => {
+  const row = (
+    <span role="row">
+      <span role="cell">Cell</span>
+    </span>
+  );
+
+  const table = (
+    <div role="table">
+      <caption>Caption</caption>
+      {row}
+    </div>
+  );
+
+  const document = Document.of([table]);
+
+  t.deepEqual(await evaluate(R68, { document }), [
+    passed(R68, table, { 1: Outcomes.HasCorrectOwnedElements }),
+    passed(R68, row, { 1: Outcomes.HasCorrectOwnedElements }),
+  ]);
+});
+
+test("evaluate() passes a radiogroup with a radio and a label", async (t) => {
+  const radio = <span role="radio" aria-labelledby="label" />;
+
+  const radiogroup = (
+    <div role="radiogroup">
+      {radio}
+      <label id="label">Label</label>
+    </div>
+  );
+
+  const document = Document.of([radiogroup]);
+
+  t.deepEqual(await evaluate(R68, { document }), [
+    passed(R68, radiogroup, { 1: Outcomes.HasCorrectOwnedElements }),
+  ]);
+});
+
 test("evaluate() ignores non-element children when determining ownership", async (t) => {
   // Don't remove the space after the list item; it's the non-element child!
   const list = (
@@ -70,7 +109,7 @@ test("evaluate() ignores non-element children when determining ownership", async
   ]);
 });
 
-test("evaluate() fails a list with a non-list item", async (t) => {
+test("evaluate() fails a list with only a non-list item", async (t) => {
   const list = (
     <div role="list">
       <span>Item 1</span>
