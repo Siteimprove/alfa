@@ -244,12 +244,17 @@ export namespace Node {
     // Do a first pass over `aria-owns` attributes and collect the referenced
     // elements.
     const references = elements.collect((element) =>
-      element
-        .attribute("aria-owns")
-        .map(
-          (attribute) =>
-            [element, attribute.tokens().collect((id) => ids.get(id))] as const
-        )
+      element.attribute("aria-owns").map(
+        (attribute) =>
+          [
+            element,
+            attribute
+              .tokens()
+              .collect((id) => ids.get(id))
+              // Reject select-references.
+              .reject((reference) => reference === element),
+          ] as const
+      )
     );
 
     // Refine the collected `aria-owns` references, constructing a set of

@@ -150,3 +150,45 @@ test(`.from() correctly handles reordered aria-owns references`, (t) => {
     ],
   ]);
 });
+
+test(`.from() correctly handles self-referential aria-owns references`, (t) => {
+  const div = <div id="foo" aria-owns="foo" />;
+
+  t.deepEqual(Node.from(div, device).toJSON(), [
+    [
+      Element.of(div, None, None, [Attribute.of("aria-owns", "foo")]).toJSON(),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() correctly handles circular aria-owns references`, (t) => {
+  const foo = <div id="foo" aria-owns="bar" />;
+
+  const bar = <div id="bar" aria-owns="foo" />;
+
+  <div>
+    {foo}
+    {bar}
+  </div>;
+
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [
+      Element.of(
+        foo,
+        None,
+        None,
+        [Attribute.of("aria-owns", "bar")],
+        [Element.of(bar, None, None, [Attribute.of("aria-owns", "foo")])]
+      ).toJSON(),
+      [],
+    ],
+  ]);
+
+  t.deepEqual(Node.from(bar, device).toJSON(), [
+    [
+      Element.of(bar, None, None, [Attribute.of("aria-owns", "foo")]).toJSON(),
+      [],
+    ],
+  ]);
+});
