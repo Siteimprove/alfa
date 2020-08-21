@@ -15,7 +15,7 @@ import { Empty, Node } from "./node";
 const { not } = Predicate;
 
 export class Map<K, V> implements Collection.Keyed<K, V> {
-  public static of<K, V>(...entries: Array<[K, V]>): Map<K, V> {
+  public static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V> {
     return entries.reduce(
       (map, [key, value]) => map.set(key, value),
       Map.empty<K, V>()
@@ -169,8 +169,8 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return new Map(root, this._size - 1);
   }
 
-  public concat(iterable: Iterable<[K, V]>): Map<K, V> {
-    return Iterable.reduce<[K, V], Map<K, V>>(
+  public concat(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Iterable.reduce<readonly [K, V], Map<K, V>>(
       iterable,
       (map, [key, value]) => map.set(key, value),
       this
@@ -241,7 +241,7 @@ export namespace Map {
     return value instanceof Map;
   }
 
-  export function from<K, V>(iterable: Iterable<[K, V]>): Map<K, V> {
+  export function from<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V> {
     return isMap<K, V>(iterable)
       ? iterable
       : Iterable.reduce(
