@@ -142,7 +142,9 @@ export namespace Graph {
     return value instanceof Graph;
   }
 
-  export function from<T>(iterable: Iterable<[T, Iterable<T>]>): Graph<T> {
+  export function from<T>(
+    iterable: Iterable<readonly [T, Iterable<T>]>
+  ): Graph<T> {
     if (isGraph<T>(iterable)) {
       return iterable;
     }
