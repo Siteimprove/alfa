@@ -263,7 +263,7 @@ export namespace Branched {
   }
 
   export function from<T, B>(
-    values: Iterable<[T, Iterable<B>]>
+    values: Iterable<readonly [T, Iterable<B>]>
   ): Branched<T, B> {
     if (isBranched<T, B>(values)) {
       return values;
