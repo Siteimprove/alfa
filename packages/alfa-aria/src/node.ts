@@ -268,7 +268,12 @@ export namespace Node {
     // claimed elements and resolving conflicting claims as needed.
     const [claimed, owned] = references.reduce(
       ([claimed, owned], [element, references]) => {
-        // Reject all element references that have already been claimed.
+        // Reject all element references that have already been claimed. While
+        // authors are not allowed to specify a given ID in more than one
+        // `aria-owns` attribute, it will inevitably happen that multiple
+        // `aria-owns` attributes reference the same ID. We deal with this on a
+        // first come, first serve basis and deny anything but the first claim
+        // to a given ID.
         references = references.reject((element) => claimed.has(element));
 
         // If there are no references left, this element has no explicit
