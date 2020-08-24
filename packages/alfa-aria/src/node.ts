@@ -217,6 +217,8 @@ export namespace Node {
   ): Branched<Node, Browser> {
     const _cache = cache.get(device, Cache.empty);
 
+    // If the cache already holds an entry for the specified node, then the tree
+    // that the node participates in has already been built.
     if (_cache.has(node)) {
       return _cache.get(node).get();
     }
@@ -288,11 +290,12 @@ export namespace Node {
 
     build(root, device, claimed, owned);
 
-    if (_cache.has(node)) {
-      return _cache.get(node).get();
-    }
-
-    return Branched.of(Inert.of(node));
+    return _cache.get(node, () =>
+      // If the cache still doesn't hold an entry for the specified node, then
+      // the node doesn't even participate in the tree. Store it as an inert
+      // node.
+      Branched.of(Inert.of(node))
+    );
   }
 
   function build(
