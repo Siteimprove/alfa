@@ -251,8 +251,13 @@ export namespace Node {
             attribute
               .tokens()
               .collect((id) => ids.get(id))
-              // Reject select-references.
-              .reject((reference) => reference === element),
+              // Reject references from the element to itself or its ancestors
+              // as these would cause cyclic references.
+              .reject(
+                (reference) =>
+                  element === reference ||
+                  element.ancestors().includes(reference)
+              ),
           ] as const
       )
     );
