@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-puppeteer",
   "homepage": "https://siteimprove.com",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "Integrations and utilities for the Puppeteer browser automation library",
   "repository": {
@@ -20,19 +20,19 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-chai": "^0.3.1",
-    "@siteimprove/alfa-device": "^0.3.0",
-    "@siteimprove/alfa-dom": "^0.3.0",
-    "@siteimprove/alfa-future": "^0.3.0",
-    "@siteimprove/alfa-http": "^0.3.0",
-    "@siteimprove/alfa-option": "^0.3.0",
-    "@siteimprove/alfa-predicate": "^0.3.0",
-    "@siteimprove/alfa-web": "^0.3.0",
+    "@siteimprove/alfa-chai": "^0.4.0",
+    "@siteimprove/alfa-device": "^0.4.0",
+    "@siteimprove/alfa-dom": "^0.4.0",
+    "@siteimprove/alfa-future": "^0.4.0",
+    "@siteimprove/alfa-http": "^0.4.0",
+    "@siteimprove/alfa-option": "^0.4.0",
+    "@siteimprove/alfa-predicate": "^0.4.0",
+    "@siteimprove/alfa-web": "^0.4.0",
     "@types/puppeteer": "^2.0.1",
     "puppeteer": "^2.1.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.3.0"
+    "@siteimprove/alfa-test": "^0.4.0"
   },
   "publishConfig": {
     "access": "public",

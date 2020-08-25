@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "page-testing-webdriver",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "scripts": {
     "test": "wdio wdio.conf.js"
   },
   "devDependencies": {
-    "@siteimprove/alfa-chai": "^0.3.1",
-    "@siteimprove/alfa-webdriver": "^0.3.1",
+    "@siteimprove/alfa-chai": "^0.4.0",
+    "@siteimprove/alfa-webdriver": "^0.4.0",
     "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
     "@wdio/cli": "^5.14.4",
