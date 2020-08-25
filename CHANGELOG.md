@@ -31,7 +31,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): The package has been reworked to solve several long-standing issues in its design. For more information, please see the associated pull request. ([#300](../../pull/300))
 
-- [@siteimprove/alfa-css](packages/alfa-css): Several CSS value types have changed slightly to better to ensure better alignment across the various value types. ([#301](../../pull/301))
+- [@siteimprove/alfa-css](packages/alfa-css): Several CSS value types have changed slightly to ensure better alignment across the various value types. ([#301](../../pull/301))
 
 ### Added
 
