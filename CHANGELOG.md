@@ -21,6 +21,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): Parent pointers are now handled internally to `Node` instances to separate the construction of parent nodes and their children. This means that the constructors of all `Node` subclasses have changed slightly and now no longer need children to be passed in a closure. The `h()` and `jsx()` APIs now also operate on actual `Node` instances instead of a JSON representation. ([#283](../../pull/283))
+
+- [@siteimprove/alfa-act](packages/alfa-act): Rules are now passed to the `Audit` class during construction rather than after. This removes the need to explicitly pass type parameters during construction as inference now works. ([#286](../../pull/286))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The package has been reworked to solve several long-standing issues in its design. For more information, please see the associated pull request. ([#300](../../pull/300))
+
+- [@siteimprove/alfa-css](packages/alfa-css): Several CSS value types have changed slightly to better to ensure better alignment across the various value types. ([#301](../../pull/301))
+
 ### Added
 
 - [@siteimprove/alfa-option](packages/alfa-option): `Option#none()` is now available as a negation of `Option#some()`.
@@ -35,11 +45,27 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-branched](packages/alfa-branched): `Branched#from()` is now available.
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R86 is now available. ([#284](../../pull/284))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports CSS Custom Properties for Cascading Variables. ([#295](../../pull/295), [#302](../../pull/302))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the full set of `background-*` long- and shorthand properties. ([#301](../../pull/301))
+
 ### Fixed
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): Style sheets referenced through `@import` rules are now correctly included when computing cascade.
 
 - [@siteimprove/alfa-cli](packages/alfa-cli): Avoid exiting prematurely on buffered socket writes.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): Conversion from JSON to `Node` subclasses has been trampolined and therefore no longer causes a stack overflow. ([#283](../../pull/283))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R69 now correctly determines contrasts involving linear gradients. ([#289](../../pull/289))
+
+- [@siteimprove/alfa-css](packages/alfa-css): Function and block components used in CSS declarations are now correctly parsed. ([#296](../../pull/296), [#302](../../pull/302))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly only requires that at least one required child be present and not that every child be a required child. ([#304](../../pull/304))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Relations defined through the `aria-owns` attribute are now correctly resolved when constructing the accessibility tree. ([#306](../../pull/306))
 
 ## [0.3.1](../../compare/v0.3.0...v0.3.1) (2020-07-03)
 
