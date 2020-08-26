@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Changed
+
+- [@siteimprove/alfa-parser](packages/alfa-parser): The `eof()` combinator now passes the last element of the input iterable to the error thunk.
+
 ### Fixed
 
 - [@siteimprove/alfa-cypress](packages/alfa-cypress), [@siteimprove/alfa-puppeteer](packages/alfa-puppeteer), [@siteimprove/alfa-webdriver](packages/alfa-webdriver): Fix conversion of native CSS `@import` rules to ensure correct import conditions.
