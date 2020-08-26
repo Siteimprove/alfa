@@ -25,6 +25,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cypress](packages/alfa-cypress), [@siteimprove/alfa-puppeteer](packages/alfa-puppeteer), [@siteimprove/alfa-webdriver](packages/alfa-webdriver): Fix conversion of native CSS `@import` rules to ensure correct import conditions.
 
+- [@siteimprove/alfa-css](packages/alfa-css): Fix parsing of square bracket (`[]`) blocks which incorrectly used the open square bracket, not the closed square bracket, as their terminator.
+
 ## [0.4.0](../../compare/v0.3.1...v0.4.0) (2020-08-25)
 
 ### Breaking
