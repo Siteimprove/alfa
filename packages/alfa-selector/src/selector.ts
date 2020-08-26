@@ -1,5 +1,5 @@
-import { Lexer, Token } from "@siteimprove/alfa-css";
-import { Document, Fragment, Shadow, Element } from "@siteimprove/alfa-dom";
+import { Lexer, Token, Function } from "@siteimprove/alfa-css";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -14,6 +14,7 @@ import * as json from "@siteimprove/alfa-json";
 
 const {
   map,
+  flatMap,
   either,
   zeroOrMore,
   oneOrMore,
@@ -21,12 +22,13 @@ const {
   right,
   pair,
   take,
-  filter,
+  peek,
   delimited,
   option,
+  eof,
 } = Parser;
 
-const { and, or, property, equals, isString } = Predicate;
+const { and, not, property, equals, isString } = Predicate;
 
 /**
  * @see https://drafts.csswg.org/selectors/#selector
@@ -65,6 +67,17 @@ export namespace Selector {
 
     public abstract toJSON(): JSON;
   }
+
+  /**
+   * @remarks
+   * The selector parser is forward-declared as it is needed within its
+   * subparsers.
+   */
+  let parseSelector: Parser<
+    Slice<Token>,
+    Simple | Compound | Complex | List<Simple | Compound | Complex>,
+    string
+  >;
 
   /**
    * @see https://drafts.csswg.org/selectors/#id-selector
@@ -756,42 +769,68 @@ export namespace Selector {
 
   const parsePseudoClass = right(
     Token.parseColon,
-    filter(
-      map(Token.parseIdent(), (ident) => {
+    either(
+      // Non-functional pseudo-classes
+      flatMap(Token.parseIdent(), (ident) => (input) => {
         switch (ident.value) {
           case "hover":
-            return Hover.of();
+            return Result.of([input, Hover.of()]);
           case "active":
-            return Active.of();
+            return Result.of([input, Active.of()]);
           case "focus":
-            return Focus.of();
+            return Result.of([input, Focus.of()]);
           case "link":
-            return Link.of();
+            return Result.of([input, Link.of()]);
           case "visited":
-            return Visited.of();
+            return Result.of([input, Visited.of()]);
           case "root":
-            return Root.of();
+            return Result.of([input, Root.of()]);
         }
+
+        return Err.of(`Unknown pseudo-class :${ident.value}`);
       }),
-      (pseudo): pseudo is Pseudo.Class => pseudo !== undefined,
-      () => "Invalid pseudo class"
+
+      // Funtional pseudo-classes
+      flatMap(
+        right(peek(Token.parseFunction()), Function.consume),
+        (fn) => (input) => {
+          const { name } = fn;
+
+          switch (name) {
+            // :<name>(<selector-list>)
+            case "is":
+            case "not":
+            case "has":
+              return parseSelector(Slice.of(fn.value)).map(([, selector]) => {
+                switch (name) {
+                  case "is":
+                    return [input, Is.of(selector) as Pseudo.Class];
+                  case "not":
+                    return [input, Not.of(selector) as Pseudo.Class];
+                  case "has":
+                    return [input, Has.of(selector) as Pseudo.Class];
+                }
+              });
+          }
+
+          return Err.of(`Unknown pseudo-class :${fn.name}()`);
+        }
+      )
     )
   );
 
   const parsePseudoElement = right(
     take(Token.parseColon, 2),
-    filter(
-      map(Token.parseIdent(), (ident) => {
-        switch (ident.value) {
-          case "before":
-            return Before.of();
-          case "after":
-            return After.of();
-        }
-      }),
-      (pseudo): pseudo is Pseudo.Element => pseudo !== undefined,
-      () => "Invalid pseudo element"
-    )
+    flatMap(Token.parseIdent(), (ident) => (input) => {
+      switch (ident.value) {
+        case "before":
+          return Result.of([input, Before.of()]);
+        case "after":
+          return Result.of([input, After.of()]);
+      }
+
+      return Err.of(`Unknown pseudo-element ::${ident.value}`);
+    })
   );
 
   const parsePseudo = either(parsePseudoClass, parsePseudoElement);
@@ -884,8 +923,8 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element): boolean {
-      return !this._selector.matches(element);
+    public matches(element: Element, scope?: Iterable<Element>): boolean {
+      return !this._selector.matches(element, scope);
     }
 
     public equals(value: unknown): value is this {
@@ -1041,9 +1080,8 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return element
-        .parent()
-        .every(or(Document.isDocument, Fragment.isFragment, Shadow.isShadow));
+      // The root element is the element whose parent is NOT itself an element.
+      return element.parent().every(not(Element.isElement));
     }
   }
 
@@ -1520,11 +1558,11 @@ export namespace Selector {
    */
   const parseList = map(
     pair(
-      either(parseRelative, parseComplex),
+      parseComplex,
       zeroOrMore(
         right(
           delimited(option(Token.parseWhitespace), Token.parseComma),
-          either(parseRelative, parseComplex)
+          parseComplex
         )
       )
     ),
@@ -1536,9 +1574,14 @@ export namespace Selector {
       return Iterable.reduce(
         selectors,
         (right, left) => List.of(left, right),
-        left as Simple | Compound | Complex | Relative | List
+        left as Simple | Compound | Complex | List<Simple | Compound | Complex>
       );
     }
+  );
+
+  parseSelector = left(
+    parseList,
+    eof((token) => `Unexpected token ${token}`)
   );
 
   export function parse(input: string) {
