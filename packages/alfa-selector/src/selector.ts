@@ -625,6 +625,10 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
+      if (this._namespace.isNone() || this._namespace.includes("*")) {
+        return true;
+      }
+
       return element.namespace.equals(this._namespace);
     }
 
