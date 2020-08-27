@@ -4,12 +4,13 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { None } from "./none";
 import { Option } from "./option";
 
-const { test } = Predicate;
+const { not, test } = Predicate;
 
 export class Some<T> implements Option<T> {
   public static of<T>(value: T): Some<T> {
@@ -38,12 +39,20 @@ export class Some<T> implements Option<T> {
     return mapper(this._value);
   }
 
+  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+    return reducer(accumulator, this._value);
+  }
+
   public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
     return mapper.map((mapper) => mapper(this._value));
   }
 
-  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reducer(accumulator, this._value);
+  public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
+    return test(predicate, this._value) ? new Some(this._value) : None;
+  }
+
+  public reject(predicate: Predicate<T>): Option<T> {
+    return this.filter(not(predicate));
   }
 
   public includes(value: T): boolean {
@@ -54,12 +63,12 @@ export class Some<T> implements Option<T> {
     return test(predicate, this._value);
   }
 
-  public every(predicate: Predicate<T>): boolean {
-    return test(predicate, this._value);
+  public none(predicate: Predicate<T>): boolean {
+    return test(not(predicate), this._value);
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return test(predicate, this._value) ? new Some(this._value) : None;
+  public every(predicate: Predicate<T>): boolean {
+    return test(predicate, this._value);
   }
 
   public and<U>(option: Option<U>): Option<U> {
@@ -100,6 +109,10 @@ export class Some<T> implements Option<T> {
 
   public *[Symbol.iterator](): Iterator<T> {
     yield this._value;
+  }
+
+  public toArray(): [T] {
+    return [this._value];
   }
 
   public toJSON(): Some.JSON {

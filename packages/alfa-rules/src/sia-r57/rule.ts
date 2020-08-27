@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -11,9 +11,10 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/expectation";
 
 import { isIgnored } from "../common/predicate/is-ignored";
+import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, not, property } = Predicate;
+const { and, not, nor, property } = Predicate;
 const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
@@ -26,7 +27,10 @@ export default Rule.Atomic.of<Page, Text>({
           .filter(
             and(
               Text.isText,
-              and(property("data", not(isEmpty)), not(isIgnored(device)))
+              and(
+                property("data", nor(isEmpty, isWhitespace)),
+                not(isIgnored(device))
+              )
             )
           );
       },
@@ -38,9 +42,7 @@ export default Rule.Atomic.of<Page, Text>({
               node
                 .ancestors()
                 .some((ancestor) =>
-                  ancestor
-                    .role()
-                    .some((role) => role.inheritsFrom(hasName("landmark")))
+                  ancestor.role.some((role) => role.isLandmark())
                 )
             ),
             () => Outcomes.IsIncludedInLandmark,
@@ -54,10 +56,10 @@ export default Rule.Atomic.of<Page, Text>({
 
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
-    "The text is included in a landmark region"
+    Diagnostic.of(`The text is included in a landmark region`)
   );
 
   export const IsNotIncludedInLandmark = Err.of(
-    "The text is not included in a landmark region"
+    Diagnostic.of(`The text is not included in a landmark region`)
   );
 }

@@ -26,7 +26,6 @@ import {
   Shadow,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -201,7 +200,7 @@ export namespace Puppeteer {
         return {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
-          condition: rule.media.mediaText,
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
           href: rule.href,
         };
       }
@@ -290,8 +289,8 @@ export namespace Puppeteer {
       Request.empty(),
       Response.empty(),
       node.type === "document"
-        ? Document.fromDocument(node as Document.JSON)
-        : Document.of((self) => [Node.fromNode(node, Option.of(self))]),
+        ? Document.from(node as Document.JSON)
+        : Document.of([Node.from(node)]),
       Device.standard()
     );
   }

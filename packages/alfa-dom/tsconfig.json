@@ -2,7 +2,9 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
+    "h.ts",
     "jsx.ts",
+    "src/h.ts",
     "src/index.ts",
     "src/jsx.ts",
     "src/namespace.ts",
@@ -11,6 +13,12 @@
     "src/node/comment.ts",
     "src/node/document.ts",
     "src/node/element.ts",
+    "src/node/element/predicate.ts",
+    "src/node/element/predicate/has-id.ts",
+    "src/node/element/predicate/has-name.ts",
+    "src/node/element/predicate/has-namespace.ts",
+    "src/node/element/predicate/has-tab-index.ts",
+    "src/node/element/predicate/is-disabled.ts",
     "src/node/fragment.ts",
     "src/node/shadow.ts",
     "src/node/slot.ts",
@@ -32,12 +40,10 @@
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
+    "test/h.spec.ts",
     "test/node/attribute.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-css"
-    },
     {
       "path": "../alfa-earl"
     },
@@ -64,6 +70,12 @@
     },
     {
       "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-trampoline"
     }
   ]
 }

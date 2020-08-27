@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -43,10 +43,10 @@ export default Rule.Atomic.of<Page, Document>({
 
 export namespace Outcomes {
   export const HasOneHeading = Ok.of(
-    "The document has at least one heading element"
+    Diagnostic.of(`The document has at least one heading element`)
   );
 
   export const HasNoHeadings = Err.of(
-    "The document does not have a heading element"
+    Diagnostic.of(`The document does not have a heading element`)
   );
 }

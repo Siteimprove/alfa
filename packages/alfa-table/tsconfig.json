@@ -40,6 +40,9 @@
       "path": "../alfa-json"
     },
     {
+      "path": "../alfa-list"
+    },
+    {
       "path": "../alfa-math"
     },
     {
@@ -47,6 +50,15 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-set"
     }
   ]
 }

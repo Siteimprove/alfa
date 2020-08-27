@@ -1,7 +1,9 @@
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -13,7 +15,7 @@ import { Scope } from "../src/scope";
 import { Table } from "../src/table";
 
 const { and } = Predicate;
-const { isElement } = Element;
+const { isElement, hasId } = Element;
 const { compare } = Comparable;
 
 const makeCellFromGetter = (getElt: (elt: string) => Element) => (
@@ -37,6 +39,27 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
     headers.map(getElt)
   );
 
+const makeCellBuilderFromGetter = (getElt: (elt: string) => Element) => (
+  elt: string,
+  kind: Cell.Kind,
+  x: number,
+  y: number,
+  scope: Scope | undefined = undefined,
+  width: number = 1,
+  height: number = 1
+): Cell.Builder =>
+  Cell.Builder.of(
+    kind,
+    x,
+    y,
+    width,
+    height,
+    getElt(elt),
+    None,
+    false,
+    Option.from(scope)
+  );
+
 function toBuildingCell(cell: Cell) {
   return Cell.Builder.of(
     cell.kind,
@@ -44,36 +67,37 @@ function toBuildingCell(cell: Cell) {
     cell.anchor.y,
     cell.width,
     cell.height,
-    cell.element
+    cell.element,
+    cell.scope
   );
 }
 
-const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (node: Node) => (id: string) =>
-  node.resolveReferences(id).shift() || dummy;
+  node
+    .descendants()
+    .find(and(isElement, hasId(id)))
+    .get();
 
 // processing simple row
 export namespace simpleRow {
-  export const element = Element.fromElement(
+  export const element = (
     <tr>
       <th id="first">1</th>
       <td id="second">2</td>
     </tr>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellFromGetter(getById);
+  const makeCell = makeCellBuilderFromGetter(getById);
 
   export const expected = Row.Builder.of(
     0,
     2,
     1,
     element,
-    [
-      makeCell("first", Cell.Kind.Header, 0, 0),
-      makeCell("second", Cell.Kind.Data, 1, 0),
-    ]
-      .map(toBuildingCell)
-      .sort(compare)
+    List.of(
+      makeCell("first", Cell.Kind.Header, 0, 0, Scope.Auto),
+      makeCell("second", Cell.Kind.Data, 1, 0)
+    )
   );
 }
 
@@ -81,63 +105,70 @@ export namespace simpleRow {
 
 // processing complex row
 export namespace complexRow {
-  export const element = Element.fromElement(
+  export const element = (
     <tr>
-      <th id="grade" rowSpan={2}>
+      <th id="grade" rowspan={2}>
         Grade.
       </th>
-      <th id="yield" rowSpan={2}>
+      <th id="yield" rowspan={2}>
         Yield Point.
       </th>
-      <th id="strength" colSpan={2}>
+      <th id="strength" colspan={2}>
         Ultimate tensile strength
       </th>
-      <th id="elong" rowSpan={2}>
+      <th id="elong" rowspan={2}>
         Per cent elong. 50.8mm or 2 in.
       </th>
-      <th id="reduct" rowSpan={2}>
+      <th id="reduct" rowspan={2}>
         Per cent reduct. area.
       </th>
     </tr>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellFromGetter(getById);
+  const makeCell = makeCellBuilderFromGetter(getById);
 
   export const expected = Row.Builder.of(
     0,
     6,
     2,
     element,
-    [
-      makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 2),
-    ]
-      .map(toBuildingCell)
-      .sort(compare)
+    List.of(
+      makeCell("grade", Cell.Kind.Header, 0, 0, Scope.Auto, 1, 2),
+      makeCell(
+        "yield",
+        Cell.Kind.Header,
+        1,
+        0,
+
+        Scope.Auto,
+        1,
+        2
+      ),
+      makeCell("strength", Cell.Kind.Header, 2, 0, Scope.Auto, 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, Scope.Auto, 1, 2),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, Scope.Auto, 1, 2)
+    )
   );
 }
 
 // processing row group
 export namespace simpleRowGroup {
-  export const element = Element.fromElement(
+  export const element = (
     <thead id="thead">
       <tr id="first">
-        <th id="grade" rowSpan={2}>
+        <th id="grade" rowspan={2}>
           Grade.
         </th>
-        <th id="yield" rowSpan={2}>
+        <th id="yield" rowspan={2}>
           Yield Point.
         </th>
-        <th id="strength" colSpan={2}>
+        <th id="strength" colspan={2}>
           Ultimate tensile strength
         </th>
-        <th id="elong" rowSpan={2}>
+        <th id="elong" rowspan={2}>
           Per cent elong. 50.8mm or 2 in.
         </th>
-        <th id="reduct" rowSpan={2}>
+        <th id="reduct" rowspan={2}>
           Per cent reduct. area.
         </th>
       </tr>
@@ -159,43 +190,45 @@ export namespace simpleRowGroup {
     2,
     element,
     6,
-    [
-      makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 2),
-      makeCell("kg-mm", Cell.Kind.Header, 2, 1),
-      makeCell("lb-in", Cell.Kind.Header, 3, 1),
-    ]
-      .map(toBuildingCell)
-      .sort(compare)
+    List.from(
+      [
+        makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 2),
+        makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
+        makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
+        makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
+        makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 2),
+        makeCell("kg-mm", Cell.Kind.Header, 2, 1),
+        makeCell("lb-in", Cell.Kind.Header, 3, 1),
+      ]
+        .map(toBuildingCell)
+        .sort(compare)
+    )
   );
 }
 
 // row group with downward growing cells
 export namespace downwardGrowing {
-  export const element = Element.fromElement(
+  export const element = (
     <thead id="thead">
       <tr id="first">
-        <th id="grade" rowSpan={3}>
+        <th id="grade" rowspan={3}>
           Grade.
         </th>
-        <th id="yield" rowSpan={2}>
+        <th id="yield" rowspan={2}>
           Yield Point.
         </th>
-        <th id="strength" colSpan={2}>
+        <th id="strength" colspan={2}>
           Ultimate tensile strength
         </th>
-        <th id="elong" rowSpan={2}>
+        <th id="elong" rowspan={2}>
           Per cent elong. 50.8mm or 2 in.
         </th>
-        <th id="reduct" rowSpan={0}>
+        <th id="reduct" rowspan={0}>
           Per cent reduct. area.
         </th>
       </tr>
       <tr id="second">
-        <th id="kg-mm" rowSpan={0}>
+        <th id="kg-mm" rowspan={0}>
           kg/mm<sup>2</sup>
         </th>
         <th id="lb-in">
@@ -216,25 +249,27 @@ export namespace downwardGrowing {
     3,
     element,
     6,
-    [
-      makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 3),
-      makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
-      makeCell("lb-in", Cell.Kind.Header, 3, 1),
-      makeCell("foo", Cell.Kind.Header, 1, 2, [], undefined, 1, 1),
-      makeCell("bar", Cell.Kind.Header, 3, 2, [], undefined, 1, 1),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 3),
-      makeCell("kg-mm", Cell.Kind.Header, 2, 1, [], undefined, 1, 2),
-    ]
-      .map(toBuildingCell)
-      .sort(compare)
+    List.from(
+      [
+        makeCell("grade", Cell.Kind.Header, 0, 0, [], undefined, 1, 3),
+        makeCell("yield", Cell.Kind.Header, 1, 0, [], undefined, 1, 2),
+        makeCell("strength", Cell.Kind.Header, 2, 0, [], undefined, 2, 1),
+        makeCell("elong", Cell.Kind.Header, 4, 0, [], undefined, 1, 2),
+        makeCell("lb-in", Cell.Kind.Header, 3, 1),
+        makeCell("foo", Cell.Kind.Header, 1, 2, [], undefined, 1, 1),
+        makeCell("bar", Cell.Kind.Header, 3, 2, [], undefined, 1, 1),
+        makeCell("reduct", Cell.Kind.Header, 5, 0, [], undefined, 1, 3),
+        makeCell("kg-mm", Cell.Kind.Header, 2, 1, [], undefined, 1, 2),
+      ]
+        .map(toBuildingCell)
+        .sort(compare)
+    )
   );
 }
 
 // table with row group, colspan and rowspan
 export namespace smithonian {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <caption>
         Specification values: <b>Steel</b>, <b>Castings</b>, Ann. A.S.T.M.
@@ -242,19 +277,19 @@ export namespace smithonian {
       </caption>
       <thead id="thead">
         <tr>
-          <th id="grade" rowSpan={2}>
+          <th id="grade" rowspan={2}>
             Grade.
           </th>
-          <th id="yield" rowSpan={2}>
+          <th id="yield" rowspan={2}>
             Yield Point.
           </th>
-          <th id="strength" colSpan={2}>
+          <th id="strength" colspan={2}>
             Ultimate tensile strength
           </th>
-          <th id="elong" rowSpan={2}>
+          <th id="elong" rowspan={2}>
             Per cent elong. 50.8mm or 2 in.
           </th>
-          <th id="reduct" rowSpan={2}>
+          <th id="reduct" rowspan={2}>
             Per cent reduct. area.
           </th>
         </tr>
@@ -298,37 +333,38 @@ export namespace smithonian {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("grade", Cell.Kind.Header, 0, 0, [], Scope.Column, 1, 2),
+    makeCell("yield", Cell.Kind.Header, 1, 0, [], Scope.Column, 1, 2),
+    makeCell("strength", Cell.Kind.Header, 2, 0, [], Scope.Column, 2, 1),
+    makeCell("elong", Cell.Kind.Header, 4, 0, [], Scope.Column, 1, 2),
+    makeCell("reduct", Cell.Kind.Header, 5, 0, [], Scope.Column, 1, 2),
+    makeCell("kg-mm", Cell.Kind.Header, 2, 1, ["strength"], Scope.Column),
+    makeCell("lb-in", Cell.Kind.Header, 3, 1, ["strength"], Scope.Column),
+    makeCell("hard", Cell.Kind.Data, 0, 2, ["grade"]),
+    makeCell("hard-yield", Cell.Kind.Data, 1, 2, ["yield"]),
+    makeCell("hard-kg", Cell.Kind.Data, 2, 2, ["strength", "kg-mm"]),
+    makeCell("hard-lb", Cell.Kind.Data, 3, 2, ["strength", "lb-in"]),
+    makeCell("hard-elong", Cell.Kind.Data, 4, 2, ["elong"]),
+    makeCell("hard-reduct", Cell.Kind.Data, 5, 2, ["reduct"]),
+    makeCell("medium", Cell.Kind.Data, 0, 3, ["grade"]),
+    makeCell("medium-yield", Cell.Kind.Data, 1, 3, ["yield"]),
+    makeCell("medium-kg", Cell.Kind.Data, 2, 3, ["strength", "kg-mm"]),
+    makeCell("medium-lb", Cell.Kind.Data, 3, 3, ["strength", "lb-in"]),
+    makeCell("medium-elong", Cell.Kind.Data, 4, 3, ["elong"]),
+    makeCell("medium-reduct", Cell.Kind.Data, 5, 3, ["reduct"]),
+    makeCell("soft", Cell.Kind.Data, 0, 4, ["grade"]),
+    makeCell("soft-yield", Cell.Kind.Data, 1, 4, ["yield"]),
+    makeCell("soft-kg", Cell.Kind.Data, 2, 4, ["strength", "kg-mm"]),
+    makeCell("soft-lb", Cell.Kind.Data, 3, 4, ["strength", "lb-in"]),
+    makeCell("soft-elong", Cell.Kind.Data, 4, 4, ["elong"]),
+    makeCell("soft-reduct", Cell.Kind.Data, 5, 4, ["reduct"]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     6,
     5,
-    [
-      makeCell("grade", Cell.Kind.Header, 0, 0, [], Scope.Column, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, [], Scope.Column, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, [], Scope.Column, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, [], Scope.Column, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, [], Scope.Column, 1, 2),
-      makeCell("kg-mm", Cell.Kind.Header, 2, 1, ["strength"], Scope.Column),
-      makeCell("lb-in", Cell.Kind.Header, 3, 1, ["strength"], Scope.Column),
-      makeCell("hard", Cell.Kind.Data, 0, 2, ["grade"]),
-      makeCell("hard-yield", Cell.Kind.Data, 1, 2, ["yield"]),
-      makeCell("hard-kg", Cell.Kind.Data, 2, 2, ["kg-mm", "strength"]),
-      makeCell("hard-lb", Cell.Kind.Data, 3, 2, ["lb-in", "strength"]),
-      makeCell("hard-elong", Cell.Kind.Data, 4, 2, ["elong"]),
-      makeCell("hard-reduct", Cell.Kind.Data, 5, 2, ["reduct"]),
-      makeCell("medium", Cell.Kind.Data, 0, 3, ["grade"]),
-      makeCell("medium-yield", Cell.Kind.Data, 1, 3, ["yield"]),
-      makeCell("medium-kg", Cell.Kind.Data, 2, 3, ["kg-mm", "strength"]),
-      makeCell("medium-lb", Cell.Kind.Data, 3, 3, ["lb-in", "strength"]),
-      makeCell("medium-elong", Cell.Kind.Data, 4, 3, ["elong"]),
-      makeCell("medium-reduct", Cell.Kind.Data, 5, 3, ["reduct"]),
-      makeCell("soft", Cell.Kind.Data, 0, 4, ["grade"]),
-      makeCell("soft-yield", Cell.Kind.Data, 1, 4, ["yield"]),
-      makeCell("soft-kg", Cell.Kind.Data, 2, 4, ["kg-mm", "strength"]),
-      makeCell("soft-lb", Cell.Kind.Data, 3, 4, ["lb-in", "strength"]),
-      makeCell("soft-elong", Cell.Kind.Data, 4, 4, ["elong"]),
-      makeCell("soft-reduct", Cell.Kind.Data, 5, 4, ["reduct"]),
-    ].sort(compare),
+    cells,
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 3, getById("tbody")),
@@ -338,7 +374,7 @@ export namespace smithonian {
 
 // table with a tfoot in the middle
 export namespace apple {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr id="tr">
@@ -383,32 +419,33 @@ export namespace apple {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+    makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
+    makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
+    makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
+    makeCell("net", Cell.Kind.Header, 0, 1, [], Scope.Row),
+    makeCell("net-2008", Cell.Kind.Data, 1, 1, ["2008", "net"]),
+    makeCell("net-2007", Cell.Kind.Data, 2, 1, ["2007", "net"]),
+    makeCell("net-2006", Cell.Kind.Data, 3, 1, ["2006", "net"]),
+    makeCell("cost", Cell.Kind.Header, 0, 2, [], Scope.Row),
+    makeCell("cost-2008", Cell.Kind.Data, 1, 2, ["2008", "cost"]),
+    makeCell("cost-2007", Cell.Kind.Data, 2, 2, ["2007", "cost"]),
+    makeCell("cost-2006", Cell.Kind.Data, 3, 2, ["2006", "cost"]),
+    makeCell("margin", Cell.Kind.Header, 0, 3, [], Scope.Row),
+    makeCell("margin-2008", Cell.Kind.Data, 1, 3, ["2008", "margin"]),
+    makeCell("margin-2007", Cell.Kind.Data, 2, 3, ["2007", "margin"]),
+    makeCell("margin-2006", Cell.Kind.Data, 3, 3, ["2006", "margin"]),
+    makeCell("percent", Cell.Kind.Header, 0, 4, [], Scope.Row),
+    makeCell("percent-2008", Cell.Kind.Data, 1, 4, ["2008", "percent"]),
+    makeCell("percent-2007", Cell.Kind.Data, 2, 4, ["2007", "percent"]),
+    makeCell("percent-2006", Cell.Kind.Data, 3, 4, ["2006", "percent"]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     4,
     5,
-    [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
-      makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
-      makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
-      makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
-      makeCell("net", Cell.Kind.Header, 0, 1, [], Scope.Row),
-      makeCell("net-2008", Cell.Kind.Data, 1, 1, ["net", "2008"]),
-      makeCell("net-2007", Cell.Kind.Data, 2, 1, ["net", "2007"]),
-      makeCell("net-2006", Cell.Kind.Data, 3, 1, ["net", "2006"]),
-      makeCell("cost", Cell.Kind.Header, 0, 2, [], Scope.Row),
-      makeCell("cost-2008", Cell.Kind.Data, 1, 2, ["cost", "2008"]),
-      makeCell("cost-2007", Cell.Kind.Data, 2, 2, ["cost", "2007"]),
-      makeCell("cost-2006", Cell.Kind.Data, 3, 2, ["cost", "2006"]),
-      makeCell("margin", Cell.Kind.Header, 0, 3, [], Scope.Row),
-      makeCell("margin-2008", Cell.Kind.Data, 1, 3, ["margin", "2008"]),
-      makeCell("margin-2007", Cell.Kind.Data, 2, 3, ["margin", "2007"]),
-      makeCell("margin-2006", Cell.Kind.Data, 3, 3, ["margin", "2006"]),
-      makeCell("percent", Cell.Kind.Header, 0, 4, [], Scope.Row),
-      makeCell("percent-2008", Cell.Kind.Data, 1, 4, ["percent", "2008"]),
-      makeCell("percent-2007", Cell.Kind.Data, 2, 4, ["percent", "2007"]),
-      makeCell("percent-2006", Cell.Kind.Data, 3, 4, ["percent", "2006"]),
-    ].sort(compare),
+    cells,
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -420,7 +457,7 @@ export namespace apple {
 
 // example with colgroup
 export namespace expenses {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-head">
         <col />
@@ -472,56 +509,57 @@ export namespace expenses {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+    makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
+    makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
+    makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
+    makeCell("rd", Cell.Kind.Header, 0, 1, [], Scope.RowGroup),
+    makeCell("rd-2008", Cell.Kind.Data, 1, 1, ["2008", "rd"]),
+    makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
+    makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
+    makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"], Scope.Row),
+    makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
+      "2008",
+      "rd",
+      "rd-percent",
+    ]),
+    makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, [
+      "2007",
+      "rd",
+      "rd-percent",
+    ]),
+    makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, [
+      "2006",
+      "rd",
+      "rd-percent",
+    ]),
+    makeCell("sales", Cell.Kind.Header, 0, 3, [], Scope.RowGroup),
+    makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
+    makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
+    makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
+    makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"], Scope.Row),
+    makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
+      "2008",
+      "sales",
+      "sales-percent",
+    ]),
+    makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, [
+      "2007",
+      "sales",
+      "sales-percent",
+    ]),
+    makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, [
+      "2006",
+      "sales",
+      "sales-percent",
+    ]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     4,
     5,
-    [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
-      makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
-      makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
-      makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
-      makeCell("rd", Cell.Kind.Header, 0, 1, [], Scope.RowGroup),
-      makeCell("rd-2008", Cell.Kind.Data, 1, 1, ["2008", "rd"]),
-      makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
-      makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
-      makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"], Scope.Row),
-      makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
-        "rd-percent",
-        "2008",
-        "rd",
-      ]),
-      makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, [
-        "rd-percent",
-        "2007",
-        "rd",
-      ]),
-      makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, [
-        "rd-percent",
-        "2006",
-        "rd",
-      ]),
-      makeCell("sales", Cell.Kind.Header, 0, 3, [], Scope.RowGroup),
-      makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
-      makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
-      makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
-      makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"], Scope.Row),
-      makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
-        "sales-percent",
-        "2008",
-        "sales",
-      ]),
-      makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, [
-        "sales-percent",
-        "2007",
-        "sales",
-      ]),
-      makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, [
-        "sales-percent",
-        "2006",
-        "sales",
-      ]),
-    ].sort(compare),
+    cells,
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -547,7 +585,7 @@ export namespace expenses {
 
 // same with colgroup defined by spans
 export namespace expensesNum {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-head" span={1} />
       <colgroup id="group-body">
@@ -598,56 +636,57 @@ export namespace expensesNum {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+    makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
+    makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
+    makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
+    makeCell("rd", Cell.Kind.Header, 0, 1, [], Scope.RowGroup),
+    makeCell("rd-2008", Cell.Kind.Data, 1, 1, ["2008", "rd"]),
+    makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
+    makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
+    makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"], Scope.Row),
+    makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
+      "2008",
+      "rd",
+      "rd-percent",
+    ]),
+    makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, [
+      "2007",
+      "rd",
+      "rd-percent",
+    ]),
+    makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, [
+      "2006",
+      "rd",
+      "rd-percent",
+    ]),
+    makeCell("sales", Cell.Kind.Header, 0, 3, [], Scope.RowGroup),
+    makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
+    makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
+    makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
+    makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"], Scope.Row),
+    makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
+      "2008",
+      "sales",
+      "sales-percent",
+    ]),
+    makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, [
+      "2007",
+      "sales",
+      "sales-percent",
+    ]),
+    makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, [
+      "2006",
+      "sales",
+      "sales-percent",
+    ]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     4,
     5,
-    [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
-      makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
-      makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
-      makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
-      makeCell("rd", Cell.Kind.Header, 0, 1, [], Scope.RowGroup),
-      makeCell("rd-2008", Cell.Kind.Data, 1, 1, ["2008", "rd"]),
-      makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
-      makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
-      makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"], Scope.Row),
-      makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
-        "rd-percent",
-        "2008",
-        "rd",
-      ]),
-      makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, [
-        "rd-percent",
-        "2007",
-        "rd",
-      ]),
-      makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, [
-        "rd-percent",
-        "2006",
-        "rd",
-      ]),
-      makeCell("sales", Cell.Kind.Header, 0, 3, [], Scope.RowGroup),
-      makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
-      makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
-      makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
-      makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"], Scope.Row),
-      makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
-        "sales-percent",
-        "2008",
-        "sales",
-      ]),
-      makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, [
-        "sales-percent",
-        "2007",
-        "sales",
-      ]),
-      makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, [
-        "sales-percent",
-        "2006",
-        "sales",
-      ]),
-    ].sort(compare),
+    cells,
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -662,10 +701,10 @@ export namespace expensesNum {
 
 export namespace errors {
   // second column (column 1) has no cell anchored in it.
-  export const emptyCol = Element.fromElement(
+  export const emptyCol = (
     <table>
       <tr>
-        <td id="one-two" colSpan={2}>
+        <td id="one-two" colspan={2}>
           2 columns
         </td>
         <td id="three">third column</td>
@@ -674,10 +713,10 @@ export namespace errors {
   );
 
   // second row (row 1) has no cell anchored in it.
-  export const emptyRow = Element.fromElement(
+  export const emptyRow = (
     <table>
       <tr>
-        <td rowSpan={2}>2 rows</td>
+        <td rowspan={2}>2 rows</td>
       </tr>
       <tr />
       <tr>
@@ -687,14 +726,14 @@ export namespace errors {
   );
 
   // slot (1, 1) is covered twice
-  export const coveredTwice = Element.fromElement(
+  export const coveredTwice = (
     <table>
       <tr>
         <td>1 row, 1 col</td>
-        <td rowSpan={2}>2 rows</td>
+        <td rowspan={2}>2 rows</td>
       </tr>
       <tr>
-        <td colSpan={2}>2 cols</td>
+        <td colspan={2}>2 cols</td>
       </tr>
     </table>
   );
@@ -709,7 +748,7 @@ export namespace headersVariant {
   D | R
   C | C
    */
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr id="row1">
@@ -761,7 +800,7 @@ export namespace headersVariant {
 }
 
 export namespace explicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <tr>
         <th id="text-content">not empty</th>
@@ -781,41 +820,34 @@ export namespace explicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Table.of(
-    element,
-    4,
-    2,
-    [
-      makeCell("text-content", Cell.Kind.Header, 0, 0),
-      makeCell("child", Cell.Kind.Header, 1, 0, [], Scope.Row),
-      makeCell("empty", Cell.Kind.Header, 2, 0, ["child"], Scope.Row),
-      makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
-      makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
-    ].sort(compare)
-  );
+  const cells = [
+    makeCell("text-content", Cell.Kind.Header, 0, 0),
+    makeCell("child", Cell.Kind.Header, 1, 0, [], Scope.Row),
+    makeCell("empty", Cell.Kind.Header, 2, 0, ["child"], Scope.Row),
+    makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
+    makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
+  ].sort(compare);
+  export const expected = Table.of(element, 4, 2, cells);
 }
 
 // correctly selecting explicit header when multiple element have the same id.
 export namespace duplicateIDExplicitHeaders {
-  export const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <body>
-          <span id="dup-out" />
-          <table id="table">
-            <tr>
-              <th id="dup-out" /> <th id="dup-in">First</th>{" "}
-              <th id="dup-in">Second</th>
-            </tr>
-            <tr>
-              <td id="data-1" headers="dup-out" />{" "}
-              <td id="data-2" headers="dup-in" />
-            </tr>
-          </table>
-        </body>
-      </html>,
-      Option.of(self)
-    ),
+  export const document = h.document([
+    <html>
+      <body>
+        <span id="dup-out" />
+        <table id="table">
+          <tr>
+            <th id="dup-out" /> <th id="dup-in">First</th>{" "}
+            <th id="dup-in">Second</th>
+          </tr>
+          <tr>
+            <td id="data-1" headers="dup-out" />{" "}
+            <td id="data-2" headers="dup-in" />
+          </tr>
+        </table>
+      </body>
+    </html>,
   ]);
   export const table = getDescendantById(document)("table");
   const getById = getDescendantById(table);
@@ -834,31 +866,25 @@ export namespace duplicateIDExplicitHeaders {
     .first()
     .get();
 
-  export const expected = Table.of(
-    table,
-    3,
-    2,
-    [
-      makeCell("dup-out", Cell.Kind.Header, 0, 0, [], Scope.Column),
-      makeCell("dup-in", Cell.Kind.Header, 1, 0, [], Scope.Column),
-      makeCellFromGetter((_) => lastHeader)(
-        "",
-        Cell.Kind.Header,
-        2,
-        0,
-        [],
-        Scope.Column
-      ),
-      makeCell("data-1", Cell.Kind.Data, 0, 1), // no header because first with correct id is out of table
-      makeCell("data-2", Cell.Kind.Data, 1, 1, ["dup-in"]),
-    ].sort(compare),
-    [],
-    []
-  );
+  const cells = [
+    makeCell("dup-out", Cell.Kind.Header, 0, 0, [], Scope.Column),
+    makeCell("dup-in", Cell.Kind.Header, 1, 0, [], Scope.Column),
+    makeCellFromGetter((_) => lastHeader)(
+      "",
+      Cell.Kind.Header,
+      2,
+      0,
+      [],
+      Scope.Column
+    ),
+    makeCell("data-1", Cell.Kind.Data, 0, 1), // no header because first with correct id is out of table
+    makeCell("data-2", Cell.Kind.Data, 1, 1, ["dup-in"]),
+  ].sort(compare);
+  export const expected = Table.of(table, 3, 2, cells);
 }
 
 export namespace simpleImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <tr>
         <th id="empty" />
@@ -880,27 +906,23 @@ export namespace simpleImplicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Table.of(
-    element,
-    3,
-    3,
-    [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
-      makeCell("col1", Cell.Kind.Header, 1, 0, [], Scope.Column),
-      makeCell("col2", Cell.Kind.Header, 2, 0, [], Scope.Column),
-      makeCell("row1", Cell.Kind.Header, 0, 1, [], Scope.Row),
-      makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
-      makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
-      makeCell("row2", Cell.Kind.Header, 0, 2, [], Scope.Row),
-      makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
-      makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"]),
-    ].sort(compare)
-  );
+  const cells = [
+    makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+    makeCell("col1", Cell.Kind.Header, 1, 0, [], Scope.Column),
+    makeCell("col2", Cell.Kind.Header, 2, 0, [], Scope.Column),
+    makeCell("row1", Cell.Kind.Header, 0, 1, [], Scope.Row),
+    makeCell("cell11", Cell.Kind.Data, 1, 1, ["col1", "row1"]),
+    makeCell("cell12", Cell.Kind.Data, 2, 1, ["col2", "row1"]),
+    makeCell("row2", Cell.Kind.Header, 0, 2, [], Scope.Row),
+    makeCell("cell21", Cell.Kind.Data, 1, 2, ["col1", "row2"]),
+    makeCell("cell22", Cell.Kind.Data, 2, 2, ["col2", "row2"]),
+  ].sort(compare);
+  export const expected = Table.of(element, 3, 3, cells);
 }
 
 //
 export namespace rowGroupImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <thead id="thead">
         <tr>
@@ -960,100 +982,93 @@ export namespace rowGroupImplicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("ID", Cell.Kind.Header, 0, 0, [], Scope.Column),
+    makeCell("measurement", Cell.Kind.Header, 1, 0, [], Scope.Column),
+    makeCell("average", Cell.Kind.Header, 2, 0, [], Scope.Column),
+    makeCell("maximum", Cell.Kind.Header, 3, 0, [], Scope.Column),
+    makeCell("empty-cat-id", Cell.Kind.Data, 0, 1, ["ID"]),
+    makeCell("cat", Cell.Kind.Header, 1, 1, ["measurement"], Scope.RowGroup),
+    makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, ["average", "cat"]),
+    makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, ["maximum", "cat"]),
+    makeCell("id93", Cell.Kind.Data, 0, 2, ["ID"]),
+    makeCell(
+      "cat-legs",
+      Cell.Kind.Header,
+      1,
+      2,
+      ["measurement", "cat"],
+      Scope.Row
+    ),
+    makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, [
+      "average",
+      "cat",
+      "cat-legs",
+    ]),
+    makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, [
+      "maximum",
+      "cat",
+      "cat-legs",
+    ]),
+    makeCell("id10", Cell.Kind.Data, 0, 3, ["ID"]),
+    makeCell(
+      "cat-tails",
+      Cell.Kind.Header,
+      1,
+      3,
+      ["measurement", "cat"],
+      Scope.Row
+    ),
+    makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, [
+      "average",
+      "cat",
+      "cat-tails",
+    ]),
+    makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, [
+      "maximum",
+      "cat",
+      "cat-tails",
+    ]),
+    makeCell("empty-en-id", Cell.Kind.Data, 0, 4, ["ID"]),
+    makeCell("en", Cell.Kind.Header, 1, 4, ["measurement"], Scope.RowGroup),
+    makeCell("empty-en-av", Cell.Kind.Data, 2, 4, ["average", "en"]),
+    makeCell("empty-en-max", Cell.Kind.Data, 3, 4, ["maximum", "en"]),
+    makeCell("id32", Cell.Kind.Data, 0, 5, ["ID"]),
+    makeCell(
+      "en-legs",
+      Cell.Kind.Header,
+      1,
+      5,
+      ["measurement", "en"],
+      Scope.Row
+    ),
+    makeCell("en-legs-av", Cell.Kind.Data, 2, 5, ["average", "en", "en-legs"]),
+    makeCell("en-legs-max", Cell.Kind.Data, 3, 5, ["maximum", "en", "en-legs"]),
+    makeCell("id35", Cell.Kind.Data, 0, 6, ["ID"]),
+    makeCell(
+      "en-tails",
+      Cell.Kind.Header,
+      1,
+      6,
+      ["measurement", "en"],
+      Scope.Row
+    ),
+    makeCell("en-tails-av", Cell.Kind.Data, 2, 6, [
+      "average",
+      "en",
+      "en-tails",
+    ]),
+    makeCell("en-tails-max", Cell.Kind.Data, 3, 6, [
+      "maximum",
+      "en",
+      "en-tails",
+    ]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     4,
     7,
-    [
-      makeCell("ID", Cell.Kind.Header, 0, 0, [], Scope.Column),
-      makeCell("measurement", Cell.Kind.Header, 1, 0, [], Scope.Column),
-      makeCell("average", Cell.Kind.Header, 2, 0, [], Scope.Column),
-      makeCell("maximum", Cell.Kind.Header, 3, 0, [], Scope.Column),
-      makeCell("empty-cat-id", Cell.Kind.Data, 0, 1, ["ID"]),
-      makeCell("cat", Cell.Kind.Header, 1, 1, ["measurement"], Scope.RowGroup),
-      makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, ["average", "cat"]),
-      makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, ["maximum", "cat"]),
-      makeCell("id93", Cell.Kind.Data, 0, 2, ["ID"]),
-      makeCell(
-        "cat-legs",
-        Cell.Kind.Header,
-        1,
-        2,
-        ["measurement", "cat"],
-        Scope.Row
-      ),
-      makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, [
-        "cat-legs",
-        "average",
-        "cat",
-      ]),
-      makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, [
-        "cat-legs",
-        "maximum",
-        "cat",
-      ]),
-      makeCell("id10", Cell.Kind.Data, 0, 3, ["ID"]),
-      makeCell(
-        "cat-tails",
-        Cell.Kind.Header,
-        1,
-        3,
-        ["measurement", "cat"],
-        Scope.Row
-      ),
-      makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, [
-        "cat-tails",
-        "average",
-        "cat",
-      ]),
-      makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, [
-        "cat-tails",
-        "maximum",
-        "cat",
-      ]),
-      makeCell("empty-en-id", Cell.Kind.Data, 0, 4, ["ID"]),
-      makeCell("en", Cell.Kind.Header, 1, 4, ["measurement"], Scope.RowGroup),
-      makeCell("empty-en-av", Cell.Kind.Data, 2, 4, ["average", "en"]),
-      makeCell("empty-en-max", Cell.Kind.Data, 3, 4, ["maximum", "en"]),
-      makeCell("id32", Cell.Kind.Data, 0, 5, ["ID"]),
-      makeCell(
-        "en-legs",
-        Cell.Kind.Header,
-        1,
-        5,
-        ["measurement", "en"],
-        Scope.Row
-      ),
-      makeCell("en-legs-av", Cell.Kind.Data, 2, 5, [
-        "en-legs",
-        "average",
-        "en",
-      ]),
-      makeCell("en-legs-max", Cell.Kind.Data, 3, 5, [
-        "en-legs",
-        "maximum",
-        "en",
-      ]),
-      makeCell("id35", Cell.Kind.Data, 0, 6, ["ID"]),
-      makeCell(
-        "en-tails",
-        Cell.Kind.Header,
-        1,
-        6,
-        ["measurement", "en"],
-        Scope.Row
-      ),
-      makeCell("en-tails-av", Cell.Kind.Data, 2, 6, [
-        "en-tails",
-        "average",
-        "en",
-      ]),
-      makeCell("en-tails-max", Cell.Kind.Data, 3, 6, [
-        "en-tails",
-        "maximum",
-        "en",
-      ]),
-    ].sort(compare),
+    cells,
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 3, getById("tbody-1")),
@@ -1065,17 +1080,17 @@ export namespace rowGroupImplicitHeaders {
 
 // https://www.w3.org/WAI/tutorials/tables/irregular/
 export namespace colGroupImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-empty" />
       <colgroup id="group-mars" span={2} />
       <colgroup id="group-venus" span={2} />
       <tr>
-        <td id="empty" rowSpan={2} />
-        <th id="mars" colSpan={2} scope="colgroup">
+        <td id="empty" rowspan={2} />
+        <th id="mars" colspan={2} scope="colgroup">
           Mars
         </th>
-        <th id="venus" colSpan={2} scope="colgroup">
+        <th id="venus" colspan={2} scope="colgroup">
           Venus
         </th>
       </tr>
@@ -1116,68 +1131,62 @@ export namespace colGroupImplicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("empty", Cell.Kind.Data, 0, 0, [], undefined, 1, 2),
+    makeCell("mars", Cell.Kind.Header, 1, 0, [], Scope.ColumnGroup, 2, 1),
+    makeCell("venus", Cell.Kind.Header, 3, 0, [], Scope.ColumnGroup, 2, 1),
+    makeCell("mars-produced", Cell.Kind.Header, 1, 1, ["mars"], Scope.Column),
+    makeCell("mars-sold", Cell.Kind.Header, 2, 1, ["mars"], Scope.Column),
+    makeCell("venus-produced", Cell.Kind.Header, 3, 1, ["venus"], Scope.Column),
+    makeCell("venus-sold", Cell.Kind.Header, 4, 1, ["venus"], Scope.Column),
+    makeCell("bears", Cell.Kind.Header, 0, 2, [], Scope.Row),
+    makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, [
+      "mars",
+      "mars-produced",
+      "bears",
+    ]),
+    makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, [
+      "mars",
+      "mars-sold",
+      "bears",
+    ]),
+    makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, [
+      "venus",
+      "venus-produced",
+      "bears",
+    ]),
+    makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, [
+      "venus",
+      "venus-sold",
+      "bears",
+    ]),
+    makeCell("games", Cell.Kind.Header, 0, 3, [], Scope.Row),
+    makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, [
+      "mars",
+      "mars-produced",
+      "games",
+    ]),
+    makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, [
+      "mars",
+      "mars-sold",
+      "games",
+    ]),
+    makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, [
+      "venus",
+      "venus-produced",
+      "games",
+    ]),
+    makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, [
+      "venus",
+      "venus-sold",
+      "games",
+    ]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     5,
     4,
-    [
-      makeCell("empty", Cell.Kind.Data, 0, 0, [], undefined, 1, 2),
-      makeCell("mars", Cell.Kind.Header, 1, 0, [], Scope.ColumnGroup, 2, 1),
-      makeCell("venus", Cell.Kind.Header, 3, 0, [], Scope.ColumnGroup, 2, 1),
-      makeCell("mars-produced", Cell.Kind.Header, 1, 1, ["mars"], Scope.Column),
-      makeCell("mars-sold", Cell.Kind.Header, 2, 1, ["mars"], Scope.Column),
-      makeCell(
-        "venus-produced",
-        Cell.Kind.Header,
-        3,
-        1,
-        ["venus"],
-        Scope.Column
-      ),
-      makeCell("venus-sold", Cell.Kind.Header, 4, 1, ["venus"], Scope.Column),
-      makeCell("bears", Cell.Kind.Header, 0, 2, [], Scope.Row),
-      makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, [
-        "bears",
-        "mars-produced",
-        "mars",
-      ]),
-      makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, [
-        "bears",
-        "mars-sold",
-        "mars",
-      ]),
-      makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, [
-        "bears",
-        "venus-produced",
-        "venus",
-      ]),
-      makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, [
-        "bears",
-        "venus-sold",
-        "venus",
-      ]),
-      makeCell("games", Cell.Kind.Header, 0, 3, [], Scope.Row),
-      makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, [
-        "games",
-        "mars-produced",
-        "mars",
-      ]),
-      makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, [
-        "games",
-        "mars-sold",
-        "mars",
-      ]),
-      makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, [
-        "games",
-        "venus-produced",
-        "venus",
-      ]),
-      makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, [
-        "games",
-        "venus-sold",
-        "venus",
-      ]),
-    ].sort(compare),
+    cells,
     [],
     [
       ColumnGroup.of(0, 1, getById("group-empty")),
@@ -1189,7 +1198,7 @@ export namespace colGroupImplicitHeaders {
 
 // A crazy one with a bit of everything
 export namespace allWeirdImplicitHeaders {
-  export const element = Element.fromElement(
+  export const element = (
     <table>
       <colgroup id="group-empty">
         <col />
@@ -1199,17 +1208,17 @@ export namespace allWeirdImplicitHeaders {
       <colgroup id="group-venus" span={2} />
       <thead id="thead">
         <tr>
-          <th id="empty" rowSpan={2} colSpan={2} />
-          <th id="mars" rowSpan={2} scope="colgroup">
+          <th id="empty" rowspan={2} colspan={2} />
+          <th id="mars" rowspan={2} scope="colgroup">
             Mars
           </th>
-          <th id="mars-produced" rowSpan={2} scope="col">
+          <th id="mars-produced" rowspan={2} scope="col">
             Produced
           </th>
-          <th id="mars-sold" rowSpan={2} scope="col">
+          <th id="mars-sold" rowspan={2} scope="col">
             Sold
           </th>
-          <th id="venus" colSpan={2} scope="colgroup">
+          <th id="venus" colspan={2} scope="colgroup">
             Venus
           </th>
         </tr>
@@ -1224,7 +1233,7 @@ export namespace allWeirdImplicitHeaders {
       </thead>
       <tbody id="stuffed-animals">
         <tr>
-          <th id="stuffed" rowSpan={2} scope="rowgroup">
+          <th id="stuffed" rowspan={2} scope="rowgroup">
             Stuffed animals
           </th>
           <th id="bears">Bears</th>
@@ -1245,7 +1254,7 @@ export namespace allWeirdImplicitHeaders {
       </tbody>
       <tbody id="games-rg">
         <tr>
-          <th id="games" colSpan={2} scope="rowgroup">
+          <th id="games" colspan={2} scope="rowgroup">
             Games
           </th>
           <td id="mars-empty-games" />
@@ -1255,7 +1264,7 @@ export namespace allWeirdImplicitHeaders {
           <td id="venus-sold-games" />
         </tr>
         <tr>
-          <th id="board" colSpan={2} scope="row">
+          <th id="board" colspan={2} scope="row">
             Board Games
           </th>
           <td id="mars-empty-board" />
@@ -1265,7 +1274,7 @@ export namespace allWeirdImplicitHeaders {
           <td id="venus-sold-board">9,000</td>
         </tr>
         <tr>
-          <th id="cards" colSpan={2} scope="row">
+          <th id="cards" colspan={2} scope="row">
             Cards Games
           </th>
           <td id="mars-empty-cards" />
@@ -1280,187 +1289,172 @@ export namespace allWeirdImplicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
+  const cells = [
+    makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column, 2, 2),
+    makeCell("mars", Cell.Kind.Header, 2, 0, [], Scope.ColumnGroup, 1, 2),
+    makeCell(
+      "mars-produced",
+      Cell.Kind.Header,
+      3,
+      0,
+      ["mars"],
+      Scope.Column,
+      1,
+      2
+    ),
+    makeCell("mars-sold", Cell.Kind.Header, 4, 0, ["mars"], Scope.Column, 1, 2),
+    makeCell("venus", Cell.Kind.Header, 5, 0, [], Scope.ColumnGroup, 2, 1),
+    makeCell("venus-produced", Cell.Kind.Header, 5, 1, ["venus"], Scope.Column),
+    makeCell("venus-sold", Cell.Kind.Header, 6, 1, ["venus"], Scope.Column),
+    makeCell("stuffed", Cell.Kind.Header, 0, 2, [], Scope.RowGroup, 1, 2),
+    makeCell("bears", Cell.Kind.Header, 1, 2, ["stuffed"], Scope.Row),
+    makeCell("mars-empty-bears", Cell.Kind.Data, 2, 2, [
+      "mars",
+      "stuffed",
+      "bears",
+    ]),
+    makeCell("mars-produced-bears", Cell.Kind.Data, 3, 2, [
+      "mars",
+      "mars-produced",
+      "stuffed",
+      "bears",
+    ]),
+    makeCell("mars-sold-bears", Cell.Kind.Data, 4, 2, [
+      "mars",
+      "mars-sold",
+      "stuffed",
+      "bears",
+    ]),
+    makeCell("venus-produced-bears", Cell.Kind.Data, 5, 2, [
+      "venus",
+      "venus-produced",
+      "stuffed",
+      "bears",
+    ]),
+    makeCell("venus-sold-bears", Cell.Kind.Data, 6, 2, [
+      "venus",
+      "venus-sold",
+      "stuffed",
+      "bears",
+    ]),
+    makeCell("bunnies", Cell.Kind.Header, 1, 3, ["stuffed"], Scope.Row),
+    makeCell("mars-empty-bunnies", Cell.Kind.Data, 2, 3, [
+      "mars",
+      "stuffed",
+      "bunnies",
+    ]),
+    makeCell("mars-produced-bunnies", Cell.Kind.Data, 3, 3, [
+      "mars",
+      "mars-produced",
+      "stuffed",
+      "bunnies",
+    ]),
+    makeCell("mars-sold-bunnies", Cell.Kind.Data, 4, 3, [
+      "mars",
+      "mars-sold",
+      "stuffed",
+      "bunnies",
+    ]),
+    makeCell("venus-produced-bunnies", Cell.Kind.Data, 5, 3, [
+      "venus",
+      "venus-produced",
+      "stuffed",
+      "bunnies",
+    ]),
+    makeCell("venus-sold-bunnies", Cell.Kind.Data, 6, 3, [
+      "venus",
+      "venus-sold",
+      "stuffed",
+      "bunnies",
+    ]),
+    makeCell("games", Cell.Kind.Header, 0, 4, [], Scope.RowGroup, 2, 1),
+    makeCell("mars-empty-games", Cell.Kind.Data, 2, 4, ["mars", "games"]),
+    makeCell("mars-produced-games", Cell.Kind.Data, 3, 4, [
+      "mars",
+      "mars-produced",
+      "games",
+    ]),
+    makeCell("mars-sold-games", Cell.Kind.Data, 4, 4, [
+      "mars",
+      "mars-sold",
+      "games",
+    ]),
+    makeCell("venus-produced-games", Cell.Kind.Data, 5, 4, [
+      "venus",
+      "venus-produced",
+      "games",
+    ]),
+    makeCell("venus-sold-games", Cell.Kind.Data, 6, 4, [
+      "venus",
+      "venus-sold",
+      "games",
+    ]),
+    makeCell("board", Cell.Kind.Header, 0, 5, ["games"], Scope.Row, 2, 1),
+    makeCell("mars-empty-board", Cell.Kind.Data, 2, 5, [
+      "mars",
+      "games",
+      "board",
+    ]),
+    makeCell("mars-produced-board", Cell.Kind.Data, 3, 5, [
+      "mars",
+      "mars-produced",
+      "games",
+      "board",
+    ]),
+    makeCell("mars-sold-board", Cell.Kind.Data, 4, 5, [
+      "mars",
+      "mars-sold",
+      "games",
+      "board",
+    ]),
+    makeCell("venus-produced-board", Cell.Kind.Data, 5, 5, [
+      "venus",
+      "venus-produced",
+      "games",
+      "board",
+    ]),
+    makeCell("venus-sold-board", Cell.Kind.Data, 6, 5, [
+      "venus",
+      "venus-sold",
+      "games",
+      "board",
+    ]),
+    makeCell("cards", Cell.Kind.Header, 0, 6, ["games"], Scope.Row, 2, 1),
+    makeCell("mars-empty-cards", Cell.Kind.Data, 2, 6, [
+      "mars",
+      "games",
+      "cards",
+    ]),
+    makeCell("mars-produced-cards", Cell.Kind.Data, 3, 6, [
+      "mars",
+      "mars-produced",
+      "games",
+      "cards",
+    ]),
+    makeCell("mars-sold-cards", Cell.Kind.Data, 4, 6, [
+      "mars",
+      "mars-sold",
+      "games",
+      "cards",
+    ]),
+    makeCell("venus-produced-cards", Cell.Kind.Data, 5, 6, [
+      "venus",
+      "venus-produced",
+      "games",
+      "cards",
+    ]),
+    makeCell("venus-sold-cards", Cell.Kind.Data, 6, 6, [
+      "venus",
+      "venus-sold",
+      "games",
+      "cards",
+    ]),
+  ].sort(compare);
   export const expected = Table.of(
     element,
     7,
     7,
-    [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column, 2, 2),
-      makeCell("mars", Cell.Kind.Header, 2, 0, [], Scope.ColumnGroup, 1, 2),
-      makeCell(
-        "mars-produced",
-        Cell.Kind.Header,
-        3,
-        0,
-        ["mars"],
-        Scope.Column,
-        1,
-        2
-      ),
-      makeCell(
-        "mars-sold",
-        Cell.Kind.Header,
-        4,
-        0,
-        ["mars"],
-        Scope.Column,
-        1,
-        2
-      ),
-      makeCell("venus", Cell.Kind.Header, 5, 0, [], Scope.ColumnGroup, 2, 1),
-      makeCell(
-        "venus-produced",
-        Cell.Kind.Header,
-        5,
-        1,
-        ["venus"],
-        Scope.Column
-      ),
-      makeCell("venus-sold", Cell.Kind.Header, 6, 1, ["venus"], Scope.Column),
-      makeCell("stuffed", Cell.Kind.Header, 0, 2, [], Scope.RowGroup, 1, 2),
-      makeCell("bears", Cell.Kind.Header, 1, 2, ["stuffed"], Scope.Row),
-      makeCell("mars-empty-bears", Cell.Kind.Data, 2, 2, [
-        "bears",
-        "stuffed",
-        "mars",
-      ]),
-      makeCell("mars-produced-bears", Cell.Kind.Data, 3, 2, [
-        "bears",
-        "mars-produced",
-        "stuffed",
-        "mars",
-      ]),
-      makeCell("mars-sold-bears", Cell.Kind.Data, 4, 2, [
-        "bears",
-        "mars-sold",
-        "stuffed",
-        "mars",
-      ]),
-      makeCell("venus-produced-bears", Cell.Kind.Data, 5, 2, [
-        "bears",
-        "venus-produced",
-        "stuffed",
-        "venus",
-      ]),
-      makeCell("venus-sold-bears", Cell.Kind.Data, 6, 2, [
-        "bears",
-        "venus-sold",
-        "stuffed",
-        "venus",
-      ]),
-      makeCell("bunnies", Cell.Kind.Header, 1, 3, ["stuffed"], Scope.Row),
-      makeCell("mars-empty-bunnies", Cell.Kind.Data, 2, 3, [
-        "bunnies",
-        "stuffed",
-        "mars",
-      ]),
-      makeCell("mars-produced-bunnies", Cell.Kind.Data, 3, 3, [
-        "bunnies",
-        "mars-produced",
-        "stuffed",
-        "mars",
-      ]),
-      makeCell("mars-sold-bunnies", Cell.Kind.Data, 4, 3, [
-        "bunnies",
-        "mars-sold",
-        "stuffed",
-        "mars",
-      ]),
-      makeCell("venus-produced-bunnies", Cell.Kind.Data, 5, 3, [
-        "bunnies",
-        "venus-produced",
-        "stuffed",
-        "venus",
-      ]),
-      makeCell("venus-sold-bunnies", Cell.Kind.Data, 6, 3, [
-        "bunnies",
-        "venus-sold",
-        "stuffed",
-        "venus",
-      ]),
-      makeCell("games", Cell.Kind.Header, 0, 4, [], Scope.RowGroup, 2, 1),
-      makeCell("mars-empty-games", Cell.Kind.Data, 2, 4, ["games", "mars"]),
-      makeCell("mars-produced-games", Cell.Kind.Data, 3, 4, [
-        "mars-produced",
-        "games",
-        "mars",
-      ]),
-      makeCell("mars-sold-games", Cell.Kind.Data, 4, 4, [
-        "mars-sold",
-        "games",
-        "mars",
-      ]),
-      makeCell("venus-produced-games", Cell.Kind.Data, 5, 4, [
-        "venus-produced",
-        "games",
-        "venus",
-      ]),
-      makeCell("venus-sold-games", Cell.Kind.Data, 6, 4, [
-        "venus-sold",
-        "games",
-        "venus",
-      ]),
-      makeCell("board", Cell.Kind.Header, 0, 5, ["games"], Scope.Row, 2, 1),
-      makeCell("mars-empty-board", Cell.Kind.Data, 2, 5, [
-        "board",
-        "games",
-        "mars",
-      ]),
-      makeCell("mars-produced-board", Cell.Kind.Data, 3, 5, [
-        "board",
-        "mars-produced",
-        "games",
-        "mars",
-      ]),
-      makeCell("mars-sold-board", Cell.Kind.Data, 4, 5, [
-        "board",
-        "mars-sold",
-        "games",
-        "mars",
-      ]),
-      makeCell("venus-produced-board", Cell.Kind.Data, 5, 5, [
-        "board",
-        "venus-produced",
-        "games",
-        "venus",
-      ]),
-      makeCell("venus-sold-board", Cell.Kind.Data, 6, 5, [
-        "board",
-        "venus-sold",
-        "games",
-        "venus",
-      ]),
-      makeCell("cards", Cell.Kind.Header, 0, 6, ["games"], Scope.Row, 2, 1),
-      makeCell("mars-empty-cards", Cell.Kind.Data, 2, 6, [
-        "cards",
-        "games",
-        "mars",
-      ]),
-      makeCell("mars-produced-cards", Cell.Kind.Data, 3, 6, [
-        "cards",
-        "mars-produced",
-        "games",
-        "mars",
-      ]),
-      makeCell("mars-sold-cards", Cell.Kind.Data, 4, 6, [
-        "cards",
-        "mars-sold",
-        "games",
-        "mars",
-      ]),
-      makeCell("venus-produced-cards", Cell.Kind.Data, 5, 6, [
-        "cards",
-        "venus-produced",
-        "games",
-        "venus",
-      ]),
-      makeCell("venus-sold-cards", Cell.Kind.Data, 6, 6, [
-        "cards",
-        "venus-sold",
-        "games",
-        "venus",
-      ]),
-    ].sort(compare),
+    cells,
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 2, getById("stuffed-animals")),

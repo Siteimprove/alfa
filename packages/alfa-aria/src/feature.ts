@@ -1,842 +1,779 @@
-import { Cache } from "@siteimprove/alfa-cache";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Browser } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Scope, Table } from "@siteimprove/alfa-table";
 
+import { Attribute } from "./attribute";
+import { Name } from "./name";
 import { Role } from "./role";
 
-const { hasName, isElement } = Element;
-const { and, equals, test } = Predicate;
+import type * as aria from ".";
 
-export class Feature<N extends string = string> {
-  public static of<N extends string>(
-    name: N,
-    role: Feature.Aspect<Option<string>> = () => None,
-    attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
-    status: Feature.Status = { obsolete: false }
-  ): Feature<N> {
-    return new Feature(name, role, attributes, status);
+const { hasName, isElement } = Element;
+const { and, or } = Predicate;
+
+/**
+ * @internal
+ */
+export class Feature {
+  public static of(
+    role: Feature.Aspect.Role = () => [],
+    attributes: Feature.Aspect.Attributes = () => [],
+    name: Feature.Aspect.Name = () => Branched.of(None)
+  ): Feature {
+    return new Feature(role, attributes, name);
   }
 
-  private readonly _name: N;
-  private readonly _role: Feature.Aspect<Option<string>>;
-  private readonly _attributes: Feature.Aspect<Map<string, string>>;
-  private readonly _status: Feature.Status;
+  private readonly _role: Feature.Aspect.Role;
+  private readonly _attributes: Feature.Aspect.Attributes;
+  private readonly _name: Feature.Aspect.Name;
 
   private constructor(
-    name: N,
-    role: Feature.Aspect<Option<string>>,
-    attributes: Feature.Aspect<Map<string, string>>,
-    status: Feature.Status
+    role: Feature.Aspect.Role,
+    attributes: Feature.Aspect.Attributes,
+    name: Feature.Aspect.Name
   ) {
-    this._name = name;
     this._role = role;
     this._attributes = attributes;
-    this._status = status;
+    this._name = name;
   }
 
-  public get name(): N {
-    return this._name;
-  }
-
-  public get role(): Feature.Aspect<Option<string>> {
+  public get role(): Feature.Aspect.Role {
     return this._role;
   }
 
-  public get attributes(): Feature.Aspect<Map<string, string>> {
+  public get attributes(): Feature.Aspect.Attributes {
     return this._attributes;
   }
 
-  public get status(): Feature.Status {
-    return this._status;
+  public get name(): Feature.Aspect.Name {
+    return this._name;
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Feature {
-  export type Aspect<T> = Mapper<Element, T>;
+  export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element, T, A>;
 
-  export interface Status {
-    readonly obsolete: boolean;
+  export namespace Aspect {
+    export type Role = Aspect<Iterable<aria.Role>>;
+
+    export type Attributes = Aspect<Iterable<aria.Attribute>>;
+
+    export type Name = Aspect<
+      Branched<Option<aria.Name>, Browser>,
+      [Device, aria.Name.State]
+    >;
   }
 
-  const features = Cache.empty<Namespace, Cache<string, Feature>>();
+  export function from(namespace: Namespace, name: string): Option<Feature> {
+    return Option.from(Features[namespace]?.[name]).orElse(() => {
+      switch (namespace) {
+        case Namespace.HTML:
+          return Option.of(html());
 
-  export function register<N extends string>(
-    namespace: Namespace,
-    feature: Feature<N>
-  ): Feature<N> {
-    features.get(namespace, Cache.empty).set(feature.name, feature);
-    return feature;
-  }
+        case Namespace.SVG:
+          return Option.of(svg());
+      }
 
-  export function lookup<N extends string>(
-    namespace: Namespace,
-    name: N
-  ): Option<Feature<N>> {
-    return features
-      .get(namespace)
-      .flatMap((features) => features.get(name) as Option<Feature<N>>);
+      return None;
+    });
   }
 }
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("a", (element) =>
-    element.attribute("href").isSome() ? Option.of("link") : None
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("area", (element) =>
-    element.attribute("href").isSome() ? Option.of("link") : None
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("article", () => Option.of("article"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("aside", () => Option.of("complementary"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "button",
-    () => Option.of("button"),
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("datalist", () => Option.of("listbox"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("dd", () => Option.of("definition"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("dfn", () => Option.of("term"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "dialog",
-    () => Option.of("dialog"),
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-open-dialog
-      attributes = attributes.set(
-        "aria-expanded",
-        element.attribute("open").isSome() ? "true" : "false"
-      );
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "details",
-    () => None,
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-open-details
-      attributes = attributes.set(
-        "aria-expanded",
-        element.attribute("open").isSome() ? "true" : "false"
-      );
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("dt", () => Option.of("term"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "fieldset",
-    () => Option.of("group"),
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("figure", () => Option.of("figure"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("footer", (element) =>
-    element
-      .closest(
-        and(isElement, hasName("article", "aside", "main", "nav", "section"))
-      )
-      .isNone()
-      ? Option.of("contentinfo")
-      : None
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("form", () => Option.of("form"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "h1",
-    () => Option.of("heading"),
-    () => Map.of(["aria-level", "1"])
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "h2",
-    () => Option.of("heading"),
-    () => Map.of(["aria-level", "2"])
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "h3",
-    () => Option.of("heading"),
-    () => Map.of(["aria-level", "3"])
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "h4",
-    () => Option.of("heading"),
-    () => Map.of(["aria-level", "4"])
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "h5",
-    () => Option.of("heading"),
-    () => Map.of(["aria-level", "5"])
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "h6",
-    () => Option.of("heading"),
-    () => Map.of(["aria-level", "6"])
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("header", (element) =>
-    element
-      .closest(
-        and(isElement, hasName("article", "aside", "main", "nav", "section"))
-      )
-      .isNone()
-      ? Option.of("banner")
-      : None
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("hr", () => Option.of("separator"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("img", (element) =>
-    Option.of(
-      element.attribute("alt").some((alt) => alt.value === "")
-        ? "presentation"
-        : "img"
+function html(
+  role: Feature.Aspect.Role = () => [],
+  attributes: Feature.Aspect.Attributes = () => [],
+  name: Feature.Aspect.Name = () => Branched.of(None)
+): Feature {
+  return Feature.of(role, attributes, (element, device, state) =>
+    Name.fromSteps(
+      () => name(element, device, state),
+      () => nameFromTitle(element)
     )
-  )
-);
+  );
+}
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "input",
-    (element) =>
-      element
-        .attribute("type")
-        .andThen((type) => {
-          switch (type.value.toLowerCase()) {
-            case "button":
-            case "image":
-            case "reset":
-            case "submit":
-              return Option.of("button");
+function svg(
+  role: Feature.Aspect.Role = () => [],
+  attributes: Feature.Aspect.Attributes = () => [],
+  name: Feature.Aspect.Name = () => Branched.of(None)
+): Feature {
+  return Feature.of(role, attributes, (element, device, state) =>
+    Name.fromSteps(
+      () => name(element, device, state),
+      () => nameFromChild(hasName("title"))(element, device, state),
+      () => nameFromTitle(element)
+    )
+  );
+}
 
-            case "checkbox":
-              return Option.of("checkbox");
-
-            case "number":
-              return Option.of("spinbutton");
-
-            case "radio":
-              return Option.of("radio");
-
-            case "range":
-              return Option.of("slider");
-
-            case "search":
-              return Option.of(
-                element.attribute("list").isSome() ? "combobox" : "searchbox"
-              );
-
-            case "email":
-            case "tel":
-            case "text":
-            case "url":
-            default:
-              return Option.of(
-                element.attribute("list").isSome() ? "combobox" : "textbox"
-              );
-          }
-        })
-        .orElse(() => Option.of("textbox")),
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-checked
-      attributes = attributes.set(
-        "aria-checked",
-        element.attribute("checked").isSome() ? "true" : "false"
-      );
-
-      // https://w3c.github.io/html-aam/#att-list
-      for (const { value } of element.attribute("list")) {
-        attributes = attributes.set("aria-controls", value);
-      }
-
-      // https://w3c.github.io/html-aam/#att-max-input
-      for (const { value } of element.attribute("max")) {
-        attributes = attributes.set("aria-valuemax", value);
-      }
-
-      // https://w3c.github.io/html-aam/#att-min-input
-      for (const { value } of element.attribute("min")) {
-        attributes = attributes.set("aria-valuemin", value);
-      }
-
-      // https://w3c.github.io/html-aam/#att-readonly
-      for (const _ of element.attribute("readonly")) {
-        attributes = attributes.set("aria-readonly", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-required
-      for (const _ of element.attribute("required")) {
-        attributes = attributes.set("aria-required", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-placeholder
-      for (const { value } of element.attribute("placeholder")) {
-        attributes = attributes.set("aria-placeholder", value);
-      }
-
-      return attributes;
+const nameFromAlt = (element: Element) => {
+  for (const attribute of element.attribute("alt")) {
+    // The `alt` attribute is used as long as it's not completely empty.
+    if (attribute.value.length > 0) {
+      return Name.fromLabel(attribute);
     }
-  )
-);
+  }
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("li", (element) =>
-    element
-      .parent()
-      .filter(Element.isElement)
-      .flatMap((parent) => {
-        switch (parent.name) {
-          case "ol":
-          case "ul":
-          case "menu":
-            return Option.of("listitem");
+  return Branched.of(None);
+};
+
+const nameFromTitle = (element: Element) => {
+  for (const attribute of element.attribute("title")) {
+    // The `title` attribute is used as long as it's not completely empty.
+    if (attribute.value.length > 0) {
+      return Name.fromLabel(attribute);
+    }
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromPlaceholder = (element: Element) => {
+  for (const attribute of element.attribute("placeholder")) {
+    // The `placeholder` attribute is used as long as it's not completely empty.
+    if (attribute.value.length > 0) {
+      return Name.fromLabel(attribute);
+    }
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromChild = (predicate: Predicate<Element>) => (
+  element: Element,
+  device: Device,
+  state: Name.State
+) => {
+  for (const child of element.children().find(and(isElement, predicate))) {
+    return Name.fromDescendants(child, device, {
+      ...state,
+      visited: state.visited.add(child),
+    }).map((name) =>
+      name.map((name) =>
+        Name.of(name.value, [Name.Source.descendant(element, name)])
+      )
+    );
+  }
+
+  return Branched.of(None);
+};
+
+const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
+  const root = element.root();
+
+  for (const id of element.id) {
+    const target = root
+      .descendants()
+      .find(and(isElement, (element) => element.id.includes(id)));
+
+    if (target.includes(element)) {
+      continue;
+    } else {
+      return Branched.of(None);
+    }
+  }
+
+  const labels = root.descendants().filter(
+    and(
+      isElement,
+      and(
+        hasName("label"),
+        or(
+          (label) => label.descendants().includes(element),
+          (label) =>
+            label
+              .attribute("for")
+              .some((attribute) => element.id.includes(attribute.value))
+        )
+      )
+    )
+  );
+
+  return Branched.traverse(labels, (element) =>
+    Name.fromNode(element, device, {
+      ...state,
+      isRecursing: true,
+      isReferencing: false,
+      isDescending: false,
+    }).map((name) => [name, element] as const)
+  )
+    .map((names) =>
+      [...names]
+        .filter(([name]) => name.isSome())
+        .map(([name, element]) => [name.get(), element] as const)
+    )
+    .map((names) => {
+      const data = names
+        .map(([name]) => name.value)
+        .join(" ")
+        .trim();
+
+      if (data === "") {
+        return None;
+      }
+
+      return Option.of(
+        Name.of(
+          data,
+          names.map(([name, element]) => {
+            for (const attribute of element.attribute("for")) {
+              return Name.Source.reference(attribute, name);
+            }
+
+            return Name.Source.ancestor(element, name);
+          })
+        )
+      );
+    });
+};
+
+type Features = {
+  [N in Namespace]?: {
+    [element: string]: Feature | undefined;
+  };
+};
+
+const Features: Features = {
+  [Namespace.HTML]: {
+    a: html((element) =>
+      element.attribute("href").isSome() ? Option.of(Role.of("link")) : None
+    ),
+
+    area: html(
+      (element) =>
+        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+      () => [],
+      nameFromAlt
+    ),
+
+    article: html(() => Option.of(Role.of("article"))),
+
+    aside: html(() => Option.of(Role.of("complementary"))),
+
+    button: html(
+      () => Option.of(Role.of("button")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
+        }
+      }
+    ),
+
+    datalist: html(() => Option.of(Role.of("listbox"))),
+
+    dd: html(() => Option.of(Role.of("definition"))),
+
+    dfn: html(() => Option.of(Role.of("term"))),
+
+    dialog: html(
+      () => Option.of(Role.of("dialog")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-open-dialog
+        yield Attribute.of(
+          "aria-expanded",
+          element.attribute("open").isSome() ? "true" : "false"
+        );
+      }
+    ),
+
+    details: html(
+      () => None,
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-open-details
+        yield Attribute.of(
+          "aria-expanded",
+          element.attribute("open").isSome() ? "true" : "false"
+        );
+      }
+    ),
+
+    dt: html(() => Option.of(Role.of("term"))),
+
+    fieldset: html(
+      () => Option.of(Role.of("group")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
+        }
+      },
+      nameFromChild(hasName("legend"))
+    ),
+
+    figure: html(
+      () => Option.of(Role.of("figure")),
+      () => [],
+      nameFromChild(hasName("figcaption"))
+    ),
+
+    footer: html((element) =>
+      element
+        .closest(
+          and(isElement, hasName("article", "aside", "main", "nav", "section"))
+        )
+        .isNone()
+        ? Option.of(Role.of("contentinfo"))
+        : None
+    ),
+
+    form: html(() => Option.of(Role.of("form"))),
+
+    h1: html(
+      () => Option.of(Role.of("heading")),
+      () => [Attribute.of("aria-level", "1")]
+    ),
+
+    h2: html(
+      () => Option.of(Role.of("heading")),
+      () => [Attribute.of("aria-level", "2")]
+    ),
+
+    h3: html(
+      () => Option.of(Role.of("heading")),
+      () => [Attribute.of("aria-level", "3")]
+    ),
+
+    h4: html(
+      () => Option.of(Role.of("heading")),
+      () => [Attribute.of("aria-level", "4")]
+    ),
+
+    h5: html(
+      () => Option.of(Role.of("heading")),
+      () => [Attribute.of("aria-level", "5")]
+    ),
+
+    h6: html(
+      () => Option.of(Role.of("heading")),
+      () => [Attribute.of("aria-level", "6")]
+    ),
+
+    header: html((element) =>
+      element
+        .closest(
+          and(isElement, hasName("article", "aside", "main", "nav", "section"))
+        )
+        .isNone()
+        ? Option.of(Role.of("banner"))
+        : None
+    ),
+
+    hr: html(() => Option.of(Role.of("separator"))),
+
+    img: html(
+      function* (element) {
+        for (const attribute of element.attribute("alt")) {
+          if (attribute.value === "") {
+            yield Role.of("presentation");
+          }
         }
 
-        return None;
-      })
-  )
-);
+        yield Role.of("img");
+      },
+      () => [],
+      nameFromAlt
+    ),
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("main", () => Option.of("main"))
-);
+    input: html(
+      (element): Option<Role> => {
+        const type = element
+          .attribute("type")
+          .flatMap((attribute) =>
+            attribute.enumerate(
+              "button",
+              "image",
+              "reset",
+              "submit",
+              "checkbox",
+              "number",
+              "radio",
+              "range",
+              "search",
+              "email",
+              "tel",
+              "text",
+              "url"
+            )
+          )
+          .getOr("text");
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("math", () => Option.of("math"))
-);
+        switch (type) {
+          case "button":
+          case "image":
+          case "reset":
+          case "submit":
+            return Option.of(Role.of("button"));
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("menu", () => Option.of("list"))
-);
+          case "checkbox":
+            return Option.of(Role.of("checkbox"));
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("nav", () => Option.of("navigation"))
-);
+          case "number":
+            return Option.of(Role.of("spinbutton"));
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("ol", () => Option.of("list"))
-);
+          case "radio":
+            return Option.of(Role.of("radio"));
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "optgroup",
-    () => Option.of("group"),
-    (element) => {
-      let attributes = Map.empty<string, string>();
+          case "range":
+            return Option.of(Role.of("slider"));
 
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
+          case "search":
+            return Option.of(
+              Role.of(
+                element.attribute("list").isSome() ? "combobox" : "searchbox"
+              )
+            );
 
-      return attributes;
-    }
-  )
-);
+          case "email":
+          case "tel":
+          case "text":
+          case "url":
+            return Option.of(
+              Role.of(
+                element.attribute("list").isSome() ? "combobox" : "textbox"
+              )
+            );
+        }
+      },
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-checked
+        yield Attribute.of(
+          "aria-checked",
+          element.attribute("checked").isSome() ? "true" : "false"
+        );
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "option",
-    (element) =>
+        // https://w3c.github.io/html-aam/#att-list
+        for (const { value } of element.attribute("list")) {
+          yield Attribute.of("aria-controls", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-max-input
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-min-input
+        for (const { value } of element.attribute("min")) {
+          yield Attribute.of("aria-valuemin", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-readonly
+        for (const _ of element.attribute("readonly")) {
+          yield Attribute.of("aria-readonly", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-required
+        for (const _ of element.attribute("required")) {
+          yield Attribute.of("aria-required", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-placeholder
+        for (const { value } of element.attribute("placeholder")) {
+          yield Attribute.of("aria-placeholder", value);
+        }
+      },
+      nameFromLabel
+    ),
+
+    li: html((element) =>
       element
-        .closest(and(isElement, hasName("select", "optgroup", "datalist")))
-        .isSome()
-        ? Option.of("option")
-        : None,
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-selected
-      attributes = attributes.set(
-        "aria-selected",
-        element.attribute("selected").isSome() ? "true" : "false"
-      );
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("output", () => Option.of("status"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("progress", () => Option.of("progressbar"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("section", () => Option.of("region"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "select",
-    () =>
-      // Despite what the HTML AAM specifies, we always map <select> elements
-      // to a listbox widget as they currently have no way of mapping to a valid
-      // combobo widget. As a combobox requires an owned textarea and a list of
-      // options, we will always end up mapping <select> elements to an invalid
-      // combobox widget.
-      Option.of("listbox"),
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-required
-      for (const _ of element.attribute("required")) {
-        attributes = attributes.set("aria-required", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-multiple-select
-      for (const _ of element.attribute("multiple")) {
-        attributes = attributes.set("aria-multiselectable", "true");
-      }
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("table", () => Option.of("table"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("tbody", () => Option.of("rowgroup"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "td",
-    (element) =>
-      element
-        .closest(and(Element.isElement, hasName("table")))
-        .flatMap((table) => {
-          for (const [role] of Role.from(table)) {
-            if (role.isSome()) {
-              switch (role.get().name) {
-                case "table":
-                  return Option.of("cell");
-                case "grid":
-                  return Option.of("gridcell");
-              }
-            }
+        .parent()
+        .filter(Element.isElement)
+        .flatMap((parent) => {
+          switch (parent.name) {
+            case "ol":
+            case "ul":
+            case "menu":
+              return Option.of(Role.of("listitem"));
           }
 
           return None;
-        }),
-    (element) => {
-      let attributes = Map.empty<string, string>();
+        })
+    ),
 
-      // https://w3c.github.io/html-aam/#att-colspan
-      for (const { value } of element.attribute("colspan")) {
-        attributes = attributes.set("aria-colspan", value);
-      }
+    main: html(() => Option.of(Role.of("main"))),
 
-      // https://w3c.github.io/html-aam/#att-rowspan
-      for (const { value } of element.attribute("rowspan")) {
-        attributes = attributes.set("aria-rowspan", value);
-      }
+    math: html(() => Option.of(Role.of("math"))),
 
-      return attributes;
-    }
-  )
-);
+    menu: html(() => Option.of(Role.of("list"))),
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "textarea",
-    () => Option.of("textbox"),
-    (element) => {
-      let attributes = Map.empty<string, string>();
+    nav: html(() => Option.of(Role.of("navigation"))),
 
-      // https://w3c.github.io/html-aam/#att-disabled
-      for (const _ of element.attribute("disabled")) {
-        attributes = attributes.set("aria-disabled", "true");
-      }
+    ol: html(() => Option.of(Role.of("list"))),
 
-      // https://w3c.github.io/html-aam/#att-readonly
-      for (const _ of element.attribute("readonly")) {
-        attributes = attributes.set("aria-readonly", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-required
-      for (const _ of element.attribute("required")) {
-        attributes = attributes.set("aria-required", "true");
-      }
-
-      // https://w3c.github.io/html-aam/#att-placeholder
-      for (const { value } of element.attribute("placeholder")) {
-        attributes = attributes.set("aria-placeholder", value);
-      }
-
-      return attributes;
-    }
-  )
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of("tfoot", () => Option.of("rowgroup"))
-);
-
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "th",
-    (element) => {
-      const table = element.closest(and(isElement, hasName("table")));
-
-      // If the <th> is not in a <table>, it doesn't really have a role…
-      if (table.isNone()) {
-        return None;
-      }
-
-      const tableModel = Table.from(table.get());
-
-      // If the <th> is within a <table> with errors, it doesn't really have a role.
-      if (tableModel.isErr()) {
-        return None;
-      }
-
-      const cell = Iterable.find(tableModel.get().cells, (cell) =>
-        cell.element.equals(element)
-      );
-
-      // If the current element is not a cell in the table, something weird happened and it doesn't have a role.
-      if (cell.isNone()) {
-        return None;
-      }
-
-      // This is not fully correct. If the header has no variant, its role should be computed as a <td>
-      // @see https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
-      //     "th (is neither column header nor row header, and ancestor table element has table role)"
-      // and "th (is neither column header nor row header, and ancestor table element has grid role)"
-      return cell.get().scope.map((scope) => {
-        switch (scope) {
-          case Scope.Column:
-          case Scope.ColumnGroup:
-            return "columnheader";
-          case Scope.Row:
-          case Scope.RowGroup:
-            return "rowheader";
+    optgroup: html(
+      () => Option.of(Role.of("group")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
         }
-      });
-    },
-
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-colspan
-      for (const { value } of element.attribute("colspan")) {
-        attributes = attributes.set("aria-colspan", value);
       }
+    ),
 
-      // https://w3c.github.io/html-aam/#att-rowspan
-      for (const { value } of element.attribute("rowspan")) {
-        attributes = attributes.set("aria-rowspan", value);
+    option: html(
+      (element) =>
+        element
+          .closest(and(isElement, hasName("select", "optgroup", "datalist")))
+          .isSome()
+          ? Option.of(Role.of("option"))
+          : None,
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-selected
+        yield Attribute.of(
+          "aria-selected",
+          element.attribute("selected").isSome() ? "true" : "false"
+        );
       }
+    ),
 
-      return attributes;
-    }
-  )
-);
+    output: html(() => Option.of(Role.of("status"))),
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("thead", () => Option.of("rowgroup"))
-);
+    section: html(() => Option.of(Role.of("region"))),
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("tr", () => Option.of("row"))
-);
+    select: html(
+      () =>
+        // Despite what the HTML AAM specifies, we always map <select> elements
+        // to a listbox widget as they currently have no way of mapping to a
+        // valid combobo widget. As a combobox requires an owned textarea and a
+        // list of options, we will always end up mapping <select> elements to
+        // an invalid combobox widget.
+        Option.of(Role.of("listbox")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
+        }
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of("ul", () => Option.of("list"))
-);
+        // https://w3c.github.io/html-aam/#att-required
+        for (const _ of element.attribute("required")) {
+          yield Attribute.of("aria-required", "true");
+        }
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "meter",
-    () => None,
-    (element) => {
-      let attributes = Map.empty<string, string>();
-
-      // https://w3c.github.io/html-aam/#att-max
-      for (const { value } of element.attribute("max")) {
-        attributes = attributes.set("aria-valuemax", value);
+        // https://w3c.github.io/html-aam/#att-multiple-select
+        for (const _ of element.attribute("multiple")) {
+          yield Attribute.of("aria-multiselectable", "true");
+        }
       }
+    ),
 
-      // https://w3c.github.io/html-aam/#att-min
-      for (const { value } of element.attribute("min")) {
-        attributes = attributes.set("aria-valuemin", value);
+    table: html(
+      () => Option.of(Role.of("table")),
+      () => [],
+      nameFromChild(hasName("caption"))
+    ),
+
+    tbody: html(() => Option.of(Role.of("rowgroup"))),
+
+    td: html(
+      (element) =>
+        element
+          .closest(and(Element.isElement, hasName("table")))
+          .flatMap<Role>((table) => {
+            for (const [role] of Role.from(table)) {
+              if (role.isSome()) {
+                switch (role.get().name) {
+                  case "table":
+                    return Option.of(Role.of("cell"));
+                  case "grid":
+                    return Option.of(Role.of("gridcell"));
+                }
+              }
+            }
+
+            return None;
+          }),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-colspan
+        for (const { value } of element.attribute("colspan")) {
+          yield Attribute.of("aria-colspan", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-rowspan
+        for (const { value } of element.attribute("rowspan")) {
+          yield Attribute.of("aria-rowspan", value);
+        }
       }
+    ),
 
-      // https://w3c.github.io/html-aam/#att-value-meter
-      for (const { value } of element.attribute("value")) {
-        attributes = attributes.set("aria-valuenow", value);
+    textarea: html(
+      () => Option.of(Role.of("textbox")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-readonly
+        for (const _ of element.attribute("readonly")) {
+          yield Attribute.of("aria-readonly", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-required
+        for (const _ of element.attribute("required")) {
+          yield Attribute.of("aria-required", "true");
+        }
+
+        // https://w3c.github.io/html-aam/#att-placeholder
+        for (const { value } of element.attribute("placeholder")) {
+          yield Attribute.of("aria-placeholder", value);
+        }
+      },
+      nameFromLabel
+    ),
+
+    tfoot: html(() => Option.of(Role.of("rowgroup"))),
+
+    th: html(
+      (element) => {
+        const table = element.closest(and(isElement, hasName("table")));
+
+        // If the <th> is not in a <table>, it doesn't really have a role…
+        if (table.isNone()) {
+          return None;
+        }
+
+        const tableModel = Table.from(table.get());
+
+        // If the <th> is within a <table> with errors, it doesn't really have a
+        // role.
+        if (tableModel.isErr()) {
+          return None;
+        }
+
+        const cell = Iterable.find(tableModel.get().cells, (cell) =>
+          cell.element.equals(element)
+        );
+
+        // If the current element is not a cell in the table, something weird
+        // happened and it doesn't have a role.
+        if (cell.isNone()) {
+          return None;
+        }
+
+        // This is not fully correct. If the header has no variant, its role
+        // should be computed as a <td>
+        // https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
+        return cell.get().scope.map((scope) => {
+          switch (scope) {
+            case Scope.Column:
+            case Scope.ColumnGroup:
+              return Role.of("columnheader");
+            case Scope.Row:
+            case Scope.RowGroup:
+              return Role.of("rowheader");
+          }
+        });
+      },
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-colspan
+        for (const { value } of element.attribute("colspan")) {
+          yield Attribute.of("aria-colspan", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-rowspan
+        for (const { value } of element.attribute("rowspan")) {
+          yield Attribute.of("aria-rowspan", value);
+        }
       }
+    ),
 
-      return attributes;
-    }
-  )
-);
+    thead: html(() => Option.of(Role.of("rowgroup"))),
 
-Feature.register(
-  Namespace.HTML,
-  Feature.of(
-    "progress",
-    () => None,
-    (element) => {
-      let attributes = Map.empty<string, string>();
+    tr: html(() => Option.of(Role.of("row"))),
 
-      // https://w3c.github.io/html-aam/#att-max
-      for (const { value } of element.attribute("max")) {
-        attributes = attributes.set("aria-valuemax", value);
+    ul: html(() => Option.of(Role.of("list"))),
+
+    meter: html(
+      () => None,
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-max
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-min
+        for (const { value } of element.attribute("min")) {
+          yield Attribute.of("aria-valuemin", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-value-meter
+        for (const { value } of element.attribute("value")) {
+          yield Attribute.of("aria-valuenow", value);
+        }
       }
+    ),
 
-      // https://w3c.github.io/html-aam/#att-value-meter
-      for (const { value } of element.attribute("value")) {
-        attributes = attributes.set("aria-valuenow", value);
+    progress: html(
+      () => Option.of(Role.of("progressbar")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-max
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-value-meter
+        for (const { value } of element.attribute("value")) {
+          yield Attribute.of("aria-valuenow", value);
+        }
       }
+    ),
+  },
 
-      return attributes;
-    }
-  )
-);
+  [Namespace.SVG]: {
+    a: svg((element) =>
+      Option.of(Role.of(element.attribute("href").isSome() ? "link" : "group"))
+    ),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("a", (element) =>
-    Option.of(element.attribute("href").isSome() ? "link" : "group")
-  )
-);
+    circle: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("circle", () => Option.of("graphics-symbol"))
-);
+    ellipse: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("ellipse", () => Option.of("graphics-symbol"))
-);
+    foreignObject: svg(() => Option.of(Role.of("group"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("foreignObject", () => Option.of("group"))
-);
+    g: svg(() => Option.of(Role.of("group"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("g", () => Option.of("group"))
-);
+    image: svg(() => Option.of(Role.of("img"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("image", () => Option.of("img"))
-);
+    line: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("line", () => Option.of("graphics-symbol"))
-);
+    mesh: svg(() => Option.of(Role.of("img"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("mesh", () => Option.of("img"))
-);
+    path: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("path", () => Option.of("graphics-symbol"))
-);
+    polygon: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("polygon", () => Option.of("graphics-symbol"))
-);
+    polyline: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("polyline", () => Option.of("graphics-symbol"))
-);
+    rect: svg(() => Option.of(Role.of("graphics-symbol"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("rect", () => Option.of("graphics-symbol"))
-);
+    svg: svg(() => Option.of(Role.of("graphics-document"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("svg", () => Option.of("graphics-document"))
-);
+    symbol: svg(() => Option.of(Role.of("graphics-object"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("symbol", () => Option.of("graphics-object"))
-);
+    text: svg(() => Option.of(Role.of("group"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("text", () => Option.of("group"))
-);
+    textPath: svg(() => Option.of(Role.of("group"))),
 
-Feature.register(
-  Namespace.SVG,
-  Feature.of("textPath", () => Option.of("group"))
-);
-
-Feature.register(
-  Namespace.SVG,
-  Feature.of("use", () => Option.of("graphics-object"))
-);
+    use: svg(() => Option.of(Role.of("graphics-object"))),
+  },
+};

@@ -1,4 +1,5 @@
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Option } from "./option";
@@ -23,12 +24,20 @@ export const None: None = new (class None {
     return this;
   }
 
+  public reduce<U>(reducer: unknown, accumulator: U): U {
+    return accumulator;
+  }
+
   public apply(): None {
     return this;
   }
 
-  public reduce<U>(reducer: unknown, accumulator: U): U {
-    return accumulator;
+  public filter(): None {
+    return this;
+  }
+
+  public reject(): None {
+    return this;
   }
 
   public includes(): boolean {
@@ -39,12 +48,12 @@ export const None: None = new (class None {
     return false;
   }
 
-  public every(): boolean {
+  public none(): boolean {
     return true;
   }
 
-  public filter(): None {
-    return this;
+  public every(): boolean {
+    return true;
   }
 
   public and(): None {
@@ -82,6 +91,10 @@ export const None: None = new (class None {
   public hash(): void {}
 
   public *[Symbol.iterator](): Iterator<never> {}
+
+  public toArray(): Array<never> {
+    return [];
+  }
 
   public toJSON(): None.JSON {
     return {

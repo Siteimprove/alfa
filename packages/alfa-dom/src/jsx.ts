@@ -1,99 +1,68 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Slice } from "@siteimprove/alfa-slice";
+import { h } from "./h";
 
-import * as css from "@siteimprove/alfa-css";
-
-import { Namespace } from "./namespace";
 import { Node } from "./node";
-import { Attribute } from "./node/attribute";
 import { Element } from "./node/element";
-import { Text } from "./node/text";
-import { Block } from "./style/block";
-import { Declaration } from "./style/declaration";
 
-const { keys } = Object;
+const { entries } = Object;
 
 export function jsx(
   name: string,
-  attributes?: { [name: string]: unknown } | null,
-  ...children: Array<Node.JSON | string>
-): Element.JSON {
-  const json = Element.of(Option.of(Namespace.HTML), None, name).toJSON();
+  properties: jsx.Properties | null = null,
+  ...children: Array<Node | string>
+): Element {
+  const attributes: Record<string, string | boolean> = {};
+  const style: Record<string, string> = {};
 
-  if (attributes !== null && attributes !== undefined) {
-    for (const name of keys(attributes)) {
-      const value = attributes[name];
-
-      if (value === false || value === null || value === undefined) {
-        continue;
-      }
-
-      json.attributes.push(
-        Attribute.of(
-          None,
-          None,
-          name,
-          value === true ? "" : `${value}`
-        ).toJSON()
-      );
+  for (const [name, value] of entries(properties ?? {})) {
+    if (value === null || value === undefined) {
+      continue;
     }
 
-    json.style = Option.from(
-      json.attributes.find((attribute) => attribute.name === "style")
-    )
-      .flatMap((attribute) =>
-        css.Declaration.parseList(Slice.of(css.Lexer.lex(attribute.value)))
-          .map((result) => result[1])
-          .map((declarations) =>
-            Iterable.map(declarations, (declaration) =>
-              Declaration.of(
-                declaration.name,
-                declaration.value.join(""),
-                declaration.important
-              )
-            )
-          )
-          .ok()
-      )
-      .map((declarations) => Block.of(declarations).toJSON())
-      .getOr(null);
+    switch (name) {
+      case "style":
+        const properties = value as Record<string, string>;
+
+        for (const [name, value] of entries(properties)) {
+          style[name] = value;
+        }
+
+        continue;
+
+      default:
+        attributes[name] = value === true ? value : `${value}`;
+    }
   }
 
-  for (const child of children) {
-    json.children.push(
-      typeof child === "string" ? Text.of(child).toJSON() : child
-    );
-  }
-
-  switch (json.name) {
-    case "svg":
-      adjustNamespace(json, Namespace.SVG);
-      break;
-
-    case "math":
-      adjustNamespace(json, Namespace.MathML);
-  }
-
-  return json;
+  return h(name, attributes, children, style);
 }
 
 export namespace jsx {
+  export interface Properties {
+    [name: string]: unknown;
+
+    /**
+     * An optional record of CSS property names and their associated values.
+     * This works similarly to the `style` property in React.
+     *
+     * @see https://reactjs.org/docs/dom-elements.html#style
+     */
+    style?: Record<string, string>;
+  }
+
+  /**
+   * @see https://www.typescriptlang.org/docs/handbook/jsx.html
+   *
+   * @remarks
+   * This namespace is currently needed to let the TypeScript compiler know the
+   * shape of elements returned by `jsx()` and the properties that tags allow.
+   * We should keep an eye on https://github.com/microsoft/TypeScript/issues/14729
+   * as it might provide an opportunity to get rid of this namespace entirely.
+   */
   export namespace JSX {
-    export type Element = import("./node/element").Element.JSON;
+    export type Element = import("./node/element").Element;
 
     export interface IntrinsicElements {
-      [tag: string]: {} | { readonly [attribute: string]: unknown };
-    }
-  }
-}
-
-function adjustNamespace(element: Element.JSON, namespace: Namespace): void {
-  element.namespace = namespace;
-
-  for (const child of element.children) {
-    if (child.type === "element") {
-      adjustNamespace(child as Element.JSON, namespace);
+      [tag: string]: Properties;
     }
   }
 }

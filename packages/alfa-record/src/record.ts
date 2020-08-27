@@ -134,6 +134,10 @@ export namespace Record {
     [key: string]: json.JSON;
   }
 
+  export function isRecord<T>(value: unknown): value is Record<T> {
+    return value instanceof Record;
+  }
+
   export function from<T>(entries: Iterable<Entry<T>>): Record<T> {
     const record: { [key: string]: unknown } = {};
 

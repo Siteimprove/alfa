@@ -1,10 +1,11 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+
 import { hasChild } from "../common/predicate/has-child";
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasRole } from "../common/predicate/has-role";
@@ -41,10 +42,10 @@ export default Rule.Atomic.of<Page, Document>({
 
 export namespace Outcomes {
   export const StartWithLevel1Heading = Ok.of(
-    "The document starts with a level 1 heading"
+    Diagnostic.of(`The document starts with a level 1 heading`)
   );
 
   export const StartWithHigherLevelHeading = Err.of(
-    "The document starts with a level 2 or more heading"
+    Diagnostic.of(`The document does not start with a level 1 heading`)
   );
 }

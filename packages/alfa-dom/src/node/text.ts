@@ -1,24 +1,25 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
 import { Element } from "./element";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Text extends Node implements Slotable {
-  public static of(data: string, parent: Option<Node> = None): Text {
-    return new Text(data, parent);
+  public static of(data: string): Text {
+    return new Text(data);
   }
 
-  public static empty(parent: Option<Node> = None): Text {
-    return new Text("", parent);
+  public static empty(): Text {
+    return new Text("");
   }
 
   private readonly _data: string;
 
-  private constructor(data: string, parent: Option<Node>) {
-    super(() => [], parent);
+  private constructor(data: string) {
+    super([]);
 
     this._data = data;
   }
@@ -31,7 +32,7 @@ export class Text extends Node implements Slotable {
     if (options.flattened === true) {
       return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
-          return Option.of(parent.host);
+          return parent.host;
         }
 
         if (Element.isElement(parent) && parent.shadow.isSome()) {
@@ -49,13 +50,15 @@ export class Text extends Node implements Slotable {
     return Slotable.findSlot(this);
   }
 
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "text()";
 
-    const index = this.preceding().count(Text.isText);
+    const index = this.preceding(options).count(Text.isText);
 
     path += `[${index + 1}]`;
 
@@ -84,7 +87,10 @@ export namespace Text {
     return value instanceof Text;
   }
 
-  export function fromText(text: JSON, parent: Option<Node> = None): Text {
-    return Text.of(text.data, parent);
+  /**
+   * @internal
+   */
+  export function fromText(json: JSON): Trampoline<Text> {
+    return Trampoline.done(Text.of(json.data));
   }
 }

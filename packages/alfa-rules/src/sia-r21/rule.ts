@@ -1,4 +1,5 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -36,11 +37,13 @@ export default Rule.Atomic.of<Page, Attribute>({
       },
 
       expectations(target) {
-        const owner = target.owner.get();
-
         return {
           1: expectation(
-            hasRole()(owner),
+            target
+              .tokens()
+              .every(
+                (token) => Role.isName(token) && Role.of(token).isConcrete()
+              ),
             () => Outcomes.HasValidRole,
             () => Outcomes.HasNoValidRole
           ),
@@ -51,9 +54,11 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 export namespace Outcomes {
-  export const HasValidRole = Ok.of("The element has a valid role");
+  export const HasValidRole = Ok.of(
+    Diagnostic.of(`The element has a valid role`)
+  );
 
   export const HasNoValidRole = Err.of(
-    "The element does not have a valid role"
+    Diagnostic.of(`The element does not have a valid role`)
   );
 }

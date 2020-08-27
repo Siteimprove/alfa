@@ -1,7 +1,10 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { List } from "@siteimprove/alfa-list";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -11,6 +14,7 @@ import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 
 const { compare } = Comparable;
+const { concat, map } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
@@ -104,46 +108,47 @@ export namespace RowGroup {
    * The row group builder contains width and cells list that will be merged with parent table once done.
    */
   export class Builder implements Equatable, Serializable {
-    private readonly _width: number;
-    private readonly _cells: Array<Cell.Builder>;
-    private readonly _rowGroup: RowGroup;
-
     public static of(
       y: number,
       height: number,
       element: Element,
       width: number = 0,
-      cells: Array<Cell.Builder> = []
+      cells: Iterable<Cell.Builder> = List.empty(),
+      downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
+      slots: Array<Array<Option<Cell.Builder>>> = [[]]
     ): Builder {
-      return new Builder(y, height, element, width, cells);
+      return new Builder(
+        y,
+        height,
+        element,
+        width,
+        cells,
+        downwardGrowingCells,
+        slots
+      );
     }
+
+    private readonly _width: number;
+    private readonly _cells: List<Cell.Builder>;
+    private readonly _downwardGrowingCells: List<Cell.Builder>;
+    private readonly _rowGroup: RowGroup;
+    // Cell covering a given slot, either from this._cells or this._downwardGrowingCells
+    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
 
     constructor(
       y: number,
       height: number,
       element: Element,
       width: number,
-      cells: Array<Cell.Builder>
+      cells: Iterable<Cell.Builder>,
+      downwardGrowingCells: Iterable<Cell.Builder>,
+      slots: Array<Array<Option<Cell.Builder>>>
     ) {
       this._rowGroup = RowGroup.of(y, height, element);
       this._width = width;
-      this._cells = cells;
-    }
-
-    public update(update: {
-      y?: number;
-      width?: number;
-      height?: number;
-      element?: Element;
-      cells?: Array<Cell.Builder>;
-    }): Builder {
-      return Builder.of(
-        update.y !== undefined ? update.y : this._rowGroup.anchor.y,
-        update.height !== undefined ? update.height : this._rowGroup.height,
-        update.element !== undefined ? update.element : this._rowGroup.element,
-        update.width !== undefined ? update.width : this._width,
-        update.cells !== undefined ? update.cells : this._cells
-      );
+      this._cells = List.from(cells);
+      this._downwardGrowingCells = List.from(downwardGrowingCells);
+      this._slots = slots;
     }
 
     public get rowgroup(): RowGroup {
@@ -154,8 +159,12 @@ export namespace RowGroup {
       return this._width;
     }
 
-    public get cells(): Array<Cell.Builder> {
+    public get cells(): Iterable<Cell.Builder> {
       return this._cells;
+    }
+
+    public get downwardGrowingCells(): Iterable<Cell.Builder> {
+      return this._downwardGrowingCells;
     }
 
     public get anchor(): { y: number } {
@@ -170,14 +179,114 @@ export namespace RowGroup {
       return this._rowGroup.element;
     }
 
+    public slot(x: number, y: number): Option<Cell.Builder> {
+      return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
+    }
+
+    /**
+     * Update by getting new values. Does not keep slots in sync, hence is highly unsafe. Use at your own risks.
+     */
+    private _updateUnsafe({
+      y = this._rowGroup.anchor.y,
+      width = this._width,
+      height = this._rowGroup.height,
+      element = this._rowGroup.element,
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
+      slots = this._slots,
+    }: {
+      y?: number;
+      width?: number;
+      height?: number;
+      element?: Element;
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+      slots?: Array<Array<Option<Cell.Builder>>>;
+    }): Builder {
+      return Builder.of(
+        y,
+        height,
+        element,
+        width,
+        cells,
+        downwardGrowingCells,
+        slots
+      );
+    }
+
+    /**
+     * Update anything but cells/downward growing cells/slots, because these need to be kept in sync.
+     */
+    public update(update: {
+      y?: number;
+      width?: number;
+      height?: number;
+      element?: Element;
+    }): Builder {
+      return this._updateUnsafe(update);
+    }
+
+    /**
+     * Update cells/downward growing cells, and resync slots with all (updated) cells
+     */
+    public updateCells({
+      cells = this._cells,
+      downwardGrowingCells = this._downwardGrowingCells,
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({ cells, downwardGrowingCells })._updateSlots(
+        concat(cells, downwardGrowingCells)
+      );
+    }
+
+    /**
+     * Add new cells/downward growing cells, and sync slots with the new cells only.
+     */
+    public addCells({
+      cells = List.empty(),
+      downwardGrowingCells = List.empty(),
+    }: {
+      cells?: Iterable<Cell.Builder>;
+      downwardGrowingCells?: Iterable<Cell.Builder>;
+    }): Builder {
+      return this._updateUnsafe({
+        cells: this._cells.concat(cells),
+        downwardGrowingCells: this._downwardGrowingCells.concat(
+          downwardGrowingCells
+        ),
+      })._updateSlots(concat(cells, downwardGrowingCells));
+    }
+
+    /**
+     * Resync slots with a given list of cells. Caller need to ensure that all updated/added cells are passed.
+     */
+    private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
+      for (const cell of cells) {
+        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+          if (this._slots[x] === undefined) {
+            this._slots[x] = [];
+          }
+          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            this._slots[x][y] = Some.of(cell);
+          }
+        }
+      }
+
+      return this; // for chaining
+    }
+
     // anchoring a row group needs to move down all cells accordingly
     public anchorAt(y: number): Builder {
-      return this.update({
-        y,
+      return this.updateCells({
         cells: this._cells.map((cell) =>
           cell.anchorAt(cell.anchor.x, y + cell.anchor.y)
         ),
-      });
+        downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
+          cell.anchorAt(cell.anchor.x, y + cell.anchor.y)
+        ),
+      }).update({ y });
     }
 
     public equals(value: unknown): value is this {
@@ -185,8 +294,7 @@ export namespace RowGroup {
       return (
         this._rowGroup.equals(value._rowGroup) &&
         this._width === value._width &&
-        this._cells.length === value._cells.length &&
-        this._cells.every((cell, idx) => cell.equals(value._cells[idx]))
+        this._cells.equals(value._cells)
       );
     }
 
@@ -194,7 +302,7 @@ export namespace RowGroup {
       return {
         rowGroup: this._rowGroup.toJSON(),
         width: this._width,
-        cells: this._cells.map((cell) => cell.cell.toJSON()),
+        cells: this._cells.toArray().map((cell) => cell.cell.toJSON()),
       };
     }
   }
@@ -211,15 +319,10 @@ export namespace RowGroup {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
      */
     export function from(group: Element): Result<Builder, string> {
-      if (
-        group.name !== "tfoot" &&
-        group.name !== "tbody" &&
-        group.name !== "thead"
-      ) {
+      if (!Element.hasName("tfoot", "tbody", "thead")(group)) {
         return Err.of("This element is not a row group");
       }
 
-      let growingCellsList: Array<Cell.Builder> = [];
       let rowgroup = Builder.of(-1, 0, group);
       let yCurrent = 0; // y position inside the rowgroup
       // 1
@@ -228,33 +331,39 @@ export namespace RowGroup {
       for (const tr of group.children().filter(isHtmlElementWithName("tr"))) {
         const row = Row.Builder.from(
           tr,
-          rowgroup.cells,
-          growingCellsList,
+          rowgroup.downwardGrowingCells,
           yCurrent,
-          rowgroup.width
+          rowgroup.width,
+          rowgroup.slot.bind(rowgroup)
         ).get();
-        growingCellsList = [...row.downwardGrowingCells];
-        rowgroup = rowgroup.update({
-          cells: rowgroup.cells.concat(...row.cells),
-          height: Math.max(rowgroup.height, yCurrent + row.height),
-          width: Math.max(rowgroup.width, row.width),
-        });
+
+        rowgroup = rowgroup
+          .addCells({ cells: row.cells })
+          .updateCells({ downwardGrowingCells: row.downwardGrowingCells })
+          .update({
+            height: Math.max(rowgroup.height, yCurrent + row.height),
+            width: Math.max(rowgroup.width, row.width),
+          });
+
         // row processing steps 4/16
         yCurrent++;
       }
       // 4, ending the row group
-      // ending row group 1
-      growingCellsList = growingCellsList.map((cell) =>
-        cell.growDownward(rowgroup.rowgroup.height - 1)
-      );
       // ending row group 2
       // When emptying the growing cells list, we need to finally add them to the group.
-      rowgroup = rowgroup.update({
-        cells: rowgroup.cells.concat(growingCellsList),
+      rowgroup = rowgroup.addCells({
+        cells: map(rowgroup.downwardGrowingCells, (cell) =>
+          cell.growDownward(rowgroup.rowgroup.height - 1)
+        ),
       });
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
-      return Ok.of(rowgroup.update({ cells: rowgroup.cells.sort(compare) }));
+      return Ok.of(
+        rowgroup.updateCells({
+          cells: [...rowgroup.cells].sort(compare),
+          downwardGrowingCells: [],
+        })
+      );
     }
   }
 }

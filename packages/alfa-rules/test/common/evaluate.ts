@@ -10,7 +10,7 @@ export function evaluate<T, Q>(
   rule: Rule<Page, T, Q>,
   page: Partial<Page>,
   oracle: Oracle<Q> = () => Future.now(None)
-): Future<Array<Outcome<Page, T, Q>>> {
+): Future<Array<Outcome.JSON>> {
   const {
     request = Request.empty(),
     response = Response.empty(),
@@ -20,5 +20,5 @@ export function evaluate<T, Q>(
 
   return rule
     .evaluate(Page.of(request, response, document, device), oracle)
-    .map((outcomes) => [...outcomes]);
+    .map((outcomes) => [...outcomes].map((outcome) => outcome.toJSON()));
 }

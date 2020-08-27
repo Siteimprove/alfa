@@ -11,7 +11,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#angles
  */
-export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric
+export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric<"angle">
   implements Convertible<Unit.Angle> {
   public static of<U extends Unit.Angle>(value: number, unit: U): Angle<U> {
     return new Angle(value, unit);

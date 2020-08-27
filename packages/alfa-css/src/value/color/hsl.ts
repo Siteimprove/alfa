@@ -1,12 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { mod, clamp } from "@siteimprove/alfa-math";
+import { Hash } from "@siteimprove/alfa-hash";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Percentage } from "../percentage";
@@ -16,7 +14,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class HSL<
   H extends Number | Angle = Number | Angle,
   A extends Number | Percentage = Number | Percentage
-> implements Equatable, Hashable, Serializable {
+> extends Value<"color"> {
   public static of<H extends Number | Angle, A extends Number | Percentage>(
     hue: H,
     saturation: Percentage,
@@ -40,6 +38,7 @@ export class HSL<
     lightness: Percentage,
     alpha: A
   ) {
+    super();
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;
@@ -48,9 +47,9 @@ export class HSL<
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
     const [red, green, blue] = hslToRgb(
-      mod(degrees, 360) / 60,
-      clamp(saturation.value, 0, 1),
-      clamp(lightness.value, 0, 1)
+      Real.modulo(degrees, 360) / 60,
+      Real.clamp(saturation.value, 0, 1),
+      Real.clamp(lightness.value, 0, 1)
     );
 
     this._red = Percentage.of(red);
@@ -130,8 +129,7 @@ export class HSL<
 }
 
 export namespace HSL {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "color";
     format: "hsl";
     hue: Number.JSON | Angle.JSON;
@@ -234,9 +232,9 @@ function hslToRgb(
   const t1 = lightness * 2 - t2;
 
   return [
-    hueToRgb(t1, t2, mod(hue + 2, 6)),
+    hueToRgb(t1, t2, Real.modulo(hue + 2, 6)),
     hueToRgb(t1, t2, hue),
-    hueToRgb(t1, t2, mod(hue - 2, 6)),
+    hueToRgb(t1, t2, Real.modulo(hue - 2, 6)),
   ];
 }
 

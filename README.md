@@ -2,7 +2,7 @@
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
-Alfa is an open and standards-based accessibility conformance testing engine used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). It is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to Siteimprove's proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
+Alfa is an open and standards-based accessibility conformance testing engine. It is used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Alfa is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine, which Alfa will replace, and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). It also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
 ## Contents
 
@@ -38,74 +38,41 @@ On their own, each of these packages do very little, but when put together they 
 At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). More often than not, your only interaction with Alfa will look similar to this:
 
 ```ts
-import { Audit } from "@siteimprove/alfa-act";
+import { Audit, Rule } from "@siteimprove/alfa-act";
 
-const input = { ... };
+const input: I;
+const rules: Iterable<Rule<I, T, Q>>;
 
-Audit.of(input)
-  // Add the rules we want to evaluate
-  .add(ruleA)
-  .add(ruleB)
-  .add(...)
-
-  // Evaluate the input
-  .evaluate()
-
-  // Translate the results to EARL
-  .then(outcomes => {
-    const earl = [...outcomes].map(outcome => outcome.toEARL());
-  });
+const outcomes = await Audit.of(input, rules).evaluate();
 ```
 
 Alfa is completely pluggable with regards to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/):
 
 ```ts
 import { Audit } from "@siteimprove/alfa-act";
-import { Rules } from "@siteimprove/alfa-rules";
 
-const input = { ... };
+import rules from "@siteimprove/alfa-rules";
 
-const audit = Rules.reduce(
-  (audit, rule) => audit.add(rule),
-  Audit.of(input)
-);
+const input: I;
 
-audit.evaluate().then(outcomes => {
-  // ...
-});
+const outcomes = await Audit.of(input, rules).evaluate();
 ```
 
 The last piece we are missing is input. Which specific input that needs to be supplied when running an audit will depend on the rules that are part of the audit as each rule specifies the input it requires. For the default WCAG rule set, the input will be a web page. To get you started, Alfa ships with a scraper that given a URL will fetch a representation of the page that can be used as input to the default rules:
 
 ```ts
 import { Audit } from "@siteimprove/alfa-act";
-import { Rules } from "@siteimprove/alfa-rules";
 import { Scraper } from "@siteimprove/alfa-scraper";
+
+import rules from "@siteimprove/alfa-rules";
 
 const scraper = await Scraper.of();
 
-scraper
-  .scrape("https://example.com")
-  .then((result) => {
-    if (result.isErr()) {
-      throw result.getErr();
-    } else {
-      return result.get();
-    }
-  })
-  .then((page) => {
-    const audit = Rules.reduce(
-      (audit, rule) => audit.add(rule),
-      Audit.of(page)
-    );
+for (const input of await scraper.scrape("http://example.com")) {
+  const outcomes = await Audit.of(input, rules).evaluate();
+}
 
-    audit.evaluate().then((outcomes) => {
-      // ...
-    });
-  })
-  .finally(() => {
-    scraper.close();
-  });
+scraper.close();
 ```
 
 ## Integrations
@@ -164,7 +131,7 @@ At the code level, Alfa is structured as a monolithic repository consisting of s
 
 [<img src="media/europe.svg" height="96" align="right" alt="European emblem">](https://ec.europa.eu/)
 
-Alfa is part of a project that has received funding from the European Union's [Horizon 2020 research and innovation programme](https://ec.europa.eu/programmes/horizon2020/) under [grant agreement Nº780057](https://cordis.europa.eu/project/rcn/213106/factsheet/en). We would like to give thanks to the European Commission for their grant, as well as all European citizens, who have indirectly contributed to making Alfa possible. You rock! :raised_hands:
+Alfa is part of a project that has received funding from the European Union's [Horizon 2020 research and innovation programme](https://ec.europa.eu/programmes/horizon2020/) under [grant agreement Nº780057](https://cordis.europa.eu/project/id/780057). We would like to give thanks to the European Commission for their grant, as well as all European citizens, who have indirectly contributed to making Alfa possible. You rock! :raised_hands:
 
 ## License
 

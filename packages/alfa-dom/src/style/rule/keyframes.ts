@@ -1,32 +1,17 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 import { Grouping } from "./grouping";
 
-const { map, join } = Iterable;
-
 export class Keyframes extends Grouping {
-  public static of(
-    name: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframes {
-    return new Keyframes(name, rules, owner, parent);
+  public static of(name: string, rules: Iterable<Rule>): Keyframes {
+    return new Keyframes(name, Array.from(rules));
   }
 
   private readonly _name: string;
 
-  private constructor(
-    name: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(rules, owner, parent);
+  private constructor(name: string, rules: Array<Rule>) {
+    super(rules);
 
     this._name = name;
   }
@@ -44,38 +29,30 @@ export class Keyframes extends Grouping {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this.rules, (rule) => indent(rule.toString())),
-      "\n\n"
-    );
+    const rules = this._rules
+      .map((rule) => indent(rule.toString()))
+      .join("\n\n");
 
     return `@keyframes ${this._name} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
 }
 
 export namespace Keyframes {
-  export function isKeyframes(value: unknown): value is Keyframes {
-    return value instanceof Keyframes;
-  }
-
   export interface JSON extends Grouping.JSON {
     type: "keyframes";
     name: string;
   }
 
-  export function fromKeyframes(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframes {
-    return Keyframes.of(
-      json.name,
-      (self) => {
-        const parent = Option.of(self);
-        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
-      },
-      owner,
-      parent
+  export function isKeyframes(value: unknown): value is Keyframes {
+    return value instanceof Keyframes;
+  }
+
+  /**
+   * @internal
+   */
+  export function fromKeyframes(json: JSON): Trampoline<Keyframes> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      Keyframes.of(json.name, rules)
     );
   }
 }

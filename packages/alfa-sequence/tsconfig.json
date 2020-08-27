@@ -10,13 +10,13 @@
   ],
   "references": [
     {
+      "path": "../alfa-collection"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
-      "path": "../alfa-foldable"
-    },
-    {
-      "path": "../alfa-functor"
+      "path": "../alfa-hash"
     },
     {
       "path": "../alfa-json"
@@ -31,9 +31,6 @@
       "path": "../alfa-mapper"
     },
     {
-      "path": "../alfa-monad"
-    },
-    {
       "path": "../alfa-option"
     },
     {
@@ -41,6 +38,9 @@
     },
     {
       "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-set"
     },
     {
       "path": "../alfa-test"

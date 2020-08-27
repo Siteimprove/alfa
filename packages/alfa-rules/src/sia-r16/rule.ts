@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -42,32 +42,31 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-const hasRequiredValues: Predicate<Element> = (element) => {
-  for (const [role] of Role.from(element)) {
-    if (role.isSome()) {
-      const { requires, implicits } = role.get().characteristics;
-
-      for (const attribute of requires) {
-        if (find(implicits, (implicit) => implicit[0] === attribute).isSome()) {
-          continue;
-        }
-
-        if (element.attribute(attribute).every(property("value", isEmpty))) {
+const hasRequiredValues: Predicate<Element> = (element) =>
+  Role.from(element)
+    .collect((role) => role)
+    .every((role) => {
+      for (const attribute of role.attributes) {
+        if (
+          role.isAttributeRequired(attribute) &&
+          role.implicitAttributeValue(attribute).isNone() &&
+          element.attribute(attribute).every(property("value", isEmpty))
+        ) {
           return false;
         }
       }
-    }
-  }
 
-  return true;
-};
+      return true;
+    });
 
 export namespace Outcomes {
   export const HasAllStates = Ok.of(
-    "The element has all required states and properties"
+    Diagnostic.of(`The element has all required states and properties`)
   );
 
   export const HasNotAllStates = Err.of(
-    "The element does not have all required states and properties"
+    Diagnostic.of(
+      `The element does not have all required states and properties`
+    )
   );
 }

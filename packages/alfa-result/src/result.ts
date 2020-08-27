@@ -10,7 +10,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
 import { Ok } from "./ok";
 
-export interface Result<T, E>
+export interface Result<T, E = T>
   extends Monad<T>,
     Functor<T>,
     Foldable<T>,

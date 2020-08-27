@@ -1,4 +1,4 @@
-import { Lexer, Token } from "@siteimprove/alfa-css";
+import { Lexer, Token, Function } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -14,17 +14,21 @@ import * as json from "@siteimprove/alfa-json";
 
 const {
   map,
+  flatMap,
   either,
   zeroOrMore,
   oneOrMore,
   left,
   right,
   pair,
+  take,
+  peek,
   delimited,
   option,
+  eof,
 } = Parser;
 
-const { and, property, equals, isString } = Predicate;
+const { and, not, property, equals, isString } = Predicate;
 
 /**
  * @see https://drafts.csswg.org/selectors/#selector
@@ -63,6 +67,17 @@ export namespace Selector {
 
     public abstract toJSON(): JSON;
   }
+
+  /**
+   * @remarks
+   * The selector parser is forward-declared as it is needed within its
+   * subparsers.
+   */
+  let parseSelector: Parser<
+    Slice<Token>,
+    Simple | Compound | Complex | List<Simple | Compound | Complex>,
+    string
+  >;
 
   /**
    * @see https://drafts.csswg.org/selectors/#id-selector
@@ -610,6 +625,10 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
+      if (this._namespace.isNone() || this._namespace.includes("*")) {
+        return true;
+      }
+
       return element.namespace.equals(this._namespace);
     }
 
@@ -752,6 +771,74 @@ export namespace Selector {
 
   export type Pseudo = Pseudo.Class | Pseudo.Element;
 
+  const parsePseudoClass = right(
+    Token.parseColon,
+    either(
+      // Non-functional pseudo-classes
+      flatMap(Token.parseIdent(), (ident) => (input) => {
+        switch (ident.value) {
+          case "hover":
+            return Result.of([input, Hover.of()]);
+          case "active":
+            return Result.of([input, Active.of()]);
+          case "focus":
+            return Result.of([input, Focus.of()]);
+          case "link":
+            return Result.of([input, Link.of()]);
+          case "visited":
+            return Result.of([input, Visited.of()]);
+          case "root":
+            return Result.of([input, Root.of()]);
+        }
+
+        return Err.of(`Unknown pseudo-class :${ident.value}`);
+      }),
+
+      // Funtional pseudo-classes
+      flatMap(
+        right(peek(Token.parseFunction()), Function.consume),
+        (fn) => (input) => {
+          const { name } = fn;
+
+          switch (name) {
+            // :<name>(<selector-list>)
+            case "is":
+            case "not":
+            case "has":
+              return parseSelector(Slice.of(fn.value)).map(([, selector]) => {
+                switch (name) {
+                  case "is":
+                    return [input, Is.of(selector) as Pseudo.Class];
+                  case "not":
+                    return [input, Not.of(selector) as Pseudo.Class];
+                  case "has":
+                    return [input, Has.of(selector) as Pseudo.Class];
+                }
+              });
+          }
+
+          return Err.of(`Unknown pseudo-class :${fn.name}()`);
+        }
+      )
+    )
+  );
+
+  const parsePseudoElement = right(
+    take(Token.parseColon, 2),
+    flatMap(Token.parseIdent(), (ident) => (input) => {
+      switch (ident.value) {
+        case "before":
+          return Result.of([input, Before.of()]);
+        case "after":
+          return Result.of([input, After.of()]);
+      }
+
+      return Err.of(`Unknown pseudo-element ::${ident.value}`);
+    })
+  );
+
+  const parsePseudo = either(parsePseudoClass, parsePseudoElement);
+
   /**
    * @see https://drafts.csswg.org/selectors/#matches-pseudo
    */
@@ -840,8 +927,8 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element): boolean {
-      return !this._selector.matches(element);
+    public matches(element: Element, scope?: Iterable<Element>): boolean {
+      return !this._selector.matches(element, scope);
     }
 
     public equals(value: unknown): value is this {
@@ -920,9 +1007,96 @@ export namespace Selector {
   }
 
   /**
+   * @see https://drafts.csswg.org/selectors/#hover-pseudo
+   */
+  export class Hover extends Pseudo.Class {
+    public static of(): Hover {
+      return new Hover();
+    }
+
+    private constructor() {
+      super("hover");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#active-pseudo
+   */
+  export class Active extends Pseudo.Class {
+    public static of(): Active {
+      return new Active();
+    }
+
+    private constructor() {
+      super("active");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#focus-pseudo
+   */
+  export class Focus extends Pseudo.Class {
+    public static of(): Focus {
+      return new Focus();
+    }
+
+    private constructor() {
+      super("focus");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#link-pseudo
+   */
+  export class Link extends Pseudo.Class {
+    public static of(): Link {
+      return new Link();
+    }
+
+    private constructor() {
+      super("link");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#visited-pseudo
+   */
+  export class Visited extends Pseudo.Class {
+    public static of(): Visited {
+      return new Visited();
+    }
+
+    private constructor() {
+      super("visited");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#root-pseudo
+   */
+  export class Root extends Pseudo.Class {
+    public static of(): Root {
+      return new Root();
+    }
+
+    private constructor() {
+      super("root");
+    }
+
+    public matches(element: Element): boolean {
+      // The root element is the element whose parent is NOT itself an element.
+      return element.parent().every(not(Element.isElement));
+    }
+  }
+
+  /**
    * @see https://drafts.csswg.org/css-pseudo/#selectordef-before
    */
   export class Before extends Pseudo.Element {
+    public static of(): Before {
+      return new Before();
+    }
+
     private constructor() {
       super("before");
     }
@@ -932,6 +1106,10 @@ export namespace Selector {
    * @see https://drafts.csswg.org/css-pseudo/#selectordef-after
    */
   export class After extends Pseudo.Element {
+    public static of(): After {
+      return new After();
+    }
+
     private constructor() {
       super("after");
     }
@@ -957,7 +1135,13 @@ export namespace Selector {
    */
   const parseSimple = either(
     parseClass,
-    either(parseType, either(parseAttribute, either(parseId, parseUniversal)))
+    either(
+      parseType,
+      either(
+        parseAttribute,
+        either(parseId, either(parseUniversal, parsePseudo))
+      )
+    )
   );
 
   /**
@@ -1147,7 +1331,8 @@ export namespace Selector {
 
           case Combinator.DirectSibling:
             return element
-              .previous(Element.isElement)
+              .preceding()
+              .find(Element.isElement)
               .some((element) => this._left.matches(element));
         }
       }
@@ -1374,15 +1559,14 @@ export namespace Selector {
 
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-selector-list
-   * @internal
    */
   const parseList = map(
     pair(
-      either(parseRelative, parseComplex),
+      parseComplex,
       zeroOrMore(
         right(
           delimited(option(Token.parseWhitespace), Token.parseComma),
-          either(parseRelative, parseComplex)
+          parseComplex
         )
       )
     ),
@@ -1394,9 +1578,14 @@ export namespace Selector {
       return Iterable.reduce(
         selectors,
         (right, left) => List.of(left, right),
-        left as Simple | Compound | Complex | Relative | List
+        left as Simple | Compound | Complex | List<Simple | Compound | Complex>
       );
     }
+  );
+
+  parseSelector = left(
+    parseList,
+    eof((token) => `Unexpected token ${token}`)
   );
 
   export function parse(input: string) {

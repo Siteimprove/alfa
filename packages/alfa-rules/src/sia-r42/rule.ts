@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
@@ -21,24 +21,22 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(
+        return document.descendants({ flattened: true, nested: true }).filter(
+          and(
+            isElement,
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                not(isIgnored(device)),
-                hasRole(hasContext())
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              not(isIgnored(device)),
+              hasRole((role) => role.hasRequiredParent())
             )
-          );
+          )
+        );
       },
 
       expectations(target) {
         return {
           1: expectation(
-            hasRequiredContext(device)(target),
+            hasRequiredParent(device)(target),
             () => Outcomes.IsOwnedByContextRole,
             () => Outcomes.IsNotOwnedByContextRole
           ),
@@ -50,40 +48,33 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsOwnedByContextRole = Ok.of(
-    "The element is owned by an element of its required context role"
+    Diagnostic.of(
+      `The element is owned by an element of its required context role`
+    )
   );
 
   export const IsNotOwnedByContextRole = Err.of(
-    "The element is not owned by an element of its required context role"
+    Diagnostic.of(
+      `The element is not owned by an element of its required context role`
+    )
   );
 }
 
-function hasContext(
-  predicate: Predicate<string> = () => true
-): Predicate<Role> {
-  return function hasContext(role) {
-    return (
-      some(role.characteristics.context, predicate) ||
-      role.inheritsFrom(hasContext)
-    );
-  };
-}
-
-function hasRequiredContext(device: Device): Predicate<Element> {
+function hasRequiredParent(device: Device): Predicate<Element> {
   return (element) =>
     Node.from(element, device).some((node) =>
-      node
-        .parent()
-        .some((parent) =>
-          parent
-            .role()
-            .some((parentRole) =>
-              node
-                .role()
-                .some((role) =>
-                  hasContext((context) => context === parentRole.name)(role)
-                )
-            )
+      node.role
+        .filter((role) => role.hasRequiredParent())
+        .every((role) =>
+          node.parent().some(isRequiredParent(role.requiredParent))
         )
     );
+}
+
+function isRequiredParent(
+  requiredParent: Iterable<Role.Name>
+): Predicate<Node> {
+  const [role, ...rest] = requiredParent;
+
+  return (node) => node.role.some(Role.hasName(role, ...rest));
 }

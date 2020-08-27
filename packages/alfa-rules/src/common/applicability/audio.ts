@@ -18,7 +18,7 @@ export function audio(
   document: Document,
   device: Device,
   options: audio.Options = {}
-): Iterable<Interview<Question, Element, Element | Option<Element>>> {
+): Iterable<Interview<Question, Element, Option<Element>>> {
   return map(
     filter(
       document.descendants({ flattened: true, nested: true }),
@@ -36,7 +36,7 @@ export function audio(
         "is-audio-streaming",
         "boolean",
         element,
-        "Is the <audio> element streaming?"
+        `Is the \`<audio>\` element streaming?`
       ).map((isStreaming) =>
         isStreaming
           ? None
@@ -44,7 +44,7 @@ export function audio(
               "is-playing",
               "boolean",
               element,
-              "Is the <audio> element currently playing?"
+              `Is the \`<audio>\` element currently playing?`
             ).map((isPlaying) =>
               isPlaying
                 ? Option.of(element)
@@ -52,7 +52,8 @@ export function audio(
                     "play-button",
                     "node",
                     element,
-                    "Where is the button that controls playback of the <audio> element?"
+                    `Where is the button that controls playback of the \`<audio>\`
+                    element?`
                   ).map((playButton) =>
                     playButton.some(
                       and(Element.isElement, isPerceivable(device))

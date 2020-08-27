@@ -25,7 +25,6 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -201,7 +200,7 @@ export namespace WebElement {
         return {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
-          condition: rule.media.mediaText,
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
           href: rule.href,
         };
       }
@@ -289,7 +288,7 @@ export namespace WebElement {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [Element.fromElement(element, Option.of(self))]),
+      Document.of([Element.from(element)]),
       Device.standard()
     );
   }

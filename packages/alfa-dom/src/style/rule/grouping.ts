@@ -1,21 +1,12 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Option } from "@siteimprove/alfa-option";
-
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
 export abstract class Grouping extends Rule {
-  protected readonly _rules: Iterable<Rule>;
+  protected readonly _rules: Array<Rule>;
 
-  protected constructor(
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  protected constructor(rules: Array<Rule>) {
+    super();
 
-    this._rules = rules(this);
+    this._rules = rules.filter((rule) => rule._attachParent(this));
   }
 
   public get rules(): Iterable<Rule> {
@@ -30,11 +21,11 @@ export abstract class Grouping extends Rule {
 }
 
 export namespace Grouping {
-  export function isGrouping(value: unknown): value is Grouping {
-    return value instanceof Grouping;
-  }
-
   export interface JSON extends Rule.JSON {
     rules: Array<Rule.JSON>;
+  }
+
+  export function isGrouping(value: unknown): value is Grouping {
+    return value instanceof Grouping;
   }
 }

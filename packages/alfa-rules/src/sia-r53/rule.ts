@@ -1,35 +1,31 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasRole } from "../common/predicate/has-role";
 
 const { and, equals } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r53.html",
   evaluate({ device, document }) {
-    // because each heading is compared with the previous one, it is much easier to remember them in reverse order.
-    const allHeadings = document
+    const headings = document
       .descendants({ flattened: true })
-      .filter(and(Element.isElement, hasRole("heading")))
-      .reverse();
+      .filter(and(isElement, hasRole("heading")));
 
     return {
       applicability() {
-        return allHeadings.take(allHeadings.size - 1);
+        return headings.skip(1);
       },
 
       expectations(target) {
-        const previousHeading = allHeadings
-          .skipUntil(equals(target))
-          .rest()
-          .first()
-          .get();
+        const previous = headings.takeUntil(equals(target)).last().get();
 
         return {
           1: expectation(
@@ -37,10 +33,10 @@ export default Rule.Atomic.of<Page, Element>({
               hasHeadingLevel(
                 device,
                 (previousLevel) => previousLevel >= currentLevel - 1
-              )(previousHeading)
+              )(previous)
             )(target),
-            () => Outcomes.isStructured,
-            () => Outcomes.isNotStructured
+            () => Outcomes.IsStructured,
+            () => Outcomes.IsNotStructured
           ),
         };
       },
@@ -49,7 +45,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const isStructured = Ok.of("This heading is correctly numbered.");
+  export const IsStructured = Ok.of(
+    Diagnostic.of(`The heading is correctly ordered`)
+  );
 
-  export const isNotStructured = Err.of("This heading is skipping levels.");
+  export const IsNotStructured = Err.of(
+    Diagnostic.of(`The heading skips one or more levels`)
+  );
 }

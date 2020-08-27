@@ -1,12 +1,11 @@
-import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasTabIndex } from "./has-tab-index";
-import { isDisabled } from "./is-disabled";
 import { isInert } from "./is-inert";
 import { isRendered } from "./is-rendered";
 
+const { hasName, hasNamespace, hasTabIndex, isDisabled } = Element;
 const { and, not } = Predicate;
 
 /**
@@ -17,31 +16,23 @@ export function isTabbable(device: Device): Predicate<Element> {
     hasTabIndex((tabIndex) => tabIndex >= 0),
     and(
       not(redirectsFocus),
-      and(not(isDisabled), and(not(isInert(device)), isRendered(device)))
+      and(not(isDisabled), not(isInert(device)), isRendered(device))
     )
   );
 }
 
-const redirectsFocus: Predicate<Element> = (element) => {
-  if (element.namespace.includes(Namespace.HTML)) {
-    switch (element.name) {
-      // Per the sequential navigation search algorithm, browsing context
-      // containers (<iframe> elements) redirect focus to either their first
-      // focusable descendant or the next element in the sequential focus
-      // navigation order.
-      //
-      // https://html.spec.whatwg.org/#browsing-context-container
-      // https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
-      case "iframe":
-        return true;
+/**
+ * Per the sequential navigation search algorithm, browsing context
+ * containers (<iframe> elements) redirect focus to either their first
+ * focusable descendant or the next element in the sequential focus
+ * navigation order.
+ * @see https://html.spec.whatwg.org/#browsing-context-container
+ * @see https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
 
-      // <label> elements redirect focus to their control.
-      //
-      // https://html.spec.whatwg.org/#the-label-element
-      case "label":
-        return true;
-    }
-  }
-
-  return false;
-};
+ * <label> elements redirect focus to their control.
+ * @see https://html.spec.whatwg.org/#the-label-element
+ */
+const redirectsFocus: Predicate<Element> = and(
+  hasNamespace(Namespace.HTML),
+  hasName("iframe", "label")
+);

@@ -1,9 +1,8 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -14,31 +13,27 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
+import * as predicate from "./element/predicate";
+
 const { isEmpty } = Iterable;
-const { and, equals, not } = Predicate;
+const { and, not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>> = () => [],
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    style: Option<Block> = None,
-    parent: Option<Node> = None,
-    shadow: Option<Mapper<Element, Shadow>> = None,
-    content: Option<Document> = None
+    attributes: Iterable<Attribute> = [],
+    children: Iterable<Node> = [],
+    style: Option<Block> = None
   ): Element {
     return new Element(
       namespace,
       prefix,
       name,
-      attributes,
-      children,
-      style,
-      parent,
-      shadow,
-      content
+      Array.from(attributes),
+      Array.from(children),
+      style
     );
   }
 
@@ -47,8 +42,8 @@ export class Element extends Node implements Slot, Slotable {
   private readonly _name: string;
   private readonly _attributes: Array<Attribute>;
   private readonly _style: Option<Block>;
-  private readonly _shadow: Option<Shadow>;
-  private readonly _content: Option<Document>;
+  private _shadow: Option<Shadow> = None;
+  private _content: Option<Document> = None;
   private readonly _id: Option<string>;
   private readonly _classes: Array<string>;
 
@@ -56,24 +51,19 @@ export class Element extends Node implements Slot, Slotable {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>>,
-    children: Mapper<Node, Iterable<Node>>,
-    style: Option<Block>,
-    parent: Option<Node>,
-    shadow: Option<Mapper<Element, Shadow>>,
-    content: Option<Document>
+    attributes: Array<Attribute>,
+    children: Array<Node>,
+    style: Option<Block>
   ) {
-    super(children, parent);
-
-    const self = Option.of(this);
+    super(children);
 
     this._namespace = namespace;
     this._prefix = prefix;
     this._name = name;
-    this._attributes = Array.from(attributes(this));
+    this._attributes = attributes.filter((attribute) =>
+      attribute._attachOwner(this)
+    );
     this._style = style;
-    this._shadow = self.apply(shadow);
-    this._content = content;
 
     this._id = this.attribute("id").map((attr) => attr.value);
 
@@ -128,7 +118,7 @@ export class Element extends Node implements Slot, Slotable {
     if (options.flattened === true) {
       return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
-          return Option.of(parent.host);
+          return parent.host;
         }
 
         if (Element.isElement(parent) && parent.shadow.isSome()) {
@@ -248,41 +238,21 @@ export class Element extends Node implements Slot, Slotable {
     return Slot.findSlotables(this);
   }
 
-  public path(): string {
-    let path = this._parent.map((parent) => parent.path()).getOr("/");
+  public path(options?: Node.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
 
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding().count(
+    const index = this.preceding(options).count(
       and(Element.isElement, (element) => element._name === this._name)
     );
 
     path += `[${index + 1}]`;
 
     return path;
-  }
-
-  /**
-   * Return all descendants of this element's root whose id is listed in an IDlist attribute (headers, aria-labelledby, …)
-   */
-  public resolveAttributeReferences(
-    name: string,
-    options: Node.Traversal = {}
-  ): Array<Element> {
-    return this.root(options).resolveReferences(
-      ...this.attribute(name)
-        .map((attribute) => attribute.tokens())
-        .getOr([])
-    );
-  }
-
-  public hasNamespace(predicate: Predicate<Namespace>): boolean {
-    return this._namespace.map(predicate).getOr(false);
-  }
-
-  public hasName(predicate: Predicate<string>): boolean {
-    return predicate(this._name);
   }
 
   public toJSON(): Element.JSON {
@@ -323,6 +293,36 @@ export class Element extends Node implements Slot, Slotable {
       children === "" ? "" : `\n${children}\n`
     }</${name}>`;
   }
+
+  /**
+   * @internal
+   */
+  public _attachShadow(shadow: Shadow): boolean {
+    if (this._frozen || this._shadow.isSome() || !shadow._attachHost(this)) {
+      return false;
+    }
+
+    this._shadow = Option.of(shadow);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachContent(document: Document): boolean {
+    if (
+      this._frozen ||
+      this._content.isSome() ||
+      !document._attachFrame(this)
+    ) {
+      return false;
+    }
+
+    this._content = Option.of(document);
+
+    return true;
+  }
 }
 
 export namespace Element {
@@ -342,80 +342,41 @@ export namespace Element {
     return value instanceof Element;
   }
 
-  export function fromElement(
-    element: JSON,
-    parent: Option<Node> = None
-  ): Element {
-    return Element.of(
-      Option.from(element.namespace as Namespace | null),
-      Option.from(element.prefix),
-      element.name,
-      (self) => {
-        const owner = Option.of(self);
-        return element.attributes.map((attribute) =>
-          Attribute.fromAttribute(attribute, owner)
-        );
-      },
-      (self) => {
-        const parent = Option.of(self);
-        return element.children.map((child) => Node.fromNode(child, parent));
-      },
-      Option.from(element.style).map((style) => Block.fromBlock(style)),
-      parent,
-      Option.from(element.shadow).map((shadow) => (self) =>
-        Shadow.fromShadow(shadow, self)
-      ),
-      Option.from(element.content).map((content) =>
-        Document.fromDocument(content)
-      )
-    );
+  /**
+   * @internal
+   */
+  export function fromElement(json: JSON): Trampoline<Element> {
+    return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
+      const element = Element.of(
+        Option.from(json.namespace as Namespace | null),
+        Option.from(json.prefix),
+        json.name,
+        json.attributes.map((attribute) =>
+          Attribute.fromAttribute(attribute).run()
+        ),
+        children,
+        Option.from(json.style).map(Block.from)
+      );
+
+      if (json.shadow !== null) {
+        element._attachShadow(Shadow.fromShadow(json.shadow).run());
+      }
+
+      if (json.content !== null) {
+        element._attachContent(Document.fromDocument(json.content).run());
+      }
+
+      return element;
+    });
   }
 
-  export function hasNamespace(
-    predicate: Predicate<Namespace>
-  ): Predicate<Element>;
-
-  export function hasNamespace(
-    namespace: Namespace,
-    ...rest: Array<Namespace>
-  ): Predicate<Element>;
-
-  export function hasNamespace(
-    namespaceOrPredicate: Namespace | Predicate<Namespace>,
-    ...namespaces: Array<Namespace>
-  ): Predicate<Element> {
-    let predicate: Predicate<Namespace>;
-
-    if (typeof namespaceOrPredicate === "function") {
-      predicate = namespaceOrPredicate;
-    } else {
-      predicate = Predicate.equals(namespaceOrPredicate, ...namespaces);
-    }
-
-    return (element) => element.hasNamespace(predicate);
-  }
-
-  export function hasName(predicate: Predicate<string>): Predicate<Element>;
-
-  export function hasName(
-    name: string,
-    ...rest: Array<string>
-  ): Predicate<Element>;
-
-  export function hasName(
-    nameOrPredicate: string | Predicate<string>,
-    ...names: Array<string>
-  ): Predicate<Element> {
-    let predicate: Predicate<string>;
-
-    if (typeof nameOrPredicate === "function") {
-      predicate = nameOrPredicate;
-    } else {
-      predicate = equals(nameOrPredicate, ...names);
-    }
-
-    return (element) => element.hasName(predicate);
-  }
+  export const {
+    hasId,
+    hasName,
+    hasNamespace,
+    hasTabIndex,
+    isDisabled,
+  } = predicate;
 }
 
 function indent(input: string): string {
@@ -429,7 +390,10 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return element.attribute("type").every((attr) => attr.value !== "hidden");
+      return element
+        .attribute("type")
+        .flatMap((attribute) => attribute.enumerate("hidden"))
+        .isNone();
 
     case "audio":
     case "video":

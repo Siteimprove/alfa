@@ -35,9 +35,7 @@ export namespace React {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [
-        Element.fromElement(toElement(tree), Option.of(self)),
-      ]),
+      Document.of([Element.from(toElement(tree))]),
       Device.standard()
     );
   }

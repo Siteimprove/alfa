@@ -116,12 +116,10 @@ export class Graph<T>
   }
 
   public toJSON(): Graph.JSON {
-    return {
-      nodes: this.toArray().map(([node, neighbors]) => [
-        Serializable.toJSON(node),
-        neighbors.map(Serializable.toJSON),
-      ]),
-    };
+    return this.toArray().map(([node, neighbors]) => [
+      Serializable.toJSON(node),
+      neighbors.map(Serializable.toJSON),
+    ]);
   }
 
   public toString(): string {
@@ -138,16 +136,15 @@ export class Graph<T>
 }
 
 export namespace Graph {
-  export interface JSON {
-    [key: string]: json.JSON;
-    nodes: Array<[json.JSON, Array<json.JSON>]>;
-  }
+  export interface JSON extends Array<[json.JSON, Array<json.JSON>]> {}
 
   export function isGraph<T>(value: unknown): value is Graph<T> {
     return value instanceof Graph;
   }
 
-  export function from<T>(iterable: Iterable<[T, Iterable<T>]>): Graph<T> {
+  export function from<T>(
+    iterable: Iterable<readonly [T, Iterable<T>]>
+  ): Graph<T> {
     if (isGraph<T>(iterable)) {
       return iterable;
     }

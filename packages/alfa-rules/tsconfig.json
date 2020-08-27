@@ -10,26 +10,25 @@
     "src/common/expectation/video-description-track-accurate.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",
-    "src/common/predicate/has-category.ts",
     "src/common/predicate/has-child.ts",
     "src/common/predicate/has-descendant.ts",
+    "src/common/predicate/has-explicit-role.ts",
     "src/common/predicate/has-heading-level.ts",
     "src/common/predicate/has-id.ts",
+    "src/common/predicate/has-implicit-role.ts",
+    "src/common/predicate/has-inclusive-descendant.ts",
     "src/common/predicate/has-input-type.ts",
-    "src/common/predicate/has-name-from.ts",
-    "src/common/predicate/has-nondefault-role.ts",
+    "src/common/predicate/has-non-empty-accessible-name.ts",
     "src/common/predicate/has-role.ts",
-    "src/common/predicate/has-tab-index.ts",
     "src/common/predicate/has-text-content.ts",
     "src/common/predicate/has-unique-id.ts",
     "src/common/predicate/has-value.ts",
-    "src/common/predicate/is-decorative.ts",
     "src/common/predicate/is-defined.ts",
-    "src/common/predicate/is-disabled.ts",
     "src/common/predicate/is-document-element.ts",
     "src/common/predicate/is-focusable.ts",
     "src/common/predicate/is-ignored.ts",
     "src/common/predicate/is-inert.ts",
+    "src/common/predicate/is-marked-decorative.ts",
     "src/common/predicate/is-perceivable.ts",
     "src/common/predicate/is-rendered.ts",
     "src/common/predicate/is-tabbable.ts",
@@ -94,9 +93,22 @@
     "src/sia-r64/rule.ts",
     "src/sia-r67/rule.ts",
     "src/sia-r68/rule.ts",
+    "src/sia-r69/diagnostic/contrast.ts",
     "src/sia-r69/rule.ts",
     "src/sia-r7/rule.ts",
+    "src/sia-r71/rule.ts",
+    "src/sia-r72/rule.ts",
+    "src/sia-r73/rule.ts",
+    "src/sia-r74/rule.ts",
+    "src/sia-r75/rule.ts",
     "src/sia-r8/rule.ts",
+    "src/sia-r80/rule.ts",
+    "src/sia-r81/rule.ts",
+    "src/sia-r82/rule.ts",
+    "src/sia-r83/rule.ts",
+    "src/sia-r84/rule.ts",
+    "src/sia-r85/rule.ts",
+    "src/sia-r86/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
@@ -112,8 +124,21 @@
     "test/sia-r57/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx",
     "test/sia-r61/rule.spec.tsx",
+    "test/sia-r67/rule.spec.tsx",
     "test/sia-r68/rule.spec.tsx",
-    "test/sia-r69/rule.spec.tsx"
+    "test/sia-r69/rule.spec.tsx",
+    "test/sia-r71/rule.spec.tsx",
+    "test/sia-r72/rule.spec.tsx",
+    "test/sia-r73/rule.spec.tsx",
+    "test/sia-r74/rule.spec.tsx",
+    "test/sia-r75/rule.spec.tsx",
+    "test/sia-r80/rule.spec.tsx",
+    "test/sia-r81/rule.spec.tsx",
+    "test/sia-r82/rule.spec.tsx",
+    "test/sia-r83/rule.spec.tsx",
+    "test/sia-r84/rule.spec.tsx",
+    "test/sia-r85/rule.spec.tsx",
+    "test/sia-r86/rule.spec.tsx"
   ],
   "references": [
     {
@@ -129,6 +154,9 @@
       "path": "../alfa-branched"
     },
     {
+      "path": "../alfa-cache"
+    },
+    {
       "path": "../alfa-compatibility"
     },
     {
@@ -141,13 +169,25 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-http"
     },
     {
       "path": "../alfa-iana"
     },
     {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-list"
     },
     {
       "path": "../alfa-map"
@@ -171,6 +211,12 @@
       "path": "../alfa-result"
     },
     {
+      "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-set"
+    },
+    {
       "path": "../alfa-style"
     },
     {
@@ -178,6 +224,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
     },
     {
       "path": "../alfa-trilean"

@@ -6,7 +6,8 @@
     "src/credentials.ts",
     "src/index.ts",
     "src/scraper.ts",
-    "src/screenshot.ts"
+    "src/screenshot.ts",
+    "test/scraper.spec.ts"
   ],
   "references": [
     {
@@ -14,9 +15,6 @@
     },
     {
       "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-encoding"
     },
     {
       "path": "../alfa-equatable"
@@ -29,6 +27,9 @@
     },
     {
       "path": "../alfa-puppeteer"
+    },
+    {
+      "path": "../alfa-result"
     },
     {
       "path": "../alfa-test"

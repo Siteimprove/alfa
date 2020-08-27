@@ -1,5 +1,5 @@
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
-import { clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok } from "@siteimprove/alfa-result";
 
@@ -23,7 +23,9 @@ export function parseSpan(
   return element
     .attribute(name)
     .map((attribute) =>
-      parseNonNegativeInteger(attribute.value).map((x) => clamp(x, min, max))
+      parseNonNegativeInteger(attribute.value).map((x) =>
+        Real.clamp(x, min, max)
+      )
     )
     .getOr(Ok.of(failed))
     .getOr(failed);

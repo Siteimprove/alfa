@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -47,10 +47,12 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const HasValidLanguage = Ok.of(
-    "The lang attribute has a valid primary language subtag"
+    Diagnostic.of(`The \`lang\` attribute has a valid primary language subtag`)
   );
 
   export const HasNoValidLanguage = Err.of(
-    "The lang attribute does not have a valid primary language subtag"
+    Diagnostic.of(
+      `The \`lang\` attribute does not have a valid primary language subtag`
+    )
   );
 }

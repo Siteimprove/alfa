@@ -1,9 +1,10 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+
+import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
@@ -37,7 +38,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                       .map((attr) => getFilename(attr.value))
                       .some(
                         (filename) =>
-                          filename === accessibleName.toLowerCase().trim()
+                          filename === accessibleName.value.toLowerCase().trim()
                       )
                   ),
                   element
@@ -53,11 +54,14 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "name-describes-purpose",
             "boolean",
             target,
-            `Does the accessible name of the <${target.name}> element describe its purpose?`
+            `Does the accessible name of the \`<${target.name}>\` element
+            describe its purpose?`
           ).map((nameDescribesPurpose) =>
-            nameDescribesPurpose
-              ? Some.of(Outcomes.NameIsDescriptive(target.name))
-              : Some.of(Outcomes.NameIsNotDescriptive(target.name))
+            expectation(
+              nameDescribesPurpose,
+              () => Outcomes.NameIsDescriptive(target.name),
+              () => Outcomes.NameIsNotDescriptive(target.name)
+            )
           ),
         };
       },
@@ -77,11 +81,17 @@ function getFilename(path: string): string {
 }
 
 export namespace Outcomes {
-  export const NameIsDescriptive = (name: string): Result<string, string> =>
-    Ok.of(`The accessible name of the <${name}> element describes its purpose`);
+  export const NameIsDescriptive = (name: string) =>
+    Ok.of(
+      Diagnostic.of(
+        `The accessible name of the \`<${name}>\` element describes its purpose`
+      )
+    );
 
-  export const NameIsNotDescriptive = (name: string): Result<string, string> =>
+  export const NameIsNotDescriptive = (name: string) =>
     Err.of(
-      `The accessible name of the <${name}> element does not describe its purpose`
+      Diagnostic.of(
+        `The accessible name of the \`<${name}>\` element does not describe its purpose`
+      )
     );
 }

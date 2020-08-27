@@ -1,16 +1,15 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { isDecorative } from "../common/predicate/is-decorative";
+import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and } = Predicate;
+const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
@@ -22,7 +21,13 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               isElement,
-              and(hasNamespace(Namespace.HTML), hasName("img"), isDecorative)
+              and(
+                or(
+                  and(hasNamespace(Namespace.HTML), hasName("img")),
+                  and(hasNamespace(Namespace.SVG), hasName("svg"))
+                ),
+                isMarkedDecorative
+              )
             )
           );
       },
@@ -30,9 +35,11 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device)(target),
-            () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            Node.from(target, device).every((node) =>
+              node.role.some(not((role) => role.isPresentational()))
+            ),
+            () => Outcomes.IsExposed,
+            () => Outcomes.IsNotExposed
           ),
         };
       },
@@ -41,11 +48,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Err.of(
-    "The image is marked as decorative but has a non-empty accessible name"
+  export const IsNotExposed = Ok.of(
+    Diagnostic.of(`The element is marked as decorative and is not exposed`)
   );
 
-  export const HasNoName = Ok.of(
-    "The image is marked as decorative and has an empty accessible name"
+  export const IsExposed = Err.of(
+    Diagnostic.of(`The element is marked as decorative but is exposed`)
   );
 }

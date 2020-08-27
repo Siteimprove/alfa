@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-equatable",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.1",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "Types for modelling structures with equivalence relations",
   "repository": {
@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.1"
+    "@siteimprove/alfa-test": "^0.4.0"
   },
   "publishConfig": {
     "access": "public",

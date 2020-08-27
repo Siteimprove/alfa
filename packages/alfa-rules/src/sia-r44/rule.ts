@@ -1,10 +1,10 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Matrix, mod, round } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -55,7 +55,7 @@ export default Rule.Atomic.of<Page, Element>({
         return document.descendants({ flattened: true, nested: true }).filter(
           and(
             Element.isElement,
-            and(
+            and<Element>(
               isVisible(device),
               (element) =>
                 hasConditionalRotation(element, landscape) ||
@@ -70,7 +70,7 @@ export default Rule.Atomic.of<Page, Element>({
           target,
           landscape,
           portrait
-        ).map((rotation) => round(rotation));
+        ).map((rotation) => Real.round(rotation));
 
         return {
           1: expectation(
@@ -84,6 +84,16 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+export namespace Outcomes {
+  export const RotationNotLocked = Ok.of(
+    Diagnostic.of(`The element is not locked in orientation`)
+  );
+
+  export const RotationLocked = Err.of(
+    Diagnostic.of(`The element is locked in orientation`)
+  );
+}
+
 function hasConditionalRotation(element: Element, device: Device): boolean {
   const { value, source } = Style.from(element, device).computed("transform");
 
@@ -96,7 +106,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
   }
 
   for (const transform of value) {
-    switch (transform.type) {
+    switch (transform.kind) {
       case "rotate":
       case "matrix":
         return true;
@@ -169,7 +179,7 @@ function getRotation(element: Element, device: Device): Option<number> {
     }
 
     for (const fn of transform) {
-      switch (fn.type) {
+      switch (fn.kind) {
         case "rotate": {
           const { x, y, z, angle } = fn;
 
@@ -185,12 +195,9 @@ function getRotation(element: Element, device: Device): Option<number> {
         }
 
         case "matrix": {
-          const decomposed = Transformation.decompose(
-            fn.values.map((row) => row.map((number) => number.value)) as Matrix<
-              4,
-              4
-            >
-          );
+          const decomposed = Transformation.of(
+            fn.values.map((row) => row.map((number) => number.value))
+          ).decompose();
 
           if (decomposed.isNone()) {
             continue;
@@ -209,7 +216,7 @@ function getRotation(element: Element, device: Device): Option<number> {
       }
     }
 
-    return Option.of(mod(rotation, 360));
+    return Option.of(Real.modulo(rotation, 360));
   });
 }
 
@@ -219,14 +226,8 @@ function getRelativeRotation(
   right: Device
 ): Option<number> {
   return getRotation(element, left).flatMap((left) =>
-    getRotation(element, right).map((right) => mod(abs(left - right), 360))
+    getRotation(element, right).map((right) =>
+      Real.modulo(abs(left - right), 360)
+    )
   );
-}
-
-export namespace Outcomes {
-  export const RotationNotLocked = Ok.of(
-    "The element is not orientation locked"
-  );
-
-  export const RotationLocked = Err.of("The element is orientation locked");
 }

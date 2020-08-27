@@ -168,6 +168,20 @@ export namespace Font {
     }
   );
 
+  export type Style = Keyword<"normal" | "italic" | "oblique">;
+
+  /**
+   * @see https://drafts.csswg.org/css-fonts/#font-style-prop
+   */
+  export const Style: Property<Style> = Property.of(
+    Keyword.of("normal"),
+    Keyword.parse("normal", "italic", "oblique"),
+    (style) => style.specified("font-style"),
+    {
+      inherits: true,
+    }
+  );
+
   export type Weight = Weight.Specified | Weight.Computed;
 
   export namespace Weight {

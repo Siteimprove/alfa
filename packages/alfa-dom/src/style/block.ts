@@ -1,35 +1,52 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Declaration } from "./declaration";
-import { Rule } from "./rule";
 
-const { map, find, join } = Iterable;
-
-export class Block implements Iterable<Declaration> {
+export class Block implements Iterable<Declaration>, Equatable, Serializable {
   public static of(declarations: Iterable<Declaration>): Block {
-    return new Block(declarations);
+    return new Block(Array.from(declarations));
   }
 
-  private readonly _declarations: Array<Declaration>;
+  private _declarations: Array<Declaration>;
 
-  private constructor(declarations: Iterable<Declaration>) {
-    this._declarations = Array.from(declarations);
+  private constructor(declarations: Array<Declaration>) {
+    this._declarations = declarations;
   }
 
   public get declarations(): Iterable<Declaration> {
     return this._declarations;
   }
 
+  public get size(): number {
+    return this._declarations.length;
+  }
+
+  public isEmpty(): boolean {
+    return this._declarations.length === 0;
+  }
+
   public declaration(
     predicate: string | Predicate<Declaration>
   ): Option<Declaration> {
-    return find(
-      this._declarations,
-      typeof predicate === "string"
-        ? (declaration) => declaration.name === predicate
-        : predicate
+    return Option.from(
+      this._declarations.find(
+        typeof predicate === "string"
+          ? (declaration) => declaration.name === predicate
+          : predicate
+      )
+    );
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Block &&
+      value._declarations.length === this._declarations.length &&
+      value._declarations.every((declaration, i) =>
+        declaration.equals(this._declarations[i])
+      )
     );
   }
 
@@ -42,19 +59,14 @@ export class Block implements Iterable<Declaration> {
   }
 
   public toString(): string {
-    return join(
-      map(this._declarations, (declaration) => declaration.toString()),
-      ";\n"
-    );
+    return this._declarations.join(";\n");
   }
 }
 
 export namespace Block {
   export type JSON = Array<Declaration.JSON>;
 
-  export function fromBlock(block: JSON, parent: Option<Rule> = None): Block {
-    return Block.of(
-      [...block].map((json) => Declaration.fromDeclaration(json, parent))
-    );
+  export function from(json: JSON): Block {
+    return Block.of(json.map(Declaration.from));
   }
 }

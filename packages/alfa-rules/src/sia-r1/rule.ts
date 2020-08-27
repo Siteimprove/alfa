@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -56,18 +56,18 @@ export default Rule.Atomic.of<Page, Document>({
 
 export namespace Outcomes {
   export const HasTitle = Ok.of(
-    "The document has at least one <title> element"
+    Diagnostic.of(`The document has at least one \`<title>\` element`)
   );
 
   export const HasNoTitle = Err.of(
-    "The document does not have a <title> element"
+    Diagnostic.of(`The document does not have a \`<title>\` element`)
   );
 
   export const HasNonEmptyTitle = Ok.of(
-    "The first <title> element has text content"
+    Diagnostic.of(`The first \`<title>\` element has text content`)
   );
 
   export const HasEmptyTitle = Err.of(
-    "The first <title> element has no text content"
+    Diagnostic.of(`The first \`<title>\` element has no text content`)
   );
 }

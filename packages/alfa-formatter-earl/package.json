@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-formatter-earl",
+  "homepage": "https://siteimprove.com",
+  "version": "0.4.0",
+  "license": "MIT",
+  "description": "An outcome formatter that outputs EARL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-formatter-earl"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-earl": "^0.4.0",
+    "@siteimprove/alfa-formatter": "^0.4.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.4.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}

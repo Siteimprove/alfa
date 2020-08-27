@@ -1,33 +1,29 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
-export class Declaration {
+export class Declaration implements Equatable, Serializable {
   public static of(
     name: string,
     value: string,
-    important = false,
-    parent: Option<Rule> = None
+    important = false
   ): Declaration {
-    return new Declaration(name, value, important, parent);
+    return new Declaration(name, value, important);
   }
 
   private readonly _name: string;
   private readonly _value: string;
   private readonly _important: boolean;
-  private readonly _parent: Option<Rule>;
+  private _parent: Option<Rule> = None;
 
-  private constructor(
-    name: string,
-    value: string,
-    important: boolean,
-    parent: Option<Rule>
-  ) {
+  private constructor(name: string, value: string, important: boolean) {
     this._name = name;
     this._value = value;
     this._important = important;
-    this._parent = parent;
   }
 
   public get name(): string {
@@ -53,6 +49,15 @@ export class Declaration {
     }
   }
 
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Declaration &&
+      value._name === this._name &&
+      value._value === this._value &&
+      value._important === this._important
+    );
+  }
+
   public toJSON(): Declaration.JSON {
     return {
       name: this._name,
@@ -66,6 +71,19 @@ export class Declaration {
       this._important ? " !important" : ""
     }`;
   }
+
+  /**
+   * @internal
+   */
+  public _attachParent(parent: Rule): boolean {
+    if (this._parent.isSome()) {
+      return false;
+    }
+
+    this._parent = Option.of(parent);
+
+    return true;
+  }
 }
 
 export namespace Declaration {
@@ -76,15 +94,7 @@ export namespace Declaration {
     important: boolean;
   }
 
-  export function fromDeclaration(
-    declaration: JSON,
-    parent: Option<Rule> = None
-  ): Declaration {
-    return Declaration.of(
-      declaration.name,
-      declaration.value,
-      declaration.important,
-      parent
-    );
+  export function from(json: JSON): Declaration {
+    return Declaration.of(json.name, json.value, json.important);
   }
 }

@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -12,13 +12,13 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { map, flatMap, isEmpty } = Iterable;
+const { map, flatMap } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 hasName("iframe"),
                 hasNamespace(Namespace.HTML),
                 not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
+                hasNonEmptyAccessibleName(device)
               )
             )
           );
@@ -46,10 +46,12 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           iframes
             .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
+                const name = node.name.map((name) => name.value);
+
                 groups = groups.set(
-                  node.name(),
+                  name,
                   groups
-                    .get(node.name())
+                    .get(name)
                     .getOrElse(() => List.empty<Element>())
                     .append(iframe)
                 );
@@ -92,14 +94,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
 export namespace Outcomes {
   export const EmbedSameResources = Ok.of(
-    "The <iframe> elements embed the same resource"
+    Diagnostic.of(`The \`<iframe>\` elements embed the same resource`)
   );
 
   export const EmbedEquivalentResources = Ok.of(
-    "The <iframe> elements embed equivalent resources"
+    Diagnostic.of(`The \`<iframe>\` elements embed equivalent resources`)
   );
 
   export const EmbedDifferentResources = Err.of(
-    "The <iframe> elements do not embed the same or equivalent resources"
+    Diagnostic.of(
+      `The \`<iframe>\` elements do not embed the same or equivalent resources`
+    )
   );
 }

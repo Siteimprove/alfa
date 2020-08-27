@@ -14,8 +14,8 @@ import { None } from "./none";
 import { Some } from "./some";
 
 export interface Option<T>
-  extends Monad<T>,
-    Functor<T>,
+  extends Functor<T>,
+    Monad<T>,
     Foldable<T>,
     Applicative<T>,
     Iterable<T>,
@@ -26,12 +26,14 @@ export interface Option<T>
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
-  apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+  apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
+  filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
+  reject(predicate: Predicate<T>): Option<T>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;
+  none(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
-  filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
   or<U>(option: Option<U>): Option<T | U>;
@@ -39,6 +41,7 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  toArray(): Array<T>;
   toJSON(): Option.JSON;
 }
 
@@ -47,19 +50,23 @@ export namespace Option {
 
   export type JSON = Some.JSON | None.JSON;
 
+  export function isOption<T>(value: unknown): value is Option<T> {
+    return Some.isSome(value) || value === None;
+  }
+
   export function of<T>(value: T): Option<T> {
     return Some.of(value);
   }
 
+  export function empty<T>(): Option<T> {
+    return None;
+  }
+
+  export function flatten<T>(option: Option<Option<T>>): Option<T> {
+    return option.flatMap((option) => option);
+  }
+
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
-  }
-
-  export function flatten<T>(value: Option<Option<T>>): Option<T> {
-    return value.flatMap((value) => value);
-  }
-
-  export function isOption<T>(value: unknown): value is Option<T> {
-    return Some.isSome(value) || value === None;
   }
 }

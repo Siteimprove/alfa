@@ -16,10 +16,16 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-http"
     },
     {
       "path": "../alfa-jquery"
+    },
+    {
+      "path": "../alfa-option"
     },
     {
       "path": "../alfa-test"

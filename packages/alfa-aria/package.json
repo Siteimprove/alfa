@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-aria",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.1",
+  "version": "0.4.1",
   "license": "MIT",
   "description": "Functionality for working with ARIA and the accessibility tree",
   "repository": {
@@ -17,26 +17,32 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
+  "scripts": {
+    "generate": "node scripts/attributes.js && node scripts/roles.js"
+  },
   "dependencies": {
-    "@siteimprove/alfa-branched": "^0.0.1",
-    "@siteimprove/alfa-cache": "^0.0.1",
-    "@siteimprove/alfa-compatibility": "^0.0.1",
-    "@siteimprove/alfa-device": "^0.0.1",
-    "@siteimprove/alfa-dom": "^0.0.1",
-    "@siteimprove/alfa-equatable": "^0.0.1",
-    "@siteimprove/alfa-iterable": "^0.0.1",
-    "@siteimprove/alfa-json": "^0.0.1",
-    "@siteimprove/alfa-lazy": "^0.0.1",
-    "@siteimprove/alfa-map": "^0.0.1",
-    "@siteimprove/alfa-mapper": "^0.0.1",
-    "@siteimprove/alfa-option": "^0.0.1",
-    "@siteimprove/alfa-predicate": "^0.0.1",
-    "@siteimprove/alfa-sequence": "^0.0.1",
-    "@siteimprove/alfa-style": "^0.0.1",
-    "@siteimprove/alfa-table": "^0.0.1"
+    "@siteimprove/alfa-branched": "^0.4.0",
+    "@siteimprove/alfa-cache": "^0.4.0",
+    "@siteimprove/alfa-compatibility": "^0.4.0",
+    "@siteimprove/alfa-device": "^0.4.0",
+    "@siteimprove/alfa-dom": "^0.4.0",
+    "@siteimprove/alfa-equatable": "^0.4.0",
+    "@siteimprove/alfa-hash": "^0.4.0",
+    "@siteimprove/alfa-iterable": "^0.4.0",
+    "@siteimprove/alfa-json": "^0.4.0",
+    "@siteimprove/alfa-lazy": "^0.4.0",
+    "@siteimprove/alfa-map": "^0.4.0",
+    "@siteimprove/alfa-mapper": "^0.4.0",
+    "@siteimprove/alfa-option": "^0.4.0",
+    "@siteimprove/alfa-predicate": "^0.4.0",
+    "@siteimprove/alfa-sequence": "^0.4.0",
+    "@siteimprove/alfa-set": "^0.4.0",
+    "@siteimprove/alfa-style": "^0.4.1",
+    "@siteimprove/alfa-table": "^0.4.0",
+    "@siteimprove/alfa-thunk": "^0.4.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.1"
+    "@siteimprove/alfa-test": "^0.4.0"
   },
   "publishConfig": {
     "access": "public",

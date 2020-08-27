@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -98,10 +98,12 @@ function getRefreshTime(content: string): Option<number> {
 
 export namespace Outcomes {
   export const HasImmediateRefresh = Ok.of(
-    "The refresh or redirect happens immediately or after 20 hours"
+    Diagnostic.of(
+      `The refresh or redirect happens immediately or after 20 hours`
+    )
   );
 
   export const HasDelayedRefresh = Err.of(
-    "The refresh or redirect is delayed less than 20 hours"
+    Diagnostic.of(`The refresh or redirect is delayed less than 20 hours`)
   );
 }

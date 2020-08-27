@@ -5,9 +5,26 @@
     "src/device.ts",
     "src/display.ts",
     "src/index.ts",
+    "src/preference.ts",
+    "src/scripting.ts",
     "src/viewport.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-hash"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-map"
+    },
     {
       "path": "../alfa-test"
     }
