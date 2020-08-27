@@ -48,7 +48,7 @@ test(".of() ignores seed URLs that are not in scope", (t) => {
 test("#enqueue() adds a URL to the frontier", (t) => {
   const frontier = Frontier.of("https://example.com/");
 
-  frontier.enqueue("https://example.com/foo.html");
+  t.equal(frontier.enqueue("https://example.com/foo.html"), true);
 
   t.deepEqual(frontier.toJSON(), {
     scope: "https://example.com/",
@@ -70,7 +70,7 @@ test("#enqueue() adds a URL to the frontier", (t) => {
 test("#enqueue() ignores a URL that has already been seen", (t) => {
   const frontier = Frontier.of("https://example.com/");
 
-  frontier.enqueue("https://example.com/");
+  t.equal(frontier.enqueue("https://example.com/"), false);
 
   t.deepEqual(frontier.toJSON(), {
     scope: "https://example.com/",
@@ -88,7 +88,8 @@ test("#enqueue() doesn't change the state of an already seen URL", (t) => {
   const frontier = Frontier.of("https://example.com/");
 
   frontier.dequeue();
-  frontier.enqueue("https://example.com/");
+
+  t.equal(frontier.enqueue("https://example.com/"), false);
 
   t.deepEqual(frontier.toJSON(), {
     scope: "https://example.com/",
