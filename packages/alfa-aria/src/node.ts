@@ -8,6 +8,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as dom from "@siteimprove/alfa-dom";
@@ -20,7 +21,7 @@ import { Feature } from "./feature";
 
 import * as predicate from "./node/predicate";
 
-const { and, not, nor, equals } = Predicate;
+const { equals } = Predicate;
 
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
@@ -216,32 +217,103 @@ export namespace Node {
   ): Branched<Node, Browser> {
     const _cache = cache.get(device, Cache.empty);
 
+    // If the cache already holds an entry for the specified node, then the tree
+    // that the node participates in has already been built.
     if (_cache.has(node)) {
       return _cache.get(node).get();
     }
 
     const root = node.root({ flattened: true });
 
-    build(root, device);
+    // Before we start constructing the accessibility tree, we need to resolve
+    // explicit ownership of elements as specified by the `aria-owns` attribute.
+    // https://w3c.github.io/aria/#aria-owns
 
-    if (_cache.has(node)) {
-      return _cache.get(node).get();
-    }
+    // Find all elements in the tree. As explicit ownership is specified via ID
+    // references, it cannot cross shadow or document boundaries.
+    const elements = root.inclusiveDescendants().filter(dom.Element.isElement);
 
-    return Branched.of(Inert.of(node));
+    // Build a map from ID -> element to allow fast resolution of ID references.
+    // The collected references are added to the map in reverse order to ensure
+    // that the first occurrence of a given ID is what ends up in the map in
+    // event of duplicates.
+    const ids = Map.from(
+      elements
+        .collect((element) => element.id.map((id) => [id, element] as const))
+        .reverse()
+    );
+
+    // Do a first pass over `aria-owns` attributes and collect the referenced
+    // elements.
+    const references = elements.collect((element) =>
+      element.attribute("aria-owns").map(
+        (attribute) =>
+          [
+            element,
+            attribute
+              .tokens()
+              .collect((id) => ids.get(id))
+              // Reject references from the element to itself or its ancestors
+              // as these would cause cyclic references.
+              .reject(
+                (reference) =>
+                  element === reference ||
+                  element.ancestors().includes(reference)
+              ),
+          ] as const
+      )
+    );
+
+    // Refine the collected `aria-owns` references, constructing a set of
+    // claimed elements and resolving conflicting claims as needed.
+    const [claimed, owned] = references.reduce(
+      ([claimed, owned], [element, references]) => {
+        // Reject all element references that have already been claimed. While
+        // authors are not allowed to specify a given ID in more than one
+        // `aria-owns` attribute, it will inevitably happen that multiple
+        // `aria-owns` attributes reference the same ID. We deal with this on a
+        // first come, first serve basis and deny anything but the first claim
+        // to a given ID.
+        references = references.reject((element) => claimed.has(element));
+
+        // If there are no references left, this element has no explicit
+        // ownership.
+        if (references.isEmpty()) {
+          return [claimed, owned];
+        }
+
+        // Claim the remaining references.
+        claimed = references.reduce(
+          (claimed, element) => claimed.add(element),
+          claimed
+        );
+
+        return [claimed, owned.set(element, references)];
+      },
+      [Set.empty<dom.Node>(), Map.empty<dom.Element, Sequence<dom.Node>>()]
+    );
+
+    build(root, device, claimed, owned);
+
+    return _cache.get(node, () =>
+      // If the cache still doesn't hold an entry for the specified node, then
+      // the node doesn't even participate in the tree. Store it as an inert
+      // node.
+      Branched.of(Inert.of(node))
+    );
   }
 
-  function build(node: dom.Node, device: Device): Branched<Node, Browser> {
+  function build(
+    node: dom.Node,
+    device: Device,
+    claimed: Set<dom.Node>,
+    owned: Map<dom.Element, Sequence<dom.Node>>
+  ): Branched<Node, Browser> {
     return cache.get(device, Cache.empty).get(node, () => {
       // Text nodes are _always_ exposed in the accessibility tree.
       if (dom.Text.isText(node)) {
         return Name.from(node, device).map((name) => Text.of(node, name.get()));
       }
-
-      const children = () =>
-        Branched.traverse(node.children({ flattened: true }), (child) =>
-          build(child, device)
-        );
 
       // Element nodes are _sometimes_ exposed in the accessibility tree.
       if (dom.Element.isElement(node)) {
@@ -277,16 +349,36 @@ export namespace Node {
           return Branched.of(Inert.of(node));
         }
 
+        // Get the children explicitly owned by the element. Children can be
+        // explicitly owned using the `aria-owns` attribute.
+        const explicit = owned
+          .get(node)
+          .getOrElse(() => Sequence.empty<dom.Node>());
+
+        // Get the children implicitly owned by the element. These are the
+        // children in the flat tree that are neither claimed already nor
+        // explicitly owned by the element.
+        const implicit = node
+          .children({ flattened: true })
+          .reject((child) => claimed.has(child) || explicit.includes(child));
+
+        // Recursively build accessible nodes for the children of the element.
+        // The children implicitly owned by the element come first, then the
+        // children explicitly owned by the element.
+        const children = Branched.traverse(implicit.concat(explicit), (child) =>
+          build(child, device, claimed, owned)
+        );
+
         // Elements that are not visible by means of `visibility: hidden` or
         // `visibility: collapse`, are exposed in the accessibility tree as
         // containers as they may contain visible descendants.
         if (style.computed("visibility").value.value !== "visible") {
-          return children().map((children) => Container.of(node, children));
+          return children.map((children) => Container.of(node, children));
         }
 
         return Role.from(node).flatMap<Node>((role) => {
           if (role.some((role) => role.isPresentational())) {
-            return children().map((children) => Container.of(node, children));
+            return children.map((children) => Container.of(node, children));
           }
 
           let attributes = Map.empty<Attribute.Name, Attribute>();
@@ -329,7 +421,7 @@ export namespace Node {
             }
           }
 
-          return children().flatMap((children) =>
+          return children.flatMap((children) =>
             Name.from(node, device).map((name) =>
               Element.of(node, role, name, attributes.values(), children)
             )
@@ -337,8 +429,15 @@ export namespace Node {
         });
       }
 
+      const children = Branched.traverse(
+        node
+          .children({ flattened: true })
+          .reject((child) => claimed.has(child)),
+        (child) => build(child, device, claimed, owned)
+      );
+
       // Other nodes are _never_ exposed in the accessibility tree.
-      return children().map((children) => Container.of(node, children));
+      return children.map((children) => Container.of(node, children));
     });
   }
 

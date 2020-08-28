@@ -63,7 +63,7 @@ export namespace Collection {
     has(key: K): boolean;
     set(key: K, value: V): Keyed<K, V>;
     delete(key: K, value: V): Keyed<K, V>;
-    concat(iterable: Iterable<[K, V]>): Keyed<K, V>;
+    concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
   }
 
   export interface Unkeyed<T> extends Collection<T>, Iterable<T> {

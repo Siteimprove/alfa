@@ -187,7 +187,7 @@ export namespace WebElement {
         return {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
-          condition: rule.media.mediaText,
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
           href: rule.href,
         };
       }

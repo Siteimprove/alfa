@@ -53,6 +53,9 @@ export class Scraper {
     this._browser = browser;
   }
 
+  /**
+   * Scrape the specified URL.
+   */
   public async scrape(
     url: string | URL,
     options: Scraper.scrape.Options = {}
@@ -161,6 +164,9 @@ export class Scraper {
     }
   }
 
+  /**
+   * Close the scraper and its associated browser.
+   */
   public async close(): Promise<void> {
     await this._browser.close();
   }
