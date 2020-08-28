@@ -645,7 +645,7 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
   });
 });
 
-test("Only allows pseudo-element selectors as the last selector", (t) => {
+test(".parse() only allows pseudo-element selectors as the last selector", (t) => {
   t.equal(Selector.parse("::foo.foo").isNone(), true);
   t.equal(Selector.parse("::foo+foo").isNone(), true);
 });
