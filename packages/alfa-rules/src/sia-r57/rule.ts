@@ -1,6 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
-import { Text } from "@siteimprove/alfa-dom";
+import { Text, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,21 +9,32 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
+import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
-const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
   evaluate({ document, device }) {
     return {
-      applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(
+      *applicability() {
+        const descendants = document.descendants({
+          flattened: true,
+          nested: true,
+        });
+
+        if (
+          descendants.some(
+            and(
+              Element.isElement,
+              hasRole((role) => role.isLandmark())
+            )
+          )
+        ) {
+          yield* descendants.filter(
             and(
               Text.isText,
               and(
@@ -33,6 +43,7 @@ export default Rule.Atomic.of<Page, Text>({
               )
             )
           );
+        }
       },
 
       expectations(target) {
