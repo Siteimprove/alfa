@@ -66,13 +66,31 @@ import { Scraper } from "@siteimprove/alfa-scraper";
 
 import rules from "@siteimprove/alfa-rules";
 
-const scraper = await Scraper.of();
+Scraper.with(async (scraper) => {
+  for (const input of await scraper.scrape("http://example.com")) {
+    const outcomes = await Audit.of(input, rules).evaluate();
+  }
+});
+```
 
-for (const input of await scraper.scrape("http://example.com")) {
-  const outcomes = await Audit.of(input, rules).evaluate();
-}
+If you need to audit multiple pages across a site, but don't necessarily know the URL of each page beforehand, Alfa also ships with a crawler that builds on the scraper to discover and scrape linked pages:
 
-scraper.close();
+```ts
+import { Audit } from "@siteimprove/alfa-act";
+import { Frontier } from "@siteimprove/alfa-frontier";
+import { Crawler } from "@siteimprove/alfa-crawler";
+
+import rules from "@siteimprove/alfa-rules";
+
+const frontier = Frontier.of("http://example.com");
+
+Crawler.with(async (crawler) => {
+  for await (const result of crawler.crawl(frontier)) {
+    for (const input of result) {
+      const outcomes = await Audit.of(input, rules).evaluate();
+    }
+  }
+});
 ```
 
 ## Integrations
