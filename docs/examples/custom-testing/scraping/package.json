@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "custom-testing-scraping",
+  "version": "0.4.1",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-cypress": "^0.4.1"
+  }
+}

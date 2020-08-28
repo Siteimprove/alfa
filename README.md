@@ -9,6 +9,7 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 - [Goals](#goals)
 - [Usage](#usage)
 - [Integrations](#integrations)
+- [Examples](#examples)
 - [Requirements](#requirements)
 - [Building](#building)
 - [Architecture](#architecture)
@@ -108,6 +109,10 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)              | React integration for supported assertion libraries   |
 | [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)    | Unexpected accessibility assertions                   |
 | [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                  | Vue integration for supported assertion libraries     |
+
+## Examples
+
+For examples of how to use Alfa in various contexts, such as unit testing, end-to-end testing, and custom scripted testing, take a look in the [`docs/examples`](docs/examples) directory.
 
 ## Requirements
 
