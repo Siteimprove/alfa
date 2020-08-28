@@ -3,7 +3,18 @@ import { Flag } from "@siteimprove/alfa-command";
 import * as scrape from "../scrape/flags";
 
 export const Flags = {
+  ...scrape.Flags,
+
   help: Flag.help("Display the help information."),
+
+  output: Flag.string(
+    "output",
+    `The path to write results to. If no path is provided, results are written
+    to stdout.`
+  )
+    .type("path")
+    .alias("o")
+    .optional(),
 
   interactive: Flag.boolean(
     "interactive",
@@ -17,15 +28,6 @@ export const Flags = {
     .alias("f")
     .default("earl"),
 
-  output: Flag.string(
-    "output",
-    `The path to write results to. If no path is provided, results are written
-    to stdout.`
-  )
-    .type("path")
-    .alias("o")
-    .optional(),
-
   outcomes: Flag.string(
     "outcome",
     `The type of outcome to include in the results. If not provided, all types
@@ -35,6 +37,4 @@ export const Flags = {
     .choices("passed", "failed", "inapplicable", "cantTell")
     .repeatable()
     .optional(),
-
-  ...scrape.Flags,
 };

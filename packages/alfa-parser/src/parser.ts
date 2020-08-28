@@ -11,7 +11,7 @@ export type Parser<I, T, E = never, A extends Array<unknown> = []> = (
 ) => Result<readonly [I, T], E>;
 
 export namespace Parser {
-  export function map<I, T, U, E, A extends Array<unknown>>(
+  export function map<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, U>
   ): Parser<I, U, E, A> {
@@ -22,7 +22,7 @@ export namespace Parser {
       ]);
   }
 
-  export function flatMap<I, T, U, E, A extends Array<unknown>>(
+  export function flatMap<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, Parser<I, U, E, A>>
   ): Parser<I, U, E, A> {
@@ -32,7 +32,7 @@ export namespace Parser {
       );
   }
 
-  export function filter<I, T, U extends T, E, A extends Array<unknown>>(
+  export function filter<I, T, U extends T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     predicate: Predicate<T, U>,
     ifError: Thunk<E>
@@ -46,7 +46,7 @@ export namespace Parser {
     });
   }
 
-  export function zeroOrMore<I, T, E, A extends Array<unknown>>(
+  export function zeroOrMore<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
   ): Parser<I, Iterable<T>, E, A> {
     return (input, ...args) => {
@@ -69,7 +69,7 @@ export namespace Parser {
     };
   }
 
-  export function oneOrMore<I, T, E, A extends Array<unknown>>(
+  export function oneOrMore<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
   ): Parser<I, Iterable<T>, E, A> {
     return flatMap(parser, (head) =>
@@ -77,7 +77,7 @@ export namespace Parser {
     );
   }
 
-  export function take<I, T, E, A extends Array<unknown>>(
+  export function take<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     n: number
   ): Parser<I, Iterable<T>, E, A> {
@@ -101,7 +101,7 @@ export namespace Parser {
     };
   }
 
-  export function takeUntil<I, T, U, E, A extends Array<unknown>>(
+  export function takeUntil<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     condition: Parser<I, unknown, E, A>
   ): Parser<I, Iterable<T>, E, A> {
@@ -127,14 +127,14 @@ export namespace Parser {
     };
   }
 
-  export function peek<I, T, E, A extends Array<unknown>>(
+  export function peek<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
   ): Parser<I, T, E, A> {
     return (input, ...args) =>
       parser(input, ...args).map(([, value]) => [input, value]);
   }
 
-  export function tee<I, T, E, A extends Array<unknown>>(
+  export function tee<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     callback: Callback<T>
   ): Parser<I, T, E, A> {
@@ -144,7 +144,7 @@ export namespace Parser {
     });
   }
 
-  export function option<I, T, E, A extends Array<unknown>>(
+  export function option<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
   ): Parser<I, Option<T>, E, A> {
     return (input, ...args) => {
@@ -158,17 +158,17 @@ export namespace Parser {
     };
   }
 
-  export function either<I, T, U, E, A extends Array<unknown>>(
+  export function either<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
   ): Parser<I, T | U, E, A>;
 
-  export function either<I, T, E, A extends Array<unknown>>(
+  export function either<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     ...rest: Array<Parser<I, T, E, A>>
   ): Parser<I, T, E, A>;
 
-  export function either<I, T, E, A extends Array<unknown>>(
+  export function either<I, T, E, A extends Array<unknown> = []>(
     ...parsers: Array<Parser<I, T, E, A>>
   ): Parser<I, T, E, A> {
     return (input, ...args) => {
@@ -191,28 +191,28 @@ export namespace Parser {
     };
   }
 
-  export function pair<I, T, U, E, A extends Array<unknown>>(
+  export function pair<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
   ): Parser<I, [T, U], E, A> {
     return flatMap(left, (left) => map(right, (right) => [left, right]));
   }
 
-  export function left<I, T, U, E, A extends Array<unknown>>(
+  export function left<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
   ): Parser<I, T, E, A> {
     return flatMap(left, (left) => map(right, () => left));
   }
 
-  export function right<I, T, U, E, A extends Array<unknown>>(
+  export function right<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>
   ): Parser<I, U, E, A> {
     return flatMap(left, () => map(right, (right) => right));
   }
 
-  export function delimited<I, T, E, A extends Array<unknown>>(
+  export function delimited<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, unknown, E, A>,
     separator: Parser<I, T, E, A>,
     right: Parser<I, unknown, E, A> = left
@@ -222,7 +222,7 @@ export namespace Parser {
     );
   }
 
-  export function separated<I, T, U, E, A extends Array<unknown>>(
+  export function separated<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>,
     right: Parser<I, U, E, A>
@@ -232,7 +232,7 @@ export namespace Parser {
     );
   }
 
-  export function separatedList<I, T, E, A extends Array<unknown>>(
+  export function separatedList<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>
   ): Parser<I, Iterable<T>, E, A> {
@@ -243,11 +243,11 @@ export namespace Parser {
   }
 
   export function eof<I extends Iterable<unknown>, E>(
-    ifError: Thunk<E>
+    ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>
   ): Parser<I, void, E> {
     return (input) => {
-      for (const _ of input) {
-        return Err.of(ifError());
+      for (const value of input) {
+        return Err.of(ifError(value as any));
       }
 
       return Result.of([input, undefined]);

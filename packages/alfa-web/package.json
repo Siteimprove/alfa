@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-web",
   "homepage": "https://siteimprove.com",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "Types for modelling web resources, such as individual web pages and entire web sites",
   "repository": {
@@ -18,16 +18,16 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-device": "^0.3.0",
-    "@siteimprove/alfa-dom": "^0.3.0",
-    "@siteimprove/alfa-earl": "^0.3.0",
-    "@siteimprove/alfa-graph": "^0.3.0",
-    "@siteimprove/alfa-http": "^0.3.0",
-    "@siteimprove/alfa-json": "^0.3.0",
-    "@siteimprove/alfa-predicate": "^0.3.0"
+    "@siteimprove/alfa-device": "^0.4.0",
+    "@siteimprove/alfa-dom": "^0.4.0",
+    "@siteimprove/alfa-earl": "^0.4.0",
+    "@siteimprove/alfa-graph": "^0.4.0",
+    "@siteimprove/alfa-http": "^0.4.0",
+    "@siteimprove/alfa-json": "^0.4.0",
+    "@siteimprove/alfa-predicate": "^0.4.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.3.0"
+    "@siteimprove/alfa-test": "^0.4.0"
   },
   "publishConfig": {
     "access": "public",

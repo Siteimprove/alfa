@@ -111,22 +111,12 @@ export namespace Block {
 
     const value: Array<Token> = [];
 
-    let isEndingToken: Predicate<Token, Block.Close>;
-
-    if (Token.isOpenParenthesis(token)) {
-      isEndingToken = Token.isCloseParenthesis;
-    } else if (Token.isOpenSquareBracket(token)) {
-      isEndingToken = Token.isOpenSquareBracket;
-    } else {
-      isEndingToken = Token.isCloseCurlyBracket;
-    }
-
     input = input.slice(1);
 
     while (input.length > 0) {
       const next = input.get(0).get();
 
-      if (isEndingToken(next)) {
+      if (next.type === token.mirror.type) {
         input = input.slice(1);
         break;
       }
