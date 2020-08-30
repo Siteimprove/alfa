@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "chalk": "^4.1.0",
-    "emphasize": "^2.0.0",
+    "emphasize": "^4.0.0",
     "highlight.js": "^9.18.1"
   },
   "publishConfig": {
