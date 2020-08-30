@@ -26,7 +26,7 @@
     "@siteimprove/alfa-option": "^0.4.0",
     "@siteimprove/alfa-predicate": "^0.4.0",
     "@siteimprove/alfa-web": "^0.4.0",
-    "webdriverio": "^5.14.3"
+    "webdriverio": "^6.4.4"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.4.0"
