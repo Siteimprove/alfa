@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Ensure that ownership is only resolved once per `Document` context.
+
 ## [0.4.1](../../compare/v0.4.0...v0.4.1) (2020-08-27)
 
 ### Changed

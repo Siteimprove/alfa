@@ -225,6 +225,13 @@ export namespace Node {
 
     const root = node.root({ flattened: true });
 
+    // If the cache already holds an entry for the root of the specified node,
+    // then the tree that the node participates in has already been built, but
+    // the node itself is not included within the resulting accessibility tree.
+    if (_cache.has(root)) {
+      return _cache.get(node, () => Branched.of(Inert.of(node)))
+    }
+
     // Before we start constructing the accessibility tree, we need to resolve
     // explicit ownership of elements as specified by the `aria-owns` attribute.
     // https://w3c.github.io/aria/#aria-owns
