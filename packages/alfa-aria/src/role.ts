@@ -20,10 +20,19 @@ import * as predicate from "./role/predicate";
 
 const { and, not, nor } = Predicate;
 
+const roles = new Map<string, Role>();
+
 export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable {
   public static of<N extends Role.Name>(name: N): Role<N> {
-    return new Role(name);
+    let role = roles.get(name);
+
+    if (role === undefined) {
+      role = new Role(name);
+      roles.set(name, role);
+    }
+
+    return role as Role<N>;
   }
 
   private readonly _name: N;
