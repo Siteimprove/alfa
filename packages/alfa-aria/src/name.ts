@@ -1,4 +1,5 @@
 import { Branched } from "@siteimprove/alfa-branched";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
@@ -513,12 +514,18 @@ export namespace Name {
   }
 
   /**
+   * Accessible names for text nodes are abundant and not impacted by the
+   * computation state and so are easily cached.
+   */
+  const textNames = Cache.empty<Text, Branched<Option<Name>, Browser>>();
+
+  /**
    * @internal
    */
   export function fromText(text: Text): Branched<Option<Name>, Browser> {
     // Step 2G: Use the data of the text node.
     // https://w3c.github.io/accname/#step2G
-    return fromData(text);
+    return textNames.get(text, () => fromData(text));
   }
 
   /**
