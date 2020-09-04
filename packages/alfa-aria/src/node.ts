@@ -229,7 +229,7 @@ export namespace Node {
     // then the tree that the node participates in has already been built, but
     // the node itself is not included within the resulting accessibility tree.
     if (_cache.has(root)) {
-      return _cache.get(node, () => Branched.of(Inert.of(node)))
+      return _cache.get(node, () => Branched.of(Inert.of(node)));
     }
 
     // Before we start constructing the accessibility tree, we need to resolve
