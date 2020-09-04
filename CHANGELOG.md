@@ -25,6 +25,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): Ensure that ownership is only resolved once per `Document` context.
 
+- [@siteimprove/alfa-lazy](packages/alfa-lazy): Fix a bug where `#map()` and `#flatMap()` could cause a `Lazy` to be evaluated more than once.
+
 ## [0.4.1](../../compare/v0.4.0...v0.4.1) (2020-08-27)
 
 ### Changed
