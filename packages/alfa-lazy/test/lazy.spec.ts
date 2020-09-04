@@ -18,7 +18,7 @@ test("#force() evaluates a lazy value", (t) => {
   t.equal(lazy.force(), 42);
 });
 
-test("#force() only evaluates a lazy value once, even if valled multiple times", (t) => {
+test("#force() only evaluates a lazy value once, even if called multiple times", (t) => {
   let count = 0;
 
   const lazy = Lazy.of(() => ++count);
