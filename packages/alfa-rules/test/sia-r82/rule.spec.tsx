@@ -1,8 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R82, { Outcomes } from "../../src/sia-r82/rule";
 
@@ -10,31 +9,25 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed } from "../common/outcome";
 
-const { isElement, hasName } = Element;
-const { and } = Predicate;
+const input = <input type="text"></input>;
+
+const perceivableError = <span>Visible error</span>;
+
+const invisibleError = <span hidden>Invisible error</span>;
+
+const ignoredError = <span aria-hidden="true">Ignored error</span>;
 
 const document = Document.of([
   <form>
     <label>
       Input
-      <input type="text"></input>
+      {input}
     </label>
-    <span>Visible error</span>
-    <span hidden>Invisible error</span>
-    <span aria-hidden="true">Ignored error</span>
+    {perceivableError}
+    {invisibleError}
+    {ignoredError}
   </form>,
 ]);
-
-const input = document
-  .descendants()
-  .find(and(isElement, hasName("input")))
-  .get();
-
-const [
-  perceivableError,
-  invisibleError,
-  ignoredError,
-] = document.descendants().filter(and(isElement, hasName("span")));
 
 test("evaluate() passes when a form field has no error indicator", async (t) => {
   t.deepEqual(

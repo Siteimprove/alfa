@@ -1,11 +1,14 @@
 import { Branched } from "@siteimprove/alfa-branched";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Node, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Scope, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";
@@ -154,10 +157,7 @@ const nameFromChild = (predicate: Predicate<Element>) => (
   state: Name.State
 ) => {
   for (const child of element.children().find(and(isElement, predicate))) {
-    return Name.fromDescendants(child, device, {
-      ...state,
-      visited: state.visited.add(child),
-    }).map((name) =>
+    return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
       name.map((name) =>
         Name.of(name.value, [Name.Source.descendant(element, name)])
       )
@@ -167,13 +167,27 @@ const nameFromChild = (predicate: Predicate<Element>) => (
   return Branched.of(None);
 };
 
+const ids = Cache.empty<Node, Map<string, Element>>();
+
+const labels = Cache.empty<Node, Sequence<Element>>();
+
 const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   const root = element.root();
 
+  const elements = root.inclusiveDescendants().filter(isElement);
+
   for (const id of element.id) {
-    const target = root
-      .descendants()
-      .find(and(isElement, (element) => element.id.includes(id)));
+    const target = ids
+      .get(root, () =>
+        Map.from(
+          elements
+            .collect((element) =>
+              element.id.map((id) => [id, element] as const)
+            )
+            .reverse()
+        )
+      )
+      .get(id);
 
     if (target.includes(element)) {
       continue;
@@ -182,29 +196,24 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     }
   }
 
-  const labels = root.descendants().filter(
-    and(
-      isElement,
-      and(
-        hasName("label"),
-        or(
-          (label) => label.descendants().includes(element),
-          (label) =>
-            label
-              .attribute("for")
-              .some((attribute) => element.id.includes(attribute.value))
-        )
+  const targets = labels
+    .get(root, () => elements.filter(hasName("label")))
+    .filter(
+      or(
+        (label) => label.descendants().includes(element),
+        (label) =>
+          label
+            .attribute("for")
+            .some((attribute) => element.id.includes(attribute.value))
       )
-    )
-  );
+    );
 
-  return Branched.traverse(labels, (element) =>
-    Name.fromNode(element, device, {
-      ...state,
-      isRecursing: true,
-      isReferencing: false,
-      isDescending: false,
-    }).map((name) => [name, element] as const)
+  return Branched.traverse(targets, (element) =>
+    Name.fromNode(
+      element,
+      device,
+      state.recurse(true).reference(false).descend(false)
+    ).map((name) => [name, element] as const)
   )
     .map((names) =>
       [...names]

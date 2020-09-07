@@ -229,7 +229,7 @@ export namespace Node {
     // then the tree that the node participates in has already been built, but
     // the node itself is not included within the resulting accessibility tree.
     if (_cache.has(root)) {
-      return _cache.get(node, () => Branched.of(Inert.of(node)))
+      return _cache.get(node, () => Branched.of(Inert.of(node)));
     }
 
     // Before we start constructing the accessibility tree, we need to resolve
@@ -426,6 +426,13 @@ export namespace Node {
                 attributes = attributes.set(name, attribute);
               }
             }
+          }
+
+          // If the element has neither attributes nor a role, it is not itself
+          // interesting for accessibility purposes. It is therefore exposed as
+          // a container.
+          if (attributes.isEmpty() && role.isNone()) {
+            return children.map((children) => Container.of(node, children));
           }
 
           return children.flatMap((children) =>
