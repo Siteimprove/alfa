@@ -399,6 +399,12 @@ export namespace Name {
     public visit(element: Element): State {
       const visited = this._visited.add(element);
 
+      // `Set#add()` returns the previous instance if attempting to add a value
+      // already present in the set. When this happens, we re-use the existing
+      // `State` instance as it hasn't changed. While we could also have used
+      // `Set#has()` before attempting to add the element to the set, doing so
+      // would cost us two lookups, rather than just one, as we would also need
+      // to add the element if not already present.
       if (this._visited === visited) {
         return this;
       }
