@@ -174,13 +174,13 @@ const labels = Cache.empty<Node, Sequence<Element>>();
 const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   const root = element.root();
 
+  const elements = root.inclusiveDescendants().filter(isElement);
+
   for (const id of element.id) {
     const target = ids
       .get(root, () =>
         Map.from(
-          root
-            .inclusiveDescendants()
-            .filter(isElement)
+          elements
             .collect((element) =>
               element.id.map((id) => [id, element] as const)
             )
@@ -197,9 +197,7 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   }
 
   const targets = labels
-    .get(root, () =>
-      root.inclusiveDescendants().filter(and(isElement, hasName("label")))
-    )
+    .get(root, () => elements.filter(hasName("label")))
     .filter(
       or(
         (label) => label.descendants().includes(element),
