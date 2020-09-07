@@ -428,6 +428,13 @@ export namespace Node {
             }
           }
 
+          // If the element has neither attributes nor a role, it is not itself
+          // interesting for accessibility purposes. It is therefore exposed as
+          // a container.
+          if (attributes.isEmpty() && role.isNone()) {
+            return children.map((children) => Container.of(node, children));
+          }
+
           return children.flatMap((children) =>
             Name.from(node, device).map((name) =>
               Element.of(node, role, name, attributes.values(), children)

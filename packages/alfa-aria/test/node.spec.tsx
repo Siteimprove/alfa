@@ -12,6 +12,7 @@ import { Role } from "../src/role";
 import { Node } from "../src/node";
 import { Element } from "../src/node/element";
 import { Text } from "../src/node/text";
+import { Container } from "../src/node/container";
 import { Inert } from "../src/node/inert";
 
 const device = Device.standard();
@@ -197,13 +198,9 @@ test(`.from() correctly handles circular aria-owns references between ancestors
 
   t.deepEqual(Node.from(bar, device).toJSON(), [
     [
-      Element.of(
-        bar,
-        None,
-        None,
-        [],
-        [Element.of(foo, None, None, [Attribute.of("aria-owns", "bar")])]
-      ).toJSON(),
+      Container.of(bar, [
+        Element.of(foo, None, None, [Attribute.of("aria-owns", "bar")]),
+      ]).toJSON(),
       [],
     ],
   ]);
