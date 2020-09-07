@@ -25,7 +25,9 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): Ensure that ownership is only resolved once per `Document` context.
 
-- [@siteimprove/alfa-lazy](packages/alfa-lazy): Fix a bug where `#map()` and `#flatMap()` could cause a `Lazy` to be evaluated more than once.
+- [@siteimprove/alfa-aria](packages/alfa-aria): Elements with neither a `role`, explicit or implicit, nor `aria-` attributes are now correctly excluded from the accessibility tree and instead map to `Container` instances. ([#356](../../pull/356))
+
+- [@siteimprove/alfa-lazy](packages/alfa-lazy): Fix a bug where `#map()` and `#flatMap()` could cause a `Lazy` to be evaluated more than once. ([#355](../../pull/355))
 
 ## [0.4.1](../../compare/v0.4.0...v0.4.1) (2020-08-27)
 
