@@ -205,3 +205,39 @@ test(`.from() correctly handles circular aria-owns references between ancestors
     ],
   ]);
 });
+
+test(".from() exposes elements if they have a role", t => {
+  const foo = <button></button>;
+
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [
+      Element.of(foo, Option.of(Role.of("button")), None).toJSON(),
+      [],
+    ],
+  ]);
+})
+
+test(".from() exposes elements if they have ARIA attributes", t => {
+  const foo = <div aria-label="foo"></div>;
+
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [
+      Element.of(foo, None, Option.of(Name.of("foo",
+        [Name.Source.Label.of(foo.attribute("aria-label").get())])),
+        [Attribute.of("aria-label", "foo")]
+      ).toJSON(),
+      [],
+    ],
+  ]);
+})
+
+test(".from() exposes elements if they are focusable", t => {
+  const foo = <div tabindex={0}></div>;
+
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [
+      Element.of(foo, None, None).toJSON(),
+      [],
+    ],
+  ]);
+})
