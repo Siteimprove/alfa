@@ -428,10 +428,10 @@ export namespace Node {
             }
           }
 
-          // If the element has neither attributes nor a role, it is not itself
+          // If the element has neither attributes nor a role nor a tabindex, it is not itself
           // interesting for accessibility purposes. It is therefore exposed as
           // a container.
-          if (attributes.isEmpty() && role.isNone()) {
+          if (attributes.isEmpty() && role.isNone() && node.tabIndex().isNone()) {
             return children.map((children) => Container.of(node, children));
           }
 
