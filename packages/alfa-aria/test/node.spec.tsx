@@ -206,61 +206,59 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   ]);
 });
 
-test(".from() exposes elements if they have a role", t => {
+test(".from() exposes elements if they have a role", (t) => {
   const foo = <button></button>;
 
   t.deepEqual(Node.from(foo, device).toJSON(), [
-    [
-      Element.of(foo, Option.of(Role.of("button")), None).toJSON(),
-      [],
-    ],
+    [Element.of(foo, Option.of(Role.of("button")), None).toJSON(), []],
   ]);
-})
+});
 
-test(".from() exposes elements if they have ARIA attributes", t => {
+test(".from() exposes elements if they have ARIA attributes", (t) => {
   const foo = <div aria-label="foo"></div>;
 
   t.deepEqual(Node.from(foo, device).toJSON(), [
     [
-      Element.of(foo, None, Option.of(Name.of("foo",
-        [Name.Source.Label.of(foo.attribute("aria-label").get())])),
+      Element.of(
+        foo,
+        None,
+        Option.of(
+          Name.of("foo", [
+            Name.Source.Label.of(foo.attribute("aria-label").get()),
+          ])
+        ),
         [Attribute.of("aria-label", "foo")]
       ).toJSON(),
       [],
     ],
   ]);
-})
+});
 
-test(".from() exposes elements if they have a tabindex", t => {
+test(".from() exposes elements if they have a tabindex", (t) => {
   const foo = <div tabindex={0}></div>;
 
   t.deepEqual(Node.from(foo, device).toJSON(), [
-    [
-      Element.of(foo, None, None).toJSON(),
-      [],
-    ],
+    [Element.of(foo, None, None).toJSON(), []],
   ]);
 
-  const iframe = <iframe/>; // focusable by default, and no role
+  const iframe = <iframe />; // Focusable by default, and no role
 
   t.deepEqual(Node.from(iframe, device).toJSON(), [
-    [
-      Element.of(iframe, None, None).toJSON(),
-      [],
-    ],
+    [Element.of(iframe, None, None).toJSON(), []],
   ]);
 });
 
-test(".from() does not expose elements that have no role, attribute nor tabindex", t => {
+test(`.from() does not expose elements that have no role, ARIA attributes, nor
+      tabindex`, (t) => {
   const text = h.text("Hello world");
-  const foo = <div>{text}</div>
+  const foo = <div>{text}</div>;
 
   t.deepEqual(Node.from(foo, device).toJSON(), [
     [
-      Container.of(foo,
-        [Text.of(text, Name.of("Hello world", [Name.Source.data(text)]))]
-      ).toJSON(),
-      []
-    ]
-  ])
+      Container.of(foo, [
+        Text.of(text, Name.of("Hello world", [Name.Source.data(text)])),
+      ]).toJSON(),
+      [],
+    ],
+  ]);
 });

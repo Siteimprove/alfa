@@ -1,17 +1,15 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R13, { Outcomes } from "../../src/sia-r13/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-const { isElement } = Element;
-
 test("evaluates() passes an <iframe> with an accessible name given by the title attribute", async (t) => {
-  const iframe = <iframe title="iframe" srcdoc="Hello World!"/>;
+  const iframe = <iframe title="iframe" srcdoc="Hello World!" />;
 
   const document = Document.of([iframe]);
 
@@ -23,7 +21,7 @@ test("evaluates() passes an <iframe> with an accessible name given by the title 
 });
 
 test("evaluates() passes an <iframe> with an accessible name given by the aria-label attribute", async (t) => {
-  const iframe = <iframe aria-label="iframe" srcdoc="Hello World!"/>;
+  const iframe = <iframe aria-label="iframe" srcdoc="Hello World!" />;
 
   const document = Document.of([iframe]);
 
@@ -34,11 +32,10 @@ test("evaluates() passes an <iframe> with an accessible name given by the aria-l
   ]);
 });
 
-
 test("evaluates() passes an <iframe> with an accessible name given by the aria-labelledby attribute", async (t) => {
   const label = <span id="label">iframe</span>;
 
-  const iframe = <iframe aria-labelledby="label" srcdoc="Hello World!"/>;
+  const iframe = <iframe aria-labelledby="label" srcdoc="Hello World!" />;
 
   const document = Document.of([label, iframe]);
 
@@ -50,7 +47,7 @@ test("evaluates() passes an <iframe> with an accessible name given by the aria-l
 });
 
 test("evaluates() fails an <iframe> with no accessible name", async (t) => {
-  const iframe = <iframe srcdoc="Hello World!"/>;
+  const iframe = <iframe srcdoc="Hello World!" />;
 
   const document = Document.of([iframe]);
 
@@ -60,7 +57,6 @@ test("evaluates() fails an <iframe> with no accessible name", async (t) => {
     }),
   ]);
 });
-
 
 test("evaluate() is inapplicable when there is no <iframe>", async (t) => {
   const button = <button>Button</button>;
