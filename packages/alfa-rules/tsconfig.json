@@ -115,6 +115,7 @@
     "test/common/outcome.ts",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
+    "test/sia-r13/rule.spec.tsx",
     "test/sia-r21/rule.spec.tsx",
     "test/sia-r24/rule.spec.tsx",
     "test/sia-r38/rule.spec.tsx",
