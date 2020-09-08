@@ -340,9 +340,15 @@ export class Sparse<K, V> implements Node<K, V> {
         return Status.unchanged(this);
       }
 
-      return Status.updated(
-        Sparse.of(this._mask, replace(this._nodes, index, node))
-      );
+      const sparse = Sparse.of(this._mask, replace(this._nodes, index, node));
+
+      switch (status) {
+        case "created":
+          return Status.created(sparse);
+        case "updated":
+        default:
+          return Status.updated(sparse);
+      }
     }
 
     return Status.created(
