@@ -8,7 +8,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Set } from "@siteimprove/alfa-set";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -338,19 +337,19 @@ export namespace Name {
    * @internal
    */
   export class State {
-    private static _empty = new State(Set.empty(), false, false, false);
+    private static _empty = new State([], false, false, false);
 
     public static empty(): State {
       return this._empty;
     }
 
-    private readonly _visited: Set<Element>;
+    private readonly _visited: Array<Element>;
     private readonly _isRecursing: boolean;
     private readonly _isReferencing: boolean;
     private readonly _isDescending: boolean;
 
     private constructor(
-      visited: Set<Element>,
+      visited: Array<Element>,
       isRecursing: boolean,
       isReferencing: boolean,
       isDescending: boolean
@@ -367,7 +366,7 @@ export namespace Name {
      * `aria-labelledby` attribute and form controls that get their name from
      * a containing `<label>` element.
      */
-    public get visited(): Set<Element> {
+    public get visited(): Iterable<Element> {
       return this._visited;
     }
 
@@ -393,24 +392,16 @@ export namespace Name {
     }
 
     public hasVisited(element: Element): boolean {
-      return this._visited.has(element);
+      return this._visited.includes(element);
     }
 
     public visit(element: Element): State {
-      const visited = this._visited.add(element);
-
-      // `Set#add()` returns the previous instance if attempting to add a value
-      // already present in the set. When this happens, we re-use the existing
-      // `State` instance as it hasn't changed. While we could also have used
-      // `Set#has()` before attempting to add the element to the set, doing so
-      // would cost us two lookups, rather than just one, as we would also need
-      // to add the element if not already present.
-      if (this._visited === visited) {
+      if (this._visited.includes(element)) {
         return this;
       }
 
       return new State(
-        visited,
+        [...this._visited, element],
         this._isRecursing,
         this._isReferencing,
         this._isDescending
@@ -576,18 +567,6 @@ export namespace Name {
             !state.isReferencing &&
             !role.every((role) => role.isNamedBy("contents"))
           ) {
-            return empty;
-          }
-
-          return fromDescendants(element, device, state);
-        },
-
-        // Step 2H: Use the subtree content, if descending.
-        // https://w3c.github.io/accname/#step2H
-        () => {
-          // Unless we're already descending then this step produces an empty
-          // name.
-          if (!state.isDescending) {
             return empty;
           }
 
