@@ -231,7 +231,7 @@ test(".from() exposes elements if they have ARIA attributes", t => {
   ]);
 })
 
-test(".from() exposes elements if they are focusable", t => {
+test(".from() exposes elements if they have a tabindex", t => {
   const foo = <div tabindex={0}></div>;
 
   t.deepEqual(Node.from(foo, device).toJSON(), [
@@ -240,4 +240,27 @@ test(".from() exposes elements if they are focusable", t => {
       [],
     ],
   ]);
-})
+
+  const iframe = <iframe/>; // focusable by default, and no role
+
+  t.deepEqual(Node.from(iframe, device).toJSON(), [
+    [
+      Element.of(iframe, None, None).toJSON(),
+      [],
+    ],
+  ]);
+});
+
+test(".from() does not expose elements that have no role, attribute nor tabindex", t => {
+  const text = h.text("Hello world");
+  const foo = <div>{text}</div>
+
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [
+      Container.of(foo,
+        [Text.of(text, Name.of("Hello world", [Name.Source.data(text)]))]
+      ).toJSON(),
+      []
+    ]
+  ])
+});
