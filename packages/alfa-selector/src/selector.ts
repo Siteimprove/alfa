@@ -796,6 +796,8 @@ export namespace Selector {
             return Result.of([input, Visited.of()]);
           case "root":
             return Result.of([input, Root.of()]);
+          case "empty":
+            return Result.of([input, Empty.of()]);
           case "first-child":
             return Result.of([input, FirstChild.of()]);
           case "last-child":
@@ -1125,6 +1127,23 @@ export namespace Selector {
     public matches(element: Element): boolean {
       // The root element is the element whose parent is NOT itself an element.
       return element.parent().every(not(isElement));
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#empty-pseudo
+   */
+  export class Empty extends Pseudo.Class {
+    public static of(): Empty {
+      return new Empty();
+    }
+
+    private constructor() {
+      super("empty");
+    }
+
+    public matches(element: Element): boolean {
+      return element.children().isEmpty();
     }
   }
 
