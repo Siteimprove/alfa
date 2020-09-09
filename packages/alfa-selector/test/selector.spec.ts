@@ -789,3 +789,14 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
     },
   });
 });
+
+test(".parse() parses an :nth-child selector", (t) => {
+  t.deepEqual(Selector.parse(":nth-child(odd)").get().toJSON(), {
+    type: "pseudo-class",
+    name: "nth-child",
+    index: {
+      step: 2,
+      offset: 1,
+    },
+  });
+});

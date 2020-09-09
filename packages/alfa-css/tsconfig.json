@@ -9,6 +9,7 @@
     "src/syntax/declaration.ts",
     "src/syntax/function.ts",
     "src/syntax/lexer.ts",
+    "src/syntax/nth.ts",
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
