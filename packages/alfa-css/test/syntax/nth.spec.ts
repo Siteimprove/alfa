@@ -143,7 +143,7 @@ test(".parse() parses an `an` with no `a` and a `b`", (t) => {
   });
 });
 
-test(".parse() accepts whitespace around the `b` sign when the `an` part it present", (t) => {
+test(".parse() accepts whitespace around the `b` sign when the `an` part is present", (t) => {
   parse(t, "4n + 6", {
     step: 4,
     offset: 6,
