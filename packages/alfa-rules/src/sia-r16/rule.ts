@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,9 +10,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
+import { isFocusable } from "../common/predicate/is-focusable";
 
 const { isElement, hasNamespace } = Element;
-const { find, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -32,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasRequiredValues(target),
+            hasRequiredValues(device)(target),
             () => Outcomes.HasAllStates,
             () => Outcomes.HasNotAllStates
           ),
@@ -42,22 +44,32 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-const hasRequiredValues: Predicate<Element> = (element) =>
-  Role.from(element)
-    .collect((role) => role)
-    .every((role) => {
-      for (const attribute of role.attributes) {
-        if (
-          role.isAttributeRequired(attribute) &&
-          role.implicitAttributeValue(attribute).isNone() &&
-          element.attribute(attribute).every(property("value", isEmpty))
-        ) {
-          return false;
+function hasRequiredValues(device: Device): Predicate<Element> {
+  return (element) =>
+    Node.from(element, device).every((node) => {
+      for (const role of node.role) {
+        // The `separator` role is poorly architected in the sense that its
+        // inheritance and attribute requirements depend on aspects of the
+        // element carrying the role. If the element is not focusable, the
+        // `separator` role has no required attributes.
+        if (role.is("separator") && !isFocusable(device)(element)) {
+          return true;
+        }
+
+        for (const attribute of role.attributes) {
+          if (
+            role.isAttributeRequired(attribute) &&
+            role.implicitAttributeValue(attribute).isNone() &&
+            node.attribute(attribute).every(property("value", isEmpty))
+          ) {
+            return false;
+          }
         }
       }
 
       return true;
     });
+}
 
 export namespace Outcomes {
   export const HasAllStates = Ok.of(
