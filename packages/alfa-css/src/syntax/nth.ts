@@ -172,9 +172,9 @@ export namespace Nth {
             map(
               pair(
                 // ["+" | "-"]?
-                option(
-                  delimited(
-                    option(Token.parseWhitespace),
+                delimited(
+                  option(Token.parseWhitespace),
+                  option(
                     either(
                       map(Token.parseDelim("+"), () => 1),
                       map(Token.parseDelim("-"), () => -1)
@@ -190,9 +190,12 @@ export namespace Nth {
               ([sign, number]) => sign.getOr(1) * number.value
             ),
 
-            map(
-              Token.parseNumber((number) => number.isInteger),
-              (number) => number.value
+            delimited(
+              option(Token.parseWhitespace),
+              map(
+                Token.parseNumber((number) => number.isInteger),
+                (number) => number.value
+              )
             )
           )
         )
@@ -224,7 +227,7 @@ export namespace Nth {
         ),
 
         // <signless-integer>
-        right(
+        delimited(
           option(Token.parseWhitespace),
           map(
             Token.parseNumber((number) => number.isInteger && !number.isSigned),
@@ -232,7 +235,7 @@ export namespace Nth {
           )
         )
       ),
-      ([step, offset]) => Nth.of(step, offset)
+      ([step, offset]) => Nth.of(step, -1 * offset)
     )
   );
 }

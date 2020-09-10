@@ -42,7 +42,8 @@
     "src/value/unit.ts",
     "src/value/url.ts",
     "test/syntax/declaration.spec.ts",
-    "test/syntax/lexer.spec.ts"
+    "test/syntax/lexer.spec.ts",
+    "test/syntax/nth.spec.ts"
   ],
   "references": [
     {
