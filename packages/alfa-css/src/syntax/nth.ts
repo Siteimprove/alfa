@@ -13,7 +13,7 @@ const { map, right, pair, delimited, option, either } = Parser;
  */
 export class Nth implements Iterable<Token>, Equatable, Serializable {
   public static of(step: number, offset: number = 0): Nth {
-    return new Nth(step, offset);
+    return new Nth(step | 0, offset | 0);
   }
 
   private readonly _step: number;
@@ -32,8 +32,33 @@ export class Nth implements Iterable<Token>, Equatable, Serializable {
     return this._offset;
   }
 
+  /**
+   * Check if the given index matches the indices produced by this nth.
+   *
+   * @remarks
+   * This is checked by solving the equation `an + b = i` for `n`, giving us
+   * `n = (i - b) / a`. The index `i` is matched by this nth if the resulting
+   * `n` is a non-negative integer.
+   */
+  public matches(index: number): boolean {
+    // If the step is 0 then we just need to match the index against the offset.
+    if (this._step === 0) {
+      return this._offset === (index | 0);
+    }
+
+    const n = ((index | 0) - this._offset) / this._step;
+
+    return n >= 0 && n === (n | 0);
+  }
+
   public for(n: number): number {
-    return this._step * n + this._offset;
+    return this._step * (n | 0) + this._offset;
+  }
+
+  public *indices(): Iterable<number> {
+    for (let n = 0; ; n++) {
+      yield this.for(n);
+    }
   }
 
   public *[Symbol.iterator](): Iterator<Token> {

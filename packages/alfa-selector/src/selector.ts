@@ -1163,6 +1163,12 @@ export namespace Selector {
       this._index = index;
     }
 
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.preceding().filter(isElement).size + 1
+      );
+    }
+
     public toJSON(): NthChild.JSON {
       return {
         ...super.toJSON(),
@@ -1191,6 +1197,12 @@ export namespace Selector {
       super("nth-last-child");
 
       this._index = nth;
+    }
+
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.following().filter(isElement).size + 1
+      );
     }
 
     public toJSON(): NthLastChild.JSON {
@@ -1282,6 +1294,13 @@ export namespace Selector {
       this._index = index;
     }
 
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.preceding().filter(and(isElement, hasName(element.name))).size +
+          1
+      );
+    }
+
     public toJSON(): NthOfType.JSON {
       return {
         ...super.toJSON(),
@@ -1310,6 +1329,13 @@ export namespace Selector {
       super("nth-last-of-type");
 
       this._index = index;
+    }
+
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.following().filter(and(isElement, hasName(element.name))).size +
+          1
+      );
     }
 
     public toJSON(): NthLastOfType.JSON {
