@@ -9,6 +9,7 @@
     "src/syntax/declaration.ts",
     "src/syntax/function.ts",
     "src/syntax/lexer.ts",
+    "src/syntax/nth.ts",
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
@@ -41,7 +42,8 @@
     "src/value/unit.ts",
     "src/value/url.ts",
     "test/syntax/declaration.spec.ts",
-    "test/syntax/lexer.spec.ts"
+    "test/syntax/lexer.spec.ts",
+    "test/syntax/nth.spec.ts"
   ],
   "references": [
     {
