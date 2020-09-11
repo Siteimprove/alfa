@@ -1737,9 +1737,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*", "@types/node@>= 8", "@types/node@^14.0.12", "@types/node@^14.6.2":
-  version "14.6.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.6.4.tgz#a145cc0bb14ef9c4777361b7bbafa5cf8e3acb5a"
-  integrity sha512-Wk7nG1JSaMfMpoMJDKUsWYugliB2Vy55pdjLpmLixeyMi7HizW2I/9QoxsPCkXl3dO+ZOVqPumKaDUv5zJu2uQ==
+  version "14.10.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.10.0.tgz#15815dff82c8dc30827f6b1286f865902945095a"
+  integrity sha512-SOIyrdADB4cq6eY1F+9iU48iIomFAPltu11LCvA9PKcyEwHadjCFzNVPotAR+oEJA0bCP4Xvvgy+vwu1ZjVh8g==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -6162,10 +6162,10 @@ marky@^1.2.0:
   resolved "https://registry.yarnpkg.com/marky/-/marky-1.2.1.tgz#a3fcf82ffd357756b8b8affec9fdbf3a30dc1b02"
   integrity sha512-md9k+Gxa3qLH6sUKpeC2CNkJK/Ld+bEz5X96nYwloqphQE0CKCVEKco/6jxEZixinqNdz5RFi/KaCyfbMDMAXQ==
 
-mdn-browser-compat-data@1.0.36:
-  version "1.0.36"
-  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-1.0.36.tgz#73b2e14eef64e3484c717eec01a01fe01d1f7dc9"
-  integrity sha512-3Z4VTxSROuJGs0Q7ZDTXBBgqiNM8KnsJtpKwWVGUJLNnIGzZBHg1UsFtcgD907+YEOPH8a4XXd7m8x+bbM4X6w==
+mdn-browser-compat-data@1.0.37:
+  version "1.0.37"
+  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-1.0.37.tgz#d21fac4f3a88bda0f11158bbbd5e74747e3c81ec"
+  integrity sha512-yNXAOlAHwoZEJ1Wb/dcXLVkp+Rpl2WmTEXDUKKjete/+1g7oMdv1wWZocMZqJh3u9BmekC6Gf96ZSlRUdzdNpg==
   dependencies:
     extend "3.0.2"
 
@@ -6508,9 +6508,9 @@ node-fetch-npm@^2.0.2:
     safe-buffer "^5.1.1"
 
 node-fetch@^2.3.0, node-fetch@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-gyp@^5.0.2:
   version "5.1.0"
@@ -8799,9 +8799,9 @@ unexpected-bluebird@2.9.34-longstack2:
   integrity sha1-SaysdTsFVt7WAlIQ7pYYIwfSssk=
 
 unexpected@^11.2.0:
-  version "11.14.0"
-  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.14.0.tgz#0a021a3210d50b395e8832a0d7aa83855fe65466"
-  integrity sha512-N4+XQRZjonRVue6ESYt3Hkt9e5p+mQJeoM8vNaQNae+RaWC0KjC81SAEXnDWdWXzH2N2To11eIDgE7ByVOjecQ==
+  version "11.15.0"
+  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.15.0.tgz#dbd118a7f55bba8e1f721bbab074da2adc92e497"
+  integrity sha512-VOyn+Hu4MrQ9n6bNLy0DZbKz7qUKq7NqYKh5GRy4EncQqFI2sFWxr7XZUDkMAB9eb2IKuVH0Qv1ohJCeYWwwkw==
   dependencies:
     array-changes "3.0.1"
     array-changes-async "3.0.1"
