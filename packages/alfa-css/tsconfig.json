@@ -13,6 +13,7 @@
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
+    "src/value/calculation.ts",
     "src/value/color.ts",
     "src/value/color/current.ts",
     "src/value/color/hex.ts",
@@ -43,7 +44,8 @@
     "src/value/url.ts",
     "test/syntax/declaration.spec.ts",
     "test/syntax/lexer.spec.ts",
-    "test/syntax/nth.spec.ts"
+    "test/syntax/nth.spec.ts",
+    "test/value/calculation.spec.ts"
   ],
   "references": [
     {

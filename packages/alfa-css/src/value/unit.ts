@@ -59,6 +59,14 @@ export namespace Unit {
     return Length.isRelative(input) || Length.isAbsolute(input);
   }
 
+  export function isRelativeLength(input: string): input is Length.Relative {
+    return Length.isRelative(input);
+  }
+
+  export function isAbsoluteLength(input: string): input is Length.Absolute {
+    return Length.isAbsolute(input);
+  }
+
   /**
    * @see https://drafts.csswg.org/css-values/#angles
    */
