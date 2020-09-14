@@ -1,3 +1,10 @@
+export type Unit =
+  | Unit.Length
+  | Unit.Angle
+  | Unit.Time
+  | Unit.Frequency
+  | Unit.Resolution;
+
 export namespace Unit {
   export namespace Length {
     /**

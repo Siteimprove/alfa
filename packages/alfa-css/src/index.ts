@@ -10,6 +10,7 @@ export * from "./value/color/named";
 export * from "./value/color/rgb";
 export * from "./value/color/system";
 export * from "./value/converter";
+export * from "./value/dimension";
 export * from "./value/gradient";
 export * from "./value/gradient/linear";
 export * from "./value/image";

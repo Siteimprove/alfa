@@ -12,6 +12,7 @@ import { Function } from "../syntax/function";
 import { Value } from "../value";
 
 import { Angle } from "./angle";
+import { Dimension } from "./dimension";
 import { Length } from "./length";
 import { Number } from "./number";
 import { Numeric } from "./numeric";
@@ -19,10 +20,15 @@ import { Percentage } from "./percentage";
 import { Unit } from "./unit";
 
 const { map, either, delimited, pair, option } = Parser;
+const { isPercentage } = Percentage;
+const { isNumber } = Number;
+const { isDimension } = Dimension;
+const { isLength } = Length;
+const { isAngle } = Angle;
 
 export class Calculation extends Value<"calculation"> {
   public static of(root: Calculation.Node): Calculation {
-    return new Calculation(root.simplify());
+    return new Calculation(root.reduce());
   }
 
   private readonly _root: Calculation.Node;
@@ -68,7 +74,7 @@ export namespace Calculation {
     /**
      * @see https://drafts.csswg.org/css-values/#simplify-a-calculation-tree
      */
-    public abstract simplify(): Node;
+    public abstract reduce(): Node;
 
     public abstract equals(value: unknown): value is this;
 
@@ -107,11 +113,15 @@ export namespace Calculation {
       return this._value;
     }
 
-    public simplify(): Node {
+    public reduce(): Node {
       const value = this._value;
 
-      if (Length.isLength(value) && Unit.isAbsoluteLength(value.unit)) {
+      if (isLength(value) && value.isAbsolute()) {
         return Value.of(value.withUnit("px"));
+      }
+
+      if (isAngle(value)) {
+        return Value.of(value.withUnit("deg"));
       }
 
       return this;
@@ -199,22 +209,32 @@ export namespace Calculation {
       return "sum";
     }
 
-    public simplify(): Node {
-      const [fst, snd] = this._operands.map((operand) => operand.simplify());
+    public reduce(): Node {
+      const [fst, snd] = this._operands.map((operand) => operand.reduce());
 
       if (fst instanceof Value && snd instanceof Value) {
-        if (Number.isNumber(fst.value) && Number.isNumber(snd.value)) {
+        if (isNumber(fst.value) && isNumber(snd.value)) {
           return Value.of(Number.of(fst.value.value + snd.value.value));
         }
 
+        if (isPercentage(fst.value) && isPercentage(snd.value)) {
+          return Value.of(Percentage.of(fst.value.value + snd.value.value));
+        }
+
         if (
-          Length.isLength(fst.value) &&
-          Length.isLength(snd.value) &&
+          isDimension(fst.value) &&
+          isDimension(snd.value) &&
           fst.value.unit === snd.value.unit
         ) {
-          return Value.of(
-            Length.of(fst.value.value + snd.value.value, fst.value.unit)
-          );
+          const { unit } = fst.value;
+
+          if (Unit.isLength(unit)) {
+            return Value.of(Length.of(fst.value.value + snd.value.value, unit));
+          }
+
+          if (Unit.isAngle(unit)) {
+            return Value.of(Angle.of(fst.value.value + snd.value.value, unit));
+          }
         }
       }
 
@@ -241,12 +261,26 @@ export namespace Calculation {
       return "negate";
     }
 
-    public simplify(): Node {
-      const [operand] = this._operands.map((operand) => operand.simplify());
+    public reduce(): Node {
+      const [operand] = this._operands.map((operand) => operand.reduce());
 
       if (operand instanceof Value) {
-        if (Number.isNumber(operand.value)) {
-          return Value.of(Number.of(-1 * operand.value.value));
+        const { value } = operand;
+
+        if (isNumber(value)) {
+          return Value.of(Number.of(0 - value.value));
+        }
+
+        if (isPercentage(value)) {
+          return Value.of(Percentage.of(0 - value.value));
+        }
+
+        if (isLength(value)) {
+          return Value.of(Length.of(0 - value.value, value.unit));
+        }
+
+        if (isAngle(value)) {
+          return Value.of(Angle.of(0 - value.value, value.unit));
         }
       }
 
@@ -273,11 +307,38 @@ export namespace Calculation {
       return "product";
     }
 
-    public simplify(): Node {
-      const [fst, snd] = this._operands.map((operand) => operand.simplify());
+    public reduce(): Node {
+      const [fst, snd] = this._operands.map((operand) => operand.reduce());
 
       if (fst instanceof Value && snd instanceof Value) {
-        return Value.of(Number.of(fst.value.value * snd.value.value));
+        let multipler: number | undefined;
+        let value!: Numeric;
+
+        if (isNumber(fst.value)) {
+          multipler = fst.value.value;
+          value = snd.value;
+        } else if (isNumber(snd.value)) {
+          multipler = snd.value.value;
+          value = fst.value;
+        }
+
+        if (multipler !== undefined) {
+          if (isNumber(value)) {
+            return Value.of(Number.of(multipler * value.value));
+          }
+
+          if (isPercentage(value)) {
+            return Value.of(Percentage.of(multipler * value.value));
+          }
+
+          if (isLength(value)) {
+            return Value.of(Length.of(multipler * value.value, value.unit));
+          }
+
+          if (isAngle(value)) {
+            return Value.of(Angle.of(multipler * value.value, value.unit));
+          }
+        }
       }
 
       return new Product([fst, snd]);
@@ -299,11 +360,15 @@ export namespace Calculation {
       return "invert";
     }
 
-    public simplify(): Node {
-      const [operand] = this._operands.map((operand) => operand.simplify());
+    public reduce(): Node {
+      const [operand] = this._operands.map((operand) => operand.reduce());
 
       if (operand instanceof Value) {
-        return Value.of(Number.of(1 / operand.value.value));
+        const { value } = operand;
+
+        if (isNumber(value)) {
+          return Value.of(Number.of(1 / value.value));
+        }
       }
 
       if (operand instanceof Invert) {

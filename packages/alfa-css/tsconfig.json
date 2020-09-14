@@ -22,6 +22,7 @@
     "src/value/color/rgb.ts",
     "src/value/color/system.ts",
     "src/value/converter.ts",
+    "src/value/dimension.ts",
     "src/value/gradient.ts",
     "src/value/gradient/linear.ts",
     "src/value/image.ts",
