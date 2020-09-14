@@ -505,6 +505,41 @@ test(`.from() determines the name of an <input> element with both a <label>
   ]);
 });
 
+test(`.from() determines the name of a <select> element with a <label> parent
+      element with child text content`, (t) => {
+  const text = h.text("Hello world");
+
+  const select = <select />;
+
+  const label = (
+    <label>
+      {text}
+      {select}
+    </label>
+  );
+
+  <form>{label}</form>;
+
+  t.deepEqual(Name.from(select, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.ancestor(
+            label,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                label,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
 test(`.from() determines the name of a <button> element with a role of
       presentation`, (t) => {
   const text = h.text("Hello world");

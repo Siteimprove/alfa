@@ -582,7 +582,8 @@ const Features: Features = {
         for (const _ of element.attribute("multiple")) {
           yield Attribute.of("aria-multiselectable", "true");
         }
-      }
+      },
+      nameFromLabel
     ),
 
     table: html(
