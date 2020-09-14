@@ -27,9 +27,9 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): Elements with neither a `role`, explicit or implicit, nor `aria-` attributes are now correctly excluded from the accessibility tree and instead map to `Container` instances. ([#356](../../pull/356))
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): The `Name` was now correctly implements a `#toString()` method to ensure correct stringification of `Node` instances.
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `Name` was now correctly implements a `#toString()` method to ensure correct stringification of `Node` instances. ([#380](../../pull/380))
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): `<select>` elements now correctly get their name from connected `<label>` elements.
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<select>` elements now correctly get their name from connected `<label>` elements. ([#380](../../pull/380))
 
 - [@siteimprove/alfa-lazy](packages/alfa-lazy): Fix a bug where `#map()` and `#flatMap()` could cause a `Lazy` to be evaluated more than once. ([#355](../../pull/355))
 
