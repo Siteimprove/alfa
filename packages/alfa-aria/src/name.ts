@@ -63,6 +63,10 @@ export class Name implements Equatable, Serializable {
       sources: this._sources.map((source) => source.toJSON()),
     };
   }
+
+  public toString(): string {
+    return this._value;
+  }
 }
 
 export namespace Name {
