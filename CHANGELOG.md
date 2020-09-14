@@ -35,6 +35,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-map](packages/alfa-map): Fix a bug where `#size` was incorrectly reported for certain combinations of keys.
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R86 is now exported from the package.
+
 ## [0.4.1](../../compare/v0.4.0...v0.4.1) (2020-08-27)
 
 ### Changed
