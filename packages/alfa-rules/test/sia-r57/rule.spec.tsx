@@ -62,3 +62,12 @@ test("evaluate() is not applicable to whitespace only text nodes", async (t) => 
 
   t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
 });
+
+test("evaluate() is not applicable to descendant of iframe", async (t) => {
+  // space, non breaking space
+  const document = Document.of([
+    <iframe><div>Hello World!</div></iframe>
+  ]);
+
+  t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
+});
