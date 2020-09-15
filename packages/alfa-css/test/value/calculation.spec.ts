@@ -19,7 +19,7 @@ function parse(t: Assertions, input: string, expected: Calculation.JSON) {
 test(".parse() parses an addition expression of numbers", (t) => {
   parse(t, "calc(1 + 2)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
@@ -32,7 +32,7 @@ test(".parse() parses an addition expression of numbers", (t) => {
 test(".parse() parses an addition expression of percentages", (t) => {
   parse(t, "calc(1% + 2%)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "percentage",
@@ -45,7 +45,7 @@ test(".parse() parses an addition expression of percentages", (t) => {
 test(".parse() parses an addition expression of absolute lengths", (t) => {
   parse(t, "calc(1px + 2px)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "length",
@@ -59,7 +59,7 @@ test(".parse() parses an addition expression of absolute lengths", (t) => {
 test(".parse() parses an addition expression of relative lengths", (t) => {
   parse(t, "calc(1em + 2em)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "length",
@@ -73,7 +73,7 @@ test(".parse() parses an addition expression of relative lengths", (t) => {
 test(".parse() parses an addition expression of mixed lengths", (t) => {
   parse(t, "calc(1px + 2em)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "sum",
       operands: [
         {
@@ -97,10 +97,36 @@ test(".parse() parses an addition expression of mixed lengths", (t) => {
   });
 });
 
+test(".parse() parses an addition expression of a length and a percentage", (t) => {
+  parse(t, "calc(1px + 2%", {
+    type: "calculation",
+    expression: {
+      type: "sum",
+      operands: [
+        {
+          type: "value",
+          value: {
+            type: "length",
+            value: 1,
+            unit: "px",
+          },
+        },
+        {
+          type: "value",
+          value: {
+            type: "percentage",
+            value: 0.02,
+          },
+        },
+      ],
+    },
+  });
+});
+
 test(".parse() parses a multiplication expression of numbers", (t) => {
   parse(t, "calc(2 * 3)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
@@ -113,7 +139,7 @@ test(".parse() parses a multiplication expression of numbers", (t) => {
 test(".parse() parses a multiplication expression of a number and a percentage", (t) => {
   parse(t, "calc(2 * 3%)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "percentage",
@@ -126,7 +152,7 @@ test(".parse() parses a multiplication expression of a number and a percentage",
 test(".parse() parses a multiplication expression of a number and a length", (t) => {
   parse(t, "calc(2 * 3px)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "length",
@@ -140,7 +166,7 @@ test(".parse() parses a multiplication expression of a number and a length", (t)
 test(".parse() gives higher precedence to * and / than + and -", (t) => {
   parse(t, "calc(2 * 3 + 4)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
@@ -151,7 +177,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 
   parse(t, "calc(2 * 3 - 4)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
@@ -162,7 +188,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 
   parse(t, "calc(3 / 2 + 4)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
@@ -173,7 +199,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 
   parse(t, "calc(3 / 2 - 4)", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
@@ -186,7 +212,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 test(".parse() parses a nested calc() function", (t) => {
   parse(t, "calc(2 * calc(1 + 2))", {
     type: "calculation",
-    root: {
+    expression: {
       type: "value",
       value: {
         type: "number",
