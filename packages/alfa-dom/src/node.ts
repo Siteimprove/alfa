@@ -8,7 +8,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-const { equals } = Predicate;
+import { hasName } from "./node/element/predicate/has-name";
+
+const { and, equals } = Predicate;
 
 export abstract class Node
   implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
@@ -262,10 +264,10 @@ export abstract class Node
   }
 
   /**
-   * Nodes that represents nothing and thus should not be rendered or included in the accessibility tree.
-   * This is descendants of `<iframe>`, plus the `<template>` element who is not meant to be rendered.
+   * Nodes that represents nothing and thus should not be rendered nor included in the accessibility tree.
+   * These are `<template>` elements and descendants of `<iframe>`.
    *
-   * It is not fully clear what els should fit here. Notably because other non-void elements with "Nothing" as
+   * It is not fully clear what else should fit here. Notably because other non-void elements with "Nothing" as
    * content model (option and colgroup, in some cases) tend to be weirdly patched up by HTML parsing (child
    * causes an early termination of the element and is pushed out of it).
    *
@@ -276,12 +278,12 @@ export abstract class Node
     return (
       // @see https://html.spec.whatwg.org/multipage/scripting.html#the-template-element
       // "In a rendering, the template element represents nothing."
-      and(isElement, hasName("template"))(this) ||
+      and(Element.isElement, hasName("template"))(this) ||
 
       // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
       // "Descendants of iframe elements represent nothing. (In legacy user agents that do not support iframe elements,
       // the contents would be parsed as markup that could act as fallback content.)"
-      this.ancestors().some(and(isElement, hasName("iframe")))
+      this.ancestors().some(and(Element.isElement, hasName("iframe")))
     )
   }
 }
@@ -322,9 +324,6 @@ import { Element } from "./node/element";
 import { Fragment } from "./node/fragment";
 import { Text } from "./node/text";
 import { Type } from "./node/type";
-import {hasName} from "./node/element/predicate/has-name";
-import and = Predicate.and;
-import isElement = Element.isElement;
 
 export namespace Node {
   export interface JSON {
