@@ -15,7 +15,6 @@ import { Value } from "../value";
 
 import { Angle } from "./angle";
 import { Dimension } from "./dimension";
-import { Integer } from "./integer";
 import { Length } from "./length";
 import { Number } from "./number";
 import { Numeric } from "./numeric";
@@ -25,13 +24,16 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
 
 const { map, flatMap, either, delimited, pair, option } = Parser;
-const { isPercentage } = Percentage;
-const { isNumber } = Number;
-const { isInteger } = Integer;
+
+const { isAngle } = Angle;
 const { isDimension } = Dimension;
 const { isLength } = Length;
-const { isAngle } = Angle;
+const { isNumber } = Number;
+const { isPercentage } = Percentage;
 
+/**
+ * @see https://drafts.csswg.org/css-values/#math
+ */
 export class Calculation extends Value<"calculation"> {
   public static of(expression: Calculation.Expression): Calculation {
     return new Calculation(expression.reduce((value) => value));
@@ -85,7 +87,7 @@ export namespace Calculation {
   }
 
   /**
-   * @see https://drafts.css-houdini.org/css-typed-om-1/#numeric-typing
+   * @see https://drafts.css-houdini.org/css-typed-om/#numeric-typing
    *
    * @remarks
    * The shared `Value` interface already uses the term "type" to denote the
@@ -132,6 +134,9 @@ export namespace Calculation {
       return this._hint;
     }
 
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match
+     */
     public is(
       kind?: Kind.Base,
       value: number = 1,
@@ -155,7 +160,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-add-two-types
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-add-two-types
      */
     public add(kind: Kind): Result<Kind, string> {
       let a: Kind = this;
@@ -208,7 +213,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-multiply-two-types
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-multiply-two-types
      */
     public multiply(kind: Kind): Result<Kind, string> {
       let a: Kind = this;
@@ -243,7 +248,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-invert-a-type
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-invert-a-type
      */
     public invert(): Kind {
       return new Kind(
@@ -256,7 +261,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om-1/#apply-the-percent-hint
+     * @see https://drafts.css-houdini.org/css-typed-om/#apply-the-percent-hint
      */
     public apply(hint: Kind.Hint): Kind {
       return new Kind(
@@ -297,6 +302,9 @@ export namespace Calculation {
       hint: Hint | null;
     }
 
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type
+     */
     export type Map = Record<
       {
         [K in Base]: number;
@@ -304,7 +312,7 @@ export namespace Calculation {
     >;
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-base-type
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type
      */
     export type Base =
       | "length"
@@ -314,9 +322,15 @@ export namespace Calculation {
       | "resolution"
       | "percentage";
 
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-percent-hint
+     */
     export type Hint = Exclude<Kind.Base, "percentage">;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-values/#calculation-tree
+   */
   export abstract class Expression implements Equatable, Serializable {
     public abstract get type(): string;
 
@@ -350,6 +364,11 @@ export namespace Calculation {
         type: this.type,
       };
     }
+
+    /**
+     * @see https://drafts.csswg.org/css-values/#serialize-a-calculation-tree
+     */
+    public abstract toString(): string;
   }
 
   export namespace Expression {
@@ -379,10 +398,6 @@ export namespace Calculation {
     public get kind(): Kind {
       const value = this._value;
 
-      if (isNumber(value) || isInteger(value)) {
-        return Kind.of();
-      }
-
       if (isPercentage(value)) {
         return Kind.of("percentage");
       }
@@ -395,7 +410,7 @@ export namespace Calculation {
         return Kind.of("angle");
       }
 
-      throw new Error(`Invalid value ${value}`);
+      return Kind.of();
     }
 
     public get value(): Numeric {
@@ -445,6 +460,9 @@ export namespace Calculation {
     return expression.type === "value";
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-values/#calculation-tree-operator-nodes
+   */
   export abstract class Operation<
     O extends Array<Expression> = Array<Expression>
   > extends Expression {
@@ -584,10 +602,6 @@ export namespace Calculation {
 
         if (isNumber(value)) {
           return Value.of(Number.of(0 - value.value));
-        }
-
-        if (isInteger(value)) {
-          return Value.of(Integer.of(0 - value.value));
         }
 
         if (isPercentage(value)) {
