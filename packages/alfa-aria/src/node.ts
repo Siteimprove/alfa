@@ -316,6 +316,11 @@ export namespace Node {
     claimed: Set<dom.Node>,
     owned: Map<dom.Element, Sequence<dom.Node>>
   ): Branched<Node, Browser> {
+    // If the node represents nothing, the subtree is not exposed at all.
+    if (node.representsNothing()) {
+      return Branched.of(Inert.of(node));
+    }
+
     return cache.get(device, Cache.empty).get(node, () => {
       // Text nodes are _always_ exposed in the accessibility tree.
       if (dom.Text.isText(node)) {
