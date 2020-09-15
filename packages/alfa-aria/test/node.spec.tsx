@@ -262,3 +262,24 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
     ],
   ]);
 });
+
+test(`.from() excludes nodes that represent nothing`, t => {
+  const div = <div>Hello</div>;
+  const iframe = <iframe>{div}</iframe>;
+
+  t.deepEqual(Node.from(div, device).toJSON(), [
+    [
+      Inert.of(div).toJSON(),
+      []
+    ]
+  ]);
+
+  const template = <template>Hello</template>;
+
+  t.deepEqual(Node.from(template, device).toJSON(), [
+    [
+      Inert.of(template).toJSON(),
+      []
+    ]
+  ]);
+});
