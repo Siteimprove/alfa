@@ -4,7 +4,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Record<T>
@@ -21,12 +23,12 @@ export class Record<T>
   }
 
   private readonly _indices: Indices<T>;
-  private readonly _keys: Array<Record.Key<T>>;
+  private readonly _keys: Readonly<Array<Record.Key<T>>>;
   private readonly _values: List<Record.Value<T>>;
 
   private constructor(
     indices: Indices<T>,
-    keys: Array<Record.Key<T>>,
+    keys: Readonly<Array<Record.Key<T>>>,
     values: List<T[Record.Key<T>]>
   ) {
     this._indices = indices;
@@ -71,7 +73,23 @@ export class Record<T>
     );
   }
 
-  public equals(value: unknown): value is this {
+  public some(
+    predicate: Predicate<Record.Value<T>, Record.Value<T>, [Record.Key<T>]>
+  ): boolean {
+    return Iterable.some(this, ([key, value]) => predicate(value, key));
+  }
+
+  public every(
+    predicate: Predicate<Record.Value<T>, Record.Value<T>, [Record.Key<T>]>
+  ): boolean {
+    return Iterable.every(this, ([key, value]) => predicate(value, key));
+  }
+
+  public equals(value: this): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Record &&
       value._keys.length === this._keys.length &&
@@ -149,7 +167,7 @@ export namespace Record {
   }
 }
 
-type Indices<T> = { [K in keyof T]: number };
+type Indices<T> = { readonly [K in keyof T]: number };
 
 namespace Indices {
   export function from<T>(keys: Iterable<Record.Key<T>>): Indices<T> {

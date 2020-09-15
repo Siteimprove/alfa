@@ -1,8 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
+import { Record } from "@siteimprove/alfa-record";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -13,51 +15,65 @@ import { Value } from "../value";
 
 import { Angle } from "./angle";
 import { Dimension } from "./dimension";
+import { Integer } from "./integer";
 import { Length } from "./length";
 import { Number } from "./number";
 import { Numeric } from "./numeric";
 import { Percentage } from "./percentage";
 import { Unit } from "./unit";
+import { Option, None } from "@siteimprove/alfa-option";
+import { Result, Err } from "@siteimprove/alfa-result";
 
-const { map, either, delimited, pair, option } = Parser;
+const { map, flatMap, either, delimited, pair, option } = Parser;
 const { isPercentage } = Percentage;
 const { isNumber } = Number;
+const { isInteger } = Integer;
 const { isDimension } = Dimension;
 const { isLength } = Length;
 const { isAngle } = Angle;
 
 export class Calculation extends Value<"calculation"> {
-  public static of(root: Calculation.Node): Calculation {
-    return new Calculation(root.reduce());
+  public static of(expression: Calculation.Expression): Calculation {
+    return new Calculation(expression.reduce((value) => value));
   }
 
-  private readonly _root: Calculation.Node;
+  private readonly _expression: Calculation.Expression;
 
-  private constructor(root: Calculation.Node) {
+  private constructor(expression: Calculation.Expression) {
     super();
 
-    this._root = root;
+    this._expression = expression;
   }
 
   public get type(): "calculation" {
     return "calculation";
   }
 
+  public get expression(): Calculation.Expression {
+    return this._expression;
+  }
+
+  public reduce(resolve: Mapper<Numeric>): Calculation {
+    return new Calculation(this._expression.reduce(resolve));
+  }
+
   public hash(hash: Hash): void {}
 
   public equals(value: unknown): value is this {
-    return value instanceof Calculation && value._root.equals(this._root);
+    return (
+      value instanceof Calculation && value._expression.equals(this._expression)
+    );
   }
 
   public toJSON(): Calculation.JSON {
     return {
       type: "calculation",
-      root: this._root.toJSON(),
+      expression: this._expression.toJSON(),
     };
   }
 
   public toString(): string {
-    return `calc(${this._root})`;
+    return `calc(${this._expression})`;
   }
 }
 
@@ -65,34 +81,285 @@ export namespace Calculation {
   export interface JSON {
     [key: string]: json.JSON;
     type: "calculation";
-    root: Node.JSON;
+    expression: Expression.JSON;
   }
 
-  export abstract class Node implements Equatable, Serializable {
+  /**
+   * @see https://drafts.css-houdini.org/css-typed-om-1/#numeric-typing
+   *
+   * @remarks
+   * The shared `Value` interface already uses the term "type" to denote the
+   * different types of CSS values. We therefore use the term "kind" to denote
+   * the type of a calculation.
+   */
+  export class Kind implements Equatable, Serializable {
+    public static of(kind?: Kind.Base): Kind {
+      const kinds = this._empty._kinds;
+
+      return new Kind(kind === undefined ? kinds : kinds.set(kind, 1), None);
+    }
+
+    private static _empty = new Kind(
+      Record.of({
+        length: 0,
+        angle: 0,
+        time: 0,
+        frequency: 0,
+        resolution: 0,
+        percentage: 0,
+      }),
+      None
+    );
+
+    public static empty(): Kind {
+      return this._empty;
+    }
+
+    private readonly _kinds: Kind.Map;
+
+    private readonly _hint: Option<Kind.Hint>;
+
+    private constructor(kinds: Kind.Map, hint: Option<Kind.Hint>) {
+      this._kinds = kinds;
+      this._hint = hint;
+    }
+
+    public get kinds(): Kind.Map {
+      return this._kinds;
+    }
+
+    public get hint(): Option<Kind.Hint> {
+      return this._hint;
+    }
+
+    public is(
+      kind?: Kind.Base,
+      value: number = 1,
+      hinted: boolean = kind === "percentage"
+    ): boolean {
+      for (const entry of this._kinds) {
+        if (entry[1] === 0) {
+          continue;
+        }
+
+        if (kind !== undefined) {
+          if (entry[0] === kind && entry[1] === value) {
+            break;
+          }
+        }
+
+        return false;
+      }
+
+      return this._hint.isNone() || hinted;
+    }
+
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-add-two-types
+     */
+    public add(kind: Kind): Result<Kind, string> {
+      let a: Kind = this;
+      let b: Kind = kind;
+
+      if (a._hint.some((a) => b._hint.some((b) => a !== b))) {
+        return Err.of(`Cannot add types ${a} and ${b}`);
+      }
+
+      if (a._hint.isNone()) {
+        for (const hint of b._hint) {
+          a = a.apply(hint);
+        }
+      }
+
+      if (b._hint.isNone()) {
+        for (const hint of a._hint) {
+          b = b.apply(hint);
+        }
+      }
+
+      if (a._kinds.equals(b._kinds)) {
+        return Result.of(a);
+      }
+
+      if (
+        [a._kinds, b._kinds].some(
+          (kinds) => kinds.get("percentage").get() !== 0
+        ) &&
+        [a._kinds, b._kinds].some((kinds) =>
+          kinds.some((value, kind) => kind !== "percentage" && value !== 0)
+        )
+      ) {
+        for (const hint of [
+          "length",
+          "angle",
+          "time",
+          "frequency",
+          "resolution",
+        ] as const) {
+          const kind = a.apply(hint);
+
+          if (kind._kinds.equals(b.apply(hint)._kinds)) {
+            return Result.of(kind);
+          }
+        }
+      }
+
+      return Err.of(`Cannot add types ${a} and ${b}`);
+    }
+
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-multiply-two-types
+     */
+    public multiply(kind: Kind): Result<Kind, string> {
+      let a: Kind = this;
+      let b: Kind = kind;
+
+      if (a._hint.some((a) => b._hint.some((b) => a !== b))) {
+        return Err.of(`Cannot multiply types ${a} and ${b}`);
+      }
+
+      if (a._hint.isNone()) {
+        for (const hint of b._hint) {
+          a = a.apply(hint);
+        }
+      }
+
+      if (b._hint.isNone()) {
+        for (const hint of a._hint) {
+          b = b.apply(hint);
+        }
+      }
+
+      return Result.of(
+        new Kind(
+          b._kinds.reduce(
+            (kinds, value, kind) =>
+              kinds.set(kind, kinds.get(kind).get() + value),
+            a._kinds
+          ),
+          a._hint
+        )
+      );
+    }
+
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-invert-a-type
+     */
+    public invert(): Kind {
+      return new Kind(
+        this._kinds.reduce(
+          (kinds, value, kind) => kinds.set(kind, -1 * value),
+          this._kinds
+        ),
+        None
+      );
+    }
+
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om-1/#apply-the-percent-hint
+     */
+    public apply(hint: Kind.Hint): Kind {
+      return new Kind(
+        this._kinds
+          .set(
+            hint,
+            this._kinds.get(hint).get() + this._kinds.get("percentage").get()
+          )
+          .set("percentage", 0),
+        Option.of(hint)
+      );
+    }
+
+    public equals(value: this): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        value instanceof Kind &&
+        value._kinds.equals(this._kinds) &&
+        value._hint.equals(this._hint)
+      );
+    }
+
+    public toJSON(): Kind.JSON {
+      return {
+        kinds: this._kinds.toArray(),
+        hint: this._hint.getOr(null),
+      };
+    }
+  }
+
+  export namespace Kind {
+    export interface JSON {
+      [key: string]: json.JSON;
+      kinds: Array<[Base, number]>;
+      hint: Hint | null;
+    }
+
+    export type Map = Record<
+      {
+        [K in Base]: number;
+      }
+    >;
+
+    /**
+     * @see https://drafts.css-houdini.org/css-typed-om-1/#cssnumericvalue-base-type
+     */
+    export type Base =
+      | "length"
+      | "angle"
+      | "time"
+      | "frequency"
+      | "resolution"
+      | "percentage";
+
+    export type Hint = Exclude<Kind.Base, "percentage">;
+  }
+
+  export abstract class Expression implements Equatable, Serializable {
     public abstract get type(): string;
+
+    public abstract get kind(): Kind;
 
     /**
      * @see https://drafts.csswg.org/css-values/#simplify-a-calculation-tree
      */
-    public abstract reduce(): Node;
+    public abstract reduce(resolve: Mapper<Numeric>): Expression;
+
+    public toLength(): Option<Length> {
+      if (isValueExpression(this) && isLength(this.value)) {
+        return Option.of(this.value);
+      }
+
+      return None;
+    }
+
+    public toPercentage(): Option<Percentage> {
+      if (isValueExpression(this) && isPercentage(this.value)) {
+        return Option.of(this.value);
+      }
+
+      return None;
+    }
 
     public abstract equals(value: unknown): value is this;
 
-    public toJSON(): Node.JSON {
+    public toJSON(): Expression.JSON {
       return {
         type: this.type,
       };
     }
   }
 
-  export namespace Node {
+  export namespace Expression {
     export interface JSON {
       [key: string]: json.JSON;
       type: string;
     }
   }
 
-  export class Value extends Node {
+  export class Value extends Expression {
     public static of(value: Numeric): Value {
       return new Value(value);
     }
@@ -109,11 +376,33 @@ export namespace Calculation {
       return "value";
     }
 
+    public get kind(): Kind {
+      const value = this._value;
+
+      if (isNumber(value) || isInteger(value)) {
+        return Kind.of();
+      }
+
+      if (isPercentage(value)) {
+        return Kind.of("percentage");
+      }
+
+      if (isLength(value)) {
+        return Kind.of("length");
+      }
+
+      if (isAngle(value)) {
+        return Kind.of("angle");
+      }
+
+      throw new Error(`Invalid value ${value}`);
+    }
+
     public get value(): Numeric {
       return this._value;
     }
 
-    public reduce(): Node {
+    public reduce(resolve: Mapper<Numeric>): Expression {
       const value = this._value;
 
       if (isLength(value) && value.isAbsolute()) {
@@ -124,7 +413,7 @@ export namespace Calculation {
         return Value.of(value.withUnit("deg"));
       }
 
-      return this;
+      return Value.of(resolve(value));
     }
 
     public equals(value: unknown): value is this {
@@ -144,25 +433,37 @@ export namespace Calculation {
   }
 
   export namespace Value {
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Expression.JSON {
       type: "value";
       value: Numeric.JSON;
     }
   }
 
-  export abstract class Operation<
-    O extends Array<Node> = Array<Node>
-  > extends Node {
-    protected readonly _operands: Readonly<O>;
+  export function isValueExpression(
+    expression: Expression
+  ): expression is Value {
+    return expression.type === "value";
+  }
 
-    protected constructor(operands: Readonly<O>) {
+  export abstract class Operation<
+    O extends Array<Expression> = Array<Expression>
+  > extends Expression {
+    protected readonly _operands: Readonly<O>;
+    protected readonly _kind: Kind;
+
+    protected constructor(operands: Readonly<O>, kind: Kind) {
       super();
 
       this._operands = operands;
+      this._kind = kind;
     }
 
     public get operands(): Readonly<O> {
       return this._operands;
+    }
+
+    public get kind(): Kind {
+      return this._kind;
     }
 
     public equals(value: this): value is this {
@@ -183,36 +484,44 @@ export namespace Calculation {
   }
 
   export namespace Operation {
-    export interface JSON extends Node.JSON {
-      operands: Array<Node.JSON>;
+    export interface JSON extends Expression.JSON {
+      operands: Array<Expression.JSON>;
     }
 
-    export abstract class Unary extends Operation<[Node]> {
-      protected constructor(operands: [Node]) {
-        super(operands);
+    export abstract class Unary extends Operation<[Expression]> {
+      protected constructor(operands: [Expression], kind: Kind) {
+        super(operands, kind);
       }
     }
 
-    export abstract class Binary extends Operation<[Node, Node]> {
-      protected constructor(operands: [Node, Node]) {
-        super(operands);
+    export abstract class Binary extends Operation<[Expression, Expression]> {
+      protected constructor(operands: [Expression, Expression], kind: Kind) {
+        super(operands, kind);
       }
     }
   }
 
   export class Sum extends Operation.Binary {
-    public static of(...operands: [Node, Node]): Sum {
-      return new Sum(operands);
+    public static of(
+      ...operands: [Expression, Expression]
+    ): Result<Sum, string> {
+      const [fst, snd] = operands;
+
+      const kind = fst.kind.add(snd.kind);
+
+      return kind.map((kind) => new Sum(operands, kind));
     }
 
     public get type(): "sum" {
       return "sum";
     }
 
-    public reduce(): Node {
-      const [fst, snd] = this._operands.map((operand) => operand.reduce());
+    public reduce(resolve: Mapper<Numeric>): Expression {
+      const [fst, snd] = this._operands.map((operand) =>
+        operand.reduce(resolve)
+      );
 
-      if (fst instanceof Value && snd instanceof Value) {
+      if (isValueExpression(fst) && isValueExpression(snd)) {
         if (isNumber(fst.value) && isNumber(snd.value)) {
           return Value.of(Number.of(fst.value.value + snd.value.value));
         }
@@ -238,13 +547,13 @@ export namespace Calculation {
         }
       }
 
-      return new Sum([fst, snd]);
+      return new Sum([fst, snd], this._kind);
     }
 
     public toString(): string {
       const [fst, snd] = this._operands;
 
-      if (snd instanceof Negate) {
+      if (isNegateExpression(snd)) {
         return `(${fst} - ${snd.operands[0]})`;
       }
 
@@ -252,23 +561,33 @@ export namespace Calculation {
     }
   }
 
+  export function isSumExpression(expression: Expression): expression is Sum {
+    return expression.type === "sum";
+  }
+
   export class Negate extends Operation.Unary {
-    public static of(operand: Node): Negate {
-      return new Negate([operand]);
+    public static of(operand: Expression): Negate {
+      return new Negate([operand], operand.kind);
     }
 
     public get type(): "negate" {
       return "negate";
     }
 
-    public reduce(): Node {
-      const [operand] = this._operands.map((operand) => operand.reduce());
+    public reduce(resolve: Mapper<Numeric>): Expression {
+      const [operand] = this._operands.map((operand) =>
+        operand.reduce(resolve)
+      );
 
-      if (operand instanceof Value) {
+      if (isValueExpression(operand)) {
         const { value } = operand;
 
         if (isNumber(value)) {
           return Value.of(Number.of(0 - value.value));
+        }
+
+        if (isInteger(value)) {
+          return Value.of(Integer.of(0 - value.value));
         }
 
         if (isPercentage(value)) {
@@ -284,7 +603,7 @@ export namespace Calculation {
         }
       }
 
-      if (operand instanceof Negate) {
+      if (isNegateExpression(operand)) {
         return operand._operands[0];
       }
 
@@ -298,19 +617,33 @@ export namespace Calculation {
     }
   }
 
+  export function isNegateExpression(
+    expression: Expression
+  ): expression is Negate {
+    return expression.type === "negate";
+  }
+
   export class Product extends Operation.Binary {
-    public static of(...operands: [Node, Node]): Product {
-      return new Product(operands);
+    public static of(
+      ...operands: [Expression, Expression]
+    ): Result<Product, string> {
+      const [fst, snd] = operands;
+
+      const kind = fst.kind.multiply(snd.kind);
+
+      return kind.map((kind) => new Product(operands, kind));
     }
 
     public get type(): "product" {
       return "product";
     }
 
-    public reduce(): Node {
-      const [fst, snd] = this._operands.map((operand) => operand.reduce());
+    public reduce(resolve: Mapper<Numeric>): Expression {
+      const [fst, snd] = this._operands.map((operand) =>
+        operand.reduce(resolve)
+      );
 
-      if (fst instanceof Value && snd instanceof Value) {
+      if (isValueExpression(fst) && isValueExpression(snd)) {
         let multipler: number | undefined;
         let value!: Numeric;
 
@@ -341,7 +674,7 @@ export namespace Calculation {
         }
       }
 
-      return new Product([fst, snd]);
+      return new Product([fst, snd], this._kind);
     }
 
     public toString(): string {
@@ -351,19 +684,31 @@ export namespace Calculation {
     }
   }
 
+  export function isProductExpression(
+    expression: Expression
+  ): expression is Product {
+    return expression.type === "product";
+  }
+
   export class Invert extends Operation.Unary {
-    public static of(operand: Node): Invert {
-      return new Invert([operand]);
+    public static of(operand: Expression): Invert {
+      return new Invert([operand], operand.kind.invert());
     }
 
     public get type(): "invert" {
       return "invert";
     }
 
-    public reduce(): Node {
-      const [operand] = this._operands.map((operand) => operand.reduce());
+    public get kind(): Kind {
+      return this._operands[0].kind.invert();
+    }
 
-      if (operand instanceof Value) {
+    public reduce(resolve: Mapper<Numeric>): Expression {
+      const [operand] = this._operands.map((operand) =>
+        operand.reduce(resolve)
+      );
+
+      if (isValueExpression(operand)) {
         const { value } = operand;
 
         if (isNumber(value)) {
@@ -371,7 +716,7 @@ export namespace Calculation {
         }
       }
 
-      if (operand instanceof Invert) {
+      if (isInvertExpression(operand)) {
         return operand._operands[0];
       }
 
@@ -385,17 +730,23 @@ export namespace Calculation {
     }
   }
 
-  let parseSum: Parser<Slice<Token>, Node, string>;
+  export function isInvertExpression(
+    expression: Expression
+  ): expression is Invert {
+    return expression.type === "invert";
+  }
+
+  let parseSum: Parser<Slice<Token>, Expression, string>;
 
   const parseCalc = map(
     Function.parse("calc", (input) => parseSum(input)),
-    ([, node]) => node
+    ([, expression]) => expression
   );
 
   /**
    * @see https://drafts.csswg.org/css-values/#typedef-calc-value
    */
-  const parseValue = either<Slice<Token>, Node, string>(
+  const parseValue = either<Slice<Token>, Expression, string>(
     map(
       either<Slice<Token>, Numeric, string>(
         Number.parse,
@@ -416,7 +767,7 @@ export namespace Calculation {
   /**
    * @see https://drafts.csswg.org/css-values/#typedef-calc-product
    */
-  const parseProduct = map(
+  const parseProduct = flatMap(
     pair(
       parseValue,
       option(
@@ -432,18 +783,24 @@ export namespace Calculation {
         )
       )
     ),
-    ([left, right]) =>
-      right
-        .map(([invert, right]) =>
-          Product.of(left, invert ? Invert.of(right) : right)
-        )
-        .getOr(left)
+    ([left, result]) => {
+      const right = result.map(([invert, right]) =>
+        invert ? Invert.of(right) : right
+      );
+
+      if (right.isNone()) {
+        return (input) => Result.of([input, left]);
+      }
+
+      return (input) =>
+        Product.of(left, right.get()).map((expression) => [input, expression]);
+    }
   );
 
   /**
    * @see https://drafts.csswg.org/css-values/#typedef-calc-sum
    */
-  parseSum = map(
+  parseSum = flatMap(
     pair(
       parseProduct,
       option(
@@ -459,12 +816,18 @@ export namespace Calculation {
         )
       )
     ),
-    ([left, right]) =>
-      right
-        .map(([negate, right]) =>
-          Sum.of(left, negate ? Negate.of(right) : right)
-        )
-        .getOr(left)
+    ([left, result]) => {
+      const right = result.map(([negate, right]) =>
+        negate ? Negate.of(right) : right
+      );
+
+      if (right.isNone()) {
+        return (input) => Result.of([input, left]);
+      }
+
+      return (input) =>
+        Sum.of(left, right.get()).map((expression) => [input, expression]);
+    }
   );
 
   export const parse = map(parseCalc, Calculation.of);

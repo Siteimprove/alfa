@@ -65,6 +65,9 @@
       "path": "../alfa-json"
     },
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-math"
     },
     {
@@ -75,6 +78,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-record"
     },
     {
       "path": "../alfa-result"
