@@ -5,7 +5,7 @@ import { Token } from "../syntax/token";
 
 import { Converter, Convertible } from "./converter";
 import { Unit } from "./unit";
-import { Numeric } from "./numeric";
+import { Dimension } from "./dimension";
 
 const { map, either } = Parser;
 
@@ -13,49 +13,46 @@ const { map, either } = Parser;
  * @see https://drafts.csswg.org/css-values/#lengths
  */
 export class Length<U extends Unit.Length = Unit.Length>
-  extends Numeric<"length">
+  extends Dimension<"length", Unit.Length, U>
   implements Convertible<Unit.Length.Absolute> {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
     return new Length(value, unit);
   }
 
-  private readonly _unit: U;
-
   private constructor(value: number, unit: U) {
-    super(value);
-    this._unit = unit;
+    super(value, unit);
   }
 
   public get type(): "length" {
     return "length";
   }
 
-  public get unit(): U {
-    return this._unit;
-  }
-
   public hasUnit<U extends Unit.Length>(unit: U): this is Length<U> {
     return (this._unit as Unit.Length) === unit;
   }
 
-  public withUnit<U extends Unit.Length.Absolute>(unit: U): Length<U> {
+  public withUnit<U extends Unit.Length>(unit: U): Length<U> {
     if (this.hasUnit(unit)) {
       return this;
     }
 
-    if (Unit.Length.isAbsolute(this._unit)) {
+    if (Unit.isAbsoluteLength(unit) && Unit.isAbsoluteLength(this._unit)) {
       return Length.of(Converter.length(this._value, this._unit, unit), unit);
     }
 
     throw new Error(`Cannot convert ${this._unit} to ${unit}`);
   }
 
+  public isAbsolute(): this is Length<Unit.Length.Absolute> {
+    return Unit.isAbsoluteLength(this._unit);
+  }
+
+  public isRelative(): this is Length<Unit.Length.Relative> {
+    return Unit.isRelativeLength(this._unit);
+  }
+
   public equals(value: unknown): value is this {
-    return (
-      value instanceof Length &&
-      super.equals(value) &&
-      value._unit === this._unit
-    );
+    return value instanceof Length && super.equals(value);
   }
 
   public hash(hash: Hash): void {
@@ -77,9 +74,9 @@ export class Length<U extends Unit.Length = Unit.Length>
 }
 
 export namespace Length {
-  export interface JSON extends Numeric.JSON {
+  export interface JSON extends Dimension.JSON {
     type: "length";
-    unit: string;
+    unit: Unit.Length;
   }
 
   export function isLength(value: unknown): value is Length {
