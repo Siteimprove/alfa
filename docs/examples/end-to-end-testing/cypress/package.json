@@ -7,6 +7,6 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-cypress": "^0.4.1",
-    "cypress": "^3.3.1"
+    "cypress": "^5.2.0"
   }
 }
