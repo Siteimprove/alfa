@@ -5,10 +5,6 @@ import { Style } from "@siteimprove/alfa-style";
 
 export function isRendered(device: Device): Predicate<Node> {
   return (node) => {
-    if (node.representsNothing()) {
-      return false;
-    }
-
     if (Element.isElement(node)) {
       const display = Style.from(node, device).computed("display").value;
 

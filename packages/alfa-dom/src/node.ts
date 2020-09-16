@@ -8,9 +8,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-import { hasName } from "./node/element/predicate/has-name";
-
-const { and, equals } = Predicate;
+const { equals } = Predicate;
 
 export abstract class Node
   implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
@@ -261,30 +259,6 @@ export abstract class Node
     this._frozen = true;
 
     return true;
-  }
-
-  /**
-   * Nodes that represents nothing and thus should not be rendered nor included in the accessibility tree.
-   * These are `<template>` elements and descendants of `<iframe>`.
-   *
-   * It is not fully clear what else should fit here. Notably because other non-void elements with "Nothing" as
-   * content model (option and colgroup, in some cases) tend to be weirdly patched up by HTML parsing (child
-   * causes an early termination of the element and is pushed out of it).
-   *
-   * We may also want to add other content that is only used as fallback, such as some children of `<object>`
-   * or `<video>`. These seem to be elements that are in a "transparent" content model…
-   */
-  public representsNothing(): boolean {
-    return (
-      // @see https://html.spec.whatwg.org/multipage/scripting.html#the-template-element
-      // "In a rendering, the template element represents nothing."
-      and(Element.isElement, hasName("template"))(this) ||
-
-      // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
-      // "Descendants of iframe elements represent nothing. (In legacy user agents that do not support iframe elements,
-      // the contents would be parsed as markup that could act as fallback content.)"
-      this.ancestors().some(and(Element.isElement, hasName("iframe")))
-    )
   }
 }
 
