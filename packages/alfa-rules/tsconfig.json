@@ -113,6 +113,7 @@
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
     "test/common/outcome.ts",
+    "test/common/predicate/is-visible.spec.tsx",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
     "test/sia-r13/rule.spec.tsx",
