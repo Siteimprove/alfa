@@ -6,19 +6,15 @@ import { Style } from "@siteimprove/alfa-style";
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
-const { and, or, not, nand } = Predicate;
+const { and, or, not } = Predicate;
 const { isElement } = Element;
 const { isText } = Text;
 
 export function isVisible(device: Device): Predicate<Node> {
   return and(
-    and(
-      isRendered(device),
-      and(
-        not(isTransparent(device)),
-        nand(or(isElement, isText), isClipped(device))
-      )
-    ),
+    isRendered(device),
+    not(isTransparent(device)),
+    not(and(or(isElement, isText), isClipped(device))),
     (node) => {
       if (Element.isElement(node)) {
         const visibility = Style.from(node, device).computed("visibility")
