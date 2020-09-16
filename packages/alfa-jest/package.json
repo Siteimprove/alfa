@@ -27,7 +27,7 @@
     "@siteimprove/alfa-sequence": "^0.4.0",
     "@siteimprove/alfa-web": "^0.4.0",
     "@types/jest": "^26.0.10",
-    "jest": "^24.1.0"
+    "jest": "^26.4.2"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.4.0"

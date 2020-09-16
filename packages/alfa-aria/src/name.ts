@@ -1,4 +1,5 @@
 import { Branched } from "@siteimprove/alfa-branched";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
@@ -7,7 +8,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Set } from "@siteimprove/alfa-set";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -61,6 +62,10 @@ export class Name implements Equatable, Serializable {
       value: this._value,
       sources: this._sources.map((source) => source.toJSON()),
     };
+  }
+
+  public toString(): string {
+    return this._value;
   }
 }
 
@@ -335,48 +340,123 @@ export namespace Name {
   /**
    * @internal
    */
-  export interface State {
+  export class State {
+    private static _empty = new State([], false, false, false);
+
+    public static empty(): State {
+      return this._empty;
+    }
+
+    private readonly _visited: Array<Element>;
+    private readonly _isRecursing: boolean;
+    private readonly _isReferencing: boolean;
+    private readonly _isDescending: boolean;
+
+    private constructor(
+      visited: Array<Element>,
+      isRecursing: boolean,
+      isReferencing: boolean,
+      isDescending: boolean
+    ) {
+      this._visited = visited;
+      this._isRecursing = isRecursing;
+      this._isReferencing = isReferencing;
+      this._isDescending = isDescending;
+    }
+
     /**
      * The elements that have been seen by the name computation so far. This is
      * used for detecting circular references resulting from things such as the
      * `aria-labelledby` attribute and form controls that get their name from
      * a containing `<label>` element.
      */
-    readonly visited: Set<Element>;
+    public get visited(): Iterable<Element> {
+      return this._visited;
+    }
 
     /**
      * Whether or not the name computation is the result of recursion.
      */
-    readonly isRecursing: boolean;
+    public get isRecursing(): boolean {
+      return this._isRecursing;
+    }
 
     /**
      * Whether or not the name computation is the result of a reference.
      */
-    readonly isReferencing: boolean;
+    public get isReferencing(): boolean {
+      return this._isReferencing;
+    }
 
     /**
      * Whether or not the name computation is descending into a subtree.
      */
-    readonly isDescending: boolean;
-  }
+    public get isDescending(): boolean {
+      return this._isDescending;
+    }
 
-  export namespace State {
-    /**
-     * The initial, empty state of the name computation.
-     */
-    export const empty: State = {
-      visited: Set.empty(),
-      isRecursing: false,
-      isReferencing: false,
-      isDescending: false,
-    };
+    public hasVisited(element: Element): boolean {
+      return this._visited.includes(element);
+    }
+
+    public visit(element: Element): State {
+      if (this._visited.includes(element)) {
+        return this;
+      }
+
+      return new State(
+        [...this._visited, element],
+        this._isRecursing,
+        this._isReferencing,
+        this._isDescending
+      );
+    }
+
+    public recurse(isRecursing: boolean): State {
+      if (this._isRecursing === isRecursing) {
+        return this;
+      }
+
+      return new State(
+        this._visited,
+        isRecursing,
+        this._isReferencing,
+        this._isDescending
+      );
+    }
+
+    public reference(isReferencing: boolean): State {
+      if (this._isReferencing === isReferencing) {
+        return this;
+      }
+
+      return new State(
+        this._visited,
+        this._isRecursing,
+        isReferencing,
+        this._isDescending
+      );
+    }
+
+    public descend(isDescending: boolean): State {
+      if (this._isDescending === isDescending) {
+        return this;
+      }
+
+      return new State(
+        this._visited,
+        this._isRecursing,
+        this._isReferencing,
+        isDescending
+      );
+    }
   }
 
   export function from(
     node: Element | Text,
     device: Device
   ): Branched<Option<Name>, Browser> {
-    return fromNode(node, device, State.empty);
+    return fromNode(node, device, State.empty());
   }
 
   /**
@@ -400,10 +480,10 @@ export namespace Name {
   ): Branched<Option<Name>, Browser> {
     const empty = Branched.of(None);
 
-    if (state.visited.has(element)) {
+    if (state.hasVisited(element)) {
       return empty;
     } else {
-      state = { ...state, visited: state.visited.add(element) };
+      state = state.visit(element);
     }
 
     return Role.from(element).flatMap((role) => {
@@ -495,22 +575,16 @@ export namespace Name {
           }
 
           return fromDescendants(element, device, state);
-        },
-
-        // Step 2H: Use the subtree content, if descending.
-        // https://w3c.github.io/accname/#step2H
-        () => {
-          // Unless we're already descending then this step produces an empty
-          // name.
-          if (!state.isDescending) {
-            return empty;
-          }
-
-          return fromDescendants(element, device, state);
         }
       );
     });
   }
+
+  /**
+   * Accessible names for text nodes are abundant and not impacted by the
+   * computation state and so are easily cached.
+   */
+  const textNames = Cache.empty<Text, Branched<Option<Name>, Browser>>();
 
   /**
    * @internal
@@ -518,7 +592,7 @@ export namespace Name {
   export function fromText(text: Text): Branched<Option<Name>, Browser> {
     // Step 2G: Use the data of the text node.
     // https://w3c.github.io/accname/#step2G
-    return fromData(text);
+    return textNames.get(text, () => fromData(text));
   }
 
   /**
@@ -532,16 +606,13 @@ export namespace Name {
     return Branched.traverse(
       element.children().filter(or(isText, isElement)),
       (element) =>
-        fromNode(element, device, {
-          ...state,
-          isRecursing: true,
-          isReferencing: false,
-          isDescending: true,
-        })
+        fromNode(
+          element,
+          device,
+          state.recurse(true).reference(false).descend(true)
+        )
     )
-      .map((names) =>
-        [...names].filter((name) => name.isSome()).map((name) => name.get())
-      )
+      .map((names) => Sequence.from(names).collect((name) => name))
       .map((names) => {
         const data = names
           .map((name) => name.value)
@@ -591,16 +662,13 @@ export namespace Name {
       .filter(and(isElement, hasId(equals(...attribute.tokens()))));
 
     return Branched.traverse(references, (element) =>
-      fromNode(element, device, {
-        ...state,
-        isRecursing: true,
-        isReferencing: true,
-        isDescending: false,
-      })
-    )
-      .map((names) =>
-        [...names].filter((name) => name.isSome()).map((name) => name.get())
+      fromNode(
+        element,
+        device,
+        state.recurse(true).reference(true).descend(false)
       )
+    )
+      .map((names) => Sequence.from(names).collect((name) => name))
       .map((names) => {
         const data = names
           .map((name) => name.value)
@@ -647,9 +715,9 @@ export namespace Name {
         return name;
       }
 
-      return name.flatMap((name, browsers) => {
+      return name.flatMap((name) => {
         if (name.isSome()) {
-          return Branched.of(name, ...browsers);
+          return Branched.of(name);
         }
 
         return step(steps[i](), i + 1);

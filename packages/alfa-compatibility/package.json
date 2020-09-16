@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.4.0",
-    "mdn-browser-compat-data": "0.0.94"
+    "mdn-browser-compat-data": "1.0.37"
   },
   "publishConfig": {
     "access": "public",
