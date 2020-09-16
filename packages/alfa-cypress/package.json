@@ -29,7 +29,7 @@
     "@siteimprove/alfa-jquery": "^0.4.0",
     "@siteimprove/alfa-option": "^0.4.0",
     "@siteimprove/alfa-web": "^0.4.0",
-    "cypress": "^3.3.1"
+    "cypress": "^5.2.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.4.0"
