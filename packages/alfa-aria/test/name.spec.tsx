@@ -613,10 +613,10 @@ test(`.from() determines the name of an <input type="submit"> element with a
 });
 
 test(`.from() determines the name of an <input type="reset"> element`, (t) => {
-  const input = <input type="submit" />;
+  const input = <input type="reset" />;
 
   t.deepEqual(Name.from(input, device).toArray(), [
-    [Option.of(Name.of("Submit")), []],
+    [Option.of(Name.of("Reset")), []],
   ]);
 });
 

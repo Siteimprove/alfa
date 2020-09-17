@@ -118,11 +118,13 @@ function svg(
   );
 }
 
-const nameFromAttribute = (element: Element, attribute: string) => {
-  for (const found of element.attribute(attribute)) {
-    // The attribute value is used as long as it's not completely empty.
-    if (found.value.length > 0) {
-      return Name.fromLabel(found);
+const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
+  for (const name of attributes) {
+    for (const attribute of element.attribute(name)) {
+      // The attribute value is used as long as it's not completely empty.
+      if (attribute.value.length > 0) {
+        return Name.fromLabel(attribute);
+      }
     }
   }
 
@@ -467,8 +469,7 @@ const Features: Features = {
         ) {
           return Name.fromSteps(
             () => nameFromLabel(element, device, state),
-            () => nameFromAttribute(element, "title"),
-            () => nameFromAttribute(element, "placeholder")
+            () => nameFromAttribute(element, "title", "placeholder")
           );
         }
 
@@ -654,8 +655,7 @@ const Features: Features = {
       (element, device, state) => {
         return Name.fromSteps(
           () => nameFromLabel(element, device, state),
-          () => nameFromAttribute(element, "title"),
-          () => nameFromAttribute(element, "placeholder")
+          () => nameFromAttribute(element, "title", "placeholder")
         );
       }
     ),
