@@ -17,8 +17,8 @@ import { Role } from "./role";
 
 import type * as aria from ".";
 
-const { hasName, isElement } = Element;
-const { and, or } = Predicate;
+const { hasInputType, hasName, isElement } = Element;
+const { and, or, test } = Predicate;
 
 /**
  * @internal
@@ -99,7 +99,7 @@ function html(
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
       () => name(element, device, state),
-      () => nameFromTitle(element)
+      () => nameFromAttribute(element, "title")
     )
   );
 }
@@ -113,38 +113,16 @@ function svg(
     Name.fromSteps(
       () => name(element, device, state),
       () => nameFromChild(hasName("title"))(element, device, state),
-      () => nameFromTitle(element)
+      () => nameFromAttribute(element, "title")
     )
   );
 }
 
-const nameFromAlt = (element: Element) => {
-  for (const attribute of element.attribute("alt")) {
-    // The `alt` attribute is used as long as it's not completely empty.
-    if (attribute.value.length > 0) {
-      return Name.fromLabel(attribute);
-    }
-  }
-
-  return Branched.of(None);
-};
-
-const nameFromTitle = (element: Element) => {
-  for (const attribute of element.attribute("title")) {
-    // The `title` attribute is used as long as it's not completely empty.
-    if (attribute.value.length > 0) {
-      return Name.fromLabel(attribute);
-    }
-  }
-
-  return Branched.of(None);
-};
-
-const nameFromPlaceholder = (element: Element) => {
-  for (const attribute of element.attribute("placeholder")) {
-    // The `placeholder` attribute is used as long as it's not completely empty.
-    if (attribute.value.length > 0) {
-      return Name.fromLabel(attribute);
+const nameFromAttribute = (element: Element, attribute: string) => {
+  for (const found of element.attribute(attribute)) {
+    // The attribute value is used as long as it's not completely empty.
+    if (found.value.length > 0) {
+      return Name.fromLabel(found);
     }
   }
 
@@ -261,7 +239,7 @@ const Features: Features = {
       (element) =>
         element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
       () => [],
-      nameFromAlt
+      (element) => nameFromAttribute(element, "alt")
     ),
 
     article: html(() => Option.of(Role.of("article"))),
@@ -390,68 +368,53 @@ const Features: Features = {
         yield Role.of("img");
       },
       () => [],
-      nameFromAlt
+      (element) => nameFromAttribute(element, "alt")
     ),
 
     input: html(
       (element): Option<Role> => {
-        const type = element
-          .attribute("type")
-          .flatMap((attribute) =>
-            attribute.enumerate(
-              "button",
-              "image",
-              "reset",
-              "submit",
-              "checkbox",
-              "number",
-              "radio",
-              "range",
-              "search",
-              "email",
-              "tel",
-              "text",
-              "url"
-            )
+        if (
+          test<Element>(
+            hasInputType("button", "image", "reset", "submit"),
+            element
           )
-          .getOr("text");
-
-        switch (type) {
-          case "button":
-          case "image":
-          case "reset":
-          case "submit":
-            return Option.of(Role.of("button"));
-
-          case "checkbox":
-            return Option.of(Role.of("checkbox"));
-
-          case "number":
-            return Option.of(Role.of("spinbutton"));
-
-          case "radio":
-            return Option.of(Role.of("radio"));
-
-          case "range":
-            return Option.of(Role.of("slider"));
-
-          case "search":
-            return Option.of(
-              Role.of(
-                element.attribute("list").isSome() ? "combobox" : "searchbox"
-              )
-            );
-
-          case "email":
-          case "tel":
-          case "text":
-          case "url":
-            return Option.of(
-              Role.of(
-                element.attribute("list").isSome() ? "combobox" : "textbox"
-              )
-            );
+        ) {
+          return Option.of(Role.of("button"));
         }
+
+        if (test<Element>(hasInputType("checkbox"), element)) {
+          return Option.of(Role.of("checkbox"));
+        }
+
+        if (test<Element>(hasInputType("number"), element)) {
+          return Option.of(Role.of("spinbutton"));
+        }
+
+        if (test<Element>(hasInputType("radio"), element)) {
+          return Option.of(Role.of("radio"));
+        }
+
+        if (test<Element>(hasInputType("range"), element)) {
+          return Option.of(Role.of("slider"));
+        }
+
+        if (test<Element>(hasInputType("search"), element)) {
+          return Option.of(
+            Role.of(
+              element.attribute("list").isSome() ? "combobox" : "searchbox"
+            )
+          );
+        }
+
+        if (
+          test<Element>(hasInputType("email", "tel", "text", "url"), element)
+        ) {
+          return Option.of(
+            Role.of(element.attribute("list").isSome() ? "combobox" : "textbox")
+          );
+        }
+
+        return None;
       },
       function* (element) {
         // https://w3c.github.io/html-aam/#att-checked
@@ -495,7 +458,47 @@ const Features: Features = {
           yield Attribute.of("aria-placeholder", value);
         }
       },
-      nameFromLabel
+      (element, device, state) => {
+        if (
+          test<Element>(
+            hasInputType("text", "password", "search", "tel", "url"),
+            element
+          )
+        ) {
+          return Name.fromSteps(
+            () => nameFromLabel(element, device, state),
+            () => nameFromAttribute(element, "title"),
+            () => nameFromAttribute(element, "placeholder")
+          );
+        }
+
+        if (test<Element>(hasInputType("button"), element)) {
+          return nameFromAttribute(element, "value");
+        }
+
+        if (test<Element>(hasInputType("submit"), element)) {
+          return Name.fromSteps(
+            () => nameFromAttribute(element, "value"),
+            () => Branched.of(Option.of(Name.of("Submit")))
+          );
+        }
+
+        if (test<Element>(hasInputType("reset"), element)) {
+          return Name.fromSteps(
+            () => nameFromAttribute(element, "value"),
+            () => Branched.of(Option.of(Name.of("Reset")))
+          );
+        }
+
+        if (test<Element>(hasInputType("image"), element)) {
+          return Name.fromSteps(
+            () => nameFromAttribute(element, "alt"),
+            () => Branched.of(Option.of(Name.of("Submit")))
+          );
+        }
+
+        return nameFromLabel(element, device, state);
+      }
     ),
 
     li: html((element) =>
@@ -648,7 +651,13 @@ const Features: Features = {
           yield Attribute.of("aria-placeholder", value);
         }
       },
-      nameFromLabel
+      (element, device, state) => {
+        return Name.fromSteps(
+          () => nameFromLabel(element, device, state),
+          () => nameFromAttribute(element, "title"),
+          () => nameFromAttribute(element, "placeholder")
+        );
+      }
     ),
 
     tfoot: html(() => Option.of(Role.of("rowgroup"))),

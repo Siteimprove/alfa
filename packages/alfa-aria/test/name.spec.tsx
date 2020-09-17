@@ -540,6 +540,126 @@ test(`.from() determines the name of a <select> element with a <label> parent
   ]);
 });
 
+test(`.from() determines the name of an <input> element with a placeholder
+      attribute`, (t) => {
+  const input = <input placeholder="Hello world" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.label(input.attribute("placeholder").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input> element with a placeholder
+      and a title attribute, with the title attribute taking precedence`, (t) => {
+  const input = <input title="Hello title" placeholder="Hello placeholder" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello title", [
+          Name.Source.label(input.attribute("title").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="button"> element with a
+      value attribute`, (t) => {
+  const input = <input type="button" value="Hello world" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.label(input.attribute("value").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="submit"> element`, (t) => {
+  const input = <input type="submit" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [Option.of(Name.of("Submit")), []],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="submit"> element with a
+      value attribute`, (t) => {
+  const input = <input type="submit" value="Hello world" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.label(input.attribute("value").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="reset"> element`, (t) => {
+  const input = <input type="submit" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [Option.of(Name.of("Submit")), []],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="reset"> element with a
+      value attribute`, (t) => {
+  const input = <input type="reset" value="Hello world" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.label(input.attribute("value").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="image"> element`, (t) => {
+  const input = <input type="image" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [Option.of(Name.of("Submit")), []],
+  ]);
+});
+
+test(`.from() determines the name of an <input type="image"> element with an
+      alt attribute`, (t) => {
+  const input = <input type="image" alt="Hello world" />;
+
+  t.deepEqual(Name.from(input, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.label(input.attribute("alt").get()),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
 test(`.from() determines the name of a <button> element with a role of
       presentation`, (t) => {
   const text = h.text("Hello world");
