@@ -15,6 +15,7 @@
     "src/node/element.ts",
     "src/node/element/predicate.ts",
     "src/node/element/predicate/has-id.ts",
+    "src/node/element/predicate/has-input-type.ts",
     "src/node/element/predicate/has-name.ts",
     "src/node/element/predicate/has-namespace.ts",
     "src/node/element/predicate/has-tab-index.ts",
