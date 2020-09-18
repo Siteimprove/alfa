@@ -226,7 +226,7 @@ export const UserAgent = h.sheet([
    * the contents would be parsed as markup that could act as fallback content.)"
    */
 
-  h.rule.style("iframe *", {
+  h.rule.style("iframe > *", {
     display: "none",
   }),
 ]);
