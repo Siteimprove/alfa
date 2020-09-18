@@ -226,7 +226,10 @@ export const UserAgent = h.sheet([
    * the contents would be parsed as markup that could act as fallback content.)"
    */
 
-  h.rule.style("iframe > *", {
-    display: "none",
-  }),
+  // This is not enough as it won't hide the text children of iframe :-(
+  // <iframe> <span>hidden</span> Not hidden </iframe>
+
+  // h.rule.style("iframe > *", {
+  //   display: "none",
+  // }),
 ]);
