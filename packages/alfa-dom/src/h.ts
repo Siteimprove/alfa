@@ -26,7 +26,6 @@ import {
 import {Sheet} from "./style/sheet";
 import {Shadow} from "./node/shadow";
 import {Predicate} from "@siteimprove/alfa-predicate";
-import Mode = Shadow.Mode;
 
 const { entries } = Object;
 
@@ -126,7 +125,7 @@ export namespace h {
 
   export function shadow(
     children: Array<Node | string>,
-    mode: Mode = Mode.Open,
+    mode: Shadow.Mode = Shadow.Mode.Open,
     style: Array<Sheet> = []
   ): Shadow {
     return Shadow.of(mode,
