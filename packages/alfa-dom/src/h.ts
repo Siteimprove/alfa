@@ -92,11 +92,12 @@ export namespace h {
       style.length === 0 ? None : Option.of(block)
     );
 
-    if (contentDocument !== undefined) {
-      element._attachContent(contentDocument);
+    if (content !== undefined) {
+      element._attachContent(content);
     }
-    if (shadowTree !== undefined) {
-      element._attachShadow(shadowTree);
+
+    if (shadow !== undefined) {
+      element._attachShadow(shadow);
     }
 
     return element;
