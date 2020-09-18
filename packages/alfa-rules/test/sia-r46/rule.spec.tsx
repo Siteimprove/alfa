@@ -108,3 +108,18 @@ test("evaluate() is inapplicable if there is no header cell", async (t) => {
 
   t.deepEqual(await evaluate(R46, { document }), [inapplicable(R46)]);
 });
+
+test("evaluate() is inapplicable if the table element is ignored", async (t) => {
+  const document = Document.of([
+    <table role="presentation">
+      <tr>
+        <th>Column A</th>
+      </tr>
+      <tr>
+        <td>Cell A</td>
+      </tr>
+    </table>,
+  ]);
+
+  t.deepEqual(await evaluate(R46, { document }), [inapplicable(R46)]);
+});
