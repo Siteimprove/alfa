@@ -365,7 +365,10 @@ export namespace Node {
         // Get the children implicitly owned by the element. These are the
         // children in the flat tree that are neither claimed already nor
         // explicitly owned by the element.
-        const implicit = node
+
+        // children of iframe are not included, they are fallback content for legacy browsers…
+        // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
+        const implicit = node.name === "iframe" ? Sequence.empty<dom.Node>() : node
           .children({ flattened: true })
           .reject((child) => claimed.has(child) || explicit.includes(child));
 
