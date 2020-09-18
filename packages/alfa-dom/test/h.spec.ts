@@ -23,3 +23,31 @@ test("h.document() constructs a document", (t) => {
     ])
   );
 });
+
+test("h() puts the first document child in a content document", (t) => {
+  const document1 = h.document([h.type("html"), h("html")]);
+  const document2 = h.document([h.type("html"), h("html")]);
+
+  const iframe = h.element("iframe", [], [
+    h.element("dummy"),
+    document1,
+    h.element("dummy"),
+    document2
+  ]);
+
+  t.deepEqual(iframe.content.get(), document1);
+});
+
+test("h() puts the first shadow child in a shadow tree", (t) => {
+  const shadow1 = h.shadow([h.element("shadow")]);
+  const shadow2 = h.shadow([h.element("exclude")]);
+
+  const iframe = h.element("iframe", [], [
+    h.element("dummy"),
+    shadow1,
+    h.element("dummy"),
+    shadow2
+  ]);
+
+  t.deepEqual(iframe.shadow.get(), shadow1);
+});
