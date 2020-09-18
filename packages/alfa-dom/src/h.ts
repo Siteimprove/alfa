@@ -84,7 +84,6 @@ export namespace h {
       None,
       name,
       attributes,
-      // filtering out children that are Document or Shadow
       children
         .filter(nor(Document.isDocument, Shadow.isShadow))
         .map((child) =>
