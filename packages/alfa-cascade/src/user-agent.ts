@@ -219,17 +219,4 @@ export const UserAgent = h.sheet([
   h.rule.style("fieldset", {
     display: "block",
   }),
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
-   * "Descendants of iframe elements represent nothing. (In legacy user agents that do not support iframe elements,
-   * the contents would be parsed as markup that could act as fallback content.)"
-   */
-
-  // This is not enough as it won't hide the text children of iframe :-(
-  // <iframe> <span>hidden</span> Not hidden </iframe>
-
-  // h.rule.style("iframe > *", {
-  //   display: "none",
-  // }),
 ]);
