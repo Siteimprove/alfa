@@ -3,15 +3,14 @@ import { Element, Comment, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
-import { hasName } from "@siteimprove/alfa-dom/src/node/element/predicate/has-name";
+const { isElement, hasName } = Element;
 const { and } = Predicate;
 
 export function isRendered(device: Device): Predicate<Node> {
   return (node) => {
-    // descendants of iframe are not rendered, they are fallback content for legacy browsers…
+    // children of iframe are not rendered, they are fallback content for legacy browsers…
     // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
-
-    if (node.ancestors().some(and(Element.isElement, hasName("iframe")))) {
+    if (node.parent().some(and(isElement, hasName("iframe")))) {
       return false;
     }
 

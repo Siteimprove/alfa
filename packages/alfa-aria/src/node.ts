@@ -365,18 +365,18 @@ export namespace Node {
         // Get the children implicitly owned by the element. These are the
         // children in the flat tree that are neither claimed already nor
         // explicitly owned by the element.
-
-        // children of iframe are not included, they are fallback content for legacy browsers…
-        // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
-        const implicit = node.name === "iframe" ? Sequence.empty<dom.Node>() : node
+        const implicit = node
           .children({ flattened: true })
           .reject((child) => claimed.has(child) || explicit.includes(child));
 
         // Recursively build accessible nodes for the children of the element.
         // The children implicitly owned by the element come first, then the
         // children explicitly owned by the element.
-        const children = Branched.traverse(implicit.concat(explicit), (child) =>
-          build(child, device, claimed, owned)
+        const children = Branched.traverse(
+          // children of iframe are not included, they are fallback content for legacy browsers…
+          // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
+          node.name === "iframe" ? Sequence.empty<dom.Node>() : implicit.concat(explicit),
+          (child) => build(child, device, claimed, owned)
         );
 
         // Elements that are not visible by means of `visibility: hidden` or
