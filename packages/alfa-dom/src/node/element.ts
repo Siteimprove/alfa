@@ -420,6 +420,9 @@ function isSuggestedFocusableElement(element: Element): boolean {
 
           return false;
         });
+
+    case "object":
+      return element.content.isSome();
   }
 
   return (
@@ -442,3 +445,4 @@ function isEditingHost(element: Element): boolean {
 function isBrowsingContextContainer(element: Element): boolean {
   return element.name === "iframe";
 }
+
