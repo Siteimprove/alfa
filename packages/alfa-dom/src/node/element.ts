@@ -372,6 +372,7 @@ export namespace Element {
 
   export const {
     hasId,
+    hasInputType,
     hasName,
     hasNamespace,
     hasTabIndex,

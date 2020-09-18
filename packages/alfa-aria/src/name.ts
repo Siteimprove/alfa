@@ -24,7 +24,7 @@ const { isText } = Text;
 const { and, or, equals } = Predicate;
 
 export class Name implements Equatable, Serializable {
-  public static of(value: string, sources: Iterable<Name.Source>): Name {
+  public static of(value: string, sources: Iterable<Name.Source> = []): Name {
     return new Name(value, Array.from(sources));
   }
 

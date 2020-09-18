@@ -7,13 +7,12 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasInputType } from "../common/predicate/has-input-type";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { isElement, hasName, hasNamespace } = Element;
-const { and, or, not, equals, test } = Predicate;
+const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { and, or, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r39.html",
@@ -25,10 +24,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             isElement,
             and(
               hasNamespace(Namespace.HTML),
-              or(
-                hasName("img"),
-                and(hasName("input"), hasInputType(equals("image")))
-              ),
+              or(hasName("img"), and(hasName("input"), hasInputType("image"))),
               not(isIgnored(device)),
               (element) =>
                 test(

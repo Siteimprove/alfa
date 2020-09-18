@@ -6,7 +6,7 @@ export type Predicate<T, U extends T = T, A extends Array<unknown> = []> =
   | ((value: T, ...args: A) => value is U);
 
 export namespace Predicate {
-  export function test<T, U extends T = T, A extends Array<unknown> = []>(
+  export function test<T, U extends T, A extends Array<unknown> = []>(
     predicate: Predicate<T, U, A>,
     value: T,
     ...args: A
