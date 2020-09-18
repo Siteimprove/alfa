@@ -27,6 +27,7 @@ test("evaluate() fails an object with an empty name", async (t) => {
 });
 
 test("evaluate() fails an object with no name", async (t) => {
+  // Content document is needed to expose the object.
   // const target = <object>{h.document(["Some nested document"])}</object>;
   const target = <object></object>;
   target._attachContent(h.document(["Some nested document"]));
