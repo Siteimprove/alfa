@@ -11,6 +11,7 @@ import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, equals, not } = Predicate;
@@ -44,7 +45,7 @@ export default Rule.Atomic.of<Page, Element>({
                 // The table model only works if the element is a th.
                 hasName("th"),
                 hasRole("rowheader", "columnheader"),
-                not(isIgnored(device))
+                isPerceivable(device)
               )
             )
           );
