@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -15,7 +14,6 @@ import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
-const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
