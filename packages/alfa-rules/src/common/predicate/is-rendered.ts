@@ -8,8 +8,8 @@ const { and } = Predicate;
 
 export function isRendered(device: Device): Predicate<Node> {
   return (node) => {
-    // children of iframe are not rendered, they are fallback content for legacy browsers…
-    // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element
+    // Children of <iframe> elements act as fallback content in legacy user
+    // agents and should therefore never be considered rendered.
     if (node.parent().some(and(isElement, hasName("iframe")))) {
       return false;
     }
