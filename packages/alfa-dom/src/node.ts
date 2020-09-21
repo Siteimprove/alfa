@@ -296,7 +296,6 @@ import { Comment } from "./node/comment";
 import { Document } from "./node/document";
 import { Element } from "./node/element";
 import { Fragment } from "./node/fragment";
-import { Shadow } from "./node/shadow";
 import { Text } from "./node/text";
 import { Type } from "./node/type";
 

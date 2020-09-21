@@ -8690,9 +8690,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typescript@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.2.tgz#7ea7c88777c723c681e33bf7988be5d008d05ac2"
-  integrity sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
+  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
 ua-parser-js@^0.7.21:
   version "0.7.21"
@@ -8948,9 +8948,9 @@ webdriver@6.5.0:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.5.0.tgz#91585d6bedf58a3e82af912983d4f5bcc90bd57a"
-  integrity sha512-hxXYeVRIeg2o6EXsZPNoHKAEW6VGZvAUG7qUTqWWVxjMmXaaMhaVjMghqA1PWBJm9+H7rY29J240q1L1q61J8Q==
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.5.2.tgz#0c733c293b88a0ee45082bfde9fc3d9a10308216"
+  integrity sha512-ChAV6RmF10mlyWnAL2y+PdnzAjpxL/UuyAHJsYSuirEeEAAqFWWePxniz67bUEVQPVClVj8Jh7oeoK6rhu4RAA==
   dependencies:
     "@types/puppeteer" "^3.0.1"
     "@wdio/config" "6.4.7"
