@@ -19,6 +19,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Resolver } from "./resolver";
+
 const {
   map,
   either,
@@ -166,6 +168,34 @@ export namespace Media {
             : this._value.some(
                 (value) => value.type === "string" && value.value === "none"
               );
+
+        case "max-width":
+          return this._value.some(
+            (value) =>
+              value.type === "length" &&
+              device.viewport.width <= Resolver.length(value, device).value
+          );
+
+        case "min-width":
+          return this._value.some(
+            (value) =>
+              value.type === "length" &&
+              device.viewport.width >= Resolver.length(value, device).value
+          );
+
+        case "max-height":
+          return this._value.some(
+            (value) =>
+              value.type === "length" &&
+              device.viewport.height <= Resolver.length(value, device).value
+          );
+
+        case "min-height":
+          return this._value.some(
+            (value) =>
+              value.type === "length" &&
+              device.viewport.height >= Resolver.length(value, device).value
+          );
       }
 
       return false;
