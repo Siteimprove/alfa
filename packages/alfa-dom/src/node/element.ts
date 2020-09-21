@@ -445,4 +445,3 @@ function isEditingHost(element: Element): boolean {
 function isBrowsingContextContainer(element: Element): boolean {
   return element.name === "iframe";
 }
-
