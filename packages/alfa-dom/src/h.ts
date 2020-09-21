@@ -1,4 +1,5 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "./namespace";
 
@@ -25,7 +26,6 @@ import {
 } from "./style/rule";
 import { Sheet } from "./style/sheet";
 import { Shadow } from "./node/shadow";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { entries } = Object;
 const { nor } = Predicate;
@@ -120,14 +120,28 @@ export namespace h {
     );
   }
 
+  export function shadow(children: Array<Node | string>): Shadow;
   export function shadow(
+    mode: Shadow.Mode,
     children: Array<Node | string>,
-    mode: Shadow.Mode = Shadow.Mode.Open,
-    style: Array<Sheet> = []
+    style: Array<Sheet>
+  ): Shadow;
+  export function shadow(
+    childrenOrMode: Array<Node | string> | Shadow.Mode,
+    children?: Array<Node | string>,
+    style?: Array<Sheet>
   ): Shadow {
+    let mode: Shadow.Mode;
+    if (Array.isArray(childrenOrMode)) {
+      children = childrenOrMode;
+      mode = Shadow.Mode.Open;
+    } else {
+      mode = childrenOrMode;
+    }
+
     return Shadow.of(
       mode,
-      children.map((child) =>
+      children!.map((child) =>
         typeof child === "string" ? text(child) : child
       ),
       style
