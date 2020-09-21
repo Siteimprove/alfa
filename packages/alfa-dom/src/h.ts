@@ -120,31 +120,17 @@ export namespace h {
     );
   }
 
-  export function shadow(children: Array<Node | string>): Shadow;
   export function shadow(
-    mode: Shadow.Mode,
     children: Array<Node | string>,
-    style: Array<Sheet>
-  ): Shadow;
-  export function shadow(
-    childrenOrMode: Array<Node | string> | Shadow.Mode,
-    children?: Array<Node | string>,
-    style: Array<Sheet> = []
+    style: Array<Sheet> = [],
+    mode?: Shadow.Mode
   ): Shadow {
-    let mode: Shadow.Mode;
-    if (Array.isArray(childrenOrMode)) {
-      children = childrenOrMode;
-      mode = Shadow.Mode.Open;
-    } else {
-      mode = childrenOrMode;
-    }
-
     return Shadow.of(
-      mode,
       children!.map((child) =>
         typeof child === "string" ? text(child) : child
       ),
-      style
+      style,
+      mode
     );
   }
 
