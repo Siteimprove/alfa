@@ -129,7 +129,7 @@ export namespace h {
   export function shadow(
     childrenOrMode: Array<Node | string> | Shadow.Mode,
     children?: Array<Node | string>,
-    style?: Array<Sheet>
+    style: Array<Sheet> = []
   ): Shadow {
     let mode: Shadow.Mode;
     if (Array.isArray(childrenOrMode)) {
