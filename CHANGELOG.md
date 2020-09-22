@@ -21,6 +21,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The `mode` argument in the `Shadow.of()` constructor has been moved last in the argument list. Additionally, the first child `Document` and `Shadow` node passed to `h.element()` is no longer included in the list of child nodes but instead used as the content document and shadow root, respectively, of the constructed element. ([#398](../../pull/398))
+
+### Added
+
+- [@siteimprove/alfa-crawler](packages/alfa-crawler): A new package has been added with an implementation of a simple crawler based on the existing scraper. ([#309](../../pull/309))
+
+- [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-selector](packages/alfa-selector): Tree-structural pseudo-selectors (`:nth-child()`, `:last-child`, `:nth-of-type()`, etc.) are now supported. ([#367](../../pull/367))
+
+- [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-style](packages/alfa-style): `calc()` expressions are now supported for the `font-size` property. ([#376](../../pull/376))
+
+- [@siteimprove/alfa-media](packages/alfa-media): The `min-width`, `max-width`, `min-height`, and `max-height` media query features are now supported. ([#403](../../pull/403))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `h.shadow()` is now available. Additionally, `h.element()` now uses the first child `Document` and `Shadow` node as the content document and shadow root, respectively, of the constructed element. ([#398](../../pull/398))
+
 ### Fixed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): Ensure that ownership is only resolved once per `Document` context.
@@ -31,11 +47,27 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `<select>` elements now correctly get their name from connected `<label>` elements. ([#380](../../pull/380))
 
+- [@siteimprove/alfa-aria](packages/alfa-aria): The last step of `Name.from()` has been removed as it was causing very poor performance for certain inputs and had no noticeable effect on computed names. ([#360](../../pull/360))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now correctly computes names for `<input>` and `<textarea>` elements, adding the previously missing name computation steps. ([#394](../../pull/394))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Children of `<iframe>` are now no longer incorrectly included in the accessibility tree. ([#383](../../pull/383))
+
 - [@siteimprove/alfa-lazy](packages/alfa-lazy): Fix a bug where `#map()` and `#flatMap()` could cause a `Lazy` to be evaluated more than once. ([#355](../../pull/355))
 
-- [@siteimprove/alfa-map](packages/alfa-map): Fix a bug where `#size` was incorrectly reported for certain combinations of keys.
+- [@siteimprove/alfa-map](packages/alfa-map): Fix a bug where `#size` was incorrectly reported for certain combinations of keys. ([#361](../../pull/361))
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R86 is now exported from the package.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isPerceivable()` now correctly accounts for nodes that aren't themselves included in the accessibility, but have descendants that are. ([#356](../../pull/356))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now correctly handles the `separator` role and only fails elements with missing required attributes when the element is focusable. The rule now also pulls attributes from the accessibility tree to ensure that implicit attributes are correctly accounted for. ([#371](../../pull/371))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` now correctly accounts for elements that have been hidden by giving them a size <= 1px and clipping overflow, as commonly done by `.sr-only`-like utility classes. ([#387](../../pull/387))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R46 now correctly ignores header cells in presentational tables. ([#400](../../pull/400))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Element#tabIndex()` now correctly considers `<object>` elements with embedded documents as browsing context containers and assigns them a default tab index of 0. ([#399](../../pull/399))
 
 ## [0.4.1](../../compare/v0.4.0...v0.4.1) (2020-08-27)
 
