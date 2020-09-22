@@ -1,20 +1,15 @@
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R15, { Outcomes } from "../../src/sia-r15/rule";
 
-import { hasId } from "../../src/common/predicate/has-id";
-
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable, cantTell } from "../common/outcome";
-
-const { isElement, hasName } = Element;
-const { and, equals } = Predicate;
 
 test("evaluate() passes when two iframes embed the exact same resource", async (t) => {
   const iframe1 = <iframe title="Foo" src="http://somewhere.com/foo.html" />;
@@ -56,6 +51,20 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
     ),
     [passed(R15, [iframe1, iframe2], { 1: Outcomes.EmbedEquivalentResources })]
   );
+});
+
+test("evaluate() passes when toplevel and nested iframe embed the same resource", async (t) => {
+  const iframe1 = <iframe title="Foo" src="http://somewhere.com/foo.html" />;
+  const nested = (
+    <iframe aria-label="Foo" src="http://somewhere.com/foo.html" />
+  );
+  const iframe2 = <iframe title="Container">{h.document([nested])}</iframe>;
+
+  const document = Document.of([iframe1, iframe2]);
+
+  t.deepEqual(await evaluate(R15, { document }), [
+    passed(R15, [iframe1, nested], { 1: Outcomes.EmbedSameResources }),
+  ]);
 });
 
 test("evaluate() fails when two iframes embed different resources", async (t) => {
