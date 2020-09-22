@@ -64,8 +64,19 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       },
 
       expectations(target) {
+        // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
         const sources = Set.from(
-          map(target, (iframe) => iframe.attribute("src"))
+          map(target, (iframe) =>
+            iframe
+              .attribute("srcdoc")
+              .map((srcdoc) => srcdoc.value)
+              .getOr(
+                iframe
+                  .attribute("src")
+                  .map((source) => source.value)
+                  .getOr("about:blank")
+              )
+          )
         );
 
         return {
