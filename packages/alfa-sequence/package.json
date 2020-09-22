@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-sequence",
   "homepage": "https://siteimprove.com",
-  "version": "0.5.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "An implementation of a lazy, immutable sequence structure, which is similar to a list but lazily evaluated",
   "repository": {
@@ -18,20 +18,20 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-collection": "^0.5.0",
-    "@siteimprove/alfa-equatable": "^0.5.0",
-    "@siteimprove/alfa-hash": "^0.5.0",
-    "@siteimprove/alfa-json": "^0.5.0",
-    "@siteimprove/alfa-lazy": "^0.5.0",
-    "@siteimprove/alfa-map": "^0.5.0",
-    "@siteimprove/alfa-mapper": "^0.5.0",
-    "@siteimprove/alfa-option": "^0.5.0",
-    "@siteimprove/alfa-predicate": "^0.5.0",
-    "@siteimprove/alfa-reducer": "^0.5.0",
-    "@siteimprove/alfa-set": "^0.5.0"
+    "@siteimprove/alfa-collection": "^0.4.0",
+    "@siteimprove/alfa-equatable": "^0.4.0",
+    "@siteimprove/alfa-hash": "^0.4.0",
+    "@siteimprove/alfa-json": "^0.4.0",
+    "@siteimprove/alfa-lazy": "^0.4.0",
+    "@siteimprove/alfa-map": "^0.4.0",
+    "@siteimprove/alfa-mapper": "^0.4.0",
+    "@siteimprove/alfa-option": "^0.4.0",
+    "@siteimprove/alfa-predicate": "^0.4.0",
+    "@siteimprove/alfa-reducer": "^0.4.0",
+    "@siteimprove/alfa-set": "^0.4.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.5.0"
+    "@siteimprove/alfa-test": "^0.4.0"
   },
   "publishConfig": {
     "access": "public",
