@@ -40,7 +40,9 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             )
           );
 
-        const roots = iframes.groupBy((iframe) => iframe.root());
+        const roots = iframes.groupBy((iframe) =>
+          iframe.root({ nested: true })
+        );
 
         const groups = flatMap(roots.values(), (iframes) =>
           iframes
