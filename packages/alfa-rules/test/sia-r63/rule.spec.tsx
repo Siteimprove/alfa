@@ -1,7 +1,8 @@
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, h } from "@siteimprove/alfa-dom";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R63, { Outcomes } from "../../src/sia-r63/rule";
 
