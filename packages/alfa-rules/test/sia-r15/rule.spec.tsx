@@ -2,14 +2,13 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R15, { Outcomes } from "../../src/sia-r15/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
+import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes when two iframes embed the exact same resource", async (t) => {
   const iframe1 = <iframe title="Foo" src="http://somewhere.com/foo.html" />;
