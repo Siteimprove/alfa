@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.5.0](../../compare/v0.4.1...v0.5.0) (2020-09-22)
+
 ### Breaking
 
 - [@siteimprove/alfa-dom](packages/alfa-dom): The `mode` argument in the `Shadow.of()` constructor has been moved last in the argument list. Additionally, the first child `Document` and `Shadow` node passed to `h.element()` is no longer included in the list of child nodes but instead used as the content document and shadow root, respectively, of the constructed element. ([#398](../../pull/398))
