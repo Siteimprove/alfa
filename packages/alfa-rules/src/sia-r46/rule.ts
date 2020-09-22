@@ -10,10 +10,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, equals } = Predicate;
+const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r46.html",
@@ -30,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(Namespace.HTML),
                 hasName("table"),
-                isPerceivable(device)
+                not(isIgnored(device))
               )
             )
           );
