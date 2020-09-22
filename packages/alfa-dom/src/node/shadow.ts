@@ -7,15 +7,15 @@ import { Element } from "./element";
 
 export class Shadow extends Node {
   public static of(
-    mode: Shadow.Mode,
     children: Iterable<Node>,
-    style: Iterable<Sheet> = []
+    style: Iterable<Sheet> = [],
+    mode: Shadow.Mode = Shadow.Mode.Open
   ): Shadow {
-    return new Shadow(mode, Array.from(children), Array.from(style));
+    return new Shadow(Array.from(children), Array.from(style), mode);
   }
 
   public static empty(): Shadow {
-    return new Shadow(Shadow.Mode.Open, [], []);
+    return new Shadow([], [], Shadow.Mode.Open);
   }
 
   private readonly _mode: Shadow.Mode;
@@ -23,9 +23,9 @@ export class Shadow extends Node {
   private readonly _style: Array<Sheet>;
 
   private constructor(
-    mode: Shadow.Mode,
     children: Array<Node>,
-    style: Array<Sheet>
+    style: Array<Sheet>,
+    mode: Shadow.Mode
   ) {
     super(children);
 
@@ -131,7 +131,7 @@ export namespace Shadow {
    */
   export function fromShadow(json: JSON): Trampoline<Shadow> {
     return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
-      Shadow.of(json.mode as Mode, children, json.style.map(Sheet.from))
+      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
     );
   }
 }
