@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "component-testing-react",
+  "name": "unit-testing-react",
   "version": "0.4.1",
   "scripts": {
     "test": "jest"

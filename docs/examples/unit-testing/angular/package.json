@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "component-testing-angular",
+  "name": "unit-testing-angular",
   "version": "0.4.1",
   "scripts": {
     "test": "jest"

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "page-testing-puppeteer",
+  "name": "end-to-end-testing-puppeteer",
   "version": "0.4.1",
   "scripts": {
     "test": "mocha"
