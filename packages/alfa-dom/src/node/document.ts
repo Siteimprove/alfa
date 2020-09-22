@@ -35,7 +35,7 @@ export class Document extends Node {
   }
 
   public parent(options: Node.Traversal = {}): Option<Node> {
-    return options.nested === true ? this.frame : None;
+    return options.nested === true ? this.frame : super.parent(options);
   }
 
   public path(options?: Node.Traversal): string {
