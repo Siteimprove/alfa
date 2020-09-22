@@ -18,7 +18,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { map, flatMap } = Iterable;
+const { filter, map, flatMap } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
         const roots = iframes.groupBy((iframe) => iframe.root());
 
-        return flatMap(roots.values(), (iframes) =>
+        const groups = flatMap(roots.values(), (iframes) =>
           iframes
             .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
@@ -61,6 +61,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             }, Map.empty<Option<string>, List<Element>>())
             .values()
         );
+        return filter(groups, (group) => group.size > 1);
       },
 
       expectations(target) {
