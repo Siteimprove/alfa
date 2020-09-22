@@ -12,6 +12,8 @@ import { Style } from "./style";
 /**
  * Resolvers are functions that resolve values to their canonical, computed
  * representation.
+ *
+ * @internal
  */
 export namespace Resolver {
   /**
@@ -30,20 +32,18 @@ export namespace Resolver {
       case "em":
         return Length.of(fontSize.value * value, fontSize.unit);
 
-      // https://www.w3.org/TR/css-values/#ex
-      case "ex":
-        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
-
-      // https://www.w3.org/TR/css-values/#ch
-      case "ch":
-        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
-
       // https://www.w3.org/TR/css-values/#rem
       case "rem": {
         const { value: rootFontSize } = style.root().computed("font-size");
 
         return Length.of(rootFontSize.value * value, fontSize.unit);
       }
+
+      // https://www.w3.org/TR/css-values/#ex
+      case "ex":
+      // https://www.w3.org/TR/css-values/#ch
+      case "ch":
+        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
 
       // https://www.w3.org/TR/css-values/#vh
       case "vh":
