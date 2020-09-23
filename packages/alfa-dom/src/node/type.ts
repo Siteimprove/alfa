@@ -20,6 +20,16 @@ export class Type extends Node {
   private readonly _publicId: Option<string>;
   private readonly _systemId: Option<string>;
 
+  protected _structurallyEquals(value: unknown): value is this {
+    return (
+      value instanceof Type &&
+      super._structurallyEquals(value) &&
+      this.name === value.name &&
+      this.publicId.equals(value.publicId) &&
+      this.systemId.equals(value.systemId)
+    );
+  }
+
   private constructor(
     name: string,
     publicId: Option<string>,

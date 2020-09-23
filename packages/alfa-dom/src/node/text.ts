@@ -6,6 +6,7 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Comment } from "./comment";
 
 export class Text extends Node implements Slotable {
   public static of(data: string): Text {
@@ -63,6 +64,14 @@ export class Text extends Node implements Slotable {
     path += `[${index + 1}]`;
 
     return path;
+  }
+
+  protected _structurallyEquals(value: unknown): value is this {
+    return (
+      value instanceof Text &&
+      super._structurallyEquals(value) &&
+      this.data === value.data
+    );
   }
 
   public toJSON(): Text.JSON {

@@ -4,6 +4,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
+import { Iterable } from "@siteimprove/alfa-iterable";
 
 export class Shadow extends Node {
   public static of(
@@ -66,6 +67,15 @@ export class Shadow extends Node {
     }
 
     return "/";
+  }
+
+  protected _structurallyEquals(value: unknown): value is this {
+    return (
+      value instanceof Shadow &&
+      super._structurallyEquals(value) &&
+      this.mode === value.mode &&
+      Iterable.equals(this.style, value.style)
+    );
   }
 
   public toJSON(): Shadow.JSON {

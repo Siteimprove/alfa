@@ -14,6 +14,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 import * as predicate from "./element/predicate";
+import { Set } from "@siteimprove/alfa-set";
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
@@ -253,6 +254,31 @@ export class Element extends Node implements Slot, Slotable {
     path += `[${index + 1}]`;
 
     return path;
+  }
+
+  protected _structurallyEquals(value: unknown): value is this {
+    return (
+      value instanceof Element &&
+      super._structurallyEquals(value) &&
+      this.namespace.equals(value.namespace) &&
+      this.prefix.equals(value.prefix) &&
+      this.name === value.name &&
+      // order of the attributes is irrelevant but we can't rely on Set#equals which will just call item.equals
+      // we check mutual inclusion of attributes, disregarding order.
+      this._attributes.every((thisAttribute) =>
+        value._attributes.some((valueAttribute) =>
+          thisAttribute.equals(valueAttribute, true)
+        )
+      ) &&
+      value._attributes.every((valueAttribute) =>
+        this._attributes.some((thisAttribute) =>
+          thisAttribute.equals(valueAttribute, true)
+        )
+      ) &&
+      this.style.equals(value.style) &&
+      this.id.equals(value.id) &&
+      Iterable.equals(this.classes, value.classes)
+    );
   }
 
   public toJSON(): Element.JSON {

@@ -4,6 +4,7 @@ import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Iterable } from "@siteimprove/alfa-iterable";
 
 export class Document extends Node {
   public static of(
@@ -46,6 +47,14 @@ export class Document extends Node {
     }
 
     return "/";
+  }
+
+  protected _structurallyEquals(value: unknown): value is this {
+    return (
+      value instanceof Document &&
+      super._structurallyEquals(value) &&
+      Iterable.equals(this.style, value.style)
+    );
   }
 
   public toJSON(): Document.JSON {

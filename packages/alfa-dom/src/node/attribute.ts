@@ -139,6 +139,17 @@ export class Attribute extends Node {
       : None;
   }
 
+  protected _structurallyEquals(value: unknown): value is this {
+    return (
+      value instanceof Attribute &&
+      super._structurallyEquals(value) &&
+      this.namespace.equals(value.namespace) &&
+      this.prefix.equals(value.prefix) &&
+      this.name === value.name &&
+      this.value === value.value
+    );
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
