@@ -42,7 +42,8 @@
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
     "test/h.spec.ts",
-    "test/node/attribute.spec.ts"
+    "test/node/attribute.spec.ts",
+    "test/node/document.spec.tsx"
   ],
   "references": [
     {
