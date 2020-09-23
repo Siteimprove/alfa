@@ -135,14 +135,14 @@ function embeddedResource(iframe: Element): Document | string {
   function getUrl(value: string): URL {
     try {
       return new URL(value);
-    } catch (ERR_INVALID_URL) {
-      return new URL(fallback);
+    } catch (error: unknown) {
+      if (error instanceof TypeError) {
+        return new URL(fallback);
+      } else {
+        throw error;
+      }
     }
   }
 
-  return src
-    .map((attribute) => {
-      return attribute.value !== "" ? getUrl(attribute.value).href : fallback;
-    })
-    .getOr(fallback);
+  return src.map((attribute) => getUrl(attribute.value).href).getOr(fallback);
 }
