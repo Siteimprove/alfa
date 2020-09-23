@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, h, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -18,7 +18,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { filter, map, flatMap } = Iterable;
+const { filter, map } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -40,29 +40,23 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             )
           );
 
-        const roots = iframes.groupBy((iframe) =>
-          iframe.root({ nested: true })
-        );
+        const groups = iframes
+          .reduce((groups, iframe) => {
+            for (const [node] of Node.from(iframe, device)) {
+              const name = node.name.map((name) => name.value);
 
-        const groups = flatMap(roots.values(), (iframes) =>
-          iframes
-            .reduce((groups, iframe) => {
-              for (const [node] of Node.from(iframe, device)) {
-                const name = node.name.map((name) => name.value);
+              groups = groups.set(
+                name,
+                groups
+                  .get(name)
+                  .getOrElse(() => List.empty<Element>())
+                  .append(iframe)
+              );
+            }
 
-                groups = groups.set(
-                  name,
-                  groups
-                    .get(name)
-                    .getOrElse(() => List.empty<Element>())
-                    .append(iframe)
-                );
-              }
-
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
-            .values()
-        );
+            return groups;
+          }, Map.empty<Option<string>, List<Element>>())
+          .values();
         return filter(groups, (group) => group.size > 1);
       },
 
