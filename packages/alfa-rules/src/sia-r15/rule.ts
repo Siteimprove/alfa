@@ -62,18 +62,20 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
       expectations(target) {
         // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
-        const sources = Set.from(
-          map(target, (iframe) =>
-            iframe
-              .attribute("srcdoc")
-              .map((srcdoc) => srcdoc.value)
-              .getOr(
-                iframe
-                  .attribute("src")
-                  .map((source) => source.value)
-                  .getOr("about:blank")
-              )
-          )
+        const sources = Set.from(map(target, embeddedResource)).reduce(
+          (sources, source) => {
+            // for strings, we can rely on === and set building
+            if (typeof source === "string") {
+              return sources.add(source);
+            }
+            // for Documents, we need to compare the value with equals.
+            if (sources.some(source.equals)) {
+              return sources;
+            } else {
+              return sources.add(source);
+            }
+          },
+          Set.empty<Document | string>()
         );
 
         return {
@@ -114,4 +116,33 @@ export namespace Outcomes {
       `The \`<iframe>\` elements do not embed the same or equivalent resources`
     )
   );
+}
+
+/**
+ * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
+ */
+function embeddedResource(iframe: Element): Document | string {
+  // If we have a content document, use it.
+  // This should cover the case where there is an srcdoc attribute.
+  if (iframe.content.isSome()) {
+    return iframe.content.get();
+  }
+
+  // Otherwise, grab the src attribute.
+  const src = iframe.attribute("src");
+  const fallback = "about:blank";
+
+  function getUrl(value: string): URL {
+    try {
+      return new URL(value);
+    } catch (ERR_INVALID_URL) {
+      return new URL(fallback);
+    }
+  }
+
+  return src
+    .map((attribute) => {
+      return attribute.value !== "" ? getUrl(attribute.value).href : fallback;
+    })
+    .getOr(fallback);
 }
