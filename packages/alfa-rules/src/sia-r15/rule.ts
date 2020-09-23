@@ -69,7 +69,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
               return sources.add(source);
             }
             // for Documents, we need to compare the value with equals.
-            if (sources.some(source.equals)) {
+            if (sources.some((item) => source.equals(item, true))) {
               return sources;
             } else {
               return sources.add(source);
