@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
-import { Document, Element, h, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -68,7 +68,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             if (typeof source === "string") {
               return sources.add(source);
             }
-            // for Documents, we need to compare the value with equals.
+            // for Documents, we need to compare the value with structural equality.
             if (sources.some((item) => source.equals(item, true))) {
               return sources;
             } else {
@@ -123,7 +123,7 @@ export namespace Outcomes {
  */
 function embeddedResource(iframe: Element): Document | string {
   // If we have a content document, use it.
-  // This should cover the case where there is an srcdoc attribute.
+  // This should cover the case where there is a srcdoc attribute.
   if (iframe.content.isSome()) {
     return iframe.content.get();
   }

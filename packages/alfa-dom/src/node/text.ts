@@ -6,7 +6,6 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
-import { Comment } from "./comment";
 
 export class Text extends Node implements Slotable {
   public static of(data: string): Text {
