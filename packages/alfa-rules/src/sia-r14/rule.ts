@@ -8,8 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasRole } from "../common/predicate/has-role";
+import { isFocusable } from "../common/predicate/is-focusable";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isVisible } from "../common/predicate/is-visible";
 
@@ -28,11 +30,16 @@ export default Rule.Atomic.of<Page, Element, Question>({
             isElement,
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasAttribute(
+                (attribute) =>
+                  attribute.name === "aria-label" ||
+                  attribute.name === "aria-labelledby"
+              ),
+              isFocusable(device),
               hasRole((role) => role.isWidget() && role.isNamedBy("contents")),
               hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
-              }),
-              hasAccessibleName(device)
+              })
             )
           )
         );
