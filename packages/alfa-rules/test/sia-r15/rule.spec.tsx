@@ -23,9 +23,11 @@ test("evaluate() passes when two iframes embed the exact same resource", async (
   ]);
 });
 
-test("evaluate() passes when two iframes embed the exact same resource via srcdoc", async (t) => {
-  const iframe1 = <iframe title="Foo" srcdoc="<span>foo</span>" />;
-  const iframe2 = <iframe aria-label="Foo" srcdoc="<span>foo</span>" />;
+test("evaluate() passes when two iframes embed the exact same resource via content document", async (t) => {
+  const iframe1 = <iframe title="Foo">{h.document([<span>foo</span>])}</iframe>;
+  const iframe2 = (
+    <iframe aria-label="Foo">{h.document([<span>foo</span>])}</iframe>
+  );
 
   const document = Document.of([iframe1, iframe2]);
 
