@@ -1,16 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/earl.ts", "src/index.ts", "src/serializable.ts"],
+  "files": ["src/index.ts", "src/refinement.ts", "test/refinement.spec.ts"],
   "references": [
     {
-      "path": "../alfa-json-ld"
+      "path": "../alfa-equatable"
     },
     {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-refinement"
+      "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-test"

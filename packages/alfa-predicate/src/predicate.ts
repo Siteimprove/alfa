@@ -1,40 +1,23 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
-export type Predicate<T, U extends T = T, A extends Array<unknown> = []> =
-  | ((value: T, ...args: A) => boolean)
-  | ((value: T, ...args: A) => value is U);
+export type Predicate<T, A extends Array<unknown> = []> = (
+  value: T,
+  ...args: A
+) => boolean;
 
 export namespace Predicate {
-  export function test<T, U extends T, A extends Array<unknown> = []>(
-    predicate: Predicate<T, U, A>,
-    value: T,
-    ...args: A
-  ): value is U;
-
   export function test<T, A extends Array<unknown> = []>(
-    predicate: Predicate<T, T, A>,
+    predicate: Predicate<T, A>,
     value: T,
     ...args: A
-  ): boolean;
-
-  export function test<T, U extends T = T, A extends Array<unknown> = []>(
-    predicate: Predicate<T, U, A>,
-    value: T,
-    ...args: A
-  ): value is U {
+  ): boolean {
     return predicate(value, ...args);
   }
 
-  export function fold<
-    T,
-    U extends T = T,
-    A extends Array<unknown> = [],
-    V = U,
-    W = T
-  >(
-    predicate: Predicate<T, U, A>,
-    ifTrue: Mapper<U, V>,
+  export function fold<T, A extends Array<unknown> = [], V = T, W = T>(
+    predicate: Predicate<T, A>,
+    ifTrue: Mapper<T, V>,
     ifFalse: Mapper<T, W>,
     value: T,
     ...args: A
@@ -42,28 +25,15 @@ export namespace Predicate {
     return predicate(value, ...args) ? ifTrue(value) : ifFalse(value);
   }
 
-  export function not<T, U extends T = T, A extends Array<unknown> = []>(
-    predicate: Predicate<T, U, A>
-  ): Predicate<T, T, A> {
+  export function not<T, A extends Array<unknown> = []>(
+    predicate: Predicate<T, A>
+  ): Predicate<T, A> {
     return (value, ...args) => !predicate(value, ...args);
   }
 
-  export function and<
-    T,
-    U extends T = T,
-    V extends U = U,
-    A extends Array<unknown> = []
-  >(left: Predicate<T, U, A>, right: Predicate<U, V, A>): Predicate<T, V, A>;
-
-  export function and<T, U extends T = T, A extends Array<unknown> = []>(
-    left: Predicate<T, U, A>,
-    right: Predicate<T, U, A>,
-    ...rest: Array<Predicate<T, U, A>>
-  ): Predicate<T, U, A>;
-
-  export function and<T, U extends T = T, A extends Array<unknown> = []>(
-    ...predicates: Array<Predicate<T, U, A>>
-  ): Predicate<T, U, A> {
+  export function and<T, A extends Array<unknown> = []>(
+    ...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]
+  ): Predicate<T, A> {
     return (value, ...args) =>
       predicates.reduce<boolean>(
         (holds, predicate) => holds && predicate(value, ...args),
@@ -71,25 +41,9 @@ export namespace Predicate {
       );
   }
 
-  export function or<
-    T,
-    U extends T = T,
-    V extends T = T,
-    A extends Array<unknown> = []
-  >(
-    left: Predicate<T, U, A>,
-    right: Predicate<T, V, A>
-  ): Predicate<T, U | V, A>;
-
-  export function or<T, U extends T = T, A extends Array<unknown> = []>(
-    left: Predicate<T, U, A>,
-    right: Predicate<T, U, A>,
-    ...rest: Array<Predicate<T, U, A>>
-  ): Predicate<T, U, A>;
-
-  export function or<T, U extends T = T, A extends Array<unknown> = []>(
-    ...predicates: Array<Predicate<T, U, A>>
-  ): Predicate<T, U, A> {
+  export function or<T, A extends Array<unknown> = []>(
+    ...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]
+  ): Predicate<T, A> {
     return (value, ...args) =>
       predicates.reduce<boolean>(
         (holds, predicate) => holds || predicate(value, ...args),
@@ -97,33 +51,24 @@ export namespace Predicate {
       );
   }
 
-  export function xor<
-    T,
-    U extends T = T,
-    V extends T = T,
-    A extends Array<unknown> = []
-  >(
-    left: Predicate<T, U, A>,
-    right: Predicate<T, V, A>
-  ): Predicate<T, U | V, A> {
+  export function xor<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
     return and(or(left, right), not(and(left, right)));
   }
 
-  export function nor<
-    T,
-    U extends T = T,
-    V extends T = T,
-    A extends Array<unknown> = []
-  >(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A> {
+  export function nor<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
     return not(or(left, right));
   }
 
-  export function nand<
-    T,
-    U extends T = T,
-    V extends U = U,
-    A extends Array<unknown> = []
-  >(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A> {
+  export function nand<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
     return not(and(left, right));
   }
 
@@ -131,57 +76,11 @@ export namespace Predicate {
     T,
     K extends keyof T = keyof T,
     A extends Array<unknown> = []
-  >(property: K, predicate: Predicate<T[K], T[K], A>): Predicate<T, T, A> {
+  >(property: K, predicate: Predicate<T[K], A>): Predicate<T, A> {
     return (value, ...args) => predicate(value[property], ...args);
   }
 
-  export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
+  export function equals<T>(...values: Array<T>): Predicate<T> {
     return (other) => values.some((value) => Equatable.equals(other, value));
   }
-
-  export function isString(value: unknown): value is string {
-    return typeof value === "string";
-  }
-
-  export function isNumber(value: unknown): value is number {
-    return typeof value === "number";
-  }
-
-  export function isBigInt(value: unknown): value is bigint {
-    return typeof value === "bigint";
-  }
-
-  export function isBoolean(value: unknown): value is boolean {
-    return typeof value === "boolean";
-  }
-
-  export function isNull(value: unknown): value is null {
-    return value === null;
-  }
-
-  export function isUndefined(value: unknown): value is undefined {
-    return value === undefined;
-  }
-
-  export function isSymbol(value: unknown): value is symbol {
-    return typeof value === "symbol";
-  }
-
-  export function isFunction(value: unknown): value is Function {
-    return typeof value === "function";
-  }
-
-  export function isObject(
-    value: unknown
-  ): value is { [key: string]: unknown } {
-    return typeof value === "object" && value !== null;
-  }
-
-  export const isPrimitive = or(
-    isString,
-    or(
-      isNumber,
-      or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol))))
-    )
-  );
 }

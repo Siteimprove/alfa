@@ -8,6 +8,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { None } from "./none";
@@ -28,7 +29,9 @@ export interface Option<T>
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
-  filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
+  filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
+  filter(predicate: Predicate<T>): Option<T>;
+  reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
   reject(predicate: Predicate<T>): Option<T>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;

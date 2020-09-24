@@ -7,6 +7,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -59,18 +60,30 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): Set<U> {
+  public filter<U extends T>(refinement: Refinement<T, U>): Set<U>;
+
+  public filter(predicate: Predicate<T>): Set<T>;
+
+  public filter(predicate: Predicate<T>): Set<T> {
     return this.reduce(
       (set, value) => (predicate(value) ? set.add(value) : set),
-      Set.empty<U>()
+      Set.empty()
     );
   }
+
+  public reject<U extends T>(refinement: Refinement<T, U>): Set<Exclude<T, U>>;
+
+  public reject(predicate: Predicate<T>): Set<T>;
 
   public reject(predicate: Predicate<T>): Set<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
+  public find<U extends T>(refinement: Refinement<T, U>): Option<U>;
+
+  public find(predicate: Predicate<T>): Option<T>;
+
+  public find(predicate: Predicate<T>): Option<T> {
     return Iterable.find(this, predicate);
   }
 

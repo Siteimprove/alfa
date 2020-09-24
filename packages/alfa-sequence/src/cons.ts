@@ -1,5 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
@@ -7,6 +8,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
@@ -45,6 +47,13 @@ export class Cons<T> implements Sequence<T> {
     return false;
   }
 
+  public map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
+
+  /**
+   * @internal
+   */
+  public map<U>(mapper: Mapper<T, U, [number]>, index: number): Cons<U>;
+
   public map<U>(mapper: Mapper<T, U, [number]>, index = 0): Cons<U> {
     return new Cons(
       mapper(this._head, index),
@@ -53,6 +62,16 @@ export class Cons<T> implements Sequence<T> {
       )
     );
   }
+
+  public flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
+
+  /**
+   * @internal
+   */
+  public flatMap<U>(
+    mapper: Mapper<T, Sequence<U>, [number]>,
+    index: number
+  ): Sequence<U>;
 
   public flatMap<U>(
     mapper: Mapper<T, Sequence<U>, [number]>,
@@ -111,18 +130,26 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U, [number]>,
-    index = 0
-  ): Sequence<U> {
+    refinement: Refinement<T, U, [number]>
+  ): Sequence<U>;
+
+  public filter(predicate: Predicate<T, [number]>): Sequence<T>;
+
+  /**
+   * @internal
+   */
+  public filter(predicate: Predicate<T, [number]>, index: number): Sequence<T>;
+
+  public filter(predicate: Predicate<T, [number]>, index = 0): Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
-      if (predicate(next._head, index)) {
+      if (predicate(next._head, index++)) {
         return new Cons(
           next._head,
           next._tail.map((tail) =>
             Cons.isCons<T>(tail)
-              ? tail.filter(predicate, index + 1)
+              ? tail.filter(predicate, index)
               : tail.filter(predicate)
           )
         );
@@ -138,11 +165,21 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public reject(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public reject<U extends T>(
+    refinement: Refinement<T, U, [number]>
+  ): Sequence<Exclude<T, U>>;
+
+  public reject(predicate: Predicate<T, [number]>): Sequence<T>;
+
+  public reject(predicate: Predicate<T, [number]>): Sequence<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U> {
+  public find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+
+  public find(predicate: Predicate<T, [number]>): Option<T>;
+
+  public find(predicate: Predicate<T, [number]>): Option<T> {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -174,14 +211,14 @@ export class Cons<T> implements Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
-      const value = mapper(next._head, index);
+      const value = mapper(next._head, index++);
 
       if (value.isSome()) {
         return new Cons(
           value.get(),
           next._tail.map((tail) =>
             Cons.isCons<T>(tail)
-              ? tail.collect(mapper, index + 1)
+              ? tail.collect(mapper, index)
               : tail.collect(mapper)
           )
         );
@@ -202,7 +239,7 @@ export class Cons<T> implements Sequence<T> {
     let index = 0;
 
     while (true) {
-      const value = mapper(next._head, index);
+      const value = mapper(next._head, index++);
 
       if (value.isSome()) {
         return value;
@@ -218,7 +255,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public some(predicate: Predicate<T, T, [number]>): boolean {
+  public some(predicate: Predicate<T, [number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -237,7 +274,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public every(predicate: Predicate<T, T, [number]>): boolean {
+  public every(predicate: Predicate<T, [number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -256,7 +293,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public count(predicate: Predicate<T, T, [number]>): number {
+  public count(predicate: Predicate<T, [number]>): number {
     return this.reduce(
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
@@ -370,14 +407,21 @@ export class Cons<T> implements Sequence<T> {
     return this.takeWhile(() => count-- > 0);
   }
 
-  public takeWhile(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public takeWhile(predicate: Predicate<T, [number]>): Sequence<T> {
     return this.takeUntil(not(predicate));
   }
 
+  public takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+
+  /**
+   * @internal
+   */
   public takeUntil(
-    predicate: Predicate<T, T, [number]>,
-    index = 0
-  ): Sequence<T> {
+    predicate: Predicate<T, [number]>,
+    index: number
+  ): Sequence<T>;
+
+  public takeUntil(predicate: Predicate<T, [number]>, index = 0): Sequence<T> {
     if (predicate(this._head, index)) {
       return Nil;
     }
@@ -400,7 +444,7 @@ export class Cons<T> implements Sequence<T> {
     return this.skipWhile(() => count-- > 0);
   }
 
-  public skipWhile(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public skipWhile(predicate: Predicate<T, [number]>): Sequence<T> {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -417,7 +461,7 @@ export class Cons<T> implements Sequence<T> {
     return next;
   }
 
-  public skipUntil(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public skipUntil(predicate: Predicate<T, [number]>): Sequence<T> {
     return this.skipWhile(not(predicate));
   }
 
@@ -475,6 +519,14 @@ export class Cons<T> implements Sequence<T> {
         )
       );
     }, Map.empty<K, Sequence<T>>()).map((group) => group.reverse());
+  }
+
+  public subtract(iterable: Iterable<T>): Sequence<T> {
+    return Sequence.from(Iterable.subtract(this, iterable));
+  }
+
+  public intersect(iterable: Iterable<T>): Sequence<T> {
+    return Sequence.from(Iterable.intersect(this, iterable));
   }
 
   public equals(value: unknown): value is this {

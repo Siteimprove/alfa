@@ -5,6 +5,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
@@ -73,9 +74,16 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U>,
+    refinement: Refinement<T, U>,
+    ifError?: Thunk<string>
+  ): Argument<U>;
+
+  public filter(predicate: Predicate<T>, ifError?: Thunk<string>): Argument<T>;
+
+  public filter(
+    predicate: Predicate<T>,
     ifError: Thunk<string> = () => "Incorrect value"
-  ): Argument<U> {
+  ): Argument<T> {
     return new Argument(
       this._name,
       this._description,
@@ -124,7 +132,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
   }
 
   public choices<U extends T>(...choices: Array<U>): Argument<U> {
-    return this.filter(Predicate.equals(...choices));
+    return this.filter(Refinement.equals(...choices));
   }
 
   public toJSON(): Argument.JSON {
