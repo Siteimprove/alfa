@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -16,6 +17,8 @@ import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-acc
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { filter, map } = Iterable;
@@ -61,26 +64,13 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       },
 
       expectations(target) {
-        // @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
-        const sources = Set.from(map(target, embeddedResource)).reduce(
-          (sources, source) => {
-            // for strings, we can rely on === and set building
-            if (typeof source === "string") {
-              return sources.add(source);
-            }
-            // for Documents, we need to compare the value with structural equality.
-            if (sources.some((item) => source.equals(item))) {
-              return sources;
-            } else {
-              return sources.add(source);
-            }
-          },
-          Set.empty<Document | string>()
-        );
+        const sources = Set.from(map(target, embeddedResource));
 
         return {
           1: expectation(
-            sources.size === 1,
+            sources.size === 1 &&
+              // always ask question if we can't find source, presumably the content doc is fed another way into the iframes
+              sources.every((source) => source.value.isSome()),
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
@@ -118,31 +108,70 @@ export namespace Outcomes {
   );
 }
 
+type Source = "srcdoc" | "src" | "invalid" | "nothing";
+
+class EmbeddedResource implements Equatable, Hashable {
+  public static of(source: Source, value?: string): EmbeddedResource {
+    return new EmbeddedResource(source, Option.from(value));
+  }
+
+  private readonly _source: Source;
+  private readonly _value: Option<string>;
+
+  private constructor(source: Source, value: Option<string>) {
+    this._source = source;
+    this._value = value;
+  }
+
+  public get value(): Option<string> {
+    return this._value;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof EmbeddedResource &&
+      this._source === value._source &&
+      this._value.equals(value._value)
+    );
+  }
+
+  public hash(hash: Hash) {
+    Hash.writeString(hash, this._source);
+    this._value.hash(hash);
+  }
+
+  public toString() {
+    return `{source: ${this._source}, value: ${this._value}}`;
+  }
+}
+
 /**
  * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
  */
-function embeddedResource(iframe: Element): Document | string {
-  // If we have a content document, use it.
-  // This should cover the case where there is a srcdoc attribute.
-  if (iframe.content.isSome()) {
-    return iframe.content.get();
+function embeddedResource(iframe: Element): EmbeddedResource {
+  // srcdoc takes precedence.
+  if (iframe.attribute("srcdoc").isSome()) {
+    return EmbeddedResource.of(
+      "srcdoc",
+      iframe.attribute("srcdoc").get().value
+    );
   }
 
   // Otherwise, grab the src attribute.
-  const src = iframe.attribute("src");
-  const fallback = "about:blank";
-
-  function getUrl(value: string): URL {
+  function getUrl(value: string): EmbeddedResource {
     try {
-      return new URL(value);
+      return EmbeddedResource.of("src", new URL(value).href);
     } catch (error: unknown) {
       if (error instanceof TypeError) {
-        return new URL(fallback);
+        return EmbeddedResource.of("invalid");
       } else {
         throw error;
       }
     }
   }
 
-  return src.map((attribute) => getUrl(attribute.value).href).getOr(fallback);
+  return iframe
+    .attribute("src")
+    .map((attribute) => getUrl(attribute.value))
+    .getOrElse(() => EmbeddedResource.of("nothing"));
 }
