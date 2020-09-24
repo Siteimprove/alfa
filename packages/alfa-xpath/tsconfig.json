@@ -41,6 +41,9 @@
       "path": "../alfa-predicate"
     },
     {
+      "path": "../alfa-refinement"
+    },
+    {
       "path": "../alfa-result"
     },
     {
