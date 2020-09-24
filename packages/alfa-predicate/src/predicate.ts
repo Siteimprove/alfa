@@ -80,7 +80,7 @@ export namespace Predicate {
     return (value, ...args) => predicate(value[property], ...args);
   }
 
-  export function equals<T>(...values: Array<T>): Predicate<T> {
+  export function equals<T>(...values: Array<T>): Predicate<unknown> {
     return (other) => values.some((value) => Equatable.equals(other, value));
   }
 }
