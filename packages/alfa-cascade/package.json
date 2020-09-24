@@ -26,6 +26,7 @@
     "@siteimprove/alfa-media": "^0.5.0",
     "@siteimprove/alfa-option": "^0.5.0",
     "@siteimprove/alfa-predicate": "^0.5.0",
+    "@siteimprove/alfa-refinement": "^0.5.0",
     "@siteimprove/alfa-selector": "^0.5.0"
   },
   "devDependencies": {
