@@ -23,18 +23,16 @@ test("evaluate() passes when two iframes embed the exact same resource", async (
   ]);
 });
 
-// test("evaluate() passes when two iframes embed the exact same resource via content document", async (t) => {
-//   const iframe1 = <iframe title="Foo">{h.document([<span>foo</span>])}</iframe>;
-//   const iframe2 = (
-//     <iframe aria-label="Foo">{h.document([<span>foo</span>])}</iframe>
-//   );
-//
-//   const document = Document.of([iframe1, iframe2]);
-//
-//   t.deepEqual(await evaluate(R15, { document }), [
-//     passed(R15, [iframe1, iframe2], { 1: Outcomes.EmbedSameResources }),
-//   ]);
-// });
+test("evaluate() passes when two iframes embed the exact same resource via srcdoc", async (t) => {
+  const iframe1 = <iframe title="Foo" srcdoc="<span>foo</span>" />;
+  const iframe2 = <iframe aria-label="Foo" srcdoc="<span>foo</span>" />;
+
+  const document = Document.of([iframe1, iframe2]);
+
+  t.deepEqual(await evaluate(R15, { document }), [
+    passed(R15, [iframe1, iframe2], { 1: Outcomes.EmbedSameResources }),
+  ]);
+});
 
 test("evaluate() passes when two iframes embed equivalent resources", async (t) => {
   const iframe1 = <iframe title="Foo" src="http://somewhere.com/foo1.html" />;
