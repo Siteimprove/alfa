@@ -8,7 +8,7 @@ import R15, { Outcomes } from "../../src/sia-r15/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome";
 
 test("evaluate() passes when two iframes embed the exact same resource", async (t) => {
   const iframe1 = <iframe title="Foo" src="http://somewhere.com/foo.html" />;
@@ -108,13 +108,24 @@ test("evaluate() passes when two iframes embed the same resource up to trailing 
   ]);
 });
 
-test("evaluate() passes with default URL of about:blank", async (t) => {
-  const iframe1 = <iframe title="Foo" src="about:blank" />;
+test("evaluate() can't with invalid URLs", async (t) => {
+  const iframe1 = <iframe title="Foo" src="" />;
   const iframe2 = <iframe aria-label="Foo" src="" />;
 
   const document = Document.of([iframe1, iframe2]);
 
   t.deepEqual(await evaluate(R15, { document }), [
-    passed(R15, [iframe1, iframe2], { 1: Outcomes.EmbedSameResources }),
+    cantTell(R15, [iframe1, iframe2]),
+  ]);
+});
+
+test("evaluate() can't tell with no source", async (t) => {
+  const iframe1 = <iframe title="Foo" />;
+  const iframe2 = <iframe aria-label="Foo" />;
+
+  const document = Document.of([iframe1, iframe2]);
+
+  t.deepEqual(await evaluate(R15, { document }), [
+    cantTell(R15, [iframe1, iframe2]),
   ]);
 });
