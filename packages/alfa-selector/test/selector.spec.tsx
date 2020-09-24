@@ -1,3 +1,4 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Selector } from "../src/selector";
@@ -788,4 +789,217 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
       },
     },
   });
+});
+
+test(".parse() parses an :nth-child selector", (t) => {
+  t.deepEqual(Selector.parse(":nth-child(odd)").get().toJSON(), {
+    type: "pseudo-class",
+    name: "nth-child",
+    index: {
+      step: 2,
+      offset: 1,
+    },
+  });
+});
+
+test("#matches() checks if an element matches an :nth-child selector", (t) => {
+  const selector = Selector.parse(":nth-child(odd)").get();
+
+  const a = <p />;
+  const b = <p />;
+  const c = <p />;
+  const d = <p />;
+
+  <div>
+    {a}
+    Hello
+    {b}
+    {c}
+    {d}
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(c), true);
+  t.equal(selector.matches(d), false);
+});
+
+test("#matches() checks if an element matches an :nth-last-child selector", (t) => {
+  const selector = Selector.parse(":nth-last-child(odd)").get();
+
+  const a = <p />;
+  const b = <p />;
+  const c = <p />;
+  const d = <p />;
+
+  <div>
+    {a}
+    Hello
+    {b}
+    {c}
+    {d}
+  </div>;
+
+  t.equal(selector.matches(a), false);
+  t.equal(selector.matches(b), true);
+  t.equal(selector.matches(c), false);
+  t.equal(selector.matches(d), true);
+});
+
+test("#matches() checks if an element matches a :first-child selector", (t) => {
+  const selector = Selector.parse(":first-child").get();
+
+  const a = <p />;
+  const b = <p />;
+
+  <div>
+    Hello
+    {a}
+    {b}
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
+});
+
+test("#matches() checks if an element matches a :last-child selector", (t) => {
+  const selector = Selector.parse(":last-child").get();
+
+  const a = <p />;
+  const b = <p />;
+
+  <div>
+    {a}
+    {b}
+    Hello
+  </div>;
+
+  t.equal(selector.matches(a), false);
+  t.equal(selector.matches(b), true);
+});
+
+test("#matches() checks if an element matches an :only-child selector", (t) => {
+  const selector = Selector.parse(":only-child").get();
+
+  const a = <p />;
+  const b = <p />;
+
+  <div>
+    {a}
+    Hello
+  </div>;
+
+  <div>
+    {b}
+    <p />
+    Hello
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
+});
+
+test("#matches() checks if an element matches an :nth-of-type selector", (t) => {
+  const selector = Selector.parse(":nth-of-type(odd)").get();
+
+  const a = <p />;
+  const b = <p />;
+  const c = <p />;
+  const d = <p />;
+
+  <div>
+    <div />
+    {a}
+    Hello
+    <span />
+    {b}
+    {c}
+    {d}
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(c), true);
+  t.equal(selector.matches(d), false);
+});
+
+test("#matches() checks if an element matches an :nth-last-of-type selector", (t) => {
+  const selector = Selector.parse(":nth-last-of-type(odd)").get();
+
+  const a = <p />;
+  const b = <p />;
+  const c = <p />;
+  const d = <p />;
+
+  <div>
+    {a}
+    {b}
+    {c}
+    <div />
+    {d}
+    Hello
+    <span />
+  </div>;
+
+  t.equal(selector.matches(a), false);
+  t.equal(selector.matches(b), true);
+  t.equal(selector.matches(c), false);
+  t.equal(selector.matches(d), true);
+});
+
+test("#matches() checks if an element matches a :first-of-type selector", (t) => {
+  const selector = Selector.parse(":first-of-type").get();
+
+  const a = <p />;
+  const b = <p />;
+
+  <div>
+    <div />
+    Hello
+    {a}
+    {b}
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
+});
+
+test("#matches() checks if an element matches a :last-of-type selector", (t) => {
+  const selector = Selector.parse(":last-of-type").get();
+
+  const a = <p />;
+  const b = <p />;
+
+  <div>
+    {a}
+    {b}
+    Hello
+    <div />
+  </div>;
+
+  t.equal(selector.matches(a), false);
+  t.equal(selector.matches(b), true);
+});
+
+test("#matches() checks if an element matches a :only-of-type selector", (t) => {
+  const selector = Selector.parse(":only-of-type").get();
+
+  const a = <p />;
+  const b = <p />;
+
+  <div>
+    {a}
+    Hello
+    <div />
+  </div>;
+
+  <div>
+    {b}
+    <p />
+    Hello
+    <div />
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
 });

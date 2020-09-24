@@ -372,6 +372,7 @@ export namespace Element {
 
   export const {
     hasId,
+    hasInputType,
     hasName,
     hasNamespace,
     hasTabIndex,
@@ -419,6 +420,9 @@ function isSuggestedFocusableElement(element: Element): boolean {
 
           return false;
         });
+
+    case "object":
+      return element.content.isSome();
   }
 
   return (

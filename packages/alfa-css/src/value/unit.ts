@@ -1,3 +1,10 @@
+export type Unit =
+  | Unit.Length
+  | Unit.Angle
+  | Unit.Time
+  | Unit.Frequency
+  | Unit.Resolution;
+
 export namespace Unit {
   export namespace Length {
     /**
@@ -57,6 +64,14 @@ export namespace Unit {
 
   export function isLength(input: string): input is Length {
     return Length.isRelative(input) || Length.isAbsolute(input);
+  }
+
+  export function isRelativeLength(input: string): input is Length.Relative {
+    return Length.isRelative(input);
+  }
+
+  export function isAbsoluteLength(input: string): input is Length.Absolute {
+    return Length.isAbsolute(input);
   }
 
   /**

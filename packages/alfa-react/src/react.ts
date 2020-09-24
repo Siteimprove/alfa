@@ -32,10 +32,14 @@ export namespace React {
       throw new Error("Could not render React element");
     }
 
+    const children = (Array.isArray(tree) ? tree : [tree]).map((element) =>
+      Element.from(toElement(element))
+    );
+
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of([Element.from(toElement(tree))]),
+      Document.of(children),
       Device.standard()
     );
   }

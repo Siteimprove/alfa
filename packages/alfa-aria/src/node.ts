@@ -225,6 +225,13 @@ export namespace Node {
 
     const root = node.root({ flattened: true });
 
+    // If the cache already holds an entry for the root of the specified node,
+    // then the tree that the node participates in has already been built, but
+    // the node itself is not included within the resulting accessibility tree.
+    if (_cache.has(root)) {
+      return _cache.get(node, () => Branched.of(Inert.of(node)));
+    }
+
     // Before we start constructing the accessibility tree, we need to resolve
     // explicit ownership of elements as specified by the `aria-owns` attribute.
     // https://w3c.github.io/aria/#aria-owns
@@ -349,25 +356,37 @@ export namespace Node {
           return Branched.of(Inert.of(node));
         }
 
-        // Get the children explicitly owned by the element. Children can be
-        // explicitly owned using the `aria-owns` attribute.
-        const explicit = owned
-          .get(node)
-          .getOrElse(() => Sequence.empty<dom.Node>());
+        let children: Branched<Iterable<Node>, Browser>;
 
-        // Get the children implicitly owned by the element. These are the
-        // children in the flat tree that are neither claimed already nor
-        // explicitly owned by the element.
-        const implicit = node
-          .children({ flattened: true })
-          .reject((child) => claimed.has(child) || explicit.includes(child));
+        // Children of <iframe> elements act as fallback content in legacy user
+        // agents and should therefore never be included in the accessibility
+        // tree.
+        if (node.name === "iframe") {
+          children = Branched.of([]);
+        }
 
-        // Recursively build accessible nodes for the children of the element.
-        // The children implicitly owned by the element come first, then the
-        // children explicitly owned by the element.
-        const children = Branched.traverse(implicit.concat(explicit), (child) =>
-          build(child, device, claimed, owned)
-        );
+        // Otherwise, recursively build accessible nodes for the children of the
+        // element.
+        else {
+          // Get the children explicitly owned by the element. Children can be
+          // explicitly owned using the `aria-owns` attribute.
+          const explicit = owned
+            .get(node)
+            .getOrElse(() => Sequence.empty<dom.Node>());
+
+          // Get the children implicitly owned by the element. These are the
+          // children in the flat tree that are neither claimed already nor
+          // explicitly owned by the element.
+          const implicit = node
+            .children({ flattened: true })
+            .reject((child) => claimed.has(child) || explicit.includes(child));
+
+          // The children implicitly owned by the element come first, then the
+          // children explicitly owned by the element.
+          children = Branched.traverse(implicit.concat(explicit), (child) =>
+            build(child, device, claimed, owned)
+          );
+        }
 
         // Elements that are not visible by means of `visibility: hidden` or
         // `visibility: collapse`, are exposed in the accessibility tree as
@@ -419,6 +438,17 @@ export namespace Node {
                 attributes = attributes.set(name, attribute);
               }
             }
+          }
+
+          // If the element has neither attributes, a role, nor a tabindex, it
+          // is not itself interesting for accessibility purposes. It is
+          // therefore exposed as a container.
+          if (
+            attributes.isEmpty() &&
+            role.isNone() &&
+            node.tabIndex().isNone()
+          ) {
+            return children.map((children) => Container.of(node, children));
           }
 
           return children.flatMap((children) =>

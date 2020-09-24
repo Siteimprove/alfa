@@ -562,7 +562,11 @@ export namespace Token {
     }
 
     public toString(): string {
-      return `${this._value}`;
+      // If the token is explicitly signed and the value is positive, we must
+      // add a `+` as this won't be included in the stringified value.
+      const sign = this._isSigned && this._value >= 0 ? "+" : "";
+
+      return `${sign}${this._value}`;
     }
   }
 
@@ -717,7 +721,11 @@ export namespace Token {
     }
 
     public toString(): string {
-      return `${this._value}${this._unit}`;
+      // If the token is explicitly signed and the value is positive, we must
+      // add a `+` as this won't be included in the stringified value.
+      const sign = this._isSigned && this._value >= 0 ? "+" : "";
+
+      return `${sign}${this._value}${this._unit}`;
     }
   }
 

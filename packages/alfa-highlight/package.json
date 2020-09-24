@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-highlight",
   "homepage": "https://siteimprove.com",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "MIT",
   "description": "Functionality for working with terminal string styling and code highlighting",
   "repository": {
@@ -19,9 +19,9 @@
     "types/**/*.d.ts"
   ],
   "dependencies": {
-    "chalk": "^2.4.2",
-    "emphasize": "^2.0.0",
-    "highlight.js": "^9.18.1"
+    "chalk": "^4.1.0",
+    "emphasize": "^4.0.0",
+    "highlight.js": "^10.1.2"
   },
   "publishConfig": {
     "access": "public",

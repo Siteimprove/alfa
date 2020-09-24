@@ -55,3 +55,28 @@ test("evaluate() is not applicable when no landmarks are found", async (t) => {
 
   t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
 });
+
+test("evaluate() is not applicable to empty text nodes", async (t) => {
+  const document = Document.of([
+    <div></div>
+  ]);
+
+  t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
+});
+
+test("evaluate() is not applicable to whitespace only text nodes", async (t) => {
+  // space, non breaking space
+  const document = Document.of([
+    <div>  </div>
+  ]);
+
+  t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
+});
+
+test("evaluate() is not applicable to descendant of iframe", async (t) => {
+  const document = Document.of([
+    <iframe ><span>Hello</span> world</iframe>
+  ]);
+
+  t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
+});

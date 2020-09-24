@@ -1,11 +1,11 @@
 {
   "private": true,
   "name": "custom-testing-crawling",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "scripts": {
     "test": "node test.js"
   },
   "devDependencies": {
-    "@siteimprove/alfa-cypress": "^0.4.1"
+    "@siteimprove/alfa-cypress": "^0.5.0"
   }
 }

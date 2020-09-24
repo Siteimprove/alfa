@@ -7,12 +7,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasInputType } from "../common/predicate/has-input-type";
 import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -33,7 +32,7 @@ export default Rule.Atomic.of<Page, Attribute>({
                 not(
                   and(
                     hasName("input"),
-                    hasInputType(equals("hidden", "button", "submit", "reset"))
+                    hasInputType("hidden", "button", "submit", "reset")
                   )
                 ),
                 not(hasAttribute("aria-disabled", equals("true"))),

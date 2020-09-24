@@ -6,22 +6,62 @@ import { Style } from "@siteimprove/alfa-style";
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
-const { and, not } = Predicate;
+const { and, or, not } = Predicate;
+const { isElement } = Element;
+const { isText } = Text;
 
-export function isVisible<T extends Node>(device: Device): Predicate<T> {
-  return and(and(isRendered(device), not(isTransparent(device))), (node) => {
+export function isVisible(device: Device): Predicate<Node> {
+  return and(
+    isRendered(device),
+    not(isTransparent(device)),
+    not(and(or(isElement, isText), isClipped(device))),
+    (node) => {
+      if (Element.isElement(node)) {
+        const visibility = Style.from(node, device).computed("visibility")
+          .value;
+
+        if (visibility.value !== "visible") {
+          return false;
+        }
+      }
+
+      if (Text.isText(node)) {
+        return node.data.trim() !== "";
+      }
+
+      return true;
+    }
+  );
+}
+
+function isClipped(device: Device): Predicate<Element | Text> {
+  return function isClipped(node): boolean {
     if (Element.isElement(node)) {
-      const visibility = Style.from(node, device).computed("visibility").value;
+      const style = Style.from(node, device);
 
-      if (visibility.value !== "visible") {
-        return false;
+      const { value: height } = style.computed("height");
+      const { value: width } = style.computed("width");
+      const { value: x } = style.computed("overflow-x");
+      const { value: y } = style.computed("overflow-y");
+
+      if (
+        height.type === "length" &&
+        height.value <= 1 &&
+        width.type === "length" &&
+        height.value <= 1 &&
+        x.value === "hidden" &&
+        y.value === "hidden"
+      ) {
+        return true;
       }
     }
 
-    if (Text.isText(node)) {
-      return node.data.trim() !== "";
+    for (const parent of node.parent({ flattened: true })) {
+      if (Element.isElement(parent)) {
+        return isClipped(parent);
+      }
     }
 
-    return true;
-  });
+    return false;
+  };
 }

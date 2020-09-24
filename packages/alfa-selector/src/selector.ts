@@ -1,4 +1,4 @@
-import { Lexer, Token, Function } from "@siteimprove/alfa-css";
+import { Lexer, Token, Function, Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -29,6 +29,8 @@ const {
 } = Parser;
 
 const { and, not, property, equals, isString } = Predicate;
+
+const { isElement, hasName } = Element;
 
 /**
  * @see https://drafts.csswg.org/selectors/#selector
@@ -771,6 +773,11 @@ export namespace Selector {
 
   export type Pseudo = Pseudo.Class | Pseudo.Element;
 
+  const parseNth = left(
+    Nth.parse,
+    eof((token) => `Unexpected token ${token}`)
+  );
+
   const parsePseudoClass = right(
     Token.parseColon,
     either(
@@ -789,6 +796,20 @@ export namespace Selector {
             return Result.of([input, Visited.of()]);
           case "root":
             return Result.of([input, Root.of()]);
+          case "empty":
+            return Result.of([input, Empty.of()]);
+          case "first-child":
+            return Result.of([input, FirstChild.of()]);
+          case "last-child":
+            return Result.of([input, LastChild.of()]);
+          case "only-child":
+            return Result.of([input, OnlyChild.of()]);
+          case "first-of-type":
+            return Result.of([input, FirstOfType.of()]);
+          case "last-of-type":
+            return Result.of([input, LastOfType.of()]);
+          case "only-of-type":
+            return Result.of([input, OnlyOfType.of()]);
         }
 
         return Err.of(`Unknown pseudo-class :${ident.value}`);
@@ -799,20 +820,40 @@ export namespace Selector {
         right(peek(Token.parseFunction()), Function.consume),
         (fn) => (input) => {
           const { name } = fn;
+          const tokens = Slice.of(fn.value);
 
           switch (name) {
             // :<name>(<selector-list>)
             case "is":
             case "not":
             case "has":
-              return parseSelector(Slice.of(fn.value)).map(([, selector]) => {
+              return parseSelector(tokens).map(([, selector]) => {
                 switch (name) {
                   case "is":
+                    // Annotate the first value to ensure correct inference.
                     return [input, Is.of(selector) as Pseudo.Class];
                   case "not":
-                    return [input, Not.of(selector) as Pseudo.Class];
+                    return [input, Not.of(selector)];
                   case "has":
-                    return [input, Has.of(selector) as Pseudo.Class];
+                    return [input, Has.of(selector)];
+                }
+              });
+
+            // :<name>(<an+b>)
+            case "nth-child":
+            case "nth-last-child":
+            case "nth-of-type":
+            case "nth-last-of-type":
+              return parseNth(tokens).map(([, nth]) => {
+                switch (name) {
+                  case "nth-child":
+                    return [input, NthChild.of(nth)];
+                  case "nth-last-child":
+                    return [input, NthLastChild.of(nth)];
+                  case "nth-of-type":
+                    return [input, NthOfType.of(nth)];
+                  case "nth-last-of-type":
+                    return [input, NthLastOfType.of(nth)];
                 }
               });
           }
@@ -1085,7 +1126,292 @@ export namespace Selector {
 
     public matches(element: Element): boolean {
       // The root element is the element whose parent is NOT itself an element.
-      return element.parent().every(not(Element.isElement));
+      return element.parent().every(not(isElement));
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#empty-pseudo
+   */
+  export class Empty extends Pseudo.Class {
+    public static of(): Empty {
+      return new Empty();
+    }
+
+    private constructor() {
+      super("empty");
+    }
+
+    public matches(element: Element): boolean {
+      return element.children().isEmpty();
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#nth-child-pseudo
+   */
+  export class NthChild extends Pseudo.Class {
+    public static of(index: Nth): NthChild {
+      return new NthChild(index);
+    }
+
+    private readonly _index: Nth;
+
+    private constructor(index: Nth) {
+      super("nth-child");
+
+      this._index = index;
+    }
+
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.preceding().filter(isElement).size + 1
+      );
+    }
+
+    public toJSON(): NthChild.JSON {
+      return {
+        ...super.toJSON(),
+        index: this._index.toJSON(),
+      };
+    }
+  }
+
+  export namespace NthChild {
+    export interface JSON extends Pseudo.Class.JSON {
+      index: Nth.JSON;
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#nth-last-child-pseudo
+   */
+  export class NthLastChild extends Pseudo.Class {
+    public static of(index: Nth): NthLastChild {
+      return new NthLastChild(index);
+    }
+
+    private readonly _index: Nth;
+
+    private constructor(nth: Nth) {
+      super("nth-last-child");
+
+      this._index = nth;
+    }
+
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.following().filter(isElement).size + 1
+      );
+    }
+
+    public toJSON(): NthLastChild.JSON {
+      return {
+        ...super.toJSON(),
+        index: this._index.toJSON(),
+      };
+    }
+  }
+
+  export namespace NthLastChild {
+    export interface JSON extends Pseudo.Class.JSON {
+      index: Nth.JSON;
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#first-child-pseudo
+   */
+  export class FirstChild extends Pseudo.Class {
+    public static of(): FirstChild {
+      return new FirstChild();
+    }
+
+    private constructor() {
+      super("first-child");
+    }
+
+    public matches(element: Element): boolean {
+      return element
+        .inclusiveSiblings()
+        .filter(isElement)
+        .first()
+        .includes(element);
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#last-child-pseudo
+   */
+  export class LastChild extends Pseudo.Class {
+    public static of(): LastChild {
+      return new LastChild();
+    }
+
+    private constructor() {
+      super("last-child");
+    }
+
+    public matches(element: Element): boolean {
+      return element
+        .inclusiveSiblings()
+        .filter(isElement)
+        .last()
+        .includes(element);
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#only-child-pseudo
+   */
+  export class OnlyChild extends Pseudo.Class {
+    public static of(): OnlyChild {
+      return new OnlyChild();
+    }
+
+    private constructor() {
+      super("only-child");
+    }
+
+    public matches(element: Element): boolean {
+      return element.inclusiveSiblings().filter(isElement).size === 1;
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#nth-of-type-pseudo
+   */
+  export class NthOfType extends Pseudo.Class {
+    public static of(index: Nth): NthOfType {
+      return new NthOfType(index);
+    }
+
+    private readonly _index: Nth;
+
+    private constructor(index: Nth) {
+      super("nth-of-type");
+
+      this._index = index;
+    }
+
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.preceding().filter(and(isElement, hasName(element.name))).size +
+          1
+      );
+    }
+
+    public toJSON(): NthOfType.JSON {
+      return {
+        ...super.toJSON(),
+        index: this._index.toJSON(),
+      };
+    }
+  }
+
+  export namespace NthOfType {
+    export interface JSON extends Pseudo.Class.JSON {
+      index: Nth.JSON;
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#nth-last-of-type-pseudo
+   */
+  export class NthLastOfType extends Pseudo.Class {
+    public static of(index: Nth): NthLastOfType {
+      return new NthLastOfType(index);
+    }
+
+    private readonly _index: Nth;
+
+    private constructor(index: Nth) {
+      super("nth-last-of-type");
+
+      this._index = index;
+    }
+
+    public matches(element: Element): boolean {
+      return this._index.matches(
+        element.following().filter(and(isElement, hasName(element.name))).size +
+          1
+      );
+    }
+
+    public toJSON(): NthLastOfType.JSON {
+      return {
+        ...super.toJSON(),
+        index: this._index.toJSON(),
+      };
+    }
+  }
+
+  export namespace NthLastOfType {
+    export interface JSON extends Pseudo.Class.JSON {
+      index: Nth.JSON;
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#first-of-type-pseudo
+   */
+  export class FirstOfType extends Pseudo.Class {
+    public static of(): FirstOfType {
+      return new FirstOfType();
+    }
+
+    private constructor() {
+      super("first-of-type");
+    }
+
+    public matches(element: Element): boolean {
+      return element
+        .inclusiveSiblings()
+        .filter(and(isElement, hasName(element.name)))
+        .first()
+        .includes(element);
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#last-of-type-pseudo
+   */
+  export class LastOfType extends Pseudo.Class {
+    public static of(): LastOfType {
+      return new LastOfType();
+    }
+
+    private constructor() {
+      super("last-of-type");
+    }
+
+    public matches(element: Element): boolean {
+      return element
+        .inclusiveSiblings()
+        .filter(and(isElement, hasName(element.name)))
+        .last()
+        .includes(element);
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#only-of-type-pseudo
+   */
+  export class OnlyOfType extends Pseudo.Class {
+    public static of(): OnlyOfType {
+      return new OnlyOfType();
+    }
+
+    private constructor() {
+      super("only-of-type");
+    }
+
+    public matches(element: Element): boolean {
+      return (
+        element
+          .inclusiveSiblings()
+          .filter(and(isElement, hasName(element.name))).size === 1
+      );
     }
   }
 
@@ -1311,28 +1637,22 @@ export namespace Selector {
           case Combinator.Descendant:
             return element
               .ancestors()
-              .some(
-                and(Element.isElement, (element) => this._left.matches(element))
-              );
+              .some(and(isElement, (element) => this._left.matches(element)));
 
           case Combinator.DirectDescendant:
             return element
               .parent()
-              .some(
-                and(Element.isElement, (element) => this._left.matches(element))
-              );
+              .some(and(isElement, (element) => this._left.matches(element)));
 
           case Combinator.Sibling:
             return element
               .preceding()
-              .some(
-                and(Element.isElement, (element) => this._left.matches(element))
-              );
+              .some(and(isElement, (element) => this._left.matches(element)));
 
           case Combinator.DirectSibling:
             return element
               .preceding()
-              .find(Element.isElement)
+              .find(isElement)
               .some((element) => this._left.matches(element));
         }
       }

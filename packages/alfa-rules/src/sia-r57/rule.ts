@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Text, Element } from "@siteimprove/alfa-dom";
+import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
