@@ -1,7 +1,8 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -17,8 +18,6 @@ import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-acc
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { filter, map } = Iterable;

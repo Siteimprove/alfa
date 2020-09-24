@@ -14,7 +14,6 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 import * as predicate from "./element/predicate";
-import { Set } from "@siteimprove/alfa-set";
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
