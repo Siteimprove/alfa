@@ -1,7 +1,7 @@
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 /**
  * @see https://en.wikipedia.org/wiki/Web_resource
