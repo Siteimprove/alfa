@@ -49,14 +49,6 @@ export class Document extends Node {
     return "/";
   }
 
-  protected _structurallyEquals(value: unknown): value is this {
-    return (
-      value instanceof Document &&
-      super._structurallyEquals(value) &&
-      Iterable.equals(this.style, value.style)
-    );
-  }
-
   public toJSON(): Document.JSON {
     return {
       type: "document",

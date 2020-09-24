@@ -18,10 +18,6 @@ export class Fragment extends Node {
     return "/";
   }
 
-  protected _structurallyEquals(value: unknown): value is this {
-    return value instanceof Fragment && super._structurallyEquals(value);
-  }
-
   public toJSON(): Fragment.JSON {
     return {
       type: "fragment",

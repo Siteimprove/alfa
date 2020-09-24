@@ -65,14 +65,6 @@ export class Text extends Node implements Slotable {
     return path;
   }
 
-  protected _structurallyEquals(value: unknown): value is this {
-    return (
-      value instanceof Text &&
-      super._structurallyEquals(value) &&
-      this.data === value.data
-    );
-  }
-
   public toJSON(): Text.JSON {
     return {
       type: "text",

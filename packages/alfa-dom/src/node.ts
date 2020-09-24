@@ -226,22 +226,8 @@ export abstract class Node
     yield* this.descendants();
   }
 
-  protected _structurallyEquals(value: unknown): value is this {
-    return (
-      value instanceof Node &&
-      // We can't use Sequence#equals because it is oblivious to structural equality and will just call item.equals
-      Array.from(
-        this.children({ nested: true, composed: true })
-      ).every((thisChild, idx) =>
-        thisChild._structurallyEquals(
-          Array.from(value.children({ nested: true, composed: true }))[idx]
-        )
-      )
-    );
-  }
-
   public equals(value: unknown, structural: boolean = false): value is this {
-    return structural ? this._structurallyEquals(value) : value === this;
+    return value === this;
   }
 
   public abstract toJSON(): Node.JSON;

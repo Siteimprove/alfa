@@ -37,14 +37,6 @@ export class Comment extends Node {
     return path;
   }
 
-  protected _structurallyEquals(value: unknown): value is this {
-    return (
-      value instanceof Comment &&
-      super._structurallyEquals(value) &&
-      this.data === value.data
-    );
-  }
-
   public toJSON(): Comment.JSON {
     return {
       type: "comment",

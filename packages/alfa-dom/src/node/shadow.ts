@@ -69,15 +69,6 @@ export class Shadow extends Node {
     return "/";
   }
 
-  protected _structurallyEquals(value: unknown): value is this {
-    return (
-      value instanceof Shadow &&
-      super._structurallyEquals(value) &&
-      this.mode === value.mode &&
-      Iterable.equals(this.style, value.style)
-    );
-  }
-
   public toJSON(): Shadow.JSON {
     return {
       type: "shadow",
