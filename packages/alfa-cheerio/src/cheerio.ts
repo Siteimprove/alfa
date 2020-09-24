@@ -17,9 +17,9 @@ const { keys } = Object;
 export namespace Cheerio {
   // The Cheerio typings are somewhat unfortunately written as they don't expose
   // the "Cheerio" type as an export. We can however extract it from the top-
-  // level type "CheerioAPI" as it's a selector function that returns objects of
+  // level "cheerio" export as it's a selector function that returns objects of
   // type "Cheerio".
-  export type Type = ReturnType<typeof cheerio>;
+  export type Type = ReturnType<typeof import("cheerio")>;
 
   export function isType(value: unknown): value is Type {
     return value instanceof cheerio;
@@ -35,7 +35,7 @@ export namespace Cheerio {
   }
 }
 
-function toNode(cheerioNode: CheerioElement): Node.JSON {
+function toNode(cheerioNode: cheerio.Element): Node.JSON {
   switch (cheerioNode.type) {
     case "text":
       return toText(cheerioNode);
@@ -45,7 +45,7 @@ function toNode(cheerioNode: CheerioElement): Node.JSON {
   }
 }
 
-function toElement(cheerioElement: CheerioElement): Element.JSON {
+function toElement(cheerioElement: cheerio.Element): Element.JSON {
   const { name, attribs, childNodes } = cheerioElement;
 
   const attributes = keys(attribs).map((localName) => {
@@ -77,7 +77,7 @@ function toAttribute(name: string, value: string): Attribute.JSON {
   };
 }
 
-function toText(cheerioElement: CheerioElement): Text.JSON {
+function toText(cheerioElement: cheerio.Element): Text.JSON {
   return {
     type: "text",
     data: cheerioElement.nodeValue,
