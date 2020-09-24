@@ -10,6 +10,9 @@
       "path": "../alfa-mapper"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-test"
     }
   ]

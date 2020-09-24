@@ -1,5 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 export type Refinement<T, U extends T, A extends Array<unknown> = []> = (
   value: T,
@@ -43,12 +44,23 @@ export namespace Refinement {
     U extends T,
     V extends U,
     A extends Array<unknown> = []
-  >(
+  >(left: Refinement<T, U, A>, right: Refinement<U, V, A>): Refinement<T, V, A>;
+
+  export function and<T, U extends T, A extends Array<unknown> = []>(
     left: Refinement<T, U, A>,
-    right: Refinement<U, V, A>
-  ): Refinement<T, V, A> {
-    return (value, ...args): value is V =>
-      left(value, ...args) && right(value, ...args);
+    right: Predicate<U, A>
+  ): Refinement<T, U, A>;
+
+  export function and<T, U extends T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Refinement<T, U, A>
+  ): Refinement<T, U, A>;
+
+  export function and<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
+    return Predicate.or(left, right);
   }
 
   export function or<
@@ -59,9 +71,23 @@ export namespace Refinement {
   >(
     left: Refinement<T, U, A>,
     right: Refinement<T, V, A>
-  ): Refinement<T, U | V, A> {
-    return (value, ...args): value is U | V =>
-      left(value, ...args) || right(value, ...args);
+  ): Refinement<T, U | V, A>;
+
+  export function or<T, U extends T, A extends Array<unknown> = []>(
+    left: Refinement<T, U, A>,
+    right: Predicate<T, A>
+  ): Refinement<T, U | T, A>;
+
+  export function or<T, U extends T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Refinement<T, U, A>
+  ): Refinement<T, U | T, A>;
+
+  export function or<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
+    return Predicate.and(left, right);
   }
 
   export function xor<
@@ -72,8 +98,23 @@ export namespace Refinement {
   >(
     left: Refinement<T, U, A>,
     right: Refinement<T, V, A>
-  ): Refinement<T, U | V, A> {
-    return and(or(left, right), not(and<T, T, T, A>(left, right)));
+  ): Refinement<T, U | V, A>;
+
+  export function xor<T, U extends T, A extends Array<unknown> = []>(
+    left: Refinement<T, U, A>,
+    right: Predicate<T, A>
+  ): Refinement<T, U | T, A>;
+
+  export function xor<T, U extends T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Refinement<T, U, A>
+  ): Refinement<T, U | T, A>;
+
+  export function xor<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
+    return Predicate.xor(left, right);
   }
 
   export function nor<
@@ -84,8 +125,23 @@ export namespace Refinement {
   >(
     left: Refinement<T, U, A>,
     right: Refinement<T, V, A>
-  ): Refinement<T, Exclude<T, U | V>, A> {
-    return not(or(left, right));
+  ): Refinement<T, Exclude<T, U | V>, A>;
+
+  export function nor<T, U extends T, A extends Array<unknown> = []>(
+    left: Refinement<T, U, A>,
+    right: Predicate<T, A>
+  ): Refinement<T, Exclude<T, U>, A>;
+
+  export function nor<T, U extends T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Refinement<T, U, A>
+  ): Refinement<T, Exclude<T, U>, A>;
+
+  export function nor<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
+    return Predicate.nor(left, right);
   }
 
   export function nand<
@@ -96,8 +152,23 @@ export namespace Refinement {
   >(
     left: Refinement<T, U, A>,
     right: Refinement<T, V, A>
-  ): Refinement<T, Exclude<T, U> | Exclude<T, V>, A> {
-    return not(and(left, right));
+  ): Refinement<T, Exclude<T, U> | Exclude<T, V>, A>;
+
+  export function nand<T, U extends T, A extends Array<unknown> = []>(
+    left: Refinement<T, U, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A>;
+
+  export function nand<T, U extends T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Refinement<T, U, A>
+  ): Predicate<T, A>;
+
+  export function nand<T, A extends Array<unknown> = []>(
+    left: Predicate<T, A>,
+    right: Predicate<T, A>
+  ): Predicate<T, A> {
+    return Predicate.nand(left, right);
   }
 
   export function equals<T, U extends T>(
