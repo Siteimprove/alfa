@@ -1,4 +1,3 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -8,175 +7,188 @@ export type Refinement<T, U extends T, A extends Array<unknown> = []> = (
 ) => value is U;
 
 export namespace Refinement {
-  export function test<T, U extends T, A extends Array<unknown> = []>(
-    refinement: Refinement<T, U, A>,
-    value: T,
-    ...args: A
-  ): value is U {
-    return refinement(value, ...args);
+  interface Test {
+    <T, U extends T, A extends Array<unknown> = []>(
+      refinement: Refinement<T, U, A>,
+      value: T,
+      ...args: A
+    ): value is U;
+
+    <T, A extends Array<unknown> = []>(
+      predicate: Predicate<T, A>,
+      value: T,
+      ...args: A
+    ): boolean;
   }
 
-  export function fold<
-    T,
-    U extends T,
-    A extends Array<unknown> = [],
-    V = U,
-    W = T
-  >(
-    refinement: Refinement<T, U, A>,
-    ifTrue: Mapper<U, V>,
-    ifFalse: Mapper<T, W>,
-    value: T,
-    ...args: A
-  ): V | W {
-    return refinement(value, ...args) ? ifTrue(value) : ifFalse(value);
+  export const test = Predicate.test as Test;
+
+  interface Fold {
+    <T, U extends T, A extends Array<unknown> = [], V = U, W = T>(
+      refinement: Refinement<T, U, A>,
+      ifTrue: Mapper<U, V>,
+      ifFalse: Mapper<T, W>,
+      value: T,
+      ...args: A
+    ): V | W;
+
+    <T, A extends Array<unknown> = [], V = T, W = T>(
+      predicate: Predicate<T, A>,
+      ifTrue: Mapper<T, V>,
+      ifFalse: Mapper<T, W>,
+      value: T,
+      ...args: A
+    ): V | W;
   }
 
-  export function not<T, U extends T, A extends Array<unknown> = []>(
-    refinement: Refinement<T, U, A>
-  ): Refinement<T, Exclude<T, U>, A> {
-    return (value, ...args): value is Exclude<T, U> =>
-      !refinement(value, ...args);
+  export const fold = Predicate.fold as Fold;
+
+  interface Not {
+    <T, U extends T, A extends Array<unknown> = []>(
+      refinement: Refinement<T, U, A>
+    ): Refinement<T, Exclude<T, U>, A>;
+
+    <T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<
+      T,
+      A
+    >;
   }
 
-  export function and<
-    T,
-    U extends T,
-    V extends U,
-    A extends Array<unknown> = []
-  >(left: Refinement<T, U, A>, right: Refinement<U, V, A>): Refinement<T, V, A>;
+  export const not = Predicate.not as Not;
 
-  export function and<T, U extends T, A extends Array<unknown> = []>(
-    left: Refinement<T, U, A>,
-    right: Predicate<U, A>
-  ): Refinement<T, U, A>;
+  interface And {
+    <T, U extends T, V extends U, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Refinement<U, V, A>
+    ): Refinement<T, V, A>;
 
-  export function and<T, U extends T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Refinement<T, U, A>
-  ): Refinement<T, U, A>;
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Predicate<U, A>
+    ): Refinement<T, U, A>;
 
-  export function and<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
-  ): Predicate<T, A> {
-    return Predicate.or(left, right);
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Refinement<T, U, A>
+    ): Refinement<T, U, A>;
+
+    <T, A extends Array<unknown> = []>(
+      ...predicates: [
+        Predicate<T, A>,
+        Predicate<T, A>,
+        ...Array<Predicate<T, A>>
+      ]
+    ): Predicate<T, A>;
   }
 
-  export function or<
-    T,
-    U extends T,
-    V extends T,
-    A extends Array<unknown> = []
-  >(
-    left: Refinement<T, U, A>,
-    right: Refinement<T, V, A>
-  ): Refinement<T, U | V, A>;
+  export const and = Predicate.and as And;
 
-  export function or<T, U extends T, A extends Array<unknown> = []>(
-    left: Refinement<T, U, A>,
-    right: Predicate<T, A>
-  ): Refinement<T, U | T, A>;
+  interface Or {
+    <T, U extends T, V extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Refinement<T, V, A>
+    ): Refinement<T, U | V, A>;
 
-  export function or<T, U extends T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Refinement<T, U, A>
-  ): Refinement<T, U | T, A>;
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Predicate<T, A>
+    ): Refinement<T, U | T, A>;
 
-  export function or<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
-  ): Predicate<T, A> {
-    return Predicate.and(left, right);
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Refinement<T, U, A>
+    ): Refinement<T, U | T, A>;
+
+    <T, A extends Array<unknown> = []>(
+      ...predicates: [
+        Predicate<T, A>,
+        Predicate<T, A>,
+        ...Array<Predicate<T, A>>
+      ]
+    ): Predicate<T, A>;
   }
 
-  export function xor<
-    T,
-    U extends T,
-    V extends T,
-    A extends Array<unknown> = []
-  >(
-    left: Refinement<T, U, A>,
-    right: Refinement<T, V, A>
-  ): Refinement<T, U | V, A>;
+  export const or = Predicate.or as Or;
 
-  export function xor<T, U extends T, A extends Array<unknown> = []>(
-    left: Refinement<T, U, A>,
-    right: Predicate<T, A>
-  ): Refinement<T, U | T, A>;
+  interface Xor {
+    <T, U extends T, V extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Refinement<T, V, A>
+    ): Refinement<T, U | V, A>;
 
-  export function xor<T, U extends T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Refinement<T, U, A>
-  ): Refinement<T, U | T, A>;
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Predicate<T, A>
+    ): Refinement<T, U | T, A>;
 
-  export function xor<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
-  ): Predicate<T, A> {
-    return Predicate.xor(left, right);
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Refinement<T, U, A>
+    ): Refinement<T, U | T, A>;
+
+    <T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Predicate<T, A>
+    ): Predicate<T, A>;
   }
 
-  export function nor<
-    T,
-    U extends T,
-    V extends T,
-    A extends Array<unknown> = []
-  >(
-    left: Refinement<T, U, A>,
-    right: Refinement<T, V, A>
-  ): Refinement<T, Exclude<T, U | V>, A>;
+  export const xor = Predicate.xor as Xor;
 
-  export function nor<T, U extends T, A extends Array<unknown> = []>(
-    left: Refinement<T, U, A>,
-    right: Predicate<T, A>
-  ): Refinement<T, Exclude<T, U>, A>;
+  interface Nor {
+    <T, U extends T, V extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Refinement<T, V, A>
+    ): Refinement<T, Exclude<T, U | V>, A>;
 
-  export function nor<T, U extends T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Refinement<T, U, A>
-  ): Refinement<T, Exclude<T, U>, A>;
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Predicate<T, A>
+    ): Refinement<T, Exclude<T, U>, A>;
 
-  export function nor<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
-  ): Predicate<T, A> {
-    return Predicate.nor(left, right);
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Refinement<T, U, A>
+    ): Refinement<T, Exclude<T, U>, A>;
+
+    <T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Predicate<T, A>
+    ): Predicate<T, A>;
   }
 
-  export function nand<
-    T,
-    U extends T,
-    V extends U,
-    A extends Array<unknown> = []
-  >(
-    left: Refinement<T, U, A>,
-    right: Refinement<T, V, A>
-  ): Refinement<T, Exclude<T, U> | Exclude<T, V>, A>;
+  export const nor = Predicate.nor as Nor;
 
-  export function nand<T, U extends T, A extends Array<unknown> = []>(
-    left: Refinement<T, U, A>,
-    right: Predicate<T, A>
-  ): Predicate<T, A>;
+  interface Nand {
+    <T, U extends T, V extends U, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Refinement<T, V, A>
+    ): Refinement<T, Exclude<T, U> | Exclude<T, V>, A>;
 
-  export function nand<T, U extends T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Refinement<T, U, A>
-  ): Predicate<T, A>;
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Refinement<T, U, A>,
+      right: Predicate<T, A>
+    ): Predicate<T, A>;
 
-  export function nand<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
-  ): Predicate<T, A> {
-    return Predicate.nand(left, right);
+    <T, U extends T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Refinement<T, U, A>
+    ): Predicate<T, A>;
+
+    <T, A extends Array<unknown> = []>(
+      left: Predicate<T, A>,
+      right: Predicate<T, A>
+    ): Predicate<T, A>;
   }
 
-  export function equals<T, U extends T>(
-    ...values: Array<U>
-  ): Refinement<T, U> {
-    return (other): other is U =>
-      values.some((value) => Equatable.equals(other, value));
+  export const nand = Predicate.nand as Nand;
+
+  interface Equals {
+    <T, U extends T>(...values: Array<U>): Refinement<T, U>;
+
+    <T>(...values: Array<T>): Predicate<unknown>;
   }
+
+  export const equals = Predicate.equals as Equals;
 
   export function isString(value: unknown): value is string {
     return typeof value === "string";

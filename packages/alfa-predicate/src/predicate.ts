@@ -72,15 +72,15 @@ export namespace Predicate {
     return not(and(left, right));
   }
 
+  export function equals<T>(...values: Array<T>): Predicate<unknown> {
+    return (other) => values.some((value) => Equatable.equals(other, value));
+  }
+
   export function property<
     T,
     K extends keyof T = keyof T,
     A extends Array<unknown> = []
   >(property: K, predicate: Predicate<T[K], A>): Predicate<T, A> {
     return (value, ...args) => predicate(value[property], ...args);
-  }
-
-  export function equals<T>(...values: Array<T>): Predicate<unknown> {
-    return (other) => values.some((value) => Equatable.equals(other, value));
   }
 }

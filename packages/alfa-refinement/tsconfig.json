@@ -4,9 +4,6 @@
   "files": ["src/index.ts", "src/refinement.ts", "test/refinement.spec.ts"],
   "references": [
     {
-      "path": "../alfa-equatable"
-    },
-    {
       "path": "../alfa-mapper"
     },
     {
