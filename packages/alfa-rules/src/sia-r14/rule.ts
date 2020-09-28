@@ -18,6 +18,7 @@ import { isVisible } from "../common/predicate/is-visible";
 import { Question } from "../common/question";
 
 const { isElement, hasNamespace } = Element;
+const { isText } = Text;
 const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -25,9 +26,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
               hasAttribute(
@@ -41,8 +43,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 flattened: true,
               })
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
@@ -87,7 +88,8 @@ function getVisibleTextContent(element: Element, device: Device): string {
   return normalize(
     element
       .descendants({ flattened: true })
-      .filter(and(Text.isText, isVisible(device)))
+      .filter(isText)
+      .filter(isVisible(device))
       .map((text) => text.data)
       .join("")
   );

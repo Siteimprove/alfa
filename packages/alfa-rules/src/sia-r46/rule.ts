@@ -25,21 +25,20 @@ export default Rule.Atomic.of<Page, Element>({
       *applicability() {
         const tables = document
           .descendants()
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("table"),
-                not(isIgnored(device))
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("table"),
+              not(isIgnored(device))
             )
           );
 
         for (const table of tables) {
-          const headerCells = table.descendants().filter(
-            and(
-              isElement,
+          const headerCells = table
+            .descendants()
+            .filter(isElement)
+            .filter(
               and(
                 hasNamespace(Namespace.HTML),
                 // The table model only works if the element is a th.
@@ -47,8 +46,7 @@ export default Rule.Atomic.of<Page, Element>({
                 hasRole("rowheader", "columnheader"),
                 isPerceivable(device)
               )
-            )
-          );
+            );
 
           for (const cell of headerCells) {
             ownership = ownership.set(cell, table);

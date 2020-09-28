@@ -29,16 +29,14 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       applicability() {
         const elements = document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasRole((role) => role.is("link")),
                 not(isIgnored(device)),
                 hasNonEmptyAccessibleName(device)
               )
-            )
           );
 
         const roots = elements.groupBy((element) => element.root());

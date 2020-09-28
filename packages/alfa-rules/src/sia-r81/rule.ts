@@ -20,7 +20,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { isElement, hasNamespace, hasId } = Element;
+const { isElement, hasName, hasNamespace, hasId } = Element;
 const { map, flatMap } = Iterable;
 const { and, not, equals } = Predicate;
 
@@ -31,15 +31,13 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       applicability() {
         const elements = document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole((role) => role.is("link")),
-                not(isIgnored(device)),
-                hasNonEmptyAccessibleName(device)
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole((role) => role.is("link")),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
             )
           );
 
@@ -125,21 +123,17 @@ export namespace Outcomes {
 function linkContext(element: Element): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
-  for (const listitem of element
-    .ancestors({ flattened: true })
-    .filter(and(isElement, hasRole("listitem")))) {
+  const ancestors = element.ancestors({ flattened: true }).filter(isElement);
+
+  for (const listitem of ancestors.filter(hasRole("listitem"))) {
     context = context.add(listitem);
   }
 
-  for (const paragraph of element
-    .ancestors({ flattened: true })
-    .find(and(isElement, Element.hasName("p")))) {
+  for (const paragraph of ancestors.find(hasName("p"))) {
     context = context.add(paragraph);
   }
 
-  for (const cell of element
-    .ancestors({ flattened: true })
-    .find(and(isElement, hasRole("cell", "gridcell")))) {
+  for (const cell of ancestors.find(hasRole("cell", "gridcell"))) {
     context = context.add(cell);
   }
 
@@ -147,7 +141,8 @@ function linkContext(element: Element): Set<dom.Node> {
     for (const reference of element
       .root()
       .descendants()
-      .filter(and(isElement, hasId(equals(...describedby.tokens()))))) {
+      .filter(isElement)
+      .filter(hasId(equals(...describedby.tokens())))) {
       context = context.add(reference);
     }
   }

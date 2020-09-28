@@ -22,12 +22,8 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .children()
-          .filter(
-            and(
-              isDocumentElement,
-              hasAttribute("lang", nor(isEmpty, isWhitespace))
-            )
-          )
+          .filter(isDocumentElement)
+          .filter(hasAttribute("lang", nor(isEmpty, isWhitespace)))
           .map((element) => element.attribute("lang").get());
       },
 

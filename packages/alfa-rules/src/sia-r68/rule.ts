@@ -20,16 +20,16 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
               not(isIgnored(device)),
               hasRole((role) => role.hasRequiredChildren())
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
