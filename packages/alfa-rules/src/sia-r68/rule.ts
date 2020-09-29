@@ -7,6 +7,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as aria from "@siteimprove/alfa-aria";
+
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
