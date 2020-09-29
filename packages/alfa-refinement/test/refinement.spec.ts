@@ -1,75 +1,71 @@
-// import { test } from "@siteimprove/alfa-test";
+import { test } from "@siteimprove/alfa-test";
 
-// import { Predicate } from "../src/predicate";
+import { Refinement } from "../src/refinement";
 
-// function isString(): Predicate<unknown, string> {
-//   return (x) => typeof x === "string";
-// }
+test(".test() evaluates a refinement on a value", (t) => {
+  const r: Refinement<string, "foo"> = (value): value is "foo" =>
+    value === "foo";
 
-// function isFoo(): Predicate<string, "foo"> {
-//   return (x) => x === "foo";
-// }
+  const value: string = "foo";
 
-// function isNumber(): Predicate<unknown, number> {
-//   return (x) => typeof x === "number";
-// }
+  if (Refinement.test(r, value)) {
+    t.equal<"foo">(value, "foo");
+  } else {
+    t.fail();
+  }
 
-// test("fold() folds over the truth values of a predicate", (t) => {
-//   const f = (value: unknown) =>
-//     Predicate.fold(
-//       isString(),
-//       (x) => `hello ${x}`,
-//       () => "goodbye",
-//       value
-//     );
+  if (Refinement.test(r, "bar")) {
+    t.fail();
+  }
+});
 
-//   t.equal(f("world"), "hello world");
-//   t.equal(f(true), "goodbye");
-// });
+test(".fold() folds over the truth values of a refinement", (t) => {
+  t.equal(
+    Refinement.fold(
+      (value): value is "foo" => value === "foo",
+      (value) => {
+        t.equal<"foo">(value, "foo");
+        return value;
+      },
+      () => t.fail(),
+      "foo"
+    ),
+    "foo"
+  );
 
-// test("and() combines two predicates to a predicate that is true if both predicates are true", (t) => {
-//   const p = Predicate.and(isString(), isFoo());
+  t.equal(
+    Refinement.fold(
+      (value): value is "foo" => value === "foo",
+      () => t.fail(),
+      (value) => value,
+      "bar"
+    ),
+    "foo"
+  );
+});
 
-//   t.equal(p("foo"), true);
-//   t.equal(p("bar"), false);
-//   t.equal(p(true), false);
-// });
+test(`.and() combines two refinements to a refinement that is true if both
+      refinements are true`, (t) => {
+  const p = Refinement.and<unknown, string, "foo">(
+    (value): value is string => typeof value === "string",
+    (value): value is "foo" => value === "foo"
+  );
 
-// test("or() combines two predicates to a predicate that is true if either predicate is true", (t) => {
-//   const p = Predicate.or(isString(), isNumber());
+  t.equal(p("foo"), true);
+  t.equal(p("bar"), false);
+  t.equal(p(123), false);
+  t.equal(p(true), false);
+});
 
-//   t.equal(p("foo"), true);
-//   t.equal(p(1), true);
-//   t.equal(p(true), false);
-// });
+test(`.or() combines two refinements to a refinement that is true if either
+      refinement is true`, (t) => {
+  const p = Refinement.or<string, "foo", "bar">(
+    (value): value is "foo" => value === "foo",
+    (value): value is "bar" => value === "bar"
+  );
 
-// test("test() evaluates a predicate on a value and acts as a type guard", (t) => {
-//   const value: string = "foo";
-
-//   if (Predicate.test(isFoo(), value)) {
-//     const foo: "foo" = value;
-
-//     t.equal(foo, "foo");
-//   } else {
-//     t.fail();
-//   }
-// });
-
-// test("isPrimitive() tests if a value is a primitive", (t) => {
-//   const value: unknown = 123;
-
-//   if (Predicate.isPrimitive(value)) {
-//     const foo:
-//       | string
-//       | number
-//       | bigint
-//       | boolean
-//       | null
-//       | undefined
-//       | symbol = value;
-
-//     t.equal(foo, 123);
-//   } else {
-//     t.fail();
-//   }
-// });
+  t.equal(p("foo"), true);
+  t.equal(p("fo"), false);
+  t.equal(p("bar"), true);
+  t.equal(p("ba"), false);
+});
