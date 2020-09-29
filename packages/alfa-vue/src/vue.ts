@@ -15,13 +15,13 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
 import { Wrapper } from "@vue/test-utils";
 import V from "vue";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 export namespace Vue {
   export type Type = Wrapper<V | null> | Cheerio.Type;

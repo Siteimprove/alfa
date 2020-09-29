@@ -28,15 +28,13 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       applicability() {
         const iframes = document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasName("iframe"),
-                hasNamespace(Namespace.HTML),
-                not(isIgnored(device)),
-                hasNonEmptyAccessibleName(device)
-              )
+              hasName("iframe"),
+              hasNamespace(Namespace.HTML),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
             )
           );
 

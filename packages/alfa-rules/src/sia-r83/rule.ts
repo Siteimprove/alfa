@@ -4,6 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,7 +14,8 @@ import { expectation } from "../common/expectation";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { and, or, not, equals, test } = Predicate;
+const { or, not, equals } = Predicate;
+const { and, test } = Refinement;
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
 

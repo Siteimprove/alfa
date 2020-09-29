@@ -3,14 +3,14 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Result } from "@siteimprove/alfa-result";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { or } = Predicate;
+const { or } = Refinement;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#simple-block

@@ -14,6 +14,7 @@ import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
+const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
@@ -22,13 +23,11 @@ export default Rule.Atomic.of<Page, Text>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isText)
           .filter(
             and(
-              Text.isText,
-              and(
-                property("data", nor(isEmpty, isWhitespace)),
-                not(isIgnored(device))
-              )
+              property("data", nor(isEmpty, isWhitespace)),
+              not(isIgnored(device))
             )
           );
       },

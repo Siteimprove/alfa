@@ -3,6 +3,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 export type Parser<I, T, E = never, A extends Array<unknown> = []> = (
@@ -34,16 +35,24 @@ export namespace Parser {
 
   export function filter<I, T, U extends T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    predicate: Predicate<T, U>,
+    refinement: Refinement<T, U>,
     ifError: Thunk<E>
-  ): Parser<I, U, E, A> {
-    return flatMap(parser, (value) => (input, ..._) => {
-      const result: Result<readonly [I, U], E> = predicate(value)
-        ? Result.of([input, value])
-        : Err.of(ifError());
+  ): Parser<I, U, E, A>;
 
-      return result;
-    });
+  export function filter<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    predicate: Predicate<T>,
+    ifError: Thunk<E>
+  ): Parser<I, T, E, A>;
+
+  export function filter<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    predicate: Predicate<T>,
+    ifError: Thunk<E>
+  ): Parser<I, T, E, A> {
+    return flatMap(parser, (value) => (input, ..._) =>
+      predicate(value) ? Result.of([input, value]) : Err.of(ifError())
+    );
   }
 
   export function zeroOrMore<I, T, E, A extends Array<unknown> = []>(

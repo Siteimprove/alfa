@@ -4,7 +4,7 @@ import { Assert } from "@siteimprove/alfa-assert";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
 declare global {
@@ -19,7 +19,7 @@ const { join } = Iterable;
 
 export namespace Chai {
   export function createPlugin<T>(
-    identify: Predicate<unknown, T>,
+    identify: Refinement<unknown, T>,
     transform: Mapper<T, Future<Page>>
   ): (chai: any, util: any) => void {
     return (chai, util) => {

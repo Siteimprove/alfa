@@ -18,7 +18,7 @@ import { Role } from "./role";
 import type * as aria from ".";
 
 const { hasInputType, hasName, isElement } = Element;
-const { and, or, test } = Predicate;
+const { or, test } = Predicate;
 
 /**
  * @internal
@@ -136,7 +136,7 @@ const nameFromChild = (predicate: Predicate<Element>) => (
   device: Device,
   state: Name.State
 ) => {
-  for (const child of element.children().find(and(isElement, predicate))) {
+  for (const child of element.children().filter(isElement).find(predicate)) {
     return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
       name.map((name) =>
         Name.of(name.value, [Name.Source.descendant(element, name)])
@@ -307,12 +307,11 @@ const Features: Features = {
 
     footer: html((element) =>
       element
-        .closest(
-          and(isElement, hasName("article", "aside", "main", "nav", "section"))
-        )
-        .isNone()
-        ? Option.of(Role.of("contentinfo"))
-        : None
+        .ancestors()
+        .filter(isElement)
+        .some(hasName("article", "aside", "main", "nav", "section"))
+        ? None
+        : Option.of(Role.of("contentinfo"))
     ),
 
     form: html(() => Option.of(Role.of("form"))),
@@ -349,12 +348,11 @@ const Features: Features = {
 
     header: html((element) =>
       element
-        .closest(
-          and(isElement, hasName("article", "aside", "main", "nav", "section"))
-        )
-        .isNone()
-        ? Option.of(Role.of("banner"))
-        : None
+        .ancestors()
+        .filter(isElement)
+        .some(hasName("article", "aside", "main", "nav", "section"))
+        ? None
+        : Option.of(Role.of("banner"))
     ),
 
     hr: html(() => Option.of(Role.of("separator"))),
@@ -375,32 +373,27 @@ const Features: Features = {
 
     input: html(
       (element): Option<Role> => {
-        if (
-          test<Element>(
-            hasInputType("button", "image", "reset", "submit"),
-            element
-          )
-        ) {
+        if (test(hasInputType("button", "image", "reset", "submit"), element)) {
           return Option.of(Role.of("button"));
         }
 
-        if (test<Element>(hasInputType("checkbox"), element)) {
+        if (test(hasInputType("checkbox"), element)) {
           return Option.of(Role.of("checkbox"));
         }
 
-        if (test<Element>(hasInputType("number"), element)) {
+        if (test(hasInputType("number"), element)) {
           return Option.of(Role.of("spinbutton"));
         }
 
-        if (test<Element>(hasInputType("radio"), element)) {
+        if (test(hasInputType("radio"), element)) {
           return Option.of(Role.of("radio"));
         }
 
-        if (test<Element>(hasInputType("range"), element)) {
+        if (test(hasInputType("range"), element)) {
           return Option.of(Role.of("slider"));
         }
 
-        if (test<Element>(hasInputType("search"), element)) {
+        if (test(hasInputType("search"), element)) {
           return Option.of(
             Role.of(
               element.attribute("list").isSome() ? "combobox" : "searchbox"
@@ -408,9 +401,7 @@ const Features: Features = {
           );
         }
 
-        if (
-          test<Element>(hasInputType("email", "tel", "text", "url"), element)
-        ) {
+        if (test(hasInputType("email", "tel", "text", "url"), element)) {
           return Option.of(
             Role.of(element.attribute("list").isSome() ? "combobox" : "textbox")
           );
@@ -462,7 +453,7 @@ const Features: Features = {
       },
       (element, device, state) => {
         if (
-          test<Element>(
+          test(
             hasInputType("text", "password", "search", "tel", "url"),
             element
           )
@@ -473,25 +464,25 @@ const Features: Features = {
           );
         }
 
-        if (test<Element>(hasInputType("button"), element)) {
+        if (test(hasInputType("button"), element)) {
           return nameFromAttribute(element, "value");
         }
 
-        if (test<Element>(hasInputType("submit"), element)) {
+        if (test(hasInputType("submit"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
             () => Branched.of(Option.of(Name.of("Submit")))
           );
         }
 
-        if (test<Element>(hasInputType("reset"), element)) {
+        if (test(hasInputType("reset"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
             () => Branched.of(Option.of(Name.of("Reset")))
           );
         }
 
-        if (test<Element>(hasInputType("image"), element)) {
+        if (test(hasInputType("image"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "alt"),
             () => Branched.of(Option.of(Name.of("Submit")))
@@ -541,8 +532,9 @@ const Features: Features = {
     option: html(
       (element) =>
         element
-          .closest(and(isElement, hasName("select", "optgroup", "datalist")))
-          .isSome()
+          .ancestors()
+          .filter(isElement)
+          .some(hasName("select", "optgroup", "datalist"))
           ? Option.of(Role.of("option"))
           : None,
       function* (element) {
@@ -601,7 +593,9 @@ const Features: Features = {
     td: html(
       (element) =>
         element
-          .closest(and(Element.isElement, hasName("table")))
+          .ancestors()
+          .filter(isElement)
+          .find(hasName("table"))
           .flatMap<Role>((table) => {
             for (const [role] of Role.from(table)) {
               if (role.isSome()) {
@@ -664,7 +658,10 @@ const Features: Features = {
 
     th: html(
       (element) => {
-        const table = element.closest(and(isElement, hasName("table")));
+        const table = element
+          .ancestors()
+          .filter(isElement)
+          .find(hasName("table"));
 
         // If the <th> is not in a <table>, it doesn't really have a role…
         if (table.isNone()) {

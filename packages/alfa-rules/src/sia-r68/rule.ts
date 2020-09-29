@@ -95,7 +95,7 @@ function isRequiredChild(
 /**
  * Collect all descendants of the given node where the descendant:
  *
- * - is a non-ignored HTML or SVG element with a role requiring specific 
+ * - is a non-ignored HTML or SVG element with a role requiring specific
  *   children; and
  * - does not have an `aria-busy` ancestor.
  */

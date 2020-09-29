@@ -159,6 +159,14 @@ export const Nil: Nil = new (class Nil {
     return Map.empty();
   }
 
+  public subtract(): Nil {
+    return this;
+  }
+
+  public intersect(): Nil {
+    return this;
+  }
+
   public join(): string {
     return "";
   }

@@ -7,6 +7,7 @@ import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
@@ -77,8 +78,18 @@ export abstract class Node implements Serializable {
   }
 
   public attribute<N extends Attribute.Name>(
-    predicate: N | Predicate<Attribute, Attribute<N>>
-  ): Option<Attribute<N>> {
+    refinement: Refinement<Attribute, Attribute<N>>
+  ): Option<Attribute<N>>;
+
+  public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+
+  public attribute<N extends Attribute.Name>(
+    predicate: N
+  ): Option<Attribute<N>>;
+
+  public attribute(
+    predicate: Attribute.Name | Predicate<Attribute>
+  ): Option<Attribute> {
     return None;
   }
 
@@ -319,7 +330,7 @@ export namespace Node {
     return cache.get(device, Cache.empty).get(node, () => {
       // Text nodes are _always_ exposed in the accessibility tree.
       if (dom.Text.isText(node)) {
-        return Name.from(node, device).map((name) => Text.of(node, name.get()));
+        return Name.from(node, device).map((name) => Text.of(node, name));
       }
 
       // Element nodes are _sometimes_ exposed in the accessibility tree.

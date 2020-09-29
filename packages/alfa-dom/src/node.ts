@@ -2,6 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -187,16 +188,26 @@ export abstract class Node
    * @see https://dom.spec.whatwg.org/#dom-element-closest
    */
   public closest<T extends Node>(
-    predicate: Predicate<Node, T>,
-    options: Node.Traversal = {}
-  ): Option<T> {
-    if (predicate(this)) {
-      return Option.of(this);
-    }
+    refinement: Refinement<Node, T>,
+    options?: Node.Traversal
+  ): Option<T>;
 
-    return this.parent(options).flatMap((parent) =>
-      parent.closest(predicate, options)
-    );
+  /**
+   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   */
+  public closest(
+    predicate: Predicate<Node>,
+    options?: Node.Traversal
+  ): Option<Node>;
+
+  /**
+   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   */
+  public closest(
+    predicate: Predicate<Node>,
+    options: Node.Traversal = {}
+  ): Option<Node> {
+    return this.inclusiveAncestors(options).find(predicate);
   }
 
   /**

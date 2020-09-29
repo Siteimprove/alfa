@@ -1,9 +1,9 @@
 import { Option, Some, None } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { EARL } from "./earl";
 
-const { isFunction, isObject } = Predicate;
+const { isFunction, isObject } = Refinement;
 
 export interface Serializable {
   toEARL(): EARL;

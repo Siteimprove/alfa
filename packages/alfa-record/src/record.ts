@@ -73,14 +73,12 @@ export class Record<T>
     );
   }
 
-  public some(
-    predicate: Predicate<Record.Value<T>, Record.Value<T>, [Record.Key<T>]>
-  ): boolean {
+  public some(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
   }
 
   public every(
-    predicate: Predicate<Record.Value<T>, Record.Value<T>, [Record.Key<T>]>
+    predicate: Predicate<Record.Value<T>, [Record.Key<T>]>
   ): boolean {
     return Iterable.every(this, ([key, value]) => predicate(value, key));
   }
