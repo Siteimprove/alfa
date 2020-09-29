@@ -97,7 +97,7 @@ function isRequiredChild(
  */
 function* visit(node: Node, device: Device): Iterable<Element> {
   if (and(isElement, hasAttribute("aria-busy", equals("true")))(node)) {
-    return [];
+    return;
   }
 
   if (
