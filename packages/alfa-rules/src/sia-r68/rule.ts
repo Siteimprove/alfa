@@ -23,20 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return visit(
-          document,
-          device
-          // { flattened: true, nested: true }
-          // and(
-          //   isElement,
-          //   and(
-          //     hasNamespace(Namespace.HTML, Namespace.SVG),
-          //     not(isIgnored(device)),
-          //     hasRole((role) => role.hasRequiredChildren())
-          //   )
-          // ),
-          // and(isElement, hasAttribute("aria-busy", equals("true")))
-        );
+        return visit(document, device);
       },
 
       expectations(target) {
@@ -107,40 +94,30 @@ function isRequiredChild(
 
 /**
  * Collect all descendants of node that:
- * * match includeNode; and
- * * do not have an ancestor matching excludeSubtree; and
- * * have an ancestor matching collectSubtree
+ * * are non-ignored HTML or SVG elements with a role requiring specific children; and
+ * * do not have an aria-busy ancestor
  */
-function visit(node: Node, device: Device): Iterable<Element> {
-  function* doVisit(node: Node): Iterable<Element> {
-    if (
-      test<Node>(
-        and(isElement, hasAttribute("aria-busy", equals("true"))),
-        node
-      )
-    ) {
-      return Sequence.empty();
-    }
-
-    if (
-      and(
-        isElement,
-        and(
-          hasNamespace(Namespace.HTML, Namespace.SVG),
-          not(isIgnored(device)),
-          hasRole((role) => role.hasRequiredChildren())
-        )
-      )(node)
-    ) {
-      yield node;
-    }
-
-    const children = node.children({ flattened: true, nested: true });
-
-    for (const child of children) {
-      yield* doVisit(child);
-    }
+function* visit(node: Node, device: Device): Iterable<Element> {
+  if (and(isElement, hasAttribute("aria-busy", equals("true")))(node)) {
+    return [];
   }
 
-  return doVisit(node);
+  if (
+    and(
+      isElement,
+      and(
+        hasNamespace(Namespace.HTML, Namespace.SVG),
+        not(isIgnored(device)),
+        hasRole((role) => role.hasRequiredChildren())
+      )
+    )(node)
+  ) {
+    yield node;
+  }
+
+  const children = node.children({ flattened: true, nested: true });
+
+  for (const child of children) {
+    yield* visit(child, device);
+  }
 }
