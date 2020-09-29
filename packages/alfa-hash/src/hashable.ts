@@ -1,9 +1,9 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { BuiltinOffset, IntegerOverflow } from "./constants";
 import { Hash } from "./hash";
 
-const { isFunction, isObject } = Predicate;
+const { isFunction, isObject } = Refinement;
 
 export interface Hashable {
   hash(hash: Hash): void;

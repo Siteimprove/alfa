@@ -9,7 +9,7 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed } from "../common/outcome";
 
-const input = <input type="text"></input>;
+const target = <input type="text"></input>;
 
 const perceivableError = <span>Visible error</span>;
 
@@ -21,7 +21,7 @@ const document = Document.of([
   <form>
     <label>
       Input
-      {input}
+      {target}
     </label>
     {perceivableError}
     {invisibleError}
@@ -39,7 +39,7 @@ test("evaluate() passes when a form field has no error indicator", async (t) => 
       })
     ),
     [
-      passed(R82, input, {
+      passed(R82, target, {
         1: Outcomes.HasNoErrorIndicator,
         2: Outcomes.HasNoErrorIndicator,
       }),
@@ -61,7 +61,7 @@ test(`evaluate() passes when a form field has an error indicator that identifies
       })
     ),
     [
-      passed(R82, input, {
+      passed(R82, target, {
         1: Outcomes.ErrorIndicatorIdentifiesTarget,
         2: Outcomes.ErrorIndicatorDescribesResolution,
       }),
@@ -83,7 +83,7 @@ test(`evaluate() fails when a form field has an error indicator that does not
       })
     ),
     [
-      failed(R82, input, {
+      failed(R82, target, {
         1: Outcomes.NoErrorIndicatorIdentifiesTarget,
         2: Outcomes.NoErrorIndicatorDescribesResolution,
       }),
@@ -105,7 +105,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       })
     ),
     [
-      failed(R82, input, {
+      failed(R82, target, {
         1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
         2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
       }),
@@ -127,7 +127,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       })
     ),
     [
-      failed(R82, input, {
+      failed(R82, target, {
         1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
         2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
       }),

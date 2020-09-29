@@ -25,7 +25,7 @@
     "@siteimprove/alfa-future": "^0.5.0",
     "@siteimprove/alfa-iterable": "^0.5.0",
     "@siteimprove/alfa-mapper": "^0.5.0",
-    "@siteimprove/alfa-predicate": "^0.5.0",
+    "@siteimprove/alfa-refinement": "^0.5.0",
     "@siteimprove/alfa-web": "^0.5.0",
     "@types/chai": "^4.1.7",
     "chai": "^4.2.0"

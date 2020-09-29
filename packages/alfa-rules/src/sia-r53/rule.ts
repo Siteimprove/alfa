@@ -17,7 +17,8 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     const headings = document
       .descendants({ flattened: true })
-      .filter(and(isElement, hasRole("heading")));
+      .filter(isElement)
+      .filter(hasRole("heading"));
 
     return {
       applicability() {

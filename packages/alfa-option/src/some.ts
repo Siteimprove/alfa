@@ -4,6 +4,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -47,9 +48,19 @@ export class Some<T> implements Option<T> {
     return mapper.map((mapper) => mapper(this._value));
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return test(predicate, this._value) ? new Some(this._value) : None;
+  public filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
+
+  public filter(predicate: Predicate<T>): Option<T>;
+
+  public filter(predicate: Predicate<T>): Option<T> {
+    return test(predicate, this._value) ? this : None;
   }
+
+  public reject<U extends T>(
+    refinement: Refinement<T, U>
+  ): Option<Exclude<T, U>>;
+
+  public reject(predicate: Predicate<T>): Option<T>;
 
   public reject(predicate: Predicate<T>): Option<T> {
     return this.filter(not(predicate));

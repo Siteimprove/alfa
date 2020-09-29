@@ -1,12 +1,9 @@
 import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Node } from "../node";
 import { Element } from "./element";
 import { Slot } from "./slot";
 import { Text } from "./text";
-
-const { and } = Predicate;
 
 export interface Slotable extends Node {
   /**
@@ -47,7 +44,8 @@ export namespace Slotable {
         parent.shadow.flatMap((shadow) =>
           shadow
             .descendants()
-            .find(and(Slot.isSlot, (slot) => Slot.name(slot) === name))
+            .filter(Slot.isSlot)
+            .find((slot) => Slot.name(slot) === name)
         )
       );
   }

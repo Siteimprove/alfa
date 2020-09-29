@@ -1,21 +1,17 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R75, { Outcomes } from "../../src/sia-r75/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed } from "../common/outcome";
 
-const { isElement } = Element;
-
 test("evaluate() passes an element with a font size not smaller than 9 pixels", async (t) => {
-  const document = Document.of([
-    <html style={{ fontSize: "medium" }}>Hello world</html>,
-  ]);
+  const target = <html style={{ fontSize: "medium" }}>Hello world</html>;
 
-  const target = document.children().find(isElement).get();
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R75, { document }), [
     passed(R75, target, {
@@ -25,11 +21,9 @@ test("evaluate() passes an element with a font size not smaller than 9 pixels", 
 });
 
 test("evaluate() fails an element with a font size smaller than 9 pixels", async (t) => {
-  const document = Document.of([
-    <html style={{ fontSize: "8px" }}>Hello world</html>,
-  ]);
+  const target = <div style={{ fontSize: "8px" }}>Hello world</div>;
 
-  const target = document.children().find(isElement).get();
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R75, { document }), [
     failed(R75, target, {
@@ -40,19 +34,16 @@ test("evaluate() fails an element with a font size smaller than 9 pixels", async
 
 test(`evaluate() fails an element with an accumulated font size smaller than 9
       pixels`, async (t) => {
-  const document = Document.of([
-    <html style={{ fontSize: "10px" }}>
-      <p style={{ fontSize: "smaller" }}>Hello world</p>
-    </html>,
-  ]);
+  const target1 = <p style={{ fontSize: "smaller" }}>Hello world</p>;
+  const target2 = <div style={{ fontSize: "10px" }}>{target1}</div>;
 
-  const [root, paragraph] = document.descendants().filter(isElement);
+  const document = Document.of([target2]);
 
   t.deepEqual(await evaluate(R75, { document }), [
-    passed(R75, root, {
+    passed(R75, target2, {
       1: Outcomes.IsSufficient,
     }),
-    failed(R75, paragraph, {
+    failed(R75, target1, {
       1: Outcomes.IsInsufficient,
     }),
   ]);

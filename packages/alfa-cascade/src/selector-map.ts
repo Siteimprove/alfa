@@ -12,12 +12,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selector } from "@siteimprove/alfa-selector";
 
 import { UserAgent } from "./user-agent";
 import { AncestorFilter } from "./ancestor-filter";
 
-const { and, equals, property } = Predicate;
+const { equals, property } = Predicate;
+const { and } = Refinement;
 
 const isDescendantSelector = and(
   Selector.isComplex,

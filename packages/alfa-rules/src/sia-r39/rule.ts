@@ -19,9 +19,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
             and(
               hasNamespace(Namespace.HTML),
               or(hasName("img"), and(hasName("input"), hasInputType("image"))),
@@ -40,8 +41,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   element
                 )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {

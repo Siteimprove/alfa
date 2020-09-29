@@ -14,7 +14,8 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, test, property } = Predicate;
+const { test, property } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
@@ -25,7 +26,8 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(and(Element.isElement, not(isIgnored(device))))
+          .filter(isElement)
+          .reject(isIgnored(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               property("name", aria.Attribute.isName)
