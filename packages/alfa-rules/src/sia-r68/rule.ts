@@ -25,16 +25,17 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return visit(
           document,
-          { flattened: true, nested: true },
-          and(
-            isElement,
-            and(
-              hasNamespace(Namespace.HTML, Namespace.SVG),
-              not(isIgnored(device)),
-              hasRole((role) => role.hasRequiredChildren())
-            )
-          ),
-          and(isElement, hasAttribute("aria-busy", equals("true")))
+          device
+          // { flattened: true, nested: true }
+          // and(
+          //   isElement,
+          //   and(
+          //     hasNamespace(Namespace.HTML, Namespace.SVG),
+          //     not(isIgnored(device)),
+          //     hasRole((role) => role.hasRequiredChildren())
+          //   )
+          // ),
+          // and(isElement, hasAttribute("aria-busy", equals("true")))
         );
       },
 
@@ -110,30 +111,36 @@ function isRequiredChild(
  * * do not have an ancestor matching excludeSubtree; and
  * * have an ancestor matching collectSubtree
  */
-function visit<T extends Node = Node>(
-  node: Node,
-  options: Node.Traversal,
-  includeNode: Predicate<Node, T> = () => true,
-  excludeSubtree: Predicate<Node> = () => false,
-  collectSubtree: Predicate<Node> = () => true
-): Iterable<T> {
-  function* doVisit(node: Node, collect: boolean): Iterable<T> {
-    if (test<Node>(excludeSubtree, node)) {
+function visit(node: Node, device: Device): Iterable<Element> {
+  function* doVisit(node: Node): Iterable<Element> {
+    if (
+      test<Node>(
+        and(isElement, hasAttribute("aria-busy", equals("true"))),
+        node
+      )
+    ) {
       return Sequence.empty();
     }
 
-    if (collect && includeNode(node)) {
+    if (
+      and(
+        isElement,
+        and(
+          hasNamespace(Namespace.HTML, Namespace.SVG),
+          not(isIgnored(device)),
+          hasRole((role) => role.hasRequiredChildren())
+        )
+      )(node)
+    ) {
       yield node;
     }
 
-    collect = collect || collectSubtree(node);
-
-    const children = node.children(options);
+    const children = node.children({ flattened: true, nested: true });
 
     for (const child of children) {
-      yield* doVisit(child, collect);
+      yield* doVisit(child);
     }
   }
 
-  return doVisit(node, false);
+  return doVisit(node);
 }
