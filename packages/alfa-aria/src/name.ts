@@ -8,6 +8,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -21,7 +22,8 @@ import * as predicate from "./name/predicate";
 
 const { hasId, isElement } = Element;
 const { isText } = Text;
-const { and, or, equals } = Predicate;
+const { equals } = Predicate;
+const { or } = Refinement;
 
 export class Name implements Equatable, Serializable {
   public static of(value: string, sources: Iterable<Name.Source> = []): Name {
@@ -659,7 +661,8 @@ export namespace Name {
 
     const references = root
       .descendants()
-      .filter(and(isElement, hasId(equals(...attribute.tokens()))));
+      .filter(isElement)
+      .filter(hasId(equals(...attribute.tokens())));
 
     return Branched.traverse(references, (element) =>
       fromNode(

@@ -19,20 +19,16 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants()
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("meta"),
-                hasAttribute(
-                  "http-equiv",
-                  (value) => value.toLowerCase() === "refresh"
-                ),
-                hasAttribute("content", (value) =>
-                  getRefreshTime(value).isSome()
-                )
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("meta"),
+              hasAttribute(
+                "http-equiv",
+                (value) => value.toLowerCase() === "refresh"
+              ),
+              hasAttribute("content", (value) => getRefreshTime(value).isSome())
             )
           )
           .first()

@@ -18,7 +18,8 @@ import { isVisible } from "../common/predicate/is-visible";
 
 const { abs, acos, PI } = Math;
 const { some } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
@@ -52,17 +53,15 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            Element.isElement,
-            and<Element>(
-              isVisible(device),
-              (element) =>
-                hasConditionalRotation(element, landscape) ||
-                hasConditionalRotation(element, portrait)
-            )
-          )
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(isVisible(device))
+          .filter(
+            (element) =>
+              hasConditionalRotation(element, landscape) ||
+              hasConditionalRotation(element, portrait)
+          );
       },
 
       expectations(target) {

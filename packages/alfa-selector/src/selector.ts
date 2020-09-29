@@ -6,6 +6,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -28,7 +29,8 @@ const {
   eof,
 } = Parser;
 
-const { and, not, property, equals, isString } = Predicate;
+const { and, not, property, equals } = Predicate;
+const { isString } = Refinement;
 
 const { isElement, hasName } = Element;
 
@@ -1296,8 +1298,8 @@ export namespace Selector {
 
     public matches(element: Element): boolean {
       return this._index.matches(
-        element.preceding().filter(and(isElement, hasName(element.name))).size +
-          1
+        element.preceding().filter(isElement).filter(hasName(element.name))
+          .size + 1
       );
     }
 
@@ -1333,8 +1335,8 @@ export namespace Selector {
 
     public matches(element: Element): boolean {
       return this._index.matches(
-        element.following().filter(and(isElement, hasName(element.name))).size +
-          1
+        element.following().filter(isElement).filter(hasName(element.name))
+          .size + 1
       );
     }
 
@@ -1367,7 +1369,8 @@ export namespace Selector {
     public matches(element: Element): boolean {
       return element
         .inclusiveSiblings()
-        .filter(and(isElement, hasName(element.name)))
+        .filter(isElement)
+        .filter(hasName(element.name))
         .first()
         .includes(element);
     }
@@ -1388,7 +1391,8 @@ export namespace Selector {
     public matches(element: Element): boolean {
       return element
         .inclusiveSiblings()
-        .filter(and(isElement, hasName(element.name)))
+        .filter(isElement)
+        .filter(hasName(element.name))
         .last()
         .includes(element);
     }
@@ -1410,7 +1414,8 @@ export namespace Selector {
       return (
         element
           .inclusiveSiblings()
-          .filter(and(isElement, hasName(element.name))).size === 1
+          .filter(isElement)
+          .filter(hasName(element.name)).size === 1
       );
     }
   }
@@ -1637,17 +1642,20 @@ export namespace Selector {
           case Combinator.Descendant:
             return element
               .ancestors()
-              .some(and(isElement, (element) => this._left.matches(element)));
+              .filter(isElement)
+              .some((element) => this._left.matches(element));
 
           case Combinator.DirectDescendant:
             return element
               .parent()
-              .some(and(isElement, (element) => this._left.matches(element)));
+              .filter(isElement)
+              .some((element) => this._left.matches(element));
 
           case Combinator.Sibling:
             return element
               .preceding()
-              .some(and(isElement, (element) => this._left.matches(element)));
+              .filter(isElement)
+              .some((element) => this._left.matches(element));
 
           case Combinator.DirectSibling:
             return element

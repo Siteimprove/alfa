@@ -6,8 +6,6 @@ import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
-
 import { isVisible } from "../common/predicate/is-visible";
 
 const { isElement, hasName, hasNamespace } = Element;
@@ -23,11 +21,9 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
+          .filter(isElement)
           .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-            )
+            and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
           );
       },
 

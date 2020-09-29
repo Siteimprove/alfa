@@ -21,25 +21,23 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasAttribute("autocomplete", hasTokens),
-                hasNamespace(Namespace.HTML),
-                hasName("input", "select", "textarea"),
-                isPerceivable(device),
-                not(
-                  and(
-                    hasName("input"),
-                    hasInputType("hidden", "button", "submit", "reset")
-                  )
-                ),
-                not(hasAttribute("aria-disabled", equals("true"))),
-                or(
-                  isTabbable(device),
-                  hasRole((role) => role.isWidget())
+              hasAttribute("autocomplete", hasTokens),
+              hasNamespace(Namespace.HTML),
+              hasName("input", "select", "textarea"),
+              isPerceivable(device),
+              not(
+                and(
+                  hasName("input"),
+                  hasInputType("hidden", "button", "submit", "reset")
                 )
+              ),
+              not(hasAttribute("aria-disabled", equals("true"))),
+              or(
+                isTabbable(device),
+                hasRole((role) => role.isWidget())
               )
             )
           )

@@ -22,7 +22,7 @@
       "path": "../alfa-json"
     },
     {
-      "path": "../alfa-predicate"
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

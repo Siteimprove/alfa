@@ -36,7 +36,12 @@ test(`.from() constructs an accessible node from an element`, (t) => {
           ])
         ),
         [],
-        [Text.of(text, Name.of("Hello world", [Name.Source.data(text)]))]
+        [
+          Text.of(
+            text,
+            Option.of(Name.of("Hello world", [Name.Source.data(text)]))
+          ),
+        ]
       ).toJSON(),
       [],
     ],
@@ -256,7 +261,10 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
   t.deepEqual(Node.from(foo, device).toJSON(), [
     [
       Container.of(foo, [
-        Text.of(text, Name.of("Hello world", [Name.Source.data(text)])),
+        Text.of(
+          text,
+          Option.of(Name.of("Hello world", [Name.Source.data(text)]))
+        ),
       ]).toJSON(),
       [],
     ],

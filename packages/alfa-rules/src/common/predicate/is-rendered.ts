@@ -10,7 +10,7 @@ export function isRendered(device: Device): Predicate<Node> {
   return (node) => {
     // Children of <iframe> elements act as fallback content in legacy user
     // agents and should therefore never be considered rendered.
-    if (node.parent().some(and(isElement, hasName("iframe")))) {
+    if (node.parent().filter(isElement).some(hasName("iframe"))) {
       return false;
     }
 

@@ -26,12 +26,12 @@ import {
   Shadow,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
 import { JSHandle } from "puppeteer";
 
-const { isFunction, isObject } = Predicate;
+const { isFunction, isObject } = Refinement;
 
 export namespace Puppeteer {
   export type Type = JSHandle<globalThis.Node>;

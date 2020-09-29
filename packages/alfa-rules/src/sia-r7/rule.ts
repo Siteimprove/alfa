@@ -21,13 +21,13 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants()
-          .filter(
-            and(isElement, and(hasNamespace(Namespace.HTML), hasName("body")))
-          )
+          .filter(isElement)
+          .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
           .flatMap((body) =>
             body
               .descendants()
-              .filter(and(isElement, hasAttribute("lang", not(isEmpty))))
+              .filter(isElement)
+              .filter(hasAttribute("lang", not(isEmpty)))
               .map((element) => element.attribute("lang").get())
           );
       },

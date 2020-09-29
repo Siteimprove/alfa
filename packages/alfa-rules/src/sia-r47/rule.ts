@@ -20,15 +20,13 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants()
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("meta"),
-                hasAttribute("name", equals("viewport")),
-                hasAttribute("content")
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("meta"),
+              hasAttribute("name", equals("viewport")),
+              hasAttribute("content")
             )
           );
       },

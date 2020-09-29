@@ -1,12 +1,14 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Style } from "@siteimprove/alfa-style";
 
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
-const { and, or, not } = Predicate;
+const { not } = Predicate;
+const { and, or } = Refinement;
 const { isElement } = Element;
 const { isText } = Text;
 

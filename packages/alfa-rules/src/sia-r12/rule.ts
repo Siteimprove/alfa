@@ -20,15 +20,13 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                not(hasInputType("image")),
-                hasNamespace(Namespace.HTML),
-                hasRole("button"),
-                not(isIgnored(device))
-              )
+              not(hasInputType("image")),
+              hasNamespace(Namespace.HTML),
+              hasRole("button"),
+              not(isIgnored(device))
             )
           );
       },

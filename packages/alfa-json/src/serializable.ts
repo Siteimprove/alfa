@@ -1,5 +1,6 @@
 /// <reference lib="dom" />
-import { Predicate } from "@siteimprove/alfa-predicate";
+
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { JSON } from "./json";
 
@@ -12,7 +13,7 @@ const {
   isNumber,
   isBoolean,
   isNull,
-} = Predicate;
+} = Refinement;
 
 export interface Serializable {
   toJSON(): JSON;

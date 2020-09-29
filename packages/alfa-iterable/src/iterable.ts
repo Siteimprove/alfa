@@ -3,8 +3,10 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
-const { not, isObject } = Predicate;
+const { not } = Predicate;
+const { isObject } = Refinement;
 
 // Re-export the global `Iterable` interface to ensure that it merges with the
 // `Iterable` namespace.
@@ -79,10 +81,20 @@ export namespace Iterable {
     return accumulator;
   }
 
-  export function* filter<T, U extends T = T>(
+  export function filter<T, U extends T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, U, [number]>
-  ): Iterable<U> {
+    refinement: Refinement<T, U, [number]>
+  ): Iterable<U>;
+
+  export function filter<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T>;
+
+  export function* filter<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
     let index = 0;
 
     for (const value of iterable) {
@@ -92,10 +104,37 @@ export namespace Iterable {
     }
   }
 
-  export function find<T, U extends T = T>(
+  export function reject<T, U extends T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, U, [number]>
-  ): Option<U> {
+    refinement: Refinement<T, U, [number]>
+  ): Iterable<Exclude<T, U>>;
+
+  export function reject<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T>;
+
+  export function reject<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    return filter(iterable, not(predicate));
+  }
+
+  export function find<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function find<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function find<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
     let index = 0;
 
     for (const value of iterable) {
@@ -127,7 +166,7 @@ export namespace Iterable {
 
   export function some<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): boolean {
     let index = 0;
 
@@ -142,7 +181,7 @@ export namespace Iterable {
 
   export function every<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): boolean {
     let index = 0;
 
@@ -157,7 +196,7 @@ export namespace Iterable {
 
   export function count<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): number {
     return reduce(
       iterable,
@@ -228,7 +267,7 @@ export namespace Iterable {
 
   export function* takeWhile<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     let index = 0;
 
@@ -243,7 +282,7 @@ export namespace Iterable {
 
   export function takeUntil<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     return takeWhile(iterable, not(predicate));
   }
@@ -293,7 +332,7 @@ export namespace Iterable {
 
   export function* skipWhile<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     let index = 0;
     let skipped = false;
@@ -310,7 +349,7 @@ export namespace Iterable {
 
   export function skipUntil<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     return skipWhile(iterable, not(predicate));
   }

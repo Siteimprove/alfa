@@ -16,7 +16,7 @@ import { Slotable } from "./slotable";
 import * as predicate from "./element/predicate";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
@@ -246,9 +246,9 @@ export class Element extends Node implements Slot, Slotable {
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding(options).count(
-      and(Element.isElement, (element) => element._name === this._name)
-    );
+    const index = this.preceding(options)
+      .filter(Element.isElement)
+      .count((element) => element._name === this._name);
 
     path += `[${index + 1}]`;
 
