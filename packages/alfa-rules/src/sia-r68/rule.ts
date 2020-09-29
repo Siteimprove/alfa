@@ -4,6 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -100,12 +101,14 @@ function isRequiredChild(
  * - does not have an `aria-busy` ancestor.
  */
 function* visit(node: Node, device: Device): Iterable<Element> {
-  if (and(isElement, hasAttribute("aria-busy", equals("true")))(node)) {
+  if (
+    Refinement.and(isElement, hasAttribute("aria-busy", equals("true")))(node)
+  ) {
     return;
   }
 
   if (
-    and(
+    Refinement.and(
       isElement,
       and(
         hasNamespace(Namespace.HTML, Namespace.SVG),
