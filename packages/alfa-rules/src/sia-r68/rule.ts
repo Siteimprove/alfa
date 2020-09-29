@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node as AriaNode, Role } from "@siteimprove/alfa-aria";
+import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -51,7 +51,7 @@ export namespace Outcomes {
 
 function hasRequiredChildren(device: Device): Predicate<Element> {
   return (element) =>
-    AriaNode.from(element, device).every((node) =>
+    aria.Node.from(element, device).every((node) =>
       node.role
         .filter((role) => role.hasRequiredChildren())
         .every((role) =>
@@ -65,13 +65,13 @@ function hasRequiredChildren(device: Device): Predicate<Element> {
 
 function isRequiredChild(
   requiredChildren: Iterable<Iterable<Role.Name>>
-): Predicate<AriaNode> {
+): Predicate<aria.Node> {
   return (node) =>
     [...requiredChildren].some((roles) => isRequiredChild(roles)(node));
 
   function isRequiredChild(
     requiredChildren: Iterable<Role.Name>
-  ): Predicate<AriaNode> {
+  ): Predicate<aria.Node> {
     return (node) => {
       const [role, ...rest] = requiredChildren;
 
