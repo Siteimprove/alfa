@@ -5,7 +5,6 @@ import { Element } from "../../element";
 import { hasName } from "./has-name";
 
 const { equals } = Predicate;
-const { isElement } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/#concept-fe-disabled
@@ -25,11 +24,14 @@ export const isDisabled: Predicate<Element> = (element) => {
 
       return element
         .ancestors()
-        .filter(isElement)
+        .filter(Element.isElement)
         .find(hasName("fieldset"))
         .reject(isDisabled)
         .flatMap((fieldset) =>
-          fieldset.descendants().filter(isElement).find(hasName("legend"))
+          fieldset
+            .descendants()
+            .filter(Element.isElement)
+            .find(hasName("legend"))
         )
         .some((legend) => legend.descendants().some(equals(element)));
 
@@ -41,7 +43,7 @@ export const isDisabled: Predicate<Element> = (element) => {
 
       return element
         .inclusiveAncestors()
-        .filter(isElement)
+        .filter(Element.isElement)
         .find(hasName("optgroup"))
         .some(isDisabled);
 

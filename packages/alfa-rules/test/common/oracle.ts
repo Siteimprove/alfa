@@ -4,7 +4,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Question } from "../../src/common/question";
 
@@ -19,7 +19,7 @@ export function oracle(answers: {
   return (rule, question) => {
     const answer = answers[question.uri];
 
-    if (question.type === "boolean" && Predicate.isBoolean(answer)) {
+    if (question.type === "boolean" && Refinement.isBoolean(answer)) {
       return Future.now(Option.of(question.answer(answer)));
     }
 
