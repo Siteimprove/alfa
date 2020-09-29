@@ -27,7 +27,7 @@ test(".fold() folds over the truth values of a predicate", (t) => {
       (value) => value,
       "bar"
     ),
-    "foo"
+    "bar"
   );
 });
 

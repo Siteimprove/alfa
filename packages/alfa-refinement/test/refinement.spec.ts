@@ -20,7 +20,7 @@ test(".test() evaluates a refinement on a value", (t) => {
 });
 
 test(".fold() folds over the truth values of a refinement", (t) => {
-  t.equal(
+  t.equal<"foo">(
     Refinement.fold(
       (value): value is "foo" => value === "foo",
       (value) => {
@@ -40,7 +40,7 @@ test(".fold() folds over the truth values of a refinement", (t) => {
       (value) => value,
       "bar"
     ),
-    "foo"
+    "bar"
   );
 });
 
