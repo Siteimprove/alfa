@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node as AccNode, Role } from "@siteimprove/alfa-aria";
+import { Node as AriaNode, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -12,8 +12,6 @@ import { expectation } from "../common/expectation";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
-import { Sequence } from "@siteimprove/alfa-sequence";
-import test = Predicate.test;
 
 const { isElement, hasNamespace } = Element;
 const { and, equals, not } = Predicate;
@@ -53,7 +51,7 @@ export namespace Outcomes {
 
 function hasRequiredChildren(device: Device): Predicate<Element> {
   return (element) =>
-    AccNode.from(element, device).every((node) =>
+    AriaNode.from(element, device).every((node) =>
       node.role
         .filter((role) => role.hasRequiredChildren())
         .every((role) =>
@@ -67,13 +65,13 @@ function hasRequiredChildren(device: Device): Predicate<Element> {
 
 function isRequiredChild(
   requiredChildren: Iterable<Iterable<Role.Name>>
-): Predicate<AccNode> {
+): Predicate<AriaNode> {
   return (node) =>
     [...requiredChildren].some((roles) => isRequiredChild(roles)(node));
 
   function isRequiredChild(
     requiredChildren: Iterable<Role.Name>
-  ): Predicate<AccNode> {
+  ): Predicate<AriaNode> {
     return (node) => {
       const [role, ...rest] = requiredChildren;
 
