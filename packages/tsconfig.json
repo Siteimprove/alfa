@@ -68,6 +68,7 @@
     { "path": "alfa-react" },
     { "path": "alfa-record" },
     { "path": "alfa-reducer" },
+    { "path": "alfa-refinement" },
     { "path": "alfa-result" },
     { "path": "alfa-rules" },
     { "path": "alfa-scraper" },
