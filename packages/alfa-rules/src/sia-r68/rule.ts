@@ -17,7 +17,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
-const { and, equals, not } = Predicate;
+const { and, equals, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r68.html",
@@ -101,14 +101,12 @@ function isRequiredChild(
  * - does not have an `aria-busy` ancestor.
  */
 function* visit(node: Node, device: Device): Iterable<Element> {
-  if (
-    Refinement.and(isElement, hasAttribute("aria-busy", equals("true")))(node)
-  ) {
+  if (and(isElement, hasAttribute("aria-busy", equals("true")))(node)) {
     return;
   }
 
   if (
-    Refinement.and(
+    and(
       isElement,
       and(
         hasNamespace(Namespace.HTML, Namespace.SVG),
