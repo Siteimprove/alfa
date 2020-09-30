@@ -1,14 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/package",
-  "name": "@siteimprove/alfa-scraper",
+  "name": "@siteimprove/alfa-url",
   "homepage": "https://siteimprove.com",
   "version": "0.5.0",
   "license": "MIT",
-  "description": "An implementation of a simple web scraper capable of producing page objects",
+  "description": "Functionality for working with immutable URLs",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",
-    "directory": "packages/alfa-scraper"
+    "directory": "packages/alfa-url"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
@@ -18,18 +18,13 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-device": "^0.5.0",
-    "@siteimprove/alfa-dom": "^0.5.0",
     "@siteimprove/alfa-equatable": "^0.5.0",
-    "@siteimprove/alfa-http": "^0.5.0",
+    "@siteimprove/alfa-hash": "^0.5.0",
+    "@siteimprove/alfa-iterable": "^0.5.0",
     "@siteimprove/alfa-json": "^0.5.0",
-    "@siteimprove/alfa-puppeteer": "^0.5.0",
+    "@siteimprove/alfa-option": "^0.5.0",
     "@siteimprove/alfa-result": "^0.5.0",
-    "@siteimprove/alfa-time": "^0.5.0",
-    "@siteimprove/alfa-url": "^0.5.0",
-    "@siteimprove/alfa-web": "^0.5.0",
-    "@types/puppeteer": "^3.0.1",
-    "puppeteer": "^5.2.1"
+    "@siteimprove/alfa-sequence": "^0.5.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.5.0"

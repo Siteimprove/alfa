@@ -69,8 +69,8 @@ export class Page implements Resource, json.Serializable, earl.Serializable {
         dct: "http://purl.org/dc/terms/",
       },
       "@type": ["earl:TestSubject"],
-      "@id": this.response.url,
-      "dct:source": this.response.url,
+      "@id": this.response.url.toString(),
+      "dct:source": this.response.url.toString(),
       "dct:hasPart": [this._request.toEARL(), this._response.toEARL()],
     };
   }

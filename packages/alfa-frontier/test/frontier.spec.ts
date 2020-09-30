@@ -106,7 +106,7 @@ test("#enqueue() doesn't change the state of an already seen URL", (t) => {
 test("#dequeue() gets the next waiting URL in queue and moves it to in progress", (t) => {
   const frontier = Frontier.of("https://example.com/");
 
-  t.deepEqual(frontier.dequeue().get(), new URL("https://example.com"));
+  t.deepEqual(frontier.dequeue().get().toString(), "https://example.com/");
 
   t.deepEqual(frontier.toJSON(), {
     scope: "https://example.com/",
