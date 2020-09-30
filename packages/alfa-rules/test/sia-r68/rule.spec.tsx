@@ -7,7 +7,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import R68, { Outcomes } from "../../src/sia-r68/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed } from "../common/outcome";
+import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes a list with two list items", async (t) => {
   const target = (
@@ -140,4 +140,15 @@ test("evaluate() fails a list with only a non-list item", async (t) => {
       1: Outcomes.HasIncorrectOwnedElements,
     }),
   ]);
+});
+
+test("evaluate() is inapplicable to aria-busy elements", async (t) => {
+  const menu = (
+    <ul role="menu" aria-busy="true">
+      Loading
+    </ul>
+  );
+
+  const document = Document.of([menu]);
+  t.deepEqual(await evaluate(R68, { document }), [inapplicable(R68)]);
 });

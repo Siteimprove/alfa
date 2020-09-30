@@ -1,35 +1,30 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
+import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as aria from "@siteimprove/alfa-aria";
+
 import { expectation } from "../common/expectation";
 
+import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and, equals, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r68.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML, Namespace.SVG),
-              not(isIgnored(device)),
-              hasRole((role) => role.hasRequiredChildren())
-            )
-          );
+        return visit(document, device);
       },
 
       expectations(target) {
@@ -59,7 +54,7 @@ export namespace Outcomes {
 
 function hasRequiredChildren(device: Device): Predicate<Element> {
   return (element) =>
-    Node.from(element, device).every((node) =>
+    aria.Node.from(element, device).every((node) =>
       node.role
         .filter((role) => role.hasRequiredChildren())
         .every((role) =>
@@ -73,13 +68,13 @@ function hasRequiredChildren(device: Device): Predicate<Element> {
 
 function isRequiredChild(
   requiredChildren: Iterable<Iterable<Role.Name>>
-): Predicate<Node> {
+): Predicate<aria.Node> {
   return (node) =>
     [...requiredChildren].some((roles) => isRequiredChild(roles)(node));
 
   function isRequiredChild(
     requiredChildren: Iterable<Role.Name>
-  ): Predicate<Node> {
+  ): Predicate<aria.Node> {
     return (node) => {
       const [role, ...rest] = requiredChildren;
 
@@ -95,5 +90,37 @@ function isRequiredChild(
 
       return false;
     };
+  }
+}
+
+/**
+ * Collect all descendants of the given node where the descendant:
+ *
+ * - is a non-ignored HTML or SVG element with a role requiring specific
+ *   children; and
+ * - does not have an `aria-busy` ancestor.
+ */
+function* visit(node: Node, device: Device): Iterable<Element> {
+  if (and(isElement, hasAttribute("aria-busy", equals("true")))(node)) {
+    return;
+  }
+
+  if (
+    and(
+      isElement,
+      and(
+        hasNamespace(Namespace.HTML, Namespace.SVG),
+        not(isIgnored(device)),
+        hasRole((role) => role.hasRequiredChildren())
+      )
+    )(node)
+  ) {
+    yield node;
+  }
+
+  const children = node.children({ flattened: true, nested: true });
+
+  for (const child of children) {
+    yield* visit(child, device);
   }
 }
