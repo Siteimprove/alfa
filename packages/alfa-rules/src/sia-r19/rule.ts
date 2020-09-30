@@ -21,7 +21,8 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(and(isElement, hasNamespace(Namespace.HTML, Namespace.SVG)))
+          .filter(isElement)
+          .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               and(

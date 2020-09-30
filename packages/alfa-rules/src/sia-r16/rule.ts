@@ -23,12 +23,8 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole())
-            )
-          );
+          .filter(isElement)
+          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()));
       },
 
       expectations(target) {

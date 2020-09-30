@@ -19,7 +19,8 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(and(isElement, isMarkedDecorative));
+          .filter(isElement)
+          .filter(isMarkedDecorative);
       },
 
       expectations(target) {

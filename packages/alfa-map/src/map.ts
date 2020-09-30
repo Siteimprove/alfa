@@ -7,6 +7,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -67,20 +68,34 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends V>(predicate: Predicate<V, U, [K]>): Map<K, U> {
+  public filter<U extends V>(refinement: Refinement<V, U, [K]>): Map<K, U>;
+
+  public filter(predicate: Predicate<V, [K]>): Map<K, V>;
+
+  public filter(predicate: Predicate<V, [K]>): Map<K, V> {
     return this.reduce(
       (map, value, key) => (predicate(value, key) ? map.set(key, value) : map),
-      Map.empty<K, U>()
+      Map.empty()
     );
   }
 
-  public reject(predicate: Predicate<V, V, [K]>): Map<K, V> {
+  public reject<U extends V>(
+    refinement: Refinement<V, U, [K]>
+  ): Map<K, Exclude<V, U>>;
+
+  public reject(predicate: Predicate<V, [K]>): Map<K, V>;
+
+  public reject(predicate: Predicate<V, [K]>): Map<K, V> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends V>(predicate: Predicate<V, U, [K]>): Option<U> {
+  public find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+
+  public find(predicate: Predicate<V, [K]>): Option<V>;
+
+  public find(predicate: Predicate<V, [K]>): Option<V> {
     return Iterable.find(this, ([key, value]) => predicate(value, key)).map(
-      ([, value]) => value as U
+      ([, value]) => value
     );
   }
 
@@ -100,15 +115,15 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.collectFirst(this, ([key, value]) => mapper(value, key));
   }
 
-  public some(predicate: Predicate<V, V, [K]>): boolean {
+  public some(predicate: Predicate<V, [K]>): boolean {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
   }
 
-  public every(predicate: Predicate<V, V, [K]>): boolean {
+  public every(predicate: Predicate<V, [K]>): boolean {
     return Iterable.every(this, ([key, value]) => predicate(value, key));
   }
 
-  public count(predicate: Predicate<V, V, [K]>): number {
+  public count(predicate: Predicate<V, [K]>): number {
     return Iterable.count(this, ([key, value]) => predicate(value, key));
   }
 

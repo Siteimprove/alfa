@@ -1,19 +1,18 @@
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R45, { Outcomes } from "../../src/sia-r45/rule";
 
 import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";
 
-const { and } = Predicate;
-const { isElement, hasName } = Element;
-
 test(`evaluate() passes when tokens in headers list refer to cells in the same
       table`, async (t) => {
+  const target = h.attribute("headers", "header1 header2");
+
   const document = Document.of([
     <table>
       <thead>
@@ -23,21 +22,10 @@ test(`evaluate() passes when tokens in headers list refer to cells in the same
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td colspan={2} headers="header1 header2">
-            15%
-          </td>
-        </tr>
+        <tr>{h("td", [h.attribute("colspan", "2"), target], ["15%"])}</tr>
       </tbody>
     </table>,
   ]);
-
-  const target = document
-    .descendants()
-    .find(and(isElement, hasName("td")))
-    .get()
-    .attribute("headers")
-    .get();
 
   t.deepEqual(await evaluate(R45, { document }), [
     passed(R45, target, {
@@ -49,6 +37,8 @@ test(`evaluate() passes when tokens in headers list refer to cells in the same
 
 test(`evaluate() fails when some tokens in headers list do not refer to cells in
       the same table`, async (t) => {
+  const target = h.attribute("headers", "header1 header2");
+
   const document = Document.of([
     <table>
       <thead>
@@ -58,21 +48,10 @@ test(`evaluate() fails when some tokens in headers list do not refer to cells in
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td colspan={2} headers="header1 header2">
-            15%
-          </td>
-        </tr>
+        <tr>{h("td", [h.attribute("colspan", "2"), target], ["15%"])}</tr>
       </tbody>
     </table>,
   ]);
-
-  const target = document
-    .descendants()
-    .find(and(isElement, hasName("td")))
-    .get()
-    .attribute("headers")
-    .get();
 
   t.deepEqual(await evaluate(R45, { document }), [
     failed(R45, target, {
@@ -84,6 +63,8 @@ test(`evaluate() fails when some tokens in headers list do not refer to cells in
 
 test(`evaluate() fails when some token in the headers list refer to the cell
       itself`, async (t) => {
+  const target = h.attribute("headers", "header cell");
+
   const document = Document.of([
     <table>
       <thead>
@@ -94,20 +75,15 @@ test(`evaluate() fails when some token in the headers list refer to the cell
       </thead>
       <tbody>
         <tr>
-          <td id="cell" colspan={2} headers="header cell">
-            15%
-          </td>
+          {h(
+            "td",
+            [h.attribute("id", "cell"), h.attribute("colspan", "2"), target],
+            ["15%"]
+          )}
         </tr>
       </tbody>
     </table>,
   ]);
-
-  const target = document
-    .descendants()
-    .find(and(isElement, hasName("td")))
-    .get()
-    .attribute("headers")
-    .get();
 
   t.deepEqual(await evaluate(R45, { document }), [
     failed(R45, target, {
@@ -117,7 +93,7 @@ test(`evaluate() fails when some token in the headers list refer to the cell
   ]);
 });
 
-test("evaluate() is inapplicable when there is no headers attribute", async (t) => {
+test("evaluate() is inapplicable to a table without headers attributes", async (t) => {
   const document = Document.of([
     <table>
       <thead>

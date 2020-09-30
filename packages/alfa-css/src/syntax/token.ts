@@ -3,12 +3,13 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
 const { fromCharCode } = String;
-const { and } = Predicate;
+const { and } = Refinement;
 
 export type Token =
   | Token.Ident
@@ -579,7 +580,7 @@ export namespace Token {
     }
   }
 
-  export function isNumber(value: unknown): value is Token {
+  export function isNumber(value: unknown): value is Number {
     return value instanceof Number;
   }
 
@@ -1263,12 +1264,12 @@ export namespace Token {
 }
 
 function parseToken<T extends Token>(
-  predicate: Predicate<Token, T>
+  refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
   return (input) =>
     input
       .get(0)
-      .filter(predicate)
+      .filter(refinement)
       .map((token) => Ok.of([input.slice(1), token] as const))
       .getOrElse(() => Err.of("Expected token"));
 }
