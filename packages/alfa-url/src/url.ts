@@ -35,6 +35,7 @@ export class URL implements Equatable, Hashable, Serializable {
       fragment
     );
   }
+
   private readonly _scheme: string;
   private readonly _username: Option<string>;
   private readonly _password: Option<string>;
@@ -268,7 +269,38 @@ export namespace URL {
     fragment: string | null;
   }
 
+  export function from(json: JSON): URL {
+    return URL.of(
+      json.scheme,
+      Option.from(json.username),
+      Option.from(json.password),
+      Option.from(json.host),
+      Option.from(json.port),
+      json.path,
+      Option.from(json.query),
+      Option.from(json.fragment)
+    );
+  }
+
+  /**
+   * @see https://url.spec.whatwg.org/#concept-url-parser
+   *
+   * @remarks
+   * Parsing URLs is tricky business and so this function relies on the presence
+   * of a globally available WHATWG URL class. This API is available in both
+   * browsers, Node.js, and Deno.
+   */
   export function parse(url: string, base?: string | URL): Result<URL, string> {
+    if (typeof base === "string") {
+      const result = parse(base);
+
+      if (result.isErr()) {
+        return result;
+      }
+
+      base = result.get();
+    }
+
     try {
       const {
         // https://url.spec.whatwg.org/#dom-url-protocol
@@ -291,15 +323,33 @@ export namespace URL {
 
       return Result.of(
         URL.of(
+          // `URL#protocol` appends a ":" to the scheme which we need to remove.
           protocol.slice(0, -1),
+
+          // `URL#username`, `URL#password`, and `URL#hostname` expose the
+          // username, password, and host as-is and so the only thing we need to
+          // do is reject them when empty.
           Option.of(username).reject(isEmpty),
           Option.of(password).reject(isEmpty),
           Option.of(hostname).reject(isEmpty),
+
+          // `URL#port` exposes the port number as a string to we convert it to
+          // a number.
           Option.of(port).reject(isEmpty).map(Number),
+
+          // `URL#pathname` exposes the path segments with a leading "/" and
+          // joins the segments with "/". We therefore remove the leading "/"
+          // and split the segments by "/" into an array.
           pathname.slice(1).split("/"),
+
+          // `URL#search` exposes the query portion of the URL with a leading
+          // "?" which we need to remove.
           Option.of(search)
             .reject(isEmpty)
             .map((search) => search.slice(1)),
+
+          // `URL#hash` exposes the fragment portion of the URL with a leading
+          // "#" which we need to remove.
           Option.of(hash)
             .reject(isEmpty)
             .map((hash) => hash.slice(1))
