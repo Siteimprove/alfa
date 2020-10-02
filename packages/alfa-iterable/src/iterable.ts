@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -308,6 +309,34 @@ export namespace Iterable {
     yield* last;
   }
 
+  export function* takeLastWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    const values = [...iterable];
+
+    let last = values.length - 1;
+
+    while (last >= 0) {
+      if (predicate(values[last], last)) {
+        last--;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = last, n = values.length - 1; i < n; i++) {
+      yield values[i];
+    }
+  }
+
+  export function takeLastUntil<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    return takeLastWhile(iterable, not(predicate));
+  }
+
   export function* skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
     const iterator = iterable[Symbol.iterator]();
 
@@ -385,6 +414,55 @@ export namespace Iterable {
     }
   }
 
+  export function* skipLastWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    const values = [...iterable];
+
+    let last = values.length - 1;
+
+    while (last >= 0) {
+      if (predicate(values[last], last)) {
+        last--;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0, n = last; i < n; i++) {
+      yield values[i];
+    }
+  }
+
+  export function skipLastUntil<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    return skipLastWhile(iterable, not(predicate));
+  }
+
+  export function trimLeading<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return skipWhile(iterable, predicate);
+  }
+
+  export function trimTrailing<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return skipLastWhile(iterable, predicate);
+  }
+
+  export function trim<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return trimTrailing(trimLeading(iterable, predicate), predicate);
+  }
+
   export function rest<T>(iterable: Iterable<T>): Iterable<T> {
     return skip(iterable, 1);
   }
@@ -449,6 +527,17 @@ export namespace Iterable {
           }
       }
     }
+  }
+
+  export function hash<T>(iterable: Iterable<T>, hash: Hash): void {
+    let size = 0;
+
+    for (const value of iterable) {
+      Hashable.hash(hash, value);
+      size++;
+    }
+
+    Hash.writeUint32(hash, size);
   }
 
   export function subtract<T>(
