@@ -1,8 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Ok } from "./ok";
@@ -89,6 +91,11 @@ export class Err<E> implements Result<never, E> {
 
   public equals(value: unknown): value is this {
     return value instanceof Err && Equatable.equals(value._error, this._error);
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, false);
+    Hashable.hash(hash, this._error);
   }
 
   public *[Symbol.iterator]() {}

@@ -13,7 +13,7 @@ const { and, or, not, equals } = Predicate;
 
 export namespace Lexer {
   export function lex(input: string): Array<Token> {
-    const points = new Array(input.length);
+    const points = new Array<number>(input.length);
 
     for (let i = 0, n = input.length; i < n; i++) {
       points[i] = input.charCodeAt(i);
