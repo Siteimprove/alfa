@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/protractor.ts"],
+  "references": [
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
+    }
+  ]
+}
