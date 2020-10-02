@@ -17,9 +17,10 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
+import { Group } from "../common/group";
 
 const { isElement, hasNamespace } = Element;
-const { map, flatMap } = Iterable;
+const { map, flatMap, filter } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -32,33 +33,39 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .filter(isElement)
           .filter(
             and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole((role) => role.is("link")),
-                not(isIgnored(device)),
-                hasNonEmptyAccessibleName(device)
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole((role) => role.is("link")),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
+            )
           );
 
         const roots = elements.groupBy((element) => element.root());
 
-        return flatMap(roots.values(), (elements) =>
-          elements
-            .reduce((groups, element) => {
-              for (const [node] of Node.from(element, device)) {
-                const name = node.name.map((name) => name.value);
+        return filter(
+          map(
+            flatMap(roots.values(), (elements) =>
+              elements
+                .reduce((groups, element) => {
+                  for (const [node] of Node.from(element, device)) {
+                    const name = node.name.map((name) => name.value);
 
-                groups = groups.set(
-                  name,
-                  groups
-                    .get(name)
-                    .getOrElse(() => List.empty<Element>())
-                    .append(element)
-                );
-              }
+                    groups = groups.set(
+                      name,
+                      groups
+                        .get(name)
+                        .getOrElse(() => List.empty<Element>())
+                        .append(element)
+                    );
+                  }
 
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
-            .values()
+                  return groups;
+                }, Map.empty<Option<string>, List<Element>>())
+                .values()
+            ),
+            Group.of
+          ),
+          (group) => group.size > 1
         );
       },
 
