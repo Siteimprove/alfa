@@ -8,6 +8,8 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Builtin } from "./url/builtin";
+
 const { isEmpty } = Iterable;
 
 /**
@@ -319,7 +321,7 @@ export namespace URL {
         search,
         // https://url.spec.whatwg.org/#dom-url-hash
         hash,
-      } = new globalThis.URL(url, base?.toString());
+      } = new Builtin(url, base?.toString());
 
       return Result.of(
         URL.of(
