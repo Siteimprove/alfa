@@ -2,6 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { URL } from "@siteimprove/alfa-url";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -35,7 +36,7 @@ export class Frontier implements Equatable, Serializable {
   }
 
   public isInScope(url: string | URL): boolean {
-    return toURL(url).href.startsWith(this._scope.href);
+    return toURL(url).toString().startsWith(this._scope.toString());
   }
 
   public hasWaiting(): boolean {
@@ -186,7 +187,7 @@ export class Frontier implements Equatable, Serializable {
   public equals(value: unknown): value is this {
     return (
       value instanceof Frontier &&
-      value._scope.href === this._scope.href &&
+      value._scope.equals(this._scope) &&
       value._items.length === this._items.length &&
       value._items.every((item, i) => item.equals(this._items[i]))
     );
@@ -194,7 +195,7 @@ export class Frontier implements Equatable, Serializable {
 
   public toJSON(): Frontier.JSON {
     return {
-      scope: this._scope.href,
+      scope: this._scope.toString(),
       items: this._items.map((item) => item.toJSON()),
     };
   }
@@ -269,10 +270,7 @@ class Item implements Equatable, Serializable {
   public matches(url: string | URL): boolean {
     url = toURL(url);
 
-    return (
-      this._url.href === url.href ||
-      this._aliases.some(property("href", equals(url.href)))
-    );
+    return this._url.equals(url) || this._aliases.some(equals(url));
   }
 
   public transition(state: State): boolean {
@@ -304,10 +302,7 @@ class Item implements Equatable, Serializable {
   public alias(url: string | URL): boolean {
     url = toURL(url);
 
-    if (
-      this._url.href === url.href ||
-      this._aliases.some(property("href", equals(url.href)))
-    ) {
+    if (this._url.equals(url) || this._aliases.some(equals(url))) {
       return false;
     }
 
@@ -319,7 +314,7 @@ class Item implements Equatable, Serializable {
   public redirect(target: string | URL): boolean {
     target = toURL(target);
 
-    if (this._url.href === target.href) {
+    if (this._url.equals(target)) {
       return false;
     }
 
@@ -332,19 +327,17 @@ class Item implements Equatable, Serializable {
   public equals(value: unknown): value is this {
     return (
       value instanceof Item &&
-      value._url.href === this._url.href &&
+      value._url.equals(this._url) &&
       value._aliases.length === this._aliases.length &&
-      value._aliases.every(
-        (alias, i) => alias.href === this._aliases[i].href
-      ) &&
+      value._aliases.every((alias, i) => alias.equals(this._aliases[i])) &&
       value._state === this._state
     );
   }
 
   public toJSON(): Item.JSON {
     return {
-      url: this._url.href,
-      aliases: this._aliases.map((url) => url.href),
+      url: this._url.toString(),
+      aliases: this._aliases.map((url) => url.toString()),
       state: this._state,
     };
   }
@@ -360,11 +353,10 @@ namespace Item {
 }
 
 function toURL(url: string | URL): URL {
-  url = typeof url === "string" ? new URL(url) : url;
-  url.hash = "";
-  return url;
+  url = typeof url === "string" ? URL.parse(url).get() : url;
+  return url.withoutFragment();
 }
 
 function isInScope(scope: string | URL, url: string | URL): boolean {
-  return toURL(url).href.startsWith(toURL(scope).href);
+  return toURL(url).toString().startsWith(toURL(scope).toString());
 }

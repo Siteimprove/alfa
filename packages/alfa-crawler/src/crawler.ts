@@ -3,6 +3,7 @@ import { Frontier } from "@siteimprove/alfa-frontier";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Result } from "@siteimprove/alfa-result";
 import { Scraper, Screenshot } from "@siteimprove/alfa-scraper";
+import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
 const { isElement } = Element;
@@ -19,10 +20,12 @@ export class Crawler {
     scraper?: Promise<Scraper>
   ): Promise<T> {
     const crawler = await this.of(scraper);
-    const result = await mapper(crawler);
 
-    await crawler.close();
-    return result;
+    try {
+      return await mapper(crawler);
+    } finally {
+      await crawler.close();
+    }
   }
 
   private readonly _scraper: Scraper;
@@ -53,8 +56,8 @@ export class Crawler {
         frontier.complete(url);
 
         for (const page of result) {
-          if (page.response.url !== url.href) {
-            frontier.redirect(url.href, page.response.url);
+          if (!page.response.url.equals(url)) {
+            frontier.redirect(url, page.response.url);
           }
 
           for (const url of urls(page)) {
@@ -94,7 +97,7 @@ function* urls(page: Page): Iterable<URL> {
     if (isElement(node) && node.name === "a") {
       yield* node
         .attribute("href")
-        .map((href) => new URL(href.value, page.response.url));
+        .map((href) => URL.parse(href.value, page.response.url).get());
     }
   }
 }
