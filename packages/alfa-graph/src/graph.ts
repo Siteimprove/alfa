@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
@@ -33,8 +33,8 @@ export class Graph<T>
     return this._nodes.keys();
   }
 
-  public neighbors(node: T): Option<Set<T>> {
-    return this._nodes.get(node);
+  public neighbors(node: T): Iterable<T> {
+    return this._nodes.get(node).getOr([]);
   }
 
   public has(node: T): boolean {
@@ -42,13 +42,11 @@ export class Graph<T>
   }
 
   public add(node: T): Graph<T> {
-    const nodes = this._nodes;
-
-    if (nodes.has(node)) {
+    if (this.has(node)) {
       return this;
     }
 
-    return new Graph(nodes.set(node, Set.empty()));
+    return new Graph(this._nodes.set(node, Set.empty()));
   }
 
   public delete(node: T): Graph<T> {
@@ -86,11 +84,11 @@ export class Graph<T>
   }
 
   public disconnect(from: T, to: T): Graph<T> {
-    const nodes = this._nodes;
-
-    if (!nodes.has(from) || !nodes.has(to)) {
+    if (!this.has(from) || !this.has(to)) {
       return this;
     }
+
+    const nodes = this._nodes;
 
     return new Graph(
       nodes.set(
@@ -101,6 +99,21 @@ export class Graph<T>
           .get()
       )
     );
+  }
+
+  public traverse(
+    root: T,
+    traversal: Graph.Traversal = Graph.DepthFirst
+  ): Sequence<T> {
+    return Sequence.from(traversal(this, root));
+  }
+
+  public hasPath(from: T, to: T): boolean {
+    if (!this.has(from) || !this.has(to)) {
+      return false;
+    }
+
+    return this.traverse(from).includes(to);
   }
 
   public equals(value: unknown): value is this {
@@ -158,4 +171,60 @@ export namespace Graph {
       )
     );
   }
+
+  export interface Traversal {
+    <T>(graph: Graph<T>, root: T): Iterable<T>;
+  }
+
+  /**
+   * @see https://en.wikipedia.org/wiki/Depth-first_search
+   */
+  export const DepthFirst: Traversal = function* <T>(graph: Graph<T>, root: T) {
+    const queue = [root];
+
+    let seen = Set.empty<T>();
+
+    while (queue.length > 0) {
+      const next = queue.pop()!;
+
+      if (seen.has(next)) {
+        continue;
+      }
+
+      yield next;
+
+      seen = seen.add(next);
+
+      for (const neighbor of graph.neighbors(next)) {
+        queue.push(neighbor);
+      }
+    }
+  };
+
+  /**
+   * @see https://en.wikipedia.org/wiki/Breadth-first_search
+   */
+  export const BreadthFirst: Traversal = function* <T>(
+    graph: Graph<T>,
+    root: T
+  ) {
+    const queue = [root];
+
+    let seen = Set.of(root);
+
+    while (queue.length > 0) {
+      const next = queue.shift()!;
+
+      yield next;
+
+      for (const neighbor of graph.neighbors(next)) {
+        if (seen.has(neighbor)) {
+          continue;
+        }
+
+        seen = seen.add(neighbor);
+        queue.push(neighbor);
+      }
+    }
+  };
 }

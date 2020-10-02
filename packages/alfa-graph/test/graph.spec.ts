@@ -30,3 +30,18 @@ test("#delete() removes a node from a graph", (t) => {
     ["foo", ["baz"]],
   ]);
 });
+
+test("#traverse() traverses the subgraph rooted at a node", (t) => {
+  t.deepEqual([...graph.traverse("baz")], ["baz", "foo", "bar"]);
+});
+
+test("#hasPath() checks if there's a path from one node to another", (t) => {
+  // foo -> bar
+  t.equal(graph.hasPath("foo", "bar"), true);
+
+  // baz -> foo -> bar
+  t.equal(graph.hasPath("baz", "bar"), true);
+
+  // bar ->
+  t.equal(graph.hasPath("bar", "baz"), false);
+});
