@@ -27,3 +27,13 @@ test(".parse() parses a relative URL against a base URL", (t) => {
     fragment: null,
   });
 });
+
+test("#equals() checks if two URLs are equal", (t) => {
+  const a = URL.parse("foo", "file:").get();
+  const b = URL.parse("foo", "file:").get();
+  const c = URL.parse("bar", "file:").get();
+
+  t.equal(a.equals(a), true);
+  t.equal(a.equals(b), true);
+  t.equal(a.equals(c), false);
+});

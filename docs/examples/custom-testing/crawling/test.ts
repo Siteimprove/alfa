@@ -25,9 +25,9 @@ Crawler.with(async (crawler) => {
 
       const earl = outcomes.map((outcome) => outcome.toEARL());
 
-      const url = new URL(input.response.url);
+      const { url } = input.response;
 
-      console.group(url.href);
+      console.group(url.toString());
       logStats(outcomes);
       console.groupEnd();
 
@@ -35,8 +35,8 @@ Crawler.with(async (crawler) => {
         path.join(
           __dirname,
           "outcomes",
-          url.host,
-          url.pathname.replace(/\/$/, "")
+          url.host.get(),
+          ...url.path.filter((segment) => segment !== "")
         ) + ".json";
 
       fs.mkdirSync(path.dirname(file), { recursive: true });
