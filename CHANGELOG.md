@@ -21,6 +21,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`.
+
+### Changed
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Some#hash()` and `None#hash()` now write a marker byte to prevent some avoidable collisions.
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence): `Nil#hash()` now writes a size of 0 to prevent some avoidable collisions.
+
 ### Fixed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now only applies to focusable widgets with either an `aria-label` or `aria-labelledby` attribute, as intended. ([#409](../../pull/409))
