@@ -324,7 +324,7 @@ export namespace URL {
       return Result.of(
         URL.of(
           // `URL#protocol` appends a ":" to the scheme which we need to remove.
-          protocol.slice(0, -1),
+          protocol.replace(/:$/, ""),
 
           // `URL#username`, `URL#password`, and `URL#hostname` expose the
           // username, password, and host as-is and so the only thing we need to
@@ -340,19 +340,19 @@ export namespace URL {
           // `URL#pathname` exposes the path segments with a leading "/" and
           // joins the segments with "/". We therefore remove the leading "/"
           // and split the segments by "/" into an array.
-          pathname.slice(1).split("/"),
+          pathname.replace(/^\//, "").split("/"),
 
           // `URL#search` exposes the query portion of the URL with a leading
           // "?" which we need to remove.
           Option.of(search)
             .reject(isEmpty)
-            .map((search) => search.slice(1)),
+            .map((search) => search.replace(/^\?/, "")),
 
           // `URL#hash` exposes the fragment portion of the URL with a leading
           // "#" which we need to remove.
           Option.of(hash)
             .reject(isEmpty)
-            .map((hash) => hash.slice(1))
+            .map((hash) => hash.replace(/^#/, ""))
         )
       );
     } catch (err) {

@@ -28,6 +28,19 @@ test(".parse() parses a relative URL against a base URL", (t) => {
   });
 });
 
+test(".parse() parses the special about:blank URL", (t) => {
+  t.deepEqual(URL.parse("about:blank").get().toJSON(), {
+    scheme: "about",
+    username: null,
+    password: null,
+    host: null,
+    port: null,
+    path: ["blank"],
+    query: null,
+    fragment: null,
+  });
+});
+
 test("#equals() checks if two URLs are equal", (t) => {
   const a = URL.parse("foo", "file:").get();
   const b = URL.parse("foo", "file:").get();
