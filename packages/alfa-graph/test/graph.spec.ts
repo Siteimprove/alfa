@@ -73,20 +73,13 @@ test("#traverse() traverses the subgraph rooted at a node depth-first", (t) => {
   t.deepEqual(
     [...graph.traverse(1, Graph.DepthFirst)],
     [
-      // 1
-      1,
-      // |- 5
-      5,
-      //    |- 7
-      7,
-      //    |- 6
-      6,
-      // |- 2
-      2,
-      //    |- 3
-      3,
-      //    |- 4
-      4,
+      1, // 1
+      5, // |- 5
+      7, //    |- 7
+      6, //    |- 6
+      2, // |- 2
+      3, //    |- 3
+      4, //    |- 4
     ]
   );
 });
@@ -108,20 +101,13 @@ test("#traverse() traverses the subgraph rooted at a node breadth-first", (t) =>
   t.deepEqual(
     [...graph.traverse(1, Graph.BreadthFirst)],
     [
-      // 1
-      1,
-      // |- 2
-      2,
-      // |- 5
-      5,
-      //    |- 4
-      4,
-      //    |- 3
-      3,
-      //    |- 6
-      6,
-      //    |- 7
-      7,
+      1, // 1
+      2, // |- 2
+      5, // |- 5
+      4, //    |- 4
+      3, //    |- 3
+      6, //    |- 6
+      7, //    |- 7
     ]
   );
 });
