@@ -7,6 +7,9 @@ import * as parser from "@siteimprove/alfa-parser";
 import { Style } from "./style";
 import { Value } from "./value";
 
+/**
+ * @internal
+ */
 export class Property<T = unknown, U = T> {
   public static of<T, U>(
     initial: U,
@@ -53,6 +56,9 @@ export class Property<T = unknown, U = T> {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Property {
   export interface Options {
     readonly inherits: boolean;
@@ -129,6 +135,9 @@ export namespace Property {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Property {
   export class Shorthand<N extends Name = never> {
     public static of<N extends Name>(
@@ -222,6 +231,9 @@ const Shorthands = {
   overflow: Overflow.Shorthand,
 };
 
+/**
+ * @internal
+ */
 export namespace Property {
   export type Name = keyof Longhands;
 
@@ -236,6 +248,9 @@ export namespace Property {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Property {
   export namespace Shorthand {
     export type Name = keyof Shorthands;

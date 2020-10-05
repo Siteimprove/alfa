@@ -1,14 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/package",
-  "name": "@siteimprove/alfa-json-ld",
+  "name": "@siteimprove/alfa-url",
   "homepage": "https://siteimprove.com",
   "version": "0.5.0",
   "license": "MIT",
-  "description": "Functionality for working with JSON-LD documents",
+  "description": "Functionality for working with immutable URLs",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",
-    "directory": "packages/alfa-json-ld"
+    "directory": "packages/alfa-url"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
@@ -18,9 +18,13 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-equatable": "^0.5.0",
+    "@siteimprove/alfa-hash": "^0.5.0",
+    "@siteimprove/alfa-iterable": "^0.5.0",
+    "@siteimprove/alfa-json": "^0.5.0",
     "@siteimprove/alfa-option": "^0.5.0",
     "@siteimprove/alfa-result": "^0.5.0",
-    "@siteimprove/alfa-url": "^0.5.0"
+    "@siteimprove/alfa-sequence": "^0.5.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.5.0"
