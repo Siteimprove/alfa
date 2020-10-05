@@ -461,6 +461,8 @@ export namespace Name {
     return fromNode(node, device, State.empty());
   }
 
+  const names = Cache.empty<Node, Branched<Option<Name>, Browser>>();
+
   /**
    * @internal
    */
@@ -469,7 +471,27 @@ export namespace Name {
     device: Device,
     state: State
   ): Branched<Option<Name>, Browser> {
-    return isElement(node) ? fromElement(node, device, state) : fromText(node);
+    // Construct a thunk with the computed name of the node. We first need to
+    // decide whether or not we can pull the name of the node from the cache and
+    // so the actual computation of the name must be delayed.
+    const name = () =>
+      isElement(node) ? fromElement(node, device, state) : fromText(node);
+
+    if (isElement(node)) {
+      // As chained references are not allowed, we cannot make use of the cache
+      // when computing a referenced name. If, for example, `foo` references
+      // `bar` and `bar` references `baz`, the reference from `bar` to `baz` is
+      // only allowed to be followed when computing a name for `bar`. When
+      // computing the name for `foo`, however, the second reference must be
+      // ignored and the name for `bar` computed as if though the reference does
+      // not exist. This of course means that we cannot make use of whatever is
+      // in the cache for `bar`.
+      if (state.isReferencing) {
+        return name();
+      }
+    }
+
+    return names.get(node, name);
   }
 
   /**
@@ -577,16 +599,22 @@ export namespace Name {
           }
 
           return fromDescendants(element, device, state);
+        },
+
+        // Step 2H: Use the subtree content, if descending.
+        // https://w3c.github.io/accname/#step2H
+        () => {
+          // Unless we're already descending then this step produces an empty
+          // name.
+          if (!state.isDescending) {
+            return empty;
+          }
+
+          return fromDescendants(element, device, state);
         }
       );
     });
   }
-
-  /**
-   * Accessible names for text nodes are abundant and not impacted by the
-   * computation state and so are easily cached.
-   */
-  const textNames = Cache.empty<Text, Branched<Option<Name>, Browser>>();
 
   /**
    * @internal
@@ -594,7 +622,7 @@ export namespace Name {
   export function fromText(text: Text): Branched<Option<Name>, Browser> {
     // Step 2G: Use the data of the text node.
     // https://w3c.github.io/accname/#step2G
-    return textNames.get(text, () => fromData(text));
+    return fromData(text);
   }
 
   /**
