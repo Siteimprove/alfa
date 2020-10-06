@@ -4,13 +4,13 @@ import * as fs from "fs";
 
 import { Audit, Outcome } from "@siteimprove/alfa-act";
 import { Command } from "@siteimprove/alfa-command";
-import { Node } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None } from "@siteimprove/alfa-option";
 import { Ok } from "@siteimprove/alfa-result";
-import rules, { Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
+
+import rules from "@siteimprove/alfa-rules";
 
 import { Oracle } from "../../oracle";
 
@@ -23,7 +23,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const formatter = await Formatter.load(flags.format);
+  const formatter = await Formatter.load<any, any, any>(flags.format);
 
   if (formatter.isErr()) {
     return formatter;
@@ -81,7 +81,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     });
   }
 
-  const output = formatter.get()(page, outcomes);
+  const output = formatter.get()(page, rules, outcomes);
 
   if (flags.output.isNone()) {
     return Ok.of(output);
