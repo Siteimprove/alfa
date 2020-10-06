@@ -256,6 +256,7 @@ test(".from() exposes elements if they have a tabindex", (t) => {
 test(`.from() does not expose elements that have no role, ARIA attributes, nor
       tabindex`, (t) => {
   const text = h.text("Hello world");
+
   const foo = <div>{text}</div>;
 
   t.deepEqual(Node.from(foo, device).toJSON(), [
@@ -268,5 +269,16 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
       ]).toJSON(),
       [],
     ],
+  ]);
+});
+
+test(`.from() does not expose text nodes of a parent element with
+      \`visibility: hidden\``, (t) => {
+  const text = h.text("Hello world");
+
+  const foo = <div style={{ visibility: "hidden" }}>{text}</div>;
+
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [Container.of(foo, [Inert.of(text)]).toJSON(), []],
   ]);
 });

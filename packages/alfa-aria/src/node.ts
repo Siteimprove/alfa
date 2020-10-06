@@ -328,12 +328,6 @@ export namespace Node {
     owned: Map<dom.Element, Sequence<dom.Node>>
   ): Branched<Node, Browser> {
     return cache.get(device, Cache.empty).get(node, () => {
-      // Text nodes are _always_ exposed in the accessibility tree.
-      if (dom.Text.isText(node)) {
-        return Name.from(node, device).map((name) => Text.of(node, name));
-      }
-
-      // Element nodes are _sometimes_ exposed in the accessibility tree.
       if (dom.Element.isElement(node)) {
         // Elements that are explicitly excluded from the accessibility tree
         // by means of `aria-hidden=true` are never exposed in the
@@ -470,6 +464,28 @@ export namespace Node {
         });
       }
 
+      if (dom.Text.isText(node)) {
+        // As elements with `visibility: hidden` are exposed as containers for
+        // other elements that _might_ be visible, we need to check the
+        // visibility of the parent element before deciding to expose the text
+        // node. If the parent element isn't visible, the text node instead
+        // becomes inert.
+        if (
+          node
+            .parent({ flattened: true })
+            .filter(dom.Element.isElement)
+            .some(
+              (parent) =>
+                Style.from(parent, device).computed("visibility").value
+                  .value !== "visible"
+            )
+        ) {
+          return Branched.of(Inert.of(node));
+        }
+
+        return Name.from(node, device).map((name) => Text.of(node, name));
+      }
+
       const children = Branched.traverse(
         node
           .children({ flattened: true })
@@ -477,7 +493,6 @@ export namespace Node {
         (child) => build(child, device, claimed, owned)
       );
 
-      // Other nodes are _never_ exposed in the accessibility tree.
       return children.map((children) => Container.of(node, children));
     });
   }
