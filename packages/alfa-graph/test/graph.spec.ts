@@ -113,9 +113,6 @@ test("#traverse() traverses the subgraph rooted at a node breadth-first", (t) =>
 });
 
 test("#hasPath() checks if there's a path from one node to another", (t) => {
-  // foo always has a path to itself
-  t.equal(graph.hasPath("foo", "foo"), true);
-
   // foo -> bar
   t.equal(graph.hasPath("foo", "bar"), true);
 
@@ -124,4 +121,9 @@ test("#hasPath() checks if there's a path from one node to another", (t) => {
 
   // bar has no neighbors
   t.equal(graph.hasPath("bar", "baz"), false);
+
+  // A node always has a path to itself
+  for (const node of ["foo", "bar", "baz"]) {
+    t.equal(graph.hasPath(node, node), true);
+  }
 });

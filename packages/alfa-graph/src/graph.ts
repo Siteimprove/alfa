@@ -180,12 +180,12 @@ export namespace Graph {
    * @see https://en.wikipedia.org/wiki/Depth-first_search
    */
   export const DepthFirst: Traversal = function* <T>(graph: Graph<T>, root: T) {
-    const queue = [root];
+    const stack = [root];
 
     let seen = Set.empty<T>();
 
-    while (queue.length > 0) {
-      const next = queue.pop()!;
+    while (stack.length > 0) {
+      const next = stack.pop()!;
 
       if (seen.has(next)) {
         continue;
@@ -196,7 +196,7 @@ export namespace Graph {
       seen = seen.add(next);
 
       for (const neighbor of graph.neighbors(next)) {
-        queue.push(neighbor);
+        stack.push(neighbor);
       }
     }
   };
