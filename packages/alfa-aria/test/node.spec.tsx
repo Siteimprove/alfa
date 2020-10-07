@@ -179,13 +179,25 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
     {bar}
   </div>;
 
-  // We should use the `Graph` class for building up a graph of references and
-  // reject any reference that would cause a cycle. Until then, cyclic references
-  // will cause all nodes participating in the cycle to become inert.
+  t.deepEqual(Node.from(foo, device).toJSON(), [
+    [
+      Element.of(
+        foo,
+        None,
+        None,
+        [Attribute.of("aria-owns", "bar")],
+        [Element.of(bar, None, None, [Attribute.of("aria-owns", "foo")])]
+      ).toJSON(),
+      [],
+    ],
+  ]);
 
-  t.deepEqual(Node.from(foo, device).toJSON(), [[Inert.of(foo).toJSON(), []]]);
-
-  t.deepEqual(Node.from(bar, device).toJSON(), [[Inert.of(bar).toJSON(), []]]);
+  t.deepEqual(Node.from(bar, device).toJSON(), [
+    [
+      Element.of(bar, None, None, [Attribute.of("aria-owns", "foo")]).toJSON(),
+      [],
+    ],
+  ]);
 });
 
 test(`.from() correctly handles circular aria-owns references between ancestors
