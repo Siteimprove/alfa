@@ -282,3 +282,50 @@ test(`.from() does not expose text nodes of a parent element with
     [Container.of(foo, [Inert.of(text)]).toJSON(), []],
   ]);
 });
+
+test(`.from() exposes implicitly required children of a presentational element
+      with an inherited presentational role`, (t) => {
+  const li = <li />;
+
+  const ul = <ul role="presentation">{li}</ul>;
+
+  t.deepEqual(Node.from(ul, device).toJSON(), [
+    [Container.of(ul, [Container.of(li)]).toJSON(), []],
+  ]);
+});
+
+test(`.from() doesn't inherit presentational roles into explicitly required
+      children of a presentational element`, (t) => {
+  const li = <li role="listitem" />;
+
+  const ul = <ul role="presentation">{li}</ul>;
+
+  t.deepEqual(Node.from(ul, device).toJSON(), [
+    [
+      Container.of(ul, [
+        Element.of(li, Option.of(Role.of("listitem"))),
+      ]).toJSON(),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() doesn't inherit presentational roles into children of implicitly
+      required children of a presentational element`, (t) => {
+  // This element should _not_ inherit a presentational role as the parent <li>
+  // element has no required children.
+  const button = <button />;
+
+  const li = <li>{button}</li>;
+
+  const ul = <ul role="presentation">{li}</ul>;
+
+  t.deepEqual(Node.from(ul, device).toJSON(), [
+    [
+      Container.of(ul, [
+        Container.of(li, [Element.of(button, Option.of(Role.of("button")))]),
+      ]).toJSON(),
+      [],
+    ],
+  ]);
+});
