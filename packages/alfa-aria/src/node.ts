@@ -2,6 +2,7 @@ import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
+import { Graph } from "@siteimprove/alfa-graph";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
@@ -285,30 +286,43 @@ export namespace Node {
     // Refine the collected `aria-owns` references, constructing a set of
     // claimed elements and resolving conflicting claims as needed.
     const [claimed, owned] = references.reduce(
-      ([claimed, owned], [element, references]) => {
-        // Reject all element references that have already been claimed. While
-        // authors are not allowed to specify a given ID in more than one
-        // `aria-owns` attribute, it will inevitably happen that multiple
-        // `aria-owns` attributes reference the same ID. We deal with this on a
-        // first come, first serve basis and deny anything but the first claim
-        // to a given ID.
-        references = references.reject((element) => claimed.has(element));
+      ([claimed, owned, graph], [element, references]) => {
+        // Reject all element references that have either already been claimed
+        // or would introduce a cyclic reference. While authors are not allowed
+        // to specify a given ID in more than one `aria-owns` attribute, it will
+        // inevitably happen that multiple `aria-owns` attributes reference the
+        // same ID. We deal with this on a first come, first serve basis and
+        // deny anything but the first claim to a given ID.
+        references = references.reject(
+          (reference) =>
+            claimed.has(reference) || graph.hasPath(reference, element)
+        );
 
         // If there are no references left, this element has no explicit
         // ownership.
         if (references.isEmpty()) {
-          return [claimed, owned];
+          return [claimed, owned, graph];
         }
 
         // Claim the remaining references.
         claimed = references.reduce(
-          (claimed, element) => claimed.add(element),
+          (claimed, reference) => claimed.add(reference),
           claimed
         );
 
-        return [claimed, owned.set(element, references)];
+        // Connect the element to each of its references to track cycles.
+        graph = references.reduce(
+          (graph, reference) => graph.connect(element, reference),
+          graph
+        );
+
+        return [claimed, owned.set(element, references), graph];
       },
-      [Set.empty<dom.Node>(), Map.empty<dom.Element, Sequence<dom.Node>>()]
+      [
+        Set.empty<dom.Element>(),
+        Map.empty<dom.Element, Sequence<dom.Element>>(),
+        Graph.empty<dom.Element>(),
+      ]
     );
 
     build(root, device, claimed, owned);
