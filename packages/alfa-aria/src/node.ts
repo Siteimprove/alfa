@@ -325,7 +325,7 @@ export namespace Node {
       ]
     );
 
-    build(root, device, claimed, owned);
+    fromNode(root, device, claimed, owned, State.empty());
 
     return _cache.get(node, () =>
       // If the cache still doesn't hold an entry for the specified node, then
@@ -335,11 +335,52 @@ export namespace Node {
     );
   }
 
-  function build(
+  class State {
+    private static _empty = new State(false, true);
+
+    public static empty(): State {
+      return this._empty;
+    }
+
+    private readonly _isPresentational: boolean;
+    private readonly _isVisible: boolean;
+
+    private constructor(isPresentational: boolean, isVisible: boolean) {
+      this._isPresentational = isPresentational;
+      this._isVisible = isVisible;
+    }
+
+    public get isPresentational(): boolean {
+      return this._isPresentational;
+    }
+
+    public get isVisible(): boolean {
+      return this._isVisible;
+    }
+
+    public presentational(isPresentational: boolean): State {
+      if (this._isPresentational === isPresentational) {
+        return this;
+      }
+
+      return new State(isPresentational, this._isVisible);
+    }
+
+    public visible(isVisible: boolean): State {
+      if (this._isVisible === isVisible) {
+        return this;
+      }
+
+      return new State(this._isPresentational, isVisible);
+    }
+  }
+
+  function fromNode(
     node: dom.Node,
     device: Device,
     claimed: Set<dom.Node>,
-    owned: Map<dom.Element, Sequence<dom.Node>>
+    owned: Map<dom.Element, Sequence<dom.Node>>,
+    state: State
   ): Branched<Node, Browser> {
     return cache.get(device, Cache.empty).get(node, () => {
       if (dom.Element.isElement(node)) {
@@ -375,13 +416,13 @@ export namespace Node {
           return Branched.of(Inert.of(node));
         }
 
-        let children: Branched<Iterable<Node>, Browser>;
+        let children: (state: State) => Branched<Iterable<Node>, Browser>;
 
         // Children of <iframe> elements act as fallback content in legacy user
         // agents and should therefore never be included in the accessibility
         // tree.
         if (node.name === "iframe") {
-          children = Branched.of([]);
+          children = () => Branched.of([]);
         }
 
         // Otherwise, recursively build accessible nodes for the children of the
@@ -402,80 +443,109 @@ export namespace Node {
 
           // The children implicitly owned by the element come first, then the
           // children explicitly owned by the element.
-          children = Branched.traverse(implicit.concat(explicit), (child) =>
-            build(child, device, claimed, owned)
-          );
+          children = (state) =>
+            Branched.traverse(implicit.concat(explicit), (child) =>
+              fromNode(child, device, claimed, owned, state)
+            );
         }
 
         // Elements that are not visible by means of `visibility: hidden` or
         // `visibility: collapse`, are exposed in the accessibility tree as
         // containers as they may contain visible descendants.
         if (style.computed("visibility").value.value !== "visible") {
-          return children.map((children) => Container.of(node, children));
+          return children(state.visible(false)).map((children) =>
+            Container.of(node, children)
+          );
         }
 
-        return Role.from(node).flatMap<Node>((role) => {
-          if (role.some((role) => role.isPresentational())) {
-            return children.map((children) => Container.of(node, children));
-          }
+        state = state.visible(true);
 
-          let attributes = Map.empty<Attribute.Name, Attribute>();
+        return Role.fromImplicit(node)
+          .flatMap((implicit) =>
+            Role.fromExplicit(node).map((explicit) => {
+              return { implicit, explicit };
+            })
+          )
+          .flatMap<Node>(({ implicit, explicit }) => {
+            const role = explicit.orElse(() =>
+              // If the element has no explicit role and instead inherits a
+              // presentational role then use that, otherwise fall back to the
+              // implicit role.
+              state.isPresentational
+                ? Option.of(Role.of("presentation"))
+                : implicit
+            );
 
-          // First pass: Look up implicit attributes on the role.
-          if (role.isSome()) {
-            for (const attribute of role.get().attributes) {
-              for (const value of role
-                .get()
-                .implicitAttributeValue(attribute)) {
-                attributes = attributes.set(
-                  attribute,
-                  Attribute.of(attribute, value)
-                );
+            if (role.some((role) => role.isPresentational())) {
+              return children(
+                state.presentational(
+                  // If the implicit role of the presentational element has
+                  // required children then any owned children must also be
+                  // presentational.
+                  implicit.some((role) => role.hasRequiredChildren())
+                )
+              ).map((children) => Container.of(node, children));
+            }
+
+            let attributes = Map.empty<Attribute.Name, Attribute>();
+
+            // First pass: Look up implicit attributes on the role.
+            if (role.isSome()) {
+              for (const attribute of role.get().attributes) {
+                for (const value of role
+                  .get()
+                  .implicitAttributeValue(attribute)) {
+                  attributes = attributes.set(
+                    attribute,
+                    Attribute.of(attribute, value)
+                  );
+                }
               }
             }
-          }
 
-          // Second pass: Look up implicit attributes on the feature mapping.
-          for (const namespace of node.namespace) {
-            for (const feature of Feature.from(namespace, node.name)) {
-              for (const attribute of feature.attributes(node)) {
-                attributes = attributes.set(attribute.name, attribute);
+            // Second pass: Look up implicit attributes on the feature mapping.
+            for (const namespace of node.namespace) {
+              for (const feature of Feature.from(namespace, node.name)) {
+                for (const attribute of feature.attributes(node)) {
+                  attributes = attributes.set(attribute.name, attribute);
+                }
               }
             }
-          }
 
-          // Third pass: Look up explicit `aria-*` attributes and set the
-          // ones that are either global or supported by the role.
-          for (const { name, value } of node.attributes) {
-            if (Attribute.isName(name)) {
-              const attribute = Attribute.of(name, value);
+            // Third pass: Look up explicit `aria-*` attributes and set the
+            // ones that are either global or supported by the role.
+            for (const { name, value } of node.attributes) {
+              if (Attribute.isName(name)) {
+                const attribute = Attribute.of(name, value);
 
-              if (
-                attribute.isGlobal() ||
-                role.some((role) => role.isAttributeSupported(attribute.name))
-              ) {
-                attributes = attributes.set(name, attribute);
+                if (
+                  attribute.isGlobal() ||
+                  role.some((role) => role.isAttributeSupported(attribute.name))
+                ) {
+                  attributes = attributes.set(name, attribute);
+                }
               }
             }
-          }
 
-          // If the element has neither attributes, a role, nor a tabindex, it
-          // is not itself interesting for accessibility purposes. It is
-          // therefore exposed as a container.
-          if (
-            attributes.isEmpty() &&
-            role.isNone() &&
-            node.tabIndex().isNone()
-          ) {
-            return children.map((children) => Container.of(node, children));
-          }
+            // If the element has neither attributes, a role, nor a tabindex, it
+            // is not itself interesting for accessibility purposes. It is
+            // therefore exposed as a container.
+            if (
+              attributes.isEmpty() &&
+              role.isNone() &&
+              node.tabIndex().isNone()
+            ) {
+              return children(state).map((children) =>
+                Container.of(node, children)
+              );
+            }
 
-          return children.flatMap((children) =>
-            Name.from(node, device).map((name) =>
-              Element.of(node, role, name, attributes.values(), children)
-            )
-          );
-        });
+            return children(state).flatMap((children) =>
+              Name.from(node, device).map((name) =>
+                Element.of(node, role, name, attributes.values(), children)
+              )
+            );
+          });
       }
 
       if (dom.Text.isText(node)) {
@@ -484,16 +554,7 @@ export namespace Node {
         // visibility of the parent element before deciding to expose the text
         // node. If the parent element isn't visible, the text node instead
         // becomes inert.
-        if (
-          node
-            .parent({ flattened: true })
-            .filter(dom.Element.isElement)
-            .some(
-              (parent) =>
-                Style.from(parent, device).computed("visibility").value
-                  .value !== "visible"
-            )
-        ) {
+        if (!state.isVisible) {
           return Branched.of(Inert.of(node));
         }
 
@@ -504,7 +565,7 @@ export namespace Node {
         node
           .children({ flattened: true })
           .reject((child) => claimed.has(child)),
-        (child) => build(child, device, claimed, owned)
+        (child) => fromNode(child, device, claimed, owned, state)
       );
 
       return children.map((children) => Container.of(node, children));
