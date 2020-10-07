@@ -9,7 +9,7 @@ const { equals } = Predicate;
 /**
  * @see https://html.spec.whatwg.org/#concept-fe-disabled
  */
-export const isDisabled: Predicate<Element> = (element) => {
+export function isDisabled(element: Element): boolean {
   switch (element.name) {
     // https://html.spec.whatwg.org/#attr-fe-disabled
     case "button":
@@ -53,4 +53,4 @@ export const isDisabled: Predicate<Element> = (element) => {
   }
 
   return false;
-};
+}
