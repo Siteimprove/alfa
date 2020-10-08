@@ -19,7 +19,11 @@
     "src/node/element/predicate/has-name.ts",
     "src/node/element/predicate/has-namespace.ts",
     "src/node/element/predicate/has-tab-index.ts",
+    "src/node/element/predicate/is-browsing-context-container.ts",
     "src/node/element/predicate/is-disabled.ts",
+    "src/node/element/predicate/is-draggable.ts",
+    "src/node/element/predicate/is-editing-host.ts",
+    "src/node/element/predicate/is-suggested-focusable.ts",
     "src/node/fragment.ts",
     "src/node/shadow.ts",
     "src/node/slot.ts",
@@ -42,7 +46,8 @@
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
     "test/h.spec.ts",
-    "test/node/attribute.spec.ts"
+    "test/node/attribute.spec.ts",
+    "test/node/element.spec.tsx"
   ],
   "references": [
     {
