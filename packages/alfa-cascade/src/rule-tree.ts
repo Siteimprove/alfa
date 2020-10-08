@@ -1,6 +1,9 @@
 import { Declaration, Rule } from "@siteimprove/alfa-dom";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Selector } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each
@@ -44,7 +47,7 @@ import { Selector } from "@siteimprove/alfa-selector";
  *
  * @see http://doc.servo.org/style/rule_tree/struct.RuleTree.html
  */
-export class RuleTree {
+export class RuleTree implements Serializable {
   public static empty(): RuleTree {
     return new RuleTree();
   }
@@ -77,10 +80,16 @@ export class RuleTree {
 
     return parent;
   }
+
+  public toJSON(): RuleTree.JSON {
+    return this._children.map((node) => node.toJSON());
+  }
 }
 
 export namespace RuleTree {
-  export class Node {
+  export type JSON = Array<Node.JSON>;
+
+  export class Node implements Serializable {
     public static of(
       rule: Rule,
       selector: Selector,
@@ -135,9 +144,9 @@ export namespace RuleTree {
       rule: Rule,
       selector: Selector,
       declarations: Iterable<Declaration>,
-      children: Array<RuleTree.Node>,
+      children: Array<Node>,
       parent: Option<Node>
-    ): RuleTree.Node {
+    ): Node {
       if (parent.some((parent) => parent._selector === selector)) {
         return parent.get();
       }
@@ -159,6 +168,27 @@ export namespace RuleTree {
       children.push(node);
 
       return node;
+    }
+
+    public toJSON(): Node.JSON {
+      return {
+        rule: this._rule.toJSON(),
+        selector: this._selector.toJSON(),
+        declarations: [...this._declarations].map((declaration) =>
+          declaration.toJSON()
+        ),
+        children: this._children.map((node) => node.toJSON()),
+      };
+    }
+  }
+
+  export namespace Node {
+    export interface JSON {
+      [key: string]: json.JSON;
+      rule: Rule.JSON;
+      selector: Selector.JSON;
+      declarations: Array<Declaration.JSON>;
+      children: Array<Node.JSON>;
     }
   }
 }

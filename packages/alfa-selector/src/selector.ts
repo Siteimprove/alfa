@@ -13,6 +13,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as dom from "@siteimprove/alfa-dom";
 import * as json from "@siteimprove/alfa-json";
 
+import { Context } from "./context";
+
 const {
   map,
   flatMap,
@@ -58,10 +60,7 @@ export namespace Selector {
     /**
      * @see https://drafts.csswg.org/selectors/#match
      */
-    public abstract matches(
-      element: Element,
-      scope?: Iterable<Element>
-    ): boolean;
+    public abstract matches(element: Element, context: Context): boolean;
 
     public abstract equals(value: unknown): value is this;
 
@@ -692,10 +691,7 @@ export namespace Selector {
         return this._name;
       }
 
-      public matches(
-        element: dom.Element,
-        scope?: Iterable<dom.Element>
-      ): boolean {
+      public matches(element: dom.Element, context: Context): boolean {
         return false;
       }
 
@@ -738,10 +734,7 @@ export namespace Selector {
         return this._name;
       }
 
-      public matches(
-        element: dom.Element,
-        scope?: Iterable<dom.Element>
-      ): boolean {
+      public matches(element: dom.Element, context: Context): boolean {
         return false;
       }
 
@@ -913,8 +906,8 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element): boolean {
-      return this._selector.matches(element);
+    public matches(element: Element, context: Context): boolean {
+      return this._selector.matches(element, context);
     }
 
     public equals(value: unknown): value is this {
@@ -970,8 +963,8 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element, scope?: Iterable<Element>): boolean {
-      return !this._selector.matches(element, scope);
+    public matches(element: Element, context: Context): boolean {
+      return !this._selector.matches(element, context);
     }
 
     public equals(value: unknown): value is this {
@@ -1060,6 +1053,10 @@ export namespace Selector {
     private constructor() {
       super("hover");
     }
+
+    public matches(element: Element, context: Context): boolean {
+      return context.isHovered(element);
+    }
   }
 
   /**
@@ -1072,6 +1069,10 @@ export namespace Selector {
 
     private constructor() {
       super("active");
+    }
+
+    public matches(element: Element, context: Context): boolean {
+      return context.isActive(element);
     }
   }
 
@@ -1086,6 +1087,10 @@ export namespace Selector {
     private constructor() {
       super("focus");
     }
+
+    public matches(element: Element, context: Context): boolean {
+      return context.isFocused(element);
+    }
   }
 
   /**
@@ -1099,6 +1104,19 @@ export namespace Selector {
     private constructor() {
       super("link");
     }
+
+    public matches(element: Element, context: Context): boolean {
+      switch (element.name) {
+        case "a":
+        case "area":
+        case "link":
+          return element
+            .attribute("href")
+            .some(() => !context.hasState(element, Context.State.Visited));
+      }
+
+      return false;
+    }
   }
 
   /**
@@ -1111,6 +1129,19 @@ export namespace Selector {
 
     private constructor() {
       super("visited");
+    }
+
+    public matches(element: Element, context: Context): boolean {
+      switch (element.name) {
+        case "a":
+        case "area":
+        case "link":
+          return element
+            .attribute("href")
+            .some(() => context.hasState(element, Context.State.Visited));
+      }
+
+      return false;
     }
   }
 
@@ -1500,8 +1531,11 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element): boolean {
-      return this._left.matches(element) && this._right.matches(element);
+    public matches(element: Element, context: Context): boolean {
+      return (
+        this._left.matches(element, context) &&
+        this._right.matches(element, context)
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -1631,10 +1665,10 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element): boolean {
+    public matches(element: Element, context: Context): boolean {
       // First, make sure that the right side of the selector, i.e. the part
       // that relates to the current element, matches.
-      if (this._right.matches(element)) {
+      if (this._right.matches(element, context)) {
         // If it does, move on to the heavy part of the work: Looking either up
         // the tree for a descendant match or looking to the side of the tree
         // for a sibling match.
@@ -1643,25 +1677,25 @@ export namespace Selector {
             return element
               .ancestors()
               .filter(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
 
           case Combinator.DirectDescendant:
             return element
               .parent()
               .filter(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
 
           case Combinator.Sibling:
             return element
               .preceding()
               .filter(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
 
           case Combinator.DirectSibling:
             return element
               .preceding()
               .find(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
         }
       }
 
@@ -1845,8 +1879,11 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element): boolean {
-      return this._left.matches(element) || this._right.matches(element);
+    public matches(element: Element, context: Context): boolean {
+      return (
+        this._left.matches(element, context) ||
+        this._right.matches(element, context)
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -1929,7 +1966,7 @@ export namespace Selector {
 
   export function matches(
     selector: string | Selector,
-    scope?: Iterable<Element>
+    context: Context = Context.empty()
   ): Predicate<Element> {
     let parsed: Selector;
 
@@ -1939,6 +1976,6 @@ export namespace Selector {
       parsed = selector;
     }
 
-    return (element) => parsed.matches(element, scope);
+    return (element) => parsed.matches(element, context);
   }
 }

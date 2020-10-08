@@ -1,8 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
+import { Context } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { RuleTree } from "./rule-tree";
@@ -12,59 +15,86 @@ import { UserAgent } from "./user-agent";
 /**
  * @see https://drafts.csswg.org/css-cascade/
  */
-export class Cascade {
-  public static of(entries: WeakMap<Element, RuleTree.Node>): Cascade {
-    return new Cascade(entries);
+export class Cascade implements Serializable {
+  private static readonly _cascades = Cache.empty<
+    Document | Shadow,
+    Cache<Device, Cascade>
+  >();
+
+  public static of(node: Document | Shadow, device: Device): Cascade {
+    return this._cascades
+      .get(node, Cache.empty)
+      .get(device, () => new Cascade(node, device));
   }
 
-  private readonly _entries: WeakMap<Element, RuleTree.Node>;
+  private readonly _root: Document | Shadow;
+  private readonly _device: Device;
+  private readonly _selectors: SelectorMap;
+  private readonly _rules = RuleTree.empty();
 
-  private constructor(entries: WeakMap<Element, RuleTree.Node>) {
-    this._entries = entries;
+  private readonly _entries = Cache.empty<
+    Element,
+    Cache<Context, Option<RuleTree.Node>>
+  >();
+
+  private constructor(root: Document | Shadow, device: Device) {
+    this._root = root;
+    this._device = device;
+    this._selectors = SelectorMap.from([UserAgent, ...root.style], device);
+
+    // Perform a baseline cascade with an empty context to benefit from ancestor
+    // filtering. As getting style information with an empty context will be the
+    // common case, we benefit a lot from pre-computing this style information
+    // with an ancestor filter applied.
+
+    const filter = AncestorFilter.empty();
+
+    const visit = (node: Node): void => {
+      if (Element.isElement(node)) {
+        this.get(node);
+        filter.add(node);
+      }
+
+      for (const child of node.children()) {
+        visit(child);
+      }
+
+      if (Element.isElement(node)) {
+        filter.remove(node);
+      }
+    };
+
+    visit(root);
   }
 
-  public get(element: Element): Option<RuleTree.Node> {
-    return Option.from(this._entries.get(element));
+  public get(
+    element: Element,
+    context: Context = Context.empty()
+  ): Option<RuleTree.Node> {
+    return this._entries
+      .get(element, Cache.empty)
+      .get(context, () =>
+        this._rules.add(sort(this._selectors.get(element, context)))
+      );
+  }
+
+  public toJSON(): Cascade.JSON {
+    return {
+      root: this._root.toJSON(),
+      device: this._device.toJSON(),
+      selectors: this._selectors.toJSON(),
+      rules: this._rules.toJSON(),
+    };
   }
 }
 
 export namespace Cascade {
-  const cache = Cache.empty<Device, Cache<Document | Shadow, Cascade>>();
-
-  export function from(node: Document | Shadow, device: Device): Cascade {
-    return cache.get(device, Cache.empty).get(node.freeze(), () => {
-      const filter = AncestorFilter.empty();
-      const ruleTree = RuleTree.empty();
-      const selectorMap = SelectorMap.of([UserAgent, ...node.style], device);
-
-      return Cascade.of(
-        Iterable.reduce(
-          Iterable.flatMap(node.children(), visit),
-          (entries, [element, entry]) => entries.set(element, entry),
-          new WeakMap()
-        )
-      );
-
-      function* visit(node: Node): Iterable<[Element, RuleTree.Node]> {
-        if (Element.isElement(node)) {
-          const rules = selectorMap.get(node, filter);
-
-          const entry = ruleTree.add(sort(rules));
-
-          if (entry.isSome()) {
-            yield [node, entry.get()];
-          }
-
-          filter.add(node);
-
-          for (const child of node.children()) {
-            yield* visit(child);
-          }
-
-          filter.remove(node);
-        }
-      }
-    });
+  export interface JSON {
+    [key: string]: json.JSON;
+    root: Document.JSON | Shadow.JSON;
+    device: Device.JSON;
+    selectors: SelectorMap.JSON;
+    rules: RuleTree.JSON;
   }
 }
 

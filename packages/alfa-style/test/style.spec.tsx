@@ -3,13 +3,16 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Context } from "@siteimprove/alfa-selector";
 
 import { Style } from "../src/style";
+
+const device = Device.standard();
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
   const element = <div style={{ color: "red" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -36,7 +39,7 @@ test("#cascaded() correctly handles duplicate properties", (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -61,7 +64,7 @@ test("#cascaded() returns the most specific property value", (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -78,7 +81,7 @@ test("#cascaded() correctly handles inline styles overriding the sheet", (t) => 
 
   h.document([element], [h.sheet([h.rule.style("div", { color: "red" })])]);
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -99,7 +102,7 @@ test(`#cascaded() correctly handles an important declaration overriding inline
     [h.sheet([h.rule.style("div", { color: "red !important" })])]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -120,7 +123,7 @@ test(`#cascaded() correctly handles important inline styles overriding an
     [h.sheet([h.rule.style("div", { color: "red !important" })])]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -148,7 +151,7 @@ test(`#cascaded() correctly handles a shorthand declaration overriding a
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -175,7 +178,7 @@ test(`#cascaded() correctly handles a longhand declaration overriding a
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -201,7 +204,7 @@ test(`#cascaded() expands a var() function`, (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -226,7 +229,7 @@ test(`#cascaded() expands a var() function with a fallback`, (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -255,7 +258,7 @@ test(`#cascaded() expands a var() function with an inherited value`, (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -286,7 +289,7 @@ test(`#cascaded() expands a var() function with an overridden value`, (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -315,7 +318,7 @@ test(`#cascaded() expands a var() function with a value that contains another
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -343,7 +346,7 @@ test(`#cascaded() expands multiple var() functions in the same declaration`, (t)
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -378,7 +381,7 @@ test(`#cascaded() expands several var() function references to the same variable
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -412,7 +415,7 @@ test(`#cascaded() expands a var() function with a fallback with a var() function
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -439,7 +442,7 @@ test(`#cascaded() returns "unset" when a var() function variable isn't defined`,
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -464,7 +467,7 @@ test(`#cascaded() returns "unset" when a var() function fallback is empty`, (t) 
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -492,7 +495,7 @@ test(`#cascaded() returns "unset" when declaration with a var() function is
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -519,7 +522,7 @@ test(`#cascaded() returns "unset" when a var() function is invalid`, (t) => {
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -547,7 +550,7 @@ test(`#cascaded() returns "unset" when var() functions contain cyclic references
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -575,7 +578,7 @@ test(`#cascaded() returns "unset" when a custom property referenced by a var()
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -631,7 +634,7 @@ test(`#cascaded() returns "unset" when confronted with a billion laughs`, (t) =>
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -668,7 +671,7 @@ test(`#cascaded() correctly resolves var() function references within context
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -700,7 +703,7 @@ test(`#cascaded() gives precedence to !important custom properties used in var()
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -732,7 +735,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -765,7 +768,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
     ]
   );
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
     value: {
@@ -773,5 +776,35 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
       value: "unset",
     },
     source: h.declaration("overflow-x", "var(--hidden, foo)").toJSON(),
+  });
+});
+
+test(`#cascaded() resolves a contextual :hover style for an element`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          color: "red",
+        }),
+
+        h.rule.style("div:hover", {
+          color: "blue",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, device, Context.hover(element));
+
+  t.deepEqual(style.cascaded("color").get().toJSON(), {
+    value: {
+      type: "color",
+      format: "named",
+      color: "blue",
+    },
+    source: h.declaration("color", "blue").toJSON(),
   });
 });

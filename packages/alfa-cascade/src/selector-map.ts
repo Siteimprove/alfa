@@ -9,11 +9,14 @@ import {
   ImportRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Selector } from "@siteimprove/alfa-selector";
+import { Selector, Context } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { UserAgent } from "./user-agent";
 import { AncestorFilter } from "./ancestor-filter";
@@ -73,23 +76,144 @@ export enum Origin {
  * @see http://doc.servo.org/style/selector_map/struct.SelectorMap.html
  * @internal
  */
-export class SelectorMap {
-  public static of(sheets: Iterable<Sheet>, device: Device): SelectorMap {
-    return new SelectorMap(sheets, device);
+export class SelectorMap implements Serializable {
+  public static of(
+    ids: SelectorMap.Bucket,
+    classes: SelectorMap.Bucket,
+    types: SelectorMap.Bucket,
+    other: Array<SelectorMap.Node>
+  ): SelectorMap {
+    return new SelectorMap(ids, classes, types, other);
   }
 
-  private readonly _ids = Bucket.empty();
-  private readonly _classes = Bucket.empty();
-  private readonly _types = Bucket.empty();
-  private readonly _other: Array<SelectorMap.Node> = [];
+  private readonly _ids: SelectorMap.Bucket;
+  private readonly _classes: SelectorMap.Bucket;
+  private readonly _types: SelectorMap.Bucket;
+  private readonly _other: Array<SelectorMap.Node>;
 
-  private constructor(sheets: Iterable<Sheet>, device: Device) {
+  private constructor(
+    ids: SelectorMap.Bucket,
+    classes: SelectorMap.Bucket,
+    types: SelectorMap.Bucket,
+    other: Array<SelectorMap.Node>
+  ) {
+    this._ids = ids;
+    this._classes = classes;
+    this._types = types;
+    this._other = other;
+  }
+
+  public get(
+    element: Element,
+    context: Context = Context.empty(),
+    filter: AncestorFilter = AncestorFilter.empty()
+  ): Array<SelectorMap.Node> {
+    const nodes: Array<SelectorMap.Node> = [];
+
+    const collect = (candidates: Iterable<SelectorMap.Node>) => {
+      for (const node of candidates) {
+        if (
+          Iterable.every(
+            node.selector,
+            and(isDescendantSelector, (selector) =>
+              canReject(selector.left, filter)
+            )
+          )
+        ) {
+          continue;
+        }
+
+        if (node.selector.matches(element, context)) {
+          nodes.push(node);
+        }
+      }
+    };
+
+    for (const id of element.id) {
+      collect(this._ids.get(id));
+    }
+
+    collect(this._types.get(element.name));
+
+    for (const className of element.classes) {
+      collect(this._classes.get(className));
+    }
+
+    collect(this._other);
+
+    return nodes;
+  }
+
+  public toJSON(): SelectorMap.JSON {
+    return {
+      ids: this._ids.toJSON(),
+      classes: this._classes.toJSON(),
+      types: this._types.toJSON(),
+      other: this._other.map((node) => node.toJSON()),
+    };
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace SelectorMap {
+  export interface JSON {
+    [key: string]: json.JSON;
+    ids: Bucket.JSON;
+    classes: Bucket.JSON;
+    types: Bucket.JSON;
+    other: Array<Node.JSON>;
+  }
+
+  export function from(sheets: Iterable<Sheet>, device: Device): SelectorMap {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
     // otherwise no longer be available once rules from different buckets are
     // combined.
     let order = 0;
+
+    const ids = Bucket.empty();
+    const classes = Bucket.empty();
+    const types = Bucket.empty();
+    const other: Array<SelectorMap.Node> = [];
+
+    const add = (
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      origin: Origin,
+      order: number
+    ): void => {
+      const keySelector = getKeySelector(selector);
+
+      const node = SelectorMap.Node.of(
+        rule,
+        selector,
+        declarations,
+        origin,
+        order
+      );
+
+      for (const selector of keySelector) {
+        if (selector instanceof Selector.Id) {
+          ids.add(selector.name, node);
+        }
+
+        if (selector instanceof Selector.Class) {
+          classes.add(selector.name, node);
+        }
+
+        if (selector instanceof Selector.Type) {
+          types.add(selector.name, node);
+        }
+
+        return;
+      }
+
+      other.push(node);
+    };
 
     const visit = (rule: Rule) => {
       if (StyleRule.isStyle(rule)) {
@@ -107,7 +231,7 @@ export class SelectorMap {
           order++;
 
           for (const part of selector) {
-            this._add(rule, part, rule.style, origin, order);
+            add(rule, part, rule.style, origin, order);
           }
         }
       }
@@ -166,91 +290,11 @@ export class SelectorMap {
         visit(rule);
       }
     }
+
+    return SelectorMap.of(ids, classes, types, other);
   }
 
-  public get(
-    element: Element,
-    filter?: AncestorFilter
-  ): Array<SelectorMap.Node> {
-    const nodes: Array<SelectorMap.Node> = [];
-
-    const collect = (candidates: Iterable<SelectorMap.Node>) => {
-      for (const node of candidates) {
-        if (
-          filter !== undefined &&
-          Iterable.every(
-            node.selector,
-            and(isDescendantSelector, (selector) =>
-              canReject(selector.left, filter)
-            )
-          )
-        ) {
-          continue;
-        }
-
-        if (node.selector.matches(element)) {
-          nodes.push(node);
-        }
-      }
-    };
-
-    for (const id of element.id) {
-      collect(this._ids.get(id));
-    }
-
-    collect(this._types.get(element.name));
-
-    for (const className of element.classes) {
-      collect(this._classes.get(className));
-    }
-
-    collect(this._other);
-
-    return nodes;
-  }
-
-  private _add(
-    rule: Rule,
-    selector: Selector,
-    declarations: Iterable<Declaration>,
-    origin: Origin,
-    order: number
-  ): void {
-    const keySelector = getKeySelector(selector);
-
-    const node = SelectorMap.Node.of(
-      rule,
-      selector,
-      declarations,
-      origin,
-      order
-    );
-
-    for (const selector of keySelector) {
-      if (selector instanceof Selector.Id) {
-        this._ids.add(selector.name, node);
-      }
-
-      if (selector instanceof Selector.Class) {
-        this._classes.add(selector.name, node);
-      }
-
-      if (selector instanceof Selector.Type) {
-        this._types.add(selector.name, node);
-      }
-
-      return;
-    }
-
-    this._other.push(node);
-  }
-}
-
-/**
- * @internal
- */
-export namespace SelectorMap {
-  export class Node {
+  export class Node implements Serializable {
     public static of(
       rule: Rule,
       selector: Selector,
@@ -306,38 +350,74 @@ export namespace SelectorMap {
     public get specificity(): number {
       return this._specificity;
     }
-  }
-}
 
-class Bucket {
-  public static empty(): Bucket {
-    return new Bucket(new Map());
-  }
-
-  private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
-
-  private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
-    this._nodes = nodes;
-  }
-
-  public add(key: string, node: SelectorMap.Node): void {
-    const nodes = this._nodes.get(key);
-
-    if (nodes === undefined) {
-      this._nodes.set(key, [node]);
-    } else {
-      nodes.push(node);
+    public toJSON(): Node.JSON {
+      return {
+        rule: this._rule.toJSON(),
+        selector: this._selector.toJSON(),
+        declarations: [...this._declarations].map((declaration) =>
+          declaration.toJSON()
+        ),
+        origin: this._origin,
+        order: this._order,
+        specificity: this._specificity,
+      };
     }
   }
 
-  public get(key: string): Array<SelectorMap.Node> {
-    const nodes = this._nodes.get(key);
+  export namespace Node {
+    export interface JSON {
+      [key: string]: json.JSON;
+      rule: Rule.JSON;
+      selector: Selector.JSON;
+      declarations: Array<Declaration.JSON>;
+      origin: Origin;
+      order: number;
+      specificity: number;
+    }
+  }
 
-    if (nodes === undefined) {
-      return [];
+  export class Bucket implements Serializable {
+    public static empty(): Bucket {
+      return new Bucket(new Map());
     }
 
-    return nodes;
+    private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
+
+    private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
+      this._nodes = nodes;
+    }
+
+    public add(key: string, node: SelectorMap.Node): void {
+      const nodes = this._nodes.get(key);
+
+      if (nodes === undefined) {
+        this._nodes.set(key, [node]);
+      } else {
+        nodes.push(node);
+      }
+    }
+
+    public get(key: string): Array<SelectorMap.Node> {
+      const nodes = this._nodes.get(key);
+
+      if (nodes === undefined) {
+        return [];
+      }
+
+      return nodes;
+    }
+
+    public toJSON(): Bucket.JSON {
+      return [...this._nodes].map(([key, nodes]) => [
+        key,
+        nodes.map((node) => node.toJSON()),
+      ]);
+    }
+  }
+
+  export namespace Bucket {
+    export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
   }
 }
 
