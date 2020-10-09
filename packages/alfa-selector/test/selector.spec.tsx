@@ -2,6 +2,9 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Selector } from "../src/selector";
+import { Context } from "../src/context";
+
+const context = Context.empty();
 
 test(".parse() parses a type selector", (t) => {
   t.deepEqual(Selector.parse("div").get().toJSON(), {
@@ -818,10 +821,10 @@ test("#matches() checks if an element matches an :nth-child selector", (t) => {
     {d}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
-  t.equal(selector.matches(c), true);
-  t.equal(selector.matches(d), false);
+  t.equal(selector.matches(a, context), true);
+  t.equal(selector.matches(b, context), false);
+  t.equal(selector.matches(c, context), true);
+  t.equal(selector.matches(d, context), false);
 });
 
 test("#matches() checks if an element matches an :nth-last-child selector", (t) => {
@@ -840,10 +843,10 @@ test("#matches() checks if an element matches an :nth-last-child selector", (t) 
     {d}
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
-  t.equal(selector.matches(c), false);
-  t.equal(selector.matches(d), true);
+  t.equal(selector.matches(a, context), false);
+  t.equal(selector.matches(b, context), true);
+  t.equal(selector.matches(c, context), false);
+  t.equal(selector.matches(d, context), true);
 });
 
 test("#matches() checks if an element matches a :first-child selector", (t) => {
@@ -858,8 +861,8 @@ test("#matches() checks if an element matches a :first-child selector", (t) => {
     {b}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(a, context), true);
+  t.equal(selector.matches(b, context), false);
 });
 
 test("#matches() checks if an element matches a :last-child selector", (t) => {
@@ -874,8 +877,8 @@ test("#matches() checks if an element matches a :last-child selector", (t) => {
     Hello
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
+  t.equal(selector.matches(a, context), false);
+  t.equal(selector.matches(b, context), true);
 });
 
 test("#matches() checks if an element matches an :only-child selector", (t) => {
@@ -895,8 +898,8 @@ test("#matches() checks if an element matches an :only-child selector", (t) => {
     Hello
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(a, context), true);
+  t.equal(selector.matches(b, context), false);
 });
 
 test("#matches() checks if an element matches an :nth-of-type selector", (t) => {
@@ -917,10 +920,10 @@ test("#matches() checks if an element matches an :nth-of-type selector", (t) => 
     {d}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
-  t.equal(selector.matches(c), true);
-  t.equal(selector.matches(d), false);
+  t.equal(selector.matches(a, context), true);
+  t.equal(selector.matches(b, context), false);
+  t.equal(selector.matches(c, context), true);
+  t.equal(selector.matches(d, context), false);
 });
 
 test("#matches() checks if an element matches an :nth-last-of-type selector", (t) => {
@@ -941,10 +944,10 @@ test("#matches() checks if an element matches an :nth-last-of-type selector", (t
     <span />
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
-  t.equal(selector.matches(c), false);
-  t.equal(selector.matches(d), true);
+  t.equal(selector.matches(a, context), false);
+  t.equal(selector.matches(b, context), true);
+  t.equal(selector.matches(c, context), false);
+  t.equal(selector.matches(d, context), true);
 });
 
 test("#matches() checks if an element matches a :first-of-type selector", (t) => {
@@ -960,8 +963,8 @@ test("#matches() checks if an element matches a :first-of-type selector", (t) =>
     {b}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(a, context), true);
+  t.equal(selector.matches(b, context), false);
 });
 
 test("#matches() checks if an element matches a :last-of-type selector", (t) => {
@@ -977,8 +980,8 @@ test("#matches() checks if an element matches a :last-of-type selector", (t) => 
     <div />
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
+  t.equal(selector.matches(a, context), false);
+  t.equal(selector.matches(b, context), true);
 });
 
 test("#matches() checks if an element matches a :only-of-type selector", (t) => {
@@ -1000,6 +1003,94 @@ test("#matches() checks if an element matches a :only-of-type selector", (t) => 
     <div />
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(a, context), true);
+  t.equal(selector.matches(b, context), false);
+});
+
+test("#matches() checks if an element matches a :hover selector", (t) => {
+  const selector = Selector.parse(":hover").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.hover(p)), true);
+});
+
+test("#matches() checks if an element matches an :active selector", (t) => {
+  const selector = Selector.parse(":active").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.active(p)), true);
+});
+
+test("#matches() checks if an element matches a :focus selector", (t) => {
+  const selector = Selector.parse(":focus").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.focus(p)), true);
+});
+
+test("#matches() checks if an element matches a :focus-within selector", (t) => {
+  const selector = Selector.parse(":focus-within").get();
+
+  const button = <button />;
+  const p = <p>{button}</p>;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.focus(p)), true);
+  t.equal(selector.matches(p, context.focus(button)), true);
+});
+
+test("#matches() checks if an element matches a :link selector", (t) => {
+  const selector = Selector.parse(":link").get();
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    t.equal(selector.matches(element, context), true, element.toString());
+
+    // Only non-visited links match :link
+    t.equal(
+      selector.matches(element, context.visit(element)),
+      false,
+      element.toString()
+    );
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element, context), false, element.toString());
+  }
+});
+
+test("#matches() checks if an element matches a :visited selector", (t) => {
+  const selector = Selector.parse(":visited").get();
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    t.equal(
+      selector.matches(element, context.visit(element)),
+      true,
+      element.toString()
+    );
+
+    // Only visited links match :link
+    t.equal(selector.matches(element, context), false, element.toString());
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element, context), false, element.toString());
+  }
 });

@@ -1,7 +1,12 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/selector.ts", "test/selector.spec.tsx"],
+  "files": [
+    "src/context.ts",
+    "src/index.ts",
+    "src/selector.ts",
+    "test/selector.spec.tsx"
+  ],
   "references": [
     {
       "path": "../alfa-css"
@@ -17,6 +22,9 @@
     },
     {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-map"
     },
     {
       "path": "../alfa-option"
