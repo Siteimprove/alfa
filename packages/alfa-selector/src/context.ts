@@ -30,8 +30,12 @@ export class Context {
     return new Context(this._state.set(element, state));
   }
 
+  public addState(element: Element, state: Context.State): Context {
+    return this.setState(element, this.getState(element) | state);
+  }
+
   public hover(element: Element): Context {
-    return this.setState(element, this.getState(element) | Context.State.Hover);
+    return this.addState(element, Context.State.Hover);
   }
 
   public static hover(element: Element): Context {
@@ -43,10 +47,7 @@ export class Context {
   }
 
   public active(element: Element): Context {
-    return this.setState(
-      element,
-      this.getState(element) | Context.State.Active
-    );
+    return this.addState(element, Context.State.Active);
   }
 
   public static active(element: Element): Context {
@@ -58,7 +59,7 @@ export class Context {
   }
 
   public focus(element: Element): Context {
-    return this.setState(element, this.getState(element) | Context.State.Focus);
+    return this.addState(element, Context.State.Focus);
   }
 
   public static focus(element: Element): Context {
@@ -70,10 +71,7 @@ export class Context {
   }
 
   public visit(element: Element): Context {
-    return this.setState(
-      element,
-      this.getState(element) | Context.State.Visited
-    );
+    return this.addState(element, Context.State.Visited);
   }
 
   public static visit(element: Element): Context {

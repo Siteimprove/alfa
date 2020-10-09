@@ -1110,13 +1110,10 @@ export namespace Selector {
     }
 
     public matches(element: Element, context: Context): boolean {
-      return (
-        context.isFocused(element) ||
-        element
-          .descendants({ flattened: true })
-          .filter(isElement)
-          .some((element) => context.isFocused(element))
-      );
+      return element
+        .inclusiveDescendants({ flattened: true })
+        .filter(isElement)
+        .some((element) => context.isFocused(element));
     }
   }
 
