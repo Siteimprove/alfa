@@ -9,6 +9,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -265,38 +266,45 @@ export namespace Style {
     properties: Array<[string, Value.JSON]>;
   }
 
-  const cache = Cache.empty<Device, Cache<Element, Style>>();
+  const cache = Cache.empty<Device, Cache<Element, Cache<Context, Style>>>();
 
-  export function from(element: Element, device: Device): Style {
-    return cache.get(device, Cache.empty).get(element.freeze(), () => {
-      const declarations: Array<Declaration> = element.style
-        .map((block) => [...block.declarations].reverse())
-        .getOr([]);
+  export function from(
+    element: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): Style {
+    return cache
+      .get(device, Cache.empty)
+      .get(element.freeze(), Cache.empty)
+      .get(context, () => {
+        const declarations: Array<Declaration> = element.style
+          .map((block) => [...block.declarations].reverse())
+          .getOr([]);
 
-      const root = element.root();
+        const root = element.root();
 
-      if (Document.isDocument(root) || Shadow.isShadow(root)) {
-        const cascade = Cascade.from(root, device);
+        if (Document.isDocument(root) || Shadow.isShadow(root)) {
+          const cascade = Cascade.of(root, device);
 
-        let next = cascade.get(element);
+          let next = cascade.get(element, context);
 
-        while (next.isSome()) {
-          const node = next.get();
+          while (next.isSome()) {
+            const node = next.get();
 
-          declarations.push(...[...node.declarations].reverse());
-          next = node.parent;
+            declarations.push(...[...node.declarations].reverse());
+            next = node.parent;
+          }
         }
-      }
 
-      return Style.of(
-        declarations,
-        device,
-        element
-          .parent({ flattened: true })
-          .filter(Element.isElement)
-          .map((parent) => from(parent, device))
-      );
-    });
+        return Style.of(
+          declarations,
+          device,
+          element
+            .parent({ flattened: true })
+            .filter(Element.isElement)
+            .map((parent) => from(parent, device, context))
+        );
+      });
   }
 
   export type Declared<N extends Name> = Property.Value.Declared<N>;

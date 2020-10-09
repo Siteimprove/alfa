@@ -80,6 +80,9 @@
       "path": "../alfa-record"
     },
     {
+      "path": "../alfa-selector"
+    },
+    {
       "path": "../alfa-set"
     },
     {
