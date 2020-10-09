@@ -785,6 +785,10 @@ export namespace Selector {
             return Result.of([input, Active.of()]);
           case "focus":
             return Result.of([input, Focus.of()]);
+          case "focus-within":
+            return Result.of([input, FocusWithin.of()]);
+          case "focus-visible":
+            return Result.of([input, FocusVisible.of()]);
           case "link":
             return Result.of([input, Link.of()]);
           case "visited":
@@ -1090,6 +1094,49 @@ export namespace Selector {
 
     public matches(element: Element, context: Context): boolean {
       return context.isFocused(element);
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#focus-within-pseudo
+   */
+  export class FocusWithin extends Pseudo.Class {
+    public static of(): FocusWithin {
+      return new FocusWithin();
+    }
+
+    private constructor() {
+      super("focus-within");
+    }
+
+    public matches(element: Element, context: Context): boolean {
+      return (
+        context.isFocused(element) ||
+        element
+          .descendants({ flattened: true })
+          .filter(isElement)
+          .some((element) => context.isFocused(element))
+      );
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#focus-visible-pseudo
+   */
+  export class FocusVisible extends Pseudo.Class {
+    public static of(): FocusVisible {
+      return new FocusVisible();
+    }
+
+    private constructor() {
+      super("focus-visible");
+    }
+
+    public matches(): boolean {
+      // For the purposes of accessibility testing, we currently assume that
+      // focus related styling can safely be "hidden" behind the :focus-visible
+      // pseudo-class and it will therefore always match.
+      return true;
     }
   }
 

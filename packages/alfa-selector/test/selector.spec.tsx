@@ -1034,6 +1034,17 @@ test("#matches() checks if an element matches a :focus selector", (t) => {
   t.equal(selector.matches(p, context.focus(p)), true);
 });
 
+test("#matches() checks if an element matches a :focus-within selector", (t) => {
+  const selector = Selector.parse(":focus-within").get();
+
+  const button = <button />;
+  const p = <p>{button}</p>;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.focus(p)), true);
+  t.equal(selector.matches(p, context.focus(button)), true);
+});
+
 test("#matches() checks if an element matches a :link selector", (t) => {
   const selector = Selector.parse(":link").get();
 
