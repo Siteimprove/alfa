@@ -779,7 +779,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
   });
 });
 
-test(`#cascaded() resolves a contextual :hover style for an element`, (t) => {
+test(`#cascaded() resolves :hover style for an element`, (t) => {
   const element = <div />;
 
   h.document(
@@ -797,7 +797,7 @@ test(`#cascaded() resolves a contextual :hover style for an element`, (t) => {
     ]
   );
 
-  const style = Style.from(element, device, Context.hover(element));
+  let style = Style.from(element, device, Context.hover(element));
 
   t.deepEqual(style.cascaded("color").get().toJSON(), {
     value: {
@@ -806,5 +806,57 @@ test(`#cascaded() resolves a contextual :hover style for an element`, (t) => {
       color: "blue",
     },
     source: h.declaration("color", "blue").toJSON(),
+  });
+
+  style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("color").get().toJSON(), {
+    value: {
+      type: "color",
+      format: "named",
+      color: "red",
+    },
+    source: h.declaration("color", "red").toJSON(),
+  });
+});
+
+test(`#cascaded() resolves :focus style for an element`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          color: "red",
+        }),
+
+        h.rule.style("div:focus", {
+          color: "blue",
+        }),
+      ]),
+    ]
+  );
+
+  let style = Style.from(element, device, Context.focus(element));
+
+  t.deepEqual(style.cascaded("color").get().toJSON(), {
+    value: {
+      type: "color",
+      format: "named",
+      color: "blue",
+    },
+    source: h.declaration("color", "blue").toJSON(),
+  });
+
+  style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("color").get().toJSON(), {
+    value: {
+      type: "color",
+      format: "named",
+      color: "red",
+    },
+    source: h.declaration("color", "red").toJSON(),
   });
 });
