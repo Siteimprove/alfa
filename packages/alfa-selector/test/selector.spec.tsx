@@ -1006,3 +1006,80 @@ test("#matches() checks if an element matches a :only-of-type selector", (t) => 
   t.equal(selector.matches(a, context), true);
   t.equal(selector.matches(b, context), false);
 });
+
+test("#matches() checks if an element matches a :hover selector", (t) => {
+  const selector = Selector.parse(":hover").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.hover(p)), true);
+});
+
+test("#matches() checks if an element matches an :active selector", (t) => {
+  const selector = Selector.parse(":active").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.active(p)), true);
+});
+
+test("#matches() checks if an element matches a :focus selector", (t) => {
+  const selector = Selector.parse(":focus").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p, context), false);
+  t.equal(selector.matches(p, context.focus(p)), true);
+});
+
+test("#matches() checks if an element matches a :link selector", (t) => {
+  const selector = Selector.parse(":link").get();
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    t.equal(selector.matches(element, context), true, element.toString());
+
+    // Only non-visited links match :link
+    t.equal(
+      selector.matches(element, context.visit(element)),
+      false,
+      element.toString()
+    );
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element, context), false, element.toString());
+  }
+});
+
+test("#matches() checks if an element matches a :visited selector", (t) => {
+  const selector = Selector.parse(":visited").get();
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    t.equal(
+      selector.matches(element, context.visit(element)),
+      true,
+      element.toString()
+    );
+
+    // Only visited links match :link
+    t.equal(selector.matches(element, context), false, element.toString());
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element, context), false, element.toString());
+  }
+});
