@@ -134,7 +134,7 @@ function embeddedResource(iframe: Element, base?: string | URL): string {
 }
 
 /**
- * If all items have the same value, return it; otherwise return None.
+ * If iterable is not empty and all items have the same value, return it; otherwise return None.
  */
 function commonValue<T>(iterable: Iterable<T>): Option<T> {
   const firstItem = first(iterable);
