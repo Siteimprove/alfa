@@ -2,14 +2,12 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -20,7 +18,8 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { every, filter, map } = Iterable;
+const { equals } = Equatable;
+const { every, filter, first } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -61,15 +60,14 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       },
 
       expectations(target) {
-        const sources = Set.from(map(target, embeddedResource));
+        const source = commonValue(List.from(target).map(embeddedResource));
 
         return {
           1: expectation(
-            sources.size === 1 &&
+            source.isSome() &&
               // always ask question if we can't find source, presumably the content doc is fed another way into the iframes
-              sources.every((source) =>
-                every(source.values(), (src) => src !== "")
-              ),
+              source.get() !== "invalid:" &&
+              source.get() !== "nothing:",
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
@@ -107,28 +105,36 @@ export namespace Outcomes {
   );
 }
 
-type Source = "srcdoc" | "src" | "invalid" | "nothing";
-
 /**
  * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
  */
-function embeddedResource(iframe: Element): Map<Source, string> {
+function embeddedResource(iframe: Element): string {
   // srcdoc takes precedence.
   if (iframe.attribute("srcdoc").isSome()) {
-    return Map.of(["srcdoc", iframe.attribute("srcdoc").get().value]);
+    return "srcdoc:" + iframe.attribute("srcdoc").get().value;
   }
 
   // Otherwise, grab the src attribute.
-  function getUrl(value: string): Map<Source, string> {
+  function getUrl(value: string): string {
     try {
-      return Map.of(["src", new URL(value).href]);
+      return "src:" + new URL(value).href;
     } catch {
-      return Map.of(["invalid", ""]);
+      return "invalid:";
     }
   }
 
   return iframe
     .attribute("src")
     .map((attribute) => getUrl(attribute.value))
-    .getOrElse(() => Map.of(["nothing", ""]));
+    .getOrElse(() => "nothing:");
+}
+
+function commonValue<T>(iterable: Iterable<T>): Option<T> {
+  const firstItem = first(iterable);
+
+  return firstItem.every((item) =>
+    every(iterable, (value) => equals(value, item))
+  )
+    ? firstItem
+    : None;
 }
