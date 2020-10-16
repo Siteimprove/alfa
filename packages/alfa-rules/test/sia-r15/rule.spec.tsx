@@ -106,7 +106,7 @@ test("evaluate() passes when two iframes embed the same resource up to trailing 
   ]);
 });
 
-test("evaluate() can't with invalid URLs", async (t) => {
+test("evaluate() can't tell with invalid URLs", async (t) => {
   const iframe1 = <iframe title="Foo" src="" />;
   const iframe2 = <iframe aria-label="Foo" src="" />;
 
