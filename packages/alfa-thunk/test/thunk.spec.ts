@@ -15,3 +15,17 @@ test(".map() does not evalaute the thunk value", (t) => {
 
   Thunk.map(thunk, (n) => n * 2);
 });
+
+test(".flatMap() applies a function to a thunk value and flattens the result", (t) => {
+  const thunk: Thunk<number> = () => 1;
+
+  t.equal(Thunk.flatMap(thunk, (n) => () => n * 2)(), 2);
+});
+
+test(".flatMap() does not evalaute the thunk value", (t) => {
+  const thunk: Thunk<number> = () => {
+    throw new Error("Should not be called");
+  };
+
+  Thunk.flatMap(thunk, () => thunk);
+});

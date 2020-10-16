@@ -1,4 +1,6 @@
 import { Decoder, Encoder } from "@siteimprove/alfa-encoding";
+import { URL } from "@siteimprove/alfa-url";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
@@ -10,7 +12,7 @@ import { Headers } from "./headers";
  */
 export class Response implements Body, json.Serializable, earl.Serializable {
   public static of(
-    url: string,
+    url: URL,
     status: number,
     headers: Headers = Headers.empty(),
     body: ArrayBuffer = new ArrayBuffer(0)
@@ -18,17 +20,19 @@ export class Response implements Body, json.Serializable, earl.Serializable {
     return new Response(url, status, headers, body);
   }
 
+  private static _empty = Response.of(URL.parse("about:blank").get(), 200);
+
   public static empty(): Response {
-    return Response.of("about:blank", 200);
+    return this._empty;
   }
 
-  private readonly _url: string;
+  private readonly _url: URL;
   private readonly _status: number;
   private readonly _headers: Headers;
   private readonly _body: ArrayBuffer;
 
   private constructor(
-    url: string,
+    url: URL,
     status: number,
     headers: Headers,
     body: ArrayBuffer
@@ -42,7 +46,7 @@ export class Response implements Body, json.Serializable, earl.Serializable {
   /**
    * @see https://fetch.spec.whatwg.org/#dom-response-url
    */
-  public get url(): string {
+  public get url(): URL {
     return this._url;
   }
 
@@ -69,7 +73,7 @@ export class Response implements Body, json.Serializable, earl.Serializable {
 
   public toJSON(): Response.JSON {
     return {
-      url: this._url,
+      url: this._url.toString(),
       status: this._status,
       headers: this._headers.toJSON(),
       body: Decoder.decode(new Uint8Array(this._body)),
@@ -127,7 +131,7 @@ export namespace Response {
 
   export function from(json: JSON): Response {
     return Response.of(
-      json.url,
+      URL.parse(json.url).get(),
       json.status,
       Headers.from(json.headers),
       Encoder.encode(json.body)

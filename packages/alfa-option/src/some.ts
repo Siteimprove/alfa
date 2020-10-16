@@ -115,6 +115,7 @@ export class Some<T> implements Option<T> {
   }
 
   public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, true);
     Hashable.hash(hash, this._value);
   }
 

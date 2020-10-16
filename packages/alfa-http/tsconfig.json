@@ -38,6 +38,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-url"
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
@@ -175,7 +176,9 @@ export const Nil: Nil = new (class Nil {
     return value instanceof Nil;
   }
 
-  public hash(): void {}
+  public hash(hash: Hash): void {
+    Hash.writeUint32(hash, 0);
+  }
 
   public *iterator(): Iterator<never> {}
 

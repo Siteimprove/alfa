@@ -1,8 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Err } from "./err";
@@ -89,6 +91,11 @@ export class Ok<T> implements Result<T, never> {
 
   public equals(value: unknown): value is this {
     return value instanceof Ok && Equatable.equals(value._value, this._value);
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, true);
+    Hashable.hash(hash, this._value);
   }
 
   public *[Symbol.iterator]() {

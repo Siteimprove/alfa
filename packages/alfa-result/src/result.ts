@@ -1,12 +1,14 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import { Err } from "./err";
 import { Ok } from "./ok";
 
@@ -16,6 +18,7 @@ export interface Result<T, E = T>
     Foldable<T>,
     Iterable<T>,
     Equatable,
+    Hashable,
     Serializable {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
@@ -39,6 +42,10 @@ export interface Result<T, E = T>
 
 export namespace Result {
   export type JSON = Ok.JSON | Err.JSON;
+
+  export function isResult<T, E>(value: unknown): value is Result<T, E> {
+    return Ok.isOk(value) || Err.isErr(value);
+  }
 
   export function of<T, E>(value: T): Result<T, E> {
     return Ok.of(value);
@@ -67,9 +74,5 @@ export namespace Result {
     }
 
     return Ok.of(value);
-  }
-
-  export function isResult<T, E>(value: unknown): value is Result<T, E> {
-    return Ok.isOk(value) || Err.isErr(value);
   }
 }

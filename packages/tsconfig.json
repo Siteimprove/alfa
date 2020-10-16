@@ -84,6 +84,7 @@
     { "path": "alfa-trampoline" },
     { "path": "alfa-trilean" },
     { "path": "alfa-unexpected" },
+    { "path": "alfa-url" },
     { "path": "alfa-vue" },
     { "path": "alfa-web" },
     { "path": "alfa-webdriver" },
