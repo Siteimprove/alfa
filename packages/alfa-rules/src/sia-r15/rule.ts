@@ -25,7 +25,7 @@ const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
-  evaluate({ device, document }) {
+  evaluate({ device, document, response }) {
     return {
       applicability() {
         const iframes = document
@@ -61,7 +61,11 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       },
 
       expectations(target) {
-        const source = commonValue(List.from(target).map(embeddedResource));
+        const sources = List.from(target).map((iframe) =>
+          embeddedResource(iframe, response.url)
+        );
+        console.log(sources);
+        const source = commonValue(sources);
 
         return {
           1: expectation(
@@ -109,7 +113,7 @@ export namespace Outcomes {
 /**
  * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
  */
-function embeddedResource(iframe: Element): string {
+function embeddedResource(iframe: Element, base?: string | URL): string {
   return (
     iframe
       // srcdoc takes precedence.
@@ -120,7 +124,7 @@ function embeddedResource(iframe: Element): string {
           // Otherwise, grab the src attribute.
           .attribute("src")
           .map((attribute) =>
-            URL.parse(attribute.value)
+            URL.parse(attribute.value, base)
               .map((url) => "src:" + url.toString())
               .getOr("invalid:")
           )
