@@ -61,11 +61,11 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       },
 
       expectations(target) {
-        const sources = List.from(target).map((iframe) =>
-          embeddedResource(iframe, response.url)
+        const source = commonValue(
+          List.from(target).map((iframe) =>
+            embeddedResource(iframe, response.url)
+          )
         );
-        console.log(sources);
-        const source = commonValue(sources);
 
         return {
           1: expectation(
