@@ -239,6 +239,9 @@
       "path": "../alfa-trilean"
     },
     {
+      "path": "../alfa-url"
+    },
+    {
       "path": "../alfa-web"
     }
   ]

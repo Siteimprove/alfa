@@ -8,6 +8,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -109,26 +110,28 @@ export namespace Outcomes {
  * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
  */
 function embeddedResource(iframe: Element): string {
-  // srcdoc takes precedence.
-  if (iframe.attribute("srcdoc").isSome()) {
-    return "srcdoc:" + iframe.attribute("srcdoc").get().value;
-  }
-
-  // Otherwise, grab the src attribute.
-  function getUrl(value: string): string {
-    try {
-      return "src:" + new URL(value).href;
-    } catch {
-      return "invalid:";
-    }
-  }
-
-  return iframe
-    .attribute("src")
-    .map((attribute) => getUrl(attribute.value))
-    .getOrElse(() => "nothing:");
+  return (
+    iframe
+      // srcdoc takes precedence.
+      .attribute("srcdoc")
+      .map((srcdoc) => "srcdoc: " + srcdoc.value)
+      .getOrElse(() =>
+        iframe
+          // Otherwise, grab the src attribute.
+          .attribute("src")
+          .map((attribute) =>
+            URL.parse(attribute.value)
+              .map((url) => "src:" + url.toString())
+              .getOr("invalid:")
+          )
+          .getOr("nothing:")
+      )
+  );
 }
 
+/**
+ * If all items have the same value, return it; otherwise return None.
+ */
 function commonValue<T>(iterable: Iterable<T>): Option<T> {
   const firstItem = first(iterable);
 
