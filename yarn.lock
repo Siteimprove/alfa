@@ -959,6 +959,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-affine@workspace:packages/alfa-affine"
   dependencies:
+    "@siteimprove/alfa-equatable": ^0.5.0
+    "@siteimprove/alfa-json": ^0.5.0
     "@siteimprove/alfa-math": ^0.5.0
     "@siteimprove/alfa-option": ^0.5.0
     "@siteimprove/alfa-test": ^0.5.0
@@ -1981,6 +1983,7 @@ __metadata:
     "@siteimprove/alfa-collection": ^0.5.0
     "@siteimprove/alfa-equatable": ^0.5.0
     "@siteimprove/alfa-hash": ^0.5.0
+    "@siteimprove/alfa-iterable": ^0.5.0
     "@siteimprove/alfa-json": ^0.5.0
     "@siteimprove/alfa-lazy": ^0.5.0
     "@siteimprove/alfa-map": ^0.5.0
