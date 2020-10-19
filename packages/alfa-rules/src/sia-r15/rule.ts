@@ -7,7 +7,7 @@ import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -71,8 +71,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           1: expectation(
             source.isSome() &&
               // always ask question if we can't find source, presumably the content doc is fed another way into the iframes
-              source.get() !== "invalid:" &&
-              source.get() !== "nothing:",
+              source.get().isOk(),
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
@@ -113,12 +112,15 @@ export namespace Outcomes {
 /**
  * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
  */
-function embeddedResource(iframe: Element, base?: string | URL): string {
+function embeddedResource(
+  iframe: Element,
+  base?: string | URL
+): Result<string, string> {
   return (
     iframe
       // srcdoc takes precedence.
       .attribute("srcdoc")
-      .map((srcdoc) => "srcdoc: " + srcdoc.value)
+      .map((srcdoc) => Ok.of("srcdoc: " + srcdoc.value))
       .getOrElse(() =>
         iframe
           // Otherwise, grab the src attribute.
@@ -126,9 +128,9 @@ function embeddedResource(iframe: Element, base?: string | URL): string {
           .map((attribute) =>
             URL.parse(attribute.value, base)
               .map((url) => "src:" + url.toString())
-              .getOr("invalid:")
+              .mapErr((error) => `Error when parsing URL: ${error}`)
           )
-          .getOr("nothing:")
+          .getOr(Err.of("No source found"))
       )
   );
 }
