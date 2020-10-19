@@ -25,12 +25,12 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
 import { Browser } from "webdriverio";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 /**
  * @see https://w3c.github.io/webdriver/#dfn-web-elements
@@ -200,7 +200,7 @@ export namespace WebElement {
         return {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
-          condition: rule.media.mediaText,
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
           href: rule.href,
         };
       }

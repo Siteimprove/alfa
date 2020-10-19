@@ -1,20 +1,17 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasInputType } from "../common/predicate/has-input-type";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { isElement, hasNamespace } = Element;
-const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { isElement, hasInputType, hasNamespace } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r12.html",
@@ -23,15 +20,13 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                not(hasInputType(equals("image"))),
-                hasNamespace(Namespace.HTML),
-                hasRole("button"),
-                not(isIgnored(device))
-              )
+              not(hasInputType("image")),
+              hasNamespace(Namespace.HTML),
+              hasRole("button"),
+              not(isIgnored(device))
             )
           );
       },
@@ -39,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device, not(isEmpty))(target),
+            hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
             () => Outcomes.HasNoName
           ),

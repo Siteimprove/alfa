@@ -18,27 +18,23 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     const headers = document
       .descendants()
+      .filter(isElement)
       .filter(
         and(
-          isElement,
-          and(
-            hasNamespace(Namespace.HTML),
-            hasName("table"),
-            isPerceivable(device)
-          )
+          hasNamespace(Namespace.HTML),
+          hasName("table"),
+          isPerceivable(device)
         )
       )
       .reduce((headers, table) => {
         const cells = table
           .descendants()
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("td", "th"),
-                hasAttribute("headers")
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("td", "th"),
+              hasAttribute("headers")
             )
           );
 
@@ -61,14 +57,12 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         const cells = table
           .descendants()
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("td", "th"),
-                hasId(equals(...ids))
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("td", "th"),
+              hasId(equals(...ids))
             )
           );
 

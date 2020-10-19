@@ -6,6 +6,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
@@ -15,7 +16,8 @@ import * as json from "@siteimprove/alfa-json";
 import { Scope } from "./scope";
 import { parseSpan } from "./helpers";
 
-const { and, equals, not } = Predicate;
+const { equals, not } = Predicate;
+const { and } = Refinement;
 const { isElement, hasName, hasNamespace, hasId } = Element;
 
 /**

@@ -1,6 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Option, None } from "@siteimprove/alfa-option";
 import { Lazy } from "@siteimprove/alfa-lazy";
+
 import { Sequence } from "../src/sequence";
 
 const array = (length: number) => new Array(length).fill(0).map((_, i) => i);
@@ -124,10 +126,24 @@ test("#find() returns none when no value of a sequence satisfies a predicate", (
   t(seq.find((n) => n > 4).isNone());
 });
 
+test("#collect() applies an option returning function to a sequence and discards all nones", (t) => {
+  t.deepEqual(
+    [...seq.collect((n) => (n % 2 === 0 ? Option.of(n.toString()) : None))],
+    ["2", "4"]
+  );
+});
+
 test("#count() counts the number of values of a sequence that satisfy a predicate", (t) => {
   t.equal(
     seq.count((n) => n % 2 === 0),
     2
+  );
+});
+
+test("#distinct() removes duplicate values from a sequence", (t) => {
+  t.deepEqual(
+    [...Sequence.from([1, 1, 2, 3, 3, 3, 4, 4]).distinct()],
+    [1, 2, 3, 4]
   );
 });
 

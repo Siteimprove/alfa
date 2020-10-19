@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,7 +14,7 @@ import { isVisible } from "../common/predicate/is-visible";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 const { isElement, hasNamespace } = Element;
-const { and } = Predicate;
+const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r84.html",
@@ -22,14 +23,12 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                isVisible(device),
-                isPossiblyScrollable(device)
-              )
+              hasNamespace(Namespace.HTML),
+              isVisible(device),
+              isPossiblyScrollable(device)
             )
           );
       },

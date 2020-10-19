@@ -38,6 +38,9 @@
       "path": "../alfa-time"
     },
     {
+      "path": "../alfa-url"
+    },
+    {
       "path": "../alfa-web"
     }
   ]

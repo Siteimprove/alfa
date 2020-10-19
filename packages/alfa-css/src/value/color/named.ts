@@ -1,17 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Number } from "../number";
 
 const { map } = Parser;
 
-export class Named<C extends Named.Color = Named.Color>
-  implements Equatable, Hashable, Serializable {
+export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }
@@ -19,6 +16,7 @@ export class Named<C extends Named.Color = Named.Color>
   private readonly _color: C;
 
   private constructor(color: C) {
+    super();
     this._color = color;
   }
 
@@ -78,8 +76,7 @@ export class Named<C extends Named.Color = Named.Color>
 }
 
 export namespace Named {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "color";
     format: "named";
     color: string;

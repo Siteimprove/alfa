@@ -2,7 +2,7 @@
 
 import { Assert } from "@siteimprove/alfa-assert";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
 declare global {
@@ -15,7 +15,7 @@ declare global {
 
 export namespace Jasmine {
   export function createPlugin<T>(
-    identify: Predicate<unknown, T>,
+    identify: Refinement<unknown, T>,
     transform: Mapper<T, Page>
   ): void {
     beforeEach(() => {

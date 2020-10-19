@@ -1,13 +1,11 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Length } from "../length";
 import { Percentage } from "../percentage";
-import { Transform } from "../transform";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
@@ -15,7 +13,7 @@ export class Translate<
   X extends Length | Percentage = Length | Percentage,
   Y extends Length | Percentage = Length | Percentage,
   Z extends Length = Length
-> implements Equatable, Serializable {
+> extends Value<"transform"> {
   public static of<
     X extends Length | Percentage,
     Y extends Length | Percentage,
@@ -29,12 +27,17 @@ export class Translate<
   private readonly _z: Z;
 
   private constructor(x: X, y: Y, z: Z) {
+    super();
     this._x = x;
     this._y = y;
     this._z = z;
   }
 
-  public get type(): "translate" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "translate" {
     return "translate";
   }
 
@@ -59,9 +62,16 @@ export class Translate<
     );
   }
 
+  public hash(hash: Hash): void {
+    this._x.hash(hash);
+    this._y.hash(hash);
+    this._z.hash(hash);
+  }
+
   public toJSON(): Translate.JSON {
     return {
-      type: "translate",
+      type: "transform",
+      kind: "translate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
       z: this._z.toJSON(),
@@ -80,9 +90,9 @@ export class Translate<
 }
 
 export namespace Translate {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "translate";
+  export interface JSON extends Value.JSON {
+    type: "transform";
+    kind: "translate";
     x: Length.JSON | Percentage.JSON;
     y: Length.JSON | Percentage.JSON;
     z: Length.JSON;

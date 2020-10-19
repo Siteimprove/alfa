@@ -7,6 +7,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -15,7 +16,7 @@ import { Empty, Node } from "./node";
 const { not } = Predicate;
 
 export class Map<K, V> implements Collection.Keyed<K, V> {
-  public static of<K, V>(...entries: Array<[K, V]>): Map<K, V> {
+  public static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V> {
     return entries.reduce(
       (map, [key, value]) => map.set(key, value),
       Map.empty<K, V>()
@@ -67,20 +68,34 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends V>(predicate: Predicate<V, U, [K]>): Map<K, U> {
+  public filter<U extends V>(refinement: Refinement<V, U, [K]>): Map<K, U>;
+
+  public filter(predicate: Predicate<V, [K]>): Map<K, V>;
+
+  public filter(predicate: Predicate<V, [K]>): Map<K, V> {
     return this.reduce(
       (map, value, key) => (predicate(value, key) ? map.set(key, value) : map),
-      Map.empty<K, U>()
+      Map.empty()
     );
   }
 
-  public reject(predicate: Predicate<V, V, [K]>): Map<K, V> {
+  public reject<U extends V>(
+    refinement: Refinement<V, U, [K]>
+  ): Map<K, Exclude<V, U>>;
+
+  public reject(predicate: Predicate<V, [K]>): Map<K, V>;
+
+  public reject(predicate: Predicate<V, [K]>): Map<K, V> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends V>(predicate: Predicate<V, U, [K]>): Option<U> {
+  public find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+
+  public find(predicate: Predicate<V, [K]>): Option<V>;
+
+  public find(predicate: Predicate<V, [K]>): Option<V> {
     return Iterable.find(this, ([key, value]) => predicate(value, key)).map(
-      ([, value]) => value as U
+      ([, value]) => value
     );
   }
 
@@ -88,16 +103,52 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.includes(this.values(), value);
   }
 
-  public some(predicate: Predicate<V, V, [K]>): boolean {
+  public collect<U>(mapper: Mapper<V, Option<U>, [K]>): Map<K, U> {
+    return Map.from(
+      Iterable.collect(this, ([key, value]) =>
+        mapper(value, key).map((value) => [key, value])
+      )
+    );
+  }
+
+  public collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U> {
+    return Iterable.collectFirst(this, ([key, value]) => mapper(value, key));
+  }
+
+  public some(predicate: Predicate<V, [K]>): boolean {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
   }
 
-  public every(predicate: Predicate<V, V, [K]>): boolean {
+  public every(predicate: Predicate<V, [K]>): boolean {
     return Iterable.every(this, ([key, value]) => predicate(value, key));
   }
 
-  public count(predicate: Predicate<V, V, [K]>): number {
+  public count(predicate: Predicate<V, [K]>): number {
     return Iterable.count(this, ([key, value]) => predicate(value, key));
+  }
+
+  /**
+   * @remarks
+   * As the order of maps is undefined, it is also undefined which keys are
+   * deleted when duplicate values are encountered.
+   */
+  public distinct(): Map<K, V> {
+    let seen = Map.empty<V, V>();
+
+    // We optimize for the case where there are more distinct values than there
+    // are duplicate values by starting with the current map and removing
+    // duplicates as we find them.
+    let map: Map<K, V> = this;
+
+    for (const [key, value] of map) {
+      if (seen.has(value)) {
+        map = map.delete(key);
+      } else {
+        seen = seen.set(value, value);
+      }
+    }
+
+    return map;
   }
 
   public get(key: K): Option<V> {
@@ -133,8 +184,8 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return new Map(root, this._size - 1);
   }
 
-  public concat(iterable: Iterable<[K, V]>): Map<K, V> {
-    return Iterable.reduce<[K, V], Map<K, V>>(
+  public concat(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Iterable.reduce<readonly [K, V], Map<K, V>>(
       iterable,
       (map, [key, value]) => map.set(key, value),
       this
@@ -205,7 +256,7 @@ export namespace Map {
     return value instanceof Map;
   }
 
-  export function from<K, V>(iterable: Iterable<[K, V]>): Map<K, V> {
+  export function from<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V> {
     return isMap<K, V>(iterable)
       ? iterable
       : Iterable.reduce(

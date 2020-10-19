@@ -2,7 +2,6 @@ import {
   Angle,
   Keyword,
   Length,
-  List,
   Matrix,
   Percentage,
   Perspective,
@@ -19,7 +18,9 @@ import * as css from "@siteimprove/alfa-css";
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either } = Parser;
+import { List } from "./value/list";
+
+const { map, either } = Parser;
 
 export type Transform = Transform.Specified | Transform.Computed;
 
@@ -51,7 +52,10 @@ export const Transform: Property<
   Transform.Computed
 > = Property.of(
   Keyword.of("none"),
-  either(Keyword.parse("none"), css.Transform.parseList),
+  either(
+    Keyword.parse("none"),
+    map(css.Transform.parseList, (transforms) => List.of(transforms))
+  ),
   (style) =>
     style.specified("transform").map((transform) => {
       switch (transform.type) {
@@ -61,7 +65,7 @@ export const Transform: Property<
         case "list":
           return List.of([
             ...Iterable.map(transform, (transform) => {
-              switch (transform.type) {
+              switch (transform.kind) {
                 case "matrix":
                   return transform;
 

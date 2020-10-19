@@ -1,18 +1,19 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Unit } from "../unit";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
-  implements Equatable, Serializable {
+export class Skew<
+  X extends Angle = Angle,
+  Y extends Angle = Angle
+> extends Value<"transform"> {
   public static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y> {
     return new Skew(x, y);
   }
@@ -21,11 +22,16 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
   private readonly _y: Y;
 
   private constructor(x: X, y: Y) {
+    super();
     this._x = x;
     this._y = y;
   }
 
-  public get type(): "skew" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "skew" {
     return "skew";
   }
 
@@ -45,9 +51,15 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
     );
   }
 
+  public hash(hash: Hash): void {
+    this._x.hash(hash);
+    this._y.hash(hash);
+  }
+
   public toJSON(): Skew.JSON {
     return {
-      type: "skew",
+      type: "transform",
+      kind: "skew",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
     };
@@ -67,9 +79,9 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
 }
 
 export namespace Skew {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "skew";
+  export interface JSON extends Value.JSON {
+    type: "transform";
+    kind: "skew";
     x: Angle.JSON;
     y: Angle.JSON;
   }

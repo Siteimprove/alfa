@@ -26,6 +26,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-json"
+    },
+    {
       "path": "../alfa-media"
     },
     {
@@ -33,6 +36,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-selector"

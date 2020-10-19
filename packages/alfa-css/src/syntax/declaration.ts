@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -10,18 +10,18 @@ import * as json from "@siteimprove/alfa-json";
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { or, not } = Predicate;
+const { not } = Predicate;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#declaration
  */
-export class Declaration implements Equatable, Serializable {
+export class Declaration implements Iterable<Token>, Equatable, Serializable {
   public static of(
     name: string,
-    value: Array<Token>,
+    value: Iterable<Token>,
     important = false
   ): Declaration {
-    return new Declaration(name, value, important);
+    return new Declaration(name, Array.from(value), important);
   }
 
   private readonly _name: string;
@@ -44,6 +44,21 @@ export class Declaration implements Equatable, Serializable {
 
   public get important(): boolean {
     return this._important;
+  }
+
+  public *[Symbol.iterator](): Iterator<Token> {
+    // <name>:
+    yield Token.Ident.of(this._name);
+    yield Token.Colon.of();
+
+    // <value>
+    yield* this._value;
+
+    if (this._important) {
+      // !important
+      yield Token.Delim.of(0x21);
+      yield Token.Ident.of("important");
+    }
   }
 
   public equals(value: unknown): value is this {
@@ -83,11 +98,10 @@ export namespace Declaration {
    * @see https://drafts.csswg.org/css-syntax/#consume-a-declaration
    */
   export const consume: Parser<Slice<Token>, Declaration, string> = (input) => {
-    const name = input.get(0).get().toString();
+    const name = input.get(0).filter(Token.isIdent).get().value;
+    const value: Array<Token> = [];
 
     input = input.slice(1);
-
-    const value: Array<Token> = [];
 
     while (input.get(0).some(Token.isWhitespace)) {
       input = input.slice(1);
@@ -103,7 +117,7 @@ export namespace Declaration {
       input = input.slice(1);
     }
 
-    while (input.length !== 0) {
+    while (input.length > 0) {
       const [remainder, component] = Component.consume(input).get();
 
       input = remainder;
@@ -135,7 +149,7 @@ export namespace Declaration {
       }
     }
 
-    return Ok.of([input, Declaration.of(name, value, important)] as const);
+    return Result.of([input, Declaration.of(name, value, important)]);
   };
 
   /**
@@ -148,7 +162,7 @@ export namespace Declaration {
 
     let next = input.get(0);
 
-    if (next.every(not(Token.isIdent))) {
+    if (next.none(Token.isIdent)) {
       return Err.of("Expected an ident");
     }
 
@@ -165,30 +179,26 @@ export namespace Declaration {
   > = (input) => {
     const declarations: Array<Declaration> = [];
 
-    while (true) {
-      const next = input.get(0);
-
-      if (next.isNone()) {
-        return Ok.of([input, declarations] as const);
-      }
+    while (input.length > 0) {
+      const next = input.get(0).get();
 
       input = input.slice(1);
 
-      if (next.some(or(Token.isWhitespace, Token.isSemicolon))) {
+      if (Token.isWhitespace(next) || Token.isSemicolon(next)) {
         continue;
       }
 
-      if (next.some(Token.isIdent)) {
-        const tokens: Array<Token> = [next.get()];
+      if (Token.isIdent(next)) {
+        const value: Array<Token> = [next];
 
         while (input.get(0).some(not(Token.isSemicolon))) {
           const [remainder, component] = Component.consume(input).get();
 
           input = remainder;
-          tokens.push(...component);
+          value.push(...component);
         }
 
-        const result = consume(Slice.of(tokens));
+        const result = consume(Slice.of(value));
 
         if (result.isOk()) {
           declarations.push(result.get()[1]);
@@ -201,6 +211,8 @@ export namespace Declaration {
         }
       }
     }
+
+    return Result.of([input, declarations]);
   };
 
   /**

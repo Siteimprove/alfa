@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -15,15 +14,15 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { isElement, hasNamespace, hasId } = Element;
-const { map, flatMap, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { isElement, hasName, hasNamespace, hasId } = Element;
+const { map, flatMap } = Iterable;
+const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r81.html",
@@ -32,19 +31,13 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
       applicability() {
         const elements = document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole(
-                  or(Role.hasName("link"), (role) =>
-                    role.inheritsFrom(Role.hasName("link"))
-                  )
-                ),
-                not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole((role) => role.is("link")),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
             )
           );
 
@@ -56,10 +49,12 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           elements
             .reduce((groups, element) => {
               for (const [node] of aria.Node.from(element, device)) {
+                const name = node.name.map((name) => name.value);
+
                 groups = groups.set(
-                  node.name(),
+                  name,
                   groups
-                    .get(node.name())
+                    .get(name)
                     .getOrElse(() => List.empty<Element>())
                     .append(element)
                 );
@@ -128,21 +123,17 @@ export namespace Outcomes {
 function linkContext(element: Element): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
-  for (const listitem of element
-    .ancestors({ flattened: true })
-    .filter(and(isElement, hasRole("listitem")))) {
+  const ancestors = element.ancestors({ flattened: true }).filter(isElement);
+
+  for (const listitem of ancestors.filter(hasRole("listitem"))) {
     context = context.add(listitem);
   }
 
-  for (const paragraph of element
-    .ancestors({ flattened: true })
-    .find(and(isElement, Element.hasName("p")))) {
+  for (const paragraph of ancestors.find(hasName("p"))) {
     context = context.add(paragraph);
   }
 
-  for (const cell of element
-    .ancestors({ flattened: true })
-    .find(and(isElement, hasRole("cell", "gridcell")))) {
+  for (const cell of ancestors.find(hasRole("cell", "gridcell"))) {
     context = context.add(cell);
   }
 
@@ -150,7 +141,8 @@ function linkContext(element: Element): Set<dom.Node> {
     for (const reference of element
       .root()
       .descendants()
-      .filter(and(isElement, hasId(equals(...describedby.tokens()))))) {
+      .filter(isElement)
+      .filter(hasId(equals(...describedby.tokens())))) {
       context = context.add(reference);
     }
   }

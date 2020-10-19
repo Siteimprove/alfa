@@ -2,8 +2,9 @@
 
 import { Assert } from "@siteimprove/alfa-assert";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
+
 import * as unexpected from "unexpected";
 
 declare module "unexpected" {
@@ -17,7 +18,7 @@ declare module "unexpected" {
 
 export namespace Unexpected {
   export function createPlugin<T>(
-    identify: Predicate<unknown, T>,
+    identify: Refinement<unknown, T>,
     transform: Mapper<T, Page>
   ): unexpected.PluginDefinition {
     return {

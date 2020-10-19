@@ -1,16 +1,32 @@
-import {Role} from "@siteimprove/alfa-aria";
-import {Element} from "@siteimprove/alfa-dom";
+import { Role } from "@siteimprove/alfa-aria";
+import { Element } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 /**
- * @see https://github.com/Siteimprove/sanshikan/blob/master/glossary/marked-as-decorative.md
- * Check if an element is marked as decorative by looking at its role but
- * without conflict resolution. If the result is "none" or "presentation", then
- * the element is marked as decorative.
+ * Check if an element is marked as decorative.
  */
-export function isMarkedDecorative(element: Element): boolean {
-  return (
-    Role.from(element, { allowPresentational: true })
-      // Element is marked as decorative if at least one browser thinks so.
-      .some((r) => r.some(Role.hasName("none", "presentation")))
+export const isMarkedDecorative: Predicate<Element> = (element) => {
+  const role = element.attribute("role").flatMap((attribute) =>
+    attribute
+      .tokens()
+      .filter(Role.isName)
+      .map(Role.of)
+      .reject((role) => role.isAbstract())
+      .first()
   );
-}
+
+  if (role.some((role) => role.isPresentational())) {
+    return true;
+  }
+
+  switch (element.name) {
+    case "img":
+      return (
+        role.isNone() &&
+        element.attribute("alt").some((attribute) => attribute.value === "")
+      );
+
+    default:
+      return false;
+  }
+};

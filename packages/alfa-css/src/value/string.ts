@@ -1,18 +1,16 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
-import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
+import { Value } from "../value";
 
 const { map } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#strings
  */
-export class String implements Equatable, Hashable, Serializable {
+export class String extends Value<"string"> {
   public static of(value: string): String {
     return new String(value);
   }
@@ -20,6 +18,7 @@ export class String implements Equatable, Hashable, Serializable {
   private readonly _value: string;
 
   private constructor(value: string) {
+    super();
     this._value = value;
   }
 
@@ -52,8 +51,7 @@ export class String implements Equatable, Hashable, Serializable {
 }
 
 export namespace String {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "string";
     value: string;
   }

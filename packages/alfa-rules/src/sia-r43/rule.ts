@@ -1,18 +1,16 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasExplicitRole } from "../common/predicate/has-role";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
+import { hasExplicitRole } from "../common/predicate/has-explicit-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
-const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -22,14 +20,12 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.SVG),
-                hasExplicitRole("img", "graphics-document", "graphics-symbol"),
-                not(isIgnored(device))
-              )
+              hasNamespace(Namespace.SVG),
+              hasExplicitRole("img", "graphics-document", "graphics-symbol"),
+              not(isIgnored(device))
             )
           );
       },
@@ -37,7 +33,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAccessibleName(device, not(isEmpty))(target),
+            hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName(target.name),
             () => Outcomes.HasNoName(target.name)
           ),

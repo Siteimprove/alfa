@@ -18,16 +18,14 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                or(
-                  and(hasNamespace(Namespace.HTML), hasName("img")),
-                  and(hasNamespace(Namespace.SVG), hasName("svg"))
-                ),
-                isMarkedDecorative
-              )
+              or(
+                and(hasNamespace(Namespace.HTML), hasName("img")),
+                and(hasNamespace(Namespace.SVG), hasName("svg"))
+              ),
+              isMarkedDecorative
             )
           );
       },
@@ -35,8 +33,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            Node.from(target, device).every((accNode) =>
-              accNode.role().some(not(Role.hasName("none", "presentation")))
+            Node.from(target, device).every((node) =>
+              node.role.some(not((role) => role.isPresentational()))
             ),
             () => Outcomes.IsExposed,
             () => Outcomes.IsNotExposed

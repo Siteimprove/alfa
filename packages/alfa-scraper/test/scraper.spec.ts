@@ -11,7 +11,7 @@ test("#scrape() scrapes a page with a hash fragment", async (t) =>
 
     const { response } = result.get();
 
-    t.equal(response.url, url);
+    t.equal(response.url.toString(), url);
   }));
 
 test("#scrape() scrapes a page with an immediate meta refresh", async (t) =>
@@ -23,7 +23,7 @@ test("#scrape() scrapes a page with an immediate meta refresh", async (t) =>
 
     const { response } = result.get();
 
-    t.equal(response.url, "https://example.com/");
+    t.equal(response.url.toString(), "https://example.com/");
   }));
 
 test("#scrape() scrapes a page with a delayed meta refresh", async (t) =>
@@ -35,7 +35,7 @@ test("#scrape() scrapes a page with a delayed meta refresh", async (t) =>
 
     const { response } = result.get();
 
-    t.equal(response.url, url);
+    t.equal(response.url.toString(), url);
   }));
 
 test("#scrape() scrapes a page with an immediate location change", async (t) =>
@@ -47,7 +47,7 @@ test("#scrape() scrapes a page with an immediate location change", async (t) =>
 
     const { response } = result.get();
 
-    t.equal(response.url, "https://example.com/");
+    t.equal(response.url.toString(), "https://example.com/");
   }));
 
 test("#scrape() scrapes a page with a delayed location change", async (t) =>
@@ -59,5 +59,5 @@ test("#scrape() scrapes a page with a delayed location change", async (t) =>
 
     const { response } = result.get();
 
-    t.equal(response.url, url);
+    t.equal(response.url.toString(), url);
   }));

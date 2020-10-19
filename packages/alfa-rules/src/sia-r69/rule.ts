@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -12,6 +11,7 @@ import {
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
@@ -19,7 +19,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasCategory } from "../common/predicate/has-category";
 import { hasRole } from "../common/predicate/has-role";
 import { hasValue } from "../common/predicate/has-value";
 import { isPerceivable } from "../common/predicate/is-perceivable";
@@ -28,9 +27,12 @@ import { Question } from "../common/question";
 
 import { Contrast } from "./diagnostic/contrast";
 
-const { reduce, some, flatMap, map, concat } = Iterable;
-const { and, or, not, equals, test } = Predicate;
+const { flatMap, map } = Iterable;
+const { or, not, equals } = Predicate;
+const { and, test } = Refinement;
 const { min, max, round } = Math;
+const { isElement } = Element;
+const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r69.html",
@@ -43,10 +45,10 @@ export default Rule.Atomic.of<Page, Text, Question>({
           if (
             test(
               and(
-                Element.isElement,
+                isElement,
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
-                  hasRole(hasCategory(equals(Role.Category.Widget))),
+                  hasRole((role) => role.isWidget()),
                   and(hasRole("group"), isSemanticallyDisabled)
                 )
               ),
@@ -56,7 +58,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
             return;
           }
 
-          if (test(and(Text.isText, isPerceivable(device)), node)) {
+          if (test(and(isText, isPerceivable(device)), node)) {
             yield node;
           }
 

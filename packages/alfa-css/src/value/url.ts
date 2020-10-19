@@ -1,18 +1,15 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../syntax/token";
+import { Value } from "../value";
 
 const { map, right, either, left, delimited, option } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#urls
  */
-export class URL implements Equatable, Hashable, Serializable {
+export class URL extends Value<"url"> {
   public static of(url: string): URL {
     return new URL(url);
   }
@@ -20,6 +17,7 @@ export class URL implements Equatable, Hashable, Serializable {
   private readonly _url: string;
 
   private constructor(url: string) {
+    super();
     this._url = url;
   }
 
@@ -52,8 +50,7 @@ export class URL implements Equatable, Hashable, Serializable {
 }
 
 export namespace URL {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "url";
     url: string;
   }

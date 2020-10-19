@@ -1,18 +1,16 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Unit } from "../unit";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Rotate<A extends Angle = Angle>
-  implements Equatable, Serializable {
+export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
   public static of<A extends Angle>(
     x: Number,
     y: Number,
@@ -28,13 +26,18 @@ export class Rotate<A extends Angle = Angle>
   private readonly _angle: A;
 
   private constructor(x: Number, y: Number, z: Number, angle: A) {
+    super();
     this._x = x;
     this._y = y;
     this._z = z;
     this._angle = angle;
   }
 
-  public get type(): "rotate" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "rotate" {
     return "rotate";
   }
 
@@ -64,9 +67,17 @@ export class Rotate<A extends Angle = Angle>
     );
   }
 
+  public hash(hash: Hash): void {
+    this._x.hash(hash);
+    this._y.hash(hash);
+    this._z.hash(hash);
+    this._angle.hash(hash);
+  }
+
   public toJSON(): Rotate.JSON {
     return {
-      type: "rotate",
+      type: "transform",
+      kind: "rotate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
       z: this._z.toJSON(),
@@ -84,9 +95,9 @@ export class Rotate<A extends Angle = Angle>
 }
 
 export namespace Rotate {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "rotate";
+  export interface JSON extends Value.JSON {
+    type: "transform";
+    kind: "rotate";
     x: Number.JSON;
     y: Number.JSON;
     z: Number.JSON;

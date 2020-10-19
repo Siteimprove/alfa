@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [],
+  "references": [{ "path": "crawling" }, { "path": "scraping" }]
+}

@@ -13,10 +13,7 @@
       "path": "../alfa-mapper"
     },
     {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-sequence"

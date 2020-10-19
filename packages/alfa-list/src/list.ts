@@ -7,6 +7,8 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -80,15 +82,29 @@ export class List<T> implements Collection.Indexed<T> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U, [number]>): List<U> {
+  public filter<U extends T>(refinement: Refinement<T, U, [number]>): List<U>;
+
+  public filter(predicate: Predicate<T, [number]>): List<T>;
+
+  public filter(predicate: Predicate<T, [number]>): List<T> {
     return List.from(Iterable.filter(this, predicate));
   }
 
-  public reject(predicate: Predicate<T, T, [number]>): List<T> {
+  public reject<U extends T>(
+    refinement: Refinement<T, U, [number]>
+  ): List<Exclude<T, U>>;
+
+  public reject(predicate: Predicate<T, [number]>): List<T>;
+
+  public reject(predicate: Predicate<T, [number]>): List<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U> {
+  public find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+
+  public find(predicate: Predicate<T, [number]>): Option<T>;
+
+  public find(predicate: Predicate<T, [number]>): Option<T> {
     return Iterable.find(this, predicate);
   }
 
@@ -96,16 +112,40 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.includes(this, value);
   }
 
-  public some(predicate: Predicate<T>): boolean {
+  public collect<U>(mapper: Mapper<T, Option<U>, [number]>): List<U> {
+    return List.from(Iterable.collect(this, mapper));
+  }
+
+  public collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U> {
+    return Iterable.collectFirst(this, mapper);
+  }
+
+  public some(predicate: Predicate<T, [number]>): boolean {
     return Iterable.some(this, predicate);
   }
 
-  public every(predicate: Predicate<T>): boolean {
+  public every(predicate: Predicate<T, [number]>): boolean {
     return Iterable.every(this, predicate);
   }
 
-  public count(predicate: Predicate<T, T, [number]>): number {
+  public count(predicate: Predicate<T, [number]>): number {
     return Iterable.count(this, predicate);
+  }
+
+  public distinct(): List<T> {
+    let seen = Set.empty<T>();
+    let list = List.empty<T>();
+
+    for (const value of this) {
+      if (seen.has(value)) {
+        continue;
+      }
+
+      seen = seen.add(value);
+      list = list.append(value);
+    }
+
+    return list;
   }
 
   public get(index: number): Option<T> {
@@ -211,11 +251,11 @@ export class List<T> implements Collection.Indexed<T> {
     return this.takeWhile(() => count-- > 0);
   }
 
-  public takeWhile(predicate: Predicate<T, T, [number]>): List<T> {
+  public takeWhile(predicate: Predicate<T, [number]>): List<T> {
     return List.from(Iterable.takeWhile(this, predicate));
   }
 
-  public takeUntil(predicate: Predicate<T, T, [number]>): List<T> {
+  public takeUntil(predicate: Predicate<T, [number]>): List<T> {
     return this.takeWhile(not(predicate));
   }
 
@@ -227,11 +267,11 @@ export class List<T> implements Collection.Indexed<T> {
     return this.skipWhile(() => count-- > 0);
   }
 
-  public skipWhile(predicate: Predicate<T, T, [number]>): List<T> {
+  public skipWhile(predicate: Predicate<T, [number]>): List<T> {
     return List.from(Iterable.skipWhile(this, predicate));
   }
 
-  public skipUntil(predicate: Predicate<T, T, [number]>): List<T> {
+  public skipUntil(predicate: Predicate<T, [number]>): List<T> {
     return this.skipWhile(not(predicate));
   }
 
@@ -275,12 +315,12 @@ export class List<T> implements Collection.Indexed<T> {
     }, Map.empty<K, List<T>>());
   }
 
-  public subtract(list: List<T>): List<T> {
-    return List.from(Iterable.subtract(this, list));
+  public subtract(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.subtract(this, iterable));
   }
 
-  public intersect(list: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, list));
+  public intersect(iterable: List<T>): List<T> {
+    return List.from(Iterable.intersect(this, iterable));
   }
 
   public equals(value: unknown): value is this {

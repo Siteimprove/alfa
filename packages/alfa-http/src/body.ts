@@ -1,7 +1,8 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
+
 import * as earl from "@siteimprove/alfa-earl";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 /**
  * @see https://fetch.spec.whatwg.org/#body-mixin

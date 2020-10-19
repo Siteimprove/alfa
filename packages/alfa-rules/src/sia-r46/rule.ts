@@ -10,10 +10,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, equals } = Predicate;
+const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r46.html",
@@ -24,21 +25,20 @@ export default Rule.Atomic.of<Page, Element>({
       *applicability() {
         const tables = document
           .descendants()
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("table"),
-                isPerceivable(device)
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("table"),
+              not(isIgnored(device))
             )
           );
 
         for (const table of tables) {
-          const headerCells = table.descendants().filter(
-            and(
-              isElement,
+          const headerCells = table
+            .descendants()
+            .filter(isElement)
+            .filter(
               and(
                 hasNamespace(Namespace.HTML),
                 // The table model only works if the element is a th.
@@ -46,8 +46,7 @@ export default Rule.Atomic.of<Page, Element>({
                 hasRole("rowheader", "columnheader"),
                 isPerceivable(device)
               )
-            )
-          );
+            );
 
           for (const cell of headerCells) {
             ownership = ownership.set(cell, table);

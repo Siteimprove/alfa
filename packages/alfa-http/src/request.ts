@@ -1,4 +1,6 @@
 import { Decoder, Encoder } from "@siteimprove/alfa-encoding";
+import { URL } from "@siteimprove/alfa-url";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
@@ -11,25 +13,27 @@ import { Headers } from "./headers";
 export class Request implements Body, json.Serializable, earl.Serializable {
   public static of(
     method: string,
-    url: string,
+    url: URL,
     headers: Headers = Headers.empty(),
     body: ArrayBuffer = new ArrayBuffer(0)
   ): Request {
     return new Request(method, url, headers, body);
   }
 
+  private static _empty = Request.of("GET", URL.parse("about:blank").get());
+
   public static empty(): Request {
-    return Request.of("GET", "about:blank");
+    return this._empty;
   }
 
   private readonly _method: string;
-  private readonly _url: string;
+  private readonly _url: URL;
   private readonly _headers: Headers;
   private readonly _body: ArrayBuffer;
 
   private constructor(
     method: string,
-    url: string,
+    url: URL,
     headers: Headers,
     body: ArrayBuffer
   ) {
@@ -49,7 +53,7 @@ export class Request implements Body, json.Serializable, earl.Serializable {
   /**
    * @see https://fetch.spec.whatwg.org/#dom-request-url
    */
-  public get url(): string {
+  public get url(): URL {
     return this._url;
   }
 
@@ -70,7 +74,7 @@ export class Request implements Body, json.Serializable, earl.Serializable {
   public toJSON(): Request.JSON {
     return {
       method: this._method,
-      url: this._url,
+      url: this._url.toString(),
       headers: this._headers.toJSON(),
       body: Decoder.decode(new Uint8Array(this._body)),
     };
@@ -83,7 +87,7 @@ export class Request implements Body, json.Serializable, earl.Serializable {
       },
       "@type": ["http:Message", "http:Request"],
       "http:methodName": this._method,
-      "http:requestURI": this._url,
+      "http:requestURI": this._url.toString(),
       "http:headers": this._headers.toEARL(),
       "http:body": {
         "@context": {
@@ -130,7 +134,7 @@ export namespace Request {
   export function from(json: JSON): Request {
     return Request.of(
       json.method,
-      json.url,
+      URL.parse(json.url).get(),
       Headers.from(json.headers),
       Encoder.encode(json.body)
     );

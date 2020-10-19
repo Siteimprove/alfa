@@ -1,4 +1,5 @@
 export interface Equatable {
+  equals(value: this): boolean;
   equals(value: unknown): value is this;
 }
 

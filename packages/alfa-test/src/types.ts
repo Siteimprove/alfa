@@ -27,7 +27,7 @@ export interface Assertions {
   /**
    * @see https://nodejs.org/api/assert.html#assert_assert_fail_message
    */
-  fail(message?: string): void;
+  fail(message?: string): never;
 
   /**
    * @see https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message

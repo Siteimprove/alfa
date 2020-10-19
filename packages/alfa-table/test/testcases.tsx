@@ -2,10 +2,10 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Comparable } from "@siteimprove/alfa-comparable";
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Cell } from "../src/cell";
 import { ColumnGroup } from "../src/column-group";
@@ -14,7 +14,7 @@ import { RowGroup } from "../src/row-group";
 import { Scope } from "../src/scope";
 import { Table } from "../src/table";
 
-const { and } = Predicate;
+const { and } = Refinement;
 const { isElement, hasId } = Element;
 const { compare } = Comparable;
 

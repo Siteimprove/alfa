@@ -1,8 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R81, { Outcomes } from "../../src/sia-r81/rule";
 
@@ -10,24 +9,21 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-const { isElement, hasName } = Element;
-const { and } = Predicate;
-
 test(`evaluate() passes two links that have the same name and reference the same
       resource in the same context`, async (t) => {
+  const target = [<a href="foo.html">Foo</a>, <a href="foo.html">Foo</a>];
+
   const document = Document.of([
     <html>
       <p>
-        <a href="foo.html">Foo</a>
-        <a href="foo.html">Foo</a>
+        {target[0]}
+        {target[1]}
       </p>
     </html>,
   ]);
 
-  const links = document.descendants().filter(and(isElement, hasName("a")));
-
   t.deepEqual(await evaluate(R81, { document }), [
-    passed(R81, links, {
+    passed(R81, target, {
       1: Outcomes.ResolveSameResource,
     }),
   ]);
@@ -35,16 +31,16 @@ test(`evaluate() passes two links that have the same name and reference the same
 
 test(`evaluate() fails two links that have the same name, but reference
       different resources in the same context`, async (t) => {
+  const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
+
   const document = Document.of([
     <html>
       <p>
-        <a href="foo.html">Foo</a>
-        <a href="bar.html">Foo</a>
+        {target[0]}
+        {target[1]}
       </p>
     </html>,
   ]);
-
-  const links = document.descendants().filter(and(isElement, hasName("a")));
 
   t.deepEqual(
     await evaluate(
@@ -55,7 +51,7 @@ test(`evaluate() fails two links that have the same name, but reference
       })
     ),
     [
-      failed(R81, links, {
+      failed(R81, target, {
         1: Outcomes.ResolveDifferentResource,
       }),
     ]
@@ -64,16 +60,16 @@ test(`evaluate() fails two links that have the same name, but reference
 
 test(`evaluate() passes two links that have the same name and reference
       equivalent resources in the same context`, async (t) => {
+  const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
+
   const document = Document.of([
     <html>
       <p>
-        <a href="foo.html">Foo</a>
-        <a href="bar.html">Foo</a>
+        {target[0]}
+        {target[1]}
       </p>
     </html>,
   ]);
-
-  const links = document.descendants().filter(and(isElement, hasName("a")));
 
   t.deepEqual(
     await evaluate(
@@ -84,7 +80,7 @@ test(`evaluate() passes two links that have the same name and reference
       })
     ),
     [
-      passed(R81, links, {
+      passed(R81, target, {
         1: Outcomes.ResolveEquivalentResource,
       }),
     ]

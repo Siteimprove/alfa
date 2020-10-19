@@ -1,4 +1,5 @@
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "./namespace";
 
@@ -13,19 +14,21 @@ import { Type } from "./node/type";
 import { Block } from "./style/block";
 import { Declaration } from "./style/declaration";
 import {
-  Rule,
   FontFaceRule,
   KeyframeRule,
   KeyframesRule,
   MediaRule,
   NamespaceRule,
   PageRule,
+  Rule,
   StyleRule,
   SupportsRule,
 } from "./style/rule";
 import { Sheet } from "./style/sheet";
+import { Shadow } from "./node/shadow";
 
 const { entries } = Object;
+const { nor } = Predicate;
 
 export function h(
   name: string,
@@ -65,26 +68,36 @@ export namespace h {
       attributes = [...attributes, h.attribute("style", block.toString())];
     }
 
-    let namespace = Namespace.HTML;
+    const namespace = Option.from(
+      attributes.find((attribute) => attribute.name === "xmlns")
+    )
+      .map((attribute) => attribute.value)
+      .filter(Namespace.isNamespace)
+      .getOr(Namespace.HTML);
 
-    switch (name) {
-      case "svg":
-        namespace = Namespace.SVG;
-        break;
-      case "math":
-        namespace = Namespace.MathML;
-    }
+    const content = children.find(Document.isDocument);
+    const shadow = children.find(Shadow.isShadow);
 
-    return Element.of(
+    const element = Element.of(
       Option.of(namespace),
       None,
       name,
       attributes,
-      children.map((child) =>
-        typeof child === "string" ? h.text(child) : child
-      ),
+      children
+        .filter(nor(Document.isDocument, Shadow.isShadow))
+        .map((child) => (typeof child === "string" ? h.text(child) : child)),
       style.length === 0 ? None : Option.of(block)
     );
+
+    if (content !== undefined) {
+      element._attachContent(content);
+    }
+
+    if (shadow !== undefined) {
+      element._attachShadow(shadow);
+    }
+
+    return element;
   }
 
   export function attribute(name: string, value: string): Attribute {
@@ -104,6 +117,20 @@ export namespace h {
         typeof child === "string" ? text(child) : child
       ),
       style
+    );
+  }
+
+  export function shadow(
+    children: Array<Node | string>,
+    style: Array<Sheet> = [],
+    mode?: Shadow.Mode
+  ): Shadow {
+    return Shadow.of(
+      children!.map((child) =>
+        typeof child === "string" ? text(child) : child
+      ),
+      style,
+      mode
     );
   }
 

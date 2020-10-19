@@ -1,3 +1,4 @@
+import { Hash } from "@siteimprove/alfa-hash";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
@@ -33,6 +34,10 @@ export const None: None = new (class None {
   }
 
   public filter(): None {
+    return this;
+  }
+
+  public reject(): None {
     return this;
   }
 
@@ -84,7 +89,9 @@ export const None: None = new (class None {
     return value instanceof None;
   }
 
-  public hash(): void {}
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, false);
+  }
 
   public *[Symbol.iterator](): Iterator<never> {}
 

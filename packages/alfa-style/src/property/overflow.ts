@@ -1,6 +1,5 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Record } from "@siteimprove/alfa-record";
 
 import { Property } from "../property";
 
@@ -65,10 +64,10 @@ export namespace Overflow {
       (result) => {
         const [x, y] = result;
 
-        return Record.of({
-          "overflow-x": x,
-          "overflow-y": y.getOr(x),
-        });
+        return [
+          ["overflow-x", x],
+          ["overflow-y", y.getOr(x)],
+        ];
       }
     )
   );

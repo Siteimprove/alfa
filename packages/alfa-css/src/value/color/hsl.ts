@@ -1,12 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Percentage } from "../percentage";
@@ -16,7 +14,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class HSL<
   H extends Number | Angle = Number | Angle,
   A extends Number | Percentage = Number | Percentage
-> implements Equatable, Hashable, Serializable {
+> extends Value<"color"> {
   public static of<H extends Number | Angle, A extends Number | Percentage>(
     hue: H,
     saturation: Percentage,
@@ -40,6 +38,7 @@ export class HSL<
     lightness: Percentage,
     alpha: A
   ) {
+    super();
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;
@@ -130,8 +129,7 @@ export class HSL<
 }
 
 export namespace HSL {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "color";
     format: "hsl";
     hue: Number.JSON | Angle.JSON;

@@ -1,34 +1,34 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+
+import { isIgnored } from "../common/predicate/is-ignored";
 import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
 
 const { isElement } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r86.html",
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(and(isElement, isMarkedDecorative));
+          .filter(isElement)
+          .filter(isMarkedDecorative);
       },
 
       expectations(target) {
         return {
           1: expectation(
-            Node.from(target, device).every((accNode) =>
-              accNode.role().some(not(Role.hasName("none", "presentation")))
-            ),
-            () => Outcomes.IsExposed,
-            () => Outcomes.IsNotExposed
+            isIgnored(device)(target),
+            () => Outcomes.IsNotExposed,
+            () => Outcomes.IsExposed
           ),
         };
       },

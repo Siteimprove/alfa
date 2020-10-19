@@ -1,3 +1,4 @@
+import { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
@@ -47,6 +48,14 @@ export const Nil: Nil = new (class Nil {
     return false;
   }
 
+  public collect(): Nil {
+    return this;
+  }
+
+  public collectFirst(): None {
+    return None;
+  }
+
   public some(): boolean {
     return false;
   }
@@ -57,6 +66,10 @@ export const Nil: Nil = new (class Nil {
 
   public count(): number {
     return 0;
+  }
+
+  public distinct(): Nil {
+    return this;
   }
 
   public get(): None {
@@ -147,6 +160,14 @@ export const Nil: Nil = new (class Nil {
     return Map.empty();
   }
 
+  public subtract(): Nil {
+    return this;
+  }
+
+  public intersect(): Nil {
+    return this;
+  }
+
   public join(): string {
     return "";
   }
@@ -155,7 +176,9 @@ export const Nil: Nil = new (class Nil {
     return value instanceof Nil;
   }
 
-  public hash(): void {}
+  public hash(hash: Hash): void {
+    Hash.writeUint32(hash, 0);
+  }
 
   public *iterator(): Iterator<never> {}
 

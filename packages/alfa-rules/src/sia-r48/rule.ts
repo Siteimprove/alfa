@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -13,7 +14,8 @@ import { hasChild } from "../common/predicate/has-child";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, or, nor } = Predicate;
+const { or, nor } = Predicate;
+const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r48.html",
@@ -22,18 +24,16 @@ export default Rule.Atomic.of<Page, Element, Question>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("audio", "video"),
-                hasAttribute("autoplay"),
-                nor(hasAttribute("paused"), hasAttribute("muted")),
-                or(
-                  hasAttribute("src"),
-                  hasChild(and(isElement, hasName("source")))
-                )
+              hasNamespace(Namespace.HTML),
+              hasName("audio", "video"),
+              hasAttribute("autoplay"),
+              nor(hasAttribute("paused"), hasAttribute("muted")),
+              or(
+                hasAttribute("src"),
+                hasChild(and(isElement, hasName("source")))
               )
             )
           )

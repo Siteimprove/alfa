@@ -12,13 +12,15 @@ import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
 const { and, equals } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants({ flattened: true })
-      .find(and(Element.isElement, hasRole("heading")));
+      .filter(isElement)
+      .find(hasRole("heading"));
 
     return {
       applicability() {

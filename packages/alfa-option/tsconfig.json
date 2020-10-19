@@ -40,6 +40,9 @@
       "path": "../alfa-reducer"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-test"
     },
     {

@@ -1,16 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Number } from "../number";
 
 const { map } = Parser;
 
-export class Hex implements Equatable, Hashable, Serializable {
+export class Hex extends Value<"color"> {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -18,6 +16,8 @@ export class Hex implements Equatable, Hashable, Serializable {
   private readonly _value: number;
 
   private constructor(value: number) {
+    super();
+
     // Make sure that only the lower 4 bytes are stored.
     this._value = value & 0xff_ff_ff_ff;
   }
@@ -72,8 +72,7 @@ export class Hex implements Equatable, Hashable, Serializable {
 }
 
 export namespace Hex {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Value.JSON {
     type: "color";
     format: "hex";
     value: number;

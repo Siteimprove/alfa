@@ -14,23 +14,23 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, test } = Predicate;
+const { test, property } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
   evaluate({ device, document }) {
-    const global = Set.from(
-      Role.lookup("roletype").get().characteristics.supports
-    );
+    const global = Set.from(Role.of("roletype").attributes);
 
     return {
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(and(Element.isElement, not(isIgnored(device))))
+          .filter(isElement)
+          .reject(isIgnored(device))
           .flatMap((element) =>
-            Sequence.from(element.attributes).filter((attribute) =>
-              aria.Attribute.lookup(attribute.name).isSome()
+            Sequence.from(element.attributes).filter(
+              property("name", aria.Attribute.isName)
             )
           );
       },
@@ -38,10 +38,10 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: expectation(
-            global.has(target.name) ||
+            global.has(target.name as aria.Attribute.Name) ||
               test(
                 hasRole((role) =>
-                  role.isAllowed((attribute) => attribute.name === target.name)
+                  role.isAttributeSupported(target.name as aria.Attribute.Name)
                 ),
                 target.owner.get()
               ),

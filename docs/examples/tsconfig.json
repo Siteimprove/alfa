@@ -2,5 +2,9 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [],
-  "references": [{ "path": "component-testing" }, { "path": "page-testing" }]
+  "references": [
+    { "path": "custom-testing" },
+    { "path": "end-to-end-testing" },
+    { "path": "unit-testing" }
+  ]
 }
