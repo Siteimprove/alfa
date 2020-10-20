@@ -108,9 +108,14 @@ export class Table implements Equatable, Serializable {
 
 export namespace Table {
   import Kind = Cell.Kind;
-  const cache = Cache.empty<Element, Result<Table, string>>();
+  const cache = Cache.empty<
+    Element,
+    Result<Table, string | Table.TableModelError>
+  >();
 
-  export function from(element: Element): Result<Table, string> {
+  export function from(
+    element: Element
+  ): Result<Table, string | Table.TableModelError> {
     return cache.get(element, () =>
       Builder.from(element).map((table) => table.table)
     );
@@ -504,7 +509,9 @@ export namespace Table {
       cells: Cell.Builder.JSON[];
     }
 
-    export function from(element: Element): Result<Builder, string> {
+    export function from(
+      element: Element
+    ): Result<Builder, string | TableModelError> {
       if (element.name !== "table")
         return Err.of("This element is not a table");
 
@@ -614,7 +621,11 @@ export namespace Table {
       for (let x = 0; x < table.width; x++) {
         for (let y = 0; y < table.height; y++) {
           if (table.slot(x, y).size > 1) {
-            return Err.of(`Slot (${x}, ${y}) is covered twice`);
+            return Err.of({
+              error: Error.TableModelError.CollidingCells,
+              x,
+              y,
+            });
           }
         }
       }
@@ -631,13 +642,13 @@ export namespace Table {
       // checking for rows
       for (let y = 0; y < table.height; y++) {
         if (!(rowCovering[y] ?? false)) {
-          return Err.of(`row ${y} has no cell anchored in it`);
+          return Err.of({ error: Error.TableModelError.EmptyRow, y });
         }
       }
       // checking for cols
       for (let x = 0; x < table.width; x++) {
         if (!(columnCovering[x] ?? false)) {
-          return Err.of(`col ${x} has no cell anchored in it`);
+          return Err.of({ error: Error.TableModelError.EmptyColumn, x });
         }
       }
 
@@ -675,4 +686,25 @@ export namespace Table {
       return Ok.of(table);
     }
   }
+
+  export namespace Error {
+    export enum TableModelError {
+      EmptyRow = "no cell anchored in row",
+      EmptyColumn = "no cell anchored in column",
+      CollidingCells = "slot covered by several cells",
+    }
+
+    export type EmptyRow = { error: TableModelError.EmptyRow; y: number };
+    export type EmptyColumn = { error: TableModelError.EmptyColumn; x: number };
+    export type CollidingCells = {
+      error: TableModelError.CollidingCells;
+      x: number;
+      y: number;
+    };
+  }
+
+  export type TableModelError =
+    | Error.EmptyRow
+    | Error.EmptyColumn
+    | Error.CollidingCells;
 }

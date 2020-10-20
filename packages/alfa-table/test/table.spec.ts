@@ -18,6 +18,7 @@ import {
 } from "./testcases";
 
 import { Cell } from "../src/cell";
+import TableModelError = Table.Error.TableModelError;
 
 test("Builder.from() computes correct header variants", (t) => {
   const expensesTable = Table.Builder.from(expenses.element).get();
@@ -62,15 +63,25 @@ test("from() builds correct table model", (t) => {
 test("from() detects table model errors", (t) => {
   t.deepEqual(
     Table.from(errors.emptyCol),
-    Err.of("col 1 has no cell anchored in it")
+    Err.of<Table.TableModelError>({
+      error: TableModelError.EmptyColumn,
+      x: 1,
+    })
   );
   t.deepEqual(
     Table.from(errors.emptyRow),
-    Err.of("row 1 has no cell anchored in it")
+    Err.of<Table.TableModelError>({
+      error: TableModelError.EmptyRow,
+      y: 1,
+    })
   );
   t.deepEqual(
     Table.from(errors.coveredTwice),
-    Err.of("Slot (1, 1) is covered twice")
+    Err.of<Table.TableModelError>({
+      error: TableModelError.CollidingCells,
+      x: 1,
+      y: 1,
+    })
   );
 });
 
