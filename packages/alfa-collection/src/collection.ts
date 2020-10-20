@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -153,5 +154,6 @@ export namespace Collection {
     slice(start: number, end?: number): Indexed<T>;
     reverse(): Indexed<T>;
     join(separator: string): string;
+    sortWith(comparer: Comparer<T>): Indexed<T>;
   }
 }

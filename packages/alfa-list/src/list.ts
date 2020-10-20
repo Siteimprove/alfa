@@ -1,4 +1,5 @@
 import { Collection } from "@siteimprove/alfa-collection";
+import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -301,6 +302,10 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.join(this, separator);
   }
 
+  public sortWith(comparer: Comparer<T>): List<T> {
+    return List.from(Iterable.sortWith(this, comparer));
+  }
+
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
@@ -556,5 +561,9 @@ export namespace List {
           (list, value) => list.append(value),
           List.empty<T>()
         );
+  }
+
+  export function sort<T extends Comparable<T>>(list: List<T>): List<T> {
+    return list.sortWith(Comparable.compare);
   }
 }
