@@ -227,9 +227,7 @@ export namespace Table {
     }
 
     public slot(x: number, y: number): List<Cell.Builder> {
-      return this._slots?.[x]?.[y] === undefined
-        ? List.empty()
-        : this._slots[x][y];
+      return this._slots?.[x]?.[y] ?? List.empty();
     }
 
     /**
