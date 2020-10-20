@@ -152,3 +152,29 @@ test("evaluate() is inapplicable to aria-busy elements", async (t) => {
   const document = Document.of([menu]);
   t.deepEqual(await evaluate(R68, { document }), [inapplicable(R68)]);
 });
+
+test("evaluate() passes on table with empty columns", async (t) => {
+  const row1 = (
+    <tr>
+      <th colspan="2">Long header</th>
+    </tr>
+  );
+  const row2 = (
+    <tr>
+      <td>Short cell</td>
+    </tr>
+  );
+  const table = (
+    <table>
+      {row1}
+      {row2}
+    </table>
+  );
+
+  const document = Document.of([table]);
+  t.deepEqual(await evaluate(R68, { document }), [
+    passed(R68, table, { 1: Outcomes.HasCorrectOwnedElements }),
+    passed(R68, row1, { 1: Outcomes.HasCorrectOwnedElements }),
+    passed(R68, row2, { 1: Outcomes.HasCorrectOwnedElements }),
+  ]);
+});

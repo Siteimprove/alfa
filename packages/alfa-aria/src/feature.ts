@@ -670,8 +670,7 @@ const Features: Features = {
 
         const tableModel = Table.from(table.get());
 
-        // If the <th> is within a <table> with errors, it doesn't really have a
-        // role.
+        // This should never happen since it only happens if table is not a <table>.
         if (tableModel.isErr()) {
           return None;
         }
