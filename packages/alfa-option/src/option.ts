@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -44,6 +45,7 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
   toArray(): Array<T>;
   toJSON(): Option.JSON;
 }

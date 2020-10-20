@@ -1,3 +1,4 @@
+import { Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -83,6 +84,10 @@ export const None: None = new (class None {
 
   public getOrElse<U>(value: Thunk<U>): U {
     return value();
+  }
+
+  public compareWith<T>(option: Option<T>): Comparison {
+    return option.isNone() ? Comparison.Equal : Comparison.Less;
   }
 
   public equals(value: unknown): value is this {
