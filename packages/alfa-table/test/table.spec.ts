@@ -19,6 +19,9 @@ import {
 
 import { Cell } from "../src/cell";
 import TableModelError = Table.Error.TableModelError;
+import { List } from "@siteimprove/alfa-list";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import first = Iterable.first;
 
 test("Builder.from() computes correct header variants", (t) => {
   const expensesTable = Table.Builder.from(expenses.element).get();
@@ -62,26 +65,32 @@ test("from() builds correct table model", (t) => {
 
 test("from() detects table model errors", (t) => {
   t.deepEqual(
-    Table.from(errors.emptyCol),
-    Err.of<Table.TableModelError>({
-      error: TableModelError.EmptyColumn,
-      x: 1,
-    })
+    [...Table.from(errors.emptyCol).get().errors],
+    [
+      {
+        error: TableModelError.EmptyColumn,
+        x: 1,
+      },
+    ]
   );
   t.deepEqual(
-    Table.from(errors.emptyRow),
-    Err.of<Table.TableModelError>({
-      error: TableModelError.EmptyRow,
-      y: 1,
-    })
+    [...Table.from(errors.emptyRow).get().errors],
+    [
+      {
+        error: TableModelError.EmptyRow,
+        y: 1,
+      },
+    ]
   );
   t.deepEqual(
-    Table.from(errors.coveredTwice),
-    Err.of<Table.TableModelError>({
-      error: TableModelError.CollidingCells,
-      x: 1,
-      y: 1,
-    })
+    [...Table.from(errors.coveredTwice).get().errors],
+    [
+      {
+        error: TableModelError.CollidingCells,
+        x: 1,
+        y: 1,
+      },
+    ]
   );
 });
 

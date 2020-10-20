@@ -31,9 +31,18 @@ export class Table implements Equatable, Serializable {
     height: number = 0,
     cells: Iterable<Cell> = List.empty(),
     rowGroups: Iterable<RowGroup> = List.empty(),
-    columnGroups: Iterable<ColumnGroup> = List.empty()
+    columnGroups: Iterable<ColumnGroup> = List.empty(),
+    errors: Iterable<Table.TableModelError> = List.empty()
   ): Table {
-    return new Table(element, width, height, cells, rowGroups, columnGroups);
+    return new Table(
+      element,
+      width,
+      height,
+      cells,
+      rowGroups,
+      columnGroups,
+      errors
+    );
   }
 
   private readonly _width: number;
@@ -42,6 +51,7 @@ export class Table implements Equatable, Serializable {
   private readonly _cells: List<Cell>;
   private readonly _rowGroups: List<RowGroup>;
   private readonly _columnGroups: List<ColumnGroup>;
+  private readonly _errors: List<Table.TableModelError>;
 
   private constructor(
     element: Element,
@@ -49,7 +59,8 @@ export class Table implements Equatable, Serializable {
     height: number,
     cells: Iterable<Cell>,
     rowGroups: Iterable<RowGroup>,
-    columnGroups: Iterable<ColumnGroup>
+    columnGroups: Iterable<ColumnGroup>,
+    errors: Iterable<Table.TableModelError>
   ) {
     this._width = width;
     this._height = height;
@@ -57,6 +68,7 @@ export class Table implements Equatable, Serializable {
     this._cells = List.from(cells);
     this._rowGroups = List.from(rowGroups);
     this._columnGroups = List.from(columnGroups);
+    this._errors = List.from(errors);
   }
 
   public get width(): number {
@@ -81,6 +93,10 @@ export class Table implements Equatable, Serializable {
 
   public get rowGroups(): Iterable<RowGroup> {
     return this._rowGroups;
+  }
+
+  public get errors(): Iterable<Table.TableModelError> {
+    return this._errors;
   }
 
   public equals(value: unknown): value is this {
@@ -142,7 +158,8 @@ export namespace Table {
       rowGroups: Iterable<RowGroup> = List.empty(),
       colGroups: Iterable<ColumnGroup> = List.empty(),
       rowGroupHeaders: Iterable<Cell.Builder> = List.empty(),
-      columnGroupHeaders: Iterable<Cell.Builder> = List.empty()
+      columnGroupHeaders: Iterable<Cell.Builder> = List.empty(),
+      errors: Iterable<TableModelError> = List.empty()
     ): Builder {
       return new Builder(
         element,
@@ -154,7 +171,8 @@ export namespace Table {
         rowGroups,
         colGroups,
         rowGroupHeaders,
-        columnGroupHeaders
+        columnGroupHeaders,
+        errors
       );
     }
 
@@ -176,7 +194,8 @@ export namespace Table {
       rowGroups: Iterable<RowGroup>,
       colGroups: Iterable<ColumnGroup>,
       rowGroupHeaders: Iterable<Cell.Builder>,
-      columnGroupHeaders: Iterable<Cell.Builder>
+      columnGroupHeaders: Iterable<Cell.Builder>,
+      errors: Iterable<TableModelError>
     ) {
       this._table = Table.of(
         element,
@@ -184,7 +203,8 @@ export namespace Table {
         height,
         List.empty(),
         rowGroups,
-        colGroups
+        colGroups,
+        errors
       );
       this._cells = List.from(cells);
       this._downwardGrowingCells = List.from(downwardGrowingCells);
@@ -221,6 +241,10 @@ export namespace Table {
       return this._table.rowGroups;
     }
 
+    public get errors(): Iterable<TableModelError> {
+      return this._table.errors;
+    }
+
     public get table(): Table {
       return Table.of(
         this.element,
@@ -228,7 +252,8 @@ export namespace Table {
         this.height,
         this._cells.map((cell) => cell.cell),
         this.rowGroups,
-        this.colGroups
+        this.colGroups,
+        this.errors
       );
     }
 
@@ -250,6 +275,7 @@ export namespace Table {
       colGroups = this.colGroups,
       rowGroupHeaders = this._rowGroupHeaders,
       columnGroupHeaders = this._columnGroupHeaders,
+      errors = this.errors,
     }: {
       element?: Element;
       width?: number;
@@ -261,6 +287,7 @@ export namespace Table {
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
       columnGroupHeaders?: Iterable<Cell.Builder>;
+      errors?: Iterable<TableModelError>;
     }): Builder {
       return Builder.of(
         element,
@@ -272,7 +299,8 @@ export namespace Table {
         rowGroups,
         colGroups,
         rowGroupHeaders,
-        columnGroupHeaders
+        columnGroupHeaders,
+        errors
       );
     }
 
@@ -288,6 +316,7 @@ export namespace Table {
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
       columnGroupHeaders?: Iterable<Cell.Builder>;
+      errors?: Iterable<TableModelError>;
     }): Builder {
       return this._updateUnsafe(update);
     }
@@ -509,9 +538,7 @@ export namespace Table {
       cells: Cell.Builder.JSON[];
     }
 
-    export function from(
-      element: Element
-    ): Result<Builder, string | TableModelError> {
+    export function from(element: Element): Result<Builder, string> {
       if (element.name !== "table")
         return Err.of("This element is not a table");
 
@@ -621,10 +648,14 @@ export namespace Table {
       for (let x = 0; x < table.width; x++) {
         for (let y = 0; y < table.height; y++) {
           if (table.slot(x, y).size > 1) {
-            return Err.of({
-              error: Error.TableModelError.CollidingCells,
-              x,
-              y,
+            table = table.update({
+              errors: concat(table.errors, [
+                {
+                  error: Error.TableModelError.CollidingCells,
+                  x,
+                  y,
+                },
+              ]),
             });
           }
         }
@@ -642,13 +673,21 @@ export namespace Table {
       // checking for rows
       for (let y = 0; y < table.height; y++) {
         if (!(rowCovering[y] ?? false)) {
-          return Err.of({ error: Error.TableModelError.EmptyRow, y });
+          table = table.update({
+            errors: concat(table.errors, [
+              { error: Error.TableModelError.EmptyRow, y },
+            ]),
+          });
         }
       }
       // checking for cols
       for (let x = 0; x < table.width; x++) {
         if (!(columnCovering[x] ?? false)) {
-          return Err.of({ error: Error.TableModelError.EmptyColumn, x });
+          table = table.update({
+            errors: concat(table.errors, [
+              { error: Error.TableModelError.EmptyColumn, x },
+            ]),
+          });
         }
       }
 
