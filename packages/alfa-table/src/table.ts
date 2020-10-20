@@ -16,6 +16,7 @@ import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 import { RowGroup } from "./row-group";
 import { Scope } from "./scope";
+import { Set } from "@siteimprove/alfa-set";
 
 const { compare } = Comparable;
 const { concat, filter, map, some } = Iterable;
@@ -132,7 +133,7 @@ export namespace Table {
       height: number = 0,
       cells: Iterable<Cell.Builder> = List.empty(),
       downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
-      slots: Array<Array<List<Cell.Builder>>> = [[]],
+      slots: Array<Array<Set<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
       colGroups: Iterable<ColumnGroup> = List.empty(),
       rowGroupHeaders: Iterable<Cell.Builder> = List.empty(),
@@ -156,7 +157,7 @@ export namespace Table {
     private readonly _table: Table;
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
-    private readonly _slots: Array<Array<List<Cell.Builder>>>;
+    private readonly _slots: Array<Array<Set<Cell.Builder>>>;
     private readonly _rowGroupHeaders: List<Cell.Builder>;
     private readonly _columnGroupHeaders: List<Cell.Builder>;
 
@@ -166,7 +167,7 @@ export namespace Table {
       height: number,
       cells: Iterable<Cell.Builder>,
       downwardGrowingCells: Iterable<Cell.Builder>,
-      slots: Array<Array<List<Cell.Builder>>>,
+      slots: Array<Array<Set<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
       colGroups: Iterable<ColumnGroup>,
       rowGroupHeaders: Iterable<Cell.Builder>,
@@ -226,8 +227,8 @@ export namespace Table {
       );
     }
 
-    public slot(x: number, y: number): List<Cell.Builder> {
-      return this._slots?.[x]?.[y] ?? List.empty();
+    public slot(x: number, y: number): Set<Cell.Builder> {
+      return this._slots?.[x]?.[y] ?? Set.empty();
     }
 
     /**
@@ -250,7 +251,7 @@ export namespace Table {
       height?: number;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<List<Cell.Builder>>>;
+      slots?: Array<Array<Set<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
@@ -277,7 +278,7 @@ export namespace Table {
       element?: Element;
       width?: number;
       height?: number;
-      slots?: Array<Array<List<Cell.Builder>>>;
+      slots?: Array<Array<Set<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
@@ -331,7 +332,7 @@ export namespace Table {
             this._slots[x] = [];
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._slots[x][y] = List.of(cell);
+            this._slots[x][y] = (this._slots[x][y] ?? Set.empty()).add(cell);
           }
         }
       }
@@ -482,7 +483,7 @@ export namespace Table {
       return (
         this._cells.equals(value._cells) &&
         this._slots.every((array, x) =>
-          array.every((option, y) => option.equals(value._slots[x][y]))
+          array.every((cells, y) => cells.equals(value._slots[x][y]))
         ) &&
         this._table.equals(value._table)
       );
@@ -654,7 +655,7 @@ export namespace Table {
       // and make access easier to handle (slots[x][y] is never undefined after this).
       // To get a PACKED_ELEMENTS array, we actually need to push to it:
       // @see https://v8.dev/blog/elements-kinds#avoid-creating-holes
-      const slots: Array<Array<List<Cell.Builder>>> = [];
+      const slots: Array<Array<Set<Cell.Builder>>> = [];
       for (let x = 0; x < table.width; x++) {
         slots.push([]);
         for (let y = 0; y < table.height; y++) {

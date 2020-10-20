@@ -188,11 +188,11 @@ export namespace Cell {
     // Any update to a Cell.Builder thus has to go through side effects :-(
 
     // The product always has empty headers while building. Correct headers are filled in by the final export.
-    private readonly _cell: Cell;
-    private readonly _downwardGrowing: boolean;
+    private _cell: Cell;
+    private _downwardGrowing: boolean;
     // This is the scope attribute, once correctly parsed.
     // The actual variant of the header is stored in the cell and can only be computed once the table is built.
-    private readonly _scope: Option<Scope>;
+    private _scope: Option<Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
     //         all over the place. Storing here elements instead of Cell is easier as it never changes.
     // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
@@ -200,8 +200,8 @@ export namespace Cell {
     //         Currently not exposing both to final cell, but easy to do if needed.
     // Note 3: Headers are empty when building the cell, they are filled in once the table is built because we need
     //         to know the full table in order to find both explicit and implicit headers.
-    private readonly _explicitHeaders: List<Element>;
-    private readonly _implicitHeaders: List<Element>;
+    private _explicitHeaders: List<Element>;
+    private _implicitHeaders: List<Element>;
 
     public static of(
       kind: Cell.Kind,
@@ -285,7 +285,7 @@ export namespace Cell {
       explicitHeaders?: Iterable<Element>;
       implicitHeaders?: Iterable<Element>;
     }): Builder {
-      return Builder.of(
+      this._cell = Cell.of(
         kind,
         x,
         y,
@@ -293,11 +293,14 @@ export namespace Cell {
         height,
         element,
         variant,
-        downwardGrowing,
-        scope,
-        explicitHeaders,
-        implicitHeaders
+        List.empty()
       );
+      this._downwardGrowing = downwardGrowing;
+      this._scope = scope;
+      this._explicitHeaders = List.from(explicitHeaders);
+      this._implicitHeaders = List.from(implicitHeaders);
+
+      return this; // for chaining
     }
 
     public get cell(): Cell {
@@ -440,7 +443,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
      */
     private _internalHeaderScanning(
-      cover: (x: number, y: number) => List<Builder>,
+      cover: (x: number, y: number) => Set<Builder>,
       initialX: number,
       initialY: number,
       decreaseX: boolean
@@ -473,7 +476,7 @@ export namespace Cell {
           continue;
         }
         // 8
-        const currentCell = covering.first().get();
+        const currentCell = covering.toArray()[0];
         // 9
         if (currentCell.kind === Cell.Kind.Header) {
           // 9.1
@@ -564,7 +567,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignImplicitHeaders(
-      cover: (x: number, y: number) => List<Builder>,
+      cover: (x: number, y: number) => Set<Builder>,
       getAboveLeftRowGroupHeaders: (
         principalCell: Builder
       ) => Iterable<Builder>,
@@ -614,7 +617,7 @@ export namespace Cell {
      */
     public assignHeaders(
       table: Element,
-      cover: (x: number, y: number) => List<Builder>,
+      cover: (x: number, y: number) => Set<Builder>,
       getAboveLeftRowGroupHeaders: (
         principalCell: Builder
       ) => Iterable<Builder>,

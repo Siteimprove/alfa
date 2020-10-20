@@ -11,6 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
+import { Set } from "@siteimprove/alfa-set";
 
 const { compare } = Comparable;
 const { concat, some } = Iterable;
@@ -35,7 +36,7 @@ export namespace Row {
       cells: Iterable<Cell.Builder> = List.empty(),
       growing: Iterable<Cell.Builder> = List.empty(),
       xCurrent: number = 0,
-      slots: Array<Array<List<Cell.Builder>>> = [[]]
+      slots: Array<Array<Set<Cell.Builder>>> = [[]]
     ): Builder {
       return new Builder(
         y,
@@ -56,8 +57,8 @@ export namespace Row {
     private readonly _element: Element;
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
-    // Cell covering a given slot, either from this._cells or this._downwardGrowingCells
-    private readonly _slots: Array<Array<List<Cell.Builder>>>;
+    // Cells covering a given slot, either from this._cells or this._downwardGrowingCells
+    private readonly _slots: Array<Array<Set<Cell.Builder>>>;
 
     private constructor(
       y: number,
@@ -67,7 +68,7 @@ export namespace Row {
       cells: Iterable<Cell.Builder>,
       growing: Iterable<Cell.Builder>,
       xCurrent: number,
-      slots: Array<Array<List<Cell.Builder>>>
+      slots: Array<Array<Set<Cell.Builder>>>
     ) {
       this._y = y;
       this._xCurrent = xCurrent;
@@ -103,8 +104,8 @@ export namespace Row {
       return this._downwardGrowingCells;
     }
 
-    public slot(x: number, y: number): List<Cell.Builder> {
-      return this._slots?.[x]?.[y] ?? List.empty();
+    public slot(x: number, y: number): Set<Cell.Builder> {
+      return this._slots?.[x]?.[y] ?? Set.empty();
     }
 
     /**
@@ -127,7 +128,7 @@ export namespace Row {
       element?: Element;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<List<Cell.Builder>>>;
+      slots?: Array<Array<Set<Cell.Builder>>>;
     }): Builder {
       return Builder.of(
         y,
@@ -197,7 +198,7 @@ export namespace Row {
             this._slots[x] = [];
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._slots[x][y] = List.of(cell);
+            this._slots[x][y] = (this._slots[x][y] ?? Set.empty()).add(cell);
           }
         }
       }
@@ -256,7 +257,7 @@ export namespace Row {
       yCurrent: number,
       // Non-growing cells from out of the current row that may cover it.
       // These are essentially cells with a fixed rowspan from previous rows.
-      externalCover: (x: number, y: number) => List<Cell.Builder>
+      externalCover: (x: number, y: number) => Set<Cell.Builder>
     ): Builder {
       const covering = this.slot(this._xCurrent, yCurrent).concat(
         externalCover(this._xCurrent, yCurrent)
@@ -323,8 +324,8 @@ export namespace Row {
       w: number = 0,
       // Non-growing cells from out of the current row that may cover it.
       // These are essentially cells with a fixed rowspan from previous rows.
-      externalCover: (x: number, y: number) => List<Cell.Builder> = (x, y) =>
-        List.empty()
+      externalCover: (x: number, y: number) => Set<Cell.Builder> = (x, y) =>
+        Set.empty()
     ): Result<Builder, string> {
       if (tr.name !== "tr") {
         return Err.of("This element is not a table row");

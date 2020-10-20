@@ -12,6 +12,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
+import { Set } from "@siteimprove/alfa-set";
 
 const { compare } = Comparable;
 const { concat, map } = Iterable;
@@ -115,7 +116,7 @@ export namespace RowGroup {
       width: number = 0,
       cells: Iterable<Cell.Builder> = List.empty(),
       downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
-      slots: Array<Array<List<Cell.Builder>>> = [[]]
+      slots: Array<Array<Set<Cell.Builder>>> = [[]]
     ): Builder {
       return new Builder(
         y,
@@ -132,8 +133,8 @@ export namespace RowGroup {
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
     private readonly _rowGroup: RowGroup;
-    // Cell covering a given slot, either from this._cells or this._downwardGrowingCells
-    private readonly _slots: Array<Array<List<Cell.Builder>>>;
+    // Cells covering a given slot, either from this._cells or this._downwardGrowingCells
+    private readonly _slots: Array<Array<Set<Cell.Builder>>>;
 
     constructor(
       y: number,
@@ -142,7 +143,7 @@ export namespace RowGroup {
       width: number,
       cells: Iterable<Cell.Builder>,
       downwardGrowingCells: Iterable<Cell.Builder>,
-      slots: Array<Array<List<Cell.Builder>>>
+      slots: Array<Array<Set<Cell.Builder>>>
     ) {
       this._rowGroup = RowGroup.of(y, height, element);
       this._width = width;
@@ -179,8 +180,8 @@ export namespace RowGroup {
       return this._rowGroup.element;
     }
 
-    public slot(x: number, y: number): List<Cell.Builder> {
-      return this._slots?.[x]?.[y] ?? List.empty();
+    public slot(x: number, y: number): Set<Cell.Builder> {
+      return this._slots?.[x]?.[y] ?? Set.empty();
     }
 
     /**
@@ -201,7 +202,7 @@ export namespace RowGroup {
       element?: Element;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<List<Cell.Builder>>>;
+      slots?: Array<Array<Set<Cell.Builder>>>;
     }): Builder {
       return Builder.of(
         y,
@@ -269,7 +270,7 @@ export namespace RowGroup {
             this._slots[x] = [];
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._slots[x][y] = List.of(cell);
+            this._slots[x][y] = (this._slots[x][y] ?? Set.empty()).add(cell);
           }
         }
       }
