@@ -611,7 +611,14 @@ export namespace Table {
       // Note that having a rowspan that extends out of the row group is not a table error per se!
 
       // Is this slot covered? If more than once => error.
-      const slotCovering: Array<Array<boolean>> = [[]];
+      for (let x = 0; x < table.width; x++) {
+        for (let y = 0; y < table.height; y++) {
+          if (table.slot(x, y).size > 1) {
+            return Err.of(`Slot (${x}, ${y}) is covered twice`);
+          }
+        }
+      }
+
       // Does this row/column have a cell anchored in it?
       const rowCovering: Array<boolean> = [];
       const columnCovering: Array<boolean> = [];
@@ -619,20 +626,6 @@ export namespace Table {
       for (const cell of table.cells) {
         columnCovering[cell.anchor.x] = true;
         rowCovering[cell.anchor.y] = true;
-
-        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            // Checking for row forming algorithm step 13 (slot covered twice)
-            if (slotCovering?.[x]?.[y] ?? false) {
-              return Err.of(`Slot (${x}, ${y}) is covered twice`);
-            } else {
-              if (slotCovering[x] === undefined) {
-                slotCovering[x] = [];
-              }
-              slotCovering[x][y] = true;
-            }
-          }
-        }
       }
 
       // checking for rows
