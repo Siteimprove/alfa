@@ -3653,13 +3653,13 @@ emoji-regex@^8.0.0:
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
 emphasize@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/emphasize/-/emphasize-4.0.0.tgz#90206aa0af88f77d0d9f3c9a73e692d6491196fa"
-  integrity sha512-a2Jo5r1WKph8I1AJZ7JH7Z4kzYPm6tNO+24s82RoUPHDtP55buorLcEgfceT14fZp7Hlu6Ceuhye7bfG9M5G8A==
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/emphasize/-/emphasize-4.1.0.tgz#35ddbae488c356adfb2646671235815a3367d97a"
+  integrity sha512-QJaGYAB+nLDfg8zPQI1mEWOzponYlyObiNUoHWTxyRAE8utAvfeJhYtdrMAvklwtlna8vY35JjIiq/gFO1xu7A==
   dependencies:
     chalk "^4.0.0"
-    highlight.js "~10.1.0"
-    lowlight "~1.14.0"
+    highlight.js "~10.2.0"
+    lowlight "~1.15.0"
 
 encoding@^0.1.11:
   version "0.1.12"
@@ -4587,15 +4587,10 @@ he@^1.1.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-highlight.js@^10.1.2:
+highlight.js@^10.1.2, highlight.js@~10.2.0:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.2.1.tgz#09784fe2e95612abbefd510948945d4fe6fa9668"
   integrity sha512-A+sckVPIb9zQTUydC9lpRX1qRFO/N0OKEh0NwIr65ckvWA/oMY8v9P3+kGRK3w2ULSh9E8v5MszXafodQ6039g==
-
-highlight.js@~10.1.0:
-  version "10.1.2"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.1.2.tgz#c20db951ba1c22c055010648dfffd7b2a968e00c"
-  integrity sha512-Q39v/Mn5mfBlMff9r+zzA+gWxRsCRKwEMvYTiisLr/XUiFI/4puWt0Ojdko3R3JCNWGdOWaA5g/Yxqa23kC5AA==
 
 hosted-git-info@^2.1.4, hosted-git-info@^2.7.1:
   version "2.8.8"
@@ -6100,13 +6095,13 @@ lowercase-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-2.0.0.tgz#2603e78b7b4b0006cbca2fbcc8a3202558ac9479"
   integrity sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==
 
-lowlight@~1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/lowlight/-/lowlight-1.14.0.tgz#83ebc143fec0f9e6c0d3deffe01be129ce56b108"
-  integrity sha512-N2E7zTM7r1CwbzwspPxJvmjAbxljCPThTFawEX2Z7+P3NGrrvY54u8kyU16IY4qWfoVIxY8SYCS8jTkuG7TqYA==
+lowlight@~1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/lowlight/-/lowlight-1.15.0.tgz#51a8888852493cbbe4a7f39919b237a1d502c18c"
+  integrity sha512-GhG/R+2zt5Wg8kCfOhapH8wDdJSHSIvdDW/DOPXCeResVqgHYLnOHBp6g9DoUIPVIyBpvQYCG4SV7XeelYFpyA==
   dependencies:
     fault "^1.0.0"
-    highlight.js "~10.1.0"
+    highlight.js "~10.2.0"
 
 lru-cache@^4.1.5:
   version "4.1.5"
