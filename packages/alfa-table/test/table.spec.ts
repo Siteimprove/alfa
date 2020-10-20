@@ -1,4 +1,3 @@
-import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
 import { Table } from "../src";
@@ -18,10 +17,6 @@ import {
 } from "./testcases";
 
 import { Cell } from "../src/cell";
-import TableModelError = Table.Error.TableModelError;
-import { List } from "@siteimprove/alfa-list";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import first = Iterable.first;
 
 test("Builder.from() computes correct header variants", (t) => {
   const expensesTable = Table.Builder.from(expenses.element).get();
@@ -68,7 +63,7 @@ test("from() detects table model errors", (t) => {
     [...Table.from(errors.emptyCol).get().errors],
     [
       {
-        error: TableModelError.EmptyColumn,
+        error: Table.Error.TableModelError.EmptyColumn,
         x: 1,
       },
     ]
@@ -77,7 +72,7 @@ test("from() detects table model errors", (t) => {
     [...Table.from(errors.emptyRow).get().errors],
     [
       {
-        error: TableModelError.EmptyRow,
+        error: Table.Error.TableModelError.EmptyRow,
         y: 1,
       },
     ]
@@ -86,7 +81,7 @@ test("from() detects table model errors", (t) => {
     [...Table.from(errors.coveredTwice).get().errors],
     [
       {
-        error: TableModelError.CollidingCells,
+        error: Table.Error.TableModelError.CollidingCells,
         x: 1,
         y: 1,
       },

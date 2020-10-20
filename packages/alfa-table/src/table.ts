@@ -5,7 +5,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -19,7 +19,7 @@ import { Scope } from "./scope";
 import { Set } from "@siteimprove/alfa-set";
 
 const { compare } = Comparable;
-const { concat, filter, map, some } = Iterable;
+const { concat, map } = Iterable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model

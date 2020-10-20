@@ -4,7 +4,6 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -14,7 +13,7 @@ import { isHtmlElementWithName } from "./helpers";
 import { Set } from "@siteimprove/alfa-set";
 
 const { compare } = Comparable;
-const { concat, some } = Iterable;
+const { concat } = Iterable;
 
 /**
  * Build artifact, corresponds to a single <tr> element
