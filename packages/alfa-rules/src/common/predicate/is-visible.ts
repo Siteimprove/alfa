@@ -2,6 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 import { isRendered } from "./is-rendered";
@@ -12,15 +13,16 @@ const { and, or } = Refinement;
 const { isElement } = Element;
 const { isText } = Text;
 
-export function isVisible(device: Device): Predicate<Node> {
+export function isVisible(device: Device, context?: Context): Predicate<Node> {
   return and(
-    isRendered(device),
-    not(isTransparent(device)),
-    not(and(or(isElement, isText), isClipped(device))),
+    isRendered(device, context),
+    not(isTransparent(device, context)),
+    not(and(or(isElement, isText), isClipped(device, context))),
     (node) => {
       if (Element.isElement(node)) {
-        const visibility = Style.from(node, device).computed("visibility")
-          .value;
+        const visibility = Style.from(node, device, context).computed(
+          "visibility"
+        ).value;
 
         if (visibility.value !== "visible") {
           return false;
@@ -36,10 +38,13 @@ export function isVisible(device: Device): Predicate<Node> {
   );
 }
 
-function isClipped(device: Device): Predicate<Element | Text> {
-  return function isClipped(node): boolean {
+function isClipped(
+  device: Device,
+  context?: Context
+): Predicate<Element | Text> {
+  return function isClipped(node) {
     if (Element.isElement(node)) {
-      const style = Style.from(node, device);
+      const style = Style.from(node, device, context);
 
       const { value: height } = style.computed("height");
       const { value: width } = style.computed("width");
@@ -58,12 +63,6 @@ function isClipped(device: Device): Predicate<Element | Text> {
       }
     }
 
-    for (const parent of node.parent({ flattened: true })) {
-      if (Element.isElement(parent)) {
-        return isClipped(parent);
-      }
-    }
-
-    return false;
+    return node.parent({ flattened: true }).filter(isElement).some(isClipped);
   };
 }

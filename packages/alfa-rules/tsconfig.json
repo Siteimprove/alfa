@@ -27,6 +27,7 @@
     "src/common/predicate/is-focusable.ts",
     "src/common/predicate/is-ignored.ts",
     "src/common/predicate/is-inert.ts",
+    "src/common/predicate/is-keyboard-actionable.ts",
     "src/common/predicate/is-marked-decorative.ts",
     "src/common/predicate/is-perceivable.ts",
     "src/common/predicate/is-rendered.ts",
@@ -108,6 +109,7 @@
     "src/sia-r84/rule.ts",
     "src/sia-r85/rule.ts",
     "src/sia-r86/rule.ts",
+    "src/sia-r87/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
@@ -141,7 +143,8 @@
     "test/sia-r83/rule.spec.tsx",
     "test/sia-r84/rule.spec.tsx",
     "test/sia-r85/rule.spec.tsx",
-    "test/sia-r86/rule.spec.tsx"
+    "test/sia-r86/rule.spec.tsx",
+    "test/sia-r87/rule.spec.tsx"
   ],
   "references": [
     {
@@ -215,6 +218,9 @@
     },
     {
       "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-selector"
     },
     {
       "path": "../alfa-sequence"

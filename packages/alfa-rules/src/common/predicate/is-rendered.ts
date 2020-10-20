@@ -1,13 +1,16 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Comment, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 const { isElement, hasName } = Element;
-const { and } = Predicate;
 
-export function isRendered(device: Device): Predicate<Node> {
-  return (node) => {
+/**
+ * @see https://html.spec.whatwg.org/#being-rendered
+ */
+export function isRendered(device: Device, context?: Context): Predicate<Node> {
+  return function isRendered(node) {
     // Children of <iframe> elements act as fallback content in legacy user
     // agents and should therefore never be considered rendered.
     if (node.parent().filter(isElement).some(hasName("iframe"))) {
@@ -15,7 +18,8 @@ export function isRendered(device: Device): Predicate<Node> {
     }
 
     if (Element.isElement(node)) {
-      const display = Style.from(node, device).computed("display").value;
+      const display = Style.from(node, device, context).computed("display")
+        .value;
 
       const [outside] = display;
 
@@ -28,6 +32,6 @@ export function isRendered(device: Device): Predicate<Node> {
       return false;
     }
 
-    return node.parent({ flattened: true }).every(isRendered(device));
+    return node.parent({ flattened: true }).every(isRendered);
   };
 }
