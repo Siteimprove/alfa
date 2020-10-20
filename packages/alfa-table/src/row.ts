@@ -35,7 +35,7 @@ export namespace Row {
       cells: Iterable<Cell.Builder> = List.empty(),
       growing: Iterable<Cell.Builder> = List.empty(),
       xCurrent: number = 0,
-      slots: Array<Array<Option<Cell.Builder>>> = [[]]
+      slots: Array<Array<List<Cell.Builder>>> = [[]]
     ): Builder {
       return new Builder(
         y,
@@ -57,7 +57,7 @@ export namespace Row {
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
     // Cell covering a given slot, either from this._cells or this._downwardGrowingCells
-    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
+    private readonly _slots: Array<Array<List<Cell.Builder>>>;
 
     private constructor(
       y: number,
@@ -67,7 +67,7 @@ export namespace Row {
       cells: Iterable<Cell.Builder>,
       growing: Iterable<Cell.Builder>,
       xCurrent: number,
-      slots: Array<Array<Option<Cell.Builder>>>
+      slots: Array<Array<List<Cell.Builder>>>
     ) {
       this._y = y;
       this._xCurrent = xCurrent;
@@ -103,8 +103,10 @@ export namespace Row {
       return this._downwardGrowingCells;
     }
 
-    public slot(x: number, y: number): Option<Cell.Builder> {
-      return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
+    public slot(x: number, y: number): List<Cell.Builder> {
+      return this._slots?.[x]?.[y] === undefined
+        ? List.empty()
+        : this._slots[x][y];
     }
 
     /**
@@ -127,7 +129,7 @@ export namespace Row {
       element?: Element;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<Option<Cell.Builder>>>;
+      slots?: Array<Array<List<Cell.Builder>>>;
     }): Builder {
       return Builder.of(
         y,
@@ -197,7 +199,7 @@ export namespace Row {
             this._slots[x] = [];
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._slots[x][y] = Some.of(cell);
+            this._slots[x][y] = List.of(cell);
           }
         }
       }
@@ -256,13 +258,13 @@ export namespace Row {
       yCurrent: number,
       // Non-growing cells from out of the current row that may cover it.
       // These are essentially cells with a fixed rowspan from previous rows.
-      externalCover: (x: number, y: number) => Option<Cell.Builder>
+      externalCover: (x: number, y: number) => List<Cell.Builder>
     ): Builder {
-      const covering = this.slot(this._xCurrent, yCurrent).or(
+      const covering = this.slot(this._xCurrent, yCurrent).concat(
         externalCover(this._xCurrent, yCurrent)
       );
 
-      if (this._xCurrent < this._width && covering.isSome()) {
+      if (this._xCurrent < this._width && !covering.isEmpty()) {
         return this._update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
           yCurrent,
           externalCover
@@ -323,8 +325,8 @@ export namespace Row {
       w: number = 0,
       // Non-growing cells from out of the current row that may cover it.
       // These are essentially cells with a fixed rowspan from previous rows.
-      externalCover: (x: number, y: number) => Option<Cell.Builder> = (x, y) =>
-        None
+      externalCover: (x: number, y: number) => List<Cell.Builder> = (x, y) =>
+        List.empty()
     ): Result<Builder, string> {
       if (tr.name !== "tr") {
         return Err.of("This element is not a table row");

@@ -440,7 +440,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
      */
     private _internalHeaderScanning(
-      cover: (x: number, y: number) => Option<Builder>,
+      cover: (x: number, y: number) => List<Builder>,
       initialX: number,
       initialY: number,
       decreaseX: boolean
@@ -468,13 +468,12 @@ export namespace Cell {
       ) {
         // 7
         const covering = cover(x, y);
-        if (covering.isNone()) {
-          // More than one cell covering a slot is a table model error. Not sure why the test is in the algorithm…
-          // (0 cell is possible, more than one is not)
+        if (covering.size !== 1) {
+          // More than one cell covering a slot is a table model error.
           continue;
         }
         // 8
-        const currentCell = covering.get();
+        const currentCell = covering.first().get();
         // 9
         if (currentCell.kind === Cell.Kind.Header) {
           // 9.1
@@ -565,7 +564,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignImplicitHeaders(
-      cover: (x: number, y: number) => Option<Builder>,
+      cover: (x: number, y: number) => List<Builder>,
       getAboveLeftRowGroupHeaders: (
         principalCell: Builder
       ) => Iterable<Builder>,
@@ -615,7 +614,7 @@ export namespace Cell {
      */
     public assignHeaders(
       table: Element,
-      cover: (x: number, y: number) => Option<Builder>,
+      cover: (x: number, y: number) => List<Builder>,
       getAboveLeftRowGroupHeaders: (
         principalCell: Builder
       ) => Iterable<Builder>,

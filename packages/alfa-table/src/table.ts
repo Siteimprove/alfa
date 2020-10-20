@@ -132,7 +132,7 @@ export namespace Table {
       height: number = 0,
       cells: Iterable<Cell.Builder> = List.empty(),
       downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
-      slots: Array<Array<Option<Cell.Builder>>> = [[]],
+      slots: Array<Array<List<Cell.Builder>>> = [[]],
       rowGroups: Iterable<RowGroup> = List.empty(),
       colGroups: Iterable<ColumnGroup> = List.empty(),
       rowGroupHeaders: Iterable<Cell.Builder> = List.empty(),
@@ -156,7 +156,7 @@ export namespace Table {
     private readonly _table: Table;
     private readonly _cells: List<Cell.Builder>;
     private readonly _downwardGrowingCells: List<Cell.Builder>;
-    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
+    private readonly _slots: Array<Array<List<Cell.Builder>>>;
     private readonly _rowGroupHeaders: List<Cell.Builder>;
     private readonly _columnGroupHeaders: List<Cell.Builder>;
 
@@ -166,7 +166,7 @@ export namespace Table {
       height: number,
       cells: Iterable<Cell.Builder>,
       downwardGrowingCells: Iterable<Cell.Builder>,
-      slots: Array<Array<Option<Cell.Builder>>>,
+      slots: Array<Array<List<Cell.Builder>>>,
       rowGroups: Iterable<RowGroup>,
       colGroups: Iterable<ColumnGroup>,
       rowGroupHeaders: Iterable<Cell.Builder>,
@@ -226,8 +226,10 @@ export namespace Table {
       );
     }
 
-    public slot(x: number, y: number): Option<Cell.Builder> {
-      return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
+    public slot(x: number, y: number): List<Cell.Builder> {
+      return this._slots?.[x]?.[y] === undefined
+        ? List.empty()
+        : this._slots[x][y];
     }
 
     /**
@@ -250,7 +252,7 @@ export namespace Table {
       height?: number;
       cells?: Iterable<Cell.Builder>;
       downwardGrowingCells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<Option<Cell.Builder>>>;
+      slots?: Array<Array<List<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
@@ -277,7 +279,7 @@ export namespace Table {
       element?: Element;
       width?: number;
       height?: number;
-      slots?: Array<Array<Option<Cell.Builder>>>;
+      slots?: Array<Array<List<Cell.Builder>>>;
       rowGroups?: Iterable<RowGroup>;
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
@@ -331,7 +333,7 @@ export namespace Table {
             this._slots[x] = [];
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._slots[x][y] = Some.of(cell);
+            this._slots[x][y] = List.of(cell);
           }
         }
       }
@@ -654,7 +656,7 @@ export namespace Table {
       // and make access easier to handle (slots[x][y] is never undefined after this).
       // To get a PACKED_ELEMENTS array, we actually need to push to it:
       // @see https://v8.dev/blog/elements-kinds#avoid-creating-holes
-      const slots: Array<Array<Option<Cell.Builder>>> = [];
+      const slots: Array<Array<List<Cell.Builder>>> = [];
       for (let x = 0; x < table.width; x++) {
         slots.push([]);
         for (let y = 0; y < table.height; y++) {
