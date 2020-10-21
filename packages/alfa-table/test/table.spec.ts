@@ -6,7 +6,6 @@ import {
   apple,
   colGroupImplicitHeaders,
   duplicateIDExplicitHeaders,
-  errors,
   expenses,
   expensesNum,
   explicitHeaders,
@@ -55,37 +54,6 @@ test("from() builds correct table model", (t) => {
   t.deepEqual(
     Table.from(expensesNum.element).get().toJSON(),
     expensesNum.expected.toJSON()
-  );
-});
-
-test("from() detects table model errors", (t) => {
-  t.deepEqual(
-    [...Table.from(errors.emptyCol).get().errors],
-    [
-      {
-        error: Table.Error.TableModelError.EmptyColumn,
-        x: 1,
-      },
-    ]
-  );
-  t.deepEqual(
-    [...Table.from(errors.emptyRow).get().errors],
-    [
-      {
-        error: Table.Error.TableModelError.EmptyRow,
-        y: 1,
-      },
-    ]
-  );
-  t.deepEqual(
-    [...Table.from(errors.coveredTwice).get().errors],
-    [
-      {
-        error: Table.Error.TableModelError.CollidingCells,
-        x: 1,
-        y: 1,
-      },
-    ]
   );
 });
 

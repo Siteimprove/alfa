@@ -31,18 +31,9 @@ export class Table implements Equatable, Serializable {
     height: number = 0,
     cells: Iterable<Cell> = List.empty(),
     rowGroups: Iterable<RowGroup> = List.empty(),
-    columnGroups: Iterable<ColumnGroup> = List.empty(),
-    errors: Iterable<Table.TableModelError> = List.empty()
+    columnGroups: Iterable<ColumnGroup> = List.empty()
   ): Table {
-    return new Table(
-      element,
-      width,
-      height,
-      cells,
-      rowGroups,
-      columnGroups,
-      errors
-    );
+    return new Table(element, width, height, cells, rowGroups, columnGroups);
   }
 
   private readonly _width: number;
@@ -51,7 +42,6 @@ export class Table implements Equatable, Serializable {
   private readonly _cells: List<Cell>;
   private readonly _rowGroups: List<RowGroup>;
   private readonly _columnGroups: List<ColumnGroup>;
-  private readonly _errors: List<Table.TableModelError>;
 
   private constructor(
     element: Element,
@@ -59,8 +49,7 @@ export class Table implements Equatable, Serializable {
     height: number,
     cells: Iterable<Cell>,
     rowGroups: Iterable<RowGroup>,
-    columnGroups: Iterable<ColumnGroup>,
-    errors: Iterable<Table.TableModelError>
+    columnGroups: Iterable<ColumnGroup>
   ) {
     this._width = width;
     this._height = height;
@@ -68,7 +57,6 @@ export class Table implements Equatable, Serializable {
     this._cells = List.from(cells);
     this._rowGroups = List.from(rowGroups);
     this._columnGroups = List.from(columnGroups);
-    this._errors = List.from(errors);
   }
 
   public get width(): number {
@@ -93,10 +81,6 @@ export class Table implements Equatable, Serializable {
 
   public get rowGroups(): Iterable<RowGroup> {
     return this._rowGroups;
-  }
-
-  public get errors(): Iterable<Table.TableModelError> {
-    return this._errors;
   }
 
   public equals(value: unknown): value is this {
@@ -124,14 +108,9 @@ export class Table implements Equatable, Serializable {
 
 export namespace Table {
   import Kind = Cell.Kind;
-  const cache = Cache.empty<
-    Element,
-    Result<Table, string | Table.TableModelError>
-  >();
+  const cache = Cache.empty<Element, Result<Table, string>>();
 
-  export function from(
-    element: Element
-  ): Result<Table, string | Table.TableModelError> {
+  export function from(element: Element): Result<Table, string> {
     return cache.get(element, () =>
       Builder.from(element).map((table) => table.table)
     );
@@ -158,8 +137,7 @@ export namespace Table {
       rowGroups: Iterable<RowGroup> = List.empty(),
       colGroups: Iterable<ColumnGroup> = List.empty(),
       rowGroupHeaders: Iterable<Cell.Builder> = List.empty(),
-      columnGroupHeaders: Iterable<Cell.Builder> = List.empty(),
-      errors: Iterable<TableModelError> = List.empty()
+      columnGroupHeaders: Iterable<Cell.Builder> = List.empty()
     ): Builder {
       return new Builder(
         element,
@@ -171,8 +149,7 @@ export namespace Table {
         rowGroups,
         colGroups,
         rowGroupHeaders,
-        columnGroupHeaders,
-        errors
+        columnGroupHeaders
       );
     }
 
@@ -194,8 +171,7 @@ export namespace Table {
       rowGroups: Iterable<RowGroup>,
       colGroups: Iterable<ColumnGroup>,
       rowGroupHeaders: Iterable<Cell.Builder>,
-      columnGroupHeaders: Iterable<Cell.Builder>,
-      errors: Iterable<TableModelError>
+      columnGroupHeaders: Iterable<Cell.Builder>
     ) {
       this._table = Table.of(
         element,
@@ -203,8 +179,7 @@ export namespace Table {
         height,
         List.empty(),
         rowGroups,
-        colGroups,
-        errors
+        colGroups
       );
       this._cells = List.from(cells);
       this._downwardGrowingCells = List.from(downwardGrowingCells);
@@ -241,10 +216,6 @@ export namespace Table {
       return this._table.rowGroups;
     }
 
-    public get errors(): Iterable<TableModelError> {
-      return this._table.errors;
-    }
-
     public get table(): Table {
       return Table.of(
         this.element,
@@ -252,8 +223,7 @@ export namespace Table {
         this.height,
         this._cells.map((cell) => cell.cell),
         this.rowGroups,
-        this.colGroups,
-        this.errors
+        this.colGroups
       );
     }
 
@@ -275,7 +245,6 @@ export namespace Table {
       colGroups = this.colGroups,
       rowGroupHeaders = this._rowGroupHeaders,
       columnGroupHeaders = this._columnGroupHeaders,
-      errors = this.errors,
     }: {
       element?: Element;
       width?: number;
@@ -287,7 +256,6 @@ export namespace Table {
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
       columnGroupHeaders?: Iterable<Cell.Builder>;
-      errors?: Iterable<TableModelError>;
     }): Builder {
       return Builder.of(
         element,
@@ -299,8 +267,7 @@ export namespace Table {
         rowGroups,
         colGroups,
         rowGroupHeaders,
-        columnGroupHeaders,
-        errors
+        columnGroupHeaders
       );
     }
 
@@ -316,7 +283,6 @@ export namespace Table {
       colGroups?: Iterable<ColumnGroup>;
       rowGroupHeaders?: Iterable<Cell.Builder>;
       columnGroupHeaders?: Iterable<Cell.Builder>;
-      errors?: Iterable<TableModelError>;
     }): Builder {
       return this._updateUnsafe(update);
     }
@@ -641,57 +607,7 @@ export namespace Table {
         yCurrent = table.height;
       }
       // 20, 21
-      // Of course, errors are more or less caught and repaired by browsers.
-      // Note that having a rowspan that extends out of the row group is not a table error per se!
-
-      // Is this slot covered? If more than once => error.
-      for (let x = 0; x < table.width; x++) {
-        for (let y = 0; y < table.height; y++) {
-          if (table.slot(x, y).size > 1) {
-            table = table.update({
-              errors: concat(table.errors, [
-                {
-                  error: Error.TableModelError.CollidingCells,
-                  x,
-                  y,
-                },
-              ]),
-            });
-          }
-        }
-      }
-
-      // Does this row/column have a cell anchored in it?
-      const rowCovering: Array<boolean> = [];
-      const columnCovering: Array<boolean> = [];
-
-      for (const cell of table.cells) {
-        columnCovering[cell.anchor.x] = true;
-        rowCovering[cell.anchor.y] = true;
-      }
-
-      // checking for rows
-      for (let y = 0; y < table.height; y++) {
-        if (!(rowCovering[y] ?? false)) {
-          table = table.update({
-            errors: concat(table.errors, [
-              { error: Error.TableModelError.EmptyRow, y },
-            ]),
-          });
-        }
-      }
-      // checking for cols
-      for (let x = 0; x < table.width; x++) {
-        if (!(columnCovering[x] ?? false)) {
-          table = table.update({
-            errors: concat(table.errors, [
-              { error: Error.TableModelError.EmptyColumn, x },
-            ]),
-          });
-        }
-      }
-
-      // 21
+      // Table model errors do not prevent buildins of a table model, so we just ignore them.
 
       // The slots array might be sparse (or at least have holes) if some slots are not covered.
       // We first turn it into a dense array to allow array-operation optimisations
@@ -725,25 +641,4 @@ export namespace Table {
       return Ok.of(table);
     }
   }
-
-  export namespace Error {
-    export enum TableModelError {
-      EmptyRow = "no cell anchored in row",
-      EmptyColumn = "no cell anchored in column",
-      CollidingCells = "slot covered by several cells",
-    }
-
-    export type EmptyRow = { error: TableModelError.EmptyRow; y: number };
-    export type EmptyColumn = { error: TableModelError.EmptyColumn; x: number };
-    export type CollidingCells = {
-      error: TableModelError.CollidingCells;
-      x: number;
-      y: number;
-    };
-  }
-
-  export type TableModelError =
-    | Error.EmptyRow
-    | Error.EmptyColumn
-    | Error.CollidingCells;
 }

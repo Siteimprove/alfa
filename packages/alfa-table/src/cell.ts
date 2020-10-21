@@ -472,7 +472,6 @@ export namespace Cell {
         // 7
         const covering = cover(x, y);
         if (covering.size !== 1) {
-          // More than one cell covering a slot is a table model error.
           continue;
         }
         // 8

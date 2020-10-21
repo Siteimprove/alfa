@@ -699,46 +699,6 @@ export namespace expensesNum {
   );
 }
 
-export namespace errors {
-  // second column (column 1) has no cell anchored in it.
-  export const emptyCol = (
-    <table>
-      <tr>
-        <td id="one-two" colspan={2}>
-          2 columns
-        </td>
-        <td id="three">third column</td>
-      </tr>
-    </table>
-  );
-
-  // second row (row 1) has no cell anchored in it.
-  export const emptyRow = (
-    <table>
-      <tr>
-        <td rowspan={2}>2 rows</td>
-      </tr>
-      <tr />
-      <tr>
-        <td>third row</td>
-      </tr>
-    </table>
-  );
-
-  // slot (1, 1) is covered twice
-  export const coveredTwice = (
-    <table>
-      <tr>
-        <td>1 row, 1 col</td>
-        <td rowspan={2}>2 rows</td>
-      </tr>
-      <tr>
-        <td colspan={2}>2 cols</td>
-      </tr>
-    </table>
-  );
-}
-
 export namespace headersVariant {
   /*
   C | R |

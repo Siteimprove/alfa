@@ -237,7 +237,7 @@ export namespace Row {
             ._addCell(cell)
       );
       // 13
-      // Double coverage check made at the end of table building to de-entangle code
+      // We ignore table model errors since they do not prevent a model from being built.
     }
 
     public adjustWidth(width: number): Builder {
