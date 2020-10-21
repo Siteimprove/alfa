@@ -1,3 +1,4 @@
+import { Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -108,6 +109,12 @@ export class Some<T> implements Option<T> {
 
   public getOrElse(): T {
     return this._value;
+  }
+
+  public compareWith(option: Option<T>, comparer: Comparer<T>): Comparison {
+    return option.isSome()
+      ? comparer(this._value, option._value)
+      : Comparison.Greater;
   }
 
   public equals(value: unknown): value is this {

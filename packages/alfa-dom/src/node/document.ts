@@ -1,9 +1,9 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Document extends Node {
   public static of(

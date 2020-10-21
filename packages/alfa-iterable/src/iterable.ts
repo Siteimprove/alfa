@@ -1,3 +1,4 @@
+import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -507,6 +508,19 @@ export namespace Iterable {
     }
 
     return result;
+  }
+
+  export function sort<T extends Comparable<T>>(
+    iterable: Iterable<T>
+  ): Iterable<T> {
+    return sortWith(iterable, Comparable.compare);
+  }
+
+  export function* sortWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
+  ): Iterable<T> {
+    yield* [...iterable].sort(comparer);
   }
 
   export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {

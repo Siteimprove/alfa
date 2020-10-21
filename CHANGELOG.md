@@ -37,7 +37,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`.
 
-- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable#takeLastWhile()`, `Iterable#takeLastUntil()`, `Iterable#skipLastWhile()`, `Iterable#skipLastUntil()`, `Iterable#trimLeading()`, `Iterable#trimTrailing()`, `Iterable#trim()`, and `Iterable#hash()` are now available.
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable#takeLastWhile()`, `Iterable#takeLastUntil()`, `Iterable#skipLastWhile()`, `Iterable#skipLastUntil()`, `Iterable#trimLeading()`, `Iterable#trimTrailing()`, `Iterable#trim()`, `Iterable#hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): A `Comparer` type is now available for modelling functions that do comparisons. A new function `Comparable.isComparable()` is now also available.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#sortWith()` is now available and implemented by `List` and `Sequence`. Additionally, `List.sort()` and `Sequence.sort()` are now also available.
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option#compareWith()` is now available.
 
 ### Changed
 
