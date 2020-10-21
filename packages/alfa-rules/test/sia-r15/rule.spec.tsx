@@ -1,8 +1,9 @@
-import { Document } from "@siteimprove/alfa-dom";
 import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
-import { Response } from "@siteimprove/alfa-http";
 import { test } from "@siteimprove/alfa-test";
+
+import { Document } from "@siteimprove/alfa-dom";
+import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
 
 import R15, { Outcomes } from "../../src/sia-r15/rule";
