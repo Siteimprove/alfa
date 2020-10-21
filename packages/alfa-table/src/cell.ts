@@ -477,6 +477,17 @@ export namespace Cell {
         // 7
         const covering = cover(x, y);
         if (covering.size !== 1) {
+          if (covering.size > 1) {
+            console.log(
+              `Cell at (${x}, ${y}) is covered ${covering.size} times`
+            );
+            for (const cell of covering) {
+              console.log(cell);
+            }
+            const [foo, bar] = [...covering];
+            console.log(`Are they equal? ${foo.equals(bar)}`);
+            throw new Error("Boom");
+          }
           continue;
         }
         // 8

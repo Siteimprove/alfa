@@ -333,7 +333,7 @@ export namespace Table {
           }
           for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
             this._slots[x][y] = (this._slots[x][y] ?? Set.empty())
-              .reject((item) => item.equals(cell))
+              // .reject((item) => item.equals(cell))
               .add(cell);
           }
         }
