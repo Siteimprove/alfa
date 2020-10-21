@@ -13,6 +13,9 @@
       "path": "../alfa-collection"
     },
     {
+      "path": "../alfa-comparable"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
