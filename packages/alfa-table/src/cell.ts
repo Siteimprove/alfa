@@ -203,6 +203,9 @@ export namespace Cell {
     private _explicitHeaders: List<Element>;
     private _implicitHeaders: List<Element>;
 
+    private readonly _id: number; // id kept when the cell changes
+    private static _nextId = 0; // first usable id.
+
     public static of(
       kind: Cell.Kind,
       x: number,
@@ -214,7 +217,8 @@ export namespace Cell {
       downwardGrowing: boolean = false,
       scope: Option<Scope> = None,
       explicitHeaders: Iterable<Element> = List.empty(),
-      implicitHeaders: Iterable<Element> = List.empty()
+      implicitHeaders: Iterable<Element> = List.empty(),
+      id?: number
     ): Builder {
       return new Builder(
         kind,
@@ -227,7 +231,8 @@ export namespace Cell {
         downwardGrowing,
         scope,
         explicitHeaders,
-        implicitHeaders
+        implicitHeaders,
+        id
       );
     }
 
@@ -242,7 +247,8 @@ export namespace Cell {
       downwardGrowing: boolean,
       scope: Option<Scope>,
       explicitHeaders: Iterable<Element>,
-      implicitHeaders: Iterable<Element>
+      implicitHeaders: Iterable<Element>,
+      id?: number
     ) {
       this._cell = Cell.of(
         kind,
@@ -258,6 +264,7 @@ export namespace Cell {
       this._scope = scope;
       this._explicitHeaders = List.from(explicitHeaders);
       this._implicitHeaders = List.from(implicitHeaders);
+      this._id = id ?? Builder._nextId++;
     }
 
     private _update({
@@ -285,7 +292,7 @@ export namespace Cell {
       explicitHeaders?: Iterable<Element>;
       implicitHeaders?: Iterable<Element>;
     }): Builder {
-      this._cell = Cell.of(
+      return Builder.of(
         kind,
         x,
         y,
@@ -293,14 +300,12 @@ export namespace Cell {
         height,
         element,
         variant,
-        List.empty()
+        downwardGrowing,
+        scope,
+        explicitHeaders,
+        implicitHeaders,
+        this._id // id is kept through all incarnations
       );
-      this._downwardGrowing = downwardGrowing;
-      this._scope = scope;
-      this._explicitHeaders = List.from(explicitHeaders);
-      this._implicitHeaders = List.from(implicitHeaders);
-
-      return this; // for chaining
     }
 
     public get cell(): Cell {
@@ -632,7 +637,8 @@ export namespace Cell {
     }
 
     public equals(value: unknown): value is this {
-      return value instanceof Builder && this._cell.equals(value._cell);
+      // return value instanceof Builder && this._cell.equals(value._cell);
+      return value instanceof Builder && value._id === this._id;
     }
 
     public toJSON(): Cell.Builder.JSON {
