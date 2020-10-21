@@ -34,6 +34,7 @@
     "src/common/predicate/is-transparent.ts",
     "src/common/predicate/is-visible.ts",
     "src/common/predicate/is-whitespace.ts",
+    "src/common/predicate/reference-same-resource.ts",
     "src/common/question.ts",
     "src/index.ts",
     "src/rules.ts",

@@ -1,26 +1,24 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { URL } from "@siteimprove/alfa-url";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { equals } = Equatable;
-const { every, filter, first } = Iterable;
+const { filter } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -28,50 +26,51 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        const iframes = document
-          .descendants({ flattened: true, nested: true })
-          .filter(isElement)
-          .filter(
-            and(
-              hasName("iframe"),
-              hasNamespace(Namespace.HTML),
-              not(isIgnored(device)),
-              hasNonEmptyAccessibleName(device)
+        return filter(
+          document
+            .descendants({ flattened: true, nested: true })
+            .filter(isElement)
+            .filter(
+              and(
+                hasName("iframe"),
+                hasNamespace(Namespace.HTML),
+                not(isIgnored(device)),
+                hasNonEmptyAccessibleName(device)
+              )
             )
-          );
+            .reduce((groups, iframe) => {
+              for (const [node] of Node.from(iframe, device)) {
+                const name = node.name.map((name) => name.value);
 
-        const groups = iframes
-          .reduce((groups, iframe) => {
-            for (const [node] of Node.from(iframe, device)) {
-              const name = node.name.map((name) => name.value);
+                groups = groups.set(
+                  name,
+                  groups
+                    .get(name)
+                    .getOrElse(() => List.empty<Element>())
+                    .append(iframe)
+                );
+              }
 
-              groups = groups.set(
-                name,
-                groups
-                  .get(name)
-                  .getOrElse(() => List.empty<Element>())
-                  .append(iframe)
-              );
-            }
-
-            return groups;
-          }, Map.empty<Option<string>, List<Element>>())
-          .values();
-        return filter(groups, (group) => group.size > 1);
+              return groups;
+            }, Map.empty<Option<string>, List<Element>>())
+            .values(),
+          (group) => group.size > 1
+        );
       },
 
       expectations(target) {
-        const source = commonValue(
-          List.from(target).map((iframe) =>
-            embeddedResource(iframe, response.url)
-          )
+        const embedSameResource = [...target].every(
+          (element, i, elements) =>
+            // This is either the first element...
+            i === 0 ||
+            // ...or an element that embeds the same resource as the element
+            // before it.
+            referenceSameResource(response.url)(element, elements[i - 1])
         );
 
         return {
           1: expectation(
-            source.isSome() &&
-              // always ask question if we can't find source, presumably the content doc is fed another way into the iframes
-              source.get().isOk(),
+            embedSameResource,
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
@@ -107,43 +106,4 @@ export namespace Outcomes {
       `The \`<iframe>\` elements do not embed the same or equivalent resources`
     )
   );
-}
-
-/**
- * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#process-the-iframe-attributes
- */
-function embeddedResource(
-  iframe: Element,
-  base?: string | URL
-): Result<string, string> {
-  return (
-    iframe
-      // srcdoc takes precedence.
-      .attribute("srcdoc")
-      .map((srcdoc) => Ok.of("srcdoc: " + srcdoc.value))
-      .getOrElse(() =>
-        iframe
-          // Otherwise, grab the src attribute.
-          .attribute("src")
-          .map((attribute) =>
-            URL.parse(attribute.value, base)
-              .map((url) => "src:" + url.toString())
-              .mapErr((error) => `Error when parsing URL: ${error}`)
-          )
-          .getOr(Err.of("No source found"))
-      )
-  );
-}
-
-/**
- * If iterable is not empty and all items have the same value, return it; otherwise return None.
- */
-function commonValue<T>(iterable: Iterable<T>): Option<T> {
-  const firstItem = first(iterable);
-
-  return firstItem.every((item) =>
-    every(iterable, (value) => equals(value, item))
-  )
-    ? firstItem
-    : None;
 }
