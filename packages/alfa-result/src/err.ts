@@ -2,6 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -9,6 +10,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Ok } from "./ok";
 import { Result } from "./result";
+
+const { not, test } = Predicate;
 
 export class Err<E> implements Result<never, E> {
   public static of<E>(error: E): Err<E> {
@@ -47,6 +50,38 @@ export class Err<E> implements Result<never, E> {
 
   public reduce<U>(reducer: unknown, accumulator: U): U {
     return accumulator;
+  }
+
+  public includes(): boolean {
+    return false;
+  }
+
+  public includesErr(error: E): boolean {
+    return Equatable.equals(this._error, error);
+  }
+
+  public some(): boolean {
+    return false;
+  }
+
+  public someErr(predicate: Predicate<E>): boolean {
+    return test(predicate, this._error);
+  }
+
+  public none(): boolean {
+    return true;
+  }
+
+  public noneErr(predicate: Predicate<E>): boolean {
+    return test(not(predicate), this._error);
+  }
+
+  public every(): boolean {
+    return true;
+  }
+
+  public everyErr(predicate: Predicate<E>): boolean {
+    return test(predicate, this._error);
   }
 
   public and(): this {
