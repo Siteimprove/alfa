@@ -6163,10 +6163,10 @@ marky@^1.2.0:
   resolved "https://registry.yarnpkg.com/marky/-/marky-1.2.1.tgz#a3fcf82ffd357756b8b8affec9fdbf3a30dc1b02"
   integrity sha512-md9k+Gxa3qLH6sUKpeC2CNkJK/Ld+bEz5X96nYwloqphQE0CKCVEKco/6jxEZixinqNdz5RFi/KaCyfbMDMAXQ==
 
-mdn-browser-compat-data@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-1.1.0.tgz#a3e2c7fa7151eaf10eb78dbbf7aef048aa020e70"
-  integrity sha512-UnOo+rQMzTeH1tI0TJjKczhtG70wk4S9MADTTyjbnFrOke0pyAGlA8QZ7dIPHr7UgrgQd+xAehbGgtiJsbCidQ==
+mdn-browser-compat-data@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-1.1.1.tgz#f07ce3d83251eb237b0c75a668407e6b0ad9ff25"
+  integrity sha512-rnengXMcgtWHxQf/QtsVZRhxm+w53XMUW/pjq0b4xjCQEwhngsxY1vQClEaKt32Q5YZc7bnLRe+lcnJBhK/s1Q==
   dependencies:
     extend "3.0.2"
 
