@@ -178,6 +178,7 @@ export namespace Property {
 }
 
 import { Background } from "./property/background";
+import { Box } from "./property/box";
 import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
@@ -203,6 +204,7 @@ const Longhands = {
   "background-clip": Background.Clip,
   "background-origin": Background.Origin,
   "background-size": Background.Size,
+  "box-shadow": Box.Shadow,
   color: Color,
   display: Display,
   "font-family": Font.Family,
