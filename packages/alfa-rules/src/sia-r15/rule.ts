@@ -7,41 +7,37 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { map, flatMap } = Iterable;
+const { filter } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
-  evaluate({ device, document }) {
+  evaluate({ device, document, response }) {
     return {
       applicability() {
-        const iframes = document
-          .descendants({ flattened: true, nested: true })
-          .filter(isElement)
-          .filter(
-            and(
-              hasName("iframe"),
-              hasNamespace(Namespace.HTML),
-              not(isIgnored(device)),
-              hasNonEmptyAccessibleName(device)
+        return filter(
+          document
+            .descendants({ flattened: true, nested: true })
+            .filter(isElement)
+            .filter(
+              and(
+                hasName("iframe"),
+                hasNamespace(Namespace.HTML),
+                not(isIgnored(device)),
+                hasNonEmptyAccessibleName(device)
+              )
             )
-          );
-
-        const roots = iframes.groupBy((iframe) => iframe.root());
-
-        return flatMap(roots.values(), (iframes) =>
-          iframes
             .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
                 const name = node.name.map((name) => name.value);
@@ -57,18 +53,24 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
               return groups;
             }, Map.empty<Option<string>, List<Element>>())
-            .values()
+            .values(),
+          (group) => group.size > 1
         );
       },
 
       expectations(target) {
-        const sources = Set.from(
-          map(target, (iframe) => iframe.attribute("src"))
+        const embedSameResource = [...target].every(
+          (element, i, elements) =>
+            // This is either the first element...
+            i === 0 ||
+            // ...or an element that embeds the same resource as the element
+            // before it.
+            referenceSameResource(response.url)(element, elements[i - 1])
         );
 
         return {
           1: expectation(
-            sources.size === 1,
+            embedSameResource,
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(

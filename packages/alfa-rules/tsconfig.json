@@ -34,6 +34,7 @@
     "src/common/predicate/is-transparent.ts",
     "src/common/predicate/is-visible.ts",
     "src/common/predicate/is-whitespace.ts",
+    "src/common/predicate/reference-same-resource.ts",
     "src/common/question.ts",
     "src/index.ts",
     "src/rules.ts",
@@ -116,6 +117,7 @@
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
     "test/sia-r13/rule.spec.tsx",
+    "test/sia-r15/rule.spec.tsx",
     "test/sia-r16/rule.spec.tsx",
     "test/sia-r21/rule.spec.tsx",
     "test/sia-r24/rule.spec.tsx",
@@ -236,6 +238,9 @@
     },
     {
       "path": "../alfa-trilean"
+    },
+    {
+      "path": "../alfa-url"
     },
     {
       "path": "../alfa-web"
