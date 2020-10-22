@@ -117,7 +117,7 @@ export class Shadow<
   public toString(): string {
     return `${this._color} ${this._vertical} ${this._horizontal} ${
       this._blur
-    } ${this._spread}${this._isInset ? " inset" : " "}`;
+    } ${this._spread}${this._isInset ? " inset" : ""}`;
   }
 }
 
