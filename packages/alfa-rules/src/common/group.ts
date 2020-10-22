@@ -64,4 +64,10 @@ export namespace Group {
       "@list": Array<earl.EARL>;
     };
   }
+
+  export function isGroup<T extends earl.Serializable>(
+    value: unknown
+  ): value is Group<T> {
+    return value instanceof Group;
+  }
 }
