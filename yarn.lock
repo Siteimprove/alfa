@@ -8931,9 +8931,9 @@ webdriver@6.6.3:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.6.6"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.6.6.tgz#750b594f5254cc0d5eb452251e5e08d10e93ad71"
-  integrity sha512-DzNSh9rx8iYFVr8gfs5q+/EwqXLEAWJSpog8cQZMABSxmooQKKpClRQ/j0dg2Lj2x7cDji69qvWDq0BtgUNzGw==
+  version "6.6.7"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.6.7.tgz#8dd35f66e392c0bc532a4e4c7a54714271e62d0f"
+  integrity sha512-Vpp+J4jiQ9zAu3U448Ry2qitUKP95+/I/NM6wvssCN7NPutEZoAbW9+4LF9Df5KEV9EIbENpOO0511dM1vwcOQ==
   dependencies:
     "@types/puppeteer" "^3.0.1"
     "@wdio/config" "6.6.3"
