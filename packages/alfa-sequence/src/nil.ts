@@ -172,6 +172,10 @@ export const Nil: Nil = new (class Nil {
     return "";
   }
 
+  public sortWith(): Nil {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Nil;
   }
