@@ -1,7 +1,8 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Document } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -13,11 +14,14 @@ import { isTabbable } from "../common/predicate/is-tabbable";
 import { isIgnored } from "../common/predicate/is-ignored";
 import { isKeyboardActionable } from "../common/predicate/is-keyboard-actionable";
 
-const { not, fold } = Predicate;
+import { Question } from "../common/question";
 
-export default Rule.Atomic.of<Page, Document>({
+const { not, fold } = Predicate;
+const { hasName, isElement } = Element;
+
+export default Rule.Atomic.of<Page, Document, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r87.html",
-  evaluate({ device, document }) {
+  evaluate({ device, document, response }) {
     return {
       applicability() {
         return fold(
@@ -29,34 +33,119 @@ export default Rule.Atomic.of<Page, Document>({
       },
 
       expectations(target) {
-        const firstTabbable = target.tabOrder().find(isTabbable(device));
+        const element = target.tabOrder().find(isTabbable(device));
+
+        const url = element
+          .filter(hasName("a"))
+          .flatMap((element) =>
+            element
+              .attribute("href")
+              .flatMap((attribute) =>
+                URL.parse(attribute.value, response.url).ok()
+              )
+          );
+
+        const reference = url
+          .filter(isInternalURL(response.url))
+          .flatMap((url) =>
+            url.fragment.flatMap((fragment) =>
+              element.flatMap((element) =>
+                element
+                  .root()
+                  .inclusiveDescendants()
+                  .filter(isElement)
+                  .find((element) => element.id.includes(fragment))
+              )
+            )
+          );
 
         return {
           1: expectation(
-            firstTabbable.isSome(),
+            element.isSome(),
             () => Outcomes.HasTabbable,
             () => Outcomes.HasNoTabbable
           ),
 
           2: expectation(
-            firstTabbable.isSome(),
+            element.isNone(),
+            () => Outcomes.HasNoTabbable,
             () =>
               expectation(
-                firstTabbable.some(hasRole((role) => role.is("link"))),
+                element.none(hasRole((role) => role.is("link"))),
+                () => Outcomes.FirstTabbableIsNotLink,
                 () =>
                   expectation(
-                    firstTabbable.some(not(isIgnored(device))),
+                    element.none(not(isIgnored(device))),
+                    () => Outcomes.FirstTabbableIsIgnored,
                     () =>
                       expectation(
-                        firstTabbable.some(isKeyboardActionable(device)),
-                        () => Outcomes.FirstTabbableIsLinkToContent,
-                        () => Outcomes.FirstTabbableIsNotKeyboardActionable
-                      ),
-                    () => Outcomes.FirstTabbableIsIgnored
-                  ),
-                () => Outcomes.FirstTabbableIsNotLink
-              ),
-            () => Outcomes.HasNoTabbable
+                        element.none(isKeyboardActionable(device)),
+                        () => Outcomes.FirstTabbableIsNotKeyboardActionable,
+                        () =>
+                          reference.isSome()
+                            ? expectation(
+                                reference.some(hasRole("main")),
+                                () => Outcomes.FirstTabbableIsLinkToContent,
+                                () =>
+                                  Question.of(
+                                    "first-tabbable-reference-is-main",
+                                    "boolean",
+                                    target,
+                                    `Does the first tabbable element of the document point to the main content?`
+                                  ).map((isMain) =>
+                                    expectation(
+                                      isMain,
+                                      () =>
+                                        Outcomes.FirstTabbableIsLinkToContent,
+                                      () =>
+                                        Outcomes.FirstTabbableIsNotLinkToContent
+                                    )
+                                  )
+                              )
+                            : Question.of(
+                                "first-tabbable-is-internal-link",
+                                "boolean",
+                                target,
+                                `Is the first tabbable element of the document an internal link?`
+                              ).map((hasInternalLink) =>
+                                expectation(
+                                  !hasInternalLink,
+                                  () => Outcomes.FirstTabbableIsNotInternalLink,
+                                  () =>
+                                    Question.of(
+                                      "first-tabbable-reference",
+                                      "node",
+                                      document,
+                                      `Where in the document does the first tabbable element point?`
+                                    ).map((reference) =>
+                                      expectation(
+                                        reference
+                                          .filter(isElement)
+                                          .some(hasRole("main")),
+                                        () =>
+                                          Outcomes.FirstTabbableIsLinkToContent,
+                                        () =>
+                                          Question.of(
+                                            "first-tabbable-reference-is-main",
+                                            "boolean",
+                                            target,
+                                            `Does the first tabbable element of the document point to the main content?`
+                                          ).map((isMain) =>
+                                            expectation(
+                                              isMain,
+                                              () =>
+                                                Outcomes.FirstTabbableIsLinkToContent,
+                                              () =>
+                                                Outcomes.FirstTabbableIsNotLinkToContent
+                                            )
+                                          )
+                                      )
+                                    )
+                                )
+                              )
+                      )
+                  )
+              )
           ),
         };
       },
@@ -75,6 +164,12 @@ export namespace Outcomes {
 
   export const FirstTabbableIsNotLink = Err.of(
     Diagnostic.of(`The first tabbable element in the document is not a link`)
+  );
+
+  export const FirstTabbableIsNotInternalLink = Err.of(
+    Diagnostic.of(
+      `The first tabbable element in the document is not an internal link`
+    )
   );
 
   export const FirstTabbableIsIgnored = Err.of(
@@ -97,4 +192,18 @@ export namespace Outcomes {
       content of the document`
     )
   );
+
+  export const FirstTabbableIsNotLinkToContent = Err.of(
+    Diagnostic.of(
+      `The first tabbable element in the document is a keyboard actionable link
+      that is included in the accessibility tree, but does not link to the main
+      block of content of the document`
+    )
+  );
+}
+
+function isInternalURL(base: URL): Predicate<URL> {
+  return (url) =>
+    url.fragment.isSome() &&
+    url.withoutFragment().equals(base.withoutFragment());
 }
