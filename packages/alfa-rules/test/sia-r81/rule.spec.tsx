@@ -5,6 +5,8 @@ import { Document } from "@siteimprove/alfa-dom";
 
 import R81, { Outcomes } from "../../src/sia-r81/rule";
 
+import { Group } from "../../src/common/group";
+
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable } from "../common/outcome";
@@ -23,7 +25,7 @@ test(`evaluate() passes two links that have the same name and reference the same
   ]);
 
   t.deepEqual(await evaluate(R81, { document }), [
-    passed(R81, target, {
+    passed(R81, Group.of(target), {
       1: Outcomes.ResolveSameResource,
     }),
   ]);
@@ -51,7 +53,7 @@ test(`evaluate() fails two links that have the same name, but reference
       })
     ),
     [
-      failed(R81, target, {
+      failed(R81, Group.of(target), {
         1: Outcomes.ResolveDifferentResource,
       }),
     ]
@@ -80,7 +82,7 @@ test(`evaluate() passes two links that have the same name and reference
       })
     ),
     [
-      passed(R81, target, {
+      passed(R81, Group.of(target), {
         1: Outcomes.ResolveEquivalentResource,
       }),
     ]

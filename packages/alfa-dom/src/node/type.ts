@@ -1,7 +1,7 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Type extends Node {
   public static of(
