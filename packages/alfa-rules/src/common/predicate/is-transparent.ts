@@ -10,10 +10,11 @@ export function isTransparent(
 ): Predicate<Node> {
   return function isTransparent(node) {
     if (Element.isElement(node)) {
-      const opacity = Style.from(node, device, context).computed("opacity")
-        .value;
-
-      if (opacity.value === 0) {
+      if (
+        Style.from(node, device, context)
+          .computed("opacity")
+          .some((opacity) => opacity.value === 0)
+      ) {
         return true;
       }
     }
