@@ -185,6 +185,7 @@ import { Font } from "./property/font";
 import { Height } from "./property/height";
 import { Line } from "./property/line";
 import { Opacity } from "./property/opacity";
+import { Outline } from "./property/outline";
 import { Overflow } from "./property/overflow";
 import { Text } from "./property/text";
 import { Transform } from "./property/transform";
@@ -214,6 +215,10 @@ const Longhands = {
   height: Height,
   "line-height": Line.Height,
   opacity: Opacity,
+  "outline-width": Outline.Width,
+  "outline-style": Outline.Style,
+  "outline-color": Outline.Color,
+  "outline-offset": Outline.Offset,
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
   "text-align": Text.Align,
@@ -230,6 +235,7 @@ const Shorthands = {
   background: Background.Shorthand,
   "background-repeat": Background.Repeat.Shorthand,
   "background-position": Background.Position.Shorthand,
+  outline: Outline.Shorthand,
   overflow: Overflow.Shorthand,
 };
 
