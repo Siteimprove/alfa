@@ -18,12 +18,11 @@ export function isRendered(device: Device, context?: Context): Predicate<Node> {
     }
 
     if (Element.isElement(node)) {
-      const display = Style.from(node, device, context).computed("display")
-        .value;
-
-      const [outside] = display;
-
-      if (outside.value === "none") {
+      if (
+        Style.from(node, device, context)
+          .computed("display")
+          .some(([outside]) => outside.value === "none")
+      ) {
         return false;
       }
     }
@@ -32,6 +31,10 @@ export function isRendered(device: Device, context?: Context): Predicate<Node> {
       return false;
     }
 
-    return node.parent({ flattened: true }).every(isRendered);
+    return node
+      .parent({
+        flattened: true,
+      })
+      .every(isRendered);
   };
 }
