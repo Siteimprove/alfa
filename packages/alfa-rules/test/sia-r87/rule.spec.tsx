@@ -154,10 +154,10 @@ test(`evaluate() fails a document with a link that would be tabbable if not
 test(`evaluate() fails a document whose first tabbable element is not a link`, async (t) => {
   const document = Document.of([
     <html>
-      <a href="#main" tabindex="-1">
+      <button />
+      <a href="#main">
         Skip to content
       </a>
-      <button />
       <main id="main">Content</main>
     </html>,
   ]);
