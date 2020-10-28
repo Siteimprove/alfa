@@ -13,7 +13,6 @@
     "src/property/height.ts",
     "src/property/line.ts",
     "src/property/opacity.ts",
-    "src/property/outline.ts",
     "src/property/overflow.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
