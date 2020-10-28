@@ -63,6 +63,11 @@ function isClipped(
       }
     }
 
-    return node.parent({ flattened: true }).filter(isElement).some(isClipped);
+    return node
+      .parent({
+        flattened: true,
+      })
+      .filter(isElement)
+      .some(isClipped);
   };
 }
