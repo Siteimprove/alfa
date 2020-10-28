@@ -20,11 +20,11 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
     not(and(or(isElement, isText), isClipped(device, context))),
     (node) => {
       if (Element.isElement(node)) {
-        const visibility = Style.from(node, device, context).computed(
-          "visibility"
-        ).value;
-
-        if (visibility.value !== "visible") {
+        if (
+          Style.from(node, device, context)
+            .computed("visibility")
+            .some((visibility) => visibility.value !== "visible")
+        ) {
           return false;
         }
       }
