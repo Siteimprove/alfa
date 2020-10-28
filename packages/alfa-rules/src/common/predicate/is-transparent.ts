@@ -9,14 +9,13 @@ export function isTransparent(
   context?: Context
 ): Predicate<Node> {
   return function isTransparent(node) {
-    if (Element.isElement(node)) {
-      if (
-        Style.from(node, device, context)
-          .computed("opacity")
-          .some((opacity) => opacity.value === 0)
-      ) {
-        return true;
-      }
+    if (
+      Element.isElement(node) &&
+      Style.from(node, device, context)
+        .computed("opacity")
+        .some((opacity) => opacity.value === 0)
+    ) {
+      return true;
     }
 
     return node

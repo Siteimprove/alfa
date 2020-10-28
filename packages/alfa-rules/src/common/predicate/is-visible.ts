@@ -19,14 +19,13 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
     not(isTransparent(device, context)),
     not(and(or(isElement, isText), isClipped(device, context))),
     (node) => {
-      if (Element.isElement(node)) {
-        if (
-          Style.from(node, device, context)
-            .computed("visibility")
-            .some((visibility) => visibility.value !== "visible")
-        ) {
-          return false;
-        }
+      if (
+        Element.isElement(node) &&
+        Style.from(node, device, context)
+          .computed("visibility")
+          .some((visibility) => visibility.value !== "visible")
+      ) {
+        return false;
       }
 
       if (Text.isText(node)) {

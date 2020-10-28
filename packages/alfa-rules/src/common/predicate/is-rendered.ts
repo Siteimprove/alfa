@@ -17,14 +17,13 @@ export function isRendered(device: Device, context?: Context): Predicate<Node> {
       return false;
     }
 
-    if (Element.isElement(node)) {
-      if (
-        Style.from(node, device, context)
-          .computed("display")
-          .some(([outside]) => outside.value === "none")
-      ) {
-        return false;
-      }
+    if (
+      Element.isElement(node) &&
+      Style.from(node, device, context)
+        .computed("display")
+        .some(([outside]) => outside.value === "none")
+    ) {
+      return false;
     }
 
     if (Comment.isComment(node)) {

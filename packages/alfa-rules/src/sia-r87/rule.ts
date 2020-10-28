@@ -36,7 +36,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
         const element = target.tabOrder().find(isTabbable(device));
 
         const url = element
-          .filter(hasName("a"))
+          .filter(hasName("a", "area"))
           .flatMap((element) =>
             element
               .attribute("href")
@@ -163,7 +163,9 @@ export namespace Outcomes {
   );
 
   export const FirstTabbableIsNotLink = Err.of(
-    Diagnostic.of(`The first tabbable element in the document is not a semantic link`)
+    Diagnostic.of(
+      `The first tabbable element in the document is not a semantic link`
+    )
   );
 
   export const FirstTabbableIsNotInternalLink = Err.of(
