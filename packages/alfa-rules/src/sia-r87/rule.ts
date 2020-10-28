@@ -59,6 +59,27 @@ export default Rule.Atomic.of<Page, Document, Question>({
             )
           );
 
+        const askIsMain = Question.of(
+          "first-tabbable-reference-is-main",
+          "boolean",
+          target,
+          `Does the first tabbable element of the document point to the main content?`
+        );
+
+        const askIsInteralLink = Question.of(
+          "first-tabbable-is-internal-link",
+          "boolean",
+          target,
+          `Is the first tabbable element of the document an internal link?`
+        );
+
+        const askReference = Question.of(
+          "first-tabbable-reference",
+          "node",
+          document,
+          `Where in the document does the first tabbable element point?`
+        );
+
         return {
           1: expectation(
             element.isSome(),
@@ -87,12 +108,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
                                 reference.some(hasRole("main")),
                                 () => Outcomes.FirstTabbableIsLinkToContent,
                                 () =>
-                                  Question.of(
-                                    "first-tabbable-reference-is-main",
-                                    "boolean",
-                                    target,
-                                    `Does the first tabbable element of the document point to the main content?`
-                                  ).map((isMain) =>
+                                  askIsMain.map((isMain) =>
                                     expectation(
                                       isMain,
                                       () =>
@@ -102,22 +118,12 @@ export default Rule.Atomic.of<Page, Document, Question>({
                                     )
                                   )
                               )
-                            : Question.of(
-                                "first-tabbable-is-internal-link",
-                                "boolean",
-                                target,
-                                `Is the first tabbable element of the document an internal link?`
-                              ).map((hasInternalLink) =>
+                            : askIsInteralLink.map((isInternalLink) =>
                                 expectation(
-                                  !hasInternalLink,
+                                  !isInternalLink,
                                   () => Outcomes.FirstTabbableIsNotInternalLink,
                                   () =>
-                                    Question.of(
-                                      "first-tabbable-reference",
-                                      "node",
-                                      document,
-                                      `Where in the document does the first tabbable element point?`
-                                    ).map((reference) =>
+                                    askReference.map((reference) =>
                                       expectation(
                                         reference
                                           .filter(isElement)
@@ -125,12 +131,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
                                         () =>
                                           Outcomes.FirstTabbableIsLinkToContent,
                                         () =>
-                                          Question.of(
-                                            "first-tabbable-reference-is-main",
-                                            "boolean",
-                                            target,
-                                            `Does the first tabbable element of the document point to the main content?`
-                                          ).map((isMain) =>
+                                          askIsMain.map((isMain) =>
                                             expectation(
                                               isMain,
                                               () =>
