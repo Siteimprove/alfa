@@ -218,6 +218,78 @@ export abstract class Node
   }
 
   /**
+   * Construct a sequence of descendants of this node sorted by tab index. Only
+   * nodes with a non-negative tab index are included in the sequence.
+   *
+   * @see https://html.spec.whatwg.org/#tabindex-value
+   */
+  public tabOrder(): Sequence<Element> {
+    const candidates = (node: Node): Sequence<Element> => {
+      if (Element.isElement(node)) {
+        const element = node;
+
+        const tabIndex = element.tabIndex();
+
+        if (element.shadow.isSome()) {
+          // If the element has a negative tab index and is a shadow host then
+          // none of its descendants will be part of the tab order.
+          if (tabIndex.some((i) => i < 0)) {
+            return Sequence.empty();
+          } else {
+            return Sequence.of(element);
+          }
+        }
+
+        if (element.content.isSome()) {
+          return Sequence.of(element);
+        }
+
+        if (Slot.isSlot(element)) {
+          return Sequence.from(element.assignedNodes()).filter(
+            Element.isElement
+          );
+        }
+
+        if (tabIndex.some((i) => i >= 0)) {
+          return Sequence.of(
+            element,
+            Lazy.of(() => element.children().flatMap(candidates))
+          );
+        }
+      }
+
+      return node.children().flatMap(candidates);
+    };
+
+    return candidates(this)
+      .sortWith((a, b) =>
+        a
+          .tabIndex()
+          .compareWith(b.tabIndex(), (a, b) => (a < b ? -1 : a > b ? 1 : 0))
+      )
+      .flatMap((element) => {
+        const tabIndex = element.tabIndex();
+
+        for (const shadow of element.shadow) {
+          if (tabIndex.some((i) => i >= 0)) {
+            return Sequence.of(
+              element,
+              Lazy.of(() => shadow.tabOrder())
+            );
+          } else {
+            return shadow.tabOrder();
+          }
+        }
+
+        for (const content of element.content) {
+          return content.tabOrder();
+        }
+
+        return Sequence.of(element);
+      });
+  }
+
+  /**
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
    */
@@ -309,6 +381,7 @@ import { Element } from "./node/element";
 import { Fragment } from "./node/fragment";
 import { Text } from "./node/text";
 import { Type } from "./node/type";
+import { Slot } from "./node/slot";
 
 export namespace Node {
   export interface JSON {
