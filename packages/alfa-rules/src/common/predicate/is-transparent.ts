@@ -19,6 +19,10 @@ export function isTransparent(
       }
     }
 
-    return node.parent({ flattened: true }).some(isTransparent);
+    return node
+      .parent({
+        flattened: true,
+      })
+      .some(isTransparent);
   };
 }
