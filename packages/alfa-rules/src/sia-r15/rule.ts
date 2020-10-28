@@ -16,46 +16,45 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 import { Question } from "../common/question";
+import { Group } from "../common/group";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { filter } = Iterable;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return filter(
-          document
-            .descendants({ flattened: true, nested: true })
-            .filter(isElement)
-            .filter(
-              and(
-                hasName("iframe"),
-                hasNamespace(Namespace.HTML),
-                not(isIgnored(device)),
-                hasNonEmptyAccessibleName(device)
-              )
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
+            and(
+              hasName("iframe"),
+              hasNamespace(Namespace.HTML),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
             )
-            .reduce((groups, iframe) => {
-              for (const [node] of Node.from(iframe, device)) {
-                const name = node.name.map((name) => name.value);
+          )
+          .reduce((groups, iframe) => {
+            for (const [node] of Node.from(iframe, device)) {
+              const name = node.name.map((name) => name.value);
 
-                groups = groups.set(
-                  name,
-                  groups
-                    .get(name)
-                    .getOrElse(() => List.empty<Element>())
-                    .append(iframe)
-                );
-              }
+              groups = groups.set(
+                name,
+                groups
+                  .get(name)
+                  .getOrElse(() => List.empty<Element>())
+                  .append(iframe)
+              );
+            }
 
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
-            .values(),
-          (group) => group.size > 1
-        );
+            return groups;
+          }, Map.empty<Option<string>, List<Element>>())
+          .filter((elements) => elements.size > 1)
+          .map(Group.of)
+          .values();
       },
 
       expectations(target) {

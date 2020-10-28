@@ -8,6 +8,7 @@
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/outcome-to-trilean.ts",
     "src/common/expectation/video-description-track-accurate.ts",
+    "src/common/group.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",
     "src/common/predicate/has-child.ts",
