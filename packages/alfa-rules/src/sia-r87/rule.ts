@@ -163,7 +163,7 @@ export namespace Outcomes {
   );
 
   export const FirstTabbableIsNotLink = Err.of(
-    Diagnostic.of(`The first tabbable element in the document is not a link`)
+    Diagnostic.of(`The first tabbable element in the document is not a semantic link`)
   );
 
   export const FirstTabbableIsNotInternalLink = Err.of(

@@ -170,7 +170,7 @@ test(`evaluate() fails a document whose first tabbable element is not a link`, a
   ]);
 });
 
-test(`evaluate() fails a document whose first tabbable element is not a link`, async (t) => {
+test(`evaluate() fails a document whose first tabbable element is not a semantic link`, async (t) => {
   const document = Document.of([
     <html>
       <a href="#main" role="button">
