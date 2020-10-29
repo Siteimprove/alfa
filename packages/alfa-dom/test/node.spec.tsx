@@ -20,15 +20,17 @@ test("#tabOrder() returns the tab order of a node", (t) => {
 test("#tabOrder() correctly handles explicitly ordered tab indices", (t) => {
   const a = <button tabindex="2" />;
   const b = <button tabindex="1" />;
+  const c = <button />;
 
   const div = (
     <div>
       {a}
       {b}
+      {c}
     </div>
   );
 
-  t.deepEqual([...div.tabOrder()], [b, a]);
+  t.deepEqual([...div.tabOrder()], [b, a, c]);
 });
 
 test(`#tabOrder() correctly handles shadow roots with slotted elements before
