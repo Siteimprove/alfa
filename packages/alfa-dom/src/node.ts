@@ -263,9 +263,17 @@ export abstract class Node
 
     return candidates(this)
       .sortWith((a, b) =>
-        a
-          .tabIndex()
-          .compareWith(b.tabIndex(), (a, b) => (a < b ? -1 : a > b ? 1 : 0))
+        a.tabIndex().compareWith(b.tabIndex(), (a, b) => {
+          if (a === 0) {
+            return b === 0 ? 0 : 1;
+          }
+
+          if (b === 0) {
+            return -1;
+          }
+
+          return a < b ? -1 : a > b ? 1 : 0;
+        })
       )
       .flatMap((element) => {
         const tabIndex = element.tabIndex();
