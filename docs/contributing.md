@@ -56,4 +56,4 @@ While the `--amend` flag can be used to ammend your last commit with a sign-off,
 $ git rebase --signoff --interactive
 ```
 
-[search for existing issues]: https://github.com/Siteimprove/alfa/search?type=Issues
+[search for existing issues]: ../../../search?type=Issues
