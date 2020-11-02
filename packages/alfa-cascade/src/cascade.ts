@@ -1,4 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { Comparer } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -74,7 +75,7 @@ export class Cascade implements Serializable {
     return this._entries
       .get(element, Cache.empty)
       .get(context, () =>
-        this._rules.add(sort(this._selectors.get(element, context)))
+        this._rules.add(this._selectors.get(element, context).sort(compare))
       );
   }
 
@@ -99,45 +100,23 @@ export namespace Cascade {
 }
 
 /**
- * Perform an in-place insertion sort of an array of selector entries. Since
- * insertion sort performs well on small arrays compared to other sorting
- * algorithms, it's a good choice for sorting selector entries during cascade
- * as the number of declarations that match an element will more often than not
- * be relatively small.
- *
- * @see https://en.wikipedia.org/wiki/Insertion_sort
+ * @see https://drafts.csswg.org/css-cascade/#cascade-sort
  */
-function sort(selectors: Array<SelectorMap.Node>): Array<SelectorMap.Node> {
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    const a = selectors[i];
-
-    let j = i - 1;
-
-    while (j >= 0) {
-      const b = selectors[j];
-
-      // If the origins of the rules are not equal, the origin of the rules
-      // will determine the cascade.
-      if (a.origin !== b.origin && a.origin > b.origin) {
-        break;
-      }
-
-      // If the specificities of the rules are equal, the declaration order
-      // will determine the cascade.
-      if (a.specificity === b.specificity && a.order > b.order) {
-        break;
-      }
-
-      // Otherwise, the specificity will determine the cascade.
-      if (a.specificity > b.specificity) {
-        break;
-      }
-
-      selectors[j + 1] = selectors[j--];
-    }
-
-    selectors[j + 1] = a;
+const compare: Comparer<SelectorMap.Node> = (a, b) => {
+  // First priority: Origin
+  if (a.origin !== b.origin) {
+    return a.origin < b.origin ? -1 : a.origin > b.origin ? 1 : 0;
   }
 
-  return selectors;
-}
+  // Second priority: Specificity.
+  if (a.specificity !== b.specificity) {
+    return a.specificity < b.specificity
+      ? -1
+      : a.specificity > b.specificity
+      ? 1
+      : 0;
+  }
+
+  // Third priority: Order.
+  return a.order < b.order ? -1 : a.order > b.order ? 1 : 0;
+};
