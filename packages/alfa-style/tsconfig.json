@@ -28,6 +28,7 @@
     "test/property/box.spec.tsx",
     "test/property/combinator/any.spec.ts",
     "test/property/font.spec.tsx",
+    "test/property/text.spec.tsx",
     "test/style.spec.tsx"
   ],
   "references": [
