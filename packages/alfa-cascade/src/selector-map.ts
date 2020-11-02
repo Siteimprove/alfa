@@ -324,7 +324,17 @@ export namespace SelectorMap {
       this._declarations = declarations;
       this._origin = origin;
       this._order = order;
-      this._specificity = getSpecificity(selector);
+
+      // For style rules that are presentational hints, the specificity will
+      // always be 0 regardless of the selector.
+      if (StyleRule.isStyle(rule) && rule.hint) {
+        this._specificity = 0;
+      }
+
+      // Otherwise, determine the specificity of the selector.
+      else {
+        this._specificity = getSpecificity(selector);
+      }
     }
 
     public get rule(): Rule {
