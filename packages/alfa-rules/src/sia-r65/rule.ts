@@ -67,28 +67,32 @@ export namespace Outcomes {
 }
 
 function hasFocusIndicator(device: Device): Predicate<Element> {
+  const hasOutline: Predicate<Style> = (style) =>
+    style.computed("outline-width").none(Length.isZero) &&
+    style
+      .computed("outline-color")
+      .none((color) => color.type === "color" && Color.isTransparent(color));
+
+  const hasTextDecoration: Predicate<Style> = (style) =>
+    style
+      .computed("text-decoration-line")
+      .none((line) => line.type === "keyword") &&
+    style.computed("text-decoration-color").none(Color.isTransparent);
+
   return (element) => {
     const unset = Style.from(element, device);
     const focus = Style.from(element, device, Context.focus(element));
 
     // If the unset state does not have an outline, the focus state may use an
     // outline as a focus indicator.
-    if (
-      unset.computed("outline-width").some(Length.isZero) ||
-      unset
-        .computed("outline-color")
-        .some((color) => color.type === "color" && Color.isTransparent(color))
-    ) {
-      // If the focus state has an outline then the element has a focus
-      // indicator.
-      if (
-        focus.computed("outline-width").none(Length.isZero) &&
-        focus
-          .computed("outline-color")
-          .none((color) => color.type === "color" && Color.isTransparent(color))
-      ) {
-        return true;
-      }
+    if (!hasOutline(unset) && hasOutline(focus)) {
+      return true;
+    }
+
+    // If the unset state does not have text decoration, the focus state may use
+    // text decoration as a focus indicator.
+    if (!hasTextDecoration(unset) && hasTextDecoration(focus)) {
+      return true;
     }
 
     return false;
