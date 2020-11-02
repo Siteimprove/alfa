@@ -7,7 +7,6 @@
     "src/property/background.ts",
     "src/property/box.ts",
     "src/property/color.ts",
-    "src/property/combinator/any.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/height.ts",
@@ -26,7 +25,6 @@
     "src/value.ts",
     "test/property/background.spec.tsx",
     "test/property/box.spec.tsx",
-    "test/property/combinator/any.spec.ts",
     "test/property/font.spec.tsx",
     "test/property/text.spec.tsx",
     "test/style.spec.tsx"
