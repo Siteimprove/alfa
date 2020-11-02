@@ -222,6 +222,9 @@ const Longhands = {
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
   "text-align": Text.Align,
+  "text-decoration-line": Text.Decoration.Line,
+  "text-decoration-style": Text.Decoration.Style,
+  "text-decoration-color": Text.Decoration.Color,
   "text-transform": Text.Transform,
   "text-overflow": Text.Overflow,
   transform: Transform,
@@ -237,6 +240,7 @@ const Shorthands = {
   "background-position": Background.Position.Shorthand,
   outline: Outline.Shorthand,
   overflow: Overflow.Shorthand,
+  "text-decoration": Text.Decoration.Shorthand,
 };
 
 /**
