@@ -3,7 +3,7 @@ import { Comparer } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Context } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
@@ -48,11 +48,13 @@ export class Cascade implements Serializable {
     // common case, we benefit a lot from pre-computing this style information
     // with an ancestor filter applied.
 
+    const context = Context.empty();
+
     const filter = AncestorFilter.empty();
 
     const visit = (node: Node): void => {
       if (Element.isElement(node)) {
-        this.get(node);
+        this.get(node, context, Option.of(filter));
         filter.add(node);
       }
 
@@ -70,12 +72,15 @@ export class Cascade implements Serializable {
 
   public get(
     element: Element,
-    context: Context = Context.empty()
+    context: Context = Context.empty(),
+    filter: Option<AncestorFilter> = None
   ): Option<RuleTree.Node> {
     return this._entries
       .get(element, Cache.empty)
       .get(context, () =>
-        this._rules.add(this._selectors.get(element, context).sort(compare))
+        this._rules.add(
+          this._selectors.get(element, context, filter).sort(compare)
+        )
       );
   }
 
