@@ -14,6 +14,8 @@ import { isTabbable } from "../common/predicate/is-tabbable";
 
 import { Question } from "../common/question";
 
+const { isElement } = Element;
+
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
   evaluate({ device, document }) {
@@ -66,35 +68,47 @@ export namespace Outcomes {
   );
 }
 
+const hasOutline: Predicate<Style> = (style) =>
+  style.computed("outline-width").none(Length.isZero) &&
+  style
+    .computed("outline-color")
+    .none((color) => color.type === "color" && Color.isTransparent(color));
+
+const hasTextDecoration: Predicate<Style> = (style) =>
+  style
+    .computed("text-decoration-line")
+    .none((line) => line.type === "keyword") &&
+  style.computed("text-decoration-color").none(Color.isTransparent);
+
 function hasFocusIndicator(device: Device): Predicate<Element> {
-  const hasOutline: Predicate<Style> = (style) =>
-    style.computed("outline-width").none(Length.isZero) &&
-    style
-      .computed("outline-color")
-      .none((color) => color.type === "color" && Color.isTransparent(color));
-
-  const hasTextDecoration: Predicate<Style> = (style) =>
-    style
-      .computed("text-decoration-line")
-      .none((line) => line.type === "keyword") &&
-    style.computed("text-decoration-color").none(Color.isTransparent);
-
   return (element) => {
-    const unset = Style.from(element, device);
-    const focus = Style.from(element, device, Context.focus(element));
+    return element
+      .inclusiveDescendants({
+        flattened: true,
+      })
+      .concat(
+        element.ancestors({
+          flattened: true,
+        })
+      )
+      .filter(isElement)
+      .some((element) => {
+        const unset = Style.from(element, device);
+        const focus = Style.from(element, device, Context.focus(element));
 
-    // If the unset state does not have an outline, the focus state may use an
-    // outline as a focus indicator.
-    if (!hasOutline(unset) && hasOutline(focus)) {
-      return true;
-    }
+        // If the unset state does not have an outline, the focus state may use an
+        // outline as a focus indicator.
+        if (!hasOutline(unset) && hasOutline(focus)) {
+          return true;
+        }
 
-    // If the unset state does not have text decoration, the focus state may use
-    // text decoration as a focus indicator.
-    if (!hasTextDecoration(unset) && hasTextDecoration(focus)) {
-      return true;
-    }
+        // If the unset state does not have text decoration, the focus state may use
+        // text decoration as a focus indicator.
+        if (!hasTextDecoration(unset) && hasTextDecoration(focus)) {
+          return true;
+        }
 
-    return false;
+        return false;
+      });
   };
 }
