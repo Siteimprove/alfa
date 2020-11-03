@@ -237,3 +237,38 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     }),
   ]);
 });
+
+test(`evaluate() fails an <a> element that removes the default focus outline
+      only when focus should be visible and is determined to have no other focus
+      indicator`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a:focus:focus-visible", {
+          outline: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(
+    await evaluate(
+      R65,
+      { document },
+      oracle({
+        "has-focus-indicator": false,
+      })
+    ),
+    [
+      failed(R65, target, {
+        1: Outcomes.HasNoFocusIndicator,
+      }),
+      passed(R65, <button />, {
+        1: Outcomes.HasFocusIndicator,
+      }),
+    ]
+  );
+});
