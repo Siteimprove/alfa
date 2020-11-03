@@ -1849,14 +1849,7 @@
   dependencies:
     "@types/puppeteer" "*"
 
-"@types/puppeteer@*":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-3.0.4.tgz#ef42b97bc50cc8813a8055f93a092b60ccd27251"
-  integrity sha512-wmkBg1Wn/wwgGDl9IrxwY9nJ/Hfv/YHFAqy6Dch9KYDSjA0lif8PA7j3Ls1iOfKWEMRIbHkpWIPoiw4r9Vq+3A==
-  dependencies:
-    "@types/node" "*"
-
-"@types/puppeteer@^3.0.1":
+"@types/puppeteer@*", "@types/puppeteer@^3.0.1":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-3.0.4.tgz#ef42b97bc50cc8813a8055f93a092b60ccd27251"
   integrity sha512-wmkBg1Wn/wwgGDl9IrxwY9nJ/Hfv/YHFAqy6Dch9KYDSjA0lif8PA7j3Ls1iOfKWEMRIbHkpWIPoiw4r9Vq+3A==
@@ -9015,9 +9008,9 @@ webdriver@6.7.1:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.7.1.tgz#f4710a4dc43d31c690651c2422f50e156b15009c"
-  integrity sha512-fhFeu7UwCzXpDE0a0iD6cTqe3nZYFReux3NnzUEC4WegcAw4oAMxJrVLXVl2kv8b/5LQ+h7uBBMv0Fsze8Jjvg==
+  version "6.7.2"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.7.2.tgz#60715ebc4b621f999da42fc1e80957fc3fee76f7"
+  integrity sha512-+ZHkwYTV6G/8+osxq4mUUHqplaOviQ4XpTRfO5RRMXEV3RfMhoC1Fxkr772JFqrtQZ/iY2b90ZyZxfSjZrbrzw==
   dependencies:
     "@types/archiver" "^3.1.1"
     "@types/atob" "^2.1.2"
