@@ -82,6 +82,8 @@ const hasTextDecoration: Predicate<Style> = (style) =>
 
 function hasFocusIndicator(device: Device): Predicate<Element> {
   return (element) => {
+    const withFocus = Context.focus(element);
+
     return element
       .inclusiveDescendants({
         flattened: true,
@@ -94,21 +96,12 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
       .filter(isElement)
       .some((element) => {
         const unset = Style.from(element, device);
-        const focus = Style.from(element, device, Context.focus(element));
+        const focus = Style.from(element, device, withFocus);
 
-        // If the unset state does not have an outline, the focus state may use an
-        // outline as a focus indicator.
-        if (!hasOutline(unset) && hasOutline(focus)) {
-          return true;
-        }
-
-        // If the unset state does not have text decoration, the focus state may use
-        // text decoration as a focus indicator.
-        if (!hasTextDecoration(unset) && hasTextDecoration(focus)) {
-          return true;
-        }
-
-        return false;
+        return (
+          hasOutline(unset) !== hasOutline(focus) ||
+          hasTextDecoration(unset) !== hasTextDecoration(focus)
+        );
       });
   };
 }
