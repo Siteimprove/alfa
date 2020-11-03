@@ -105,25 +105,24 @@ export class SelectorMap implements Serializable {
 
   public get(
     element: Element,
-    context: Context = Context.empty(),
-    filter: AncestorFilter = AncestorFilter.empty()
+    context: Context,
+    filter: Option<AncestorFilter>
   ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
 
     const collect = (candidates: Iterable<SelectorMap.Node>) => {
       for (const node of candidates) {
         if (
-          Iterable.every(
-            node.selector,
-            and(isDescendantSelector, (selector) =>
-              canReject(selector.left, filter)
+          filter.none((filter) =>
+            Iterable.every(
+              node.selector,
+              and(isDescendantSelector, (selector) =>
+                canReject(selector.left, filter)
+              )
             )
-          )
+          ) &&
+          node.selector.matches(element, context)
         ) {
-          continue;
-        }
-
-        if (node.selector.matches(element, context)) {
           nodes.push(node);
         }
       }
