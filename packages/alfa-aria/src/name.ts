@@ -523,7 +523,7 @@ export namespace Name {
 
       // Step 2A: Is the element hidden and not referenced?
       // https://w3c.github.io/accname/#step2A
-      if (!state.isReferencing && !isRendered(element, device)) {
+      if (!state.isReferencing && isHidden(element, device)) {
         return empty;
       }
 
@@ -779,4 +779,17 @@ function isRendered(node: Node, device: Device): boolean {
   return node
     .parent({ flattened: true })
     .every((parent) => isRendered(parent, device));
+}
+
+/**
+ * @see https://w3c.github.io/accname/#dfn-hidden
+ * @see https://github.com/w3c/accname/issues/30
+ */
+function isHidden(element: Element, device: Device): boolean {
+  return (
+    !isRendered(element, device) ||
+    element
+      .attribute("aria-hidden")
+      .some((attribute) => attribute.value === "true")
+  );
 }
