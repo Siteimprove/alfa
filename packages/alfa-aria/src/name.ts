@@ -523,7 +523,7 @@ export namespace Name {
 
       // Step 2A: Is the element hidden and not referenced?
       // https://w3c.github.io/accname/#step2A
-      if (isHidden(element, device) && !state.isReferencing) {
+      if (!state.isReferencing && isHidden(element, device)) {
         return empty;
       }
 
