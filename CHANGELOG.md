@@ -21,6 +21,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R65 is now available. ([#497](../../pull/497))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-*` CSS properties. ([#511](../../pull/511))
+
 ### Fixed
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): Fix faulty ancestor filtering that resulted in complex selectors never matching when computing cascade.
@@ -51,7 +57,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-option](packages/alfa-option): `Option#compareWith()` is now available.
 
-- [@siteimprove/alfa-style](packages/alfa-style): The style system now support the `box-shadow` and `outline-*` CSS properties. ([#481](../../pull/481), [#496](../../pull/496))
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `box-shadow` and `outline-*` CSS properties. ([#481](../../pull/481), [#496](../../pull/496))
 
 - [@siteimprove/alfa-style](packages/alfa-style): `Value#includes()`, `Value#some()`, and `Value#none()` are now available. ([#468](../../pull/468))
 
