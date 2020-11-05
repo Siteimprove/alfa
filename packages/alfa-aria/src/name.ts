@@ -521,9 +521,15 @@ export namespace Name {
         return empty;
       }
 
-      // Step 2A: Is the element hidden and not referenced?
+      // Step 2A: Is the element not referenced and either hidden or not exposed?
       // https://w3c.github.io/accname/#step2A
-      if (!state.isReferencing && !isRendered(element, device)) {
+      if (
+        !state.isReferencing &&
+        (!isRendered(element, device) ||
+          element
+            .attribute("aria-hidden")
+            .some((attribute) => attribute.value === "true"))
+      ) {
         return empty;
       }
 
