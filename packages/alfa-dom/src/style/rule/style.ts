@@ -7,21 +7,28 @@ import { Rule } from "../rule";
 export class Style extends Rule {
   public static of(
     selector: string,
-    declarations: Iterable<Declaration>
+    declarations: Iterable<Declaration>,
+    hint = false
   ): Style {
-    return new Style(selector, Array.from(declarations));
+    return new Style(selector, Array.from(declarations), hint);
   }
 
   private readonly _selector: string;
   private readonly _style: Block;
+  private readonly _hint: boolean;
 
-  private constructor(selector: string, declarations: Array<Declaration>) {
+  private constructor(
+    selector: string,
+    declarations: Array<Declaration>,
+    hint: boolean
+  ) {
     super();
 
     this._selector = selector;
     this._style = Block.of(
       declarations.filter((declaration) => declaration._attachParent(this))
     );
+    this._hint = hint;
   }
 
   public get selector(): string {
@@ -30,6 +37,10 @@ export class Style extends Rule {
 
   public get style(): Block {
     return this._style;
+  }
+
+  public get hint(): boolean {
+    return this._hint;
   }
 
   public toJSON(): Style.JSON {

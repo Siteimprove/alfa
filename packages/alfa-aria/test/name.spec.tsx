@@ -961,3 +961,35 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
     ],
   ]);
 });
+
+test(".from() ignores nodes that are not exposed when computing name from content", (t) => {
+  const text = h.text("Hello ");
+  const exposed = <span>{text}</span>;
+  const notExposed = <span aria-hidden="true">World!</span>;
+
+  const heading = (
+    <h1>
+      {exposed}
+      {notExposed}
+    </h1>
+  );
+
+  t.deepEqual(Name.from(heading, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello", [
+          Name.Source.descendant(
+            heading,
+            Name.of("Hello", [
+              Name.Source.descendant(
+                exposed,
+                Name.of("Hello ", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});

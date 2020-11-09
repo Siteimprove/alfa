@@ -21,6 +21,18 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R65 is now available. ([#497](../../pull/497))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-*` CSS properties. ([#511](../../pull/511))
+
+### Fixed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): Fix faulty ancestor filtering that resulted in complex selectors never matching when computing cascade.
+
+## [0.6.0](../../compare/v0.5.0...v0.6.0) (2020-10-30)
+
 ### Breaking
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): The `Predicate<T>` type now no longer duals as a refinement type. This behavior has instead been split out into the new `Refinement<T, U extends T>` type. This also means that none of the functions on the `Predicate` namespace will perform type narrowing. Instead, an equivalent function on the `Refinement` namespace should be used if type narrowing is desired. ([#415](../../pull/415))
@@ -35,17 +47,25 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-url](packages/alfa-url): A new package has been added with an implementation of an immutable URL representation. ([#421](../../pull/421))
 
-- [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`.
+- [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`. `Result#includes()`, `Result#includesErr()`, `Result#some()`, `Result#someErr()`, `Result#none()`, `Result#noneErr()`, `Result#every()`, and `Result#everyErr()` are now also available.
 
-- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable#takeLastWhile()`, `Iterable#takeLastUntil()`, `Iterable#skipLastWhile()`, `Iterable#skipLastUntil()`, `Iterable#trimLeading()`, `Iterable#trimTrailing()`, `Iterable#trim()`, and `Iterable#hash()` are now available.
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable#takeLastWhile()`, `Iterable#takeLastUntil()`, `Iterable#skipLastWhile()`, `Iterable#skipLastUntil()`, `Iterable#trimLeading()`, `Iterable#trimTrailing()`, `Iterable#trim()`, `Iterable#hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
 
 - [@siteimprove/alfa-comparable](packages/alfa-comparable): A `Comparer` type is now available for modelling functions that do comparisons. A new function `Comparable.isComparable()` is now also available.
-
-- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.sort()` and `Iterable.sortWith()` are now available.
 
 - [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#sortWith()` is now available and implemented by `List` and `Sequence`. Additionally, `List.sort()` and `Sequence.sort()` are now also available.
 
 - [@siteimprove/alfa-option](packages/alfa-option): `Option#compareWith()` is now available.
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `box-shadow` and `outline-*` CSS properties. ([#481](../../pull/481), [#496](../../pull/496))
+
+- [@siteimprove/alfa-style](packages/alfa-style): `Value#includes()`, `Value#some()`, and `Value#none()` are now available. ([#468](../../pull/468))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R87 is now available. ([#468](../../pull/468))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Node#tabOrder()` is now available. ([#468](../../pull/468))
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Color.isTransparent()` and `Length.isZero()` are now available.
 
 ### Changed
 
@@ -55,13 +75,21 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 now only applies when at least one landmark is found one the page. ([#414](../../pull/414))
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R15 now automatically passes `<iframe>` elements that definitely point to the same resource. ([#406](../../pull/406))
+
 ### Fixed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now only applies to focusable widgets with either an `aria-label` or `aria-labelledby` attribute, as intended. ([#409](../../pull/409))
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly excludes descendants of containers with an `aria-busy=true` attribute. ([#418](../../pull/418))
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): Rules that target sets of nodes now make use of the new `Group` class, which provides an EARL serializable wrapper around iterables. Previously, pointers for these targets were not included in EARL output. ([#427](../../pull/427))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 no longer fails cases where a top-level `overflow: hidden` declaration would cause deep descendants to fail due to them not handling text overflow. ([#482](../../pull/482))
+
 - [@siteimprove/alfa-thunk](packages/alfa-thunk): `Thunk.flatMap()` now correctly defers evaluation of the passed thunk.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `placeholder` attribute is now correctly accepted for `<input type="email">` elements when computing accessible names.
 
 ## [0.5.0](../../compare/v0.4.1...v0.5.0) (2020-09-22)
 

@@ -1,0 +1,31 @@
+name: Scan
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
+  schedule:
+    - cron: "0 21 * * 1"
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    name: Analyze
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: actions/cache@v1
+        with:
+          path: .cache/yarn
+          key: yarn-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --frozen-lockfile --ignore-platform --cache-folder .cache/yarn
+      - run: yarn build
+      - uses: github/codeql-action/init@v1
+        with:
+          languages: javascript
+      - uses: github/codeql-action/analyze@v1

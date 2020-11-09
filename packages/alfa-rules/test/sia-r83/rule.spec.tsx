@@ -105,3 +105,26 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
+
+test(`evaluate() passes a text node with hidden overflow, a fixed line height,
+      and a fixed width, but with a flexible height`, async (t) => {
+  const target = h.text("Hello world");
+
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        width: "80ch",
+        lineHeight: "18px",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, {
+      1: Outcomes.WrapsText,
+    }),
+  ]);
+});
