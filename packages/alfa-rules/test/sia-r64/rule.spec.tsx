@@ -37,3 +37,19 @@ test("evaluate() is not applicable when a document has no headings", async (t) =
 
   t.deepEqual(await evaluate(R64, { document }), [inapplicable(R64)]);
 });
+
+test("evaluate() fails a heading whose content is aria-hidden", async (t) => {
+  const target = (
+    <h1>
+      <span aria-hidden="true">This is not exposed to AT</span>
+    </h1>
+  );
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R64, { document }), [
+    failed(R64, target, {
+      1: Outcomes.HasNoAccessibleName,
+    }),
+  ]);
+});

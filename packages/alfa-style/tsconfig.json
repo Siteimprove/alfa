@@ -5,13 +5,14 @@
     "src/index.ts",
     "src/property.ts",
     "src/property/background.ts",
+    "src/property/box.ts",
     "src/property/color.ts",
-    "src/property/combinator/any.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/height.ts",
     "src/property/line.ts",
     "src/property/opacity.ts",
+    "src/property/outline.ts",
     "src/property/overflow.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
@@ -23,8 +24,9 @@
     "src/style.ts",
     "src/value.ts",
     "test/property/background.spec.tsx",
+    "test/property/box.spec.tsx",
     "test/property/font.spec.tsx",
-    "test/property/combinator/any.spec.ts",
+    "test/property/text.spec.tsx",
     "test/style.spec.tsx"
   ],
   "references": [
@@ -53,6 +55,9 @@
       "path": "../alfa-functor"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {
@@ -77,7 +82,16 @@
       "path": "../alfa-parser"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-record"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-selector"
     },
     {
       "path": "../alfa-set"

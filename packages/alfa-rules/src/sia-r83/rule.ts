@@ -115,14 +115,20 @@ function wrapsText(device: Device): Predicate<Text> {
 
         const { value: whitespace } = style.computed("white-space");
 
+        // If whitespace does not cause wrapping, we need to check if a text
+        // overflow could cause the text to clip.
         if (whitespace.value === "nowrap") {
           const { value: overflow } = style.computed("text-overflow");
 
+          // We assume that the text won't clip if the text overflow is handled
+          // any other way than clip.
           return overflow.value !== "clip";
         }
 
         let { value: lineHeight } = style.computed("line-height");
 
+        // If the line height is a number, resolve it against the font size of
+        // the element.
         if (lineHeight.type === "number") {
           lineHeight = Length.of(
             lineHeight.value * style.computed("font-size").value.value,
@@ -130,16 +136,29 @@ function wrapsText(device: Device): Predicate<Text> {
           );
         }
 
-        if (lineHeight.type !== "length") {
-          return false;
+        // If the line height is a length, we need to check if a height has been
+        // set which could cause the text to clip.
+        if (lineHeight.type === "length") {
+          const { value: height } = style.computed("height");
+
+          if (height.type === "length") {
+            // We assume that the text won't clip if the line height is equal to
+            // the height. If it isn't, we need to check if an overflow could
+            // cause the text to clip.
+            if (lineHeight.value !== height.value) {
+              for (const property of ["overflow-x", "overflow-y"] as const) {
+                const { value: overflow } = style.computed(property);
+
+                switch (overflow.value) {
+                  case "hidden":
+                  case "clip":
+                    return false;
+                }
+              }
+            }
+          }
         }
 
-        const { value: height } = style.computed("height");
-
-        if (height.type !== "length") {
-          return false;
-        }
-
-        return lineHeight.value === height.value;
+        return true;
       });
 }

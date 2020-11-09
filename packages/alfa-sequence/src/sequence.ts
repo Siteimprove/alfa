@@ -1,4 +1,5 @@
 import { Collection } from "@siteimprove/alfa-collection";
+import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -57,6 +58,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;
   join(separator: string): string;
+  sortWith(comparer: Comparer<T>): Sequence<T>;
 
   // Sequence<T> methods
 
@@ -131,5 +133,11 @@ export namespace Sequence {
     };
 
     return tail();
+  }
+
+  export function sort<T extends Comparable<T>>(
+    sequence: Sequence<T>
+  ): Sequence<T> {
+    return sequence.sortWith(Comparable.compare);
   }
 }

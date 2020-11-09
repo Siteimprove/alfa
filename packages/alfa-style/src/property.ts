@@ -178,12 +178,14 @@ export namespace Property {
 }
 
 import { Background } from "./property/background";
+import { Box } from "./property/box";
 import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
 import { Height } from "./property/height";
 import { Line } from "./property/line";
 import { Opacity } from "./property/opacity";
+import { Outline } from "./property/outline";
 import { Overflow } from "./property/overflow";
 import { Text } from "./property/text";
 import { Transform } from "./property/transform";
@@ -203,6 +205,7 @@ const Longhands = {
   "background-clip": Background.Clip,
   "background-origin": Background.Origin,
   "background-size": Background.Size,
+  "box-shadow": Box.Shadow,
   color: Color,
   display: Display,
   "font-family": Font.Family,
@@ -212,9 +215,16 @@ const Longhands = {
   height: Height,
   "line-height": Line.Height,
   opacity: Opacity,
+  "outline-width": Outline.Width,
+  "outline-style": Outline.Style,
+  "outline-color": Outline.Color,
+  "outline-offset": Outline.Offset,
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
   "text-align": Text.Align,
+  "text-decoration-line": Text.Decoration.Line,
+  "text-decoration-style": Text.Decoration.Style,
+  "text-decoration-color": Text.Decoration.Color,
   "text-transform": Text.Transform,
   "text-overflow": Text.Overflow,
   transform: Transform,
@@ -228,7 +238,9 @@ const Shorthands = {
   background: Background.Shorthand,
   "background-repeat": Background.Repeat.Shorthand,
   "background-position": Background.Position.Shorthand,
+  outline: Outline.Shorthand,
   overflow: Overflow.Shorthand,
+  "text-decoration": Text.Decoration.Shorthand,
 };
 
 /**

@@ -19,50 +19,51 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
+import { Group } from "../common/group";
 
 const { isElement, hasName, hasNamespace, hasId } = Element;
-const { map, flatMap } = Iterable;
+const { map, flatten } = Iterable;
 const { and, not, equals } = Predicate;
 
-export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r81.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        const elements = document
-          .descendants({ flattened: true, nested: true })
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML, Namespace.SVG),
-              hasRole((role) => role.is("link")),
-              not(isIgnored(device)),
-              hasNonEmptyAccessibleName(device)
+        return flatten(
+          document
+            .descendants({ flattened: true, nested: true })
+            .filter(isElement)
+            .filter(
+              and(
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                hasRole((role) => role.is("link")),
+                not(isIgnored(device)),
+                hasNonEmptyAccessibleName(device)
+              )
             )
-          );
+            .groupBy((element) => linkContext(element).add(element.root()))
+            .map((elements) =>
+              elements
+                .reduce((groups, element) => {
+                  for (const [node] of aria.Node.from(element, device)) {
+                    const name = node.name.map((name) => name.value);
 
-        const groups = elements.groupBy((element) =>
-          linkContext(element).add(element.root())
-        );
+                    groups = groups.set(
+                      name,
+                      groups
+                        .get(name)
+                        .getOrElse(() => List.empty<Element>())
+                        .append(element)
+                    );
+                  }
 
-        return flatMap(groups.values(), (elements) =>
-          elements
-            .reduce((groups, element) => {
-              for (const [node] of aria.Node.from(element, device)) {
-                const name = node.name.map((name) => name.value);
-
-                groups = groups.set(
-                  name,
-                  groups
-                    .get(name)
-                    .getOrElse(() => List.empty<Element>())
-                    .append(element)
-                );
-              }
-
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
-            .filter((elements) => elements.size > 1)
+                  return groups;
+                }, Map.empty<Option<string>, List<Element>>())
+                .filter((elements) => elements.size > 1)
+                .map(Group.of)
+                .values()
+            )
             .values()
         );
       },

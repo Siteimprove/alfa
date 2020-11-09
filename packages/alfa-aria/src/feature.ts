@@ -454,7 +454,7 @@ const Features: Features = {
       (element, device, state) => {
         if (
           test(
-            hasInputType("text", "password", "search", "tel", "url"),
+            hasInputType("text", "password", "search", "tel", "email", "url"),
             element
           )
         ) {

@@ -1,3 +1,4 @@
+import { Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -505,6 +506,10 @@ export class Cons<T> implements Sequence<T> {
         return result;
       }
     }
+  }
+
+  public sortWith(comparer: Comparer<T>): Sequence<T> {
+    return Sequence.from(Iterable.sortWith(this, comparer));
   }
 
   public groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>> {

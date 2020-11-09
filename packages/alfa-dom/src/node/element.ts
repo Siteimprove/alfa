@@ -217,7 +217,7 @@ export class Element extends Node implements Slot, Slotable {
       }
     }
 
-    if (isSuggestedFocusableElement(this)) {
+    if (Element.isSuggestedFocusable(this)) {
       return Some.of(0);
     }
 
@@ -376,72 +376,14 @@ export namespace Element {
     hasName,
     hasNamespace,
     hasTabIndex,
+    isBrowsingContextContainer,
     isDisabled,
+    isDraggable,
+    isEditingHost,
+    isSuggestedFocusable,
   } = predicate;
 }
 
 function indent(input: string): string {
   return input.replace(/^/gm, "  ");
-}
-
-function isSuggestedFocusableElement(element: Element): boolean {
-  switch (element.name) {
-    case "a":
-    case "link":
-      return element.attribute("href").isSome();
-
-    case "input":
-      return element
-        .attribute("type")
-        .flatMap((attribute) => attribute.enumerate("hidden"))
-        .isNone();
-
-    case "audio":
-    case "video":
-      return element.attribute("controls").isSome();
-
-    case "button":
-    case "select":
-    case "textarea":
-      return true;
-
-    case "summary":
-      return element
-        .parent()
-        .filter(Element.isElement)
-        .some((parent) => {
-          if (parent.name === "details") {
-            for (const child of parent.children()) {
-              if (Element.isElement(child) && child.name === "summary") {
-                return child === element;
-              }
-            }
-          }
-
-          return false;
-        });
-
-    case "object":
-      return element.content.isSome();
-  }
-
-  return (
-    element.attribute("draggable").isSome() ||
-    isEditingHost(element) ||
-    isBrowsingContextContainer(element)
-  );
-}
-
-/**
- * @see https://html.spec.whatwg.org/#editing-host
- */
-function isEditingHost(element: Element): boolean {
-  return element.attribute("contenteditable").isSome();
-}
-
-/**
- * @see https://html.spec.whatwg.org/#browsing-context-container
- */
-function isBrowsingContextContainer(element: Element): boolean {
-  return element.name === "iframe";
 }
