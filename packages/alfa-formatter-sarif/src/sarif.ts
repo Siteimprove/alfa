@@ -1,4 +1,4 @@
-import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Outcome } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Formatter } from "@siteimprove/alfa-formatter";
@@ -7,15 +7,8 @@ import { Page } from "@siteimprove/alfa-web";
 const { stringify } = JSON;
 
 export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
-  return function SARIF(page, outcomes) {
+  return function SARIF(page, rules, outcomes) {
     outcomes = [...outcomes];
-
-    const rules = [
-      ...[...outcomes].reduce(
-        (rules, outcome) => rules.add(outcome.rule),
-        new Set<Rule<Page, Node | Iterable<Node>, Q>>()
-      ),
-    ];
 
     const artifacts = [
       {
@@ -97,7 +90,6 @@ export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
 
       return {
         ruleId: outcome.rule.uri,
-        ruleIndex: rules.indexOf(outcome.rule),
         kind,
         level,
         message: {
@@ -117,7 +109,7 @@ export default function <Q>(): Formatter<Page, Node | Iterable<Node>, Q> {
             tool: {
               driver: {
                 name: "Alfa",
-                rules: rules.map((rule) => {
+                rules: [...rules].map((rule) => {
                   return {
                     id: rule.uri,
                     helpUri: rule.uri,
