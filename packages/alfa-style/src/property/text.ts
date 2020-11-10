@@ -7,6 +7,7 @@ import {
   System,
   Token,
 } from "@siteimprove/alfa-css";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
@@ -16,7 +17,6 @@ import { Property } from "../property";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
-import { None, Option } from "@siteimprove/alfa-option";
 
 const { either } = Parser;
 
