@@ -16,6 +16,7 @@ import { Property } from "../property";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
+import { None, Option } from "@siteimprove/alfa-option";
 
 const { either } = Parser;
 
@@ -94,11 +95,11 @@ export namespace Text {
     Indent.Specified,
     Indent.Computed
   > = Property.of(
-    [Length.of(0, "px"), List.of([])],
+    [Length.of(0, "px"), None, None],
     (input) => {
-      let indent: Length | Percentage | undefined;
-      let hanging: Indent.Hanging | undefined;
-      let eachLine: Indent.EachLine | undefined;
+      let indent: Length | Percentage | undefined = undefined;
+      let hanging: Option<Indent.Hanging> = None;
+      let eachLine: Option<Indent.EachLine> = None;
 
       while (true) {
         for (const [remainder] of Token.parseWhitespace(input)) {
@@ -114,20 +115,24 @@ export namespace Text {
           }
         }
 
-        if (hanging === undefined) {
+        if (hanging.isNone()) {
           const result = Keyword.parse("hanging")(input);
 
           if (result.isOk()) {
-            [input, hanging] = result.get();
+            const [remainder, value] = result.get();
+            hanging = Option.of(value);
+            input = remainder;
             continue;
           }
         }
 
-        if (eachLine === undefined) {
+        if (eachLine.isNone()) {
           const result = Keyword.parse("each-line")(input);
 
           if (result.isOk()) {
-            [input, eachLine] = result.get();
+            const [remainder, value] = result.get();
+            eachLine = Option.of(value);
+            input = remainder;
             continue;
           }
         }
@@ -139,25 +144,18 @@ export namespace Text {
         return Err.of("Length must be provided");
       }
 
-      const modifiers = [];
-
-      if (hanging !== undefined) {
-        modifiers.push(hanging);
-      }
-      if (eachLine !== undefined) {
-        modifiers.push(eachLine);
-      }
-
-      return Result.of([input, [indent, List.of(modifiers)]]);
+      return Result.of([input, [indent, hanging, eachLine]]);
     },
-    (style) => {
-      const specified = style.specified("text-indent");
-      const [indent, modifiers] = specified;
-      return specified.map(([indent, modifiers]) => [
-        indent.type === "percentage" ? indent : Resolver.length(indent, style),
-        modifiers,
-      ]);
-    }
+    (style) =>
+      style
+        .specified("text-indent")
+        .map(([indent, hanging, eachLine]) => [
+          indent.type === "percentage"
+            ? indent
+            : Resolver.length(indent, style),
+          hanging,
+          eachLine,
+        ])
   );
 
   export namespace Indent {
@@ -165,11 +163,16 @@ export namespace Text {
 
     export type EachLine = Keyword<"each-line">;
 
-    export type Specified = [Length | Percentage, List<Hanging | EachLine>];
+    export type Specified = [
+      Length | Percentage,
+      Option<Hanging>,
+      Option<EachLine>
+    ];
 
     export type Computed = [
       Length<"px"> | Percentage,
-      List<Hanging | EachLine>
+      Option<Hanging>,
+      Option<EachLine>
     ];
   }
 
