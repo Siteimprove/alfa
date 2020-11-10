@@ -3,17 +3,18 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
-import { isTabbable } from "../common/predicate/is-tabbable";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasName } = Element;
 const { isText } = Text;
-const { and, not, test } = Predicate;
+const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r62.html",
@@ -60,13 +61,116 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        return {};
+        const container = target
+          .ancestors({
+            flattened: true,
+          })
+          .filter(isElement)
+          .find(hasName("p"))
+          .get();
+
+        return {
+          1: expectation(
+            test(isDistinguishable(container, device), target),
+            () => Outcomes.IsDistinguishable,
+            () =>
+              expectation(
+                test(
+                  isDistinguishable(container, device, Context.hover(target)),
+                  target
+                ),
+                () =>
+                  expectation(
+                    test(
+                      isDistinguishable(
+                        container,
+                        device,
+                        Context.focus(target)
+                      ),
+                      target
+                    ),
+                    () => Outcomes.IsDistinguishable,
+                    () => Outcomes.IsNotDistinguishableOnFocus
+                  ),
+                () => Outcomes.IsNotDistinguishableOnHover
+              )
+          ),
+
+          2: expectation(
+            test(
+              isDistinguishable(container, device, Context.visit(target)),
+              target
+            ),
+            () => Outcomes.IsDistinguishableWhenVisited,
+            () =>
+              expectation(
+                test(
+                  isDistinguishable(
+                    container,
+                    device,
+                    Context.hover(target).visit(target)
+                  ),
+                  target
+                ),
+                () =>
+                  expectation(
+                    test(
+                      isDistinguishable(
+                        container,
+                        device,
+                        Context.focus(target).visit(target)
+                      ),
+                      target
+                    ),
+                    () => Outcomes.IsDistinguishableWhenVisited,
+                    () => Outcomes.IsNotDistinguishableOnFocusWhenVisited
+                  ),
+                () => Outcomes.IsNotDistinguishableOnHoverWhenVisited
+              )
+          ),
+        };
       },
     };
   },
 });
 
-export namespace Outcomes {}
+export namespace Outcomes {
+  export const IsDistinguishable = Ok.of(
+    Diagnostic.of(`The link is distinguishable from the surrounding text`)
+  );
+
+  export const IsNotDistinguishableOnHover = Ok.of(
+    Diagnostic.of(
+      `On hover, the link is not distinguishable from the surrounding text`
+    )
+  );
+
+  export const IsNotDistinguishableOnFocus = Ok.of(
+    Diagnostic.of(
+      `On focus, the link is not distinguishable from the surrounding text`
+    )
+  );
+
+  export const IsDistinguishableWhenVisited = Ok.of(
+    Diagnostic.of(
+      `When visited, the link is distinguishable from the surrounding text`
+    )
+  );
+
+  export const IsNotDistinguishableOnHoverWhenVisited = Ok.of(
+    Diagnostic.of(
+      `On hover, when visited, the link is not distinguishable from the
+      surrounding text`
+    )
+  );
+
+  export const IsNotDistinguishableOnFocusWhenVisited = Ok.of(
+    Diagnostic.of(
+      `On focus, when visited, the link is not distinguishable from the
+      surrounding text`
+    )
+  );
+}
 
 function hasNonLinkText(device: Device): Predicate<Element> {
   return function hasNonLinkText(element) {
@@ -82,5 +186,28 @@ function hasNonLinkText(device: Device): Predicate<Element> {
       .filter(isElement)
       .reject(hasRole((role) => role.is("link")))
       .some(hasNonLinkText);
+  };
+}
+
+function isDistinguishable(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const surroundings = Style.from(container, device, context);
+
+  return (element) => {
+    const style = Style.from(element, device, context);
+
+    for (const property of [
+      "text-decoration-line",
+      "text-decoration-style",
+    ] as const) {
+      if (!style.computed(property).equals(surroundings.computed(property))) {
+        return true;
+      }
+    }
+
+    return false;
   };
 }

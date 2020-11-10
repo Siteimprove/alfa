@@ -16,7 +16,12 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
 
   const document = Document.of([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [passed(R62, target, {})]);
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
 });
 
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
@@ -29,7 +34,12 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(R62, { document }), [passed(R62, target, {})]);
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with no visible text content`, async (t) => {
