@@ -155,7 +155,8 @@ export namespace Text {
             : Resolver.length(indent, style),
           hanging,
           eachLine,
-        ])
+        ]),
+    { inherits: true }
   );
 
   export namespace Indent {
