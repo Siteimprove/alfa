@@ -95,86 +95,21 @@ export namespace Text {
     Indent.Specified,
     Indent.Computed
   > = Property.of(
-    [Length.of(0, "px"), None, None],
-    (input) => {
-      let indent: Length | Percentage | undefined = undefined;
-      let hanging: Option<Indent.Hanging> = None;
-      let eachLine: Option<Indent.EachLine> = None;
-
-      while (true) {
-        for (const [remainder] of Token.parseWhitespace(input)) {
-          input = remainder;
-        }
-
-        if (indent === undefined) {
-          const result = either(Length.parse, Percentage.parse)(input);
-
-          if (result.isOk()) {
-            [input, indent] = result.get();
-            continue;
-          }
-        }
-
-        if (hanging.isNone()) {
-          const result = Keyword.parse("hanging")(input);
-
-          if (result.isOk()) {
-            const [remainder, value] = result.get();
-            hanging = Option.of(value);
-            input = remainder;
-            continue;
-          }
-        }
-
-        if (eachLine.isNone()) {
-          const result = Keyword.parse("each-line")(input);
-
-          if (result.isOk()) {
-            const [remainder, value] = result.get();
-            eachLine = Option.of(value);
-            input = remainder;
-            continue;
-          }
-        }
-
-        break;
-      }
-
-      if (indent === undefined) {
-        return Err.of("Length must be provided");
-      }
-
-      return Result.of([input, [indent, hanging, eachLine]]);
-    },
+    Length.of(0, "px"),
+    either(Length.parse, Percentage.parse),
     (style) =>
       style
         .specified("text-indent")
-        .map(([indent, hanging, eachLine]) => [
-          indent.type === "percentage"
-            ? indent
-            : Resolver.length(indent, style),
-          hanging,
-          eachLine,
-        ]),
+        .map((indent) =>
+          indent.type === "percentage" ? indent : Resolver.length(indent, style)
+        ),
     { inherits: true }
   );
 
   export namespace Indent {
-    export type Hanging = Keyword<"hanging">;
+    export type Specified = Length | Percentage;
 
-    export type EachLine = Keyword<"each-line">;
-
-    export type Specified = [
-      Length | Percentage,
-      Option<Hanging>,
-      Option<EachLine>
-    ];
-
-    export type Computed = [
-      Length<"px"> | Percentage,
-      Option<Hanging>,
-      Option<EachLine>
-    ];
+    export type Computed = Length<"px"> | Percentage;
   }
 
   export namespace Decoration {

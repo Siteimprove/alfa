@@ -162,111 +162,17 @@ test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
   });
 });
 
-test("#cascaded() parses `text-indent: <length>`", (t) => {
+test("#cascaded() parses `text-indent`", (t) => {
   const element = <div style={{ textIndent: "5px" }}></div>;
 
   const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("text-indent").get().toJSON(), {
-    value: [
-      {
-        type: "length",
-        unit: "px",
-        value: 5,
-      },
-      {
-        type: "none",
-      },
-      {
-        type: "none",
-      },
-    ],
+    value: {
+      type: "length",
+      unit: "px",
+      value: 5,
+    },
     source: h.declaration("text-indent", "5px").toJSON(),
-  });
-});
-
-test("#cascaded() parses `text-indent: <length> hanging`", (t) => {
-  const element = <div style={{ textIndent: "5px hanging" }}></div>;
-
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-indent").get().toJSON(), {
-    value: [
-      {
-        type: "length",
-        unit: "px",
-        value: 5,
-      },
-      {
-        type: "some",
-        value: {
-          type: "keyword",
-          value: "hanging",
-        },
-      },
-      {
-        type: "none",
-      },
-    ],
-    source: h.declaration("text-indent", "5px hanging").toJSON(),
-  });
-});
-
-test("#cascaded() parses `text-indent: <length> hanging each-line`", (t) => {
-  const element = <div style={{ textIndent: "5px hanging each-line" }}></div>;
-
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-indent").get().toJSON(), {
-    value: [
-      {
-        type: "length",
-        unit: "px",
-        value: 5,
-      },
-      {
-        type: "some",
-        value: {
-          type: "keyword",
-          value: "hanging",
-        },
-      },
-      {
-        type: "some",
-        value: {
-          type: "keyword",
-          value: "each-line",
-        },
-      },
-    ],
-    source: h.declaration("text-indent", "5px hanging each-line").toJSON(),
-  });
-});
-
-test("#cascaded() parses `text-indent: <length> each-line`", (t) => {
-  const element = <div style={{ textIndent: "5px each-line" }}></div>;
-
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-indent").get().toJSON(), {
-    value: [
-      {
-        type: "length",
-        unit: "px",
-        value: 5,
-      },
-
-      {
-        type: "none",
-      },
-      {
-        type: "some",
-        value: {
-          type: "keyword",
-          value: "each-line",
-        },
-      },
-    ],
-    source: h.declaration("text-indent", "5px each-line").toJSON(),
   });
 });
