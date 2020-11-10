@@ -225,6 +225,7 @@ const Longhands = {
   "text-decoration-line": Text.Decoration.Line,
   "text-decoration-style": Text.Decoration.Style,
   "text-decoration-color": Text.Decoration.Color,
+  "text-indent": Text.Indent,
   "text-transform": Text.Transform,
   "text-overflow": Text.Overflow,
   transform: Transform,

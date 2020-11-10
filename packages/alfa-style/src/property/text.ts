@@ -1,6 +1,7 @@
 import {
   Current,
   Keyword,
+  Length,
   Percentage,
   RGB,
   System,
@@ -84,6 +85,92 @@ export namespace Text {
     export type Specified = Keyword<"clip"> | Keyword<"ellipsis">;
 
     export type Computed = Specified;
+  }
+
+  /**
+   * @see https://drafts.csswg.org/css-text/#text-indent-property
+   */
+  export const Indent: Property<
+    Indent.Specified,
+    Indent.Computed
+  > = Property.of(
+    [Length.of(0, "px"), List.of([])],
+    (input) => {
+      let indent: Length | Percentage | undefined;
+      let hanging: Indent.Hanging | undefined;
+      let eachLine: Indent.EachLine | undefined;
+
+      while (true) {
+        for (const [remainder] of Token.parseWhitespace(input)) {
+          input = remainder;
+        }
+
+        if (indent === undefined) {
+          const result = either(Length.parse, Percentage.parse)(input);
+
+          if (result.isOk()) {
+            [input, indent] = result.get();
+            continue;
+          }
+        }
+
+        if (hanging === undefined) {
+          const result = Keyword.parse("hanging")(input);
+
+          if (result.isOk()) {
+            [input, hanging] = result.get();
+            continue;
+          }
+        }
+
+        if (eachLine === undefined) {
+          const result = Keyword.parse("each-line")(input);
+
+          if (result.isOk()) {
+            [input, eachLine] = result.get();
+            continue;
+          }
+        }
+
+        break;
+      }
+
+      if (indent === undefined) {
+        return Err.of("Length must be provided");
+      }
+
+      const modifiers = [];
+
+      if (hanging !== undefined) {
+        modifiers.push(hanging);
+      }
+      if (eachLine !== undefined) {
+        modifiers.push(eachLine);
+      }
+
+      return Result.of([input, [indent, List.of(modifiers)]]);
+    },
+    (style) => {
+      const specified = style.specified("text-indent");
+      const [indent, modifiers] = specified;
+      return specified.map(([indent, modifiers]) => [
+        indent.type === "percentage" ? indent : Resolver.length(indent, style),
+        modifiers,
+      ]);
+    }
+  );
+
+  export namespace Indent {
+    export type Hanging = Keyword<"hanging">;
+
+    export type EachLine = Keyword<"each-line">;
+
+    export type Specified = [Length | Percentage, List<Hanging | EachLine>];
+
+    export type Computed = [
+      Length<"px"> | Percentage,
+      List<Hanging | EachLine>
+    ];
   }
 
   export namespace Decoration {
