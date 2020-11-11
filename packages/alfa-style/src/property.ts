@@ -192,6 +192,7 @@ import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
+import { Insets } from "./property/box-insets";
 
 type Longhands = typeof Longhands;
 const Longhands = {
@@ -205,6 +206,7 @@ const Longhands = {
   "background-clip": Background.Clip,
   "background-origin": Background.Origin,
   "background-size": Background.Size,
+  bottom: Insets.Bottom,
   "box-shadow": Box.Shadow,
   color: Color,
   display: Display,
@@ -213,6 +215,7 @@ const Longhands = {
   "font-style": Font.Style,
   "font-weight": Font.Weight,
   height: Height,
+  left: Insets.Left,
   "line-height": Line.Height,
   opacity: Opacity,
   "outline-width": Outline.Width,
@@ -221,6 +224,7 @@ const Longhands = {
   "outline-offset": Outline.Offset,
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
+  right: Insets.Right,
   "text-align": Text.Align,
   "text-decoration-line": Text.Decoration.Line,
   "text-decoration-style": Text.Decoration.Style,
@@ -228,6 +232,7 @@ const Longhands = {
   "text-indent": Text.Indent,
   "text-transform": Text.Transform,
   "text-overflow": Text.Overflow,
+  top: Insets.Top,
   transform: Transform,
   visibility: Visibility,
   "white-space": Whitespace,
