@@ -129,6 +129,33 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   ]);
 });
 
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and applies an outline on hover and focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+
+        h.rule.style("a:hover, a:focus", {
+          outline: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
 test(`evaluate() fails an applicable <a> element that removes the default text
       decoration and is determined not to be distinguishable`, async (t) => {
   const target = <a href="#">Link</a>;
