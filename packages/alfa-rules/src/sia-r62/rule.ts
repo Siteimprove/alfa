@@ -12,11 +12,13 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isVisible } from "../common/predicate/is-visible";
 
+import { Question } from "../common/question";
+
 const { isElement, hasName } = Element;
 const { isText } = Text;
-const { and, test } = Predicate;
+const { and, or, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r62.html",
   evaluate({ device, document }) {
     return {
@@ -71,61 +73,122 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            test(isDistinguishable(container, device), target),
+            test(
+              or(
+                isDistinguishable(container, device),
+                and(
+                  isDistinguishable(container, device, Context.hover(target)),
+                  isDistinguishable(container, device, Context.focus(target))
+                )
+              ),
+              target
+            ),
             () => Outcomes.IsDistinguishable,
             () =>
-              expectation(
-                test(
-                  isDistinguishable(container, device, Context.hover(target)),
-                  target
-                ),
-                () =>
-                  expectation(
-                    test(
-                      isDistinguishable(
-                        container,
-                        device,
-                        Context.focus(target)
-                      ),
-                      target
-                    ),
-                    () => Outcomes.IsDistinguishable,
-                    () => Outcomes.IsNotDistinguishableOnFocus
-                  ),
-                () => Outcomes.IsNotDistinguishableOnHover
+              Question.of(
+                "is-distinguishable",
+                "boolean",
+                target,
+                `Can the link be distinguished from the surrounding text without
+                relying on color perception alone?`
+              ).map((isDistinguishable) =>
+                expectation(
+                  isDistinguishable,
+                  () => Outcomes.IsDistinguishable,
+                  () =>
+                    Question.of(
+                      "is-distinguishable-on-hover",
+                      "boolean",
+                      target,
+                      `When hovered, can the link be distinguished from the
+                      surrounding text without relying on color perception
+                      alone?`
+                    ).map((isDistinguishableOnHover) =>
+                      expectation(
+                        isDistinguishableOnHover,
+                        () =>
+                          Question.of(
+                            "is-distinguishable-on-focus",
+                            "boolean",
+                            target,
+                            `When focused, can the link be distinguished from
+                            the surrounding text without relying on color
+                            perception alone?`
+                          ).map((isDistinguishableOnFocus) =>
+                            expectation(
+                              isDistinguishableOnFocus,
+                              () => Outcomes.IsDistinguishable,
+                              () => Outcomes.IsNotDistinguishable
+                            )
+                          ),
+                        () => Outcomes.IsNotDistinguishable
+                      )
+                    )
+                )
               )
           ),
 
           2: expectation(
             test(
-              isDistinguishable(container, device, Context.visit(target)),
-              target
-            ),
-            () => Outcomes.IsDistinguishableWhenVisited,
-            () =>
-              expectation(
-                test(
+              or(
+                isDistinguishable(container, device, Context.visit(target)),
+                and(
                   isDistinguishable(
                     container,
                     device,
                     Context.hover(target).visit(target)
                   ),
-                  target
-                ),
-                () =>
-                  expectation(
-                    test(
-                      isDistinguishable(
-                        container,
-                        device,
-                        Context.focus(target).visit(target)
-                      ),
-                      target
-                    ),
-                    () => Outcomes.IsDistinguishableWhenVisited,
-                    () => Outcomes.IsNotDistinguishableOnFocusWhenVisited
-                  ),
-                () => Outcomes.IsNotDistinguishableOnHoverWhenVisited
+                  isDistinguishable(
+                    container,
+                    device,
+                    Context.focus(target).visit(target)
+                  )
+                )
+              ),
+              target
+            ),
+            () => Outcomes.IsDistinguishableWhenVisited,
+            () =>
+              Question.of(
+                "is-distinguishable-when-visited",
+                "boolean",
+                target,
+                `When visited, can the link be distinguished from the
+                surrounding text without relying on color perception alone?`
+              ).map((isDistinguishable) =>
+                expectation(
+                  isDistinguishable,
+                  () => Outcomes.IsDistinguishableWhenVisited,
+                  () =>
+                    Question.of(
+                      "is-distinguishable-on-hover-when-visited",
+                      "boolean",
+                      target,
+                      `When visited and hovered, can the link be distinguished
+                      from the surrounding text without relying on color
+                      perception alone?`
+                    ).map((isDistinguishableOnHoverWhenVisited) =>
+                      expectation(
+                        isDistinguishableOnHoverWhenVisited,
+                        () =>
+                          Question.of(
+                            "is-distinguishable-on-focus-when-visited",
+                            "boolean",
+                            target,
+                            `When visited and focused, can the link be
+                            distinguished from the surrounding text without
+                            relying on color perception alone?`
+                          ).map((isDistinguishableOnFocusWhenVisited) =>
+                            expectation(
+                              isDistinguishableOnFocusWhenVisited,
+                              () => Outcomes.IsDistinguishableWhenVisited,
+                              () => Outcomes.IsNotDistinguishableWhenVisited
+                            )
+                          ),
+                        () => Outcomes.IsNotDistinguishableWhenVisited
+                      )
+                    )
+                )
               )
           ),
         };
@@ -139,15 +202,10 @@ export namespace Outcomes {
     Diagnostic.of(`The link is distinguishable from the surrounding text`)
   );
 
-  export const IsNotDistinguishableOnHover = Ok.of(
+  export const IsNotDistinguishable = Err.of(
     Diagnostic.of(
-      `On hover, the link is not distinguishable from the surrounding text`
-    )
-  );
-
-  export const IsNotDistinguishableOnFocus = Ok.of(
-    Diagnostic.of(
-      `On focus, the link is not distinguishable from the surrounding text`
+      `The link is not distinguishable from the surrounding text, either in its
+      default state, or on hover and focus`
     )
   );
 
@@ -157,17 +215,10 @@ export namespace Outcomes {
     )
   );
 
-  export const IsNotDistinguishableOnHoverWhenVisited = Ok.of(
+  export const IsNotDistinguishableWhenVisited = Err.of(
     Diagnostic.of(
-      `On hover, when visited, the link is not distinguishable from the
-      surrounding text`
-    )
-  );
-
-  export const IsNotDistinguishableOnFocusWhenVisited = Ok.of(
-    Diagnostic.of(
-      `On focus, when visited, the link is not distinguishable from the
-      surrounding text`
+      `When visited, the link is not distinguishable from the surrounding text,
+      either in its default state, or on hover and focus`
     )
   );
 }
