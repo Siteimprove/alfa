@@ -19,7 +19,7 @@ export namespace Position {
 }
 
 /**
- * @see https://drafts.csswg.org/css-sizing/#propdef-width
+ * @see https://drafts.csswg.org/css-position/#position-property
  */
 export const Position: Property<
   Position.Specified,
