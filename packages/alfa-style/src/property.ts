@@ -192,6 +192,7 @@ import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
+import { Position } from "./property/position";
 
 type Longhands = typeof Longhands;
 const Longhands = {
@@ -221,6 +222,7 @@ const Longhands = {
   "outline-offset": Outline.Offset,
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
+  position: Position,
   "text-align": Text.Align,
   "text-decoration-line": Text.Decoration.Line,
   "text-decoration-style": Text.Decoration.Style,
