@@ -3,7 +3,6 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/index.ts",
-    "src/factory/auto-length-percentage.ts",
     "src/property.ts",
     "src/property/background.ts",
     "src/property/box.ts",
