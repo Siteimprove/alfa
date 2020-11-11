@@ -108,8 +108,9 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
 function wrapsText(device: Device): Predicate<Text> {
   return (text) =>
     text
-      .parent()
+      .ancestors({ flattened: true })
       .filter(isElement)
+      .find(isPossiblyClipped(device))
       .some((element) => {
         const style = Style.from(element, device);
 
@@ -143,19 +144,8 @@ function wrapsText(device: Device): Predicate<Text> {
 
           if (height.type === "length") {
             // We assume that the text won't clip if the line height is equal to
-            // the height. If it isn't, we need to check if an overflow could
-            // cause the text to clip.
-            if (lineHeight.value !== height.value) {
-              for (const property of ["overflow-x", "overflow-y"] as const) {
-                const { value: overflow } = style.computed(property);
-
-                switch (overflow.value) {
-                  case "hidden":
-                  case "clip":
-                    return false;
-                }
-              }
-            }
+            // the height.
+            return lineHeight.value === height.value;
           }
         }
 
