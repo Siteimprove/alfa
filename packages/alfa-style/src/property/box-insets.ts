@@ -1,41 +1,51 @@
-import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
+import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either } = Parser;
+const { either, map, oneOrMore, separatedList } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-position/#insets
  */
 
-export type Insets = Insets.Specified | Insets.Computed;
+export type Inset = Inset.Specified | Inset.Computed;
 
-export namespace Insets {
+export namespace Inset {
   export type Auto = Keyword<"auto">;
 
   export type Specified = Auto | Length | Percentage;
 
   export type Computed = Auto | Length<"px"> | Percentage;
 
-  type InsetNames = "top" | "right" | "bottom" | "left";
+  type InsetNames =
+    | "top"
+    | "right"
+    | "bottom"
+    | "left"
+    | "inset-block-start"
+    | "inset-line-start"
+    | "inset-block-end"
+    | "inset-line-end";
+
+  const parseInset = either(
+    Keyword.parse("auto"),
+    either(Length.parse, Percentage.parse)
+  );
 
   function inset(name: InsetNames): Property<Specified, Computed> {
-    return Property.of(
-      Keyword.of("auto"),
-      either(Keyword.parse("auto"), either(Length.parse, Percentage.parse)),
-      (style) =>
-        style.specified(name).map((property) => {
-          switch (property.type) {
-            case "keyword":
-            case "percentage":
-              return property;
+    return Property.of(Keyword.of("auto"), parseInset, (style) =>
+      style.specified(name).map((property) => {
+        switch (property.type) {
+          case "keyword":
+          case "percentage":
+            return property;
 
-            case "length":
-              return Resolver.length(property, style);
-          }
-        })
+          case "length":
+            return Resolver.length(property, style);
+        }
+      })
     );
   }
 
@@ -46,4 +56,31 @@ export namespace Insets {
   export const Bottom = inset("bottom");
 
   export const Left = inset("left");
+
+  export namespace Block {
+    export const Start = inset("inset-block-start");
+
+    export const End = inset("inset-block-end");
+
+    export const ShortHand = Property.Shorthand.of(
+      ["inset-block-start", "inset-block-end"],
+      map(
+        separatedList(parseInset, oneOrMore(Token.parseWhitespace)),
+        (values) => {
+          const [start, end] = [...values];
+
+          return [
+            ["inset-block-start", start],
+            ["inset-block-end", end ?? start],
+          ];
+        }
+      )
+    );
+  }
+
+  export namespace Line {
+    export const Start = inset("inset-line-start");
+
+    export const End = inset("inset-line-end");
+  }
 }
