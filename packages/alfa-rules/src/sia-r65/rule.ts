@@ -1,20 +1,21 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Color, Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
+import { hasOutline } from "../common/predicate/has-outline";
+import { hasTextDecoration } from "../common/predicate/has-text-decoration";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 import { Question } from "../common/question";
 
 const { isElement } = Element;
+const { test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
@@ -68,18 +69,6 @@ export namespace Outcomes {
   );
 }
 
-const hasOutline: Predicate<Style> = (style) =>
-  style.computed("outline-width").none(Length.isZero) &&
-  style
-    .computed("outline-color")
-    .none((color) => color.type === "color" && Color.isTransparent(color));
-
-const hasTextDecoration: Predicate<Style> = (style) =>
-  style
-    .computed("text-decoration-line")
-    .none((line) => line.type === "keyword") &&
-  style.computed("text-decoration-color").none(Color.isTransparent);
-
 function hasFocusIndicator(device: Device): Predicate<Element> {
   return (element) => {
     const withFocus = Context.focus(element);
@@ -95,13 +84,21 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
       )
       .filter(isElement)
       .some((element) => {
-        const unset = Style.from(element, device);
-        const focus = Style.from(element, device, withFocus);
+        if (
+          test(hasOutline(device), element) !==
+          test(hasOutline(device, withFocus), element)
+        ) {
+          return true;
+        }
 
-        return (
-          hasOutline(unset) !== hasOutline(focus) ||
-          hasTextDecoration(unset) !== hasTextDecoration(focus)
-        );
+        if (
+          test(hasTextDecoration(device), element) !==
+          test(hasTextDecoration(device, withFocus), element)
+        ) {
+          return true;
+        }
+
+        return false;
       });
   };
 }

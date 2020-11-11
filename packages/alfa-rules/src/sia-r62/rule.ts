@@ -4,19 +4,20 @@ import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
+import { hasOutline } from "../common/predicate/has-outline";
 import { hasRole } from "../common/predicate/has-role";
+import { hasTextDecoration } from "../common/predicate/has-text-decoration";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 
 const { isElement, hasName } = Element;
 const { isText } = Text;
-const { and, or, test } = Predicate;
+const { and, or, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r62.html",
@@ -245,18 +246,19 @@ function isDistinguishable(
   device: Device,
   context?: Context
 ): Predicate<Element> {
-  const surroundings = Style.from(container, device, context);
-
   return (element) => {
-    const style = Style.from(element, device, context);
+    if (
+      test(not(hasOutline(device, context)), container) &&
+      test(hasOutline(device, context), element)
+    ) {
+      return true;
+    }
 
-    for (const property of [
-      "text-decoration-line",
-      "text-decoration-style",
-    ] as const) {
-      if (!style.computed(property).equals(surroundings.computed(property))) {
-        return true;
-      }
+    if (
+      test(not(hasTextDecoration(device, context)), container) &&
+      test(hasTextDecoration(device, context), element)
+    ) {
+      return true;
     }
 
     return false;

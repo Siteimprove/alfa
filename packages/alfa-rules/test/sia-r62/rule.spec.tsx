@@ -42,6 +42,56 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   ]);
 });
 
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration on hover and focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a:hover, a:focus", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and applies text decoration on hover and focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+
+        h.rule.style("a:hover, a:focus", {
+          textDecoration: "underline",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
 test(`evaluate() is inapplicable to an <a> element with no visible text content`, async (t) => {
   const target = (
     <a href="#">
