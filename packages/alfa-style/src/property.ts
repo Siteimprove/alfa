@@ -251,6 +251,7 @@ const Shorthands = {
   "background-repeat": Background.Repeat.Shorthand,
   "background-position": Background.Position.Shorthand,
   "inset-block": Inset.Block.ShortHand,
+  "inset-line": Inset.Line.ShortHand,
   outline: Outline.Shorthand,
   overflow: Overflow.Shorthand,
   "text-decoration": Text.Decoration.Shorthand,

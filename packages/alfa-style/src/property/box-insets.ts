@@ -62,6 +62,9 @@ export namespace Inset {
 
     export const End = inset("inset-block-end");
 
+    /**
+     * @see https://drafts.csswg.org/css-position/#inset-shorthands
+     */
     export const ShortHand = Property.Shorthand.of(
       ["inset-block-start", "inset-block-end"],
       map(
@@ -82,5 +85,23 @@ export namespace Inset {
     export const Start = inset("inset-line-start");
 
     export const End = inset("inset-line-end");
+
+    /**
+     * @see https://drafts.csswg.org/css-position/#inset-shorthands
+     */
+    export const ShortHand = Property.Shorthand.of(
+      ["inset-line-start", "inset-line-end"],
+      map(
+        separatedList(parseInset, oneOrMore(Token.parseWhitespace)),
+        (values) => {
+          const [start, end] = [...values];
+
+          return [
+            ["inset-line-start", start],
+            ["inset-line-end", end ?? start],
+          ];
+        }
+      )
+    );
   }
 }
