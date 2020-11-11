@@ -27,6 +27,7 @@
     "src/value.ts",
     "test/property/background.spec.tsx",
     "test/property/box.spec.tsx",
+    "test/property/box-insets.spec.tsx",
     "test/property/font.spec.tsx",
     "test/property/text.spec.tsx",
     "test/style.spec.tsx"
