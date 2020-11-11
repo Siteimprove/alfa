@@ -8,7 +8,7 @@ import { Style } from "../../src/style";
 
 const device = Device.standard();
 
-test("#cascade parses `inset-block: 1px 2px", (t) => {
+test("#cascaded() parses `inset-block: 1px 2px", (t) => {
   const element = <div style={{ insetBlock: "1px 2px" }}></div>;
 
   const style = Style.from(element, device);
@@ -32,7 +32,7 @@ test("#cascade parses `inset-block: 1px 2px", (t) => {
   });
 });
 
-test("#cascade parses `inset-block: 1px", (t) => {
+test("#cascaded() parses `inset-block: 1px", (t) => {
   const element = <div style={{ insetBlock: "1px" }}></div>;
 
   const style = Style.from(element, device);

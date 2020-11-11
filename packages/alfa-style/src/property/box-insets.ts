@@ -19,7 +19,7 @@ export namespace Inset {
 
   export type Computed = Auto | Length<"px"> | Percentage;
 
-  type InsetNames =
+  type Name =
     | "top"
     | "right"
     | "bottom"
@@ -34,7 +34,7 @@ export namespace Inset {
     either(Length.parse, Percentage.parse)
   );
 
-  function inset(name: InsetNames): Property<Specified, Computed> {
+  function inset(name: Name): Property<Specified, Computed> {
     return Property.of(Keyword.of("auto"), parseInset, (style) =>
       style.specified(name).map((property) => {
         switch (property.type) {
@@ -65,10 +65,10 @@ export namespace Inset {
     /**
      * @see https://drafts.csswg.org/css-position/#inset-shorthands
      */
-    export const ShortHand = Property.Shorthand.of(
+    export const Shorthand = Property.Shorthand.of(
       ["inset-block-start", "inset-block-end"],
       map(
-        separatedList(parseInset, oneOrMore(Token.parseWhitespace)),
+        separatedList(parseInset, Token.parseWhitespace),
         (values) => {
           const [start, end] = [...values];
 
@@ -89,10 +89,10 @@ export namespace Inset {
     /**
      * @see https://drafts.csswg.org/css-position/#inset-shorthands
      */
-    export const ShortHand = Property.Shorthand.of(
+    export const Shorthand = Property.Shorthand.of(
       ["inset-line-start", "inset-line-end"],
       map(
-        separatedList(parseInset, oneOrMore(Token.parseWhitespace)),
+        separatedList(parseInset, Token.parseWhitespace),
         (values) => {
           const [start, end] = [...values];
 
