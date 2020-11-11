@@ -183,16 +183,19 @@ import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
 import { Height } from "./property/height";
+import { Insets } from "./property/box-insets";
 import { Line } from "./property/line";
 import { Opacity } from "./property/opacity";
 import { Outline } from "./property/outline";
 import { Overflow } from "./property/overflow";
+import { Position } from "./property/position";
 import { Text } from "./property/text";
 import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
-import { Insets } from "./property/box-insets";
+
+
 
 type Longhands = typeof Longhands;
 const Longhands = {
@@ -224,6 +227,7 @@ const Longhands = {
   "outline-offset": Outline.Offset,
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
+  position: Position,
   right: Insets.Right,
   "text-align": Text.Align,
   "text-decoration-line": Text.Decoration.Line,

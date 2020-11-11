@@ -16,6 +16,7 @@
     "src/property/opacity.ts",
     "src/property/outline.ts",
     "src/property/overflow.ts",
+    "src/property/position.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
     "src/property/value/list.ts",
