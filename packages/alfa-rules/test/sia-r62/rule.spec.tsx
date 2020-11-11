@@ -66,6 +66,43 @@ test(`evaluate() passes an applicable <a> element that removes the default text
 });
 
 test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and is determined to be distinguishable on hover and focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(
+    await evaluate(
+      R62,
+      { document },
+      oracle({
+        "is-distinguishable": false,
+        "is-distinguishable-when-visited": false,
+        "is-distinguishable-on-hover": true,
+        "is-distinguishable-on-hover-when-visited": true,
+        "is-distinguishable-on-focus": true,
+        "is-distinguishable-on-focus-when-visited": true,
+      })
+    ),
+    [
+      passed(R62, target, {
+        1: Outcomes.IsDistinguishable,
+        2: Outcomes.IsDistinguishableWhenVisited,
+      }),
+    ]
+  );
+});
+
+test(`evaluate() passes an applicable <a> element that removes the default text
       decoration and applies text decoration on hover and focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
@@ -90,6 +127,43 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
+});
+
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration and is determined not to be distinguishable`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(
+    await evaluate(
+      R62,
+      { document },
+      oracle({
+        "is-distinguishable": false,
+        "is-distinguishable-when-visited": false,
+        "is-distinguishable-on-hover": false,
+        "is-distinguishable-on-hover-when-visited": false,
+        "is-distinguishable-on-focus": false,
+        "is-distinguishable-on-focus-when-visited": false,
+      })
+    ),
+    [
+      failed(R62, target, {
+        1: Outcomes.IsNotDistinguishable,
+        2: Outcomes.IsNotDistinguishableWhenVisited,
+      }),
+    ]
+  );
 });
 
 test(`evaluate() is inapplicable to an <a> element with no visible text content`, async (t) => {
