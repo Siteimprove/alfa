@@ -15,7 +15,7 @@ import { isTabbable } from "../common/predicate/is-tabbable";
 import { Question } from "../common/question";
 
 const { isElement } = Element;
-const { test } = Predicate;
+const { or, xor, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
@@ -83,22 +83,11 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
         })
       )
       .filter(isElement)
-      .some((element) => {
-        if (
-          test(hasOutline(device), element) !==
-          test(hasOutline(device, withFocus), element)
-        ) {
-          return true;
-        }
-
-        if (
-          test(hasTextDecoration(device), element) !==
-          test(hasTextDecoration(device, withFocus), element)
-        ) {
-          return true;
-        }
-
-        return false;
-      });
+      .some(
+        or(
+          xor(hasOutline(device), hasOutline(device, withFocus)),
+          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus))
+        )
+      );
   };
 }

@@ -105,24 +105,19 @@ export default Rule.Atomic.of<Page, Element, Question>({
                       surrounding text without relying on color perception
                       alone?`
                     ).map((isDistinguishableOnHover) =>
-                      expectation(
-                        isDistinguishableOnHover,
-                        () =>
-                          Question.of(
-                            "is-distinguishable-on-focus",
-                            "boolean",
-                            target,
-                            `When focused, can the link be distinguished from
+                      Question.of(
+                        "is-distinguishable-on-focus",
+                        "boolean",
+                        target,
+                        `When focused, can the link be distinguished from
                             the surrounding text without relying on color
                             perception alone?`
-                          ).map((isDistinguishableOnFocus) =>
-                            expectation(
-                              isDistinguishableOnFocus,
-                              () => Outcomes.IsDistinguishable,
-                              () => Outcomes.IsNotDistinguishable
-                            )
-                          ),
-                        () => Outcomes.IsNotDistinguishable
+                      ).map((isDistinguishableOnFocus) =>
+                        expectation(
+                          isDistinguishableOnHover && isDistinguishableOnFocus,
+                          () => Outcomes.IsDistinguishable,
+                          () => Outcomes.IsNotDistinguishable
+                        )
                       )
                     )
                 )
@@ -169,24 +164,20 @@ export default Rule.Atomic.of<Page, Element, Question>({
                       from the surrounding text without relying on color
                       perception alone?`
                     ).map((isDistinguishableOnHoverWhenVisited) =>
-                      expectation(
-                        isDistinguishableOnHoverWhenVisited,
-                        () =>
-                          Question.of(
-                            "is-distinguishable-on-focus-when-visited",
-                            "boolean",
-                            target,
-                            `When visited and focused, can the link be
+                      Question.of(
+                        "is-distinguishable-on-focus-when-visited",
+                        "boolean",
+                        target,
+                        `When visited and focused, can the link be
                             distinguished from the surrounding text without
                             relying on color perception alone?`
-                          ).map((isDistinguishableOnFocusWhenVisited) =>
-                            expectation(
-                              isDistinguishableOnFocusWhenVisited,
-                              () => Outcomes.IsDistinguishableWhenVisited,
-                              () => Outcomes.IsNotDistinguishableWhenVisited
-                            )
-                          ),
-                        () => Outcomes.IsNotDistinguishableWhenVisited
+                      ).map((isDistinguishableOnFocusWhenVisited) =>
+                        expectation(
+                          isDistinguishableOnHoverWhenVisited &&
+                            isDistinguishableOnFocusWhenVisited,
+                          () => Outcomes.IsDistinguishableWhenVisited,
+                          () => Outcomes.IsNotDistinguishableWhenVisited
+                        )
                       )
                     )
                 )
