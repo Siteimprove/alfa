@@ -52,6 +52,7 @@ export { default as R53 } from "./sia-r53/rule";
 export { default as R57 } from "./sia-r57/rule";
 export { default as R59 } from "./sia-r59/rule";
 export { default as R61 } from "./sia-r61/rule";
+export { default as R62 } from "./sia-r62/rule";
 export { default as R63 } from "./sia-r63/rule";
 export { default as R64 } from "./sia-r64/rule";
 export { default as R65 } from "./sia-r65/rule";
