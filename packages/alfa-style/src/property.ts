@@ -183,10 +183,12 @@ import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
 import { Height } from "./property/height";
+import { Inset } from "./property/box-insets";
 import { Line } from "./property/line";
 import { Opacity } from "./property/opacity";
 import { Outline } from "./property/outline";
 import { Overflow } from "./property/overflow";
+import { Position } from "./property/position";
 import { Text } from "./property/text";
 import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
@@ -205,6 +207,7 @@ const Longhands = {
   "background-clip": Background.Clip,
   "background-origin": Background.Origin,
   "background-size": Background.Size,
+  bottom: Inset.Bottom,
   "box-shadow": Box.Shadow,
   color: Color,
   display: Display,
@@ -213,6 +216,11 @@ const Longhands = {
   "font-style": Font.Style,
   "font-weight": Font.Weight,
   height: Height,
+  "inset-block-end": Inset.Block.End,
+  "inset-block-start": Inset.Block.Start,
+  "inset-line-end": Inset.Line.End,
+  "inset-line-start": Inset.Line.Start,
+  left: Inset.Left,
   "line-height": Line.Height,
   opacity: Opacity,
   "outline-width": Outline.Width,
@@ -221,12 +229,16 @@ const Longhands = {
   "outline-offset": Outline.Offset,
   "overflow-x": Overflow.X,
   "overflow-y": Overflow.Y,
+  position: Position,
+  right: Inset.Right,
   "text-align": Text.Align,
   "text-decoration-line": Text.Decoration.Line,
   "text-decoration-style": Text.Decoration.Style,
   "text-decoration-color": Text.Decoration.Color,
+  "text-indent": Text.Indent,
   "text-transform": Text.Transform,
   "text-overflow": Text.Overflow,
+  top: Inset.Top,
   transform: Transform,
   visibility: Visibility,
   "white-space": Whitespace,
@@ -238,6 +250,8 @@ const Shorthands = {
   background: Background.Shorthand,
   "background-repeat": Background.Repeat.Shorthand,
   "background-position": Background.Position.Shorthand,
+  "inset-block": Inset.Block.Shorthand,
+  "inset-line": Inset.Line.Shorthand,
   outline: Outline.Shorthand,
   overflow: Overflow.Shorthand,
   "text-decoration": Text.Decoration.Shorthand,

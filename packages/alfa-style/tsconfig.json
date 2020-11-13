@@ -6,6 +6,7 @@
     "src/property.ts",
     "src/property/background.ts",
     "src/property/box.ts",
+    "src/property/box-insets.ts",
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
@@ -14,6 +15,7 @@
     "src/property/opacity.ts",
     "src/property/outline.ts",
     "src/property/overflow.ts",
+    "src/property/position.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
     "src/property/value/list.ts",
@@ -25,6 +27,7 @@
     "src/value.ts",
     "test/property/background.spec.tsx",
     "test/property/box.spec.tsx",
+    "test/property/box-insets.spec.tsx",
     "test/property/font.spec.tsx",
     "test/property/text.spec.tsx",
     "test/style.spec.tsx"

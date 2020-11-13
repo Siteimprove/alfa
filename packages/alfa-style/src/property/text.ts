@@ -1,11 +1,13 @@
 import {
   Current,
   Keyword,
+  Length,
   Percentage,
   RGB,
   System,
   Token,
 } from "@siteimprove/alfa-css";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
@@ -84,6 +86,30 @@ export namespace Text {
     export type Specified = Keyword<"clip"> | Keyword<"ellipsis">;
 
     export type Computed = Specified;
+  }
+
+  /**
+   * @see https://drafts.csswg.org/css-text/#text-indent-property
+   */
+  export const Indent: Property<
+    Indent.Specified,
+    Indent.Computed
+  > = Property.of(
+    Length.of(0, "px"),
+    either(Length.parse, Percentage.parse),
+    (style) =>
+      style
+        .specified("text-indent")
+        .map((indent) =>
+          indent.type === "percentage" ? indent : Resolver.length(indent, style)
+        ),
+    { inherits: true }
+  );
+
+  export namespace Indent {
+    export type Specified = Length | Percentage;
+
+    export type Computed = Length<"px"> | Percentage;
   }
 
   export namespace Decoration {
