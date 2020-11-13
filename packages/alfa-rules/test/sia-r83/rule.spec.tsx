@@ -31,6 +31,29 @@ test("evaluate() passes a text node that truncates overflow using ellipsis", asy
   ]);
 });
 
+test(`evaluate() passes a child text node of an element whose parent truncates
+      overflow using ellipsis`, async (t) => {
+  const target = h.text("Hello world");
+
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+      }}
+    >
+      <span>{target}</span>
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, {
+      1: Outcomes.WrapsText,
+    }),
+  ]);
+});
+
 test(`evaluate() passes a text node that hides overflow by wrapping text using
       the \`height\` property with a value that is equal to the value of the
       \`line-height\` property`, async (t) => {
