@@ -57,7 +57,7 @@ test(`isVisible() returns false when an element is hidden by reducing its size
 test("isVisible() returns false on empty elements", (t) => {
   const element = <div></div>;
 
-  t.equal(isVisible(element), true);
+  t.equal(isVisible(element), false);
 });
 
 test("isVisible() returns false when no child is visible", (t) => {
@@ -72,7 +72,7 @@ test("isVisible() returns false when no child is visible", (t) => {
   // is applied.
   h.document([element]);
 
-  t.equal(isVisible(element), true);
+  t.equal(isVisible(element), false);
 });
 
 test("isVisible() returns true when at least one child is visible", (t) => {
