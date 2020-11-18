@@ -9041,9 +9041,9 @@ webdriver@6.8.0:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.8.0.tgz#dabb873c7f03772b2380c6c20b47b947be0b3c03"
-  integrity sha512-jVN73xLUcIF3PJYgeqzTbyak0QfqUegq/hjaIkLl8wQWRNubuEA3dN9L4U33AzOokYvcBXinemh3Ein35f1a8A==
+  version "6.8.1"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.8.1.tgz#fa165af70d394c2c215c8c88dc6344f5300573ef"
+  integrity sha512-iu3oiNMJXSJqSH7e5j2HHlLJKYJM/IKr3oyA34+ZrnjYHc4f8YT//GXHCxo72XMEv1xocWHjI8JEyxNgEGgrJg==
   dependencies:
     "@types/archiver" "^3.1.1"
     "@types/atob" "^2.1.2"
