@@ -10,8 +10,8 @@ import { isTransparent } from "./is-transparent";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import every = Iterable.every;
 
-const { not, or } = Predicate;
-const { and } = Refinement;
+const { not } = Predicate;
+const { and, or } = Refinement;
 const { isElement } = Element;
 const { isText } = Text;
 
@@ -19,33 +19,32 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
   return and(
     isRendered(device, context),
     not(isTransparent(device, context)),
-    // Text specific checks
-    not(
-      and(
-        isText,
-        // text which is empty or clipped is not visible
-        or<Text>((text) => text.data.trim() === "", isClipped(device, context))
-      )
-    ),
-    // Element specific checks
+    not(and(or(isElement, isText), isClipped(device, context))),
+    (node) => {
+      if (
+        Element.isElement(node) &&
+        Style.from(node, device, context)
+          .computed("visibility")
+          .some((visibility) => visibility.value !== "visible")
+      ) {
+        return false;
+      }
+
+      if (Text.isText(node)) {
+        return node.data.trim() !== "";
+      }
+
+      return true;
+    },
+    // non-replaced elements with no visible child are not visible
+    // replaced elements are assumed to be replaced by something visible.
     not(
       and(
         isElement,
-        or<Element>(
-          // elements with visibility other than "visible" are not visible
-          (element) =>
-            Style.from(element, device, context)
-              .computed("visibility")
-              .some((visibility) => visibility.value !== "visible"),
-          // clipped elements are not visible
-          isClipped(device, context),
-          // non-replaced elements with no visible child are not visible
-          // replaced elements are assumed to be replaced by something visible.
-          and(not(isReplaced), (element) =>
-            every(
-              element.children({ nested: true, flattened: true }),
-              not(isVisible(device, context))
-            )
+        and(not(isReplaced), (element) =>
+          every(
+            element.children({ nested: true, flattened: true }),
+            not(isVisible(device, context))
           )
         )
       )
