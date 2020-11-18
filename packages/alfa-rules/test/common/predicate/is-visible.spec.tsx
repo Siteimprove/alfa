@@ -88,3 +88,9 @@ test("isVisible() returns true when at least one child is visible", (t) => {
 
   t.equal(isVisible(element), true);
 });
+
+test("isVisible() returns true for replaced elements with no child", (t) => {
+  const element = <img src="foo.jpg" />;
+
+  t.equal(isVisible(element), true);
+});
