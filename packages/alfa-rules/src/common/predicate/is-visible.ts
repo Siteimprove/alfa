@@ -89,14 +89,13 @@ function isClipped(
 /**
  * @see https://html.spec.whatwg.org/multipage/rendering.html#replaced-elements
  */
-const isReplaced: Predicate<Element> = (element) =>
-  [
-    "audio",
-    "canvas",
-    "embed",
-    "iframe",
-    "img",
-    "input",
-    "object",
-    "video",
-  ].includes(element.name);
+const isReplaced = hasName(
+  "audio",
+  "canvas",
+  "embed",
+  "iframe",
+  "img",
+  "input",
+  "object",
+  "video",
+);
