@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import every = Iterable.every;
+const { every } = Iterable;
 
 const { not } = Predicate;
 const { and, or } = Refinement;
