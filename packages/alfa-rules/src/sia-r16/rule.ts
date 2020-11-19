@@ -11,10 +11,11 @@ import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
 import { isFocusable } from "../common/predicate/is-focusable";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, property } = Predicate;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
@@ -24,7 +25,8 @@ export default Rule.Atomic.of<Page, Element>({
         return document
           .descendants({ composed: true, nested: true })
           .filter(isElement)
-          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()));
+          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()))
+          .filter(not(isIgnored(device)));
       },
 
       expectations(target) {
