@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
@@ -7,12 +8,11 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
-import { Iterable } from "@siteimprove/alfa-iterable";
 const { every } = Iterable;
 
 const { not } = Predicate;
 const { and, or } = Refinement;
-const { isElement } = Element;
+const { isElement, hasName } = Element;
 const { isText } = Text;
 
 export function isVisible(device: Device, context?: Context): Predicate<Node> {
@@ -97,5 +97,5 @@ const isReplaced = hasName(
   "img",
   "input",
   "object",
-  "video",
+  "video"
 );
