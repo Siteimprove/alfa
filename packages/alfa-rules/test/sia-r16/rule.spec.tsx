@@ -6,7 +6,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import R16, { Outcomes } from "../../src/sia-r16/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed } from "../common/outcome";
+import { passed, failed, inapplicable } from "../common/outcome";
 
 test(`evaluate() passes a <div> element with a role of checkbox and an
       aria-checked attribute`, async (t) => {
@@ -94,4 +94,12 @@ test(`evaluate() fails a focusable <div> element with a role of separator and no
       1: Outcomes.HasNotAllStates,
     }),
   ]);
+});
+
+test("evaluate() is inapplicable to elements that are not exposed", async (t) => {
+  const target = <div role="combobox" style={{ display: "none" }}></div>;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R16, { document }), [inapplicable(R16)]);
 });
