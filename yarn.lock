@@ -8827,9 +8827,9 @@ unexpected-bluebird@2.9.34-longstack2:
   integrity sha1-SaysdTsFVt7WAlIQ7pYYIwfSssk=
 
 unexpected@^11.2.0:
-  version "11.15.0"
-  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.15.0.tgz#dbd118a7f55bba8e1f721bbab074da2adc92e497"
-  integrity sha512-VOyn+Hu4MrQ9n6bNLy0DZbKz7qUKq7NqYKh5GRy4EncQqFI2sFWxr7XZUDkMAB9eb2IKuVH0Qv1ohJCeYWwwkw==
+  version "11.15.1"
+  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.15.1.tgz#86654c8f429a660f23bd78bbfb2f63cd3e334f31"
+  integrity sha512-s3XfLMEKRPioyuC5cqOCl2oCgGEg4fLhIuFHcUf0IExkGXTafPlLrkcvWV76woFrXpdxWGShYpDDQXBA3lOUcA==
   dependencies:
     array-changes "3.0.1"
     array-changes-async "3.0.1"
