@@ -112,7 +112,7 @@ test("evaluates() is inapplicable on input type who don't support autocomplete",
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
 
-test("evaluates() is inapplicable on invisible element", async (t) => {
+test("evaluates() is inapplicable on invisible elements", async (t) => {
   const element = <input style={{ display: "none" }} autocomplete="email" />;
 
   const document = Document.of([element]);
@@ -120,8 +120,16 @@ test("evaluates() is inapplicable on invisible element", async (t) => {
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
 
-test("evaluates() is inapplicable on aria-disabled element", async (t) => {
+test("evaluates() is inapplicable on aria-disabled elements", async (t) => {
   const element = <input aria-disabled="true" autocomplete="email" />;
+
+  const document = Document.of([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
+});
+
+test("evaluates() is inapplicable on disabled elements", async (t) => {
+  const element = <input disabled autocomplete="email" />;
 
   const document = Document.of([element]);
 
