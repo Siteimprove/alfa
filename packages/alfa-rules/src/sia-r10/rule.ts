@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -34,7 +35,12 @@ export default Rule.Atomic.of<Page, Attribute>({
                   hasInputType("hidden", "button", "submit", "reset")
                 )
               ),
-              not(hasAttribute("aria-disabled", equals("true"))),
+              (element) =>
+                Node.from(element, device).some((ariaNode) =>
+                  ariaNode
+                    .attribute("aria-disabled")
+                    .none((ariaDisabled) => ariaDisabled.value === "true")
+                ),
               or(
                 isTabbable(device),
                 hasRole((role) => role.isWidget())
