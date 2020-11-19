@@ -87,7 +87,7 @@ function isClipped(
 }
 
 /**
- * @see https://html.spec.whatwg.org/multipage/rendering.html#replaced-elements
+ * @see https://html.spec.whatwg.org/#replaced-elements
  */
 const isReplaced = hasName(
   "audio",
