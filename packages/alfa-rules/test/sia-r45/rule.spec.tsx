@@ -123,7 +123,7 @@ test("evaluate() is inapplicable to a table which is not included in the accessi
   t.deepEqual(await evaluate(R45, { document }), [inapplicable(R45)]);
 });
 
-test("evaluate() is inapplicable to a table which does not have a role of table", async (t) => {
+test("evaluate() is inapplicable to a table with a presentational role", async (t) => {
   const document = Document.of([
     <table role="presentation">
       <td headers="foo">Bar</td>
