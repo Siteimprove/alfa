@@ -21,15 +21,29 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-formatter](packages/alfa-formatter): The list of relevant rules are now expected to be passed as the second argument to the `Formatter<I, T, Q>` type. ([#439](../../pull/439))
+
 ### Added
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R65 is now available. ([#497](../../pull/497))
 
-- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-*` CSS properties. ([#511](../../pull/511))
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-*`, `text-indent`, `position`, `top`, `right`, `bottom`, `left`, `inset-line-*`, and `inset-block-*` CSS properties. ([#511](../../pull/511), [#539](../../pull/539), [#541](../../pull/541), [#542](../../pull/542))
 
 ### Fixed
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): Fix faulty ancestor filtering that resulted in complex selectors never matching when computing cascade.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Elements, and descendants of elements, with `aria-hidden=true` are no longer included when computing accessible names unless explicitly referenced through `aria-labelledby`. ([#527](../../pull/527))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now checks overflow handling of the clipping ancestor rather than the immediate parent of each applicable text node. ([#540](../../pull/540))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R10 no longer applies to disabled form controls. ([#516](../../issues/516), [#554](../../pull/554))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 no longer applies to elements not in the accessibility tree. ([#523](../../issues/523), [#555](../../pull/555))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R45 no longer applies to elements with a presentational role. ([#521](../../issues/521), [#556](../../pull/556))
 
 ## [0.6.0](../../compare/v0.5.0...v0.6.0) (2020-10-30)
 
