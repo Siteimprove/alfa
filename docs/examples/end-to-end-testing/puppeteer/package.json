@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "end-to-end-testing-puppeteer",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "scripts": {
     "test": "mocha"
   },
   "devDependencies": {
-    "@siteimprove/alfa-chai": "^0.6.0",
-    "@siteimprove/alfa-puppeteer": "^0.6.0",
+    "@siteimprove/alfa-chai": "^0.7.0",
+    "@siteimprove/alfa-puppeteer": "^0.7.0",
     "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
     "@types/puppeteer": "^2.0.1",
