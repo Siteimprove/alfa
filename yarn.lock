@@ -3562,10 +3562,10 @@ diff-sequences@^26.6.2:
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-26.6.2.tgz#48ba99157de1923412eed41db6b6d4aa9ca7c0b1"
   integrity sha512-Mv/TDa3nZ9sbc5soK+OoA74BsS3mL37yixCvUAQkiuA4Wz6YtwP/K47n2rv2ovzHZvoiQeA5FTQOschKkEwB0Q==
 
-diff@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
-  integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
+diff@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-5.0.0.tgz#7ed6ad76d859d030787ec35855f5b1daf31d852b"
+  integrity sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==
 
 dir-glob@^2.2.2:
   version "2.2.2"
@@ -8826,15 +8826,15 @@ unexpected-bluebird@2.9.34-longstack2:
   resolved "https://registry.yarnpkg.com/unexpected-bluebird/-/unexpected-bluebird-2.9.34-longstack2.tgz#49acac753b0556ded6025210ee96182307d2b2c9"
   integrity sha1-SaysdTsFVt7WAlIQ7pYYIwfSssk=
 
-unexpected@^11.2.0:
-  version "11.15.1"
-  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.15.1.tgz#86654c8f429a660f23bd78bbfb2f63cd3e334f31"
-  integrity sha512-s3XfLMEKRPioyuC5cqOCl2oCgGEg4fLhIuFHcUf0IExkGXTafPlLrkcvWV76woFrXpdxWGShYpDDQXBA3lOUcA==
+unexpected@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-12.0.0.tgz#23f328dfb6681ed7147bb85a9af7a4856f4b7a9d"
+  integrity sha512-fvfae3tGahPNRp3biVWDVGj/E3XHsD1uOr9/nf9cxV5zaaAtncRu2L2sVOeU2e3BJ7+kfVSyo/vakECBykPA6g==
   dependencies:
     array-changes "3.0.1"
     array-changes-async "3.0.1"
     detect-indent "3.0.1"
-    diff "4.0.2"
+    diff "^5.0.0"
     greedy-interval-packer "1.2.0"
     magicpen "^6.2.1"
     ukkonen "^1.4.0"
