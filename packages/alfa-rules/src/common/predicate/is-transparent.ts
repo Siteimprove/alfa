@@ -5,28 +5,31 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-const cache = Cache.empty<[Device, Context, Node], boolean>();
+const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 export function isTransparent(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
   return function isTransparent(node) {
-    return cache.get([device, context, node], () => {
-      if (
-        Element.isElement(node) &&
-        Style.from(node, device, context)
-          .computed("opacity")
-          .some((opacity) => opacity.value === 0)
-      ) {
-        return true;
-      }
+    return cache
+      .get(device, () => Cache.empty<Context, Cache<Node, boolean>>())
+      .get(context, () => Cache.empty<Node, boolean>())
+      .get(node, () => {
+        if (
+          Element.isElement(node) &&
+          Style.from(node, device, context)
+            .computed("opacity")
+            .some((opacity) => opacity.value === 0)
+        ) {
+          return true;
+        }
 
-      return node
-        .parent({
-          flattened: true,
-        })
-        .some(isTransparent);
-    });
+        return node
+          .parent({
+            flattened: true,
+          })
+          .some(isTransparent);
+      });
   };
 }

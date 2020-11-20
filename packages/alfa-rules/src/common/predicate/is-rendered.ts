@@ -7,7 +7,7 @@ import { Style } from "@siteimprove/alfa-style";
 
 const { isElement, hasName } = Element;
 
-const cache = Cache.empty<[Device, Context, Node], boolean>();
+const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
  * @see https://html.spec.whatwg.org/#being-rendered
@@ -17,31 +17,34 @@ export function isRendered(
   context: Context = Context.empty()
 ): Predicate<Node> {
   return function isRendered(node) {
-    return cache.get([device, context, node], () => {
-      // Children of <iframe> elements act as fallback content in legacy user
-      // agents and should therefore never be considered rendered.
-      if (node.parent().filter(isElement).some(hasName("iframe"))) {
-        return false;
-      }
+    return cache
+      .get(device, () => Cache.empty<Context, Cache<Node, boolean>>())
+      .get(context, () => Cache.empty<Node, boolean>())
+      .get(node, () => {
+        // Children of <iframe> elements act as fallback content in legacy user
+        // agents and should therefore never be considered rendered.
+        if (node.parent().filter(isElement).some(hasName("iframe"))) {
+          return false;
+        }
 
-      if (
-        Element.isElement(node) &&
-        Style.from(node, device, context)
-          .computed("display")
-          .some(([outside]) => outside.value === "none")
-      ) {
-        return false;
-      }
+        if (
+          Element.isElement(node) &&
+          Style.from(node, device, context)
+            .computed("display")
+            .some(([outside]) => outside.value === "none")
+        ) {
+          return false;
+        }
 
-      if (Comment.isComment(node)) {
-        return false;
-      }
+        if (Comment.isComment(node)) {
+          return false;
+        }
 
-      return node
-        .parent({
-          flattened: true,
-        })
-        .every(isRendered);
-    });
+        return node
+          .parent({
+            flattened: true,
+          })
+          .every(isRendered);
+      });
   };
 }

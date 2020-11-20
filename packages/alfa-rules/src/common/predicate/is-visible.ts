@@ -53,41 +53,47 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
   );
 }
 
-const clippedCache = Cache.empty<[Device, Context, Node], boolean>();
+const clippedCache = Cache.empty<
+  Device,
+  Cache<Context, Cache<Node, boolean>>
+>();
 
 function isClipped(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Element | Text> {
   return function isClipped(node) {
-    return clippedCache.get([device, context, node], () => {
-      if (Element.isElement(node)) {
-        const style = Style.from(node, device, context);
+    return clippedCache
+      .get(device, () => Cache.empty<Context, Cache<Node, boolean>>())
+      .get(context, () => Cache.empty<Node, boolean>())
+      .get(node, () => {
+        if (Element.isElement(node)) {
+          const style = Style.from(node, device, context);
 
-        const { value: height } = style.computed("height");
-        const { value: width } = style.computed("width");
-        const { value: x } = style.computed("overflow-x");
-        const { value: y } = style.computed("overflow-y");
+          const { value: height } = style.computed("height");
+          const { value: width } = style.computed("width");
+          const { value: x } = style.computed("overflow-x");
+          const { value: y } = style.computed("overflow-y");
 
-        if (
-          height.type === "length" &&
-          height.value <= 1 &&
-          width.type === "length" &&
-          height.value <= 1 &&
-          x.value === "hidden" &&
-          y.value === "hidden"
-        ) {
-          return true;
+          if (
+            height.type === "length" &&
+            height.value <= 1 &&
+            width.type === "length" &&
+            height.value <= 1 &&
+            x.value === "hidden" &&
+            y.value === "hidden"
+          ) {
+            return true;
+          }
         }
-      }
 
-      return node
-        .parent({
-          flattened: true,
-        })
-        .filter(isElement)
-        .some(isClipped);
-    });
+        return node
+          .parent({
+            flattened: true,
+          })
+          .filter(isElement)
+          .some(isClipped);
+      });
   };
 }
 
