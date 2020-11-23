@@ -7,7 +7,6 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -21,7 +20,7 @@ import { Group } from "../common/group";
 import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 const { isElement, hasNamespace } = Element;
-const { map, flatten } = Iterable;
+const { flatten } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
@@ -68,12 +67,6 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
       },
 
       expectations(target) {
-        // const sources = Set.from(
-        //   map(target, (element) =>
-        //     element.attribute("href").map((attr) => attr.value)
-        //   )
-        // );
-
         const embedSameResource = [...target].every((element, i, elements) => {
           // This is either the first element...
           return (

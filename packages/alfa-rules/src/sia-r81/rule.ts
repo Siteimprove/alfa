@@ -23,7 +23,7 @@ import { Group } from "../common/group";
 import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 const { isElement, hasName, hasNamespace, hasId } = Element;
-const { map, flatten } = Iterable;
+const { flatten } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
@@ -70,12 +70,6 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
       },
 
       expectations(target) {
-        const sources = Set.from(
-          map(target, (element) =>
-            element.attribute("href").map((attr) => attr.value)
-          )
-        );
-
         const embedSameResource = [...target].every(
           (element, i, elements) =>
             // This is either the first element...
