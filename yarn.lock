@@ -3,9 +3,9 @@
 
 
 "@angular/core@^11.0.0":
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-11.0.1.tgz#ff606d13a76692c5797dd8f16dd5857b0d7a6baf"
-  integrity sha512-8Xd1YNHPvi32q8+RxEbruQfKGBenucJ2EGBky7108F3kGcnDjm9u+zqdwWjm0ww6VeYh6OsvCnXt303jpX6C4Q==
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-11.0.2.tgz#490248b1d746e24513f2db996bd857e5a36d2f45"
+  integrity sha512-GyDebks5ZPHDyChDW3VvzJq00Ct0iuesNpb9z/GpKtOXqug3sGr4KgkFDUTbfizKPWyeoaLH9FQYP55215nCKQ==
   dependencies:
     tslib "^2.0.0"
 
@@ -1772,9 +1772,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jasmine@^3.3.12":
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.6.1.tgz#f8b95def0016411c58c7adb4791dff29bc62992c"
-  integrity sha512-eeSCVhBsgwHNS1FmaMu4zrLxfykCTWJMLFZv7lmyrZQjw7foUUXoPu4GukSN9v7JvUw7X+/aDH3kCaymirBSTg==
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.6.2.tgz#02f64450016f7de70f145d698be311136d7c6374"
+  integrity sha512-AzfesNFLvOs6Q1mHzIsVJXSeUnqVh4ZHG8ngygKJfbkcSLwzrBVm/LKa+mR8KrOfnWtUL47112gde1MC0IXqpQ==
 
 "@types/jest@^26.0.10":
   version "26.0.15"
@@ -1830,9 +1830,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*", "@types/node@>= 8", "@types/node@^14.0.12", "@types/node@^14.6.2":
-  version "14.14.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.8.tgz#2127bd81949a95c8b7d3240f3254352d72563aec"
-  integrity sha512-z/5Yd59dCKI5kbxauAJgw6dLPzW+TNOItNE00PkpzNwUIEwdj/Lsqwq94H5DdYBX7C13aRA0CY32BK76+neEUA==
+  version "14.14.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.9.tgz#04afc9a25c6ff93da14deabd65dc44485b53c8d6"
+  integrity sha512-JsoLXFppG62tWTklIoO4knA+oDTYsmqWxHRvd4lpmfQRNhX6osheUOWETP2jMoV/2bEHuMra8Pp3Dmo/stBFcw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -1863,10 +1863,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-test-renderer@^16.8.1":
-  version "16.9.3"
-  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-16.9.3.tgz#96bab1860904366f4e848b739ba0e2f67bcae87e"
-  integrity sha512-wJ7IlN5NI82XMLOyHSa+cNN4Z0I+8/YaLl04uDgcZ+W+ExWCmCiVTLT/7fRNqzy4OhStZcUwIqLNF7q+AdW43Q==
+"@types/react-test-renderer@^17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-17.0.0.tgz#9be47b375eeb906fced37049e67284a438d56620"
+  integrity sha512-nvw+F81OmyzpyIE1S0xWpLonLUZCMewslPuA8BtjSKc5XEbn8zEQBXS7KuOLHTNnSOEM2Pum50gHOoZ62tqTRg==
   dependencies:
     "@types/react" "*"
 
@@ -3562,10 +3562,10 @@ diff-sequences@^26.6.2:
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-26.6.2.tgz#48ba99157de1923412eed41db6b6d4aa9ca7c0b1"
   integrity sha512-Mv/TDa3nZ9sbc5soK+OoA74BsS3mL37yixCvUAQkiuA4Wz6YtwP/K47n2rv2ovzHZvoiQeA5FTQOschKkEwB0Q==
 
-diff@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
-  integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
+diff@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-5.0.0.tgz#7ed6ad76d859d030787ec35855f5b1daf31d852b"
+  integrity sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==
 
 dir-glob@^2.2.2:
   version "2.2.2"
@@ -7252,10 +7252,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
-prettier@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
-  integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==
+prettier@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.0.tgz#8a03c7777883b29b37fb2c4348c66a78e980418b"
+  integrity sha512-yYerpkvseM4iKD/BXLYUkQV5aKt4tQPqaGW6EsZjzyu0r7sVZZNPJW4Y8MyKmicp6t42XUPcBVA+H6sB3gqndw==
 
 pretty-bytes@^5.4.1:
   version "5.4.1"
@@ -8782,9 +8782,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typescript@^4.0.2:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
-  integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.2.tgz#6369ef22516fe5e10304aae5a5c4862db55380e9"
+  integrity sha512-thGloWsGH3SOxv1SoY7QojKi0tc+8FnOmiarEGMbd/lar7QOEd3hvlx3Fp5y6FlDUGl9L+pd4n2e+oToGMmhRQ==
 
 ua-parser-js@^0.7.21:
   version "0.7.21"
@@ -8826,15 +8826,15 @@ unexpected-bluebird@2.9.34-longstack2:
   resolved "https://registry.yarnpkg.com/unexpected-bluebird/-/unexpected-bluebird-2.9.34-longstack2.tgz#49acac753b0556ded6025210ee96182307d2b2c9"
   integrity sha1-SaysdTsFVt7WAlIQ7pYYIwfSssk=
 
-unexpected@^11.2.0:
-  version "11.15.1"
-  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.15.1.tgz#86654c8f429a660f23bd78bbfb2f63cd3e334f31"
-  integrity sha512-s3XfLMEKRPioyuC5cqOCl2oCgGEg4fLhIuFHcUf0IExkGXTafPlLrkcvWV76woFrXpdxWGShYpDDQXBA3lOUcA==
+unexpected@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-12.0.0.tgz#23f328dfb6681ed7147bb85a9af7a4856f4b7a9d"
+  integrity sha512-fvfae3tGahPNRp3biVWDVGj/E3XHsD1uOr9/nf9cxV5zaaAtncRu2L2sVOeU2e3BJ7+kfVSyo/vakECBykPA6g==
   dependencies:
     array-changes "3.0.1"
     array-changes-async "3.0.1"
     detect-indent "3.0.1"
-    diff "4.0.2"
+    diff "^5.0.0"
     greedy-interval-packer "1.2.0"
     magicpen "^6.2.1"
     ukkonen "^1.4.0"
@@ -9027,10 +9027,10 @@ wcwidth@^1.0.0:
   dependencies:
     defaults "^1.0.3"
 
-webdriver@6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-6.9.0.tgz#8b5fd445ef324b6f57cbda612292d00fc94c86e8"
-  integrity sha512-P0Hv1JJYi5k7ZcWi53yba4VSA0D45WcmDT5TGZPA0qEp5D1dwYuHMboQtlBXVRMUQaiu3+9zeEFfwahCR0A+aw==
+webdriver@6.9.1:
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-6.9.1.tgz#1d4aabefd756e281fedb7591ca7e16619d6421f4"
+  integrity sha512-2JMjwLKau/+nia6yzsnnHy4CRzc3nFZHBSNFfWxsTf+vqrLEGdaNgcWfXdpwCfGIVg4xgdMFFBaWxaZeVQUz8g==
   dependencies:
     "@types/lodash.merge" "^4.6.6"
     "@wdio/config" "6.9.0"
@@ -9041,9 +9041,9 @@ webdriver@6.9.0:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.9.0.tgz#ca8d4d4f0affe37da01f0b725c9bfb7e986e03f6"
-  integrity sha512-M+hIXCv9u7m2yktsvlYC9X9vDgNrPN9kyMeD3jQiJDcmURu3SCv774g1cg/tzgmZRiGTY3leltUxapHnRJqazQ==
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.9.1.tgz#34da0c0b4eeaaed028fa507867d716e1f0b3d313"
+  integrity sha512-ElDtA4rwyJE+BaJJuKKVEz4WQcVnb6r76YNmK5g1Mq97zoRMYhj9StJxhXbxY50yODdcbxSTOeMGjMyFx9ccZQ==
   dependencies:
     "@types/archiver" "^3.1.1"
     "@types/atob" "^2.1.2"
@@ -9071,7 +9071,7 @@ webdriverio@^6.4.4:
     resq "^1.9.1"
     rgb2hex "^0.2.0"
     serialize-error "^7.0.0"
-    webdriver "6.9.0"
+    webdriver "6.9.1"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
