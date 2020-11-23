@@ -18,8 +18,8 @@ export function isRendered(
 ): Predicate<Node> {
   return function isRendered(node) {
     return cache
-      .get(device, () => Cache.empty<Context, Cache<Node, boolean>>())
-      .get(context, () => Cache.empty<Node, boolean>())
+      .get(device, Cache.empty)
+      .get(context, Cache.empty)
       .get(node, () => {
         // Children of <iframe> elements act as fallback content in legacy user
         // agents and should therefore never be considered rendered.

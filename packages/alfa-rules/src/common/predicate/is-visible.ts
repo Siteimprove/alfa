@@ -64,8 +64,8 @@ function isClipped(
 ): Predicate<Element | Text> {
   return function isClipped(node) {
     return clippedCache
-      .get(device, () => Cache.empty<Context, Cache<Node, boolean>>())
-      .get(context, () => Cache.empty<Node, boolean>())
+      .get(device, Cache.empty)
+      .get(context, Cache.empty)
       .get(node, () => {
         if (Element.isElement(node)) {
           const style = Style.from(node, device, context);

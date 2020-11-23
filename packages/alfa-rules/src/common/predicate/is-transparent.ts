@@ -13,8 +13,8 @@ export function isTransparent(
 ): Predicate<Node> {
   return function isTransparent(node) {
     return cache
-      .get(device, () => Cache.empty<Context, Cache<Node, boolean>>())
-      .get(context, () => Cache.empty<Node, boolean>())
+      .get(device, Cache.empty)
+      .get(context, Cache.empty)
       .get(node, () => {
         if (
           Element.isElement(node) &&
