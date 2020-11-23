@@ -32,7 +32,7 @@
     "@siteimprove/alfa-unexpected": "^0.7.0",
     "@siteimprove/alfa-web": "^0.7.0",
     "@types/react": "^16.8.4",
-    "@types/react-test-renderer": "^16.8.1",
+    "@types/react-test-renderer": "^17.0.0",
     "react": "^17.0.0",
     "react-test-renderer": "^17.0.0"
   },
