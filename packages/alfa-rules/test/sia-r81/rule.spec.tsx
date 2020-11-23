@@ -10,7 +10,6 @@ import { Group } from "../../src/common/group";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable } from "../common/outcome";
-import R41 from "../../src/sia-r41/rule";
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
 
@@ -130,7 +129,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
   ]);
 
   t.deepEqual(
-    await evaluate(R41, {
+    await evaluate(R81, {
       document,
       response: Response.of(
         URL.parse("https://somewhere.com/path/to/bar.html").get(),
@@ -138,7 +137,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
       ),
     }),
     [
-      passed(R41, Group.of(target), {
+      passed(R81, Group.of(target), {
         1: Outcomes.ResolveSameResource,
       }),
     ]
