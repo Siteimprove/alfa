@@ -108,18 +108,26 @@ test(`evaluate() is inapplicable to two links that have the same name and
   t.deepEqual(await evaluate(R81, { document }), [inapplicable(R81)]);
 });
 
-test("evaluate() correctly resolves relative URLs and trailing slashes", async (t) => {
+test("evaluate() correctly resolves relative URLs", async (t) => {
   const target = [
-    <a href="https://somewhere.com/path/to/foo">Foo</a>,
-    <a href="https://somewhere.com/path/to/foo/">Foo</a>,
-    <a href="foo">Foo</a>,
-    <a href="./foo">Foo</a>,
-    <a href="/path/to/foo">Foo</a>,
-    <a href="down/../foo">Foo</a>,
-    <a href="../to/foo">Foo</a>,
+    <a href="https://somewhere.com/path/to/foo.html">Foo</a>,
+    <a href="foo.html">Foo</a>,
+    <a href="./foo.html">Foo</a>,
+    <a href="/path/to/foo.html">Foo</a>,
+    <a href="down/../foo.html">Foo</a>,
+    <a href="../to/foo.html">Foo</a>,
   ];
 
-  const document = Document.of([<p>{...target}</p>]);
+  const document = Document.of([
+    <p>
+      {target[0]}
+      {target[1]}
+      {target[2]}
+      {target[3]}
+      {target[4]}
+      {target[5]}
+    </p>,
+  ]);
 
   t.deepEqual(
     await evaluate(R41, {
