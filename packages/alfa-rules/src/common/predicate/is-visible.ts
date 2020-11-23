@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
@@ -7,10 +8,12 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
+import { Cache } from "@siteimprove/alfa-cache";
+const { every } = Iterable;
 
 const { not } = Predicate;
 const { and, or } = Refinement;
-const { isElement } = Element;
+const { isElement, hasName } = Element;
 const { isText } = Text;
 
 export function isVisible(device: Device, context?: Context): Predicate<Node> {
@@ -33,40 +36,77 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
       }
 
       return true;
-    }
+    },
+    // non-replaced elements with no visible child are not visible
+    // replaced elements are assumed to be replaced by something visible.
+    not(
+      and(
+        isElement,
+        and(not(isReplaced), (element) =>
+          every(
+            element.children({ nested: true, flattened: true }),
+            not(isVisible(device, context))
+          )
+        )
+      )
+    )
   );
 }
 
+const clippedCache = Cache.empty<
+  Device,
+  Cache<Context, Cache<Node, boolean>>
+>();
+
 function isClipped(
   device: Device,
-  context?: Context
+  context: Context = Context.empty()
 ): Predicate<Element | Text> {
   return function isClipped(node) {
-    if (Element.isElement(node)) {
-      const style = Style.from(node, device, context);
+    return clippedCache
+      .get(device, Cache.empty)
+      .get(context, Cache.empty)
+      .get(node, () => {
+        if (Element.isElement(node)) {
+          const style = Style.from(node, device, context);
 
-      const { value: height } = style.computed("height");
-      const { value: width } = style.computed("width");
-      const { value: x } = style.computed("overflow-x");
-      const { value: y } = style.computed("overflow-y");
+          const { value: height } = style.computed("height");
+          const { value: width } = style.computed("width");
+          const { value: x } = style.computed("overflow-x");
+          const { value: y } = style.computed("overflow-y");
 
-      if (
-        height.type === "length" &&
-        height.value <= 1 &&
-        width.type === "length" &&
-        height.value <= 1 &&
-        x.value === "hidden" &&
-        y.value === "hidden"
-      ) {
-        return true;
-      }
-    }
+          if (
+            height.type === "length" &&
+            height.value <= 1 &&
+            width.type === "length" &&
+            height.value <= 1 &&
+            x.value === "hidden" &&
+            y.value === "hidden"
+          ) {
+            return true;
+          }
+        }
 
-    return node
-      .parent({
-        flattened: true,
-      })
-      .filter(isElement)
-      .some(isClipped);
+        return node
+          .parent({
+            flattened: true,
+          })
+          .filter(isElement)
+          .some(isClipped);
+      });
   };
 }
+
+/**
+ * @see https://html.spec.whatwg.org/#replaced-elements
+ */
+const isReplaced = hasName(
+  "audio",
+  "canvas",
+  "embed",
+  "iframe",
+  "img",
+  "input",
+  "object",
+  "video"
+);
