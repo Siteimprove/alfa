@@ -151,3 +151,20 @@ test(`evaluate() passes a text node with hidden overflow, a fixed line height,
     }),
   ]);
 });
+
+test("evaluates() fails a clipped node with `normal` line-height", async (t) => {
+  const target = h.text(
+    "Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten\n" +
+      "\tlore. While I nodded, nearly napping, suddenly there came a tapping."
+  );
+
+  const document = Document.of([
+    <div style={{ overflow: "hidden", height: "1.5em", fontSize: "16px" }}>
+      {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, { 1: Outcomes.ClipsText }),
+  ]);
+});
