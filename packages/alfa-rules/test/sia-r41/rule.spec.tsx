@@ -10,6 +10,8 @@ import { Group } from "../../src/common/group";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable } from "../common/outcome";
+import { Response } from "@siteimprove/alfa-http";
+import { URL } from "@siteimprove/alfa-url";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {
@@ -75,4 +77,33 @@ test(`evaluate() is inapplicable to two links that have different names`, async 
   ]);
 
   t.deepEqual(await evaluate(R41, { document }), [inapplicable(R41)]);
+});
+
+test("evaluate() correctly resolves relative URLs and trailing slashes", async (t) => {
+  const target = [
+    <a href="https://somewhere.com/path/to/foo">Foo</a>,
+    <a href="https://somewhere.com/path/to/foo/">Foo</a>,
+    <a href="foo">Foo</a>,
+    <a href="./foo">Foo</a>,
+    <a href="/path/to/foo">Foo</a>,
+    <a href="down/../foo">Foo</a>,
+    <a href="../to/foo">Foo</a>,
+  ];
+
+  const document = Document.of(target);
+
+  t.deepEqual(
+    await evaluate(R41, {
+      document,
+      response: Response.of(
+        URL.parse("https://somewhere.com/path/to/bar.html").get(),
+        200
+      ),
+    }),
+    [
+      passed(R41, Group.of(target), {
+        1: Outcomes.ResolveSameResource,
+      }),
+    ]
+  );
 });
