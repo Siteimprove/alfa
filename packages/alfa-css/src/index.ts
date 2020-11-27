@@ -22,6 +22,7 @@ export * from "./value/numeric";
 export * from "./value/percentage";
 export * from "./value/position";
 export * from "./value/shadow";
+export * from "./value/shape/rectangle";
 export * from "./value/string";
 export * from "./value/transform";
 export * from "./value/transform/matrix";

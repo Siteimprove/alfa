@@ -34,6 +34,7 @@
     "src/value/percentage.ts",
     "src/value/position.ts",
     "src/value/shadow.ts",
+    "src/value/shape/rectangle.ts",
     "src/value/string.ts",
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",
