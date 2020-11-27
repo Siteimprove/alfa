@@ -194,6 +194,7 @@ import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
+import { Clip } from "./property/clip";
 
 type Longhands = typeof Longhands;
 const Longhands = {
@@ -209,6 +210,7 @@ const Longhands = {
   "background-size": Background.Size,
   bottom: Inset.Bottom,
   "box-shadow": Box.Shadow,
+  clip: Clip,
   color: Color,
   display: Display,
   "font-family": Font.Family,

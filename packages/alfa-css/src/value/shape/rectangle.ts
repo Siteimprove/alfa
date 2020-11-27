@@ -3,7 +3,7 @@ import { Length } from "../length";
 import { Keyword } from "../keyword";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
@@ -111,7 +111,7 @@ export namespace Rectangle {
 
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
-  export const parse = (input: Slice<Token>) =>
+  export const parse: Parser<Slice<Token>, Rectangle, string> = (input) =>
     right(
       Token.parseFunction((fn) => fn.value === "rect"),
       left(
@@ -123,12 +123,14 @@ export namespace Rectangle {
       )
     )(input).flatMap(([remainder, result]) => {
       const values = [...result];
+      const err: Result<[Slice<Token>, Rectangle], string> = Err.of(
+        "rect() must have exactly 4 arguments"
+      );
 
       if (values.length !== 4) {
-        return Err.of("rect() must have exactly 4 arguments");
+        return err;
       }
-
-      return Ok.of([
+      return Ok.of<[Slice<Token>, Rectangle]>([
         remainder,
         Rectangle.of(values[0], values[1], values[2], values[3]),
       ]);

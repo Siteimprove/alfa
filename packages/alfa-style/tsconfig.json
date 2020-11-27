@@ -7,6 +7,7 @@
     "src/property/background.ts",
     "src/property/box.ts",
     "src/property/box-insets.ts",
+    "src/property/clip.ts",
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
