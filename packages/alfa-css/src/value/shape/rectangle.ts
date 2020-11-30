@@ -96,6 +96,11 @@ export class Rectangle extends Value<"shape"> {
 }
 
 export namespace Rectangle {
+  import peek = Parser.peek;
+  import pair = Parser.pair;
+  import option = Parser.option;
+  import parseWhitespace = Token.parseWhitespace;
+
   export interface JSON extends Value.JSON {
     type: "shape";
     format: "rectangle";
@@ -110,8 +115,8 @@ export namespace Rectangle {
   }
 
   const parseLengthAuto = (input: Slice<Token>) => {
-    console.log("Got input");
-    console.log(input.toJSON());
+    // console.log("Got input");
+    // console.log(input.toJSON());
     return either(Length.parse, Keyword.parse("auto"))(input);
   };
 
@@ -119,17 +124,25 @@ export namespace Rectangle {
     right(
       Token.parseFunction((fn) => fn.value === "rect"),
       left(
-        // either(
-        //   separatedList(parseLengthAuto, Token.parseComma),
-        //   separatedList(parseLengthAuto, Token.parseWhitespace)
-        // ),
-        separatedList(parseLengthAuto, Token.parseComma),
+        either(
+          // If there is the wrong separator, separatedList still return the first value.
+          // Thus, it doesn't fail and the full parser fails at the closing parenthesis.
+          // We need to peek to find the correct separator…
+          right(
+            peek(pair(parseLengthAuto, Token.parseWhitespace)),
+            separatedList(parseLengthAuto, Token.parseWhitespace)
+          ),
+          separatedList(
+            parseLengthAuto,
+            pair(Token.parseComma, option(parseWhitespace))
+          )
+        ),
         Token.parseCloseParenthesis
       )
     )(input).flatMap(([remainder, result]) => {
       const values = [...result];
 
-      console.log("got a result");
+      // console.log("got a result");
 
       const err: Result<[Slice<Token>, Rectangle], string> = Err.of(
         "rect() must have exactly 4 arguments"
