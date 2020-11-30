@@ -42,8 +42,8 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   ]);
 });
 
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration on hover and focus`, async (t) => {
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration on hover and focus and is determined not to be distinguishable`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = Document.of(
@@ -57,16 +57,30 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
-    }),
-  ]);
+  t.deepEqual(
+    await evaluate(
+      R62,
+      { document },
+      oracle({
+        "is-distinguishable": true,
+        "is-distinguishable-when-visited": true,
+        "is-distinguishable-on-hover": false,
+        "is-distinguishable-on-hover-when-visited": false,
+        "is-distinguishable-on-focus": false,
+        "is-distinguishable-on-focus-when-visited": false,
+      })
+    ),
+    [
+      failed(R62, target, {
+        1: Outcomes.IsNotDistinguishable,
+        2: Outcomes.IsNotDistinguishableWhenVisited,
+      }),
+    ]
+  );
 });
 
 test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and is determined to be distinguishable on hover and focus`, async (t) => {
+      decoration and is determined to be distinguishable`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = Document.of(
@@ -85,8 +99,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       R62,
       { document },
       oracle({
-        "is-distinguishable": false,
-        "is-distinguishable-when-visited": false,
+        "is-distinguishable": true,
+        "is-distinguishable-when-visited": true,
         "is-distinguishable-on-hover": true,
         "is-distinguishable-on-hover-when-visited": true,
         "is-distinguishable-on-focus": true,
@@ -103,7 +117,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
 });
 
 test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and applies text decoration on hover and focus`, async (t) => {
+      decoration and instead applies an outline`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = Document.of(
@@ -112,36 +126,6 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
-        }),
-
-        h.rule.style("a:hover, a:focus", {
-          textDecoration: "underline",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
-    }),
-  ]);
-});
-
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and applies an outline on hover and focus`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = Document.of(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
-
-        h.rule.style("a:hover, a:focus", {
           outline: "auto",
         }),
       ]),
