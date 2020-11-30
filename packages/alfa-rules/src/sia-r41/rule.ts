@@ -7,7 +7,6 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -18,14 +17,15 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 import { Group } from "../common/group";
+import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 const { isElement, hasNamespace } = Element;
-const { map, flatten } = Iterable;
+const { flatten } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
-  evaluate({ device, document }) {
+  evaluate({ device, document, response }) {
     return {
       applicability() {
         return flatten(
@@ -67,15 +67,19 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
       },
 
       expectations(target) {
-        const sources = Set.from(
-          map(target, (element) =>
-            element.attribute("href").map((attr) => attr.value)
-          )
-        );
+        const embedSameResource = [...target].every((element, i, elements) => {
+          // This is either the first element...
+          return (
+            i === 0 ||
+            // ...or an element that embeds the same resource as the element
+            // before it.
+            referenceSameResource(response.url)(element, elements[i - 1])
+          );
+        });
 
         return {
           1: expectation(
-            sources.size === 1,
+            embedSameResource,
             () => Outcomes.ResolveSameResource,
             () =>
               Question.of(
