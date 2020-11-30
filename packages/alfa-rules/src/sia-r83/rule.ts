@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Length } from "@siteimprove/alfa-css";
+import { Length, Number } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -128,6 +128,11 @@ function wrapsText(device: Device): Predicate<Text> {
 
         let { value: lineHeight } = style.computed("line-height");
 
+        // If the line height is "normal", find a used value
+        if (lineHeight.type === "keyword") {
+          lineHeight = normalLineHeight();
+        }
+
         // If the line height is a number, resolve it against the font size of
         // the element.
         if (lineHeight.type === "number") {
@@ -151,4 +156,31 @@ function wrapsText(device: Device): Predicate<Text> {
 
         return true;
       });
+}
+
+/**
+ * "normal" line height is everything but normal…
+ *
+ * CSS recommends that it is "between 1.0 and 1.2"
+ * @see https://drafts.csswg.org/css2/#valdef-line-height-normal
+ *
+ * MDN says that Desktop browsers use a value of roughly 1.2
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/line-height#normal
+ *
+ * It actually depends on font metrics (ascent, descent, line gap)
+ * These font metrics are platform dependant…
+ * @see https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
+ *
+ * @see https://github.com/servo/servo/blob/6a3c3a4e18370d5604644d5491430b82d51c5be9/components/layout_2020/flow/inline.rs#L807
+ * @see https://github.com/servo/servo/blob/8de1b8d3f4d0e814980a1f7836a9e865e0d0f53b/components/gfx/platform/macos/font.rs#L287
+ * @see https://github.com/servo/servo/blob/029049b48630f426ac5face4d9a9c0cd5195c66c/components/gfx/platform/windows/font.rs#L392
+ *
+ * @see https://github.com/chromium/chromium/blob/53675c0acf7691ec1686a6aab6aab624f9b8a232/third_party/blink/renderer/core/layout/ng/inline/ng_line_height_metrics.h#L63
+ * @see https://github.com/chromium/chromium/blob/6efa1184771ace08f3e2162b0255c93526d1750d/third_party/blink/renderer/platform/fonts/font_metrics.cc
+ *
+ * Keeping the simple version for now, if this causes troubles, we can later
+ * build a more complex version, possibly branched…
+ */
+function normalLineHeight(): Number {
+  return Number.of(1.2);
 }
