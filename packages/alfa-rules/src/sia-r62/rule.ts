@@ -96,16 +96,14 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "boolean",
                   target,
                   `When hovered, can the link be distinguished from the
-                      surrounding text without relying on color perception
-                      alone?`
+                  surrounding text without relying on color perception alone?`
                 ).map((isDistinguishableOnHover) =>
                   Question.of(
                     "is-distinguishable-on-focus",
                     "boolean",
                     target,
-                    `When focused, can the link be distinguished from
-                            the surrounding text without relying on color
-                            perception alone?`
+                    `When focused, can the link be distinguished from the
+                    surrounding text without relying on color perception alone?`
                   ).map((isDistinguishableOnFocus) =>
                     expectation(
                       isDistinguishable &&
@@ -150,16 +148,16 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "boolean",
                   target,
                   `When visited and hovered, can the link be distinguished
-                      from the surrounding text without relying on color
-                      perception alone?`
+                  from the surrounding text without relying on color perception
+                  alone?`
                 ).map((isDistinguishableOnHoverWhenVisited) =>
                   Question.of(
                     "is-distinguishable-on-focus-when-visited",
                     "boolean",
                     target,
-                    `When visited and focused, can the link be
-                            distinguished from the surrounding text without
-                            relying on color perception alone?`
+                    `When visited and focused, can the link be distinguished
+                    from the surrounding text without relying on color
+                    perception alone?`
                   ).map((isDistinguishableOnFocusWhenVisited) =>
                     expectation(
                       isDistinguishableWhenVisited &&
