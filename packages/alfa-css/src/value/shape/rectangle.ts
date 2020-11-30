@@ -109,20 +109,28 @@ export namespace Rectangle {
     return value instanceof Rectangle;
   }
 
-  const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
+  const parseLengthAuto = (input: Slice<Token>) => {
+    console.log("Got input");
+    console.log(input.toJSON());
+    return either(Length.parse, Keyword.parse("auto"))(input);
+  };
 
   export const parse: Parser<Slice<Token>, Rectangle, string> = (input) =>
     right(
       Token.parseFunction((fn) => fn.value === "rect"),
       left(
-        either(
-          separatedList(parseLengthAuto, Token.parseComma),
-          separatedList(parseLengthAuto, Token.parseWhitespace)
-        ),
+        // either(
+        //   separatedList(parseLengthAuto, Token.parseComma),
+        //   separatedList(parseLengthAuto, Token.parseWhitespace)
+        // ),
+        separatedList(parseLengthAuto, Token.parseComma),
         Token.parseCloseParenthesis
       )
     )(input).flatMap(([remainder, result]) => {
       const values = [...result];
+
+      console.log("got a result");
+
       const err: Result<[Slice<Token>, Rectangle], string> = Err.of(
         "rect() must have exactly 4 arguments"
       );
