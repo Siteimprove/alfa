@@ -63,8 +63,6 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
 
   const cascaded = style.cascaded("clip");
 
-  // console.log(cascaded.toJSON());
-
   t.deepEqual(cascaded.get().toJSON(), {
     value: {
       type: "shape",

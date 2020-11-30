@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 
-const { either, left, right, separatedList } = Parser;
+const { either, left, pair, peek, option, right, separatedList } = Parser;
 
 export class Rectangle extends Value<"shape"> {
   public static of(
@@ -96,11 +96,6 @@ export class Rectangle extends Value<"shape"> {
 }
 
 export namespace Rectangle {
-  import peek = Parser.peek;
-  import pair = Parser.pair;
-  import option = Parser.option;
-  import parseWhitespace = Token.parseWhitespace;
-
   export interface JSON extends Value.JSON {
     type: "shape";
     format: "rectangle";
@@ -115,8 +110,6 @@ export namespace Rectangle {
   }
 
   const parseLengthAuto = (input: Slice<Token>) => {
-    // console.log("Got input");
-    // console.log(input.toJSON());
     return either(Length.parse, Keyword.parse("auto"))(input);
   };
 
@@ -134,15 +127,13 @@ export namespace Rectangle {
           ),
           separatedList(
             parseLengthAuto,
-            pair(Token.parseComma, option(parseWhitespace))
+            pair(Token.parseComma, option(Token.parseWhitespace))
           )
         ),
         Token.parseCloseParenthesis
       )
     )(input).flatMap(([remainder, result]) => {
       const values = [...result];
-
-      // console.log("got a result");
 
       const err: Result<[Slice<Token>, Rectangle], string> = Err.of(
         "rect() must have exactly 4 arguments"
