@@ -3230,6 +3230,11 @@ css-select@~1.2.0:
     domutils "1.5.1"
     nth-check "~1.0.1"
 
+css-shorthand-properties@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/css-shorthand-properties/-/css-shorthand-properties-1.1.1.tgz#1c808e63553c283f289f2dd56fcee8f3337bd935"
+  integrity sha512-Md+Juc7M3uOdbAFwOYlTrccIZ7oCFuzrhKYQjdeUEW/sE1hv17Jp/Bws+ReOPpGVBTYCBoYo+G17V5Qo8QQ75A==
+
 css-value@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/css-value/-/css-value-0.0.1.tgz#5efd6c2eea5ea1fd6b6ac57ec0427b18452424ea"
@@ -3526,10 +3531,10 @@ devtools-protocol@0.0.818844:
   resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
   integrity sha512-AD1hi7iVJ8OD0aMLQU5VK0XH9LDlA1+BcPIgrAxPfaibx2DbWucuyOhc4oyQCbnvDDO68nN6/LcKfqTP343Jjg==
 
-devtools@6.10.0:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/devtools/-/devtools-6.10.0.tgz#67f10e6dd6d6ae25ea0cef79d82a097c689bb1cd"
-  integrity sha512-IgnvglibbhK/hZY1kYpM4Q0yzz/EUlHNgI/jm2+a95LvqGjUVA74GGoopqZlmvXCREIGmiqdjVgDy14yeaNFAw==
+devtools@6.10.2:
+  version "6.10.2"
+  resolved "https://registry.yarnpkg.com/devtools/-/devtools-6.10.2.tgz#355531c7eee953312cecd1d68ae4792a4b084d1a"
+  integrity sha512-I7uwrlX4kxVkWM3KZKHSaHwt5m8XOrK4/sToY0LGPq6VHt1RQlI8TJEvoc3wUqxDt0DHeTl1YU9RwZMuhX3y3w==
   dependencies:
     "@types/puppeteer-core" "^2.0.0"
     "@types/ua-parser-js" "^0.7.33"
@@ -9041,9 +9046,9 @@ webdriver@6.10.0:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.10.0.tgz#bcfe81cc315c10e7f5992633fa41cb50a77a0415"
-  integrity sha512-/9rFbhNHd9zyacmgDlBiFm0OE5myy893x6Gw0+DFX8MnLDXIBL/Nsb19RnUyQCgfEED6Vs2ZE+r5m7ZbeWsvpA==
+  version "6.10.2"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.10.2.tgz#d5edc0bfcbb4d5579821470bf480573131655c29"
+  integrity sha512-XnodmNkql/R+EwZVJ5lXTK9VfthJ9xTAs7S1qJATcOdIeBDYvuvFePrG3h+O5rzinR561MM5cYbZeJYH1tzZvQ==
   dependencies:
     "@types/archiver" "^3.1.1"
     "@types/atob" "^2.1.2"
@@ -9057,8 +9062,9 @@ webdriverio@^6.4.4:
     "@wdio/utils" "6.8.0"
     archiver "^5.0.0"
     atob "^2.1.2"
+    css-shorthand-properties "^1.1.1"
     css-value "^0.0.1"
-    devtools "6.10.0"
+    devtools "6.10.2"
     fs-extra "^9.0.1"
     get-port "^5.1.1"
     grapheme-splitter "^1.0.2"
