@@ -69,8 +69,8 @@ test("evaluate() is inapplicable when the document has only one heading", async 
 });
 
 test("evaluate() ignore headings that are not exposed", async (t) => {
-  const target1 = <h2>Part one</h2>;
-  const target2 = <h2>Part two</h2>;
+  const target1 = <h2>Chapter one</h2>;
+  const target2 = <h2>Chapter two</h2>;
 
   const document = Document.of([
     <html>
