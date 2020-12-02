@@ -1,13 +1,13 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 
 import R53, { Outcomes } from "../../src/sia-r53/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-import { Device } from "@siteimprove/alfa-device";
 
 test("evaluate() passes when the document headings are structured", async (t) => {
   const target1 = <h2>Chapter one</h2>;
