@@ -10,7 +10,7 @@ import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { equals, not } = Predicate;
+const { equals } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -20,7 +20,7 @@ export default Rule.Atomic.of<Page, Element>({
       .descendants({ flattened: true })
       .filter(isElement)
       .filter(hasRole("heading"))
-      .filter(not(isIgnored(device)));
+      .reject(isIgnored(device));
 
     return {
       applicability() {
