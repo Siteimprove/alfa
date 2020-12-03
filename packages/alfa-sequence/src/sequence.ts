@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
 import { Lazy } from "@siteimprove/alfa-lazy";
@@ -15,6 +16,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   // Collection<T> methods
 
   isEmpty(): this is Sequence<never>;
+  forEach(callback: Callback<T, void, [number]>): void;
   map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
   flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
   reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
@@ -31,6 +33,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
   collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
   some(predicate: Predicate<T, [number]>): boolean;
+  none(predicate: Predicate<T, [number]>): boolean;
   every(predicate: Predicate<T, [number]>): boolean;
   count(predicate: Predicate<T, [number]>): number;
   distinct(): Sequence<T>;

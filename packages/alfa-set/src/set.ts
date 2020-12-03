@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -36,6 +37,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   public isEmpty(): this is Set<never> {
     return this._values.isEmpty();
+  }
+
+  public forEach(callback: Callback<T>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U>): Set<U> {
@@ -101,6 +106,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   public some(predicate: Predicate<T>): boolean {
     return Iterable.some(this, predicate);
+  }
+
+  public none(predicate: Predicate<T>): boolean {
+    return Iterable.none(this, predicate);
   }
 
   public every(predicate: Predicate<T>): boolean {

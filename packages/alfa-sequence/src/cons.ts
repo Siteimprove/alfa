@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -46,6 +47,10 @@ export class Cons<T> implements Sequence<T> {
 
   public isEmpty(): this is Sequence<never> {
     return false;
+  }
+
+  public forEach(callback: Callback<T, void, [number]>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
@@ -273,6 +278,10 @@ export class Cons<T> implements Sequence<T> {
         return false;
       }
     }
+  }
+
+  public none(predicate: Predicate<T, [number]>): boolean {
+    return this.every(not(predicate));
   }
 
   public every(predicate: Predicate<T, [number]>): boolean {

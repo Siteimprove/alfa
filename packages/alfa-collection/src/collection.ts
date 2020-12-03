@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
@@ -23,6 +24,7 @@ export interface Collection<T>
     Serializable {
   readonly size: number;
   isEmpty(): this is Collection<never>;
+  forEach(callback: Callback<T>): void;
   map<U>(mapper: Mapper<T, U>): Collection<U>;
   flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
@@ -37,6 +39,7 @@ export interface Collection<T>
   collect<U>(mapper: Mapper<T, Option<U>>): Collection<U>;
   collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   some(predicate: Predicate<T>): boolean;
+  none(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
   count(predicate: Predicate<T>): number;
   distinct(): Collection<T>;
@@ -47,6 +50,7 @@ export namespace Collection {
     // Collection<T> methods
 
     isEmpty(): this is Keyed<K, never>;
+    forEach(callback: Callback<V, void, [K]>): void;
     map<U>(mapper: Mapper<V, U, [K]>): Keyed<K, U>;
     flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [K]>): Keyed<K, U>;
     reduce<U>(reducer: Reducer<V, U, [K]>, accumulator: U): U;
@@ -63,6 +67,7 @@ export namespace Collection {
     collect<U>(mapper: Mapper<V, Option<U>, [K]>): Keyed<K, U>;
     collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U>;
     some(predicate: Predicate<V, [K]>): boolean;
+    none(predicate: Predicate<V, [K]>): boolean;
     every(predicate: Predicate<V, [K]>): boolean;
     count(predicate: Predicate<V, [K]>): number;
     distinct(): Keyed<K, V>;
@@ -80,6 +85,7 @@ export namespace Collection {
     // Collection<T> methods
 
     isEmpty(): this is Unkeyed<never>;
+    forEach(callback: Callback<T>): void;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
     flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
@@ -94,6 +100,7 @@ export namespace Collection {
     collect<U>(mapper: Mapper<T, Option<U>>): Unkeyed<U>;
     collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
     some(predicate: Predicate<T>): boolean;
+    none(predicate: Predicate<T>): boolean;
     every(predicate: Predicate<T>): boolean;
     count(predicate: Predicate<T>): number;
     distinct(): Unkeyed<T>;
@@ -111,6 +118,7 @@ export namespace Collection {
     // Collection<T> methods
 
     isEmpty(): this is Indexed<never>;
+    forEach(callback: Callback<T, void, [number]>): void;
     map<U>(mapper: Mapper<T, U, [number]>): Indexed<U>;
     flatMap<U>(mapper: Mapper<T, Indexed<U>, [number]>): Indexed<U>;
     reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
@@ -127,6 +135,7 @@ export namespace Collection {
     collect<U>(mapper: Mapper<T, Option<U>, [number]>): Indexed<U>;
     collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
     some(predicate: Predicate<T, [number]>): boolean;
+    none(predicate: Predicate<T, [number]>): boolean;
     every(predicate: Predicate<T, [number]>): boolean;
     count(predicate: Predicate<T, [number]>): number;
     distinct(): Indexed<T>;

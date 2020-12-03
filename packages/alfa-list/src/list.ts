@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -51,6 +52,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public isEmpty(): this is List<never> {
     return this._tail.isEmpty();
+  }
+
+  public forEach(callback: Callback<T, void, [number]>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U, [number]>): List<U> {
@@ -123,6 +128,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public some(predicate: Predicate<T, [number]>): boolean {
     return Iterable.some(this, predicate);
+  }
+
+  public none(predicate: Predicate<T, [number]>): boolean {
+    return Iterable.none(this, predicate);
   }
 
   public every(predicate: Predicate<T, [number]>): boolean {

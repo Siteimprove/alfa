@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { FNV } from "@siteimprove/alfa-fnv";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -43,6 +44,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public isEmpty(): this is Map<K, never> {
     return this._size === 0;
+  }
+
+  public forEach(callback: Callback<V, void, [K]>): void {
+    Iterable.forEach(this, ([key, value]) => callback(value, key));
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Map<K, U> {
@@ -117,6 +122,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public some(predicate: Predicate<V, [K]>): boolean {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
+  }
+
+  public none(predicate: Predicate<V, [K]>): boolean {
+    return Iterable.none(this, ([key, value]) => predicate(value, key));
   }
 
   public every(predicate: Predicate<V, [K]>): boolean {

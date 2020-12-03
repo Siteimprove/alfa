@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -39,6 +40,17 @@ export namespace Iterable {
     }
 
     return true;
+  }
+
+  export function forEach<T>(
+    iterable: Iterable<T>,
+    callback: Callback<T, void, [number]>
+  ): void {
+    let index = 0;
+
+    for (const value of iterable) {
+      callback(value, index++);
+    }
   }
 
   export function* map<T, U = T>(
@@ -179,6 +191,13 @@ export namespace Iterable {
     }
 
     return false;
+  }
+
+  export function none<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): boolean {
+    return every(iterable, not(predicate));
   }
 
   export function every<T>(

@@ -25,6 +25,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-callback](packages/alfa-callback): The `Callback<T, R>` type now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
 
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.forEach()` and `Iterable.none()` are now available.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-branched](alfa-branched), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Collection#forEach()` and `Collection#none()` are now available and implemented by `Branched`, `List`, `Map`, `Set`, and `Sequence`.
+
 ## [0.7.0](../../compare/v0.6.0...v0.7.0) (2020-11-20)
 
 ### Breaking
@@ -69,7 +73,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`. `Result#includes()`, `Result#includesErr()`, `Result#some()`, `Result#someErr()`, `Result#none()`, `Result#noneErr()`, `Result#every()`, and `Result#everyErr()` are now also available.
 
-- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable#takeLastWhile()`, `Iterable#takeLastUntil()`, `Iterable#skipLastWhile()`, `Iterable#skipLastUntil()`, `Iterable#trimLeading()`, `Iterable#trimTrailing()`, `Iterable#trim()`, `Iterable#hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.takeLastWhile()`, `Iterable.takeLastUntil()`, `Iterable.skipLastWhile()`, `Iterable.skipLastUntil()`, `Iterable.trimLeading()`, `Iterable.trimTrailing()`, `Iterable.trim()`, `Iterable.hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
 
 - [@siteimprove/alfa-comparable](packages/alfa-comparable): A `Comparer` type is now available for modelling functions that do comparisons. A new function `Comparable.isComparable()` is now also available.
 
