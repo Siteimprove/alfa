@@ -3,7 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
-import { Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
@@ -13,6 +13,7 @@ import { Cell } from "./cell";
 import { Column } from "./column";
 import { Row } from "./row";
 import { Slot } from "./slot";
+import { Scope } from "./scope";
 
 const { isNaN } = Number;
 const { clamp } = Real;
@@ -188,8 +189,8 @@ export namespace Table {
 
     // 21
     // Before returning the final table, we go through all cells and assign them
-    // headers, if any.
-    return Table.of(element, cells.map(assignHeaderCells));
+    // scopes and headers, if any.
+    return Table.of(element, cells.map(assignScope).map(assignHeaders));
 
     /**
      * Get the cells at the given position.
@@ -537,7 +538,7 @@ export namespace Table {
     /**
      * @see https://html.spec.whatwg.org/#algorithm-for-assigning-header-cells
      */
-    function assignHeaderCells(principal: Cell): Cell {
+    function assignHeaders(principal: Cell): Cell {
       // 1
       const headers: Array<Cell> = [];
 
@@ -602,6 +603,7 @@ export namespace Table {
         principal.anchor,
         principal.width,
         principal.height,
+        principal.scope,
         filtered.map((cell) => cell.anchor)
       );
     }
@@ -700,6 +702,34 @@ export namespace Table {
     }
 
     /**
+     * @see https://html.spec.whatwg.org/#attr-th-scope
+     */
+    function assignScope(cell: Cell): Cell {
+      if (cell.isData()) {
+        return cell;
+      }
+
+      let scope: Option<Scope.Resolved> = None;
+
+      if (isColumHeader(cell)) {
+        scope = Option.of(Scope.Column);
+      } else if (isRowHeader(cell)) {
+        scope = Option.of(Scope.Row);
+      } else {
+        return cell;
+      }
+
+      return Cell.of(
+        cell.element,
+        cell.type,
+        cell.anchor,
+        cell.width,
+        cell.height,
+        scope
+      );
+    }
+
+    /**
      * @see https://html.spec.whatwg.org/#column-header
      */
     function isColumHeader(cell: Cell): boolean {
@@ -707,11 +737,15 @@ export namespace Table {
         return false;
       }
 
-      switch (scope(cell)) {
-        case "col":
+      if (cell.scope.some(equals(Scope.Column))) {
+        return true;
+      }
+
+      switch (Scope.from(cell.element)) {
+        case Scope.Column:
           return true;
 
-        case "auto":
+        case Scope.Auto:
           for (let y = cell.y, n = y + cell.height; y < n; y++) {
             if (hasData.y[y]) {
               return false;
@@ -732,11 +766,15 @@ export namespace Table {
         return false;
       }
 
-      switch (scope(cell)) {
-        case "row":
+      if (cell.scope.some(equals(Scope.Row))) {
+        return true;
+      }
+
+      switch (Scope.from(cell.element)) {
+        case Scope.Row:
           return true;
 
-        case "auto":
+        case Scope.Auto:
           for (let x = cell.x, n = x + cell.width; x < n; x++) {
             if (hasData.x[x]) {
               return false;
@@ -748,35 +786,23 @@ export namespace Table {
 
       return false;
     }
+  }
 
-    /**
-     * @see https://html.spec.whatwg.org/#attr-th-scope
-     */
-    function scope(cell: Cell) {
-      return cell.element
-        .attribute("scope")
-        .flatMap((attribute) =>
-          attribute.enumerate("row", "col", "rowgroup", "colgroup")
-        )
-        .getOr("auto");
-    }
-
-    function integerValue(
-      element: Element,
-      attribute: string,
-      lower: number,
-      upper: number,
-      missing: number = lower
-    ): number {
-      return clamp(
-        element
-          .attribute(attribute)
-          .map((attribute) => parseInt(attribute.value))
-          .reject(isNaN)
-          .getOr(missing),
-        lower,
-        upper
-      );
-    }
+  function integerValue(
+    element: Element,
+    attribute: string,
+    lower: number,
+    upper: number,
+    missing: number = lower
+  ): number {
+    return clamp(
+      element
+        .attribute(attribute)
+        .map((attribute) => parseInt(attribute.value))
+        .reject(isNaN)
+        .getOr(missing),
+      lower,
+      upper
+    );
   }
 }

@@ -2,6 +2,7 @@ import { Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
@@ -9,6 +10,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Anchored } from "./anchored";
 import { Slot } from "./slot";
+import { Scope } from "./scope";
 
 const { and, or } = Refinement;
 const { isElement } = Element;
@@ -24,9 +26,18 @@ export class Cell implements Anchored, Equatable, Serializable {
     anchor: Slot,
     width: number,
     height: number,
+    scope: Option<Scope.Resolved> = None,
     headers: Iterable<Slot> = []
   ): Cell {
-    return new Cell(element, type, anchor, width, height, Array.from(headers));
+    return new Cell(
+      element,
+      type,
+      anchor,
+      width,
+      height,
+      scope,
+      Array.from(headers).sort((a, b) => a.compare(b))
+    );
   }
 
   private readonly _element: Element;
@@ -34,6 +45,7 @@ export class Cell implements Anchored, Equatable, Serializable {
   private readonly _anchor: Slot;
   private readonly _width: number;
   private readonly _height: number;
+  private readonly _scope: Option<Scope.Resolved>;
   private readonly _headers: Array<Slot>;
 
   private constructor(
@@ -42,6 +54,7 @@ export class Cell implements Anchored, Equatable, Serializable {
     anchor: Slot,
     width: number,
     height: number,
+    scope: Option<Scope.Resolved>,
     headers: Array<Slot>
   ) {
     this._element = element;
@@ -50,6 +63,7 @@ export class Cell implements Anchored, Equatable, Serializable {
     this._width = width;
     this._height = height;
     this._headers = headers;
+    this._scope = scope;
   }
 
   public get element(): Element {
@@ -78,6 +92,10 @@ export class Cell implements Anchored, Equatable, Serializable {
 
   public get height(): number {
     return this._height;
+  }
+
+  public get scope(): Option<Scope.Resolved> {
+    return this._scope;
   }
 
   public get headers(): Sequence<Slot> {
@@ -128,6 +146,7 @@ export class Cell implements Anchored, Equatable, Serializable {
       value._anchor.equals(this._anchor) &&
       value._width === this._width &&
       value._height === this._height &&
+      value._scope === this._scope &&
       value._headers.length === this._headers.length &&
       value._headers.every((header, i) => header.equals(this._headers[i]))
     );
@@ -140,6 +159,7 @@ export class Cell implements Anchored, Equatable, Serializable {
       anchor: this._anchor.toJSON(),
       width: this._width,
       height: this._height,
+      scope: this._scope.getOr(null),
       headers: this._headers.map((header) => header.toJSON()),
     };
   }
@@ -158,6 +178,7 @@ export namespace Cell {
     anchor: Slot.JSON;
     width: number;
     height: number;
+    scope: string | null;
     headers: Array<Slot.JSON>;
   }
 

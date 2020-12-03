@@ -27,6 +27,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
+        scope: "column",
         headers: [],
       },
       {
@@ -35,6 +36,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
+        scope: "column",
         headers: [],
       },
       {
@@ -43,6 +45,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
+        scope: null,
         headers: [{ x: 0, y: 0 }],
       },
       {
@@ -51,6 +54,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         anchor: { x: 1, y: 1 },
         width: 1,
         height: 1,
+        scope: null,
         headers: [{ x: 1, y: 0 }],
       },
     ],
@@ -85,6 +89,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
+        scope: "column",
         headers: [],
       },
       {
@@ -93,6 +98,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
+        scope: "column",
         headers: [],
       },
       {
@@ -101,6 +107,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
+        scope: null,
         headers: [{ x: 0, y: 0 }],
       },
       {
@@ -109,6 +116,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
         anchor: { x: 1, y: 1 },
         width: 1,
         height: 1,
+        scope: null,
         headers: [{ x: 1, y: 0 }],
       },
     ],
@@ -137,6 +145,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
+        scope: null,
         headers: [],
       },
       {
@@ -145,6 +154,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 2,
+        scope: null,
         headers: [],
       },
       {
@@ -153,6 +163,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
+        scope: null,
         headers: [],
       },
     ],

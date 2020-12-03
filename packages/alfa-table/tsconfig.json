@@ -7,6 +7,7 @@
     "src/column.ts",
     "src/index.ts",
     "src/row.ts",
+    "src/scope.ts",
     "src/slot.ts",
     "src/table.ts",
     "test/table.spec.tsx"
