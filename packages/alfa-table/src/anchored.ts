@@ -14,6 +14,6 @@ export interface Anchored extends Comparable<Anchored> {
  */
 export namespace Anchored {
   export function compare(a: Anchored, b: Anchored): Comparison {
-    return a.compare(b);
+    return a.anchor.compare(b.anchor);
   }
 }
