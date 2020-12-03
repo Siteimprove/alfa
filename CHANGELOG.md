@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-callback](packages/alfa-callback): The `Callback<T, R>` type now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
+
 ## [0.7.0](../../compare/v0.6.0...v0.7.0) (2020-11-20)
 
 ### Breaking
