@@ -8,78 +8,78 @@ import { Anchored } from "./anchored";
 import { Slot } from "./slot";
 
 /**
- * @see https://html.spec.whatwg.org/#concept-row
+ * @see https://html.spec.whatwg.org/#concept-column
  */
-export class Row implements Anchored, Equatable, Serializable {
-  public static of(y: number): Row {
-    return new Row(y);
+export class Column implements Anchored, Equatable, Serializable {
+  public static of(x: number): Column {
+    return new Column(x);
   }
 
-  private readonly _y: number;
+  private readonly _x: number;
 
-  private constructor(y: number) {
-    this._y = y;
+  private constructor(x: number) {
+    this._x = x;
   }
 
-  public get y(): number {
-    return this._y;
+  public get x(): number {
+    return this._x;
   }
 
   public get anchor(): Slot {
-    return Slot.of(0, this._y);
+    return Slot.of(this._x, 0);
   }
 
   public compare(anchored: Anchored): Comparison {
     return Anchored.compare(this, anchored);
   }
 
-  public equals(row: Row): boolean;
+  public equals(column: Column): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof Row && value._y === this._y;
+    return value instanceof Column && value._x === this._x;
   }
 
-  public toJSON(): Row.JSON {
+  public toJSON(): Column.JSON {
     return {
-      y: this._y,
+      x: this._x,
     };
   }
 }
 
-export namespace Row {
+export namespace Column {
   export interface JSON {
     [key: string]: json.JSON;
-    y: number;
+    x: number;
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#concept-row-group
+   * @see https://html.spec.whatwg.org/#concept-column-group
    */
   export class Group implements Anchored, Equatable, Serializable {
-    public static of(y: number, height: number): Group {
-      return new Group(y, height);
+    public static of(x: number, width: number): Group {
+      return new Group(x, width);
     }
 
-    private readonly _y: number;
-    private readonly _height: number;
+    private readonly _x: number;
+    private readonly _width: number;
 
-    private constructor(y: number, height: number) {
-      this._y = y;
-      this._height = height;
+    private constructor(x: number, width: number) {
+      this._x = x;
+      this._width = width;
     }
 
-    public get y(): number {
-      return this._y;
+    public get x(): number {
+      return this._x;
     }
 
     public get anchor(): Slot {
-      return Slot.of(0, this._y);
+      return Slot.of(this._x, 0);
     }
 
-    public get height(): number {
-      return this._height;
+    public get width(): number {
+      return this._width;
     }
 
     public compare(anchored: Anchored): Comparison {
@@ -93,15 +93,15 @@ export namespace Row {
     public equals(value: unknown): boolean {
       return (
         value instanceof Group &&
-        value._y === this._y &&
-        value._height === this._height
+        value._x === this._x &&
+        value._width === this._width
       );
     }
 
     public toJSON(): Group.JSON {
       return {
-        y: this._y,
-        height: this._height,
+        x: this._x,
+        width: this._width,
       };
     }
   }
@@ -109,8 +109,8 @@ export namespace Row {
   export namespace Group {
     export interface JSON {
       [key: string]: json.JSON;
-      y: number;
-      height: number;
+      x: number;
+      width: number;
     }
 
     export function isGroup(value: unknown): value is Group {
@@ -118,15 +118,15 @@ export namespace Row {
     }
   }
 
-  export function group(y: number, height: number): Group {
-    return Group.of(y, height);
+  export function group(x: number, width: number): Group {
+    return Group.of(x, width);
   }
 
-  export function isRow(value: unknown): value is Row {
-    return value instanceof Row;
+  export function isColumn(value: unknown): value is Column {
+    return value instanceof Column;
   }
 
-  export function isRowGroup(value: unknown): value is Group {
+  export function isColumnGroup(value: unknown): value is Group {
     return Group.isGroup(value);
   }
 }

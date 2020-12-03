@@ -1,0 +1,19 @@
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+
+import { Slot } from "./slot";
+
+/**
+ * @internal
+ */
+export interface Anchored extends Comparable<Anchored> {
+  readonly anchor: Slot;
+}
+
+/**
+ * @internal
+ */
+export namespace Anchored {
+  export function compare(a: Anchored, b: Anchored): Comparison {
+    return a.compare(b);
+  }
+}
