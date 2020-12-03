@@ -29,6 +29,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-branched](alfa-branched), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Collection#forEach()` and `Collection#none()` are now available and implemented by `Branched`, `List`, `Map`, `Set`, and `Sequence`.
 
+### Fixed
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence): `Sequence#size` is now stack safe and no longer overflows for long sequences.
+
 ## [0.7.0](../../compare/v0.6.0...v0.7.0) (2020-11-20)
 
 ### Breaking
