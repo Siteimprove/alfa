@@ -661,44 +661,36 @@ const Features: Features = {
         const table = element
           .ancestors()
           .filter(isElement)
-          .find(hasName("table"));
+          .find(hasName("table"))
+          .map(Table.from);
 
-        // If the <th> is not in a <table>, it doesn't really have a role…
+        // If the <th> is not in a table, it doesn't have a role.
         if (table.isNone()) {
           return None;
         }
 
-        const tableModel = Table.from(table.get());
+        const cell = table
+          .get()
+          .cells.find((cell) => cell.element.equals(element));
 
-        // If the <th> is within a <table> with errors, it doesn't really have a
-        // role.
-        if (tableModel.isErr()) {
-          return None;
-        }
-
-        const cell = Iterable.find(tableModel.get().cells, (cell) =>
-          cell.element.equals(element)
-        );
-
-        // If the current element is not a cell in the table, something weird
-        // happened and it doesn't have a role.
+        // If the <th> is not a cell in the table, it doesn't have a role.
         if (cell.isNone()) {
           return None;
         }
 
-        // This is not fully correct. If the header has no variant, its role
-        // should be computed as a <td>
-        // https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
-        return cell.get().scope.map((scope) => {
-          switch (scope) {
-            case Scope.Column:
-            case Scope.ColumnGroup:
-              return Role.of("columnheader");
-            case Scope.Row:
-            case Scope.RowGroup:
-              return Role.of("rowheader");
-          }
-        });
+        return cell
+          .get()
+          .scope.map((scope) => {
+            switch (scope) {
+              case Scope.Column:
+              case Scope.ColumnGroup:
+                return Role.of("columnheader");
+              case Scope.Row:
+              case Scope.RowGroup:
+                return Role.of("rowheader");
+            }
+          })
+          .orElse(() => Option.of(Role.of("cell")));
       },
       function* (element) {
         // https://w3c.github.io/html-aam/#att-colspan
