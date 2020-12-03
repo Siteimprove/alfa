@@ -30,7 +30,6 @@ export class Cons<T> implements Sequence<T> {
 
   private readonly _head: T;
   private readonly _tail: Lazy<Sequence<T>>;
-  private _size: Option<number> = None;
 
   private constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
@@ -38,11 +37,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public get size(): number {
-    if (this._size.isNone()) {
-      this._size = Option.of(1 + this._tail.force().size);
-    }
-
-    return this._size.get();
+    return Iterable.size(this);
   }
 
   public isEmpty(): this is Sequence<never> {
