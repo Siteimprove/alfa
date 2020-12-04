@@ -23,6 +23,7 @@
     "src/property/visibility.ts",
     "src/property/whitespace.ts",
     "src/property/width.ts",
+    "src/property/word-spacing.ts",
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts",
