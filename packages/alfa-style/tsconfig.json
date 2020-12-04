@@ -11,6 +11,7 @@
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/height.ts",
+    "src/property/letter-spacing.ts",
     "src/property/line.ts",
     "src/property/opacity.ts",
     "src/property/outline.ts",

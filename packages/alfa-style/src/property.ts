@@ -194,6 +194,7 @@ import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
+import { LetterSpacing } from "./property/letter-spacing";
 
 type Longhands = typeof Longhands;
 const Longhands = {
@@ -221,6 +222,7 @@ const Longhands = {
   "inset-line-end": Inset.Line.End,
   "inset-line-start": Inset.Line.Start,
   left: Inset.Left,
+  "letter-spacing": LetterSpacing,
   "line-height": Line.Height,
   opacity: Opacity,
   "outline-width": Outline.Width,
