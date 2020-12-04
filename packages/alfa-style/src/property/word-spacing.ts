@@ -13,7 +13,7 @@ export namespace WordSpacing {
 }
 
 /**
- * @see https://drafts.csswg.org/css-text-3/#letter-spacing-property
+ * @see https://drafts.csswg.org/css-text-3/#word-spacing-property
  */
 export const WordSpacing: Property<
   WordSpacing.Specified,
