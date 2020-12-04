@@ -7,8 +7,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
-import { isTabbable } from "../common/predicate/is-tabbable";
 import { hasDescendant } from "../common/predicate/has-descendant";
+import { isTabbable } from "../common/predicate/is-tabbable";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Refinement;

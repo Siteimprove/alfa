@@ -1,14 +1,12 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { Device } from "@siteimprove/alfa-device";
+import { Document } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R90, { Outcomes } from "../../src/sia-r90/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-import { Device } from "@siteimprove/alfa-device";
 
 const device = Device.standard();
 
