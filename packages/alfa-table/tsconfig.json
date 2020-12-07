@@ -4,6 +4,8 @@
   "files": [
     "src/anchored.ts",
     "src/cell.ts",
+    "src/cell/predicate.ts",
+    "src/cell/predicate/has-element.ts",
     "src/column.ts",
     "src/index.ts",
     "src/row.ts",

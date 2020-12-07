@@ -11,6 +11,8 @@ import { Anchored } from "./anchored";
 import { Slot } from "./slot";
 import { Scope } from "./scope";
 
+import * as predicate from "./cell/predicate";
+
 const { and, or } = Refinement;
 const { isElement } = Element;
 const { isText } = Text;
@@ -134,6 +136,8 @@ export namespace Cell {
   export function isCell(value: unknown): value is Cell {
     return value instanceof Cell;
   }
+
+  export const { hasElement } = predicate;
 
   export class Data extends Cell {
     public static of(
