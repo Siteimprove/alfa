@@ -169,3 +169,75 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
     ],
   });
 });
+
+test(`.from() correctly assigns implicit row headers`, (t) => {
+  const table = Table.from(
+    <table>
+      <tr>
+        <th>Header</th>
+        <td>Data</td>
+      </tr>
+    </table>
+  );
+
+  t.deepEqual(table.toJSON(), {
+    element: "/table[1]",
+    cells: [
+      {
+        element: "/table[1]/tr[1]/th[1]",
+        type: "header",
+        anchor: { x: 0, y: 0 },
+        width: 1,
+        height: 1,
+        scope: "row",
+        headers: [],
+      },
+      {
+        element: "/table[1]/tr[1]/td[1]",
+        type: "data",
+        anchor: { x: 1, y: 0 },
+        width: 1,
+        height: 1,
+        scope: null,
+        headers: [{ x: 0, y: 0 }],
+      },
+    ],
+  });
+});
+
+test(`.from() correctly assigns implicit column headers`, (t) => {
+  const table = Table.from(
+    <table>
+      <tr>
+        <th>Header</th>
+      </tr>
+      <tr>
+        <td>Data</td>
+      </tr>
+    </table>
+  );
+
+  t.deepEqual(table.toJSON(), {
+    element: "/table[1]",
+    cells: [
+      {
+        element: "/table[1]/tr[1]/th[1]",
+        type: "header",
+        anchor: { x: 0, y: 0 },
+        width: 1,
+        height: 1,
+        scope: "column",
+        headers: [],
+      },
+      {
+        element: "/table[1]/tr[2]/td[1]",
+        type: "data",
+        anchor: { x: 0, y: 1 },
+        width: 1,
+        height: 1,
+        scope: null,
+        headers: [{ x: 0, y: 0 }],
+      },
+    ],
+  });
+});
