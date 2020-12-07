@@ -9,7 +9,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Scope, Table } from "@siteimprove/alfa-table";
+import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";
 import { Name } from "./name";
@@ -657,41 +657,31 @@ const Features: Features = {
     tfoot: html(() => Option.of(Role.of("rowgroup"))),
 
     th: html(
-      (element) => {
-        const table = element
+      (element) =>
+        element
           .ancestors()
           .filter(isElement)
           .find(hasName("table"))
-          .map(Table.from);
-
-        // If the <th> is not in a table, it doesn't have a role.
-        if (table.isNone()) {
-          return None;
-        }
-
-        const cell = table
-          .get()
-          .cells.find((cell) => cell.element.equals(element));
-
-        // If the <th> is not a cell in the table, it doesn't have a role.
-        if (cell.isNone()) {
-          return None;
-        }
-
-        return cell
-          .get()
-          .scope.map((scope) => {
-            switch (scope) {
-              case Scope.Column:
-              case Scope.ColumnGroup:
+          .map(Table.from)
+          .flatMap((table) =>
+            table.cells
+              .filter(Cell.isHeader)
+              .find((cell) => cell.element.equals(element))
+          )
+          .map((cell) => {
+            switch (cell.scope) {
+              case "column":
+              case "column-group":
                 return Role.of("columnheader");
-              case Scope.Row:
-              case Scope.RowGroup:
+
+              case "row":
+              case "row-group":
                 return Role.of("rowheader");
+
+              default:
+                return Role.of("cell");
             }
-          })
-          .orElse(() => Option.of(Role.of("cell")));
-      },
+          }),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-colspan
         for (const { value } of element.attribute("colspan")) {

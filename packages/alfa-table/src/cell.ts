@@ -19,59 +19,29 @@ const { isText } = Text;
 /**
  * @see https://html.spec.whatwg.org/#concept-cell
  */
-export class Cell implements Anchored, Equatable, Serializable {
-  public static of(
+export abstract class Cell implements Anchored, Equatable, Serializable {
+  protected readonly _element: Element;
+  protected readonly _anchor: Slot;
+  protected readonly _width: number;
+  protected readonly _height: number;
+  protected readonly _headers: Array<Slot>;
+
+  protected constructor(
     element: Element,
-    type: Cell.Type,
     anchor: Slot,
     width: number,
     height: number,
-    scope: Option<Scope.Resolved> = None,
-    headers: Iterable<Slot> = []
-  ): Cell {
-    return new Cell(
-      element,
-      type,
-      anchor,
-      width,
-      height,
-      scope,
-      Array.from(headers).sort((a, b) => a.compare(b))
-    );
-  }
-
-  private readonly _element: Element;
-  private readonly _type: Cell.Type;
-  private readonly _anchor: Slot;
-  private readonly _width: number;
-  private readonly _height: number;
-  private readonly _scope: Option<Scope.Resolved>;
-  private readonly _headers: Array<Slot>;
-
-  private constructor(
-    element: Element,
-    type: Cell.Type,
-    anchor: Slot,
-    width: number,
-    height: number,
-    scope: Option<Scope.Resolved>,
     headers: Array<Slot>
   ) {
     this._element = element;
-    this._type = type;
     this._anchor = anchor;
     this._width = width;
     this._height = height;
     this._headers = headers;
-    this._scope = scope;
   }
 
   public get element(): Element {
     return this._element;
-  }
-
-  public get type(): Cell.Type {
-    return this._type;
   }
 
   public get anchor(): Slot {
@@ -92,10 +62,6 @@ export class Cell implements Anchored, Equatable, Serializable {
 
   public get height(): number {
     return this._height;
-  }
-
-  public get scope(): Option<Scope.Resolved> {
-    return this._scope;
   }
 
   public get headers(): Sequence<Slot> {
@@ -119,15 +85,15 @@ export class Cell implements Anchored, Equatable, Serializable {
   /**
    * Check if this cell is a data cell.
    */
-  public isData(): boolean {
-    return this._type === Cell.Type.Data;
+  public isData(): this is Cell.Data {
+    return Cell.isData(this);
   }
 
   /**
    * Check if this cell is a header cell.
    */
-  public isHeader(): boolean {
-    return this._type === Cell.Type.Header;
+  public isHeader(): this is Cell.Header {
+    return Cell.isHeader(this);
   }
 
   public compare(anchored: Anchored): Comparison {
@@ -142,47 +108,149 @@ export class Cell implements Anchored, Equatable, Serializable {
     return (
       value instanceof Cell &&
       value._element.equals(this._element) &&
-      value._type === this._type &&
       value._anchor.equals(this._anchor) &&
       value._width === this._width &&
       value._height === this._height &&
-      value._scope === this._scope &&
       value._headers.length === this._headers.length &&
       value._headers.every((header, i) => header.equals(this._headers[i]))
     );
   }
 
-  public toJSON(): Cell.JSON {
-    return {
-      element: this._element.path(),
-      type: this._type,
-      anchor: this._anchor.toJSON(),
-      width: this._width,
-      height: this._height,
-      scope: this._scope.getOr(null),
-      headers: this._headers.map((header) => header.toJSON()),
-    };
-  }
+  public abstract toJSON(): Cell.JSON;
 }
 
 export namespace Cell {
-  export enum Type {
-    Data = "data",
-    Header = "header",
-  }
+  export type Type = "data" | "header";
 
   export interface JSON {
     [key: string]: json.JSON;
+    type: Type;
     element: string;
-    type: string;
     anchor: Slot.JSON;
     width: number;
     height: number;
-    scope: string | null;
     headers: Array<Slot.JSON>;
   }
 
   export function isCell(value: unknown): value is Cell {
     return value instanceof Cell;
   }
+
+  export class Data extends Cell {
+    public static of(
+      element: Element,
+      anchor: Slot,
+      width: number,
+      height: number,
+      headers: Iterable<Slot> = []
+    ): Data {
+      return new Data(
+        element,
+        anchor,
+        width,
+        height,
+        Array.from(headers).sort((a, b) => a.compare(b))
+      );
+    }
+
+    private constructor(
+      element: Element,
+      anchor: Slot,
+      width: number,
+      height: number,
+      headers: Array<Slot>
+    ) {
+      super(element, anchor, width, height, headers);
+    }
+
+    public toJSON(): Data.JSON {
+      return {
+        type: "data",
+        element: this._element.path(),
+        anchor: this._anchor.toJSON(),
+        width: this._width,
+        height: this._height,
+        headers: this._headers.map((header) => header.toJSON()),
+      };
+    }
+  }
+
+  export namespace Data {
+    export interface JSON extends Cell.JSON {
+      type: "data";
+    }
+
+    export function isData(value: unknown): value is Data {
+      return value instanceof Data;
+    }
+  }
+
+  export const { of: data, isData } = Data;
+
+  export class Header extends Cell {
+    public static of(
+      element: Element,
+      anchor: Slot,
+      width: number,
+      height: number,
+      headers: Iterable<Slot> = [],
+      scope: Scope = "auto"
+    ): Header {
+      return new Header(
+        element,
+        anchor,
+        width,
+        height,
+        Array.from(headers).sort((a, b) => a.compare(b)),
+        scope
+      );
+    }
+
+    private readonly _scope: Scope;
+
+    private constructor(
+      element: Element,
+      anchor: Slot,
+      width: number,
+      height: number,
+      headers: Array<Slot>,
+      scope: Scope
+    ) {
+      super(element, anchor, width, height, headers);
+
+      this._scope = scope;
+    }
+
+    public get type(): "header" {
+      return "header";
+    }
+
+    public get scope(): Scope {
+      return this._scope;
+    }
+
+    public toJSON(): Header.JSON {
+      return {
+        type: "header",
+        element: this._element.path(),
+        anchor: this._anchor.toJSON(),
+        width: this._width,
+        height: this._height,
+        headers: this._headers.map((header) => header.toJSON()),
+        scope: this._scope,
+      };
+    }
+  }
+
+  export namespace Header {
+    export interface JSON extends Cell.JSON {
+      scope: Scope;
+    }
+
+    export function isHeader(value: unknown): value is Header {
+      return value instanceof Header;
+    }
+  }
+
+  export const { of: header, isHeader } = Header;
 }

@@ -379,13 +379,23 @@ export namespace Table {
         }
 
         // 13
-        const cell = Cell.of(
-          current().get(),
-          current().some(hasName("th")) ? Cell.Type.Header : Cell.Type.Data,
-          Slot.of(xCurrent, yCurrent),
-          colspan,
-          rowspan
-        );
+        let cell: Cell;
+
+        if (current().some(hasName("td"))) {
+          cell = Cell.data(
+            current().get(),
+            Slot.of(xCurrent, yCurrent),
+            colspan,
+            rowspan
+          );
+        } else {
+          cell = Cell.header(
+            current().get(),
+            Slot.of(xCurrent, yCurrent),
+            colspan,
+            rowspan
+          );
+        }
 
         const i = cells.length;
 
@@ -516,7 +526,7 @@ export namespace Table {
      * @see https://html.spec.whatwg.org/#algorithm-for-growing-downward-growing-cells
      */
     function growCells(): void {
-      for (const [cell, i] of downwardGrowing) {
+      for (let [cell, i] of downwardGrowing) {
         const height = yCurrent - cell.y + 1;
 
         for (let x = cell.x, n = x + cell.width; x < n; x++) {
@@ -525,20 +535,23 @@ export namespace Table {
           }
         }
 
-        cells[i] = Cell.of(
-          cell.element,
-          cell.type,
-          cell.anchor,
-          cell.width,
-          height
-        );
+        if (cell.isData()) {
+          cells[i] = Cell.data(cell.element, cell.anchor, cell.width, height);
+        } else if (cell.isHeader()) {
+          cells[i] = Cell.header(
+            cell.element,
+            cell.anchor,
+            cell.width,
+            cell.height
+          );
+        }
       }
     }
 
     /**
      * @see https://html.spec.whatwg.org/#algorithm-for-assigning-header-cells
      */
-    function assignHeaders(principal: Cell): Cell {
+    function assignHeaders(cell: Cell): Cell {
       // 1
       const headers: Array<Cell> = [];
 
@@ -546,7 +559,7 @@ export namespace Table {
       // Nothing to do
 
       // 3
-      const ids = principal.element
+      const ids = cell.element
         .attribute("headers")
         .map((attribute) => attribute.tokens());
 
@@ -570,13 +583,13 @@ export namespace Table {
         // Nothing to do
 
         // 3
-        for (let y = principal.y, n = y + principal.height; y < n; y++) {
-          scanHeaderCells(principal, headers, principal.x, y, -1, 0);
+        for (let y = cell.y, n = y + cell.height; y < n; y++) {
+          scanHeaderCells(cell, headers, cell.x, y, -1, 0);
         }
 
         // 4
-        for (let x = principal.x, n = x + principal.width; x < n; x++) {
-          scanHeaderCells(principal, headers, x, principal.y, 0, -1);
+        for (let x = cell.x, n = x + cell.width; x < n; x++) {
+          scanHeaderCells(cell, headers, x, cell.y, 0, -1);
         }
 
         // 5
@@ -594,18 +607,31 @@ export namespace Table {
         .distinct()
 
         // 6
-        .reject(equals(principal));
+        .reject(equals(cell));
+
+      const anchors = filtered.map((cell) => cell.anchor);
 
       // 7
-      return Cell.of(
-        principal.element,
-        principal.type,
-        principal.anchor,
-        principal.width,
-        principal.height,
-        principal.scope,
-        filtered.map((cell) => cell.anchor)
-      );
+      if (cell.isData()) {
+        cell = Cell.data(
+          cell.element,
+          cell.anchor,
+          cell.width,
+          cell.height,
+          anchors
+        );
+      } else if (cell.isHeader()) {
+        cell = Cell.header(
+          cell.element,
+          cell.anchor,
+          cell.width,
+          cell.height,
+          anchors,
+          cell.scope
+        );
+      }
+
+      return cell;
     }
 
     /**
@@ -705,26 +731,26 @@ export namespace Table {
      * @see https://html.spec.whatwg.org/#attr-th-scope
      */
     function assignScope(cell: Cell): Cell {
-      if (cell.isData()) {
+      if (!cell.isHeader()) {
         return cell;
       }
 
-      let scope: Option<Scope.Resolved> = None;
+      let scope: Scope;
 
       if (isColumHeader(cell)) {
-        scope = Option.of(Scope.Column);
+        scope = "column";
       } else if (isRowHeader(cell)) {
-        scope = Option.of(Scope.Row);
+        scope = "row";
       } else {
         return cell;
       }
 
-      return Cell.of(
+      return Cell.header(
         cell.element,
-        cell.type,
         cell.anchor,
         cell.width,
         cell.height,
+        cell.headers,
         scope
       );
     }
@@ -732,20 +758,16 @@ export namespace Table {
     /**
      * @see https://html.spec.whatwg.org/#column-header
      */
-    function isColumHeader(cell: Cell): boolean {
-      if (cell.isData()) {
-        return false;
-      }
-
-      if (cell.scope.some(equals(Scope.Column))) {
+    function isColumHeader(cell: Cell.Header): boolean {
+      if (cell.scope === "column") {
         return true;
       }
 
       switch (Scope.from(cell.element)) {
-        case Scope.Column:
+        case "column":
           return true;
 
-        case Scope.Auto:
+        case "auto":
           for (let y = cell.y, n = y + cell.height; y < n; y++) {
             if (hasData.y[y]) {
               return false;
@@ -761,20 +783,16 @@ export namespace Table {
     /**
      * @see https://html.spec.whatwg.org/#row-header
      */
-    function isRowHeader(cell: Cell): boolean {
-      if (cell.isData()) {
-        return false;
-      }
-
-      if (cell.scope.some(equals(Scope.Row))) {
+    function isRowHeader(cell: Cell.Header): boolean {
+      if (cell.scope === "row") {
         return true;
       }
 
       switch (Scope.from(cell.element)) {
-        case Scope.Row:
+        case "row":
           return true;
 
-        case Scope.Auto:
+        case "auto":
           for (let x = cell.x, n = x + cell.width; x < n; x++) {
             if (hasData.x[x]) {
               return false;

@@ -3,17 +3,9 @@ import { Element } from "@siteimprove/alfa-dom";
 /**
  * @see https://html.spec.whatwg.org/#attr-th-scope
  */
-export enum Scope {
-  Row = "row",
-  RowGroup = "row-group",
-  Column = "column",
-  ColumnGroup = "column-group",
-  Auto = "auto",
-}
+export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
 
 export namespace Scope {
-  export type Resolved = Exclude<Scope, Scope.Auto>;
-
   export function from(element: Element): Scope {
     return element
       .attribute("scope")
@@ -23,15 +15,15 @@ export namespace Scope {
       .map((scope) => {
         switch (scope) {
           case "row":
-            return Scope.Row;
+            return "row";
           case "rowgroup":
-            return Scope.RowGroup;
+            return "row-group";
           case "col":
-            return Scope.Column;
+            return "column";
           case "colgroup":
-            return Scope.ColumnGroup;
+            return "column-group";
         }
       })
-      .getOr(Scope.Auto);
+      .getOr("auto");
   }
 }
