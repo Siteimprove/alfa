@@ -66,12 +66,12 @@ export namespace Outcomes {
  * Determine if an element is possibly scrollable. This is determined by the
  * following factors:
  *
- * - A computed `width` or `height` that is not `auto`.
- * - A computed `overflow-x` or `overflow-y` that is `auto`, `clip`, or
- *   `scroll`.
+ * - A computed `width` or `height` that is not `auto`; and
+ * - A corresponding computed `overflow-x` or `overflow-y`, respectively, that
+ *   is `auto`, `clip`, or `scroll`.
  */
 function isPossiblyScrollable(device: Device): Predicate<Element> {
-  const propertiers = [
+  const properties = [
     ["overflow-x", "width"],
     ["overflow-y", "height"],
   ] as const;
@@ -79,7 +79,7 @@ function isPossiblyScrollable(device: Device): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device);
 
-    return propertiers.some(
+    return properties.some(
       ([overflow, dimension]) =>
         style
           .computed(dimension)
