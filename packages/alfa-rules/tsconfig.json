@@ -4,6 +4,7 @@
   "files": [
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
+    "src/common/diagnostic/text-spacing.ts",
     "src/common/expectation.ts",
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/outcome-to-trilean.ts",

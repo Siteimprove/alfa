@@ -1,17 +1,19 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 
+import { Outcomes } from "../common/diagnostic/text-spacing";
 import { expectation } from "../common/expectation";
 import { declaresProperty } from "../common/predicate/declares-property";
 import { isVisible } from "../common/predicate/is-visible";
 
 const { and } = Predicate;
 const { isElement, hasNamespace } = Element;
+
+const outcomes = Outcomes("word-spacing");
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r92.html",
@@ -39,12 +41,12 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             computed.source.none((declaration) => declaration.important),
-            () => Outcomes.NotImportant,
+            () => outcomes.notImportant,
             () =>
               expectation(
                 computed.value.value >=
                   0.16 * style.computed("font-size").value.value,
-                () => Outcomes.AboveMinimum,
+                () => outcomes.aboveMinimum,
                 () =>
                   expectation(
                     style.cascaded("word-spacing").none((spacing) =>
@@ -58,8 +60,8 @@ export default Rule.Atomic.of<Page, Element>({
                         )
                       )
                     ),
-                    () => Outcomes.Cascaded,
-                    () => Outcomes.Important
+                    () => outcomes.cascaded,
+                    () => outcomes.important
                   )
               )
           ),
@@ -68,23 +70,3 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
-
-export namespace Outcomes {
-  export const NotImportant = Ok.of(
-    Diagnostic.of("The `word-spacing` property is not !important")
-  );
-
-  export const AboveMinimum = Ok.of(
-    Diagnostic.of("The `word-spacing` property is above the required minimum")
-  );
-
-  export const Cascaded = Ok.of(
-    Diagnostic.of(
-      "The `word-spacing` property is cascaded from another element"
-    )
-  );
-
-  export const Important = Err.of(
-    Diagnostic.of("The `word-spacing` property is !important and too small")
-  );
-}

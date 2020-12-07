@@ -2,10 +2,13 @@ import { Document, h } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import R92, { Outcomes } from "../../src/sia-r92/rule";
+import R92 from "../../src/sia-r92/rule";
+import { Outcomes } from "../../src/common/diagnostic/text-spacing";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
+
+const outcomes = Outcomes("word-spacing");
 
 test("evaluate() passes on non important style", async (t) => {
   const target = <div style={{ wordSpacing: "0.1em" }}>Hello World</div>;
@@ -13,7 +16,7 @@ test("evaluate() passes on non important style", async (t) => {
   const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R92, { document }), [
-    passed(R92, target, { 1: Outcomes.NotImportant }),
+    passed(R92, target, { 1: outcomes.notImportant }),
   ]);
 });
 
@@ -25,7 +28,7 @@ test("evaluate() passes on large enough value", async (t) => {
   const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R92, { document }), [
-    passed(R92, target, { 1: Outcomes.AboveMinimum }),
+    passed(R92, target, { 1: outcomes.aboveMinimum }),
   ]);
 });
 
@@ -38,7 +41,7 @@ test("evaluate() passes on important cascaded styles", async (t) => {
   );
 
   t.deepEqual(await evaluate(R92, { document }), [
-    passed(R92, target, { 1: Outcomes.Cascaded }),
+    passed(R92, target, { 1: outcomes.cascaded }),
   ]);
 });
 
@@ -50,7 +53,7 @@ test("evaluate() fails on important small values", async (t) => {
   const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R92, { document }), [
-    failed(R92, target, { 1: Outcomes.Important }),
+    failed(R92, target, { 1: outcomes.important }),
   ]);
 });
 
