@@ -572,7 +572,7 @@ export namespace Table {
           ...ids
             .get()
             .collect((id) =>
-              Option.from(cells.find((cell) => cell.element.id.includes(id)))
+              Option.from(cells.find(Cell.hasElement(Element.hasId(id))))
             )
         );
       } else {
