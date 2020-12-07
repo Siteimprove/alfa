@@ -43,11 +43,21 @@ export default Rule.Atomic.of<Page, Element>({
                   0.12 * style.computed("font-size").value.value,
                 () => Outcomes.AboveMinimum,
                 () =>
-                  style
-                    .cascaded("letter-spacing")
-                    .none((spacing) =>
-                      spacing.source.some((declaration) => declaration)
-                    )
+                  expectation(
+                    style.cascaded("letter-spacing").none((spacing) =>
+                      spacing.source.some((cascaded) =>
+                        target.style.some((block) =>
+                          block
+                            .declaration("letter-spacing")
+                            // We need reference equality here, not .equals as we want to check if the cascaded
+                            // value is exactly the declared one, not just a similar one.
+                            .some((declared) => cascaded === declared)
+                        )
+                      )
+                    ),
+                    () => Outcomes.Cascaded,
+                    () => Outcomes.Important
+                  )
               )
           ),
         };
