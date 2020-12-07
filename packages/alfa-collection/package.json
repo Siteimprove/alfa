@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-applicative": "^0.7.0",
+    "@siteimprove/alfa-callback": "^0.7.0",
     "@siteimprove/alfa-comparable": "^0.7.0",
     "@siteimprove/alfa-equatable": "^0.7.0",
     "@siteimprove/alfa-foldable": "^0.7.0",

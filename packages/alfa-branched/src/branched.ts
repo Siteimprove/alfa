@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -42,6 +43,15 @@ export class Branched<T, B = never>
 
   public isEmpty(): this is Branched<never, B> {
     return false;
+  }
+
+  public forEach(callback: Callback<T, void, [Iterable<B>]>): void {
+    this._values.forEach(({ value, branches }) =>
+      callback(
+        value,
+        branches.getOrElse(() => List.empty())
+      )
+    );
   }
 
   public map<U>(mapper: Mapper<T, U, [Iterable<B>]>): Branched<U, B> {
@@ -191,6 +201,10 @@ export class Branched<T, B = never>
     }
 
     return false;
+  }
+
+  public none(predicate: Predicate<T, [Iterable<B>]>): boolean {
+    return this.every(not(predicate));
   }
 
   public every(predicate: Predicate<T, [Iterable<B>]>): boolean {

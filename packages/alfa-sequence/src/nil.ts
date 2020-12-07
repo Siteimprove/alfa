@@ -16,6 +16,8 @@ export const Nil: Nil = new (class Nil {
     return true;
   }
 
+  public forEach(): void {}
+
   public map(): Nil {
     return this;
   }
@@ -58,6 +60,10 @@ export const Nil: Nil = new (class Nil {
 
   public some(): boolean {
     return false;
+  }
+
+  public none(): boolean {
+    return true;
   }
 
   public every(): boolean {

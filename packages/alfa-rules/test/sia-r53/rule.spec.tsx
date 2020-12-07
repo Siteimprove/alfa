@@ -1,6 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 
 import R53, { Outcomes } from "../../src/sia-r53/rule";
@@ -65,4 +66,27 @@ test("evaluate() is inapplicable when the document has only one heading", async 
   ]);
 
   t.deepEqual(await evaluate(R53, { document }), [inapplicable(R53)]);
+});
+
+test("evaluate() ignore headings that are not exposed", async (t) => {
+  const target1 = <h2>Chapter one</h2>;
+  const target2 = <h2>Chapter two</h2>;
+
+  const document = Document.of([
+    <html>
+      <h1>Part one</h1>
+      <h3 hidden>I'm not here</h3>
+      {target1}
+      {target2}
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R53, { document, device: Device.standard() }), [
+    passed(R53, target1, {
+      1: Outcomes.IsStructured,
+    }),
+    passed(R53, target2, {
+      1: Outcomes.IsStructured,
+    }),
+  ]);
 });

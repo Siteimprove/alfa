@@ -7,7 +7,6 @@ import {
   System,
   Token,
 } from "@siteimprove/alfa-css";
-import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 

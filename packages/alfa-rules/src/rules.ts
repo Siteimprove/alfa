@@ -72,3 +72,4 @@ export { default as R84 } from "./sia-r84/rule";
 export { default as R85 } from "./sia-r85/rule";
 export { default as R86 } from "./sia-r86/rule";
 export { default as R87 } from "./sia-r87/rule";
+export { default as R90 } from "./sia-r90/rule";
