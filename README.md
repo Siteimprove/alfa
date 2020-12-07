@@ -112,7 +112,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 
 ## Examples
 
-For examples of how to use Alfa in various contexts, such as unit testing, end-to-end testing, and custom scripted testing, take a look in the [`docs/examples`](docs/examples) directory.
+For examples of how to use Alfa in various contexts, such as unit testing, end-to-end testing, and custom scripted testing, take a look at the [@siteimprove/alfa-examples](https://github.com/siteimprove/alfa-examples) repository.
 
 ## Requirements
 
