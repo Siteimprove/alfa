@@ -86,16 +86,12 @@ export abstract class Cell implements Anchored, Equatable, Serializable {
   /**
    * Check if this cell is a data cell.
    */
-  public isData(): this is Cell.Data {
-    return Cell.isData(this);
-  }
+  public abstract isData(): this is Cell.Data;
 
   /**
    * Check if this cell is a header cell.
    */
-  public isHeader(): this is Cell.Header {
-    return Cell.isHeader(this);
-  }
+  public abstract isHeader(): this is Cell.Header;
 
   public compare(anchored: Anchored): Comparison {
     return Anchored.compare(this, anchored);
@@ -121,11 +117,8 @@ export abstract class Cell implements Anchored, Equatable, Serializable {
 }
 
 export namespace Cell {
-  export type Type = "data" | "header";
-
   export interface JSON {
     [key: string]: json.JSON;
-    type: Type;
     element: string;
     anchor: Slot.JSON;
     width: number;
@@ -166,9 +159,24 @@ export namespace Cell {
       super(element, anchor, width, height, headers);
     }
 
+    public isData(): boolean {
+      return true;
+    }
+
+    public isHeader(): boolean {
+      return false;
+    }
+
+    public equals(cell: Data): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof Data && super.equals(value);
+    }
+
     public toJSON(): Data.JSON {
       return {
-        type: "data",
         element: this._element.path(),
         anchor: this._anchor.toJSON(),
         width: this._width,
@@ -179,9 +187,7 @@ export namespace Cell {
   }
 
   export namespace Data {
-    export interface JSON extends Cell.JSON {
-      type: "data";
-    }
+    export interface JSON extends Cell.JSON {}
 
     export function isData(value: unknown): value is Data {
       return value instanceof Data;
@@ -224,23 +230,38 @@ export namespace Cell {
       this._scope = scope;
     }
 
-    public get type(): "header" {
-      return "header";
-    }
-
     public get scope(): Scope {
       return this._scope;
     }
 
+    public isData(): boolean {
+      return false;
+    }
+
+    public isHeader(): boolean {
+      return true;
+    }
+
+    public equals(cell: Header): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        value instanceof Header &&
+        super.equals(value) &&
+        value._scope === this._scope
+      );
+    }
+
     public toJSON(): Header.JSON {
       return {
-        type: "header",
+        scope: this._scope,
         element: this._element.path(),
         anchor: this._anchor.toJSON(),
         width: this._width,
         height: this._height,
         headers: this._headers.map((header) => header.toJSON()),
-        scope: this._scope,
       };
     }
   }

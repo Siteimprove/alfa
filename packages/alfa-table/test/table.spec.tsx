@@ -23,25 +23,22 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
     cells: [
       {
         element: "/table[1]/tr[1]/th[1]",
-        type: "header",
+        scope: "column",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
-        scope: "column",
       },
       {
         element: "/table[1]/tr[1]/th[2]",
-        type: "header",
+        scope: "column",
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
         headers: [],
-        scope: "column",
       },
       {
         element: "/table[1]/tr[2]/td[1]",
-        type: "data",
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
@@ -49,7 +46,6 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
       },
       {
         element: "/table[1]/tr[2]/td[2]",
-        type: "data",
         anchor: { x: 1, y: 1 },
         width: 1,
         height: 1,
@@ -83,25 +79,22 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
     cells: [
       {
         element: "/table[1]/thead[1]/tr[1]/th[1]",
-        type: "header",
+        scope: "column",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
-        scope: "column",
         headers: [],
       },
       {
         element: "/table[1]/thead[1]/tr[1]/th[2]",
-        type: "header",
+        scope: "column",
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
-        scope: "column",
         headers: [],
       },
       {
         element: "/table[1]/tbody[1]/tr[1]/td[1]",
-        type: "data",
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
@@ -109,7 +102,6 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
       },
       {
         element: "/table[1]/tbody[1]/tr[1]/td[2]",
-        type: "data",
         anchor: { x: 1, y: 1 },
         width: 1,
         height: 1,
@@ -137,7 +129,6 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
     cells: [
       {
         element: "/table[1]/tr[1]/td[1]",
-        type: "data",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
@@ -145,7 +136,6 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
       },
       {
         element: "/table[1]/tr[1]/td[2]",
-        type: "data",
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 2,
@@ -153,7 +143,6 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
       },
       {
         element: "/table[1]/tr[2]/td[1]",
-        type: "data",
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
@@ -178,16 +167,14 @@ test(`.from() correctly assigns implicit row headers`, (t) => {
     cells: [
       {
         element: "/table[1]/tr[1]/th[1]",
-        type: "header",
+        scope: "row",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
-        scope: "row",
       },
       {
         element: "/table[1]/tr[1]/td[1]",
-        type: "data",
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
@@ -214,16 +201,14 @@ test(`.from() correctly assigns implicit column headers`, (t) => {
     cells: [
       {
         element: "/table[1]/tr[1]/th[1]",
-        type: "header",
+        scope: "column",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
-        scope: "column",
       },
       {
         element: "/table[1]/tr[2]/td[1]",
-        type: "data",
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,

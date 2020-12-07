@@ -18,7 +18,8 @@ import { Scope } from "./scope";
 const { isNaN } = Number;
 const { clamp } = Real;
 const { not, equals } = Predicate;
-const { hasName, isElement } = Element;
+const { hasId, hasName, isElement } = Element;
+const { hasElement } = Cell;
 
 /**
  * @see https://html.spec.whatwg.org/#concept-table
@@ -109,7 +110,7 @@ export namespace Table {
     // In addition to the list of cells and the table grid, we also keep track
     // of which columns and rows have data cells. This information is used when
     // determining the scope of header cells.
-    const hasData = { x: [] as Array<boolean>, y: [] as Array<boolean> };
+    const data = { x: new Set<number>(), y: new Set<number>() };
 
     // 5
     if (element.children().isEmpty()) {
@@ -193,17 +194,25 @@ export namespace Table {
     return Table.of(element, cells.map(assignScope).map(assignHeaders));
 
     /**
+     * Ensure that the given position is available in the table.
+     */
+    function ensure(x: number, y: number): void {
+      for (let i = table.length - 1; i < y; i++) {
+        table.push([]);
+      }
+
+      const row = table[y];
+
+      for (let i = row.length - 1; i < x; i++) {
+        row.push([]);
+      }
+    }
+
+    /**
      * Get the cells at the given position.
      */
     function get(x: number, y: number): Array<number> {
-      if (table[y] === undefined) {
-        table[y] = [];
-      }
-
-      if (table[y][x] === undefined) {
-        table[y][x] = [];
-      }
-
+      ensure(x, y);
       return table[y][x];
     }
 
@@ -217,21 +226,14 @@ export namespace Table {
     /**
      * Add a cell at the given position.
      */
-    function add(x: number, y: number, i: number): void {
-      if (table[y] === undefined) {
-        table[y] = [];
-      }
-
-      if (table[y][x] === undefined) {
-        table[y][x] = [];
-      }
-
+    function add(x: number, y: number, i: number): number {
       if (cells[i].isData()) {
-        hasData.x[x] = true;
-        hasData.y[y] = true;
+        data.x.add(x);
+        data.y.add(y);
       }
 
-      table[y][x].push(i);
+      ensure(x, y);
+      return table[y][x].push(i);
     }
 
     /**
@@ -381,15 +383,15 @@ export namespace Table {
         // 13
         let cell: Cell;
 
-        if (current().some(hasName("td"))) {
-          cell = Cell.data(
+        if (current().some(hasName("th"))) {
+          cell = Cell.header(
             current().get(),
             Slot.of(xCurrent, yCurrent),
             colspan,
             rowspan
           );
         } else {
-          cell = Cell.header(
+          cell = Cell.data(
             current().get(),
             Slot.of(xCurrent, yCurrent),
             colspan,
@@ -535,15 +537,15 @@ export namespace Table {
           }
         }
 
-        if (cell.isData()) {
-          cells[i] = Cell.data(cell.element, cell.anchor, cell.width, height);
-        } else if (cell.isHeader()) {
+        if (cell.isHeader()) {
           cells[i] = Cell.header(
             cell.element,
             cell.anchor,
             cell.width,
             cell.height
           );
+        } else {
+          cells[i] = Cell.data(cell.element, cell.anchor, cell.width, height);
         }
       }
     }
@@ -571,9 +573,7 @@ export namespace Table {
         headers.push(
           ...ids
             .get()
-            .collect((id) =>
-              Option.from(cells.find(Cell.hasElement(Element.hasId(id))))
-            )
+            .collect((id) => Option.from(cells.find(hasElement(hasId(id)))))
         );
       } else {
         // 1
@@ -612,15 +612,7 @@ export namespace Table {
       const anchors = filtered.map((cell) => cell.anchor);
 
       // 7
-      if (cell.isData()) {
-        cell = Cell.data(
-          cell.element,
-          cell.anchor,
-          cell.width,
-          cell.height,
-          anchors
-        );
-      } else if (cell.isHeader()) {
+      if (cell.isHeader()) {
         cell = Cell.header(
           cell.element,
           cell.anchor,
@@ -628,6 +620,14 @@ export namespace Table {
           cell.height,
           anchors,
           cell.scope
+        );
+      } else {
+        cell = Cell.data(
+          cell.element,
+          cell.anchor,
+          cell.width,
+          cell.height,
+          anchors
         );
       }
 
@@ -769,7 +769,7 @@ export namespace Table {
 
         case "auto":
           for (let y = cell.y, n = y + cell.height; y < n; y++) {
-            if (hasData.y[y]) {
+            if (data.y.has(y)) {
               return false;
             }
           }
@@ -794,7 +794,7 @@ export namespace Table {
 
         case "auto":
           for (let x = cell.x, n = x + cell.width; x < n; x++) {
-            if (hasData.x[x]) {
+            if (data.x.has(x)) {
               return false;
             }
           }
