@@ -15,5 +15,5 @@
     "types": []
   },
   "files": [],
-  "references": [{ "path": "docs" }, { "path": "packages" }]
+  "references": [{ "path": "packages" }]
 }
