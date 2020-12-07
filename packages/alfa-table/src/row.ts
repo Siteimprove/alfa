@@ -54,6 +54,10 @@ export namespace Row {
     y: number;
   }
 
+  export function isRow(value: unknown): value is Row {
+    return value instanceof Row;
+  }
+
   /**
    * @see https://html.spec.whatwg.org/#concept-row-group
    */
@@ -118,15 +122,5 @@ export namespace Row {
     }
   }
 
-  export function group(y: number, height: number): Group {
-    return Group.of(y, height);
-  }
-
-  export function isRow(value: unknown): value is Row {
-    return value instanceof Row;
-  }
-
-  export function isRowGroup(value: unknown): value is Group {
-    return Group.isGroup(value);
-  }
+  export const { of: group, isGroup } = Group;
 }

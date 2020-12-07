@@ -54,6 +54,10 @@ export namespace Column {
     x: number;
   }
 
+  export function isColumn(value: unknown): value is Column {
+    return value instanceof Column;
+  }
+
   /**
    * @see https://html.spec.whatwg.org/#concept-column-group
    */
@@ -118,15 +122,5 @@ export namespace Column {
     }
   }
 
-  export function group(x: number, width: number): Group {
-    return Group.of(x, width);
-  }
-
-  export function isColumn(value: unknown): value is Column {
-    return value instanceof Column;
-  }
-
-  export function isColumnGroup(value: unknown): value is Group {
-    return Group.isGroup(value);
-  }
+  export const { of: group, isGroup } = Group;
 }
