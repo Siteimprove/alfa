@@ -10,8 +10,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { expectation } from "../common/expectation";
 
-const { and, not, fold } = Predicate;
-const { hasName, isElement } = Element;
+const { and } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r91.html",
@@ -48,10 +48,10 @@ export default Rule.Atomic.of<Page, Element>({
                       spacing.source.some((cascaded) =>
                         target.style.some((block) =>
                           block
-                            .declaration("letter-spacing")
                             // We need reference equality here, not .equals as we want to check if the cascaded
                             // value is exactly the declared one, not just a similar one.
-                            .some((declared) => cascaded === declared)
+                            .declaration((declared) => cascaded === declared)
+                            .isSome()
                         )
                       )
                     ),
