@@ -14,7 +14,7 @@ const { and } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r91.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r93.html",
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
             isElement,
             and(hasNamespace(Namespace.HTML), isVisible(device), (element) =>
               element.style.some((block) =>
-                block.declaration("letter-spacing").isSome()
+                block.declaration("line-height").isSome()
               )
             )
           )
@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
       expectations(target) {
         const style = Style.from(target, device);
-        const computed = style.computed("letter-spacing");
+        const computed = style.computed("line-height");
 
         return {
           1: expectation(
@@ -39,12 +39,16 @@ export default Rule.Atomic.of<Page, Element>({
             () => Outcomes.NotImportant,
             () =>
               expectation(
-                computed.value.value >=
-                  0.12 * style.computed("font-size").value.value,
+                (computed.value.type === "number" &&
+                  computed.value.value >= 1.5) ||
+                  (computed.value.type === "length" &&
+                    computed.value.value >=
+                      1.5 * style.computed("font-size").value.value),
+
                 () => Outcomes.AboveMinimum,
                 () =>
                   expectation(
-                    style.cascaded("letter-spacing").none((spacing) =>
+                    style.cascaded("line-height").none((spacing) =>
                       spacing.source.some((cascaded) =>
                         target.style.some((block) =>
                           block
@@ -68,20 +72,18 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const NotImportant = Ok.of(
-    Diagnostic.of("The `letter-spacing` property is not !important")
+    Diagnostic.of("The `line-height` property is not !important")
   );
 
   export const AboveMinimum = Ok.of(
-    Diagnostic.of("The `letter-spacing` property is above the required minimum")
+    Diagnostic.of("The `line-height` property is above the required minimum")
   );
 
   export const Cascaded = Ok.of(
-    Diagnostic.of(
-      "The `letter-spacing` property is cascaded from another element"
-    )
+    Diagnostic.of("The `line-height` property is cascaded from another element")
   );
 
   export const Important = Err.of(
-    Diagnostic.of("The `letter-spacing` property is !important and too small")
+    Diagnostic.of("The `line-height` property is !important and too small")
   );
 }
