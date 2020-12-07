@@ -664,9 +664,7 @@ const Features: Features = {
           .find(hasName("table"))
           .map(Table.from)
           .flatMap((table) =>
-            table.cells
-              .filter(Cell.isHeader)
-              .find((cell) => cell.element.equals(element))
+            table.cells.filter(Cell.isHeader).find(Cell.hasElement(element))
           )
           .map((cell) => {
             switch (cell.scope) {
