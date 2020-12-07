@@ -9,11 +9,13 @@ import { Outcomes } from "../common/diagnostic/text-spacing";
 import { expectation } from "../common/expectation";
 import { declaresProperty } from "../common/predicate/declares-property";
 import { isVisible } from "../common/predicate/is-visible";
+import { cascadedIsDeclared } from "../common/expectation/text-spacing";
 
 const { and } = Predicate;
 const { isElement, hasNamespace } = Element;
 
-const outcomes = Outcomes("line-height");
+const name = "line-height";
+const outcomes = Outcomes(name);
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r93.html",
@@ -28,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(Namespace.HTML),
                 isVisible(device),
-                declaresProperty("line-height")
+                declaresProperty(name)
               )
             )
           );
@@ -36,7 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const style = Style.from(target, device);
-        const computed = style.computed("line-height");
+        const computed = style.computed(name);
 
         return {
           1: expectation(
@@ -53,17 +55,7 @@ export default Rule.Atomic.of<Page, Element>({
                 () => outcomes.aboveMinimum,
                 () =>
                   expectation(
-                    style.cascaded("line-height").none((spacing) =>
-                      spacing.source.some((cascaded) =>
-                        target.style.some((block) =>
-                          block
-                            // We need reference equality here, not .equals as we want to check if the cascaded
-                            // value is exactly the declared one, not just a similar one.
-                            .declaration((declared) => cascaded === declared)
-                            .isSome()
-                        )
-                      )
-                    ),
+                    !cascadedIsDeclared(device, name)(target),
                     () => outcomes.cascaded,
                     () => outcomes.important
                   )
