@@ -19,7 +19,7 @@ test("evaluate() passes on non important style", async (t) => {
 
 test("evaluate() passes on large enough value", async (t) => {
   const target = (
-    <div style={{ letterSpacing: "0.15em !important" }}>Hello World</div>
+    <div style={{ letterSpacing: "0.12em !important" }}>Hello World</div>
   );
 
   const document = Document.of([target]);
@@ -54,7 +54,7 @@ test("evaluate() fails on important small values", async (t) => {
   ]);
 });
 
-test("evaluate() is inapplicable is letter-spacing is not declared in the style", async (t) => {
+test("evaluate() is inapplicable if letter-spacing is not declared in the style", async (t) => {
   const document = Document.of([
     <div style={{ color: "red" }}>Hello World</div>,
   ]);
