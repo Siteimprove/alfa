@@ -1,4 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -20,6 +21,7 @@ const { isNaN } = Number;
 const { clamp } = Real;
 const { not, equals } = Predicate;
 const { hasId, hasName, isElement } = Element;
+const { compare } = Comparable;
 const { hasElement } = Cell;
 
 /**
@@ -33,8 +35,8 @@ export class Table implements Equatable, Serializable {
   ): Table {
     return new Table(
       element,
-      Array.from(cells).sort((a, b) => a.compare(b)),
-      Array.from(groups).sort((a, b) => a.compare(b))
+      Array.from(cells).sort(compare),
+      Array.from(groups).sort(compare)
     );
   }
 
@@ -124,6 +126,20 @@ export namespace Table {
     // 4
     let cells: Array<Cell> = [];
     let groups: Array<Group> = [];
+
+    // We model tables as an array of rows with each row containing an array of
+    // columns and each column containing an array of cell indices.
+    //
+    // Tables are indexed first by row and then by column. This way, rows are
+    // aligned vertically and columns horizontally:
+    //
+    //   table = [
+    //     /* row 1 */ [/* column 1 */, /* column 2 */],
+    //     /* row 2 */ [/* column 1 */, /* column 2 */],
+    //   ]
+    //
+    // This makes it considerably easier to debug table construction by not
+    // having to rotate your screen 90 degrees to make sense of things.
     let table: Array<Array<Array<number>>> = [];
 
     // In addition to the list of cells and the table grid, we also keep track
@@ -232,6 +248,8 @@ export namespace Table {
      */
     function get(x: number, y: number): Array<number> {
       ensure(x, y);
+
+      // Keep in mind that tables are indexed first by row and then by column.
       return table[y][x];
     }
 
@@ -252,6 +270,8 @@ export namespace Table {
       }
 
       ensure(x, y);
+
+      // Keep in mind that tables are indexed first by row and then by column.
       return table[y][x].push(i);
     }
 
@@ -566,12 +586,7 @@ export namespace Table {
         }
 
         if (cell.isHeader()) {
-          cells[i] = Cell.header(
-            cell.element,
-            cell.anchor,
-            cell.width,
-            cell.height
-          );
+          cells[i] = Cell.header(cell.element, cell.anchor, cell.width, height);
         } else {
           cells[i] = Cell.data(cell.element, cell.anchor, cell.width, height);
         }

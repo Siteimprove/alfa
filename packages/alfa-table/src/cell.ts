@@ -1,4 +1,4 @@
-import { Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -16,6 +16,7 @@ import * as predicate from "./cell/predicate";
 const { and, or } = Refinement;
 const { isElement } = Element;
 const { isText } = Text;
+const { compare } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/#concept-cell
@@ -137,7 +138,7 @@ export namespace Cell {
         anchor,
         width,
         height,
-        Array.from(headers).sort((a, b) => a.compare(b))
+        Array.from(headers).sort(compare)
       );
     }
 
@@ -202,7 +203,7 @@ export namespace Cell {
         anchor,
         width,
         height,
-        Array.from(headers).sort((a, b) => a.compare(b)),
+        Array.from(headers).sort(compare),
         scope
       );
     }
