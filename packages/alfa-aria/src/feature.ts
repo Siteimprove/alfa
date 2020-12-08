@@ -598,13 +598,12 @@ const Features: Features = {
           .find(hasName("table"))
           .flatMap<Role>((table) => {
             for (const [role] of Role.from(table)) {
-              if (role.isSome()) {
-                switch (role.get().name) {
-                  case "table":
-                    return Option.of(Role.of("cell"));
-                  case "grid":
-                    return Option.of(Role.of("gridcell"));
-                }
+              if (role.some((role) => role.is("table"))) {
+                return Option.of(Role.of("cell"));
+              }
+
+              if (role.some((role) => role.is("grid"))) {
+                return Option.of(Role.of("gridcell"));
               }
             }
 
@@ -664,20 +663,35 @@ const Features: Features = {
           .find(hasName("table"))
           .map(Table.from)
           .flatMap((table) =>
-            table.cells.filter(Cell.isHeader).find(Cell.hasElement(element))
+            table.cells
+              .filter(Cell.isHeader)
+              .find(Cell.hasElement(element))
+              .map((cell) => {
+                return { table, cell };
+              })
           )
-          .map((cell) => {
+          .flatMap<Role>(({ table, cell }) => {
             switch (cell.scope) {
               case "column":
               case "column-group":
-                return Role.of("columnheader");
+                return Option.of(Role.of("columnheader"));
 
               case "row":
               case "row-group":
-                return Role.of("rowheader");
+                return Option.of(Role.of("rowheader"));
 
               default:
-                return Role.of("cell");
+                for (const [role] of Role.from(table.element)) {
+                  if (role.some((role) => role.is("table"))) {
+                    return Option.of(Role.of("cell"));
+                  }
+
+                  if (role.some((role) => role.is("grid"))) {
+                    return Option.of(Role.of("gridcell"));
+                  }
+                }
+
+                return None;
             }
           }),
       function* (element) {
