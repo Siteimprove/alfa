@@ -142,10 +142,13 @@ export namespace Table {
     // having to rotate your screen 90 degrees to make sense of things.
     const table: Array<Array<Array<number>>> = [];
 
-    // In addition to the list of cells and the table grid, we also keep track
-    // of which columns and rows have data cells. This information is used when
-    // determining the scope of header cells.
+    // Keep track of which columns and rows have data cells. This information is
+    // used when determining the scope of header cells.
     const data = { x: new Set<number>(), y: new Set<number>() };
+
+    // Keep track of cells that can be indexed by element ID. This information
+    // is used when determining explicitly assigned header cells.
+    const index = new Map<string, number>();
 
     // 5
     if (element.children().isEmpty()) {
@@ -445,6 +448,10 @@ export namespace Table {
 
         cells.push(cell);
 
+        for (const id of cell.element.id) {
+          index.set(id, i);
+        }
+
         for (let x = xCurrent, n = x + colspan; x < n; x++) {
           for (let y = yCurrent, n = y + rowspan; y < n; y++) {
             add(x, y, i);
@@ -616,7 +623,7 @@ export namespace Table {
         headers.push(
           ...ids
             .get()
-            .collect((id) => Option.from(cells.find(hasElement(hasId(id)))))
+            .collect((id) => Option.from(index.get(id)).map((i) => cells[i]))
         );
       } else {
         // 1
