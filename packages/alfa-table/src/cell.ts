@@ -70,8 +70,6 @@ export abstract class Cell implements Anchored, Equatable, Serializable {
   }
 
   /**
-   * Check if this cell is empty.
-   *
    * @see https://html.spec.whatwg.org/#empty-cell
    */
   public isEmpty(): boolean {
@@ -83,14 +81,8 @@ export abstract class Cell implements Anchored, Equatable, Serializable {
     );
   }
 
-  /**
-   * Check if this cell is a data cell.
-   */
   public abstract isData(): this is Cell.Data;
 
-  /**
-   * Check if this cell is a header cell.
-   */
   public abstract isHeader(): this is Cell.Header;
 
   public compare(anchored: Anchored): Comparison {
