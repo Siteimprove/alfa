@@ -149,6 +149,13 @@ export namespace Table {
     // is used when determining explicitly assigned header cells.
     const index = new Map<string, number>();
 
+    // Keep track of the groups associated with columns and rows. This
+    // information is used when determining implicitly assigned header cells.
+    const groupings = {
+      x: new Map<number, number>(),
+      y: new Map<number, number>(),
+    };
+
     // 5
     if (element.children().isEmpty()) {
       return Table.of(element, cells, groups);
@@ -228,7 +235,10 @@ export namespace Table {
     // 21
     // Before returning the final table, we go through all cells and assign them
     // scopes and headers, if any.
-    return Table.of(element, cells.map(assignScope).map(assignHeaders), groups);
+    cells.forEach(assignScope);
+    cells.forEach(assignHeaders);
+
+    return Table.of(element, cells, groups);
 
     /**
      * Ensure that the given position is available in the table.
@@ -318,10 +328,13 @@ export namespace Table {
       // 3
       if (yHeight > yStart) {
         const group = Row.group(yStart, yHeight - yStart);
+        const i = groups.length;
 
         groups.push(group);
 
-        // Todo
+        for (let y = group.y, n = y + group.height; y < n; y++) {
+          groupings.y.set(y, i);
+        }
       }
 
       // 4
@@ -505,6 +518,9 @@ export namespace Table {
         .filter(isElement)
         .filter(hasName("col"));
 
+      let group: Group;
+      let i: number;
+
       if (!children.isEmpty()) {
         // 1
         const xStart = xWidth;
@@ -534,11 +550,8 @@ export namespace Table {
         }
 
         // 7
-        const group = Column.group(xStart, xWidth - xStart);
-
-        groups.push(group);
-
-        // Todo
+        group = Column.group(xStart, xWidth - xStart);
+        i = groups.length;
       } else {
         // 1
         const span = integerValue(
@@ -552,11 +565,14 @@ export namespace Table {
         xWidth += span;
 
         // 3
-        const group = Column.group(xWidth - span, span);
+        group = Column.group(xWidth - span, span);
+        i = groups.length;
+      }
 
-        groups.push(group);
+      groups.push(group);
 
-        // Todo
+      for (let x = group.x, n = x + group.width; x < n; x++) {
+        groupings.x.set(x, i);
       }
 
       /**
@@ -602,7 +618,7 @@ export namespace Table {
     /**
      * @see https://html.spec.whatwg.org/#algorithm-for-assigning-header-cells
      */
-    function assignHeaders(cell: Cell): Cell {
+    function assignHeaders(cell: Cell, i: number): void {
       // 1
       const headers: Array<Cell> = [];
 
@@ -664,7 +680,7 @@ export namespace Table {
 
       // 7
       if (cell.isHeader()) {
-        cell = Cell.header(
+        cells[i] = Cell.header(
           cell.element,
           cell.anchor,
           cell.width,
@@ -673,7 +689,7 @@ export namespace Table {
           cell.scope
         );
       } else {
-        cell = Cell.data(
+        cells[i] = Cell.data(
           cell.element,
           cell.anchor,
           cell.width,
@@ -681,8 +697,6 @@ export namespace Table {
           anchors
         );
       }
-
-      return cell;
     }
 
     /**
@@ -781,22 +795,26 @@ export namespace Table {
     /**
      * @see https://html.spec.whatwg.org/#attr-th-scope
      */
-    function assignScope(cell: Cell): Cell {
+    function assignScope(cell: Cell, i: number): void {
       if (!cell.isHeader()) {
-        return cell;
+        return;
       }
 
       let scope: Scope;
 
       if (isColumHeader(cell)) {
         scope = "column";
+      } else if (isColumnGroupHeader(cell)) {
+        scope = "column-group";
       } else if (isRowHeader(cell)) {
         scope = "row";
+      } else if (isRowGroupHeader(cell)) {
+        scope = "row-group";
       } else {
-        return cell;
+        return;
       }
 
-      return Cell.header(
+      cells[i] = Cell.header(
         cell.element,
         cell.anchor,
         cell.width,
@@ -832,6 +850,16 @@ export namespace Table {
     }
 
     /**
+     * @see https://html.spec.whatwg.org/#column-group-header
+     */
+    function isColumnGroupHeader(cell: Cell.Header): boolean {
+      return (
+        cell.scope === "column-group" ||
+        Scope.from(cell.element) === "column-group"
+      );
+    }
+
+    /**
      * @see https://html.spec.whatwg.org/#row-header
      */
     function isRowHeader(cell: Cell.Header): boolean {
@@ -854,6 +882,15 @@ export namespace Table {
       }
 
       return false;
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#row-group-header
+     */
+    function isRowGroupHeader(cell: Cell.Header): boolean {
+      return (
+        cell.scope === "row-group" || Scope.from(cell.element) === "row-group"
+      );
     }
   }
 
