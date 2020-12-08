@@ -619,6 +619,8 @@ export namespace Table {
         // Nothing to do
 
         // 3.2
+        // Keep in mind that not just <th> elements but also <td> elements can
+        // be referenced as headers.
         headers.push(
           ...ids
             .get()
