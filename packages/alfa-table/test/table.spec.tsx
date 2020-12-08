@@ -52,6 +52,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         headers: [{ x: 1, y: 0 }],
       },
     ],
+    groups: [],
   });
 });
 
@@ -108,6 +109,10 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
         headers: [{ x: 1, y: 0 }],
       },
     ],
+    groups: [
+      { y: 0, height: 1 },
+      { y: 1, height: 1 },
+    ],
   });
 });
 
@@ -149,6 +154,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
         headers: [],
       },
     ],
+    groups: [],
   });
 });
 
@@ -181,6 +187,7 @@ test(`.from() correctly assigns implicit row headers`, (t) => {
         headers: [{ x: 0, y: 0 }],
       },
     ],
+    groups: [],
   });
 });
 
@@ -215,5 +222,6 @@ test(`.from() correctly assigns implicit column headers`, (t) => {
         headers: [{ x: 0, y: 0 }],
       },
     ],
+    groups: [],
   });
 });

@@ -12,6 +12,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Cell } from "./cell";
 import { Column } from "./column";
 import { Row } from "./row";
+import { Group } from "./group";
 import { Slot } from "./slot";
 import { Scope } from "./scope";
 
@@ -25,23 +26,34 @@ const { hasElement } = Cell;
  * @see https://html.spec.whatwg.org/#concept-table
  */
 export class Table implements Equatable, Serializable {
-  public static of(element: Element, cells: Iterable<Cell>): Table {
+  public static of(
+    element: Element,
+    cells: Iterable<Cell>,
+    groups: Iterable<Group>
+  ): Table {
     return new Table(
       element,
-      Array.from(cells).sort((a, b) => a.compare(b))
+      Array.from(cells).sort((a, b) => a.compare(b)),
+      Array.from(groups).sort((a, b) => a.compare(b))
     );
   }
 
   public static empty(element: Element): Table {
-    return new Table(element, []);
+    return new Table(element, [], []);
   }
 
   private readonly _element: Element;
   private readonly _cells: Array<Cell>;
+  private readonly _groups: Array<Group>;
 
-  private constructor(element: Element, cells: Array<Cell>) {
+  private constructor(
+    element: Element,
+    cells: Array<Cell>,
+    groups: Array<Group>
+  ) {
     this._element = element;
     this._cells = cells;
+    this._groups = groups;
   }
 
   public get element(): Element {
@@ -50,6 +62,10 @@ export class Table implements Equatable, Serializable {
 
   public get cells(): Sequence<Cell> {
     return Sequence.from(this._cells);
+  }
+
+  public get groups(): Sequence<Group> {
+    return Sequence.from(this._groups);
   }
 
   public isEmpty(): boolean {
@@ -73,6 +89,7 @@ export class Table implements Equatable, Serializable {
     return {
       element: this._element.path(),
       cells: this._cells.map((cell) => cell.toJSON()),
+      groups: this._groups.map((group) => group.toJSON()),
     };
   }
 }
@@ -82,6 +99,7 @@ export namespace Table {
     [key: string]: json.JSON;
     element: string;
     cells: Array<Cell.JSON>;
+    groups: Array<Group.JSON>;
   }
 
   const cache = Cache.empty<Element, Table>();
@@ -105,6 +123,7 @@ export namespace Table {
 
     // 4
     let cells: Array<Cell> = [];
+    let groups: Array<Group> = [];
     let table: Array<Array<Array<number>>> = [];
 
     // In addition to the list of cells and the table grid, we also keep track
@@ -114,7 +133,7 @@ export namespace Table {
 
     // 5
     if (element.children().isEmpty()) {
-      return Table.of(element, cells);
+      return Table.of(element, cells, groups);
     }
 
     // 6
@@ -191,7 +210,7 @@ export namespace Table {
     // 21
     // Before returning the final table, we go through all cells and assign them
     // scopes and headers, if any.
-    return Table.of(element, cells.map(assignScope).map(assignHeaders));
+    return Table.of(element, cells.map(assignScope).map(assignHeaders), groups);
 
     /**
      * Ensure that the given position is available in the table.
@@ -277,6 +296,9 @@ export namespace Table {
       // 3
       if (yHeight > yStart) {
         const group = Row.group(yStart, yHeight - yStart);
+
+        groups.push(group);
+
         // Todo
       }
 
@@ -487,6 +509,9 @@ export namespace Table {
 
         // 7
         const group = Column.group(xStart, xWidth - xStart);
+
+        groups.push(group);
+
         // Todo
       } else {
         // 1
@@ -502,6 +527,9 @@ export namespace Table {
 
         // 3
         const group = Column.group(xWidth - span, span);
+
+        groups.push(group);
+
         // Todo
       }
 
