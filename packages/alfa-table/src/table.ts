@@ -20,9 +20,8 @@ import { Scope } from "./scope";
 const { isNaN } = Number;
 const { clamp } = Real;
 const { not, equals } = Predicate;
-const { hasId, hasName, isElement } = Element;
+const { hasName, isElement } = Element;
 const { compare } = Comparable;
-const { hasElement } = Cell;
 
 /**
  * @see https://html.spec.whatwg.org/#concept-table
