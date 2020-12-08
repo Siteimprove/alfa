@@ -582,7 +582,7 @@ export namespace Table {
      * @see https://html.spec.whatwg.org/#algorithm-for-growing-downward-growing-cells
      */
     function growCells(): void {
-      for (let [cell, i] of downwardGrowing) {
+      for (const [cell, i] of downwardGrowing) {
         const height = yCurrent - cell.y + 1;
 
         for (let x = cell.x, n = x + cell.width; x < n; x++) {
