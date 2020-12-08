@@ -191,6 +191,38 @@ test(`.from() correctly assigns implicit row headers`, (t) => {
   });
 });
 
+test(`.from() correctly assigns explicit row headers`, (t) => {
+  const table = Table.from(
+    <table>
+      <tr>
+        <td id="header">Header</td>
+        <td headers="header">Data</td>
+      </tr>
+    </table>
+  );
+
+  t.deepEqual(table.toJSON(), {
+    element: "/table[1]",
+    cells: [
+      {
+        element: "/table[1]/tr[1]/td[1]",
+        anchor: { x: 0, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+      {
+        element: "/table[1]/tr[1]/td[2]",
+        anchor: { x: 1, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [{ x: 0, y: 0 }],
+      },
+    ],
+    groups: [],
+  });
+});
+
 test(`.from() correctly assigns implicit column headers`, (t) => {
   const table = Table.from(
     <table>
@@ -209,6 +241,40 @@ test(`.from() correctly assigns implicit column headers`, (t) => {
       {
         element: "/table[1]/tr[1]/th[1]",
         scope: "column",
+        anchor: { x: 0, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+      {
+        element: "/table[1]/tr[2]/td[1]",
+        anchor: { x: 0, y: 1 },
+        width: 1,
+        height: 1,
+        headers: [{ x: 0, y: 0 }],
+      },
+    ],
+    groups: [],
+  });
+});
+
+test(`.from() correctly assigns explicit column headers`, (t) => {
+  const table = Table.from(
+    <table>
+      <tr>
+        <td id="header">Header</td>
+      </tr>
+      <tr>
+        <td headers="header">Data</td>
+      </tr>
+    </table>
+  );
+
+  t.deepEqual(table.toJSON(), {
+    element: "/table[1]",
+    cells: [
+      {
+        element: "/table[1]/tr[1]/td[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
