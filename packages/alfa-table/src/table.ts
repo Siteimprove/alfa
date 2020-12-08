@@ -121,11 +121,11 @@ export namespace Table {
     let yHeight = 0;
 
     // 3
-    let footers: Array<Element> = [];
+    const footers: Array<Element> = [];
 
     // 4
-    let cells: Array<Cell> = [];
-    let groups: Array<Group> = [];
+    const cells: Array<Cell> = [];
+    const groups: Array<Group> = [];
 
     // We model tables as an array of rows with each row containing an array of
     // columns and each column containing an array of cell indices.
@@ -140,7 +140,7 @@ export namespace Table {
     //
     // This makes it considerably easier to debug table construction by not
     // having to rotate your screen 90 degrees to make sense of things.
-    let table: Array<Array<Array<number>>> = [];
+    const table: Array<Array<Array<number>>> = [];
 
     // In addition to the list of cells and the table grid, we also keep track
     // of which columns and rows have data cells. This information is used when
@@ -695,7 +695,7 @@ export namespace Table {
       let y = initialY;
 
       // 3
-      let opaque: Array<Cell> = [];
+      const opaque: Array<Cell> = [];
 
       // 4
       let inHeader = principal.isHeader();
