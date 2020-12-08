@@ -145,6 +145,13 @@ export namespace Table {
     // used when determining the scope of header cells.
     const data = { x: new Set<number>(), y: new Set<number>() };
 
+    // Keep track of headings along rows and columns. This information is used
+    // when determining implicitly assigned header cells.
+    const jumps = {
+      x: new Map<number, Set<number>>(),
+      y: new Map<number, Set<number>>(),
+    };
+
     // Keep track of cells that can be indexed by element ID. This information
     // is used when determining explicitly assigned header cells.
     const index = new Map<string, number>();
@@ -276,7 +283,18 @@ export namespace Table {
      * Add a cell at the given position.
      */
     function add(x: number, y: number, i: number): number {
-      if (cells[i].isData()) {
+      if (cells[i].isHeader()) {
+        if (!jumps.x.has(x)) {
+          jumps.x.set(x, new Set());
+        }
+
+        if (!jumps.y.has(y)) {
+          jumps.y.set(y, new Set());
+        }
+
+        jumps.x.get(x)!.add(i);
+        jumps.y.get(y)!.add(i);
+      } else {
         data.x.add(x);
         data.y.add(y);
       }
@@ -285,6 +303,27 @@ export namespace Table {
 
       // Keep in mind that tables are indexed first by row and then by column.
       return table[y][x].push(i);
+    }
+
+    /**
+     * Determine the position among the non-empty set of candidates that is
+     * lower than the given initial position. If no suitable candidate is found,
+     * -1 is returned.
+     */
+    function jump(i: number, candidates?: Set<number>): number {
+      if (candidates === undefined) {
+        return -1;
+      }
+
+      for (const skip of candidates) {
+        if (i > skip) {
+          i = skip;
+        } else {
+          break;
+        }
+      }
+
+      return i;
     }
 
     /**
@@ -730,20 +769,29 @@ export namespace Table {
         x += deltaX;
         y += deltaY;
 
+        // Fast path: Based on the current position and direction, jump to the
+        // next available heading. This ensures that we don't need to linearly
+        // scan over a bunch of data cells before finding a header.
+        if (deltaX === 0) {
+          y = jump(y, jumps.x.get(x));
+        } else {
+          x = jump(x, jumps.y.get(y));
+        }
+
         // 6
         if (x < 0 || y < 0) {
           return;
         }
 
         // 7
-        const candidates = get(x, y);
+        const neighbour = get(x, y);
 
-        if (candidates.length !== 1) {
+        if (neighbour.length !== 1) {
           continue;
         }
 
         // 8
-        const cell = cells[candidates[0]];
+        const cell = cells[neighbour[0]];
 
         // 9
         if (cell.isHeader()) {
