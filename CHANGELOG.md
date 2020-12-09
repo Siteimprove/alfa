@@ -31,6 +31,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-clone](packages/alfa-clone): `Clone.clone()` is now available.
 
+- [@siteimprove/alfa-json](packages/alfa-json): The `Serializable` interface now accepts a type parameter, `T extends JSON`, denoting the precise JSON type that implementations serialize to.
+
 ### Fixed
 
 - [@siteimprove/alfa-sequence](packages/alfa-sequence): `Sequence#size` is now stack safe and no longer overflows for long sequences.
