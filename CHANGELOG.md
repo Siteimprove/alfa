@@ -23,7 +23,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Added
 
-- [@siteimprove/alfa-callback](packages/alfa-callback): The `Callback<T, R>` type now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
+- [@siteimprove/alfa-callback](packages/alfa-callback): `Callback<T, R>` now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
 
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.forEach()` and `Iterable.none()` are now available.
 
@@ -31,9 +31,11 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-clone](packages/alfa-clone): `Clone.clone()` is now available.
 
-- [@siteimprove/alfa-json](packages/alfa-json): The `Serializable` interface now accepts a type parameter, `T extends JSON`, denoting the precise JSON type that implementations serialize to.
+- [@siteimprove/alfa-json](packages/alfa-json): `Serializable` now accepts a type parameter, `T extends JSON`, denoting the precise JSON type that implementations serialize to.
 
-- [@siteimprove/alfa-earl](packages/alfa-earl): The `Serializable` interface now accepts a type parameter, `T extends EARL`, denoting the precise EARL type that implementations serialize to.
+- [@siteimprove/alfa-earl](packages/alfa-earl): `Serializable` now accepts a type parameter, `T extends EARL`, denoting the precise EARL type that implementations serialize to.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.compare()` now provides overloads for `string`, `number`, `bigint`, and `boolean` in addition to `Comparable<T>`.
 
 ### Fixed
 
