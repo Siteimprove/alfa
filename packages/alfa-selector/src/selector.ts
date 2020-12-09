@@ -33,7 +33,6 @@ const {
 
 const { and, not, property, equals } = Predicate;
 const { isString } = Refinement;
-
 const { isElement, hasName } = Element;
 
 /**
@@ -60,7 +59,7 @@ export namespace Selector {
     /**
      * @see https://drafts.csswg.org/selectors/#match
      */
-    public abstract matches(element: Element, context: Context): boolean;
+    public abstract matches(element: Element, context?: Context): boolean;
 
     public abstract equals(value: unknown): value is this;
 
@@ -691,7 +690,7 @@ export namespace Selector {
         return this._name;
       }
 
-      public matches(element: dom.Element, context: Context): boolean {
+      public matches(element: dom.Element, context?: Context): boolean {
         return false;
       }
 
@@ -734,7 +733,7 @@ export namespace Selector {
         return this._name;
       }
 
-      public matches(element: dom.Element, context: Context): boolean {
+      public matches(element: dom.Element, context?: Context): boolean {
         return false;
       }
 
@@ -910,7 +909,7 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(element: Element, context?: Context): boolean {
       return this._selector.matches(element, context);
     }
 
@@ -967,7 +966,7 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(element: Element, context?: Context): boolean {
       return !this._selector.matches(element, context);
     }
 
@@ -1058,7 +1057,10 @@ export namespace Selector {
       super("hover");
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
       return context.isHovered(element);
     }
   }
@@ -1075,7 +1077,10 @@ export namespace Selector {
       super("active");
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
       return context.isActive(element);
     }
   }
@@ -1092,7 +1097,10 @@ export namespace Selector {
       super("focus");
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
       return context.isFocused(element);
     }
   }
@@ -1109,7 +1117,10 @@ export namespace Selector {
       super("focus-within");
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
       return element
         .inclusiveDescendants({ flattened: true })
         .filter(isElement)
@@ -1149,7 +1160,10 @@ export namespace Selector {
       super("link");
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
       switch (element.name) {
         case "a":
         case "area":
@@ -1175,7 +1189,10 @@ export namespace Selector {
       super("visited");
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
       switch (element.name) {
         case "a":
         case "area":
@@ -1575,7 +1592,7 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(element: Element, context?: Context): boolean {
       return (
         this._left.matches(element, context) &&
         this._right.matches(element, context)
@@ -1709,7 +1726,7 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(element: Element, context?: Context): boolean {
       // First, make sure that the right side of the selector, i.e. the part
       // that relates to the current element, matches.
       if (this._right.matches(element, context)) {
@@ -1923,7 +1940,7 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element, context: Context): boolean {
+    public matches(element: Element, context?: Context): boolean {
       return (
         this._left.matches(element, context) ||
         this._right.matches(element, context)
@@ -2010,7 +2027,7 @@ export namespace Selector {
 
   export function matches(
     selector: string | Selector,
-    context: Context = Context.empty()
+    context?: Context
   ): Predicate<Element> {
     let parsed: Selector;
 
