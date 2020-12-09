@@ -139,17 +139,76 @@ export namespace Table {
     //
     // This makes it considerably easier to debug table construction by not
     // having to rotate your screen 90 degrees to make sense of things.
+
     const table: Array<Array<Array<number>>> = [];
 
     // Keep track of which columns and rows have data cells. This information is
     // used when determining the scope of header cells.
+    //
+    // Consider the following table, with letters indicating headers and numbers
+    // indicating data:
+    //
+    //   +---+---+---+
+    //   |   | A | B |
+    //   +---+---+---+
+    //   | C | 1 | 2 |
+    //   +---+---+---+
+    //
+    // For this table, the following `data` object would be constructed:
+    //
+    //   data = {
+    //     x: Set { 1, 2 }
+    //     y: Set { 1 }
+    //   }
+    //
+    // This tells us that across the x-axis column 1 and 2 contain data, and
+    // across the y-axis row 1 contains data. Empty cells never count as data.
+    //
+    // For the headers "A" and "B" we can therefore determine that these should
+    // be column headers as row 0 contains no data. For the header "C" we can
+    // determine that this should be a row header as column 0 has no data.
+
     const data = { x: new Set<number>(), y: new Set<number>() };
 
     // Keep track of headings along rows and columns. This information is used
     // when determining implicitly assigned header cells.
+    //
+    // Consider the following table, with letters indicating headers and numbers
+    // indicating data:
+    //
+    //   +---+---+---+
+    //   |   | A | B |
+    //   +---+---+---+
+    //   | C | 1 | 2 |
+    //   +---+---+---+
+    //
+    // For this table, the following `jumps` object would be constructed:
+    //
+    //   jump = {
+    //     x: Map {
+    //       0 => [ 1 ]
+    //       1 => [ 0 ],
+    //       2 => [ 0 ],
+    //     },
+    //     y: Map {
+    //       0 => [ 1, 2 ],
+    //       1 => [ 0 ]
+    //     }
+    //   }
+    //
+    // This tells us that across the x-axis, column 0 contains a header at row 1
+    // while columns 1 and 2 contain headers at row 0. Across the y-axis, row 0
+    // contains headers at column 1 and 2 while row 1 contains a header at
+    // column 0.
+    //
+    // For the cell "2" on row 1 we can therefore determine that we can jump
+    // directly to x-coordinate 0 when scanning for row headers as this is the
+    // only column with a header on row 1. This saves us from having to visit
+    // cell "1" just to determine that it's a data cell.
+
     const jumps = {
-      x: new Map<number, Set<number>>(),
-      y: new Map<number, Set<number>>(),
+      x: new Map<number, Array<number>>(),
+      y: new Map<number, Array<number>>(),
     };
 
     // Keep track of cells that can be indexed by element ID. This information
@@ -283,18 +342,21 @@ export namespace Table {
      * Add a cell at the given position.
      */
     function add(x: number, y: number, i: number): number {
-      if (cells[i].isHeader()) {
-        if (!jumps.x.has(x)) {
-          jumps.x.set(x, new Set());
+      const cell = cells[i];
+
+      if (cell.isHeader()) {
+        if (jumps.x.has(x)) {
+          jumps.x.get(x)!.push(y);
+        } else {
+          jumps.x.set(x, [y]);
         }
 
-        if (!jumps.y.has(y)) {
-          jumps.y.set(y, new Set());
-        }
-
-        jumps.x.get(x)!.add(i);
-        jumps.y.get(y)!.add(i);
+        if (jumps.y.has(y)) {
+          jumps.y.get(y)!.push(x);
       } else {
+          jumps.y.set(y, [x]);
+        }
+      } else if (!cell.isEmpty()) {
         data.x.add(x);
         data.y.add(y);
       }
@@ -306,11 +368,11 @@ export namespace Table {
     }
 
     /**
-     * Determine the position among the non-empty set of candidates that is
+     * Determine the position among the non-empty array of candidates that is
      * lower than the given initial position. If no suitable candidate is found,
      * -1 is returned.
      */
-    function jump(i: number, candidates?: Set<number>): number {
+    function jump(i: number, candidates?: Array<number>): number {
       if (candidates === undefined) {
         return -1;
       }

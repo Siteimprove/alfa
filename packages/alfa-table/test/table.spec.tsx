@@ -8,8 +8,8 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
   const table = Table.from(
     <table>
       <tr>
-        <th>Foo</th>
-        <th>Bar</th>
+        <th>A</th>
+        <th>B</th>
       </tr>
       <tr>
         <td>1</td>
@@ -22,22 +22,25 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
     element: "/table[1]",
     cells: [
       {
-        element: "/table[1]/tr[1]/th[1]",
+        type: "header",
         scope: "column",
+        element: "/table[1]/tr[1]/th[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
       },
       {
-        element: "/table[1]/tr[1]/th[2]",
+        type: "header",
         scope: "column",
+        element: "/table[1]/tr[1]/th[2]",
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[2]/td[1]",
         anchor: { x: 0, y: 1 },
         width: 1,
@@ -45,6 +48,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         headers: [{ x: 0, y: 0 }],
       },
       {
+        type: "data",
         element: "/table[1]/tr[2]/td[2]",
         anchor: { x: 1, y: 1 },
         width: 1,
@@ -62,8 +66,8 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
     <table>
       <thead>
         <tr>
-          <th>Foo</th>
-          <th>Bar</th>
+          <th>A</th>
+          <th>B</th>
         </tr>
       </thead>
       <tbody>
@@ -79,22 +83,25 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
     element: "/table[1]",
     cells: [
       {
-        element: "/table[1]/thead[1]/tr[1]/th[1]",
+        type: "header",
         scope: "column",
+        element: "/table[1]/thead[1]/tr[1]/th[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
       },
       {
-        element: "/table[1]/thead[1]/tr[1]/th[2]",
+        type: "header",
         scope: "column",
+        element: "/table[1]/thead[1]/tr[1]/th[2]",
         anchor: { x: 1, y: 0 },
         width: 1,
         height: 1,
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tbody[1]/tr[1]/td[1]",
         anchor: { x: 0, y: 1 },
         width: 1,
@@ -102,6 +109,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
         headers: [{ x: 0, y: 0 }],
       },
       {
+        type: "data",
         element: "/table[1]/tbody[1]/tr[1]/td[2]",
         anchor: { x: 1, y: 1 },
         width: 1,
@@ -120,11 +128,11 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
   const table = Table.from(
     <table>
       <tr>
-        <td>Foo</td>
-        <td rowspan="0">42</td>
+        <td>1</td>
+        <td rowspan="0">2</td>
       </tr>
       <tr>
-        <td>Bar</td>
+        <td>3</td>
       </tr>
     </table>
   );
@@ -133,6 +141,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
     element: "/table[1]",
     cells: [
       {
+        type: "data",
         element: "/table[1]/tr[1]/td[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
@@ -140,6 +149,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[1]/td[2]",
         anchor: { x: 1, y: 0 },
         width: 1,
@@ -147,6 +157,7 @@ test(`.from() correctly handles a <td> element with a rowspan=0 attribute`, (t) 
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[2]/td[1]",
         anchor: { x: 0, y: 1 },
         width: 1,
@@ -162,8 +173,8 @@ test(`.from() correctly assigns implicit row headers`, (t) => {
   const table = Table.from(
     <table>
       <tr>
-        <th>Header</th>
-        <td>Data</td>
+        <th>A</th>
+        <td>1</td>
       </tr>
     </table>
   );
@@ -172,14 +183,16 @@ test(`.from() correctly assigns implicit row headers`, (t) => {
     element: "/table[1]",
     cells: [
       {
-        element: "/table[1]/tr[1]/th[1]",
+        type: "header",
         scope: "row",
+        element: "/table[1]/tr[1]/th[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[1]/td[1]",
         anchor: { x: 1, y: 0 },
         width: 1,
@@ -195,8 +208,8 @@ test(`.from() correctly assigns explicit row headers`, (t) => {
   const table = Table.from(
     <table>
       <tr>
-        <td id="header">Header</td>
-        <td headers="header">Data</td>
+        <td id="header">A</td>
+        <td headers="header">1</td>
       </tr>
     </table>
   );
@@ -205,6 +218,7 @@ test(`.from() correctly assigns explicit row headers`, (t) => {
     element: "/table[1]",
     cells: [
       {
+        type: "data",
         element: "/table[1]/tr[1]/td[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
@@ -212,6 +226,7 @@ test(`.from() correctly assigns explicit row headers`, (t) => {
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[1]/td[2]",
         anchor: { x: 1, y: 0 },
         width: 1,
@@ -227,10 +242,10 @@ test(`.from() correctly assigns implicit column headers`, (t) => {
   const table = Table.from(
     <table>
       <tr>
-        <th>Header</th>
+        <th>A</th>
       </tr>
       <tr>
-        <td>Data</td>
+        <td>1</td>
       </tr>
     </table>
   );
@@ -239,14 +254,16 @@ test(`.from() correctly assigns implicit column headers`, (t) => {
     element: "/table[1]",
     cells: [
       {
-        element: "/table[1]/tr[1]/th[1]",
+        type: "header",
         scope: "column",
+        element: "/table[1]/tr[1]/th[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
         height: 1,
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[2]/td[1]",
         anchor: { x: 0, y: 1 },
         width: 1,
@@ -262,10 +279,10 @@ test(`.from() correctly assigns explicit column headers`, (t) => {
   const table = Table.from(
     <table>
       <tr>
-        <td id="header">Header</td>
+        <td id="header">A</td>
       </tr>
       <tr>
-        <td headers="header">Data</td>
+        <td headers="header">1</td>
       </tr>
     </table>
   );
@@ -274,6 +291,7 @@ test(`.from() correctly assigns explicit column headers`, (t) => {
     element: "/table[1]",
     cells: [
       {
+        type: "data",
         element: "/table[1]/tr[1]/td[1]",
         anchor: { x: 0, y: 0 },
         width: 1,
@@ -281,11 +299,94 @@ test(`.from() correctly assigns explicit column headers`, (t) => {
         headers: [],
       },
       {
+        type: "data",
         element: "/table[1]/tr[2]/td[1]",
         anchor: { x: 0, y: 1 },
         width: 1,
         height: 1,
         headers: [{ x: 0, y: 0 }],
+      },
+    ],
+    groups: [],
+  });
+});
+
+test(`.from() correctly assigns implicit row and column headers for the same
+      table`, (t) => {
+  const table = Table.from(
+    <table>
+      <tr>
+        <td></td>
+        <th>A</th>
+        <th>B</th>
+      </tr>
+      <tr>
+        <th>C</th>
+        <td>1</td>
+        <td>2</td>
+      </tr>
+    </table>
+  );
+
+  t.deepEqual(table.toJSON(), {
+    element: "/table[1]",
+    cells: [
+      {
+        type: "data",
+        element: "/table[1]/tr[1]/td[1]",
+        anchor: { x: 0, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+      {
+        type: "header",
+        scope: "column",
+        element: "/table[1]/tr[1]/th[1]",
+        anchor: { x: 1, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+      {
+        type: "header",
+        scope: "column",
+        element: "/table[1]/tr[1]/th[2]",
+        anchor: { x: 2, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+      {
+        type: "header",
+        scope: "row",
+        element: "/table[1]/tr[2]/th[1]",
+        anchor: { x: 0, y: 1 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+      {
+        type: "data",
+        element: "/table[1]/tr[2]/td[1]",
+        anchor: { x: 1, y: 1 },
+        width: 1,
+        height: 1,
+        headers: [
+          { x: 1, y: 0 },
+          { x: 0, y: 1 },
+        ],
+      },
+      {
+        type: "data",
+        element: "/table[1]/tr[2]/td[2]",
+        anchor: { x: 2, y: 1 },
+        width: 1,
+        height: 1,
+        headers: [
+          { x: 2, y: 0 },
+          { x: 0, y: 1 },
+        ],
       },
     ],
     groups: [],

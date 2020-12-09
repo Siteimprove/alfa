@@ -170,6 +170,7 @@ export namespace Cell {
 
     public toJSON(): Data.JSON {
       return {
+        type: "data",
         element: this._element.path(),
         anchor: this._anchor.toJSON(),
         width: this._width,
@@ -180,7 +181,9 @@ export namespace Cell {
   }
 
   export namespace Data {
-    export interface JSON extends Cell.JSON {}
+    export interface JSON extends Cell.JSON {
+      type: "data";
+    }
 
     export function isData(value: unknown): value is Data {
       return value instanceof Data;
@@ -249,6 +252,7 @@ export namespace Cell {
 
     public toJSON(): Header.JSON {
       return {
+        type: "header",
         scope: this._scope,
         element: this._element.path(),
         anchor: this._anchor.toJSON(),
@@ -261,6 +265,7 @@ export namespace Cell {
 
   export namespace Header {
     export interface JSON extends Cell.JSON {
+      type: "header";
       scope: Scope;
     }
 
