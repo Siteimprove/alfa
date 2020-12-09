@@ -1,5 +1,5 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -21,12 +21,11 @@ const { isNaN } = Number;
 const { clamp } = Real;
 const { not, equals } = Predicate;
 const { hasName, isElement } = Element;
-const { compare } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/#concept-table
  */
-export class Table implements Equatable, Serializable {
+export class Table implements Equatable, Serializable<Table.JSON> {
   public static of(
     element: Element,
     cells: Iterable<Cell>,
@@ -34,8 +33,8 @@ export class Table implements Equatable, Serializable {
   ): Table {
     return new Table(
       element,
-      Array.from(cells).sort(compare),
-      Array.from(groups).sort(compare)
+      Array.sort(Array.copy(Array.from(cells))),
+      Array.sort(Array.copy(Array.from(groups)))
     );
   }
 
@@ -81,16 +80,15 @@ export class Table implements Equatable, Serializable {
     return (
       value instanceof Table &&
       value._element.equals(this._element) &&
-      value._cells.length === this._cells.length &&
-      value._cells.every((cell, i) => cell.equals(this._cells[i]))
+      Array.equals(value._cells, this._cells)
     );
   }
 
   public toJSON(): Table.JSON {
     return {
       element: this._element.path(),
-      cells: this._cells.map((cell) => cell.toJSON()),
-      groups: this._groups.map((group) => group.toJSON()),
+      cells: Array.toJSON(this._cells),
+      groups: Array.toJSON<Group.JSON>(this._groups),
     };
   }
 }
@@ -353,7 +351,7 @@ export namespace Table {
 
         if (jumps.y.has(y)) {
           jumps.y.get(y)!.push(x);
-      } else {
+        } else {
           jumps.y.set(y, [x]);
         }
       } else if (!cell.isEmpty()) {

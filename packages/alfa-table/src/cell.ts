@@ -1,4 +1,5 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Array } from "@siteimprove/alfa-array";
+import { Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -16,12 +17,12 @@ import * as predicate from "./cell/predicate";
 const { and, or } = Refinement;
 const { isElement } = Element;
 const { isText } = Text;
-const { compare } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/#concept-cell
  */
-export abstract class Cell implements Anchored, Equatable, Serializable {
+export abstract class Cell
+  implements Anchored, Equatable, Serializable<Cell.JSON> {
   protected readonly _element: Element;
   protected readonly _anchor: Slot;
   protected readonly _width: number;
@@ -101,8 +102,7 @@ export abstract class Cell implements Anchored, Equatable, Serializable {
       value._anchor.equals(this._anchor) &&
       value._width === this._width &&
       value._height === this._height &&
-      value._headers.length === this._headers.length &&
-      value._headers.every((header, i) => header.equals(this._headers[i]))
+      Array.equals(value._headers, this._headers)
     );
   }
 
@@ -138,7 +138,7 @@ export namespace Cell {
         anchor,
         width,
         height,
-        Array.from(headers).sort(compare)
+        Array.sort(Array.copy(Array.from(headers)))
       );
     }
 
@@ -175,7 +175,7 @@ export namespace Cell {
         anchor: this._anchor.toJSON(),
         width: this._width,
         height: this._height,
-        headers: this._headers.map((header) => header.toJSON()),
+        headers: Array.toJSON(this._headers),
       };
     }
   }
@@ -206,7 +206,7 @@ export namespace Cell {
         anchor,
         width,
         height,
-        Array.from(headers).sort(compare),
+        Array.sort(Array.copy(Array.from(headers))),
         scope
       );
     }
@@ -258,7 +258,7 @@ export namespace Cell {
         anchor: this._anchor.toJSON(),
         width: this._width,
         height: this._height,
-        headers: this._headers.map((header) => header.toJSON()),
+        headers: Array.toJSON(this._headers),
       };
     }
   }

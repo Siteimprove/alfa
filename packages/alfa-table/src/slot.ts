@@ -7,7 +7,8 @@ import * as json from "@siteimprove/alfa-json";
 /**
  * @see https://html.spec.whatwg.org/#concept-slots
  */
-export class Slot implements Comparable<Slot>, Equatable, Serializable {
+export class Slot
+  implements Comparable<Slot>, Equatable, Serializable<Slot.JSON> {
   public static of(x: number, y: number): Slot {
     return new Slot(x, y);
   }

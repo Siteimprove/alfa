@@ -10,7 +10,7 @@ import { Slot } from "./slot";
 /**
  * @see https://html.spec.whatwg.org/#concept-row
  */
-export class Row implements Anchored, Equatable, Serializable {
+export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
   public static of(y: number): Row {
     return new Row(y);
   }
@@ -61,7 +61,7 @@ export namespace Row {
   /**
    * @see https://html.spec.whatwg.org/#concept-row-group
    */
-  export class Group implements Anchored, Equatable, Serializable {
+  export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
     public static of(y: number, height: number): Group {
       return new Group(y, height);
     }
@@ -90,7 +90,7 @@ export namespace Row {
       return Anchored.compare(this, anchored);
     }
 
-    public equals(group: Group): boolean;
+    public equals(group: this): boolean;
 
     public equals(value: unknown): value is this;
 

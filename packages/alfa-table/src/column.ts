@@ -10,7 +10,7 @@ import { Slot } from "./slot";
 /**
  * @see https://html.spec.whatwg.org/#concept-column
  */
-export class Column implements Anchored, Equatable, Serializable {
+export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
   public static of(x: number): Column {
     return new Column(x);
   }
@@ -61,7 +61,7 @@ export namespace Column {
   /**
    * @see https://html.spec.whatwg.org/#concept-column-group
    */
-  export class Group implements Anchored, Equatable, Serializable {
+  export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
     public static of(x: number, width: number): Group {
       return new Group(x, width);
     }
