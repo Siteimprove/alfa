@@ -1,4 +1,6 @@
+import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
@@ -180,6 +182,13 @@ export const Nil: Nil = new (class Nil {
 
   public sortWith(): Nil {
     return this;
+  }
+
+  public compareWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
+  ): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
   }
 
   public equals(value: unknown): value is this {

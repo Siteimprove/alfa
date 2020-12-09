@@ -1,6 +1,6 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -11,6 +11,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Cons } from "./cons";
 import { Nil } from "./nil";
+
+const { compareComparable } = Comparable;
 
 export interface Sequence<T> extends Collection.Indexed<T> {
   // Collection<T> methods
@@ -62,6 +64,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   reverse(): Sequence<T>;
   join(separator: string): string;
   sortWith(comparer: Comparer<T>): Sequence<T>;
+  compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
 
   // Sequence<T> methods
 
@@ -141,6 +144,13 @@ export namespace Sequence {
   export function sort<T extends Comparable<T>>(
     sequence: Sequence<T>
   ): Sequence<T> {
-    return sequence.sortWith(Comparable.compare);
+    return sequence.sortWith(compareComparable);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Sequence<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }
