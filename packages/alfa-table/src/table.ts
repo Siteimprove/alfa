@@ -366,24 +366,20 @@ export namespace Table {
     }
 
     /**
-     * Determine the position among the non-empty array of candidates that is
-     * lower than the given initial position. If no suitable candidate is found,
+     * Determine the last position among the candidates that is lower than or
+     * equal to the given initial position. If no suitable candidate is found,
      * -1 is returned.
      */
-    function jump(i: number, candidates?: Array<number>): number {
-      if (candidates === undefined) {
-        return -1;
-      }
+    function jump(i: number, candidates: Array<number> = []): number {
+      for (let j = candidates.length - 1; j >= 0; j--) {
+        const candidate = candidates[j];
 
-      for (const skip of candidates) {
-        if (i > skip) {
-          i = skip;
-        } else {
-          break;
+        if (candidate <= i) {
+          return candidate;
         }
       }
 
-      return i;
+      return -1;
     }
 
     /**
@@ -759,10 +755,52 @@ export namespace Table {
         }
 
         // 5
-        // Todo
+        const i = groupings.y.get(cell.y);
+
+        if (i !== undefined) {
+          const group = groups[i] as Row.Group;
+
+          for (let x = cell.x + cell.width - 1; x >= 0; x--) {
+            for (let y = group.y, n = cell.y + cell.height; y < n; y++) {
+              x = jump(x, jumps.y.get(y));
+
+              if (x < 0) {
+                break;
+              }
+
+              headers.push(
+                ...get(x, y)
+                  .map((i) => cells[i])
+                  .filter((cell) => cell.isHeader() && isRowGroupHeader(cell))
+              );
+            }
+          }
+        }
 
         // 6
-        // Todo
+        const j = groupings.x.get(cell.x);
+
+        if (j !== undefined) {
+          const group = groups[j] as Column.Group;
+
+          for (let y = cell.y + cell.height - 1; y >= 0; y--) {
+            for (let x = group.x, n = cell.x + cell.width; x < n; x++) {
+              y = jump(y, jumps.x.get(x));
+
+              if (y < 0) {
+                break;
+              }
+
+              headers.push(
+                ...get(x, y)
+                  .map((i) => cells[i])
+                  .filter(
+                    (cell) => cell.isHeader() && isColumnGroupHeader(cell)
+                  )
+              );
+            }
+          }
+        }
       }
 
       const filtered = Sequence.from(headers)
