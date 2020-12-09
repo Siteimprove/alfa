@@ -1,4 +1,5 @@
 import { Comparison } from "@siteimprove/alfa-comparable";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
@@ -62,16 +63,22 @@ export namespace Column {
    * @see https://html.spec.whatwg.org/#concept-column-group
    */
   export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
-    public static of(x: number, width: number): Group {
-      return new Group(x, width);
+    public static of(element: Element, x: number, width: number): Group {
+      return new Group(element, x, width);
     }
 
+    private readonly _element: Element;
     private readonly _x: number;
     private readonly _width: number;
 
-    private constructor(x: number, width: number) {
+    private constructor(element: Element, x: number, width: number) {
+      this._element = element;
       this._x = x;
       this._width = width;
+    }
+
+    public get element(): Element {
+      return this._element;
     }
 
     public get x(): number {
@@ -97,6 +104,7 @@ export namespace Column {
     public equals(value: unknown): boolean {
       return (
         value instanceof Group &&
+        value._element.equals(this._element) &&
         value._x === this._x &&
         value._width === this._width
       );
@@ -104,6 +112,7 @@ export namespace Column {
 
     public toJSON(): Group.JSON {
       return {
+        element: this._element.path(),
         x: this._x,
         width: this._width,
       };
@@ -113,6 +122,7 @@ export namespace Column {
   export namespace Group {
     export interface JSON {
       [key: string]: json.JSON;
+      element: string;
       x: number;
       width: number;
     }

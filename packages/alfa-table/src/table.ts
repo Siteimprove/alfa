@@ -426,7 +426,7 @@ export namespace Table {
 
       // 3
       if (yHeight > yStart) {
-        const group = Row.group(yStart, yHeight - yStart);
+        const group = Row.group(element, yStart, yHeight - yStart);
         const i = groups.length;
 
         groups.push(group);
@@ -649,12 +649,12 @@ export namespace Table {
         }
 
         // 7
-        group = Column.group(xStart, xWidth - xStart);
+        group = Column.group(element, xStart, xWidth - xStart);
         i = groups.length;
       } else {
         // 1
         const span = integerValue(
-          current().get(),
+          element,
           "span",
           1 /* lower */,
           1000 /* upper */
@@ -664,7 +664,7 @@ export namespace Table {
         xWidth += span;
 
         // 3
-        group = Column.group(xWidth - span, span);
+        group = Column.group(element, xWidth - span, span);
         i = groups.length;
       }
 
