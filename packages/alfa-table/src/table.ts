@@ -184,7 +184,7 @@ export namespace Table {
     //
     // For this table, the following `jumps` object would be constructed:
     //
-    //   jump = {
+    //   jumps = {
     //     x: Map {
     //       0 => [ 1 ]
     //       1 => [ 0 ],
