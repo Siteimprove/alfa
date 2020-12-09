@@ -23,6 +23,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Added
 
+- [@siteimprove/alfa-array](packages/alfa-array): A new package has been added with functionality for working with arrays.
+
 - [@siteimprove/alfa-callback](packages/alfa-callback): `Callback<T, R>` now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
 
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.forEach()`, `Iterable.none()`, `Iterable.compare()`, `Iterable.compareWith()`, and `Iterable.toJSON()` are now available.
