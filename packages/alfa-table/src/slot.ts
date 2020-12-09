@@ -31,22 +31,24 @@ export class Slot implements Comparable<Slot>, Equatable, Serializable {
   public compare(slot: Slot): Comparison {
     // Slots are compared first by y-coordinate, then by x-coordinate. This way,
     // cells will be ordered as they appear in tree-order.
-    switch (true) {
-      case this._y > slot._y:
-        return Comparison.Greater;
 
-      case this._y < slot.y:
-        return Comparison.Less;
-
-      case this._x > slot._x:
-        return Comparison.Greater;
-
-      case this._x < slot._x:
-        return Comparison.Less;
-
-      default:
-        return Comparison.Equal;
+    if (this._y > slot._y) {
+      return Comparison.Greater;
     }
+
+    if (this._y < slot._y) {
+      return Comparison.Less;
+    }
+
+    if (this._x > slot._x) {
+      return Comparison.Greater;
+    }
+
+    if (this._x < slot._x) {
+      return Comparison.Less;
+    }
+
+    return Comparison.Equal;
   }
 
   public equals(slot: Slot): boolean;
