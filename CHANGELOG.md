@@ -33,6 +33,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-json](packages/alfa-json): The `Serializable` interface now accepts a type parameter, `T extends JSON`, denoting the precise JSON type that implementations serialize to.
 
+- [@siteimprove/alfa-earl](packages/alfa-earl): The `Serializable` interface now accepts a type parameter, `T extends EARL`, denoting the precise EARL type that implementations serialize to.
+
 ### Fixed
 
 - [@siteimprove/alfa-sequence](packages/alfa-sequence): `Sequence#size` is now stack safe and no longer overflows for long sequences.
