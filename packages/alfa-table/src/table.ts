@@ -366,9 +366,10 @@ export namespace Table {
     }
 
     /**
-     * Determine the last position among the candidates that is lower than or
-     * equal to the given initial position. If no suitable candidate is found,
-     * -1 is returned.
+     * Determine the last position among the candidates that is less than or
+     * equal to the given initial position `i`. That is, the last value in
+     * `candidates` that is `<= i`. If no suitable candidate is found, -1 is
+     * returned.
      */
     function jump(i: number, candidates: Array<number> = []): number {
       for (let j = candidates.length - 1; j >= 0; j--) {
