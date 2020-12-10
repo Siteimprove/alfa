@@ -1249,6 +1249,8 @@ export namespace Selector {
       return new NthChild(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(index: Nth) {
@@ -1258,9 +1260,18 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.preceding().filter(isElement).size + 1
-      );
+      const indices = NthChild._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthChild.JSON {
@@ -1285,6 +1296,8 @@ export namespace Selector {
       return new NthLastChild(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(nth: Nth) {
@@ -1294,9 +1307,19 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.following().filter(isElement).size + 1
-      );
+      const indices = NthLastChild._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .reverse()
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthLastChild.JSON {
@@ -1380,6 +1403,8 @@ export namespace Selector {
       return new NthOfType(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(index: Nth) {
@@ -1389,10 +1414,19 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.preceding().filter(isElement).filter(hasName(element.name))
-          .size + 1
-      );
+      const indices = NthOfType._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .filter(hasName(element.name))
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthOfType.JSON {
@@ -1417,6 +1451,8 @@ export namespace Selector {
       return new NthLastOfType(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(index: Nth) {
@@ -1426,10 +1462,20 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.following().filter(isElement).filter(hasName(element.name))
-          .size + 1
-      );
+      const indices = NthLastOfType._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .filter(hasName(element.name))
+          .reverse()
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthLastOfType.JSON {
