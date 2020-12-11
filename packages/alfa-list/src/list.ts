@@ -1,6 +1,6 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -17,6 +17,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Branch, Empty, Leaf, Node } from "./node";
 
 const { not } = Predicate;
+const { compareComparable } = Comparable;
 
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
@@ -315,6 +316,10 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.sortWith(this, comparer));
   }
 
+  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
+  }
+
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
@@ -573,6 +578,13 @@ export namespace List {
   }
 
   export function sort<T extends Comparable<T>>(list: List<T>): List<T> {
-    return list.sortWith(Comparable.compare);
+    return list.sortWith(compareComparable);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: List<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

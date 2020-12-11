@@ -1,6 +1,6 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
-import { Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -13,6 +13,8 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
+
+const { compareComparable } = Comparable;
 
 export interface Collection<T>
   extends Functor<T>,
@@ -164,5 +166,19 @@ export namespace Collection {
     reverse(): Indexed<T>;
     join(separator: string): string;
     sortWith(comparer: Comparer<T>): Indexed<T>;
+    compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
+  }
+
+  export function sort<T extends Comparable<T>>(
+    collection: Indexed<T>
+  ): Indexed<T> {
+    return collection.sortWith(compareComparable);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Indexed<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

@@ -1,10 +1,8 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Table } from "@siteimprove/alfa-table";
+import { Table, Cell } from "@siteimprove/alfa-table";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -14,12 +12,12 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, equals, not } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r46.html",
   evaluate({ device, document }) {
-    let ownership = Map.empty<Element, Element>();
+    const data = new Map<Element, [cell: Cell, table: Table]>();
 
     return {
       *applicability() {
@@ -35,44 +33,45 @@ export default Rule.Atomic.of<Page, Element>({
           );
 
         for (const table of tables) {
-          const headerCells = table
+          const model = Table.from(table);
+
+          const headers = table
             .descendants()
             .filter(isElement)
             .filter(
               and(
                 hasNamespace(Namespace.HTML),
-                // The table model only works if the element is a th.
                 hasName("th"),
                 hasRole("rowheader", "columnheader"),
                 isPerceivable(device)
               )
             );
 
-          for (const cell of headerCells) {
-            ownership = ownership.set(cell, table);
-            yield cell;
+          for (const header of headers) {
+            for (const cell of model.cells.find((cell) =>
+              cell.element.equals(header)
+            )) {
+              data.set(header, [cell, model]);
+
+              yield header;
+            }
           }
         }
       },
 
       expectations(target) {
-        const tableModel = Table.from(ownership.get(target).get());
+        const [header, table] = data.get(target)!;
+
         return {
           1: expectation(
-            tableModel.isErr(),
-            () => Outcomes.TableHasError,
-            () =>
-              expectation(
-                Iterable.some(
-                  tableModel.get().cells,
-                  (cell) =>
-                    // Does there exists a cell with the target as one of its headers?
-                    hasRole("cell", "gridcell")(cell.element) &&
-                    Iterable.some(cell.headers, equals(target))
-                ),
-                () => Outcomes.IsAssignedToDataCell,
-                () => Outcomes.IsNotAssignedToDataCell
-              )
+            table.cells.some(
+              (cell) =>
+                // Does there exists a cell with the target as one of its headers?
+                hasRole("cell", "gridcell")(cell.element) &&
+                cell.headers.some((slot) => slot.equals(header.anchor))
+            ),
+            () => Outcomes.IsAssignedToDataCell,
+            () => Outcomes.IsNotAssignedToDataCell
           ),
         };
       },
@@ -87,9 +86,5 @@ export namespace Outcomes {
 
   export const IsNotAssignedToDataCell = Err.of(
     Diagnostic.of(`The header cell is not assigned to any data cell`)
-  );
-
-  export const TableHasError = Err.of(
-    Diagnostic.of(`The table could not be formed correctly`)
   );
 }

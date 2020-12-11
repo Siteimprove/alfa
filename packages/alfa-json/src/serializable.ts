@@ -15,14 +15,20 @@ const {
   isNull,
 } = Refinement;
 
-export interface Serializable {
-  toJSON(): JSON;
+export interface Serializable<T extends JSON = JSON> {
+  toJSON(): T;
 }
 
 export namespace Serializable {
-  export function isSerializable(value: unknown): value is Serializable {
+  export function isSerializable<T extends JSON>(
+    value: unknown
+  ): value is Serializable<T> {
     return isObject(value) && isFunction(value.toJSON);
   }
+
+  export function toJSON<T extends JSON>(value: Serializable<T>): T;
+
+  export function toJSON(value: unknown): JSON;
 
   export function toJSON(value: unknown): JSON {
     if (isSerializable(value)) {
