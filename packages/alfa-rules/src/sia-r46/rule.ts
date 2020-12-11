@@ -67,7 +67,7 @@ export default Rule.Atomic.of<Page, Element>({
             table.cells.some(
               (cell) =>
                 // Does there exists a cell with the target as one of its headers?
-                hasRole("cell", "gridcell")(cell.element) &&
+                hasRole((role) => role.is("cell"))(cell.element) &&
                 cell.headers.some((slot) => slot.equals(header.anchor))
             ),
             () => Outcomes.IsAssignedToDataCell,
@@ -81,10 +81,10 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsAssignedToDataCell = Ok.of(
-    Diagnostic.of(`The header cell is assigned to a data cell`)
+    Diagnostic.of(`The header cell is assigned to a cell`)
   );
 
   export const IsNotAssignedToDataCell = Err.of(
-    Diagnostic.of(`The header cell is not assigned to any data cell`)
+    Diagnostic.of(`The header cell is not assigned to any cell`)
   );
 }

@@ -112,3 +112,28 @@ test("evaluate() is inapplicable if the table element is ignored", async (t) => 
 
   t.deepEqual(await evaluate(R46, { document }), [inapplicable(R46)]);
 });
+
+test("evaluate() passes headers assigned only to other headers", async (t) => {
+  const target1 = <th>Only header</th>;
+  const target2 = <th>Column header</th>;
+  const target3 = <th>Row header</th>;
+
+  const document = Document.of([
+    <table>
+      <tr>
+        {target1}
+        {target2}
+      </tr>
+      <tr>
+        {target3}
+        <td>Data</td>
+      </tr>
+    </table>,
+  ]);
+
+  t.deepEqual(await evaluate(R46, { document }), [
+    passed(R46, target1, { 1: Outcomes.IsAssignedToDataCell }),
+    passed(R46, target2, { 1: Outcomes.IsAssignedToDataCell }),
+    passed(R46, target3, { 1: Outcomes.IsAssignedToDataCell }),
+  ]);
+});
