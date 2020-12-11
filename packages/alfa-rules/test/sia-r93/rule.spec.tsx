@@ -1,6 +1,8 @@
-import { Document, h } from "@siteimprove/alfa-dom";
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+
+import { Document } from "@siteimprove/alfa-dom";
 
 import R93, { Outcomes } from "../../src/sia-r93/rule";
 
