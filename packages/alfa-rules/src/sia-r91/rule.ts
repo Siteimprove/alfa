@@ -10,7 +10,7 @@ import { TextSpacing } from "../common/outcome/text-spacing";
 import { expectation } from "../common/expectation";
 import { cascadedIsDeclared } from "../common/expectation/text-spacing";
 
-import { declaresProperty } from "../common/predicate/declares-property";
+import { hasInlineStyleProperty } from "../common/predicate/has-inline-style-property";
 import { isVisible } from "../common/predicate/is-visible";
 
 const { and } = Predicate;
@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(Namespace.HTML),
                 isVisible(device),
-                declaresProperty(property)
+                hasInlineStyleProperty(property)
               )
             )
           );
