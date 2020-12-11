@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/expectation";
-import { cascadedIsDeclared } from "../common/expectation/text-spacing";
+import { cascadedIsDeclared } from "../common/predicate/text-spacing";
 
 import { hasInlineStyleProperty } from "../common/predicate/has-inline-style-property";
 import { isVisible } from "../common/predicate/is-visible";
