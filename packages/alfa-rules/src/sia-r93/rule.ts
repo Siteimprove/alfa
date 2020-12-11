@@ -39,19 +39,30 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const style = Style.from(target, device);
-        const computed = style.computed(property);
+        const lineHeight = style.computed(property);
 
         return {
           1: expectation(
-            computed.source.none((declaration) => declaration.important),
+            lineHeight.source.none((declaration) => declaration.important),
             () => Outcomes.NotImportant,
             () =>
               expectation(
-                (computed.value.type === "number" &&
-                  computed.value.value >= 1.5) ||
-                  (computed.value.type === "length" &&
-                    computed.value.value >=
-                      1.5 * style.computed("font-size").value.value),
+                lineHeight.some((lineHeight) => {
+                  switch (lineHeight.type) {
+                    case "number":
+                      return lineHeight.value >= 1.5;
+
+                    case "length":
+                      return style
+                        .computed("font-size")
+                        .some(
+                          (fontSize) => lineHeight.value >= 1.5 * fontSize.value
+                        );
+
+                    default:
+                      return false;
+                  }
+                }),
 
                 () => Outcomes.AboveMinimum,
                 () =>

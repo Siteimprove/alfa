@@ -39,16 +39,21 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const style = Style.from(target, device);
-        const computed = style.computed(property);
+        const letterSpacing = style.computed(property);
 
         return {
           1: expectation(
-            computed.source.none((declaration) => declaration.important),
+            letterSpacing.source.none((declaration) => declaration.important),
             () => Outcomes.NotImportant,
             () =>
               expectation(
-                computed.value.value >=
-                  0.12 * style.computed("font-size").value.value,
+                letterSpacing.some((letterSpacing) =>
+                  style
+                    .computed("font-size")
+                    .some(
+                      (fontSize) => letterSpacing.value >= 0.12 * fontSize.value
+                    )
+                ),
                 () => Outcomes.AboveMinimum,
                 () =>
                   expectation(
