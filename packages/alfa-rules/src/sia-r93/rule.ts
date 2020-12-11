@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/expectation";
-import { cascadedIsDeclared } from "../common/predicate/text-spacing";
+import { hasCascadedValueDeclaredInInlineStyle } from "../common/predicate/has-cascaded-value-declared-in-inline-style";
 
 import { hasInlineStyleProperty } from "../common/predicate/has-inline-style-property";
 import { isVisible } from "../common/predicate/is-visible";
@@ -67,7 +67,10 @@ export default Rule.Atomic.of<Page, Element>({
                 () => Outcomes.AboveMinimum,
                 () =>
                   expectation(
-                    !cascadedIsDeclared(device, property)(target),
+                    !hasCascadedValueDeclaredInInlineStyle(
+                      device,
+                      property
+                    )(target),
                     () => Outcomes.Cascaded,
                     () => Outcomes.Important
                   )

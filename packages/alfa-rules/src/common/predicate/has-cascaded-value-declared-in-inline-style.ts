@@ -6,7 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 /**
  * Checks if the cascaded value of a property of an element is declared on that element
  */
-export function cascadedIsDeclared(
+export function hasCascadedValueDeclaredInInlineStyle(
   device: Device,
   name: Property.Name
 ): Predicate<Element> {
