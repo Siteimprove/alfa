@@ -124,6 +124,7 @@
     "src/sia-r91/rule.ts",
     "src/sia-r92/rule.ts",
     "src/sia-r93/rule.ts",
+    "src/sia-r94/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
     "test/common/outcome.ts",
@@ -166,7 +167,8 @@
     "test/sia-r90/rule.spec.tsx",
     "test/sia-r91/rule.spec.tsx",
     "test/sia-r92/rule.spec.tsx",
-    "test/sia-r93/rule.spec.tsx"
+    "test/sia-r93/rule.spec.tsx",
+    "test/sia-r94/rule.spec.tsx"
   ],
   "references": [
     {
