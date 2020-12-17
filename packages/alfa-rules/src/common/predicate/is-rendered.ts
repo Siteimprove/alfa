@@ -27,8 +27,20 @@ export function isRendered(
           return false;
         }
 
+        // <option> elements that are descendants of <select> elements will not
+        // be rendered as only their label is used during rendering.
+        // https://html.spec.whatwg.org/#the-select-element-2
         if (
-          Element.isElement(node) &&
+          hasName("option") &&
+          // <option> elements might be nested within <optgroup> elements so we
+          // need to look at the first two ancestors.
+          node.ancestors().filter(isElement).take(2).some(hasName("select"))
+        ) {
+          return false;
+        }
+
+        if (
+          isElement(node) &&
           Style.from(node, device, context)
             .computed("display")
             .some(([outside]) => outside.value === "none")
