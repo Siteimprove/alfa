@@ -94,3 +94,229 @@ test("isVisible() returns true for replaced elements with no child", (t) => {
 
   t.equal(isVisible(element), true);
 });
+
+test(`isVisible() returns false for an element that has been pulled offscreen
+      by position: absolute and left: 9999px`, (t) => {
+  const element = (
+    <div
+      style={{
+        position: "absolute",
+        left: "9999px",
+      }}
+    >
+      Hello world
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false for an element that has been pulled offscreen
+      by position: absolute and left: -9999px`, (t) => {
+  const element = (
+    <div
+      style={{
+        position: "absolute",
+        left: "-9999px",
+      }}
+    >
+      Hello world
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false for an element that has been pulled offscreen
+      by position: absolute and right: 9999px`, (t) => {
+  const element = (
+    <div
+      style={{
+        position: "absolute",
+        right: "9999px",
+      }}
+    >
+      Hello world
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false for an element that has been pulled offscreen
+      by position: absolute and right: -9999px`, (t) => {
+  const element = (
+    <div
+      style={{
+        position: "absolute",
+        right: "-9999px",
+      }}
+    >
+      Hello world
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test("isVisible() returns false for a text node with no data", (t) => {
+  const text = h.text("");
+
+  t.equal(isVisible(text), false);
+});
+
+test("isVisible() returns false for a text node with no data", (t) => {
+  const text = h.text("");
+
+  t.equal(isVisible(text), false);
+});
+
+test("isVisible() returns false for a text node with only whitespace", (t) => {
+  const text = h.text(" ");
+
+  t.equal(isVisible(text), false);
+});
+
+test("isVisible() returns false for a text node with a transparent color", (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      color: "transparent",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), false);
+});
+
+test("isVisible() returns false for a text node with a font size of 0", (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      fontSize: "0",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), false);
+});
+
+test("isVisible() returns true for a text node with a font size of 1px", (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      fontSize: "1px",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), true);
+});
+
+test(`isVisible() returns false for a text node with hidden overflow and a 100%
+      text indent`, (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textIndent: "100%",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), false);
+});
+
+test(`isVisible() returns true for a text node with hidden overflow and a 20%
+      text indent`, (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textIndent: "20%",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), true);
+});
+
+test(`isVisible() returns false for a text node with hidden overflow and a -100%
+      text indent`, (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textIndent: "-100%",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), false);
+});
+
+test(`isVisible() returns false for a text node with hidden overflow and a 999px
+      text indent`, (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textIndent: "999px",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), false);
+});
+
+test(`isVisible() returns true for a text node with hidden overflow and a 20px
+      text indent`, (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textIndent: "20px",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), true);
+});
+
+test(`isVisible() returns false for a text node with hidden overflow and a -999px
+      text indent`, (t) => {
+  const text = h.text("Hello world");
+
+  <div
+    style={{
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textIndent: "-999px",
+    }}
+  >
+    {text}
+  </div>;
+
+  t.equal(isVisible(text), false);
+});
