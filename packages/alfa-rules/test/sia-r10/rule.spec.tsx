@@ -36,19 +36,6 @@ test("evaluate() passes a valid complex autocomplete attribute on an <input> ele
   ]);
 });
 
-test("evaluate() passes a valid autocomplete attribute, ignoring case", async (t) => {
-  const element = <textarea autocomplete="Street-Address"></textarea>;
-  const target = element.attribute("autocomplete").get()!;
-
-  const document = Document.of([element]);
-
-  t.deepEqual(await evaluate(R10, { document }), [
-    passed(R10, target, {
-      1: Outcomes.HasValidValue,
-    }),
-  ]);
-});
-
 test("evaluate() fails an autocomplete attribute with a non-existing term", async (t) => {
   const element = <input autocomplete="invalid" />;
   const target = element.attribute("autocomplete").get()!;
