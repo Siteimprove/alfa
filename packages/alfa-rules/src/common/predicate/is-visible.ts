@@ -37,12 +37,13 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
 
       return true;
     },
-    // non-replaced elements with no visible child are not visible
-    // replaced elements are assumed to be replaced by something visible.
+    // most non-replaced elements with no visible child are not visible
+    // replaced elements are assumed to be replaced by something visible
+    // some non-replaced elements are still visible when they are empty :-/
     not(
       and(
         isElement,
-        and(not(isReplaced), (element) =>
+        and(not(or(isReplaced, isVisibleWhenEmpty)), (element) =>
           every(
             element.children({ nested: true, flattened: true }),
             not(isVisible(device, context))
@@ -110,3 +111,8 @@ const isReplaced = hasName(
   "object",
   "video"
 );
+
+/**
+ * Elements that are *not* "replaced element" but are nonetheless visible whan empty
+ */
+const isVisibleWhenEmpty = hasName("textarea");
