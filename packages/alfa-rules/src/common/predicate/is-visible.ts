@@ -113,6 +113,6 @@ const isReplaced = hasName(
 );
 
 /**
- * Elements that are *not* "replaced element" but are nonetheless visible whan empty
+ * Elements that are *not* "replaced elements" but are nonetheless visible when empty
  */
 const isVisibleWhenEmpty = hasName("textarea");
