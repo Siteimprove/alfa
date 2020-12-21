@@ -95,7 +95,7 @@ test("isVisible() returns true for replaced elements with no child", (t) => {
   t.equal(isVisible(element), true);
 });
 
-test("isVisible() returns true for textarea with nro child", (t) => {
+test("isVisible() returns true for textarea with no child", (t) => {
   const element = <textarea></textarea>;
 
   t.equal(isVisible(element), true);
