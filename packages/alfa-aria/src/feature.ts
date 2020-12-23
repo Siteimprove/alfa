@@ -9,7 +9,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Scope, Table } from "@siteimprove/alfa-table";
+import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";
 import { Name } from "./name";
@@ -598,13 +598,12 @@ const Features: Features = {
           .find(hasName("table"))
           .flatMap<Role>((table) => {
             for (const [role] of Role.from(table)) {
-              if (role.isSome()) {
-                switch (role.get().name) {
-                  case "table":
-                    return Option.of(Role.of("cell"));
-                  case "grid":
-                    return Option.of(Role.of("gridcell"));
-                }
+              if (role.some((role) => role.is("table"))) {
+                return Option.of(Role.of("cell"));
+              }
+
+              if (role.some((role) => role.is("grid"))) {
+                return Option.of(Role.of("gridcell"));
               }
             }
 
@@ -657,49 +656,44 @@ const Features: Features = {
     tfoot: html(() => Option.of(Role.of("rowgroup"))),
 
     th: html(
-      (element) => {
-        const table = element
+      (element) =>
+        element
           .ancestors()
           .filter(isElement)
-          .find(hasName("table"));
+          .find(hasName("table"))
+          .map(Table.from)
+          .flatMap((table) =>
+            table.cells
+              .filter(Cell.isHeader)
+              .find(Cell.hasElement(element))
+              .map((cell) => {
+                return { table, cell };
+              })
+          )
+          .flatMap<Role>(({ table, cell }) => {
+            switch (cell.scope) {
+              case "column":
+              case "column-group":
+                return Option.of(Role.of("columnheader"));
 
-        // If the <th> is not in a <table>, it doesn't really have a role…
-        if (table.isNone()) {
-          return None;
-        }
+              case "row":
+              case "row-group":
+                return Option.of(Role.of("rowheader"));
 
-        const tableModel = Table.from(table.get());
+              default:
+                for (const [role] of Role.from(table.element)) {
+                  if (role.some((role) => role.is("table"))) {
+                    return Option.of(Role.of("cell"));
+                  }
 
-        // If the <th> is within a <table> with errors, it doesn't really have a
-        // role.
-        if (tableModel.isErr()) {
-          return None;
-        }
+                  if (role.some((role) => role.is("grid"))) {
+                    return Option.of(Role.of("gridcell"));
+                  }
+                }
 
-        const cell = Iterable.find(tableModel.get().cells, (cell) =>
-          cell.element.equals(element)
-        );
-
-        // If the current element is not a cell in the table, something weird
-        // happened and it doesn't have a role.
-        if (cell.isNone()) {
-          return None;
-        }
-
-        // This is not fully correct. If the header has no variant, its role
-        // should be computed as a <td>
-        // https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
-        return cell.get().scope.map((scope) => {
-          switch (scope) {
-            case Scope.Column:
-            case Scope.ColumnGroup:
-              return Role.of("columnheader");
-            case Scope.Row:
-            case Scope.RowGroup:
-              return Role.of("rowheader");
-          }
-        });
-      },
+                return None;
+            }
+          }),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-colspan
         for (const { value } of element.attribute("colspan")) {

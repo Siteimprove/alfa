@@ -1,7 +1,8 @@
 import { Callback } from "@siteimprove/alfa-callback";
-import { Comparable, Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { JSON, Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,6 +11,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 const { isObject } = Refinement;
+const { compareComparable } = Comparable;
 
 // Re-export the global `Iterable` interface to ensure that it merges with the
 // `Iterable` namespace.
@@ -532,7 +534,7 @@ export namespace Iterable {
   export function sort<T extends Comparable<T>>(
     iterable: Iterable<T>
   ): Iterable<T> {
-    return sortWith(iterable, Comparable.compare);
+    return sortWith(iterable, compareComparable);
   }
 
   export function* sortWith<T>(
@@ -542,22 +544,55 @@ export namespace Iterable {
     yield* [...iterable].sort(comparer);
   }
 
-  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
-    const ita = a[Symbol.iterator]();
-    const itb = b[Symbol.iterator]();
+  export function compare<T extends Comparable<T>>(
+    a: Iterable<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return compareWith(a, b, compareComparable);
+  }
+
+  export function compareWith<T>(
+    a: Iterable<T>,
+    b: Iterable<T>,
+    comparer: Comparer<T>
+  ): Comparison {
+    const iteratorA = a[Symbol.iterator]();
+    const iteratorB = b[Symbol.iterator]();
 
     while (true) {
-      const a = ita.next();
-      const b = itb.next();
+      const a = iteratorA.next();
+      const b = iteratorB.next();
 
-      switch (a.done) {
-        case true:
-          return b.done === true;
+      if (a.done === true) {
+        return b.done === true ? Comparison.Equal : Comparison.Less;
+      }
 
-        default:
-          if (b.done === true || !Equatable.equals(a.value, b.value)) {
-            return false;
-          }
+      if (b.done === true) {
+        return Comparison.Greater;
+      }
+
+      const result = comparer(a.value, b.value);
+
+      if (result !== 0) {
+        return result;
+      }
+    }
+  }
+
+  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
+    const iteratorA = a[Symbol.iterator]();
+    const iteratorB = b[Symbol.iterator]();
+
+    while (true) {
+      const a = iteratorA.next();
+      const b = iteratorB.next();
+
+      if (a.done === true) {
+        return b.done === true;
+      }
+
+      if (b.done === true || !Equatable.equals(a.value, b.value)) {
+        return false;
       }
     }
   }
@@ -610,5 +645,11 @@ export namespace Iterable {
     }
 
     return groups;
+  }
+
+  export function toJSON<T extends JSON>(
+    iterable: Iterable<Serializable<T>>
+  ): Array<T> {
+    return [...map<Serializable<T>, T>(iterable, Serializable.toJSON)];
   }
 }
