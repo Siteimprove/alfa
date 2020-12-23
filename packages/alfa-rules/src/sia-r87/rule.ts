@@ -82,12 +82,6 @@ export default Rule.Atomic.of<Page, Document, Question>({
 
         return {
           1: expectation(
-            element.isSome(),
-            () => Outcomes.HasTabbable,
-            () => Outcomes.HasNoTabbable
-          ),
-
-          2: expectation(
             element.isNone(),
             () => Outcomes.HasNoTabbable,
             () =>
@@ -155,10 +149,6 @@ export default Rule.Atomic.of<Page, Document, Question>({
 });
 
 export namespace Outcomes {
-  export const HasTabbable = Ok.of(
-    Diagnostic.of(`The document has at least one tabbable descendant`)
-  );
-
   export const HasNoTabbable = Err.of(
     Diagnostic.of(`The document has no tabbable descendants`)
   );
