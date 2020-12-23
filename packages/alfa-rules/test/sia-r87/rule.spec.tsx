@@ -22,8 +22,7 @@ test(`evaluate() passes a document whose first tabbable link references an
 
   t.deepEqual(await evaluate(R87, { document }), [
     passed(R87, document, {
-      1: Outcomes.HasTabbable,
-      2: Outcomes.FirstTabbableIsLinkToContent,
+      1: Outcomes.FirstTabbableIsLinkToContent,
     }),
   ]);
 });
@@ -52,8 +51,7 @@ test(`evaluate() passes a document whose first tabbable link references an
     ),
     [
       passed(R87, document, {
-        1: Outcomes.HasTabbable,
-        2: Outcomes.FirstTabbableIsLinkToContent,
+        1: Outcomes.FirstTabbableIsLinkToContent,
       }),
     ]
   );
@@ -78,8 +76,7 @@ test(`evaluate() passes a document whose first tabbable link references an
     ),
     [
       passed(R87, document, {
-        1: Outcomes.HasTabbable,
-        2: Outcomes.FirstTabbableIsLinkToContent,
+        1: Outcomes.FirstTabbableIsLinkToContent,
       }),
     ]
   );
@@ -110,8 +107,7 @@ test(`evaluate() passes a document whose first tabbable link references an
     ),
     [
       passed(R87, document, {
-        1: Outcomes.HasTabbable,
-        2: Outcomes.FirstTabbableIsLinkToContent,
+        1: Outcomes.FirstTabbableIsLinkToContent,
       }),
     ]
   );
@@ -127,7 +123,6 @@ test(`evaluate() fails a document without tabbable elements`, async (t) => {
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
       1: Outcomes.HasNoTabbable,
-      2: Outcomes.HasNoTabbable,
     }),
   ]);
 });
@@ -146,7 +141,6 @@ test(`evaluate() fails a document with a link that would be tabbable if not
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
       1: Outcomes.HasNoTabbable,
-      2: Outcomes.HasNoTabbable,
     }),
   ]);
 });
@@ -155,17 +149,14 @@ test(`evaluate() fails a document whose first tabbable element is not a link`, a
   const document = Document.of([
     <html>
       <button />
-      <a href="#main">
-        Skip to content
-      </a>
+      <a href="#main">Skip to content</a>
       <main id="main">Content</main>
     </html>,
   ]);
 
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
-      1: Outcomes.HasTabbable,
-      2: Outcomes.FirstTabbableIsNotLink,
+      1: Outcomes.FirstTabbableIsNotLink,
     }),
   ]);
 });
@@ -182,8 +173,7 @@ test(`evaluate() fails a document whose first tabbable element is not a semantic
 
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
-      1: Outcomes.HasTabbable,
-      2: Outcomes.FirstTabbableIsNotLink,
+      1: Outcomes.FirstTabbableIsNotLink,
     }),
   ]);
 });
@@ -201,8 +191,7 @@ test(`evaluate() fails a document whose first tabbable link is not included in
 
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
-      1: Outcomes.HasTabbable,
-      2: Outcomes.FirstTabbableIsIgnored,
+      1: Outcomes.FirstTabbableIsIgnored,
     }),
   ]);
 });
@@ -226,8 +215,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
 
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
-      1: Outcomes.HasTabbable,
-      2: Outcomes.FirstTabbableIsNotKeyboardActionable,
+      1: Outcomes.FirstTabbableIsNotKeyboardActionable,
     }),
   ]);
 });
@@ -256,8 +244,7 @@ test(`evaluate() passes a document whose first tabbable link is visible when
 
   t.deepEqual(await evaluate(R87, { document }), [
     passed(R87, document, {
-      1: Outcomes.HasTabbable,
-      2: Outcomes.FirstTabbableIsLinkToContent,
+      1: Outcomes.FirstTabbableIsLinkToContent,
     }),
   ]);
 });
