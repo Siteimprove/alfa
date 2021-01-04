@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -8,6 +9,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -41,6 +43,15 @@ export class Branched<T, B = never>
 
   public isEmpty(): this is Branched<never, B> {
     return false;
+  }
+
+  public forEach(callback: Callback<T, void, [Iterable<B>]>): void {
+    this._values.forEach(({ value, branches }) =>
+      callback(
+        value,
+        branches.getOrElse(() => List.empty())
+      )
+    );
   }
 
   public map<U>(mapper: Mapper<T, U, [Iterable<B>]>): Branched<U, B> {
@@ -100,8 +111,12 @@ export class Branched<T, B = never>
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U, [Iterable<B>]>
-  ): Branched<U, B> {
+    refinement: Refinement<T, U, [Iterable<B>]>
+  ): Branched<U, B>;
+
+  public filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
+
+  public filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B> {
     return new Branched(
       this._values.filter(({ value, branches }) =>
         predicate(
@@ -112,13 +127,23 @@ export class Branched<T, B = never>
     );
   }
 
-  public reject(predicate: Predicate<T, T, [Iterable<B>]>): Branched<T, B> {
+  public reject<U extends T>(
+    refinement: Refinement<T, U, [Iterable<B>]>
+  ): Branched<Exclude<T, U>, B>;
+
+  public reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
+
+  public reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B> {
     return this.filter(not(predicate));
   }
 
   public find<U extends T>(
-    predicate: Predicate<T, U, [Iterable<B>]>
-  ): Option<U> {
+    refinement: Refinement<T, U, [Iterable<B>]>
+  ): Option<U>;
+
+  public find(predicate: Predicate<T, [Iterable<B>]>): Option<T>;
+
+  public find(predicate: Predicate<T, [Iterable<B>]>): Option<T> {
     return this._values
       .find(({ value, branches }) =>
         predicate(
@@ -126,7 +151,7 @@ export class Branched<T, B = never>
           branches.getOrElse(() => List.empty())
         )
       )
-      .map(({ value }) => value as U);
+      .map(({ value }) => value);
   }
 
   public includes(value: T): boolean {
@@ -163,7 +188,7 @@ export class Branched<T, B = never>
     );
   }
 
-  public some(predicate: Predicate<T, T, [Iterable<B>]>): boolean {
+  public some(predicate: Predicate<T, [Iterable<B>]>): boolean {
     for (const value of this._values) {
       if (
         predicate(
@@ -178,7 +203,11 @@ export class Branched<T, B = never>
     return false;
   }
 
-  public every(predicate: Predicate<T, T, [Iterable<B>]>): boolean {
+  public none(predicate: Predicate<T, [Iterable<B>]>): boolean {
+    return this.every(not(predicate));
+  }
+
+  public every(predicate: Predicate<T, [Iterable<B>]>): boolean {
     for (const value of this._values) {
       if (
         !predicate(
@@ -193,7 +222,7 @@ export class Branched<T, B = never>
     return true;
   }
 
-  public count(predicate: Predicate<T, T, [Iterable<B>]>): number {
+  public count(predicate: Predicate<T, [Iterable<B>]>): number {
     return this.reduce(
       (count, value, branches) =>
         predicate(value, branches) ? count + 1 : count,
@@ -263,7 +292,7 @@ export namespace Branched {
   }
 
   export function from<T, B>(
-    values: Iterable<[T, Iterable<B>]>
+    values: Iterable<readonly [T, Iterable<B>]>
   ): Branched<T, B> {
     if (isBranched<T, B>(values)) {
       return values;

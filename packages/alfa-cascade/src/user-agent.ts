@@ -51,7 +51,7 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#non-replaced-elements-flow-content
+   * @see https://html.spec.whatwg.org/#flow-content-3
    */
 
   h.rule.style(
@@ -66,7 +66,12 @@ export const UserAgent = h.sheet([
   }),
 
   h.rule.style("dialog", {
+    background: "white",
     color: "black",
+  }),
+
+  h.rule.style("dialog::backdrop", {
+    background: "rgb(0 0 0 / 0.1)",
   }),
 
   h.rule.style("slot", {
@@ -74,40 +79,29 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#non-replaced-elements-phrasing-content
+   * @see https://html.spec.whatwg.org/#phrasing-content-3
    */
 
-  h.rule.style("big", {
-    fontSize: "larger",
-  }),
+  h.rule.style("cite, dfn, em, i, var", { fontStyle: "italic" }),
+  h.rule.style("b, strong", { fontWeight: "bolder" }),
+  h.rule.style("code, kbd, samp, tt", { fontFamily: "monospace" }),
+  h.rule.style("big", { fontSize: "larger" }),
+  h.rule.style("small", { fontSize: "smaller" }),
 
-  h.rule.style("small", {
-    fontSize: "smaller",
-  }),
+  h.rule.style("ruby", { display: "ruby" }),
+  h.rule.style("rt", { display: "ruby-text" }),
 
-  h.rule.style("ruby", {
-    display: "ruby",
-  }),
+  h.rule.style(":link", { color: "#0000ee" }),
+  h.rule.style(":visited", { color: "#551a8b" }),
+  h.rule.style(":link:active, :visited:active", { color: "#ff0000" }),
+  h.rule.style(":link, :visited", { textDecoration: "underline" }),
 
-  h.rule.style("rt", {
-    display: "ruby-text",
-  }),
+  h.rule.style(":focus", { outline: "auto" }),
 
-  h.rule.style(":link", {
-    color: "#0000ee",
-  }),
+  h.rule.style("mark", { background: "yellow", color: "black" }),
 
-  h.rule.style(":visited", {
-    color: "#551a8b",
-  }),
-
-  h.rule.style(":link:active, :visited:active", {
-    color: "#ff0000",
-  }),
-
-  h.rule.style("mark", {
-    color: "black",
-  }),
+  h.rule.style("ins, u", { textDecoration: "underline" }),
+  h.rule.style("del, s, strike", { textDecoration: "line-through" }),
 
   /**
    * @see https://html.spec.whatwg.org/#sections-and-headings
@@ -117,81 +111,33 @@ export const UserAgent = h.sheet([
     display: "block",
   }),
 
-  h.rule.style("h1", {
-    fontSize: "2.00em",
-  }),
-
-  h.rule.style("h2", {
-    fontSize: "1.50em",
-  }),
-
-  h.rule.style("h3", {
-    fontSize: "1.17em",
-  }),
-
-  h.rule.style("h4", {
-    fontSize: "1.00em",
-  }),
-
-  h.rule.style("h5", {
-    fontSize: "0.83em",
-  }),
-
-  h.rule.style("h6", {
-    fontSize: "0.67em",
-  }),
+  h.rule.style("h1", { fontSize: "2.00em", fontWeight: "bold" }),
+  h.rule.style("h2", { fontSize: "1.50em", fontWeight: "bold" }),
+  h.rule.style("h3", { fontSize: "1.17em", fontWeight: "bold" }),
+  h.rule.style("h4", { fontSize: "1.00em", fontWeight: "bold" }),
+  h.rule.style("h5", { fontSize: "0.83em", fontWeight: "bold" }),
+  h.rule.style("h6", { fontSize: "0.67em", fontWeight: "bold" }),
 
   /**
    * @see https://html.spec.whatwg.org/#section-lists
    */
 
-  h.rule.style("dir, dd, dl, dt, ol, ul", {
-    display: "block",
-  }),
-
-  h.rule.style("li", {
-    display: "list-item",
-  }),
+  h.rule.style("dir, dd, dl, dt, ol, ul", { display: "block" }),
+  h.rule.style("li", { display: "list-item" }),
 
   /**
    * @see https://html.spec.whatwg.org/#tables
    */
 
-  h.rule.style("table", {
-    display: "table",
-  }),
-
-  h.rule.style("caption", {
-    display: "table-caption",
-  }),
-
-  h.rule.style("colgroup, colgroup[hidden]", {
-    display: "table-column-group",
-  }),
-
-  h.rule.style("col, col[hidden]", {
-    display: "table-column",
-  }),
-
-  h.rule.style("thead, thead[hidden]", {
-    display: "table-header-group",
-  }),
-
-  h.rule.style("tbody, tbody[hidden]", {
-    display: "table-row-group",
-  }),
-
-  h.rule.style("tfoot, tfoot[hidden]", {
-    display: "table-footer-group",
-  }),
-
-  h.rule.style("tr, tr[hidden]", {
-    display: "table-row",
-  }),
-
-  h.rule.style("td, th, td[hidden], th[hidden]", {
-    display: "table-cell",
-  }),
+  h.rule.style("table", { display: "table" }),
+  h.rule.style("caption", { display: "table-caption" }),
+  h.rule.style("colgroup, colgroup[hidden]", { display: "table-column-group" }),
+  h.rule.style("col, col[hidden]", { display: "table-column" }),
+  h.rule.style("thead, thead[hidden]", { display: "table-header-group" }),
+  h.rule.style("tbody, tbody[hidden]", { display: "table-row-group" }),
+  h.rule.style("tfoot, tfoot[hidden]", { display: "table-footer-group" }),
+  h.rule.style("tr, tr[hidden]", { display: "table-row" }),
+  h.rule.style("td, th, td[hidden], th[hidden]", { display: "table-cell" }),
 
   h.rule.style(
     "colgroup[hidden], col[hidden], thead[hidden], tbody[hidden], tfoot[hidden], tr[hidden], td[hidden], th[hidden]",
@@ -200,7 +146,9 @@ export const UserAgent = h.sheet([
     }
   ),
 
-  h.rule.style(":matches(table, thead, tbody, tfoot, tr) > form", {
+  h.rule.style("th", { fontWeight: "bold" }),
+
+  h.rule.style(":is(table, thead, tbody, tfoot, tr) > form", {
     display: "none !important",
   }),
 
@@ -210,6 +158,7 @@ export const UserAgent = h.sheet([
 
   h.rule.style("hr", {
     color: "gray",
+    overflow: "hidden",
   }),
 
   /**

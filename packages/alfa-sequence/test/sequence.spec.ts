@@ -1,6 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Option, None } from "@siteimprove/alfa-option";
 import { Lazy } from "@siteimprove/alfa-lazy";
+
 import { Sequence } from "../src/sequence";
 
 const array = (length: number) => new Array(length).fill(0).map((_, i) => i);
@@ -9,6 +11,10 @@ const seq = Sequence.from([1, 2, 3, 4]);
 
 test("#size gets the size of a sequence", (t) => {
   t.equal(seq.size, 4);
+});
+
+test("#size does not overflow for large sequences", (t) => {
+  t.equal(Sequence.from(array(100000)).size, 100000);
 });
 
 test("#isEmpty() returns true if a sequence is empty", (t) => {
@@ -122,6 +128,13 @@ test("#find() finds the first value of a sequence that satisfies a predicate", (
 
 test("#find() returns none when no value of a sequence satisfies a predicate", (t) => {
   t(seq.find((n) => n > 4).isNone());
+});
+
+test("#collect() applies an option returning function to a sequence and discards all nones", (t) => {
+  t.deepEqual(
+    [...seq.collect((n) => (n % 2 === 0 ? Option.of(n.toString()) : None))],
+    ["2", "4"]
+  );
 });
 
 test("#count() counts the number of values of a sequence that satisfy a predicate", (t) => {

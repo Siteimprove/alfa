@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -8,10 +9,13 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { None } from "./none";
 import { Some } from "./some";
+
+const { compareComparable } = Comparable;
 
 export interface Option<T>
   extends Functor<T>,
@@ -28,7 +32,9 @@ export interface Option<T>
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
-  filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
+  filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
+  filter(predicate: Predicate<T>): Option<T>;
+  reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
   reject(predicate: Predicate<T>): Option<T>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;
@@ -41,6 +47,7 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
   toArray(): Array<T>;
   toJSON(): Option.JSON;
 }
@@ -68,5 +75,12 @@ export namespace Option {
 
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Option<T>,
+    b: Option<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

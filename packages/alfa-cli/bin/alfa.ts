@@ -3,7 +3,6 @@
 /// <reference types="node" />
 
 import * as path from "path";
-import * as process from "process";
 import * as tty from "tty";
 
 import { Command, Flag } from "@siteimprove/alfa-command";
@@ -41,6 +40,8 @@ application
   .run(process.argv.slice(2))
   .catch((err: Error) => Err.of(`${err.stack ?? err.message}`))
   .then(async (result) => {
+    process.exitCode = result.isOk() ? 0 : 1;
+
     let stream: tty.WriteStream;
     let output: string;
 
@@ -55,10 +56,6 @@ application
     output = output.trimRight();
 
     if (output.length > 0) {
-      await new Promise((resolve, reject) =>
-        stream.write(output + "\n", (err) => (err ? reject(err) : resolve()))
-      );
+      stream.write(output + "\n");
     }
-
-    process.exit(result.isOk() ? 0 : 1);
   });

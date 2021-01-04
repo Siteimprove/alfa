@@ -18,16 +18,14 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                or(
-                  and(hasNamespace(Namespace.HTML), hasName("img")),
-                  and(hasNamespace(Namespace.SVG), hasName("svg"))
-                ),
-                isMarkedDecorative
-              )
+              or(
+                and(hasNamespace(Namespace.HTML), hasName("img")),
+                and(hasNamespace(Namespace.SVG), hasName("svg"))
+              ),
+              isMarkedDecorative
             )
           );
       },

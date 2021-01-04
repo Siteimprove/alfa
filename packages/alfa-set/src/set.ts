@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -7,6 +8,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -37,6 +39,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return this._values.isEmpty();
   }
 
+  public forEach(callback: Callback<T>): void {
+    Iterable.forEach(this, callback);
+  }
+
   public map<U>(mapper: Mapper<T, U>): Set<U> {
     return this._values.reduce(
       (set, _, value) => set.add(mapper(value)),
@@ -59,18 +65,30 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): Set<U> {
+  public filter<U extends T>(refinement: Refinement<T, U>): Set<U>;
+
+  public filter(predicate: Predicate<T>): Set<T>;
+
+  public filter(predicate: Predicate<T>): Set<T> {
     return this.reduce(
       (set, value) => (predicate(value) ? set.add(value) : set),
-      Set.empty<U>()
+      Set.empty()
     );
   }
+
+  public reject<U extends T>(refinement: Refinement<T, U>): Set<Exclude<T, U>>;
+
+  public reject(predicate: Predicate<T>): Set<T>;
 
   public reject(predicate: Predicate<T>): Set<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
+  public find<U extends T>(refinement: Refinement<T, U>): Option<U>;
+
+  public find(predicate: Predicate<T>): Option<T>;
+
+  public find(predicate: Predicate<T>): Option<T> {
     return Iterable.find(this, predicate);
   }
 
@@ -88,6 +106,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   public some(predicate: Predicate<T>): boolean {
     return Iterable.some(this, predicate);
+  }
+
+  public none(predicate: Predicate<T>): boolean {
+    return Iterable.none(this, predicate);
   }
 
   public every(predicate: Predicate<T>): boolean {

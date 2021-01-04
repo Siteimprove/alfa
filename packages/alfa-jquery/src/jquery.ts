@@ -15,10 +15,10 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 export namespace JQuery {
   export type Type = JQuery;

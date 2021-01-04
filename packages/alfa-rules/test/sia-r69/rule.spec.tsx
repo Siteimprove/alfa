@@ -37,27 +37,27 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
 });
 
 test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
-  const sufficient = Text.of("Sufficient contrast");
-  const insufficient = Text.of("Insufficient contrast");
+  const target1 = Text.of("Sufficient contrast");
+  const target2 = Text.of("Insufficient contrast");
 
   const document = Document.of([
     <html style={{ backgroundColor: "black", color: "white" }}>
       <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 15%)" }}>
-        {sufficient}
+        {target1}
       </div>
       <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 50%)" }}>
-        {insufficient}
+        {target2}
       </div>
     </html>,
   ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
-    passed(R69, sufficient, {
+    passed(R69, target1, {
       1: Outcomes.HasSufficientContrast(15.08, 4.5, [
         Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.15, 0.15, 0.15), 15.08),
       ]),
     }),
-    failed(R69, insufficient, {
+    failed(R69, target2, {
       1: Outcomes.HasInsufficientContrast(3.98, 4.5, [
         Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.5, 0.5, 0.5), 3.98),
       ]),
@@ -66,23 +66,23 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
 });
 
 test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
-  const sufficient = Text.of("Sufficient contrast");
-  const insufficient = Text.of("Insufficient contrast");
+  const target1 = Text.of("Sufficient contrast");
+  const target2 = Text.of("Insufficient contrast");
 
   const document = Document.of([
     <html style={{ backgroundColor: "black" }}>
-      <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>{sufficient}</div>
-      <div style={{ color: "rgb(100%, 100%, 100%, 40%)" }}>{insufficient}</div>
+      <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>{target1}</div>
+      <div style={{ color: "rgb(100%, 100%, 100%, 40%)" }}>{target2}</div>
     </html>,
   ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
-    passed(R69, sufficient, {
+    passed(R69, target1, {
       1: Outcomes.HasSufficientContrast(14.84, 4.5, [
         Contrast.Pairing.of(rgb(0.85, 0.85, 0.85), rgb(0, 0, 0), 14.84),
       ]),
     }),
-    failed(R69, insufficient, {
+    failed(R69, target2, {
       1: Outcomes.HasInsufficientContrast(3.66, 4.5, [
         Contrast.Pairing.of(rgb(0.4, 0.4, 0.4), rgb(0, 0, 0), 3.66),
       ]),
@@ -322,6 +322,30 @@ test("evaluate() fails when a linear gradient has insufficient contrast in the b
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
         Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
         Contrast.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+      ]),
+    }),
+  ]);
+});
+
+test(`evaluate() correctly merges semi-transparent background layers against a
+      white backdrop`, async (t) => {
+  const target = Text.of("Hello world");
+
+  const document = Document.of([
+    <div
+      style={{
+        color: "#fff",
+        backgroundColor: "rgba(0 0 0 / 0.75)",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(10.41, 4.5, [
+        Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.25, 0.25, 0.25), 10.41),
       ]),
     }),
   ]);

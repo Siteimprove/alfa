@@ -19,15 +19,15 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return document.children().filter(
-          and(
-            isDocumentElement,
+        return document
+          .children()
+          .filter(isDocumentElement)
+          .filter(
             and(
               hasAttribute("lang", (value) => Language.parse(value).isSome()),
               hasAttribute("xml:lang", not(isEmpty))
             )
-          )
-        );
+          );
       },
 
       expectations(target) {

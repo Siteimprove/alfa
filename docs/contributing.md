@@ -1,8 +1,6 @@
-[search for existing issues]: https://github.com/Siteimprove/alfa/search?type=Issues
-
 # Contribution guidelines
 
-> :warning: These contribution guidelines only apply to external contributors. Members of the Alfa development team are instead expected to follow the development process as outlined in the [process documentation](PROCESS.md).
+> :warning: These contribution guidelines only apply to external contributors. Members of the Alfa development team are instead expected to follow the development process as outlined in the [process documentation](process.md).
 
 ## Reporting issues
 
@@ -57,3 +55,5 @@ While the `--amend` flag can be used to ammend your last commit with a sign-off,
 ```console
 $ git rebase --signoff --interactive
 ```
+
+[search for existing issues]: ../../../search?type=Issues

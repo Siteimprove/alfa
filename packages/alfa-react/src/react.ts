@@ -9,14 +9,14 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
 import { isValidElement, ReactElement } from "react";
 import * as TestRenderer from "react-test-renderer";
 
 const { keys } = Object;
-const { isBoolean, isObject, isString } = Predicate;
+const { isBoolean, isObject, isString } = Refinement;
 
 export namespace React {
   export type Type = ReactElement<unknown>;
@@ -32,10 +32,14 @@ export namespace React {
       throw new Error("Could not render React element");
     }
 
+    const children = (Array.isArray(tree) ? tree : [tree]).map((element) =>
+      Element.from(toElement(element))
+    );
+
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of([Element.from(toElement(tree))]),
+      Document.of(children),
       Device.standard()
     );
   }

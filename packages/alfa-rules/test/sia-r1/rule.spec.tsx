@@ -47,7 +47,7 @@ test("evaluate() fails a document that has an empty <title> element", async (t) 
   ]);
 });
 
-test("evaluate() is inapplicable when a document is not an HTML document", async (t) => {
+test("evaluate() is inapplicable to a document that is not an HTML document", async (t) => {
   const document = Document.empty();
 
   t.deepEqual(await evaluate(R1, { document }), [inapplicable(R1)]);

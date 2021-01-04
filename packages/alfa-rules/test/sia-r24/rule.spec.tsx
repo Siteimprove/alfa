@@ -1,42 +1,27 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 import R24, { Outcomes } from "../../src/sia-r24/rule";
-
-import { hasId } from "../../src/common/predicate/has-id";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable, cantTell } from "../common/outcome";
 
-const { isElement, hasName } = Element;
-const { and, equals } = Predicate;
-
 test(`evaluate() passes when non-streaming video elements have all audio and
       visual information available in a transcript`, async (t) => {
-  const document = Document.of([
-    <div>
-      <video controls>
-        <source src="foo.mp4" type="video/mp4" />
-        <source src="foo.webm" type="video/webm" />
-      </video>
-      <span id="transcript">Transcript</span>
-    </div>,
-  ]);
+  const target = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+    </video>
+  );
 
-  const video = document
-    .descendants()
-    .find(and(isElement, hasName("video")))
-    .get();
+  const transcript = <span id="transcript">Transcript</span>;
 
-  const transcript = document
-    .descendants()
-    .find(and(isElement, hasId(equals("transcript"))))
-    .get();
+  const document = Document.of([target, transcript]);
 
   t.deepEqual(
     await evaluate(
@@ -49,7 +34,7 @@ test(`evaluate() passes when non-streaming video elements have all audio and
       })
     ),
     [
-      passed(R24, video, {
+      passed(R24, target, {
         1: Outcomes.HasTranscript,
       }),
     ]
@@ -58,17 +43,14 @@ test(`evaluate() passes when non-streaming video elements have all audio and
 
 test(`evaluate() fails when non-streaming video elements have no audio and
       visual information available in a transcript`, async (t) => {
-  const document = Document.of([
+  const target = (
     <video controls>
       <source src="foo.mp4" type="video/mp4" />
       <source src="foo.webm" type="video/webm" />
-    </video>,
-  ]);
+    </video>
+  );
 
-  const video = document
-    .descendants()
-    .find(and(Element.isElement, hasName("video")))
-    .get();
+  const document = Document.of([target]);
 
   t.deepEqual(
     await evaluate(
@@ -82,7 +64,7 @@ test(`evaluate() fails when non-streaming video elements have no audio and
       })
     ),
     [
-      failed(R24, video, {
+      failed(R24, target, {
         1: Outcomes.HasNoTranscript,
       }),
     ]
@@ -90,17 +72,14 @@ test(`evaluate() fails when non-streaming video elements have no audio and
 });
 
 test("evaluate() can't tell when some questions are left unanswered", async (t) => {
-  const document = Document.of([
+  const target = (
     <video controls>
       <source src="foo.mp4" type="video/mp4" />
       <source src="foo.webm" type="video/webm" />
-    </video>,
-  ]);
+    </video>
+  );
 
-  const video = document
-    .descendants()
-    .find(and(Element.isElement, hasName("video")))
-    .get();
+  const document = Document.of([target]);
 
   t.deepEqual(
     await evaluate(
@@ -112,11 +91,11 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
         transcript: None,
       })
     ),
-    [cantTell(R24, video)]
+    [cantTell(R24, target)]
   );
 });
 
-test("evaluate() is inapplicable when element is not a video element", async (t) => {
+test("evaluate() is inapplicable to a document without <video> elements", async (t) => {
   const document = Document.of([<img src="foo.mp4" />]);
 
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);

@@ -2,12 +2,15 @@ import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
+import { Graph } from "@siteimprove/alfa-graph";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as dom from "@siteimprove/alfa-dom";
@@ -20,7 +23,7 @@ import { Feature } from "./feature";
 
 import * as predicate from "./node/predicate";
 
-const { and, not, nor, equals } = Predicate;
+const { equals } = Predicate;
 
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
@@ -76,8 +79,18 @@ export abstract class Node implements Serializable {
   }
 
   public attribute<N extends Attribute.Name>(
-    predicate: N | Predicate<Attribute, Attribute<N>>
-  ): Option<Attribute<N>> {
+    refinement: Refinement<Attribute, Attribute<N>>
+  ): Option<Attribute<N>>;
+
+  public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+
+  public attribute<N extends Attribute.Name>(
+    predicate: N
+  ): Option<Attribute<N>>;
+
+  public attribute(
+    predicate: Attribute.Name | Predicate<Attribute>
+  ): Option<Attribute> {
     return None;
   }
 
@@ -216,34 +229,160 @@ export namespace Node {
   ): Branched<Node, Browser> {
     const _cache = cache.get(device, Cache.empty);
 
+    // If the cache already holds an entry for the specified node, then the tree
+    // that the node participates in has already been built.
     if (_cache.has(node)) {
       return _cache.get(node).get();
     }
 
     const root = node.root({ flattened: true });
 
-    build(root, device);
-
-    if (_cache.has(node)) {
-      return _cache.get(node).get();
+    // If the cache already holds an entry for the root of the specified node,
+    // then the tree that the node participates in has already been built, but
+    // the node itself is not included within the resulting accessibility tree.
+    if (_cache.has(root)) {
+      return _cache.get(node, () => Branched.of(Inert.of(node)));
     }
 
-    return Branched.of(Inert.of(node));
-  }
+    // Before we start constructing the accessibility tree, we need to resolve
+    // explicit ownership of elements as specified by the `aria-owns` attribute.
+    // https://w3c.github.io/aria/#aria-owns
 
-  function build(node: dom.Node, device: Device): Branched<Node, Browser> {
-    return cache.get(device, Cache.empty).get(node, () => {
-      // Text nodes are _always_ exposed in the accessibility tree.
-      if (dom.Text.isText(node)) {
-        return Name.from(node, device).map((name) => Text.of(node, name.get()));
-      }
+    // Find all elements in the tree. As explicit ownership is specified via ID
+    // references, it cannot cross shadow or document boundaries.
+    const elements = root.inclusiveDescendants().filter(dom.Element.isElement);
 
-      const children = () =>
-        Branched.traverse(node.children({ flattened: true }), (child) =>
-          build(child, device)
+    // Build a map from ID -> element to allow fast resolution of ID references.
+    // The collected references are added to the map in reverse order to ensure
+    // that the first occurrence of a given ID is what ends up in the map in
+    // event of duplicates.
+    const ids = Map.from(
+      elements
+        .collect((element) => element.id.map((id) => [id, element] as const))
+        .reverse()
+    );
+
+    // Do a first pass over `aria-owns` attributes and collect the referenced
+    // elements.
+    const references = elements.collect((element) =>
+      element.attribute("aria-owns").map(
+        (attribute) =>
+          [
+            element,
+            attribute
+              .tokens()
+              .collect((id) => ids.get(id))
+              // Reject references from the element to itself or its ancestors
+              // as these would cause cyclic references.
+              .reject(
+                (reference) =>
+                  element === reference ||
+                  element.ancestors().includes(reference)
+              ),
+          ] as const
+      )
+    );
+
+    // Refine the collected `aria-owns` references, constructing a set of
+    // claimed elements and resolving conflicting claims as needed.
+    const [claimed, owned] = references.reduce(
+      ([claimed, owned, graph], [element, references]) => {
+        // Reject all element references that have either already been claimed
+        // or would introduce a cyclic reference. While authors are not allowed
+        // to specify a given ID in more than one `aria-owns` attribute, it will
+        // inevitably happen that multiple `aria-owns` attributes reference the
+        // same ID. We deal with this on a first come, first serve basis and
+        // deny anything but the first claim to a given ID.
+        references = references.reject(
+          (reference) =>
+            claimed.has(reference) || graph.hasPath(reference, element)
         );
 
-      // Element nodes are _sometimes_ exposed in the accessibility tree.
+        // If there are no references left, this element has no explicit
+        // ownership.
+        if (references.isEmpty()) {
+          return [claimed, owned, graph];
+        }
+
+        // Claim the remaining references.
+        claimed = references.reduce(
+          (claimed, reference) => claimed.add(reference),
+          claimed
+        );
+
+        // Connect the element to each of its references to track cycles.
+        graph = references.reduce(
+          (graph, reference) => graph.connect(element, reference),
+          graph
+        );
+
+        return [claimed, owned.set(element, references), graph];
+      },
+      [
+        Set.empty<dom.Element>(),
+        Map.empty<dom.Element, Sequence<dom.Element>>(),
+        Graph.empty<dom.Element>(),
+      ]
+    );
+
+    fromNode(root, device, claimed, owned, State.empty());
+
+    return _cache.get(node, () =>
+      // If the cache still doesn't hold an entry for the specified node, then
+      // the node doesn't even participate in the tree. Store it as an inert
+      // node.
+      Branched.of(Inert.of(node))
+    );
+  }
+
+  class State {
+    private static _empty = new State(false, true);
+
+    public static empty(): State {
+      return this._empty;
+    }
+
+    private readonly _isPresentational: boolean;
+    private readonly _isVisible: boolean;
+
+    private constructor(isPresentational: boolean, isVisible: boolean) {
+      this._isPresentational = isPresentational;
+      this._isVisible = isVisible;
+    }
+
+    public get isPresentational(): boolean {
+      return this._isPresentational;
+    }
+
+    public get isVisible(): boolean {
+      return this._isVisible;
+    }
+
+    public presentational(isPresentational: boolean): State {
+      if (this._isPresentational === isPresentational) {
+        return this;
+      }
+
+      return new State(isPresentational, this._isVisible);
+    }
+
+    public visible(isVisible: boolean): State {
+      if (this._isVisible === isVisible) {
+        return this;
+      }
+
+      return new State(this._isPresentational, isVisible);
+    }
+  }
+
+  function fromNode(
+    node: dom.Node,
+    device: Device,
+    claimed: Set<dom.Node>,
+    owned: Map<dom.Element, Sequence<dom.Node>>,
+    state: State
+  ): Branched<Node, Browser> {
+    return cache.get(device, Cache.empty).get(node, () => {
       if (dom.Element.isElement(node)) {
         // Elements that are explicitly excluded from the accessibility tree
         // by means of `aria-hidden=true` are never exposed in the
@@ -277,68 +416,159 @@ export namespace Node {
           return Branched.of(Inert.of(node));
         }
 
+        let children: (state: State) => Branched<Iterable<Node>, Browser>;
+
+        // Children of <iframe> elements act as fallback content in legacy user
+        // agents and should therefore never be included in the accessibility
+        // tree.
+        if (node.name === "iframe") {
+          children = () => Branched.of([]);
+        }
+
+        // Otherwise, recursively build accessible nodes for the children of the
+        // element.
+        else {
+          // Get the children explicitly owned by the element. Children can be
+          // explicitly owned using the `aria-owns` attribute.
+          const explicit = owned
+            .get(node)
+            .getOrElse(() => Sequence.empty<dom.Node>());
+
+          // Get the children implicitly owned by the element. These are the
+          // children in the flat tree that are neither claimed already nor
+          // explicitly owned by the element.
+          const implicit = node
+            .children({ flattened: true })
+            .reject((child) => claimed.has(child) || explicit.includes(child));
+
+          // The children implicitly owned by the element come first, then the
+          // children explicitly owned by the element.
+          children = (state) =>
+            Branched.traverse(implicit.concat(explicit), (child) =>
+              fromNode(child, device, claimed, owned, state)
+            );
+        }
+
         // Elements that are not visible by means of `visibility: hidden` or
         // `visibility: collapse`, are exposed in the accessibility tree as
         // containers as they may contain visible descendants.
         if (style.computed("visibility").value.value !== "visible") {
-          return children().map((children) => Container.of(node, children));
+          return children(state.visible(false)).map((children) =>
+            Container.of(node, children)
+          );
         }
 
-        return Role.from(node).flatMap<Node>((role) => {
-          if (role.some((role) => role.isPresentational())) {
-            return children().map((children) => Container.of(node, children));
-          }
+        state = state.visible(true);
 
-          let attributes = Map.empty<Attribute.Name, Attribute>();
+        return Role.fromImplicit(node)
+          .flatMap((implicit) =>
+            Role.fromExplicit(node).map((explicit) => {
+              return { implicit, explicit };
+            })
+          )
+          .flatMap<Node>(({ implicit, explicit }) => {
+            const role = explicit.orElse(() =>
+              // If the element has no explicit role and instead inherits a
+              // presentational role then use that, otherwise fall back to the
+              // implicit role.
+              state.isPresentational
+                ? Option.of(Role.of("presentation"))
+                : implicit
+            );
 
-          // First pass: Look up implicit attributes on the role.
-          if (role.isSome()) {
-            for (const attribute of role.get().attributes) {
-              for (const value of role
-                .get()
-                .implicitAttributeValue(attribute)) {
-                attributes = attributes.set(
-                  attribute,
-                  Attribute.of(attribute, value)
-                );
+            if (role.some((role) => role.isPresentational())) {
+              return children(
+                state.presentational(
+                  // If the implicit role of the presentational element has
+                  // required children then any owned children must also be
+                  // presentational.
+                  implicit.some((role) => role.hasRequiredChildren())
+                )
+              ).map((children) => Container.of(node, children));
+            }
+
+            let attributes = Map.empty<Attribute.Name, Attribute>();
+
+            // First pass: Look up implicit attributes on the role.
+            if (role.isSome()) {
+              for (const attribute of role.get().attributes) {
+                for (const value of role
+                  .get()
+                  .implicitAttributeValue(attribute)) {
+                  attributes = attributes.set(
+                    attribute,
+                    Attribute.of(attribute, value)
+                  );
+                }
               }
             }
-          }
 
-          // Second pass: Look up implicit attributes on the feature mapping.
-          for (const namespace of node.namespace) {
-            for (const feature of Feature.from(namespace, node.name)) {
-              for (const attribute of feature.attributes(node)) {
-                attributes = attributes.set(attribute.name, attribute);
+            // Second pass: Look up implicit attributes on the feature mapping.
+            for (const namespace of node.namespace) {
+              for (const feature of Feature.from(namespace, node.name)) {
+                for (const attribute of feature.attributes(node)) {
+                  attributes = attributes.set(attribute.name, attribute);
+                }
               }
             }
-          }
 
-          // Third pass: Look up explicit `aria-*` attributes and set the
-          // ones that are either global or supported by the role.
-          for (const { name, value } of node.attributes) {
-            if (Attribute.isName(name)) {
-              const attribute = Attribute.of(name, value);
+            // Third pass: Look up explicit `aria-*` attributes and set the
+            // ones that are either global or supported by the role.
+            for (const { name, value } of node.attributes) {
+              if (Attribute.isName(name)) {
+                const attribute = Attribute.of(name, value);
 
-              if (
-                attribute.isGlobal() ||
-                role.some((role) => role.isAttributeSupported(attribute.name))
-              ) {
-                attributes = attributes.set(name, attribute);
+                if (
+                  attribute.isGlobal() ||
+                  role.some((role) => role.isAttributeSupported(attribute.name))
+                ) {
+                  attributes = attributes.set(name, attribute);
+                }
               }
             }
-          }
 
-          return children().flatMap((children) =>
-            Name.from(node, device).map((name) =>
-              Element.of(node, role, name, attributes.values(), children)
-            )
-          );
-        });
+            // If the element has neither attributes, a role, nor a tabindex, it
+            // is not itself interesting for accessibility purposes. It is
+            // therefore exposed as a container.
+            if (
+              attributes.isEmpty() &&
+              role.isNone() &&
+              node.tabIndex().isNone()
+            ) {
+              return children(state).map((children) =>
+                Container.of(node, children)
+              );
+            }
+
+            return children(state).flatMap((children) =>
+              Name.from(node, device).map((name) =>
+                Element.of(node, role, name, attributes.values(), children)
+              )
+            );
+          });
       }
 
-      // Other nodes are _never_ exposed in the accessibility tree.
-      return children().map((children) => Container.of(node, children));
+      if (dom.Text.isText(node)) {
+        // As elements with `visibility: hidden` are exposed as containers for
+        // other elements that _might_ be visible, we need to check the
+        // visibility of the parent element before deciding to expose the text
+        // node. If the parent element isn't visible, the text node instead
+        // becomes inert.
+        if (!state.isVisible) {
+          return Branched.of(Inert.of(node));
+        }
+
+        return Name.from(node, device).map((name) => Text.of(node, name));
+      }
+
+      const children = Branched.traverse(
+        node
+          .children({ flattened: true })
+          .reject((child) => claimed.has(child)),
+        (child) => fromNode(child, device, claimed, owned, state)
+      );
+
+      return children.map((children) => Container.of(node, children));
     });
   }
 

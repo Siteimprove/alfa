@@ -20,14 +20,12 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.SVG),
-                hasExplicitRole("img", "graphics-document", "graphics-symbol"),
-                not(isIgnored(device))
-              )
+              hasNamespace(Namespace.SVG),
+              hasExplicitRole("img", "graphics-document", "graphics-symbol"),
+              not(isIgnored(device))
             )
           );
       },

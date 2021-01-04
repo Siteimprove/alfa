@@ -3,15 +3,17 @@ import {
   Keyword,
   Length,
   Percentage,
+  Calculation,
   String,
   Number,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { map, either, option, delimited, separatedList } = Parser;
+const { map, filter, either, option, delimited, separatedList } = Parser;
 
 export namespace Font {
   export type Family = Family.Specified;
@@ -67,7 +69,12 @@ export namespace Font {
 
     export type Relative = Keyword<"larger" | "smaller">;
 
-    export type Specified = Absolute | Relative | Length | Percentage;
+    export type Specified =
+      | Absolute
+      | Relative
+      | Length
+      | Percentage
+      | Calculation;
 
     export type Computed = Length<"px">;
   }
@@ -111,24 +118,47 @@ export namespace Font {
    */
   export const Size: Property<Size.Specified, Size.Computed> = Property.of(
     Length.of(16, "px"),
-    either(
-      either(
-        Keyword.parse(
-          "xx-small",
-          "x-small",
-          "small",
-          "medium",
-          "large",
-          "x-large",
-          "xx-large",
-          "xxx-large"
-        ),
-        Keyword.parse("larger", "smaller")
+    either<Slice<Token>, Size.Specified, string>(
+      Keyword.parse(
+        "xx-small",
+        "x-small",
+        "small",
+        "medium",
+        "large",
+        "x-large",
+        "xx-large",
+        "xxx-large"
       ),
-      either(Percentage.parse, Length.parse)
+      Keyword.parse("larger", "smaller"),
+      Percentage.parse,
+      Length.parse,
+      filter(
+        Calculation.parse,
+        ({ expression: { kind } }) =>
+          kind.is("length", 1, true) || kind.is("percentage"),
+        () => `calc() expression must be of type "length" or "percentage"`
+      )
     ),
     (style) =>
       style.specified("font-size").map((size) => {
+        if (size.type === "calculation") {
+          const { expression } = size.reduce((value) => {
+            if (Length.isLength(value)) {
+              return Resolver.length(value, style.parent);
+            }
+
+            if (Percentage.isPercentage(value)) {
+              const parent = style.parent.computed("font-size").value;
+
+              return Length.of(parent.value * value.value, parent.unit);
+            }
+
+            return value;
+          });
+
+          size = expression.toLength().or(expression.toPercentage()).get();
+        }
+
         switch (size.type) {
           case "length":
             return Resolver.length(size, style.parent);

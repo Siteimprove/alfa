@@ -9,6 +9,7 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 - [Goals](#goals)
 - [Usage](#usage)
 - [Integrations](#integrations)
+- [Examples](#examples)
 - [Requirements](#requirements)
 - [Building](#building)
 - [Architecture](#architecture)
@@ -66,13 +67,31 @@ import { Scraper } from "@siteimprove/alfa-scraper";
 
 import rules from "@siteimprove/alfa-rules";
 
-const scraper = await Scraper.of();
+Scraper.with(async (scraper) => {
+  for (const input of await scraper.scrape("http://example.com")) {
+    const outcomes = await Audit.of(input, rules).evaluate();
+  }
+});
+```
 
-for (const input of await scraper.scrape("http://example.com")) {
-  const outcomes = await Audit.of(input, rules).evaluate();
-}
+If you need to audit multiple pages across a site, but don't necessarily know the URL of each page beforehand, Alfa also ships with a crawler that builds on the scraper to discover and scrape linked pages:
 
-scraper.close();
+```ts
+import { Audit } from "@siteimprove/alfa-act";
+import { Frontier } from "@siteimprove/alfa-frontier";
+import { Crawler } from "@siteimprove/alfa-crawler";
+
+import rules from "@siteimprove/alfa-rules";
+
+const frontier = Frontier.of("http://example.com");
+
+Crawler.with(async (crawler) => {
+  for await (const result of crawler.crawl(frontier)) {
+    for (const input of result) {
+      const outcomes = await Audit.of(input, rules).evaluate();
+    }
+  }
+});
 ```
 
 ## Integrations
@@ -91,9 +110,13 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)    | Unexpected accessibility assertions                   |
 | [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                  | Vue integration for supported assertion libraries     |
 
+## Examples
+
+For examples of how to use Alfa in various contexts, such as unit testing, end-to-end testing, and custom scripted testing, take a look at the [@siteimprove/alfa-examples](https://github.com/siteimprove/alfa-examples) repository.
+
 ## Requirements
 
-Alfa will run in any [ECMAScript 2017](https://www.ecma-international.org/ecma-262/8.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is highly reliant on especially data structures introduced in newer versions of ECMAScript.
+Alfa will run in any [ECMAScript 2017](https://www.ecma-international.org/ecma-262/8.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
 
 ## Building
 

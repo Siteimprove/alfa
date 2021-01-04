@@ -13,6 +13,12 @@ test("#map() applies a function to a branched value", (t) => {
   ]);
 });
 
+test("#map() merges mapped values", (t) => {
+  const m = n.map(() => 3);
+
+  t.deepEqual(m.toArray(), [[3, ["foo", "bar"]]]);
+});
+
 test("#flatMap() applies a function to a branched value and flattens the result", (t) => {
   const m = n.flatMap((value) => {
     return Branched.of(value * 2, "foo").branch(value ** 4, "bar");

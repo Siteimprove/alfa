@@ -19,14 +19,12 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("object"),
-                not(isIgnored(device))
-              )
+              hasNamespace(Namespace.HTML),
+              hasName("object"),
+              not(isIgnored(device))
             )
           );
       },

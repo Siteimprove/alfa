@@ -2,6 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -187,16 +188,26 @@ export abstract class Node
    * @see https://dom.spec.whatwg.org/#dom-element-closest
    */
   public closest<T extends Node>(
-    predicate: Predicate<Node, T>,
-    options: Node.Traversal = {}
-  ): Option<T> {
-    if (predicate(this)) {
-      return Option.of(this);
-    }
+    refinement: Refinement<Node, T>,
+    options?: Node.Traversal
+  ): Option<T>;
 
-    return this.parent(options).flatMap((parent) =>
-      parent.closest(predicate, options)
-    );
+  /**
+   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   */
+  public closest(
+    predicate: Predicate<Node>,
+    options?: Node.Traversal
+  ): Option<Node>;
+
+  /**
+   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   */
+  public closest(
+    predicate: Predicate<Node>,
+    options: Node.Traversal = {}
+  ): Option<Node> {
+    return this.inclusiveAncestors(options).find(predicate);
   }
 
   /**
@@ -204,6 +215,86 @@ export abstract class Node
    */
   public textContent(options: Node.Traversal = {}): string {
     return this.descendants(options).filter(Text.isText).join("");
+  }
+
+  /**
+   * Construct a sequence of descendants of this node sorted by tab index. Only
+   * nodes with a non-negative tab index are included in the sequence.
+   *
+   * @see https://html.spec.whatwg.org/#tabindex-value
+   */
+  public tabOrder(): Sequence<Element> {
+    const candidates = (node: Node): Sequence<Element> => {
+      if (Element.isElement(node)) {
+        const element = node;
+
+        const tabIndex = element.tabIndex();
+
+        if (element.shadow.isSome()) {
+          // If the element has a negative tab index and is a shadow host then
+          // none of its descendants will be part of the tab order.
+          if (tabIndex.some((i) => i < 0)) {
+            return Sequence.empty();
+          } else {
+            return Sequence.of(element);
+          }
+        }
+
+        if (element.content.isSome()) {
+          return Sequence.of(element);
+        }
+
+        if (Slot.isSlot(element)) {
+          return Sequence.from(element.assignedNodes()).filter(
+            Element.isElement
+          );
+        }
+
+        if (tabIndex.some((i) => i >= 0)) {
+          return Sequence.of(
+            element,
+            Lazy.of(() => element.children().flatMap(candidates))
+          );
+        }
+      }
+
+      return node.children().flatMap(candidates);
+    };
+
+    return candidates(this)
+      .sortWith((a, b) =>
+        a.tabIndex().compareWith(b.tabIndex(), (a, b) => {
+          if (a === 0) {
+            return b === 0 ? 0 : 1;
+          }
+
+          if (b === 0) {
+            return -1;
+          }
+
+          return a < b ? -1 : a > b ? 1 : 0;
+        })
+      )
+      .flatMap((element) => {
+        const tabIndex = element.tabIndex();
+
+        for (const shadow of element.shadow) {
+          if (tabIndex.some((i) => i >= 0)) {
+            return Sequence.of(
+              element,
+              Lazy.of(() => shadow.tabOrder())
+            );
+          } else {
+            return shadow.tabOrder();
+          }
+        }
+
+        for (const content of element.content) {
+          return content.tabOrder();
+        }
+
+        return Sequence.of(element);
+      });
   }
 
   /**
@@ -296,9 +387,9 @@ import { Comment } from "./node/comment";
 import { Document } from "./node/document";
 import { Element } from "./node/element";
 import { Fragment } from "./node/fragment";
-import { Shadow } from "./node/shadow";
 import { Text } from "./node/text";
 import { Type } from "./node/type";
+import { Slot } from "./node/slot";
 
 export namespace Node {
   export interface JSON {

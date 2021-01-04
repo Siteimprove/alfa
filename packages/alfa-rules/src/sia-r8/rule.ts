@@ -20,26 +20,24 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasRole(
-                  "checkbox",
-                  "combobox",
-                  "listbox",
-                  "menuitemcheckbox",
-                  "menuitemradio",
-                  "radio",
-                  "searchbox",
-                  "slider",
-                  "spinbutton",
-                  "switch",
-                  "textbox"
-                ),
-                not(isIgnored(device))
-              )
+              hasNamespace(Namespace.HTML),
+              hasRole(
+                "checkbox",
+                "combobox",
+                "listbox",
+                "menuitemcheckbox",
+                "menuitemradio",
+                "radio",
+                "searchbox",
+                "slider",
+                "spinbutton",
+                "switch",
+                "textbox"
+              ),
+              not(isIgnored(device))
             )
           );
       },

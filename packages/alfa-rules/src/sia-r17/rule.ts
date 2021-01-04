@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -10,7 +11,8 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasInclusiveDescendant } from "../common/predicate/has-inclusive-descendant";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
-const { and, not, equals } = Predicate;
+const { not, equals } = Predicate;
+const { and } = Refinement;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -20,9 +22,8 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(
-            and(Element.isElement, hasAttribute("aria-hidden", equals("true")))
-          );
+          .filter(isElement)
+          .filter(hasAttribute("aria-hidden", equals("true")));
       },
 
       expectations(target) {

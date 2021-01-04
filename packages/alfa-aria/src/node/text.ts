@@ -6,20 +6,20 @@ import { Name } from "../name";
 import { Node } from "../node";
 
 export class Text extends Node {
-  public static of(owner: dom.Node, name: Name): Text {
+  public static of(owner: dom.Node, name: Option<Name>): Text {
     return new Text(owner, name);
   }
 
-  private readonly _name: Name;
+  private readonly _name: Option<Name>;
 
-  private constructor(owner: dom.Node, name: Name) {
+  private constructor(owner: dom.Node, name: Option<Name>) {
     super(owner, []);
 
     this._name = name;
   }
 
   public get name(): Option<Name> {
-    return Option.of(this._name);
+    return this._name;
   }
 
   public clone(): Text {
@@ -33,7 +33,7 @@ export class Text extends Node {
   public toJSON(): Text.JSON {
     return {
       type: "text",
-      name: this._name.value,
+      name: this._name.map((name) => name.value).getOr(null),
       children: this._children.map((child) => child.toJSON()),
     };
   }
@@ -46,6 +46,6 @@ export class Text extends Node {
 export namespace Text {
   export interface JSON extends Node.JSON {
     type: "text";
-    name: string;
+    name: string | null;
   }
 }

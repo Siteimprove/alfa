@@ -7,12 +7,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasInputType } from "../common/predicate/has-input-type";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { isElement, hasNamespace } = Element;
-const { and, not, equals } = Predicate;
+const { isElement, hasInputType, hasNamespace } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r12.html",
@@ -21,15 +20,13 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                not(hasInputType(equals("image"))),
-                hasNamespace(Namespace.HTML),
-                hasRole("button"),
-                not(isIgnored(device))
-              )
+              not(hasInputType("image")),
+              hasNamespace(Namespace.HTML),
+              hasRole("button"),
+              not(isIgnored(device))
             )
           );
       },

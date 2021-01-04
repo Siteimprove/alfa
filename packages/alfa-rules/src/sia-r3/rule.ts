@@ -12,7 +12,8 @@ import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r3.html",
@@ -22,7 +23,8 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(and(Element.isElement, hasId(not(isEmpty))));
+          .filter(isElement)
+          .filter(hasId(not(isEmpty)));
       },
 
       expectations(target) {

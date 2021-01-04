@@ -1,3 +1,6 @@
+import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import { Hash } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
@@ -14,6 +17,8 @@ export const Nil: Nil = new (class Nil {
   public isEmpty(): this is Sequence<never> {
     return true;
   }
+
+  public forEach(): void {}
 
   public map(): Nil {
     return this;
@@ -57,6 +62,10 @@ export const Nil: Nil = new (class Nil {
 
   public some(): boolean {
     return false;
+  }
+
+  public none(): boolean {
+    return true;
   }
 
   public every(): boolean {
@@ -159,15 +168,36 @@ export const Nil: Nil = new (class Nil {
     return Map.empty();
   }
 
+  public subtract(): Nil {
+    return this;
+  }
+
+  public intersect(): Nil {
+    return this;
+  }
+
   public join(): string {
     return "";
+  }
+
+  public sortWith(): Nil {
+    return this;
+  }
+
+  public compareWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
+  ): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
   }
 
   public equals(value: unknown): value is this {
     return value instanceof Nil;
   }
 
-  public hash(): void {}
+  public hash(hash: Hash): void {
+    Hash.writeUint32(hash, 0);
+  }
 
   public *iterator(): Iterator<never> {}
 

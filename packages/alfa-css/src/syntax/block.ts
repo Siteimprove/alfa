@@ -3,14 +3,14 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Result } from "@siteimprove/alfa-result";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { or } = Predicate;
+const { or } = Refinement;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#simple-block
@@ -111,22 +111,12 @@ export namespace Block {
 
     const value: Array<Token> = [];
 
-    let isEndingToken: Predicate<Token, Block.Close>;
-
-    if (Token.isOpenParenthesis(token)) {
-      isEndingToken = Token.isCloseParenthesis;
-    } else if (Token.isOpenSquareBracket(token)) {
-      isEndingToken = Token.isOpenSquareBracket;
-    } else {
-      isEndingToken = Token.isCloseCurlyBracket;
-    }
-
     input = input.slice(1);
 
     while (input.length > 0) {
       const next = input.get(0).get();
 
-      if (isEndingToken(next)) {
+      if (next.type === token.mirror.type) {
         input = input.slice(1);
         break;
       }

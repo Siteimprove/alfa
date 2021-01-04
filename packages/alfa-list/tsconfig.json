@@ -7,7 +7,13 @@
       "path": "../alfa-bits"
     },
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-comparable"
     },
     {
       "path": "../alfa-equatable"
@@ -38,6 +44,9 @@
     },
     {
       "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-set"
