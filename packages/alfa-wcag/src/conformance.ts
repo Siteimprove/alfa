@@ -1,4 +1,5 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Criterion } from "./criterion";
 
@@ -36,8 +37,8 @@ export namespace Conformance {
    */
   export function isA<
     V extends Criterion.Version = Criterion.Version.Recommendation
-  >(version?: V): Predicate<Criterion, Criterion<A<V>>> {
-    return hasLevel("A", version);
+  >(version?: V): Refinement<Criterion, Criterion<A<V>>> {
+    return hasLevel("A", version) as Refinement<Criterion, Criterion<A<V>>>;
   }
 
   /**
@@ -53,8 +54,8 @@ export namespace Conformance {
    */
   export function isAA<
     V extends Criterion.Version = Criterion.Version.Recommendation
-  >(version?: V): Predicate<Criterion, Criterion<A<V>>> {
-    return hasLevel("AA", version);
+  >(version?: V): Refinement<Criterion, Criterion<AA<V>>> {
+    return hasLevel("AA", version) as Refinement<Criterion, Criterion<AA<V>>>;
   }
 
   /**
@@ -70,7 +71,7 @@ export namespace Conformance {
    */
   export function isAAA<
     V extends Criterion.Version = Criterion.Version.Recommendation
-  >(version?: V): Predicate<Criterion, Criterion<A<V>>> {
-    return hasLevel("AAA", version);
+  >(version?: V): Refinement<Criterion, Criterion<AAA<V>>> {
+    return hasLevel("AAA", version) as Refinement<Criterion, Criterion<AAA<V>>>;
   }
 }
