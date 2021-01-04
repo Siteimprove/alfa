@@ -7,6 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -28,6 +29,7 @@ const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r81.html",
+  requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9")],
   evaluate({ device, document, response }) {
     return {
       applicability() {

@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { some } from "@siteimprove/alfa-trilean";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -14,6 +15,12 @@ import R31 from "../sia-r31/rule";
 
 export default Rule.Composite.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r27.html",
+  requirements: [
+    Criterion.of("1.2.2"),
+    Technique.of("G87"),
+    Technique.of("G93"),
+    Technique.of("H95"),
+  ],
   composes: [R22, R31],
   evaluate: () => {
     return {
