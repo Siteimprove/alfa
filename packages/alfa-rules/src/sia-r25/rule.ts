@@ -1,7 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
-import { Criterion, Technique } from "@siteimprove/alfa-wcag";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";

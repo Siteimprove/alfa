@@ -21,6 +21,7 @@ const property = "word-spacing";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r92.html",
+  requirements: [Criterion.of("1.4.12")],
   evaluate({ device, document }) {
     return {
       applicability() {

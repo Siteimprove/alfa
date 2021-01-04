@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Criterion, Technique } from "@siteimprove/alfa-wcag";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -21,6 +21,7 @@ const property = "line-height";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r93.html",
+  requirements: [Criterion.of("1.4.12")],
   evaluate({ device, document }) {
     return {
       applicability() {
