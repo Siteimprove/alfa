@@ -14,6 +14,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -36,6 +37,7 @@ const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r69.html",
+  requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
   evaluate({ device, document }) {
     return {
       applicability() {

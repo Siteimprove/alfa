@@ -194,13 +194,15 @@ export class Style implements Serializable {
 
     return this.cascaded(name)
       .map((cascaded) => {
+        // If we have a cascade value, act upon it.
+        // In these cases, `initial`/`unset` have been explicitly set and their source is needed.
         const { value, source } = cascaded;
 
         if (Keyword.isKeyword(value)) {
           switch (value.value) {
             // https://drafts.csswg.org/css-cascade/#initial
             case "initial":
-              return this.initial(name);
+              return this.initial(name, source);
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
@@ -208,13 +210,18 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
-              return inherits ? this.inherited(name) : this.initial(name);
+              return inherits
+                ? this.inherited(name)
+                : this.initial(name, source);
           }
         }
 
         return Value.of(value, source);
       })
       .getOrElse(() => {
+        // If we don't have a cascade value, take the initial or parent value depending whether
+        // this is an inherited property.
+        // In these case, `initial` is a fallback value and has no source per se.
         if (inherits === false) {
           return this.initial(name);
         }
@@ -235,8 +242,11 @@ export class Style implements Serializable {
     ) as Value<Style.Computed<N>>;
   }
 
-  public initial<N extends Name>(name: N): Value<Style.Initial<N>> {
-    return Value.of(Property.get(name).initial as Style.Computed<N>);
+  public initial<N extends Name>(
+    name: N,
+    source: Option<Declaration> = None
+  ): Value<Style.Initial<N>> {
+    return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
   public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {

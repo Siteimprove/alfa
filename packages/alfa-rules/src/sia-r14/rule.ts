@@ -3,6 +3,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -23,6 +24,7 @@ const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
+  requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
   evaluate({ device, document }) {
     return {
       applicability() {

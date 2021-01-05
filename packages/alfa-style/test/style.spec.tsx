@@ -860,3 +860,21 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
     source: h.declaration("color", "red").toJSON(),
   });
 });
+
+test(`#specified() keeps the !important flag of properties set to initial`, (t) => {
+  const element = <div style={{ backgroundColor: "initial !important" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.specified("background-color").toJSON(), {
+    value: {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 0 },
+      green: { type: "percentage", value: 0 },
+      blue: { type: "percentage", value: 0 },
+      alpha: { type: "percentage", value: 0 },
+    },
+    source: { name: "background-color", value: "initial", important: true },
+  });
+});

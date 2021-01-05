@@ -87,6 +87,7 @@
     { "path": "alfa-unexpected" },
     { "path": "alfa-url" },
     { "path": "alfa-vue" },
+    { "path": "alfa-wcag" },
     { "path": "alfa-web" },
     { "path": "alfa-webdriver" },
     { "path": "alfa-xpath" }

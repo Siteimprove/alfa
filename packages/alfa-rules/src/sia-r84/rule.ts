@@ -5,6 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -18,6 +19,11 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r84.html",
+  requirements: [
+    Criterion.of("2.1.1"),
+    Criterion.of("2.1.3"),
+    Technique.of("G202"),
+  ],
   evaluate({ device, document }) {
     return {
       applicability() {

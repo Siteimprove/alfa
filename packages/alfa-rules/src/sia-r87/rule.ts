@@ -3,6 +3,7 @@ import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { URL } from "@siteimprove/alfa-url";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -21,6 +22,7 @@ const { hasName, isElement } = Element;
 
 export default Rule.Atomic.of<Page, Document, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r87.html",
+  requirements: [Technique.of("G1")],
   evaluate({ device, document, response }) {
     return {
       applicability() {
