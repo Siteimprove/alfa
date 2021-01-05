@@ -179,11 +179,13 @@ export namespace Property {
 
 import { Background } from "./property/background";
 import { Box } from "./property/box";
+import { Clip } from "./property/clip";
 import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
 import { Height } from "./property/height";
 import { Inset } from "./property/box-insets";
+import { LetterSpacing } from "./property/letter-spacing";
 import { Line } from "./property/line";
 import { Opacity } from "./property/opacity";
 import { Outline } from "./property/outline";
@@ -194,7 +196,7 @@ import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 import { Whitespace } from "./property/whitespace";
 import { Width } from "./property/width";
-import { Clip } from "./property/clip";
+import { WordSpacing } from "./property/word-spacing";
 
 type Longhands = typeof Longhands;
 const Longhands = {
@@ -223,6 +225,7 @@ const Longhands = {
   "inset-line-end": Inset.Line.End,
   "inset-line-start": Inset.Line.Start,
   left: Inset.Left,
+  "letter-spacing": LetterSpacing,
   "line-height": Line.Height,
   opacity: Opacity,
   "outline-width": Outline.Width,
@@ -245,6 +248,7 @@ const Longhands = {
   visibility: Visibility,
   "white-space": Whitespace,
   width: Width,
+  "word-spacing": WordSpacing,
 };
 
 type Shorthands = typeof Shorthands;

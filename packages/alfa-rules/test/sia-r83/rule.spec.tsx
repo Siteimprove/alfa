@@ -60,7 +60,13 @@ test(`evaluate() passes a text node that hides overflow by wrapping text using
   const target = h.text("Hello world");
 
   const document = Document.of([
-    <div style={{ overflow: "hidden", height: "1.5em", lineHeight: "1.5" }}>
+    <div
+      style={{
+        overflow: "hidden",
+        height: "1.5em",
+        lineHeight: "1.5",
+      }}
+    >
       {target}
     </div>,
   ]);
@@ -77,7 +83,14 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
   const target = h.text("Hello world");
 
   const document = Document.of([
-    <div style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{target}</div>,
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {target}
+    </div>,
   ]);
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -93,7 +106,13 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
   const target = h.text("Hello world");
 
   const document = Document.of([
-    <div style={{ overflow: "hidden", height: "1.5em", lineHeight: "1.2" }}>
+    <div
+      style={{
+        overflow: "hidden",
+        height: "1.5em",
+        lineHeight: "1.2",
+      }}
+    >
       {target}
     </div>,
   ]);
@@ -107,7 +126,13 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
 
 test("evaluate() is inapplicable to a text node that is not visible", async (t) => {
   const document = Document.of([
-    <div style={{ overflow: "hidden", whiteSpace: "nowrap" }} hidden>
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+      }}
+      hidden
+    >
       Hello world
     </div>,
   ]);
@@ -119,7 +144,10 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
       accessibility tree using the \`aria-hidden\` attribute`, async (t) => {
   const document = Document.of([
     <div
-      style={{ overflow: "hidden", whiteSpace: "nowrap" }}
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+      }}
       aria-hidden="true"
     >
       Hello world
@@ -129,16 +157,15 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
-test(`evaluate() passes a text node with hidden overflow, a fixed line height,
-      and a fixed width, but with a flexible height`, async (t) => {
-  const target = h.text("Hello world");
+test("evaluates() fails a clipped node with `normal` line-height", async (t) => {
+  const target = h.text("Hello World");
 
   const document = Document.of([
     <div
       style={{
         overflow: "hidden",
-        width: "80ch",
-        lineHeight: "18px",
+        height: "1.5em",
+        fontSize: "16px",
       }}
     >
       {target}
@@ -146,8 +173,22 @@ test(`evaluate() passes a text node with hidden overflow, a fixed line height,
   ]);
 
   t.deepEqual(await evaluate(R83, { document }), [
-    passed(R83, target, {
-      1: Outcomes.WrapsText,
-    }),
+    failed(R83, target, { 1: Outcomes.ClipsText }),
   ]);
+});
+
+test(`evaluate() is inapplicable to a text node with a fixed width and hidden
+      overflow`, async (t) => {
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        width: "80ch",
+      }}
+    >
+      Hello world
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });

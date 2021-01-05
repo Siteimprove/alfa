@@ -1,4 +1,5 @@
-import { Comparer } from "@siteimprove/alfa-comparable";
+import { Callback } from "@siteimprove/alfa-callback";
+import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -29,7 +30,6 @@ export class Cons<T> implements Sequence<T> {
 
   private readonly _head: T;
   private readonly _tail: Lazy<Sequence<T>>;
-  private _size: Option<number> = None;
 
   private constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
@@ -37,15 +37,15 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public get size(): number {
-    if (this._size.isNone()) {
-      this._size = Option.of(1 + this._tail.force().size);
-    }
-
-    return this._size.get();
+    return Iterable.size(this);
   }
 
   public isEmpty(): this is Sequence<never> {
     return false;
+  }
+
+  public forEach(callback: Callback<T, void, [number]>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
@@ -273,6 +273,10 @@ export class Cons<T> implements Sequence<T> {
         return false;
       }
     }
+  }
+
+  public none(predicate: Predicate<T, [number]>): boolean {
+    return this.every(not(predicate));
   }
 
   public every(predicate: Predicate<T, [number]>): boolean {
@@ -510,6 +514,10 @@ export class Cons<T> implements Sequence<T> {
 
   public sortWith(comparer: Comparer<T>): Sequence<T> {
     return Sequence.from(Iterable.sortWith(this, comparer));
+  }
+
+  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
   }
 
   public groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>> {

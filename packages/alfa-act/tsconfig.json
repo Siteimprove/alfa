@@ -10,7 +10,9 @@
     "src/oracle.ts",
     "src/outcome.ts",
     "src/question.ts",
-    "src/rule.ts"
+    "src/requirement.ts",
+    "src/rule.ts",
+    "src/tag.ts"
   ],
   "references": [
     {

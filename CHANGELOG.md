@@ -21,6 +21,36 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-array](packages/alfa-array): A new package has been added with functionality for working with arrays.
+
+- [@siteimprove/alfa-callback](packages/alfa-callback): `Callback<T, R>` now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.forEach()`, `Iterable.none()`, `Iterable.compare()`, `Iterable.compareWith()`, and `Iterable.toJSON()` are now available.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-branched](alfa-branched), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Collection#forEach()` and `Collection#none()` are now available and implemented by `Branched`, `List`, `Map`, `Set`, and `Sequence`.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#compareWith()` is now available and implemented by `List` and `Sequence`. In addition, `Collection.sort()`, `Collection.compare()`, `List.compare()`, and `Sequence.compare()` are also available.
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option.compare()` is now available.
+
+- [@siteimprove/alfa-clone](packages/alfa-clone): `Clone.clone()` is now available.
+
+- [@siteimprove/alfa-json](packages/alfa-json): `Serializable` now accepts a type parameter, `T extends JSON`, denoting the precise JSON type that implementations serialize to.
+
+- [@siteimprove/alfa-earl](packages/alfa-earl): `Serializable` now accepts a type parameter, `T extends EARL`, denoting the precise EARL type that implementations serialize to.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.compare()` now provides overloads for `string`, `number`, `bigint`, and `boolean` in addition to `Comparable<T>`.
+
+### Changed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): The `context` argument in `Selector#matches()` is now optional.
+
+### Fixed
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence): `Sequence#size` is now stack safe and no longer overflows for long sequences.
+
 ## [0.7.0](../../compare/v0.6.0...v0.7.0) (2020-11-20)
 
 ### Breaking
@@ -65,7 +95,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`. `Result#includes()`, `Result#includesErr()`, `Result#some()`, `Result#someErr()`, `Result#none()`, `Result#noneErr()`, `Result#every()`, and `Result#everyErr()` are now also available.
 
-- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable#takeLastWhile()`, `Iterable#takeLastUntil()`, `Iterable#skipLastWhile()`, `Iterable#skipLastUntil()`, `Iterable#trimLeading()`, `Iterable#trimTrailing()`, `Iterable#trim()`, `Iterable#hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.takeLastWhile()`, `Iterable.takeLastUntil()`, `Iterable.skipLastWhile()`, `Iterable.skipLastUntil()`, `Iterable.trimLeading()`, `Iterable.trimTrailing()`, `Iterable.trim()`, `Iterable.hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
 
 - [@siteimprove/alfa-comparable](packages/alfa-comparable): A `Comparer` type is now available for modelling functions that do comparisons. A new function `Comparable.isComparable()` is now also available.
 

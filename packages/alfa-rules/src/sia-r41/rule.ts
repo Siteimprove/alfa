@@ -7,6 +7,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -25,6 +26,7 @@ const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
+  requirements: [Criterion.of("2.4.9")],
   evaluate({ device, document, response }) {
     return {
       applicability() {

@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
@@ -10,6 +11,7 @@ import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r34.html",
+  requirements: [Technique.of("H96")],
   evaluate({ device, document }) {
     return {
       applicability() {

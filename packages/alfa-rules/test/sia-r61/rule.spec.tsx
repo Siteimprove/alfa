@@ -61,3 +61,16 @@ test("evaluate() is inapplicable when there is no heading", async (t) => {
 
   t.deepEqual(await evaluate(R61, { document }), [inapplicable(R61)]);
 });
+
+test("evaluate() skips headings that are not exposed to assistive technologies", async (t) => {
+  const document = Document.of([
+    <html>
+      <h2 aria-hidden="true">Now you can't see me</h2>
+      <h1>Now you can.</h1>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R61, { document }), [
+    passed(R61, document, { 1: Outcomes.StartWithLevel1Heading }),
+  ]);
+});

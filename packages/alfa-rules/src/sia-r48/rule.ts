@@ -3,7 +3,8 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -19,6 +20,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r48.html",
+  requirements: [Technique.of("G60")],
   evaluate({ document }) {
     return {
       applicability() {

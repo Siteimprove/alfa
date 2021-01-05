@@ -1,5 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
-import { Comparison, Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -14,6 +14,8 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { None } from "./none";
 import { Some } from "./some";
+
+const { compareComparable } = Comparable;
 
 export interface Option<T>
   extends Functor<T>,
@@ -73,5 +75,12 @@ export namespace Option {
 
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Option<T>,
+    b: Option<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

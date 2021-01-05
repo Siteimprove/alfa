@@ -3,6 +3,7 @@ import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { URL } from "@siteimprove/alfa-url";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -21,6 +22,7 @@ const { hasName, isElement } = Element;
 
 export default Rule.Atomic.of<Page, Document, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r87.html",
+  requirements: [Technique.of("G1")],
   evaluate({ device, document, response }) {
     return {
       applicability() {
@@ -82,12 +84,6 @@ export default Rule.Atomic.of<Page, Document, Question>({
 
         return {
           1: expectation(
-            element.isSome(),
-            () => Outcomes.HasTabbable,
-            () => Outcomes.HasNoTabbable
-          ),
-
-          2: expectation(
             element.isNone(),
             () => Outcomes.HasNoTabbable,
             () =>
@@ -155,10 +151,6 @@ export default Rule.Atomic.of<Page, Document, Question>({
 });
 
 export namespace Outcomes {
-  export const HasTabbable = Ok.of(
-    Diagnostic.of(`The document has at least one tabbable descendant`)
-  );
-
   export const HasNoTabbable = Err.of(
     Diagnostic.of(`The document has no tabbable descendants`)
   );
