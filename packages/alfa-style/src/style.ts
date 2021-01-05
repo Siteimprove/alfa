@@ -7,7 +7,7 @@ import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
@@ -194,13 +194,14 @@ export class Style implements Serializable {
 
     return this.cascaded(name)
       .map((cascaded) => {
+        // If we have a cascade value, act upon it
         const { value, source } = cascaded;
 
         if (Keyword.isKeyword(value)) {
           switch (value.value) {
             // https://drafts.csswg.org/css-cascade/#initial
             case "initial":
-              return this.initial(name);
+              return this.initial(name, source);
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
@@ -208,13 +209,17 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
-              return inherits ? this.inherited(name) : this.initial(name);
+              return inherits
+                ? this.inherited(name)
+                : this.initial(name, source);
           }
         }
 
         return Value.of(value, source);
       })
       .getOrElse(() => {
+        // If we don't have a cascade value, take the initial or parent value depending whether
+        // this is an inherited property
         if (inherits === false) {
           return this.initial(name);
         }
@@ -235,8 +240,11 @@ export class Style implements Serializable {
     ) as Value<Style.Computed<N>>;
   }
 
-  public initial<N extends Name>(name: N): Value<Style.Initial<N>> {
-    return Value.of(Property.get(name).initial as Style.Computed<N>);
+  public initial<N extends Name>(
+    name: N,
+    source: Option<Declaration> = None
+  ): Value<Style.Initial<N>> {
+    return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
   public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
