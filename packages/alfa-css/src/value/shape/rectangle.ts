@@ -10,6 +10,11 @@ import { Token } from "../../syntax/token";
 
 const { either, left, pair, peek, option, right, separatedList } = Parser;
 
+/**
+ * @see https://drafts.fxtf.org/css-masking/#funcdef-clip-rect
+ * The deprecated Rectangle is used in the deprecated clip property.
+ * It has been superseded by the Inset shape, but differences are large enough that keeping a separate shape is easier.
+ */
 export class Rectangle extends Value<"shape"> {
   public static of(
     top: Length | Keyword<"auto">,
