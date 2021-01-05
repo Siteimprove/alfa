@@ -271,6 +271,9 @@
       "path": "../alfa-url"
     },
     {
+      "path": "../alfa-wcag"
+    },
+    {
       "path": "../alfa-web"
     }
   ]

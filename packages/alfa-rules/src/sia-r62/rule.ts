@@ -4,6 +4,7 @@ import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -17,10 +18,11 @@ import { Question } from "../common/question";
 
 const { isElement, hasName } = Element;
 const { isText } = Text;
-const { and, or, not, test } = Predicate;
+const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r62.html",
+  requirements: [Criterion.of("1.4.1")],
   evaluate({ device, document }) {
     return {
       applicability() {
