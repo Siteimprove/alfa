@@ -861,7 +861,7 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
   });
 });
 
-test(`#specified() keeps the !important flag of propertiesset to initial`, (t) => {
+test(`#specified() keeps the !important flag of properties set to initial`, (t) => {
   const element = <div style={{ backgroundColor: "initial !important" }}></div>;
 
   const style = Style.from(element, device);

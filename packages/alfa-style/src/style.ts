@@ -7,7 +7,7 @@ import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
@@ -194,7 +194,8 @@ export class Style implements Serializable {
 
     return this.cascaded(name)
       .map((cascaded) => {
-        // If we have a cascade value, act upon it
+        // If we have a cascade value, act upon it.
+        // In these cases, `initial`/`unset` have been explicitly set and their source is needed.
         const { value, source } = cascaded;
 
         if (Keyword.isKeyword(value)) {
@@ -219,7 +220,8 @@ export class Style implements Serializable {
       })
       .getOrElse(() => {
         // If we don't have a cascade value, take the initial or parent value depending whether
-        // this is an inherited property
+        // this is an inherited property.
+        // In these case, `initial` is a fallback value and has no source per se.
         if (inherits === false) {
           return this.initial(name);
         }
