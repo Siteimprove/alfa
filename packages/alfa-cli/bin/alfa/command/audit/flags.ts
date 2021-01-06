@@ -37,4 +37,12 @@ export const Flags = {
     .choices("passed", "failed", "inapplicable", "cantTell")
     .repeatable()
     .optional(),
+
+  profile: Flag.string(
+    "profile",
+    `The path to write a CPU profile of the audit to. If no path is provided, no
+    CPU profile is made.`
+  )
+    .type("path")
+    .optional(),
 };

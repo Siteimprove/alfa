@@ -13,6 +13,7 @@ import { Page } from "@siteimprove/alfa-web";
 import rules from "@siteimprove/alfa-rules";
 
 import { Oracle } from "../../oracle";
+import { profile } from "../../profile";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
@@ -59,7 +60,14 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     flags.interactive ? Oracle(page) : undefined
   );
 
-  let outcomes = await audit.evaluate();
+  let outcomes = flags.profile.isNone()
+    ? await audit.evaluate()
+    : await profile(
+        async () => await audit.evaluate(),
+        (profile) => {
+          fs.writeFileSync(flags.profile.get(), JSON.stringify(profile) + "\n");
+        }
+      );
 
   if (flags.outcomes.isSome()) {
     const filter = new Set(flags.outcomes.get());
