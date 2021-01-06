@@ -16,7 +16,7 @@
     "bin/alfa/command/scrape/flags.ts",
     "bin/alfa/command/scrape/run.ts",
     "bin/alfa/oracle.ts",
-    "bin/alfa/profile.ts"
+    "bin/alfa/profiler.ts"
   ],
   "references": [
     {

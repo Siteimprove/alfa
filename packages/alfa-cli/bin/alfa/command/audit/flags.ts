@@ -40,8 +40,16 @@ export const Flags = {
 
   cpuProfile: Flag.string(
     "cpu-profile",
-    `The path to write a CPU profile of the audit to. If no path is provided, no
-    CPU profile is made.`
+    `The path to write a CPU profile of the audit to. If no path is provided,
+    no CPU profile is made.`
+  )
+    .type("path")
+    .optional(),
+
+  heapProfile: Flag.string(
+    "heap-profile",
+    `The path to write a heap profile of the audit to. If no path is provided,
+    no heap profile is made.`
   )
     .type("path")
     .optional(),

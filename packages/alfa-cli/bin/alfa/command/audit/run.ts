@@ -13,7 +13,7 @@ import { Page } from "@siteimprove/alfa-web";
 import rules from "@siteimprove/alfa-rules";
 
 import { Oracle } from "../../oracle";
-import { profile } from "../../profile";
+import { Profiler } from "../../profiler";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
@@ -60,17 +60,23 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     flags.interactive ? Oracle(page) : undefined
   );
 
-  let outcomes = flags.cpuProfile.isNone()
-    ? await audit.evaluate()
-    : await profile(
-        async () => await audit.evaluate(),
-        (profile) => {
-          fs.writeFileSync(
-            flags.cpuProfile.get(),
-            JSON.stringify(profile) + "\n"
-          );
-        }
-      );
+  for (const _ of flags.cpuProfile) {
+    await Profiler.CPU.start();
+  }
+
+  for (const _ of flags.heapProfile) {
+    await Profiler.Heap.start();
+  }
+
+  let outcomes = await audit.evaluate();
+
+  for (const path of flags.cpuProfile) {
+    fs.writeFileSync(path, JSON.stringify(await Profiler.CPU.stop()) + "\n");
+  }
+
+  for (const path of flags.heapProfile) {
+    fs.writeFileSync(path, JSON.stringify(await Profiler.Heap.stop()) + "\n");
+  }
 
   if (flags.outcomes.isSome()) {
     const filter = new Set(flags.outcomes.get());
