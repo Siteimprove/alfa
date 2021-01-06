@@ -1785,7 +1785,14 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/puppeteer@^5.4.0":
+"@types/puppeteer-core@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer-core/-/puppeteer-core-5.4.0.tgz#880a7917b4ede95cbfe2d5e81a558cfcb072c0fb"
+  integrity sha512-yqRPuv4EFcSkTyin6Yy17pN6Qz2vwVwTCJIDYMXbE3j8vTPhv0nCQlZOl5xfi0WHUkqvQsjAR8hAfjeMCoetwg==
+  dependencies:
+    "@types/puppeteer" "*"
+
+"@types/puppeteer@*", "@types/puppeteer@^5.4.0":
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-5.4.2.tgz#80f3a1f54dedbbf750779716de81401549062072"
   integrity sha512-yjbHoKjZFOGqA6bIEI2dfBE5UPqU0YGWzP+ipDVP1iGzmlhksVKTBVZfT3Aj3wnvmcJ2PQ9zcncwOwyavmafBw==
@@ -8965,10 +8972,11 @@ webdriver@6.11.0:
     lodash.merge "^4.6.1"
 
 webdriverio@^6.4.4:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.11.0.tgz#09761b80395e5a9a745391e7b7a6c7c82dd32465"
-  integrity sha512-8tK3+H6OQP1/17xjNd/u14mgMyy4Iw9QIOOlA0bzVc8flYYfhzs2Z+uKKPT9NtrfeoJOvDa9ms7nq7o0QtcmEg==
+  version "6.11.3"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.11.3.tgz#043bc98514d7410264fbf14991bc0546fa119779"
+  integrity sha512-yHS01H0+oz59Y+JLj/u8piLzOhtTiQSeASwb3hHF1EDuIiiK6JgGYFAqCYr26BrlzqzUOQ/9VpJj11LtcKWF/A==
   dependencies:
+    "@types/puppeteer-core" "^5.4.0"
     "@wdio/config" "6.11.0"
     "@wdio/logger" "6.10.10"
     "@wdio/repl" "6.11.0"
