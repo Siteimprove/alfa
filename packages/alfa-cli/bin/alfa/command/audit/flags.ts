@@ -38,8 +38,8 @@ export const Flags = {
     .repeatable()
     .optional(),
 
-  profile: Flag.string(
-    "profile",
+  cpuProfile: Flag.string(
+    "cpu-profile",
     `The path to write a CPU profile of the audit to. If no path is provided, no
     CPU profile is made.`
   )

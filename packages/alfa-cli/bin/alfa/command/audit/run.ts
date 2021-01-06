@@ -60,12 +60,15 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     flags.interactive ? Oracle(page) : undefined
   );
 
-  let outcomes = flags.profile.isNone()
+  let outcomes = flags.cpuProfile.isNone()
     ? await audit.evaluate()
     : await profile(
         async () => await audit.evaluate(),
         (profile) => {
-          fs.writeFileSync(flags.profile.get(), JSON.stringify(profile) + "\n");
+          fs.writeFileSync(
+            flags.cpuProfile.get(),
+            JSON.stringify(profile) + "\n"
+          );
         }
       );
 
