@@ -88,7 +88,7 @@ export class Table implements Equatable, Serializable<Table.JSON> {
     return {
       element: this._element.path(),
       cells: Array.toJSON(this._cells),
-      groups: Array.toJSON<Group.JSON>(this._groups),
+      groups: Array.toJSON(this._groups),
     };
   }
 }
