@@ -3,9 +3,9 @@
 
 
 "@angular/core@^11.0.0":
-  version "11.0.5"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-11.0.5.tgz#b8c448c3cd4f6dae7327cc1ba4ee2aa29c8dbc26"
-  integrity sha512-XAXWQi7R3ucZXQwx9QK5jSKJeQyRJ53u2dQDpr7R5stzeCy1a5hrNOkZLg9zOTTPcth/6+FrOrRZP9SMdxtw3w==
+  version "11.0.6"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-11.0.6.tgz#1b6521c3b784a185272f2bf9b90b64aa48da6600"
+  integrity sha512-npPTnFDldcxuDKFg5fJaFOsWvP4DjCRU2pOk83ck8XTzLwvkD3jfn4zPTpvYSFFyxvXHb2IPTMjx8Jy0AZoVvA==
   dependencies:
     tslib "^2.0.0"
 
