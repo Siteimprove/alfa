@@ -1,6 +1,6 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -64,10 +64,10 @@ export namespace Trampoline {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap((value) =>
-          values.map((values) => values.append(value))
+        values.flatMap((values) =>
+          mapper(value).map((value) => Array.append(values, value))
         ),
-      done(List.empty())
+      done(Array.empty())
     );
   }
 
