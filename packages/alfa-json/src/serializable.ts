@@ -20,8 +20,8 @@ export interface Serializable<T extends JSON = JSON> {
 }
 
 export namespace Serializable {
-  export type ToJSON<T> = T extends Serializable<infer T>
-    ? T
+  export type ToJSON<T> = T extends Serializable<infer U>
+    ? U
     : T extends JSON
     ? T
     : JSON;
