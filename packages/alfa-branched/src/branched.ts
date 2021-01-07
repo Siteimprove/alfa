@@ -1,4 +1,3 @@
-import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -315,9 +314,9 @@ export namespace Branched {
       values,
       (values, value) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => Array.append(values, value))
+          mapper(value).map((value) => values.append(value))
         ),
-      Branched.of(Array.empty())
+      Branched.of(List.empty())
     );
   }
 

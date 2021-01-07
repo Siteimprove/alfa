@@ -4,9 +4,6 @@
   "files": ["src/branched.ts", "src/index.ts", "test/branched.spec.ts"],
   "references": [
     {
-      "path": "../alfa-array"
-    },
-    {
       "path": "../alfa-callback"
     },
     {
