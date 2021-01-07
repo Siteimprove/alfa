@@ -27,6 +27,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.findLast()` is now available.
 
+- [@siteimprove/alfa-future](packages/alfa-future): `Future#tee()` and `Future.empty()` are now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `flow`, `flow-root`, `table`, `flex`, `grid`, and `ruby` values.

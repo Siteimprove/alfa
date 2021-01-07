@@ -59,6 +59,13 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 
+  public tee(callback: Callback<T>): Future<T> {
+    return this.map((value) => {
+      callback(value);
+      return value;
+    });
+  }
+
   public toPromise(): Promise<T> {
     return new Promise((resolve) => this.then(resolve));
   }
@@ -69,6 +76,10 @@ export namespace Future {
 
   export function isFuture<T>(value: unknown): value is Future<T> {
     return value instanceof Future;
+  }
+
+  export function empty(): Future<void> {
+    return now(undefined);
   }
 
   export function now<T>(value: T): Future<T> {
