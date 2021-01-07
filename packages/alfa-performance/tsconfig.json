@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/now.ts", "src/performance.ts"],
+  "references": [
+    {
+      "path": "../alfa-array"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
+    }
+  ]
+}
