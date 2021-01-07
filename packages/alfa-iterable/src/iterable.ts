@@ -162,6 +162,32 @@ export namespace Iterable {
     return None;
   }
 
+  export function findLast<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    let index = 0;
+    let result: Option<T> = None;
+
+    for (const value of iterable) {
+      if (predicate(value, index++)) {
+        result = Some.of(value);
+      }
+    }
+
+    return result;
+  }
+
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
     return some(iterable, Predicate.equals(value));
   }

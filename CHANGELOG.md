@@ -25,6 +25,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-array](packages/alfa-array): `Array.find()`, `Array.findLast()`, `Array.insert()`, `Array.append()`, and `Array.prepend()` are now available.
 
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.findLast()` is now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `flow`, `flow-root`, `table`, `flex`, `grid`, and `ruby` values.
