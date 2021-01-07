@@ -52,7 +52,9 @@ export namespace Serializable {
       const json: Record<string, JSON> = {};
 
       for (const key of keys(value)) {
-        json[key] = toJSON(value[key]);
+        if (value[key] !== undefined) {
+          json[key] = toJSON(value[key]);
+        }
       }
 
       return json;
