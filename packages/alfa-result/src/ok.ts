@@ -137,7 +137,7 @@ export class Ok<T> implements Result<T, never> {
     yield this._value;
   }
 
-  public toJSON(): Ok.JSON {
+  public toJSON(): Ok.JSON<T> {
     return {
       type: "ok",
       value: Serializable.toJSON(this._value),
@@ -150,10 +150,10 @@ export class Ok<T> implements Result<T, never> {
 }
 
 export namespace Ok {
-  export interface JSON {
+  export interface JSON<T> {
     [key: string]: json.JSON;
     type: "ok";
-    value: json.JSON;
+    value: Serializable.ToJSON<T>;
   }
 
   export function isOk<T>(value: unknown): value is Ok<T> {

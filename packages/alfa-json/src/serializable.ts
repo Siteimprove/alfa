@@ -20,6 +20,12 @@ export interface Serializable<T extends JSON = JSON> {
 }
 
 export namespace Serializable {
+  export type ToJSON<T> = T extends Serializable<infer T>
+    ? T
+    : T extends JSON
+    ? T
+    : JSON;
+
   export function isSerializable<T extends JSON>(
     value: unknown
   ): value is Serializable<T> {
@@ -28,7 +34,7 @@ export namespace Serializable {
 
   export function toJSON<T extends JSON>(value: Serializable<T>): T;
 
-  export function toJSON(value: unknown): JSON;
+  export function toJSON<T>(value: T): ToJSON<T>;
 
   export function toJSON(value: unknown): JSON {
     if (isSerializable(value)) {

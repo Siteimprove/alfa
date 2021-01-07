@@ -2,7 +2,7 @@ import { Clone } from "@siteimprove/alfa-clone";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -201,9 +201,7 @@ export namespace Array {
     Hash.writeUint32(hash, array.length);
   }
 
-  export function toJSON<T extends JSON>(
-    array: Array<Serializable<T>>
-  ): Array<T> {
-    return array.map<T>(Serializable.toJSON);
+  export function toJSON<T>(array: Array<T>): Array<Serializable.ToJSON<T>> {
+    return array.map((value) => Serializable.toJSON(value));
   }
 }
