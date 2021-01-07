@@ -64,7 +64,7 @@ export class Left<L> implements Either<L, never> {
     yield this._value;
   }
 
-  public toJSON(): Left.JSON {
+  public toJSON(): Left.JSON<L> {
     return {
       type: "left",
       value: Serializable.toJSON(this._value),
@@ -77,10 +77,10 @@ export class Left<L> implements Either<L, never> {
 }
 
 export namespace Left {
-  export interface JSON {
+  export interface JSON<L> {
     [key: string]: json.JSON;
     type: "left";
-    value: json.JSON;
+    value: Serializable.ToJSON<L>;
   }
 
   export function isLeft<L>(value: unknown): value is Left<L> {

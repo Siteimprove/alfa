@@ -135,7 +135,7 @@ export class Err<E> implements Result<never, E> {
 
   public *[Symbol.iterator]() {}
 
-  public toJSON(): Err.JSON {
+  public toJSON(): Err.JSON<E> {
     return {
       type: "err",
       error: Serializable.toJSON(this._error),
@@ -152,9 +152,9 @@ export namespace Err {
     return value instanceof Err;
   }
 
-  export interface JSON {
+  export interface JSON<E> {
     [key: string]: json.JSON;
     type: "err";
-    error: json.JSON;
+    error: Serializable.ToJSON<E>;
   }
 }
