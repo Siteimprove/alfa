@@ -1,31 +1,99 @@
-import { Position } from "../position";
+import { Hash } from "@siteimprove/alfa-hash";
+import { Parser } from "@siteimprove/alfa-parser";
 
+import { Position } from "../position";
 import { Radius } from "./radius";
+import { Value } from "../../value";
+import { Function } from "../../syntax/function";
+import { Keyword } from "../keyword";
+
+const { map, pair } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-circle
  */
-export class Circle<R extends Radius = Radius, P extends Position = Position> {
+export class Circle<
+  R extends Radius = Radius,
+  P extends Position = Position
+> extends Value<"shape"> {
   public static of<R extends Radius, P extends Position>(
     radius: R,
-    position: P
+    center: P
   ): Circle<R, P> {
-    return new Circle(radius, position);
+    return new Circle(radius, center);
   }
 
   private readonly _radius: R;
-  private readonly _position: P;
+  private readonly _center: P;
 
-  private constructor(radius: R, position: P) {
+  private constructor(radius: R, center: P) {
+    super();
     this._radius = radius;
-    this._position = position;
+    this._center = center;
   }
 
   public get radius(): R {
     return this._radius;
   }
 
-  public get position(): P {
-    return this._position;
+  public get center(): P {
+    return this._center;
   }
+
+  public get type(): "shape" {
+    return "shape";
+  }
+
+  public get format(): "circle" {
+    return "circle";
+  }
+
+  public equals(value: Circle): boolean;
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof Circle &&
+      value.radius.equals(this.radius) &&
+      value.center.equals(this.center)
+    );
+  }
+
+  public hash(hash: Hash) {
+    this.radius.hash(hash);
+    this.center.hash(hash);
+  }
+
+  public toJSON(): Circle.JSON {
+    return {
+      type: "shape",
+      format: "circle",
+      center: this.center.toJSON(),
+      radius: this.radius.toJSON(),
+    };
+  }
+
+  public toString(): string {
+    return `circle(${this.radius.toString()} at ${this.center.toString()})`;
+  }
+}
+
+export namespace Circle {
+  import option = Parser.option;
+  import right = Parser.right;
+
+  export interface JSON extends Value.JSON {
+    format: "circle";
+    center: Position.JSON;
+    radius: Radius.JSON;
+  }
+
+  export function isCircle(value: unknown): value is Circle {
+    return value instanceof Circle;
+  }
+
+  export const parse = map(
+    Function.parse("circle"),
+    pair(option(Radius.parse), option(right(Keyword.parse("at"), Position.p)))
+  );
 }
