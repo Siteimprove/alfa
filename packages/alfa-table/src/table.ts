@@ -263,6 +263,10 @@ export namespace Table {
       // 12
       skip(not(hasName("thead", "tbody", "tfoot", "tr")));
 
+      if (current().isNone()) {
+        break;
+      }
+
       // 13
       if (current().some(hasName("tr"))) {
         processRow(current().get());

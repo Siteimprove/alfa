@@ -565,3 +565,29 @@ test(`.from() assigns headers within a column group`, (t) => {
     ],
   });
 });
+
+test(`.from() gracefully handles invalid elements in tables`, (t) => {
+  const table = Table.from(
+    <table>
+      <tr>
+        <td>1</td>
+      </tr>
+      <input />
+    </table>
+  );
+
+  t.deepEqual(table.toJSON(), {
+    element: "/table[1]",
+    cells: [
+      {
+        type: "data",
+        element: "/table[1]/tr[1]/td[1]",
+        anchor: { x: 0, y: 0 },
+        width: 1,
+        height: 1,
+        headers: [],
+      },
+    ],
+    groups: [],
+  });
+});
