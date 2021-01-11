@@ -271,14 +271,9 @@ export namespace Background {
     (positions) => List.of(positions, ", ")
   );
 
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
-   */
-  const parsePosition = css.Position.parse;
-
   const parsePositionList = map(
     separatedList(
-      parsePosition,
+      css.Position.parse,
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (positions) => List.of(positions, ", ")
@@ -608,7 +603,7 @@ export namespace Background {
 
       // <position> [ / <size> ]?
       if (positionX.isNone() || positionY.isNone()) {
-        const result = parsePosition(input);
+        const result = css.Position.parse(input);
 
         if (result.isOk()) {
           [input, [positionX, positionY]] = result.get();
