@@ -207,7 +207,7 @@ export namespace Position {
   /**
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
    */
-  export const parse: Parser<
+  export const parseOld: Parser<
     Slice<Token>,
     [Option<Component<Horizontal>>, Option<Component<Vertical>>],
     string

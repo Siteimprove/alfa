@@ -273,7 +273,7 @@ export namespace Background {
 
   const parsePositionList = map(
     separatedList(
-      css.Position.parse,
+      css.Position.parseOld,
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (positions) => List.of(positions, ", ")
@@ -603,7 +603,7 @@ export namespace Background {
 
       // <position> [ / <size> ]?
       if (positionX.isNone() || positionY.isNone()) {
-        const result = css.Position.parse(input);
+        const result = css.Position.parseOld(input);
 
         if (result.isOk()) {
           [input, [positionX, positionY]] = result.get();
