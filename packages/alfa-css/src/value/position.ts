@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Option, None } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import { Value } from "../value";
 
@@ -7,6 +8,20 @@ import { Keyword } from "./keyword";
 import { Length } from "./length";
 import { Percentage } from "./percentage";
 import { Unit } from "./unit";
+import { Slice } from "@siteimprove/alfa-slice";
+import { Token } from "../syntax/token";
+import { Err, Result } from "@siteimprove/alfa-result";
+
+const {
+  map,
+  filter,
+  either,
+  delimited,
+  option,
+  pair,
+  right,
+  separatedList,
+} = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#position
@@ -166,9 +181,76 @@ export namespace Position {
     }
   }
 
-  export type Component = Center | Offset | Side;
+  export type Component<
+    T extends Horizontal | Vertical = Horizontal | Vertical
+  > = Center | Offset | Side<T>;
 
   export namespace Component {
     export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
   }
+
+  const parsePositionX = either(
+    map(Keyword.parse("left", "right", "center"), (x) =>
+      x.value === "center" ? x : Side.of(x)
+    ),
+    either(Length.parse, Percentage.parse)
+  );
+
+  const parsePositionY = either(
+    map(Keyword.parse("top", "bottom", "center"), (x) =>
+      x.value === "center" ? x : Side.of(x)
+    ),
+    either(Length.parse, Percentage.parse)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
+   */
+  const parse: Parser<
+    Slice<Token>,
+    [Option<Component<Horizontal>>, Option<Component<Vertical>>],
+    string
+  > = (input) => {
+    let x: Option<Component<Horizontal>> = None;
+    let y: Option<Component<Vertical>> = None;
+
+    while (true) {
+      for (const [remainder] of Token.parseWhitespace(input)) {
+        input = remainder;
+      }
+
+      if (x.isNone()) {
+        const result = parsePositionX(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          x = Option.of(value);
+          input = remainder;
+          continue;
+        }
+      }
+
+      if (y.isNone()) {
+        const result = parsePositionY(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          y = Option.of(value);
+          input = remainder;
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (x.isNone() && y.isNone()) {
+      return Err.of(`Expected one of x or y`);
+    }
+
+    return Result.of([
+      input,
+      [x, y.orElse(() => Option.of(Keyword.of("center")))],
+    ]);
+  };
 }
