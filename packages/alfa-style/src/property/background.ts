@@ -271,70 +271,10 @@ export namespace Background {
     (positions) => List.of(positions, ", ")
   );
 
-  const parsePositionX = either(
-    map(Keyword.parse("left", "right", "center"), (x) =>
-      x.value === "center" ? x : css.Position.Side.of(x)
-    ),
-    either(Length.parse, Percentage.parse)
-  );
-
-  const parsePositionY = either(
-    map(Keyword.parse("top", "bottom", "center"), (x) =>
-      x.value === "center" ? x : css.Position.Side.of(x)
-    ),
-    either(Length.parse, Percentage.parse)
-  );
-
   /**
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
    */
-  const parsePosition: Parser<
-    Slice<Token>,
-    [Option<Position.X.Specified.Item>, Option<Position.Y.Specified.Item>],
-    string
-  > = (input) => {
-    let x: Option<Position.X.Specified.Item> = None;
-    let y: Option<Position.Y.Specified.Item> = None;
-
-    while (true) {
-      for (const [remainder] of Token.parseWhitespace(input)) {
-        input = remainder;
-      }
-
-      if (x.isNone()) {
-        const result = parsePositionX(input);
-
-        if (result.isOk()) {
-          const [remainder, value] = result.get();
-          x = Option.of(value);
-          input = remainder;
-          continue;
-        }
-      }
-
-      if (y.isNone()) {
-        const result = parsePositionY(input);
-
-        if (result.isOk()) {
-          const [remainder, value] = result.get();
-          y = Option.of(value);
-          input = remainder;
-          continue;
-        }
-      }
-
-      break;
-    }
-
-    if (x.isNone() && y.isNone()) {
-      return Err.of(`Expected one of x or y`);
-    }
-
-    return Result.of([
-      input,
-      [x, y.orElse(() => Option.of(Keyword.of("center")))],
-    ]);
-  };
+  const parsePosition = css.Position.parse;
 
   const parsePositionList = map(
     separatedList(
@@ -384,17 +324,17 @@ export namespace Background {
       export type Specified = List<Specified.Item>;
 
       export namespace Specified {
-        export type Item =
-          | css.Position.Center
-          | css.Position.Offset
-          | css.Position.Side<css.Position.Horizontal>;
+        export type Item = css.Position.Component<css.Position.Horizontal>;
       }
 
-      export type Computed = List<
-        | css.Position.Center
-        | css.Position.Offset<"px">
-        | css.Position.Side<css.Position.Horizontal, css.Position.Offset<"px">>
-      >;
+      export type Computed = List<Computed.Item>;
+
+      export namespace Computed {
+        export type Item = css.Position.Component<
+          css.Position.Horizontal,
+          "px"
+        >;
+      }
     }
 
     export const Y: Property<Y.Specified, Y.Computed> = Property.of(
@@ -436,17 +376,14 @@ export namespace Background {
       export type Specified = List<Specified.Item>;
 
       export namespace Specified {
-        export type Item =
-          | css.Position.Center
-          | css.Position.Offset
-          | css.Position.Side<css.Position.Vertical>;
+        export type Item = css.Position.Component<css.Position.Vertical>;
       }
 
-      export type Computed = List<
-        | css.Position.Center
-        | css.Position.Offset<"px">
-        | css.Position.Side<css.Position.Vertical, css.Position.Offset<"px">>
-      >;
+      export type Computed = List<Computed.Item>;
+
+      export namespace Computed {
+        export type Item = css.Position.Component<css.Position.Vertical, "px">;
+      }
     }
 
     export const Shorthand = Property.Shorthand.of(

@@ -182,8 +182,9 @@ export namespace Position {
   }
 
   export type Component<
-    T extends Horizontal | Vertical = Horizontal | Vertical
-  > = Center | Offset | Side<T>;
+    S extends Horizontal | Vertical = Horizontal | Vertical,
+    U extends Unit.Length = Unit.Length
+  > = Center | Offset<U> | Side<S, Offset<U>>;
 
   export namespace Component {
     export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
@@ -206,7 +207,7 @@ export namespace Position {
   /**
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
    */
-  const parse: Parser<
+  export const parse: Parser<
     Slice<Token>,
     [Option<Component<Horizontal>>, Option<Component<Vertical>>],
     string
