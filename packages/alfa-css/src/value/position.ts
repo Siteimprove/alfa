@@ -276,8 +276,8 @@ export namespace Position {
    */
   export function parse(): Parser<Slice<Token>, Position, string> {
     type ComponentParser<
-      T extends Horizontal | Vertical = Horizontal | Vertical
-    > = Parser<Slice<Token>, Component<T>, string>;
+      S extends Horizontal | Vertical = Horizontal | Vertical
+    > = Parser<Slice<Token>, Component<S>, string>;
     type PositionParser = Parser<Slice<Token>, Position, string>;
 
     const parseHorizontalKeyword: ComponentParser<Horizontal> = either(
@@ -298,6 +298,17 @@ export namespace Position {
     const parseVerticalKeywordValue: ComponentParser<Vertical> = map(
       pair(parseVertical, either(Length.parse, Percentage.parse)),
       ([keyword, value]) => Side.of(keyword, Some.of(value))
+    );
+
+    const parse4: PositionParser = either(
+      map(
+        pair(parseHorizontalKeywordValue, parseVerticalKeywordValue),
+        ([horizontal, vertical]) => Position.of(vertical, horizontal)
+      ),
+      map(
+        pair(parseVerticalKeywordValue, parseHorizontalKeywordValue),
+        ([vertical, horizontal]) => Position.of(vertical, horizontal)
+      )
     );
 
     return (input) => Err.of("not implemented");
