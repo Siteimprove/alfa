@@ -1,4 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
+import { Emitter } from "@siteimprove/alfa-emitter";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -7,13 +9,15 @@ import * as json from "@siteimprove/alfa-json";
 
 import { now } from "./now";
 
-export class Performance implements Serializable<Performance.JSON> {
-  public static empty(): Performance {
+export class Performance
+  implements AsyncIterable<Performance.Entry>, Serializable<Performance.JSON> {
+  public static of(): Performance {
     return new Performance();
   }
 
-  private readonly _epoch: number = now();
-  private readonly _entries: Array<Performance.Entry> = [];
+  private readonly _epoch = now();
+  private readonly _entries = Array.empty<Performance.Entry>();
+  private readonly _emitter = Emitter.of<Performance.Entry>();
 
   private constructor() {}
 
@@ -34,11 +38,7 @@ export class Performance implements Serializable<Performance.JSON> {
   }
 
   public mark(id: string): Performance.Entry {
-    const entry = Performance.entry(id, "mark", this.now(), 0);
-
-    this._entries.push(entry);
-
-    return entry;
+    return this._store(Performance.entry(id, "mark", this.now(), 0));
   }
 
   public measure(
@@ -58,17 +58,31 @@ export class Performance implements Serializable<Performance.JSON> {
         .getOr(this.now());
     }
 
-    const entry = Performance.entry(id, "measure", start, end - start);
+    return this._store(Performance.entry(id, "measure", start, end - start));
+  }
 
-    this._entries.push(entry);
+  public on(listener: Callback<Performance.Entry>): void {
+    this._emitter.on(listener);
+  }
 
-    return entry;
+  public asyncIterator(): AsyncIterator<Performance.Entry> {
+    return this._emitter.asyncIterator();
+  }
+
+  public [Symbol.asyncIterator](): AsyncIterator<Performance.Entry> {
+    return this.asyncIterator();
   }
 
   public toJSON(): Performance.JSON {
     return {
       entries: this._entries.map((entry) => entry.toJSON()),
     };
+  }
+
+  private _store(entry: Performance.Entry): Performance.Entry {
+    this._entries.push(entry);
+    this._emitter.emit(entry);
+    return entry;
   }
 
   private _findLastEntry(id: string): Option<Performance.Entry> {

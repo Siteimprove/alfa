@@ -7,6 +7,12 @@
       "path": "../alfa-array"
     },
     {
+      "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-emitter"
+    },
+    {
       "path": "../alfa-json"
     },
     {
