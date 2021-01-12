@@ -27,13 +27,13 @@ const {
  * @see https://drafts.csswg.org/css-values/#position
  */
 export class Position<
-  V extends Position.Component<Position.Vertical> = Position.Component<Position.Vertical>,
-  H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>
+  H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>,
+  V extends Position.Component<Position.Vertical> = Position.Component<Position.Vertical>
 > extends Value<"position"> {
   public static of<
-    V extends Position.Component<Position.Vertical>,
-    H extends Position.Component<Position.Horizontal>
-  >(horizontal: H, vertical: V): Position<V, H> {
+    H extends Position.Component<Position.Horizontal>,
+    V extends Position.Component<Position.Vertical>
+  >(horizontal: H, vertical: V): Position<H, V> {
     return new Position(horizontal, vertical);
   }
 
