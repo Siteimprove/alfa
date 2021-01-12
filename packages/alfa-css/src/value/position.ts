@@ -1,5 +1,5 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option, None, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Value } from "../value";
@@ -254,4 +254,54 @@ export namespace Position {
       [x, y.orElse(() => Option.of(Keyword.of("center")))],
     ]);
   };
+
+  /**
+   * @see https://drafts.csswg.org/css-values-4/#typedef-position
+   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
+   *
+   * Parsing positions is a mess… It can be a 1, 2, 3, or 4 tokens value.
+   * What the grammar doesn't say is that 3 is only allowed for background-position and
+   * that the H/V components can only be switched when both start with a keyword.
+   * Parsing has to be greedy, consuming as much as possible. So we check whether we can
+   * get a 4, 3, 2, 1 match. It is hard to know whether a 1 match can be extended as a 2 match,
+   * and so on, so it's easier to retry from the start. This should be OK performance wise since it
+   * is not that much retry and it shouldn't be a type present in that many values…
+   *
+   * Notations: H/V: keyword for the component, h/v: numeric (length percentage), Hh/Vv: both keyword and numeric.
+   * "center" may be used as H/V but not in Hh nor Vv…
+   * * Accepted 4 tokens values: Hh Vv / Vv Hh
+   * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position)
+   * * Accepted 2 tokens values: H V / H v / h v / h V / Hh / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
+   * * Accepted 1 token values: H / V / h
+   */
+  export function parse(): Parser<
+    Slice<Token>,
+    [Option<Component<Horizontal>>, Option<Component<Vertical>>],
+    string
+  > {
+    type ComponentParser = Parser<Slice<Token>, Component, string>;
+    type PositionParser = Parser<Slice<Token>, Position, string>;
+
+    const parseHorizontalKeyword: ComponentParser = either(
+      parseCenter,
+      map(parseHorizontal, Side.of)
+    );
+
+    const parseHorizontalKeywordValue: ComponentParser = map(
+      pair(parseHorizontal, either(Length.parse, Percentage.parse)),
+      ([keyword, value]) => Side.of(keyword, Some.of(value))
+    );
+
+    const parseVerticalKeyword: ComponentParser = either(
+      parseCenter,
+      map(parseVertical, Side.of)
+    );
+
+    const parseVerticalKeywordValue: ComponentParser = map(
+      pair(parseVertical, either(Length.parse, Percentage.parse)),
+      ([keyword, value]) => Side.of(keyword, Some.of(value))
+    );
+
+    return (input) => Result.of([input, [None, None]]);
+  }
 }
