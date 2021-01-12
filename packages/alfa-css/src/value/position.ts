@@ -80,7 +80,7 @@ export class Position<
   }
 
   public toString(): string {
-    return `${this._vertical.toString()} ${this._horizontal.toString()}`;
+    return `${this._horizontal.toString()} ${this._vertical.toString()}`;
   }
 }
 
