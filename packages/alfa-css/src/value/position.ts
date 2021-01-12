@@ -85,6 +85,8 @@ export class Position<
 }
 
 export namespace Position {
+  import parseWhitespace = Token.parseWhitespace;
+
   export interface JSON extends Value.JSON {
     type: "position";
     vertical: Component.JSON;
@@ -295,7 +297,10 @@ export namespace Position {
     );
 
     const parseHorizontalKeywordValue: ComponentParser<Horizontal> = map(
-      pair(parseHorizontal, either(Length.parse, Percentage.parse)),
+      pair(
+        parseHorizontal,
+        right(parseWhitespace, either(Length.parse, Percentage.parse))
+      ),
       ([keyword, value]) => Side.of(keyword, Some.of(value))
     );
 
@@ -310,7 +315,10 @@ export namespace Position {
     );
 
     const parseVerticalKeywordValue: ComponentParser<Vertical> = map(
-      pair(parseVertical, either(Length.parse, Percentage.parse)),
+      pair(
+        parseVertical,
+        right(parseWhitespace, either(Length.parse, Percentage.parse))
+      ),
       ([keyword, value]) => Side.of(keyword, Some.of(value))
     );
 
@@ -324,23 +332,47 @@ export namespace Position {
     ]) => Position.of(horizontal, vertical);
 
     const parse4: PositionParser = either(
-      map(pair(parseHorizontalKeywordValue, parseVerticalKeywordValue), mapHV),
-      map(pair(parseVerticalKeywordValue, parseHorizontalKeywordValue), mapVH)
+      map(
+        pair(
+          parseHorizontalKeywordValue,
+          right(parseWhitespace, parseVerticalKeywordValue)
+        ),
+        mapHV
+      ),
+      map(
+        pair(
+          parseVerticalKeywordValue,
+          right(parseWhitespace, parseHorizontalKeywordValue)
+        ),
+        mapVH
+      )
     );
 
     const parse3: PositionParser = allowThreeTokens
       ? either(
           map(
             either(
-              pair(parseHorizontalKeywordValue, parseVerticalKeyword),
-              pair(parseHorizontalKeyword, parseVerticalKeywordValue)
+              pair(
+                parseHorizontalKeywordValue,
+                right(parseWhitespace, parseVerticalKeyword)
+              ),
+              pair(
+                parseHorizontalKeyword,
+                right(parseWhitespace, parseVerticalKeywordValue)
+              )
             ),
             mapHV
           ),
           map(
             either(
-              pair(parseVerticalKeywordValue, parseHorizontalKeyword),
-              pair(parseVerticalKeyword, parseHorizontalKeywordValue)
+              pair(
+                parseVerticalKeywordValue,
+                right(parseWhitespace, parseHorizontalKeyword)
+              ),
+              pair(
+                parseVerticalKeyword,
+                right(parseWhitespace, parseHorizontalKeywordValue)
+              )
             ),
             mapVH
           )
@@ -351,11 +383,20 @@ export namespace Position {
       map(
         pair(
           either(parseHorizontalKeyword, parseHorizontalValue),
-          either(parseVerticalKeyword, parseVerticalValue)
+          right(
+            parseWhitespace,
+            either(parseVerticalKeyword, parseVerticalValue)
+          )
         ),
         mapHV
       ),
-      map(pair(parseVerticalKeyword, parseHorizontalKeyword), mapVH)
+      map(
+        pair(
+          parseVerticalKeyword,
+          right(parseWhitespace, parseHorizontalKeyword)
+        ),
+        mapVH
+      )
     );
 
     const parse1: PositionParser = either(
