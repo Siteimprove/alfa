@@ -1,32 +1,26 @@
-import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Emitter } from "@siteimprove/alfa-emitter";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { now } from "./now";
 
-export class Performance
-  implements AsyncIterable<Performance.Entry>, Serializable<Performance.JSON> {
-  public static of(): Performance {
+export class Performance<T>
+  implements
+    AsyncIterable<Performance.Entry<T>>,
+    Serializable<Performance.JSON> {
+  public static of<T>(): Performance<T> {
     return new Performance();
   }
 
   private readonly _epoch = now();
-  private readonly _entries = Array.empty<Performance.Entry>();
-  private readonly _emitter = Emitter.of<Performance.Entry>();
+  private readonly _emitter = Emitter.of<Performance.Entry<T>>();
 
   private constructor() {}
 
   public get epoch(): number {
     return this._epoch;
-  }
-
-  public get entries(): Sequence<Performance.Entry> {
-    return Sequence.from(this._entries);
   }
 
   public now(): number {
@@ -37,102 +31,123 @@ export class Performance
     return now ? now - this._epoch : this.now();
   }
 
-  public mark(id: string): Performance.Entry {
-    return this._store(Performance.entry(id, "mark", this.now(), 0));
+  public mark(data: T): Performance.Mark<T> {
+    return this._emit(Performance.mark(data, this.now()));
   }
 
   public measure(
-    id: string,
-    start: string | number = this._epoch,
-    end: string | number = this.now()
-  ): Performance.Entry {
-    if (typeof start === "string") {
-      start = this._findLastEntry(start)
-        .map((entry) => entry.start)
-        .getOr(this._epoch);
+    data: T,
+    start: Performance.Entry<T> | number = this._epoch,
+    end: Performance.Entry<T> | number = this.now()
+  ): Performance.Measure<T> {
+    if (typeof start !== "number") {
+      start = start.start;
     }
 
-    if (typeof end === "string") {
-      end = this._findLastEntry(end)
-        .map((entry) => entry.start)
-        .getOr(this.now());
+    if (typeof end !== "number") {
+      end = end.start;
     }
 
-    return this._store(Performance.entry(id, "measure", start, end - start));
+    return this._emit(Performance.measure(data, start, end - start));
   }
 
-  public on(listener: Callback<Performance.Entry>): void {
+  public on(listener: Callback<Performance.Entry<T>>): void {
     this._emitter.on(listener);
   }
 
-  public off(listener: Callback<Performance.Entry>): void {
+  public off(listener: Callback<Performance.Entry<T>>): void {
     this._emitter.off(listener);
   }
 
-  public asyncIterator(): AsyncIterator<Performance.Entry> {
+  public asyncIterator(): AsyncIterator<Performance.Entry<T>> {
     return this._emitter.asyncIterator();
   }
 
-  public [Symbol.asyncIterator](): AsyncIterator<Performance.Entry> {
+  public [Symbol.asyncIterator](): AsyncIterator<Performance.Entry<T>> {
     return this.asyncIterator();
   }
 
   public toJSON(): Performance.JSON {
-    return {
-      entries: this._entries.map((entry) => entry.toJSON()),
-    };
+    return {};
   }
 
-  private _store(entry: Performance.Entry): Performance.Entry {
-    this._entries.push(entry);
+  private _emit<E extends Performance.Entry<T>>(entry: E): E {
     this._emitter.emit(entry);
     return entry;
-  }
-
-  private _findLastEntry(id: string): Option<Performance.Entry> {
-    return Array.findLast(this._entries, (entry) => entry.id === id);
   }
 }
 
 export namespace Performance {
   export interface JSON {
     [key: string]: json.JSON;
-    entries: Array<Entry.JSON>;
   }
 
-  export class Entry implements Serializable<Entry.JSON> {
-    public static of(
-      id: string,
-      type: string,
-      start: number,
-      duration: number
-    ): Entry {
-      return new Entry(id, type, start, duration);
+  export type Entry<T> = Mark<T> | Measure<T>;
+
+  export namespace Entry {
+    export type JSON<T> = Mark.JSON<T> | Measure.JSON<T>;
+  }
+
+  export class Mark<T> implements Serializable<Mark.JSON<T>> {
+    public static of<T>(data: T, start: number): Mark<T> {
+      return new Mark(data, start);
     }
 
-    private readonly _id: string;
-    private readonly _type: string;
+    private readonly _data: T;
+    private readonly _start: number;
+
+    private constructor(data: T, start: number) {
+      this._data = data;
+      this._start = start;
+    }
+
+    public get data(): T {
+      return this._data;
+    }
+
+    public get start(): number {
+      return this._start;
+    }
+
+    public toJSON(): Mark.JSON<T> {
+      return {
+        data: Serializable.toJSON(this._data),
+        start: this._start,
+      };
+    }
+  }
+
+  export namespace Mark {
+    export interface JSON<T> {
+      [key: string]: json.JSON | undefined;
+      data: Serializable.ToJSON<T>;
+      start: number;
+    }
+
+    export function isMark<T>(value: unknown | Entry<T>): value is Mark<T> {
+      return value instanceof Mark;
+    }
+  }
+
+  export const { of: mark, isMark } = Mark;
+
+  export class Measure<T> implements Serializable<Measure.JSON<T>> {
+    public static of<T>(data: T, start: number, duration: number): Measure<T> {
+      return new Measure(data, start, duration);
+    }
+
+    private readonly _data: T;
     private readonly _start: number;
     private readonly _duration: number;
 
-    private constructor(
-      id: string,
-      type: string,
-      start: number,
-      duration: number
-    ) {
-      this._id = id;
-      this._type = type;
+    private constructor(data: T, start: number, duration: number) {
+      this._data = data;
       this._start = start;
       this._duration = duration;
     }
 
-    public get id(): string {
-      return this._id;
-    }
-
-    public get type(): string {
-      return this._type;
+    public get data(): T {
+      return this._data;
     }
 
     public get start(): number {
@@ -143,25 +158,29 @@ export namespace Performance {
       return this._duration;
     }
 
-    public toJSON(): Entry.JSON {
+    public toJSON(): Measure.JSON<T> {
       return {
-        id: this._id,
-        type: this._type,
+        data: Serializable.toJSON(this._data),
         start: this._start,
         duration: this._duration,
       };
     }
   }
 
-  export namespace Entry {
-    export interface JSON {
+  export namespace Measure {
+    export interface JSON<T> {
       [key: string]: json.JSON | undefined;
-      id: string;
-      type: string;
+      data: Serializable.ToJSON<T>;
       start: number;
       duration: number;
     }
+
+    export function isMeasure<T>(
+      value: unknown | Entry<T>
+    ): value is Measure<T> {
+      return value instanceof Measure;
+    }
   }
 
-  export const { of: entry } = Entry;
+  export const { of: measure, isMeasure } = Measure;
 }
