@@ -12,16 +12,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../syntax/token";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-const {
-  map,
-  filter,
-  either,
-  delimited,
-  option,
-  pair,
-  right,
-  separatedList,
-} = Parser;
+const { map, either, pair, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#position
@@ -265,14 +256,14 @@ export namespace Position {
    * What the grammar doesn't say is that 3 is only allowed for background-position and
    * that the H/V components can only be switched when both start with a keyword.
    * Parsing has to be greedy, consuming as much as possible. So we check whether we can
-   * get a 4, 3, 2, 1 match. It is hard to know whether a 1 match can be extended as a 2 match,
+   * get a 4, 3, 2, 1 match. It is hard to know whether a 1 match can be extended as a 2 match (it may depend on the 3 token also),
    * and so on, so it's easier to retry from the start. This should be OK performance wise since it
    * is not that much retry and it shouldn't be a type present in that many values…
    *
    * Notations: H/V: keyword for the component, h/v: numeric (length percentage), Hh/Vv: both keyword and numeric.
    * "center" may be used as H/V but not in Hh nor Vv…
    * * Accepted 4 tokens values: Hh Vv / Vv Hh
-   * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position) (**not** h Vv, **not** Hv v)
+   * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position) (**not** h Vv, **not** Hh v)
    * * Accepted 2 tokens values: H V / H v / h V / h v / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
    * * Accepted 1 token values: H / V / h
    */
