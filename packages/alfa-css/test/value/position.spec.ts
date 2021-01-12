@@ -328,3 +328,437 @@ test("parse() parses 10px 20%", (t) => {
     },
   });
 });
+
+test("parse() parses 10px top 20% as a two tokens value", (t) => {
+  testParse(
+    t,
+    "10px top 20%",
+    {
+      type: "position",
+      horizontal: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    [
+      {
+        type: "whitespace",
+      },
+      {
+        isInteger: true,
+        type: "percentage",
+        value: 0.2,
+      },
+    ],
+    true
+  );
+});
+
+test("parse() parses left 10px 20% as a two tokens value", (t) => {
+  testParse(
+    t,
+    "left 10px 20%",
+    {
+      type: "position",
+      horizontal: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    [
+      {
+        type: "whitespace",
+      },
+      {
+        isInteger: true,
+        type: "percentage",
+        value: 0.2,
+      },
+    ],
+    true
+  );
+});
+
+//    testing 3 tokens values
+
+test("parse() parses left 10px center as a three tokens value when allowed", (t) => {
+  testParse(
+    t,
+    "left 10px center",
+    {
+      type: "position",
+      horizontal: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        type: "keyword",
+        value: "center",
+      },
+    },
+    undefined,
+    true
+  );
+
+  testParse(
+    t,
+    "left 10px center",
+    {
+      type: "position",
+      horizontal: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    [
+      {
+        type: "whitespace",
+      },
+      {
+        type: "ident",
+        value: "center",
+      },
+    ]
+  );
+});
+
+test("parse() parses left top 10px as a three tokens value when allowed", (t) => {
+  testParse(
+    t,
+    "left top 10px",
+    {
+      type: "position",
+      horizontal: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    undefined,
+    true
+  );
+
+  testParse(
+    t,
+    "left top 10px",
+    {
+      type: "position",
+      horizontal: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    [
+      {
+        type: "whitespace",
+      },
+      {
+        isInteger: true,
+        isSigned: false,
+        type: "dimension",
+        unit: "px",
+        value: 10,
+      },
+    ]
+  );
+});
+
+test("parse() parses top 10px left as a three tokens value when allowed", (t) => {
+  testParse(
+    t,
+    "top 10px left",
+    {
+      type: "position",
+      horizontal: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    undefined,
+    true
+  );
+
+  testParse(
+    t,
+    "top 10px left",
+    {
+      type: "position",
+      horizontal: {
+        type: "keyword",
+        value: "center",
+      },
+      vertical: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    [
+      {
+        type: "whitespace",
+      },
+      {
+        isInteger: true,
+        isSigned: false,
+        type: "dimension",
+        unit: "px",
+        value: 10,
+      },
+      {
+        type: "whitespace",
+      },
+      { type: "ident", value: "left" },
+    ]
+  );
+});
+
+test("parse() parses top left 10px as a three tokens value when allowed", (t) => {
+  testParse(
+    t,
+    "top left 10px",
+    {
+      type: "position",
+      horizontal: {
+        offset: {
+          type: "length",
+          unit: "px",
+          value: 10,
+        },
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    undefined,
+    true
+  );
+
+  testParse(
+    t,
+    "top left 10px",
+    {
+      type: "position",
+      horizontal: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "left",
+        },
+        type: "side",
+      },
+      vertical: {
+        offset: null,
+        side: {
+          type: "keyword",
+          value: "top",
+        },
+        type: "side",
+      },
+    },
+    [
+      {
+        type: "whitespace",
+      },
+      {
+        isInteger: true,
+        isSigned: false,
+        type: "dimension",
+        unit: "px",
+        value: 10,
+      },
+    ]
+  );
+});
+
+//    testing 4 tokens values
+
+test("parse() parses right 10px bottom 20%", (t) => {
+  testParse(t, "right 10px bottom 20%", {
+    type: "position",
+    horizontal: {
+      offset: {
+        type: "length",
+        unit: "px",
+        value: 10,
+      },
+      side: {
+        type: "keyword",
+        value: "right",
+      },
+      type: "side",
+    },
+    vertical: {
+      offset: {
+        type: "percentage",
+        value: 0.2,
+      },
+      side: {
+        type: "keyword",
+        value: "bottom",
+      },
+      type: "side",
+    },
+  });
+});
+
+test("parse() parses bottom 20% right 10px", (t) => {
+  testParse(t, "bottom 20% right 10px", {
+    type: "position",
+    horizontal: {
+      offset: {
+        type: "length",
+        unit: "px",
+        value: 10,
+      },
+      side: {
+        type: "keyword",
+        value: "right",
+      },
+      type: "side",
+    },
+    vertical: {
+      offset: {
+        type: "percentage",
+        value: 0.2,
+      },
+      side: {
+        type: "keyword",
+        value: "bottom",
+      },
+      type: "side",
+    },
+  });
+});
+
+test("parse() parses center 20% right 10px as a two tokens value", (t) => {
+  testParse(t, "center 20% right 10px", {
+    type: "position",
+    horizontal: {
+      type: "keyword",
+      value: "center",
+    },
+    vertical: {
+      offset: {
+        type: "percentage",
+        value: 0.2,
+      },
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
+});
