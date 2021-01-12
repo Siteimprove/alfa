@@ -2,7 +2,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -673,9 +673,9 @@ export namespace Iterable {
     return groups;
   }
 
-  export function toJSON<T extends JSON>(
-    iterable: Iterable<Serializable<T>>
-  ): Array<T> {
-    return [...map<Serializable<T>, T>(iterable, Serializable.toJSON)];
+  export function toJSON<T>(
+    iterable: Iterable<T>
+  ): Array<Serializable.ToJSON<T>> {
+    return [...map(iterable, (value) => Serializable.toJSON(value))];
   }
 }

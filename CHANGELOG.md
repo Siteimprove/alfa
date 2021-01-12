@@ -37,6 +37,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-json](packages/alfa-json): Drop `undefined` property values when serializing JSON objects rather than convert them to `null` values.
 
+- [@siteimprove/alfa-table](packages/alfa-table): `Table.from()` no longer panics when tables contain invalid elements.
+
 ## [0.8.0](../../compare/v0.7.0...v0.8.0) (2021-01-06)
 
 ### Breaking

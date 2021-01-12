@@ -75,11 +75,11 @@ export interface Sequence<T> extends Collection.Indexed<T> {
 
   // Serializable methods
 
-  toJSON(): Sequence.JSON;
+  toJSON(): Sequence.JSON<T>;
 }
 
 export namespace Sequence {
-  export type JSON = Cons.JSON | Nil.JSON;
+  export type JSON<T> = Cons.JSON<T> | Nil.JSON;
 
   export function isSequence<T>(value: unknown): value is Sequence<T> {
     return Cons.isCons(value) || value === Nil;

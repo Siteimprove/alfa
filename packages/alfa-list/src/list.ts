@@ -12,8 +12,6 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Branch, Empty, Leaf, Node } from "./node";
 
 const { not } = Predicate;
@@ -368,8 +366,8 @@ export class List<T> implements Collection.Indexed<T> {
     return [...this];
   }
 
-  public toJSON(): List.JSON {
-    return this.toArray().map(Serializable.toJSON);
+  public toJSON(): List.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value));
   }
 
   public toString(): string {
@@ -561,7 +559,7 @@ export class List<T> implements Collection.Indexed<T> {
 }
 
 export namespace List {
-  export interface JSON extends Array<json.JSON> {}
+  export type JSON<T> = Collection.Indexed.JSON<T>;
 
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
