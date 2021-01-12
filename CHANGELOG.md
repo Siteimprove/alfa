@@ -35,6 +35,8 @@ In addition to the changes listed below, this release adjusts the compile target
 
 - [@siteimprove/alfa-functor](packages/alfa-functor): `Functor.Invariant<T>` is now available.
 
+- [@siteimprove/alfa-emitter](packages/alfa-emitter): A new package has been added with an implementation of a strongly typed event emitter.
+
 ### Fixed
 
 - [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `flow`, `flow-root`, `table`, `flex`, `grid`, and `ruby` values.
