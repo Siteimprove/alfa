@@ -270,11 +270,13 @@ export namespace Position {
    * Notations: H/V: keyword for the component, h/v: numeric (length percentage), Hh/Vv: both keyword and numeric.
    * "center" may be used as H/V but not in Hh nor Vv…
    * * Accepted 4 tokens values: Hh Vv / Vv Hh
-   * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position)
+   * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position) (**not** h Vv, **not** Hv v)
    * * Accepted 2 tokens values: H V / H v / h V / h v / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
    * * Accepted 1 token values: H / V / h
    */
-  export function parse(): Parser<Slice<Token>, Position, string> {
+  export function parse(
+    allowThreeTokens: boolean = false
+  ): Parser<Slice<Token>, Position, string> {
     type ComponentParser<S extends Horizontal | Vertical> = Parser<
       Slice<Token>,
       Component<S>,
@@ -326,22 +328,24 @@ export namespace Position {
       map(pair(parseVerticalKeywordValue, parseHorizontalKeywordValue), mapVH)
     );
 
-    const parse3: PositionParser = either(
-      map(
-        either(
-          pair(parseHorizontalKeywordValue, parseVerticalKeyword),
-          pair(parseHorizontalKeyword, parseVerticalKeywordValue)
-        ),
-        mapHV
-      ),
-      map(
-        either(
-          pair(parseVerticalKeywordValue, parseHorizontalKeyword),
-          pair(parseVerticalKeyword, parseHorizontalKeywordValue)
-        ),
-        mapVH
-      )
-    );
+    const parse3: PositionParser = allowThreeTokens
+      ? either(
+          map(
+            either(
+              pair(parseHorizontalKeywordValue, parseVerticalKeyword),
+              pair(parseHorizontalKeyword, parseVerticalKeywordValue)
+            ),
+            mapHV
+          ),
+          map(
+            either(
+              pair(parseVerticalKeywordValue, parseHorizontalKeyword),
+              pair(parseVerticalKeyword, parseHorizontalKeywordValue)
+            ),
+            mapVH
+          )
+        )
+      : (_) => Err.of("Three-value syntax is not allowed");
 
     const parse2: PositionParser = either(
       map(
@@ -369,6 +373,6 @@ export namespace Position {
       )
     );
 
-    return (input) => Err.of("not implemented");
+    return either(parse4, parse3, parse2, parse1);
   }
 }
