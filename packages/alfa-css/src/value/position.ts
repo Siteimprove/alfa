@@ -274,34 +274,32 @@ export namespace Position {
    * * Accepted 2 tokens values: H V / H v / h v / h V / Hh / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
    * * Accepted 1 token values: H / V / h
    */
-  export function parse(): Parser<
-    Slice<Token>,
-    [Option<Component<Horizontal>>, Option<Component<Vertical>>],
-    string
-  > {
-    type ComponentParser = Parser<Slice<Token>, Component, string>;
+  export function parse(): Parser<Slice<Token>, Position, string> {
+    type ComponentParser<
+      T extends Horizontal | Vertical = Horizontal | Vertical
+    > = Parser<Slice<Token>, Component<T>, string>;
     type PositionParser = Parser<Slice<Token>, Position, string>;
 
-    const parseHorizontalKeyword: ComponentParser = either(
+    const parseHorizontalKeyword: ComponentParser<Horizontal> = either(
       parseCenter,
       map(parseHorizontal, Side.of)
     );
 
-    const parseHorizontalKeywordValue: ComponentParser = map(
+    const parseHorizontalKeywordValue: ComponentParser<Horizontal> = map(
       pair(parseHorizontal, either(Length.parse, Percentage.parse)),
       ([keyword, value]) => Side.of(keyword, Some.of(value))
     );
 
-    const parseVerticalKeyword: ComponentParser = either(
+    const parseVerticalKeyword: ComponentParser<Vertical> = either(
       parseCenter,
       map(parseVertical, Side.of)
     );
 
-    const parseVerticalKeywordValue: ComponentParser = map(
+    const parseVerticalKeywordValue: ComponentParser<Vertical> = map(
       pair(parseVertical, either(Length.parse, Percentage.parse)),
       ([keyword, value]) => Side.of(keyword, Some.of(value))
     );
 
-    return (input) => Result.of([input, [None, None]]);
+    return (input) => Err.of("not implemented");
   }
 }
