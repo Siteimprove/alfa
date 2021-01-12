@@ -116,7 +116,7 @@ For examples of how to use Alfa in various contexts, such as unit testing, end-t
 
 ## Requirements
 
-Alfa will run in any [ECMAScript 2017](https://www.ecma-international.org/ecma-262/8.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
+Alfa will run in any [ECMAScript 2018](https://www.ecma-international.org/ecma-262/9.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
 
 ## Building
 
