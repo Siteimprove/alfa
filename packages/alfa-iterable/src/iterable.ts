@@ -2,7 +2,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -160,6 +160,32 @@ export namespace Iterable {
     }
 
     return None;
+  }
+
+  export function findLast<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    let index = 0;
+    let result: Option<T> = None;
+
+    for (const value of iterable) {
+      if (predicate(value, index++)) {
+        result = Some.of(value);
+      }
+    }
+
+    return result;
   }
 
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
@@ -647,9 +673,9 @@ export namespace Iterable {
     return groups;
   }
 
-  export function toJSON<T extends JSON>(
-    iterable: Iterable<Serializable<T>>
-  ): Array<T> {
-    return [...map<Serializable<T>, T>(iterable, Serializable.toJSON)];
+  export function toJSON<T>(
+    iterable: Iterable<T>
+  ): Array<Serializable.ToJSON<T>> {
+    return [...map(iterable, (value) => Serializable.toJSON(value))];
   }
 }

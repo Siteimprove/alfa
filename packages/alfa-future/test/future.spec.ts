@@ -129,7 +129,8 @@ test("#get() returns the value of a non-deferred future", (t) => {
   t.equal(n.get(), 10);
 });
 
-test(".traverse() traverses a list of values and lifts them to a future of lists", async (t) => {
+test(`.traverse() traverses an iterable of values and lifts them to a future of
+      iterables`, async (t) => {
   t.deepEqual(
     await Future.traverse([1, 2, 3, 4], (n) =>
       wait(n * 10).map(() => n * 2)
@@ -146,7 +147,7 @@ test(".traverse() does not run any resulting deferred futures", (t) => {
   );
 });
 
-test(".sequence() inverts a list of futures to a future of lists", async (t) => {
+test(".sequence() inverts an iterable of futures to a future of iterables", async (t) => {
   const futures = [
     wait(40).map(() => 1),
     wait(20).map(() => 2),

@@ -66,7 +66,7 @@ export class Right<R> implements Either<never, R> {
     yield this._value;
   }
 
-  public toJSON(): Right.JSON {
+  public toJSON(): Right.JSON<R> {
     return {
       type: "right",
       value: Serializable.toJSON(this._value),
@@ -79,10 +79,10 @@ export class Right<R> implements Either<never, R> {
 }
 
 export namespace Right {
-  export interface JSON {
+  export interface JSON<R> {
     [key: string]: json.JSON;
     type: "right";
-    value: json.JSON;
+    value: Serializable.ToJSON<R>;
   }
 
   export function isRight<R>(value: unknown): value is Right<R> {

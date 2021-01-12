@@ -16,10 +16,19 @@
       "path": "../alfa-hash"
     },
     {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-json"
     },
     {
-      "path": "../alfa-iterable"
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

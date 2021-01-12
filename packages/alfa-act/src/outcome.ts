@@ -144,7 +144,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.JSON;
-      expectations: Array<[string, Result.JSON]>;
+      expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -246,7 +246,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.JSON;
-      expectations: Array<[string, Result.JSON]>;
+      expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
 
     export interface EARL extends Outcome.EARL {

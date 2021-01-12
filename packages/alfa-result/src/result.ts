@@ -20,7 +20,7 @@ export interface Result<T, E = T>
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable {
+    Serializable<Result.JSON<T, E>> {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
@@ -46,11 +46,11 @@ export interface Result<T, E = T>
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
   err(): Option<E>;
-  toJSON(): Result.JSON;
+  toJSON(): Result.JSON<T, E>;
 }
 
 export namespace Result {
-  export type JSON = Ok.JSON | Err.JSON;
+  export type JSON<T, E = T> = Ok.JSON<T> | Err.JSON<E>;
 
   export function isResult<T, E>(value: unknown): value is Result<T, E> {
     return Ok.isOk(value) || Err.isErr(value);

@@ -2,8 +2,11 @@ import { Clone } from "@siteimprove/alfa-clone";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as global from "./global";
 
@@ -53,6 +56,75 @@ export namespace Array {
 
   export function clone<T extends Clone<T>>(array: Array<T>): Array<T> {
     return array.map(Clone.clone);
+  }
+
+  export function find<T, U extends T>(
+    array: Array<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function find<T>(
+    array: Array<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function find<T>(
+    array: Array<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    for (let i = 0, n = array.length; i < n; i++) {
+      const value = array[i];
+
+      if (predicate(value, i)) {
+        return Some.of(value);
+      }
+    }
+
+    return None;
+  }
+
+  export function findLast<T, U extends T>(
+    array: Array<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function findLast<T>(
+    array: Array<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function findLast<T>(
+    array: Array<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    for (let i = array.length - 1; i >= 0; i--) {
+      const value = array[i];
+
+      if (predicate(value, i)) {
+        return Some.of(value);
+      }
+    }
+
+    return None;
+  }
+
+  export function insert<T>(
+    array: Array<T>,
+    index: number,
+    value: T
+  ): Array<T> {
+    array.splice(index, 0, value);
+    return array;
+  }
+
+  export function append<T>(array: Array<T>, value: T): Array<T> {
+    array.push(value);
+    return array;
+  }
+
+  export function prepend<T>(array: Array<T>, value: T): Array<T> {
+    array.unshift(value);
+    return array;
   }
 
   export function sort<T extends Comparable<T>>(array: Array<T>): Array<T> {
@@ -129,9 +201,7 @@ export namespace Array {
     Hash.writeUint32(hash, array.length);
   }
 
-  export function toJSON<T extends JSON>(
-    array: Array<Serializable<T>>
-  ): Array<T> {
-    return array.map<T>(Serializable.toJSON);
+  export function toJSON<T>(array: Array<T>): Array<Serializable.ToJSON<T>> {
+    return array.map((value) => Serializable.toJSON(value));
   }
 }

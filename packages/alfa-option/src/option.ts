@@ -25,7 +25,7 @@ export interface Option<T>
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable {
+    Serializable<Option.JSON<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -49,13 +49,13 @@ export interface Option<T>
   getOrElse<U>(value: Thunk<U>): T | U;
   compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
   toArray(): Array<T>;
-  toJSON(): Option.JSON;
+  toJSON(): Option.JSON<T>;
 }
 
 export namespace Option {
   export type Maybe<T> = T | Option<T>;
 
-  export type JSON = Some.JSON | None.JSON;
+  export type JSON<T> = Some.JSON<T> | None.JSON;
 
   export function isOption<T>(value: unknown): value is Option<T> {
     return Some.isSome(value) || value === None;

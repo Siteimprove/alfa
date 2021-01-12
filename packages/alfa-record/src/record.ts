@@ -14,7 +14,7 @@ export class Record<T>
     Foldable<Record.Value<T>>,
     Iterable<Record.Entry<T>>,
     Equatable,
-    Serializable {
+    Serializable<Record.JSON<T>> {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
     const values = List.from(keys.map((key) => properties[key]));
@@ -120,14 +120,14 @@ export class Record<T>
     return [...this];
   }
 
-  public toJSON(): Record.JSON {
+  public toJSON(): Record.JSON<T> {
     const json: { [key: string]: json.JSON } = {};
 
     for (const [key, value] of this) {
       json[key] = Serializable.toJSON(value);
     }
 
-    return json;
+    return json as Record.JSON<T>;
   }
 
   public toString(): string {
@@ -146,9 +146,7 @@ export namespace Record {
 
   export type Entry<T> = { [K in Key<T>]: [K, T[K]] }[Key<T>];
 
-  export interface JSON {
-    [key: string]: json.JSON;
-  }
+  export type JSON<T> = { [K in Key<T>]: Serializable.ToJSON<T[K]> };
 
   export function isRecord<T>(value: unknown): value is Record<T> {
     return value instanceof Record;

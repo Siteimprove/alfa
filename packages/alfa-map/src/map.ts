@@ -234,7 +234,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return [...this];
   }
 
-  public toJSON(): Map.JSON {
+  public toJSON(): Map.JSON<K, V> {
     return this.toArray().map(([key, value]) => [
       Serializable.toJSON(key),
       Serializable.toJSON(value),
@@ -259,7 +259,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 }
 
 export namespace Map {
-  export interface JSON extends Array<[json.JSON, json.JSON]> {}
+  export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
 
   export function isMap<K, V>(value: unknown): value is Map<K, V> {
     return value instanceof Map;

@@ -187,8 +187,8 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return [...this];
   }
 
-  public toJSON(): Set.JSON {
-    return this.toArray().map(Serializable.toJSON);
+  public toJSON(): Set.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value));
   }
 
   public toString(): string {
@@ -199,7 +199,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
 }
 
 export namespace Set {
-  export interface JSON extends Array<json.JSON> {}
+  export type JSON<T> = Collection.Unkeyed.JSON<T>;
 
   export function isSet<T>(value: unknown): value is Set<T> {
     return value instanceof Set;

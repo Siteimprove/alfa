@@ -1,3 +1,4 @@
+import { Collection } from "@siteimprove/alfa-collection";
 import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -219,5 +220,5 @@ export const Nil: Nil = new (class Nil {
 })();
 
 export namespace Nil {
-  export type JSON = Array<never>;
+  export type JSON = Collection.Indexed.JSON<never>;
 }
