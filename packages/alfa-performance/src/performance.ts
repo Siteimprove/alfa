@@ -65,6 +65,10 @@ export class Performance
     this._emitter.on(listener);
   }
 
+  public off(listener: Callback<Performance.Entry>): void {
+    this._emitter.off(listener);
+  }
+
   public asyncIterator(): AsyncIterator<Performance.Entry> {
     return this._emitter.asyncIterator();
   }
