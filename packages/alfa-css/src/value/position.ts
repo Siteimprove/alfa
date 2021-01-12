@@ -33,14 +33,14 @@ export class Position<
   public static of<
     V extends Position.Component<Position.Vertical>,
     H extends Position.Component<Position.Horizontal>
-  >(vertical: V, horizontal: H): Position<V, H> {
-    return new Position(vertical, horizontal);
+  >(horizontal: H, vertical: V): Position<V, H> {
+    return new Position(horizontal, vertical);
   }
 
   private readonly _vertical: V;
   private readonly _horizontal: H;
 
-  private constructor(vertical: V, horizontal: H) {
+  private constructor(horizontal: H, vertical: V) {
     super();
     this._vertical = vertical;
     this._horizontal = horizontal;
@@ -303,11 +303,11 @@ export namespace Position {
     const parse4: PositionParser = either(
       map(
         pair(parseHorizontalKeywordValue, parseVerticalKeywordValue),
-        ([horizontal, vertical]) => Position.of(vertical, horizontal)
+        ([horizontal, vertical]) => Position.of(horizontal, vertical)
       ),
       map(
         pair(parseVerticalKeywordValue, parseHorizontalKeywordValue),
-        ([vertical, horizontal]) => Position.of(vertical, horizontal)
+        ([vertical, horizontal]) => Position.of(horizontal, vertical)
       )
     );
 

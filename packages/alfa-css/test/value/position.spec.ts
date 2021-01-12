@@ -11,7 +11,7 @@ function parse(t: Assertions, input: string, expected: Position.JSON) {
   t.deepEqual(
     parser(Slice.of(Lexer.lex(input)))
       .map(([_, [horizontal, vertical]]) =>
-        Position.of(vertical.get(), horizontal.get())
+        Position.of(horizontal.get(), vertical.get())
       )
       .get()
       .toJSON(),
