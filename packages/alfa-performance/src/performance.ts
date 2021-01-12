@@ -31,8 +31,15 @@ export class Performance<T>
     return now ? now - this._epoch : this.now();
   }
 
-  public mark(data: T): Performance.Mark<T> {
-    return this._emit(Performance.mark(data, this.now()));
+  public mark(
+    data: T,
+    start: Performance.Entry<T> | number = this.now()
+  ): Performance.Mark<T> {
+    if (typeof start !== "number") {
+      start = start.start;
+    }
+
+    return this._emit(Performance.mark(data, start));
   }
 
   public measure(
