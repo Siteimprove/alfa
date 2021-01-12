@@ -31,6 +31,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-callback](packages/alfa-callback): `Callback.contraMap()` is now available.
 
+- [@siteimprove/alfa-functor](packages/alfa-functor): `Functor.Invariant<T>` is now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `flow`, `flow-root`, `table`, `flex`, `grid`, and `ruby` values.
