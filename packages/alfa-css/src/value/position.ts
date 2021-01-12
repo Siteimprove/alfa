@@ -271,18 +271,25 @@ export namespace Position {
    * "center" may be used as H/V but not in Hh nor Vv…
    * * Accepted 4 tokens values: Hh Vv / Vv Hh
    * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position)
-   * * Accepted 2 tokens values: H V / H v / h v / h V / Hh / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
+   * * Accepted 2 tokens values: H V / H v / h V / h v / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
    * * Accepted 1 token values: H / V / h
    */
   export function parse(): Parser<Slice<Token>, Position, string> {
-    type ComponentParser<
-      S extends Horizontal | Vertical = Horizontal | Vertical
-    > = Parser<Slice<Token>, Component<S>, string>;
+    type ComponentParser<S extends Horizontal | Vertical> = Parser<
+      Slice<Token>,
+      Component<S>,
+      string
+    >;
     type PositionParser = Parser<Slice<Token>, Position, string>;
 
     const parseHorizontalKeyword: ComponentParser<Horizontal> = either(
       parseCenter,
       map(parseHorizontal, Side.of)
+    );
+
+    const parseHorizontalValue: ComponentParser<Horizontal> = map(
+      either(Length.parse, Percentage.parse),
+      (offset) => Side.of(Keyword.of("left"), Some.of(offset))
     );
 
     const parseHorizontalKeywordValue: ComponentParser<Horizontal> = map(
@@ -295,19 +302,70 @@ export namespace Position {
       map(parseVertical, Side.of)
     );
 
+    const parseVerticalValue: ComponentParser<Vertical> = map(
+      either(Length.parse, Percentage.parse),
+      (offset) => Side.of(Keyword.of("top"), Some.of(offset))
+    );
+
     const parseVerticalKeywordValue: ComponentParser<Vertical> = map(
       pair(parseVertical, either(Length.parse, Percentage.parse)),
       ([keyword, value]) => Side.of(keyword, Some.of(value))
     );
 
+    const mapHV = ([horizontal, vertical]: [
+      Component<Horizontal>,
+      Component<Vertical>
+    ]) => Position.of(horizontal, vertical);
+    const mapVH = ([vertical, horizontal]: [
+      Component<Vertical>,
+      Component<Horizontal>
+    ]) => Position.of(horizontal, vertical);
+
     const parse4: PositionParser = either(
+      map(pair(parseHorizontalKeywordValue, parseVerticalKeywordValue), mapHV),
+      map(pair(parseVerticalKeywordValue, parseHorizontalKeywordValue), mapVH)
+    );
+
+    const parse3: PositionParser = either(
       map(
-        pair(parseHorizontalKeywordValue, parseVerticalKeywordValue),
-        ([horizontal, vertical]) => Position.of(horizontal, vertical)
+        either(
+          pair(parseHorizontalKeywordValue, parseVerticalKeyword),
+          pair(parseHorizontalKeyword, parseVerticalKeywordValue)
+        ),
+        mapHV
       ),
       map(
-        pair(parseVerticalKeywordValue, parseHorizontalKeywordValue),
-        ([vertical, horizontal]) => Position.of(horizontal, vertical)
+        either(
+          pair(parseVerticalKeywordValue, parseHorizontalKeyword),
+          pair(parseVerticalKeyword, parseHorizontalKeywordValue)
+        ),
+        mapVH
+      )
+    );
+
+    const parse2: PositionParser = either(
+      map(
+        pair(
+          either(parseHorizontalKeyword, parseHorizontalValue),
+          either(parseVerticalKeyword, parseVerticalValue)
+        ),
+        mapHV
+      ),
+      map(pair(parseVerticalKeyword, parseHorizontalKeyword), mapVH)
+    );
+
+    const parse1: PositionParser = either(
+      map(parseHorizontalKeyword, (horizontal) =>
+        Position.of<Component<Horizontal>, Component<Vertical>>(
+          horizontal,
+          Keyword.of("center")
+        )
+      ),
+      map(parseVerticalKeyword, (vertical) =>
+        Position.of(Keyword.of("center"), vertical)
+      ),
+      map(parseHorizontalValue, (horizontal) =>
+        Position.of(horizontal, Keyword.of("center"))
       )
     );
 
