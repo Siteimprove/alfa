@@ -17,6 +17,9 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-mapper": "^0.8.0"
+  },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.8.0"
   },
