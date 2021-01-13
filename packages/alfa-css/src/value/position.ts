@@ -10,7 +10,7 @@ import { Percentage } from "./percentage";
 import { Unit } from "./unit";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../syntax/token";
-import { Err, Result } from "@siteimprove/alfa-result";
+import { Err } from "@siteimprove/alfa-result";
 
 const { map, either, pair, right } = Parser;
 
