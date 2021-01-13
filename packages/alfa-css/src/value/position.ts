@@ -242,57 +242,6 @@ export namespace Position {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
-   */
-  export const parseOld: Parser<
-    Slice<Token>,
-    [Option<Component<Horizontal>>, Option<Component<Vertical>>],
-    string
-  > = (input) => {
-    let x: Option<Component<Horizontal>> = None;
-    let y: Option<Component<Vertical>> = None;
-
-    while (true) {
-      for (const [remainder] of Token.parseWhitespace(input)) {
-        input = remainder;
-      }
-
-      if (x.isNone()) {
-        const result = parsePositionX(input);
-
-        if (result.isOk()) {
-          const [remainder, value] = result.get();
-          x = Option.of(value);
-          input = remainder;
-          continue;
-        }
-      }
-
-      if (y.isNone()) {
-        const result = parsePositionY(input);
-
-        if (result.isOk()) {
-          const [remainder, value] = result.get();
-          y = Option.of(value);
-          input = remainder;
-          continue;
-        }
-      }
-
-      break;
-    }
-
-    if (x.isNone() && y.isNone()) {
-      return Err.of(`Expected one of x or y`);
-    }
-
-    return Result.of([
-      input,
-      [x, y.orElse(() => Option.of(Keyword.of("center")))],
-    ]);
-  };
-
-  /**
    * @see https://drafts.csswg.org/css-values-4/#typedef-position
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
    *
