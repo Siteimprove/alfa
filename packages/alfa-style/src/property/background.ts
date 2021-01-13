@@ -254,35 +254,27 @@ export namespace Background {
     export type Computed = Specified;
   }
 
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#propdef-background-position
-   */
-
-  const parsePositionComponent = either(
-    css.Position.parseCenter,
-    either(Length.parse, Percentage.parse)
-  );
-
-  const parsePositionComponentList = map(
-    separatedList(
-      parsePositionComponent,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (positions) => List.of(positions, ", ")
-  );
-
-  const parsePositionList = map(
-    separatedList(
-      css.Position.parse(true),
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (positions) => List.of(positions, ", ")
-  );
-
   export namespace Position {
+    // This should use Position.Component.Horizontal.parse (or Vertical).
+    // However, two-value syntax (right 10px) is only supported by Firefox and IE
+    // Moreover, the longhands are still experimental in CSS
+    // Keeping this for now, may need to be revisited later.
+    const parseComponent = either(
+      css.Position.parseCenter,
+      either(Length.parse, Percentage.parse)
+    );
+
+    const parseComponentList = map(
+      separatedList(
+        parseComponent,
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (positions) => List.of(positions, ", ")
+    );
+
     export const X: Property<X.Specified, X.Computed> = Property.of(
       List.of([Length.of(0, "px")]),
-      parsePositionComponentList,
+      parseComponentList,
       (style) =>
         style.specified("background-position-x").map((positions) =>
           List.of(
@@ -334,7 +326,7 @@ export namespace Background {
 
     export const Y: Property<Y.Specified, Y.Computed> = Property.of(
       List.of([Length.of(0, "px")]),
-      parsePositionComponentList,
+      parseComponentList,
       (style) =>
         style.specified("background-position-y").map((positions) =>
           List.of(
@@ -381,9 +373,17 @@ export namespace Background {
       }
     }
 
+    const parseList = map(
+      separatedList(
+        css.Position.parse(true),
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (positions) => List.of(positions, ", ")
+    );
+
     export const Shorthand = Property.Shorthand.of(
       ["background-position-x", "background-position-y"],
-      map(parsePositionList, (positions) => {
+      map(parseList, (positions) => {
         const xs: Array<X.Specified.Item> = [];
         const ys: Array<Y.Specified.Item> = [];
 
