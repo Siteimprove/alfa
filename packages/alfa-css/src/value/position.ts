@@ -182,13 +182,13 @@ export namespace Position {
   export namespace Component {
     export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
 
+    export const parseValue = either(Length.parse, Percentage.parse);
+
     export namespace Horizontal {
       export const parseKeyword = either(
         parseCenter,
         map(parseHorizontal, Side.of)
       );
-
-      export const parseValue = either(Length.parse, Percentage.parse);
 
       export const parseKeywordValue = map(
         pair(
@@ -210,8 +210,6 @@ export namespace Position {
         parseCenter,
         map(parseVertical, Side.of)
       );
-
-      export const parseValue = either(Length.parse, Percentage.parse);
 
       export const parseKeywordValue = map(
         pair(
@@ -260,7 +258,7 @@ export namespace Position {
       Component<Horizontal>
     ]) => Position.of(horizontal, vertical);
 
-    const { Horizontal, Vertical } = Component;
+    const { Horizontal, Vertical, parseValue } = Component;
 
     const parse4 = either(
       map(
@@ -313,11 +311,8 @@ export namespace Position {
     const parse2 = either(
       map(
         pair(
-          either(Horizontal.parseKeyword, Horizontal.parseValue),
-          right(
-            parseWhitespace,
-            either(Vertical.parseKeyword, Vertical.parseValue)
-          )
+          either(Horizontal.parseKeyword, parseValue),
+          right(parseWhitespace, either(Vertical.parseKeyword, parseValue))
         ),
         mapHV
       ),
@@ -340,7 +335,7 @@ export namespace Position {
       map(Vertical.parseKeyword, (vertical) =>
         Position.of(Keyword.of("center"), vertical)
       ),
-      map(Horizontal.parseValue, (horizontal) =>
+      map(parseValue, (horizontal) =>
         Position.of(horizontal, Keyword.of("center"))
       )
     );
