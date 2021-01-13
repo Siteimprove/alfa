@@ -270,24 +270,17 @@ export namespace Position {
   export function parse(
     allowThreeTokens: boolean = false
   ): Parser<Slice<Token>, Position, string> {
-    type ComponentParser<S extends Horizontal | Vertical> = Parser<
-      Slice<Token>,
-      Component<S>,
-      string
-    >;
-    type PositionParser = Parser<Slice<Token>, Position, string>;
-
-    const parseHorizontalKeyword: ComponentParser<Horizontal> = either(
+    const parseHorizontalKeyword = either(
       parseCenter,
       map(parseHorizontal, Side.of)
     );
 
-    const parseHorizontalValue: ComponentParser<Horizontal> = map(
+    const parseHorizontalValue = map(
       either(Length.parse, Percentage.parse),
       (offset) => Side.of(Keyword.of("left"), Some.of(offset))
     );
 
-    const parseHorizontalKeywordValue: ComponentParser<Horizontal> = map(
+    const parseHorizontalKeywordValue = map(
       pair(
         parseHorizontal,
         right(parseWhitespace, either(Length.parse, Percentage.parse))
@@ -295,17 +288,17 @@ export namespace Position {
       ([keyword, value]) => Side.of(keyword, Some.of(value))
     );
 
-    const parseVerticalKeyword: ComponentParser<Vertical> = either(
+    const parseVerticalKeyword = either(
       parseCenter,
       map(parseVertical, Side.of)
     );
 
-    const parseVerticalValue: ComponentParser<Vertical> = map(
+    const parseVerticalValue = map(
       either(Length.parse, Percentage.parse),
       (offset) => Side.of(Keyword.of("top"), Some.of(offset))
     );
 
-    const parseVerticalKeywordValue: ComponentParser<Vertical> = map(
+    const parseVerticalKeywordValue = map(
       pair(
         parseVertical,
         right(parseWhitespace, either(Length.parse, Percentage.parse))
@@ -322,7 +315,7 @@ export namespace Position {
       Component<Horizontal>
     ]) => Position.of(horizontal, vertical);
 
-    const parse4: PositionParser = either(
+    const parse4 = either(
       map(
         pair(
           parseHorizontalKeywordValue,
@@ -339,7 +332,7 @@ export namespace Position {
       )
     );
 
-    const parse3: PositionParser = allowThreeTokens
+    const parse3 = allowThreeTokens
       ? either(
           map(
             either(
@@ -368,9 +361,9 @@ export namespace Position {
             mapVH
           )
         )
-      : (_) => Err.of("Three-value syntax is not allowed");
+      : () => Err.of("Three-value syntax is not allowed");
 
-    const parse2: PositionParser = either(
+    const parse2 = either(
       map(
         pair(
           either(parseHorizontalKeyword, parseHorizontalValue),
@@ -390,7 +383,7 @@ export namespace Position {
       )
     );
 
-    const parse1: PositionParser = either(
+    const parse1 = either(
       map(parseHorizontalKeyword, (horizontal) =>
         Position.of<Component<Horizontal>, Component<Vertical>>(
           horizontal,
