@@ -273,7 +273,7 @@ export namespace Background {
 
   const parsePositionList = map(
     separatedList(
-      css.Position.parseOld,
+      css.Position.parse(true),
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (positions) => List.of(positions, ", ")
@@ -388,10 +388,8 @@ export namespace Background {
         const ys: Array<Y.Specified.Item> = [];
 
         for (const position of positions) {
-          const [x, y] = position;
-
-          xs.push(x.getOr(Keyword.of("center")));
-          ys.push(y.getOr(Keyword.of("center")));
+          xs.push(position.horizontal);
+          ys.push(position.vertical);
         }
 
         return [
