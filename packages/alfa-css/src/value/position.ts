@@ -188,10 +188,7 @@ export namespace Position {
         map(parseHorizontal, Side.of)
       );
 
-      export const parseValue = map(
-        either(Length.parse, Percentage.parse),
-        (offset) => Side.of(Keyword.of("left"), Some.of(offset))
-      );
+      export const parseValue = either(Length.parse, Percentage.parse);
 
       export const parseKeywordValue = map(
         pair(
@@ -201,7 +198,11 @@ export namespace Position {
         ([keyword, value]) => Side.of(keyword, Some.of(value))
       );
 
-      export const parse = either(parseKeywordValue, parseKeyword, parseValue);
+      export const parse = either<Slice<Token>, Component<Horizontal>, string>(
+        parseKeywordValue,
+        parseKeyword,
+        parseValue
+      );
     }
 
     export namespace Vertical {
@@ -210,10 +211,7 @@ export namespace Position {
         map(parseVertical, Side.of)
       );
 
-      export const parseValue = map(
-        either(Length.parse, Percentage.parse),
-        (offset) => Side.of(Keyword.of("top"), Some.of(offset))
-      );
+      export const parseValue = either(Length.parse, Percentage.parse);
 
       export const parseKeywordValue = map(
         pair(
@@ -223,7 +221,11 @@ export namespace Position {
         ([keyword, value]) => Side.of(keyword, Some.of(value))
       );
 
-      export const parse = either(parseKeywordValue, parseKeyword, parseValue);
+      export const parse = either<Slice<Token>, Component<Vertical>, string>(
+        parseKeywordValue,
+        parseKeyword,
+        parseValue
+      );
     }
   }
 

@@ -79,16 +79,9 @@ test("parse()  parses 10px", (t) => {
   testParse(t, "10px", {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "left",
-      },
-      type: "side",
+      type: "length",
+      unit: "px",
+      value: 10,
     },
     vertical: {
       type: "keyword",
@@ -138,16 +131,9 @@ test("parse() parses 10px left as a one token value", (t) => {
     {
       type: "position",
       horizontal: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+        type: "length",
+        unit: "px",
+        value: 10,
       },
       vertical: {
         type: "keyword",
@@ -260,16 +246,9 @@ test("parse() parses left 10px", (t) => {
       offset: null,
     },
     vertical: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "top",
-      },
-      type: "side",
+      type: "length",
+      unit: "px",
+      value: 10,
     },
   });
 });
@@ -278,16 +257,9 @@ test("parse() parses 10px top", (t) => {
   testParse(t, "10px top", {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "left",
-      },
-      type: "side",
+      type: "length",
+      unit: "px",
+      value: 10,
     },
     vertical: {
       type: "side",
@@ -304,27 +276,13 @@ test("parse() parses 10px 20%", (t) => {
   testParse(t, "10px 20%", {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "left",
-      },
-      type: "side",
+      type: "length",
+      unit: "px",
+      value: 10,
     },
     vertical: {
-      offset: {
-        type: "percentage",
-        value: 0.2,
-      },
-      side: {
-        type: "keyword",
-        value: "top",
-      },
-      type: "side",
+      type: "percentage",
+      value: 0.2,
     },
   });
 });
@@ -336,16 +294,9 @@ test("parse() parses 10px top 20% as a two tokens value", (t) => {
     {
       type: "position",
       horizontal: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+        type: "length",
+        unit: "px",
+        value: 10,
       },
       vertical: {
         offset: null,
@@ -385,16 +336,9 @@ test("parse() parses left 10px 20% as a two tokens value", (t) => {
         type: "side",
       },
       vertical: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "top",
-        },
-        type: "side",
+        type: "length",
+        unit: "px",
+        value: 10,
       },
     },
     [
@@ -454,16 +398,9 @@ test("parse() parses left 10px center as a three tokens value when allowed", (t)
         type: "side",
       },
       vertical: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "top",
-        },
-        type: "side",
+        type: "length",
+        unit: "px",
+        value: 10,
       },
     },
     [
@@ -750,15 +687,8 @@ test("parse() parses center 20% right 10px as a two tokens value", (t) => {
       value: "center",
     },
     vertical: {
-      offset: {
-        type: "percentage",
-        value: 0.2,
-      },
-      side: {
-        type: "keyword",
-        value: "top",
-      },
-      type: "side",
+      type: "percentage",
+      value: 0.2,
     },
   });
 });
