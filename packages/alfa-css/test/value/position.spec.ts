@@ -21,7 +21,7 @@ function parse(
   );
 }
 
-test("parse() parses center", (t) => {
+test("parse() parses 1-token positions", (t) => {
   parse(t, "center", {
     type: "position",
     horizontal: {
@@ -33,9 +33,7 @@ test("parse() parses center", (t) => {
       value: "center",
     },
   });
-});
 
-test("parse() parses right", (t) => {
   parse(t, "right", {
     type: "position",
     horizontal: {
@@ -51,9 +49,7 @@ test("parse() parses right", (t) => {
       value: "center",
     },
   });
-});
 
-test("parse() parses top", (t) => {
   parse(t, "top", {
     type: "position",
     horizontal: {
@@ -69,9 +65,7 @@ test("parse() parses top", (t) => {
       offset: null,
     },
   });
-});
 
-test("parse() parses 10px", (t) => {
   parse(t, "10px", {
     type: "position",
     horizontal: {
@@ -84,9 +78,8 @@ test("parse() parses 10px", (t) => {
       value: "center",
     },
   });
-});
 
-test("parse() parses top 10px as a one token value", (t) => {
+  // "10px" is not consumed
   parse(t, "top 10px", {
     type: "position",
     horizontal: {
@@ -102,9 +95,8 @@ test("parse() parses top 10px as a one token value", (t) => {
       offset: null,
     },
   });
-});
 
-test("parse() parses 10px left as a one token value", (t) => {
+  // "left" is not consumed
   parse(t, "10px left", {
     type: "position",
     horizontal: {
@@ -119,7 +111,7 @@ test("parse() parses 10px left as a one token value", (t) => {
   });
 });
 
-test("parse() parses left bottom", (t) => {
+test("parse() parses 2-token positions", (t) => {
   parse(t, "left bottom", {
     type: "position",
     horizontal: {
@@ -139,9 +131,7 @@ test("parse() parses left bottom", (t) => {
       offset: null,
     },
   });
-});
 
-test("parse() parses bottom left", (t) => {
   parse(t, "bottom left", {
     type: "position",
     horizontal: {
@@ -161,9 +151,7 @@ test("parse() parses bottom left", (t) => {
       offset: null,
     },
   });
-});
 
-test("parse() parses left center", (t) => {
   parse(t, "left center", {
     type: "position",
     horizontal: {
@@ -179,9 +167,7 @@ test("parse() parses left center", (t) => {
       value: "center",
     },
   });
-});
 
-test("parse() parses center left", (t) => {
   parse(t, "center left", {
     type: "position",
     horizontal: {
@@ -197,9 +183,7 @@ test("parse() parses center left", (t) => {
       value: "center",
     },
   });
-});
 
-test("parse() parses left 10px", (t) => {
   parse(t, "left 10px", {
     type: "position",
     horizontal: {
@@ -216,9 +200,7 @@ test("parse() parses left 10px", (t) => {
       value: 10,
     },
   });
-});
 
-test("parse() parses 10px top", (t) => {
   parse(t, "10px top", {
     type: "position",
     horizontal: {
@@ -235,9 +217,7 @@ test("parse() parses 10px top", (t) => {
       offset: null,
     },
   });
-});
 
-test("parse() parses 10px 20%", (t) => {
   parse(t, "10px 20%", {
     type: "position",
     horizontal: {
@@ -250,9 +230,8 @@ test("parse() parses 10px 20%", (t) => {
       value: 0.2,
     },
   });
-});
 
-test("parse() parses 10px top 20% as a two tokens value", (t) => {
+  // "20%" is not consumed
   parse(
     t,
     "10px top 20%",
@@ -274,9 +253,8 @@ test("parse() parses 10px top 20% as a two tokens value", (t) => {
     },
     true
   );
-});
 
-test("parse() parses left 10px 20% as a two tokens value", (t) => {
+  // "20%" is not consumed
   parse(
     t,
     "left 10px 20%",
@@ -298,9 +276,81 @@ test("parse() parses left 10px 20% as a two tokens value", (t) => {
     },
     true
   );
+
+  // "10px" not consumed
+  parse(t, "left top 10px", {
+    type: "position",
+    horizontal: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "left",
+      },
+      type: "side",
+    },
+    vertical: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
+
+  // "left" not consumed
+  parse(t, "top 10px left", {
+    type: "position",
+    horizontal: {
+      type: "keyword",
+      value: "center",
+    },
+    vertical: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
+
+  // "10px" not consumed
+  parse(t, "top left 10px", {
+    type: "position",
+    horizontal: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "left",
+      },
+      type: "side",
+    },
+    vertical: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
+
+  // "right 10px" not consumed
+  parse(t, "center 20% right 10px", {
+    type: "position",
+    horizontal: {
+      type: "keyword",
+      value: "center",
+    },
+    vertical: {
+      type: "percentage",
+      value: 0.2,
+    },
+  });
 });
 
-test("parse() parses left 10px center as a three tokens value when allowed", (t) => {
+test("parse() parses 3-token positions", (t) => {
   parse(
     t,
     "left 10px center",
@@ -326,25 +376,6 @@ test("parse() parses left 10px center as a three tokens value when allowed", (t)
     true
   );
 
-  parse(t, "left 10px center", {
-    type: "position",
-    horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
-      type: "side",
-    },
-    vertical: {
-      type: "length",
-      unit: "px",
-      value: 10,
-    },
-  });
-});
-
-test("parse() parses left top 10px as a three tokens value when allowed", (t) => {
   parse(
     t,
     "left top 10px",
@@ -374,28 +405,6 @@ test("parse() parses left top 10px as a three tokens value when allowed", (t) =>
     true
   );
 
-  parse(t, "left top 10px", {
-    type: "position",
-    horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
-      type: "side",
-    },
-    vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
-      type: "side",
-    },
-  });
-});
-
-test("parse() parses top 10px left as a three tokens value when allowed", (t) => {
   parse(
     t,
     "top 10px left",
@@ -425,24 +434,6 @@ test("parse() parses top 10px left as a three tokens value when allowed", (t) =>
     true
   );
 
-  parse(t, "top 10px left", {
-    type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
-    vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
-      type: "side",
-    },
-  });
-});
-
-test("parse() parses top left 10px as a three tokens value when allowed", (t) => {
   parse(
     t,
     "top left 10px",
@@ -471,29 +462,9 @@ test("parse() parses top left 10px as a three tokens value when allowed", (t) =>
     },
     true
   );
-
-  parse(t, "top left 10px", {
-    type: "position",
-    horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
-      type: "side",
-    },
-    vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
-      type: "side",
-    },
-  });
 });
 
-test("parse() parses right 10px bottom 20%", (t) => {
+test("parse() parses 4-token positions", (t) => {
   parse(t, "right 10px bottom 20%", {
     type: "position",
     horizontal: {
@@ -520,9 +491,7 @@ test("parse() parses right 10px bottom 20%", (t) => {
       type: "side",
     },
   });
-});
 
-test("parse() parses bottom 20% right 10px", (t) => {
   parse(t, "bottom 20% right 10px", {
     type: "position",
     horizontal: {
@@ -547,20 +516,6 @@ test("parse() parses bottom 20% right 10px", (t) => {
         value: "bottom",
       },
       type: "side",
-    },
-  });
-});
-
-test("parse() parses center 20% right 10px as a two tokens value", (t) => {
-  parse(t, "center 20% right 10px", {
-    type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
-    vertical: {
-      type: "percentage",
-      value: 0.2,
     },
   });
 });
