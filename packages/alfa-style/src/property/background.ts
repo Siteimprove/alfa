@@ -13,7 +13,7 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option, None, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -561,6 +561,10 @@ export namespace Background {
   > = (input) => {
     let color: Option<Color.Specified> = None;
     let image: Option<Image.Specified.Item> = None;
+    let position: css.Position = css.Position.of(
+      Keyword.of("center"),
+      Keyword.of("center")
+    );
     let positionX: Option<Position.X.Specified.Item> = None;
     let positionY: Option<Position.Y.Specified.Item> = None;
     let size: Option<Size.Specified.Item> = None;
@@ -601,10 +605,12 @@ export namespace Background {
 
       // <position> [ / <size> ]?
       if (positionX.isNone() || positionY.isNone()) {
-        const result = css.Position.parseOld(input);
+        const result = css.Position.parse(true)(input);
 
         if (result.isOk()) {
-          [input, [positionX, positionY]] = result.get();
+          [input, position] = result.get();
+          positionX = Some.of(position.horizontal);
+          positionY = Some.of(position.vertical);
 
           // [ / <size> ]?
           {
