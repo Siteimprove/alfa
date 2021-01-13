@@ -1,16 +1,15 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Option, None, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
+import { Err } from "@siteimprove/alfa-result";
 
+import { Token } from "../syntax/token";
 import { Value } from "../value";
-
 import { Keyword } from "./keyword";
 import { Length } from "./length";
 import { Percentage } from "./percentage";
 import { Unit } from "./unit";
-import { Slice } from "@siteimprove/alfa-slice";
-import { Token } from "../syntax/token";
-import { Err } from "@siteimprove/alfa-result";
 
 const { map, either, pair, right } = Parser;
 
@@ -28,45 +27,45 @@ export class Position<
     return new Position(horizontal, vertical);
   }
 
-  private readonly _vertical: V;
   private readonly _horizontal: H;
+  private readonly _vertical: V;
 
   private constructor(horizontal: H, vertical: V) {
     super();
-    this._vertical = vertical;
     this._horizontal = horizontal;
+    this._vertical = vertical;
   }
 
   public get type(): "position" {
     return "position";
   }
 
-  public get vertical(): V {
-    return this._vertical;
-  }
-
   public get horizontal(): H {
     return this._horizontal;
+  }
+
+  public get vertical(): V {
+    return this._vertical;
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof Position &&
-      value._vertical.equals(this._vertical) &&
-      value._horizontal.equals(this._horizontal)
+      value._horizontal.equals(this._horizontal) &&
+      value._vertical.equals(this._vertical)
     );
   }
 
   public hash(hash: Hash): void {
-    this._vertical.hash(hash);
     this._horizontal.hash(hash);
+    this._vertical.hash(hash);
   }
 
   public toJSON(): Position.JSON {
     return {
       type: "position",
-      vertical: this._vertical.toJSON(),
       horizontal: this._horizontal.toJSON(),
+      vertical: this._vertical.toJSON(),
     };
   }
 
@@ -80,8 +79,8 @@ export namespace Position {
 
   export interface JSON extends Value.JSON {
     type: "position";
-    vertical: Component.JSON;
     horizontal: Component.JSON;
+    vertical: Component.JSON;
   }
 
   export type Center = Keyword<"center">;
@@ -228,31 +227,35 @@ export namespace Position {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values-4/#typedef-position
+   * @remarks
+   * Positions can be declared using either 1, 2, 3, or 4 tokens with the
+   * longest possible match taking precedence. The 3-token syntax is deprecated
+   * and must be selectively enabled.
+   *
+   * Notation:
+   *
+   *   - H/V: keyword, top | bottom | right | left | center
+   *   - h/v: numeric, <length | percentage>
+   *   - Hh/Vv: keyword (excluding center) and numeric
+   *
+   * Syntax:
+   *
+   *   - 4 tokens: Hh Vv | Vv Hh
+   *   - 3 tokens: Hh V | H Vv | Vv H | V Hh
+   *   - 2 tokens: H V | H v | h V | h v | V H
+   *   - 1 token:  H | V | h
+   *
+   * @see https://drafts.csswg.org/css-values/#typedef-position
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
-   *
-   * Parsing positions is a mess… It can be a 1, 2, 3, or 4 tokens value.
-   * What the grammar doesn't say is that 3 is only allowed for background-position and
-   * that the H/V components can only be switched when both start with a keyword.
-   * Parsing has to be greedy, consuming as much as possible. So we check whether we can
-   * get a 4, 3, 2, 1 match. It is hard to know whether a 1 match can be extended as a 2 match (it may depend on the 3 token also),
-   * and so on, so it's easier to retry from the start. This should be OK performance wise since it
-   * is not that much retry and it shouldn't be a type present in that many values…
-   *
-   * Notations: H/V: keyword for the component, h/v: numeric (length percentage), Hh/Vv: both keyword and numeric.
-   * "center" may be used as H/V but not in Hh nor Vv…
-   * * Accepted 4 tokens values: Hh Vv / Vv Hh
-   * * Accepted 3 tokens values: Hh V / H Vv / Vv H / V Hh (only for background-position) (**not** h Vv, **not** Hh v)
-   * * Accepted 2 tokens values: H V / H v / h V / h v / V H (**not** "Vv", **not** "v *", "H v" is **not** "Hh")
-   * * Accepted 1 token values: H / V / h
    */
   export function parse(
-    allowThreeTokens: boolean = false
+    legacySyntax: boolean = false
   ): Parser<Slice<Token>, Position, string> {
     const mapHV = ([horizontal, vertical]: [
       Component<Horizontal>,
       Component<Vertical>
     ]) => Position.of(horizontal, vertical);
+
     const mapVH = ([vertical, horizontal]: [
       Component<Vertical>,
       Component<Horizontal>
@@ -277,7 +280,7 @@ export namespace Position {
       )
     );
 
-    const parse3 = allowThreeTokens
+    const parse3 = legacySyntax
       ? either(
           map(
             either(
