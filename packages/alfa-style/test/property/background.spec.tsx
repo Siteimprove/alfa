@@ -198,16 +198,9 @@ test(`#cascaded() parses \`background: 12px\``, (t) => {
       type: "list",
       values: [
         {
-          type: "side",
-          side: {
-            type: "keyword",
-            value: "left",
-          },
-          offset: {
-            type: "length",
-            value: 12,
-            unit: "px",
-          },
+          type: "length",
+          value: 12,
+          unit: "px",
         },
       ],
       separator: ", ",
@@ -240,16 +233,9 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
       type: "list",
       values: [
         {
-          type: "side",
-          side: {
-            type: "keyword",
-            value: "left",
-          },
-          offset: {
-            type: "length",
-            value: 12,
-            unit: "px",
-          },
+          type: "length",
+          value: 12,
+          unit: "px",
         },
       ],
       separator: ", ",
@@ -262,16 +248,9 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
       type: "list",
       values: [
         {
-          type: "side",
-          side: {
-            type: "keyword",
-            value: "top",
-          },
-          offset: {
-            type: "length",
-            value: 0,
-            unit: "px",
-          },
+          type: "length",
+          value: 0,
+          unit: "px",
         },
       ],
       separator: ", ",
