@@ -227,20 +227,6 @@ export namespace Position {
     }
   }
 
-  const parsePositionX = either(
-    map(Keyword.parse("left", "right", "center"), (x) =>
-      x.value === "center" ? x : Side.of(x)
-    ),
-    either(Length.parse, Percentage.parse)
-  );
-
-  const parsePositionY = either(
-    map(Keyword.parse("top", "bottom", "center"), (x) =>
-      x.value === "center" ? x : Side.of(x)
-    ),
-    either(Length.parse, Percentage.parse)
-  );
-
   /**
    * @see https://drafts.csswg.org/css-values-4/#typedef-position
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
