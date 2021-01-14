@@ -65,6 +65,7 @@
     { "path": "alfa-monad" },
     { "path": "alfa-option" },
     { "path": "alfa-parser" },
+    { "path": "alfa-performance" },
     { "path": "alfa-predicate" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
