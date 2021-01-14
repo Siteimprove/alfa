@@ -13,7 +13,7 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option, None, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -254,100 +254,27 @@ export namespace Background {
     export type Computed = Specified;
   }
 
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#propdef-background-position
-   */
-
-  const parsePositionComponent = either(
-    css.Position.parseCenter,
-    either(Length.parse, Percentage.parse)
-  );
-
-  const parsePositionComponentList = map(
-    separatedList(
-      parsePositionComponent,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (positions) => List.of(positions, ", ")
-  );
-
-  const parsePositionX = either(
-    map(Keyword.parse("left", "right", "center"), (x) =>
-      x.value === "center" ? x : css.Position.Side.of(x)
-    ),
-    either(Length.parse, Percentage.parse)
-  );
-
-  const parsePositionY = either(
-    map(Keyword.parse("top", "bottom", "center"), (x) =>
-      x.value === "center" ? x : css.Position.Side.of(x)
-    ),
-    either(Length.parse, Percentage.parse)
-  );
-
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
-   */
-  const parsePosition: Parser<
-    Slice<Token>,
-    [Option<Position.X.Specified.Item>, Option<Position.Y.Specified.Item>],
-    string
-  > = (input) => {
-    let x: Option<Position.X.Specified.Item> = None;
-    let y: Option<Position.Y.Specified.Item> = None;
-
-    while (true) {
-      for (const [remainder] of Token.parseWhitespace(input)) {
-        input = remainder;
-      }
-
-      if (x.isNone()) {
-        const result = parsePositionX(input);
-
-        if (result.isOk()) {
-          const [remainder, value] = result.get();
-          x = Option.of(value);
-          input = remainder;
-          continue;
-        }
-      }
-
-      if (y.isNone()) {
-        const result = parsePositionY(input);
-
-        if (result.isOk()) {
-          const [remainder, value] = result.get();
-          y = Option.of(value);
-          input = remainder;
-          continue;
-        }
-      }
-
-      break;
-    }
-
-    if (x.isNone() && y.isNone()) {
-      return Err.of(`Expected one of x or y`);
-    }
-
-    return Result.of([
-      input,
-      [x, y.orElse(() => Option.of(Keyword.of("center")))],
-    ]);
-  };
-
-  const parsePositionList = map(
-    separatedList(
-      parsePosition,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (positions) => List.of(positions, ", ")
-  );
-
   export namespace Position {
+    // This should use Position.Component.Horizontal.parse (or Vertical).
+    // However, two-value syntax (right 10px) is only supported by Firefox and IE
+    // Moreover, the longhands are still experimental in CSS
+    // Keeping this for now, may need to be revisited later.
+    const parseComponent = either(
+      css.Position.parseCenter,
+      either(Length.parse, Percentage.parse)
+    );
+
+    const parseComponentList = map(
+      separatedList(
+        parseComponent,
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (positions) => List.of(positions, ", ")
+    );
+
     export const X: Property<X.Specified, X.Computed> = Property.of(
       List.of([Length.of(0, "px")]),
-      parsePositionComponentList,
+      parseComponentList,
       (style) =>
         style.specified("background-position-x").map((positions) =>
           List.of(
@@ -384,22 +311,22 @@ export namespace Background {
       export type Specified = List<Specified.Item>;
 
       export namespace Specified {
-        export type Item =
-          | css.Position.Center
-          | css.Position.Offset
-          | css.Position.Side<css.Position.Horizontal>;
+        export type Item = css.Position.Component<css.Position.Horizontal>;
       }
 
-      export type Computed = List<
-        | css.Position.Center
-        | css.Position.Offset<"px">
-        | css.Position.Side<css.Position.Horizontal, css.Position.Offset<"px">>
-      >;
+      export type Computed = List<Computed.Item>;
+
+      export namespace Computed {
+        export type Item = css.Position.Component<
+          css.Position.Horizontal,
+          "px"
+        >;
+      }
     }
 
     export const Y: Property<Y.Specified, Y.Computed> = Property.of(
       List.of([Length.of(0, "px")]),
-      parsePositionComponentList,
+      parseComponentList,
       (style) =>
         style.specified("background-position-y").map((positions) =>
           List.of(
@@ -436,30 +363,33 @@ export namespace Background {
       export type Specified = List<Specified.Item>;
 
       export namespace Specified {
-        export type Item =
-          | css.Position.Center
-          | css.Position.Offset
-          | css.Position.Side<css.Position.Vertical>;
+        export type Item = css.Position.Component<css.Position.Vertical>;
       }
 
-      export type Computed = List<
-        | css.Position.Center
-        | css.Position.Offset<"px">
-        | css.Position.Side<css.Position.Vertical, css.Position.Offset<"px">>
-      >;
+      export type Computed = List<Computed.Item>;
+
+      export namespace Computed {
+        export type Item = css.Position.Component<css.Position.Vertical, "px">;
+      }
     }
+
+    const parseList = map(
+      separatedList(
+        css.Position.parse(true),
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (positions) => List.of(positions, ", ")
+    );
 
     export const Shorthand = Property.Shorthand.of(
       ["background-position-x", "background-position-y"],
-      map(parsePositionList, (positions) => {
+      map(parseList, (positions) => {
         const xs: Array<X.Specified.Item> = [];
         const ys: Array<Y.Specified.Item> = [];
 
         for (const position of positions) {
-          const [x, y] = position;
-
-          xs.push(x.getOr(Keyword.of("center")));
-          ys.push(y.getOr(Keyword.of("center")));
+          xs.push(position.horizontal);
+          ys.push(position.vertical);
         }
 
         return [
@@ -631,6 +561,10 @@ export namespace Background {
   > = (input) => {
     let color: Option<Color.Specified> = None;
     let image: Option<Image.Specified.Item> = None;
+    let position: css.Position = css.Position.of(
+      Keyword.of("center"),
+      Keyword.of("center")
+    );
     let positionX: Option<Position.X.Specified.Item> = None;
     let positionY: Option<Position.Y.Specified.Item> = None;
     let size: Option<Size.Specified.Item> = None;
@@ -671,10 +605,12 @@ export namespace Background {
 
       // <position> [ / <size> ]?
       if (positionX.isNone() || positionY.isNone()) {
-        const result = parsePosition(input);
+        const result = css.Position.parse(true)(input);
 
         if (result.isOk()) {
-          [input, [positionX, positionY]] = result.get();
+          [input, position] = result.get();
+          positionX = Some.of(position.horizontal);
+          positionY = Some.of(position.vertical);
 
           // [ / <size> ]?
           {
