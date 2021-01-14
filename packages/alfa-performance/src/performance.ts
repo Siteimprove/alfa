@@ -62,6 +62,20 @@ export class Performance<T>
     this._emitter.on(listener);
   }
 
+  public once(): Promise<Performance.Entry<T>>;
+
+  public once(listener: Callback<Performance.Entry<T>>): void;
+
+  public once(
+    listener?: Callback<Performance.Entry<T>>
+  ): void | Promise<Performance.Entry<T>> {
+    if (listener) {
+      return this._emitter.once(listener);
+    } else {
+      return this._emitter.once();
+    }
+  }
+
   public off(listener: Callback<Performance.Entry<T>>): void {
     this._emitter.off(listener);
   }
@@ -87,6 +101,10 @@ export class Performance<T>
 export namespace Performance {
   export interface JSON {
     [key: string]: json.JSON;
+  }
+
+  export function isPerformance<T>(value: unknown): value is Performance<T> {
+    return value instanceof Performance;
   }
 
   export type Entry<T> = Mark<T> | Measure<T>;
