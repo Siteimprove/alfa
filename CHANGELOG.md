@@ -47,6 +47,8 @@ In addition to the changes listed below, this release adjusts the compile target
 
 - [@siteimprove/alfa-table](packages/alfa-table): `Table.from()` no longer panics when tables contain invalid elements.
 
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now behaves correctly when computing names of elements that are named by their contents, but contain children that aren't.
+
 ## [0.8.0](../../compare/v0.7.0...v0.8.0) (2021-01-06)
 
 ### Breaking
