@@ -125,6 +125,7 @@
     "src/sia-r92/rule.ts",
     "src/sia-r93/rule.ts",
     "src/sia-r94/rule.ts",
+    "src/sia-r95/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
     "test/common/outcome.ts",
