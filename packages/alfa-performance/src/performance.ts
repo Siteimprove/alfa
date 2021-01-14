@@ -10,7 +10,7 @@ export class Performance<T>
   implements
     AsyncIterable<Performance.Entry<T>>,
     Serializable<Performance.JSON> {
-  public static of<T>(): Performance<T> {
+  public static of<T = string>(): Performance<T> {
     return new Performance();
   }
 
@@ -126,6 +126,10 @@ export namespace Performance {
       this._start = start;
     }
 
+    public get type(): "mark" {
+      return "mark";
+    }
+
     public get data(): T {
       return this._data;
     }
@@ -136,6 +140,7 @@ export namespace Performance {
 
     public toJSON(): Mark.JSON<T> {
       return {
+        type: "mark",
         data: Serializable.toJSON(this._data),
         start: this._start,
       };
@@ -145,6 +150,7 @@ export namespace Performance {
   export namespace Mark {
     export interface JSON<T> {
       [key: string]: json.JSON | undefined;
+      type: "mark";
       data: Serializable.ToJSON<T>;
       start: number;
     }
@@ -171,6 +177,10 @@ export namespace Performance {
       this._duration = duration;
     }
 
+    public get type(): "measure" {
+      return "measure";
+    }
+
     public get data(): T {
       return this._data;
     }
@@ -185,6 +195,7 @@ export namespace Performance {
 
     public toJSON(): Measure.JSON<T> {
       return {
+        type: "measure",
         data: Serializable.toJSON(this._data),
         start: this._start,
         duration: this._duration,
@@ -195,6 +206,7 @@ export namespace Performance {
   export namespace Measure {
     export interface JSON<T> {
       [key: string]: json.JSON | undefined;
+      type: "measure";
       data: Serializable.ToJSON<T>;
       start: number;
       duration: number;
