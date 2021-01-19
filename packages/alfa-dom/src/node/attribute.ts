@@ -53,6 +53,13 @@ export class Attribute extends Node {
     return foldCase(this._name, this._owner);
   }
 
+  public get qualifiedName(): string {
+    return this._prefix.reduce(
+      (name, prefix) => `${prefix}:${name}`,
+      this._name
+    );
+  }
+
   public get value(): string {
     return this._value;
   }
@@ -87,7 +94,7 @@ export class Attribute extends Node {
    * @see https://html.spec.whatwg.org/#boolean-attribute
    */
   public isBoolean(): boolean {
-    switch (foldCase(this._name, this._owner)) {
+    switch (this.name) {
       case "allowfullscreen":
       case "allowpaymentrequest":
       case "async":
@@ -107,7 +114,7 @@ export class Attribute extends Node {
     let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
     path += path === "/" ? "" : "/";
-    path += `@${foldCase(this._name, this._owner)}`;
+    path += `@${this.name}`;
 
     return path;
   }
@@ -150,7 +157,7 @@ export class Attribute extends Node {
   }
 
   public toString(): string {
-    const name = foldCase(this._name, this._owner);
+    const name = this.qualifiedName;
 
     if (this.isBoolean()) {
       return name;

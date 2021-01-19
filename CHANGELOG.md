@@ -37,6 +37,8 @@ In addition to the changes listed below, this release adjusts the compile target
 
 - [@siteimprove/alfa-emitter](packages/alfa-emitter): A new package has been added with an implementation of a strongly typed event emitter.
 
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Element#qualifiedName` and `Attribute#qualifiedName` are now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `flow`, `flow-root`, `table`, `flex`, `grid`, and `ruby` values.

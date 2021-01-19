@@ -84,6 +84,13 @@ export class Element extends Node implements Slot, Slotable {
     return this._name;
   }
 
+  public get qualifiedName(): string {
+    return this._prefix.reduce(
+      (name, prefix) => `${prefix}:${name}`,
+      this._name
+    );
+  }
+
   public get attributes(): Iterable<Attribute> {
     return this._attributes;
   }
@@ -270,10 +277,7 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   public toString(): string {
-    const name = this._prefix.reduce(
-      (name, prefix) => `${prefix}:${name}`,
-      this._name
-    );
+    const name = this.qualifiedName;
 
     const attributes = this._attributes
       .map((attribute) => ` ${attribute.toString()}`)
