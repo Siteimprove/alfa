@@ -23,6 +23,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 In addition to the changes listed below, this release adjusts the compile target from `es2017` to `es2018`.
 
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Attribute#hasName()` has been removed in favor of `Attribute.hasName()`.
+
 ### Added
 
 - [@siteimprove/alfa-array](packages/alfa-array): `Array.find()`, `Array.findLast()`, `Array.insert()`, `Array.append()`, and `Array.prepend()` are now available.
