@@ -62,7 +62,7 @@ export namespace Iterable {
     let index = 0;
 
     for (const value of iterable) {
-      yield mapper(value, index);
+      yield mapper(value, index++);
     }
   }
 
