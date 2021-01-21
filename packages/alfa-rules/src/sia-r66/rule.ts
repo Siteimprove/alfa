@@ -37,7 +37,7 @@ const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r69.html",
-  requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
+  requirements: [Criterion.of("1.4.6")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -106,7 +106,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
               0
             );
 
-            const threshold = isLargeText(device)(target) ? 3 : 4.5;
+            const threshold = isLargeText(device)(target) ? 4.5 : 7;
 
             return expectation(
               highest >= threshold,
