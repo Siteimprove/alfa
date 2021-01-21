@@ -26,7 +26,7 @@ import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
 
-import { Contrast } from "./diagnostic/contrast";
+import { Contrast } from "../common/diagnostic/contrast";
 
 const { flatMap, map } = Iterable;
 const { or, not, equals } = Predicate;

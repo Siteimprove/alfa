@@ -5,7 +5,7 @@ import { RGB, Percentage } from "@siteimprove/alfa-css";
 import { Document, Text } from "@siteimprove/alfa-dom";
 
 import R69, { Outcomes } from "../../src/sia-r69/rule";
-import { Contrast } from "../../src/sia-r69/diagnostic/contrast";
+import { Contrast } from "../../src/common/diagnostic/contrast";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
