@@ -174,145 +174,172 @@ test("isVisible() returns false for a text node with only whitespace", (t) => {
 test("isVisible() returns false for a text node with a transparent color", (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      color: "transparent",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        color: "transparent",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(div), false);
 });
 
 test("isVisible() returns false for a text node with a font size of 0", (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      fontSize: "0",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        fontSize: "0",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(div), false);
 });
 
 test("isVisible() returns true for a text node with a font size of 1px", (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      fontSize: "1px",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        fontSize: "1px",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), true);
+  t.equal(isVisible(div), true);
 });
 
 test(`isVisible() returns false for a text node with hidden overflow and a 100%
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textIndent: "100%",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textIndent: "100%",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(div), false);
 });
 
 test(`isVisible() returns true for a text node with hidden overflow and a 20%
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textIndent: "20%",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textIndent: "20%",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), true);
+  t.equal(isVisible(div), true);
 });
 
 test(`isVisible() returns false for a text node with hidden overflow and a -100%
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textIndent: "-100%",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textIndent: "-100%",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(div), false);
 });
 
 test(`isVisible() returns false for a text node with hidden overflow and a 999px
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textIndent: "999px",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textIndent: "999px",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(div), false);
 });
 
 test(`isVisible() returns true for a text node with hidden overflow and a 20px
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textIndent: "20px",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textIndent: "20px",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), true);
+  t.equal(isVisible(div), true);
 });
 
 test(`isVisible() returns false for a text node with hidden overflow and a -999px
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  <div
-    style={{
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textIndent: "-999px",
-    }}
-  >
-    {text}
-  </div>;
+  const div = (
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textIndent: "-999px",
+      }}
+    >
+      {text}
+    </div>
+  );
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(div), false);
 });
 
 test("isVisible() returns true for textarea with no child", (t) => {

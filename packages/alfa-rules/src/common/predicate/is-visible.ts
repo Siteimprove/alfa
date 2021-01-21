@@ -63,7 +63,7 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
     },
     // Most non-replaced elements with no visible children are not visible while
     // replaced elements are assumed to be replaced by something visible. Some
-    // non-replaced element are, however, visible even when empty.
+    // non-replaced elements are, however, visible even when empty.
     not(
       and(
         isElement,
@@ -82,6 +82,7 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
 }
 
 /**
- * Elements that are *not* "replaced elements" but are nonetheless visible when empty
+ * Elements that are *not* "replaced elements" but are nonetheless visible when
+ * empty
  */
 const isVisibleWhenEmpty = hasName("textarea");
