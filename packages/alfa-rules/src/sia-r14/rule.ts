@@ -14,15 +14,12 @@ import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasRole } from "../common/predicate/has-role";
 import { isFocusable } from "../common/predicate/is-focusable";
 import { isPerceivable } from "../common/predicate/is-perceivable";
-import { isVisible } from "../common/predicate/is-visible";
-
-import { Question } from "../common/question";
 
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
 const { and, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
   requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
   evaluate({ device, document }) {
@@ -49,7 +46,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
       },
 
       expectations(target) {
-        const textContent = getVisibleTextContent(target, device);
+        const textContent = getPerceivableTextContent(target, device);
 
         const accessibleNameIncludesTextContent = test(
           hasAccessibleName(device, (accessibleName) =>
@@ -62,19 +59,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
           1: expectation(
             accessibleNameIncludesTextContent,
             () => Outcomes.VisibleIsInName,
-            () =>
-              Question.of(
-                "is-human-language",
-                "boolean",
-                target,
-                "Does the accessible name of the element express anything in human language?"
-              ).map((isHumanLanguage) =>
-                expectation(
-                  !isHumanLanguage,
-                  () => Outcomes.NameIsNotLanguage,
-                  () => Outcomes.VisibleIsNotInName
-                )
-              )
+            () => Outcomes.VisibleIsNotInName
           ),
         };
       },
@@ -86,12 +71,12 @@ function normalize(input: string): string {
   return input.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
-function getVisibleTextContent(element: Element, device: Device): string {
+function getPerceivableTextContent(element: Element, device: Device): string {
   return normalize(
     element
       .descendants({ flattened: true })
       .filter(isText)
-      .filter(isVisible(device))
+      .filter(isPerceivable(device))
       .map((text) => text.data)
       .join("")
   );
@@ -101,12 +86,6 @@ export namespace Outcomes {
   export const VisibleIsInName = Ok.of(
     Diagnostic.of(
       `The visible text content of the element is included within its accessible name`
-    )
-  );
-
-  export const NameIsNotLanguage = Ok.of(
-    Diagnostic.of(
-      `The accessible name of the element does not express anything in human language`
     )
   );
 

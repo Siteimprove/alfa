@@ -43,6 +43,7 @@ export function isRendered(
         return node
           .parent({
             flattened: true,
+            nested: true,
           })
           .every(isRendered);
       });

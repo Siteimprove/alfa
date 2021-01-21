@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 import { Namespace } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 
 import { Name } from "../src/name";
 
@@ -984,6 +984,41 @@ test(".from() ignores nodes that are not exposed when computing name from conten
               Name.Source.descendant(
                 exposed,
                 Name.of("Hello ", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() behaves correctly when encountering a descendant that doesn't
+      itself have a name, but should have one when required by an ancestor`, (t) => {
+  const text = h.text("Hello world");
+
+  const table = <table>{text}</table>;
+
+  const heading = <h1>{table}</h1>;
+
+  // On its own, the <table> element has no name as it's not named by its
+  // contents.
+  t.deepEqual(Name.from(table, device).toArray(), [[None, []]]);
+
+  // When part of an <h1> element, which is named by its content, the <table>
+  // element also takes its name from its content to ensure that the name
+  // propagates to the <h1> element.
+  t.deepEqual(Name.from(heading, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            heading,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                table,
+                Name.of("Hello world", [Name.Source.data(text)])
               ),
             ])
           ),

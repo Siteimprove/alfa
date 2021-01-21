@@ -21,6 +21,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+In addition to the changes listed below, this release adjusts the compile target from `es2017` to `es2018`.
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Attribute#hasName()` has been removed in favor of `Attribute.hasName()`.
+
 ### Added
 
 - [@siteimprove/alfa-array](packages/alfa-array): `Array.find()`, `Array.findLast()`, `Array.insert()`, `Array.append()`, and `Array.prepend()` are now available.
@@ -28,6 +34,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.findLast()` is now available.
 
 - [@siteimprove/alfa-future](packages/alfa-future): `Future#tee()` and `Future.empty()` are now available.
+
+- [@siteimprove/alfa-callback](packages/alfa-callback): `Callback.contraMap()` is now available.
+
+- [@siteimprove/alfa-functor](packages/alfa-functor): `Functor.Invariant<T>` is now available.
+
+- [@siteimprove/alfa-emitter](packages/alfa-emitter): A new package has been added with an implementation of a strongly typed event emitter.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Element#qualifiedName` and `Attribute#qualifiedName` are now available.
 
 ### Fixed
 
@@ -38,6 +52,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-json](packages/alfa-json): Drop `undefined` property values when serializing JSON objects rather than convert them to `null` values.
 
 - [@siteimprove/alfa-table](packages/alfa-table): `Table.from()` no longer panics when tables contain invalid elements.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now behaves correctly when computing names of elements that are named by their contents, but contain children that aren't.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): The `index` parameter in `Iterable.map()` now correctly increments.
 
 ## [0.8.0](../../compare/v0.7.0...v0.8.0) (2021-01-06)
 

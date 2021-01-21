@@ -54,7 +54,8 @@
     "test/syntax/declaration.spec.ts",
     "test/syntax/lexer.spec.ts",
     "test/syntax/nth.spec.ts",
-    "test/value/calculation.spec.ts"
+    "test/value/calculation.spec.ts",
+    "test/value/position.spec.ts"
   ],
   "references": [
     {

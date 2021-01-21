@@ -10,6 +10,8 @@
     "src/namespace.ts",
     "src/node.ts",
     "src/node/attribute.ts",
+    "src/node/attribute/predicate.ts",
+    "src/node/attribute/predicate/has-name.ts",
     "src/node/comment.ts",
     "src/node/document.ts",
     "src/node/element.ts",
