@@ -4,6 +4,7 @@
   "files": [
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
+    "src/common/diagnostic/contrast.ts",
     "src/common/expectation.ts",
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/outcome-to-trilean.ts",
@@ -103,7 +104,6 @@
     "src/sia-r66/rule.ts",
     "src/sia-r67/rule.ts",
     "src/sia-r68/rule.ts",
-    "src/common/diagnostic/contrast.ts",
     "src/sia-r69/rule.ts",
     "src/sia-r7/rule.ts",
     "src/sia-r71/rule.ts",
@@ -151,6 +151,7 @@
     "test/sia-r63/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx",
     "test/sia-r65/rule.spec.tsx",
+    "test/sia-r66/rule.spec.tsx",
     "test/sia-r67/rule.spec.tsx",
     "test/sia-r68/rule.spec.tsx",
     "test/sia-r69/rule.spec.tsx",
