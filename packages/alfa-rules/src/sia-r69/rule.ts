@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { RGB } from "@siteimprove/alfa-css";
 import {
   Element,
   Text,
@@ -8,13 +7,14 @@ import {
   Attribute,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { contrast } from "../common/expectation/contrast";
 import { getBackground, getForeground } from "../common/expectation/get-colors";
 
 import {
@@ -34,7 +34,7 @@ import { Contrast } from "../common/diagnostic/contrast";
 const { flatMap, map } = Iterable;
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { min, max, round } = Math;
+const { max } = Math;
 const { isElement } = Element;
 const { isText } = Text;
 
@@ -137,33 +137,6 @@ export default Rule.Atomic.of<Page, Text, Question>({
     };
   },
 });
-
-/**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-relative-luminance
- */
-function luminance(color: RGB): number {
-  const [red, green, blue] = [color.red, color.green, color.blue].map((c) => {
-    const component = c.type === "number" ? c.value / 0xff : c.value;
-
-    return component <= 0.03928
-      ? component / 12.92
-      : Math.pow((component + 0.055) / 1.055, 2.4);
-  });
-
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-}
-
-/**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-contrast-ratio
- */
-function contrast(foreground: RGB, background: RGB): number {
-  const lf = luminance(foreground);
-  const lb = luminance(background);
-
-  const contrast = (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
-
-  return round(contrast * 100) / 100;
-}
 
 /**
  * @see https://act-rules.github.io/glossary/#disabled-element

@@ -6,6 +6,7 @@
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
     "src/common/expectation.ts",
+    "src/common/expectation/contrast.ts",
     "src/common/expectation/get-colors.ts",
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/outcome-to-trilean.ts",
