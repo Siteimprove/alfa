@@ -165,12 +165,6 @@ test("isVisible() returns false for a text node with no data", (t) => {
   t.equal(isVisible(text), false);
 });
 
-test("isVisible() returns false for a text node with no data", (t) => {
-  const text = h.text("");
-
-  t.equal(isVisible(text), false);
-});
-
 test("isVisible() returns false for a text node with only whitespace", (t) => {
   const text = h.text(" ");
 
