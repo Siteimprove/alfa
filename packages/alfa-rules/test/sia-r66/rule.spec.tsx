@@ -45,7 +45,7 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
       <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 15%)" }}>
         {target1}
       </div>
-      <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 50%)" }}>
+      <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 40%)" }}>
         {target2}
       </div>
     </html>,
@@ -58,9 +58,8 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
       ]),
     }),
     failed(R66, target2, {
-      // TODO more contrast
-      1: Outcomes.HasInsufficientContrast(3.98, 7, [
-        Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.5, 0.5, 0.5), 3.98),
+      1: Outcomes.HasInsufficientContrast(5.74, 7, [
+        Contrast.Pairing.of(rgb(1, 1, 1), rgb(0.4, 0.4, 0.4), 5.74),
       ]),
     }),
   ]);
@@ -73,7 +72,7 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
   const document = Document.of([
     <html style={{ backgroundColor: "black" }}>
       <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>{target1}</div>
-      <div style={{ color: "rgb(100%, 100%, 100%, 40%)" }}>{target2}</div>
+      <div style={{ color: "rgb(100%, 100%, 100%, 50%)" }}>{target2}</div>
     </html>,
   ]);
 
@@ -84,9 +83,8 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
       ]),
     }),
     failed(R66, target2, {
-      // TODO more contrast
-      1: Outcomes.HasInsufficientContrast(3.66, 7, [
-        Contrast.Pairing.of(rgb(0.4, 0.4, 0.4), rgb(0, 0, 0), 3.66),
+      1: Outcomes.HasInsufficientContrast(5.28, 7, [
+        Contrast.Pairing.of(rgb(0.5, 0.5, 0.5), rgb(0, 0, 0), 5.28),
       ]),
     }),
   ]);
@@ -97,7 +95,7 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
 
   const document = Document.of([
     <html
-      style={{ backgroundColor: "black", color: "#606060", fontSize: "18pt" }}
+      style={{ backgroundColor: "black", color: "#808080", fontSize: "18pt" }}
     >
       {target}
     </html>,
@@ -105,12 +103,11 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
 
   t.deepEqual(await evaluate(R66, { document }), [
     passed(R66, target, {
-      // TODO need more contrast
-      1: Outcomes.HasSufficientContrast(3.34, 4.5, [
+      1: Outcomes.HasSufficientContrast(5.32, 4.5, [
         Contrast.Pairing.of(
-          rgb(0.3764706, 0.3764706, 0.3764706),
+          rgb(0.5019608, 0.5019608, 0.5019608),
           rgb(0, 0, 0),
-          3.34
+          5.32
         ),
       ]),
     }),
@@ -124,7 +121,7 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
     <html
       style={{
         backgroundColor: "black",
-        color: "#606060",
+        color: "#808080",
         fontSize: "14pt",
         fontWeight: "bold",
       }}
@@ -135,12 +132,11 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
 
   t.deepEqual(await evaluate(R66, { document }), [
     passed(R66, target, {
-      // TODO need more contrast
-      1: Outcomes.HasSufficientContrast(3.34, 4.5, [
+      1: Outcomes.HasSufficientContrast(5.32, 4.5, [
         Contrast.Pairing.of(
-          rgb(0.3764706, 0.3764706, 0.3764706),
+          rgb(0.5019608, 0.5019608, 0.5019608),
           rgb(0, 0, 0),
-          3.34
+          5.32
         ),
       ]),
     }),
