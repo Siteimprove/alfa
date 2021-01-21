@@ -18,10 +18,13 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasRole } from "../common/predicate/has-role";
-import { hasValue } from "../common/predicate/has-value";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import {
+  hasAttribute,
+  hasRole,
+  hasValue,
+  isPerceivable,
+  isLargeText,
+} from "../common/predicate";
 
 import { Outcomes } from "../common/outcome/contrast";
 
@@ -135,31 +138,6 @@ export default Rule.Atomic.of<Page, Text, Question>({
     };
   },
 });
-
-/**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-large-scale
- */
-function isLargeText(device: Device): Predicate<Text> {
-  return (text) => {
-    const parent = text.parent({ flattened: true }).filter(Element.isElement);
-
-    if (parent.isNone()) {
-      return false;
-    }
-
-    const style = Style.from(parent.get(), device);
-
-    const size = style.computed("font-size").value.withUnit("pt");
-
-    if (size.value >= 18) {
-      return true;
-    }
-
-    const weight = style.computed("font-weight").value;
-
-    return size.value >= 14 && weight.value >= 700;
-  };
-}
 
 /**
  * Determine the approximate foreground color of an element if possible.
