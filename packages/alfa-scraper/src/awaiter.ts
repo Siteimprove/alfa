@@ -68,7 +68,7 @@ export namespace Awaiter {
       const result = await after(page, timeout);
 
       if (result.isOk()) {
-        await page.waitFor(duration);
+        await page.waitForTimeout(duration);
       }
 
       return result;

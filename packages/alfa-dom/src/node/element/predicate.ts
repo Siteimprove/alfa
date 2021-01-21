@@ -3,4 +3,8 @@ export * from "./predicate/has-input-type";
 export * from "./predicate/has-name";
 export * from "./predicate/has-namespace";
 export * from "./predicate/has-tab-index";
+export * from "./predicate/is-browsing-context-container";
 export * from "./predicate/is-disabled";
+export * from "./predicate/is-draggable";
+export * from "./predicate/is-editing-host";
+export * from "./predicate/is-suggested-focusable";

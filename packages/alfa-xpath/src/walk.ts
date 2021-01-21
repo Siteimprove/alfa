@@ -8,7 +8,7 @@ import { Expression } from "./expression";
 export function* walk(
   node: Node,
   axis: Expression.Axis.Type,
-  options: Node.Traversal = {}
+  options: Node.Traversal
 ): Iterable<Node> {
   switch (axis) {
     case "self":

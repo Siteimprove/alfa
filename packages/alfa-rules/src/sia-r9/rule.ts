@@ -3,6 +3,7 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -14,6 +15,12 @@ const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
+  requirements: [
+    Criterion.of("2.2.1"),
+    Criterion.of("2.2.4"),
+    Criterion.of("3.2.5"),
+    Technique.of("H76"),
+  ],
   evaluate({ document }) {
     return {
       applicability() {

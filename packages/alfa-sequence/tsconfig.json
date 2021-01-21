@@ -10,13 +10,22 @@
   ],
   "references": [
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-comparable"
     },
     {
       "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-hash"
+    },
+    {
+      "path": "../alfa-iterable"
     },
     {
       "path": "../alfa-json"

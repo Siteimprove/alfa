@@ -1,8 +1,12 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { Comparer } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option, None } from "@siteimprove/alfa-option";
+import { Context } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { RuleTree } from "./rule-tree";
@@ -12,102 +16,112 @@ import { UserAgent } from "./user-agent";
 /**
  * @see https://drafts.csswg.org/css-cascade/
  */
-export class Cascade {
-  public static of(entries: WeakMap<Element, RuleTree.Node>): Cascade {
-    return new Cascade(entries);
+export class Cascade implements Serializable {
+  private static readonly _cascades = Cache.empty<
+    Document | Shadow,
+    Cache<Device, Cascade>
+  >();
+
+  public static of(node: Document | Shadow, device: Device): Cascade {
+    return this._cascades
+      .get(node, Cache.empty)
+      .get(device, () => new Cascade(node, device));
   }
 
-  private readonly _entries: WeakMap<Element, RuleTree.Node>;
+  private readonly _root: Document | Shadow;
+  private readonly _device: Device;
+  private readonly _selectors: SelectorMap;
+  private readonly _rules = RuleTree.empty();
 
-  private constructor(entries: WeakMap<Element, RuleTree.Node>) {
-    this._entries = entries;
+  private readonly _entries = Cache.empty<
+    Element,
+    Cache<Context, Option<RuleTree.Node>>
+  >();
+
+  private constructor(root: Document | Shadow, device: Device) {
+    this._root = root;
+    this._device = device;
+    this._selectors = SelectorMap.from([UserAgent, ...root.style], device);
+
+    // Perform a baseline cascade with an empty context to benefit from ancestor
+    // filtering. As getting style information with an empty context will be the
+    // common case, we benefit a lot from pre-computing this style information
+    // with an ancestor filter applied.
+
+    const context = Context.empty();
+
+    const filter = AncestorFilter.empty();
+
+    const visit = (node: Node): void => {
+      if (Element.isElement(node)) {
+        this.get(node, context, Option.of(filter));
+        filter.add(node);
+      }
+
+      for (const child of node.children()) {
+        visit(child);
+      }
+
+      if (Element.isElement(node)) {
+        filter.remove(node);
+      }
+    };
+
+    visit(root);
   }
 
-  public get(element: Element): Option<RuleTree.Node> {
-    return Option.from(this._entries.get(element));
+  public get(
+    element: Element,
+    context: Context = Context.empty(),
+    filter: Option<AncestorFilter> = None
+  ): Option<RuleTree.Node> {
+    return this._entries
+      .get(element, Cache.empty)
+      .get(context, () =>
+        this._rules.add(
+          this._selectors.get(element, context, filter).sort(compare)
+        )
+      );
+  }
+
+  public toJSON(): Cascade.JSON {
+    return {
+      root: this._root.toJSON(),
+      device: this._device.toJSON(),
+      selectors: this._selectors.toJSON(),
+      rules: this._rules.toJSON(),
+    };
   }
 }
 
 export namespace Cascade {
-  const cache = Cache.empty<Device, Cache<Document | Shadow, Cascade>>();
-
-  export function from(node: Document | Shadow, device: Device): Cascade {
-    return cache.get(device, Cache.empty).get(node.freeze(), () => {
-      const filter = AncestorFilter.empty();
-      const ruleTree = RuleTree.empty();
-      const selectorMap = SelectorMap.of([UserAgent, ...node.style], device);
-
-      return Cascade.of(
-        Iterable.reduce(
-          Iterable.flatMap(node.children(), visit),
-          (entries, [element, entry]) => entries.set(element, entry),
-          new WeakMap()
-        )
-      );
-
-      function* visit(node: Node): Iterable<[Element, RuleTree.Node]> {
-        if (Element.isElement(node)) {
-          const rules = selectorMap.get(node, filter);
-
-          const entry = ruleTree.add(sort(rules));
-
-          if (entry.isSome()) {
-            yield [node, entry.get()];
-          }
-
-          filter.add(node);
-
-          for (const child of node.children()) {
-            yield* visit(child);
-          }
-
-          filter.remove(node);
-        }
-      }
-    });
+  export interface JSON {
+    [key: string]: json.JSON;
+    root: Document.JSON | Shadow.JSON;
+    device: Device.JSON;
+    selectors: SelectorMap.JSON;
+    rules: RuleTree.JSON;
   }
 }
 
 /**
- * Perform an in-place insertion sort of an array of selector entries. Since
- * insertion sort performs well on small arrays compared to other sorting
- * algorithms, it's a good choice for sorting selector entries during cascade
- * as the number of declarations that match an element will more often than not
- * be relatively small.
- *
- * @see https://en.wikipedia.org/wiki/Insertion_sort
+ * @see https://drafts.csswg.org/css-cascade/#cascade-sort
  */
-function sort(selectors: Array<SelectorMap.Node>): Array<SelectorMap.Node> {
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    const a = selectors[i];
-
-    let j = i - 1;
-
-    while (j >= 0) {
-      const b = selectors[j];
-
-      // If the origins of the rules are not equal, the origin of the rules
-      // will determine the cascade.
-      if (a.origin !== b.origin && a.origin > b.origin) {
-        break;
-      }
-
-      // If the specificities of the rules are equal, the declaration order
-      // will determine the cascade.
-      if (a.specificity === b.specificity && a.order > b.order) {
-        break;
-      }
-
-      // Otherwise, the specificity will determine the cascade.
-      if (a.specificity > b.specificity) {
-        break;
-      }
-
-      selectors[j + 1] = selectors[j--];
-    }
-
-    selectors[j + 1] = a;
+const compare: Comparer<SelectorMap.Node> = (a, b) => {
+  // First priority: Origin
+  if (a.origin !== b.origin) {
+    return a.origin < b.origin ? -1 : a.origin > b.origin ? 1 : 0;
   }
 
-  return selectors;
-}
+  // Second priority: Specificity.
+  if (a.specificity !== b.specificity) {
+    return a.specificity < b.specificity
+      ? -1
+      : a.specificity > b.specificity
+      ? 1
+      : 0;
+  }
+
+  // Third priority: Order.
+  return a.order < b.order ? -1 : a.order > b.order ? 1 : 0;
+};

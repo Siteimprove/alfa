@@ -33,6 +33,7 @@
     "src/value/numeric.ts",
     "src/value/percentage.ts",
     "src/value/position.ts",
+    "src/value/shadow.ts",
     "src/value/string.ts",
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",
@@ -46,7 +47,8 @@
     "test/syntax/declaration.spec.ts",
     "test/syntax/lexer.spec.ts",
     "test/syntax/nth.spec.ts",
-    "test/value/calculation.spec.ts"
+    "test/value/calculation.spec.ts",
+    "test/value/position.spec.ts"
   ],
   "references": [
     {

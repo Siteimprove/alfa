@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 import { Namespace } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 
 import { Name } from "../src/name";
 
@@ -266,6 +266,59 @@ test(`.from() determines the name of an <img> element with an alt attribute`, (t
     [
       Option.of(
         Name.of("Hello world", [Name.Source.label(img.attribute("alt").get())])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <a> element with a <img> child element
+      with an alt attribute`, (t) => {
+  const img = <img alt="Hello world" />;
+
+  const a = <a href="#">{img}</a>;
+
+  t.deepEqual(Name.from(a, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [
+              Name.Source.label(img.attribute("alt").get()),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <a> element with a <figure> child element
+      with a <img> child element with an alt attribute`, (t) => {
+  const img = <img alt="Hello world" />;
+
+  const figure = <figure>{img}</figure>;
+
+  const a = <a href="#">{figure}</a>;
+
+  t.deepEqual(Name.from(a, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                figure,
+                Name.of("Hello world", [
+                  Name.Source.label(img.attribute("alt").get()),
+                ])
+              ),
+            ])
+          ),
+        ])
       ),
       [],
     ],
@@ -843,7 +896,8 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
 });
 
 test(`.from() correctly handles chained aria-labelledby references`, (t) => {
-  const text = h.text("Bar");
+  const text1 = h.text("Bar");
+  const text2 = h.text("Baz");
 
   const foo = (
     <div id="foo" aria-labelledby="bar">
@@ -853,11 +907,11 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
 
   const bar = (
     <div id="bar" aria-labelledby="baz">
-      {text}
+      {text1}
     </div>
   );
 
-  const baz = <div id="baz">Baz</div>;
+  const baz = <div id="baz">{text2}</div>;
 
   <div>
     {foo}
@@ -865,6 +919,8 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
     {baz}
   </div>;
 
+  // From the perspective of `foo`, `bar` has a name of "Bar" as the second
+  // `aria-labelledby` reference isn't followed.
   t.deepEqual(Name.from(foo, device).toArray(), [
     [
       Option.of(
@@ -874,7 +930,95 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
             Name.of("Bar", [
               Name.Source.descendant(
                 bar,
-                Name.of("Bar", [Name.Source.data(text)])
+                Name.of("Bar", [Name.Source.data(text1)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+
+  // From the perspective of `bar`, it has a name of "Baz" as `bar` doesn't care
+  // about `foo` and therefore only sees a single `aria-labelledby` reference.
+  t.deepEqual(Name.from(bar, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Baz", [
+          Name.Source.reference(
+            bar.attribute("aria-labelledby").get(),
+            Name.of("Baz", [
+              Name.Source.descendant(
+                baz,
+                Name.of("Baz", [Name.Source.data(text2)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(".from() ignores nodes that are not exposed when computing name from content", (t) => {
+  const text = h.text("Hello ");
+  const exposed = <span>{text}</span>;
+  const notExposed = <span aria-hidden="true">World!</span>;
+
+  const heading = (
+    <h1>
+      {exposed}
+      {notExposed}
+    </h1>
+  );
+
+  t.deepEqual(Name.from(heading, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello", [
+          Name.Source.descendant(
+            heading,
+            Name.of("Hello", [
+              Name.Source.descendant(
+                exposed,
+                Name.of("Hello ", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() behaves correctly when encountering a descendant that doesn't
+      itself have a name, but should have one when required by an ancestor`, (t) => {
+  const text = h.text("Hello world");
+
+  const table = <table>{text}</table>;
+
+  const heading = <h1>{table}</h1>;
+
+  // On its own, the <table> element has no name as it's not named by its
+  // contents.
+  t.deepEqual(Name.from(table, device).toArray(), [[None, []]]);
+
+  // When part of an <h1> element, which is named by its content, the <table>
+  // element also takes its name from its content to ensure that the name
+  // propagates to the <h1> element.
+  t.deepEqual(Name.from(heading, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            heading,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                table,
+                Name.of("Hello world", [Name.Source.data(text)])
               ),
             ])
           ),

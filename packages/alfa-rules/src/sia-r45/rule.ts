@@ -3,18 +3,21 @@ import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
+import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasId, hasName, hasNamespace } = Element;
-const { and, equals } = Predicate;
+const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
+  requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
   evaluate({ device, document }) {
     const headers = document
       .descendants()
@@ -23,7 +26,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         and(
           hasNamespace(Namespace.HTML),
           hasName("table"),
-          isPerceivable(device)
+          isPerceivable(device),
+          hasRole(not((role) => role.isPresentational()))
         )
       )
       .reduce((headers, table) => {

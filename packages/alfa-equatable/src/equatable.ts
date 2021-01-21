@@ -12,7 +12,7 @@ export namespace Equatable {
     return typeof value === "object" && value !== null;
   }
 
-  export function isEquatable<T>(value: unknown): value is Equatable {
+  export function isEquatable(value: unknown): value is Equatable {
     return isObject(value) && isFunction(value.equals);
   }
 

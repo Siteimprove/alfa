@@ -93,4 +93,8 @@ export namespace Length {
       () => Length.of(0, "px")
     )
   );
+
+  export function isZero(length: Length): boolean {
+    return length.value === 0;
+  }
 }

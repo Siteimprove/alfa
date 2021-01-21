@@ -1,9 +1,9 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Document extends Node {
   public static of(
@@ -32,6 +32,10 @@ export class Document extends Node {
 
   public get frame(): Option<Element> {
     return this._frame;
+  }
+
+  public parent(options: Node.Traversal = {}): Option<Node> {
+    return options.nested === true ? this.frame : super.parent(options);
   }
 
   public path(options?: Node.Traversal): string {

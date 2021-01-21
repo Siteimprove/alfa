@@ -1,3 +1,6 @@
+import { Callback } from "@siteimprove/alfa-callback";
+import { Collection } from "@siteimprove/alfa-collection";
+import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -10,8 +13,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
-
-import * as json from "@siteimprove/alfa-json";
 
 import { Nil } from "./nil";
 import { Sequence } from "./sequence";
@@ -28,7 +29,6 @@ export class Cons<T> implements Sequence<T> {
 
   private readonly _head: T;
   private readonly _tail: Lazy<Sequence<T>>;
-  private _size: Option<number> = None;
 
   private constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
@@ -36,15 +36,15 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public get size(): number {
-    if (this._size.isNone()) {
-      this._size = Option.of(1 + this._tail.force().size);
-    }
-
-    return this._size.get();
+    return Iterable.size(this);
   }
 
   public isEmpty(): this is Sequence<never> {
     return false;
+  }
+
+  public forEach(callback: Callback<T, void, [number]>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
@@ -272,6 +272,10 @@ export class Cons<T> implements Sequence<T> {
         return false;
       }
     }
+  }
+
+  public none(predicate: Predicate<T, [number]>): boolean {
+    return this.every(not(predicate));
   }
 
   public every(predicate: Predicate<T, [number]>): boolean {
@@ -507,6 +511,14 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
+  public sortWith(comparer: Comparer<T>): Sequence<T> {
+    return Sequence.from(Iterable.sortWith(this, comparer));
+  }
+
+  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
+  }
+
   public groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>> {
     return this.reduce((groups, value, index) => {
       const group = grouper(value, index);
@@ -603,8 +615,8 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Cons.JSON {
-    const json: Cons.JSON = [];
+  public toJSON(): Cons.JSON<T> {
+    const json: Cons.JSON<T> = [];
 
     let next: Cons<T> = this;
 
@@ -627,7 +639,7 @@ export class Cons<T> implements Sequence<T> {
 }
 
 export namespace Cons {
-  export type JSON = Array<json.JSON>;
+  export type JSON<T> = Collection.Indexed.JSON<T>;
 
   export function isCons<T>(value: unknown): value is Cons<T> {
     return value instanceof Cons;

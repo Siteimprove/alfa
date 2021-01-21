@@ -6,7 +6,8 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-export class Lazy<T> implements Monad<T>, Functor<T>, Equatable, Serializable {
+export class Lazy<T>
+  implements Monad<T>, Functor<T>, Equatable, Serializable<Lazy.JSON<T>> {
   public static of<T>(thunk: Thunk<T>): Lazy<T> {
     return new Lazy(Trampoline.delay(thunk));
   }
@@ -55,11 +56,15 @@ export class Lazy<T> implements Monad<T>, Functor<T>, Equatable, Serializable {
     return () => this.force();
   }
 
-  public toJSON(): JSON {
+  public toJSON(): Lazy.JSON<T> {
     return Serializable.toJSON(this.force());
   }
 
   public toString(): string {
     return `Lazy { ${this.force()} }`;
   }
+}
+
+export namespace Lazy {
+  export type JSON<T> = Serializable.ToJSON<T>;
 }

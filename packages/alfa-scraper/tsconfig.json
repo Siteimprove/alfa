@@ -26,6 +26,9 @@
       "path": "../alfa-json"
     },
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-puppeteer"
     },
     {

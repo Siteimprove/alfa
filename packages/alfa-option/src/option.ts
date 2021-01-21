@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -14,6 +15,8 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { None } from "./none";
 import { Some } from "./some";
 
+const { compareComparable } = Comparable;
+
 export interface Option<T>
   extends Functor<T>,
     Monad<T>,
@@ -22,7 +25,7 @@ export interface Option<T>
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable {
+    Serializable<Option.JSON<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -44,14 +47,15 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
   toArray(): Array<T>;
-  toJSON(): Option.JSON;
+  toJSON(): Option.JSON<T>;
 }
 
 export namespace Option {
   export type Maybe<T> = T | Option<T>;
 
-  export type JSON = Some.JSON | None.JSON;
+  export type JSON<T> = Some.JSON<T> | None.JSON;
 
   export function isOption<T>(value: unknown): value is Option<T> {
     return Some.isSome(value) || value === None;
@@ -71,5 +75,12 @@ export namespace Option {
 
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Option<T>,
+    b: Option<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

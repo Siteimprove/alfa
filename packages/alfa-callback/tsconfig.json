@@ -4,6 +4,9 @@
   "files": ["src/callback.ts", "src/index.ts"],
   "references": [
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
