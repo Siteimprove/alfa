@@ -1,11 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  Text,
-  Namespace,
-  Node,
-  Attribute,
-} from "@siteimprove/alfa-dom";
+import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -18,11 +12,10 @@ import { contrast } from "../common/expectation/contrast";
 import { getBackground, getForeground } from "../common/expectation/get-colors";
 
 import {
-  hasAttribute,
   hasRole,
-  hasValue,
   isPerceivable,
   isLargeText,
+  isSemanticallyDisabled,
 } from "../common/predicate";
 
 import { Outcomes } from "../common/outcome/contrast";
@@ -32,7 +25,7 @@ import { Question } from "../common/question";
 import { Contrast } from "../common/diagnostic/contrast";
 
 const { flatMap, map } = Iterable;
-const { or, not, equals } = Predicate;
+const { or, not } = Predicate;
 const { and, test } = Refinement;
 const { max } = Math;
 const { isElement } = Element;
@@ -137,13 +130,3 @@ export default Rule.Atomic.of<Page, Text, Question>({
     };
   },
 });
-
-/**
- * @see https://act-rules.github.io/glossary/#disabled-element
- */
-const isSemanticallyDisabled: Predicate<Element> = or(
-  Element.isDisabled,
-  hasAttribute(
-    and(Attribute.hasName("aria-disabled"), hasValue(equals("true")))
-  )
-);
