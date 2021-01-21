@@ -314,3 +314,9 @@ test(`isVisible() returns false for a text node with hidden overflow and a -999p
 
   t.equal(isVisible(text), false);
 });
+
+test("isVisible() returns true for textarea with no child", (t) => {
+  const element = <textarea />;
+
+  t.equal(isVisible(element), true);
+});

@@ -15,7 +15,7 @@ import { isTransparent } from "./is-transparent";
 const { every } = Iterable;
 const { not } = Predicate;
 const { and, or } = Refinement;
-const { isElement } = Element;
+const { hasName, isElement } = Element;
 const { isText } = Text;
 
 export function isVisible(device: Device, context?: Context): Predicate<Node> {
@@ -61,12 +61,13 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
 
       return true;
     },
-    // Non-replaced elements with no visible children are never visible while
-    // replaced elements are assumed to be replaced by something visible.
+    // Most non-replaced elements with no visible children are not visible while
+    // replaced elements are assumed to be replaced by something visible. Some
+    // non-replaced element are, however, visible even when empty.
     not(
       and(
         isElement,
-        and(not(isReplaced), (element) =>
+        and(not(or(isReplaced, isVisibleWhenEmpty)), (element) =>
           every(
             element.children({
               nested: true,
@@ -79,3 +80,8 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
     )
   );
 }
+
+/**
+ * Elements that are *not* "replaced elements" but are nonetheless visible when empty
+ */
+const isVisibleWhenEmpty = hasName("textarea");

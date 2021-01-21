@@ -1,4 +1,5 @@
 import { Callback } from "@siteimprove/alfa-callback";
+import { Collection } from "@siteimprove/alfa-collection";
 import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -12,8 +13,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
-
-import * as json from "@siteimprove/alfa-json";
 
 import { Nil } from "./nil";
 import { Sequence } from "./sequence";
@@ -616,8 +615,8 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Cons.JSON {
-    const json: Cons.JSON = [];
+  public toJSON(): Cons.JSON<T> {
+    const json: Cons.JSON<T> = [];
 
     let next: Cons<T> = this;
 
@@ -640,7 +639,7 @@ export class Cons<T> implements Sequence<T> {
 }
 
 export namespace Cons {
-  export type JSON = Array<json.JSON>;
+  export type JSON<T> = Collection.Indexed.JSON<T>;
 
   export function isCons<T>(value: unknown): value is Cons<T> {
     return value instanceof Cons;

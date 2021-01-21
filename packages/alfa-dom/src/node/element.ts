@@ -40,7 +40,7 @@ export class Element extends Node implements Slot, Slotable {
   private readonly _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
   private readonly _name: string;
-  private readonly _attributes: Array<Attribute>;
+  private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
   private _shadow: Option<Shadow> = None;
   private _content: Option<Document> = None;
@@ -60,8 +60,10 @@ export class Element extends Node implements Slot, Slotable {
     this._namespace = namespace;
     this._prefix = prefix;
     this._name = name;
-    this._attributes = attributes.filter((attribute) =>
-      attribute._attachOwner(this)
+    this._attributes = new Map(
+      attributes
+        .filter((attribute) => attribute._attachOwner(this))
+        .map((attribute) => [attribute.qualifiedName, attribute])
     );
     this._style = style;
 
@@ -84,8 +86,15 @@ export class Element extends Node implements Slot, Slotable {
     return this._name;
   }
 
+  public get qualifiedName(): string {
+    return this._prefix.reduce(
+      (name, prefix) => `${prefix}:${name}`,
+      this._name
+    );
+  }
+
   public get attributes(): Iterable<Attribute> {
-    return this._attributes;
+    return this._attributes.values();
   }
 
   public get style(): Option<Block> {
@@ -169,12 +178,11 @@ export class Element extends Node implements Slot, Slotable {
   public attribute(
     predicate: string | Predicate<Attribute>
   ): Option<Attribute> {
-    return Iterable.find(
-      this._attributes,
-      typeof predicate === "string"
-        ? (attribute) => attribute.hasName(predicate)
-        : predicate
-    );
+    if (typeof predicate === "string") {
+      return Option.from(this._attributes.get(predicate));
+    } else {
+      return Iterable.find(this._attributes.values(), predicate);
+    }
   }
 
   /**
@@ -261,7 +269,9 @@ export class Element extends Node implements Slot, Slotable {
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
-      attributes: this._attributes.map((attribute) => attribute.toJSON()),
+      attributes: [...this._attributes.values()].map((attribute) =>
+        attribute.toJSON()
+      ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
       children: this._children.map((child) => child.toJSON()),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
@@ -270,12 +280,9 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   public toString(): string {
-    const name = this._prefix.reduce(
-      (name, prefix) => `${prefix}:${name}`,
-      this._name
-    );
+    const name = this.qualifiedName;
 
-    const attributes = this._attributes
+    const attributes = [...this._attributes.values()]
       .map((attribute) => ` ${attribute.toString()}`)
       .join("");
 

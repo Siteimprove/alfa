@@ -2,6 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -15,6 +16,7 @@ const { and, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r90.html",
+  requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
   evaluate({ device, document }) {
     return {
       applicability() {

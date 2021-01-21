@@ -7,6 +7,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -21,6 +22,7 @@ const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r83.html",
+  requirements: [Criterion.of("1.4.4")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -83,22 +85,41 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device);
 
+    // Case 1: Words never wrap and will continue to expand along the x-axis.
+    // In this case, text might clip if overflow of the x-axis is hidden.
     if (
-      style.computed("width").value.type === "keyword" &&
-      style.computed("height").value.type === "keyword" &&
-      style.computed("white-space").value.value !== "nowrap"
+      style
+        .computed("white-space")
+        .some((whiteSpace) => whiteSpace.value === "nowrap")
     ) {
-      return false;
+      return style
+        .computed("overflow-x")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
+        );
     }
 
-    for (const property of ["overflow-x", "overflow-y"] as const) {
-      const { value: overflow } = style.computed(property);
+    // Case 2: The height of the element has been restricted. In this case, text
+    // might clip if overflow of the y-axis is hidden.
+    if (
+      style.computed("height").some((height) => {
+        switch (height.type) {
+          case "percentage":
+            return height.value > 0 && height.value < 1;
 
-      switch (overflow.value) {
-        case "hidden":
-        case "clip":
-          return true;
-      }
+          case "length":
+            return height.value > 0;
+
+          default:
+            return false;
+        }
+      })
+    ) {
+      return style
+        .computed("overflow-y")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
+        );
     }
 
     return false;

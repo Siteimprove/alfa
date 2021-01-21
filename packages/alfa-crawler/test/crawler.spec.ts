@@ -1,10 +1,12 @@
+import * as url from "url";
+
 import { test } from "@siteimprove/alfa-test";
 
 import { Frontier } from "@siteimprove/alfa-frontier";
 
 import { Crawler } from "../src/crawler";
 
-const fixture = `file://${__dirname}/fixture`;
+const fixture = `${url.pathToFileURL(__dirname).href}/fixture`;
 
 test("#crawl() crawls a frontier", async (t) =>
   await Crawler.with(async (crawler) => {
