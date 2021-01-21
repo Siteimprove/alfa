@@ -14,11 +14,11 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r96.html",
   requirements: [
-    Criterion.of("2.2.1"),
     Criterion.of("2.2.4"),
     Criterion.of("3.2.5"),
+    Technique.of("G110"),
     Technique.of("H76"),
   ],
   evaluate({ document }) {
@@ -50,7 +50,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            refreshTime === 0 || refreshTime! > 72000,
+            refreshTime === 0,
             () => Outcomes.HasImmediateRefresh,
             () => Outcomes.HasDelayedRefresh
           ),
