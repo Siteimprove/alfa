@@ -23,12 +23,15 @@ export default Rule.Atomic.of<Page, Element>({
     Technique.of("H76"),
   ],
   evaluate({ document }) {
+    // since we take the first one with a valid content attribute, we only need to store one value
+    let refreshTime: number;
+
     return {
       applicability() {
         return document
           .descendants()
           .filter(isElement)
-          .filter(
+          .find(
             and(
               hasNamespace(Namespace.HTML),
               hasName("meta"),
@@ -36,26 +39,25 @@ export default Rule.Atomic.of<Page, Element>({
                 "http-equiv",
                 (value) => value.toLowerCase() === "refresh"
               ),
-              hasAttribute("content", (value) => getRefreshTime(value).isSome())
+              hasAttribute("content", (value) =>
+                getRefreshTime(value)
+                  .map((time) => (refreshTime = time))
+                  .isSome()
+              )
             )
           )
-          .first()
           .map((meta) => [meta])
           .getOr([]);
       },
 
       expectations(target) {
-        const refreshTime = getRefreshTime(
-          target.attribute("content").get().value
-        ).get();
-
         return {
           1: expectation(
             refreshTime === 0,
             () => Outcomes.HasImmediateRefresh,
             () =>
               expectation(
-                refreshTime > 72000,
+                refreshTime > 72000, // 20 hours = 20*60*60 seconds
                 () => Outcomes.HasTwentyHoursDelayedRefresh,
                 () => Outcomes.HasDelayedRefresh
               )
