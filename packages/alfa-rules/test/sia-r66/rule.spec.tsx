@@ -4,8 +4,9 @@ import { test } from "@siteimprove/alfa-test";
 import { RGB, Percentage } from "@siteimprove/alfa-css";
 import { Document, Text } from "@siteimprove/alfa-dom";
 
-import R66, { Outcomes } from "../../src/sia-r66/rule";
+import R66 from "../../src/sia-r66/rule";
 import { Contrast } from "../../src/common/diagnostic/contrast";
+import { Outcomes } from "../../src/common/outcome/contrast";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
