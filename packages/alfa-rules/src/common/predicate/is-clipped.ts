@@ -32,7 +32,7 @@ export function isClipped(
             height.type === "length" &&
             height.value <= 1 &&
             width.type === "length" &&
-            height.value <= 1 &&
+            width.value <= 1 &&
             x.value === "hidden" &&
             y.value === "hidden"
           ) {
