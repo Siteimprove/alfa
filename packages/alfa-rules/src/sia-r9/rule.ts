@@ -19,6 +19,7 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("2.2.1"),
     Criterion.of("2.2.4"),
     Criterion.of("3.2.5"),
+    Technique.of("G110"),
     Technique.of("H76"),
   ],
   evaluate({ document }) {
@@ -50,9 +51,14 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            refreshTime === 0 || refreshTime! > 72000,
+            refreshTime === 0,
             () => Outcomes.HasImmediateRefresh,
-            () => Outcomes.HasDelayedRefresh
+            () =>
+              expectation(
+                refreshTime > 72000,
+                () => Outcomes.HasTwentyHoursDelayedRefresh,
+                () => Outcomes.HasDelayedRefresh
+              )
           ),
         };
       },
@@ -101,9 +107,11 @@ function getRefreshTime(content: string): Option<number> {
 
 export namespace Outcomes {
   export const HasImmediateRefresh = Ok.of(
-    Diagnostic.of(
-      `The refresh or redirect happens immediately or after 20 hours`
-    )
+    Diagnostic.of(`The refresh or redirect happens immediately`)
+  );
+
+  export const HasTwentyHoursDelayedRefresh = Ok.of(
+    Diagnostic.of(`The refresh or redirect happens after 20 hours`)
   );
 
   export const HasDelayedRefresh = Err.of(

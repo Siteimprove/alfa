@@ -28,7 +28,7 @@ test("evaluates() passes when there is a refresh after 20h", async (t) => {
   const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R9, { document }), [
-    passed(R9, target, { 1: Outcomes.HasImmediateRefresh }),
+    passed(R9, target, { 1: Outcomes.HasTwentyHoursDelayedRefresh }),
   ]);
 });
 
