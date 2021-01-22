@@ -3,7 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
 
-import R9, { Outcomes } from "../../src/sia-r9/rule";
+import R9 from "../../src/sia-r9/rule";
+import { RefreshDelay as Outcomes } from "../../src/common/outcome/refresh-delay";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
