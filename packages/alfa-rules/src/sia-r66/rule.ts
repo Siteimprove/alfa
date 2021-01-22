@@ -18,11 +18,11 @@ import {
   isSemanticallyDisabled,
 } from "../common/predicate";
 
-import { Outcomes } from "../common/outcome/contrast";
+import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Question } from "../common/question";
 
-import { Contrast } from "../common/diagnostic/contrast";
+import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
 
 const { flatMap, map } = Iterable;
 const { or, not } = Predicate;
@@ -88,7 +88,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
             const pairings = [
               ...flatMap(foregrounds, (foreground) =>
                 map(backgrounds, (background) =>
-                  Contrast.Pairing.of(
+                  Diagnostic.Pairing.of(
                     foreground,
                     background,
                     contrast(foreground, background)
