@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
 
-import R9 from "../../src/sia-r9/rule";
+import R96 from "../../src/sia-r96/rule";
 import { RefreshDelay as Outcomes } from "../../src/common/outcome/refresh-delay";
 
 import { evaluate } from "../common/evaluate";
@@ -16,20 +16,8 @@ test("evaluates() passes when there is an immediate refresh", async (t) => {
 
   const document = Document.of([target]);
 
-  t.deepEqual(await evaluate(R9, { document }), [
-    passed(R9, target, { 1: Outcomes.HasImmediateRefresh }),
-  ]);
-});
-
-test("evaluates() passes when there is a refresh after 20h", async (t) => {
-  const target = (
-    <meta http-equiv="refresh" content="72001; URL='https://w3c.org'" />
-  );
-
-  const document = Document.of([target]);
-
-  t.deepEqual(await evaluate(R9, { document }), [
-    passed(R9, target, { 1: Outcomes.HasTwentyHoursDelayedRefresh }),
+  t.deepEqual(await evaluate(R96, { document }), [
+    passed(R96, target, { 1: Outcomes.HasImmediateRefresh }),
   ]);
 });
 
@@ -40,8 +28,20 @@ test("evaluates() fails when there is a delayed refresh", async (t) => {
 
   const document = Document.of([target]);
 
-  t.deepEqual(await evaluate(R9, { document }), [
-    failed(R9, target, { 1: Outcomes.HasDelayedRefresh }),
+  t.deepEqual(await evaluate(R96, { document }), [
+    failed(R96, target, { 1: Outcomes.HasDelayedRefresh }),
+  ]);
+});
+
+test("evaluates() fails when there is a refresh after 20h", async (t) => {
+  const target = (
+    <meta http-equiv="refresh" content="72001; URL='https://w3c.org'" />
+  );
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R96, { document }), [
+    failed(R96, target, { 1: Outcomes.HasDelayedRefresh }),
   ]);
 });
 
@@ -55,21 +55,21 @@ test("evaluates() only considers the first <meta> element", async (t) => {
 
   const document = Document.of([target, ignored]);
 
-  t.deepEqual(await evaluate(R9, { document }), [
-    passed(R9, target, { 1: Outcomes.HasImmediateRefresh }),
+  t.deepEqual(await evaluate(R96, { document }), [
+    passed(R96, target, { 1: Outcomes.HasImmediateRefresh }),
   ]);
 });
 
 test("evaluate() is inapplicable when there is no <meta> element", async (t) => {
   const document = Document.of([<div>Foo</div>]);
 
-  t.deepEqual(await evaluate(R9, { document }), [inapplicable(R9)]);
+  t.deepEqual(await evaluate(R96, { document }), [inapplicable(R96)]);
 });
 
 test("evaluate() is inapplicable when there is no <meta refresh> element", async (t) => {
   const document = Document.of([<meta content="30" />]);
 
-  t.deepEqual(await evaluate(R9, { document }), [inapplicable(R9)]);
+  t.deepEqual(await evaluate(R96, { document }), [inapplicable(R96)]);
 });
 
 test("evaluate() is inapplicable when the content attribute is invalid", async (t) => {
@@ -78,5 +78,5 @@ test("evaluate() is inapplicable when the content attribute is invalid", async (
     <meta http-equiv="refresh" content="0: URL='https://w3c.org'" />,
   ]);
 
-  t.deepEqual(await evaluate(R9, { document }), [inapplicable(R9)]);
+  t.deepEqual(await evaluate(R96, { document }), [inapplicable(R96)]);
 });

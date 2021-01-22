@@ -175,7 +175,8 @@
     "test/sia-r92/rule.spec.tsx",
     "test/sia-r93/rule.spec.tsx",
     "test/sia-r94/rule.spec.tsx",
-    "test/sia-r95/rule.spec.tsx"
+    "test/sia-r95/rule.spec.tsx",
+    "test/sia-r96/rule.spec.tsx"
   ],
   "references": [
     {
