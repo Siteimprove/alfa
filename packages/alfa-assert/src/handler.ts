@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-import { Outcome } from "@siteimprove/alfa-act";
+import { Rule, Outcome } from "@siteimprove/alfa-act";
 import { Formatter } from "@siteimprove/alfa-formatter";
 import { Future } from "@siteimprove/alfa-future";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -10,6 +10,7 @@ import earl from "@siteimprove/alfa-formatter-earl";
 export interface Handler<I, T, Q> {
   (
     input: I,
+    rules: Iterable<Rule<I, T, Q>>,
     outcomes: Iterable<Outcome<I, T, Q>>,
     message: string
   ): Future.Maybe<string>;
@@ -31,7 +32,7 @@ export namespace Handler {
     output: Mapper<I, string>,
     format: Formatter<I, T, Q> = earl()
   ): Handler<I, T, Q> {
-    return (input, outcomes, message) =>
+    return (input, rules, outcomes, message) =>
       Future.from(async () => {
         // Only attempt to load the needed Node.js modules when the handler is
         // run to ensure that we don't break things if run in non-Node.js
@@ -43,7 +44,7 @@ export namespace Handler {
         const dir = path.dirname(file);
 
         fs.mkdirSync(dir, { recursive: true });
-        fs.writeFileSync(file, format(input, outcomes) + "\n");
+        fs.writeFileSync(file, format(input, rules, outcomes) + "\n");
 
         return `${message}, see the full report at ${file}`;
       });
