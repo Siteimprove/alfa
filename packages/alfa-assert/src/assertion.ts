@@ -66,7 +66,12 @@ export class Assertion<I, T, Q> {
           .reduce(
             (message, handler) =>
               message.flatMap((message) => {
-                const future = handler(this._input, failures, message);
+                const future = handler(
+                  this._input,
+                  this._rules,
+                  failures,
+                  message
+                );
 
                 if (Future.isFuture(future)) {
                   return future;
