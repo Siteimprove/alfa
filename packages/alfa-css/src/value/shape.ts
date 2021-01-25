@@ -4,10 +4,11 @@ import { Keyword } from "./keyword";
 
 import { Circle } from "./shape/circle";
 import { Inset } from "./shape/inset";
+import { Hash } from "@siteimprove/alfa-hash";
 
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
-  B = Shape.Box
+  B extends Shape.Box = Shape.Box
 > extends Value<"shape"> {
   private readonly _shape: S;
   private readonly _box: B;
@@ -29,13 +30,41 @@ export class Shape<
   public get box(): B {
     return this._box;
   }
+
+  public equals(value: Shape): boolean;
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof Shape &&
+      value.shape.equals(this.shape) &&
+      value.box.equals(this.box)
+    );
+  }
+
+  public hash(hash: Hash) {
+    this.shape.hash(hash);
+    this.box.hash(hash);
+  }
+
+  public toJSON(): Shape.JSON {
+    return {
+      type: "shape",
+      shape: this.shape.toJSON(),
+      box: this.box.toJSON(),
+    };
+  }
+
+  public toString(): string {
+    return `${this.shape.toString()} ${this.box.toString()}`;
+  }
 }
 
 export namespace Shape {
   /**
    * @see https://drafts.csswg.org/css-shapes/#supported-basic-shapes
    */
-  export type Basic = Circle | Inset;
+  export type Basic = Circle; // | Inset;
 
   /**
    * @see https://drafts.csswg.org/css-shapes/#shapes-from-box-values
@@ -45,4 +74,9 @@ export namespace Shape {
     | Keyword<"padding-box">
     | Keyword<"content-box">
     | Keyword<"margin-box">;
+
+  export interface JSON extends Value.JSON {
+    shape: Circle.JSON;
+    box: Keyword.JSON;
+  }
 }
