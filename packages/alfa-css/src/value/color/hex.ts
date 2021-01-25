@@ -72,8 +72,7 @@ export class Hex extends Value<"color"> {
 }
 
 export namespace Hex {
-  export interface JSON extends Value.JSON {
-    type: "color";
+  export interface JSON extends Value.JSON<"color"> {
     format: "hex";
     value: number;
   }

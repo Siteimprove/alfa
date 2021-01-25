@@ -64,8 +64,7 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 }
 
 export namespace List {
-  export interface JSON extends Value.JSON {
-    type: "list";
+  export interface JSON extends Value.JSON<"list"> {
     values: Array<json.JSON>;
     separator: string;
   }

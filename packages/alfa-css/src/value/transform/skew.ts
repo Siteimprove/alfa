@@ -79,8 +79,7 @@ export class Skew<
 }
 
 export namespace Skew {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "skew";
     x: Angle.JSON;
     y: Angle.JSON;
