@@ -18,6 +18,10 @@ const { compareComparable } = Comparable;
 export type Array<T> = globalThis.Array<T>;
 
 export namespace Array {
+  export function isArray<T>(value: Iterable<T>): value is Array<T>;
+
+  export function isArray<T>(value: unknown): value is Array<T>;
+
   export function isArray<T>(value: unknown): value is Array<T> {
     return global.isArray(value);
   }
@@ -36,7 +40,7 @@ export namespace Array {
    * along existing arrays as-is instead of returning a copy.
    */
   export function from<T>(iterable: Iterable<T>): Array<T> {
-    if (isArray<T>(iterable)) {
+    if (isArray(iterable)) {
       return iterable;
     }
 

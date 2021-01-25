@@ -57,8 +57,28 @@ export namespace Option {
 
   export type JSON<T> = Some.JSON<T> | None.JSON;
 
+  export function isOption<T>(value: Iterable<T>): value is Option<T>;
+
+  export function isOption<T>(value: unknown): value is Option<T>;
+
   export function isOption<T>(value: unknown): value is Option<T> {
-    return Some.isSome(value) || value === None;
+    return isSome(value) || isNone(value);
+  }
+
+  export function isSome<T>(value: Iterable<T>): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T> {
+    return Some.isSome(value);
+  }
+
+  export function isNone<T>(value: Iterable<T>): value is None;
+
+  export function isNone(value: unknown): value is None;
+
+  export function isNone(value: unknown): value is None {
+    return value === None;
   }
 
   export function of<T>(value: T): Option<T> {
