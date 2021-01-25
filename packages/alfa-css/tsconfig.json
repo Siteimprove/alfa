@@ -41,6 +41,7 @@
     "src/value/shape/path.ts",
     "src/value/shape/polygon.ts",
     "src/value/shape/radius.ts",
+    "src/value/shape/rectangle.ts",
     "src/value/string.ts",
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",

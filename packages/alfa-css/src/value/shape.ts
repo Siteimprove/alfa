@@ -1,13 +1,14 @@
-import { Value } from "../value";
+import { Hash } from "@siteimprove/alfa-hash";
 
 import { Keyword } from "./keyword";
+import { Value } from "../value";
 
 import { Circle } from "./shape/circle";
 import { Inset } from "./shape/inset";
-import { Hash } from "@siteimprove/alfa-hash";
+import { Rectangle } from "./shape/rectangle";
 
 export class Shape<
-  S extends Shape.Basic = Shape.Basic,
+  S extends Shape.Basic | Shape.Deprecated = Shape.Basic,
   B extends Shape.Box = Shape.Box
 > extends Value<"shape"> {
   private readonly _shape: S;
@@ -66,6 +67,8 @@ export namespace Shape {
    */
   export type Basic = Circle; // | Inset;
 
+  export type Deprecated = Rectangle;
+
   /**
    * @see https://drafts.csswg.org/css-shapes/#shapes-from-box-values
    */
@@ -76,7 +79,7 @@ export namespace Shape {
     | Keyword<"margin-box">;
 
   export interface JSON extends Value.JSON<"shape"> {
-    shape: Circle.JSON;
+    shape: Circle.JSON | Rectangle.JSON;
     box: Keyword.JSON;
   }
 }
