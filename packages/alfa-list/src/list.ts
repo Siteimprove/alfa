@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
@@ -561,18 +562,40 @@ export class List<T> implements Collection.Indexed<T> {
 export namespace List {
   export type JSON<T> = Collection.Indexed.JSON<T>;
 
+  export function isList<T>(value: Iterable<T>): value is List<T>;
+
+  export function isList<T>(value: unknown): value is List<T>;
+
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
 
   export function from<T>(iterable: Iterable<T>): List<T> {
-    return isList<T>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (list, value) => list.append(value),
-          List.empty<T>()
-        );
+    if (isList(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
+  }
+
+  export function fromArray<T>(array: Array<T>): List<T> {
+    return Array.reduce(
+      array,
+      (list, value) => list.append(value),
+      List.empty()
+    );
+  }
+
+  export function fromIterable<T>(iterable: Iterable<T>): List<T> {
+    return Iterable.reduce(
+      iterable,
+      (list, value) => list.append(value),
+      List.empty()
+    );
   }
 
   export function sort<T extends Comparable<T>>(list: List<T>): List<T> {
