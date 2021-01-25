@@ -8,6 +8,7 @@ import { Length } from "../length";
 import { Percentage } from "../percentage";
 
 import * as json from "@siteimprove/alfa-json";
+import { Value } from "../../value";
 
 const { either, map } = Parser;
 
@@ -19,7 +20,7 @@ export class Radius<
     | Length
     | Percentage
     | Radius.Side
-> implements Equatable, Hashable, Serializable {
+> extends Value<"shape"> {
   public static of<R extends Length | Percentage | Radius.Side>(
     value: R
   ): Radius<R> {
@@ -29,11 +30,20 @@ export class Radius<
   private readonly _value: R;
 
   private constructor(value: R) {
+    super();
     this._value = value;
   }
 
   public get value(): R {
     return this._value;
+  }
+
+  public get type(): "shape" {
+    return "shape";
+  }
+
+  public get format(): "radius" {
+    return "radius";
   }
 
   public equals(value: Radius): boolean;
@@ -49,6 +59,8 @@ export class Radius<
 
   public toJSON(): Radius.JSON {
     return {
+      type: "shape",
+      format: "radius",
       value: this.value.toJSON(),
     };
   }
@@ -59,8 +71,9 @@ export class Radius<
 }
 
 export namespace Radius {
-  export interface JSON {
+  export interface JSON extends Value.JSON {
     [key: string]: json.JSON;
+    format: "radius";
     value: Length.JSON | Percentage.JSON | Keyword.JSON;
   }
 
