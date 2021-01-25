@@ -75,7 +75,7 @@ export namespace Shape {
     | Keyword<"content-box">
     | Keyword<"margin-box">;
 
-  export interface JSON extends Value.JSON {
+  export interface JSON extends Value.JSON<"shape"> {
     shape: Circle.JSON;
     box: Keyword.JSON;
   }

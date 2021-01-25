@@ -84,8 +84,7 @@ export namespace Circle {
   import right = Parser.right;
   import parseWhitespace = Token.parseWhitespace;
 
-  export interface JSON extends Value.JSON {
-    type: "shape";
+  export interface JSON extends Value.JSON<"shape"> {
     kind: "circle";
     center: Position.JSON;
     radius: Radius.JSON;

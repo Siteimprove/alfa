@@ -71,8 +71,7 @@ export class Radius<
 }
 
 export namespace Radius {
-  export interface JSON extends Value.JSON {
-    type: "shape";
+  export interface JSON extends Value.JSON<"shape"> {
     kind: "radius";
     value: Length.JSON | Percentage.JSON | Keyword.JSON;
   }
