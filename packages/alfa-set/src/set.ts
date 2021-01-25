@@ -10,8 +10,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
-
 const { not } = Predicate;
 
 export class Set<T> implements Collection.Unkeyed<T> {
