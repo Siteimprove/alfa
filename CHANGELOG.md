@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.reduce()` is now available.
+
 ## [0.9.0](../../compare/v0.8.0...v0.9.0) (2021-01-21)
 
 In addition to the changes listed below, this release adjusts the compile target from `es2017` to `es2018`.
