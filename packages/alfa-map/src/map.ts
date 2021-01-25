@@ -242,7 +242,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
     return `Map {${entries === "" ? "" : ` ${entries} `}}`;
   }
-  }
+}
 
 export namespace Map {
   export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
