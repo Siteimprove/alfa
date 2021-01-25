@@ -44,7 +44,7 @@ export class Circle<
     return "shape";
   }
 
-  public get format(): "circle" {
+  public get kind(): "circle" {
     return "circle";
   }
 
@@ -67,7 +67,7 @@ export class Circle<
   public toJSON(): Circle.JSON {
     return {
       type: "shape",
-      format: "circle",
+      kind: "circle",
       center: this.center.toJSON(),
       radius: this.radius.toJSON(),
     };
@@ -83,7 +83,8 @@ export namespace Circle {
   import right = Parser.right;
 
   export interface JSON extends Value.JSON {
-    format: "circle";
+    type: "shape";
+    kind: "circle";
     center: Position.JSON;
     radius: Radius.JSON;
   }

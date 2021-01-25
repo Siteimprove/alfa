@@ -42,7 +42,7 @@ export class Radius<
     return "shape";
   }
 
-  public get format(): "radius" {
+  public get kind(): "radius" {
     return "radius";
   }
 
@@ -60,7 +60,7 @@ export class Radius<
   public toJSON(): Radius.JSON {
     return {
       type: "shape",
-      format: "radius",
+      kind: "radius",
       value: this.value.toJSON(),
     };
   }
@@ -72,8 +72,8 @@ export class Radius<
 
 export namespace Radius {
   export interface JSON extends Value.JSON {
-    [key: string]: json.JSON;
-    format: "radius";
+    type: "shape";
+    kind: "radius";
     value: Length.JSON | Percentage.JSON | Keyword.JSON;
   }
 
