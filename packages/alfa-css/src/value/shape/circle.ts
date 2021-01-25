@@ -93,7 +93,17 @@ export namespace Circle {
   }
 
   export const parse = map(
-    Function.parse("circle"),
-    pair(option(Radius.parse), option(right(Keyword.parse("at"), Position.p)))
+    Function.parse(
+      "circle",
+      pair(
+        option(Radius.parse),
+        option(right(Keyword.parse("at"), Position.parse()))
+      )
+    ),
+    ([_, [radius, center]]) =>
+      Circle.of(
+        radius.getOr(Radius.of(Keyword.of("closest-side"))),
+        center.getOr(Position.of(Keyword.of("center"), Keyword.of("center")))
+      )
   );
 }
