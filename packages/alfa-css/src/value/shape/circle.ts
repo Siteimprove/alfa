@@ -95,30 +95,15 @@ export namespace Circle {
     return value instanceof Circle;
   }
 
-  function showAndTell<I, T, E>(
-    name: string,
-    parser: Parser<I, T, E>
-  ): Parser<I, T, E> {
-    return (input) => {
-      // console.log(`${name} is parsing ${input}`);
-      const result = parser(input);
-      // console.log(result.toJSON());
-      return result;
-    };
-  }
-
   export const parse = map(
     Function.parse(
       "circle",
       pair(
-        showAndTell("Option-radius", option(Radius.parse)),
-        showAndTell(
-          "Option-center",
-          option(
-            right(
-              right(option(parseWhitespace), Keyword.parse("at")),
-              right(parseWhitespace, Position.parse())
-            )
+        option(Radius.parse),
+        option(
+          right(
+            option(parseWhitespace),
+            right(Keyword.parse("at"), right(parseWhitespace, Position.parse()))
           )
         )
       )

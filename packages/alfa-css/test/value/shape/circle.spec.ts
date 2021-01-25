@@ -6,7 +6,6 @@ import { Lexer } from "../../../src/syntax/lexer";
 import { Circle } from "../../../src/value/shape/circle";
 
 function parse(t: Assertions, input: string, expected: Circle.JSON) {
-  // console.log(Circle.parse(Slice.of(Lexer.lex(input))).toJSON());
   t.deepEqual(
     Circle.parse(Slice.of(Lexer.lex(input)))
       .map(([_, circle]) => circle)
