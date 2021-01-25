@@ -29,9 +29,9 @@ export function isClipped(
           const { value: y } = style.computed("overflow-y");
 
           if (
-            height.type === "length" &&
+            height.type !== "keyword" &&
             height.value <= 1 &&
-            width.type === "length" &&
+            width.type !== "keyword" &&
             width.value <= 1 &&
             x.value === "hidden" &&
             y.value === "hidden"
