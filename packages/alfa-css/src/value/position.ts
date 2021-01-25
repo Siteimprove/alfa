@@ -77,8 +77,7 @@ export class Position<
 export namespace Position {
   import parseWhitespace = Token.parseWhitespace;
 
-  export interface JSON extends Value.JSON {
-    type: "position";
+  export interface JSON extends Value.JSON<"position"> {
     horizontal: Component.JSON;
     vertical: Component.JSON;
   }
@@ -166,8 +165,7 @@ export namespace Position {
   }
 
   export namespace Side {
-    export interface JSON extends Value.JSON {
-      type: "side";
+    export interface JSON extends Value.JSON<"side"> {
       side: Keyword.JSON;
       offset: Length.JSON | Percentage.JSON | null;
     }

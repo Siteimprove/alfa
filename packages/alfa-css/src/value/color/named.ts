@@ -76,8 +76,7 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
 }
 
 export namespace Named {
-  export interface JSON extends Value.JSON {
-    type: "color";
+  export interface JSON extends Value.JSON<"color"> {
     format: "named";
     color: string;
   }

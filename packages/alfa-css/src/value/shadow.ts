@@ -122,8 +122,7 @@ export class Shadow<
 }
 
 export namespace Shadow {
-  export interface JSON extends Value.JSON {
-    type: "shadow";
+  export interface JSON extends Value.JSON<"shadow"> {
     vertical: Length.JSON;
     horizontal: Length.JSON;
     blur: Length.JSON;
