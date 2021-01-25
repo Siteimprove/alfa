@@ -1,6 +1,5 @@
-import { Assertions, test } from "@siteimprove/alfa-test";
-
 import { Slice } from "@siteimprove/alfa-slice";
+import { Assertions, test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../../src/syntax/lexer";
 import { Circle } from "../../../src/value/shape/circle";
