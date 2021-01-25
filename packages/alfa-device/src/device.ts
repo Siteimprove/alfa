@@ -95,13 +95,13 @@ export class Device implements Equatable, Hashable, Serializable {
   public hash(hash: Hash): void {
     switch (this._type) {
       case Device.Type.Print:
-        Hash.writeUint8(hash, 1);
+        hash.writeUint8(1);
         break;
       case Device.Type.Screen:
-        Hash.writeUint8(hash, 2);
+        hash.writeUint8(2);
         break;
       case Device.Type.Screen:
-        Hash.writeUint8(hash, 3);
+        hash.writeUint8(3);
     }
 
     this._viewport.hash(hash);

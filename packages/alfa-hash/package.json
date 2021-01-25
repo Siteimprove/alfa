@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-encoding": "^0.9.0",
+    "@siteimprove/alfa-equatable": "^0.9.0",
     "@siteimprove/alfa-refinement": "^0.9.0"
   },
   "devDependencies": {

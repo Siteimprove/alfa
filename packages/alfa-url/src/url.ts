@@ -179,7 +179,7 @@ export class URL implements Equatable, Hashable, Serializable {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._scheme);
+    hash.writeString(this._scheme);
     this._username.hash(hash);
     this._password.hash(hash);
     this._host.hash(hash);

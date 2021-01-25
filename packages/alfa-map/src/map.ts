@@ -161,7 +161,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public get(key: K): Option<V> {
-    return this._root.get(key, this._hash(key), 0);
+    return this._root.get(key, hash(key), 0);
   }
 
   public has(key: K): boolean {
@@ -169,12 +169,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public set(key: K, value: V): Map<K, V> {
-    const { result: root, status } = this._root.set(
-      key,
-      value,
-      this._hash(key),
-      0
-    );
+    const { result: root, status } = this._root.set(key, value, hash(key), 0);
 
     if (status === "unchanged") {
       return this;
@@ -184,7 +179,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public delete(key: K): Map<K, V> {
-    const { result: root, status } = this._root.delete(key, this._hash(key), 0);
+    const { result: root, status } = this._root.delete(key, hash(key), 0);
 
     if (status === "unchanged") {
       return this;
@@ -211,11 +206,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public hash(hash: Hash): void {
     for (const [key, value] of this) {
-      Hashable.hash(hash, key);
-      Hashable.hash(hash, value);
+      hash.writeUnknown(key).writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._size);
+    hash.writeUint32(this._size);
   }
 
   public keys(): Iterable<K> {
@@ -248,15 +242,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
     return `Map {${entries === "" ? "" : ` ${entries} `}}`;
   }
-
-  private _hash(key: K): number {
-    const hash = FNV.empty();
-
-    Hashable.hash(hash, key);
-
-    return hash.finish();
   }
-}
 
 export namespace Map {
   export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
@@ -274,4 +260,8 @@ export namespace Map {
           Map.empty<K, V>()
         );
   }
+}
+
+function hash<K>(key: K): number {
+  return FNV.empty().writeUnknown(key).finish();
 }

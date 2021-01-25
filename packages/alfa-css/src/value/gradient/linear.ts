@@ -75,8 +75,7 @@ export class Linear<
       item.hash(hash);
     }
 
-    Hash.writeUint32(hash, this._items.length);
-    Hash.writeUint8(hash, +this._repeats);
+    hash.writeUint32(this._items.length).writeUint8(+this._repeats);
   }
 
   public toJSON(): Linear.JSON {
@@ -158,7 +157,7 @@ export namespace Linear {
     }
 
     public hash(hash: Hash): void {
-      Hash.writeString(hash, this._side);
+      hash.writeString(this._side);
     }
 
     public toJSON(): Side.JSON {
@@ -221,8 +220,7 @@ export namespace Linear {
     }
 
     public hash(hash: Hash): void {
-      Hash.writeString(hash, this._vertical);
-      Hash.writeString(hash, this._horizontal);
+      hash.writeString(this._vertical).writeString(this._horizontal);
     }
 
     public toJSON(): Corner.JSON {

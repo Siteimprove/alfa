@@ -43,14 +43,14 @@ export class Display implements Equatable, Hashable, Serializable {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeUint8(hash, this._resolution);
+    hash.writeUint8(this._resolution);
 
     switch (this._scan) {
       case Display.Scan.Interlace:
-        Hash.writeUint8(hash, 1);
+        hash.writeUint8(1);
         break;
       case Display.Scan.Progressive:
-        Hash.writeUint8(hash, 2);
+        hash.writeUint8(2);
     }
   }
 

@@ -627,11 +627,11 @@ export namespace Iterable {
     let size = 0;
 
     for (const value of iterable) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
       size++;
     }
 
-    Hash.writeUint32(hash, size);
+    hash.writeUint32(size);
   }
 
   export function subtract<T>(

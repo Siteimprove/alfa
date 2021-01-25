@@ -41,8 +41,7 @@ export class Preference<N extends Preference.Name = Preference.Name>
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._name);
-    Hash.writeString(hash, this._value);
+    hash.writeString(this._name).writeString(this._value);
   }
 
   public toJSON(): Preference.JSON {

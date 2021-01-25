@@ -99,7 +99,7 @@ export class Shadow<
     this._blur.hash(hash);
     this._spread.hash(hash);
     this._color.hash(hash);
-    Hash.writeBoolean(hash, this._isInset);
+    hash.writeBoolean(this._isInset);
   }
 
   public toJSON(): Shadow.JSON {

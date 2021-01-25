@@ -34,7 +34,7 @@ export class URL extends Value<"url"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._url);
+    hash.writeString(this._url);
   }
 
   public toJSON(): URL.JSON {

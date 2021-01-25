@@ -129,8 +129,7 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, true);
-    Hashable.hash(hash, this._value);
+    hash.writeBoolean(true).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator]() {

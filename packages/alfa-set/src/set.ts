@@ -171,10 +171,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   public hash(hash: Hash): void {
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._values.size);
+    hash.writeUint32(this._values.size);
   }
 
   public *[Symbol.iterator](): Iterator<T> {

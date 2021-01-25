@@ -57,7 +57,7 @@ export class Length<U extends Unit.Length = Unit.Length>
 
   public hash(hash: Hash): void {
     super.hash(hash);
-    Hash.writeString(hash, this._unit);
+    hash.writeString(this._unit);
   }
 
   public toJSON(): Length.JSON {

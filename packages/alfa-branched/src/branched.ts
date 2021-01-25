@@ -360,7 +360,7 @@ class Value<T, B> implements Equatable, Hashable {
   }
 
   public hash(hash: Hash): void {
-    Hashable.hash(hash, this._value);
+    hash.writeUnknown(this._value);
     this._branches.hash(hash);
   }
 }
