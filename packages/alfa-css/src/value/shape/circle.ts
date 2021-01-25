@@ -8,7 +8,7 @@ import { Function } from "../../syntax/function";
 import { Keyword } from "../keyword";
 import { Token } from "../../syntax/token";
 
-const { map, pair } = Parser;
+const { map, option, pair, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-circle
@@ -80,10 +80,6 @@ export class Circle<
 }
 
 export namespace Circle {
-  import option = Parser.option;
-  import right = Parser.right;
-  import parseWhitespace = Token.parseWhitespace;
-
   export interface JSON extends Value.JSON<"shape"> {
     kind: "circle";
     center: Position.JSON;
@@ -101,8 +97,11 @@ export namespace Circle {
         option(Radius.parse),
         option(
           right(
-            option(parseWhitespace),
-            right(Keyword.parse("at"), right(parseWhitespace, Position.parse()))
+            option(Token.parseWhitespace),
+            right(
+              Keyword.parse("at"),
+              right(Token.parseWhitespace, Position.parse())
+            )
           )
         )
       )
