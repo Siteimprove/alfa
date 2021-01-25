@@ -50,8 +50,7 @@ export class URL extends Value<"url"> {
 }
 
 export namespace URL {
-  export interface JSON extends Value.JSON {
-    type: "url";
+  export interface JSON extends Value.JSON<"url"> {
     url: string;
   }
 

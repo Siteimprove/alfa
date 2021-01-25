@@ -74,8 +74,7 @@ export class Length<U extends Unit.Length = Unit.Length>
 }
 
 export namespace Length {
-  export interface JSON extends Dimension.JSON {
-    type: "length";
+  export interface JSON extends Dimension.JSON<"length"> {
     unit: Unit.Length;
   }
 
