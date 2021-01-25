@@ -9,6 +9,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -193,13 +194,15 @@ export class Style implements Serializable {
 
     return this.cascaded(name)
       .map((cascaded) => {
+        // If we have a cascade value, act upon it.
+        // In these cases, `initial`/`unset` have been explicitly set and their source is needed.
         const { value, source } = cascaded;
 
         if (Keyword.isKeyword(value)) {
           switch (value.value) {
             // https://drafts.csswg.org/css-cascade/#initial
             case "initial":
-              return this.initial(name);
+              return this.initial(name, source);
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
@@ -207,13 +210,18 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
-              return inherits ? this.inherited(name) : this.initial(name);
+              return inherits
+                ? this.inherited(name)
+                : this.initial(name, source);
           }
         }
 
         return Value.of(value, source);
       })
       .getOrElse(() => {
+        // If we don't have a cascade value, take the initial or parent value depending whether
+        // this is an inherited property.
+        // In these case, `initial` is a fallback value and has no source per se.
         if (inherits === false) {
           return this.initial(name);
         }
@@ -234,8 +242,11 @@ export class Style implements Serializable {
     ) as Value<Style.Computed<N>>;
   }
 
-  public initial<N extends Name>(name: N): Value<Style.Initial<N>> {
-    return Value.of(Property.get(name).initial as Style.Computed<N>);
+  public initial<N extends Name>(
+    name: N,
+    source: Option<Declaration> = None
+  ): Value<Style.Initial<N>> {
+    return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
   public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
@@ -265,38 +276,45 @@ export namespace Style {
     properties: Array<[string, Value.JSON]>;
   }
 
-  const cache = Cache.empty<Device, Cache<Element, Style>>();
+  const cache = Cache.empty<Device, Cache<Element, Cache<Context, Style>>>();
 
-  export function from(element: Element, device: Device): Style {
-    return cache.get(device, Cache.empty).get(element.freeze(), () => {
-      const declarations: Array<Declaration> = element.style
-        .map((block) => [...block.declarations].reverse())
-        .getOr([]);
+  export function from(
+    element: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): Style {
+    return cache
+      .get(device, Cache.empty)
+      .get(element.freeze(), Cache.empty)
+      .get(context, () => {
+        const declarations: Array<Declaration> = element.style
+          .map((block) => [...block.declarations].reverse())
+          .getOr([]);
 
-      const root = element.root();
+        const root = element.root();
 
-      if (Document.isDocument(root) || Shadow.isShadow(root)) {
-        const cascade = Cascade.from(root, device);
+        if (Document.isDocument(root) || Shadow.isShadow(root)) {
+          const cascade = Cascade.of(root, device);
 
-        let next = cascade.get(element);
+          let next = cascade.get(element, context);
 
-        while (next.isSome()) {
-          const node = next.get();
+          while (next.isSome()) {
+            const node = next.get();
 
-          declarations.push(...[...node.declarations].reverse());
-          next = node.parent;
+            declarations.push(...[...node.declarations].reverse());
+            next = node.parent;
+          }
         }
-      }
 
-      return Style.of(
-        declarations,
-        device,
-        element
-          .parent({ flattened: true })
-          .filter(Element.isElement)
-          .map((parent) => from(parent, device))
-      );
-    });
+        return Style.of(
+          declarations,
+          device,
+          element
+            .parent({ flattened: true })
+            .filter(Element.isElement)
+            .map((parent) => from(parent, device, context))
+        );
+      });
   }
 
   export type Declared<N extends Name> = Property.Value.Declared<N>;

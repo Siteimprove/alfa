@@ -1,7 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -10,7 +9,6 @@ import { isVisible } from "../predicate/is-visible";
 import { Question } from "../question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { filter, map, some } = Iterable;
 const { and } = Predicate;
 
 export function video(
@@ -20,48 +18,45 @@ export function video(
 ): Iterable<Interview<Question, Element, Option<Element>>> {
   const { audio, track } = options;
 
-  return map(
-    filter(
-      document.descendants({ flattened: true, nested: true }),
+  return document
+    .descendants({ flattened: true, nested: true })
+    .filter(isElement)
+    .filter(
       and(
-        isElement,
-        and(
-          hasNamespace(Namespace.HTML),
-          hasName("video"),
-          isVisible(device),
-          (element) =>
-            track === undefined ||
-            track.has ===
-              some(
-                element.children(),
+        hasNamespace(Namespace.HTML),
+        hasName("video"),
+        isVisible(device),
+        (element) =>
+          track === undefined ||
+          track.has ===
+            element
+              .children()
+              .filter(isElement)
+              .some(
                 and(
-                  Element.isElement,
-                  and(
-                    hasName("track"),
-                    (trackElement) =>
-                      trackElement
-                        .attribute("kind")
-                        // @see https://html.spec.whatwg.org/multipage/media.html#attr-track-kind
-                        .map(
-                          (kind) =>
-                            kind
-                              .enumerate(
-                                "subtitles",
-                                "captions",
-                                "descriptions",
-                                "chapters",
-                                "metadata"
-                              )
-                              .getOr("metadata") // invalid value default
-                        )
-                        .getOr("subtitles") === track.kind // missing value default
-                  )
+                  hasName("track"),
+                  (trackElement) =>
+                    trackElement
+                      .attribute("kind")
+                      // @see https://html.spec.whatwg.org/multipage/media.html#attr-track-kind
+                      .map(
+                        (kind) =>
+                          kind
+                            .enumerate(
+                              "subtitles",
+                              "captions",
+                              "descriptions",
+                              "chapters",
+                              "metadata"
+                            )
+                            .getOr("metadata") // invalid value default
+                      )
+                      .getOr("subtitles") === track.kind // missing value default
                 )
               )
-        )
       )
-    ),
-    (element) =>
+    )
+    .map((element) =>
       Question.of(
         "is-video-streaming",
         "boolean",
@@ -85,7 +80,7 @@ export function video(
 
         return Option.of(element);
       })
-  );
+    );
 }
 
 export namespace video {

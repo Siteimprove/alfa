@@ -13,8 +13,9 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option, None, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as css from "@siteimprove/alfa-css";
@@ -24,8 +25,6 @@ import { Resolver } from "../resolver";
 import { Style } from "../style";
 
 import { List } from "./value/list";
-
-import { any } from "./combinator/any";
 
 const {
   map,
@@ -59,8 +58,6 @@ export namespace Background {
     (style) =>
       style.specified("background-color").map((color) => Resolver.color(color))
   );
-
-  export type Color = Color.Specified | Color.Computed;
 
   export namespace Color {
     export type Specified = css.Color;
@@ -102,19 +99,15 @@ export namespace Background {
       )
   );
 
-  export type Image = Image.Specified | Image.Computed;
-
   export namespace Image {
-    export type None = Keyword<"none">;
-
     export type Specified = List<Specified.Item>;
 
     export namespace Specified {
-      export type Item = None | css.Image;
+      export type Item = Keyword<"none"> | css.Image;
     }
 
     export type Computed = List<
-      | None
+      | Keyword<"none">
       | css.Image<
           | URL
           | Linear<
@@ -170,7 +163,7 @@ export namespace Background {
   );
 
   export namespace Repeat {
-    export type Style = Keyword<"repeat" | "space" | "round" | "no-repeat">;
+    type Style = Keyword<"repeat" | "space" | "round" | "no-repeat">;
 
     export const X: Property<X.Specified, X.Computed> = Property.of(
       List.of([Keyword.of("repeat")]),
@@ -251,8 +244,6 @@ export namespace Background {
     (style) => style.specified("background-attachment")
   );
 
-  export type Attachment = Attachment.Specified | Attachment.Computed;
-
   export namespace Attachment {
     export type Specified = List<Specified.Item>;
 
@@ -263,88 +254,27 @@ export namespace Background {
     export type Computed = Specified;
   }
 
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#propdef-background-position
-   */
-
-  const parsePositionComponent = either(
-    css.Position.parseCenter,
-    either(Length.parse, Percentage.parse)
-  );
-
-  const parsePositionComponentList = map(
-    separatedList(
-      parsePositionComponent,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (positions) => List.of(positions, ", ")
-  );
-
-  const parsePosition: Parser<
-    Slice<Token>,
-    [Position.X.Specified.Item, Position.Y.Specified.Item],
-    string
-  > = map(
-    any<
-      Slice<Token>,
-      ["x", Position.X.Specified.Item] | ["y", Position.Y.Specified.Item],
-      string
-    >(
-      map(
-        delimited(
-          option(Token.parseWhitespace),
-          either(
-            map(Keyword.parse("left", "right", "center"), (x) =>
-              x.value === "center" ? x : css.Position.Side.of(x)
-            ),
-            either(Length.parse, Percentage.parse)
-          )
-        ),
-        (x) => ["x", x]
-      ),
-      map(
-        delimited(
-          option(Token.parseWhitespace),
-          either(
-            map(Keyword.parse("top", "bottom", "center"), (x) =>
-              x.value === "center" ? x : css.Position.Side.of(x)
-            ),
-            either(Length.parse, Percentage.parse)
-          )
-        ),
-        (y) => ["y", y]
-      )
-    ),
-    (positions) => {
-      let x: Position.X.Specified.Item = Keyword.of("center");
-      let y: Position.Y.Specified.Item = Keyword.of("center");
-
-      for (const position of positions) {
-        switch (position[0]) {
-          case "x":
-            x = position[1];
-            break;
-          case "y":
-            y = position[1];
-        }
-      }
-
-      return [x, y];
-    }
-  );
-
-  const parsePositionList = map(
-    separatedList(
-      parsePosition,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (positions) => List.of(positions, ", ")
-  );
-
   export namespace Position {
+    // This should use Position.Component.Horizontal.parse (or Vertical).
+    // However, two-value syntax (right 10px) is only supported by Firefox and IE
+    // Moreover, the longhands are still experimental in CSS
+    // Keeping this for now, may need to be revisited later.
+    const parseComponent = either(
+      css.Position.parseCenter,
+      either(Length.parse, Percentage.parse)
+    );
+
+    const parseComponentList = map(
+      separatedList(
+        parseComponent,
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (positions) => List.of(positions, ", ")
+    );
+
     export const X: Property<X.Specified, X.Computed> = Property.of(
       List.of([Length.of(0, "px")]),
-      parsePositionComponentList,
+      parseComponentList,
       (style) =>
         style.specified("background-position-x").map((positions) =>
           List.of(
@@ -381,22 +311,22 @@ export namespace Background {
       export type Specified = List<Specified.Item>;
 
       export namespace Specified {
-        export type Item =
-          | css.Position.Center
-          | css.Position.Offset
-          | css.Position.Side<css.Position.Horizontal>;
+        export type Item = css.Position.Component<css.Position.Horizontal>;
       }
 
-      export type Computed = List<
-        | css.Position.Center
-        | css.Position.Offset<"px">
-        | css.Position.Side<css.Position.Horizontal, css.Position.Offset<"px">>
-      >;
+      export type Computed = List<Computed.Item>;
+
+      export namespace Computed {
+        export type Item = css.Position.Component<
+          css.Position.Horizontal,
+          "px"
+        >;
+      }
     }
 
     export const Y: Property<Y.Specified, Y.Computed> = Property.of(
       List.of([Length.of(0, "px")]),
-      parsePositionComponentList,
+      parseComponentList,
       (style) =>
         style.specified("background-position-y").map((positions) =>
           List.of(
@@ -433,30 +363,33 @@ export namespace Background {
       export type Specified = List<Specified.Item>;
 
       export namespace Specified {
-        export type Item =
-          | css.Position.Center
-          | css.Position.Offset
-          | css.Position.Side<css.Position.Vertical>;
+        export type Item = css.Position.Component<css.Position.Vertical>;
       }
 
-      export type Computed = List<
-        | css.Position.Center
-        | css.Position.Offset<"px">
-        | css.Position.Side<css.Position.Vertical, css.Position.Offset<"px">>
-      >;
+      export type Computed = List<Computed.Item>;
+
+      export namespace Computed {
+        export type Item = css.Position.Component<css.Position.Vertical, "px">;
+      }
     }
+
+    const parseList = map(
+      separatedList(
+        css.Position.parse(true),
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (positions) => List.of(positions, ", ")
+    );
 
     export const Shorthand = Property.Shorthand.of(
       ["background-position-x", "background-position-y"],
-      map(parsePositionList, (positions) => {
+      map(parseList, (positions) => {
         const xs: Array<X.Specified.Item> = [];
         const ys: Array<Y.Specified.Item> = [];
 
         for (const position of positions) {
-          const [x, y] = position;
-
-          xs.push(x);
-          ys.push(y);
+          xs.push(position.horizontal);
+          ys.push(position.vertical);
         }
 
         return [
@@ -489,8 +422,6 @@ export namespace Background {
     parseClipList,
     (style) => style.specified("background-clip")
   );
-
-  export type Clip = Clip.Specified | Clip.Computed;
 
   export namespace Clip {
     export type Specified = List<Specified.Item>;
@@ -527,8 +458,6 @@ export namespace Background {
     parseOriginList,
     (style) => style.specified("background-origin")
   );
-
-  export type Origin = Origin.Specified | Origin.Computed;
 
   export namespace Origin {
     export type Specified = List<Specified.Item>;
@@ -589,166 +518,210 @@ export namespace Background {
   );
 
   export namespace Size {
-    export type Contain = Keyword<"contain">;
-
-    export type Cover = Keyword<"cover">;
-
-    export type Auto = Keyword<"auto">;
-
     export type Specified = List<Specified.Item>;
 
     export namespace Specified {
       export type Item =
-        | [Length | Percentage | Auto, Length | Percentage | Auto]
-        | Cover
-        | Contain;
+        | [
+            Length | Percentage | Keyword<"auto">,
+            Length | Percentage | Keyword<"auto">
+          ]
+        | Keyword<"cover">
+        | Keyword<"contain">;
     }
 
     export type Computed = List<
-      | [Length<"px"> | Percentage | Auto, Length<"px"> | Percentage | Auto]
-      | Cover
-      | Contain
+      | [
+          Length<"px"> | Percentage | Keyword<"auto">,
+          Length<"px"> | Percentage | Keyword<"auto">
+        ]
+      | Keyword<"cover">
+      | Keyword<"contain">
     >;
   }
 
   /**
    * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-layer
    */
-  const parseBackgroundLayer = map(
-    any<
-      Slice<Token>,
-      Array<
-        | ["background-color", Color.Specified]
-        | ["background-image", Image.Specified.Item]
-        | ["background-position-x", Position.X.Specified.Item]
-        | ["background-position-y", Position.Y.Specified.Item]
-        | ["background-size", Size.Specified.Item]
-        | ["background-repeat-x", Repeat.X.Specified.Item]
-        | ["background-repeat-y", Repeat.Y.Specified.Item]
-        | ["background-attachment", Attachment.Specified.Item]
-        | ["background-origin", Origin.Specified.Item]
-        | ["background-clip", Clip.Specified.Item]
-      >,
-      string
-    >(
+  const parseBackgroundLayer: Parser<
+    Slice<Token>,
+    [
+      Option<Color.Specified>,
+      Option<Image.Specified.Item>,
+      Option<Position.X.Specified.Item>,
+      Option<Position.Y.Specified.Item>,
+      Option<Size.Specified.Item>,
+      Option<Repeat.X.Specified.Item>,
+      Option<Repeat.Y.Specified.Item>,
+      Option<Attachment.Specified.Item>,
+      Option<Origin.Specified.Item>,
+      Option<Clip.Specified.Item>
+    ],
+    string
+  > = (input) => {
+    let color: Option<Color.Specified> = None;
+    let image: Option<Image.Specified.Item> = None;
+    let position: css.Position = css.Position.of(
+      Keyword.of("center"),
+      Keyword.of("center")
+    );
+    let positionX: Option<Position.X.Specified.Item> = None;
+    let positionY: Option<Position.Y.Specified.Item> = None;
+    let size: Option<Size.Specified.Item> = None;
+    let repeatX: Option<Repeat.X.Specified.Item> = None;
+    let repeatY: Option<Repeat.Y.Specified.Item> = None;
+    let attachment: Option<Attachment.Specified.Item> = None;
+    let origin: Option<Origin.Specified.Item> = None;
+    let clip: Option<Clip.Specified.Item> = None;
+
+    while (true) {
+      for (const [remainder] of Token.parseWhitespace(input)) {
+        input = remainder;
+      }
+
       // <color>
-      map(delimited(option(Token.parseWhitespace), parseColor), (color) => [
-        ["background-color", color],
-      ]),
+      if (color.isNone()) {
+        const result = parseColor(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          color = Option.of(value);
+          input = remainder;
+          continue;
+        }
+      }
 
       // <image>
-      map(
-        option(delimited(option(Token.parseWhitespace), parseImage)),
-        (image) => [
-          ["background-image", image.getOrElse(() => Keyword.of("none"))],
-        ]
-      ),
+      if (image.isNone()) {
+        const result = parseImage(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          image = Option.of(value);
+          input = remainder;
+          continue;
+        }
+      }
 
       // <position> [ / <size> ]?
-      map(
-        option(
-          delimited(
-            option(Token.parseWhitespace),
-            pair(
-              // <position>
-              parsePosition,
-              // [ / <side> ]?
-              option(
-                delimited(
-                  option(Token.parseWhitespace),
-                  right(
-                    delimited(
-                      option(Token.parseWhitespace),
-                      Token.parseDelim("/")
-                    ),
-                    parseSize
-                  )
-                )
+      if (positionX.isNone() || positionY.isNone()) {
+        const result = css.Position.parse(true)(input);
+
+        if (result.isOk()) {
+          [input, position] = result.get();
+          positionX = Some.of(position.horizontal);
+          positionY = Some.of(position.vertical);
+
+          // [ / <size> ]?
+          {
+            const result = delimited(
+              option(Token.parseWhitespace),
+              right(
+                delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+                parseSize
               )
-            )
-          )
-        ),
-        (result) => [
-          [
-            "background-position-x",
-            result
-              .map(([position]) => position[0])
-              .getOrElse(() => Percentage.of(0)),
-          ],
-          [
-            "background-position-y",
-            result
-              .map(([position]) => position[1])
-              .getOrElse(() => Percentage.of(0)),
-          ],
-          [
-            "background-size",
-            result
-              .flatMap(([, size]) => size)
-              .getOrElse(() => [Keyword.of("auto"), Keyword.of("auto")]),
-          ],
-        ]
-      ),
+            )(input);
+
+            if (result.isOk()) {
+              const [remainder, value] = result.get();
+              size = Option.of(value);
+              input = remainder;
+            }
+          }
+
+          continue;
+        }
+      }
 
       // <repeat>
-      map(
-        option(delimited(option(Token.parseWhitespace), parseRepeat)),
-        (repeat) => [
-          [
-            "background-repeat-x",
-            repeat
-              .map((repeat) => repeat[0])
-              .getOrElse(() => Keyword.of("repeat")),
-          ],
-          [
-            "background-repeat-y",
-            repeat
-              .map((repeat) => repeat[1])
-              .getOrElse(() => Keyword.of("repeat")),
-          ],
-        ]
-      ),
+      if (repeatX.isNone() || repeatY.isNone()) {
+        const result = parseRepeat(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          repeatX = Option.of(value[0]);
+          repeatY = Option.of(value[1]);
+          input = remainder;
+          continue;
+        }
+      }
 
       // <attachment>
-      map(
-        option(delimited(option(Token.parseWhitespace), parseAttachment)),
-        (attachment) => [
-          [
-            "background-attachment",
-            attachment.getOrElse(() => Keyword.of("scroll")),
-          ],
-        ]
-      ),
+      if (attachment.isNone()) {
+        const result = parseAttachment(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          attachment = Option.of(value);
+          input = remainder;
+          continue;
+        }
+      }
 
       // <origin> <clip>?
-      map(
-        option(
-          delimited(
-            option(Token.parseWhitespace),
-            pair(
-              parseOrigin,
-              option(delimited(option(Token.parseWhitespace), parseClip))
-            )
-          )
-        ),
-        (result) => [
-          [
-            "background-origin",
-            result
-              .map(([origin]) => origin)
-              .getOrElse(() => Keyword.of("padding-box")),
-          ],
-          [
-            "background-clip",
-            result
-              .map(([origin, clip]) => clip.getOr(origin))
-              .getOrElse(() => Keyword.of("border-box")),
-          ],
-        ]
-      )
-    ),
-    Iterable.flatten
-  );
+      if (origin.isNone()) {
+        const result = parseOrigin(input);
+
+        if (result.isOk()) {
+          const [remainder, value] = result.get();
+          origin = Option.of(value);
+          input = remainder;
+
+          // <clip>?
+          {
+            const result = delimited(
+              option(Token.parseWhitespace),
+              parseClip
+            )(input);
+
+            if (result.isOk()) {
+              const [remainder, value] = result.get();
+              clip = Option.of(value);
+              input = remainder;
+            }
+          }
+
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (
+      [
+        color,
+        image,
+        positionX,
+        positionY,
+        repeatX,
+        repeatY,
+        attachment,
+        origin,
+        clip,
+      ].every((property) => property.isNone())
+    ) {
+      return Err.of(
+        `Expected one of color, image, position, repeat, attachment, origin, or clip`
+      );
+    }
+
+    return Result.of([
+      input,
+      [
+        color,
+        image,
+        positionX,
+        positionY,
+        size,
+        repeatX,
+        repeatY,
+        attachment,
+        origin,
+        clip.or(origin),
+      ],
+    ]);
+  };
 
   const parseBackgroundLayerList = map(
     filter(
@@ -756,12 +729,7 @@ export namespace Background {
         parseBackgroundLayer,
         delimited(option(Token.parseWhitespace), Token.parseComma)
       ),
-      (layers) =>
-        [...layers]
-          .slice(0, -1)
-          .every((layer) =>
-            [...layer].every(([property]) => property !== "background-color")
-          ),
+      (layers) => [...layers].slice(0, -1).every(([color]) => color.isNone()),
       () => "Only the last layer may contain a color"
     ),
     (layers) => List.of(layers, ", ")
@@ -796,43 +764,22 @@ export namespace Background {
       let clip: Array<Clip.Specified.Item> = [];
 
       for (const layer of layers) {
-        for (const property of layer) {
-          switch (property[0]) {
-            case "background-color":
-              color = Option.of(property[1]);
-              break;
-            case "background-image":
-              image.push(property[1]);
-              break;
-            case "background-position-x":
-              positionX.push(property[1]);
-              break;
-            case "background-position-y":
-              positionY.push(property[1]);
-              break;
-            case "background-size":
-              size.push(property[1]);
-              break;
-            case "background-repeat-x":
-              repeatX.push(property[1]);
-              break;
-            case "background-repeat-y":
-              repeatY.push(property[1]);
-              break;
-            case "background-attachment":
-              attachment.push(property[1]);
-              break;
-            case "background-origin":
-              origin.push(property[1]);
-              break;
-            case "background-clip":
-              clip.push(property[1]);
-          }
-        }
+        color = layer[0];
+        image.push(layer[1].getOrElse(() => Keyword.of("none")));
+        positionX.push(layer[2].getOrElse(() => Percentage.of(0)));
+        positionY.push(layer[3].getOrElse(() => Percentage.of(0)));
+        size.push(
+          layer[4].getOrElse(() => [Keyword.of("auto"), Keyword.of("auto")])
+        );
+        repeatX.push(layer[5].getOrElse(() => Keyword.of("repeat")));
+        repeatY.push(layer[6].getOrElse(() => Keyword.of("repeat")));
+        attachment.push(layer[7].getOrElse(() => Keyword.of("scroll")));
+        origin.push(layer[8].getOrElse(() => Keyword.of("padding-box")));
+        clip.push(layer[9].getOrElse(() => Keyword.of("border-box")));
       }
 
       return [
-        ["background-color", color.getOr(Keyword.of("initial"))],
+        ["background-color", color.getOrElse(() => Keyword.of("initial"))],
         ["background-image", List.of(image, ", ")],
         ["background-position-x", List.of(positionX, ", ")],
         ["background-position-y", List.of(positionY, ", ")],

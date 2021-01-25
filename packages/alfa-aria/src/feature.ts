@@ -1,12 +1,15 @@
 import { Branched } from "@siteimprove/alfa-branched";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Node, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Scope, Table } from "@siteimprove/alfa-table";
+import { Sequence } from "@siteimprove/alfa-sequence";
+import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";
 import { Name } from "./name";
@@ -14,8 +17,8 @@ import { Role } from "./role";
 
 import type * as aria from ".";
 
-const { hasName, isElement } = Element;
-const { and, or } = Predicate;
+const { hasInputType, hasName, isElement } = Element;
+const { or, test } = Predicate;
 
 /**
  * @internal
@@ -96,7 +99,7 @@ function html(
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
       () => name(element, device, state),
-      () => nameFromTitle(element)
+      () => nameFromAttribute(element, "title")
     )
   );
 }
@@ -110,38 +113,18 @@ function svg(
     Name.fromSteps(
       () => name(element, device, state),
       () => nameFromChild(hasName("title"))(element, device, state),
-      () => nameFromTitle(element)
+      () => nameFromAttribute(element, "title")
     )
   );
 }
 
-const nameFromAlt = (element: Element) => {
-  for (const attribute of element.attribute("alt")) {
-    // The `alt` attribute is used as long as it's not completely empty.
-    if (attribute.value.length > 0) {
-      return Name.fromLabel(attribute);
-    }
-  }
-
-  return Branched.of(None);
-};
-
-const nameFromTitle = (element: Element) => {
-  for (const attribute of element.attribute("title")) {
-    // The `title` attribute is used as long as it's not completely empty.
-    if (attribute.value.length > 0) {
-      return Name.fromLabel(attribute);
-    }
-  }
-
-  return Branched.of(None);
-};
-
-const nameFromPlaceholder = (element: Element) => {
-  for (const attribute of element.attribute("placeholder")) {
-    // The `placeholder` attribute is used as long as it's not completely empty.
-    if (attribute.value.length > 0) {
-      return Name.fromLabel(attribute);
+const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
+  for (const name of attributes) {
+    for (const attribute of element.attribute(name)) {
+      // The attribute value is used as long as it's not completely empty.
+      if (attribute.value.length > 0) {
+        return Name.fromLabel(attribute);
+      }
     }
   }
 
@@ -153,11 +136,8 @@ const nameFromChild = (predicate: Predicate<Element>) => (
   device: Device,
   state: Name.State
 ) => {
-  for (const child of element.children().find(and(isElement, predicate))) {
-    return Name.fromDescendants(child, device, {
-      ...state,
-      visited: state.visited.add(child),
-    }).map((name) =>
+  for (const child of element.children().filter(isElement).find(predicate)) {
+    return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
       name.map((name) =>
         Name.of(name.value, [Name.Source.descendant(element, name)])
       )
@@ -167,13 +147,27 @@ const nameFromChild = (predicate: Predicate<Element>) => (
   return Branched.of(None);
 };
 
+const ids = Cache.empty<Node, Map<string, Element>>();
+
+const labels = Cache.empty<Node, Sequence<Element>>();
+
 const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   const root = element.root();
 
+  const elements = root.inclusiveDescendants().filter(isElement);
+
   for (const id of element.id) {
-    const target = root
-      .descendants()
-      .find(and(isElement, (element) => element.id.includes(id)));
+    const target = ids
+      .get(root, () =>
+        Map.from(
+          elements
+            .collect((element) =>
+              element.id.map((id) => [id, element] as const)
+            )
+            .reverse()
+        )
+      )
+      .get(id);
 
     if (target.includes(element)) {
       continue;
@@ -182,29 +176,24 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     }
   }
 
-  const labels = root.descendants().filter(
-    and(
-      isElement,
-      and(
-        hasName("label"),
-        or(
-          (label) => label.descendants().includes(element),
-          (label) =>
-            label
-              .attribute("for")
-              .some((attribute) => element.id.includes(attribute.value))
-        )
+  const targets = labels
+    .get(root, () => elements.filter(hasName("label")))
+    .filter(
+      or(
+        (label) => label.descendants().includes(element),
+        (label) =>
+          label
+            .attribute("for")
+            .some((attribute) => element.id.includes(attribute.value))
       )
-    )
-  );
+    );
 
-  return Branched.traverse(labels, (element) =>
-    Name.fromNode(element, device, {
-      ...state,
-      isRecursing: true,
-      isReferencing: false,
-      isDescending: false,
-    }).map((name) => [name, element] as const)
+  return Branched.traverse(targets, (element) =>
+    Name.fromNode(
+      element,
+      device,
+      state.recurse(true).reference(false).descend(false)
+    ).map((name) => [name, element] as const)
   )
     .map((names) =>
       [...names]
@@ -252,7 +241,7 @@ const Features: Features = {
       (element) =>
         element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
       () => [],
-      nameFromAlt
+      (element) => nameFromAttribute(element, "alt")
     ),
 
     article: html(() => Option.of(Role.of("article"))),
@@ -318,12 +307,11 @@ const Features: Features = {
 
     footer: html((element) =>
       element
-        .closest(
-          and(isElement, hasName("article", "aside", "main", "nav", "section"))
-        )
-        .isNone()
-        ? Option.of(Role.of("contentinfo"))
-        : None
+        .ancestors()
+        .filter(isElement)
+        .some(hasName("article", "aside", "main", "nav", "section"))
+        ? None
+        : Option.of(Role.of("contentinfo"))
     ),
 
     form: html(() => Option.of(Role.of("form"))),
@@ -360,12 +348,11 @@ const Features: Features = {
 
     header: html((element) =>
       element
-        .closest(
-          and(isElement, hasName("article", "aside", "main", "nav", "section"))
-        )
-        .isNone()
-        ? Option.of(Role.of("banner"))
-        : None
+        .ancestors()
+        .filter(isElement)
+        .some(hasName("article", "aside", "main", "nav", "section"))
+        ? None
+        : Option.of(Role.of("banner"))
     ),
 
     hr: html(() => Option.of(Role.of("separator"))),
@@ -381,68 +368,46 @@ const Features: Features = {
         yield Role.of("img");
       },
       () => [],
-      nameFromAlt
+      (element) => nameFromAttribute(element, "alt")
     ),
 
     input: html(
       (element): Option<Role> => {
-        const type = element
-          .attribute("type")
-          .flatMap((attribute) =>
-            attribute.enumerate(
-              "button",
-              "image",
-              "reset",
-              "submit",
-              "checkbox",
-              "number",
-              "radio",
-              "range",
-              "search",
-              "email",
-              "tel",
-              "text",
-              "url"
-            )
-          )
-          .getOr("text");
-
-        switch (type) {
-          case "button":
-          case "image":
-          case "reset":
-          case "submit":
-            return Option.of(Role.of("button"));
-
-          case "checkbox":
-            return Option.of(Role.of("checkbox"));
-
-          case "number":
-            return Option.of(Role.of("spinbutton"));
-
-          case "radio":
-            return Option.of(Role.of("radio"));
-
-          case "range":
-            return Option.of(Role.of("slider"));
-
-          case "search":
-            return Option.of(
-              Role.of(
-                element.attribute("list").isSome() ? "combobox" : "searchbox"
-              )
-            );
-
-          case "email":
-          case "tel":
-          case "text":
-          case "url":
-            return Option.of(
-              Role.of(
-                element.attribute("list").isSome() ? "combobox" : "textbox"
-              )
-            );
+        if (test(hasInputType("button", "image", "reset", "submit"), element)) {
+          return Option.of(Role.of("button"));
         }
+
+        if (test(hasInputType("checkbox"), element)) {
+          return Option.of(Role.of("checkbox"));
+        }
+
+        if (test(hasInputType("number"), element)) {
+          return Option.of(Role.of("spinbutton"));
+        }
+
+        if (test(hasInputType("radio"), element)) {
+          return Option.of(Role.of("radio"));
+        }
+
+        if (test(hasInputType("range"), element)) {
+          return Option.of(Role.of("slider"));
+        }
+
+        if (test(hasInputType("search"), element)) {
+          return Option.of(
+            Role.of(
+              element.attribute("list").isSome() ? "combobox" : "searchbox"
+            )
+          );
+        }
+
+        if (test(hasInputType("email", "tel", "text", "url"), element)) {
+          return Option.of(
+            Role.of(element.attribute("list").isSome() ? "combobox" : "textbox")
+          );
+        }
+
+        return None;
       },
       function* (element) {
         // https://w3c.github.io/html-aam/#att-checked
@@ -486,7 +451,46 @@ const Features: Features = {
           yield Attribute.of("aria-placeholder", value);
         }
       },
-      nameFromLabel
+      (element, device, state) => {
+        if (
+          test(
+            hasInputType("text", "password", "search", "tel", "email", "url"),
+            element
+          )
+        ) {
+          return Name.fromSteps(
+            () => nameFromLabel(element, device, state),
+            () => nameFromAttribute(element, "title", "placeholder")
+          );
+        }
+
+        if (test(hasInputType("button"), element)) {
+          return nameFromAttribute(element, "value");
+        }
+
+        if (test(hasInputType("submit"), element)) {
+          return Name.fromSteps(
+            () => nameFromAttribute(element, "value"),
+            () => Branched.of(Option.of(Name.of("Submit")))
+          );
+        }
+
+        if (test(hasInputType("reset"), element)) {
+          return Name.fromSteps(
+            () => nameFromAttribute(element, "value"),
+            () => Branched.of(Option.of(Name.of("Reset")))
+          );
+        }
+
+        if (test(hasInputType("image"), element)) {
+          return Name.fromSteps(
+            () => nameFromAttribute(element, "alt"),
+            () => Branched.of(Option.of(Name.of("Submit")))
+          );
+        }
+
+        return nameFromLabel(element, device, state);
+      }
     ),
 
     li: html((element) =>
@@ -528,8 +532,9 @@ const Features: Features = {
     option: html(
       (element) =>
         element
-          .closest(and(isElement, hasName("select", "optgroup", "datalist")))
-          .isSome()
+          .ancestors()
+          .filter(isElement)
+          .some(hasName("select", "optgroup", "datalist"))
           ? Option.of(Role.of("option"))
           : None,
       function* (element) {
@@ -573,7 +578,8 @@ const Features: Features = {
         for (const _ of element.attribute("multiple")) {
           yield Attribute.of("aria-multiselectable", "true");
         }
-      }
+      },
+      nameFromLabel
     ),
 
     table: html(
@@ -587,16 +593,17 @@ const Features: Features = {
     td: html(
       (element) =>
         element
-          .closest(and(Element.isElement, hasName("table")))
+          .ancestors()
+          .filter(isElement)
+          .find(hasName("table"))
           .flatMap<Role>((table) => {
             for (const [role] of Role.from(table)) {
-              if (role.isSome()) {
-                switch (role.get().name) {
-                  case "table":
-                    return Option.of(Role.of("cell"));
-                  case "grid":
-                    return Option.of(Role.of("gridcell"));
-                }
+              if (role.some((role) => role.is("table"))) {
+                return Option.of(Role.of("cell"));
+              }
+
+              if (role.some((role) => role.is("grid"))) {
+                return Option.of(Role.of("gridcell"));
               }
             }
 
@@ -638,52 +645,55 @@ const Features: Features = {
           yield Attribute.of("aria-placeholder", value);
         }
       },
-      nameFromLabel
+      (element, device, state) => {
+        return Name.fromSteps(
+          () => nameFromLabel(element, device, state),
+          () => nameFromAttribute(element, "title", "placeholder")
+        );
+      }
     ),
 
     tfoot: html(() => Option.of(Role.of("rowgroup"))),
 
     th: html(
-      (element) => {
-        const table = element.closest(and(isElement, hasName("table")));
+      (element) =>
+        element
+          .ancestors()
+          .filter(isElement)
+          .find(hasName("table"))
+          .map(Table.from)
+          .flatMap((table) =>
+            table.cells
+              .filter(Cell.isHeader)
+              .find(Cell.hasElement(element))
+              .map((cell) => {
+                return { table, cell };
+              })
+          )
+          .flatMap<Role>(({ table, cell }) => {
+            switch (cell.scope) {
+              case "column":
+              case "column-group":
+                return Option.of(Role.of("columnheader"));
 
-        // If the <th> is not in a <table>, it doesn't really have a role…
-        if (table.isNone()) {
-          return None;
-        }
+              case "row":
+              case "row-group":
+                return Option.of(Role.of("rowheader"));
 
-        const tableModel = Table.from(table.get());
+              default:
+                for (const [role] of Role.from(table.element)) {
+                  if (role.some((role) => role.is("table"))) {
+                    return Option.of(Role.of("cell"));
+                  }
 
-        // If the <th> is within a <table> with errors, it doesn't really have a
-        // role.
-        if (tableModel.isErr()) {
-          return None;
-        }
+                  if (role.some((role) => role.is("grid"))) {
+                    return Option.of(Role.of("gridcell"));
+                  }
+                }
 
-        const cell = Iterable.find(tableModel.get().cells, (cell) =>
-          cell.element.equals(element)
-        );
-
-        // If the current element is not a cell in the table, something weird
-        // happened and it doesn't have a role.
-        if (cell.isNone()) {
-          return None;
-        }
-
-        // This is not fully correct. If the header has no variant, its role
-        // should be computed as a <td>
-        // https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
-        return cell.get().scope.map((scope) => {
-          switch (scope) {
-            case Scope.Column:
-            case Scope.ColumnGroup:
-              return Role.of("columnheader");
-            case Scope.Row:
-            case Scope.RowGroup:
-              return Role.of("rowheader");
-          }
-        });
-      },
+                return None;
+            }
+          }),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-colspan
         for (const { value } of element.attribute("colspan")) {

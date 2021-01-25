@@ -4,6 +4,9 @@
   "files": ["src/branched.ts", "src/index.ts", "test/branched.spec.ts"],
   "references": [
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-collection"
     },
     {
@@ -32,6 +35,9 @@
     },
     {
       "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

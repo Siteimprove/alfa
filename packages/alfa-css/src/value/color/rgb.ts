@@ -93,8 +93,7 @@ export class RGB<
 }
 
 export namespace RGB {
-  export interface JSON extends Value.JSON {
-    type: "color";
+  export interface JSON extends Value.JSON<"color"> {
     format: "rgb";
     red: Number.JSON | Percentage.JSON;
     green: Number.JSON | Percentage.JSON;

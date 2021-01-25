@@ -1,684 +1,1065 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { List } from "@siteimprove/alfa-list";
-import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Real } from "@siteimprove/alfa-math";
+import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { ColumnGroup } from "./column-group";
-import { isHtmlElementWithName } from "./helpers";
+import { Column } from "./column";
 import { Row } from "./row";
-import { RowGroup } from "./row-group";
+import { Group } from "./group";
+import { Slot } from "./slot";
 import { Scope } from "./scope";
 
-const { compare } = Comparable;
-const { concat, filter, map, some } = Iterable;
+const { isNaN } = Number;
+const { clamp } = Real;
+const { not, equals } = Predicate;
+const { hasName, isElement } = Element;
 
 /**
- * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
+ * @see https://html.spec.whatwg.org/#concept-table
  */
-export class Table implements Equatable, Serializable {
+export class Table implements Equatable, Serializable<Table.JSON> {
   public static of(
     element: Element,
-    width: number = 0,
-    height: number = 0,
-    cells: Iterable<Cell> = List.empty(),
-    rowGroups: Iterable<RowGroup> = List.empty(),
-    columnGroups: Iterable<ColumnGroup> = List.empty()
+    cells: Iterable<Cell>,
+    groups: Iterable<Group>
   ): Table {
-    return new Table(element, width, height, cells, rowGroups, columnGroups);
+    return new Table(
+      element,
+      Array.sort(Array.copy(Array.from(cells))),
+      Array.sort(Array.copy(Array.from(groups)))
+    );
   }
 
-  private readonly _width: number;
-  private readonly _height: number;
+  public static empty(element: Element): Table {
+    return new Table(element, [], []);
+  }
+
   private readonly _element: Element;
-  private readonly _cells: List<Cell>;
-  private readonly _rowGroups: List<RowGroup>;
-  private readonly _columnGroups: List<ColumnGroup>;
+  private readonly _cells: Array<Cell>;
+  private readonly _groups: Array<Group>;
 
   private constructor(
     element: Element,
-    width: number,
-    height: number,
-    cells: Iterable<Cell>,
-    rowGroups: Iterable<RowGroup>,
-    columnGroups: Iterable<ColumnGroup>
+    cells: Array<Cell>,
+    groups: Array<Group>
   ) {
-    this._width = width;
-    this._height = height;
     this._element = element;
-    this._cells = List.from(cells);
-    this._rowGroups = List.from(rowGroups);
-    this._columnGroups = List.from(columnGroups);
-  }
-
-  public get width(): number {
-    return this._width;
-  }
-
-  public get height(): number {
-    return this._height;
+    this._cells = cells;
+    this._groups = groups;
   }
 
   public get element(): Element {
     return this._element;
   }
 
-  public get cells(): Iterable<Cell> {
-    return this._cells;
+  public get cells(): Sequence<Cell> {
+    return Sequence.from(this._cells);
   }
 
-  public get columnGroups(): Iterable<ColumnGroup> {
-    return this._columnGroups;
+  public get groups(): Sequence<Group> {
+    return Sequence.from(this._groups);
   }
 
-  public get rowGroups(): Iterable<RowGroup> {
-    return this._rowGroups;
+  public isEmpty(): boolean {
+    return this._cells.length === 0;
   }
 
-  public equals(value: unknown): value is this {
-    if (!(value instanceof Table)) return false;
+  public equals(table: Table): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
-      this._width === value._width &&
-      this._height === value._height &&
-      this._cells.equals(value._cells) &&
-      this._rowGroups.equals(value._rowGroups) &&
-      this._columnGroups.equals(this._columnGroups)
+      value instanceof Table &&
+      value._element.equals(this._element) &&
+      Array.equals(value._cells, this._cells)
     );
   }
 
   public toJSON(): Table.JSON {
     return {
-      height: this._height,
-      width: this._width,
-      element: this._element.toJSON(),
-      cells: this._cells.toArray().map((cell) => cell.toJSON()),
-      rowGroups: this._rowGroups.toArray().map((rg) => rg.toJSON()),
-      colGroups: this._columnGroups.toArray().map((cg) => cg.toJSON()),
+      element: this._element.path(),
+      cells: Array.toJSON(this._cells),
+      groups: Array.toJSON(this._groups),
     };
   }
 }
 
 export namespace Table {
-  import Kind = Cell.Kind;
-  const cache = Cache.empty<Element, Result<Table, string>>();
-
-  export function from(element: Element): Result<Table, string> {
-    return cache.get(element, () =>
-      Builder.from(element).map((table) => table.table)
-    );
-  }
-
   export interface JSON {
     [key: string]: json.JSON;
-    height: number;
-    width: number;
-    element: Element.JSON;
-    cells: Cell.JSON[];
-    rowGroups: RowGroup.JSON[];
-    colGroups: ColumnGroup.JSON[];
+    element: string;
+    cells: Array<Cell.JSON>;
+    groups: Array<Group.JSON>;
   }
 
-  export class Builder implements Equatable, Serializable {
-    public static of(
-      element: Element,
-      width: number = 0,
-      height: number = 0,
-      cells: Iterable<Cell.Builder> = List.empty(),
-      downwardGrowingCells: Iterable<Cell.Builder> = List.empty(),
-      slots: Array<Array<Option<Cell.Builder>>> = [[]],
-      rowGroups: Iterable<RowGroup> = List.empty(),
-      colGroups: Iterable<ColumnGroup> = List.empty(),
-      rowGroupHeaders: Iterable<Cell.Builder> = List.empty(),
-      columnGroupHeaders: Iterable<Cell.Builder> = List.empty()
-    ): Builder {
-      return new Builder(
-        element,
-        width,
-        height,
-        cells,
-        downwardGrowingCells,
-        slots,
-        rowGroups,
-        colGroups,
-        rowGroupHeaders,
-        columnGroupHeaders
-      );
-    }
+  const cache = Cache.empty<Element, Table>();
 
-    // The product will always have empty cells list as it's stored here
-    private readonly _table: Table;
-    private readonly _cells: List<Cell.Builder>;
-    private readonly _downwardGrowingCells: List<Cell.Builder>;
-    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
-    private readonly _rowGroupHeaders: List<Cell.Builder>;
-    private readonly _columnGroupHeaders: List<Cell.Builder>;
-
-    private constructor(
-      element: Element,
-      width: number,
-      height: number,
-      cells: Iterable<Cell.Builder>,
-      downwardGrowingCells: Iterable<Cell.Builder>,
-      slots: Array<Array<Option<Cell.Builder>>>,
-      rowGroups: Iterable<RowGroup>,
-      colGroups: Iterable<ColumnGroup>,
-      rowGroupHeaders: Iterable<Cell.Builder>,
-      columnGroupHeaders: Iterable<Cell.Builder>
-    ) {
-      this._table = Table.of(
-        element,
-        width,
-        height,
-        List.empty(),
-        rowGroups,
-        colGroups
-      );
-      this._cells = List.from(cells);
-      this._downwardGrowingCells = List.from(downwardGrowingCells);
-      this._slots = slots;
-      this._rowGroupHeaders = List.from(rowGroupHeaders);
-      this._columnGroupHeaders = List.from(columnGroupHeaders);
-    }
-
-    public get cells(): Iterable<Cell.Builder> {
-      return this._cells;
-    }
-
-    public get downwardGrowingCells(): Iterable<Cell.Builder> {
-      return this._downwardGrowingCells;
-    }
-
-    public get width(): number {
-      return this._table.width;
-    }
-
-    public get height(): number {
-      return this._table.height;
-    }
-
-    public get element(): Element {
-      return this._table.element;
-    }
-
-    public get colGroups(): Iterable<ColumnGroup> {
-      return this._table.columnGroups;
-    }
-
-    public get rowGroups(): Iterable<RowGroup> {
-      return this._table.rowGroups;
-    }
-
-    public get table(): Table {
-      return Table.of(
-        this.element,
-        this.width,
-        this.height,
-        this._cells.map((cell) => cell.cell),
-        this.rowGroups,
-        this.colGroups
-      );
-    }
-
-    public slot(x: number, y: number): Option<Cell.Builder> {
-      return this._slots?.[x]?.[y] === undefined ? None : this._slots[x][y];
-    }
-
-    /**
-     * Update by getting new values. Does not keep anything in sync, hence is highly unsafe. Use at your own risks.
-     */
-    private _updateUnsafe({
-      element = this.element,
-      width = this.width,
-      height = this.height,
-      cells = this._cells,
-      downwardGrowingCells = this._downwardGrowingCells,
-      slots = this._slots,
-      rowGroups = this.rowGroups,
-      colGroups = this.colGroups,
-      rowGroupHeaders = this._rowGroupHeaders,
-      columnGroupHeaders = this._columnGroupHeaders,
-    }: {
-      element?: Element;
-      width?: number;
-      height?: number;
-      cells?: Iterable<Cell.Builder>;
-      downwardGrowingCells?: Iterable<Cell.Builder>;
-      slots?: Array<Array<Option<Cell.Builder>>>;
-      rowGroups?: Iterable<RowGroup>;
-      colGroups?: Iterable<ColumnGroup>;
-      rowGroupHeaders?: Iterable<Cell.Builder>;
-      columnGroupHeaders?: Iterable<Cell.Builder>;
-    }): Builder {
-      return Builder.of(
-        element,
-        width,
-        height,
-        cells,
-        downwardGrowingCells,
-        slots,
-        rowGroups,
-        colGroups,
-        rowGroupHeaders,
-        columnGroupHeaders
-      );
-    }
-
-    /**
-     * Update anything but cells/downward growing cells/slots, because these need to be kept in sync.
-     */
-    public update(update: {
-      element?: Element;
-      width?: number;
-      height?: number;
-      slots?: Array<Array<Option<Cell.Builder>>>;
-      rowGroups?: Iterable<RowGroup>;
-      colGroups?: Iterable<ColumnGroup>;
-      rowGroupHeaders?: Iterable<Cell.Builder>;
-      columnGroupHeaders?: Iterable<Cell.Builder>;
-    }): Builder {
-      return this._updateUnsafe(update);
-    }
-
-    /**
-     * Update cells, and resync slots
-     * Cells are assumed to keep the same anchors, width, height and kind (header/data),
-     * hence columnHasData and rowHasData don't change but slots need to be updated to the new version of their cell.
-     */
-    public updateCells({
-      cells = this._cells,
-      downwardGrowingCells = this._downwardGrowingCells,
-    }: {
-      cells?: Iterable<Cell.Builder>;
-      downwardGrowingCells?: Iterable<Cell.Builder>;
-    }): Builder {
-      return this._updateUnsafe({ cells, downwardGrowingCells })._updateSlots(
-        concat(cells, downwardGrowingCells)
-      );
-    }
-
-    /**
-     * Add new cells, sync slots with the new cells and update columnHasData and rowHasData.
-     */
-    public addCells({
-      cells = List.empty(),
-      downwardGrowingCells = List.empty(),
-    }: {
-      cells?: Iterable<Cell.Builder>;
-      downwardGrowingCells?: Iterable<Cell.Builder>;
-    }): Builder {
-      return this._updateUnsafe({
-        cells: this._cells.concat(cells),
-        downwardGrowingCells: this._downwardGrowingCells.concat(
-          downwardGrowingCells
-        ),
-      })._updateSlots(cells);
-    }
-
-    /**
-     * Resync slots with a given list of cells. Caller need to ensure that all updated/added cells are passed.
-     */
-    private _updateSlots(cells: Iterable<Cell.Builder>): Builder {
-      for (const cell of cells) {
-        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-          if (this._slots[x] === undefined) {
-            this._slots[x] = [];
-          }
-          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            this._slots[x][y] = Some.of(cell);
-          }
-        }
-      }
-
-      return this; // for chaining
-    }
-
-    public addRowGroupFromElement(
-      rowgroup: Element,
-      yCurrent: number
-    ): Result<Builder, string> {
-      return RowGroup.Builder.from(rowgroup)
-        .map((rowGroup) => rowGroup.anchorAt(yCurrent))
-        .map((rowGroup) => {
-          if (rowGroup.height > 0) {
-            return (
-              this.update({
-                // adjust table height and width
-                height: Math.max(this.height, this.height + rowGroup.height),
-                width: Math.max(this.width, rowGroup.width),
-                // add new group
-                rowGroups: List.from(this.rowGroups).append(rowGroup.rowgroup),
-              })
-                // merge in new cells
-                .addCells({ cells: rowGroup.cells })
-            );
-          } else {
-            return this;
-          }
-        });
-    }
-
-    public addHeadersVariants(): Builder {
-      // We need to know which column/row contains at least one data cell. Computing this once and for all now.
-      const columnHasData: Array<boolean> = [];
-      const rowHasData: Array<boolean> = [];
-      for (const cell of this._cells) {
-        if (cell.kind === Kind.Data) {
-          // If this is a data cell, update the memory of column/row with data cells.
-          for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-            columnHasData[x] = true;
-          }
-          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            rowHasData[y] = true;
-          }
-        }
-      }
-
-      return this.updateCells({
-        cells: List.from(
-          map(this.cells, (cell) => {
-            // We need to know if the cell is covering a slot with a data cell in the same column/row
-            let dataInColumns = false;
-            let dataInRows = false;
-            for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-              if (columnHasData[x] ?? false) {
-                dataInColumns = true;
-              }
-            }
-            for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-              if (rowHasData[y] ?? false) {
-                dataInRows = true;
-              }
-            }
-
-            return cell.addHeaderVariant(dataInColumns, dataInRows);
-          })
-        ),
-      });
-    }
-
-    public findGroupHeaders(): Builder {
-      const rowGroupHeaders: Array<Cell.Builder> = [];
-      const columnGroupHeaders: Array<Cell.Builder> = [];
-
-      for (const cell of this._cells) {
-        if (cell.variant.equals(Some.of(Scope.RowGroup))) {
-          rowGroupHeaders.push(cell);
-        }
-        if (cell.variant.equals(Some.of(Scope.ColumnGroup))) {
-          columnGroupHeaders.push(cell);
-        }
-      }
-
-      return this.update({ rowGroupHeaders, columnGroupHeaders });
-    }
-
-    /**
-     * If principal cell is in a group, get all group headers that are in this group and above+lift of principal cell.
-     */
-    public getAboveLeftGroupHeaders(
-      kind: "row" | "column"
-    ): (principalCell: Cell.Builder) => Iterable<Cell.Builder> {
-      let anchor: "x" | "y",
-        groups: Iterable<RowGroup | ColumnGroup>,
-        groupHeaders: Iterable<Cell.Builder>;
-
-      switch (kind) {
-        case "row":
-          anchor = "y";
-          groups = this.rowGroups;
-          groupHeaders = this._rowGroupHeaders;
-          break;
-        case "column":
-          anchor = "x";
-          groups = this.colGroups;
-          groupHeaders = this._columnGroupHeaders;
-          break;
-      }
-
-      return (principalCell) => {
-        // The group covering the same anchor as the principal cell
-        const principalGroup = Iterable.find(groups, (group) =>
-          group.isCovering(principalCell.anchor[anchor])
-        );
-
-        return principalGroup.isSome()
-          ? // if the cell is in a group,
-            Iterable.filter(
-              // get all group headers
-              groupHeaders,
-              (cell) =>
-                // keep the ones inside the group of the cell
-                principalGroup.get().isCovering(cell.anchor[anchor]) &&
-                // keep the ones that are above and left of the cell
-                cell.anchor.x < principalCell.anchor.x + principalCell.width &&
-                cell.anchor.y < principalCell.anchor.y + principalCell.height
-            )
-          : [];
-      };
-    }
-
-    public assignHeaders(): Builder {
-      return this.updateCells({
-        cells: map(this.cells, (cell) =>
-          cell.assignHeaders(
-            this.element,
-            this.slot.bind(this),
-            this.getAboveLeftGroupHeaders("row"),
-            this.getAboveLeftGroupHeaders("column")
-          )
-        ),
-      });
-    }
-
-    public equals(value: unknown): value is this {
-      if (!(value instanceof Builder)) return false;
-      return (
-        this._cells.equals(value._cells) &&
-        this._slots.every((array, x) =>
-          array.every((option, y) => option.equals(value._slots[x][y]))
-        ) &&
-        this._table.equals(value._table)
-      );
-    }
-
-    public toJSON(): Builder.JSON {
-      return {
-        table: this._table.toJSON(),
-        cells: this._cells.toArray().map((cell) => cell.toJSON()),
-      };
-    }
+  export function from(element: Element): Table {
+    return cache.get(element, () => formTable(element));
   }
 
-  export namespace Builder {
-    export interface JSON {
-      [key: string]: json.JSON;
-      table: Table.JSON;
-      cells: Cell.Builder.JSON[];
+  /**
+   * @see https://html.spec.whatwg.org/#forming-a-table
+   */
+  function formTable(element: Element): Table {
+    // 1
+    let xWidth = 0;
+
+    // 2
+    let yHeight = 0;
+
+    // 3
+    const footers: Array<Element> = [];
+
+    // 4
+    const cells: Array<Cell> = [];
+    const groups: Array<Group> = [];
+
+    // We model tables as an array of rows with each row containing an array of
+    // columns and each column containing an array of cell indices.
+    //
+    // Tables are indexed first by row and then by column. This way, rows are
+    // aligned vertically and columns horizontally:
+    //
+    //   table = [
+    //     /* row 1 */ [/* column 1 */, /* column 2 */],
+    //     /* row 2 */ [/* column 1 */, /* column 2 */],
+    //   ]
+    //
+    // This makes it considerably easier to debug table construction by not
+    // having to rotate your screen 90 degrees to make sense of things.
+
+    const table: Array<Array<Array<number>>> = [];
+
+    // Keep track of which columns and rows have data cells. This information is
+    // used when determining the scope of header cells.
+    //
+    // Consider the following table, with letters indicating headers and numbers
+    // indicating data:
+    //
+    //   +---+---+---+
+    //   |   | A | B |
+    //   +---+---+---+
+    //   | C | 1 | 2 |
+    //   +---+---+---+
+    //
+    // For this table, the following `data` object would be constructed:
+    //
+    //   data = {
+    //     x: Set { 1, 2 }
+    //     y: Set { 1 }
+    //   }
+    //
+    // This tells us that across the x-axis column 1 and 2 contain data, and
+    // across the y-axis row 1 contains data. Empty cells never count as data.
+    //
+    // For the headers "A" and "B" we can therefore determine that these should
+    // be column headers as row 0 contains no data. For the header "C" we can
+    // determine that this should be a row header as column 0 has no data.
+
+    const data = { x: new Set<number>(), y: new Set<number>() };
+
+    // Keep track of headings along rows and columns. This information is used
+    // when determining implicitly assigned header cells.
+    //
+    // Consider the following table, with letters indicating headers and numbers
+    // indicating data:
+    //
+    //   +---+---+---+
+    //   |   | A | B |
+    //   +---+---+---+
+    //   | C | 1 | 2 |
+    //   +---+---+---+
+    //
+    // For this table, the following `jumps` object would be constructed:
+    //
+    //   jumps = {
+    //     x: Map {
+    //       0 => [ 1 ]
+    //       1 => [ 0 ],
+    //       2 => [ 0 ],
+    //     },
+    //     y: Map {
+    //       0 => [ 1, 2 ],
+    //       1 => [ 0 ]
+    //     }
+    //   }
+    //
+    // This tells us that across the x-axis, column 0 contains a header at row 1
+    // while columns 1 and 2 contain headers at row 0. Across the y-axis, row 0
+    // contains headers at column 1 and 2 while row 1 contains a header at
+    // column 0.
+    //
+    // For the cell "2" on row 1 we can therefore determine that we can jump
+    // directly to x-coordinate 0 when scanning for row headers as this is the
+    // only column with a header on row 1. This saves us from having to visit
+    // cell "1" just to determine that it's a data cell.
+
+    const jumps = {
+      x: new Map<number, Array<number>>(),
+      y: new Map<number, Array<number>>(),
+    };
+
+    // Keep track of cells that can be indexed by element ID. This information
+    // is used when determining explicitly assigned header cells.
+    const index = new Map<string, number>();
+
+    // Keep track of the groups associated with columns and rows. This
+    // information is used when determining implicitly assigned header cells.
+    const groupings = {
+      x: new Map<number, number>(),
+      y: new Map<number, number>(),
+    };
+
+    // 5
+    if (element.children().isEmpty()) {
+      return Table.of(element, cells, groups);
     }
 
-    export function from(element: Element): Result<Builder, string> {
-      if (element.name !== "table")
-        return Err.of("This element is not a table");
+    // 6
+    // Nothing to do
 
-      // 1, 2, 4, 11
-      let table = Builder.of(element);
+    // 7
+    let children = element.children().filter(isElement);
+
+    // 8
+    skip(not(hasName("colgroup", "thead", "tbody", "tfoot", "tr")));
+
+    // 9
+    while (current().some(hasName("colgroup"))) {
+      // 9.1
+      // As this step contains several substeps inlined in the algorithm, its
+      // substeps have been extracted into a function of their own.
+      processColumnGroup(current().get());
+
+      // 9.2
+      advance();
+
+      // 9.3
+      skip(not(hasName("colgroup", "thead", "tbody", "tfoot", "tr")));
+
+      // 9.4
+      // Nothing to do
+    }
+
+    // 10
+    let yCurrent = 0;
+
+    // 11
+    let downwardGrowing: Array<[cell: Cell, index: number]> = [];
+
+    // Steps 12-18 are repeated for as long as there are children left in the
+    // table.
+    while (current().isSome()) {
+      // 12
+      skip(not(hasName("thead", "tbody", "tfoot", "tr")));
+
+      if (current().isNone()) {
+        break;
+      }
+
+      // 13
+      if (current().some(hasName("tr"))) {
+        processRow(current().get());
+        advance();
+        continue;
+      }
+
+      // 14
+      endRowGroup();
+
+      // 15
+      if (current().some(hasName("tfoot"))) {
+        footers.push(current().get());
+        advance();
+        continue;
+      }
+
+      // 16
+      processRowGroup(current().get());
+
+      // 17
+      advance();
+
+      // 18
+      // Nothing to do
+    }
+
+    // 19
+    footers.forEach(processRowGroup);
+
+    // 20
+    // Nothing to do
+
+    // 21
+    // Before returning the final table, we go through all cells and assign them
+    // scopes and headers, if any.
+    cells.forEach(assignScope);
+    cells.forEach(assignHeaders);
+
+    return Table.of(element, cells, groups);
+
+    /**
+     * Ensure that the given position is available in the table.
+     */
+    function ensure(x: number, y: number): void {
+      for (let i = table.length - 1; i < y; i++) {
+        table.push([]);
+      }
+
+      const row = table[y];
+
+      for (let i = row.length - 1; i < x; i++) {
+        row.push([]);
+      }
+    }
+
+    /**
+     * Get the cells at the given position.
+     */
+    function get(x: number, y: number): Array<number> {
+      ensure(x, y);
+
+      // Keep in mind that tables are indexed first by row and then by column.
+      return table[y][x];
+    }
+
+    /**
+     * Check if the table has cells at the given position.
+     */
+    function has(x: number, y: number): boolean {
+      return get(x, y).length > 0;
+    }
+
+    /**
+     * Add a cell at the given position.
+     */
+    function add(x: number, y: number, i: number): number {
+      const cell = cells[i];
+
+      if (cell.isHeader()) {
+        if (jumps.x.has(x)) {
+          jumps.x.get(x)!.push(y);
+        } else {
+          jumps.x.set(x, [y]);
+        }
+
+        if (jumps.y.has(y)) {
+          jumps.y.get(y)!.push(x);
+        } else {
+          jumps.y.set(y, [x]);
+        }
+      } else if (!cell.isEmpty()) {
+        data.x.add(x);
+        data.y.add(y);
+      }
+
+      ensure(x, y);
+
+      // Keep in mind that tables are indexed first by row and then by column.
+      return table[y][x].push(i);
+    }
+
+    /**
+     * Determine the last position among the candidates that is less than or
+     * equal to the given initial position `i`. That is, the last value in
+     * `candidates` that is `<= i`. If no suitable candidate is found, -1 is
+     * returned.
+     */
+    function jump(i: number, candidates: Array<number> = []): number {
+      for (let j = candidates.length - 1; j >= 0; j--) {
+        const candidate = candidates[j];
+
+        if (candidate <= i) {
+          return candidate;
+        }
+      }
+
+      return -1;
+    }
+
+    /**
+     * Get the current child element of the table.
+     */
+    function current(): Option<Element> {
+      return children.first();
+    }
+
+    /**
+     * Advance to the next child element of the table.
+     */
+    function advance(): Option<Element> {
+      children = children.rest();
+      return current();
+    }
+
+    /**
+     * Skip child elements of the table while the predicate holds.
+     */
+    function skip(predicate: Predicate<Element>): void {
+      while (current().some(predicate)) {
+        advance();
+      }
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#algorithm-for-processing-row-groups
+     */
+    function processRowGroup(element: Element): void {
+      // 1
+      const yStart = yHeight;
+
+      // 2
+      element
+        .children()
+        .filter(isElement)
+        .filter(hasName("tr"))
+        .forEach(processRow);
+
       // 3
-      let pendingTfoot: Array<Element> = [];
-      // 5 + 8 + 9.3
+      if (yHeight > yStart) {
+        const group = Row.group(element, yStart, yHeight - yStart);
+        const i = groups.length;
+
+        groups.push(group);
+
+        for (let y = group.y, n = y + group.height; y < n; y++) {
+          groupings.y.set(y, i);
+        }
+      }
+
+      // 4
+      endRowGroup();
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#algorithm-for-ending-a-row-group
+     */
+    function endRowGroup(): void {
+      // 1
+      while (yCurrent < yHeight) {
+        // 1.1
+        growCells();
+
+        // 1.2
+        yCurrent++;
+      }
+
+      // 2
+      downwardGrowing = [];
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#algorithm-for-processing-rows
+     */
+    function processRow(element: Element): void {
+      // 1
+      if (yHeight === yCurrent) {
+        yHeight++;
+      }
+
+      // 2
+      let xCurrent = 0;
+
+      // 3
+      growCells();
+
+      // 4
       let children = element
         .children()
-        .filter(
-          isHtmlElementWithName("colgroup", "thead", "tbody", "tfoot", "tr")
+        .filter(isElement)
+        .filter(hasName("td", "th"));
+
+      if (children.isEmpty()) {
+        yCurrent++;
+        return;
+      }
+
+      // 5
+      // Nothing to do
+
+      // Steps 6-18 are repeated for as long as there are children left in the
+      // row.
+      while (current().isSome()) {
+        // 6
+        while (xCurrent < xWidth && has(xCurrent, yCurrent)) {
+          xCurrent++;
+        }
+
+        // 7
+        if (xCurrent === xWidth) {
+          xWidth++;
+        }
+
+        // 8
+        let colspan = integerValue(
+          current().get(),
+          "colspan",
+          1 /* lower */,
+          1000 /* upper */
         );
-      // 6
-      // skipping caption for now
 
-      // 10
-      let yCurrent = 0;
+        // 9
+        let rowspan = integerValue(
+          current().get(),
+          "rowspan",
+          0 /* lower */,
+          65534 /* upper */,
+          1 /* missing */
+        );
 
-      // 11
-      let processCG = true;
-      for (const currentElement of children) {
-        // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
+        // 10
+        let growsDownward: boolean;
 
-        if (currentElement.name === "colgroup") {
-          // 9.1 (Columns group)
-          if (processCG) {
-            const colGroup = ColumnGroup.Builder.from(currentElement)
-              .get()
-              .anchorAt(table.width).columnGroup;
-            table = table.update({
-              // 9.1 (1).4 (cumulative) and (2).2
-              width: Math.max(table.width, table.width + colGroup.width),
-              // 9.1 (1).7 and (2).3
-              colGroups: List.from(table.colGroups).append(colGroup),
-            });
-          }
-          continue;
+        if (rowspan === 0) {
+          growsDownward = true;
+          rowspan = 1;
+        } else {
+          growsDownward = false;
+        }
+
+        // 11
+        if (xWidth < xCurrent + colspan) {
+          xWidth = xCurrent + colspan;
         }
 
         // 12
-        processCG = false;
+        if (yHeight < yCurrent + rowspan) {
+          yHeight = yCurrent + rowspan;
+        }
 
-        if (currentElement.name === "tr") {
-          // 13 (process) can detect new downward growing cells
+        // 13
+        let cell: Cell;
 
-          const row = Row.Builder.from(
-            currentElement,
-            table.downwardGrowingCells,
-            yCurrent,
-            table.width,
-            table.slot.bind(table)
-          ).get();
-          table = table
-            .update({
-              height: Math.max(table.height, yCurrent + 1),
-              width: Math.max(table.width, row.width),
-            })
-            .updateCells({ downwardGrowingCells: row.downwardGrowingCells })
-            .addCells({ cells: row.cells });
-          // row processing steps 4/16
-          yCurrent++;
+        if (current().some(hasName("th"))) {
+          cell = Cell.header(
+            current().get(),
+            Slot.of(xCurrent, yCurrent),
+            colspan,
+            rowspan
+          );
+        } else {
+          cell = Cell.data(
+            current().get(),
+            Slot.of(xCurrent, yCurrent),
+            colspan,
+            rowspan
+          );
+        }
 
-          continue;
+        const i = cells.length;
+
+        cells.push(cell);
+
+        for (const id of cell.element.id) {
+          index.set(id, i);
+        }
+
+        for (let x = xCurrent, n = x + colspan; x < n; x++) {
+          for (let y = yCurrent, n = y + rowspan; y < n; y++) {
+            add(x, y, i);
+          }
         }
 
         // 14
-        // Ending row group 1
-        yCurrent = table.height;
-        // Ending row group 2
-        table = table
-          .addCells({
-            cells: map(
-              table.downwardGrowingCells,
-              // Ending row group 1
-              (cell) => cell.growDownward(table.height - 1)
-            ),
-          })
-          .updateCells({ downwardGrowingCells: [] });
-
-        if (currentElement.name === "tfoot") {
-          // 15 (add to list)
-          pendingTfoot.push(currentElement);
+        if (growsDownward) {
+          downwardGrowing.push([cell, i]);
         }
 
-        if (
-          currentElement.name === "thead" ||
-          currentElement.name === "tbody"
-        ) {
-          // 16
-          // process row group and anchor cells
-          table = table.addRowGroupFromElement(currentElement, yCurrent).get();
-          yCurrent = table.height;
+        // 15
+        xCurrent += colspan;
+
+        // 16
+        if (advance().isNone()) {
+          yCurrent++;
+          return;
+        }
+
+        // 17
+        // Nothing to do
+
+        // 18
+        // Nothing to do
+      }
+
+      /**
+       * Get the current child element of the row.
+       */
+      function current(): Option<Element> {
+        return children.first();
+      }
+
+      /**
+       * Advance to the next child element of the row.
+       */
+      function advance(): Option<Element> {
+        children = children.rest();
+        return current();
+      }
+    }
+
+    /**
+     * Carry out step 9.1 of the table forming algorithm.
+     *
+     * @see https://html.spec.whatwg.org/#forming-a-table
+     */
+    function processColumnGroup(element: Element): void {
+      let children = element
+        .children()
+        .filter(isElement)
+        .filter(hasName("col"));
+
+      let group: Group;
+      let i: number;
+
+      if (!children.isEmpty()) {
+        // 1
+        const xStart = xWidth;
+
+        // 2
+        // Nothing to do
+
+        // Steps 3-6 are repeated for as long as there are children left in the
+        // column group.
+        while (current().isSome()) {
+          // 3
+          const span = integerValue(
+            current().get(),
+            "span",
+            1 /* lower */,
+            1000 /* upper */
+          );
+
+          // 4
+          xWidth += span;
+
+          // 5
+          // Nothing to do
+
+          // 6
+          advance();
+        }
+
+        // 7
+        group = Column.group(element, xStart, xWidth - xStart);
+        i = groups.length;
+      } else {
+        // 1
+        const span = integerValue(
+          element,
+          "span",
+          1 /* lower */,
+          1000 /* upper */
+        );
+
+        // 2
+        xWidth += span;
+
+        // 3
+        group = Column.group(element, xWidth - span, span);
+        i = groups.length;
+      }
+
+      groups.push(group);
+
+      for (let x = group.x, n = x + group.width; x < n; x++) {
+        groupings.x.set(x, i);
+      }
+
+      /**
+       * Get the current child element of the column group.
+       */
+      function current(): Option<Element> {
+        return children.first();
+      }
+
+      /**
+       * Advance to the next child element of the column group.
+       */
+      function advance(): Option<Element> {
+        children = children.rest();
+        return current();
+      }
+    }
+
+    /**
+     * For all downwards growing cells, extend their height to the current
+     * y-coordinate.
+     *
+     * @see https://html.spec.whatwg.org/#algorithm-for-growing-downward-growing-cells
+     */
+    function growCells(): void {
+      for (const [cell, i] of downwardGrowing) {
+        const height = yCurrent - cell.y + 1;
+
+        for (let x = cell.x, n = x + cell.width; x < n; x++) {
+          for (let y = cell.y + cell.height, n = cell.y + height; y < n; y++) {
+            add(x, y, i);
+          }
+        }
+
+        if (cell.isHeader()) {
+          cells[i] = Cell.header(cell.element, cell.anchor, cell.width, height);
+        } else {
+          cells[i] = Cell.data(cell.element, cell.anchor, cell.width, height);
         }
       }
+    }
 
-      // 19
-      for (const tfoot of pendingTfoot) {
-        table = table.addRowGroupFromElement(tfoot, yCurrent).get();
-        yCurrent = table.height;
-      }
-      // 20, 21
-      // Of course, errors are more or less caught and repaired by browsers.
-      // Note that having a rowspan that extends out of the row group is not a table error per se!
+    /**
+     * @see https://html.spec.whatwg.org/#algorithm-for-assigning-header-cells
+     */
+    function assignHeaders(cell: Cell, i: number): void {
+      // 1
+      const headers: Array<Cell> = [];
 
-      // Is this slot covered? If more than once => error.
-      const slotCovering: Array<Array<boolean>> = [[]];
-      // Does this row/column have a cell anchored in it?
-      const rowCovering: Array<boolean> = [];
-      const columnCovering: Array<boolean> = [];
+      // 2
+      // Nothing to do
 
-      for (const cell of table.cells) {
-        columnCovering[cell.anchor.x] = true;
-        rowCovering[cell.anchor.y] = true;
+      // 3
+      const ids = cell.element
+        .attribute("headers")
+        .map((attribute) => attribute.tokens());
 
-        for (let x = cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
-          for (let y = cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
-            // Checking for row forming algorithm step 13 (slot covered twice)
-            if (slotCovering?.[x]?.[y] ?? false) {
-              return Err.of(`Slot (${x}, ${y}) is covered twice`);
-            } else {
-              if (slotCovering[x] === undefined) {
-                slotCovering[x] = [];
+      if (ids.isSome()) {
+        // 3.1
+        // Nothing to do
+
+        // 3.2
+        // Keep in mind that not just <th> elements but also <td> elements can
+        // be referenced as headers.
+        headers.push(
+          ...ids
+            .get()
+            .collect((id) => Option.from(index.get(id)).map((i) => cells[i]))
+        );
+      } else {
+        // 1
+        // Nothing to do
+
+        // 2
+        // Nothing to do
+
+        // 3
+        for (let y = cell.y, n = y + cell.height; y < n; y++) {
+          scanHeaderCells(cell, headers, cell.x, y, -1, 0);
+        }
+
+        // 4
+        for (let x = cell.x, n = x + cell.width; x < n; x++) {
+          scanHeaderCells(cell, headers, x, cell.y, 0, -1);
+        }
+
+        // 5
+        const i = groupings.y.get(cell.y);
+
+        if (i !== undefined) {
+          const group = groups[i] as Row.Group;
+
+          for (let x = cell.x + cell.width - 1; x >= 0; x--) {
+            for (let y = group.y, n = cell.y + cell.height; y < n; y++) {
+              x = jump(x, jumps.y.get(y));
+
+              if (x < 0) {
+                break;
               }
-              slotCovering[x][y] = true;
+
+              headers.push(
+                ...get(x, y)
+                  .map((i) => cells[i])
+                  .filter((cell) => cell.isHeader() && isRowGroupHeader(cell))
+              );
+            }
+          }
+        }
+
+        // 6
+        const j = groupings.x.get(cell.x);
+
+        if (j !== undefined) {
+          const group = groups[j] as Column.Group;
+
+          for (let y = cell.y + cell.height - 1; y >= 0; y--) {
+            for (let x = group.x, n = cell.x + cell.width; x < n; x++) {
+              y = jump(y, jumps.x.get(x));
+
+              if (y < 0) {
+                break;
+              }
+
+              headers.push(
+                ...get(x, y)
+                  .map((i) => cells[i])
+                  .filter(
+                    (cell) => cell.isHeader() && isColumnGroupHeader(cell)
+                  )
+              );
             }
           }
         }
       }
 
-      // checking for rows
-      for (let y = 0; y < table.height; y++) {
-        if (!(rowCovering[y] ?? false)) {
-          return Err.of(`row ${y} has no cell anchored in it`);
-        }
+      const filtered = Sequence.from(headers)
+        // 4
+        .reject((cell) => cell.isEmpty())
+
+        // 5
+        .distinct()
+
+        // 6
+        .reject(equals(cell));
+
+      const anchors = filtered.map((cell) => cell.anchor);
+
+      // 7
+      if (cell.isHeader()) {
+        cells[i] = Cell.header(
+          cell.element,
+          cell.anchor,
+          cell.width,
+          cell.height,
+          anchors,
+          cell.scope
+        );
+      } else {
+        cells[i] = Cell.data(
+          cell.element,
+          cell.anchor,
+          cell.width,
+          cell.height,
+          anchors
+        );
       }
-      // checking for cols
-      for (let x = 0; x < table.width; x++) {
-        if (!(columnCovering[x] ?? false)) {
-          return Err.of(`col ${x} has no cell anchored in it`);
-        }
-      }
-
-      // 21
-
-      // The slots array might be sparse (or at least have holes) if some slots are not covered.
-      // We first turn it into a dense array to allow array-operation optimisations
-      // and make access easier to handle (slots[x][y] is never undefined after this).
-      // To get a PACKED_ELEMENTS array, we actually need to push to it:
-      // @see https://v8.dev/blog/elements-kinds#avoid-creating-holes
-      const slots: Array<Array<Option<Cell.Builder>>> = [];
-      for (let x = 0; x < table.width; x++) {
-        slots.push([]);
-        for (let y = 0; y < table.height; y++) {
-          slots[x].push(table.slot(x, y));
-        }
-      }
-
-      table = table
-        .update({ slots })
-        // Second, we need to compute all headers variant.
-        // This need to be done separately so that the updated table is used in assignHeaders.
-        .addHeadersVariants()
-        // Third, we assign headers to cells
-        .findGroupHeaders()
-        .assignHeaders();
-
-      // Finally, we sort lists and export the result.
-      table = table
-        .update({
-          rowGroups: [...table.rowGroups].sort(compare),
-          colGroups: [...table.colGroups].sort(compare),
-        })
-        .updateCells({ cells: [...table.cells].sort(compare) });
-      return Ok.of(table);
     }
+
+    /**
+     * @see https://html.spec.whatwg.org/#internal-algorithm-for-scanning-and-assigning-header-cells
+     */
+    function scanHeaderCells(
+      principal: Cell,
+      headers: Array<Cell>,
+      initialX: number,
+      initialY: number,
+      deltaX: number,
+      deltaY: number
+    ): void {
+      // 1
+      let x = initialX;
+
+      // 2
+      let y = initialY;
+
+      // 3
+      const opaque: Array<Cell> = [];
+
+      // 4
+      let inHeader = principal.isHeader();
+      let currentHeaders = inHeader ? [principal] : [];
+
+      // Steps 5-10 are repeated for as long as the position (x, y) is within
+      // bounds of the table.
+      while (true) {
+        // 5
+        x += deltaX;
+        y += deltaY;
+
+        // Fast path: Based on the current position and direction, jump to the
+        // next available heading. This ensures that we don't need to linearly
+        // scan over a bunch of data cells before finding a header.
+        if (deltaX === 0) {
+          y = jump(y, jumps.x.get(x));
+        } else {
+          x = jump(x, jumps.y.get(y));
+        }
+
+        // 6
+        if (x < 0 || y < 0) {
+          return;
+        }
+
+        // 7
+        const neighbour = get(x, y);
+
+        if (neighbour.length !== 1) {
+          continue;
+        }
+
+        // 8
+        const cell = cells[neighbour[0]];
+
+        // 9
+        if (cell.isHeader()) {
+          // 9.1
+          inHeader = true;
+
+          // 9.2
+          currentHeaders.push(cell);
+
+          // 9.3
+          let blocked = false;
+
+          // 9.4
+          if (deltaX === 0) {
+            if (
+              opaque.some(
+                (header) => header.x === cell.x && header.width === cell.width
+              ) ||
+              !isColumHeader(cell)
+            ) {
+              blocked = true;
+            }
+          } else {
+            if (
+              opaque.some(
+                (header) => header.y === cell.y && header.height === cell.height
+              ) ||
+              !isRowHeader(cell)
+            ) {
+              blocked = true;
+            }
+          }
+
+          // 9.5
+          if (!blocked) {
+            headers.push(cell);
+          }
+        } else if (inHeader) {
+          inHeader = false;
+          opaque.push(...currentHeaders);
+          currentHeaders = [];
+        }
+
+        // 10
+        // Nothing to do
+      }
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#attr-th-scope
+     */
+    function assignScope(cell: Cell, i: number): void {
+      if (!cell.isHeader()) {
+        return;
+      }
+
+      let scope: Scope;
+
+      if (isColumHeader(cell)) {
+        scope = "column";
+      } else if (isColumnGroupHeader(cell)) {
+        scope = "column-group";
+      } else if (isRowHeader(cell)) {
+        scope = "row";
+      } else if (isRowGroupHeader(cell)) {
+        scope = "row-group";
+      } else {
+        return;
+      }
+
+      cells[i] = Cell.header(
+        cell.element,
+        cell.anchor,
+        cell.width,
+        cell.height,
+        cell.headers,
+        scope
+      );
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#column-header
+     */
+    function isColumHeader(cell: Cell.Header): boolean {
+      if (cell.scope === "column") {
+        return true;
+      }
+
+      switch (Scope.from(cell.element)) {
+        case "column":
+          return true;
+
+        case "auto":
+          for (let y = cell.y, n = y + cell.height; y < n; y++) {
+            if (data.y.has(y)) {
+              return false;
+            }
+          }
+
+          return true;
+      }
+
+      return false;
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#column-group-header
+     */
+    function isColumnGroupHeader(cell: Cell.Header): boolean {
+      return (
+        cell.scope === "column-group" ||
+        Scope.from(cell.element) === "column-group"
+      );
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#row-header
+     */
+    function isRowHeader(cell: Cell.Header): boolean {
+      if (cell.scope === "row") {
+        return true;
+      }
+
+      switch (Scope.from(cell.element)) {
+        case "row":
+          return true;
+
+        case "auto":
+          for (let x = cell.x, n = x + cell.width; x < n; x++) {
+            if (data.x.has(x)) {
+              return false;
+            }
+          }
+
+          return true;
+      }
+
+      return false;
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/#row-group-header
+     */
+    function isRowGroupHeader(cell: Cell.Header): boolean {
+      return (
+        cell.scope === "row-group" || Scope.from(cell.element) === "row-group"
+      );
+    }
+  }
+
+  function integerValue(
+    element: Element,
+    attribute: string,
+    lower: number,
+    upper: number,
+    missing: number = lower
+  ): number {
+    return clamp(
+      element
+        .attribute(attribute)
+        .map((attribute) => parseInt(attribute.value))
+        .reject(isNaN)
+        .getOr(missing),
+      lower,
+      upper
+    );
   }
 }

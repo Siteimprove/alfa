@@ -44,7 +44,7 @@ export namespace WebElement {
     webElement: WebElement,
     browser: Browser
   ): Promise<Page> {
-    const element = await browser.execute((element) => {
+    const element = await browser.execute((element: globalThis.Element) => {
       return toElement(element);
 
       function toNode(node: globalThis.Node): Node.JSON {

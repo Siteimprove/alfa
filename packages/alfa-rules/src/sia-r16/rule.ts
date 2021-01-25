@@ -1,38 +1,40 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
+import { isFocusable } from "../common/predicate/is-focusable";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
-const { find, isEmpty } = Iterable;
-const { and, property } = Predicate;
+const { isEmpty } = Iterable;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
+  requirements: [Criterion.of("4.1.2"), Technique.of("ARIA5")],
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole())
-            )
-          );
+          .filter(isElement)
+          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()))
+          .filter(not(isIgnored(device)));
       },
 
       expectations(target) {
         return {
           1: expectation(
-            hasRequiredValues(target),
+            hasRequiredValues(device)(target),
             () => Outcomes.HasAllStates,
             () => Outcomes.HasNotAllStates
           ),
@@ -42,22 +44,32 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-const hasRequiredValues: Predicate<Element> = (element) =>
-  Role.from(element)
-    .collect((role) => role)
-    .every((role) => {
-      for (const attribute of role.attributes) {
-        if (
-          role.isAttributeRequired(attribute) &&
-          role.implicitAttributeValue(attribute).isNone() &&
-          element.attribute(attribute).every(property("value", isEmpty))
-        ) {
-          return false;
+function hasRequiredValues(device: Device): Predicate<Element> {
+  return (element) =>
+    Node.from(element, device).every((node) => {
+      for (const role of node.role) {
+        // The `separator` role is poorly architected in the sense that its
+        // inheritance and attribute requirements depend on aspects of the
+        // element carrying the role. If the element is not focusable, the
+        // `separator` role has no required attributes.
+        if (role.is("separator") && !isFocusable(device)(element)) {
+          return true;
+        }
+
+        for (const attribute of role.attributes) {
+          if (
+            role.isAttributeRequired(attribute) &&
+            role.implicitAttributeValue(attribute).isNone() &&
+            node.attribute(attribute).every(property("value", isEmpty))
+          ) {
+            return false;
+          }
         }
       }
 
       return true;
     });
+}
 
 export namespace Outcomes {
   export const HasAllStates = Ok.of(

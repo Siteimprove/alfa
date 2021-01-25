@@ -1,5 +1,6 @@
-import { Node } from "../node";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+
+import { Node } from "../node";
 
 export class Comment extends Node {
   public static of(data: string): Comment {

@@ -1,12 +1,17 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Err } from "./err";
 import { Result } from "./result";
+
+const { not, test } = Predicate;
 
 export class Ok<T> implements Result<T, never> {
   public static of<T>(value: T): Ok<T> {
@@ -45,6 +50,38 @@ export class Ok<T> implements Result<T, never> {
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
     return reducer(accumulator, this._value);
+  }
+
+  public includes(value: T): boolean {
+    return Equatable.equals(this._value, value);
+  }
+
+  public includesErr(): boolean {
+    return false;
+  }
+
+  public some(predicate: Predicate<T>): boolean {
+    return test(predicate, this._value);
+  }
+
+  public someErr(): boolean {
+    return false;
+  }
+
+  public none(predicate: Predicate<T>): boolean {
+    return test(not(predicate), this._value);
+  }
+
+  public noneErr(): boolean {
+    return true;
+  }
+
+  public every(predicate: Predicate<T>): boolean {
+    return test(predicate, this._value);
+  }
+
+  public everyErr(): boolean {
+    return true;
   }
 
   public and<U, F>(result: Result<U, F>): Result<U, F> {
@@ -91,11 +128,16 @@ export class Ok<T> implements Result<T, never> {
     return value instanceof Ok && Equatable.equals(value._value, this._value);
   }
 
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, true);
+    Hashable.hash(hash, this._value);
+  }
+
   public *[Symbol.iterator]() {
     yield this._value;
   }
 
-  public toJSON(): Ok.JSON {
+  public toJSON(): Ok.JSON<T> {
     return {
       type: "ok",
       value: Serializable.toJSON(this._value),
@@ -108,10 +150,10 @@ export class Ok<T> implements Result<T, never> {
 }
 
 export namespace Ok {
-  export interface JSON {
+  export interface JSON<T> {
     [key: string]: json.JSON;
     type: "ok";
-    value: json.JSON;
+    value: Serializable.ToJSON<T>;
   }
 
   export function isOk<T>(value: unknown): value is Ok<T> {

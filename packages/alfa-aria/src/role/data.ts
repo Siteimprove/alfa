@@ -223,7 +223,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -346,7 +346,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -902,7 +902,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1231,7 +1231,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1365,7 +1365,7 @@ export const Roles = {
       required: ["group", "menu", "menubar"],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1382,7 +1382,7 @@ export const Roles = {
       required: ["group", "menu", "menubar"],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1479,7 +1479,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1530,7 +1530,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1569,7 +1569,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -1991,7 +1991,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -2144,7 +2144,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -2218,7 +2218,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -2417,7 +2417,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -2477,7 +2477,7 @@ export const Roles = {
       required: ["tablist"],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -2934,7 +2934,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },
@@ -3444,7 +3444,7 @@ export const Roles = {
       required: [],
     },
     children: {
-      presentational: false,
+      presentational: true,
       required: [],
     },
   },

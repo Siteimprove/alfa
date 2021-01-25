@@ -34,8 +34,8 @@ export class Number extends Numeric<"number"> {
 }
 
 export namespace Number {
-  export interface JSON extends Numeric.JSON {
-    type: "number";
+  export interface JSON extends Numeric.JSON<"number"> {
+    value: number;
   }
 
   export function isNumber(value: unknown): value is Number {

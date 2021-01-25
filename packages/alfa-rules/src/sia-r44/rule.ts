@@ -10,6 +10,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -18,10 +19,12 @@ import { isVisible } from "../common/predicate/is-visible";
 
 const { abs, acos, PI } = Math;
 const { some } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
+  requirements: [Criterion.of("1.3.4")],
   evaluate({ device, document }) {
     let landscape: Device;
     let portrait: Device;
@@ -52,17 +55,15 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            Element.isElement,
-            and<Element>(
-              isVisible(device),
-              (element) =>
-                hasConditionalRotation(element, landscape) ||
-                hasConditionalRotation(element, portrait)
-            )
-          )
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(isVisible(device))
+          .filter(
+            (element) =>
+              hasConditionalRotation(element, landscape) ||
+              hasConditionalRotation(element, portrait)
+          );
       },
 
       expectations(target) {

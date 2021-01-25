@@ -3,43 +3,50 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasRole } from "../common/predicate/has-role";
+import { isFocusable } from "../common/predicate/is-focusable";
 import { isPerceivable } from "../common/predicate/is-perceivable";
-import { isVisible } from "../common/predicate/is-visible";
-
-import { Question } from "../common/question";
 
 const { isElement, hasNamespace } = Element;
+const { isText } = Text;
 const { and, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
+  requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasAttribute(
+                (attribute) =>
+                  attribute.name === "aria-label" ||
+                  attribute.name === "aria-labelledby"
+              ),
+              isFocusable(device),
               hasRole((role) => role.isWidget() && role.isNamedBy("contents")),
               hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
-              }),
-              hasAccessibleName(device)
+              })
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
-        const textContent = getVisibleTextContent(target, device);
+        const textContent = getPerceivableTextContent(target, device);
 
         const accessibleNameIncludesTextContent = test(
           hasAccessibleName(device, (accessibleName) =>
@@ -52,19 +59,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
           1: expectation(
             accessibleNameIncludesTextContent,
             () => Outcomes.VisibleIsInName,
-            () =>
-              Question.of(
-                "is-human-language",
-                "boolean",
-                target,
-                "Does the accessible name of the element express anything in human language?"
-              ).map((isHumanLanguage) =>
-                expectation(
-                  !isHumanLanguage,
-                  () => Outcomes.NameIsNotLanguage,
-                  () => Outcomes.VisibleIsNotInName
-                )
-              )
+            () => Outcomes.VisibleIsNotInName
           ),
         };
       },
@@ -76,11 +71,12 @@ function normalize(input: string): string {
   return input.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
-function getVisibleTextContent(element: Element, device: Device): string {
+function getPerceivableTextContent(element: Element, device: Device): string {
   return normalize(
     element
       .descendants({ flattened: true })
-      .filter(and(Text.isText, isVisible(device)))
+      .filter(isText)
+      .filter(isPerceivable(device))
       .map((text) => text.data)
       .join("")
   );
@@ -90,12 +86,6 @@ export namespace Outcomes {
   export const VisibleIsInName = Ok.of(
     Diagnostic.of(
       `The visible text content of the element is included within its accessible name`
-    )
-  );
-
-  export const NameIsNotLanguage = Ok.of(
-    Diagnostic.of(
-      `The accessible name of the element does not express anything in human language`
     )
   );
 

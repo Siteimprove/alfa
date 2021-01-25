@@ -11,6 +11,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Timeout } from "@siteimprove/alfa-time";
+import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as puppeteer from "puppeteer";
@@ -41,10 +42,12 @@ export class Scraper {
     browser?: Promise<puppeteer.Browser>
   ): Promise<T> {
     const scraper = await this.of(browser);
-    const result = await mapper(scraper);
 
-    await scraper.close();
-    return result;
+    try {
+      return await mapper(scraper);
+    } finally {
+      await scraper.close();
+    }
   }
 
   private readonly _browser: puppeteer.Browser;
@@ -60,7 +63,17 @@ export class Scraper {
     url: string | URL,
     options: Scraper.scrape.Options = {}
   ): Promise<Result<Page, string>> {
-    const { href, protocol } = typeof url === "string" ? new URL(url) : url;
+    if (typeof url === "string") {
+      const result = URL.parse(url);
+
+      if (result.isErr()) {
+        return result;
+      }
+
+      url = result.get();
+    }
+
+    const scheme = url.scheme;
 
     const {
       timeout = Timeout.of(10000),
@@ -109,19 +122,19 @@ export class Scraper {
         }, {})
       );
 
-      if (protocol === "http:" || protocol === "https:") {
+      if (scheme === "http" || scheme === "https") {
         await page.setCookie(
           ...[...cookies].map((cookie) => {
             return {
               name: cookie.name,
               value: cookie.value,
-              url: href,
+              url: url.toString(),
             };
           })
         );
       }
 
-      let origin = href;
+      let origin = url.toString();
 
       while (true) {
         try {
@@ -189,7 +202,7 @@ export namespace Scraper {
 function parseRequest(request: puppeteer.Request): Request {
   return Request.of(
     request.method(),
-    request.url(),
+    URL.parse(request.url()).get(),
     Headers.of(
       entries(request.headers()).map(([name, value]) => Header.of(name, value))
     )
@@ -198,7 +211,7 @@ function parseRequest(request: puppeteer.Request): Request {
 
 async function parseResponse(response: puppeteer.Response): Promise<Response> {
   return Response.of(
-    response.url(),
+    URL.parse(response.url()).get(),
     response.status(),
     Headers.of(
       entries(response.headers()).map(([name, value]) => Header.of(name, value))

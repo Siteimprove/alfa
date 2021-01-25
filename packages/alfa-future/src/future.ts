@@ -1,8 +1,8 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -59,6 +59,13 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 
+  public tee(callback: Callback<T>): Future<T> {
+    return this.map((value) => {
+      callback(value);
+      return value;
+    });
+  }
+
   public toPromise(): Promise<T> {
     return new Promise((resolve) => this.then(resolve));
   }
@@ -69,6 +76,10 @@ export namespace Future {
 
   export function isFuture<T>(value: unknown): value is Future<T> {
     return value instanceof Future;
+  }
+
+  export function empty(): Future<void> {
+    return now(undefined);
   }
 
   export function now<T>(value: T): Future<T> {
@@ -100,10 +111,10 @@ export namespace Future {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap((value) =>
-          values.map((values) => values.append(value))
+        values.flatMap((values) =>
+          mapper(value).map((value) => Array.append(values, value))
         ),
-      now(List.empty())
+      now(Array.empty())
     );
   }
 

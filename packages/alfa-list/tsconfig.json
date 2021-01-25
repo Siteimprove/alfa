@@ -4,10 +4,19 @@
   "files": ["src/index.ts", "src/list.ts", "src/node.ts", "test/list.spec.ts"],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-bits"
     },
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-comparable"
     },
     {
       "path": "../alfa-equatable"
@@ -38,6 +47,9 @@
     },
     {
       "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-set"

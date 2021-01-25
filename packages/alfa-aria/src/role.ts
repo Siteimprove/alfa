@@ -20,16 +20,39 @@ import * as predicate from "./role/predicate";
 
 const { and, not, nor } = Predicate;
 
+const roles = new Map<string, Role>();
+
 export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable {
   public static of<N extends Role.Name>(name: N): Role<N> {
-    return new Role(name);
+    let role = roles.get(name);
+
+    if (role === undefined) {
+      const { inherited } = Roles[name];
+
+      const attributes = new Set(
+        [...Roles[name].attributes].map(([attribute]) => attribute)
+      );
+
+      for (const parent of inherited) {
+        for (const attribute of Role.of(parent).attributes) {
+          attributes.add(attribute);
+        }
+      }
+
+      role = new Role(name, [...attributes]);
+      roles.set(name, role);
+    }
+
+    return role as Role<N>;
   }
 
   private readonly _name: N;
+  private readonly _attributes: Array<Attribute.Name>;
 
-  private constructor(name: N) {
+  private constructor(name: N, attributes: Array<Attribute.Name>) {
     this._name = name;
+    this._attributes = attributes;
   }
 
   public get name(): N {
@@ -40,19 +63,7 @@ export class Role<N extends Role.Name = Role.Name>
    * Get all attributes supported by this role and its inherited roles.
    */
   public get attributes(): Iterable<Attribute.Name> {
-    const { inherited } = Roles[this._name];
-
-    const attributes = new Set(
-      [...Roles[this._name].attributes].map(([attribute]) => attribute)
-    );
-
-    for (const parent of inherited) {
-      for (const attribute of Role.of(parent).attributes) {
-        attributes.add(attribute);
-      }
-    }
-
-    return attributes;
+    return this._attributes[Symbol.iterator]();
   }
 
   /**

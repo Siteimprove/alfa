@@ -4,6 +4,12 @@
   "files": ["src/index.ts", "src/set.ts"],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-collection"
     },
     {
@@ -29,6 +35,9 @@
     },
     {
       "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

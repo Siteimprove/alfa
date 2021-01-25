@@ -1,10 +1,17 @@
+import { Callback } from "@siteimprove/alfa-callback";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
-const { not, isObject } = Predicate;
+const { not } = Predicate;
+const { isObject } = Refinement;
+const { compareComparable } = Comparable;
 
 // Re-export the global `Iterable` interface to ensure that it merges with the
 // `Iterable` namespace.
@@ -37,6 +44,17 @@ export namespace Iterable {
     return true;
   }
 
+  export function forEach<T>(
+    iterable: Iterable<T>,
+    callback: Callback<T, void, [number]>
+  ): void {
+    let index = 0;
+
+    for (const value of iterable) {
+      callback(value, index++);
+    }
+  }
+
   export function* map<T, U = T>(
     iterable: Iterable<T>,
     mapper: Mapper<T, U, [number]>
@@ -44,7 +62,7 @@ export namespace Iterable {
     let index = 0;
 
     for (const value of iterable) {
-      yield mapper(value, index);
+      yield mapper(value, index++);
     }
   }
 
@@ -79,10 +97,20 @@ export namespace Iterable {
     return accumulator;
   }
 
-  export function* filter<T, U extends T = T>(
+  export function filter<T, U extends T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, U, [number]>
-  ): Iterable<U> {
+    refinement: Refinement<T, U, [number]>
+  ): Iterable<U>;
+
+  export function filter<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T>;
+
+  export function* filter<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
     let index = 0;
 
     for (const value of iterable) {
@@ -92,10 +120,37 @@ export namespace Iterable {
     }
   }
 
-  export function find<T, U extends T = T>(
+  export function reject<T, U extends T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, U, [number]>
-  ): Option<U> {
+    refinement: Refinement<T, U, [number]>
+  ): Iterable<Exclude<T, U>>;
+
+  export function reject<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T>;
+
+  export function reject<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    return filter(iterable, not(predicate));
+  }
+
+  export function find<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function find<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function find<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
     let index = 0;
 
     for (const value of iterable) {
@@ -105,6 +160,32 @@ export namespace Iterable {
     }
 
     return None;
+  }
+
+  export function findLast<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    let index = 0;
+    let result: Option<T> = None;
+
+    for (const value of iterable) {
+      if (predicate(value, index++)) {
+        result = Some.of(value);
+      }
+    }
+
+    return result;
   }
 
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
@@ -127,7 +208,7 @@ export namespace Iterable {
 
   export function some<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): boolean {
     let index = 0;
 
@@ -140,9 +221,16 @@ export namespace Iterable {
     return false;
   }
 
+  export function none<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): boolean {
+    return every(iterable, not(predicate));
+  }
+
   export function every<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): boolean {
     let index = 0;
 
@@ -157,7 +245,7 @@ export namespace Iterable {
 
   export function count<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): number {
     return reduce(
       iterable,
@@ -228,7 +316,7 @@ export namespace Iterable {
 
   export function* takeWhile<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     let index = 0;
 
@@ -243,7 +331,7 @@ export namespace Iterable {
 
   export function takeUntil<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     return takeWhile(iterable, not(predicate));
   }
@@ -267,6 +355,34 @@ export namespace Iterable {
     }
 
     yield* last;
+  }
+
+  export function* takeLastWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    const values = [...iterable];
+
+    let last = values.length - 1;
+
+    while (last >= 0) {
+      if (predicate(values[last], last)) {
+        last--;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = last, n = values.length - 1; i < n; i++) {
+      yield values[i];
+    }
+  }
+
+  export function takeLastUntil<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    return takeLastWhile(iterable, not(predicate));
   }
 
   export function* skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
@@ -293,7 +409,7 @@ export namespace Iterable {
 
   export function* skipWhile<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     let index = 0;
     let skipped = false;
@@ -310,7 +426,7 @@ export namespace Iterable {
 
   export function skipUntil<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, T, [number]>
+    predicate: Predicate<T, [number]>
   ): Iterable<T> {
     return skipWhile(iterable, not(predicate));
   }
@@ -344,6 +460,55 @@ export namespace Iterable {
 
       yield first.shift()!;
     }
+  }
+
+  export function* skipLastWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    const values = [...iterable];
+
+    let last = values.length - 1;
+
+    while (last >= 0) {
+      if (predicate(values[last], last)) {
+        last--;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0, n = last; i < n; i++) {
+      yield values[i];
+    }
+  }
+
+  export function skipLastUntil<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Iterable<T> {
+    return skipLastWhile(iterable, not(predicate));
+  }
+
+  export function trimLeading<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return skipWhile(iterable, predicate);
+  }
+
+  export function trimTrailing<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return skipLastWhile(iterable, predicate);
+  }
+
+  export function trim<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return trimTrailing(trimLeading(iterable, predicate), predicate);
   }
 
   export function rest<T>(iterable: Iterable<T>): Iterable<T> {
@@ -392,24 +557,81 @@ export namespace Iterable {
     return result;
   }
 
-  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
-    const ita = a[Symbol.iterator]();
-    const itb = b[Symbol.iterator]();
+  export function sort<T extends Comparable<T>>(
+    iterable: Iterable<T>
+  ): Iterable<T> {
+    return sortWith(iterable, compareComparable);
+  }
+
+  export function* sortWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
+  ): Iterable<T> {
+    yield* [...iterable].sort(comparer);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Iterable<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return compareWith(a, b, compareComparable);
+  }
+
+  export function compareWith<T>(
+    a: Iterable<T>,
+    b: Iterable<T>,
+    comparer: Comparer<T>
+  ): Comparison {
+    const iteratorA = a[Symbol.iterator]();
+    const iteratorB = b[Symbol.iterator]();
 
     while (true) {
-      const a = ita.next();
-      const b = itb.next();
+      const a = iteratorA.next();
+      const b = iteratorB.next();
 
-      switch (a.done) {
-        case true:
-          return b.done === true;
+      if (a.done === true) {
+        return b.done === true ? Comparison.Equal : Comparison.Less;
+      }
 
-        default:
-          if (b.done === true || !Equatable.equals(a.value, b.value)) {
-            return false;
-          }
+      if (b.done === true) {
+        return Comparison.Greater;
+      }
+
+      const result = comparer(a.value, b.value);
+
+      if (result !== 0) {
+        return result;
       }
     }
+  }
+
+  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
+    const iteratorA = a[Symbol.iterator]();
+    const iteratorB = b[Symbol.iterator]();
+
+    while (true) {
+      const a = iteratorA.next();
+      const b = iteratorB.next();
+
+      if (a.done === true) {
+        return b.done === true;
+      }
+
+      if (b.done === true || !Equatable.equals(a.value, b.value)) {
+        return false;
+      }
+    }
+  }
+
+  export function hash<T>(iterable: Iterable<T>, hash: Hash): void {
+    let size = 0;
+
+    for (const value of iterable) {
+      Hashable.hash(hash, value);
+      size++;
+    }
+
+    Hash.writeUint32(hash, size);
   }
 
   export function subtract<T>(
@@ -449,5 +671,11 @@ export namespace Iterable {
     }
 
     return groups;
+  }
+
+  export function toJSON<T>(
+    iterable: Iterable<T>
+  ): Array<Serializable.ToJSON<T>> {
+    return [...map(iterable, (value) => Serializable.toJSON(value))];
   }
 }

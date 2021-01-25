@@ -21,6 +21,264 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.reduce()` is now available.
+
+## [0.9.0](../../compare/v0.8.0...v0.9.0) (2021-01-21)
+
+In addition to the changes listed below, this release adjusts the compile target from `es2017` to `es2018`.
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Attribute#hasName()` has been removed in favor of `Attribute.hasName()`.
+
+- [@siteimprove/alfa-array](packages/alfa-array), [@siteimprove/alfa-branched](packages/alfa-branched), [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-either](packages/alfa-either), [@siteimprove/alfa-iterable](packages/alfa-iterable), [@siteimprove/alfa-lazy](packages/alfa-lazy), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-option](packages/alfa-option), [@siteimprove/alfa-record](packages/alfa-record), [@siteimprove/alfa-result](packages/alfa-result), [@siteimprove/alfa-sequence](packages/alfa-sequence), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-slice](packages/alfa-slice): The `#toJSON()` methods of all container types, `Type<T>`, are now parametric, ensuring deep strongly typed JSON serialisation. ([#644](../../pull/644))
+
+- [@siteimprove/alfa-css](packages/alfa-css): The `Position` value type has been reworked to fix some outstanding issues with `Position.parse()`. This has resulted in a few breaking API changes, such as reordered type parameters (`Position<V, H>` is now `Position<H, V>`). For more information, please see the associated pull request. ([#650](../../pull/650))
+
+### Added
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.find()`, `Array.findLast()`, `Array.insert()`, `Array.append()`, and `Array.prepend()` are now available.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.findLast()` is now available.
+
+- [@siteimprove/alfa-future](packages/alfa-future): `Future#tee()` and `Future.empty()` are now available.
+
+- [@siteimprove/alfa-callback](packages/alfa-callback): `Callback.contraMap()` is now available.
+
+- [@siteimprove/alfa-functor](packages/alfa-functor): `Functor.Invariant<T>` is now available.
+
+- [@siteimprove/alfa-emitter](packages/alfa-emitter): A new package has been added with an implementation of a strongly typed event emitter.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Element#qualifiedName` and `Attribute#qualifiedName` are now available.
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): Two new flags, `--cpu-profile` and `--heap-profile`, are now available in the `alfa audit` command. ([#640](../../pull/640))
+
+- [@siteimprove/alfa-performance](packages/alfa-performance): A new package has been added with functionality for working with performance measurements. ([#643](../../pull/643))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R95 is now available. ([#654](../../pull/654))
+
+- [@siteimprove/alfa-act](packages/alfa-act): `Audit#evaluate()` now accepts a `Performance` instance for measuring rule durations. ([#656](../../pull/656))
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `flow`, `flow-root`, `table`, `flex`, `grid`, and `ruby` values.
+
+- [@siteimprove/alfa-xpath](packages/alfa-xpath): The `evaluate()` function now correctly respects passed `Node.Traversal` options.
+
+- [@siteimprove/alfa-json](packages/alfa-json): Drop `undefined` property values when serializing JSON objects rather than convert them to `null` values.
+
+- [@siteimprove/alfa-table](packages/alfa-table): `Table.from()` no longer panics when tables contain invalid elements.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now behaves correctly when computing names of elements that are named by their contents, but contain children that aren't.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): The `index` parameter in `Iterable.map()` now correctly increments.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now correctly assumes that non-essential text is imperceivable. ([#648](../../pull/648))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isRendered()` now behaves correctly in the presence of embedded documents. ([#653](../../pull/653))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R48 and SIA-R49 now correctly assume that `<audio>` elements have audio. ([#662](../../pull/662))
+
+## [0.8.0](../../compare/v0.7.0...v0.8.0) (2021-01-06)
+
+### Breaking
+
+- [@siteimprove/alfa-table](packages/alfa-table): The package has been reworked to solve several long-standing issues in its design. For more information, please see the associated pull request. ([#581](../../pull/581))
+
+### Added
+
+- [@siteimprove/alfa-array](packages/alfa-array): A new package has been added with functionality for working with arrays.
+
+- [@siteimprove/alfa-callback](packages/alfa-callback): `Callback<T, R>` now accepts a third type parameter, `A`, denoting additional arguments passed to the callback.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.forEach()`, `Iterable.none()`, `Iterable.compare()`, `Iterable.compareWith()`, and `Iterable.toJSON()` are now available.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-branched](alfa-branched), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Collection#forEach()` and `Collection#none()` are now available and implemented by `Branched`, `List`, `Map`, `Set`, and `Sequence`.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#compareWith()` is now available and implemented by `List` and `Sequence`. In addition, `Collection.sort()`, `Collection.compare()`, `List.compare()`, and `Sequence.compare()` are also available.
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option.compare()` is now available.
+
+- [@siteimprove/alfa-clone](packages/alfa-clone): `Clone.clone()` is now available.
+
+- [@siteimprove/alfa-json](packages/alfa-json): `Serializable` now accepts a type parameter, `T extends JSON`, denoting the precise JSON type that implementations serialize to.
+
+- [@siteimprove/alfa-earl](packages/alfa-earl): `Serializable` now accepts a type parameter, `T extends EARL`, denoting the precise EARL type that implementations serialize to.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.compare()` now provides overloads for `string`, `number`, `bigint`, and `boolean` in addition to `Comparable<T>`.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Implementations of SIA-R90, SIA-R91, SIA-R92, SIA-R93, and SIA-R94 are now available. ([#586](../../pull/586), [#592](../../pull/592), [#609](../../pull/609))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `letter-spacing` and `word-spacing` CSS properties. ([#587](../../pull/587))
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules), [@siteimprove/alfa-wcag](packages/alfa-wcag): ACT rules may now list their requirements and a new package has been added that models WCAG success criteria and techniques. Existing rules now list associated success criteria and techniques. ([#299](../../pull/299))
+
+### Changed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): The `context` argument in `Selector#matches()` is now optional.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now requires that all link states (unset, `:hover`, and `:focus`) be distinguishable.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The second expectation of SIA-R87 has been merged with the first. ([#629](../../pull/629))
+
+### Fixed
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence): `Sequence#size` is now stack safe and no longer overflows for long sequences.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` no longer considers elements with no visible children as visible. ([#549](../../pull/549), [#624](../../pull/624))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R41 and SIA-R81 now automatically passes links with references that resolve to the same URL. ([#567](../../pull/567))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now assumes a used value of `1.2` for `line-height: normal`. ([#566](../../pull/566))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R53 and SIA-R61 now correctly ignore headings not in the accessibility tree. ([#577](../../pull/577), [#589](../../pull/589))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 now more accurately determines if elements are possibly scrollable. ([#588](../../pull/588), [#618](../../pull/618))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R46 now accepts header cells that are themselves assigned to other header cells. ([#607](../../pull/607))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): Matching of `:nth-*` selectors no longer degrades to quadratic complexity for certain input. ([#600](../../pull/600))
+
+- [@siteimprove/alfa-style](packages/alfa-style): Explicit `initial` property values are now correctly assigned a source declaration. ([#637](../../pull/637))
+
+## [0.7.0](../../compare/v0.6.0...v0.7.0) (2020-11-20)
+
+### Breaking
+
+- [@siteimprove/alfa-formatter](packages/alfa-formatter): The list of relevant rules are now expected to be passed as the second argument to the `Formatter<I, T, Q>` type. ([#439](../../pull/439))
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Implementations of SIA-R62 and SIA-R65 are now available. ([#497](../../pull/497), [#538](../../pull/538))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-*`, `text-indent`, `position`, `top`, `right`, `bottom`, `left`, `inset-line-*`, and `inset-block-*` CSS properties. ([#511](../../pull/511), [#539](../../pull/539), [#541](../../pull/541), [#542](../../pull/542))
+
+### Fixed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): Fix faulty ancestor filtering that resulted in complex selectors never matching when computing cascade.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Elements, and descendants of elements, with `aria-hidden=true` are no longer included when computing accessible names unless explicitly referenced through `aria-labelledby`. ([#527](../../pull/527))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now checks overflow handling of the clipping ancestor rather than the immediate parent of each applicable text node. ([#540](../../pull/540))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R10 no longer applies to disabled form controls. ([#516](../../issues/516), [#554](../../pull/554))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 no longer applies to elements not in the accessibility tree. ([#523](../../issues/523), [#555](../../pull/555))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R45 no longer applies to elements with a presentational role. ([#521](../../issues/521), [#556](../../pull/556))
+
+## [0.6.0](../../compare/v0.5.0...v0.6.0) (2020-10-30)
+
+### Breaking
+
+- [@siteimprove/alfa-predicate](packages/alfa-predicate): The `Predicate<T>` type now no longer duals as a refinement type. This behavior has instead been split out into the new `Refinement<T, U extends T>` type. This also means that none of the functions on the `Predicate` namespace will perform type narrowing. Instead, an equivalent function on the `Refinement` namespace should be used if type narrowing is desired. ([#415](../../pull/415))
+
+- [@siteimprove/alfa-http](packages/alfa-http): `Request#url` and `Response#url` now return `URL` instances rather than strings. ([#421](../../pull/421))
+
+- [@siteimprove/alfa-frontier](packages/alfa-frontier), [@siteimprove/alfa-scraper](packages/alfa-scraper): `Frontier` and `Scraper` now work on `URL` instances from the @siteimprove/alfa-url package rather than WHATWG URL instances. ([#421](../../pull/421))
+
+### Added
+
+- [@siteimprove/alfa-refinement](packages/alfa-refinement): A new package has been added with functionality for working with refinement types, also known as type guards in TypeScript. ([#415](../../pull/415))
+
+- [@siteimprove/alfa-url](packages/alfa-url): A new package has been added with an implementation of an immutable URL representation. ([#421](../../pull/421))
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result` now provides an implementation of `Hashable`. `Result#includes()`, `Result#includesErr()`, `Result#some()`, `Result#someErr()`, `Result#none()`, `Result#noneErr()`, `Result#every()`, and `Result#everyErr()` are now also available.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.takeLastWhile()`, `Iterable.takeLastUntil()`, `Iterable.skipLastWhile()`, `Iterable.skipLastUntil()`, `Iterable.trimLeading()`, `Iterable.trimTrailing()`, `Iterable.trim()`, `Iterable.hash()`, `Iterable.sort()`, and `Iterable.sortWith()` are now available.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): A `Comparer` type is now available for modelling functions that do comparisons. A new function `Comparable.isComparable()` is now also available.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#sortWith()` is now available and implemented by `List` and `Sequence`. Additionally, `List.sort()` and `Sequence.sort()` are now also available.
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option#compareWith()` is now available.
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `box-shadow` and `outline-*` CSS properties. ([#481](../../pull/481), [#496](../../pull/496))
+
+- [@siteimprove/alfa-style](packages/alfa-style): `Value#includes()`, `Value#some()`, and `Value#none()` are now available. ([#468](../../pull/468))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R87 is now available. ([#468](../../pull/468))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Node#tabOrder()` is now available. ([#468](../../pull/468))
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Color.isTransparent()` and `Length.isZero()` are now available.
+
+### Changed
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Some#hash()` and `None#hash()` now write a marker byte to prevent some avoidable collisions.
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence): `Nil#hash()` now writes a size of 0 to prevent some avoidable collisions.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 now only applies when at least one landmark is found one the page. ([#414](../../pull/414))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R15 now automatically passes `<iframe>` elements that definitely point to the same resource. ([#406](../../pull/406))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now only applies to focusable widgets with either an `aria-label` or `aria-labelledby` attribute, as intended. ([#409](../../pull/409))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly excludes descendants of containers with an `aria-busy=true` attribute. ([#418](../../pull/418))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Rules that target sets of nodes now make use of the new `Group` class, which provides an EARL serializable wrapper around iterables. Previously, pointers for these targets were not included in EARL output. ([#427](../../pull/427))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 no longer fails cases where a top-level `overflow: hidden` declaration would cause deep descendants to fail due to them not handling text overflow. ([#482](../../pull/482))
+
+- [@siteimprove/alfa-thunk](packages/alfa-thunk): `Thunk.flatMap()` now correctly defers evaluation of the passed thunk.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `placeholder` attribute is now correctly accepted for `<input type="email">` elements when computing accessible names.
+
+## [0.5.0](../../compare/v0.4.1...v0.5.0) (2020-09-22)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The `mode` argument in the `Shadow.of()` constructor has been moved last in the argument list. Additionally, the first child `Document` and `Shadow` node passed to `h.element()` is no longer included in the list of child nodes but instead used as the content document and shadow root, respectively, of the constructed element. ([#398](../../pull/398))
+
+### Added
+
+- [@siteimprove/alfa-crawler](packages/alfa-crawler): A new package has been added with an implementation of a simple crawler based on the existing scraper. ([#309](../../pull/309))
+
+- [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-selector](packages/alfa-selector): Tree-structural pseudo-selectors (`:nth-child()`, `:last-child`, `:nth-of-type()`, etc.) are now supported. ([#367](../../pull/367))
+
+- [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-style](packages/alfa-style): `calc()` expressions are now supported for the `font-size` property. ([#376](../../pull/376))
+
+- [@siteimprove/alfa-media](packages/alfa-media): The `min-width`, `max-width`, `min-height`, and `max-height` media query features are now supported. ([#403](../../pull/403))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `h.shadow()` is now available. Additionally, `h.element()` now uses the first child `Document` and `Shadow` node as the content document and shadow root, respectively, of the constructed element. ([#398](../../pull/398))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Ensure that ownership is only resolved once per `Document` context.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Elements with neither a `role`, explicit or implicit, nor `aria-` attributes are now correctly excluded from the accessibility tree and instead map to `Container` instances. ([#356](../../pull/356))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `Name` class now correctly implements a `#toString()` method to ensure correct stringification of `Node` instances. ([#380](../../pull/380))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<select>` elements now correctly get their name from connected `<label>` elements. ([#380](../../pull/380))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The last step of `Name.from()` has been removed as it was causing very poor performance for certain inputs and had no noticeable effect on computed names. ([#360](../../pull/360))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now correctly computes names for `<input>` and `<textarea>` elements, adding the previously missing name computation steps. ([#394](../../pull/394))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Children of `<iframe>` are now no longer incorrectly included in the accessibility tree. ([#383](../../pull/383))
+
+- [@siteimprove/alfa-lazy](packages/alfa-lazy): Fix a bug where `#map()` and `#flatMap()` could cause a `Lazy` to be evaluated more than once. ([#355](../../pull/355))
+
+- [@siteimprove/alfa-map](packages/alfa-map): Fix a bug where `#size` was incorrectly reported for certain combinations of keys. ([#361](../../pull/361))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R86 is now exported from the package.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isPerceivable()` now correctly accounts for nodes that aren't themselves included in the accessibility, but have descendants that are. ([#356](../../pull/356))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now correctly handles the `separator` role and only fails elements with missing required attributes when the element is focusable. The rule now also pulls attributes from the accessibility tree to ensure that implicit attributes are correctly accounted for. ([#371](../../pull/371))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` now correctly accounts for elements that have been hidden by giving them a size <= 1px and clipping overflow, as commonly done by `.sr-only`-like utility classes. ([#387](../../pull/387))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R46 now correctly ignores header cells in presentational tables. ([#400](../../pull/400))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `Element#tabIndex()` now correctly considers `<object>` elements with embedded documents as browsing context containers and assigns them a default tab index of 0. ([#399](../../pull/399))
+
 ## [0.4.1](../../compare/v0.4.0...v0.4.1) (2020-08-27)
 
 ### Changed

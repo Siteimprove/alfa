@@ -4,6 +4,7 @@ import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -13,21 +14,18 @@ import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, nor } = Predicate;
+const { nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r5.html",
+  requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
   evaluate({ document }) {
     return {
       applicability() {
         return document
           .children()
-          .filter(
-            and(
-              isDocumentElement,
-              hasAttribute("lang", nor(isEmpty, isWhitespace))
-            )
-          )
+          .filter(isDocumentElement)
+          .filter(hasAttribute("lang", nor(isEmpty, isWhitespace)))
           .map((element) => element.attribute("lang").get());
       },
 

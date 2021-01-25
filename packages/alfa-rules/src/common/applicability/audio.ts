@@ -1,7 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -11,7 +10,6 @@ import { isPerceivable } from "../predicate/is-perceivable";
 import { Question } from "../question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { filter, map } = Iterable;
 const { and, not } = Predicate;
 
 export function audio(
@@ -19,19 +17,17 @@ export function audio(
   device: Device,
   options: audio.Options = {}
 ): Iterable<Interview<Question, Element, Option<Element>>> {
-  return map(
-    filter(
-      document.descendants({ flattened: true, nested: true }),
+  return document
+    .descendants({ flattened: true, nested: true })
+    .filter(isElement)
+    .filter(
       and(
-        isElement,
-        and(
-          hasNamespace(Namespace.HTML),
-          hasName("audio"),
-          not(isIgnored(device))
-        )
+        hasNamespace(Namespace.HTML),
+        hasName("audio"),
+        not(isIgnored(device))
       )
-    ),
-    (element) =>
+    )
+    .map((element) =>
       Question.of(
         "is-audio-streaming",
         "boolean",
@@ -63,7 +59,7 @@ export function audio(
                   )
             )
       )
-  );
+    );
 }
 
 export namespace audio {

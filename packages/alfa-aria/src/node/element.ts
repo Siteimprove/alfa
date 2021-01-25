@@ -1,6 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -57,8 +58,18 @@ export class Element extends Node {
   }
 
   public attribute<N extends Attribute.Name>(
-    predicate: N | Predicate<Attribute, Attribute<N>>
-  ): Option<Attribute<N>> {
+    refinement: Refinement<Attribute, Attribute<N>>
+  ): Option<Attribute<N>>;
+
+  public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+
+  public attribute<N extends Attribute.Name>(
+    predicate: N
+  ): Option<Attribute<N>>;
+
+  public attribute(
+    predicate: Attribute.Name | Predicate<Attribute>
+  ): Option<Attribute> {
     return Iterable.find(
       this._attributes,
       typeof predicate === "string"

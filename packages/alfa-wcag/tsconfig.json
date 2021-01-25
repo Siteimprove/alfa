@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/conformance.ts",
+    "src/criterion.ts",
+    "src/criterion/data.ts",
+    "src/index.ts",
+    "src/technique.ts",
+    "src/technique/data.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-branched"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

@@ -8,8 +8,9 @@ import { expectation } from "../common/expectation";
 
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, equals } = Predicate;
+const { equals } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -17,7 +18,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     const headings = document
       .descendants({ flattened: true })
-      .filter(and(isElement, hasRole("heading")));
+      .filter(isElement)
+      .filter(hasRole("heading"))
+      .reject(isIgnored(device));
 
     return {
       applicability() {

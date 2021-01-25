@@ -7,7 +7,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -17,21 +17,24 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
+import { Group } from "../common/group";
+import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 const { isElement, hasNamespace } = Element;
-const { map, flatMap } = Iterable;
+const { flatten } = Iterable;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
-  evaluate({ device, document }) {
+  requirements: [Criterion.of("2.4.9")],
+  evaluate({ device, document, response }) {
     return {
       applicability() {
-        const elements = document
-          .descendants({ flattened: true, nested: true })
-          .filter(
-            and(
-              isElement,
+        return flatten(
+          document
+            .descendants({ flattened: true, nested: true })
+            .filter(isElement)
+            .filter(
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasRole((role) => role.is("link")),
@@ -39,41 +42,46 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 hasNonEmptyAccessibleName(device)
               )
             )
-          );
+            .groupBy((element) => element.root())
+            .map((elements) =>
+              elements
+                .reduce((groups, element) => {
+                  for (const [node] of Node.from(element, device)) {
+                    const name = node.name.map((name) => name.value);
 
-        const roots = elements.groupBy((element) => element.root());
+                    groups = groups.set(
+                      name,
+                      groups
+                        .get(name)
+                        .getOrElse(() => List.empty<Element>())
+                        .append(element)
+                    );
+                  }
 
-        return flatMap(roots.values(), (elements) =>
-          elements
-            .reduce((groups, element) => {
-              for (const [node] of Node.from(element, device)) {
-                const name = node.name.map((name) => name.value);
-
-                groups = groups.set(
-                  name,
-                  groups
-                    .get(name)
-                    .getOrElse(() => List.empty<Element>())
-                    .append(element)
-                );
-              }
-
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
+                  return groups;
+                }, Map.empty<Option<string>, List<Element>>())
+                .filter((elements) => elements.size > 1)
+                .map(Group.of)
+                .values()
+            )
             .values()
         );
       },
 
       expectations(target) {
-        const sources = Set.from(
-          map(target, (element) =>
-            element.attribute("href").map((attr) => attr.value)
-          )
-        );
+        const embedSameResource = [...target].every((element, i, elements) => {
+          // This is either the first element...
+          return (
+            i === 0 ||
+            // ...or an element that embeds the same resource as the element
+            // before it.
+            referenceSameResource(response.url)(element, elements[i - 1])
+          );
+        });
 
         return {
           1: expectation(
-            sources.size === 1,
+            embedSameResource,
             () => Outcomes.ResolveSameResource,
             () =>
               Question.of(
