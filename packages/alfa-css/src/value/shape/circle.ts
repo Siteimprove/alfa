@@ -6,6 +6,7 @@ import { Radius } from "./radius";
 import { Value } from "../../value";
 import { Function } from "../../syntax/function";
 import { Keyword } from "../keyword";
+import { Token } from "../../syntax/token";
 
 const { map, pair } = Parser;
 
@@ -81,6 +82,7 @@ export class Circle<
 export namespace Circle {
   import option = Parser.option;
   import right = Parser.right;
+  import parseWhitespace = Token.parseWhitespace;
 
   export interface JSON extends Value.JSON {
     type: "shape";
@@ -93,12 +95,32 @@ export namespace Circle {
     return value instanceof Circle;
   }
 
+  function showAndTell<I, T, E>(
+    name: string,
+    parser: Parser<I, T, E>
+  ): Parser<I, T, E> {
+    return (input) => {
+      // console.log(`${name} is parsing ${input}`);
+      const result = parser(input);
+      // console.log(result.toJSON());
+      return result;
+    };
+  }
+
   export const parse = map(
     Function.parse(
       "circle",
       pair(
-        option(Radius.parse),
-        option(right(Keyword.parse("at"), Position.parse()))
+        showAndTell("Option-radius", option(Radius.parse)),
+        showAndTell(
+          "Option-center",
+          option(
+            right(
+              right(option(parseWhitespace), Keyword.parse("at")),
+              right(parseWhitespace, Position.parse())
+            )
+          )
+        )
       )
     ),
     ([_, [radius, center]]) =>
