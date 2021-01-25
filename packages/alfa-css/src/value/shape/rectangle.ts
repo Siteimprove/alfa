@@ -7,6 +7,7 @@ import { Value } from "../../value";
 import { Token } from "../../syntax/token";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { FourSides } from "../four-sides";
 
 const { either, left, map, option, pair, peek, right, separatedList } = Parser;
 
@@ -18,19 +19,19 @@ export class Rectangle<
   O extends Length | Rectangle.Auto = Length | Rectangle.Auto
 > extends Value<"shape"> {
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
-    offset: readonly [O, O, O, O]
+    offset: FourSides<O>
   ): Rectangle<O> {
     return new Rectangle(offset);
   }
 
-  private readonly _offset: readonly [O, O, O, O];
+  private readonly _offset: FourSides<O>;
 
-  private constructor(offset: readonly [O, O, O, O]) {
+  private constructor(offset: FourSides<O>) {
     super();
     this._offset = offset;
   }
 
-  public get offset(): readonly [O, O, O, O] {
+  public get offset(): FourSides<O> {
     return this._offset;
   }
 
@@ -43,19 +44,19 @@ export class Rectangle<
   }
 
   public get top(): O {
-    return this._offset[0];
+    return this._offset.top;
   }
 
   public get right(): O {
-    return this._offset[1];
+    return this._offset.right;
   }
 
   public get bottom(): O {
-    return this._offset[2];
+    return this._offset.bottom;
   }
 
   public get left(): O {
-    return this._offset[3];
+    return this._offset.left;
   }
 
   public equals(value: Rectangle): boolean;
@@ -142,7 +143,7 @@ export namespace Rectangle {
       }
       return Ok.of<[Slice<Token>, Rectangle]>([
         remainder,
-        Rectangle.of([values[0], values[1], values[2], values[3]]),
+        Rectangle.of(FourSides.of(values[0], values[1], values[2], values[3])),
       ]);
     });
 }
