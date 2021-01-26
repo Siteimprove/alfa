@@ -59,6 +59,7 @@
     "test/value/calculation.spec.ts",
     "test/value/position.spec.ts",
     "test/value/shape/circle.spec.ts",
+    "test/value/shape/ellipse.spec.ts",
     "test/value/shape/rectangle.spec.ts"
   ],
   "references": [

@@ -107,9 +107,9 @@ export namespace Ellipse {
 
   export const parse = map(
     Function.parse(
-      "circle",
+      "ellipse",
       pair(
-        option(pair(Radius.parse, Radius.parse)),
+        option(pair(Radius.parse, right(Token.parseWhitespace, Radius.parse))),
         option(
           right(
             option(Token.parseWhitespace),
