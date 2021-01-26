@@ -6,10 +6,19 @@ import { Keyword } from "../keyword";
 import { Value } from "../../value";
 import { Token } from "../../syntax/token";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { FourSides } from "../four-sides";
 
-const { either, left, map, option, pair, peek, right, separatedList } = Parser;
+const {
+  either,
+  left,
+  mapResult,
+  option,
+  pair,
+  peek,
+  right,
+  separatedList,
+} = Parser;
 
 /**
  * @see https://drafts.fxtf.org/css-masking/#funcdef-clip-rect
@@ -112,7 +121,12 @@ export namespace Rectangle {
 
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
-  export const parse: Parser<Slice<Token>, Rectangle, string> = (input) =>
+  export const parse = mapResult<
+    Slice<Token>,
+    Iterable<Length | Auto>,
+    Rectangle,
+    string
+  >(
     right(
       Token.parseFunction((fn) => fn.value === "rect"),
       left(
@@ -131,19 +145,18 @@ export namespace Rectangle {
         ),
         Token.parseCloseParenthesis
       )
-    )(input).flatMap(([remainder, result]) => {
+    ),
+    (result) => {
       const values = [...result];
 
-      const err: Result<[Slice<Token>, Rectangle], string> = Err.of(
-        "rect() must have exactly 4 arguments"
-      );
-
-      if (values.length !== 4) {
-        return err;
-      }
-      return Ok.of<[Slice<Token>, Rectangle]>([
-        remainder,
-        Rectangle.of(FourSides.of(values[0], values[1], values[2], values[3])),
-      ]);
-    });
+      return values.length === 4
+        ? Ok.of(
+            Rectangle.of(
+              // Typescript does not remember the length of the array, so we can't use "...values" :-(
+              FourSides.of(values[0], values[1], values[2], values[3])
+            )
+          )
+        : Err.of("rect() must have exactly 4 arguments");
+    }
+  );
 }
