@@ -7,17 +7,9 @@ import { Length } from "../length";
 import { Keyword } from "../keyword";
 import { Value } from "../../value";
 import { Token } from "../../syntax/token";
+import { Function } from "../../syntax/function";
 
-const {
-  either,
-  left,
-  mapResult,
-  option,
-  pair,
-  peek,
-  right,
-  separatedList,
-} = Parser;
+const { either, mapResult, option, pair, peek, right, separatedList } = Parser;
 
 /**
  * @see https://drafts.fxtf.org/css-masking/#funcdef-clip-rect
@@ -127,41 +119,33 @@ export namespace Rectangle {
 
   export const parse = mapResult<
     Slice<Token>,
-    Iterable<Length | Auto>,
+    readonly [Function, Iterable<Length | Auto>],
     Rectangle,
     string
   >(
-    right(
-      Token.parseFunction((fn) => fn.value === "rect"),
-      left(
-        either(
-          // If there is the wrong separator, separatedList still return the first value.
-          // Thus, it doesn't fail and the full parser fails at the closing parenthesis.
-          // We need to peek to find the correct separator…
-          right(
-            peek(pair(parseLengthAuto, Token.parseWhitespace)),
-            separatedList(parseLengthAuto, Token.parseWhitespace)
-          ),
-          separatedList(
-            parseLengthAuto,
-            pair(Token.parseComma, option(Token.parseWhitespace))
-          )
+    Function.parse(
+      "rect",
+      either(
+        // If there is the wrong separator, separatedList still return the first value.
+        // Thus, it doesn't fail and the full parser fails at the closing parenthesis.
+        // We need to peek to find the correct separator…
+        right(
+          peek(pair(parseLengthAuto, Token.parseWhitespace)),
+          separatedList(parseLengthAuto, Token.parseWhitespace)
         ),
-        Token.parseCloseParenthesis
+        separatedList(
+          parseLengthAuto,
+          pair(Token.parseComma, option(Token.parseWhitespace))
+        )
       )
     ),
-    (result) => {
+    ([_, result]) => {
       const values = [...result];
 
       return values.length === 4
         ? Ok.of(
-            Rectangle.of(
-              // Typescript does not remember the length of the array, so we can't use "...values" :-(
-              values[0],
-              values[1],
-              values[2],
-              values[3]
-            )
+            // Typescript does not remember the length of the array, so we can't use "...values" :-(
+            Rectangle.of(values[0], values[1], values[2], values[3])
           )
         : Err.of("rect() must have exactly 4 arguments");
     }
