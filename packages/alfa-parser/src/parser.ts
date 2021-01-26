@@ -23,6 +23,16 @@ export namespace Parser {
       ]);
   }
 
+  export function mapResult<I, T, U, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    mapper: Mapper<T, Result<U, E>>
+  ): Parser<I, U, E, A> {
+    return (input, ...args) =>
+      parser(input, ...args).flatMap(([remainder, value]) =>
+        mapper(value).map((result) => [remainder, result])
+      );
+  }
+
   export function flatMap<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, Parser<I, U, E, A>>
