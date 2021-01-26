@@ -101,3 +101,7 @@ test("parse() parses a circle with both radius and center", (t) => {
     },
   });
 });
+
+test("parse() fails if there is a negative radius", (t) => {
+  t.deepEqual(Circle.parse(Slice.of(Lexer.lex("circle(-1px)"))).isErr(), true);
+});
