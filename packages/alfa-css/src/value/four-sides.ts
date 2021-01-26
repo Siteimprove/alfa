@@ -95,15 +95,15 @@ export class FourSides<
   public toJSON(): FourSides.JSON<T> {
     return {
       type: "four-sides",
-      top: Serializable.toJSON<T>(this._top),
-      right: Serializable.toJSON<T>(this._right),
-      bottom: Serializable.toJSON<T>(this._bottom),
-      left: Serializable.toJSON<T>(this._left),
+      top: Serializable.toJSON<T>(this.top),
+      right: Serializable.toJSON<T>(this.right),
+      bottom: Serializable.toJSON<T>(this.bottom),
+      left: Serializable.toJSON<T>(this.left),
     };
   }
 
   public toString(): string {
-    return `${this._top} ${this._right} ${this._bottom} ${this._left}`;
+    return `${this.top} ${this.right} ${this.bottom} ${this.left}`;
   }
 }
 

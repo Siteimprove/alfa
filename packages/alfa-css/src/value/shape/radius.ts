@@ -50,11 +50,11 @@ export class Radius<
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof Radius && value.value.equals(this.value);
+    return value instanceof Radius && value._value.equals(this._value);
   }
 
   public hash(hash: Hash) {
-    this.value.hash(hash);
+    this._value.hash(hash);
   }
 
   public toJSON(): Radius.JSON {

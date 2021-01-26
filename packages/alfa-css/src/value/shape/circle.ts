@@ -55,14 +55,14 @@ export class Circle<
   public equals(value: unknown): boolean {
     return (
       value instanceof Circle &&
-      value.radius.equals(this.radius) &&
-      value.center.equals(this.center)
+      value._radius.equals(this._radius) &&
+      value._center.equals(this._center)
     );
   }
 
   public hash(hash: Hash) {
-    this.radius.hash(hash);
-    this.center.hash(hash);
+    this._radius.hash(hash);
+    this._center.hash(hash);
   }
 
   public toJSON(): Circle.JSON {

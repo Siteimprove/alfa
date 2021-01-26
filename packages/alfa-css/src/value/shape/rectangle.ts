@@ -72,20 +72,11 @@ export class Rectangle<
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return (
-      value instanceof Rectangle &&
-      value.top.equals(this.top) &&
-      value.right.equals(this.right) &&
-      value.bottom.equals(this.bottom) &&
-      value.left.equals(this.left)
-    );
+    return value instanceof Rectangle && value._offset.equals(this._offset);
   }
 
   public hash(hash: Hash) {
-    this.top.hash(hash);
-    this.right.hash(hash);
-    this.bottom.hash(hash);
-    this.left.hash(hash);
+    this._offset.hash(hash);
   }
 
   public toJSON(): Rectangle.JSON {
