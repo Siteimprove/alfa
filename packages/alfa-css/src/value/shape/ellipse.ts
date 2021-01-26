@@ -1,13 +1,15 @@
-import { Value } from "../../value";
-import { Radius } from "./radius";
-import { Position } from "../position";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+
+import { Radius } from "./radius";
+import { Keyword } from "../keyword";
+import { Position } from "../position";
+
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
-import { Keyword } from "../keyword";
-import { Circle } from "./circle";
+import { Value } from "../../value";
+
+const { map, option, pair, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-ellipse
@@ -89,11 +91,6 @@ export class Ellipse<
 }
 
 export namespace Ellipse {
-  import map = Parser.map;
-  import pair = Parser.pair;
-  import right = Parser.right;
-  import option = Parser.option;
-
   export interface JSON extends Value.JSON<"shape"> {
     kind: "ellipse";
     center: Position.JSON;

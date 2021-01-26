@@ -3,11 +3,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Length } from "../length";
 import { Keyword } from "../keyword";
-import { Value } from "../../value";
+import { Length } from "../length";
+
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
+import { Value } from "../../value";
 
 const { either, mapResult, option, pair, peek, right, separatedList } = Parser;
 
