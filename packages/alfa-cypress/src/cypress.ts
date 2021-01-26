@@ -26,11 +26,14 @@ import {
   Text,
   Type,
 } from "@siteimprove/alfa-dom";
+import { Formatter } from "@siteimprove/alfa-formatter";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { JQuery } from "@siteimprove/alfa-jquery";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as act from "@siteimprove/alfa-act";
+import earl from "@siteimprove/alfa-formatter-earl";
 
 import { addCommand } from "./cypress/add-command";
 
@@ -307,6 +310,21 @@ export namespace Cypress {
       }
 
       return declarations;
+    }
+  }
+
+  export namespace Handler {
+    export function persist<I, T, Q>(
+      output: Mapper<I, string>,
+      format: Formatter<I, T, Q> = earl()
+    ): Handler<I, T, Q> {
+      return (input, rules, outcomes, message) => {
+        const file = output(input);
+
+        cy.writeFile(file, format(input, rules, outcomes) + "\n");
+
+        return `${message}, see the full report at ${file}`;
+      };
     }
   }
 }
