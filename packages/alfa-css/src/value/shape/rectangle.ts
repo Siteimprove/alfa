@@ -1,13 +1,12 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Length } from "../length";
 import { Keyword } from "../keyword";
 import { Value } from "../../value";
 import { Token } from "../../syntax/token";
-import { Slice } from "@siteimprove/alfa-slice";
-import { Err, Ok } from "@siteimprove/alfa-result";
-import { FourSides } from "../four-sides";
 
 const {
   either,
@@ -28,20 +27,25 @@ export class Rectangle<
   O extends Length | Rectangle.Auto = Length | Rectangle.Auto
 > extends Value<"shape"> {
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
-    offset: FourSides<O>
+    top: O,
+    right: O,
+    bottom: O,
+    left: O
   ): Rectangle<O> {
-    return new Rectangle(offset);
+    return new Rectangle(top, right, bottom, left);
   }
 
-  private readonly _offset: FourSides<O>;
+  public readonly _top: O;
+  public readonly _right: O;
+  public readonly _bottom: O;
+  public readonly _left: O;
 
-  private constructor(offset: FourSides<O>) {
+  private constructor(top: O, right: O, bottom: O, left: O) {
     super();
-    this._offset = offset;
-  }
-
-  public get offset(): FourSides<O> {
-    return this._offset;
+    this._top = top;
+    this._right = right;
+    this._bottom = bottom;
+    this._left = left;
   }
 
   public get type(): "shape" {
@@ -53,30 +57,39 @@ export class Rectangle<
   }
 
   public get top(): O {
-    return this._offset.top;
+    return this._top;
   }
 
   public get right(): O {
-    return this._offset.right;
+    return this._right;
   }
 
   public get bottom(): O {
-    return this._offset.bottom;
+    return this._bottom;
   }
 
   public get left(): O {
-    return this._offset.left;
+    return this._left;
   }
 
   public equals(value: Rectangle): boolean;
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof Rectangle && value._offset.equals(this._offset);
+    return (
+      value instanceof Rectangle &&
+      value._top.equals(this._top) &&
+      value._right.equals(this._right) &&
+      value._bottom.equals(this._bottom) &&
+      value._left.equals(this._left)
+    );
   }
 
   public hash(hash: Hash) {
-    this._offset.hash(hash);
+    this._top.hash(hash);
+    this._right.hash(hash);
+    this._bottom.hash(hash);
+    this._left.hash(hash);
   }
 
   public toJSON(): Rectangle.JSON {
@@ -144,7 +157,10 @@ export namespace Rectangle {
         ? Ok.of(
             Rectangle.of(
               // Typescript does not remember the length of the array, so we can't use "...values" :-(
-              FourSides.of(values[0], values[1], values[2], values[3])
+              values[0],
+              values[1],
+              values[2],
+              values[3]
             )
           )
         : Err.of("rect() must have exactly 4 arguments");
