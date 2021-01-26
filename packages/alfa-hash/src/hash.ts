@@ -1,8 +1,11 @@
 import { Encoder } from "@siteimprove/alfa-encoding";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { JSON } from "@siteimprove/alfa-json";
 
 import { Hashable } from "./hashable";
 import { BuiltinOffset, IntegerOverflow } from "./constants";
+
+const { keys } = Object;
 
 const hashes = new WeakMap<object, number>();
 
@@ -149,6 +152,42 @@ export abstract class Hash implements Equatable, Hashable {
     }
   }
 
+  public writeJSON(data: JSON): this {
+    switch (typeof data) {
+      case "string":
+        return this.writeString(data);
+
+      case "number":
+        return this.writeNumber(data);
+
+      case "boolean":
+        return this.writeBoolean(data);
+
+      case "object":
+        if (Array.isArray(data)) {
+          for (let i = 0, n = data.length; i < n; i++) {
+            this.writeJSON(data[i]);
+          }
+
+          this.writeUint32(data.length);
+        } else if (data !== null) {
+          for (const key of keys(data).sort()) {
+            const value = data[key];
+
+            this.writeString(key);
+
+            if (value !== undefined) {
+              this.writeJSON(value);
+            }
+
+            this.writeUint8(0);
+          }
+        }
+
+        return this;
+    }
+  }
+
   public equals(value: Hash): boolean;
 
   public equals(value: unknown): value is this;
@@ -159,5 +198,63 @@ export abstract class Hash implements Equatable, Hashable {
 
   public hash(hash: Hash): void {
     hash.writeUint32(this.finish());
+  }
+}
+
+export namespace Hash {
+  export function writeString(hash: Hash, data: string): Hash {
+    return hash.writeString(data);
+  }
+
+  export function writeNumber(hash: Hash, data: number): Hash {
+    return hash.writeNumber(data);
+  }
+
+  export function writeInt8(hash: Hash, data: number): Hash {
+    return hash.writeInt8(data);
+  }
+
+  export function writeUint8(hash: Hash, data: number): Hash {
+    return hash.writeUint8(data);
+  }
+
+  export function writeInt16(hash: Hash, data: number): Hash {
+    return hash.writeInt16(data);
+  }
+
+  export function writeUint16(hash: Hash, data: number): Hash {
+    return hash.writeUint16(data);
+  }
+
+  export function writeInt32(hash: Hash, data: number): Hash {
+    return hash.writeInt32(data);
+  }
+
+  export function writeUint32(hash: Hash, data: number): Hash {
+    return hash.writeUint32(data);
+  }
+
+  export function writeFloat32(hash: Hash, data: number): Hash {
+    return hash.writeFloat32(data);
+  }
+
+  export function writeFloat64(hash: Hash, data: number): Hash {
+    return hash.writeFloat64(data);
+  }
+
+  export function writeBoolean(hash: Hash, data: boolean): Hash {
+    return hash.writeBoolean(data);
+  }
+
+  export function writeHashable(hash: Hash, data: Hashable): Hash {
+    return hash.writeHashable(data);
+  }
+
+  export function writeUnknown(hash: Hash, data: unknown): Hash {
+    return hash.writeUnknown(data);
+  }
+
+  export function writeJSON(hash: Hash, data: JSON): Hash {
+    return hash.writeJSON(data);
   }
 }
