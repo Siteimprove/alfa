@@ -140,7 +140,7 @@ As new code is pulled from the repository, changes to dependencies and code may 
 $ yarn build
 ```
 
-If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](CONTRIBUTING.md). If you have any questions, you are also welcome to [open an issue][].
+If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](docs/contributing.md). If you have any questions, you are also welcome to [open an issue][].
 
 ## Architecture
 
