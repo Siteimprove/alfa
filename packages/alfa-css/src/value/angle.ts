@@ -67,8 +67,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
 }
 
 export namespace Angle {
-  export interface JSON extends Dimension.JSON {
-    type: "angle";
+  export interface JSON extends Dimension.JSON<"angle"> {
     unit: Unit.Angle;
   }
 

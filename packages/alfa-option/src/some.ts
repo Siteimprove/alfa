@@ -1,3 +1,4 @@
+import { Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -8,8 +9,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { None } from "./none";
 import { Option } from "./option";
+import { None } from "./none";
 
 const { not, test } = Predicate;
 
@@ -110,6 +111,12 @@ export class Some<T> implements Option<T> {
     return this._value;
   }
 
+  public compareWith(option: Option<T>, comparer: Comparer<T>): Comparison {
+    return option.isSome()
+      ? comparer(this._value, option._value)
+      : Comparison.Greater;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Some && Equatable.equals(value._value, this._value);
   }
@@ -127,7 +134,7 @@ export class Some<T> implements Option<T> {
     return [this._value];
   }
 
-  public toJSON(): Some.JSON {
+  public toJSON(): Some.JSON<T> {
     return {
       type: "some",
       value: Serializable.toJSON(this._value),
@@ -140,11 +147,15 @@ export class Some<T> implements Option<T> {
 }
 
 export namespace Some {
-  export interface JSON {
+  export interface JSON<T> {
     [key: string]: json.JSON;
     type: "some";
-    value: json.JSON;
+    value: Serializable.ToJSON<T>;
   }
+
+  export function isSome<T>(value: Iterable<T>): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T>;
 
   export function isSome<T>(value: unknown): value is Some<T> {
     return value instanceof Some;

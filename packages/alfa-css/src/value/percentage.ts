@@ -38,8 +38,8 @@ export class Percentage extends Numeric<"percentage"> {
 }
 
 export namespace Percentage {
-  export interface JSON extends Numeric.JSON {
-    type: "percentage";
+  export interface JSON extends Numeric.JSON<"percentage"> {
+    value: number;
   }
 
   export function isPercentage(value: unknown): value is Percentage {

@@ -89,8 +89,7 @@ export class Matrix extends Value<"transform"> {
 }
 
 export namespace Matrix {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "matrix";
     values: Values<Number.JSON>;
   }

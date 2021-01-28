@@ -7,15 +7,15 @@ import * as json from "@siteimprove/alfa-json";
 
 export class List<T> extends Value<"list"> implements Iterable<T> {
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
-    return new List(values, separator);
+    return new List(Array.from(values), separator);
   }
 
   private readonly _values: Array<T>;
   private readonly _separator: string;
 
-  private constructor(values: Iterable<T>, separator: string) {
+  private constructor(values: Array<T>, separator: string) {
     super();
-    this._values = [...values];
+    this._values = values;
     this._separator = separator;
   }
 
@@ -24,7 +24,7 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
   }
 
   public get values(): Iterable<T> {
-    return this._values;
+    return this._values[Symbol.iterator]();
   }
 
   public equals(value: unknown): value is this {
@@ -64,8 +64,7 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 }
 
 export namespace List {
-  export interface JSON extends Value.JSON {
-    type: "list";
+  export interface JSON extends Value.JSON<"list"> {
     values: Array<json.JSON>;
     separator: string;
   }

@@ -13,6 +13,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as dom from "@siteimprove/alfa-dom";
 import * as json from "@siteimprove/alfa-json";
 
+import { Context } from "./context";
+
 const {
   map,
   flatMap,
@@ -31,7 +33,6 @@ const {
 
 const { and, not, property, equals } = Predicate;
 const { isString } = Refinement;
-
 const { isElement, hasName } = Element;
 
 /**
@@ -58,10 +59,7 @@ export namespace Selector {
     /**
      * @see https://drafts.csswg.org/selectors/#match
      */
-    public abstract matches(
-      element: Element,
-      scope?: Iterable<Element>
-    ): boolean;
+    public abstract matches(element: Element, context?: Context): boolean;
 
     public abstract equals(value: unknown): value is this;
 
@@ -692,10 +690,7 @@ export namespace Selector {
         return this._name;
       }
 
-      public matches(
-        element: dom.Element,
-        scope?: Iterable<dom.Element>
-      ): boolean {
+      public matches(element: dom.Element, context?: Context): boolean {
         return false;
       }
 
@@ -738,10 +733,7 @@ export namespace Selector {
         return this._name;
       }
 
-      public matches(
-        element: dom.Element,
-        scope?: Iterable<dom.Element>
-      ): boolean {
+      public matches(element: dom.Element, context?: Context): boolean {
         return false;
       }
 
@@ -792,6 +784,10 @@ export namespace Selector {
             return Result.of([input, Active.of()]);
           case "focus":
             return Result.of([input, Focus.of()]);
+          case "focus-within":
+            return Result.of([input, FocusWithin.of()]);
+          case "focus-visible":
+            return Result.of([input, FocusVisible.of()]);
           case "link":
             return Result.of([input, Link.of()]);
           case "visited":
@@ -913,8 +909,8 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element): boolean {
-      return this._selector.matches(element);
+    public matches(element: Element, context?: Context): boolean {
+      return this._selector.matches(element, context);
     }
 
     public equals(value: unknown): value is this {
@@ -970,8 +966,8 @@ export namespace Selector {
       return this._selector;
     }
 
-    public matches(element: Element, scope?: Iterable<Element>): boolean {
-      return !this._selector.matches(element, scope);
+    public matches(element: Element, context?: Context): boolean {
+      return !this._selector.matches(element, context);
     }
 
     public equals(value: unknown): value is this {
@@ -1060,6 +1056,13 @@ export namespace Selector {
     private constructor() {
       super("hover");
     }
+
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      return context.isHovered(element);
+    }
   }
 
   /**
@@ -1072,6 +1075,13 @@ export namespace Selector {
 
     private constructor() {
       super("active");
+    }
+
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      return context.isActive(element);
     }
   }
 
@@ -1086,6 +1096,56 @@ export namespace Selector {
     private constructor() {
       super("focus");
     }
+
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      return context.isFocused(element);
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#focus-within-pseudo
+   */
+  export class FocusWithin extends Pseudo.Class {
+    public static of(): FocusWithin {
+      return new FocusWithin();
+    }
+
+    private constructor() {
+      super("focus-within");
+    }
+
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      return element
+        .inclusiveDescendants({ flattened: true })
+        .filter(isElement)
+        .some((element) => context.isFocused(element));
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#focus-visible-pseudo
+   */
+  export class FocusVisible extends Pseudo.Class {
+    public static of(): FocusVisible {
+      return new FocusVisible();
+    }
+
+    private constructor() {
+      super("focus-visible");
+    }
+
+    public matches(): boolean {
+      // For the purposes of accessibility testing, we currently assume that
+      // focus related styling can safely be "hidden" behind the :focus-visible
+      // pseudo-class and it will therefore always match.
+      return true;
+    }
   }
 
   /**
@@ -1099,6 +1159,22 @@ export namespace Selector {
     private constructor() {
       super("link");
     }
+
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      switch (element.name) {
+        case "a":
+        case "area":
+        case "link":
+          return element
+            .attribute("href")
+            .some(() => !context.hasState(element, Context.State.Visited));
+      }
+
+      return false;
+    }
   }
 
   /**
@@ -1111,6 +1187,22 @@ export namespace Selector {
 
     private constructor() {
       super("visited");
+    }
+
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      switch (element.name) {
+        case "a":
+        case "area":
+        case "link":
+          return element
+            .attribute("href")
+            .some(() => context.hasState(element, Context.State.Visited));
+      }
+
+      return false;
     }
   }
 
@@ -1157,6 +1249,8 @@ export namespace Selector {
       return new NthChild(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(index: Nth) {
@@ -1166,9 +1260,18 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.preceding().filter(isElement).size + 1
-      );
+      const indices = NthChild._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthChild.JSON {
@@ -1193,6 +1296,8 @@ export namespace Selector {
       return new NthLastChild(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(nth: Nth) {
@@ -1202,9 +1307,19 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.following().filter(isElement).size + 1
-      );
+      const indices = NthLastChild._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .reverse()
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthLastChild.JSON {
@@ -1288,6 +1403,8 @@ export namespace Selector {
       return new NthOfType(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(index: Nth) {
@@ -1297,10 +1414,19 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.preceding().filter(isElement).filter(hasName(element.name))
-          .size + 1
-      );
+      const indices = NthOfType._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .filter(hasName(element.name))
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthOfType.JSON {
@@ -1325,6 +1451,8 @@ export namespace Selector {
       return new NthLastOfType(index);
     }
 
+    private static readonly _indices = new WeakMap<Element, number>();
+
     private readonly _index: Nth;
 
     private constructor(index: Nth) {
@@ -1334,10 +1462,20 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return this._index.matches(
-        element.following().filter(isElement).filter(hasName(element.name))
-          .size + 1
-      );
+      const indices = NthLastOfType._indices;
+
+      if (!indices.has(element)) {
+        element
+          .inclusiveSiblings()
+          .filter(isElement)
+          .filter(hasName(element.name))
+          .reverse()
+          .forEach((element, i) => {
+            indices.set(element, i + 1);
+          });
+      }
+
+      return this._index.matches(indices.get(element)!);
     }
 
     public toJSON(): NthLastOfType.JSON {
@@ -1500,8 +1638,11 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element): boolean {
-      return this._left.matches(element) && this._right.matches(element);
+    public matches(element: Element, context?: Context): boolean {
+      return (
+        this._left.matches(element, context) &&
+        this._right.matches(element, context)
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -1631,10 +1772,10 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element): boolean {
+    public matches(element: Element, context?: Context): boolean {
       // First, make sure that the right side of the selector, i.e. the part
       // that relates to the current element, matches.
-      if (this._right.matches(element)) {
+      if (this._right.matches(element, context)) {
         // If it does, move on to the heavy part of the work: Looking either up
         // the tree for a descendant match or looking to the side of the tree
         // for a sibling match.
@@ -1643,25 +1784,25 @@ export namespace Selector {
             return element
               .ancestors()
               .filter(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
 
           case Combinator.DirectDescendant:
             return element
               .parent()
               .filter(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
 
           case Combinator.Sibling:
             return element
               .preceding()
               .filter(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
 
           case Combinator.DirectSibling:
             return element
               .preceding()
               .find(isElement)
-              .some((element) => this._left.matches(element));
+              .some((element) => this._left.matches(element, context));
         }
       }
 
@@ -1845,8 +1986,11 @@ export namespace Selector {
       return this._right;
     }
 
-    public matches(element: Element): boolean {
-      return this._left.matches(element) || this._right.matches(element);
+    public matches(element: Element, context?: Context): boolean {
+      return (
+        this._left.matches(element, context) ||
+        this._right.matches(element, context)
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -1929,7 +2073,7 @@ export namespace Selector {
 
   export function matches(
     selector: string | Selector,
-    scope?: Iterable<Element>
+    context?: Context
   ): Predicate<Element> {
     let parsed: Selector;
 
@@ -1939,6 +2083,6 @@ export namespace Selector {
       parsed = selector;
     }
 
-    return (element) => parsed.matches(element, scope);
+    return (element) => parsed.matches(element, context);
   }
 }

@@ -1,4 +1,4 @@
-import { Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -9,7 +9,7 @@ export class Import extends Condition {
   public static of(
     href: string,
     sheet: Sheet,
-    condition: Option<string>
+    condition: Option<string> = None
   ): Import {
     return new Import(href, sheet, condition);
   }

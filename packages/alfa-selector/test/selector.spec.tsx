@@ -2,6 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Selector } from "../src/selector";
+import { Context } from "../src/context";
 
 test(".parse() parses a type selector", (t) => {
   t.deepEqual(Selector.parse("div").get().toJSON(), {
@@ -1002,4 +1003,92 @@ test("#matches() checks if an element matches a :only-of-type selector", (t) => 
 
   t.equal(selector.matches(a), true);
   t.equal(selector.matches(b), false);
+});
+
+test("#matches() checks if an element matches a :hover selector", (t) => {
+  const selector = Selector.parse(":hover").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p), false);
+  t.equal(selector.matches(p, Context.hover(p)), true);
+});
+
+test("#matches() checks if an element matches an :active selector", (t) => {
+  const selector = Selector.parse(":active").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p), false);
+  t.equal(selector.matches(p, Context.active(p)), true);
+});
+
+test("#matches() checks if an element matches a :focus selector", (t) => {
+  const selector = Selector.parse(":focus").get();
+
+  const p = <p />;
+
+  t.equal(selector.matches(p), false);
+  t.equal(selector.matches(p, Context.focus(p)), true);
+});
+
+test("#matches() checks if an element matches a :focus-within selector", (t) => {
+  const selector = Selector.parse(":focus-within").get();
+
+  const button = <button />;
+  const p = <p>{button}</p>;
+
+  t.equal(selector.matches(p), false);
+  t.equal(selector.matches(p, Context.focus(p)), true);
+  t.equal(selector.matches(p, Context.focus(button)), true);
+});
+
+test("#matches() checks if an element matches a :link selector", (t) => {
+  const selector = Selector.parse(":link").get();
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    t.equal(selector.matches(element), true, element.toString());
+
+    // Only non-visited links match :link
+    t.equal(
+      selector.matches(element, Context.visit(element)),
+      false,
+      element.toString()
+    );
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element), false, element.toString());
+  }
+});
+
+test("#matches() checks if an element matches a :visited selector", (t) => {
+  const selector = Selector.parse(":visited").get();
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    t.equal(
+      selector.matches(element, Context.visit(element)),
+      true,
+      element.toString()
+    );
+
+    // Only visited links match :link
+    t.equal(selector.matches(element), false, element.toString());
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element), false, element.toString());
+  }
 });

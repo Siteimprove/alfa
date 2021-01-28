@@ -51,8 +51,7 @@ export class String extends Value<"string"> {
 }
 
 export namespace String {
-  export interface JSON extends Value.JSON {
-    type: "string";
+  export interface JSON extends Value.JSON<"string"> {
     value: string;
   }
 

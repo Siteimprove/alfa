@@ -44,6 +44,9 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-graph"
+    },
+    {
       "path": "../alfa-hash"
     },
     {

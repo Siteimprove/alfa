@@ -1,4 +1,6 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Callback } from "@siteimprove/alfa-callback";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -12,16 +14,18 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
+const { compareComparable } = Comparable;
+
 export interface Collection<T>
   extends Functor<T>,
     Monad<T>,
     Foldable<T>,
     Applicative<T>,
     Equatable,
-    Hashable,
-    Serializable {
+    Hashable {
   readonly size: number;
   isEmpty(): this is Collection<never>;
+  forEach(callback: Callback<T>): void;
   map<U>(mapper: Mapper<T, U>): Collection<U>;
   flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
@@ -36,16 +40,21 @@ export interface Collection<T>
   collect<U>(mapper: Mapper<T, Option<U>>): Collection<U>;
   collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   some(predicate: Predicate<T>): boolean;
+  none(predicate: Predicate<T>): boolean;
   every(predicate: Predicate<T>): boolean;
   count(predicate: Predicate<T>): number;
   distinct(): Collection<T>;
 }
 
 export namespace Collection {
-  export interface Keyed<K, V> extends Collection<V>, Iterable<[K, V]> {
+  export interface Keyed<K, V>
+    extends Collection<V>,
+      Iterable<[K, V]>,
+      Serializable<Keyed.JSON<K, V>> {
     // Collection<T> methods
 
     isEmpty(): this is Keyed<K, never>;
+    forEach(callback: Callback<V, void, [K]>): void;
     map<U>(mapper: Mapper<V, U, [K]>): Keyed<K, U>;
     flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [K]>): Keyed<K, U>;
     reduce<U>(reducer: Reducer<V, U, [K]>, accumulator: U): U;
@@ -62,6 +71,7 @@ export namespace Collection {
     collect<U>(mapper: Mapper<V, Option<U>, [K]>): Keyed<K, U>;
     collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U>;
     some(predicate: Predicate<V, [K]>): boolean;
+    none(predicate: Predicate<V, [K]>): boolean;
     every(predicate: Predicate<V, [K]>): boolean;
     count(predicate: Predicate<V, [K]>): number;
     distinct(): Keyed<K, V>;
@@ -75,10 +85,20 @@ export namespace Collection {
     concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
   }
 
-  export interface Unkeyed<T> extends Collection<T>, Iterable<T> {
+  export namespace Keyed {
+    export type JSON<K, V> = Array<
+      [Serializable.ToJSON<K>, Serializable.ToJSON<V>]
+    >;
+  }
+
+  export interface Unkeyed<T>
+    extends Collection<T>,
+      Iterable<T>,
+      Serializable<Unkeyed.JSON<T>> {
     // Collection<T> methods
 
     isEmpty(): this is Unkeyed<never>;
+    forEach(callback: Callback<T>): void;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
     flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
@@ -93,6 +113,7 @@ export namespace Collection {
     collect<U>(mapper: Mapper<T, Option<U>>): Unkeyed<U>;
     collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
     some(predicate: Predicate<T>): boolean;
+    none(predicate: Predicate<T>): boolean;
     every(predicate: Predicate<T>): boolean;
     count(predicate: Predicate<T>): number;
     distinct(): Unkeyed<T>;
@@ -106,10 +127,18 @@ export namespace Collection {
     concat(iterable: Iterable<T>): Unkeyed<T>;
   }
 
-  export interface Indexed<T> extends Collection<T>, Iterable<T> {
+  export namespace Unkeyed {
+    export type JSON<T> = Array<Serializable.ToJSON<T>>;
+  }
+
+  export interface Indexed<T>
+    extends Collection<T>,
+      Iterable<T>,
+      Serializable<Indexed.JSON<T>> {
     // Collection<T> methods
 
     isEmpty(): this is Indexed<never>;
+    forEach(callback: Callback<T, void, [number]>): void;
     map<U>(mapper: Mapper<T, U, [number]>): Indexed<U>;
     flatMap<U>(mapper: Mapper<T, Indexed<U>, [number]>): Indexed<U>;
     reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
@@ -126,6 +155,7 @@ export namespace Collection {
     collect<U>(mapper: Mapper<T, Option<U>, [number]>): Indexed<U>;
     collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
     some(predicate: Predicate<T, [number]>): boolean;
+    none(predicate: Predicate<T, [number]>): boolean;
     every(predicate: Predicate<T, [number]>): boolean;
     count(predicate: Predicate<T, [number]>): number;
     distinct(): Indexed<T>;
@@ -153,5 +183,24 @@ export namespace Collection {
     slice(start: number, end?: number): Indexed<T>;
     reverse(): Indexed<T>;
     join(separator: string): string;
+    sortWith(comparer: Comparer<T>): Indexed<T>;
+    compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
+  }
+
+  export namespace Indexed {
+    export type JSON<T> = Array<Serializable.ToJSON<T>>;
+  }
+
+  export function sort<T extends Comparable<T>>(
+    collection: Indexed<T>
+  ): Indexed<T> {
+    return collection.sortWith(compareComparable);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Indexed<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

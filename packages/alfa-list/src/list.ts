@@ -1,4 +1,7 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -10,11 +13,10 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Branch, Empty, Leaf, Node } from "./node";
 
 const { not } = Predicate;
+const { compareComparable } = Comparable;
 
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
@@ -50,6 +52,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public isEmpty(): this is List<never> {
     return this._tail.isEmpty();
+  }
+
+  public forEach(callback: Callback<T, void, [number]>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U, [number]>): List<U> {
@@ -122,6 +128,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public some(predicate: Predicate<T, [number]>): boolean {
     return Iterable.some(this, predicate);
+  }
+
+  public none(predicate: Predicate<T, [number]>): boolean {
+    return Iterable.none(this, predicate);
   }
 
   public every(predicate: Predicate<T, [number]>): boolean {
@@ -301,6 +311,14 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.join(this, separator);
   }
 
+  public sortWith(comparer: Comparer<T>): List<T> {
+    return List.from(Iterable.sortWith(this, comparer));
+  }
+
+  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
+  }
+
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
@@ -349,8 +367,8 @@ export class List<T> implements Collection.Indexed<T> {
     return [...this];
   }
 
-  public toJSON(): List.JSON {
-    return this.toArray().map(Serializable.toJSON);
+  public toJSON(): List.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value));
   }
 
   public toString(): string {
@@ -542,19 +560,52 @@ export class List<T> implements Collection.Indexed<T> {
 }
 
 export namespace List {
-  export interface JSON extends Array<json.JSON> {}
+  export type JSON<T> = Collection.Indexed.JSON<T>;
+
+  export function isList<T>(value: Iterable<T>): value is List<T>;
+
+  export function isList<T>(value: unknown): value is List<T>;
 
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
 
   export function from<T>(iterable: Iterable<T>): List<T> {
-    return isList<T>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (list, value) => list.append(value),
-          List.empty<T>()
-        );
+    if (isList(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
+  }
+
+  export function fromArray<T>(array: Array<T>): List<T> {
+    return Array.reduce(
+      array,
+      (list, value) => list.append(value),
+      List.empty()
+    );
+  }
+
+  export function fromIterable<T>(iterable: Iterable<T>): List<T> {
+    return Iterable.reduce(
+      iterable,
+      (list, value) => list.append(value),
+      List.empty()
+    );
+  }
+
+  export function sort<T extends Comparable<T>>(list: List<T>): List<T> {
+    return list.sortWith(compareComparable);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: List<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

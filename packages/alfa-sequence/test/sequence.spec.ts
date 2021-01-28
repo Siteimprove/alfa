@@ -13,6 +13,10 @@ test("#size gets the size of a sequence", (t) => {
   t.equal(seq.size, 4);
 });
 
+test("#size does not overflow for large sequences", (t) => {
+  t.equal(Sequence.from(array(100000)).size, 100000);
+});
+
 test("#isEmpty() returns true if a sequence is empty", (t) => {
   t(Sequence.empty().isEmpty());
 });

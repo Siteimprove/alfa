@@ -52,8 +52,7 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
 }
 
 export namespace Keyword {
-  export interface JSON extends Value.JSON {
-    type: "keyword";
+  export interface JSON extends Value.JSON<"keyword"> {
     value: string;
   }
 

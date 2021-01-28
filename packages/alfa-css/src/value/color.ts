@@ -59,4 +59,14 @@ export namespace Color {
       either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
     )
   );
+
+  export function isTransparent(color: Color): boolean {
+    switch (color.type) {
+      case "keyword":
+        return false;
+
+      case "color":
+        return color.alpha.value === 0;
+    }
+  }
 }

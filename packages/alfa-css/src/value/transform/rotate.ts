@@ -95,8 +95,7 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
 }
 
 export namespace Rotate {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "rotate";
     x: Number.JSON;
     y: Number.JSON;
