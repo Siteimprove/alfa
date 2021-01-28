@@ -221,7 +221,7 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
 }
 
 async function parseDocument(page: puppeteer.Page): Promise<Document> {
-  const { document } = await Puppeteer.asPage(
+  const { document } = await Puppeteer.toPage(
     await page.evaluateHandle(() => window.document)
   );
 

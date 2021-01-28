@@ -14,19 +14,17 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
-    "*.js",
-    "*.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-assert": "^0.9.0",
-    "@siteimprove/alfa-chai": "^0.9.0",
     "@siteimprove/alfa-device": "^0.9.0",
     "@siteimprove/alfa-dom": "^0.9.0",
-    "@siteimprove/alfa-future": "^0.9.0",
+    "@siteimprove/alfa-formatter": "^0.9.0",
+    "@siteimprove/alfa-formatter-earl": "^0.9.0",
     "@siteimprove/alfa-http": "^0.9.0",
     "@siteimprove/alfa-jquery": "^0.9.0",
+    "@siteimprove/alfa-mapper": "^0.9.0",
     "@siteimprove/alfa-option": "^0.9.0",
     "@siteimprove/alfa-web": "^0.9.0",
     "cypress": "^6.0.1"

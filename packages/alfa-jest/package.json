@@ -21,10 +21,8 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-assert": "^0.9.0",
-    "@siteimprove/alfa-highlight": "^0.9.0",
+    "@siteimprove/alfa-future": "^0.9.0",
     "@siteimprove/alfa-mapper": "^0.9.0",
-    "@siteimprove/alfa-refinement": "^0.9.0",
-    "@siteimprove/alfa-sequence": "^0.9.0",
     "@siteimprove/alfa-web": "^0.9.0",
     "@types/jest": "^26.0.10",
     "jest": "^26.4.2"
