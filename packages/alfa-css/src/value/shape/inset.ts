@@ -177,7 +177,7 @@ export namespace Inset {
   function parseOneToFour<T>(
     parser: Parser<Slice<Token>, T, string>
   ): Parser<Slice<Token>, readonly [T, T, T, T], string> {
-    return map(
+    return mapResult<Slice<Token>, Iterable<T>, readonly [T, T, T, T], string>(
       right(
         // make sure we fail if we have nothing
         peek(parser),
@@ -186,12 +186,16 @@ export namespace Inset {
       (result) => {
         const values = [...result];
 
-        return [
+        if (values.length > 4) {
+          return Err.of("Maximum of four parameters");
+        }
+
+        return Ok.of<readonly [T, T, T, T]>([
           values[0],
           values[1] ?? values[0],
           values[2] ?? values[0],
           values[3] ?? values[1] ?? values[0],
-        ];
+        ]);
       }
     );
   }
