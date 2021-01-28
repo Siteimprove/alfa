@@ -5,6 +5,14 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Array } from "@siteimprove/alfa-array";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Token } from "../../syntax/token";
+import { Slice } from "@siteimprove/alfa-slice";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Keyword } from "../keyword";
+import { Function } from "../../syntax/function";
+import { None, Option } from "@siteimprove/alfa-option";
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-inset
@@ -18,119 +26,61 @@ export class Inset<
     C extends Inset.Corner = Inset.Corner
   >(
     offsets: readonly [O, O, O, O],
-    corners: readonly [C, C, C, C]
-  ): Inset<O, C>;
-  public static of<
-    O extends Inset.Offset = Inset.Offset,
-    C extends Inset.Corner = Inset.Corner
-  >(
-    top: O,
-    right: O,
-    bottom: O,
-    left: O,
-    topLeft: C,
-    topRight: C,
-    bottomRight: C,
-    bottomLeft: C
-  ): Inset<O, C>;
-
-  public static of<
-    O extends Inset.Offset = Inset.Offset,
-    C extends Inset.Corner = Inset.Corner
-  >(
-    ...args:
-      | [readonly [O, O, O, O], readonly [C, C, C, C]]
-      | [O, O, O, O, C, C, C, C]
+    corners: Option<readonly [C, C, C, C]>
   ): Inset<O, C> {
-    const top = args.length === 2 ? args[0][0] : args[0];
-    const right = args.length === 2 ? args[0][1] : args[1];
-    const bottom = args.length === 2 ? args[0][2] : args[2];
-    const left = args.length === 2 ? args[0][3] : args[3];
-    const topLeft = args.length === 2 ? args[1][0] : args[4];
-    const topRight = args.length === 2 ? args[1][1] : args[5];
-    const bottomRight = args.length === 2 ? args[1][2] : args[6];
-    const bottomLeft = args.length === 2 ? args[1][3] : args[7];
-
-    return new Inset(
-      top,
-      right,
-      bottom,
-      left,
-      topLeft,
-      topRight,
-      bottomRight,
-      bottomLeft
-    );
+    return new Inset(offsets, corners);
   }
 
-  private readonly _top: O;
-  private readonly _right: O;
-  private readonly _bottom: O;
-  private readonly _left: O;
-  private readonly _topLeft: C;
-  private readonly _topRight: C;
-  private readonly _bottomRight: C;
-  private readonly _bottomLeft: C;
+  private readonly _offsets: readonly [O, O, O, O];
+  private readonly _corners: Option<readonly [C, C, C, C]>;
 
   private constructor(
-    top: O,
-    right: O,
-    bottom: O,
-    left: O,
-    topLeft: C,
-    topRight: C,
-    bottomRight: C,
-    bottomLeft: C
+    offsets: readonly [O, O, O, O],
+    corners: Option<readonly [C, C, C, C]>
   ) {
     super();
-    this._top = top;
-    this._right = right;
-    this._bottom = bottom;
-    this._left = left;
-    this._topLeft = topLeft;
-    this._topRight = topRight;
-    this._bottomLeft = bottomLeft;
-    this._bottomRight = bottomRight;
-  }
-
-  public get top(): O {
-    return this._top;
-  }
-
-  public get right(): O {
-    return this._right;
-  }
-
-  public get bottom(): O {
-    return this._bottom;
-  }
-
-  public get left(): O {
-    return this._left;
+    this._offsets = offsets;
+    this._corners = corners;
   }
 
   public get offsets(): readonly [O, O, O, O] {
-    return [this._top, this._right, this._bottom, this._left];
+    return this._offsets;
   }
 
-  public get topLeft(): C {
-    return this._topLeft;
+  public get corners(): Option<readonly [C, C, C, C]> {
+    return this._corners;
   }
 
-  public get topRight(): C {
-    return this._topRight;
+  public get top(): O {
+    return this._offsets[0];
   }
 
-  public get bottomRight(): C {
-    return this._bottomRight;
+  public get right(): O {
+    return this._offsets[1];
   }
 
-  public get bottomLeft(): C {
-    return this._bottomLeft;
+  public get bottom(): O {
+    return this._offsets[2];
   }
 
-  public get corners(): readonly [C, C, C, C] {
-    return [this._topLeft, this._topRight, this._bottomRight, this._bottomLeft];
+  public get left(): O {
+    return this._offsets[3];
+  }
+
+  public get topLeft(): Option<C> {
+    return this._corners.map((corners) => corners[0]);
+  }
+
+  public get topRight(): Option<C> {
+    return this._corners.map((corners) => corners[1]);
+  }
+
+  public get bottomRight(): Option<C> {
+    return this._corners.map((corners) => corners[2]);
+  }
+
+  public get bottomLeft(): Option<C> {
+    return this._corners.map((corners) => corners[3]);
   }
 
   public get type(): "shape" {
@@ -143,54 +93,38 @@ export class Inset<
 
   public equals(value: this): boolean;
   public equals(value: unknown): value is this;
+
   public equals(value: unknown): boolean {
     return (
       value instanceof Inset &&
-      value._top.equals(this._top) &&
-      value._right.equals(this._right) &&
-      value._bottom.equals(this._bottom) &&
-      value._left.equals(this._left) &&
-      Corner.equals(value._topLeft, this._topLeft) &&
-      Corner.equals(value._topRight, this._topRight) &&
-      Corner.equals(value._bottomRight, this._bottomRight) &&
-      Corner.equals(value._bottomLeft, this._bottomLeft)
+      Array.equals(value._offsets, this._offsets) &&
+      value._corners.equals(this._corners)
     );
   }
 
   public hash(hash: Hash): void {
-    this._top.hash(hash);
-    this._right.hash(hash);
-    this._bottom.hash(hash);
-    this._left.hash(hash);
-    Corner.hash(this._topLeft, hash);
-    Corner.hash(this._topRight, hash);
-    Corner.hash(this._bottomRight, hash);
-    Corner.hash(this._bottomLeft, hash);
+    Array.hash(this._offsets, hash);
+    this._corners.hash(hash);
   }
 
   public toJSON(): Inset.JSON {
     return {
       type: "shape",
       kind: "inset",
-      offsets: {
-        top: this.top.toJSON(),
-        right: this.top.toJSON(),
-        bottom: this.top.toJSON(),
-        left: this.top.toJSON(),
-      },
-      corners: {
-        topLeft: Corner.toJson(this.topLeft),
-        topRight: Corner.toJson(this.topLeft),
-        bottomRight: Corner.toJson(this.topLeft),
-        bottomLeft: Corner.toJson(this.topLeft),
-      },
+      offsets: Array.toJSON(this.offsets),
+      corners: this._corners.toJSON(),
     };
   }
 
   public toString(): string {
-    let result = `ellipse(${this.top} ${this.right} ${this.bottom} ${this.left} round `;
+    let result = `ellipse(${this.top} ${this.right} ${this.bottom} ${this.left}`;
+
+    if (this._corners.isNone()) {
+      return result + ")";
+    }
+
     // printing out the radii in the correct format is not completely trivial…
-    if (this.corners.some((c) => Array.isArray(c))) {
+    if (this._corners.get().some((c) => Array.isArray(c))) {
       // at least one corner has both horizontal and vertical radius, so we need to split things.
       const [tlh, tlv] = Array.isArray(this.topLeft)
         ? this.topLeft
@@ -215,53 +149,109 @@ export class Inset<
 }
 
 export namespace Inset {
+  import map = Parser.map;
+  import separatedList = Parser.separatedList;
+  import either = Parser.either;
+  import parseWhitespace = Token.parseWhitespace;
+  import right = Parser.right;
+  import peek = Parser.peek;
+  import mapResult = Parser.mapResult;
+  import pair = Parser.pair;
+  import option = Parser.option;
+  import separated = Parser.separated;
+  import Delim = Token.Delim;
+  import parseDelim = Token.parseDelim;
   export type Offset = Length | Percentage;
   type Radius = Length | Percentage;
   export type Corner = Radius | readonly [Radius, Radius];
 
   export interface JSON extends Value.JSON<"shape"> {
     kind: "inset";
-    offsets: {
-      top: Serializable.ToJSON<Offset>;
-      right: Serializable.ToJSON<Offset>;
-      bottom: Serializable.ToJSON<Offset>;
-      left: Serializable.ToJSON<Offset>;
-    };
-    corners: {
-      topLeft: Serializable.ToJSON<Corner>;
-      topRight: Serializable.ToJSON<Corner>;
-      bottomRight: Serializable.ToJSON<Corner>;
-      bottomLeft: Serializable.ToJSON<Corner>;
-    };
+    offsets: Serializable.ToJSON<Array<Offset>>;
+    corners: Option.JSON<Serializable.ToJSON<Array<Corner>>>;
   }
+
+  const parseLengthPercentage = either(Length.parse, Percentage.parse);
+
+  function parseOneToFour<T>(
+    parser: Parser<Slice<Token>, T, string>
+  ): Parser<Slice<Token>, readonly [T, T, T, T], string> {
+    return map(
+      right(
+        // make sure we fail if we have nothing
+        peek(parser),
+        separatedList(parser, parseWhitespace)
+      ),
+      (result) => {
+        const values = [...result];
+
+        return [
+          values[0],
+          values[1] ?? values[0],
+          values[2] ?? values[0],
+          values[3] ?? values[1] ?? values[0],
+        ];
+      }
+    );
+  }
+
+  const parseRadii = mapResult<
+    Slice<Token>,
+    readonly [Radius, Radius, Radius, Radius],
+    readonly [Radius, Radius, Radius, Radius],
+    string
+  >(parseOneToFour(parseLengthPercentage), (values) =>
+    Iterable.none(values, (value) => value.value < 0)
+      ? Ok.of(values)
+      : Err.of("Radii cannot be negative")
+  );
+
+  const parseCorners: Parser<
+    Slice<Token>,
+    readonly [Corner, Corner, Corner, Corner],
+    string
+  > = map(
+    pair(
+      parseRadii,
+      option(
+        right(
+          option(parseWhitespace),
+          right(parseDelim("/"), right(option(parseWhitespace), parseRadii))
+        )
+      )
+    ),
+    ([horizontal, vertical]) =>
+      vertical.isNone() ? horizontal : zip4(horizontal, vertical.get())
+  );
+
+  export const parse = map(
+    Function.parse(
+      "inset",
+      pair(
+        parseOneToFour<Offset>(parseLengthPercentage),
+        option(
+          right(
+            option(Token.parseWhitespace),
+            right(
+              Keyword.parse("round"),
+              right(Token.parseWhitespace, parseCorners)
+            )
+          )
+        )
+      )
+    ),
+    ([_, [offsets, corners]]) => Inset.of(offsets, corners)
+  );
 }
 
-namespace Corner {
-  export function equals(c1: Inset.Corner, c2: Inset.Corner): boolean {
-    if (Equatable.isEquatable(c1)) {
-      return c1.equals(c2);
-    }
-
-    if (Equatable.isEquatable(c2)) {
-      return c2.equals(c1);
-    }
-
-    return Array.equals(c1, c2);
-  }
-
-  export function hash(c: Inset.Corner, hash: Hash): void {
-    if (Hashable.isHashable(c)) {
-      c.hash(hash);
-    } else {
-      Array.hash(c, hash);
-    }
-  }
-
-  export function toJson(c: Inset.Corner): Serializable.ToJSON<Inset.Corner> {
-    if (Serializable.isSerializable(c)) {
-      return c.toJSON();
-    }
-
-    return Array.toJSON(c);
-  }
+function zip4<T, U>(
+  array1: readonly [T, T, T, T],
+  array2: readonly [U, U, U, U]
+): readonly [[T, U], [T, U], [T, U], [T, U]] {
+  return [
+    [array1[0], array2[0]],
+    [array1[1], array2[1]],
+    [array1[2], array2[2]],
+    [array1[3], array2[3]],
+  ];
 }
