@@ -22,7 +22,7 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 
 - Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. However, this does not mean that Alfa does not rely on third-party dependencies, only that there are limitations to what third-party dependencies may be used for.
 
-- Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high-quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure. **This goal is currently far from met and will be prioritised**.
+- Alfa wants to foster a thriving ecosystem with people from many different backgrounds building on top of the core capabilities of Alfa. To this end, high-quality documentation is paramount to success. Picking up and putting any one of the many subsystems within Alfa to use should be a straightforward experience with every subsystem clearly stating its purpose and structure. **This goal is currently far from met and will be prioritised**.
 
 ## Usage
 
