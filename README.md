@@ -160,4 +160,4 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
-[open an issue]: ../../issues/new "Open a new issue"
+[open an issue]: ../../issues/new/choose "Open a new issue"
