@@ -1,18 +1,31 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Hash } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
+
+import { Keyword } from "../keyword";
 import { Length } from "../length";
 import { Percentage } from "../percentage";
+
 import { Value } from "../../value";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Array } from "@siteimprove/alfa-array";
-import { Parser } from "@siteimprove/alfa-parser";
 import { Token } from "../../syntax/token";
-import { Slice } from "@siteimprove/alfa-slice";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Err, Ok } from "@siteimprove/alfa-result";
-import { Keyword } from "../keyword";
 import { Function } from "../../syntax/function";
-import { None, Option } from "@siteimprove/alfa-option";
+
+const {
+  either,
+  map,
+  mapResult,
+  option,
+  pair,
+  peek,
+  right,
+  separatedList,
+} = Parser;
+const { parseDelim, parseWhitespace } = Token;
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-inset
@@ -149,18 +162,6 @@ export class Inset<
 }
 
 export namespace Inset {
-  import map = Parser.map;
-  import separatedList = Parser.separatedList;
-  import either = Parser.either;
-  import parseWhitespace = Token.parseWhitespace;
-  import right = Parser.right;
-  import peek = Parser.peek;
-  import mapResult = Parser.mapResult;
-  import pair = Parser.pair;
-  import option = Parser.option;
-  import separated = Parser.separated;
-  import Delim = Token.Delim;
-  import parseDelim = Token.parseDelim;
   export type Offset = Length | Percentage;
   type Radius = Length | Percentage;
   export type Corner = Radius | readonly [Radius, Radius];
