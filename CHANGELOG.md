@@ -21,9 +21,25 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-assert](packages/alfa-assert): The package has been reworked to solve several long-standing issues in its design. This also affects all the integration packages that make use of this package. For more information, please see the associated issue and pull request. ([#270](../../issues/270), [#287](../../pull/287))
+
 ### Added
 
 - [@siteimprove/alfa-array](packages/alfa-array): `Array.reduce()` is now available.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Implementations of SIA-R66 and SIA-R96 are now available. ([#665](../../pull/665), [#666](../../pull/666))
+
+- [@siteimprove/alfa-protractor](packages/alfa-protractor): A new package has been added with conversion functions for the Protractor browser automation framework. ([#428](../../pull/428))
+
+### Changed
+
+- [@siteimprove/alfa-css](packages/alfa-css): The `Value.JSON` type is now optionally parametric. ([#667](../../pull/667))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `isVisible()` function now correctly accounts for content and text hidden by offscreening and text indents that cause full clipping. ([#519](../../issues/519), [#524](../../issues/524), [#616](../../pull/616))
 
 ## [0.9.0](../../compare/v0.8.0...v0.9.0) (2021-01-21)
 
