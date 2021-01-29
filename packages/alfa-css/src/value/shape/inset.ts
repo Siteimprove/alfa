@@ -120,12 +120,12 @@ export class Inset<
     this._corners.hash(hash);
   }
 
-  public toJSON(): Inset.JSON {
+  public toJSON(): Inset.JSON<O, C> {
     return {
       type: "shape",
       kind: "inset",
       offsets: Array.toJSON(this.offsets),
-      corners: this._corners.toJSON(),
+      corners: this.corners.toJSON(),
     };
   }
 
@@ -137,7 +137,7 @@ export class Inset<
     }
 
     // printing out the radii in the correct format is not completely trivial…
-    if (this._corners.get().some((c) => Array.isArray(c))) {
+    if (this.corners.get().some((c) => Array.isArray(c))) {
       // at least one corner has both horizontal and vertical radius, so we need to split things.
       const [tlh, tlv] = Array.isArray(this.topLeft)
         ? this.topLeft
@@ -166,10 +166,11 @@ export namespace Inset {
   type Radius = Length | Percentage;
   export type Corner = Radius | readonly [Radius, Radius];
 
-  export interface JSON extends Value.JSON<"shape"> {
+  export interface JSON<O extends Offset = Offset, C extends Corner = Corner>
+    extends Value.JSON<"shape"> {
     kind: "inset";
-    offsets: Serializable.ToJSON<Array<Offset>>;
-    corners: Option.JSON<Serializable.ToJSON<Array<Corner>>>;
+    offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
+    corners: Option.JSON<readonly [C, C, C, C]>;
   }
 
   const parseLengthPercentage = either(Length.parse, Percentage.parse);
