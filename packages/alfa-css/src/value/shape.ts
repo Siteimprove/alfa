@@ -6,6 +6,8 @@ import { Value } from "../value";
 import { Circle } from "./shape/circle";
 import { Inset } from "./shape/inset";
 import { Rectangle } from "./shape/rectangle";
+import { Ellipse } from "./shape/ellipse";
+import { Polygon } from "./shape/polygon";
 
 export class Shape<
   S extends Shape.Basic | Shape.Deprecated = Shape.Basic,
@@ -64,8 +66,10 @@ export class Shape<
 export namespace Shape {
   /**
    * @see https://drafts.csswg.org/css-shapes/#supported-basic-shapes
+   *
+   * We do not support Path yet
    */
-  export type Basic = Circle; // | Inset;
+  export type Basic = Circle | Ellipse | Inset | Polygon;
 
   export type Deprecated = Rectangle;
 
@@ -79,7 +83,12 @@ export namespace Shape {
     | Keyword<"margin-box">;
 
   export interface JSON extends Value.JSON<"shape"> {
-    shape: Circle.JSON | Rectangle.JSON;
+    shape:
+      | Circle.JSON
+      | Ellipse.JSON
+      | Inset.JSON
+      | Polygon.JSON
+      | Rectangle.JSON;
     box: Keyword.JSON;
   }
 }
