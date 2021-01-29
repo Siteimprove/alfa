@@ -41,6 +41,13 @@ test(".parse() parses the special about:blank URL", (t) => {
   });
 });
 
+test(".parse() parses the special about:blank URL", (t) => {
+  const a = URL.parse("about:blank").get().toString();
+  const b = "about:blank";
+
+  t.equal(a === b, true);
+});
+
 test("#equals() checks if two URLs are equal", (t) => {
   const a = URL.parse("foo", "file:").get();
   const b = URL.parse("foo", "file:").get();
