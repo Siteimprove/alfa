@@ -7,6 +7,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Array } from "@siteimprove/alfa-array";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Token } from "../../syntax/token";
+import { Function } from "../../syntax/function";
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-polygon
@@ -81,6 +84,16 @@ export class Polygon<
 }
 
 export namespace Polygon {
+  import pair = Parser.pair;
+  import either = Parser.either;
+  import right = Parser.right;
+  import parseWhitespace = Token.parseWhitespace;
+  import map = Parser.map;
+  import option = Parser.option;
+  import left = Parser.left;
+  import parseComma = Token.parseComma;
+  import separatedList = Parser.separatedList;
+  import separated = Parser.separated;
   export type FillRule = Keyword<"nonzero"> | Keyword<"evenodd">;
   export type Vertex<
     V extends Length | Percentage = Length | Percentage
@@ -92,4 +105,22 @@ export namespace Polygon {
     fillRule: Option.JSON<Keyword.JSON<"nonzero"> | Keyword.JSON<"evenodd">>;
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;
   }
+
+  const parseLengthPercentage = either(Length.parse, Percentage.parse);
+  const parseVertex = separated(
+    parseLengthPercentage,
+    parseWhitespace,
+    parseLengthPercentage
+  );
+
+  export const parse = map(
+    Function.parse(
+      "polygon",
+      pair(
+        option(left(Keyword.parse("nonzero", "evenodd"), parseComma)),
+        separatedList(parseVertex, parseWhitespace)
+      )
+    ),
+    ([_, [fillRule, vertices]]) => Polygon.of(fillRule, vertices)
+  );
 }
