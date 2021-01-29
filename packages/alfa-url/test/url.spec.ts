@@ -12,6 +12,7 @@ test(".parse() parses an absolute URL", (t) => {
     path: ["page.html"],
     query: null,
     fragment: null,
+    cannotBeABaseURL: false,
   });
 });
 
@@ -25,6 +26,7 @@ test(".parse() parses a relative URL against a base URL", (t) => {
     path: ["page.html"],
     query: null,
     fragment: null,
+    cannotBeABaseURL: false,
   });
 });
 
@@ -38,6 +40,7 @@ test(".parse() parses the special about:blank URL", (t) => {
     path: ["blank"],
     query: null,
     fragment: null,
+    cannotBeABaseURL: false,
   });
 });
 

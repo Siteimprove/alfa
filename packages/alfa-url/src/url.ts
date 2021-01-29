@@ -24,7 +24,8 @@ export class URL implements Equatable, Hashable, Serializable {
     port: Option<number> = None,
     path: Iterable<string> = [],
     query: Option<string> = None,
-    fragment: Option<string> = None
+    fragment: Option<string> = None,
+    cannotBeABaseURL: boolean = false
   ): URL {
     return new URL(
       scheme,
@@ -34,7 +35,8 @@ export class URL implements Equatable, Hashable, Serializable {
       port,
       Sequence.from(path),
       query,
-      fragment
+      fragment,
+      cannotBeABaseURL
     );
   }
 
@@ -46,6 +48,7 @@ export class URL implements Equatable, Hashable, Serializable {
   private readonly _path: Sequence<string>;
   private readonly _query: Option<string>;
   private readonly _fragment: Option<string>;
+  private readonly _cannotBeABaseURL: boolean;
 
   private constructor(
     scheme: string,
@@ -55,7 +58,8 @@ export class URL implements Equatable, Hashable, Serializable {
     port: Option<number>,
     path: Sequence<string>,
     query: Option<string>,
-    fragment: Option<string>
+    fragment: Option<string>,
+    cannotBeABaseURL: boolean
   ) {
     this._scheme = scheme;
     this._username = username;
@@ -65,6 +69,7 @@ export class URL implements Equatable, Hashable, Serializable {
     this._path = path;
     this._query = query;
     this._fragment = fragment;
+    this._cannotBeABaseURL = cannotBeABaseURL;
   }
 
   /**
@@ -124,6 +129,13 @@ export class URL implements Equatable, Hashable, Serializable {
   }
 
   /**
+   * @see https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag
+   */
+  public get cannotBeABaseURL(): boolean {
+    return this._cannotBeABaseURL;
+  }
+
+  /**
    * @see https://url.spec.whatwg.org/#include-credentials
    */
   public hasCredentials(): boolean {
@@ -150,7 +162,8 @@ export class URL implements Equatable, Hashable, Serializable {
       this._port,
       this._path,
       this._query,
-      None
+      None,
+      this._cannotBeABaseURL
     );
   }
 
@@ -199,6 +212,7 @@ export class URL implements Equatable, Hashable, Serializable {
       path: this._path.toArray(),
       query: this._query.getOr(null),
       fragment: this._fragment.getOr(null),
+      cannotBeABaseURL: this._cannotBeABaseURL,
     };
   }
 
@@ -269,6 +283,7 @@ export namespace URL {
     path: Array<string>;
     query: string | null;
     fragment: string | null;
+    cannotBeABaseURL: boolean;
   }
 
   export function from(json: JSON): URL {
