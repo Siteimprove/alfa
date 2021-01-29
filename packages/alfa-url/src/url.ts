@@ -244,20 +244,24 @@ export class URL implements Equatable, Hashable, Serializable {
       }
     }
 
-    if (this._host.isNone() && this._scheme === "file") {
-      output += "//";
-    }
+    if (this._cannotBeABaseURL === true) {
+      for (const path of this._path) output += path;
+    } else {
+      if (this._host.isNone() && this._scheme === "file") {
+        output += "//";
+      }
 
-    if (
-      this._host.isNone() &&
-      this._path.size > 1 &&
-      this._path.first().includes("")
-    ) {
-      output += "/.";
-    }
+      if (
+        this._host.isNone() &&
+        this._path.size > 1 &&
+        this._path.first().includes("")
+      ) {
+        output += "/.";
+      }
 
-    for (const segment of this._path) {
-      output += "/" + segment;
+      for (const segment of this._path) {
+        output += "/" + segment;
+      }
     }
 
     for (const query of this._query) {
