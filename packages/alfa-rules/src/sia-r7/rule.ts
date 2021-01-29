@@ -3,12 +3,13 @@ import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isIgnored } from "../common/predicate";
+import { hasDescendant, isIgnored } from "../common/predicate";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isVisible } from "../common/predicate/is-visible";
@@ -16,6 +17,7 @@ import { isVisible } from "../common/predicate/is-visible";
 const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, or } = Predicate;
+const { and: andRefinement } = Refinement;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
@@ -33,6 +35,17 @@ export default Rule.Atomic.of<Page, Attribute>({
               .filter(isElement)
               .filter(or(isVisible(device), not(isIgnored(device))))
               .filter(hasAttribute("lang", not(isEmpty)))
+              .filter(
+                not(
+                  hasDescendant(
+                    andRefinement(
+                      isElement,
+                      hasAttribute("lang", not(isEmpty))
+                    ),
+                    { flattened: true }
+                  )
+                )
+              )
               .map((element) => element.attribute("lang").get())
           );
       },
