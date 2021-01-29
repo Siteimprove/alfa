@@ -1,15 +1,29 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Hash } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
+
 import { Value } from "../../value";
 import { Length } from "../length";
 import { Percentage } from "../percentage";
 import { Keyword } from "../keyword";
-import { Option } from "@siteimprove/alfa-option";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Array } from "@siteimprove/alfa-array";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Parser } from "@siteimprove/alfa-parser";
+
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
+
+const {
+  either,
+  left,
+  map,
+  option,
+  pair,
+  right,
+  separated,
+  separatedList,
+} = Parser;
+const { parseComma, parseWhitespace } = Token;
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#funcdef-polygon
@@ -84,16 +98,6 @@ export class Polygon<
 }
 
 export namespace Polygon {
-  import pair = Parser.pair;
-  import either = Parser.either;
-  import right = Parser.right;
-  import parseWhitespace = Token.parseWhitespace;
-  import map = Parser.map;
-  import option = Parser.option;
-  import left = Parser.left;
-  import parseComma = Token.parseComma;
-  import separatedList = Parser.separatedList;
-  import separated = Parser.separated;
   export type FillRule = Keyword<"nonzero"> | Keyword<"evenodd">;
   export type Vertex<
     V extends Length | Percentage = Length | Percentage
