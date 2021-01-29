@@ -118,7 +118,10 @@ export namespace Polygon {
       "polygon",
       pair(
         option(left(Keyword.parse("nonzero", "evenodd"), parseComma)),
-        separatedList(parseVertex, parseWhitespace)
+        right(
+          option(parseWhitespace),
+          separatedList(parseVertex, parseWhitespace)
+        )
       )
     ),
     ([_, [fillRule, vertices]]) => Polygon.of(fillRule, vertices)
