@@ -52,8 +52,8 @@ export class Polygon<
     return this._fillRule;
   }
 
-  public get vertices(): Iterable<Polygon.Vertex<V>> {
-    return this.vertices;
+  public get vertices(): ReadonlyArray<Polygon.Vertex<V>> {
+    return this._vertices;
   }
 
   public get type(): "shape" {
@@ -85,13 +85,13 @@ export class Polygon<
       type: "shape",
       kind: "polygon",
       fillRule: this.fillRule.toJSON(),
-      vertices: Array.toJSON(this._vertices),
+      vertices: Array.toJSON(this.vertices),
     };
   }
 
   public toString(): string {
     const fillRule = this._fillRule.isSome() ? `${this.fillRule.get()}, ` : "";
-    const vertices = this._vertices.map(([h, v]) => `${h} ${v}`).join(" ");
+    const vertices = this.vertices.map(([h, v]) => `${h} ${v}`).join(" ");
 
     return `polygon(${fillRule}${vertices})`;
   }
