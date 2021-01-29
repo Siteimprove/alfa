@@ -28,6 +28,9 @@
       "path": "../alfa-predicate"
     },
     {
+      "path": "../alfa-reducer"
+    },
+    {
       "path": "../alfa-refinement"
     },
     {

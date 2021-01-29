@@ -9,8 +9,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { None } from "./none";
 import { Option } from "./option";
+import { None } from "./none";
 
 const { not, test } = Predicate;
 
@@ -152,6 +152,10 @@ export namespace Some {
     type: "some";
     value: Serializable.ToJSON<T>;
   }
+
+  export function isSome<T>(value: Iterable<T>): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T>;
 
   export function isSome<T>(value: unknown): value is Some<T> {
     return value instanceof Some;

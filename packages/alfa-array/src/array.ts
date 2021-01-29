@@ -6,6 +6,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as global from "./global";
@@ -17,6 +18,10 @@ const { compareComparable } = Comparable;
 export type Array<T> = globalThis.Array<T>;
 
 export namespace Array {
+  export function isArray<T>(value: Iterable<T>): value is Array<T>;
+
+  export function isArray<T>(value: unknown): value is Array<T>;
+
   export function isArray<T>(value: unknown): value is Array<T> {
     return global.isArray(value);
   }
@@ -35,7 +40,7 @@ export namespace Array {
    * along existing arrays as-is instead of returning a copy.
    */
   export function from<T>(iterable: Iterable<T>): Array<T> {
-    if (isArray<T>(iterable)) {
+    if (isArray(iterable)) {
       return iterable;
     }
 
@@ -56,6 +61,18 @@ export namespace Array {
 
   export function clone<T extends Clone<T>>(array: ReadonlyArray<T>): Array<T> {
     return array.map(Clone.clone);
+  }
+
+  export function reduce<T, U = T>(
+    array: Array<T>,
+    reducer: Reducer<T, U, [number]>,
+    accumulator: U
+  ): U {
+    for (let i = 0, n = array.length; i < n; i++) {
+      accumulator = reducer(accumulator, array[i], i);
+    }
+
+    return accumulator;
   }
 
   export function find<T, U extends T>(

@@ -24,7 +24,11 @@ declare module "unexpected" {
        */
       addAssertion<T, A extends Array<unknown> = []>(
         pattern: string,
-        handler: (expect: Expect, subject: T, ...args: A) => void
+        handler: (
+          expect: Expect,
+          subject: T,
+          ...args: A
+        ) => void | Promise<void>
       ): this;
 
       /**

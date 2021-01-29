@@ -1,9 +1,10 @@
 /// <reference types="jasmine" />
 
-import { Assert } from "@siteimprove/alfa-assert";
+import { Rule } from "@siteimprove/alfa-act";
+import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Page } from "@siteimprove/alfa-web";
+
+import { addAsyncMatcher } from "./jasmine/add-async-matcher";
 
 declare global {
   namespace jasmine {
@@ -14,39 +15,32 @@ declare global {
 }
 
 export namespace Jasmine {
-  export function createPlugin<T>(
-    identify: Refinement<unknown, T>,
-    transform: Mapper<T, Page>
+  export function createPlugin<I, J, T = unknown, Q = never>(
+    transform: Mapper<I, Promise<J>>,
+    rules: Iterable<Rule<J, T, Q>>,
+    handlers: Iterable<Handler<J, T, Q>> = [],
+    options: Asserter.Options = {}
   ): void {
-    beforeEach(() => {
-      jasmine.addMatchers({
-        toBeAccessible(util): any {
+    const asserter = Asserter.of(rules, handlers, options);
+
+    addAsyncMatcher("toBeAccessible", (util) => {
+      return {
+        async compare(value: I) {
+          const target = await transform(value);
+
+          const error = await asserter.expect(target).to.be.accessible();
+
+          const message = error.isOk() ? error.get() : error.getErr();
+
           return {
-            async compare(value: unknown) {
-              if (identify(value)) {
-                const page = transform(value);
-
-                return await Assert.Page.isAccessible(page).map((error) => {
-                  return {
-                    pass: error.isNone(),
-                    message:
-                      util.buildFailureMessage(
-                        "toBeAccessible",
-                        error.isNone(),
-                        page
-                      ) + (error.isNone() ? "" : ` ${error.toString()}`),
-                  };
-                });
-              }
-
-              return {
-                pass: true,
-                message: "Expected to not be accessible",
-              };
-            },
+            pass: error.isOk(),
+            message:
+              util.buildFailureMessage("toBeAccessible", error.isOk(), value) +
+              " " +
+              message,
           };
         },
-      });
+      };
     });
   }
 }

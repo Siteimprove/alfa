@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -9,8 +10,6 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
-
-import * as json from "@siteimprove/alfa-json";
 
 const { not } = Predicate;
 
@@ -201,17 +200,35 @@ export class Set<T> implements Collection.Unkeyed<T> {
 export namespace Set {
   export type JSON<T> = Collection.Unkeyed.JSON<T>;
 
+  export function isSet<T>(value: Iterable<T>): value is Set<T>;
+
+  export function isSet<T>(value: unknown): value is Set<T>;
+
   export function isSet<T>(value: unknown): value is Set<T> {
     return value instanceof Set;
   }
 
   export function from<T>(iterable: Iterable<T>): Set<T> {
-    return isSet<T>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (set, value) => set.add(value),
-          Set.empty<T>()
-        );
+    if (isSet(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
+  }
+
+  export function fromArray<T>(array: Array<T>): Set<T> {
+    return Array.reduce(array, (set, value) => set.add(value), Set.empty());
+  }
+
+  export function fromIterable<T>(iterable: Iterable<T>): Set<T> {
+    return Iterable.reduce(
+      iterable,
+      (set, value) => set.add(value),
+      Set.empty()
+    );
   }
 }
