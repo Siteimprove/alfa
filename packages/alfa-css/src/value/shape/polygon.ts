@@ -80,7 +80,7 @@ export class Polygon<
     Array.hash(this._vertices, hash);
   }
 
-  public toJSON(): Polygon.JSON<V> {
+  public toJSON(): Polygon.JSON<F, V> {
     return {
       type: "shape",
       kind: "polygon",
@@ -103,10 +103,12 @@ export namespace Polygon {
     V extends Length | Percentage = Length | Percentage
   > = readonly [V, V];
 
-  export interface JSON<V extends Length | Percentage = Length | Percentage>
-    extends Value.JSON<"shape"> {
+  export interface JSON<
+    F extends FillRule = FillRule,
+    V extends Length | Percentage = Length | Percentage
+  > extends Value.JSON<"shape"> {
     kind: "polygon";
-    fillRule: Option.JSON<Keyword.JSON<"nonzero"> | Keyword.JSON<"evenodd">>;
+    fillRule: Option.JSON<F>;
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;
   }
 
