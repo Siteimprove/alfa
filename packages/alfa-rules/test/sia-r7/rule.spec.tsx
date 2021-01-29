@@ -55,6 +55,29 @@ test("evaluate() passes an element with a lang attribute within <body> that is n
   ]);
 });
 
+test("evaluate() passes an element with a lang attribute within <body> when the element's lang attribute overwrites an invalid lang attribute", async (t) => {
+  const element = (
+    <span lang="en" style={{ diplay: "none" }}>
+      Hello World
+    </span>
+  );
+  const target = element.attribute("lang").get();
+
+  const document = Document.of([
+    <html lang="en">
+      <body>
+        <div lang="english">{element}</div>
+      </body>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R7, { document }), [
+    passed(R7, target, {
+      1: Outcomes.HasValidLanguage,
+    }),
+  ]);
+});
+
 test("evaluate() fails an element with a lang attribute within <body> with an invalid value", async (t) => {
   const element = <span lang="english">Hello World</span>;
   const target = element.attribute("lang").get()!;
