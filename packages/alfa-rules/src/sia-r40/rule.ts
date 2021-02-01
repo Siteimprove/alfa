@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasRole } from "../common/predicate/has-role";
+import { hasExplicitRole } from "../common/predicate/has-explicit-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { and, not } = Predicate;
@@ -23,7 +23,9 @@ export default Rule.Atomic.of<Page, Element>({
         return document
           .descendants({ flattened: true, nested: true })
           .filter(isElement)
-          .filter(and(hasRole(hasName("region")), not(isIgnored(device))));
+          .filter(
+            and(hasExplicitRole(hasName("region")), not(isIgnored(device)))
+          );
       },
 
       expectations(target) {
