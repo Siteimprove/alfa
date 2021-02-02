@@ -8,7 +8,8 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 /**
  * @see http://blog.higher-order.com/assets/trampolines.pdf
  */
-export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
+export abstract class Trampoline<T>
+  implements Functor<T>, Monad<T>, Iterable<T> {
   protected abstract step(): Trampoline<T>;
 
   public run(): T {
@@ -25,19 +26,23 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
     }
   }
 
-  public isDone(): boolean {
-    return this instanceof Done;
-  }
+  public abstract isDone(): boolean;
 
-  public isSuspended(): boolean {
-    return this instanceof Suspend || this instanceof Bind;
-  }
+  public abstract isSuspended(): boolean;
 
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
     return this.flatMap((value) => Done.of(mapper(value)));
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
+
+  public *iterator(): Iterator<T> {
+    yield this.run();
+  }
+
+  public [Symbol.iterator](): Iterator<T> {
+    return this.iterator();
+  }
 }
 
 export namespace Trampoline {
@@ -98,6 +103,14 @@ class Done<T> extends Trampoline<T> {
     return this._value;
   }
 
+  public isDone(): boolean {
+    return true;
+  }
+
+  public isSuspended(): boolean {
+    return false;
+  }
+
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
     return new Done(mapper(this._value));
   }
@@ -121,6 +134,14 @@ class Suspend<T> extends Trampoline<T> {
 
   protected step(): Trampoline<T> {
     return this._thunk();
+  }
+
+  public isDone(): boolean {
+    return false;
+  }
+
+  public isSuspended(): boolean {
+    return true;
   }
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
@@ -150,6 +171,14 @@ class Bind<S, T> extends Trampoline<T> {
 
   protected step(): Trampoline<T> {
     return this._thunk().flatMap(this._mapper);
+  }
+
+  public isDone(): boolean {
+    return false;
+  }
+
+  public isSuspended(): boolean {
+    return true;
   }
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
