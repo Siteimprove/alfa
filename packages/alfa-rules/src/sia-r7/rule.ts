@@ -16,8 +16,8 @@ import { isVisible } from "../common/predicate/is-visible";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, or } = Predicate;
-const { and: andRefinement } = Refinement;
+const { not, or } = Predicate;
+const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
@@ -38,10 +38,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               .filter(
                 not(
                   hasDescendant(
-                    andRefinement(
-                      isElement,
-                      hasAttribute("lang", not(isEmpty))
-                    ),
+                    and(isElement, hasAttribute("lang", not(isEmpty))),
                     { flattened: true }
                   )
                 )
