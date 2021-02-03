@@ -620,3 +620,33 @@ test(".lex() lexes a hash delimiter", (t) => {
     },
   ]);
 });
+
+test(".lex() lexes an important declaration", (t) => {
+  lex(t, "display: none !important", [
+    {
+      type: "ident",
+      value: "display",
+    },
+    {
+      type: "colon",
+    },
+    {
+      type: "whitespace",
+    },
+    {
+      type: "ident",
+      value: "none",
+    },
+    {
+      type: "whitespace",
+    },
+    {
+      type: "delim",
+      value: 0x21,
+    },
+    {
+      type: "ident",
+      value: "important",
+    },
+  ]);
+});
