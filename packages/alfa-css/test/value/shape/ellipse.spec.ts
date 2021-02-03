@@ -18,10 +18,10 @@ function parse(t: Assertions, input: string, expected: Ellipse.JSON) {
 
 test("parse() parses an ellipse", (t) => {
   parse(t, "ellipse(1px 3px at right)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "ellipse",
     rx: {
-      type: "shape",
+      type: "basic-shape",
       kind: "radius",
       value: {
         type: "length",
@@ -30,7 +30,7 @@ test("parse() parses an ellipse", (t) => {
       },
     },
     ry: {
-      type: "shape",
+      type: "basic-shape",
       kind: "radius",
       value: {
         type: "length",

@@ -31,7 +31,7 @@ const { parseComma, parseWhitespace } = Token;
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
   V extends Length | Percentage = Length | Percentage
-> extends Value<"shape"> {
+> extends Value<"basic-shape"> {
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
     V extends Length | Percentage = Length | Percentage
@@ -48,20 +48,20 @@ export class Polygon<
     this._vertices = vertices;
   }
 
+  public get type(): "basic-shape" {
+    return "basic-shape";
+  }
+
+  public get kind(): "polygon" {
+    return "polygon";
+  }
+
   public get fill(): Option<F> {
     return this._fill;
   }
 
   public get vertices(): ReadonlyArray<Polygon.Vertex<V>> {
     return this._vertices;
-  }
-
-  public get type(): "shape" {
-    return "shape";
-  }
-
-  public get kind(): "polygon" {
-    return "polygon";
   }
 
   public equals(value: Polygon): boolean;
@@ -83,7 +83,7 @@ export class Polygon<
 
   public toJSON(): Polygon.JSON<F, V> {
     return {
-      type: "shape",
+      type: "basic-shape",
       kind: "polygon",
       fill: this._fill.toJSON(),
       vertices: Array.toJSON(this._vertices),
@@ -108,7 +108,7 @@ export namespace Polygon {
   export interface JSON<
     F extends Fill = Fill,
     V extends Length | Percentage = Length | Percentage
-  > extends Value.JSON<"shape"> {
+  > extends Value.JSON<"basic-shape"> {
     kind: "polygon";
     fill: Option.JSON<F>;
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;

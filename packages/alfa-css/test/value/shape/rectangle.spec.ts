@@ -18,8 +18,8 @@ function parse(t: Assertions, input: string, expected: Rectangle.JSON) {
 
 test("parse() parses comma separated rectangles", (t) => {
   parse(t, "rect(1px, auto, 2em, auto)", {
-    type: "shape",
-    format: "rectangle",
+    type: "basic-shape",
+    kind: "rectangle",
     bottom: {
       type: "length",
       unit: "em",
@@ -41,8 +41,8 @@ test("parse() parses comma separated rectangles", (t) => {
   });
 
   parse(t, "rect(1px , auto , 2em,auto)", {
-    type: "shape",
-    format: "rectangle",
+    type: "basic-shape",
+    kind: "rectangle",
     bottom: {
       type: "length",
       unit: "em",
@@ -66,8 +66,8 @@ test("parse() parses comma separated rectangles", (t) => {
 
 test("parse() parses space separated rectangles", (t) => {
   parse(t, "rect(1px auto 2em auto)", {
-    type: "shape",
-    format: "rectangle",
+    type: "basic-shape",
+    kind: "rectangle",
     bottom: {
       type: "length",
       unit: "em",

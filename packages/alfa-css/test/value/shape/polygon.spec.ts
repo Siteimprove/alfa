@@ -18,7 +18,7 @@ function parse(t: Assertions, input: string, expected: Polygon.JSON) {
 
 test("parse() parses a polygon with no fill rule", (t) => {
   parse(t, "polygon(1px 0px 1px 1px 0px 1px)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "polygon",
     fill: {
       type: "none",
@@ -42,7 +42,7 @@ test("parse() parses a polygon with no fill rule", (t) => {
 
 test("parse() parses a polygon with a fill rule", (t) => {
   parse(t, "polygon(evenodd, 1px 0px 1px 1px 0px 1px)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "polygon",
     fill: {
       type: "some",

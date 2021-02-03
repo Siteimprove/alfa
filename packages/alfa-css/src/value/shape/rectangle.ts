@@ -16,7 +16,7 @@ const { either, map, option, pair, take, right, delimited } = Parser;
  */
 export class Rectangle<
   O extends Length | Rectangle.Auto = Length | Rectangle.Auto
-> extends Value<"shape"> {
+> extends Value<"basic-shape"> {
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
     top: O,
     right: O,
@@ -39,8 +39,8 @@ export class Rectangle<
     this._left = left;
   }
 
-  public get type(): "shape" {
-    return "shape";
+  public get type(): "basic-shape" {
+    return "basic-shape";
   }
 
   public get kind(): "rectangle" {
@@ -86,8 +86,8 @@ export class Rectangle<
 
   public toJSON(): Rectangle.JSON {
     return {
-      type: "shape",
-      format: "rectangle",
+      type: "basic-shape",
+      kind: "rectangle",
       top: this._top.toJSON(),
       right: this._right.toJSON(),
       bottom: this._bottom.toJSON(),
@@ -103,8 +103,8 @@ export class Rectangle<
 export namespace Rectangle {
   export type Auto = Keyword<"auto">;
 
-  export interface JSON extends Value.JSON<"shape"> {
-    format: "rectangle";
+  export interface JSON extends Value.JSON<"basic-shape"> {
+    kind: "rectangle";
     top: Length.JSON | Keyword.JSON;
     right: Length.JSON | Keyword.JSON;
     bottom: Length.JSON | Keyword.JSON;

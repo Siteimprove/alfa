@@ -18,7 +18,7 @@ function parse(t: Assertions, input: string, expected: Inset.JSON) {
 
 test("parse() parses an inset with square corners", (t) => {
   parse(t, "inset(1px 2px 3px 4px)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "inset",
     offsets: [
       { type: "length", value: 1, unit: "px" },
@@ -32,7 +32,7 @@ test("parse() parses an inset with square corners", (t) => {
 
 test("parse() parses an inset with evenly rounded corners", (t) => {
   parse(t, "inset(1px 2px 3px 4px round 1px 1px 1px 1px)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "inset",
     offsets: [
       { type: "length", value: 1, unit: "px" },
@@ -54,7 +54,7 @@ test("parse() parses an inset with evenly rounded corners", (t) => {
 
 test("parse() parses an inset with unevenly rounded corners", (t) => {
   parse(t, "inset(1px 2px 3px 4px round 1px 1px 1px 1px / 2px 2px 2px 2px)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "inset",
     offsets: [
       { type: "length", value: 1, unit: "px" },
@@ -88,7 +88,7 @@ test("parse() parses an inset with unevenly rounded corners", (t) => {
 
 test("parse() parses a partially specified inset", (t) => {
   parse(t, "inset(1px 2px 3px round 1px 1px/2px)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "inset",
     offsets: [
       { type: "length", value: 1, unit: "px" },

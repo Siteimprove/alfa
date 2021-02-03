@@ -17,7 +17,7 @@ const { map, option, pair, right } = Parser;
 export class Ellipse<
   R extends Radius = Radius,
   P extends Position = Position
-> extends Value<"shape"> {
+> extends Value<"basic-shape"> {
   public static of<R extends Radius = Radius, P extends Position = Position>(
     rx: R,
     ry: R,
@@ -37,6 +37,14 @@ export class Ellipse<
     this._center = center;
   }
 
+  public get type(): "basic-shape" {
+    return "basic-shape";
+  }
+
+  public get kind(): "ellipse" {
+    return "ellipse";
+  }
+
   public get rx(): R {
     return this._rx;
   }
@@ -47,14 +55,6 @@ export class Ellipse<
 
   public get center(): P {
     return this._center;
-  }
-
-  public get type(): "shape" {
-    return "shape";
-  }
-
-  public get kind(): "ellipse" {
-    return "ellipse";
   }
 
   public equals(value: Ellipse): boolean;
@@ -78,7 +78,7 @@ export class Ellipse<
 
   public toJSON(): Ellipse.JSON {
     return {
-      type: "shape",
+      type: "basic-shape",
       kind: "ellipse",
       rx: this._rx.toJSON(),
       ry: this._ry.toJSON(),
@@ -92,7 +92,7 @@ export class Ellipse<
 }
 
 export namespace Ellipse {
-  export interface JSON extends Value.JSON<"shape"> {
+  export interface JSON extends Value.JSON<"basic-shape"> {
     kind: "ellipse";
     rx: Radius.JSON;
     ry: Radius.JSON;

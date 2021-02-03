@@ -18,10 +18,10 @@ function parse(t: Assertions, input: string, expected: Circle.JSON) {
 
 test("parse() parses a circle with just a radius", (t) => {
   parse(t, "circle(farthest-side)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "circle",
     radius: {
-      type: "shape",
+      type: "basic-shape",
       kind: "radius",
       value: {
         type: "keyword",
@@ -44,10 +44,10 @@ test("parse() parses a circle with just a radius", (t) => {
 
 test("parse() parses a circle with just a center", (t) => {
   parse(t, "circle(at left)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "circle",
     radius: {
-      type: "shape",
+      type: "basic-shape",
       kind: "radius",
       value: {
         type: "keyword",
@@ -74,10 +74,10 @@ test("parse() parses a circle with just a center", (t) => {
 
 test("parse() parses a circle with both radius and center", (t) => {
   parse(t, "circle(10px at left)", {
-    type: "shape",
+    type: "basic-shape",
     kind: "circle",
     radius: {
-      type: "shape",
+      type: "basic-shape",
       kind: "radius",
       value: {
         type: "length",

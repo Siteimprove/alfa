@@ -21,7 +21,7 @@ const { parseDelim, parseWhitespace } = Token;
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
   C extends Inset.Corner = Inset.Corner
-> extends Value<"shape"> {
+> extends Value<"basic-shape"> {
   public static of<
     O extends Inset.Offset = Inset.Offset,
     C extends Inset.Corner = Inset.Corner
@@ -42,6 +42,14 @@ export class Inset<
     super();
     this._offsets = offsets;
     this._corners = corners;
+  }
+
+  public get type(): "basic-shape" {
+    return "basic-shape";
+  }
+
+  public get kind(): "inset" {
+    return "inset";
   }
 
   public get offsets(): readonly [O, O, O, O] {
@@ -84,14 +92,6 @@ export class Inset<
     return this._corners.map((corners) => corners[3]);
   }
 
-  public get type(): "shape" {
-    return "shape";
-  }
-
-  public get kind(): "inset" {
-    return "inset";
-  }
-
   public equals(value: Inset): boolean;
 
   public equals(value: unknown): value is this;
@@ -111,7 +111,7 @@ export class Inset<
 
   public toJSON(): Inset.JSON<O, C> {
     return {
-      type: "shape",
+      type: "basic-shape",
       kind: "inset",
       offsets: Array.toJSON(this._offsets),
       corners: this._corners.toJSON(),
@@ -164,7 +164,7 @@ export namespace Inset {
   export type Corner = Radius | readonly [Radius, Radius];
 
   export interface JSON<O extends Offset = Offset, C extends Corner = Corner>
-    extends Value.JSON<"shape"> {
+    extends Value.JSON<"basic-shape"> {
     kind: "inset";
     offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     corners: Option.JSON<readonly [C, C, C, C]>;
