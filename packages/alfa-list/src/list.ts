@@ -20,6 +20,13 @@ const { compareComparable } = Comparable;
 
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
+    const size = values.length;
+
+    // Fast path: The values fit within the tail.
+    if (size <= Node.Capacity) {
+      return new List(Empty, Leaf.of(values), 0, size);
+    }
+
     return values.reduce((list, value) => list._push(value), List.empty<T>());
   }
 
@@ -258,7 +265,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public take(count: number): List<T> {
-    return this.takeWhile(() => count-- > 0);
+    return List.from(Iterable.take(this, count));
   }
 
   public takeWhile(predicate: Predicate<T, [number]>): List<T> {
@@ -274,7 +281,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public skip(count: number): List<T> {
-    return this.skipWhile(() => count-- > 0);
+    return List.from(Iterable.skip(this, count));
   }
 
   public skipWhile(predicate: Predicate<T, [number]>): List<T> {
@@ -319,6 +326,14 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
+  public subtract(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.subtract(this, iterable));
+  }
+
+  public intersect(iterable: List<T>): List<T> {
+    return List.from(Iterable.intersect(this, iterable));
+  }
+
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
@@ -331,14 +346,6 @@ export class List<T> implements Collection.Indexed<T> {
           ._push(value)
       );
     }, Map.empty<K, List<T>>());
-  }
-
-  public subtract(iterable: Iterable<T>): List<T> {
-    return List.from(Iterable.subtract(this, iterable));
-  }
-
-  public intersect(iterable: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, iterable));
   }
 
   public equals(value: unknown): value is this {
@@ -583,6 +590,13 @@ export namespace List {
   }
 
   export function fromArray<T>(array: Array<T>): List<T> {
+    const size = array.length;
+
+    // Fast path: The array fits within the tail.
+    if (size <= Node.Capacity) {
+      return List.of(...array);
+    }
+
     return Array.reduce(
       array,
       (list, value) => list.append(value),
