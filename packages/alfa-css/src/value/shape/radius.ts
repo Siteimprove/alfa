@@ -1,16 +1,13 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Value } from "../../value";
+
 import { Keyword } from "../keyword";
 import { Length } from "../length";
 import { Percentage } from "../percentage";
 
-import { Value } from "../../value";
-import { Err, Ok } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
-import { Token } from "../../syntax/token";
-
-const { either, mapResult } = Parser;
+const { either, map, filter } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-shapes/#typedef-shape-radius
@@ -94,19 +91,15 @@ export namespace Radius {
     return value instanceof Radius;
   }
 
-  export const parse = mapResult<
-    Slice<Token>,
-    Length | Percentage | Side,
-    Radius,
-    string
-  >(
+  export const parse = map(
     either(
-      either(Length.parse, Percentage.parse),
+      filter(
+        either(Length.parse, Percentage.parse),
+        ({ value }) => value >= 0,
+        () => "Radius cannot be negative"
+      ),
       Keyword.parse("closest-side", "farthest-side")
     ),
-    (radius) =>
-      radius.type !== "keyword" && radius.value < 0
-        ? Err.of("Radius cannot be negative")
-        : Ok.of(Radius.of(radius))
+    (radius) => Radius.of(radius)
   );
 }

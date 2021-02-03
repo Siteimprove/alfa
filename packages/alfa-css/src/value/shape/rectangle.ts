@@ -1,16 +1,14 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
-
-import { Keyword } from "../keyword";
-import { Length } from "../length";
 
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
 import { Value } from "../../value";
 
-const { either, mapResult, option, pair, peek, right, separatedList } = Parser;
+import { Keyword } from "../keyword";
+import { Length } from "../length";
+
+const { either, map, option, pair, take, right, delimited } = Parser;
 
 /**
  * @see https://drafts.fxtf.org/css-masking/#funcdef-clip-rect
@@ -45,7 +43,7 @@ export class Rectangle<
     return "shape";
   }
 
-  public get format(): "rectangle" {
+  public get kind(): "rectangle" {
     return "rectangle";
   }
 
@@ -66,6 +64,7 @@ export class Rectangle<
   }
 
   public equals(value: Rectangle): boolean;
+
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
@@ -89,15 +88,15 @@ export class Rectangle<
     return {
       type: "shape",
       format: "rectangle",
-      top: this.top.toJSON(),
-      right: this.right.toJSON(),
-      bottom: this.bottom.toJSON(),
-      left: this.left.toJSON(),
+      top: this._top.toJSON(),
+      right: this._right.toJSON(),
+      bottom: this._bottom.toJSON(),
+      left: this._left.toJSON(),
     };
   }
 
   public toString(): string {
-    return `rect(${this.top}, ${this.right}, ${this.bottom}, ${this.left})`;
+    return `rect(${this._top}, ${this._right}, ${this._bottom}, ${this._left})`;
   }
 }
 
@@ -118,37 +117,27 @@ export namespace Rectangle {
 
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
-  export const parse = mapResult<
-    Slice<Token>,
-    readonly [Function, Iterable<Length | Auto>],
-    Rectangle,
-    string
-  >(
+  export const parse = map(
     Function.parse(
       "rect",
       either(
-        // If there is the wrong separator, separatedList still return the first value.
-        // Thus, it doesn't fail and the full parser fails at the closing parenthesis.
-        // We need to peek to find the correct separator…
-        right(
-          peek(pair(parseLengthAuto, Token.parseWhitespace)),
-          separatedList(parseLengthAuto, Token.parseWhitespace)
-        ),
-        separatedList(
+        pair(
           parseLengthAuto,
-          pair(Token.parseComma, option(Token.parseWhitespace))
+          take(right(option(Token.parseWhitespace), parseLengthAuto), 3)
+        ),
+        pair(
+          parseLengthAuto,
+          take(
+            right(
+              delimited(option(Token.parseWhitespace), Token.parseComma),
+              parseLengthAuto
+            ),
+            3
+          )
         )
       )
     ),
-    ([_, result]) => {
-      const values = [...result];
-
-      return values.length === 4
-        ? Ok.of(
-            // Typescript does not remember the length of the array, so we can't use "...values" :-(
-            Rectangle.of(values[0], values[1], values[2], values[3])
-          )
-        : Err.of("rect() must have exactly 4 arguments");
-    }
+    ([_, [top, [right, bottom, left]]]) =>
+      Rectangle.of(top, right, bottom, left)
   );
 }

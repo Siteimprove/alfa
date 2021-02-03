@@ -1,13 +1,13 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Radius } from "./radius";
-import { Keyword } from "../keyword";
-import { Position } from "../position";
-
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
 import { Value } from "../../value";
+
+import { Keyword } from "../keyword";
+import { Position } from "../position";
+import { Radius } from "./radius";
 
 const { map, option, pair, right } = Parser;
 
@@ -58,6 +58,7 @@ export class Ellipse<
   }
 
   public equals(value: Ellipse): boolean;
+
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
@@ -79,23 +80,23 @@ export class Ellipse<
     return {
       type: "shape",
       kind: "ellipse",
-      center: this.center.toJSON(),
-      rx: this.rx.toJSON(),
-      ry: this.ry.toJSON(),
+      rx: this._rx.toJSON(),
+      ry: this._ry.toJSON(),
+      center: this._center.toJSON(),
     };
   }
 
   public toString(): string {
-    return `ellipse(${this.rx} ${this.ry} at ${this.center})`;
+    return `ellipse(${this._rx} ${this._ry} at ${this._center})`;
   }
 }
 
 export namespace Ellipse {
   export interface JSON extends Value.JSON<"shape"> {
     kind: "ellipse";
-    center: Position.JSON;
     rx: Radius.JSON;
     ry: Radius.JSON;
+    center: Position.JSON;
   }
 
   export function isEllipse(value: unknown): value is Ellipse {

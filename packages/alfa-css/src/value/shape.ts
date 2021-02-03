@@ -10,7 +10,7 @@ import { Ellipse } from "./shape/ellipse";
 import { Polygon } from "./shape/polygon";
 
 export class Shape<
-  S extends Shape.Basic | Shape.Deprecated = Shape.Basic,
+  S extends Shape.Basic = Shape.Basic,
   B extends Shape.Box = Shape.Box
 > extends Value<"shape"> {
   private readonly _shape: S;
@@ -35,43 +35,40 @@ export class Shape<
   }
 
   public equals(value: Shape): boolean;
+
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
     return (
       value instanceof Shape &&
-      value.shape.equals(this.shape) &&
-      value.box.equals(this.box)
+      value._shape.equals(this._shape) &&
+      value._box.equals(this._box)
     );
   }
 
   public hash(hash: Hash) {
-    this.shape.hash(hash);
-    this.box.hash(hash);
+    this._shape.hash(hash);
+    this._box.hash(hash);
   }
 
   public toJSON(): Shape.JSON {
     return {
       type: "shape",
-      shape: this.shape.toJSON(),
-      box: this.box.toJSON(),
+      shape: this._shape.toJSON(),
+      box: this._box.toJSON(),
     };
   }
 
   public toString(): string {
-    return `${this.shape.toString()} ${this.box.toString()}`;
+    return `${this._shape.toString()} ${this._box.toString()}`;
   }
 }
 
 export namespace Shape {
   /**
    * @see https://drafts.csswg.org/css-shapes/#supported-basic-shapes
-   *
-   * We do not support Path yet
    */
-  export type Basic = Circle | Ellipse | Inset | Polygon;
-
-  export type Deprecated = Rectangle;
+  export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 
   /**
    * @see https://drafts.csswg.org/css-shapes/#shapes-from-box-values

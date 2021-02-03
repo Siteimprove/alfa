@@ -1,30 +1,18 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Hash } from "@siteimprove/alfa-hash";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+
+import { Token } from "../../syntax/token";
+import { Function } from "../../syntax/function";
+import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
 import { Length } from "../length";
 import { Percentage } from "../percentage";
 
-import { Value } from "../../value";
-import { Token } from "../../syntax/token";
-import { Function } from "../../syntax/function";
-
-const {
-  either,
-  map,
-  mapResult,
-  option,
-  pair,
-  peek,
-  right,
-  separatedList,
-} = Parser;
+const { either, map, filter, option, pair, right, takeAtMost } = Parser;
 const { parseDelim, parseWhitespace } = Token;
 
 /**
@@ -104,7 +92,8 @@ export class Inset<
     return "inset";
   }
 
-  public equals(value: this): boolean;
+  public equals(value: Inset): boolean;
+
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
@@ -124,46 +113,54 @@ export class Inset<
     return {
       type: "shape",
       kind: "inset",
-      offsets: Array.toJSON(this.offsets),
-      corners: this.corners.toJSON(),
+      offsets: Array.toJSON(this._offsets),
+      corners: this._corners.toJSON(),
     };
   }
 
   public toString(): string {
-    let result = `ellipse(${this.top} ${this.right} ${this.bottom} ${this.left}`;
+    const result = `ellipse(${this.top} ${this.right} ${this.bottom} ${this.left}`;
 
-    if (this._corners.isNone()) {
-      return result + ")";
+    for (const corners of this._corners) {
+      // If at least one corner has both horizontal and vertical radius, we need
+      // to split things.
+      if (corners.some((corner) => Array.isArray(corner))) {
+        const [tlh, tlv] = Array.isArray(this.topLeft)
+          ? this.topLeft
+          : [this.topLeft, this.topLeft];
+
+        const [trh, trv] = Array.isArray(this.topRight)
+          ? this.topRight
+          : [this.topRight, this.topRight];
+
+        const [brh, brv] = Array.isArray(this.bottomRight)
+          ? this.bottomRight
+          : [this.bottomRight, this.bottomRight];
+
+        const [blh, blv] = Array.isArray(this.bottomLeft)
+          ? this.bottomLeft
+          : [this.bottomLeft, this.bottomLeft];
+
+        return (
+          result + `${tlh} ${trh} ${brh} ${blh} / ${tlv} ${trv} ${brv} ${blv})`
+        );
+      } else {
+        return (
+          result +
+          `${this.topLeft} ${this.topRight} ${this.bottomRight} ${this.bottomLeft})`
+        );
+      }
     }
 
-    // printing out the radii in the correct format is not completely trivial…
-    if (this.corners.get().some((c) => Array.isArray(c))) {
-      // at least one corner has both horizontal and vertical radius, so we need to split things.
-      const [tlh, tlv] = Array.isArray(this.topLeft)
-        ? this.topLeft
-        : [this.topLeft, this.topLeft];
-      const [trh, trv] = Array.isArray(this.topRight)
-        ? this.topRight
-        : [this.topRight, this.topRight];
-      const [brh, brv] = Array.isArray(this.bottomRight)
-        ? this.bottomRight
-        : [this.bottomRight, this.bottomRight];
-      const [blh, blv] = Array.isArray(this.bottomLeft)
-        ? this.bottomLeft
-        : [this.bottomLeft, this.bottomLeft];
-
-      result += `${tlh} ${trh} ${brh} ${blh} / ${tlv} ${trv} ${brv} ${blv})`;
-    } else {
-      result += `${this.topLeft} ${this.topRight} ${this.bottomRight} ${this.bottomLeft})`;
-    }
-
-    return result;
+    return result + ")";
   }
 }
 
 export namespace Inset {
   export type Offset = Length | Percentage;
-  type Radius = Length | Percentage;
+
+  export type Radius = Length | Percentage;
+
   export type Corner = Radius | readonly [Radius, Radius];
 
   export interface JSON<O extends Offset = Offset, C extends Corner = Corner>
@@ -175,48 +172,33 @@ export namespace Inset {
 
   const parseLengthPercentage = either(Length.parse, Percentage.parse);
 
-  function parseOneToFour<T>(
-    parser: Parser<Slice<Token>, T, string>
-  ): Parser<Slice<Token>, readonly [T, T, T, T], string> {
-    return mapResult<Slice<Token>, Iterable<T>, readonly [T, T, T, T], string>(
-      right(
-        // make sure we fail if we have nothing
-        peek(parser),
-        separatedList(parser, parseWhitespace)
-      ),
-      (result) => {
-        const values = [...result];
-
-        if (values.length > 4) {
-          return Err.of("Maximum of four parameters");
-        }
-
-        return Ok.of<readonly [T, T, T, T]>([
-          values[0],
-          values[1] ?? values[0],
-          values[2] ?? values[0],
-          values[3] ?? values[1] ?? values[0],
-        ]);
-      }
-    );
-  }
-
-  const parseRadii = mapResult<
-    Slice<Token>,
-    readonly [Radius, Radius, Radius, Radius],
-    readonly [Radius, Radius, Radius, Radius],
-    string
-  >(parseOneToFour(parseLengthPercentage), (values) =>
-    Iterable.none(values, (value) => value.value < 0)
-      ? Ok.of(values)
-      : Err.of("Radii cannot be negative")
+  const parseOffsets = map(
+    pair(
+      parseLengthPercentage,
+      takeAtMost(right(option(Token.parseWhitespace), parseLengthPercentage), 3)
+    ),
+    ([top, [right = top, bottom = top, left = right]]) =>
+      [top, right, bottom, left] as const
   );
 
-  const parseCorners: Parser<
-    Slice<Token>,
-    readonly [Corner, Corner, Corner, Corner],
-    string
-  > = map(
+  const parseRadius = filter(
+    parseLengthPercentage,
+    ({ value }) => value >= 0,
+    () => "Radius cannot be negative"
+  );
+
+  const parseRadii = map(
+    pair(
+      parseRadius,
+      takeAtMost(right(option(Token.parseWhitespace), parseRadius), 3)
+    ),
+    ([
+      topLeft,
+      [topRight = topLeft, bottomRight = topLeft, bottomLeft = topRight],
+    ]) => [topLeft, topRight, bottomRight, bottomLeft] as const
+  );
+
+  const parseCorners = map(
     pair(
       parseRadii,
       option(
@@ -227,14 +209,24 @@ export namespace Inset {
       )
     ),
     ([horizontal, vertical]) =>
-      vertical.isNone() ? horizontal : zip4(horizontal, vertical.get())
+      vertical
+        .map(
+          (vertical) =>
+            [
+              [horizontal[0], vertical[0]],
+              [horizontal[1], vertical[1]],
+              [horizontal[2], vertical[2]],
+              [horizontal[3], vertical[3]],
+            ] as const
+        )
+        .getOr(horizontal)
   );
 
   export const parse = map(
     Function.parse(
       "inset",
       pair(
-        parseOneToFour<Offset>(parseLengthPercentage),
+        parseOffsets,
         option(
           right(
             option(Token.parseWhitespace),
@@ -246,18 +238,6 @@ export namespace Inset {
         )
       )
     ),
-    ([_, [offsets, corners]]) => Inset.of(offsets, corners)
+    ([_, [offsets, corners]]) => Inset.of<Offset, Corner>(offsets, corners)
   );
-}
-
-function zip4<T, U>(
-  array1: readonly [T, T, T, T],
-  array2: readonly [U, U, U, U]
-): readonly [[T, U], [T, U], [T, U], [T, U]] {
-  return [
-    [array1[0], array2[0]],
-    [array1[1], array2[1]],
-    [array1[2], array2[2]],
-    [array1[3], array2[3]],
-  ];
 }

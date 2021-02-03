@@ -1,13 +1,13 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Radius } from "./radius";
-import { Keyword } from "../keyword";
-import { Position } from "../position";
-
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
 import { Value } from "../../value";
+
+import { Keyword } from "../keyword";
+import { Position } from "../position";
+import { Radius } from "./radius";
 
 const { map, option, pair, right } = Parser;
 
@@ -51,6 +51,7 @@ export class Circle<
   }
 
   public equals(value: Circle): boolean;
+
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
@@ -70,21 +71,21 @@ export class Circle<
     return {
       type: "shape",
       kind: "circle",
-      center: this.center.toJSON(),
-      radius: this.radius.toJSON(),
+      radius: this._radius.toJSON(),
+      center: this._center.toJSON(),
     };
   }
 
   public toString(): string {
-    return `circle(${this.radius.toString()} at ${this.center.toString()})`;
+    return `circle(${this._radius.toString()} at ${this._center.toString()})`;
   }
 }
 
 export namespace Circle {
   export interface JSON extends Value.JSON<"shape"> {
     kind: "circle";
-    center: Position.JSON;
     radius: Radius.JSON;
+    center: Position.JSON;
   }
 
   export function isCircle(value: unknown): value is Circle {

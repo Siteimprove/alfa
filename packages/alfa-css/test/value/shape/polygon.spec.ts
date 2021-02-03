@@ -1,5 +1,6 @@
-import { Slice } from "@siteimprove/alfa-slice";
 import { Assertions, test } from "@siteimprove/alfa-test";
+
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Lexer } from "../../../src/syntax/lexer";
 import { Polygon } from "../../../src/value/shape/polygon";
@@ -19,7 +20,9 @@ test("parse() parses a polygon with no fill rule", (t) => {
   parse(t, "polygon(1px 0px 1px 1px 0px 1px)", {
     type: "shape",
     kind: "polygon",
-    fillRule: { type: "none" },
+    fill: {
+      type: "none",
+    },
     vertices: [
       [
         { type: "length", value: 1, unit: "px" },
@@ -41,7 +44,10 @@ test("parse() parses a polygon with a fill rule", (t) => {
   parse(t, "polygon(evenodd, 1px 0px 1px 1px 0px 1px)", {
     type: "shape",
     kind: "polygon",
-    fillRule: { type: "some", value: { type: "keyword", value: "evenodd" } },
+    fill: {
+      type: "some",
+      value: { type: "keyword", value: "evenodd" },
+    },
     vertices: [
       [
         { type: "length", value: 1, unit: "px" },

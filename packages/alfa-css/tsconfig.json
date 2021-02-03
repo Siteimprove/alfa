@@ -38,7 +38,6 @@
     "src/value/shape/circle.ts",
     "src/value/shape/ellipse.ts",
     "src/value/shape/inset.ts",
-    "src/value/shape/path.ts",
     "src/value/shape/polygon.ts",
     "src/value/shape/radius.ts",
     "src/value/shape/rectangle.ts",
@@ -59,7 +58,7 @@
     "test/value/position.spec.ts",
     "test/value/shape/circle.spec.ts",
     "test/value/shape/ellipse.spec.ts",
-    "test/value/shape/insets.spec.ts",
+    "test/value/shape/inset.spec.ts",
     "test/value/shape/polygon.spec.ts",
     "test/value/shape/rectangle.spec.ts"
   ],
