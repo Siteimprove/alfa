@@ -180,6 +180,7 @@ export namespace Property {
 import { Background } from "./property/background";
 import { Box } from "./property/box";
 import { Clip } from "./property/clip";
+import { ClipPath } from "./property/clip-path";
 import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
@@ -213,6 +214,7 @@ const Longhands = {
   bottom: Inset.Bottom,
   "box-shadow": Box.Shadow,
   clip: Clip,
+  "clip-path": ClipPath,
   color: Color,
   display: Display,
   "font-family": Font.Family,

@@ -8,6 +8,7 @@
     "src/property/box.ts",
     "src/property/box-insets.ts",
     "src/property/clip.ts",
+    "src/property/clip-path.ts",
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
