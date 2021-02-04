@@ -3,28 +3,26 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Value } from "../value";
+import { Token } from "../syntax/token";
+
 import { Box } from "./box";
 import { Keyword } from "./keyword";
-import { Value } from "../value";
-
-import {
-  Circle,
-  Ellipse,
-  Inset,
-  Polygon,
-  Rectangle,
-} from "./shape/basic-shape";
-import { Token } from "../syntax/token";
+import { Circle } from "./shape/circle";
+import { Inset } from "./shape/inset";
+import { Rectangle } from "./shape/rectangle";
+import { Ellipse } from "./shape/ellipse";
+import { Polygon } from "./shape/polygon";
 
 const { either } = Parser;
 
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
-  B extends Box.GeometryBox = Box.GeometryBox
+  B extends Box.Geometry = Box.Geometry
 > extends Value<"shape"> {
   public static of<
     S extends Shape.Basic = Shape.Basic,
-    B extends Box.GeometryBox = Box.GeometryBox
+    B extends Box.Geometry = Box.Geometry
   >(shape: S, box: B): Shape<S, B> {
     return new Shape(shape, box);
   }
@@ -82,9 +80,7 @@ export class Shape<
 
 export namespace Shape {
   /**
-   * @see https://drafts.csswg.org/css-shapes/#supported-basic-shapes
-   *
-   * Rectangle is technically not a <basic-shape>, and is deprecated, but is essentially serving the same purposes.
+   * @see https://drafts.csswg.org/css-shapes/#typedef-basic-shape
    */
   export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 
@@ -95,20 +91,30 @@ export namespace Shape {
       | Inset.JSON
       | Polygon.JSON
       | Rectangle.JSON;
-    box: Keyword.JSON<Box.GeometryBoxName>;
+    box: Box.Geometry.JSON;
   }
 
   /**
-   * Parsing the <basic-shape> || <geometry-box> bit of the syntax.
-   * Thus Rectangle is left out.
+   * @remarks
+   * This does not parse the deprecated `rect()` shape.
+   */
+  const parseBasicShape = either<
+    Slice<Token>,
+    Circle | Ellipse | Inset | Polygon,
+    string
+  >(Circle.parse, Ellipse.parse, Inset.parse, Polygon.parse);
+
+  /**
+   * @remarks
+   * This does not parse the deprecated `rect()` shape.
    */
   export const parse: Parser<
     Slice<Token>,
     Shape<Circle | Ellipse | Inset | Polygon>,
     string
   > = (input) => {
-    let basicShape: Circle | Ellipse | Inset | Polygon | undefined;
-    let geometryBox: Box.GeometryBox | undefined;
+    let shape: Circle | Ellipse | Inset | Polygon | undefined;
+    let box: Box.Geometry | undefined;
 
     const skipWhitespace = () => {
       for (const [remainder] of Token.parseWhitespace(input)) {
@@ -119,31 +125,20 @@ export namespace Shape {
     while (true) {
       skipWhitespace();
 
-      if (basicShape === undefined) {
-        const result = either<
-          Slice<Token>,
-          Circle | Ellipse | Inset | Polygon,
-          string
-        >(
-          Circle.parse,
-          Ellipse.parse,
-          Inset.parse,
-          Polygon.parse
-        )(input);
+      if (shape === undefined) {
+        const result = parseBasicShape(input);
 
         if (result.isOk()) {
-          [input, basicShape] = result.get();
-
+          [input, shape] = result.get();
           continue;
         }
       }
 
-      if (geometryBox === undefined) {
-        const result = Keyword.parse(...Box.geometryBox)(input);
+      if (box === undefined) {
+        const result = Box.parseGeometry(input);
 
         if (result.isOk()) {
-          [input, geometryBox] = result.get();
-
+          [input, box] = result.get();
           continue;
         }
       }
@@ -151,14 +146,12 @@ export namespace Shape {
       break;
     }
 
-    // Even though <geometry-box> alone is accepted by the specs, it seems to have no browser support.
-    if (basicShape === undefined) {
+    // Even though `<geometry-box>` alone is accepted by the specs, it seems to
+    // have no browser support.
+    if (shape === undefined) {
       return Err.of("Expected a shape");
     }
 
-    return Result.of([
-      input,
-      Shape.of(basicShape, geometryBox ?? Keyword.of("border-box")),
-    ]);
+    return Result.of([input, Shape.of(shape, box ?? Keyword.of("border-box"))]);
   };
 }

@@ -1,6 +1,6 @@
-import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
+import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -29,25 +29,32 @@ test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
 
   t.deepEqual(cascaded.get().toJSON(), {
     value: {
-      type: "basic-shape",
-      kind: "rectangle",
-      bottom: {
-        type: "length",
-        unit: "em",
-        value: 2,
+      type: "shape",
+      shape: {
+        type: "basic-shape",
+        kind: "rectangle",
+        bottom: {
+          type: "length",
+          unit: "em",
+          value: 2,
+        },
+        left: {
+          type: "keyword",
+          value: "auto",
+        },
+        right: {
+          type: "keyword",
+          value: "auto",
+        },
+        top: {
+          type: "length",
+          unit: "px",
+          value: 1,
+        },
       },
-      left: {
+      box: {
         type: "keyword",
-        value: "auto",
-      },
-      right: {
-        type: "keyword",
-        value: "auto",
-      },
-      top: {
-        type: "length",
-        unit: "px",
-        value: 1,
+        value: "border-box",
       },
     },
     source: h.declaration("clip", "rect(1px, auto, 2em, auto)").toJSON(),
@@ -63,25 +70,32 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
 
   t.deepEqual(cascaded.get().toJSON(), {
     value: {
-      type: "basic-shape",
-      kind: "rectangle",
-      bottom: {
-        type: "length",
-        unit: "em",
-        value: 2,
+      type: "shape",
+      shape: {
+        type: "basic-shape",
+        kind: "rectangle",
+        bottom: {
+          type: "length",
+          unit: "em",
+          value: 2,
+        },
+        left: {
+          type: "keyword",
+          value: "auto",
+        },
+        right: {
+          type: "keyword",
+          value: "auto",
+        },
+        top: {
+          type: "length",
+          unit: "px",
+          value: 1,
+        },
       },
-      left: {
+      box: {
         type: "keyword",
-        value: "auto",
-      },
-      right: {
-        type: "keyword",
-        value: "auto",
-      },
-      top: {
-        type: "length",
-        unit: "px",
-        value: 1,
+        value: "border-box",
       },
     },
     source: h.declaration("clip", "rect(1px auto 2em auto)").toJSON(),

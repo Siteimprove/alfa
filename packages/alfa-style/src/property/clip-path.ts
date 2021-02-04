@@ -1,9 +1,10 @@
-import { Keyword, Token, URL } from "@siteimprove/alfa-css";
-import { Shape } from "@siteimprove/alfa-css/src/value/shape";
-import { Property } from "../property";
+import { Shape, Keyword, Token, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import either = Parser.either;
 import { Slice } from "@siteimprove/alfa-slice";
+
+import { Property } from "../property";
+
+const { either } = Parser;
 
 export namespace ClipPath {
   export type Specified = URL | Shape | Keyword<"none">;
