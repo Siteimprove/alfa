@@ -13,7 +13,10 @@ export type Box =
   | Keyword<"content-box">;
 
 export namespace Box {
-  export type JSON = Keyword.JSON<"border-box" | "padding-box" | "content-box">;
+  export type JSON =
+    | Keyword.JSON<"border-box">
+    | Keyword.JSON<"padding-box">
+    | Keyword.JSON<"content-box">;
 
   export const parse = Keyword.parse(
     "border-box",
@@ -44,7 +47,9 @@ export namespace Box {
   export namespace Geometry {
     export type JSON =
       | Shape.JSON
-      | Keyword.JSON<"fill-box" | "stroke-box" | "view-box">;
+      | Keyword.JSON<"fill-box">
+      | Keyword.JSON<"stroke-box">
+      | Keyword.JSON<"view-box">;
   }
 
   export const parseGeometry = either(
