@@ -29,8 +29,8 @@ test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
 
   t.deepEqual(cascaded.get().toJSON(), {
     value: {
-      type: "shape",
-      format: "rectangle",
+      type: "basic-shape",
+      kind: "rectangle",
       bottom: {
         type: "length",
         unit: "em",
@@ -63,8 +63,8 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
 
   t.deepEqual(cascaded.get().toJSON(), {
     value: {
-      type: "shape",
-      format: "rectangle",
+      type: "basic-shape",
+      kind: "rectangle",
       bottom: {
         type: "length",
         unit: "em",
