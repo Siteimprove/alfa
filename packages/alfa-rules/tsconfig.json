@@ -35,7 +35,7 @@
     "src/common/predicate/has-text-decoration.ts",
     "src/common/predicate/has-unique-id.ts",
     "src/common/predicate/has-value.ts",
-    "src/common/predicate/is-clipped.ts",
+    "src/common/predicate/is-clipped-by-size.ts",
     "src/common/predicate/is-defined.ts",
     "src/common/predicate/is-document-element.ts",
     "src/common/predicate/is-focusable.ts",

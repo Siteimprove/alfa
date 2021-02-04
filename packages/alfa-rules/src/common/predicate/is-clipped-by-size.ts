@@ -11,7 +11,7 @@ const { isText } = Text;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
-export function isClipped(
+export function isClippedBySize(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
