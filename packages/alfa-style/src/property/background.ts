@@ -1,5 +1,6 @@
 import {
   Angle,
+  Box as cssBox,
   Current,
   Gradient,
   Image,
@@ -25,6 +26,7 @@ import { Resolver } from "../resolver";
 import { Style } from "../style";
 
 import { List } from "./value/list";
+import { Box } from "./box";
 
 const {
   map,
@@ -404,7 +406,7 @@ export namespace Background {
    * @see https://drafts.csswg.org/css-backgrounds/#propdef-background-clip
    */
 
-  const parseClip = Keyword.parse("border-box", "padding-box", "content-box");
+  const parseClip = Keyword.parse(...cssBox.box);
 
   const parseClipList = map(
     separatedList(
@@ -427,10 +429,7 @@ export namespace Background {
     export type Specified = List<Specified.Item>;
 
     export namespace Specified {
-      export type Item =
-        | Keyword<"border-box">
-        | Keyword<"padding-box">
-        | Keyword<"content-box">;
+      export type Item = cssBox.Box;
     }
 
     export type Computed = Specified;
@@ -440,7 +439,7 @@ export namespace Background {
    * @see https://drafts.csswg.org/css-backgrounds-3/#propdef-background-origin
    */
 
-  const parseOrigin = Keyword.parse("border-box", "padding-box", "content-box");
+  const parseOrigin = Keyword.parse(...cssBox.box);
 
   const parseOriginList = map(
     separatedList(
@@ -463,10 +462,7 @@ export namespace Background {
     export type Specified = List<Specified.Item>;
 
     export namespace Specified {
-      export type Item =
-        | Keyword<"border-box">
-        | Keyword<"padding-box">
-        | Keyword<"content-box">;
+      export type Item = cssBox.Box;
     }
 
     export type Computed = Specified;
