@@ -6,7 +6,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isClipped } from "./is-clipped";
+import { isClippedBySize } from "./is-clipped-by-size";
 import { isOffscreen } from "./is-offscreen";
 import { isRendered } from "./is-rendered";
 import { isReplaced } from "./is-replaced";
@@ -25,7 +25,7 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
     not(
       and(
         or(isElement, isText),
-        or(isClipped(device, context), isOffscreen(device, context))
+        or(isClippedBySize(device, context), isOffscreen(device, context))
       )
     ),
     (node) => {
