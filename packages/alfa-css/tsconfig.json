@@ -36,6 +36,7 @@
     "src/value/position.ts",
     "src/value/shadow.ts",
     "src/value/shape.ts",
+    "src/value/shape/basic-shape.ts",
     "src/value/shape/circle.ts",
     "src/value/shape/ellipse.ts",
     "src/value/shape/inset.ts",
