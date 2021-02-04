@@ -437,7 +437,7 @@ export namespace Background {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-backgrounds/#propdef-ackground-origin
+   * @see https://drafts.csswg.org/css-backgrounds-3/#propdef-background-origin
    */
 
   const parseOrigin = Keyword.parse("border-box", "padding-box", "content-box");
