@@ -185,8 +185,6 @@ export namespace SelectorMap {
       origin: Origin,
       order: number
     ): void => {
-      const keySelector = getKeySelector(selector);
-
       const node = SelectorMap.Node.of(
         rule,
         selector,
@@ -195,17 +193,19 @@ export namespace SelectorMap {
         order
       );
 
-      for (const selector of keySelector) {
-        if (selector instanceof Selector.Id) {
-          ids.add(selector.name, node);
+      const keySelector = getKeySelector(selector);
+
+      if (keySelector !== null) {
+        if (keySelector instanceof Selector.Id) {
+          ids.add(keySelector.name, node);
         }
 
-        if (selector instanceof Selector.Class) {
-          classes.add(selector.name, node);
+        if (keySelector instanceof Selector.Class) {
+          classes.add(keySelector.name, node);
         }
 
-        if (selector instanceof Selector.Type) {
-          types.add(selector.name, node);
+        if (keySelector instanceof Selector.Type) {
+          types.add(keySelector.name, node);
         }
 
         return;
@@ -437,26 +437,30 @@ export namespace SelectorMap {
  */
 function getKeySelector(
   selector: Selector
-): Option<Selector.Id | Selector.Class | Selector.Type> {
+): Selector.Id | Selector.Class | Selector.Type | null {
   if (
     selector instanceof Selector.Id ||
     selector instanceof Selector.Class ||
     selector instanceof Selector.Type
   ) {
-    return Option.of(selector);
+    return selector;
   }
 
   if (selector instanceof Selector.Compound) {
-    return getKeySelector(selector.left).orElse(() =>
-      getKeySelector(selector.right)
-    );
+    const left = getKeySelector(selector.left);
+
+    if (left !== null) {
+      return left;
+    }
+
+    return getKeySelector(selector.right);
   }
 
   if (selector instanceof Selector.Complex) {
     return getKeySelector(selector.right);
   }
 
-  return None;
+  return null;
 }
 
 type Specificity = number;

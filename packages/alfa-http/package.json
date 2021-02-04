@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-http",
   "homepage": "https://siteimprove.com",
-  "version": "0.7.0",
+  "version": "0.10.0",
   "license": "MIT",
   "description": "Types for modelling HTTP primitives",
   "repository": {
@@ -18,18 +18,18 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-earl": "^0.7.0",
-    "@siteimprove/alfa-encoding": "^0.7.0",
-    "@siteimprove/alfa-equatable": "^0.7.0",
-    "@siteimprove/alfa-iterable": "^0.7.0",
-    "@siteimprove/alfa-json": "^0.7.0",
-    "@siteimprove/alfa-map": "^0.7.0",
-    "@siteimprove/alfa-option": "^0.7.0",
-    "@siteimprove/alfa-refinement": "^0.7.0",
-    "@siteimprove/alfa-url": "^0.7.0"
+    "@siteimprove/alfa-earl": "^0.10.0",
+    "@siteimprove/alfa-encoding": "^0.10.0",
+    "@siteimprove/alfa-equatable": "^0.10.0",
+    "@siteimprove/alfa-iterable": "^0.10.0",
+    "@siteimprove/alfa-json": "^0.10.0",
+    "@siteimprove/alfa-map": "^0.10.0",
+    "@siteimprove/alfa-option": "^0.10.0",
+    "@siteimprove/alfa-refinement": "^0.10.0",
+    "@siteimprove/alfa-url": "^0.10.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.7.0"
+    "@siteimprove/alfa-test": "^0.10.0"
   },
   "publishConfig": {
     "access": "public",

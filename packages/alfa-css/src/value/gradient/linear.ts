@@ -97,8 +97,7 @@ export class Linear<
 }
 
 export namespace Linear {
-  export interface JSON extends Value.JSON {
-    type: "gradient";
+  export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
     direction: Direction.JSON;
     items: Array<Gradient.Item.JSON>;

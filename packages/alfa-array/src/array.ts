@@ -2,8 +2,12 @@ import { Clone } from "@siteimprove/alfa-clone";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as global from "./global";
 
@@ -14,6 +18,10 @@ const { compareComparable } = Comparable;
 export type Array<T> = globalThis.Array<T>;
 
 export namespace Array {
+  export function isArray<T>(value: Iterable<T>): value is Array<T>;
+
+  export function isArray<T>(value: unknown): value is Array<T>;
+
   export function isArray<T>(value: unknown): value is Array<T> {
     return global.isArray(value);
   }
@@ -32,27 +40,108 @@ export namespace Array {
    * along existing arrays as-is instead of returning a copy.
    */
   export function from<T>(iterable: Iterable<T>): Array<T> {
-    if (isArray<T>(iterable)) {
+    if (isArray(iterable)) {
       return iterable;
     }
 
     return [...iterable];
   }
 
-  export function size<T>(array: Array<T>): number {
+  export function size<T>(array: ReadonlyArray<T>): number {
     return array.length;
   }
 
-  export function isEmpty<T>(array: Array<T>): array is Array<never> {
+  export function isEmpty<T>(array: ReadonlyArray<T>): array is Array<never> {
     return array.length === 0;
   }
 
-  export function copy<T>(array: Array<T>): Array<T> {
+  export function copy<T>(array: ReadonlyArray<T>): Array<T> {
     return array.slice(0);
   }
 
-  export function clone<T extends Clone<T>>(array: Array<T>): Array<T> {
+  export function clone<T extends Clone<T>>(array: ReadonlyArray<T>): Array<T> {
     return array.map(Clone.clone);
+  }
+
+  export function reduce<T, U = T>(
+    array: Array<T>,
+    reducer: Reducer<T, U, [number]>,
+    accumulator: U
+  ): U {
+    for (let i = 0, n = array.length; i < n; i++) {
+      accumulator = reducer(accumulator, array[i], i);
+    }
+
+    return accumulator;
+  }
+
+  export function find<T, U extends T>(
+    array: ReadonlyArray<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function find<T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function find<T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    for (let i = 0, n = array.length; i < n; i++) {
+      const value = array[i];
+
+      if (predicate(value, i)) {
+        return Some.of(value);
+      }
+    }
+
+    return None;
+  }
+
+  export function findLast<T, U extends T>(
+    array: ReadonlyArray<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function findLast<T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function findLast<T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    for (let i = array.length - 1; i >= 0; i--) {
+      const value = array[i];
+
+      if (predicate(value, i)) {
+        return Some.of(value);
+      }
+    }
+
+    return None;
+  }
+
+  export function insert<T>(
+    array: Array<T>,
+    index: number,
+    value: T
+  ): Array<T> {
+    array.splice(index, 0, value);
+    return array;
+  }
+
+  export function append<T>(array: Array<T>, value: T): Array<T> {
+    array.push(value);
+    return array;
+  }
+
+  export function prepend<T>(array: Array<T>, value: T): Array<T> {
+    array.unshift(value);
+    return array;
   }
 
   export function sort<T extends Comparable<T>>(array: Array<T>): Array<T> {
@@ -67,14 +156,14 @@ export namespace Array {
   }
 
   export function compare<T extends Comparable<T>>(
-    a: Array<T>,
+    a: ReadonlyArray<T>,
     b: Iterable<T>
   ): Comparison {
     return compareWith(a, b, compareComparable);
   }
 
   export function compareWith<T>(
-    a: Array<T>,
+    a: ReadonlyArray<T>,
     b: Iterable<T>,
     comparer: Comparer<T>
   ): Comparison {
@@ -82,7 +171,7 @@ export namespace Array {
   }
 
   export function search<T>(
-    array: Array<T>,
+    array: ReadonlyArray<T>,
     value: T,
     comparer: Comparer<T>
   ): number {
@@ -107,7 +196,7 @@ export namespace Array {
     return lower;
   }
 
-  export function equals<T>(a: Array<T>, b: Array<T>): boolean {
+  export function equals<T>(a: ReadonlyArray<T>, b: ReadonlyArray<T>): boolean {
     if (a.length !== b.length) {
       return false;
     }
@@ -121,7 +210,7 @@ export namespace Array {
     return true;
   }
 
-  export function hash<T>(array: Array<T>, hash: Hash): void {
+  export function hash<T>(array: ReadonlyArray<T>, hash: Hash): void {
     for (let i = 0, n = array.length; i < n; i++) {
       Hashable.hash(hash, array[i]);
     }
@@ -129,9 +218,9 @@ export namespace Array {
     Hash.writeUint32(hash, array.length);
   }
 
-  export function toJSON<T extends JSON>(
-    array: Array<Serializable<T>>
-  ): Array<T> {
-    return array.map<T>(Serializable.toJSON);
+  export function toJSON<T>(
+    array: ReadonlyArray<T>
+  ): Array<Serializable.ToJSON<T>> {
+    return array.map((value) => Serializable.toJSON(value));
   }
 }

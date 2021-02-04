@@ -1,3 +1,4 @@
+import { Collection } from "@siteimprove/alfa-collection";
 import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -164,18 +165,6 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
-  public groupBy<K, T>(): Map<K, Sequence<T>> {
-    return Map.empty();
-  }
-
-  public subtract(): Nil {
-    return this;
-  }
-
-  public intersect(): Nil {
-    return this;
-  }
-
   public join(): string {
     return "";
   }
@@ -189,6 +178,18 @@ export const Nil: Nil = new (class Nil {
     comparer: Comparer<T>
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
+  }
+
+  public subtract(): Nil {
+    return this;
+  }
+
+  public intersect(): Nil {
+    return this;
+  }
+
+  public groupBy<K, T>(): Map<K, Sequence<T>> {
+    return Map.empty();
   }
 
   public equals(value: unknown): value is this {
@@ -219,5 +220,5 @@ export const Nil: Nil = new (class Nil {
 })();
 
 export namespace Nil {
-  export type JSON = Array<never>;
+  export type JSON = Collection.Indexed.JSON<never>;
 }

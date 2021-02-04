@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
@@ -68,21 +69,41 @@ export interface Sequence<T> extends Collection.Indexed<T> {
 
   // Sequence<T> methods
 
-  groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   subtract(iterable: Iterable<T>): Sequence<T>;
   intersect(iterable: Iterable<T>): Sequence<T>;
+  groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
 
   // Serializable methods
 
-  toJSON(): Sequence.JSON;
+  toJSON(): Sequence.JSON<T>;
 }
 
 export namespace Sequence {
-  export type JSON = Cons.JSON | Nil.JSON;
+  export type JSON<T> = Cons.JSON<T> | Nil.JSON;
+
+  export function isSequence<T>(value: Iterable<T>): value is Sequence<T>;
+
+  export function isSequence<T>(value: unknown): value is Sequence<T>;
 
   export function isSequence<T>(value: unknown): value is Sequence<T> {
-    return Cons.isCons(value) || value === Nil;
+    return isCons(value) || isNil(value);
+  }
+
+  export function isCons<T>(value: Iterable<T>): value is Cons<T>;
+
+  export function isCons<T>(value: unknown): value is Cons<T>;
+
+  export function isCons<T>(value: unknown): value is Cons<T> {
+    return Cons.isCons(value);
+  }
+
+  export function isNil<T>(value: Iterable<T>): value is Nil;
+
+  export function isNil(value: unknown): value is Nil;
+
+  export function isNil(value: unknown): value is Nil {
+    return value === Nil;
   }
 
   export function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T> {
@@ -98,15 +119,29 @@ export namespace Sequence {
   }
 
   export function from<T>(iterable: Iterable<T>): Sequence<T> {
-    if (isSequence<T>(iterable)) {
+    if (isSequence(iterable)) {
       return iterable;
     }
 
-    // if (Array.isArray(iterable)) {
-    //   return fromArray(iterable);
-    // }
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
 
     return fromIterable(iterable);
+  }
+
+  export function fromArray<T>(array: Array<T>): Sequence<T> {
+    let i = 0;
+
+    const tail = (): Sequence<T> => {
+      if (i >= array.length) {
+        return empty();
+      }
+
+      return of(array[i++], Lazy.of(tail));
+    };
+
+    return tail();
   }
 
   export function fromIterable<T>(iterable: Iterable<T>): Sequence<T> {
@@ -122,20 +157,6 @@ export namespace Sequence {
       }
 
       return of(head.value, Lazy.of(tail));
-    };
-
-    return tail();
-  }
-
-  export function fromArray<T>(array: Array<T>): Sequence<T> {
-    let i = 0;
-
-    const tail = (): Sequence<T> => {
-      if (i >= array.length) {
-        return empty();
-      }
-
-      return of(array[i++], Lazy.of(tail));
     };
 
     return tail();

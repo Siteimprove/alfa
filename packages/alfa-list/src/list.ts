@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
@@ -12,8 +13,6 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Branch, Empty, Leaf, Node } from "./node";
 
 const { not } = Predicate;
@@ -21,6 +20,13 @@ const { compareComparable } = Comparable;
 
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
+    const size = values.length;
+
+    // Fast path: The values fit within the tail.
+    if (size <= Node.Capacity) {
+      return new List(Empty, Leaf.of(values), 0, size);
+    }
+
     return values.reduce((list, value) => list._push(value), List.empty<T>());
   }
 
@@ -259,7 +265,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public take(count: number): List<T> {
-    return this.takeWhile(() => count-- > 0);
+    return List.from(Iterable.take(this, count));
   }
 
   public takeWhile(predicate: Predicate<T, [number]>): List<T> {
@@ -275,7 +281,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public skip(count: number): List<T> {
-    return this.skipWhile(() => count-- > 0);
+    return List.from(Iterable.skip(this, count));
   }
 
   public skipWhile(predicate: Predicate<T, [number]>): List<T> {
@@ -320,6 +326,14 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
+  public subtract(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.subtract(this, iterable));
+  }
+
+  public intersect(iterable: List<T>): List<T> {
+    return List.from(Iterable.intersect(this, iterable));
+  }
+
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
@@ -332,14 +346,6 @@ export class List<T> implements Collection.Indexed<T> {
           ._push(value)
       );
     }, Map.empty<K, List<T>>());
-  }
-
-  public subtract(iterable: Iterable<T>): List<T> {
-    return List.from(Iterable.subtract(this, iterable));
-  }
-
-  public intersect(iterable: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, iterable));
   }
 
   public equals(value: unknown): value is this {
@@ -368,8 +374,8 @@ export class List<T> implements Collection.Indexed<T> {
     return [...this];
   }
 
-  public toJSON(): List.JSON {
-    return this.toArray().map(Serializable.toJSON);
+  public toJSON(): List.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value));
   }
 
   public toString(): string {
@@ -561,20 +567,49 @@ export class List<T> implements Collection.Indexed<T> {
 }
 
 export namespace List {
-  export interface JSON extends Array<json.JSON> {}
+  export type JSON<T> = Collection.Indexed.JSON<T>;
+
+  export function isList<T>(value: Iterable<T>): value is List<T>;
+
+  export function isList<T>(value: unknown): value is List<T>;
 
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
 
   export function from<T>(iterable: Iterable<T>): List<T> {
-    return isList<T>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (list, value) => list.append(value),
-          List.empty<T>()
-        );
+    if (isList(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
+  }
+
+  export function fromArray<T>(array: Array<T>): List<T> {
+    const size = array.length;
+
+    // Fast path: The array fits within the tail.
+    if (size <= Node.Capacity) {
+      return List.of(...array);
+    }
+
+    return Array.reduce(
+      array,
+      (list, value) => list.append(value),
+      List.empty()
+    );
+  }
+
+  export function fromIterable<T>(iterable: Iterable<T>): List<T> {
+    return Iterable.reduce(
+      iterable,
+      (list, value) => list.append(value),
+      List.empty()
+    );
   }
 
   export function sort<T extends Comparable<T>>(list: List<T>): List<T> {

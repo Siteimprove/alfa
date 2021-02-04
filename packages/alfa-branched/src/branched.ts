@@ -11,8 +11,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
-
 const { not } = Predicate;
 
 export class Branched<T, B = never>
@@ -272,7 +270,7 @@ export class Branched<T, B = never>
       ]);
   }
 
-  public toJSON(): Branched.JSON {
+  public toJSON(): Branched.JSON<T, B> {
     return this._values
       .toArray()
       .map(({ value, branches }) => [
@@ -283,7 +281,9 @@ export class Branched<T, B = never>
 }
 
 export namespace Branched {
-  export type JSON = Array<[json.JSON, List.JSON]>;
+  export type JSON<T, B = never> = Array<
+    [Serializable.ToJSON<T>, Array<Serializable.ToJSON<B>>]
+  >;
 
   export function isBranched<T, B = never>(
     value: unknown
@@ -291,7 +291,7 @@ export namespace Branched {
     return value instanceof Branched;
   }
 
-  export function from<T, B>(
+  export function from<T, B = never>(
     values: Iterable<readonly [T, Iterable<B>]>
   ): Branched<T, B> {
     if (isBranched<T, B>(values)) {
@@ -313,8 +313,8 @@ export namespace Branched {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap((value) =>
-          values.map((values) => values.append(value))
+        values.flatMap((values) =>
+          mapper(value).map((value) => values.append(value))
         ),
       Branched.of(List.empty())
     );
@@ -370,6 +370,10 @@ function merge<T, B>(
   value: T,
   branches: Option<List<B>>
 ): List<Value<T, B>> {
+  if (values.size === 0) {
+    return List.of(Value.of(value, branches));
+  }
+
   branches = values
     .find((existing) => Equatable.equals(existing.value, value))
     .map((existing) =>

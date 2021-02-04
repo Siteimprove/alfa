@@ -22,8 +22,7 @@ export interface Collection<T>
     Foldable<T>,
     Applicative<T>,
     Equatable,
-    Hashable,
-    Serializable {
+    Hashable {
   readonly size: number;
   isEmpty(): this is Collection<never>;
   forEach(callback: Callback<T>): void;
@@ -48,7 +47,10 @@ export interface Collection<T>
 }
 
 export namespace Collection {
-  export interface Keyed<K, V> extends Collection<V>, Iterable<[K, V]> {
+  export interface Keyed<K, V>
+    extends Collection<V>,
+      Iterable<[K, V]>,
+      Serializable<Keyed.JSON<K, V>> {
     // Collection<T> methods
 
     isEmpty(): this is Keyed<K, never>;
@@ -83,7 +85,16 @@ export namespace Collection {
     concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
   }
 
-  export interface Unkeyed<T> extends Collection<T>, Iterable<T> {
+  export namespace Keyed {
+    export type JSON<K, V> = Array<
+      [Serializable.ToJSON<K>, Serializable.ToJSON<V>]
+    >;
+  }
+
+  export interface Unkeyed<T>
+    extends Collection<T>,
+      Iterable<T>,
+      Serializable<Unkeyed.JSON<T>> {
     // Collection<T> methods
 
     isEmpty(): this is Unkeyed<never>;
@@ -116,7 +127,14 @@ export namespace Collection {
     concat(iterable: Iterable<T>): Unkeyed<T>;
   }
 
-  export interface Indexed<T> extends Collection<T>, Iterable<T> {
+  export namespace Unkeyed {
+    export type JSON<T> = Array<Serializable.ToJSON<T>>;
+  }
+
+  export interface Indexed<T>
+    extends Collection<T>,
+      Iterable<T>,
+      Serializable<Indexed.JSON<T>> {
     // Collection<T> methods
 
     isEmpty(): this is Indexed<never>;
@@ -167,6 +185,10 @@ export namespace Collection {
     join(separator: string): string;
     sortWith(comparer: Comparer<T>): Indexed<T>;
     compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
+  }
+
+  export namespace Indexed {
+    export type JSON<T> = Array<Serializable.ToJSON<T>>;
   }
 
   export function sort<T extends Comparable<T>>(

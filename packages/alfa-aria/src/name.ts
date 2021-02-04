@@ -479,14 +479,52 @@ export namespace Name {
 
     if (isElement(node)) {
       // As chained references are not allowed, we cannot make use of the cache
-      // when computing a referenced name. If, for example, `foo` references
-      // `bar` and `bar` references `baz`, the reference from `bar` to `baz` is
-      // only allowed to be followed when computing a name for `bar`. When
-      // computing the name for `foo`, however, the second reference must be
-      // ignored and the name for `bar` computed as if though the reference does
-      // not exist. This of course means that we cannot make use of whatever is
-      // in the cache for `bar`.
+      // when computing a referenced name. If, for example, <foo> references
+      // <bar> and <bar> references <baz>...
+      //
+      //   <foo> -> <bar> -> <baz> "Hello world"
+      //
+      // ...the reference from <bar> to <baz> is only allowed to be followed
+      // when computing a name for <bar>:
+      //
+      //   <bar> "Hello world" -> <baz> "Hello world"
+      //
+      // When computing the name for <foo>, however, the second reference must
+      // be ignored and the name for <bar> computed as if though the reference
+      // does not exist:
+      //
+      //   <foo> null -> <bar> null
+      //
+      // We therefore cannot make use of whatever is in the cache for <bar>.
       if (state.isReferencing) {
+        return name();
+      }
+
+      // If we're descending then the name already in the cache may not be
+      // relevant due to the last step of the name computation. If, for example,
+      // <baz> is a child of <bar> which is a child of <foo>...
+      //
+      //   <foo>
+      //     <bar>
+      //       <baz> "Hello world"
+      //
+      // ...and the name of <baz> has already been computed as "Hello world" and
+      // we then compute the name of <bar> and <bar> is not allowed to be named
+      // by its contents, it will not have a name:
+      //
+      //   <bar> null
+      //     <baz> "Hello world"
+      //
+      // However, when we compute the name of <foo> and <foo> is allowed to be
+      // named by its contents, the last step of the same computation kicks in
+      // and includes all descendant names:
+      //
+      //   <foo> "Hello world"
+      //     <bar> "Hello world"
+      //       <baz> "Hello world"
+      //
+      // We therefore cannot make use of whatever is in the cache for <bar>.
+      if (state.isDescending) {
         return name();
       }
     }

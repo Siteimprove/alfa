@@ -1,41 +1,37 @@
-import { Value } from "../../value";
-import { Length } from "../length";
-import { Keyword } from "../keyword";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
+import { Function } from "../../syntax/function";
+import { Value } from "../../value";
 
-const { either, left, pair, peek, option, right, separatedList } = Parser;
+import { Keyword } from "../keyword";
+import { Length } from "../length";
+
+const { either, map, option, pair, take, right, delimited } = Parser;
 
 /**
  * @see https://drafts.fxtf.org/css-masking/#funcdef-clip-rect
- * The deprecated Rectangle is used in the deprecated clip property.
- * It has been superseded by the Inset shape, but differences are large enough that keeping a separate shape is easier.
+ * @deprecated
  */
-export class Rectangle extends Value<"shape"> {
-  public static of(
-    top: Length | Keyword<"auto">,
-    right: Length | Keyword<"auto">,
-    bottom: Length | Keyword<"auto">,
-    left: Length | Keyword<"auto">
-  ) {
+export class Rectangle<
+  O extends Length | Rectangle.Auto = Length | Rectangle.Auto
+> extends Value<"basic-shape"> {
+  public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
+    top: O,
+    right: O,
+    bottom: O,
+    left: O
+  ): Rectangle<O> {
     return new Rectangle(top, right, bottom, left);
   }
 
-  private readonly _top: Length | Keyword<"auto">;
-  private readonly _right: Length | Keyword<"auto">;
-  private readonly _bottom: Length | Keyword<"auto">;
-  private readonly _left: Length | Keyword<"auto">;
+  public readonly _top: O;
+  public readonly _right: O;
+  public readonly _bottom: O;
+  public readonly _left: O;
 
-  private constructor(
-    top: Length | Keyword<"auto">,
-    right: Length | Keyword<"auto">,
-    bottom: Length | Keyword<"auto">,
-    left: Length | Keyword<"auto">
-  ) {
+  private constructor(top: O, right: O, bottom: O, left: O) {
     super();
     this._top = top;
     this._right = right;
@@ -43,31 +39,35 @@ export class Rectangle extends Value<"shape"> {
     this._left = left;
   }
 
-  public get type(): "shape" {
-    return "shape";
+  public get type(): "basic-shape" {
+    return "basic-shape";
   }
 
-  public get format(): "rectangle" {
+  public get kind(): "rectangle" {
     return "rectangle";
   }
 
-  public get top(): Length | Keyword<"auto"> {
+  public get top(): O {
     return this._top;
   }
 
-  public get right(): Length | Keyword<"auto"> {
+  public get right(): O {
     return this._right;
   }
 
-  public get bottom(): Length | Keyword<"auto"> {
+  public get bottom(): O {
     return this._bottom;
   }
 
-  public get left(): Length | Keyword<"auto"> {
+  public get left(): O {
     return this._left;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Rectangle): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Rectangle &&
       value._top.equals(this._top) &&
@@ -86,8 +86,8 @@ export class Rectangle extends Value<"shape"> {
 
   public toJSON(): Rectangle.JSON {
     return {
-      type: "shape",
-      format: "rectangle",
+      type: "basic-shape",
+      kind: "rectangle",
       top: this._top.toJSON(),
       right: this._right.toJSON(),
       bottom: this._bottom.toJSON(),
@@ -96,14 +96,15 @@ export class Rectangle extends Value<"shape"> {
   }
 
   public toString(): string {
-    return `rect(${this._top.toString()}, ${this._right.toString()}, ${this._bottom.toString()}, ${this._left.toString()})`;
+    return `rect(${this._top}, ${this._right}, ${this._bottom}, ${this._left})`;
   }
 }
 
 export namespace Rectangle {
-  export interface JSON extends Value.JSON {
-    type: "shape";
-    format: "rectangle";
+  export type Auto = Keyword<"auto">;
+
+  export interface JSON extends Value.JSON<"basic-shape"> {
+    kind: "rectangle";
     top: Length.JSON | Keyword.JSON;
     right: Length.JSON | Keyword.JSON;
     bottom: Length.JSON | Keyword.JSON;
@@ -114,42 +115,29 @@ export namespace Rectangle {
     return value instanceof Rectangle;
   }
 
-  const parseLengthAuto = (input: Slice<Token>) => {
-    return either(Length.parse, Keyword.parse("auto"))(input);
-  };
+  const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
-  export const parse: Parser<Slice<Token>, Rectangle, string> = (input) =>
-    right(
-      Token.parseFunction((fn) => fn.value === "rect"),
-      left(
-        either(
-          // If there is the wrong separator, separatedList still return the first value.
-          // Thus, it doesn't fail and the full parser fails at the closing parenthesis.
-          // We need to peek to find the correct separator…
-          right(
-            peek(pair(parseLengthAuto, Token.parseWhitespace)),
-            separatedList(parseLengthAuto, Token.parseWhitespace)
-          ),
-          separatedList(
-            parseLengthAuto,
-            pair(Token.parseComma, option(Token.parseWhitespace))
-          )
+  export const parse = map(
+    Function.parse(
+      "rect",
+      either(
+        pair(
+          parseLengthAuto,
+          take(right(option(Token.parseWhitespace), parseLengthAuto), 3)
         ),
-        Token.parseCloseParenthesis
+        pair(
+          parseLengthAuto,
+          take(
+            right(
+              delimited(option(Token.parseWhitespace), Token.parseComma),
+              parseLengthAuto
+            ),
+            3
+          )
+        )
       )
-    )(input).flatMap(([remainder, result]) => {
-      const values = [...result];
-
-      const err: Result<[Slice<Token>, Rectangle], string> = Err.of(
-        "rect() must have exactly 4 arguments"
-      );
-
-      if (values.length !== 4) {
-        return err;
-      }
-      return Ok.of<[Slice<Token>, Rectangle]>([
-        remainder,
-        Rectangle.of(values[0], values[1], values[2], values[3]),
-      ]);
-    });
+    ),
+    ([_, [top, [right, bottom, left]]]) =>
+      Rectangle.of(top, right, bottom, left)
+  );
 }

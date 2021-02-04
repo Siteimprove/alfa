@@ -88,7 +88,7 @@ export class Table implements Equatable, Serializable<Table.JSON> {
     return {
       element: this._element.path(),
       cells: Array.toJSON(this._cells),
-      groups: Array.toJSON<Group.JSON>(this._groups),
+      groups: Array.toJSON(this._groups),
     };
   }
 }
@@ -262,6 +262,10 @@ export namespace Table {
     while (current().isSome()) {
       // 12
       skip(not(hasName("thead", "tbody", "tfoot", "tr")));
+
+      if (current().isNone()) {
+        break;
+      }
 
       // 13
       if (current().some(hasName("tr"))) {
