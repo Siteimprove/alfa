@@ -61,7 +61,9 @@ export namespace Keyword {
     return value instanceof Keyword;
   }
 
-  export function parse<T extends string>(...keywords: Array<T>) {
+  export type ToKeyword<T extends string> = { [K in T]: Keyword<K> }[T];
+
+  export function parse<T extends string>(...keywords: ReadonlyArray<T>) {
     return map(
       Token.parseIdent((ident) =>
         keywords.some(equals(ident.value.toLowerCase()))
@@ -72,7 +74,7 @@ export namespace Keyword {
         // `Keyword<"foo"> | Keyword<"bar">`, not `Keyword<"foo" | "bar">`. Why?
         // Because the former is assignable to the latter, but the latter isn't
         // assignable to the former.
-        Keyword.of(ident.value.toLowerCase()) as { [K in T]: Keyword<K> }[T]
+        Keyword.of(ident.value.toLowerCase()) as ToKeyword<T>
     );
   }
 }
