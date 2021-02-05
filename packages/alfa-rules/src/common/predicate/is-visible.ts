@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 
 import {
   isClippedByMasking,
-  isClippedBySize,
+  isClipped,
   isOffscreen,
   isRendered,
   isReplaced,
@@ -29,7 +29,7 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
       and(
         or(isElement, isText),
         or(
-          isClippedBySize(device, context),
+          isClipped(device, context),
           isClippedByMasking(device, context),
           isOffscreen(device, context)
         )
