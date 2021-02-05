@@ -7,7 +7,6 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 import {
-  isClippedByMasking,
   isClipped,
   isOffscreen,
   isRendered,
@@ -28,11 +27,7 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
     not(
       and(
         or(isElement, isText),
-        or(
-          isClipped(device, context),
-          isClippedByMasking(device, context),
-          isOffscreen(device, context)
-        )
+        or(isClipped(device, context), isOffscreen(device, context))
       )
     ),
     (node) => {

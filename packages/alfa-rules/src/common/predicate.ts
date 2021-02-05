@@ -16,7 +16,6 @@ export * from "./predicate/has-text-content";
 export * from "./predicate/has-text-decoration";
 export * from "./predicate/has-unique-id";
 export * from "./predicate/has-value";
-export * from "./predicate/is-clipped-by-masking";
 export * from "./predicate/is-clipped";
 export * from "./predicate/is-defined";
 export * from "./predicate/is-document-element";
