@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -82,5 +83,18 @@ export namespace Predicate {
     A extends Array<unknown> = []
   >(property: K, predicate: Predicate<T[K], A>): Predicate<T, A> {
     return (value, ...args) => predicate(value[property], ...args);
+  }
+
+  export function tee<T, A extends Array<unknown>>(
+    predicate: Predicate<T, A>,
+    callback: Callback<T, void, [result: boolean, ...args: A]>
+  ): Predicate<T, A> {
+    return (value, ...args) => {
+      const result = predicate(value, ...args);
+
+      callback(value, result, ...args);
+
+      return result;
+    };
   }
 }
