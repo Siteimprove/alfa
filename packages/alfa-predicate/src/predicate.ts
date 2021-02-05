@@ -85,7 +85,7 @@ export namespace Predicate {
     return (value, ...args) => predicate(value[property], ...args);
   }
 
-  export function tee<T, A extends Array<unknown>>(
+  export function tee<T, A extends Array<unknown> = []>(
     predicate: Predicate<T, A>,
     callback: Callback<T, void, [result: boolean, ...args: A]>
   ): Predicate<T, A> {
