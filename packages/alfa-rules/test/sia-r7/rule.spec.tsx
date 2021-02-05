@@ -8,7 +8,7 @@ import R7, { Outcomes } from "../../src/sia-r7/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test("evaluate() passes an element with an lang attribute within <body> with a valid language tag", async (t) => {
+test("evaluate() passes an element with a lang attribute within <body> with a valid language tag", async (t) => {
   const element = <span lang="en">Hello World</span>;
   const target = element.attribute("lang").get();
 
@@ -64,11 +64,9 @@ test("evaluate() passes an element with a lang attribute within <body> when the 
   const target = element.attribute("lang").get();
 
   const document = Document.of([
-    <html lang="en">
-      <body>
-        <div lang="english">{element}</div>
-      </body>
-    </html>,
+    <body>
+      <div lang="invalid">{element}</div>
+    </body>,
   ]);
 
   t.deepEqual(await evaluate(R7, { document }), [
@@ -79,7 +77,7 @@ test("evaluate() passes an element with a lang attribute within <body> when the 
 });
 
 test("evaluate() fails an element with a lang attribute within <body> with an invalid value", async (t) => {
-  const element = <span lang="english">Hello World</span>;
+  const element = <span lang="invalid">Hello World</span>;
   const target = element.attribute("lang").get()!;
 
   const document = Document.of([<body>{element}</body>]);
@@ -91,8 +89,27 @@ test("evaluate() fails an element with a lang attribute within <body> with an in
   ]);
 });
 
+test("evaluate() correctly handles nested elements with valid/invalid lang attributes", async (t) => {
+  const element1 = <span lang="en">World</span>;
+  const element2 = <div lang="invalid">Hello {element1}</div>;
+
+  const target1 = element1.attribute("lang").get();
+  const target2 = element2.attribute("lang").get();
+
+  const document = Document.of([<body>{element2}</body>]);
+
+  t.deepEqual(await evaluate(R7, { document }), [
+    failed(R7, target2, {
+      1: Outcomes.HasNoValidLanguage,
+    }),
+    passed(R7, target1, {
+      1: Outcomes.HasValidLanguage,
+    }),
+  ]);
+});
+
 test("evaluate() is inapplicable for an element that is not visible or included in the accessibility tree", async (t) => {
-  const element = <span lang="english" hidden />;
+  const element = <span lang="invalid" hidden />;
 
   const document = Document.of([<body>{element}</body>]);
 
