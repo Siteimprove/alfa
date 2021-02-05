@@ -10,11 +10,6 @@ const { isElement } = Element;
 const { or } = Predicate;
 const { isText } = Text;
 
-const clippedBySizeCache = Cache.empty<
-  Device,
-  Cache<Context, Cache<Node, boolean>>
->();
-
 export function isClipped(
   device: Device,
   context: Context = Context.empty()
@@ -24,6 +19,11 @@ export function isClipped(
     isClippedByMasking(device, context)
   );
 }
+
+const clippedBySizeCache = Cache.empty<
+  Device,
+  Cache<Context, Cache<Node, boolean>>
+>();
 
 function isClippedBySize(
   device: Device,
