@@ -219,6 +219,7 @@ const Longhands = {
   display: Display,
   "font-family": Font.Family,
   "font-size": Font.Size,
+  "font-stretch": Font.Stretch,
   "font-style": Font.Style,
   "font-weight": Font.Weight,
   height: Height,

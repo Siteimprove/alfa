@@ -16,10 +16,11 @@ import { Resolver } from "../resolver";
 const { map, filter, either, option, delimited, separatedList } = Parser;
 
 export namespace Font {
+  import isPercentage = Token.isPercentage;
   export type Family = Family.Specified;
 
   export namespace Family {
-    export type Generic = Keyword<
+    export type Generic = Keyword.ToKeyword<
       "serif" | "sans-serif" | "cursive" | "fantasy" | "monospace"
     >;
 
@@ -56,7 +57,7 @@ export namespace Font {
   export type Size = Size.Specified | Size.Computed;
 
   export namespace Size {
-    export type Absolute = Keyword<
+    export type Absolute = Keyword.ToKeyword<
       | "xx-small"
       | "x-small"
       | "small"
@@ -67,7 +68,7 @@ export namespace Font {
       | "xxx-large"
     >;
 
-    export type Relative = Keyword<"larger" | "smaller">;
+    export type Relative = Keyword.ToKeyword<"larger" | "smaller">;
 
     export type Specified =
       | Absolute
@@ -198,7 +199,79 @@ export namespace Font {
     }
   );
 
-  export type Style = Keyword<"normal" | "italic" | "oblique">;
+  export namespace Stretch {
+    export type Absolute = Keyword.ToKeyword<
+      | "ultra-condensed"
+      | "extra-condensed"
+      | "condensed"
+      | "semi-condensed"
+      | "normal"
+      | "semi-expanded"
+      | "expanded"
+      | "extra-expanded"
+      | "ultra-expanded"
+    >;
+
+    export type Specified = Absolute | Percentage;
+
+    export type Computed = Percentage;
+  }
+
+  /**
+   * @see https://drafts.csswg.org/css-fonts/#font-stretch-prop
+   *
+   * This does *not* respect the serialisation of getComputedStyle() to keywords!
+   */
+  export const Stretch: Property<
+    Stretch.Specified,
+    Stretch.Computed
+  > = Property.of(
+    Percentage.of(1),
+    either(
+      Percentage.parse,
+      Keyword.parse(
+        "ultra-condensed",
+        "extra-condensed",
+        "condensed",
+        "semi-condensed",
+        "normal",
+        "semi-expanded",
+        "expanded",
+        "extra-expanded",
+        "ultra-expanded"
+      )
+    ),
+    (style) =>
+      style.specified("font-stretch").map((stretch) => {
+        if (stretch.type === "percentage") {
+          return stretch;
+        }
+
+        switch (stretch.value) {
+          case "ultra-condensed":
+            return Percentage.of(0.5);
+          case "extra-condensed":
+            return Percentage.of(0.625);
+          case "condensed":
+            return Percentage.of(0.75);
+          case "semi-condensed":
+            return Percentage.of(0.875);
+          case "normal":
+            return Percentage.of(1);
+          case "semi-expanded":
+            return Percentage.of(1.125);
+          case "expanded":
+            return Percentage.of(1.25);
+          case "extra-expanded":
+            return Percentage.of(1.5);
+          case "ultra-expanded":
+            return Percentage.of(2);
+        }
+      }),
+    { inherits: true }
+  );
+
+  export type Style = Keyword.ToKeyword<"normal" | "italic" | "oblique">;
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#font-style-prop
@@ -215,9 +288,9 @@ export namespace Font {
   export type Weight = Weight.Specified | Weight.Computed;
 
   export namespace Weight {
-    export type Absolute = Keyword<"normal" | "bold">;
+    export type Absolute = Keyword.ToKeyword<"normal" | "bold">;
 
-    export type Relative = Keyword<"bolder" | "lighter">;
+    export type Relative = Keyword.ToKeyword<"bolder" | "lighter">;
 
     export type Specified = Absolute | Relative | Number;
 
