@@ -347,3 +347,21 @@ test("isVisible() returns true for textarea with no child", (t) => {
 
   t.equal(isVisible(element), true);
 });
+
+test("isVisible() returns false for an absolutely positioned element clipped by rect(1px, 1px, 1px, 1px)", (t) => {
+  const element = (
+    <div style={{ clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" }}>
+      Invisible text
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test("isVisible() returns true for a relatively positioned element clipped by rect(1px, 1px, 1px, 1px)", (t) => {
+  const element = (
+    <div style={{ clip: "rect(1px, 1px, 1px, 1px)" }}>Invisible text</div>
+  );
+
+  t.equal(isVisible(element), true);
+});
