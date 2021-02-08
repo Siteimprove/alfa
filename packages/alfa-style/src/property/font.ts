@@ -409,14 +409,14 @@ export namespace Font {
     const normal = Keyword.of("normal");
 
     // "normal" can be a keyword for each of these four longhands, making parsing annoying…
-    // Fortunately, "normal" happen to also be the initial value of these longhands.
+    // Fortunately, "normal" happens to also be the initial value of these longhands.
     // So, we can have them default to "normal", and try to overwrite them as long as they still are "normal";
     // when "normal" keyword is encountered, it will be affected to the first still "normal" longhand (for no effect)
     // and the end result is OK (only the longhands with a non-"normal" specified value are changed).
     //
-    // This approach will stop working if CSS ever decide that the initial value of these longhands is not "normal"
+    // This approach will stop working if CSS ever decides that the initial value of these longhands is not "normal"
     // or that setting the shorthand does not reset all the longhands. Both seem to be unlikely changes.
-    // This is nonetheless hacky to hardcode the initial value instead of using Keyword.of("initial") in the end…
+    // It is nonetheless hacky to hardcode the initial value instead of using Keyword.of("initial") in the end…
     let stretch: Stretch.Specified = normal;
     let style: Style = normal;
     let variant: VariantCSS2 = normal;
