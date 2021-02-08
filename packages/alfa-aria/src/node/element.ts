@@ -95,6 +95,7 @@ export class Element extends Node {
   public toJSON(): Element.JSON {
     return {
       type: "element",
+      node: this._node.path(),
       role: this._role.map((role) => role.name).getOr(null),
       name: this._name.map((name) => name.value).getOr(null),
       attributes: this._attributes.map((attribute) => attribute.toJSON()),
