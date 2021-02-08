@@ -540,6 +540,12 @@ export namespace Node {
               );
             }
 
+            // If the element has a role that designates its children as
+            // presentational then set the state as presentational.
+            if (role.some((role) => role.hasPresentationalChildren())) {
+              state = state.presentational(true);
+            }
+
             return children(state).flatMap((children) =>
               Name.from(node, device).map((name) =>
                 Element.of(node, role, name, attributes.values(), children)
