@@ -10,7 +10,11 @@ import { Resource } from "./resource";
 /**
  * @see https://en.wikipedia.org/wiki/Web_page
  */
-export class Page implements Resource, json.Serializable, earl.Serializable {
+export class Page
+  implements
+    Resource,
+    json.Serializable<Page.JSON>,
+    earl.Serializable<Page.EARL> {
   public static of(
     request: Request,
     response: Response,

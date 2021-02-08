@@ -83,6 +83,10 @@ export namespace Left {
     value: Serializable.ToJSON<L>;
   }
 
+  export function isLeft<L>(value: Iterable<L>): value is Left<L>;
+
+  export function isLeft<L>(value: unknown): value is Left<L>;
+
   export function isLeft<L>(value: unknown): value is Left<L> {
     return value instanceof Left;
   }

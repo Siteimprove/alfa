@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
@@ -25,7 +26,7 @@ const { isText } = Text;
 const { equals } = Predicate;
 const { or } = Refinement;
 
-export class Name implements Equatable, Serializable {
+export class Name implements Equatable, Serializable<Name.JSON> {
   public static of(value: string, sources: Iterable<Name.Source> = []): Name {
     return new Name(value, Array.from(sources));
   }
@@ -93,7 +94,7 @@ export namespace Name {
       | Label.JSON
       | Reference.JSON;
 
-    export class Data implements Equatable, Serializable {
+    export class Data implements Equatable, Serializable<Data.JSON> {
       public static of(text: Text): Data {
         return new Data(text);
       }
@@ -134,7 +135,8 @@ export namespace Name {
       return Data.of(text);
     }
 
-    export class Descendant implements Equatable, Serializable {
+    export class Descendant
+      implements Equatable, Serializable<Descendant.JSON> {
       public static of(element: Element, name: Name): Descendant {
         return new Descendant(element, name);
       }
@@ -187,7 +189,7 @@ export namespace Name {
       return Descendant.of(element, name);
     }
 
-    export class Ancestor implements Equatable, Serializable {
+    export class Ancestor implements Equatable, Serializable<Ancestor.JSON> {
       public static of(element: Element, name: Name): Ancestor {
         return new Ancestor(element, name);
       }
@@ -240,7 +242,7 @@ export namespace Name {
       return Ancestor.of(element, name);
     }
 
-    export class Label implements Equatable, Serializable {
+    export class Label implements Equatable, Serializable<Label.JSON> {
       public static of(attribute: Attribute): Label {
         return new Label(attribute);
       }
@@ -285,7 +287,7 @@ export namespace Name {
       return Label.of(attribute);
     }
 
-    export class Reference implements Equatable, Serializable {
+    export class Reference implements Equatable, Serializable<Reference.JSON> {
       public static of(attribute: Attribute, name: Name): Reference {
         return new Reference(attribute, name);
       }
@@ -342,7 +344,7 @@ export namespace Name {
   /**
    * @internal
    */
-  export class State {
+  export class State implements Equatable, Serializable<State.JSON> {
     private static _empty = new State([], false, false, false);
 
     public static empty(): State {
@@ -452,6 +454,39 @@ export namespace Name {
         isDescending
       );
     }
+
+    public equals(state: State): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        value instanceof State &&
+        Array.equals(value._visited, this._visited) &&
+        value._isRecursing === this._isRecursing &&
+        value._isReferencing === this._isReferencing &&
+        value._isDescending === this._isDescending
+      );
+    }
+
+    public toJSON(): State.JSON {
+      return {
+        visited: this._visited.map((element) => element.path()),
+        isRecursing: this._isRecursing,
+        isReferencing: this._isReferencing,
+        isDescending: this._isDescending,
+      };
+    }
+  }
+
+  export namespace State {
+    export interface JSON {
+      [key: string]: json.JSON;
+      visited: Array<string>;
+      isRecursing: boolean;
+      isReferencing: boolean;
+      isDescending: boolean;
+    }
   }
 
   export function from(
@@ -461,7 +496,10 @@ export namespace Name {
     return fromNode(node, device, State.empty());
   }
 
-  const names = Cache.empty<Node, Branched<Option<Name>, Browser>>();
+  const names = Cache.empty<
+    Device,
+    Cache<Node, Branched<Option<Name>, Browser>>
+  >();
 
   /**
    * @internal
@@ -529,7 +567,7 @@ export namespace Name {
       }
     }
 
-    return names.get(node, name);
+    return names.get(device, Cache.empty).get(node, name);
   }
 
   /**

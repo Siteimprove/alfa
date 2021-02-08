@@ -12,7 +12,11 @@ import * as json from "@siteimprove/alfa-json";
 const { equals } = Predicate;
 
 export abstract class Node
-  implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
+  implements
+    Iterable<Node>,
+    Equatable,
+    json.Serializable<Node.JSON>,
+    earl.Serializable<Node.EARL> {
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
 

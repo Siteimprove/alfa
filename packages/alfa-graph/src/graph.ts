@@ -1,14 +1,17 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
-import * as json from "@siteimprove/alfa-json";
-
 export class Graph<T>
-  implements Iterable<[T, Iterable<T>]>, Equatable, Serializable {
+  implements
+    Iterable<[T, Iterable<T>]>,
+    Equatable,
+    Hashable,
+    Serializable<Graph.JSON<T>> {
   public static of<T>(nodes: Map<T, Set<T>>): Graph<T> {
     return new Graph(nodes);
   }
@@ -116,29 +119,41 @@ export class Graph<T>
     return this.traverse(from).includes(to);
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T>(value: Graph<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Graph && value._nodes.equals(this._nodes);
   }
 
-  public *[Symbol.iterator](): Iterator<[T, Iterable<T>]> {
+  public hash(hash: Hash): void {
+    this._nodes.hash(hash);
+  }
+
+  public *iterator(): Iterator<[T, Iterable<T>]> {
     yield* this._nodes;
+  }
+
+  public [Symbol.iterator](): Iterator<[T, Iterable<T>]> {
+    return this.iterator();
   }
 
   public toArray(): Array<[T, Array<T>]> {
     return [...this].map(([node, neighbors]) => [node, [...neighbors]]);
   }
 
-  public toJSON(): Graph.JSON {
+  public toJSON(): Graph.JSON<T> {
     return this.toArray().map(([node, neighbors]) => [
       Serializable.toJSON(node),
-      neighbors.map(Serializable.toJSON),
+      neighbors.map((node) => Serializable.toJSON(node)),
     ]);
   }
 
   public toString(): string {
-    const entries = [...this._nodes]
+    const entries = this.toArray()
       .map(([node, edges]) => {
-        const entries = [...edges].join(", ");
+        const entries = edges.join(", ");
 
         return `${node}${entries === "" ? "" : ` => [ ${entries} ]`}`;
       })
@@ -149,7 +164,15 @@ export class Graph<T>
 }
 
 export namespace Graph {
-  export interface JSON extends Array<[json.JSON, Array<json.JSON>]> {}
+  export type JSON<T> = Array<
+    [Serializable.ToJSON<T>, Array<Serializable.ToJSON<T>>]
+  >;
+
+  export function isGraph<T>(
+    value: Iterable<readonly [T, Iterable<T>]>
+  ): value is Graph<T>;
+
+  export function isGraph<T>(value: unknown): value is Graph<T>;
 
   export function isGraph<T>(value: unknown): value is Graph<T> {
     return value instanceof Graph;
@@ -158,7 +181,7 @@ export namespace Graph {
   export function from<T>(
     iterable: Iterable<readonly [T, Iterable<T>]>
   ): Graph<T> {
-    if (isGraph<T>(iterable)) {
+    if (isGraph(iterable)) {
       return iterable;
     }
 

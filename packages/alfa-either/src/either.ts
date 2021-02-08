@@ -11,8 +11,8 @@ import { Left } from "./left";
 import { Right } from "./right";
 
 export interface Either<L, R = L>
-  extends Monad<L | R>,
-    Functor<L | R>,
+  extends Functor<L | R>,
+    Monad<L | R>,
     Foldable<L | R>,
     Iterable<L | R>,
     Equatable,
@@ -31,6 +31,10 @@ export interface Either<L, R = L>
 
 export namespace Either {
   export type JSON<L, R = L> = Left.JSON<L> | Right.JSON<R>;
+
+  export function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
+
+  export function isEither<L, R>(value: unknown): value is Either<L, R>;
 
   export function isEither<L, R>(value: unknown): value is Either<L, R> {
     return Left.isLeft(value) || Right.isRight(value);
