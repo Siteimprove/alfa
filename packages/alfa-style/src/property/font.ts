@@ -288,7 +288,7 @@ export namespace Font {
   export const Style: Property<Style> = Property.of(
     Keyword.of("normal"),
     either(
-      pair(Keyword.parse("oblique"), Angle.parse),
+      pair(Keyword.parse("oblique"), right(parseWhitespace, Angle.parse)),
       Keyword.parse("normal", "italic", "oblique")
     ),
     (style) => style.specified("font-style"),
@@ -422,7 +422,7 @@ export namespace Font {
         input = remainder;
       }
 
-      if (stretch.equals(normal)) {
+      if (normal.equals(stretch)) {
         // only keyword stretch are allowed in the shorthand
         const result = Keyword.parse(
           "ultra-condensed",
@@ -442,7 +442,7 @@ export namespace Font {
         }
       }
 
-      if (style.equals(normal)) {
+      if (normal.equals(style)) {
         const result = Style.parse(input);
 
         if (result.isOk()) {
@@ -451,7 +451,7 @@ export namespace Font {
         }
       }
 
-      if (variant.equals(normal)) {
+      if (normal.equals(variant)) {
         const result = VariantCSS2.parse(input);
 
         if (result.isOk()) {
@@ -460,7 +460,7 @@ export namespace Font {
         }
       }
 
-      if (weight.equals(normal)) {
+      if (normal.equals(weight)) {
         const result = Weight.parse(input);
 
         if (result.isOk()) {
