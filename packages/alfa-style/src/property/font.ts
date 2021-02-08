@@ -6,6 +6,7 @@ import {
   Calculation,
   String,
   Number,
+  Angle,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -277,14 +278,19 @@ export namespace Font {
     { inherits: true }
   );
 
-  export type Style = Keyword.ToKeyword<"normal" | "italic" | "oblique">;
+  export type Style =
+    | Keyword.ToKeyword<"normal" | "italic" | "oblique">
+    | [Keyword<"oblique">, Angle];
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#font-style-prop
    */
   export const Style: Property<Style> = Property.of(
     Keyword.of("normal"),
-    Keyword.parse("normal", "italic", "oblique"),
+    either(
+      pair(Keyword.parse("oblique"), Angle.parse),
+      Keyword.parse("normal", "italic", "oblique")
+    ),
     (style) => style.specified("font-style"),
     {
       inherits: true,
