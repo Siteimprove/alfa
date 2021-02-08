@@ -255,23 +255,23 @@ export namespace Font {
 
         switch (stretch.value) {
           case "ultra-condensed":
-            return Percentage.of(50);
+            return Percentage.of(0.5);
           case "extra-condensed":
-            return Percentage.of(62.5);
+            return Percentage.of(0.625);
           case "condensed":
-            return Percentage.of(75);
+            return Percentage.of(0.75);
           case "semi-condensed":
-            return Percentage.of(87.5);
+            return Percentage.of(0.875);
           case "normal":
-            return Percentage.of(100);
+            return Percentage.of(1);
           case "semi-expanded":
-            return Percentage.of(112.5);
+            return Percentage.of(1.125);
           case "expanded":
-            return Percentage.of(125);
+            return Percentage.of(1.25);
           case "extra-expanded":
-            return Percentage.of(150);
+            return Percentage.of(1.5);
           case "ultra-expanded":
-            return Percentage.of(200);
+            return Percentage.of(2);
         }
       }),
     { inherits: true }
