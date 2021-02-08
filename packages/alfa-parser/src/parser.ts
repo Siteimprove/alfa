@@ -181,13 +181,19 @@ export namespace Parser {
 
   export function tee<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    callback: Callback<I, void, [result: T, ...args: A]>
+    callback: Callback<I, void, [result: T, ...args: A]>,
+    callbackError: Callback<I, void, [error: E, ...args: A]> = () => {}
   ): Parser<I, T, E, A> {
     return (input, ...args) =>
-      map(parser, (value) => {
-        callback(input, value, ...args);
-        return value;
-      })(input, ...args);
+      parser(input, ...args)
+        .map<readonly [I, T]>(([remainder, result]) => {
+          callback(input, result, ...args);
+          return [remainder, result];
+        })
+        .mapErr((error) => {
+          callbackError(input, error, ...args);
+          return error;
+        });
   }
 
   export function option<I, T, E, A extends Array<unknown> = []>(
