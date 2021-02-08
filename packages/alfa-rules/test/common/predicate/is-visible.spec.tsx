@@ -270,7 +270,6 @@ test(`isVisible() returns false for a text node with hidden overflow and a -100%
     <div
       style={{
         overflow: "hidden",
-        whiteSpace: "nowrap",
         textIndent: "-100%",
       }}
     >
@@ -330,7 +329,6 @@ test(`isVisible() returns false for a text node with hidden overflow and a -999p
     <div
       style={{
         overflow: "hidden",
-        whiteSpace: "nowrap",
         textIndent: "-999px",
       }}
     >
