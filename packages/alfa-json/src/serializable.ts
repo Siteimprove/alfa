@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { JSON } from "./json";

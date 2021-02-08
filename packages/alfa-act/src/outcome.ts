@@ -182,7 +182,7 @@ export namespace Outcome {
       value: unknown
     ): value is Passed<I, T, Q> {
       return value instanceof Passed;
-  }
+    }
   }
 
   export const { of: passed, isPassed } = Passed;
@@ -308,7 +308,7 @@ export namespace Outcome {
       value: unknown
     ): value is Failed<I, T, Q> {
       return value instanceof Failed;
-  }
+    }
   }
 
   export const { of: failed, isFailed } = Failed;
@@ -366,11 +366,10 @@ export namespace Outcome {
 
       for (const pointer of earl.Serializable.toEARL(this._target)) {
         outcome["earl:result"]["earl:pointer"] = pointer;
-    }
+      }
 
       return outcome;
-  }
-
+    }
   }
 
   export namespace CantTell {
@@ -494,7 +493,7 @@ export namespace Outcome {
       value: unknown
     ): value is Inapplicable<I, T, Q> {
       return value instanceof Inapplicable;
-  }
+    }
   }
 
   export const { of: inapplicable, isInapplicable } = Inapplicable;

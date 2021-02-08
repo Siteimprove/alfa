@@ -211,6 +211,7 @@ export namespace Node {
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
+    node: string;
     children: Array<JSON>;
   }
 
