@@ -4,7 +4,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either, map, oneOrMore, separatedList } = Parser;
+const { either, map, separatedList } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-position/#insets
@@ -67,17 +67,14 @@ export namespace Inset {
      */
     export const Shorthand = Property.Shorthand.of(
       ["inset-block-start", "inset-block-end"],
-      map(
-        separatedList(parseInset, Token.parseWhitespace),
-        (values) => {
-          const [start, end] = [...values];
+      map(separatedList(parseInset, Token.parseWhitespace), (values) => {
+        const [start, end] = [...values];
 
-          return [
-            ["inset-block-start", start],
-            ["inset-block-end", end ?? start],
-          ];
-        }
-      )
+        return [
+          ["inset-block-start", start],
+          ["inset-block-end", end ?? start],
+        ];
+      })
     );
   }
 
@@ -91,17 +88,14 @@ export namespace Inset {
      */
     export const Shorthand = Property.Shorthand.of(
       ["inset-line-start", "inset-line-end"],
-      map(
-        separatedList(parseInset, Token.parseWhitespace),
-        (values) => {
-          const [start, end] = [...values];
+      map(separatedList(parseInset, Token.parseWhitespace), (values) => {
+        const [start, end] = [...values];
 
-          return [
-            ["inset-line-start", start],
-            ["inset-line-end", end ?? start],
-          ];
-        }
-      )
+        return [
+          ["inset-line-start", start],
+          ["inset-line-end", end ?? start],
+        ];
+      })
     );
   }
 }
