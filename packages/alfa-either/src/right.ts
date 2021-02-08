@@ -85,6 +85,10 @@ export namespace Right {
     value: Serializable.ToJSON<R>;
   }
 
+  export function isRight<R>(value: Iterable<R>): value is Right<R>;
+
+  export function isRight<R>(value: unknown): value is Right<R>;
+
   export function isRight<R>(value: unknown): value is Right<R> {
     return value instanceof Right;
   }
