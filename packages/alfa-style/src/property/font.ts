@@ -9,21 +9,26 @@ import {
   Angle,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-import { Result } from "@siteimprove/alfa-result";
+
 import { Line } from "./line";
 
-const { map, filter, either, option, delimited, separatedList } = Parser;
+const {
+  delimited,
+  either,
+  filter,
+  map,
+  option,
+  pair,
+  right,
+  separatedList,
+} = Parser;
 
 export namespace Font {
-  import pair = Parser.pair;
-  import right = Parser.right;
-  import parseWhitespace = Token.parseWhitespace;
-  import parseDelim = Token.parseDelim;
-  import tee = Parser.tee;
   export type Family = Family.Specified;
 
   export namespace Family {
@@ -288,7 +293,7 @@ export namespace Font {
   export const Style: Property<Style> = Property.of(
     Keyword.of("normal"),
     either(
-      pair(Keyword.parse("oblique"), right(parseWhitespace, Angle.parse)),
+      pair(Keyword.parse("oblique"), right(Token.parseWhitespace, Angle.parse)),
       Keyword.parse("normal", "italic", "oblique")
     ),
     (style) => style.specified("font-style"),
@@ -389,7 +394,7 @@ export namespace Font {
   );
 
   /**
-   * Parses the "combiator any" part of the font shorthand.
+   * Parses the "combinator any" part of the font shorthand.
    */
   const parseFontAny: Parser<
     Slice<Token>,
@@ -483,53 +488,6 @@ export namespace Font {
     ]);
   };
 
-  const ok = (name: string) => (input: Slice<Token>) => {
-    // console.log(`${name} OK`);
-    // console.log(`  ${input}`);
-  };
-  const ko = (name: string) => (input: Slice<Token>) => {
-    // console.log(`${name} KO`);
-    // console.log(`  ${input}`);
-  };
-
-  const parse: Parser<
-    Slice<Token>,
-    [
-      ["font-stretch", Stretch.Specified],
-      ["font-style", Style],
-      ["font-variant", VariantCSS2],
-      ["font-weight", Weight.Specified],
-      ["font-size", Size],
-      ["line-height", Line.Height.Specified | Keyword<"initial">],
-      ["font-family", Family.Specified]
-    ],
-    string
-  > = map(
-    pair(
-      tee(parseFontAny, ok("fontAny"), ko("fontAny")),
-      pair(
-        right(option(parseWhitespace), tee(Size.parse, ok("size"), ko("size"))),
-        pair(
-          option(
-            right(
-              pair(
-                pair(option(parseWhitespace), parseDelim("/")),
-                option(parseWhitespace)
-              ),
-              tee(Line.Height.parse, ok("height"), ko("height"))
-            )
-          ),
-          right(parseWhitespace, tee(Family.parse, ok("family"), ko("family")))
-        )
-      )
-    ),
-    ([fontAny, [size, [lineHeight, family]]]) => [
-      ...fontAny,
-      ["font-size", size],
-      ["line-height", lineHeight.getOr(Keyword.of("initial"))],
-      ["font-family", family],
-    ]
-  );
   /**
    * Alfa is not really equipped to deal with system fonts right now.
    * The resulting family and size depends both on the OS and on the browser.
@@ -544,6 +502,31 @@ export namespace Font {
       "font-weight",
       "line-height",
     ],
-    parse
+    map(
+      pair(
+        parseFontAny,
+        pair(
+          right(option(Token.parseWhitespace), Size.parse),
+          pair(
+            option(
+              right(
+                pair(
+                  pair(option(Token.parseWhitespace), Token.parseDelim("/")),
+                  option(Token.parseWhitespace)
+                ),
+                Line.Height.parse
+              )
+            ),
+            right(Token.parseWhitespace, Family.parse)
+          )
+        )
+      ),
+      ([fontAny, [size, [lineHeight, family]]]) => [
+        ...fontAny,
+        ["font-size", size],
+        ["line-height", lineHeight.getOr(Keyword.of("initial"))],
+        ["font-family", family],
+      ]
+    )
   );
 }
