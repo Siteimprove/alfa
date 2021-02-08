@@ -417,7 +417,18 @@ export namespace Font {
       }
 
       if (stretch.equals(normal)) {
-        const result = Stretch.parse(input);
+        // only keyword stretch are allowed in the shorthand
+        const result = Keyword.parse(
+          "ultra-condensed",
+          "extra-condensed",
+          "condensed",
+          "semi-condensed",
+          "normal",
+          "semi-expanded",
+          "expanded",
+          "extra-expanded",
+          "ultra-expanded"
+        )(input);
 
         if (result.isOk()) {
           [input, stretch] = result.get();
