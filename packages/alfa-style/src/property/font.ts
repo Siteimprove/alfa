@@ -20,9 +20,9 @@ const { map, filter, either, option, delimited, separatedList } = Parser;
 export namespace Font {
   import pair = Parser.pair;
   import right = Parser.right;
-  import Delim = Token.Delim;
   import parseWhitespace = Token.parseWhitespace;
   import parseDelim = Token.parseDelim;
+  import tee = Parser.tee;
   export type Family = Family.Specified;
 
   export namespace Family {
@@ -466,6 +466,50 @@ export namespace Font {
     ]);
   };
 
+  const ok = (name: string) => (input: Slice<Token>) => {
+    console.log(`${name} OK`);
+    console.log(`  ${input}`);
+  };
+  const ko = (name: string) => (input: Slice<Token>) => {
+    console.log(`${name} KO`);
+    console.log(`  ${input}`);
+  };
+
+  const parse: Parser<
+    Slice<Token>,
+    [
+      ["font-stretch", Stretch.Specified],
+      ["font-style", Style],
+      ["font-variant", VariantCSS2],
+      ["font-weight", Weight.Specified],
+      ["font-size", Size],
+      ["line-height", Line.Height.Specified | Keyword<"initial">],
+      ["font-family", Family.Specified]
+    ],
+    string
+  > = map(
+    pair(
+      tee(parseFontAny, ok("fontAny"), ko("fontAny")),
+      pair(
+        right(option(parseWhitespace), tee(Size.parse, ok("size"), ko("size"))),
+        pair(
+          option(
+            right(
+              pair(pair(parseWhitespace, parseDelim("/")), parseWhitespace),
+              tee(Line.Height.parse, ok("height"), ko("height"))
+            )
+          ),
+          right(parseWhitespace, tee(Family.parse, ok("family"), ko("family")))
+        )
+      )
+    ),
+    ([fontAny, [size, [lineHeight, family]]]) => [
+      ...fontAny,
+      ["font-size", size],
+      ["line-height", lineHeight.getOr(Keyword.of("initial"))],
+      ["font-family", family],
+    ]
+  );
   /**
    * Alfa is not really equipped to deal with system fonts right now.
    * The resulting family and size depends both on the OS and on the browser.
@@ -480,25 +524,6 @@ export namespace Font {
       "font-weight",
       "line-height",
     ],
-    map(
-      pair(
-        parseFontAny,
-        pair(
-          Size.parse,
-          pair(
-            option(
-              right(pair(parseDelim("/"), parseWhitespace), Line.Height.parse)
-            ),
-            Family.parse
-          )
-        )
-      ),
-      ([fontAny, [size, [lineHeight, family]]]) => [
-        ...fontAny,
-        ["font-size", size],
-        ["line-height", lineHeight.getOr(Keyword.of("initial"))],
-        ["font-family", family],
-      ]
-    )
+    parse
   );
 }
