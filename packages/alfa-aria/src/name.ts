@@ -120,6 +120,7 @@ export namespace Name {
       public toJSON(): Data.JSON {
         return {
           type: "data",
+          text: this._text.path(),
         };
       }
     }
@@ -128,6 +129,7 @@ export namespace Name {
       export interface JSON {
         [key: string]: json.JSON;
         type: "data";
+        text: string;
       }
     }
 
@@ -172,6 +174,7 @@ export namespace Name {
       public toJSON(): Descendant.JSON {
         return {
           type: "descendant",
+          element: this._element.path(),
           name: this._name.toJSON(),
         };
       }
@@ -181,6 +184,7 @@ export namespace Name {
       export interface JSON {
         [key: string]: json.JSON;
         type: "descendant";
+        element: string;
         name: Name.JSON;
       }
     }
@@ -225,6 +229,7 @@ export namespace Name {
       public toJSON(): Ancestor.JSON {
         return {
           type: "ancestor",
+          element: this._element.path(),
           name: this._name.toJSON(),
         };
       }
@@ -234,6 +239,7 @@ export namespace Name {
       export interface JSON {
         [key: string]: json.JSON;
         type: "ancestor";
+        element: string;
         name: Name.JSON;
       }
     }
@@ -270,7 +276,7 @@ export namespace Name {
       public toJSON(): Label.JSON {
         return {
           type: "label",
-          attribute: this._attribute.name,
+          attribute: this._attribute.path(),
         };
       }
     }
@@ -321,7 +327,7 @@ export namespace Name {
       public toJSON(): Reference.JSON {
         return {
           type: "reference",
-          attribute: this._attribute.name,
+          attribute: this._attribute.path(),
           name: this._name.toJSON(),
         };
       }
