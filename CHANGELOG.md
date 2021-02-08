@@ -25,6 +25,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
 
+- [@siteimprove/alfa-result](packages/alfa-result): `Result#tee()` and `Result#teeErr()` are now available.
+
+- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.teeErr()` is now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-css](packages/alfa-css): `Linear.parse()` now correctly parses gradient sides and corners specified as `bottom`.
