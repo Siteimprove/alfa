@@ -12,11 +12,17 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
+import { Result } from "@siteimprove/alfa-result";
+import { Line } from "./line";
 
 const { map, filter, either, option, delimited, separatedList } = Parser;
 
 export namespace Font {
-  import isPercentage = Token.isPercentage;
+  import pair = Parser.pair;
+  import right = Parser.right;
+  import Delim = Token.Delim;
+  import parseWhitespace = Token.parseWhitespace;
+  import parseDelim = Token.parseDelim;
   export type Family = Family.Specified;
 
   export namespace Family {
@@ -249,23 +255,23 @@ export namespace Font {
 
         switch (stretch.value) {
           case "ultra-condensed":
-            return Percentage.of(0.5);
+            return Percentage.of(50);
           case "extra-condensed":
-            return Percentage.of(0.625);
+            return Percentage.of(62.5);
           case "condensed":
-            return Percentage.of(0.75);
+            return Percentage.of(75);
           case "semi-condensed":
-            return Percentage.of(0.875);
+            return Percentage.of(87.5);
           case "normal":
-            return Percentage.of(1);
+            return Percentage.of(100);
           case "semi-expanded":
-            return Percentage.of(1.125);
+            return Percentage.of(112.5);
           case "expanded":
-            return Percentage.of(1.25);
+            return Percentage.of(125);
           case "extra-expanded":
-            return Percentage.of(1.5);
+            return Percentage.of(150);
           case "ultra-expanded":
-            return Percentage.of(2);
+            return Percentage.of(200);
         }
       }),
     { inherits: true }
@@ -283,6 +289,21 @@ export namespace Font {
     {
       inherits: true,
     }
+  );
+
+  export type VariantCSS2 = Keyword.ToKeyword<"normal" | "small-caps">;
+
+  /**
+   * @see https://drafts.csswg.org/css-fonts/#font-variant-css21-values
+   *
+   * This is not the full font-variant property which is much more complex and not needed currently.
+   * @see https://drafts.csswg.org/css-fonts/#font-variant-prop
+   */
+  export const VariantCSS2: Property<VariantCSS2> = Property.of(
+    Keyword.of("normal"),
+    Keyword.parse("normal", "small-caps"),
+    (style) => style.specified("font-variant"),
+    { inherits: true }
   );
 
   export type Weight = Weight.Specified | Weight.Computed;
@@ -359,5 +380,125 @@ export namespace Font {
     {
       inherits: true,
     }
+  );
+
+  /**
+   * Parses the "combiator any" part of the font shorthand.
+   */
+  const parseFontAny: Parser<
+    Slice<Token>,
+    [
+      ["font-stretch", Stretch.Specified],
+      ["font-style", Style],
+      ["font-variant", VariantCSS2],
+      ["font-weight", Weight.Specified]
+    ],
+    string
+  > = (input) => {
+    const normal = Keyword.of("normal");
+
+    // "normal" can be a keyword for each of these four longhands, making parsing annoying…
+    // Fortunately, "normal" happen to also be the initial value of these longhands.
+    // So, we can have them default to "normal", and try to overwrite them as long as they still are "normal";
+    // when "normal" keyword is encountered, it will be affected to the first still "normal" longhand (for no effect)
+    // and the end result is OK (only the longhands with a non-"normal" specified value are changed).
+    //
+    // This approach will stop working if CSS ever decide that the initial value of these longhands is not "normal"
+    // or that setting the shorthand does not reset all the longhands. Both seem to be unlikely changes.
+    // This is nonetheless hacky to hardcode the initial value instead of using Keyword.of("initial") in the end…
+    let stretch: Stretch.Specified = normal;
+    let style: Style = normal;
+    let variant: VariantCSS2 = normal;
+    let weight: Weight.Specified = normal;
+
+    while (true) {
+      for (const [remainder] of Token.parseWhitespace(input)) {
+        input = remainder;
+      }
+
+      if (stretch.equals(normal)) {
+        const result = Stretch.parse(input);
+
+        if (result.isOk()) {
+          [input, stretch] = result.get();
+          continue;
+        }
+      }
+
+      if (style.equals(normal)) {
+        const result = Style.parse(input);
+
+        if (result.isOk()) {
+          [input, style] = result.get();
+          continue;
+        }
+      }
+
+      if (variant.equals(normal)) {
+        const result = VariantCSS2.parse(input);
+
+        if (result.isOk()) {
+          [input, variant] = result.get();
+          continue;
+        }
+      }
+
+      if (weight.equals(normal)) {
+        const result = Weight.parse(input);
+
+        if (result.isOk()) {
+          [input, weight] = result.get();
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    return Result.of([
+      input,
+      [
+        ["font-stretch", stretch],
+        ["font-style", style],
+        ["font-variant", variant],
+        ["font-weight", weight],
+      ],
+    ]);
+  };
+
+  /**
+   * Alfa is not really equipped to deal with system fonts right now.
+   * The resulting family and size depends both on the OS and on the browser.
+   */
+  export const Shorthand = Property.Shorthand.of(
+    [
+      "font-family",
+      "font-size",
+      "font-stretch",
+      "font-style",
+      "font-variant",
+      "font-weight",
+      "line-height",
+    ],
+    map(
+      pair(
+        parseFontAny,
+        pair(
+          Size.parse,
+          pair(
+            option(
+              right(pair(parseDelim("/"), parseWhitespace), Line.Height.parse)
+            ),
+            Family.parse
+          )
+        )
+      ),
+      ([fontAny, [size, [lineHeight, family]]]) => [
+        ...fontAny,
+        ["font-size", size],
+        ["line-height", lineHeight.getOr(Keyword.of("initial"))],
+        ["font-family", family],
+      ]
+    )
   );
 }

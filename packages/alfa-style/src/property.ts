@@ -221,6 +221,7 @@ const Longhands = {
   "font-size": Font.Size,
   "font-stretch": Font.Stretch,
   "font-style": Font.Style,
+  "font-variant": Font.VariantCSS2,
   "font-weight": Font.Weight,
   height: Height,
   "inset-block-end": Inset.Block.End,
