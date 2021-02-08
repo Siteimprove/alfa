@@ -28,7 +28,7 @@ export namespace Parser {
     mapper: Mapper<T, Result<U, E>>
   ): Parser<I, U, E, A> {
     return (input, ...args) =>
-      parser(input, ...args).flatMap(([remainder, value]) =>
+      parser(input, ...args).andThen(([remainder, value]) =>
         mapper(value).map((result) => [remainder, result])
       );
   }
