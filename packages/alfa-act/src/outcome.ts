@@ -7,6 +7,7 @@ import { Predicate } from "@siteimprove/alfa-trilean";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as trilean from "@siteimprove/alfa-trilean";
 import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Diagnostic } from "./diagnostic";
