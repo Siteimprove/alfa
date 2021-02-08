@@ -1,7 +1,7 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-export function outcomeToTrilean<I, T, Q>(
+export function isPassed<I, T, Q>(
   outcome: Outcome.Applicable<I, T, Q>
 ): Trilean {
   if (Outcome.isPassed(outcome)) {

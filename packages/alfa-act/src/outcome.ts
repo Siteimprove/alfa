@@ -3,7 +3,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
-import { Predicate } from "@siteimprove/alfa-trilean";
+import { Trilean } from "@siteimprove/alfa-trilean";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -507,11 +507,11 @@ export namespace Outcome {
       [key: string]: Option<Result<Diagnostic>>;
     }>
   ): Outcome.Applicable<I, T, Q> {
-    return Predicate.fold(
-      trilean.every((expectation) =>
-        expectation.isNone() ? undefined : expectation.get().isOk()
+    return Trilean.fold(
+      (expectations) =>
+        Trilean.every(expectations, (expectation) =>
+          expectation.map((expectation) => expectation.isOk()).getOr(undefined)
       ),
-      expectations.values(),
       () =>
         Passed.of(
           rule,
@@ -534,7 +534,8 @@ export namespace Outcome {
             ])
           )
         ),
-      () => CantTell.of(rule, target)
+      () => CantTell.of(rule, target),
+      expectations.values()
     );
   }
 }
