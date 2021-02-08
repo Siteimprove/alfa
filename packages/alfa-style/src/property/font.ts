@@ -478,12 +478,12 @@ export namespace Font {
   };
 
   const ok = (name: string) => (input: Slice<Token>) => {
-    console.log(`${name} OK`);
-    console.log(`  ${input}`);
+    // console.log(`${name} OK`);
+    // console.log(`  ${input}`);
   };
   const ko = (name: string) => (input: Slice<Token>) => {
-    console.log(`${name} KO`);
-    console.log(`  ${input}`);
+    // console.log(`${name} KO`);
+    // console.log(`  ${input}`);
   };
 
   const parse: Parser<
@@ -506,7 +506,10 @@ export namespace Font {
         pair(
           option(
             right(
-              pair(pair(parseWhitespace, parseDelim("/")), parseWhitespace),
+              pair(
+                pair(option(parseWhitespace), parseDelim("/")),
+                option(parseWhitespace)
+              ),
               tee(Line.Height.parse, ok("height"), ko("height"))
             )
           ),
