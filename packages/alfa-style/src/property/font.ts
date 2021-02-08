@@ -283,19 +283,16 @@ export namespace Font {
     { inherits: true }
   );
 
-  export type Style =
-    | Keyword.ToKeyword<"normal" | "italic" | "oblique">
-    | [Keyword<"oblique">, Angle];
+  export type Style = Keyword.ToKeyword<"normal" | "italic" | "oblique">;
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#font-style-prop
+   *
+   * oblique accepting an angle has poor browser support and shouldn't affect Alfa currently.
    */
   export const Style: Property<Style> = Property.of(
     Keyword.of("normal"),
-    either(
-      pair(Keyword.parse("oblique"), right(Token.parseWhitespace, Angle.parse)),
-      Keyword.parse("normal", "italic", "oblique")
-    ),
+    Keyword.parse("normal", "italic", "oblique"),
     (style) => style.specified("font-style"),
     {
       inherits: true,

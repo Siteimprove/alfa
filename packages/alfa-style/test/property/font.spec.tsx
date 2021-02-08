@@ -169,21 +169,21 @@ test("#cascaded() correctly handles line-height and font-family stack", (t) => {
   ]);
 });
 
-test("#cascaded parses `condensed oblique 25deg 753 12pt 'Helvetica Neue', serif`", (t) => {
+test("#cascaded parses `condensed oblique753 12pt 'Helvetica Neue', serif`", (t) => {
   const element = (
     <div
       style={{
-        font: "condensed oblique 25deg 753 12pt 'Helvetica Neue', serif",
+        font: "condensed oblique 753 12pt 'Helvetica Neue', serif",
       }}
     ></div>
   );
 
   const style = Style.from(element, device);
 
-  t.deepEqual(style.cascaded("font-style").get().toJSON().value, [
-    { type: "keyword", value: "oblique" },
-    { type: "angle", value: 25, unit: "deg" },
-  ]);
+  t.deepEqual(style.cascaded("font-style").get().value.toJSON(), {
+    type: "keyword",
+    value: "oblique",
+  });
 
   t.deepEqual(style.cascaded("font-variant").get().value.toJSON(), {
     type: "keyword",
