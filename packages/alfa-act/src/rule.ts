@@ -9,6 +9,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
@@ -24,7 +25,8 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
   implements
     Equatable,
     json.Serializable<Rule.JSON>,
-    earl.Serializable<Rule.EARL> {
+    earl.Serializable<Rule.EARL>,
+    sarif.Serializable<sarif.ReportingDescriptor> {
   protected readonly _uri: string;
   protected readonly _requirements: Array<Requirement>;
   protected readonly _tags: Array<Tag>;
@@ -83,6 +85,13 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
       "dct:isPartOf": {
         "@set": this._requirements.map((requirement) => requirement.toEARL()),
       },
+    };
+  }
+
+  public toSARIF(): sarif.ReportingDescriptor {
+    return {
+      id: this._uri,
+      helpUri: this._uri,
     };
   }
 }
