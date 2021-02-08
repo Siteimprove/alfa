@@ -23,7 +23,7 @@ export namespace Parser {
       ]);
   }
 
-  export function mapResult<I, T, U, E, A extends Array<unknown> = []>(
+  export function andThen<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, Result<U, E>>
   ): Parser<I, U, E, A> {
@@ -60,7 +60,7 @@ export namespace Parser {
     predicate: Predicate<T>,
     ifError: Thunk<E>
   ): Parser<I, T, E, A> {
-    return mapResult(parser, (value) =>
+    return andThen(parser, (value) =>
       predicate(value) ? Result.of(value) : Err.of(ifError())
     );
   }
