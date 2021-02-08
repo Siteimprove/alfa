@@ -21,9 +21,17 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-css](packages/alfa-css): `Linear.parse()` now correctly parses gradient sides and corners specified as `bottom`.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` now correctly considers elements with large negative text indents and no `white-space: nowrap` as hidden.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Node.from()` now correctly handles children of elements with roles that designate their children as presentational.
 
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 

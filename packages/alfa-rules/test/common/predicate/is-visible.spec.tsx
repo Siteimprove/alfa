@@ -270,7 +270,6 @@ test(`isVisible() returns false for a text node with hidden overflow and a -100%
     <div
       style={{
         overflow: "hidden",
-        whiteSpace: "nowrap",
         textIndent: "-100%",
       }}
     >
@@ -330,7 +329,6 @@ test(`isVisible() returns false for a text node with hidden overflow and a -999p
     <div
       style={{
         overflow: "hidden",
-        whiteSpace: "nowrap",
         textIndent: "-999px",
       }}
     >
@@ -344,6 +342,24 @@ test(`isVisible() returns false for a text node with hidden overflow and a -999p
 
 test("isVisible() returns true for textarea with no child", (t) => {
   const element = <textarea />;
+
+  t.equal(isVisible(element), true);
+});
+
+test("isVisible() returns false for an absolutely positioned element clipped by rect(1px, 1px, 1px, 1px)", (t) => {
+  const element = (
+    <div style={{ clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" }}>
+      Invisible text
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test("isVisible() returns true for a relatively positioned element clipped by rect(1px, 1px, 1px, 1px)", (t) => {
+  const element = (
+    <div style={{ clip: "rect(1px, 1px, 1px, 1px)" }}>Invisible text</div>
+  );
 
   t.equal(isVisible(element), true);
 });
