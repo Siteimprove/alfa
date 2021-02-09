@@ -1,13 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/sarif.ts"],
+  "files": ["src/index.ts", "src/sarif.ts", "src/serializable.ts"],
   "references": [
     {
-      "path": "../alfa-formatter"
+      "path": "../alfa-option"
     },
     {
-      "path": "../alfa-sarif"
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

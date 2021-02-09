@@ -8,6 +8,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 const { equals } = Predicate;
 
@@ -16,7 +17,8 @@ export abstract class Node
     Iterable<Node>,
     Equatable,
     json.Serializable<Node.JSON>,
-    earl.Serializable<Node.EARL> {
+    earl.Serializable<Node.EARL>,
+    sarif.Serializable<sarif.Location> {
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
 
@@ -339,6 +341,16 @@ export abstract class Node
         "ptr:XPathPointer",
       ],
       "ptr:expression": this.path(),
+    };
+  }
+
+  public toSARIF(): sarif.Location {
+    return {
+      logicalLocations: [
+        {
+          fullyQualifiedName: this.path(),
+        },
+      ],
     };
   }
 
