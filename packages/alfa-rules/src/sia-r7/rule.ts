@@ -12,6 +12,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -33,15 +34,6 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return visit(
-          document
-            .descendants()
-            .find(isElement)
-            .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
-            .get(),
-          None
-        );
-
         function* visit(
           node: Node,
           lang: Option<Attribute>
@@ -60,12 +52,19 @@ export default Rule.Atomic.of<Page, Attribute>({
             yield lang.get();
           }
 
-          const children = node.children({ flattened: true, nested: true });
+          const children = node.children({ flattened: true });
 
           for (const child of children) {
             yield* visit(child, lang);
           }
         }
+
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(isElement)
+          .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
+          .flatMap((element) => Sequence.from(visit(element, None)))
+          .distinct();
       },
 
       expectations(target) {
