@@ -169,7 +169,7 @@ export namespace Outcome {
 
       for (const location of sarif.Serializable.toSARIF(this._target)) {
         locations.push(location as sarif.Location);
-  }
+      }
 
       return {
         ruleId: this._rule.uri,
@@ -557,7 +557,7 @@ export namespace Outcome {
           markdown: message,
         },
       };
-  }
+    }
   }
 
   export namespace Inapplicable {
