@@ -24,8 +24,7 @@ export class URL implements Equatable, Hashable, Serializable {
     port: Option<number> = None,
     path: Iterable<string> = [],
     query: Option<string> = None,
-    fragment: Option<string> = None,
-    cannotBeABaseURL: boolean = false
+    fragment: Option<string> = None
   ): URL {
     return new URL(
       scheme,
@@ -35,8 +34,7 @@ export class URL implements Equatable, Hashable, Serializable {
       port,
       Sequence.from(path),
       query,
-      fragment,
-      cannotBeABaseURL
+      fragment
     );
   }
 
@@ -48,7 +46,6 @@ export class URL implements Equatable, Hashable, Serializable {
   private readonly _path: Sequence<string>;
   private readonly _query: Option<string>;
   private readonly _fragment: Option<string>;
-  private readonly _cannotBeABaseURL: boolean;
 
   private constructor(
     scheme: string,
@@ -58,8 +55,7 @@ export class URL implements Equatable, Hashable, Serializable {
     port: Option<number>,
     path: Sequence<string>,
     query: Option<string>,
-    fragment: Option<string>,
-    cannotBeABaseURL: boolean
+    fragment: Option<string>
   ) {
     this._scheme = scheme;
     this._username = username;
@@ -69,7 +65,6 @@ export class URL implements Equatable, Hashable, Serializable {
     this._path = path;
     this._query = query;
     this._fragment = fragment;
-    this._cannotBeABaseURL = cannotBeABaseURL;
   }
 
   /**
@@ -132,7 +127,10 @@ export class URL implements Equatable, Hashable, Serializable {
    * @see https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag
    */
   public get cannotBeABaseURL(): boolean {
-    return this._cannotBeABaseURL;
+    const specialSchemes = ["ftp", "file", "http", "https", "ws", "wss"];
+    return (
+      !specialSchemes.includes(this._scheme) && !this._path.get(0).equals("")
+    );
   }
 
   /**
@@ -162,8 +160,7 @@ export class URL implements Equatable, Hashable, Serializable {
       this._port,
       this._path,
       this._query,
-      None,
-      this._cannotBeABaseURL
+      None
     );
   }
 
@@ -212,7 +209,7 @@ export class URL implements Equatable, Hashable, Serializable {
       path: this._path.toArray(),
       query: this._query.getOr(null),
       fragment: this._fragment.getOr(null),
-      cannotBeABaseURL: this._cannotBeABaseURL,
+      cannotBeABaseURL: this.cannotBeABaseURL,
     };
   }
 
