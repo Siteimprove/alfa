@@ -8,8 +8,8 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Lazy<T>
   implements
-    Monad<T>,
     Functor<T>,
+    Monad<T>,
     Iterable<T>,
     Equatable,
     Serializable<Lazy.JSON<T>> {
@@ -59,7 +59,11 @@ export class Lazy<T>
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T>(value: Lazy<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Lazy && Equatable.equals(value.force(), this.force())
     );

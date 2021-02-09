@@ -7,7 +7,7 @@ export function passed<T, Q>(
   rule: Rule<Page, T, Q>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> }
-): Outcome.Passed.JSON {
+): Outcome.Passed.JSON<T> {
   return Outcome.Passed.of(
     rule,
     target,
@@ -19,7 +19,7 @@ export function failed<T, Q>(
   rule: Rule<Page, T, Q>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> }
-): Outcome.Failed.JSON {
+): Outcome.Failed.JSON<T> {
   return Outcome.Failed.of(
     rule,
     target,
@@ -36,6 +36,6 @@ export function inapplicable<T, Q>(
 export function cantTell<T, Q>(
   rule: Rule<Page, T, Q>,
   target: T
-): Outcome.CantTell.JSON {
+): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target).toJSON();
 }

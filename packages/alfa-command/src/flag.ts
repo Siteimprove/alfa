@@ -11,7 +11,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
 
-export class Flag<T = unknown> implements Functor<T>, Serializable {
+export class Flag<T = unknown> implements Functor<T>, Serializable<Flag.JSON> {
   public static of<T>(
     name: string,
     description: string,

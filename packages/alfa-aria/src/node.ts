@@ -28,7 +28,7 @@ const { equals } = Predicate;
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
  */
-export abstract class Node implements Serializable {
+export abstract class Node implements Serializable<Node.JSON> {
   protected readonly _node: dom.Node;
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
@@ -211,6 +211,7 @@ export namespace Node {
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
+    node: string;
     children: Array<JSON>;
   }
 

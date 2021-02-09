@@ -1,4 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -36,6 +37,13 @@ export abstract class Trampoline<T>
 
   public abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
 
+  public tee(callback: Callback<T>): Trampoline<T> {
+    return this.map((value) => {
+      callback(value);
+      return value;
+    });
+  }
+
   public *iterator(): Iterator<T> {
     yield this.run();
   }
@@ -46,8 +54,16 @@ export abstract class Trampoline<T>
 }
 
 export namespace Trampoline {
+  export function isTrampoline<T>(value: Iterable<T>): value is Trampoline<T>;
+
+  export function isTrampoline<T>(value: unknown): value is Trampoline<T>;
+
   export function isTrampoline<T>(value: unknown): value is Trampoline<T> {
     return value instanceof Trampoline;
+  }
+
+  export function empty(): Trampoline<void> {
+    return done(undefined);
   }
 
   export function done<T>(value: T): Trampoline<T> {

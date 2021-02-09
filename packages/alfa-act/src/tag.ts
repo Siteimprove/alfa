@@ -4,12 +4,16 @@ import { Serializable } from "@siteimprove/alfa-json";
 import * as json from "@siteimprove/alfa-json";
 
 export abstract class Tag<T extends string = string>
-  implements Equatable, Serializable {
+  implements Equatable, Serializable<Tag.JSON> {
   protected constructor() {}
 
   public abstract get type(): T;
 
-  public equals(value: unknown): value is this {
+  public equals(value: Tag): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Tag && value.type === this.type;
   }
 
