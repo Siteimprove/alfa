@@ -32,9 +32,12 @@ export namespace Font {
   export type Family = Family.Specified;
 
   export namespace Family {
-    export type Generic = Keyword.ToKeyword<
-      "serif" | "sans-serif" | "cursive" | "fantasy" | "monospace"
-    >;
+    export type Generic =
+      | Keyword<"serif">
+      | Keyword<"sans-serif">
+      | Keyword<"cursive">
+      | Keyword<"fantasy">
+      | Keyword<"monospace">;
 
     export type Specified = Array<Generic | String>;
   }
@@ -69,18 +72,17 @@ export namespace Font {
   export type Size = Size.Specified | Size.Computed;
 
   export namespace Size {
-    export type Absolute = Keyword.ToKeyword<
-      | "xx-small"
-      | "x-small"
-      | "small"
-      | "medium"
-      | "large"
-      | "x-large"
-      | "xx-large"
-      | "xxx-large"
-    >;
+    export type Absolute =
+      | Keyword<"xx-small">
+      | Keyword<"x-small">
+      | Keyword<"small">
+      | Keyword<"medium">
+      | Keyword<"large">
+      | Keyword<"x-large">
+      | Keyword<"xx-large">
+      | Keyword<"xxx-large">;
 
-    export type Relative = Keyword.ToKeyword<"larger" | "smaller">;
+    export type Relative = Keyword<"larger"> | Keyword<"smaller">;
 
     export type Specified =
       | Absolute
@@ -212,17 +214,16 @@ export namespace Font {
   );
 
   export namespace Stretch {
-    export type Absolute = Keyword.ToKeyword<
-      | "ultra-condensed"
-      | "extra-condensed"
-      | "condensed"
-      | "semi-condensed"
-      | "normal"
-      | "semi-expanded"
-      | "expanded"
-      | "extra-expanded"
-      | "ultra-expanded"
-    >;
+    export type Absolute =
+      | Keyword<"ultra-condensed">
+      | Keyword<"extra-condensed">
+      | Keyword<"condensed">
+      | Keyword<"semi-condensed">
+      | Keyword<"normal">
+      | Keyword<"semi-expanded">
+      | Keyword<"expanded">
+      | Keyword<"extra-expanded">
+      | Keyword<"ultra-expanded">;
 
     export type Specified = Absolute | Percentage;
 
@@ -281,7 +282,10 @@ export namespace Font {
     { inherits: true }
   );
 
-  export type Style = Keyword.ToKeyword<"normal" | "italic" | "oblique">;
+  export type Style =
+    | Keyword<"normal">
+    | Keyword<"italic">
+    | Keyword<"oblique">;
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#font-style-prop
@@ -300,9 +304,9 @@ export namespace Font {
   export type Weight = Weight.Specified | Weight.Computed;
 
   export namespace Weight {
-    export type Absolute = Keyword.ToKeyword<"normal" | "bold">;
+    export type Absolute = Keyword<"normal"> | Keyword<"bold">;
 
-    export type Relative = Keyword.ToKeyword<"bolder" | "lighter">;
+    export type Relative = Keyword<"bolder"> | Keyword<"lighter">;
 
     export type Specified = Absolute | Relative | Number;
 
@@ -398,7 +402,7 @@ export namespace Font {
     // It is nonetheless hacky to hardcode the initial value instead of using Keyword.of("initial") in the end…
     let stretch: Stretch.Specified = normal;
     let style: Style = normal;
-    let variant: Keyword.ToKeyword<"normal" | "small-caps"> = normal;
+    let variant: Keyword<"normal"> | Keyword<"small-caps"> = normal;
     let weight: Weight.Specified = normal;
 
     while (true) {
