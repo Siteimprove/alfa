@@ -8,12 +8,17 @@ import { Predicate } from "@siteimprove/alfa-trilean";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as trilean from "@siteimprove/alfa-trilean";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
 
 export abstract class Outcome<I, T, Q = never>
-  implements Equatable, json.Serializable, earl.Serializable {
+  implements
+    Equatable,
+    json.Serializable<Outcome.JSON>,
+    earl.Serializable<Outcome.EARL>,
+    sarif.Serializable<sarif.Result> {
   protected readonly _rule: Rule<I, T, Q>;
 
   protected constructor(rule: Rule<I, T, Q>) {
@@ -27,6 +32,8 @@ export abstract class Outcome<I, T, Q = never>
   public get target(): T | undefined {
     return undefined;
   }
+
+  public abstract equals<I, T, Q>(value: Outcome<I, T, Q>): boolean;
 
   public abstract equals(value: unknown): value is this;
 
@@ -43,6 +50,8 @@ export abstract class Outcome<I, T, Q = never>
       },
     };
   }
+
+  public abstract toSARIF(): sarif.Result;
 }
 
 export namespace Outcome {
@@ -63,7 +72,9 @@ export namespace Outcome {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Result<Diagnostic> }>
+      expectations: Record<{
+        [key: string]: Result<Diagnostic>;
+      }>
     ): Passed<I, T, Q> {
       return new Passed(rule, target, expectations);
     }
@@ -76,7 +87,9 @@ export namespace Outcome {
     private constructor(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Result<Diagnostic> }>
+      expectations: Record<{
+        [key: string]: Result<Diagnostic>;
+      }>
     ) {
       super(rule);
 
@@ -88,11 +101,17 @@ export namespace Outcome {
       return this._target;
     }
 
-    public get expectations(): Record<{ [key: string]: Result<Diagnostic> }> {
+    public get expectations(): Record<{
+      [key: string]: Result<Diagnostic>;
+    }> {
       return this._expectations;
     }
 
-    public equals(value: unknown): value is this {
+    public equals<I, T, Q>(value: Passed<I, T, Q>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Passed &&
         value._rule.equals(this._rule) &&
@@ -101,7 +120,7 @@ export namespace Outcome {
       );
     }
 
-    public toJSON(): Passed.JSON {
+    public toJSON(): Passed.JSON<T> {
       return {
         outcome: "passed",
         rule: this._rule.toJSON(),
@@ -137,13 +156,39 @@ export namespace Outcome {
 
       return outcome;
     }
+
+    public toSARIF(): sarif.Result {
+      const message =
+        "The test target passes all requirements:\n\n" +
+        this._expectations
+          .toArray()
+          .map(([, expectation]) => `- ${expectation.get().message}`)
+          .join("\n");
+
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "pass",
+        level: "none",
+        message: {
+          text: message,
+          markdown: message,
+        },
+        locations,
+      };
+    }
   }
 
   export namespace Passed {
-    export interface JSON extends Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "passed";
-      target: json.JSON;
+      target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
 
@@ -157,13 +202,29 @@ export namespace Outcome {
         "earl:pointer"?: earl.EARL;
       };
     }
+
+    export function isPassed<I, T, Q>(
+      value: Outcome<I, T, Q>
+    ): value is Passed<I, T, Q>;
+
+    export function isPassed<I, T, Q>(value: unknown): value is Passed<I, T, Q>;
+
+    export function isPassed<I, T, Q>(
+      value: unknown
+    ): value is Passed<I, T, Q> {
+      return value instanceof Passed;
+    }
   }
+
+  export const { of: passed, isPassed } = Passed;
 
   export class Failed<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Result<Diagnostic> }>
+      expectations: Record<{
+        [key: string]: Result<Diagnostic>;
+      }>
     ): Failed<I, T, Q> {
       return new Failed(rule, target, expectations);
     }
@@ -176,7 +237,9 @@ export namespace Outcome {
     private constructor(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<{ [key: string]: Result<Diagnostic> }>
+      expectations: Record<{
+        [key: string]: Result<Diagnostic>;
+      }>
     ) {
       super(rule);
 
@@ -188,11 +251,17 @@ export namespace Outcome {
       return this._target;
     }
 
-    public get expectations(): Record<{ [key: string]: Result<Diagnostic> }> {
+    public get expectations(): Record<{
+      [key: string]: Result<Diagnostic>;
+    }> {
       return this._expectations;
     }
 
-    public equals(value: unknown): value is this {
+    public equals<I, T, Q>(value: Failed<I, T, Q>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Failed &&
         value._rule.equals(this._rule) &&
@@ -201,7 +270,7 @@ export namespace Outcome {
       );
     }
 
-    public toJSON(): Failed.JSON {
+    public toJSON(): Failed.JSON<T> {
       return {
         outcome: "failed",
         rule: this._rule.toJSON(),
@@ -239,13 +308,40 @@ export namespace Outcome {
 
       return outcome;
     }
+
+    public toSARIF(): sarif.Result {
+      const message =
+        "The test target fails the following requirements:\n\n" +
+        this._expectations
+          .toArray()
+          .filter(([, expectation]) => expectation.isErr())
+          .map(([, expectation]) => `- ${expectation.getErr().message}`)
+          .join("\n");
+
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "fail",
+        level: "error",
+        message: {
+          text: message,
+          markdown: message,
+        },
+        locations,
+      };
+    }
   }
 
   export namespace Failed {
-    export interface JSON extends Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "failed";
-      target: json.JSON;
+      target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
 
@@ -259,7 +355,21 @@ export namespace Outcome {
         "earl:pointer"?: earl.EARL;
       };
     }
+
+    export function isFailed<I, T, Q>(
+      value: Outcome<I, T, Q>
+    ): value is Failed<I, T, Q>;
+
+    export function isFailed<I, T, Q>(value: unknown): value is Failed<I, T, Q>;
+
+    export function isFailed<I, T, Q>(
+      value: unknown
+    ): value is Failed<I, T, Q> {
+      return value instanceof Failed;
+    }
   }
+
+  export const { of: failed, isFailed } = Failed;
 
   export class CantTell<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
@@ -281,7 +391,11 @@ export namespace Outcome {
       return this._target;
     }
 
-    public equals(value: unknown): value is this {
+    public equals<I, T, Q>(value: CantTell<I, T, Q>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof CantTell &&
         value._rule.equals(this._rule) &&
@@ -289,7 +403,7 @@ export namespace Outcome {
       );
     }
 
-    public toJSON(): CantTell.JSON {
+    public toJSON(): CantTell.JSON<T> {
       return {
         outcome: "cantTell",
         rule: this._rule.toJSON(),
@@ -298,7 +412,7 @@ export namespace Outcome {
     }
 
     public toEARL(): CantTell.EARL {
-      return {
+      const outcome: CantTell.EARL = {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
@@ -307,14 +421,42 @@ export namespace Outcome {
           },
         },
       };
+
+      for (const pointer of earl.Serializable.toEARL(this._target)) {
+        outcome["earl:result"]["earl:pointer"] = pointer;
+      }
+
+      return outcome;
+    }
+
+    public toSARIF(): sarif.Result {
+      const message =
+        "The rule has outstanding questions that must be answered for the test target";
+
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "review",
+        level: "warning",
+        message: {
+          text: message,
+          markdown: message,
+        },
+        locations,
+      };
     }
   }
 
   export namespace CantTell {
-    export interface JSON extends Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "cantTell";
-      target: json.JSON;
+      target: json.Serializable.ToJSON<T>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -323,14 +465,49 @@ export namespace Outcome {
         "earl:outcome": {
           "@id": "earl:cantTell";
         };
+        "earl:pointer"?: earl.EARL;
       };
     }
+
+    export function isCantTell<I, T, Q>(
+      value: Outcome<I, T, Q>
+    ): value is CantTell<I, T, Q>;
+
+    export function isCantTell<I, T, Q>(
+      value: unknown
+    ): value is CantTell<I, T, Q>;
+
+    export function isCantTell<I, T, Q>(
+      value: unknown
+    ): value is CantTell<I, T, Q> {
+      return value instanceof CantTell;
+    }
   }
+
+  export const { of: cantTell, isCantTell } = CantTell;
 
   export type Applicable<I, T, Q = unknown> =
     | Passed<I, T, Q>
     | Failed<I, T, Q>
     | CantTell<I, T, Q>;
+
+  export namespace Applicable {
+    export function isApplicable<I, T, Q>(
+      value: Outcome<I, T, Q>
+    ): value is Applicable<I, T, Q>;
+
+    export function isApplicable<I, T, Q>(
+      value: unknown
+    ): value is Applicable<I, T, Q>;
+
+    export function isApplicable<I, T, Q>(
+      value: unknown
+    ): value is Applicable<I, T, Q> {
+      return isPassed(value) || isFailed(value) || isCantTell(value);
+    }
+  }
+
+  export const { isApplicable } = Applicable;
 
   export class Inapplicable<I, T, Q = unknown> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(rule: Rule<I, T, Q>): Inapplicable<I, T, Q> {
@@ -341,7 +518,11 @@ export namespace Outcome {
       super(rule);
     }
 
-    public equals(value: unknown): value is this {
+    public equals<I, T, Q>(value: Inapplicable<I, T, Q>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Inapplicable && value._rule.equals(this._rule);
     }
 
@@ -363,6 +544,20 @@ export namespace Outcome {
         },
       };
     }
+
+    public toSARIF(): sarif.Result {
+      const message = "The rule did not apply to the test subject";
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "notApplicable",
+        level: "none",
+        message: {
+          text: message,
+          markdown: message,
+        },
+      };
+    }
   }
 
   export namespace Inapplicable {
@@ -379,12 +574,30 @@ export namespace Outcome {
         };
       };
     }
+
+    export function isInapplicable<I, T, Q>(
+      value: Outcome<I, T, Q>
+    ): value is Inapplicable<I, T, Q>;
+
+    export function isInapplicable<I, T, Q>(
+      value: unknown
+    ): value is Inapplicable<I, T, Q>;
+
+    export function isInapplicable<I, T, Q>(
+      value: unknown
+    ): value is Inapplicable<I, T, Q> {
+      return value instanceof Inapplicable;
+    }
   }
+
+  export const { of: inapplicable, isInapplicable } = Inapplicable;
 
   export function from<I, T, Q>(
     rule: Rule<I, T, Q>,
     target: T,
-    expectations: Record<{ [key: string]: Option<Result<Diagnostic>> }>
+    expectations: Record<{
+      [key: string]: Option<Result<Diagnostic>>;
+    }>
   ): Outcome.Applicable<I, T, Q> {
     return Predicate.fold(
       trilean.every((expectation) =>
@@ -415,35 +628,5 @@ export namespace Outcome {
         ),
       () => CantTell.of(rule, target)
     );
-  }
-
-  export function isPassed<I, T, Q>(
-    outcome: Outcome<I, T, Q>
-  ): outcome is Passed<I, T, Q> {
-    return outcome instanceof Passed;
-  }
-
-  export function isFailed<I, T, Q>(
-    outcome: Outcome<I, T, Q>
-  ): outcome is Failed<I, T, Q> {
-    return outcome instanceof Failed;
-  }
-
-  export function isCantTell<I, T, Q>(
-    outcome: Outcome<I, T, Q>
-  ): outcome is CantTell<I, T, Q> {
-    return outcome instanceof CantTell;
-  }
-
-  export function isApplicable<I, T, Q>(
-    outcome: Outcome<I, T, Q>
-  ): outcome is Applicable<I, T, Q> {
-    return isPassed(outcome) || isFailed(outcome) || isCantTell(outcome);
-  }
-
-  export function isInapplicable<I, T, Q>(
-    outcome: Outcome<I, T, Q>
-  ): outcome is Inapplicable<I, T, Q> {
-    return outcome instanceof Inapplicable;
   }
 }

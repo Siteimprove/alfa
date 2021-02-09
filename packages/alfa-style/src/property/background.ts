@@ -1,5 +1,6 @@
 import {
   Angle,
+  Box,
   Current,
   Gradient,
   Image,
@@ -404,7 +405,7 @@ export namespace Background {
    * @see https://drafts.csswg.org/css-backgrounds/#propdef-background-clip
    */
 
-  const parseClip = Keyword.parse("border-box", "padding-box", "content-box");
+  const parseClip = Box.parse;
 
   const parseClipList = map(
     separatedList(
@@ -427,20 +428,17 @@ export namespace Background {
     export type Specified = List<Specified.Item>;
 
     export namespace Specified {
-      export type Item =
-        | Keyword<"border-box">
-        | Keyword<"padding-box">
-        | Keyword<"content-box">;
+      export type Item = Box;
     }
 
     export type Computed = Specified;
   }
 
   /**
-   * @see https://drafts.csswg.org/css-backgrounds/#propdef-ackground-origin
+   * @see https://drafts.csswg.org/css-backgrounds/#propdef-background-origin
    */
 
-  const parseOrigin = Keyword.parse("border-box", "padding-box", "content-box");
+  const parseOrigin = Box.parse;
 
   const parseOriginList = map(
     separatedList(
@@ -463,10 +461,7 @@ export namespace Background {
     export type Specified = List<Specified.Item>;
 
     export namespace Specified {
-      export type Item =
-        | Keyword<"border-box">
-        | Keyword<"padding-box">
-        | Keyword<"content-box">;
+      export type Item = Box;
     }
 
     export type Computed = Specified;

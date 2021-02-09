@@ -7,6 +7,8 @@
     "src/property/background.ts",
     "src/property/box.ts",
     "src/property/box-insets.ts",
+    "src/property/clip.ts",
+    "src/property/clip-path.ts",
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
@@ -30,6 +32,7 @@
     "test/property/background.spec.tsx",
     "test/property/box.spec.tsx",
     "test/property/box-insets.spec.tsx",
+    "test/property/clip.spec.tsx",
     "test/property/font.spec.tsx",
     "test/property/text.spec.tsx",
     "test/style.spec.tsx"
@@ -67,9 +70,6 @@
     },
     {
       "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
     },
     {
       "path": "../alfa-mapper"

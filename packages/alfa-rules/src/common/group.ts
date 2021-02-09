@@ -1,10 +1,17 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
-export class Group<T extends earl.Serializable>
-  implements Iterable<T>, Equatable, json.Serializable, earl.Serializable {
+export class Group<T>
+  implements
+    Iterable<T>,
+    Equatable,
+    json.Serializable<Group.JSON<T>>,
+    earl.Serializable<Group.EARL>,
+    sarif.Serializable<sarif.Location> {
   public static of<T extends earl.Serializable>(
     members: Iterable<T>
   ): Group<T> {
@@ -35,8 +42,8 @@ export class Group<T extends earl.Serializable>
     );
   }
 
-  public toJSON(): Group.JSON {
-    return this._members.map(json.Serializable.toJSON);
+  public toJSON(): Group.JSON<T> {
+    return this._members.map((member) => json.Serializable.toJSON(member));
   }
 
   public toEARL(): Group.EARL {
@@ -46,14 +53,28 @@ export class Group<T extends earl.Serializable>
       },
       "@type": ["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"],
       "ptr:groupPointer": {
-        "@list": this._members.map((member) => member.toEARL()),
+        "@list": Array.collect(this._members, (member) =>
+          earl.Serializable.toEARL(member)
+        ),
       },
+    };
+  }
+
+  public toSARIF(): sarif.Location {
+    return {
+      logicalLocations: Array.flatMap(this._members, (member) =>
+        sarif.Serializable.toSARIF(member)
+          .map(
+            (location) => (location as sarif.Location).logicalLocations ?? []
+          )
+          .getOr([])
+      ),
     };
   }
 }
 
 export namespace Group {
-  export type JSON = Array<json.JSON>;
+  export type JSON<T> = Array<json.Serializable.ToJSON<T>>;
 
   export interface EARL extends earl.EARL {
     "@context": {

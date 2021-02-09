@@ -59,7 +59,6 @@ function hasRequiredValues(device: Device): Predicate<Element> {
         for (const attribute of role.attributes) {
           if (
             role.isAttributeRequired(attribute) &&
-            role.implicitAttributeValue(attribute).isNone() &&
             node.attribute(attribute).every(property("value", isEmpty))
           ) {
             return false;

@@ -76,6 +76,7 @@
     { "path": "alfa-result" },
     { "path": "alfa-rules" },
     { "path": "alfa-scraper" },
+    { "path": "alfa-sarif" },
     { "path": "alfa-selector" },
     { "path": "alfa-sequence" },
     { "path": "alfa-set" },

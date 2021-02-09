@@ -13,6 +13,7 @@
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
+    "src/value/box.ts",
     "src/value/calculation.ts",
     "src/value/color.ts",
     "src/value/color/current.ts",
@@ -34,6 +35,13 @@
     "src/value/percentage.ts",
     "src/value/position.ts",
     "src/value/shadow.ts",
+    "src/value/shape.ts",
+    "src/value/shape/circle.ts",
+    "src/value/shape/ellipse.ts",
+    "src/value/shape/inset.ts",
+    "src/value/shape/polygon.ts",
+    "src/value/shape/radius.ts",
+    "src/value/shape/rectangle.ts",
     "src/value/string.ts",
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",
@@ -48,7 +56,13 @@
     "test/syntax/lexer.spec.ts",
     "test/syntax/nth.spec.ts",
     "test/value/calculation.spec.ts",
-    "test/value/position.spec.ts"
+    "test/value/position.spec.ts",
+    "test/value/shape.spec.ts",
+    "test/value/shape/circle.spec.ts",
+    "test/value/shape/ellipse.spec.ts",
+    "test/value/shape/inset.spec.ts",
+    "test/value/shape/polygon.spec.ts",
+    "test/value/shape/rectangle.spec.ts"
   ],
   "references": [
     {
