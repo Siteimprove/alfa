@@ -61,7 +61,7 @@ export namespace Keyword {
     return value instanceof Keyword;
   }
 
-  export function parse<T extends string>(...keywords: ReadonlyArray<T>) {
+  export function parse<T extends string>(...keywords: Array<T>) {
     return map(
       Token.parseIdent((ident) =>
         keywords.some(equals(ident.value.toLowerCase()))
