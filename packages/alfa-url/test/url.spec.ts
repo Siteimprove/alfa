@@ -9,7 +9,7 @@ test(".parse() parses an absolute URL", (t) => {
     password: null,
     host: "example.com",
     port: null,
-    path: ["page.html"],
+    path: ["", "page.html"],
     query: null,
     fragment: null,
     cannotBeABaseURL: false,
@@ -23,7 +23,7 @@ test(".parse() parses a relative URL against a base URL", (t) => {
     password: null,
     host: "example.com",
     port: null,
-    path: ["page.html"],
+    path: ["", "page.html"],
     query: null,
     fragment: null,
     cannotBeABaseURL: false,
@@ -40,7 +40,7 @@ test(".parse() parses the special about:blank URL", (t) => {
     path: ["blank"],
     query: null,
     fragment: null,
-    cannotBeABaseURL: false,
+    cannotBeABaseURL: true,
   });
 });
 
