@@ -63,6 +63,7 @@
     { "path": "alfa-math" },
     { "path": "alfa-media" },
     { "path": "alfa-monad" },
+    { "path": "alfa-network" },
     { "path": "alfa-option" },
     { "path": "alfa-parser" },
     { "path": "alfa-performance" },
