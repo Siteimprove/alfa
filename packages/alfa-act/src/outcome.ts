@@ -8,6 +8,7 @@ import { Predicate } from "@siteimprove/alfa-trilean";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as trilean from "@siteimprove/alfa-trilean";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
@@ -16,7 +17,8 @@ export abstract class Outcome<I, T, Q = never>
   implements
     Equatable,
     json.Serializable<Outcome.JSON>,
-    earl.Serializable<Outcome.EARL> {
+    earl.Serializable<Outcome.EARL>,
+    sarif.Serializable<sarif.Result> {
   protected readonly _rule: Rule<I, T, Q>;
 
   protected constructor(rule: Rule<I, T, Q>) {
@@ -48,6 +50,8 @@ export abstract class Outcome<I, T, Q = never>
       },
     };
   }
+
+  public abstract toSARIF(): sarif.Result;
 }
 
 export namespace Outcome {
@@ -151,6 +155,32 @@ export namespace Outcome {
       }
 
       return outcome;
+    }
+
+    public toSARIF(): sarif.Result {
+      const message =
+        "The test target passes all requirements:\n\n" +
+        this._expectations
+          .toArray()
+          .map(([, expectation]) => `- ${expectation.get().message}`)
+          .join("\n");
+
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "pass",
+        level: "none",
+        message: {
+          text: message,
+          markdown: message,
+        },
+        locations,
+      };
     }
   }
 
@@ -278,6 +308,33 @@ export namespace Outcome {
 
       return outcome;
     }
+
+    public toSARIF(): sarif.Result {
+      const message =
+        "The test target fails the following requirements:\n\n" +
+        this._expectations
+          .toArray()
+          .filter(([, expectation]) => expectation.isErr())
+          .map(([, expectation]) => `- ${expectation.getErr().message}`)
+          .join("\n");
+
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "fail",
+        level: "error",
+        message: {
+          text: message,
+          markdown: message,
+        },
+        locations,
+      };
+    }
   }
 
   export namespace Failed {
@@ -371,6 +428,28 @@ export namespace Outcome {
 
       return outcome;
     }
+
+    public toSARIF(): sarif.Result {
+      const message =
+        "The rule has outstanding questions that must be answered for the test target";
+
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "review",
+        level: "warning",
+        message: {
+          text: message,
+          markdown: message,
+        },
+        locations,
+      };
+    }
   }
 
   export namespace CantTell {
@@ -462,6 +541,20 @@ export namespace Outcome {
           "earl:outcome": {
             "@id": "earl:inapplicable",
           },
+        },
+      };
+    }
+
+    public toSARIF(): sarif.Result {
+      const message = "The rule did not apply to the test subject";
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "notApplicable",
+        level: "none",
+        message: {
+          text: message,
+          markdown: message,
         },
       };
     }
