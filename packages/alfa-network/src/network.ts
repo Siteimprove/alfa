@@ -95,6 +95,10 @@ export class Network<N, E>
     );
   }
 
+  public disconnect(from: N, to: N): Network<N, E>;
+
+  public disconnect(from: N, to: N, edge: E): Network<N, E>;
+
   public disconnect(from: N, to: N, edge?: E): Network<N, E> {
     if (!this.has(from) || !this.has(to)) {
       return this;
