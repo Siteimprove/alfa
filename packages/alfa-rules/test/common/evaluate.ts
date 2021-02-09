@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 export function evaluate<T, Q>(
   rule: Rule<Page, T, Q>,
   page: Partial<Page>,
-  oracle: Oracle<Q> = () => Future.now(None)
+  oracle: Oracle<Page, T, Q> = () => Future.now(None)
 ): Future<Array<Outcome.JSON>> {
   const {
     request = Request.empty(),

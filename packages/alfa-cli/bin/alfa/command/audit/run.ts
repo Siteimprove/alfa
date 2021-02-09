@@ -5,14 +5,14 @@ import * as fs from "fs";
 import { Audit, Outcome } from "@siteimprove/alfa-act";
 import { Command } from "@siteimprove/alfa-command";
 import { Formatter } from "@siteimprove/alfa-formatter";
+import { Interviewer } from "@siteimprove/alfa-interviewer";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None } from "@siteimprove/alfa-option";
-import { Ok } from "@siteimprove/alfa-result";
+import { Option, None } from "@siteimprove/alfa-option";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import rules from "@siteimprove/alfa-rules";
 
-import { Oracle } from "../../oracle";
 import { Profiler } from "../../profiler";
 
 import type { Arguments } from "./arguments";
@@ -28,6 +28,16 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   if (formatter.isErr()) {
     return formatter;
+  }
+
+  const interviewer = Option.from(
+    await flags.interviewer
+      .map((interviewer) => Interviewer.load<any, any, any>(interviewer))
+      .getOr(undefined)
+  );
+
+  if (interviewer.some((interviewer) => interviewer.isErr())) {
+    return interviewer.get() as Err<string>;
   }
 
   let json: string;
@@ -54,11 +64,11 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   const page = Page.from(JSON.parse(json));
 
-  const audit = Audit.of(
-    page,
-    rules,
-    flags.interactive ? Oracle(page) : undefined
-  );
+  const oracle = interviewer
+    .map((interviewer) => interviewer.get()(page, rules))
+    .getOr(undefined);
+
+  const audit = Audit.of(page, rules, oracle);
 
   for (const _ of flags.cpuProfile) {
     await Profiler.CPU.start();
@@ -101,9 +111,9 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   const output = formatter.get()(page, rules, outcomes);
 
   if (flags.output.isNone()) {
-    return Ok.of(output);
+    return Result.of(output);
   } else {
     fs.writeFileSync(flags.output.get(), output + "\n");
-    return Ok.of("");
+    return Result.of("");
   }
 };

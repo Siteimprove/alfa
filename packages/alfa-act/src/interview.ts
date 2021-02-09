@@ -30,7 +30,7 @@ export namespace Interview {
   export function conduct<I, T, Q, A>(
     interview: Interview<Q, T, A>,
     rule: Rule<I, T, Q>,
-    oracle: Oracle<Q>
+    oracle: Oracle<I, T, Q>
   ): Future<Option<A>> {
     if (interview instanceof Question) {
       return oracle(rule, interview).flatMap((answer) =>
