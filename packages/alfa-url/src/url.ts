@@ -339,6 +339,11 @@ export namespace URL {
         hash,
       } = new Builtin(url, base?.toString());
 
+      const segments = pathname.replace(/^\//, "").split("/");
+      if (pathname.startsWith("/")) {
+        segments.unshift("");
+      }
+
       return Result.of(
         URL.of(
           // `URL#protocol` appends a ":" to the scheme which we need to remove.
@@ -358,7 +363,7 @@ export namespace URL {
           // `URL#pathname` exposes the path segments with a leading "/" and
           // joins the segments with "/". We therefore remove the leading "/"
           // and split the segments by "/" into an array.
-          pathname.replace(/^\//, "").split("/"),
+          segments,
 
           // `URL#search` exposes the query portion of the URL with a leading
           // "?" which we need to remove.
