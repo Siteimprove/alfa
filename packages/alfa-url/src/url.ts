@@ -241,7 +241,7 @@ export class URL implements Equatable, Hashable, Serializable {
       }
     }
 
-    if (this._cannotBeABaseURL === true) {
+    if (this.cannotBeABaseURL) {
       for (const path of this._path) output += path;
     } else {
       if (this._host.isNone() && this._scheme === "file") {
@@ -257,7 +257,7 @@ export class URL implements Equatable, Hashable, Serializable {
       }
 
       for (const segment of this._path) {
-        output += "/" + segment;
+        segment === "" ? (output += segment) : (output += "/" + segment);
       }
     }
 
