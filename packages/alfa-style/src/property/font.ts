@@ -231,8 +231,6 @@ export namespace Font {
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#font-stretch-prop
-   *
-   * This does *not* respect the serialisation of getComputedStyle() to keywords!
    */
   export const Stretch: Property<
     Stretch.Specified,
