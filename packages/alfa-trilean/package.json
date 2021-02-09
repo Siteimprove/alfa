@@ -18,7 +18,6 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "^0.10.0",
     "@siteimprove/alfa-iterable": "^0.10.0",
     "@siteimprove/alfa-mapper": "^0.10.0"
   },
