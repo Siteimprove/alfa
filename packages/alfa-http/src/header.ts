@@ -3,7 +3,11 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-export class Header implements Equatable, json.Serializable, earl.Serializable {
+export class Header
+  implements
+    Equatable,
+    json.Serializable<Header.JSON>,
+    earl.Serializable<Header.EARL> {
   public static of(name: string, value: string): Header {
     return new Header(name, value);
   }
@@ -24,7 +28,11 @@ export class Header implements Equatable, json.Serializable, earl.Serializable {
     return this._value;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Header): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Header &&
       value._name === this._name &&

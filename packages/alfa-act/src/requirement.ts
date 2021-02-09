@@ -4,12 +4,19 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
 export abstract class Requirement
-  implements Equatable, json.Serializable, earl.Serializable {
+  implements
+    Equatable,
+    json.Serializable<Requirement.JSON>,
+    earl.Serializable<Requirement.EARL> {
   protected constructor() {}
 
   public abstract get uri(): string;
 
-  public equals(value: unknown): value is this {
+  public equals(value: Requirement): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Requirement && value.uri === this.uri;
   }
 

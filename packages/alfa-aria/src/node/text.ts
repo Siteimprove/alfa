@@ -33,6 +33,7 @@ export class Text extends Node {
   public toJSON(): Text.JSON {
     return {
       type: "text",
+      node: this._node.path(),
       name: this._name.map((name) => name.value).getOr(null),
       children: this._children.map((child) => child.toJSON()),
     };
