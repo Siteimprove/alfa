@@ -65,7 +65,9 @@ export class Network<N, E>
     );
   }
 
-  public connect(from: N, to: N, edge: E): Network<N, E> {
+  public connect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
+
+  public connect(from: N, to: N, ...edges: Array<E>): Network<N, E> {
     let nodes = this._nodes;
 
     if (!nodes.has(from)) {
@@ -86,8 +88,10 @@ export class Network<N, E>
               to,
               from
                 .get(to)
-                .map((edges) => edges.add(edge))
-                .getOrElse(() => Set.of(edge))
+                .map((existing) =>
+                  edges.reduce((edges, edge) => edges.add(edge), existing)
+                )
+                .getOrElse(() => Set.from(edges))
             )
           )
           .get()
@@ -97,9 +101,9 @@ export class Network<N, E>
 
   public disconnect(from: N, to: N): Network<N, E>;
 
-  public disconnect(from: N, to: N, edge: E): Network<N, E>;
+  public disconnect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
 
-  public disconnect(from: N, to: N, edge?: E): Network<N, E> {
+  public disconnect(from: N, to: N, ...edges: Array<E>): Network<N, E> {
     if (!this.has(from) || !this.has(to)) {
       return this;
     }
@@ -112,18 +116,21 @@ export class Network<N, E>
         nodes
           .get(from)
           .map((from) => {
-            if (edge === undefined) {
+            if (edges.length === 0) {
               return from.delete(to);
             }
 
-            for (let edges of from.get(to)) {
-              edges = edges.delete(edge);
+            for (let existing of from.get(to)) {
+              existing = edges.reduce(
+                (edges, edge) => edges.delete(edge),
+                existing
+              );
 
-              if (edges.size === 0) {
+              if (existing.size === 0) {
                 return from.delete(to);
               }
 
-              return from.set(to, edges);
+              return from.set(to, existing);
             }
 
             return from;
