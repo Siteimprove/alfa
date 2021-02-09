@@ -185,11 +185,6 @@ test("#cascaded parses `condensed oblique753 12pt 'Helvetica Neue', serif`", (t)
     value: "oblique",
   });
 
-  t.deepEqual(style.cascaded("font-variant").get().value.toJSON(), {
-    type: "keyword",
-    value: "normal",
-  });
-
   t.deepEqual(style.cascaded("font-weight").get().value.toJSON(), {
     type: "number",
     value: 753,

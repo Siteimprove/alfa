@@ -297,21 +297,6 @@ export namespace Font {
     }
   );
 
-  export type VariantCSS2 = Keyword.ToKeyword<"normal" | "small-caps">;
-
-  /**
-   * @see https://drafts.csswg.org/css-fonts/#font-variant-css21-values
-   *
-   * This is not the full font-variant property which is much more complex and not needed currently.
-   * @see https://drafts.csswg.org/css-fonts/#font-variant-prop
-   */
-  export const VariantCSS2: Property<VariantCSS2> = Property.of(
-    Keyword.of("normal"),
-    Keyword.parse("normal", "small-caps"),
-    (style) => style.specified("font-variant"),
-    { inherits: true }
-  );
-
   export type Weight = Weight.Specified | Weight.Computed;
 
   export namespace Weight {
@@ -396,7 +381,6 @@ export namespace Font {
     [
       ["font-stretch", Stretch.Specified],
       ["font-style", Style],
-      ["font-variant", VariantCSS2],
       ["font-weight", Weight.Specified]
     ],
     string
@@ -414,7 +398,7 @@ export namespace Font {
     // It is nonetheless hacky to hardcode the initial value instead of using Keyword.of("initial") in the end…
     let stretch: Stretch.Specified = normal;
     let style: Style = normal;
-    let variant: VariantCSS2 = normal;
+    let variant: Keyword.ToKeyword<"normal" | "small-caps"> = normal;
     let weight: Weight.Specified = normal;
 
     while (true) {
@@ -452,7 +436,7 @@ export namespace Font {
       }
 
       if (normal.equals(variant)) {
-        const result = VariantCSS2.parse(input);
+        const result = Keyword.parse("normal", "small-caps")(input);
 
         if (result.isOk()) {
           [input, variant] = result.get();
@@ -477,7 +461,7 @@ export namespace Font {
       [
         ["font-stretch", stretch],
         ["font-style", style],
-        ["font-variant", variant],
+        // we currently do not support font-variant and just ditch it.
         ["font-weight", weight],
       ],
     ]);
@@ -493,7 +477,6 @@ export namespace Font {
       "font-size",
       "font-stretch",
       "font-style",
-      "font-variant",
       "font-weight",
       "line-height",
     ],
