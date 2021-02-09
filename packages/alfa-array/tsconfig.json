@@ -4,6 +4,9 @@
   "files": ["src/array.ts", "src/global.ts", "src/index.ts"],
   "references": [
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-clone"
     },
     {
@@ -20,6 +23,9 @@
     },
     {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-option"
