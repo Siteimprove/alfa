@@ -196,14 +196,20 @@ export class Network<N, E>
 
   public toString(): string {
     const entries = this.toArray()
-      .map(([node, edges]) => {
-        const entries = edges.join(", ");
+      .map(([node, neighbors]) => {
+        const entries = neighbors
+          .map(([node, edges]) => {
+            const entries = edges.join(", ");
+
+            return `${node}${entries === "" ? "" : ` (${entries})`}`;
+          })
+          .join(", ");
 
         return `${node}${entries === "" ? "" : ` => [ ${entries} ]`}`;
       })
       .join(", ");
 
-    return `Graph {${entries === "" ? "" : ` ${entries} `}}`;
+    return `Network {${entries === "" ? "" : ` ${entries} `}}`;
   }
 }
 
@@ -234,10 +240,10 @@ export namespace Network {
 
     return Network.of(
       Map.from(
-        Iterable.map(iterable, ([node, neighbours]) => [
+        Iterable.map(iterable, ([node, neighbors]) => [
           node,
           Map.from(
-            Iterable.map(neighbours, ([node, edges]) => [node, Set.from(edges)])
+            Iterable.map(neighbors, ([node, edges]) => [node, Set.from(edges)])
           ),
         ])
       )
