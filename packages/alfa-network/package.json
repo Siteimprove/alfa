@@ -4,7 +4,7 @@
   "homepage": "https://siteimprove.com",
   "version": "0.10.0",
   "license": "MIT",
-  "description": "An implementation of an immutable, directed graph with unique edges",
+  "description": "An implementation of an immutable, directed graph that allows for multiple, unique edges",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",

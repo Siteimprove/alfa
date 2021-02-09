@@ -243,7 +243,13 @@ export namespace Network {
         Iterable.map(iterable, ([node, neighbors]) => [
           node,
           Map.from(
-            Iterable.map(neighbors, ([node, edges]) => [node, Set.from(edges)])
+            Iterable.flatMap(neighbors, function* ([node, edges]) {
+              const set = Set.from(edges);
+
+              if (set.size > 0) {
+                yield [node, set];
+              }
+            })
           ),
         ])
       )
