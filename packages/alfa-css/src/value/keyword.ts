@@ -39,7 +39,7 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
     Hash.writeString(hash, this._value);
   }
 
-  public toJSON(): Keyword.JSON {
+  public toJSON(): Keyword.JSON<T> {
     return {
       type: "keyword",
       value: this._value,
@@ -52,8 +52,9 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
 }
 
 export namespace Keyword {
-  export interface JSON extends Value.JSON<"keyword"> {
-    value: string;
+  export interface JSON<T extends string = string>
+    extends Value.JSON<"keyword"> {
+    value: T;
   }
 
   export function isKeyword(value: unknown): value is Keyword {

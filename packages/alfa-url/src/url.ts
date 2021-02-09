@@ -8,14 +8,14 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Builtin } from "./url/builtin";
+import * as global from "./global";
 
 const { isEmpty } = Iterable;
 
 /**
  * @see https://url.spec.whatwg.org/
  */
-export class URL implements Equatable, Hashable, Serializable {
+export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   public static of(
     scheme: string,
     username: Option<string> = None,
@@ -340,7 +340,7 @@ export namespace URL {
         search,
         // https://url.spec.whatwg.org/#dom-url-hash
         hash,
-      } = new Builtin(url, base?.toString());
+      } = new global.URL(url, base?.toString());
 
       return Result.of(
         URL.of(

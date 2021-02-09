@@ -9,6 +9,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
@@ -21,7 +22,11 @@ import { Tag } from "./tag";
 const { flatMap, flatten, reduce } = Iterable;
 
 export abstract class Rule<I = unknown, T = unknown, Q = never>
-  implements Equatable, json.Serializable, earl.Serializable {
+  implements
+    Equatable,
+    json.Serializable<Rule.JSON>,
+    earl.Serializable<Rule.EARL>,
+    sarif.Serializable<sarif.ReportingDescriptor> {
   protected readonly _uri: string;
   protected readonly _requirements: Array<Requirement>;
   protected readonly _tags: Array<Tag>;
@@ -59,7 +64,11 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
     return this._evaluate(input, oracle, outcomes);
   }
 
-  public equals(value: unknown): value is this {
+  public equals<I, T, Q>(value: Rule<I, T, Q>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Rule && value._uri === this._uri;
   }
 
@@ -76,6 +85,13 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
       "dct:isPartOf": {
         "@set": this._requirements.map((requirement) => requirement.toEARL()),
       },
+    };
+  }
+
+  public toSARIF(): sarif.ReportingDescriptor {
+    return {
+      id: this._uri,
+      helpUri: this._uri,
     };
   }
 }
@@ -112,6 +128,7 @@ export namespace Rule {
   }
 
   /**
+   * @remarks
    * We use a short-lived cache during audits for rules to store their outcomes.
    * It effectively acts as a memoization layer on top of each rule evaluation
    * procedure, which comes in handy when dealing with composite rules that are
@@ -210,10 +227,18 @@ export namespace Rule {
         applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
         expectations(
           target: T
-        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
+        ): {
+          [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+        };
       };
     }
   }
+
+  export function isAtomic<I, T, Q>(
+    value: Rule<I, T, Q>
+  ): value is Atomic<I, T, Q>;
+
+  export function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q>;
 
   export function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q> {
     return value instanceof Atomic;
@@ -317,10 +342,20 @@ export namespace Rule {
       (input: Readonly<I>): {
         expectations(
           outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
+        ): {
+          [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+        };
       };
     }
   }
+
+  export function isComposite<I, T, Q>(
+    value: Rule<I, T, Q>
+  ): value is Composite<I, T, Q>;
+
+  export function isComposite<I, T, Q>(
+    value: unknown
+  ): value is Composite<I, T, Q>;
 
   export function isComposite<I, T, Q>(
     value: unknown

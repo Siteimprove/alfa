@@ -10,7 +10,6 @@ import {
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as cheerio from "cheerio";
 import * as dom from "domhandler";
 
 const { keys } = Object;

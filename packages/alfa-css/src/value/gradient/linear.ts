@@ -119,7 +119,7 @@ export namespace Linear {
 
     export const parseVertical = map(
       Token.parseIdent(
-        (ident) => ident.value === "top" || ident.value === "left"
+        (ident) => ident.value === "top" || ident.value === "bottom"
       ),
       (ident) => ident.value as Vertical
     );

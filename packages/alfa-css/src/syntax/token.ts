@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -1266,10 +1266,11 @@ export namespace Token {
 function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) =>
-    input
-      .get(0)
-      .filter(refinement)
-      .map((token) => Ok.of([input.slice(1), token] as const))
-      .getOrElse(() => Err.of("Expected token"));
+  return (input) => {
+    for (const token of input.get(0).filter(refinement)) {
+      return Result.of([input.slice(1), token]);
+    }
+
+    return Err.of("Expected token");
+  };
 }

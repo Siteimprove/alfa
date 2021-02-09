@@ -1,9 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
-
-const { either } = Parser;
 
 export type Position = Position.Specified | Position.Computed;
 
@@ -26,12 +23,6 @@ export const Position: Property<
   Position.Computed
 > = Property.of(
   Keyword.of("static"),
-  either(
-    either(Keyword.parse("static"), Keyword.parse("relative")),
-    either(
-      Keyword.parse("absolute"),
-      either(Keyword.parse("sticky"), Keyword.parse("fixed"))
-    )
-  ),
+  Keyword.parse("static", "relative", "absolute", "sticky", "fixed"),
   (style) => style.specified("position")
 );

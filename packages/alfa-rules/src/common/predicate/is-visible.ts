@@ -6,11 +6,13 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isClipped } from "./is-clipped";
-import { isOffscreen } from "./is-offscreen";
-import { isRendered } from "./is-rendered";
-import { isReplaced } from "./is-replaced";
-import { isTransparent } from "./is-transparent";
+import {
+  isClipped,
+  isOffscreen,
+  isRendered,
+  isReplaced,
+  isTransparent,
+} from "../predicate";
 
 const { every } = Iterable;
 const { not } = Predicate;

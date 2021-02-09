@@ -4,7 +4,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -434,10 +434,11 @@ export namespace Token {
 function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) =>
-    input
-      .get(0)
-      .filter(refinement)
-      .map((token) => Ok.of([input.slice(1), token] as const))
-      .getOrElse(() => Err.of("Expected token"));
+  return (input) => {
+    for (const token of input.get(0).filter(refinement)) {
+      return Result.of([input.slice(1), token]);
+    }
+
+    return Err.of("Expected token");
+  };
 }

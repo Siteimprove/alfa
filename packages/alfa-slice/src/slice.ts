@@ -5,7 +5,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 export class Slice<T>
   implements Iterable<T>, Equatable, Serializable<Slice.JSON<T>> {
   public static of<T>(
-    array: Readonly<Array<T>>,
+    array: ReadonlyArray<T>,
     start: number = 0,
     end: number = array.length
   ): Slice<T> {
@@ -20,21 +20,17 @@ export class Slice<T>
     return this._empty;
   }
 
-  private readonly _array: Readonly<Array<T>>;
+  private readonly _array: ReadonlyArray<T>;
   private readonly _offset: number;
   private readonly _length: number;
 
-  private constructor(
-    array: Readonly<Array<T>>,
-    offset: number,
-    length: number
-  ) {
+  private constructor(array: ReadonlyArray<T>, offset: number, length: number) {
     this._array = array;
     this._offset = offset;
     this._length = length;
   }
 
-  public get array(): Readonly<Array<T>> {
+  public get array(): ReadonlyArray<T> {
     return this._array;
   }
 
@@ -106,6 +102,10 @@ export class Slice<T>
 
 export namespace Slice {
   export type JSON<T> = Array<Serializable.ToJSON<T>>;
+
+  export function isSlice<T>(value: Iterable<T>): value is Slice<T>;
+
+  export function isSlice<T>(value: unknown): value is Slice<T>;
 
   export function isSlice<T>(value: unknown): value is Slice<T> {
     return value instanceof Slice;

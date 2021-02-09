@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { test } from "@siteimprove/alfa-test";
 
 import { Future } from "../src/future";
@@ -141,7 +143,7 @@ test(`.traverse() traverses an iterable of values and lifts them to a future of
 
 test(".traverse() does not run any resulting deferred futures", (t) => {
   Future.traverse([1, 2, 3, 4], (n) =>
-    Future.delay(() => {
+    Future.defer(() => {
       throw new Error("The future was run");
     })
   );

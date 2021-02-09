@@ -165,18 +165,6 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
-  public groupBy<K, T>(): Map<K, Sequence<T>> {
-    return Map.empty();
-  }
-
-  public subtract(): Nil {
-    return this;
-  }
-
-  public intersect(): Nil {
-    return this;
-  }
-
   public join(): string {
     return "";
   }
@@ -190,6 +178,18 @@ export const Nil: Nil = new (class Nil {
     comparer: Comparer<T>
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
+  }
+
+  public subtract(): Nil {
+    return this;
+  }
+
+  public intersect(): Nil {
+    return this;
+  }
+
+  public groupBy<K, T>(): Map<K, Sequence<T>> {
+    return Map.empty();
   }
 
   public equals(value: unknown): value is this {
