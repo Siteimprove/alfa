@@ -29,6 +29,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.teeErr()` is now available.
 
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, and `Array.distinct()` are now available.
+
+- [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
+
+- [@siteimprove/alfa-trampoline](packages-alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
+
 ### Fixed
 
 - [@siteimprove/alfa-css](packages/alfa-css): `Linear.parse()` now correctly parses gradient sides and corners specified as `bottom`.
