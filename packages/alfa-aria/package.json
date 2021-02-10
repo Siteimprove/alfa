@@ -21,6 +21,7 @@
     "generate": "node scripts/attributes.js && node scripts/roles.js"
   },
   "dependencies": {
+    "@siteimprove/alfa-array": "^0.10.0",
     "@siteimprove/alfa-branched": "^0.10.0",
     "@siteimprove/alfa-cache": "^0.10.0",
     "@siteimprove/alfa-compatibility": "^0.10.0",
