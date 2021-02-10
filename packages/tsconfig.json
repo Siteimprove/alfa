@@ -80,6 +80,7 @@
     { "path": "alfa-rules" },
     { "path": "alfa-scraper" },
     { "path": "alfa-sarif" },
+    { "path": "alfa-selective" },
     { "path": "alfa-selector" },
     { "path": "alfa-sequence" },
     { "path": "alfa-set" },

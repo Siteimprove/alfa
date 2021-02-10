@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -56,8 +57,17 @@ export class Left<L> implements Either<L, never> {
     return reducer(accumulator, this._value);
   }
 
-  public equals(value: unknown): value is this {
+  public equals<L>(value: Left<L>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Left && Equatable.equals(value._value, this._value);
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, false);
+    Hashable.hash(hash, this._value);
   }
 
   public *[Symbol.iterator](): Iterator<L> {

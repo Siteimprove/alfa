@@ -33,7 +33,9 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
 
-- [@siteimprove/alfa-trampoline](packages-alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
+
+- [@siteimprove/alfa-either](packages/alfa-either): `Either<L, R>` now provides an implementation of `Hashable`.
 
 ### Fixed
 
