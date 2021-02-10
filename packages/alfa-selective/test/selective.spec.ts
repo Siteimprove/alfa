@@ -46,3 +46,13 @@ test("#get() returns the value of a selective", (t) => {
     "bar"
   );
 });
+
+test(`#map() applies a function to a matched selective value`, (t) => {
+  t.equal(
+    Selective.of("foo")
+      .if(isFoo, () => "was foo")
+      .map((string) => string.toUpperCase())
+      .get(),
+    "WAS FOO"
+  );
+});
