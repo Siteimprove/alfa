@@ -1,7 +1,7 @@
 *
 !.gitignore
 
-!**/*.js
+!**/*.cjs
 
 !releases
 !plugins
