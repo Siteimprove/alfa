@@ -4,6 +4,7 @@ import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option } from "@siteimprove/alfa-option";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -18,29 +19,28 @@ const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r82.html",
+  requirements: [Criterion.of("3.3.1")],
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasRole(
-                  "checkbox",
-                  "combobox",
-                  "listbox",
-                  "menuitemcheckbox",
-                  "menuitemradio",
-                  "radio",
-                  "searchbox",
-                  "slider",
-                  "spinbutton",
-                  "switch",
-                  "textbox"
-                )
+              hasNamespace(Namespace.HTML),
+              hasRole(
+                "checkbox",
+                "combobox",
+                "listbox",
+                "menuitemcheckbox",
+                "menuitemradio",
+                "radio",
+                "searchbox",
+                "slider",
+                "spinbutton",
+                "switch",
+                "textbox"
               )
             )
           );
@@ -55,29 +55,33 @@ export default Rule.Atomic.of<Page, Element, Question>({
         ).map((indicators) => [...indicators]);
 
         return {
-          1: indicators.map((indicators) =>
-            expectation(
-              indicators.length === 0,
-              () => Outcomes.HasNoErrorIndicator,
-              () =>
-                identifiesTarget(
-                  indicators,
-                  Outcomes.NoErrorIndicatorIdentifiesTarget,
-                  device
-                )
+          1: <Interview<Question, Element, Option<Result<Diagnostic>>>>(
+            indicators.map((indicators) =>
+              expectation(
+                indicators.length === 0,
+                () => Outcomes.HasNoErrorIndicator,
+                () =>
+                  identifiesTarget(
+                    indicators,
+                    Outcomes.NoErrorIndicatorIdentifiesTarget,
+                    device
+                  )
+              )
             )
           ),
 
-          2: indicators.map((indicators) =>
-            expectation(
-              indicators.length === 0,
-              () => Outcomes.HasNoErrorIndicator,
-              () =>
-                describesResolution(
-                  indicators,
-                  Outcomes.NoErrorIndicatorDescribesResolution,
-                  device
-                )
+          2: <Interview<Question, Element, Option<Result<Diagnostic>>>>(
+            indicators.map((indicators) =>
+              expectation(
+                indicators.length === 0,
+                () => Outcomes.HasNoErrorIndicator,
+                () =>
+                  describesResolution(
+                    indicators,
+                    Outcomes.NoErrorIndicatorDescribesResolution,
+                    device
+                  )
+              )
             )
           ),
         };
@@ -134,7 +138,7 @@ function identifiesTarget(
   indicators: Array<Node>,
   error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Option.Maybe<Result<Diagnostic>>> {
+): Interview<Question, Node, Result<Diagnostic>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {
@@ -163,7 +167,7 @@ function describesResolution(
   indicators: Array<Node>,
   error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Option.Maybe<Result<Diagnostic>>> {
+): Interview<Question, Node, Result<Diagnostic>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {

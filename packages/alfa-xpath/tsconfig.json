@@ -18,6 +18,7 @@
     "src/syntax/token.ts",
     "src/types.ts",
     "src/walk.ts",
+    "test/evaluate.spec.tsx",
     "test/syntax/lexer.spec.ts",
     "test/syntax/parser.spec.ts"
   ],
@@ -39,6 +40,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-result"

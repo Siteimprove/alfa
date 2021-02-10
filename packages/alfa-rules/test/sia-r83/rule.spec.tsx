@@ -1,27 +1,51 @@
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element, Text } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R83, { Outcomes } from "../../src/sia-r83/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-const { isText } = Text;
-
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-        Hello world
-      </div>,
-      Option.of(self)
-    ),
+  const target = h.text("Hello world");
+
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+      }}
+    >
+      {target}
+    </div>,
   ]);
 
-  const target = document.descendants().find(isText).get();
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, {
+      1: Outcomes.WrapsText,
+    }),
+  ]);
+});
+
+test(`evaluate() passes a child text node of an element whose parent truncates
+      overflow using ellipsis`, async (t) => {
+  const target = h.text("Hello world");
+
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+      }}
+    >
+      <span>{target}</span>
+    </div>,
+  ]);
 
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
@@ -33,16 +57,19 @@ test("evaluate() passes a text node that truncates overflow using ellipsis", asy
 test(`evaluate() passes a text node that hides overflow by wrapping text using
       the \`height\` property with a value that is equal to the value of the
       \`line-height\` property`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div style="overflow: hidden; height: 1.5em; line-height: 1.5;">
-        Hello world
-      </div>,
-      Option.of(self)
-    ),
-  ]);
+  const target = h.text("Hello world");
 
-  const target = document.descendants().find(isText).get();
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        height: "1.5em",
+        lineHeight: "1.5",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
 
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
@@ -53,14 +80,18 @@ test(`evaluate() passes a text node that hides overflow by wrapping text using
 
 test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`white-space\` property`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap;">Hello world</div>,
-      Option.of(self)
-    ),
-  ]);
+  const target = h.text("Hello world");
 
-  const target = document.descendants().find(isText).get();
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, {
@@ -72,16 +103,19 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
 test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`height\` property with a value that is greater than the value
       of the \`line-height\` property`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div style="overflow: hidden; height: 1.5em; line-height: 1.2;">
-        Hello world
-      </div>,
-      Option.of(self)
-    ),
-  ]);
+  const target = h.text("Hello world");
 
-  const target = document.descendants().find(isText).get();
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        height: "1.5em",
+        lineHeight: "1.2",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, {
@@ -91,13 +125,16 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
 });
 
 test("evaluate() is inapplicable to a text node that is not visible", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap;" hidden>
-        Hello world
-      </div>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+      }}
+      hidden
+    >
+      Hello world
+    </div>,
   ]);
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
@@ -105,13 +142,52 @@ test("evaluate() is inapplicable to a text node that is not visible", async (t) 
 
 test(`evaluate() is inapplicable to a text node that is excluded from the
       accessibility tree using the \`aria-hidden\` attribute`, async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div style="overflow: hidden; white-space: nowrap;" aria-hidden="true">
-        Hello world
-      </div>,
-      Option.of(self)
-    ),
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+      }}
+      aria-hidden="true"
+    >
+      Hello world
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+});
+
+test("evaluates() fails a clipped node with `normal` line-height", async (t) => {
+  const target = h.text("Hello World");
+
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        height: "1.5em",
+        fontSize: "16px",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, { 1: Outcomes.ClipsText }),
+  ]);
+});
+
+test(`evaluate() is inapplicable to a text node with a fixed width and hidden
+      overflow`, async (t) => {
+  const document = Document.of([
+    <div
+      style={{
+        overflow: "hidden",
+        width: "80ch",
+      }}
+    >
+      Hello world
+    </div>,
   ]);
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);

@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -8,6 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -15,73 +15,75 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
+import { Group } from "../common/group";
+import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
-const { isElement, hasNamespace, hasId } = Element;
-const { map, flatMap, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { isElement, hasName, hasNamespace, hasId } = Element;
+const { flatten } = Iterable;
+const { and, not, equals } = Predicate;
 
-export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r81.html",
-  evaluate({ device, document }) {
+  requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9")],
+  evaluate({ device, document, response }) {
     return {
       applicability() {
-        const elements = document
-          .descendants({ flattened: true, nested: true })
-          .filter(
-            and(
-              isElement,
+        return flatten(
+          document
+            .descendants({ flattened: true, nested: true })
+            .filter(isElement)
+            .filter(
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole(
-                  or(Role.hasName("link"), (role) =>
-                    role.inheritsFrom(Role.hasName("link"))
-                  )
-                ),
+                hasRole((role) => role.is("link")),
                 not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
+                hasNonEmptyAccessibleName(device)
               )
             )
-          );
+            .groupBy((element) => linkContext(element).add(element.root()))
+            .map((elements) =>
+              elements
+                .reduce((groups, element) => {
+                  for (const [node] of aria.Node.from(element, device)) {
+                    const name = node.name.map((name) => name.value);
 
-        const groups = elements.groupBy((element) =>
-          linkContext(element).add(element.root())
-        );
+                    groups = groups.set(
+                      name,
+                      groups
+                        .get(name)
+                        .getOrElse(() => List.empty<Element>())
+                        .append(element)
+                    );
+                  }
 
-        return flatMap(groups.values(), (elements) =>
-          elements
-            .reduce((groups, element) => {
-              for (const [node] of aria.Node.from(element, device)) {
-                groups = groups.set(
-                  node.name(),
-                  groups
-                    .get(node.name())
-                    .getOrElse(() => List.empty<Element>())
-                    .append(element)
-                );
-              }
-
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
-            .filter((elements) => elements.size > 1)
+                  return groups;
+                }, Map.empty<Option<string>, List<Element>>())
+                .filter((elements) => elements.size > 1)
+                .map(Group.of)
+                .values()
+            )
             .values()
         );
       },
 
       expectations(target) {
-        const sources = Set.from(
-          map(target, (element) =>
-            element.attribute("href").map((attr) => attr.value)
-          )
+        const embedSameResource = [...target].every(
+          (element, i, elements) =>
+            // This is either the first element...
+            i === 0 ||
+            // ...or an element that embeds the same resource as the element
+            // before it.
+            referenceSameResource(response.url)(element, elements[i - 1])
         );
 
         return {
           1: expectation(
-            sources.size === 1,
+            embedSameResource,
             () => Outcomes.ResolveSameResource,
             () =>
               Question.of(
@@ -128,21 +130,17 @@ export namespace Outcomes {
 function linkContext(element: Element): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
-  for (const listitem of element
-    .ancestors({ flattened: true })
-    .filter(and(isElement, hasRole("listitem")))) {
+  const ancestors = element.ancestors({ flattened: true }).filter(isElement);
+
+  for (const listitem of ancestors.filter(hasRole("listitem"))) {
     context = context.add(listitem);
   }
 
-  for (const paragraph of element
-    .ancestors({ flattened: true })
-    .find(and(isElement, Element.hasName("p")))) {
+  for (const paragraph of ancestors.find(hasName("p"))) {
     context = context.add(paragraph);
   }
 
-  for (const cell of element
-    .ancestors({ flattened: true })
-    .find(and(isElement, hasRole("cell", "gridcell")))) {
+  for (const cell of ancestors.find(hasRole("cell", "gridcell"))) {
     context = context.add(cell);
   }
 
@@ -150,7 +148,8 @@ function linkContext(element: Element): Set<dom.Node> {
     for (const reference of element
       .root()
       .descendants()
-      .filter(and(isElement, hasId(equals(...describedby.tokens()))))) {
+      .filter(isElement)
+      .filter(hasId(equals(...describedby.tokens())))) {
       context = context.add(reference);
     }
   }

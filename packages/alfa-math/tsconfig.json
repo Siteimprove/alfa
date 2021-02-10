@@ -2,13 +2,12 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
-    "src/clamp.ts",
-    "src/equals.ts",
     "src/index.ts",
     "src/matrix.ts",
-    "src/mod.ts",
-    "src/round.ts",
-    "src/vector.ts"
+    "src/real.ts",
+    "src/vector.ts",
+    "test/matrix.spec.ts",
+    "test/vector.spec.ts"
   ],
   "references": [
     {

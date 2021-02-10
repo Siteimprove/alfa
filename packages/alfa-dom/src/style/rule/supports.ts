@@ -1,31 +1,15 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 import { Condition } from "./condition";
-import { Grouping } from "./grouping";
-
-const { map, join } = Iterable;
 
 export class Supports extends Condition {
-  public static of(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Supports {
-    return new Supports(condition, rules, owner, parent);
+  public static of(condition: string, rules: Iterable<Rule>): Supports {
+    return new Supports(condition, Array.from(rules));
   }
 
-  private constructor(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(condition, rules, owner, parent);
+  private constructor(condition: string, rules: Array<Rule>) {
+    super(condition, rules);
   }
 
   public toJSON(): Supports.JSON {
@@ -37,10 +21,9 @@ export class Supports extends Condition {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this._rules, (rule) => indent(rule.toString())),
-      "\n\n"
-    );
+    const rules = this._rules
+      .map((rule) => indent(rule.toString()))
+      .join("\n\n");
 
     return `@supports ${this._condition} {${
       rules === "" ? "" : `\n${rules}\n`
@@ -57,19 +40,12 @@ export namespace Supports {
     return value instanceof Supports;
   }
 
-  export function fromSupports(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Supports {
-    return Supports.of(
-      json.condition,
-      (self) => {
-        const parent = Option.of(self);
-        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromSupports(json: JSON): Trampoline<Supports> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      Supports.of(json.condition, rules)
     );
   }
 }

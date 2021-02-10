@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/now.ts", "src/performance.ts"],
+  "references": [
+    {
+      "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-emitter"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

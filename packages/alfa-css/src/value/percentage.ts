@@ -8,7 +8,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#percentages
  */
-export class Percentage extends Numeric {
+export class Percentage extends Numeric<"percentage"> {
   public static of(value: number): Percentage {
     return new Percentage(value);
   }
@@ -33,13 +33,13 @@ export class Percentage extends Numeric {
   }
 
   public toString(): string {
-    return `${this._value}%`;
+    return `${this._value * 100}%`;
   }
 }
 
 export namespace Percentage {
-  export interface JSON extends Numeric.JSON {
-    type: "percentage";
+  export interface JSON extends Numeric.JSON<"percentage"> {
+    value: number;
   }
 
   export function isPercentage(value: unknown): value is Percentage {

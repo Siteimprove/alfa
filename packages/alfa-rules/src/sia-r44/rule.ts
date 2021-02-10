@@ -4,12 +4,13 @@ import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Matrix, mod, round } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -18,10 +19,12 @@ import { isVisible } from "../common/predicate/is-visible";
 
 const { abs, acos, PI } = Math;
 const { some } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
+  requirements: [Criterion.of("1.3.4")],
   evaluate({ device, document }) {
     let landscape: Device;
     let portrait: Device;
@@ -52,17 +55,15 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            Element.isElement,
-            and<Element>(
-              isVisible(device),
-              (element) =>
-                hasConditionalRotation(element, landscape) ||
-                hasConditionalRotation(element, portrait)
-            )
-          )
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(isVisible(device))
+          .filter(
+            (element) =>
+              hasConditionalRotation(element, landscape) ||
+              hasConditionalRotation(element, portrait)
+          );
       },
 
       expectations(target) {
@@ -70,7 +71,7 @@ export default Rule.Atomic.of<Page, Element>({
           target,
           landscape,
           portrait
-        ).map((rotation) => round(rotation));
+        ).map((rotation) => Real.round(rotation));
 
         return {
           1: expectation(
@@ -106,7 +107,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
   }
 
   for (const transform of value) {
-    switch (transform.type) {
+    switch (transform.kind) {
       case "rotate":
       case "matrix":
         return true;
@@ -179,7 +180,7 @@ function getRotation(element: Element, device: Device): Option<number> {
     }
 
     for (const fn of transform) {
-      switch (fn.type) {
+      switch (fn.kind) {
         case "rotate": {
           const { x, y, z, angle } = fn;
 
@@ -195,12 +196,9 @@ function getRotation(element: Element, device: Device): Option<number> {
         }
 
         case "matrix": {
-          const decomposed = Transformation.decompose(
-            fn.values.map((row) => row.map((number) => number.value)) as Matrix<
-              4,
-              4
-            >
-          );
+          const decomposed = Transformation.of(
+            fn.values.map((row) => row.map((number) => number.value))
+          ).decompose();
 
           if (decomposed.isNone()) {
             continue;
@@ -219,7 +217,7 @@ function getRotation(element: Element, device: Device): Option<number> {
       }
     }
 
-    return Option.of(mod(rotation, 360));
+    return Option.of(Real.modulo(rotation, 360));
   });
 }
 
@@ -229,6 +227,8 @@ function getRelativeRotation(
   right: Device
 ): Option<number> {
   return getRotation(element, left).flatMap((left) =>
-    getRotation(element, right).map((right) => mod(abs(left - right), 360))
+    getRotation(element, right).map((right) =>
+      Real.modulo(abs(left - right), 360)
+    )
   );
 }

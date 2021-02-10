@@ -1,33 +1,37 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasInputType } from "../common/predicate/has-input-type";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { isElement, hasName, hasNamespace } = Element;
-const { and, or, not, equals, test } = Predicate;
+const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { and, or, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r39.html",
+  requirements: [
+    Criterion.of("1.1.1"),
+    Technique.of("G94"),
+    Technique.of("G95"),
+  ],
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
             and(
               hasNamespace(Namespace.HTML),
-              or(
-                hasName("img"),
-                and(hasName("input"), hasInputType(equals("image")))
-              ),
+              or(hasName("img"), and(hasName("input"), hasInputType("image"))),
               not(isIgnored(device)),
               (element) =>
                 test(
@@ -37,14 +41,13 @@ export default Rule.Atomic.of<Page, Element, Question>({
                       .map((attr) => getFilename(attr.value))
                       .some(
                         (filename) =>
-                          filename === accessibleName.toLowerCase().trim()
+                          filename === accessibleName.value.toLowerCase().trim()
                       )
                   ),
                   element
                 )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
@@ -56,9 +59,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
             `Does the accessible name of the \`<${target.name}>\` element
             describe its purpose?`
           ).map((nameDescribesPurpose) =>
-            nameDescribesPurpose
-              ? Some.of(Outcomes.NameIsDescriptive(target.name))
-              : Some.of(Outcomes.NameIsNotDescriptive(target.name))
+            expectation(
+              nameDescribesPurpose,
+              () => Outcomes.NameIsDescriptive(target.name),
+              () => Outcomes.NameIsNotDescriptive(target.name)
+            )
           ),
         };
       },

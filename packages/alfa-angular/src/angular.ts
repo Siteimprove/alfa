@@ -14,7 +14,6 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 import { Page } from "@siteimprove/alfa-web";
 
 import { ComponentFixture } from "@angular/core/testing";
@@ -22,19 +21,13 @@ import { ComponentFixture } from "@angular/core/testing";
 export namespace Angular {
   export type Type = ComponentFixture<unknown>;
 
-  export function isType(value: unknown): value is Type {
-    return value instanceof ComponentFixture;
-  }
-
-  export function asPage(value: Type): Page {
+  export function toPage(value: Type): Page {
     const { nativeElement } = value;
 
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [
-        Element.fromElement(toElement(nativeElement), Option.of(self)),
-      ]),
+      Document.of([Element.from(toElement(nativeElement))]),
       Device.standard()
     );
   }

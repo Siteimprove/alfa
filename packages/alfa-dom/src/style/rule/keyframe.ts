@@ -1,34 +1,24 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
 export class Keyframe extends Rule {
-  public static of(
-    key: string,
-    declarations: Mapper<Keyframe, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframe {
-    return new Keyframe(key, declarations, owner, parent);
+  public static of(key: string, declarations: Iterable<Declaration>): Keyframe {
+    return new Keyframe(key, Array.from(declarations));
   }
 
   private readonly _key: string;
   private readonly _style: Block;
 
-  private constructor(
-    key: string,
-    declarations: Mapper<Keyframe, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(key: string, declarations: Array<Declaration>) {
+    super();
 
     this._key = key;
-    this._style = Block.of(declarations(this));
+    this._style = Block.of(
+      declarations.filter((declaration) => declaration._attachParent(this))
+    );
   }
 
   public get key(): string {
@@ -67,21 +57,12 @@ export namespace Keyframe {
     return value instanceof Keyframe;
   }
 
-  export function fromKeyframe(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframe {
-    return Keyframe.of(
-      json.key,
-      (self) => {
-        const parent = Option.of(self);
-        return json.style.map((declaration) =>
-          Declaration.fromDeclaration(declaration, parent)
-        );
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromKeyframe(json: JSON): Trampoline<Keyframe> {
+    return Trampoline.done(
+      Keyframe.of(json.key, json.style.map(Declaration.from))
     );
   }
 }

@@ -1,6 +1,8 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
+import { Browser } from "webdriverio";
+
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -25,13 +27,7 @@ import {
   Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
-
-import { Browser } from "webdriverio";
-
-const { isObject } = Predicate;
 
 /**
  * @see https://w3c.github.io/webdriver/#dfn-web-elements
@@ -40,25 +36,15 @@ export interface WebElement {
   /**
    * @see https://w3c.github.io/webdriver/#dfn-web-element-reference
    */
-  [WebElement.Reference]?: string;
+  ["element-6066-11e4-a52e-4f735466cecf"]?: string;
 }
 
 export namespace WebElement {
-  export const Reference = "element-6066-11e4-a52e-4f735466cecf" as const;
-  export type Reference = typeof Reference;
-
-  /**
-   * @see https://w3c.github.io/webdriver/#dfn-represents-a-web-element
-   */
-  export function isType(value: unknown): value is WebElement {
-    return isObject(value) && Reference in value;
-  }
-
-  export async function asPage(
+  export async function toPage(
     webElement: WebElement,
     browser: Browser
   ): Promise<Page> {
-    const element = await browser.execute((element) => {
+    const element = await browser.execute((element: globalThis.Element) => {
       return toElement(element);
 
       function toNode(node: globalThis.Node): Node.JSON {
@@ -201,7 +187,7 @@ export namespace WebElement {
         return {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
-          condition: rule.media.mediaText,
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
           href: rule.href,
         };
       }
@@ -289,7 +275,7 @@ export namespace WebElement {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of((self) => [Element.fromElement(element, Option.of(self))]),
+      Document.of([Element.from(element)]),
       Device.standard()
     );
   }

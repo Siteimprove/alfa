@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -8,8 +9,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
-
-import * as json from "@siteimprove/alfa-json";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
@@ -43,17 +43,29 @@ export class Branched<T, B = never>
     return false;
   }
 
+  public forEach(callback: Callback<T, void, [Iterable<B>]>): void {
+    this._values.forEach(({ value, branches }) =>
+      callback(
+        value,
+        branches.getOrElse(() => List.empty())
+      )
+    );
+  }
+
   public map<U>(mapper: Mapper<T, U, [Iterable<B>]>): Branched<U, B> {
     return new Branched(
-      this._values.map(({ value, branches }) => {
-        return Value.of(
-          mapper(
-            value,
-            branches.getOrElse(() => List.empty())
+      this._values.reduce(
+        (values, { value, branches }) =>
+          merge(
+            values,
+            mapper(
+              value,
+              branches.getOrElse(() => List.empty())
+            ),
+            branches
           ),
-          branches
-        );
-      })
+        List.empty()
+      )
     );
   }
 
@@ -61,22 +73,22 @@ export class Branched<T, B = never>
     mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>
   ): Branched<U, B> {
     return new Branched(
-      this._values.reduce((values, { value, branches }) => {
-        const scope = branches;
+      this._values.reduce(
+        (values, { value, branches: scope }) =>
+          mapper(
+            value,
+            scope.getOrElse(() => List.empty())
+          )._values.reduce((values, { value, branches }) => {
+            if (scope.isNone() && branches.isSome()) {
+              branches = unused(branches, this._values);
+            } else {
+              branches = narrow(branches, scope);
+            }
 
-        return mapper(
-          value,
-          branches.getOrElse(() => List.empty())
-        )._values.reduce((values, { value, branches }) => {
-          if (scope.isNone() && branches.isSome()) {
-            branches = unused(branches, this._values);
-          } else {
-            branches = narrow(branches, scope);
-          }
-
-          return merge(values, value, branches);
-        }, values);
-      }, List.empty())
+            return merge(values, value, branches);
+          }, values),
+        List.empty()
+      )
     );
   }
 
@@ -97,8 +109,12 @@ export class Branched<T, B = never>
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U, [Iterable<B>]>
-  ): Branched<U, B> {
+    refinement: Refinement<T, U, [Iterable<B>]>
+  ): Branched<U, B>;
+
+  public filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
+
+  public filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B> {
     return new Branched(
       this._values.filter(({ value, branches }) =>
         predicate(
@@ -109,13 +125,23 @@ export class Branched<T, B = never>
     );
   }
 
-  public reject(predicate: Predicate<T, T, [Iterable<B>]>): Branched<T, B> {
+  public reject<U extends T>(
+    refinement: Refinement<T, U, [Iterable<B>]>
+  ): Branched<Exclude<T, U>, B>;
+
+  public reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
+
+  public reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B> {
     return this.filter(not(predicate));
   }
 
   public find<U extends T>(
-    predicate: Predicate<T, U, [Iterable<B>]>
-  ): Option<U> {
+    refinement: Refinement<T, U, [Iterable<B>]>
+  ): Option<U>;
+
+  public find(predicate: Predicate<T, [Iterable<B>]>): Option<T>;
+
+  public find(predicate: Predicate<T, [Iterable<B>]>): Option<T> {
     return this._values
       .find(({ value, branches }) =>
         predicate(
@@ -123,7 +149,7 @@ export class Branched<T, B = never>
           branches.getOrElse(() => List.empty())
         )
       )
-      .map(({ value }) => value as U);
+      .map(({ value }) => value);
   }
 
   public includes(value: T): boolean {
@@ -132,7 +158,35 @@ export class Branched<T, B = never>
     );
   }
 
-  public some(predicate: Predicate<T, T, [Iterable<B>]>): boolean {
+  public collect<U>(
+    mapper: Mapper<T, Option<U>, [Iterable<B>]>
+  ): Branched<U, B> {
+    return new Branched(
+      this._values.reduce(
+        (values, { value, branches }) =>
+          mapper(
+            value,
+            branches.getOrElse(() => List.empty())
+          )
+            .map((value) => merge(values, value, branches))
+            .getOr(values),
+        List.empty()
+      )
+    );
+  }
+
+  public collectFirst<U>(
+    mapper: Mapper<T, Option<U>, [Iterable<B>]>
+  ): Option<U> {
+    return this._values.collectFirst(({ value, branches }) =>
+      mapper(
+        value,
+        branches.getOrElse(() => List.empty())
+      )
+    );
+  }
+
+  public some(predicate: Predicate<T, [Iterable<B>]>): boolean {
     for (const value of this._values) {
       if (
         predicate(
@@ -147,7 +201,11 @@ export class Branched<T, B = never>
     return false;
   }
 
-  public every(predicate: Predicate<T, T, [Iterable<B>]>): boolean {
+  public none(predicate: Predicate<T, [Iterable<B>]>): boolean {
+    return this.every(not(predicate));
+  }
+
+  public every(predicate: Predicate<T, [Iterable<B>]>): boolean {
     for (const value of this._values) {
       if (
         !predicate(
@@ -162,12 +220,21 @@ export class Branched<T, B = never>
     return true;
   }
 
-  public count(predicate: Predicate<T, T, [Iterable<B>]>): number {
+  public count(predicate: Predicate<T, [Iterable<B>]>): number {
     return this.reduce(
       (count, value, branches) =>
         predicate(value, branches) ? count + 1 : count,
       0
     );
+  }
+
+  /**
+   * @remarks
+   * As branched values merges branches with duplicate values, they will only
+   * ever contain distinct values.
+   */
+  public distinct(): Branched<T, B> {
+    return this;
   }
 
   public branch(value: T, ...branches: Array<B>): Branched<T, B> {
@@ -203,7 +270,7 @@ export class Branched<T, B = never>
       ]);
   }
 
-  public toJSON(): Branched.JSON {
+  public toJSON(): Branched.JSON<T, B> {
     return this._values
       .toArray()
       .map(({ value, branches }) => [
@@ -214,12 +281,29 @@ export class Branched<T, B = never>
 }
 
 export namespace Branched {
-  export type JSON = Array<[json.JSON, List.JSON]>;
+  export type JSON<T, B = never> = Array<
+    [Serializable.ToJSON<T>, Array<Serializable.ToJSON<B>>]
+  >;
 
   export function isBranched<T, B = never>(
     value: unknown
   ): value is Branched<T, B> {
     return value instanceof Branched;
+  }
+
+  export function from<T, B = never>(
+    values: Iterable<readonly [T, Iterable<B>]>
+  ): Branched<T, B> {
+    if (isBranched<T, B>(values)) {
+      return values;
+    }
+
+    const [[value, branches], ...rest] = values;
+
+    return rest.reduce(
+      (result, [value, branches]) => result.branch(value, ...branches),
+      Branched.of(value, ...branches)
+    );
   }
 
   export function traverse<T, U, B>(
@@ -229,8 +313,8 @@ export namespace Branched {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap((value) =>
-          values.map((values) => values.append(value))
+        values.flatMap((values) =>
+          mapper(value).map((value) => values.append(value))
         ),
       Branched.of(List.empty())
     );
@@ -286,6 +370,10 @@ function merge<T, B>(
   value: T,
   branches: Option<List<B>>
 ): List<Value<T, B>> {
+  if (values.size === 0) {
+    return List.of(Value.of(value, branches));
+  }
+
   branches = values
     .find((existing) => Equatable.equals(existing.value, value))
     .map((existing) =>

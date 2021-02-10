@@ -32,6 +32,26 @@ test("#size returns the size of a map", (t) => {
   t.equal(map.size, 4);
 });
 
+test("#distinct() removes duplicate values from a map", (t) => {
+  t.deepEqual(
+    [
+      ...Map.of(
+        ["a", 1],
+        ["b", 1],
+        ["c", 1],
+        ["d", 2],
+        ["e", 3],
+        ["f", 3]
+      ).distinct(),
+    ],
+    [
+      ["e", 3],
+      ["b", 1],
+      ["d", 2],
+    ]
+  );
+});
+
 test("#has() returns true if a key exists in a map", (t) => {
   t(map.has("foo"));
 });
@@ -290,4 +310,13 @@ test("#delete() behaves when deleting a key in a sparse map with collisions", (t
       [bar, 2],
     ]
   );
+});
+
+test("#size is correctly reported when sparse nodes are branched", (t) => {
+  const foo = key(100);
+  const bar = key(9178623);
+
+  const map = Map.of([foo, 1], [bar, 2]);
+
+  t.equal(map.size, 2);
 });

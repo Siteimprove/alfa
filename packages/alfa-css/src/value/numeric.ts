@@ -1,11 +1,11 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { round } from "@siteimprove/alfa-math";
+import { Hash } from "@siteimprove/alfa-hash";
+import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
 
-export abstract class Numeric implements Equatable, Hashable, Serializable {
+import { Value } from "../value";
+
+export abstract class Numeric<T extends string = string> extends Value<T> {
   /**
    * The number of decimals stored for every numeric value.
    */
@@ -14,7 +14,8 @@ export abstract class Numeric implements Equatable, Hashable, Serializable {
   protected readonly _value: number;
 
   protected constructor(value: number) {
-    this._value = round(value, Numeric.Decimals);
+    super();
+    this._value = Real.round(value, Numeric.Decimals);
   }
 
   public get value(): number {
@@ -29,7 +30,7 @@ export abstract class Numeric implements Equatable, Hashable, Serializable {
     Hash.writeFloat64(hash, this._value);
   }
 
-  public abstract toJSON(): Numeric.JSON;
+  public abstract toJSON(): Numeric.JSON<T>;
 
   public toString(): string {
     return `${this._value}`;
@@ -37,9 +38,8 @@ export abstract class Numeric implements Equatable, Hashable, Serializable {
 }
 
 export namespace Numeric {
-  export interface JSON {
+  export interface JSON<T extends string = string> extends Value.JSON<T> {
     [key: string]: json.JSON;
-    type: string;
     value: number;
   }
 

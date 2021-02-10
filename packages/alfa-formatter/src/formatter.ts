@@ -1,18 +1,17 @@
-/// <reference types="node" />
+import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Result, Err } from "@siteimprove/alfa-result";
 
-import { Outcome } from "@siteimprove/alfa-act";
-import { Result, Ok, Err } from "@siteimprove/alfa-result";
-
-export type Formatter<I, T, Q> = (
+export type Formatter<I = unknown, T = unknown, Q = never> = (
   input: I,
+  rules: Iterable<Rule<I, T, Q>>,
   outcomes: Iterable<Outcome<I, T, Q>>
 ) => string;
 
 export namespace Formatter {
-  export function load<I, T, Q>(
+  export async function load<I, T = unknown, Q = never>(
     name: string,
     defaultScope: string = "@siteimprove"
-  ): Result<Formatter<I, T, Q>, string> {
+  ): Promise<Result<Formatter<I, T, Q>, string>> {
     let scope: string | undefined;
 
     if (name.startsWith("@")) {
@@ -32,7 +31,9 @@ export namespace Formatter {
 
     for (const pattern of patterns) {
       try {
-        return Ok.of(require(pattern).default());
+        const module = await import(pattern);
+
+        return Result.of(module.default());
       } catch {
         continue;
       }

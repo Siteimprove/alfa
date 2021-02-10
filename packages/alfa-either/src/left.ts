@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -56,15 +57,24 @@ export class Left<L> implements Either<L, never> {
     return reducer(accumulator, this._value);
   }
 
-  public equals(value: unknown): value is this {
+  public equals<L>(value: Left<L>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Left && Equatable.equals(value._value, this._value);
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, false);
+    Hashable.hash(hash, this._value);
   }
 
   public *[Symbol.iterator](): Iterator<L> {
     yield this._value;
   }
 
-  public toJSON(): Left.JSON {
+  public toJSON(): Left.JSON<L> {
     return {
       type: "left",
       value: Serializable.toJSON(this._value),
@@ -77,11 +87,15 @@ export class Left<L> implements Either<L, never> {
 }
 
 export namespace Left {
-  export interface JSON {
+  export interface JSON<L> {
     [key: string]: json.JSON;
     type: "left";
-    value: json.JSON;
+    value: Serializable.ToJSON<L>;
   }
+
+  export function isLeft<L>(value: Iterable<L>): value is Left<L>;
+
+  export function isLeft<L>(value: unknown): value is Left<L>;
 
   export function isLeft<L>(value: unknown): value is Left<L> {
     return value instanceof Left;

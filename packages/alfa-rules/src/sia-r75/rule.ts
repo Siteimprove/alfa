@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Unit } from "@siteimprove/alfa-css";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -11,7 +10,7 @@ import { expectation } from "../common/expectation";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -24,15 +23,13 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                and(hasNamespace(Namespace.HTML), (element) =>
-                  Style.from(element, device).cascaded("font-size").isSome()
-                ),
-                and(hasTextContent(), isVisible(device))
-              )
+              and(hasNamespace(Namespace.HTML), (element) =>
+                Style.from(element, device).cascaded("font-size").isSome()
+              ),
+              and(hasTextContent(), isVisible(device))
             )
           );
       },

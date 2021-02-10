@@ -8,7 +8,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#numbers
  */
-export class Number extends Numeric {
+export class Number extends Numeric<"number"> {
   public static of(value: number): Number {
     return new Number(value);
   }
@@ -31,15 +31,11 @@ export class Number extends Numeric {
       value: this._value,
     };
   }
-
-  public toString(): string {
-    return `${this._value}`;
-  }
 }
 
 export namespace Number {
-  export interface JSON extends Numeric.JSON {
-    type: "number";
+  export interface JSON extends Numeric.JSON<"number"> {
+    value: number;
   }
 
   export function isNumber(value: unknown): value is Number {

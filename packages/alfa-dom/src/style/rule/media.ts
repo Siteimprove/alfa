@@ -1,31 +1,20 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 import { Condition } from "./condition";
-import { Grouping } from "./grouping";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 const { map, join } = Iterable;
 
 export class Media extends Condition {
-  public static of(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Media {
-    return new Media(condition, rules, owner, parent);
+  public static of(condition: string, rules: Iterable<Rule>): Media {
+    return new Media(condition, Array.from(rules));
   }
 
-  private constructor(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(condition, rules, owner, parent);
+  private constructor(condition: string, rules: Array<Rule>) {
+    super(condition, rules);
   }
 
   public toJSON(): Media.JSON {
@@ -55,19 +44,12 @@ export namespace Media {
     return value instanceof Media;
   }
 
-  export function fromMedia(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Media {
-    return Media.of(
-      json.condition,
-      (self) => {
-        const parent = Option.of(self);
-        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromMedia(json: JSON): Trampoline<Media> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      Media.of(json.condition, rules)
     );
   }
 }

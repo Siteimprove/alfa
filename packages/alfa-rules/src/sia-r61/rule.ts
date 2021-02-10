@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -10,15 +11,19 @@ import { hasChild } from "../common/predicate/has-child";
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, equals } = Predicate;
+const { isElement } = Element;
+const { equals, not } = Predicate;
+const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants({ flattened: true })
-      .find(and(Element.isElement, hasRole("heading")));
+      .filter(and(isElement, not(isIgnored(device))))
+      .find(hasRole("heading"));
 
     return {
       applicability() {

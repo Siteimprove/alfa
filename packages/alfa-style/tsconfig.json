@@ -5,21 +5,37 @@
     "src/index.ts",
     "src/property.ts",
     "src/property/background.ts",
+    "src/property/box.ts",
+    "src/property/box-insets.ts",
+    "src/property/clip.ts",
+    "src/property/clip-path.ts",
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/height.ts",
+    "src/property/letter-spacing.ts",
     "src/property/line.ts",
     "src/property/opacity.ts",
+    "src/property/outline.ts",
     "src/property/overflow.ts",
+    "src/property/position.ts",
     "src/property/text.ts",
     "src/property/transform.ts",
+    "src/property/value/list.ts",
     "src/property/visibility.ts",
     "src/property/whitespace.ts",
     "src/property/width.ts",
+    "src/property/word-spacing.ts",
     "src/resolver.ts",
     "src/style.ts",
-    "src/value.ts"
+    "src/value.ts",
+    "test/property/background.spec.tsx",
+    "test/property/box.spec.tsx",
+    "test/property/box-insets.spec.tsx",
+    "test/property/clip.spec.tsx",
+    "test/property/font.spec.tsx",
+    "test/property/text.spec.tsx",
+    "test/style.spec.tsx"
   ],
   "references": [
     {
@@ -38,10 +54,16 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-either"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-hash"
     },
     {
       "path": "../alfa-iterable"
@@ -65,7 +87,19 @@
       "path": "../alfa-parser"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-record"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-selector"
+    },
+    {
+      "path": "../alfa-set"
     },
     {
       "path": "../alfa-slice"

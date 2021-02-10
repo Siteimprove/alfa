@@ -1,10 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R82, { Outcomes } from "../../src/sia-r82/rule";
 
@@ -12,34 +9,25 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed } from "../common/outcome";
 
-const { isElement, hasName } = Element;
-const { and } = Predicate;
+const target = <input type="text"></input>;
 
-const document = Document.of((self) => [
-  Element.fromElement(
-    <form>
-      <label>
-        Input
-        <input type="text"></input>
-      </label>
-      <span>Visible error</span>
-      <span hidden>Invisible error</span>
-      <span aria-hidden="true">Ignored error</span>
-    </form>,
-    Option.of(self)
-  ),
+const perceivableError = <span>Visible error</span>;
+
+const invisibleError = <span hidden>Invisible error</span>;
+
+const ignoredError = <span aria-hidden="true">Ignored error</span>;
+
+const document = Document.of([
+  <form>
+    <label>
+      Input
+      {target}
+    </label>
+    {perceivableError}
+    {invisibleError}
+    {ignoredError}
+  </form>,
 ]);
-
-const input = document
-  .descendants()
-  .find(and(isElement, hasName("input")))
-  .get();
-
-const [
-  perceivableError,
-  invisibleError,
-  ignoredError,
-] = document.descendants().filter(and(isElement, hasName("span")));
 
 test("evaluate() passes when a form field has no error indicator", async (t) => {
   t.deepEqual(
@@ -51,7 +39,7 @@ test("evaluate() passes when a form field has no error indicator", async (t) => 
       })
     ),
     [
-      passed(R82, input, {
+      passed(R82, target, {
         1: Outcomes.HasNoErrorIndicator,
         2: Outcomes.HasNoErrorIndicator,
       }),
@@ -73,7 +61,7 @@ test(`evaluate() passes when a form field has an error indicator that identifies
       })
     ),
     [
-      passed(R82, input, {
+      passed(R82, target, {
         1: Outcomes.ErrorIndicatorIdentifiesTarget,
         2: Outcomes.ErrorIndicatorDescribesResolution,
       }),
@@ -95,7 +83,7 @@ test(`evaluate() fails when a form field has an error indicator that does not
       })
     ),
     [
-      failed(R82, input, {
+      failed(R82, target, {
         1: Outcomes.NoErrorIndicatorIdentifiesTarget,
         2: Outcomes.NoErrorIndicatorDescribesResolution,
       }),
@@ -117,7 +105,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       })
     ),
     [
-      failed(R82, input, {
+      failed(R82, target, {
         1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
         2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
       }),
@@ -139,7 +127,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       })
     ),
     [
-      failed(R82, input, {
+      failed(R82, target, {
         1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
         2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
       }),

@@ -2,19 +2,30 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
+    "h.ts",
     "jsx.ts",
+    "src/h.ts",
     "src/index.ts",
     "src/jsx.ts",
     "src/namespace.ts",
     "src/node.ts",
     "src/node/attribute.ts",
+    "src/node/attribute/predicate.ts",
+    "src/node/attribute/predicate/has-name.ts",
     "src/node/comment.ts",
     "src/node/document.ts",
     "src/node/element.ts",
     "src/node/element/predicate.ts",
     "src/node/element/predicate/has-id.ts",
+    "src/node/element/predicate/has-input-type.ts",
     "src/node/element/predicate/has-name.ts",
     "src/node/element/predicate/has-namespace.ts",
+    "src/node/element/predicate/has-tab-index.ts",
+    "src/node/element/predicate/is-browsing-context-container.ts",
+    "src/node/element/predicate/is-disabled.ts",
+    "src/node/element/predicate/is-draggable.ts",
+    "src/node/element/predicate/is-editing-host.ts",
+    "src/node/element/predicate/is-suggested-focusable.ts",
     "src/node/fragment.ts",
     "src/node/shadow.ts",
     "src/node/slot.ts",
@@ -36,12 +47,12 @@
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
-    "test/node/attribute.spec.ts"
+    "test/h.spec.ts",
+    "test/node.spec.tsx",
+    "test/node/attribute.spec.ts",
+    "test/node/element.spec.tsx"
   ],
   "references": [
-    {
-      "path": "../alfa-css"
-    },
     {
       "path": "../alfa-earl"
     },
@@ -67,13 +78,19 @@
       "path": "../alfa-predicate"
     },
     {
+      "path": "../alfa-refinement"
+    },
+    {
+      "path": "../alfa-sarif"
+    },
+    {
       "path": "../alfa-sequence"
     },
     {
-      "path": "../alfa-slice"
+      "path": "../alfa-test"
     },
     {
-      "path": "../alfa-test"
+      "path": "../alfa-trampoline"
     }
   ]
 }

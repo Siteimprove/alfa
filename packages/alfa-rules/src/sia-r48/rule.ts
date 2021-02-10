@@ -2,7 +2,9 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Ok, Err } from "@siteimprove/alfa-result";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -13,50 +15,52 @@ import { hasChild } from "../common/predicate/has-child";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, or, nor } = Predicate;
+const { or, nor } = Predicate;
+const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r48.html",
+  requirements: [Technique.of("G60")],
   evaluate({ document }) {
     return {
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("audio", "video"),
-                hasAttribute("autoplay"),
-                nor(hasAttribute("paused"), hasAttribute("muted")),
-                or(
-                  hasAttribute("src"),
-                  hasChild(and(isElement, hasName("source")))
-                )
+              hasNamespace(Namespace.HTML),
+              hasName("audio", "video"),
+              hasAttribute("autoplay"),
+              nor(hasAttribute("paused"), hasAttribute("muted")),
+              or(
+                hasAttribute("src"),
+                hasChild(and(isElement, hasName("source")))
               )
             )
           )
-          .map((element) =>
-            Question.of(
-              "has-audio",
+          .map((element) => {
+            const isAboveDurationThreshold = Question.of(
+              "is-above-duration-threshold",
               "boolean",
               element,
-              `Does the \`<${element.name}>\` element contain audio?`
-            ).map((hasAudio) =>
-              hasAudio
-                ? Question.of(
-                    "is-above-duration-threshold",
-                    "boolean",
-                    element,
-                    `Does the \`<${element.name}>\` element have a duration of
-                    more than 3 seconds?`
-                  ).map((isAboveDurationThreshold) =>
-                    isAboveDurationThreshold ? Option.of(element) : None
-                  )
-                : None
-            )
-          );
+              `Does the \`<${element.name}>\` element have a duration of more
+              than 3 seconds?`
+            ).map((isAboveDurationThreshold) =>
+              isAboveDurationThreshold ? Option.of(element) : None
+            );
+
+            if (element.name === "audio") {
+              return isAboveDurationThreshold;
+            } else {
+              return Question.of(
+                "has-audio",
+                "boolean",
+                element,
+                `Does the \`<${element.name}>\` element contain audio?`
+              ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
+            }
+          });
       },
 
       expectations(target) {

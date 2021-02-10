@@ -1,18 +1,19 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Block } from "./block";
+import { Function } from "./function";
 import { Token } from "./token";
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#component-value
  */
 export class Component implements Iterable<Token>, Equatable, Serializable {
-  public static of(value: Array<Token>): Component {
-    return new Component(value);
+  public static of(value: Iterable<Token>): Component {
+    return new Component(Array.from(value));
   }
 
   private readonly _value: Array<Token>;
@@ -25,16 +26,16 @@ export class Component implements Iterable<Token>, Equatable, Serializable {
     return this._value;
   }
 
+  public *[Symbol.iterator](): Iterator<Token> {
+    yield* this._value;
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Component &&
       value._value.length === this._value.length &&
       value._value.every((token, i) => token.equals(this._value[i]))
     );
-  }
-
-  public *[Symbol.iterator](): Iterator<Token> {
-    yield* this._value;
   }
 
   public toJSON(): Component.JSON {
@@ -55,22 +56,25 @@ export namespace Component {
   export const consume: Parser<Slice<Token>, Component> = (input) => {
     const next = input.get(0).get();
 
-    const value = [next];
-
     if (
       Token.isOpenParenthesis(next) ||
       Token.isOpenSquareBracket(next) ||
       Token.isOpenCurlyBracket(next)
     ) {
-      const [remainder, block] = Block.consume(input).get();
-
-      input = remainder;
-      value.push(...block.value);
-    } else {
-      input = input.slice(1);
+      return Block.consume(input).map(([input, value]) => [
+        input,
+        Component.of(value),
+      ]);
     }
 
-    return Ok.of([input, Component.of(value)] as const);
+    if (Token.isFunction(next)) {
+      return Function.consume(input).map(([input, value]) => [
+        input,
+        Component.of(value),
+      ]);
+    }
+
+    return Result.of([input.slice(1), Component.of([next])]);
   };
 
   /**

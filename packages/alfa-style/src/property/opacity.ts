@@ -1,5 +1,5 @@
 import { Number, Percentage } from "@siteimprove/alfa-css";
-import { clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
@@ -26,7 +26,7 @@ export const Opacity: Property<
   (style) =>
     style
       .specified("opacity")
-      .map((opacity) => Number.of(clamp(opacity.value, 0, 1))),
+      .map((opacity) => Number.of(Real.clamp(opacity.value, 0, 1))),
   {
     inherits: true,
   }

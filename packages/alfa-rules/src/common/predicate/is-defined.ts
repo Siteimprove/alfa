@@ -1,5 +1,7 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
-export function isDefined<T>(): Predicate<T, Exclude<T, undefined>> {
-  return (value) => value !== undefined;
+const { not, equals } = Refinement;
+
+export function isDefined<T>(): Refinement<T | undefined, T> {
+  return not(equals<T | undefined, undefined>(undefined));
 }

@@ -7,10 +7,14 @@
     "src/syntax/block.ts",
     "src/syntax/component.ts",
     "src/syntax/declaration.ts",
+    "src/syntax/function.ts",
     "src/syntax/lexer.ts",
+    "src/syntax/nth.ts",
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
+    "src/value/box.ts",
+    "src/value/calculation.ts",
     "src/value/color.ts",
     "src/value/color/current.ts",
     "src/value/color/hex.ts",
@@ -19,17 +23,25 @@
     "src/value/color/rgb.ts",
     "src/value/color/system.ts",
     "src/value/converter.ts",
+    "src/value/dimension.ts",
     "src/value/gradient.ts",
     "src/value/gradient/linear.ts",
     "src/value/image.ts",
     "src/value/integer.ts",
     "src/value/keyword.ts",
     "src/value/length.ts",
-    "src/value/list.ts",
     "src/value/number.ts",
     "src/value/numeric.ts",
     "src/value/percentage.ts",
     "src/value/position.ts",
+    "src/value/shadow.ts",
+    "src/value/shape.ts",
+    "src/value/shape/circle.ts",
+    "src/value/shape/ellipse.ts",
+    "src/value/shape/inset.ts",
+    "src/value/shape/polygon.ts",
+    "src/value/shape/radius.ts",
+    "src/value/shape/rectangle.ts",
     "src/value/string.ts",
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",
@@ -41,7 +53,16 @@
     "src/value/unit.ts",
     "src/value/url.ts",
     "test/syntax/declaration.spec.ts",
-    "test/syntax/lexer.spec.ts"
+    "test/syntax/lexer.spec.ts",
+    "test/syntax/nth.spec.ts",
+    "test/value/calculation.spec.ts",
+    "test/value/position.spec.ts",
+    "test/value/shape.spec.ts",
+    "test/value/shape/circle.spec.ts",
+    "test/value/shape/ellipse.spec.ts",
+    "test/value/shape/inset.spec.ts",
+    "test/value/shape/polygon.spec.ts",
+    "test/value/shape/rectangle.spec.ts"
   ],
   "references": [
     {
@@ -60,6 +81,9 @@
       "path": "../alfa-json"
     },
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-math"
     },
     {
@@ -70,6 +94,12 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-record"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-result"

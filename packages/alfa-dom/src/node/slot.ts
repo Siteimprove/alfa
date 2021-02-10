@@ -37,9 +37,14 @@ export namespace Slot {
     const root = slot.root();
 
     if (Shadow.isShadow(root)) {
-      for (const child of root.host.children()) {
-        if (Slotable.isSlotable(child) && child.assignedSlot().includes(slot)) {
-          yield child;
+      for (const host of root.host) {
+        for (const child of host.children()) {
+          if (
+            Slotable.isSlotable(child) &&
+            child.assignedSlot().includes(slot)
+          ) {
+            yield child;
+          }
         }
       }
     }

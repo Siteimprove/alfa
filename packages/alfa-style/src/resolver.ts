@@ -3,15 +3,17 @@ import {
   Converter,
   Length,
   Percentage,
-  RGB
+  RGB,
 } from "@siteimprove/alfa-css";
-import { clamp } from "@siteimprove/alfa-math";
+import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
 
 /**
  * Resolvers are functions that resolve values to their canonical, computed
  * representation.
+ *
+ * @internal
  */
 export namespace Resolver {
   /**
@@ -30,20 +32,18 @@ export namespace Resolver {
       case "em":
         return Length.of(fontSize.value * value, fontSize.unit);
 
-      // https://www.w3.org/TR/css-values/#ex
-      case "ex":
-        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
-
-      // https://www.w3.org/TR/css-values/#ch
-      case "ch":
-        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
-
       // https://www.w3.org/TR/css-values/#rem
       case "rem": {
         const { value: rootFontSize } = style.root().computed("font-size");
 
         return Length.of(rootFontSize.value * value, fontSize.unit);
       }
+
+      // https://www.w3.org/TR/css-values/#ex
+      case "ex":
+      // https://www.w3.org/TR/css-values/#ch
+      case "ch":
+        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
 
       // https://www.w3.org/TR/css-values/#vh
       case "vh":
@@ -80,10 +80,10 @@ export namespace Resolver {
         const [red, green, blue] = [
           color.red,
           color.green,
-          color.blue
-        ].map(channel =>
+          color.blue,
+        ].map((channel) =>
           Percentage.of(
-            clamp(
+            Real.clamp(
               channel.type === "number" ? channel.value / 0xff : channel.value,
               0,
               1
@@ -95,7 +95,7 @@ export namespace Resolver {
           red,
           green,
           blue,
-          Percentage.of(clamp(color.alpha.value, 0, 1))
+          Percentage.of(Real.clamp(color.alpha.value, 0, 1))
         );
       }
 

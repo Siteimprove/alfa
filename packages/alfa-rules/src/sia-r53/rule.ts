@@ -8,16 +8,19 @@ import { expectation } from "../common/expectation";
 
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, equals } = Predicate;
+const { equals } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r53.html",
   evaluate({ device, document }) {
     const headings = document
       .descendants({ flattened: true })
-      .filter(and(isElement, hasRole("heading")));
+      .filter(isElement)
+      .filter(hasRole("heading"))
+      .reject(isIgnored(device));
 
     return {
       applicability() {

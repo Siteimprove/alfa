@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { test } from "@siteimprove/alfa-test";
 
 import { Future } from "../src/future";
@@ -119,7 +121,18 @@ test("#flatMap() does not overflow for long nested defer() chains", async (t) =>
   t.equal(await n, 100000);
 });
 
-test(".traverse() traverses a list of values and lifts them to a future of lists", async (t) => {
+test("#get() returns the value of a non-deferred future", (t) => {
+  let n = Future.now(0);
+
+  for (let i = 0; i < 10; i++) {
+    n = n.flatMap((i) => Future.now(i + 1));
+  }
+
+  t.equal(n.get(), 10);
+});
+
+test(`.traverse() traverses an iterable of values and lifts them to a future of
+      iterables`, async (t) => {
   t.deepEqual(
     await Future.traverse([1, 2, 3, 4], (n) =>
       wait(n * 10).map(() => n * 2)
@@ -130,13 +143,13 @@ test(".traverse() traverses a list of values and lifts them to a future of lists
 
 test(".traverse() does not run any resulting deferred futures", (t) => {
   Future.traverse([1, 2, 3, 4], (n) =>
-    Future.delay(() => {
+    Future.defer(() => {
       throw new Error("The future was run");
     })
   );
 });
 
-test(".sequence() inverts a list of futures to a future of lists", async (t) => {
+test(".sequence() inverts an iterable of futures to a future of iterables", async (t) => {
   const futures = [
     wait(40).map(() => 1),
     wait(20).map(() => 2),
@@ -151,6 +164,12 @@ test(".from() converts a promise to a future", async (t) => {
   const future = Future.from(
     new Promise<number>((resolve) => resolve(2))
   );
+
+  t.equal(await future, 2);
+});
+
+test(".from() converts a thunked promise to a future", async (t) => {
+  const future = Future.from(async () => 2);
 
   t.equal(await future, 2);
 });

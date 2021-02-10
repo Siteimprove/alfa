@@ -1,9 +1,9 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 export class Cache<K, V> {
   public static empty<K, V>(): Cache<K, V> {
@@ -49,7 +49,7 @@ export class Cache<K, V> {
     return this;
   }
 
-  public merge(iterable: Iterable<[K, V]>): this {
+  public merge(iterable: Iterable<readonly [K, V]>): this {
     return Iterable.reduce(
       iterable,
       (cache, [key, value]) => cache.set(key, value),
@@ -59,7 +59,7 @@ export class Cache<K, V> {
 }
 
 export namespace Cache {
-  export function from<K, V>(iterable: Iterable<[K, V]>): Cache<K, V> {
+  export function from<K, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V> {
     return Cache.empty<K, V>().merge(iterable);
   }
 }
