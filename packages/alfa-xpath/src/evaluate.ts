@@ -159,7 +159,7 @@ function* evaluateAxisExpression<T extends Item.Value>(
 
   let position = 1;
 
-  loop: for (const node of walk(focus.value, expression.axis)) {
+  loop: for (const node of walk(focus.value, expression.axis, options)) {
     if (expression.test.isSome()) {
       const test = expression.test.get();
 

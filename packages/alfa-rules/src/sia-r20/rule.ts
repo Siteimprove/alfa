@@ -8,6 +8,8 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
+const { isElement } = Element;
+
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r20.html",
   evaluate({ document }) {
@@ -15,7 +17,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(Element.isElement)
+          .filter(isElement)
           .flatMap((element) =>
             Sequence.from(element.attributes).filter((attribute) =>
               attribute.name.startsWith("aria-")

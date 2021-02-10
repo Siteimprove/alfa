@@ -311,3 +311,12 @@ test("#delete() behaves when deleting a key in a sparse map with collisions", (t
     ]
   );
 });
+
+test("#size is correctly reported when sparse nodes are branched", (t) => {
+  const foo = key(100);
+  const bar = key(9178623);
+
+  const map = Map.of([foo, 1], [bar, 2]);
+
+  t.equal(map.size, 2);
+});

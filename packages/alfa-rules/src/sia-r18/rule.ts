@@ -5,6 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -14,10 +15,12 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, test, property } = Predicate;
+const { test, property } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
+  requirements: [Technique.of("ARIA5")],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").attributes);
 
@@ -25,7 +28,8 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(and(Element.isElement, not(isIgnored(device))))
+          .filter(isElement)
+          .reject(isIgnored(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               property("name", aria.Attribute.isName)

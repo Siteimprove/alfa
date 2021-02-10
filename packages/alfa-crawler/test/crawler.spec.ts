@@ -1,10 +1,12 @@
+import * as url from "url";
+
 import { test } from "@siteimprove/alfa-test";
 
 import { Frontier } from "@siteimprove/alfa-frontier";
 
 import { Crawler } from "../src/crawler";
 
-const fixture = `file://${__dirname}/fixture`;
+const fixture = `${url.pathToFileURL(__dirname).href}/fixture`;
 
 test("#crawl() crawls a frontier", async (t) =>
   await Crawler.with(async (crawler) => {
@@ -15,7 +17,7 @@ test("#crawl() crawls a frontier", async (t) =>
     for await (const result of crawler.crawl(frontier)) {
       t.equal(result.isOk(), true);
 
-      pages.push(result.get().response.url);
+      pages.push(result.get().response.url.toString());
     }
 
     t.deepEqual(pages, [

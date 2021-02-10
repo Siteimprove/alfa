@@ -22,6 +22,9 @@
       "path": "../alfa-test"
     },
     {
+      "path": "../alfa-url"
+    },
+    {
       "path": "../alfa-web"
     }
   ]

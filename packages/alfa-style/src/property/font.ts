@@ -3,23 +3,41 @@ import {
   Keyword,
   Length,
   Percentage,
+  Calculation,
   String,
   Number,
+  Angle,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { map, either, option, delimited, separatedList } = Parser;
+import { Line } from "./line";
+
+const {
+  delimited,
+  either,
+  filter,
+  map,
+  option,
+  pair,
+  right,
+  separatedList,
+} = Parser;
 
 export namespace Font {
   export type Family = Family.Specified;
 
   export namespace Family {
-    export type Generic = Keyword<
-      "serif" | "sans-serif" | "cursive" | "fantasy" | "monospace"
-    >;
+    export type Generic =
+      | Keyword<"serif">
+      | Keyword<"sans-serif">
+      | Keyword<"cursive">
+      | Keyword<"fantasy">
+      | Keyword<"monospace">;
 
     export type Specified = Array<Generic | String>;
   }
@@ -54,20 +72,24 @@ export namespace Font {
   export type Size = Size.Specified | Size.Computed;
 
   export namespace Size {
-    export type Absolute = Keyword<
-      | "xx-small"
-      | "x-small"
-      | "small"
-      | "medium"
-      | "large"
-      | "x-large"
-      | "xx-large"
-      | "xxx-large"
-    >;
+    export type Absolute =
+      | Keyword<"xx-small">
+      | Keyword<"x-small">
+      | Keyword<"small">
+      | Keyword<"medium">
+      | Keyword<"large">
+      | Keyword<"x-large">
+      | Keyword<"xx-large">
+      | Keyword<"xxx-large">;
 
-    export type Relative = Keyword<"larger" | "smaller">;
+    export type Relative = Keyword<"larger"> | Keyword<"smaller">;
 
-    export type Specified = Absolute | Relative | Length | Percentage;
+    export type Specified =
+      | Absolute
+      | Relative
+      | Length
+      | Percentage
+      | Calculation;
 
     export type Computed = Length<"px">;
   }
@@ -111,24 +133,47 @@ export namespace Font {
    */
   export const Size: Property<Size.Specified, Size.Computed> = Property.of(
     Length.of(16, "px"),
-    either(
-      either(
-        Keyword.parse(
-          "xx-small",
-          "x-small",
-          "small",
-          "medium",
-          "large",
-          "x-large",
-          "xx-large",
-          "xxx-large"
-        ),
-        Keyword.parse("larger", "smaller")
+    either<Slice<Token>, Size.Specified, string>(
+      Keyword.parse(
+        "xx-small",
+        "x-small",
+        "small",
+        "medium",
+        "large",
+        "x-large",
+        "xx-large",
+        "xxx-large"
       ),
-      either(Percentage.parse, Length.parse)
+      Keyword.parse("larger", "smaller"),
+      Percentage.parse,
+      Length.parse,
+      filter(
+        Calculation.parse,
+        ({ expression: { kind } }) =>
+          kind.is("length", 1, true) || kind.is("percentage"),
+        () => `calc() expression must be of type "length" or "percentage"`
+      )
     ),
     (style) =>
       style.specified("font-size").map((size) => {
+        if (size.type === "calculation") {
+          const { expression } = size.reduce((value) => {
+            if (Length.isLength(value)) {
+              return Resolver.length(value, style.parent);
+            }
+
+            if (Percentage.isPercentage(value)) {
+              const parent = style.parent.computed("font-size").value;
+
+              return Length.of(parent.value * value.value, parent.unit);
+            }
+
+            return value;
+          });
+
+          size = expression.toLength().or(expression.toPercentage()).get();
+        }
+
         switch (size.type) {
           case "length":
             return Resolver.length(size, style.parent);
@@ -168,10 +213,84 @@ export namespace Font {
     }
   );
 
-  export type Style = Keyword<"normal" | "italic" | "oblique">;
+  export namespace Stretch {
+    export type Absolute =
+      | Keyword<"ultra-condensed">
+      | Keyword<"extra-condensed">
+      | Keyword<"condensed">
+      | Keyword<"semi-condensed">
+      | Keyword<"normal">
+      | Keyword<"semi-expanded">
+      | Keyword<"expanded">
+      | Keyword<"extra-expanded">
+      | Keyword<"ultra-expanded">;
+
+    export type Specified = Absolute | Percentage;
+
+    export type Computed = Percentage;
+  }
+
+  /**
+   * @see https://drafts.csswg.org/css-fonts/#font-stretch-prop
+   */
+  export const Stretch: Property<
+    Stretch.Specified,
+    Stretch.Computed
+  > = Property.of(
+    Percentage.of(1),
+    either(
+      Percentage.parse,
+      Keyword.parse(
+        "ultra-condensed",
+        "extra-condensed",
+        "condensed",
+        "semi-condensed",
+        "normal",
+        "semi-expanded",
+        "expanded",
+        "extra-expanded",
+        "ultra-expanded"
+      )
+    ),
+    (style) =>
+      style.specified("font-stretch").map((stretch) => {
+        if (stretch.type === "percentage") {
+          return stretch;
+        }
+
+        switch (stretch.value) {
+          case "ultra-condensed":
+            return Percentage.of(0.5);
+          case "extra-condensed":
+            return Percentage.of(0.625);
+          case "condensed":
+            return Percentage.of(0.75);
+          case "semi-condensed":
+            return Percentage.of(0.875);
+          case "normal":
+            return Percentage.of(1);
+          case "semi-expanded":
+            return Percentage.of(1.125);
+          case "expanded":
+            return Percentage.of(1.25);
+          case "extra-expanded":
+            return Percentage.of(1.5);
+          case "ultra-expanded":
+            return Percentage.of(2);
+        }
+      }),
+    { inherits: true }
+  );
+
+  export type Style =
+    | Keyword<"normal">
+    | Keyword<"italic">
+    | Keyword<"oblique">;
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#font-style-prop
+   *
+   * oblique accepting an angle has poor browser support and shouldn't affect Alfa currently.
    */
   export const Style: Property<Style> = Property.of(
     Keyword.of("normal"),
@@ -185,9 +304,9 @@ export namespace Font {
   export type Weight = Weight.Specified | Weight.Computed;
 
   export namespace Weight {
-    export type Absolute = Keyword<"normal" | "bold">;
+    export type Absolute = Keyword<"normal"> | Keyword<"bold">;
 
-    export type Relative = Keyword<"bolder" | "lighter">;
+    export type Relative = Keyword<"bolder"> | Keyword<"lighter">;
 
     export type Specified = Absolute | Relative | Number;
 
@@ -256,5 +375,140 @@ export namespace Font {
     {
       inherits: true,
     }
+  );
+
+  /**
+   * Parses the "combinator any" part of the font shorthand.
+   */
+  const parseFontAny: Parser<
+    Slice<Token>,
+    [
+      ["font-stretch", Stretch.Specified],
+      ["font-style", Style],
+      ["font-weight", Weight.Specified]
+    ],
+    string
+  > = (input) => {
+    const normal = Keyword.of("normal");
+
+    // "normal" can be a keyword for each of these four longhands, making parsing annoying…
+    // Fortunately, "normal" happens to also be the initial value of these longhands.
+    // So, we can have them default to "normal", and try to overwrite them as long as they still are "normal";
+    // when "normal" keyword is encountered, it will be affected to the first still "normal" longhand (for no effect)
+    // and the end result is OK (only the longhands with a non-"normal" specified value are changed).
+    //
+    // This approach will stop working if CSS ever decides that the initial value of these longhands is not "normal"
+    // or that setting the shorthand does not reset all the longhands. Both seem to be unlikely changes.
+    // It is nonetheless hacky to hardcode the initial value instead of using Keyword.of("initial") in the end…
+    let stretch: Stretch.Specified = normal;
+    let style: Style = normal;
+    let variant: Keyword<"normal"> | Keyword<"small-caps"> = normal;
+    let weight: Weight.Specified = normal;
+
+    while (true) {
+      for (const [remainder] of Token.parseWhitespace(input)) {
+        input = remainder;
+      }
+
+      if (normal.equals(stretch)) {
+        // only keyword stretch are allowed in the shorthand
+        const result = Keyword.parse(
+          "ultra-condensed",
+          "extra-condensed",
+          "condensed",
+          "semi-condensed",
+          "normal",
+          "semi-expanded",
+          "expanded",
+          "extra-expanded",
+          "ultra-expanded"
+        )(input);
+
+        if (result.isOk()) {
+          [input, stretch] = result.get();
+          continue;
+        }
+      }
+
+      if (normal.equals(style)) {
+        const result = Style.parse(input);
+
+        if (result.isOk()) {
+          [input, style] = result.get();
+          continue;
+        }
+      }
+
+      if (normal.equals(variant)) {
+        const result = Keyword.parse("normal", "small-caps")(input);
+
+        if (result.isOk()) {
+          [input, variant] = result.get();
+          continue;
+        }
+      }
+
+      if (normal.equals(weight)) {
+        const result = Weight.parse(input);
+
+        if (result.isOk()) {
+          [input, weight] = result.get();
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    return Result.of([
+      input,
+      [
+        ["font-stretch", stretch],
+        ["font-style", style],
+        // we currently do not support font-variant and just ditch it.
+        ["font-weight", weight],
+      ],
+    ]);
+  };
+
+  /**
+   * Alfa is not really equipped to deal with system fonts right now.
+   * The resulting family and size depends both on the OS and on the browser.
+   */
+  export const Shorthand = Property.Shorthand.of(
+    [
+      "font-family",
+      "font-size",
+      "font-stretch",
+      "font-style",
+      "font-weight",
+      "line-height",
+    ],
+    map(
+      pair(
+        parseFontAny,
+        pair(
+          right(option(Token.parseWhitespace), Size.parse),
+          pair(
+            option(
+              right(
+                pair(
+                  pair(option(Token.parseWhitespace), Token.parseDelim("/")),
+                  option(Token.parseWhitespace)
+                ),
+                Line.Height.parse
+              )
+            ),
+            right(Token.parseWhitespace, Family.parse)
+          )
+        )
+      ),
+      ([fontAny, [size, [lineHeight, family]]]) => [
+        ...fontAny,
+        ["font-size", size],
+        ["line-height", lineHeight.getOr(Keyword.of("initial"))],
+        ["font-family", family],
+      ]
+    )
   );
 }

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/global.ts", "src/index.ts", "src/url.ts", "test/url.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-hash"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

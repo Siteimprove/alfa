@@ -2,6 +2,7 @@
 
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { URL } from "@siteimprove/alfa-url";
 
 import {
   isDictionary,
@@ -871,10 +872,6 @@ function isRelativeIri(url: string): boolean {
   return relativeIri.test(url);
 }
 
-function resolveUrl(target: string, base: string): string {
-  return new URL(target, base).href;
-}
-
 function getMapping(
   context: Context,
   property: string | null,
@@ -957,7 +954,13 @@ function processContext(
         const base = result["@base"];
 
         if (typeof base === "string") {
-          result["@base"] = resolveUrl(value, base);
+          const url = URL.parse(value, base);
+
+          if (url.isErr()) {
+            return url;
+          }
+
+          result["@base"] = url.get().toString();
         }
       }
 

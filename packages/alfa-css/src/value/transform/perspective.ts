@@ -54,8 +54,7 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
 }
 
 export namespace Perspective {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "perspective";
     depth: Length.JSON;
   }

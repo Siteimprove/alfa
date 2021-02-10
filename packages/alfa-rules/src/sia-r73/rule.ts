@@ -4,9 +4,8 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
-
-import { expectation } from "../common/expectation";
 
 import { isVisible } from "../common/predicate/is-visible";
 
@@ -15,6 +14,7 @@ const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r73.html",
+  requirements: [Criterion.of("1.4.8")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -23,11 +23,9 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
+          .filter(isElement)
           .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-            )
+            and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
           );
       },
 

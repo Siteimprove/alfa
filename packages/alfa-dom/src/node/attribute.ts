@@ -8,6 +8,8 @@ import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
 
+import * as predicate from "./attribute/predicate";
+
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;
 
@@ -50,7 +52,14 @@ export class Attribute extends Node {
   }
 
   public get name(): string {
-    return foldCase(this._name, this._owner);
+    return Attribute.foldCase(this._name, this._owner);
+  }
+
+  public get qualifiedName(): string {
+    return this._prefix.reduce(
+      (name, prefix) => `${prefix}:${name}`,
+      this._name
+    );
   }
 
   public get value(): string {
@@ -61,33 +70,11 @@ export class Attribute extends Node {
     return this._owner;
   }
 
-  public hasName(predicate: Predicate<string>): boolean;
-
-  public hasName(name: string, ...rest: Array<string>): boolean;
-
-  public hasName(
-    nameOrPredicate: string | Predicate<string>,
-    ...names: Array<string>
-  ): boolean {
-    let predicate: Predicate<string>;
-
-    if (typeof nameOrPredicate === "function") {
-      predicate = nameOrPredicate;
-    } else {
-      const namesWithCases = [nameOrPredicate, ...names].map((name) =>
-        foldCase(name, this._owner)
-      );
-      predicate = equals(...namesWithCases);
-    }
-
-    return predicate(foldCase(this._name, this._owner));
-  }
-
   /**
    * @see https://html.spec.whatwg.org/#boolean-attribute
    */
   public isBoolean(): boolean {
-    switch (foldCase(this._name, this._owner)) {
+    switch (this.name) {
       case "allowfullscreen":
       case "allowpaymentrequest":
       case "async":
@@ -107,7 +94,7 @@ export class Attribute extends Node {
     let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
     path += path === "/" ? "" : "/";
-    path += `@${foldCase(this._name, this._owner)}`;
+    path += `@${this.name}`;
 
     return path;
   }
@@ -150,7 +137,7 @@ export class Attribute extends Node {
   }
 
   public toString(): string {
-    const name = foldCase(this._name, this._owner);
+    const name = this.qualifiedName;
 
     if (this.isBoolean()) {
       return name;
@@ -208,31 +195,17 @@ export namespace Attribute {
     );
   }
 
-  export function hasName(predicate: Predicate<string>): Predicate<Attribute>;
-
-  export function hasName(
-    name: string,
-    ...rest: Array<string>
-  ): Predicate<Attribute>;
-
-  export function hasName(
-    nameOrPredicate: string | Predicate<string>,
-    ...names: Array<string>
-  ): Predicate<Attribute> {
-    if (typeof nameOrPredicate === "function") {
-      return (attribute) => attribute.hasName(nameOrPredicate);
-    } else {
-      return (attribute) => attribute.hasName(nameOrPredicate, ...names);
-    }
+  /**
+   * Conditionally fold the case of an attribute name based on its owner; HTML
+   * attributes are case insensitive while attributes in other namespaces aren't.
+   *
+   * @internal
+   */
+  export function foldCase(name: string, owner: Option<Element>): string {
+    return owner.some((owner) => owner.namespace.some(equals(Namespace.HTML)))
+      ? name.toLowerCase()
+      : name;
   }
-}
 
-/**
- * Conditionally fold the case of an attribute name based on its owner; HTML
- * attributes are case insensitive while attributes in other namespaces aren't.
- */
-function foldCase(name: string, owner: Option<Element>): string {
-  return owner.some((owner) => owner.namespace.some(equals(Namespace.HTML)))
-    ? name.toLowerCase()
-    : name;
+  export const { hasName } = predicate;
 }

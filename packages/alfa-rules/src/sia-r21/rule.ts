@@ -4,12 +4,12 @@ import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
@@ -18,19 +18,18 @@ const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r21.html",
+  requirements: [Technique.of("ARIA4"), Technique.of("G108")],
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasAttribute("role", (value) => not(isEmpty)(value.trim())),
-                not(isIgnored(device))
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasAttribute("role", (value) => not(isEmpty)(value.trim())),
+              not(isIgnored(device))
             )
           )
           .map((element) => element.attribute("role").get());

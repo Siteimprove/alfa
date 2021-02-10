@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
@@ -11,6 +12,7 @@ import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r32.html",
+  requirements: [Technique.of("G166")],
   evaluate({ device, document }) {
     return {
       applicability() {

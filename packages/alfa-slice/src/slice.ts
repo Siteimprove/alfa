@@ -2,11 +2,10 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import * as json from "@siteimprove/alfa-json";
-
-export class Slice<T> implements Iterable<T>, Equatable, Serializable {
+export class Slice<T>
+  implements Iterable<T>, Equatable, Serializable<Slice.JSON<T>> {
   public static of<T>(
-    array: Readonly<Array<T>>,
+    array: ReadonlyArray<T>,
     start: number = 0,
     end: number = array.length
   ): Slice<T> {
@@ -21,21 +20,17 @@ export class Slice<T> implements Iterable<T>, Equatable, Serializable {
     return this._empty;
   }
 
-  private readonly _array: Readonly<Array<T>>;
+  private readonly _array: ReadonlyArray<T>;
   private readonly _offset: number;
   private readonly _length: number;
 
-  private constructor(
-    array: Readonly<Array<T>>,
-    offset: number,
-    length: number
-  ) {
+  private constructor(array: ReadonlyArray<T>, offset: number, length: number) {
     this._array = array;
     this._offset = offset;
     this._length = length;
   }
 
-  public get array(): Readonly<Array<T>> {
+  public get array(): ReadonlyArray<T> {
     return this._array;
   }
 
@@ -94,8 +89,8 @@ export class Slice<T> implements Iterable<T>, Equatable, Serializable {
     return this._array.slice(this._offset, this._offset + this._length);
   }
 
-  public toJSON(): Slice.JSON {
-    return this.toArray().map(Serializable.toJSON);
+  public toJSON(): Slice.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value));
   }
 
   public toString(): string {
@@ -106,7 +101,11 @@ export class Slice<T> implements Iterable<T>, Equatable, Serializable {
 }
 
 export namespace Slice {
-  export interface JSON extends Array<json.JSON> {}
+  export type JSON<T> = Array<Serializable.ToJSON<T>>;
+
+  export function isSlice<T>(value: Iterable<T>): value is Slice<T>;
+
+  export function isSlice<T>(value: unknown): value is Slice<T>;
 
   export function isSlice<T>(value: unknown): value is Slice<T> {
     return value instanceof Slice;

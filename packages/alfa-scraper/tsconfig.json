@@ -26,6 +26,9 @@
       "path": "../alfa-json"
     },
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-puppeteer"
     },
     {
@@ -36,6 +39,9 @@
     },
     {
       "path": "../alfa-time"
+    },
+    {
+      "path": "../alfa-url"
     },
     {
       "path": "../alfa-web"

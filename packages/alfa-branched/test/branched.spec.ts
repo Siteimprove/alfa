@@ -13,6 +13,12 @@ test("#map() applies a function to a branched value", (t) => {
   ]);
 });
 
+test("#map() merges mapped values", (t) => {
+  const m = n.map(() => 3);
+
+  t.deepEqual(m.toArray(), [[3, ["foo", "bar"]]]);
+});
+
 test("#flatMap() applies a function to a branched value and flattens the result", (t) => {
   const m = n.flatMap((value) => {
     return Branched.of(value * 2, "foo").branch(value ** 4, "bar");
@@ -118,7 +124,8 @@ test("#equals() returns false if two branched values are not equal", (t) => {
   t.equal(n.equals(m), false);
 });
 
-test(".traverse() traverses a list of values and lifts them to a branched value of lists", (t) => {
+test(`.traverse() traverses an iterable of values and lifts them to a branched
+      value of iterables`, (t) => {
   const ns = [1, 2, 3];
 
   t.deepEqual(
@@ -132,7 +139,8 @@ test(".traverse() traverses a list of values and lifts them to a branched value 
   );
 });
 
-test(".sequence() inverts a list of branched values to a branched value of lists", (t) => {
+test(`.sequence() inverts an iterable of branched values to a branched value of
+      iterables`, (t) => {
   const ns = [
     Branched.of(1, "foo").branch(2, "bar"),
     Branched.of(3, "foo").branch(4, "bar"),
@@ -150,7 +158,8 @@ test(".sequence() inverts a list of branched values to a branched value of lists
   );
 });
 
-test(".sequence() inverts a list of branchless values to a branchless value of lists", (t) => {
+test(`.sequence() inverts an iterable of branchless values to a branchless value
+      of iterables`, (t) => {
   const ns = [Branched.of(1), Branched.of(2), Branched.of(3)];
 
   t.deepEqual(

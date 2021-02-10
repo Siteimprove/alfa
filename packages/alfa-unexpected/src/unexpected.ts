@@ -1,10 +1,11 @@
 /// <reference path="../types/unexpected.d.ts" />
 
-import { Assert } from "@siteimprove/alfa-assert";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Page } from "@siteimprove/alfa-web";
 import * as unexpected from "unexpected";
+
+import { Rule } from "@siteimprove/alfa-act";
+import { Asserter, Handler } from "@siteimprove/alfa-assert";
+import { Future } from "@siteimprove/alfa-future";
+import { Mapper } from "@siteimprove/alfa-mapper";
 
 declare module "unexpected" {
   interface Expect {
@@ -16,34 +17,36 @@ declare module "unexpected" {
 }
 
 export namespace Unexpected {
-  export function createPlugin<T>(
-    identify: Predicate<unknown, T>,
-    transform: Mapper<T, Page>
+  export function createPlugin<I, J, T = unknown, Q = never>(
+    transform: Mapper<I, Future.Maybe<J>>,
+    rules: Iterable<Rule<J, T, Q>>,
+    handlers: Iterable<Handler<J, T, Q>> = [],
+    options: Asserter.Options = {}
   ): unexpected.PluginDefinition {
+    const asserter = Asserter.of(rules, handlers, options);
+
     return {
       name: "@siteimprove/alfa-unexpected",
       installInto(unexpected) {
         unexpected.addType({
           name: "Element",
           base: "object",
-          identify(value: unknown): value is T {
-            return identify(value);
+          identify(value: unknown): value is I {
+            return true;
           },
           inspect(value, depth, output) {
             output.text(`${value}`);
           },
         });
 
-        unexpected.addAssertion<T>(
+        unexpected.addAssertion<I>(
           `<Element> [not] to be accessible`,
-          (expect, subject) => {
-            const page = transform(subject);
+          async (expect, value) => {
+            const target = await transform(value);
 
-            return Assert.Page.isAccessible(page)
-              .map((error) => {
-                expect(error.isNone(), "[not] to be", true);
-              })
-              .toPromise();
+            const error = await asserter.expect(target).to.be.accessible();
+
+            expect(error.isOk(), "[not] to be", true);
           }
         );
       },

@@ -1,6 +1,7 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -8,7 +9,8 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 /**
  * @see http://blog.higher-order.com/assets/trampolines.pdf
  */
-export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
+export abstract class Trampoline<T>
+  implements Functor<T>, Monad<T>, Iterable<T> {
   protected abstract step(): Trampoline<T>;
 
   public run(): T {
@@ -25,24 +27,43 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
     }
   }
 
-  public isDone(): boolean {
-    return this instanceof Done;
-  }
+  public abstract isDone(): boolean;
 
-  public isSuspended(): boolean {
-    return this instanceof Suspend || this instanceof Bind;
-  }
+  public abstract isSuspended(): boolean;
 
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
     return this.flatMap((value) => Done.of(mapper(value)));
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
+
+  public tee(callback: Callback<T>): Trampoline<T> {
+    return this.map((value) => {
+      callback(value);
+      return value;
+    });
+  }
+
+  public *iterator(): Iterator<T> {
+    yield this.run();
+  }
+
+  public [Symbol.iterator](): Iterator<T> {
+    return this.iterator();
+  }
 }
 
 export namespace Trampoline {
+  export function isTrampoline<T>(value: Iterable<T>): value is Trampoline<T>;
+
+  export function isTrampoline<T>(value: unknown): value is Trampoline<T>;
+
   export function isTrampoline<T>(value: unknown): value is Trampoline<T> {
     return value instanceof Trampoline;
+  }
+
+  export function empty(): Trampoline<void> {
+    return done(undefined);
   }
 
   export function done<T>(value: T): Trampoline<T> {
@@ -64,10 +85,10 @@ export namespace Trampoline {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap((value) =>
-          values.map((values) => values.append(value))
+        values.flatMap((values) =>
+          mapper(value).map((value) => Array.append(values, value))
         ),
-      done(List.empty())
+      done(Array.empty())
     );
   }
 
@@ -98,6 +119,14 @@ class Done<T> extends Trampoline<T> {
     return this._value;
   }
 
+  public isDone(): boolean {
+    return true;
+  }
+
+  public isSuspended(): boolean {
+    return false;
+  }
+
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
     return new Done(mapper(this._value));
   }
@@ -121,6 +150,14 @@ class Suspend<T> extends Trampoline<T> {
 
   protected step(): Trampoline<T> {
     return this._thunk();
+  }
+
+  public isDone(): boolean {
+    return false;
+  }
+
+  public isSuspended(): boolean {
+    return true;
   }
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
@@ -150,6 +187,14 @@ class Bind<S, T> extends Trampoline<T> {
 
   protected step(): Trampoline<T> {
     return this._thunk().flatMap(this._mapper);
+  }
+
+  public isDone(): boolean {
+    return false;
+  }
+
+  public isSuspended(): boolean {
+    return true;
   }
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {

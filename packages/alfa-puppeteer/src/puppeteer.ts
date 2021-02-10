@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
-import { Device } from "@siteimprove/alfa-device";
+import { Device, Display, Viewport } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Block,
@@ -26,22 +26,57 @@ import {
   Shadow,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
 import { JSHandle } from "puppeteer";
 
-const { isFunction, isObject } = Predicate;
-
 export namespace Puppeteer {
   export type Type = JSHandle<globalThis.Node>;
 
-  export function isType(value: unknown): value is Type {
-    return isObject(value) && isFunction(value.dispose);
+  export async function toNode(value: Type): Promise<Node> {
+    return Node.from(await toJSON(value));
   }
 
-  export async function asPage(value: Type): Promise<Page> {
-    const node = await value.evaluate((node) => {
+  export async function toPage(value: Type): Promise<Page> {
+    const json = await toJSON(value);
+
+    const device = await value.evaluate(() => {
+      const {
+        documentElement: { clientWidth, clientHeight },
+      } = document;
+
+      return {
+        width: clientWidth,
+        height: clientHeight,
+        resolution: window.devicePixelRatio,
+        orientation: window.matchMedia("(orientation: landscape)").matches
+          ? "landscape"
+          : "portrait",
+      };
+    });
+
+    return Page.of(
+      Request.empty(),
+      Response.empty(),
+      json.type === "document"
+        ? Document.from(json as Document.JSON)
+        : Document.of([Node.from(json)]),
+      Device.of(
+        Device.Type.Screen,
+        Viewport.of(
+          device.width,
+          device.height,
+          device.orientation === "landscape"
+            ? Viewport.Orientation.Landscape
+            : Viewport.Orientation.Portrait
+        ),
+        Display.of(device.resolution)
+      )
+    );
+  }
+
+  async function toJSON(value: Type): Promise<Node.JSON> {
+    return value.evaluate((node) => {
       return toNode(node);
 
       function toNode(node: globalThis.Node): Node.JSON {
@@ -284,14 +319,5 @@ export namespace Puppeteer {
         return declarations;
       }
     });
-
-    return Page.of(
-      Request.empty(),
-      Response.empty(),
-      node.type === "document"
-        ? Document.from(node as Document.JSON)
-        : Document.of([Node.from(node)]),
-      Device.standard()
-    );
   }
 }

@@ -22,11 +22,9 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
+          .filter(isElement)
           .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-            )
+            and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
           );
       },
 

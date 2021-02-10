@@ -4,6 +4,7 @@ import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option } from "@siteimprove/alfa-option";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -18,29 +19,28 @@ const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r82.html",
+  requirements: [Criterion.of("3.3.1")],
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasRole(
-                  "checkbox",
-                  "combobox",
-                  "listbox",
-                  "menuitemcheckbox",
-                  "menuitemradio",
-                  "radio",
-                  "searchbox",
-                  "slider",
-                  "spinbutton",
-                  "switch",
-                  "textbox"
-                )
+              hasNamespace(Namespace.HTML),
+              hasRole(
+                "checkbox",
+                "combobox",
+                "listbox",
+                "menuitemcheckbox",
+                "menuitemradio",
+                "radio",
+                "searchbox",
+                "slider",
+                "spinbutton",
+                "switch",
+                "textbox"
               )
             )
           );
