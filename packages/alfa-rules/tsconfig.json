@@ -200,6 +200,9 @@
       "path": "../alfa-aria"
     },
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-branched"
     },
     {
@@ -216,6 +219,9 @@
     },
     {
       "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-earl"
     },
     {
       "path": "../alfa-equatable"
@@ -261,6 +267,9 @@
     },
     {
       "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-sarif"
     },
     {
       "path": "../alfa-selector"
