@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Outcome](./alfa-act.outcome.md) &gt; [isPassed](./alfa-act.outcome.ispassed.md)
 
-## Outcome.isPassed() function
+## Outcome.isPassed variable
 
 <b>Signature:</b>
 
 ```typescript
-function isPassed<I, T, Q>(outcome: Outcome<I, T, Q>): outcome is Passed<I, T, Q>;
+isPassed: typeof Passed.isPassed
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  outcome | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt; |  |
-
-<b>Returns:</b>
-
-outcome is [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q&gt;
-

@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type JSON = Cons.JSON | Nil.JSON;
+type JSON<T> = Cons.JSON<T> | Nil.JSON;
 ```
+<b>References:</b> [Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->, [Nil.JSON](./alfa-sequence.nil.json.md)
+

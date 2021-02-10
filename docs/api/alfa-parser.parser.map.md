@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function map<I, T, U, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, mapper: Mapper<T, U>): Parser<I, U, E, A>;
+function map<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, U>): Parser<I, U, E, A>;
 ```
 
 ## Parameters

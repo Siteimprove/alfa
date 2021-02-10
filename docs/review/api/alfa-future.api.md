@@ -12,22 +12,28 @@ import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
-// @public
-export abstract class Future<T> implements Monad<T>, Functor<T> {
+// @public (undocumented)
+export abstract class Future<T> implements Functor<T>, Monad<T>, AsyncIterable<T> {
+    // (undocumented)
+    [Symbol.asyncIterator](): AsyncIterator<T>;
+    // (undocumented)
+    asyncIterator(): AsyncIterator<T>;
     // (undocumented)
     abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
     // (undocumented)
     get(): T;
     // (undocumented)
-    isDeferred(): boolean;
+    abstract isDeferred(): boolean;
     // (undocumented)
-    isNow(): boolean;
+    abstract isNow(): boolean;
     // (undocumented)
-    isSuspended(): boolean;
+    abstract isSuspended(): boolean;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Future<U>;
     // (undocumented)
     protected abstract step(): Future<T>;
+    // (undocumented)
+    tee(callback: Callback<T>): Future<T>;
     // (undocumented)
     then(callback: Callback<T>): void;
     // (undocumented)
@@ -41,7 +47,11 @@ export namespace Future {
     // (undocumented)
     export function delay<T>(thunk: Thunk<T>): Future<T>;
     // (undocumented)
+    export function empty(): Future<void>;
+    // (undocumented)
     export function from<T>(promise: Promise<T> | Thunk<Promise<T>>): Future<T>;
+    // (undocumented)
+    export function isFuture<T>(value: AsyncIterable<T>): value is Future<T>;
     // (undocumented)
     export function isFuture<T>(value: unknown): value is Future<T>;
     // (undocumented)

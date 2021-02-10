@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export function matches(selector: string | Selector, scope?: Iterable<Element>): Predicate<Element>;
+export function matches(selector: string | Selector, context?: Context): Predicate<Element>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ export function matches(selector: string | Selector, scope?: Iterable<Element>):
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string \| Selector |  |
-|  scope | Iterable&lt;Element&gt; |  |
+|  context | [Context](./alfa-selector.context.md) |  |
 
 <b>Returns:</b>
 

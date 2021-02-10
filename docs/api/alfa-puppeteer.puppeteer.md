@@ -14,8 +14,8 @@ export declare namespace Puppeteer
 
 |  Function | Description |
 |  --- | --- |
-|  [asPage(value)](./alfa-puppeteer.puppeteer.aspage.md) |  |
-|  [isType(value)](./alfa-puppeteer.puppeteer.istype.md) |  |
+|  [toNode(value)](./alfa-puppeteer.puppeteer.tonode.md) |  |
+|  [toPage(value)](./alfa-puppeteer.puppeteer.topage.md) |  |
 
 ## Type Aliases
 

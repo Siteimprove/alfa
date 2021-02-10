@@ -4,15 +4,16 @@
 
 ```ts
 
+import { Callback } from '@siteimprove/alfa-callback';
 import { Collection } from '@siteimprove/alfa-collection';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
-import { List } from '@siteimprove/alfa-list';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Iterable_2<B>]> {
@@ -23,17 +24,29 @@ export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Ite
     // (undocumented)
     branch(value: T, ...branches: Array<B>): Branched<T, B>;
     // (undocumented)
-    count(predicate: Predicate<T, T, [Iterable_2<B>]>): number;
+    collect<U>(mapper: Mapper<T, Option<U>, [Iterable_2<B>]>): Branched<U, B>;
+    // (undocumented)
+    collectFirst<U>(mapper: Mapper<T, Option<U>, [Iterable_2<B>]>): Option<U>;
+    // (undocumented)
+    count(predicate: Predicate<T, [Iterable_2<B>]>): number;
+    // (undocumented)
+    distinct(): Branched<T, B>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    every(predicate: Predicate<T, T, [Iterable_2<B>]>): boolean;
+    every(predicate: Predicate<T, [Iterable_2<B>]>): boolean;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U, [Iterable_2<B>]>): Branched<U, B>;
+    filter<U extends T>(refinement: Refinement<T, U, [Iterable_2<B>]>): Branched<U, B>;
     // (undocumented)
-    find<U extends T>(predicate: Predicate<T, U, [Iterable_2<B>]>): Option_2<U>;
+    filter(predicate: Predicate<T, [Iterable_2<B>]>): Branched<T, B>;
+    // (undocumented)
+    find<U extends T>(refinement: Refinement<T, U, [Iterable_2<B>]>): Option<U>;
+    // (undocumented)
+    find(predicate: Predicate<T, [Iterable_2<B>]>): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Branched<U, B>, [Iterable_2<B>]>): Branched<U, B>;
+    // (undocumented)
+    forEach(callback: Callback<T, void, [Iterable_2<B>]>): void;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -43,27 +56,36 @@ export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Ite
     // (undocumented)
     map<U>(mapper: Mapper<T, U, [Iterable_2<B>]>): Branched<U, B>;
     // (undocumented)
+    none(predicate: Predicate<T, [Iterable_2<B>]>): boolean;
+    // (undocumented)
     static of<T, B = never>(value: T, ...branches: Array<B>): Branched<T, B>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U, [Iterable_2<B>]>, accumulator: U): U;
     // (undocumented)
-    reject(predicate: Predicate<T, T, [Iterable_2<B>]>): Branched<T, B>;
+    reject<U extends T>(refinement: Refinement<T, U, [Iterable_2<B>]>): Branched<Exclude<T, U>, B>;
+    // (undocumented)
+    reject(predicate: Predicate<T, [Iterable_2<B>]>): Branched<T, B>;
     // (undocumented)
     get size(): number;
     // (undocumented)
-    some(predicate: Predicate<T, T, [Iterable_2<B>]>): boolean;
+    some(predicate: Predicate<T, [Iterable_2<B>]>): boolean;
     // (undocumented)
     toArray(): Array<[T, Array<B>]>;
     // (undocumented)
-    toJSON(): Branched.JSON;
+    toJSON(): Branched.JSON<T, B>;
     }
 
 // @public (undocumented)
 export namespace Branched {
     // (undocumented)
+    export function from<T, B = never>(values: Iterable_2<readonly [T, Iterable_2<B>]>): Branched<T, B>;
+    // (undocumented)
     export function isBranched<T, B = never>(value: unknown): value is Branched<T, B>;
     // (undocumented)
-    export type JSON = Array<[json.JSON, List.JSON]>;
+    export type JSON<T, B = never> = Array<[
+        Serializable.ToJSON<T>,
+        Array<Serializable.ToJSON<B>>
+    ]>;
     // (undocumented)
     export function sequence<T, B>(values: Iterable_2<Branched<T, B>>): Branched<Iterable_2<T>, B>;
     // (undocumented)

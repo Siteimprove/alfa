@@ -2,12 +2,15 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-graph](./alfa-graph.md) &gt; [Graph](./alfa-graph.graph.md) &gt; [JSON](./alfa-graph.graph.json.md)
 
-## Graph.JSON interface
+## Graph.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Array<[json.JSON, Array<json.JSON>]> 
+type JSON<T> = Array<[
+        Serializable.ToJSON<T>,
+        Array<Serializable.ToJSON<T>>
+    ]>;
 ```
-<b>Extends:</b> Array&lt;\[json.JSON, Array&lt;json.JSON&gt;\]&gt;
+<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

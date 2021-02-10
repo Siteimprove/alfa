@@ -4,8 +4,6 @@
 
 ## Matrix type
 
- https://en.wikipedia.org/wiki/Matrix\_(mathematics)
-
 <b>Signature:</b>
 
 ```typescript

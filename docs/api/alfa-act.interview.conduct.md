@@ -20,5 +20,5 @@ function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>,
 
 <b>Returns:</b>
 
-[Future](./alfa-future.future.md)<!-- -->&lt;Option&lt;A&gt;&gt;
+[Future](./alfa-future.future.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;A&gt;&gt;
 

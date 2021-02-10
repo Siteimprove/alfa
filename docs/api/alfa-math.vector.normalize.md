@@ -6,8 +6,6 @@
 
 Compute a unit vector corresponding to a vector.
 
- https://en.wikipedia.org/wiki/Unit\_vector
-
 <b>Signature:</b>
 
 ```typescript

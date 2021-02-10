@@ -7,21 +7,25 @@
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.Entry<T>>, Equatable, Serializable {
+class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.Entry<T>>, Equatable, Serializable<Record_2.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Record_2.Entry<T>>;
     // (undocumented)
     entries(): Iterable_2<Record_2.Entry<T>>;
     // (undocumented)
+    equals(value: Record_2<T>): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get<K extends Record_2.Key<T>>(key: K): Option_2<T[K]>;
+    every(predicate: Predicate<Record_2.Value<T>, [Record_2.Key<T>]>): boolean;
+    // (undocumented)
+    get<K extends Record_2.Key<T>>(key: K): Option<T[K]>;
     // (undocumented)
     has(key: string): key is Record_2.Key<T>;
     // (undocumented)
@@ -33,9 +37,11 @@ class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.En
     // (undocumented)
     set<K extends Record_2.Key<T>>(key: K, value: T[K]): Record_2<T>;
     // (undocumented)
+    some(predicate: Predicate<Record_2.Value<T>, [Record_2.Key<T>]>): boolean;
+    // (undocumented)
     toArray(): Array<Record_2.Entry<T>>;
     // (undocumented)
-    toJSON(): Record_2.JSON;
+    toJSON(): Record_2.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -53,10 +59,9 @@ namespace Record_2 {
     // (undocumented)
     function isRecord<T>(value: unknown): value is Record_2<T>;
     // (undocumented)
-    interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-    }
+    type JSON<T> = {
+        [K in Key<T>]: Serializable.ToJSON<T[K]>;
+    };
     // (undocumented)
     type Key<T> = Extract<keyof T, string>;
     // (undocumented)

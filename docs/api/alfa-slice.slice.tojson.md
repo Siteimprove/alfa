@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Slice.JSON;
+toJSON(): Slice.JSON<T>;
 ```
 <b>Returns:</b>
 
-[Slice.JSON](./alfa-slice.slice.json.md)
+[Slice.JSON](./alfa-slice.slice.json.md)<!-- -->&lt;T&gt;
 

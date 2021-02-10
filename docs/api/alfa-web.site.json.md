@@ -7,12 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+interface JSON<R extends Resource = Resource> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [resources](./alfa-web.site.json.resources.md) | [Graph.JSON](./alfa-graph.graph.json.md) |  |
+|  [resources](./alfa-web.site.json.resources.md) | [Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;R&gt; |  |
 

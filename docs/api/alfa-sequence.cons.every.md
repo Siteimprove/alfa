@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-every(predicate: Predicate<T, T, [number]>): boolean;
+every(predicate: Predicate<T, [number]>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

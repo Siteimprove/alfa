@@ -7,14 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-static of(entries: WeakMap<Element, RuleTree.Node>): Cascade;
+static of(node: Document | Shadow, device: Device): Cascade;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entries | WeakMap&lt;Element, RuleTree.Node&gt; |  |
+|  node | Document \| Shadow |  |
+|  device | [Device](./alfa-device.device.md) |  |
 
 <b>Returns:</b>
 

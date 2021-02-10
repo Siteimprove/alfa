@@ -7,16 +7,18 @@
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
 import { Functor } from '@siteimprove/alfa-functor';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { None } from '@siteimprove/alfa-option';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export interface Either<L, R> extends Monad<L | R>, Functor<L | R>, Foldable<L | R>, Iterable<L | R>, Equatable, Serializable {
+export interface Either<L, R = L> extends Functor<L | R>, Monad<L | R>, Foldable<L | R>, Iterable<L | R>, Equatable, Hashable, Serializable<Either.JSON<L, R>> {
     // (undocumented)
     either<T>(left: Mapper<L, T>, right: Mapper<R, T>): T;
     // (undocumented)
@@ -28,23 +30,29 @@ export interface Either<L, R> extends Monad<L | R>, Functor<L | R>, Foldable<L |
     // (undocumented)
     isRight(): this is Right<R>;
     // (undocumented)
-    left(): Option_2<L>;
+    left(): Option<L>;
     // (undocumented)
     map<T>(mapper: Mapper<L | R, T>): Either<T, T>;
     // (undocumented)
     reduce<T>(reducer: Reducer<L | R, T>, accumulator: T): T;
     // (undocumented)
-    right(): Option_2<R>;
+    right(): Option<R>;
     // (undocumented)
-    toJSON(): Either.JSON;
+    toJSON(): Either.JSON<L, R>;
 }
 
 // @public (undocumented)
 export namespace Either {
     // (undocumented)
+    export function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
+    // (undocumented)
     export function isEither<L, R>(value: unknown): value is Either<L, R>;
     // (undocumented)
-    export type JSON = Left.JSON | Right.JSON;
+    export type JSON<L, R = L> = Left.JSON<L> | Right.JSON<R>;
+    // (undocumented)
+    export function left<L, R = never>(value: L): Either<L, R>;
+    // (undocumented)
+    export function right<R, L = never>(value: R): Either<L, R>;
 }
 
 // @public (undocumented)
@@ -54,17 +62,21 @@ export class Left<L> implements Either<L, never> {
     // (undocumented)
     either<T>(left: Mapper<L, T>): T;
     // (undocumented)
+    equals<L>(value: Left<L>): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     flatMap<T>(mapper: Mapper<L, Either<T, T>>): Either<T, T>;
     // (undocumented)
     get(): L;
     // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
     isLeft(): this is Left<L>;
     // (undocumented)
     isRight(): this is Right<never>;
     // (undocumented)
-    left(): Option_2<L>;
+    left(): Option<L>;
     // (undocumented)
     map<T>(mapper: Mapper<L, T>): Either<T, T>;
     // (undocumented)
@@ -74,7 +86,7 @@ export class Left<L> implements Either<L, never> {
     // (undocumented)
     right(): None;
     // (undocumented)
-    toJSON(): Left.JSON;
+    toJSON(): Left.JSON<L>;
     // (undocumented)
     toString(): string;
     }
@@ -82,15 +94,17 @@ export class Left<L> implements Either<L, never> {
 // @public (undocumented)
 export namespace Left {
     // (undocumented)
+    export function isLeft<L>(value: Iterable<L>): value is Left<L>;
+    // (undocumented)
     export function isLeft<L>(value: unknown): value is Left<L>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<L> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         type: "left";
         // (undocumented)
-        value: json.JSON;
+        value: Serializable.ToJSON<L>;
     }
 }
 
@@ -101,11 +115,15 @@ export class Right<R> implements Either<never, R> {
     // (undocumented)
     either<T>(left: unknown, right: Mapper<R, T>): T;
     // (undocumented)
+    equals<R>(value: Right<R>): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     flatMap<T>(mapper: Mapper<R, Either<T, T>>): Either<T, T>;
     // (undocumented)
     get(): R;
+    // (undocumented)
+    hash(hash: Hash): void;
     // (undocumented)
     isLeft(): this is Left<never>;
     // (undocumented)
@@ -119,9 +137,9 @@ export class Right<R> implements Either<never, R> {
     // (undocumented)
     reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
     // (undocumented)
-    right(): Option_2<R>;
+    right(): Option<R>;
     // (undocumented)
-    toJSON(): Right.JSON;
+    toJSON(): Right.JSON<R>;
     // (undocumented)
     toString(): string;
     }
@@ -129,15 +147,17 @@ export class Right<R> implements Either<never, R> {
 // @public (undocumented)
 export namespace Right {
     // (undocumented)
+    export function isRight<R>(value: Iterable<R>): value is Right<R>;
+    // (undocumented)
     export function isRight<R>(value: unknown): value is Right<R>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<R> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         type: "right";
         // (undocumented)
-        value: json.JSON;
+        value: Serializable.ToJSON<R>;
     }
 }
 

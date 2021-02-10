@@ -10,3 +10,9 @@
 |  --- | --- |
 |  [Functor](./alfa-functor.functor.md) |  |
 
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Functor](./alfa-functor.functor.md) |  |
+

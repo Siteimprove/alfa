@@ -15,7 +15,7 @@ static of(name: string, scope?: Option<Scope>): Primary;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  scope | Option&lt;[Scope](./alfa-iana.language.scope.md)<!-- -->&gt; |  |
+|  scope | [Option](./alfa-option.option.md)<!-- -->&lt;[Scope](./alfa-iana.language.scope.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

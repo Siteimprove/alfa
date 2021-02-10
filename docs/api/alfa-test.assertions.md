@@ -14,11 +14,11 @@ export interface Assertions
 
 |  Method | Description |
 |  --- | --- |
-|  [deepEqual(actual, expected, message)](./alfa-test.assertions.deepequal.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_deepequal\_actual\_expected\_message |
-|  [equal(actual, expected, message)](./alfa-test.assertions.equal.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_equal\_actual\_expected\_message |
-|  [fail(message)](./alfa-test.assertions.fail.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_fail\_message |
-|  [notDeepEqual(actual, expected, message)](./alfa-test.assertions.notdeepequal.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message |
-|  [notEqual(actual, expected, message)](./alfa-test.assertions.notequal.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_notequal\_actual\_expected\_message |
-|  [rejects(block, error, message)](./alfa-test.assertions.rejects.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_rejects\_block\_error\_message |
-|  [throws(block, error, message)](./alfa-test.assertions.throws.md) |  https://nodejs.org/api/assert.html\#assert\_assert\_throws\_block\_error\_message |
+|  [deepEqual(actual, expected, message)](./alfa-test.assertions.deepequal.md) |  |
+|  [equal(actual, expected, message)](./alfa-test.assertions.equal.md) |  |
+|  [fail(message)](./alfa-test.assertions.fail.md) |  |
+|  [notDeepEqual(actual, expected, message)](./alfa-test.assertions.notdeepequal.md) |  |
+|  [notEqual(actual, expected, message)](./alfa-test.assertions.notequal.md) |  |
+|  [rejects(block, error, message)](./alfa-test.assertions.rejects.md) |  |
+|  [throws(block, error, message)](./alfa-test.assertions.throws.md) |  |
 

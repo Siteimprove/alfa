@@ -4,8 +4,6 @@
 
 ## Preference.Preferences."prefers-contrast" property
 
- https://drafts.csswg.org/mediaqueries-5/\#prefers-contrast
-
 <b>Signature:</b>
 
 ```typescript

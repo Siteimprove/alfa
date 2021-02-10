@@ -14,7 +14,7 @@ interface Options
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [default](./alfa-command.argument.options.default.md) | Option&lt;string&gt; |  |
+|  [default](./alfa-command.argument.options.default.md) | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  [optional](./alfa-command.argument.options.optional.md) | boolean |  |
 |  [repeatable](./alfa-command.argument.options.repeatable.md) | boolean |  |
 

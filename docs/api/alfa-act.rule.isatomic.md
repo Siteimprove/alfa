@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q>;
+function isAtomic<I, T, Q>(value: Rule<I, T, Q>): value is Atomic<I, T, Q>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 

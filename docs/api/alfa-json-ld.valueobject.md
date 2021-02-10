@@ -15,5 +15,5 @@ export interface ValueObject extends Dictionary
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@value"](./alfa-json-ld.valueobject.__value_.md) | [Scalar](./alfa-json-ld.scalar.md) |  |
+|  ["@value"?](./alfa-json-ld.valueobject.__value_.md) | [Scalar](./alfa-json-ld.scalar.md) | <i>(Optional)</i> |
 

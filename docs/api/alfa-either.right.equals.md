@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals<R>(value: Right<R>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Right](./alfa-either.right.md)<!-- -->&lt;R&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

@@ -2,26 +2,17 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-lazy](./alfa-lazy.md) &gt; [Lazy](./alfa-lazy.lazy.md)
 
-## Lazy class
+## Lazy namespace
 
 <b>Signature:</b>
 
 ```typescript
-export declare class Lazy<T> implements Monad<T>, Functor<T>, Equatable, Serializable 
+export declare namespace Lazy 
 ```
-<b>Implements:</b> [Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;, [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;, [Equatable](./alfa-equatable.equatable.md)<!-- -->, [Serializable](./alfa-json.serializable.md)
 
-## Methods
+## Type Aliases
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [equals(value)](./alfa-lazy.lazy.equals.md) |  |  |
-|  [flatMap(mapper)](./alfa-lazy.lazy.flatmap.md) |  |  |
-|  [force()](./alfa-lazy.lazy.force.md) |  |  |
-|  [force(value)](./alfa-lazy.lazy.force.md) | <code>static</code> |  |
-|  [map(mapper)](./alfa-lazy.lazy.map.md) |  |  |
-|  [of(thunk)](./alfa-lazy.lazy.of.md) | <code>static</code> |  |
-|  [toJSON()](./alfa-lazy.lazy.tojson.md) |  |  |
-|  [toString()](./alfa-lazy.lazy.tostring.md) |  |  |
-|  [toThunk()](./alfa-lazy.lazy.tothunk.md) |  |  |
+|  Type Alias | Description |
+|  --- | --- |
+|  [JSON](./alfa-lazy.lazy.json.md) |  |
 

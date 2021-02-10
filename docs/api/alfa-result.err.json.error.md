@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-error: json.JSON;
+error: Serializable.ToJSON<E>;
 ```

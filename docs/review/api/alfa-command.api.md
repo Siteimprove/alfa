@@ -7,15 +7,16 @@
 import { Functor } from '@siteimprove/alfa-functor';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import * as parser from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Argument<T = unknown> implements Functor<T>, Serializable {
+export class Argument<T = unknown> implements Functor<T>, Serializable<Argument.JSON> {
     // (undocumented)
     choices<U extends T>(...choices: Array<U>): Argument<U>;
     // (undocumented)
@@ -23,7 +24,9 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     // (undocumented)
     get description(): string;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U>, ifError?: Thunk<string>): Argument<U>;
+    filter<U extends T>(refinement: Refinement<T, U>, ifError?: Thunk<string>): Argument<U>;
+    // (undocumented)
+    filter(predicate: Predicate<T>, ifError?: Thunk<string>): Argument<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Argument<U>;
     // (undocumented)
@@ -31,7 +34,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
     // (undocumented)
     static of<T>(name: string, description: string, parse: Argument.Parser<T>): Argument<T>;
     // (undocumented)
-    optional(): Argument<Option_2<T>>;
+    optional(): Argument<Option<T>>;
     // (undocumented)
     get options(): Argument.Options;
     // (undocumented)
@@ -61,7 +64,7 @@ export namespace Argument {
             [key: string]: json.JSON;
             optional: boolean;
             repeatable: boolean;
-            default: json.JSON | null;
+            default: string | null;
         };
     }
     // (undocumented)
@@ -69,7 +72,7 @@ export namespace Argument {
     // (undocumented)
     export interface Options {
         // (undocumented)
-        default: Option_2<string>;
+        default: Option<string>;
         // (undocumented)
         optional: boolean;
         // (undocumented)
@@ -82,7 +85,7 @@ export namespace Argument {
 }
 
 // @public (undocumented)
-export class Command<F extends Command.Flags = {}, A extends Command.Arguments = {}, S extends Command.Subcommands = {}> implements Serializable {
+export class Command<F extends Command.Flags = {}, A extends Command.Arguments = {}, S extends Command.Subcommands = {}> implements Serializable<Command.JSON> {
     // (undocumented)
     get arguments(): A;
     // (undocumented)
@@ -100,9 +103,9 @@ export class Command<F extends Command.Flags = {}, A extends Command.Arguments =
     // (undocumented)
     get version(): string;
     // (undocumented)
-    static withArguments<F extends Command.Flags, A extends Command.Arguments>(name: string, version: string, description: string, flags: F, args: A, parent?: Option_2<Command>, run?: (command: Command<F, A, {}>) => Command.Runner<F, A>): Command<F, A, {}>;
+    static withArguments<F extends Command.Flags, A extends Command.Arguments>(name: string, version: string, description: string, flags: F, args: A, parent?: Option<Command>, run?: (command: Command<F, A, {}>) => Command.Runner<F, A>): Command<F, A, {}>;
     // (undocumented)
-    static withSubcommands<F extends Command.Flags, S extends Command.Subcommands>(name: string, version: string, description: string, flags: F, subcommands: Mapper<Command, S>, parent?: Option_2<Command>, run?: (command: Command<F, {}, S>) => Command.Runner<F, {}>): Command<F, {}, S>;
+    static withSubcommands<F extends Command.Flags, S extends Command.Subcommands>(name: string, version: string, description: string, flags: F, subcommands: Mapper<Command, S>, parent?: Option<Command>, run?: (command: Command<F, {}, S>) => Command.Runner<F, {}>): Command<F, {}, S>;
 }
 
 // @public (undocumented)
@@ -165,7 +168,7 @@ export namespace Command {
 }
 
 // @public (undocumented)
-export class Flag<T = unknown> implements Functor<T>, Serializable {
+export class Flag<T = unknown> implements Functor<T>, Serializable<Flag.JSON> {
     // (undocumented)
     alias(alias: string): Flag<T>;
     // (undocumented)
@@ -175,7 +178,9 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     // (undocumented)
     get description(): string;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U>, ifError?: Thunk<string>): Flag<U>;
+    filter<U extends T>(refinement: Refinement<T, U>, ifError?: Thunk<string>): Flag<U>;
+    // (undocumented)
+    filter(predicate: Predicate<T>, ifError?: Thunk<string>): Flag<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Flag<U>;
     // (undocumented)
@@ -187,7 +192,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     // (undocumented)
     static of<T>(name: string, description: string, parse: Flag.Parser<T, [Predicate<string>]>): Flag<T>;
     // (undocumented)
-    optional(): Flag<Option_2<T>>;
+    optional(): Flag<Option<T>>;
     // (undocumented)
     get options(): Flag.Options;
     // (undocumented)
@@ -207,7 +212,7 @@ export namespace Flag {
     // (undocumented)
     export function empty(name: string, description: string): Flag<void>;
     // (undocumented)
-    export function help(description: string): Flag<Option_2<symbol>>;
+    export function help(description: string): Flag<Option<symbol>>;
     // (undocumented)
     export function integer(name: string, description: string): Flag<number>;
     // (undocumented)
@@ -235,7 +240,7 @@ export namespace Flag {
         // (undocumented)
         readonly aliases: Array<string>;
         // (undocumented)
-        readonly default: Option_2<string>;
+        readonly default: Option<string>;
         // (undocumented)
         readonly negatable: boolean;
         // (undocumented)
@@ -243,7 +248,7 @@ export namespace Flag {
         // (undocumented)
         readonly repeatable: boolean;
         // (undocumented)
-        readonly type: Option_2<string>;
+        readonly type: Option<string>;
     }
     // (undocumented)
     export type Parser<T, A extends Array<unknown> = []> = parser.Parser<Array<string>, Set<T>, string, A>;
@@ -264,19 +269,18 @@ export namespace Flag {
     const // (undocumented)
     Version: unique symbol;
     // (undocumented)
-    export function version(description: string): Flag<Option_2<symbol>>;
-}
-
-// @internal (undocumented)
-namespace Text_2 {
-    // (undocumented)
-    function indent(text: string, indent?: string | number): string;
-    // (undocumented)
-    function wrap(text: string, length?: number): string;
+    export function version(description: string): Flag<Option<symbol>>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Text" should be prefixed with an underscore because the declaration is marked as @internal
-export { Text_2 as Text }
+//
+// @internal (undocumented)
+export namespace Text {
+    // (undocumented)
+    export function indent(text: string, indent?: string | number): string;
+    // (undocumented)
+    export function wrap(text: string, length?: number): string;
+}
 
 
 // (No @packageDocumentation comment for this package)

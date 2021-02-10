@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Outcome](./alfa-act.outcome.md) &gt; [isInapplicable](./alfa-act.outcome.isinapplicable.md)
 
-## Outcome.isInapplicable() function
+## Outcome.isInapplicable variable
 
 <b>Signature:</b>
 
 ```typescript
-function isInapplicable<I, T, Q>(outcome: Outcome<I, T, Q>): outcome is Inapplicable<I, T, Q>;
+isInapplicable: typeof Inapplicable.isInapplicable
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  outcome | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt; |  |
-
-<b>Returns:</b>
-
-outcome is [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q&gt;
-

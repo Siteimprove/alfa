@@ -14,9 +14,9 @@ and<U>(option: Option<U>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  option | Option&lt;U&gt; |  |
+|  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;U&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

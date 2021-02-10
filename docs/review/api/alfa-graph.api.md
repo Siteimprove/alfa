@@ -5,15 +5,16 @@
 ```ts
 
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Set as Set_2 } from '@siteimprove/alfa-set';
 
 // @public (undocumented)
-export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Serializable {
+export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hashable, Serializable<Graph.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[T, Iterable_2<T>]>;
     // (undocumented)
@@ -27,11 +28,19 @@ export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Seri
     // (undocumented)
     static empty<T>(): Graph<T>;
     // (undocumented)
+    equals<T>(value: Graph<T>): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     has(node: T): boolean;
     // (undocumented)
-    neighbors(node: T): Option_2<Set_2<T>>;
+    hash(hash: Hash): void;
+    // (undocumented)
+    hasPath(from: T, to: T): boolean;
+    // (undocumented)
+    iterator(): Iterator<[T, Iterable_2<T>]>;
+    // (undocumented)
+    neighbors(node: T): Iterable_2<T>;
     // (undocumented)
     nodes(): Iterable_2<T>;
     // (undocumented)
@@ -41,20 +50,35 @@ export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Seri
     // (undocumented)
     toArray(): Array<[T, Array<T>]>;
     // (undocumented)
-    toJSON(): Graph.JSON;
+    toJSON(): Graph.JSON<T>;
     // (undocumented)
     toString(): string;
+    // (undocumented)
+    traverse(root: T, traversal?: Graph.Traversal): Sequence<T>;
 }
 
 // @public (undocumented)
 export namespace Graph {
     // (undocumented)
-    export function from<T>(iterable: Iterable_2<[T, Iterable_2<T>]>): Graph<T>;
+    export function from<T>(iterable: Iterable_2<readonly [T, Iterable_2<T>]>): Graph<T>;
+    // (undocumented)
+    export function isGraph<T>(value: Iterable_2<readonly [T, Iterable_2<T>]>): value is Graph<T>;
     // (undocumented)
     export function isGraph<T>(value: unknown): value is Graph<T>;
     // (undocumented)
-    export interface JSON extends Array<[json.JSON, Array<json.JSON>]> {
+    export type JSON<T> = Array<[
+        Serializable.ToJSON<T>,
+        Array<Serializable.ToJSON<T>>
+    ]>;
+    // (undocumented)
+    export interface Traversal {
+        // (undocumented)
+        <T>(graph: Graph<T>, root: T): Iterable_2<T>;
     }
+    const // (undocumented)
+    DepthFirst: Traversal;
+    const // (undocumented)
+    BreadthFirst: Traversal;
 }
 
 

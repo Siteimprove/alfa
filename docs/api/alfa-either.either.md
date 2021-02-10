@@ -15,6 +15,9 @@ export declare namespace Either
 |  Function | Description |
 |  --- | --- |
 |  [isEither(value)](./alfa-either.either.iseither.md) |  |
+|  [isEither(value)](./alfa-either.either.iseither_1.md) |  |
+|  [left(value)](./alfa-either.either.left.md) |  |
+|  [right(value)](./alfa-either.either.right.md) |  |
 
 ## Type Aliases
 

@@ -10,9 +10,7 @@ import { Page } from '@siteimprove/alfa-web';
 // @public (undocumented)
 export namespace Angular {
     // (undocumented)
-    export function asPage(value: Type): Page;
-    // (undocumented)
-    export function isType(value: unknown): value is Type;
+    export function toPage(value: Type): Page;
     // (undocumented)
     export type Type = ComponentFixture<unknown>;
 }

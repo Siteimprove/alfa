@@ -13,8 +13,31 @@ export interface Comparable<T> {
 // @public (undocumented)
 export namespace Comparable {
     // (undocumented)
-    export function compare<T extends Comparable<U>, U>(a: T, b: U): Comparison;
+    export function compare(a: string, b: string): Comparison;
+    // (undocumented)
+    export function compare(a: number, b: number): Comparison;
+    // (undocumented)
+    export function compare(a: bigint, b: bigint): Comparison;
+    // (undocumented)
+    export function compare(a: boolean, b: boolean): Comparison;
+    // (undocumented)
+    export function compare<T>(a: Comparable<T>, b: T): Comparison;
+    // (undocumented)
+    export function compareBigInt(a: bigint, b: bigint): Comparison;
+    // (undocumented)
+    export function compareBoolean(a: boolean, b: boolean): Comparison;
+    // (undocumented)
+    export function compareComparable<T>(a: Comparable<T>, b: T): Comparison;
+    // (undocumented)
+    export function compareNumber(a: number, b: number): Comparison;
+    // (undocumented)
+    export function compareString(a: string, b: string): Comparison;
+    // (undocumented)
+    export function isComparable<T>(value: unknown): value is Comparable<T>;
 }
+
+// @public (undocumented)
+export type Comparer<T, A extends Array<unknown> = []> = (a: T, b: T, ...args: A) => Comparison;
 
 // @public (undocumented)
 export enum Comparison {

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isEquatable<T>(value: unknown): value is Equatable;
+function isEquatable(value: unknown): value is Equatable;
 ```
 
 ## Parameters

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>, index?: number): Sequence<U>;
+flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,6 @@ flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>, index?: number): Sequence<U
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;, \[number\]&gt; |  |
-|  index | number |  |
 
 <b>Returns:</b>
 

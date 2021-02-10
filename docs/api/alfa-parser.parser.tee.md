@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function tee<I, T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, callback: Callback<T>): Parser<I, T, E, A>;
+function tee<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, callback: Callback<T, void, [remainder: I, ...args: A]>): Parser<I, T, E, A>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function tee<I, T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, call
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[remainder: I, ...args: A\]&gt; |  |
 
 <b>Returns:</b>
 

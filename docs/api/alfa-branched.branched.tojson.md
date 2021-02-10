@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Branched.JSON;
+toJSON(): Branched.JSON<T, B>;
 ```
 <b>Returns:</b>
 
-[Branched.JSON](./alfa-branched.branched.json.md)
+[Branched.JSON](./alfa-branched.branched.json.md)<!-- -->&lt;T, B&gt;
 

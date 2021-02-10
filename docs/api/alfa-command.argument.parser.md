@@ -9,3 +9,5 @@
 ```typescript
 type Parser<T> = parser.Parser<Array<string>, T, string>;
 ```
+<b>References:</b> [Parser](./alfa-parser.parser.md)
+

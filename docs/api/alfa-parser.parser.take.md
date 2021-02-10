@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function take<I, T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, n: number): Parser<I, Iterable<T>, E, A>;
+function take<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Iterable<T>, E, A>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function take<I, T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, n: 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  n | number |  |
+|  count | number |  |
 
 <b>Returns:</b>
 

@@ -4,8 +4,6 @@
 
 ## Media.Modifier enum
 
- https://drafts.csswg.org/mediaqueries/\#media-query-modifier
-
 <b>Signature:</b>
 
 ```typescript

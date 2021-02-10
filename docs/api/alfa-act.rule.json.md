@@ -14,6 +14,8 @@ interface JSON
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [requirements](./alfa-act.rule.json.requirements.md) | Array&lt;[Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&gt; |  |
+|  [tags](./alfa-act.rule.json.tags.md) | Array&lt;[Tag.JSON](./alfa-act.tag.json.md)<!-- -->&gt; |  |
 |  [type](./alfa-act.rule.json.type.md) | string |  |
 |  [uri](./alfa-act.rule.json.uri.md) | string |  |
 

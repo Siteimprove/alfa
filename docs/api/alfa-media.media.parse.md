@@ -18,5 +18,5 @@ function parse(input: string): Option<List>;
 
 <b>Returns:</b>
 
-Option&lt;[List](./alfa-media.media.list.md)<!-- -->&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;[List](./alfa-media.media.list.md)<!-- -->&gt;
 

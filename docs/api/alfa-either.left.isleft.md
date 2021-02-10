@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isLeft<L>(value: unknown): value is Left<L>;
+function isLeft<L>(value: Iterable<L>): value is Left<L>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;L&gt; |  |
 
 <b>Returns:</b>
 

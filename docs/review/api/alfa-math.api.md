@@ -4,7 +4,7 @@
 
 ```ts
 
-// @public
+// @public (undocumented)
 export type Matrix = Array<Array<number>>;
 
 // @public (undocumented)
@@ -27,6 +27,7 @@ export namespace Matrix {
     export function isMatrix(value: unknown): value is Matrix;
     // (undocumented)
     export function isSquare(m: Matrix): boolean;
+    // (undocumented)
     export function multiply(m: Matrix, n: number | Matrix): Matrix;
     // (undocumented)
     export function row(m: Matrix, i: number): Array<number>;
@@ -39,7 +40,7 @@ export namespace Matrix {
     export function transpose(m: Matrix): Matrix;
 }
 
-// @public
+// @public (undocumented)
 export namespace Real {
     // (undocumented)
     export function add(p: number, q: number): number;
@@ -57,7 +58,7 @@ export namespace Real {
     export function subtract(p: number, q: number): number;
 }
 
-// @public
+// @public (undocumented)
 export type Vector = Array<number>;
 
 // @public (undocumented)

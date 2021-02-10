@@ -4,8 +4,6 @@
 
 ## Language.Primary.scope property
 
- https://tools.ietf.org/html/bcp47\#section-3.1.11
-
 <b>Signature:</b>
 
 ```typescript

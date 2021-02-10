@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-subtract(list: List<T>): List<T>;
+subtract(iterable: Iterable<T>): List<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  list | [List](./alfa-list.list.md)<!-- -->&lt;T&gt; |  |
+|  iterable | Iterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

@@ -10,9 +10,7 @@ import { ReactElement } from 'react';
 // @public (undocumented)
 namespace React_2 {
     // (undocumented)
-    function asPage(value: Type): Page;
-    // (undocumented)
-    function isType(value: unknown): value is Type;
+    function toPage(value: Type): Page;
     // (undocumented)
     type Type = ReactElement<unknown>;
 }

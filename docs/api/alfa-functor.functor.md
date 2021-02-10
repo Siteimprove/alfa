@@ -2,17 +2,17 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-functor](./alfa-functor.md) &gt; [Functor](./alfa-functor.functor.md)
 
-## Functor interface
+## Functor namespace
 
 <b>Signature:</b>
 
 ```typescript
-export interface Functor<T> 
+export declare namespace Functor 
 ```
 
-## Methods
+## Interfaces
 
-|  Method | Description |
+|  Interface | Description |
 |  --- | --- |
-|  [map(mapper)](./alfa-functor.functor.map.md) |  |
+|  [Invariant](./alfa-functor.functor.invariant.md) |  |
 

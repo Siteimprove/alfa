@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of<T>(array: Readonly<Array<T>>, start?: number, end?: number): Slice<T>;
+static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Readonly&lt;Array&lt;T&gt;&gt; |  |
+|  array | ReadonlyArray&lt;T&gt; |  |
 |  start | number |  |
 |  end | number |  |
 

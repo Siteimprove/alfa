@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-set](./alfa-set.md) &gt; [Set\_2](./alfa-set.set_2.md) &gt; [JSON](./alfa-set.set_2.json.md)
 
-## Set\_2.JSON interface
+## Set\_2.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Array<json.JSON> 
+type JSON<T> = Collection.Unkeyed.JSON<T>;
 ```
-<b>Extends:</b> Array&lt;json.JSON&gt;
+<b>References:</b> [Collection.Unkeyed.JSON](./alfa-collection.collection.unkeyed.json.md)
 

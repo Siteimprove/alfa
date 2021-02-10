@@ -14,8 +14,7 @@ export declare namespace Vue
 
 |  Function | Description |
 |  --- | --- |
-|  [asPage(value)](./alfa-vue.vue_2.aspage.md) |  |
-|  [isType(value)](./alfa-vue.vue_2.istype.md) |  |
+|  [toPage(value)](./alfa-vue.vue_2.topage.md) |  |
 
 ## Type Aliases
 

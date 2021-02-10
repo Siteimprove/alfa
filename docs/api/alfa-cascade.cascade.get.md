@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-get(element: Element): Option<RuleTree.Node>;
+get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
 ```
 
 ## Parameters
@@ -15,8 +15,10 @@ get(element: Element): Option<RuleTree.Node>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | Element |  |
+|  context | [Context](./alfa-selector.context.md) |  |
+|  filter | [Option](./alfa-option.option.md)<!-- -->&lt;AncestorFilter&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;RuleTree.Node&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;RuleTree.Node&gt;
 

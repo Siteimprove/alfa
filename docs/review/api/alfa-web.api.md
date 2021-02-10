@@ -11,9 +11,10 @@ import { Graph } from '@siteimprove/alfa-graph';
 import * as json from '@siteimprove/alfa-json';
 import { Request as Request_2 } from '@siteimprove/alfa-http';
 import { Response as Response_2 } from '@siteimprove/alfa-http';
+import * as sarif from '@siteimprove/alfa-sarif';
 
-// @public
-export class Page implements Resource, json.Serializable, earl.Serializable {
+// @public (undocumented)
+export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serializable<Page.EARL>, sarif.Serializable<sarif.Artifact> {
     // (undocumented)
     get device(): Device;
     // (undocumented)
@@ -28,6 +29,8 @@ export class Page implements Resource, json.Serializable, earl.Serializable {
     toEARL(): Page.EARL;
     // (undocumented)
     toJSON(): Page.JSON;
+    // (undocumented)
+    toSARIF(): sarif.Artifact;
 }
 
 // @public (undocumented)
@@ -67,7 +70,7 @@ export namespace Page {
     }
 }
 
-// @public
+// @public (undocumented)
 export interface Resource {
     // (undocumented)
     readonly request: Request_2;
@@ -81,24 +84,24 @@ export namespace Resource {
     export function isResource(value: unknown): value is Resource;
 }
 
-// @public
-export class Site implements json.Serializable {
+// @public (undocumented)
+export class Site<R extends Resource = Resource> implements json.Serializable<Site.JSON<R>> {
     // (undocumented)
-    static of(resources: Graph<Resource>): Site;
+    static of<R extends Resource>(resources: Graph<R>): Site<R>;
     // (undocumented)
-    get resources(): Graph<Resource>;
+    get resources(): Graph<R>;
     // (undocumented)
-    toJSON(): Site.JSON;
+    toJSON(): Site.JSON<R>;
 }
 
 // @public (undocumented)
 export namespace Site {
     // (undocumented)
-    export interface JSON {
+    export interface JSON<R extends Resource = Resource> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        resources: Graph.JSON;
+        resources: Graph.JSON<R>;
     }
 }
 

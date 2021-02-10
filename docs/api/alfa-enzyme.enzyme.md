@@ -14,8 +14,7 @@ export declare namespace Enzyme
 
 |  Function | Description |
 |  --- | --- |
-|  [asPage(enzyme)](./alfa-enzyme.enzyme.aspage.md) |  |
-|  [isType(value)](./alfa-enzyme.enzyme.istype.md) |  |
+|  [toPage(value)](./alfa-enzyme.enzyme.topage.md) |  |
 
 ## Type Aliases
 

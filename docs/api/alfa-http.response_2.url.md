@@ -4,10 +4,8 @@
 
 ## Response\_2.url property
 
- https://fetch.spec.whatwg.org/\#dom-response-url
-
 <b>Signature:</b>
 
 ```typescript
-get url(): string;
+get url(): URL;
 ```

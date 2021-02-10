@@ -8,6 +8,6 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Decoder](./alfa-encoding.decoder.md) |  https://encoding.spec.whatwg.org/\#textdecoder |
-|  [Encoder](./alfa-encoding.encoder.md) |  https://encoding.spec.whatwg.org/\#textencoder |
+|  [Decoder](./alfa-encoding.decoder.md) |  |
+|  [Encoder](./alfa-encoding.encoder.md) |  |
 

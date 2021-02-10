@@ -14,5 +14,5 @@ export declare namespace Chai
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin(identify, transform)](./alfa-chai.chai_2.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-chai.chai_2.createplugin.md) |  |
 

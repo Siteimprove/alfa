@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of<K, V>(...entries: Array<[K, V]>): Map<K, V>;
+static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entries | Array&lt;\[K, V\]&gt; |  |
+|  entries | Array&lt;readonly \[K, V\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -14,9 +14,9 @@ andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  option | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;&gt; |  |
+|  option | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;U&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-function fold<T, U extends T = T, A extends Array<unknown> = [], V = U, W = T>(predicate: Predicate<T, U, A>, ifTrue: Mapper<U, V>, ifFalse: Mapper<T, W>, value: T, ...args: A): V | W;
+function fold<T, A extends Array<unknown> = [], V = T, W = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, value: T, ...args: A): V | W;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U, A&gt; |  |
-|  ifTrue | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, V&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
+|  ifTrue | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, V&gt; |  |
 |  ifFalse | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, W&gt; |  |
 |  value | T |  |
 |  args | A |  |

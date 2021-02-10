@@ -4,8 +4,6 @@
 
 ## Encoder namespace
 
- https://encoding.spec.whatwg.org/\#textencoder
-
 <b>Signature:</b>
 
 ```typescript
@@ -16,5 +14,5 @@ export declare namespace Encoder
 
 |  Function | Description |
 |  --- | --- |
-|  [encode(input)](./alfa-encoding.encoder.encode.md) |  https://encoding.spec.whatwg.org/\#dom-textencoder-encode  https://encoding.spec.whatwg.org/\#utf-8-encoder |
+|  [encode(input)](./alfa-encoding.encoder.encode.md) |  |
 

@@ -11,5 +11,5 @@ optional(): Flag<Option<T>>;
 ```
 <b>Returns:</b>
 
-[Flag](./alfa-command.flag.md)<!-- -->&lt;Option&lt;T&gt;&gt;
+[Flag](./alfa-command.flag.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt;
 

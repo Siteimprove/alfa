@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Outcome](./alfa-act.outcome.md) &gt; [isCantTell](./alfa-act.outcome.iscanttell.md)
 
-## Outcome.isCantTell() function
+## Outcome.isCantTell variable
 
 <b>Signature:</b>
 
 ```typescript
-function isCantTell<I, T, Q>(outcome: Outcome<I, T, Q>): outcome is CantTell<I, T, Q>;
+isCantTell: typeof CantTell.isCantTell
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  outcome | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt; |  |
-
-<b>Returns:</b>
-
-outcome is [CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q&gt;
-

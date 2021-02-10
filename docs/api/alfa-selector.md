@@ -4,15 +4,22 @@
 
 ## alfa-selector package
 
+## Classes
+
+|  Class | Description |
+|  --- | --- |
+|  [Context](./alfa-selector.context.md) |  |
+
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
+|  [Context](./alfa-selector.context.md) |  |
 |  [Selector](./alfa-selector.selector.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Selector](./alfa-selector.selector.md) |  https://drafts.csswg.org/selectors/\#selector |
+|  [Selector](./alfa-selector.selector.md) |  |
 

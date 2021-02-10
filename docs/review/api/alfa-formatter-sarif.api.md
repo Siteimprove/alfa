@@ -5,13 +5,11 @@
 ```ts
 
 import { Formatter } from '@siteimprove/alfa-formatter';
-import { Node as Node_2 } from '@siteimprove/alfa-dom';
-import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)
-function <Q>(): Formatter<Page, Node_2 | Iterable<Node_2>, Q>;
+function <I, T, Q>(): Formatter<I, T, Q>;
 
-export default default;
+export default default_2;
 
 
 // (No @packageDocumentation comment for this package)

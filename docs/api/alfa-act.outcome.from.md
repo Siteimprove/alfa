@@ -18,7 +18,7 @@ function from<I, T, Q>(rule: Rule<I, T, Q>, target: T, expectations: Record<{
 |  --- | --- | --- |
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt; |  |
 |  target | T |  |
-|  expectations | Record&lt;{ \[key: string\]: Option&lt;[Result](./alfa-result.result.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt;&gt;; }&gt; |  |
+|  expectations | Record&lt;{ \[key: string\]: [Option](./alfa-option.option.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt;&gt;; }&gt; |  |
 
 <b>Returns:</b>
 

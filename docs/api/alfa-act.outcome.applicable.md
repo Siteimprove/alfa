@@ -9,3 +9,5 @@
 ```typescript
 type Applicable<I, T, Q = unknown> = Passed<I, T, Q> | Failed<I, T, Q> | CantTell<I, T, Q>;
 ```
+<b>References:</b> [Passed](./alfa-act.outcome.passed.md)<!-- -->, [Failed](./alfa-act.outcome.failed.md)<!-- -->, [CantTell](./alfa-act.outcome.canttell.md)
+

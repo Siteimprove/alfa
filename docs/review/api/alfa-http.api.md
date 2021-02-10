@@ -10,9 +10,11 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Serializable } from '@siteimprove/alfa-json';
+import { URL as URL_2 } from '@siteimprove/alfa-url';
 
-// @public
+// @public (undocumented)
 interface Body_2 {
+    // (undocumented)
     readonly body: ArrayBuffer;
 }
 
@@ -38,7 +40,9 @@ namespace Body_2 {
 export { Body_2 as Body }
 
 // @public (undocumented)
-export class Cookie implements Equatable, Serializable {
+export class Cookie implements Equatable, Serializable<Cookie.JSON> {
+    // (undocumented)
+    equals(value: Cookie): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -71,7 +75,7 @@ export namespace Cookie {
 }
 
 // @public (undocumented)
-export class Cookies implements Iterable_2<Cookie>, Serializable {
+export class Cookies implements Iterable_2<Cookie>, Serializable<Cookies.JSON> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Cookie>;
     // (undocumented)
@@ -106,7 +110,9 @@ export namespace Cookies {
 }
 
 // @public (undocumented)
-export class Header implements Equatable, json.Serializable, earl.Serializable {
+export class Header implements Equatable, json.Serializable<Header.JSON>, earl.Serializable<Header.EARL> {
+    // (undocumented)
+    equals(value: Header): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -154,7 +160,7 @@ export namespace Header {
 }
 
 // @public (undocumented)
-class Headers_2 implements Iterable_2<Header>, json.Serializable, earl.Serializable {
+class Headers_2 implements Iterable_2<Header>, json.Serializable<Headers_2.JSON>, earl.Serializable<Headers_2.EARL> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Header>;
     // (undocumented)
@@ -201,22 +207,26 @@ namespace Headers_2 {
 
 export { Headers_2 as Headers }
 
-// @public
-class Request_2 implements Body_2, json.Serializable, earl.Serializable {
+// @public (undocumented)
+class Request_2 implements Body_2, json.Serializable<Request_2.JSON>, earl.Serializable<Request_2.EARL> {
+    // (undocumented)
     get body(): ArrayBuffer;
     // (undocumented)
     static empty(): Request_2;
+    // (undocumented)
     get headers(): Headers_2;
+    // (undocumented)
     get method(): string;
     // (undocumented)
-    static of(method: string, url: string, headers?: Headers_2, body?: ArrayBuffer): Request_2;
+    static of(method: string, url: URL_2, headers?: Headers_2, body?: ArrayBuffer): Request_2;
     // (undocumented)
     toEARL(): Request_2.EARL;
     // (undocumented)
     toJSON(): Request_2.JSON;
     // (undocumented)
     toString(): string;
-    get url(): string;
+    // (undocumented)
+    get url(): URL_2;
     }
 
 // @public (undocumented)
@@ -259,14 +269,17 @@ namespace Request_2 {
 
 export { Request_2 as Request }
 
-// @public
-class Response_2 implements Body_2, json.Serializable, earl.Serializable {
+// @public (undocumented)
+class Response_2 implements Body_2, json.Serializable<Response_2.JSON>, earl.Serializable<Response_2.EARL> {
+    // (undocumented)
     get body(): ArrayBuffer;
     // (undocumented)
     static empty(): Response_2;
+    // (undocumented)
     get headers(): Headers_2;
     // (undocumented)
-    static of(url: string, status: number, headers?: Headers_2, body?: ArrayBuffer): Response_2;
+    static of(url: URL_2, status: number, headers?: Headers_2, body?: ArrayBuffer): Response_2;
+    // (undocumented)
     get status(): number;
     // (undocumented)
     toEARL(): Response_2.EARL;
@@ -274,7 +287,8 @@ class Response_2 implements Body_2, json.Serializable, earl.Serializable {
     toJSON(): Response_2.JSON;
     // (undocumented)
     toString(): string;
-    get url(): string;
+    // (undocumented)
+    get url(): URL_2;
     }
 
 // @public (undocumented)

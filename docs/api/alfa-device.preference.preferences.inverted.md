@@ -4,8 +4,6 @@
 
 ## Preference.Preferences.inverted property
 
- https://drafts.csswg.org/mediaqueries-5/\#inverted
-
 <b>Signature:</b>
 
 ```typescript

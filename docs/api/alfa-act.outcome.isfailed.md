@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Outcome](./alfa-act.outcome.md) &gt; [isFailed](./alfa-act.outcome.isfailed.md)
 
-## Outcome.isFailed() function
+## Outcome.isFailed variable
 
 <b>Signature:</b>
 
 ```typescript
-function isFailed<I, T, Q>(outcome: Outcome<I, T, Q>): outcome is Failed<I, T, Q>;
+isFailed: typeof Failed.isFailed
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  outcome | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt; |  |
-
-<b>Returns:</b>
-
-outcome is [Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q&gt;
-

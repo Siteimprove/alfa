@@ -11,3 +11,5 @@ type Values<A extends Arguments> = {
             [N in keyof A]: A[N] extends Argument<infer T> ? T : never;
         };
 ```
+<b>References:</b> [Arguments](./alfa-command.command.arguments.md)<!-- -->, [Argument](./alfa-command.argument.md)
+

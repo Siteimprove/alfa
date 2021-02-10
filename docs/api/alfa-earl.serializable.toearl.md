@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function toEARL(value: unknown): Option<EARL>;
+function toEARL<T extends EARL>(value: Serializable<T>): Some<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Serializable](./alfa-earl.serializable.md)<!-- -->&lt;T&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;[EARL](./alfa-earl.earl.md)<!-- -->&gt;
+[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

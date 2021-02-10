@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-isNow(): boolean;
+abstract isNow(): boolean;
 ```
 <b>Returns:</b>
 

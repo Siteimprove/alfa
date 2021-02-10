@@ -14,8 +14,7 @@ export declare namespace Angular
 
 |  Function | Description |
 |  --- | --- |
-|  [asPage(value)](./alfa-angular.angular.aspage.md) |  |
-|  [isType(value)](./alfa-angular.angular.istype.md) |  |
+|  [toPage(value)](./alfa-angular.angular.topage.md) |  |
 
 ## Type Aliases
 

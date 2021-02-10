@@ -17,17 +17,12 @@ export declare namespace Record
 |  [from(entries)](./alfa-record.record_2.from.md) |  |
 |  [isRecord(value)](./alfa-record.record_2.isrecord.md) |  |
 
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-record.record_2.json.md) |  |
-
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
 |  [Entry](./alfa-record.record_2.entry.md) |  |
+|  [JSON](./alfa-record.record_2.json.md) |  |
 |  [Key](./alfa-record.record_2.key.md) |  |
 |  [Value](./alfa-record.record_2.value.md) |  |
 

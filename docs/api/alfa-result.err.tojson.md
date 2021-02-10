@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Err.JSON;
+toJSON(): Err.JSON<E>;
 ```
 <b>Returns:</b>
 
-[Err.JSON](./alfa-result.err.json.md)
+[Err.JSON](./alfa-result.err.json.md)<!-- -->&lt;E&gt;
 

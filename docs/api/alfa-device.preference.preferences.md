@@ -14,10 +14,10 @@ interface Preferences
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["forced-colors"](./alfa-device.preference.preferences._forced-colors_.md) | "none" \| "active" |  https://drafts.csswg.org/mediaqueries-5/\#forced-colors |
-|  ["prefers-color-scheme"](./alfa-device.preference.preferences._prefers-color-scheme_.md) | "no-preference" \| "light" \| "dark" |  https://drafts.csswg.org/mediaqueries-5/\#prefers-color-scheme |
-|  ["prefers-contrast"](./alfa-device.preference.preferences._prefers-contrast_.md) | "no-preference" \| "high" \| "low" |  https://drafts.csswg.org/mediaqueries-5/\#prefers-contrast |
-|  ["prefers-reduced-motion"](./alfa-device.preference.preferences._prefers-reduced-motion_.md) | "no-preference" \| "reduce" |  https://drafts.csswg.org/mediaqueries-5/\#prefers-reduced-motion |
-|  ["prefers-reduced-transparency"](./alfa-device.preference.preferences._prefers-reduced-transparency_.md) | "no-preference" \| "reduce" |  https://drafts.csswg.org/mediaqueries-5/\#prefers-reduced-transparency |
-|  [inverted](./alfa-device.preference.preferences.inverted.md) | "none" \| "inverted" |  https://drafts.csswg.org/mediaqueries-5/\#inverted |
+|  ["forced-colors"](./alfa-device.preference.preferences._forced-colors_.md) | "none" \| "active" |  |
+|  ["prefers-color-scheme"](./alfa-device.preference.preferences._prefers-color-scheme_.md) | "no-preference" \| "light" \| "dark" |  |
+|  ["prefers-contrast"](./alfa-device.preference.preferences._prefers-contrast_.md) | "no-preference" \| "high" \| "low" |  |
+|  ["prefers-reduced-motion"](./alfa-device.preference.preferences._prefers-reduced-motion_.md) | "no-preference" \| "reduce" |  |
+|  ["prefers-reduced-transparency"](./alfa-device.preference.preferences._prefers-reduced-transparency_.md) | "no-preference" \| "reduce" |  |
+|  [inverted](./alfa-device.preference.preferences.inverted.md) | "none" \| "inverted" |  |
 

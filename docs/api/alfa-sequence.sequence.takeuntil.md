@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-takeUntil(predicate: Predicate<T, T, [number]>): Sequence<T>;
+takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

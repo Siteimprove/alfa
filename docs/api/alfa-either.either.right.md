@@ -2,14 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-either](./alfa-either.md) &gt; [Either](./alfa-either.either.md) &gt; [right](./alfa-either.either.right.md)
 
-## Either.right() method
+## Either.right() function
 
 <b>Signature:</b>
 
 ```typescript
-right(): Option<R>;
+function right<R, L = never>(value: R): Either<L, R>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  value | R |  |
+
 <b>Returns:</b>
 
-Option&lt;R&gt;
+[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

@@ -4,10 +4,17 @@
 
 ```ts
 
+import { Callback } from '@siteimprove/alfa-callback';
+import { Comparable } from '@siteimprove/alfa-comparable';
+import { Comparer } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
+import { Hash } from '@siteimprove/alfa-hash';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 type Iterable_2<T> = globalThis.Iterable<T>;
@@ -15,33 +22,55 @@ type Iterable_2<T> = globalThis.Iterable<T>;
 // @public (undocumented)
 namespace Iterable_2 {
     // (undocumented)
+    function collect<T, U>(iterable: Iterable_2<T>, mapper: Mapper<T, Option<U>, [number]>): Iterable_2<U>;
+    // (undocumented)
+    function collectFirst<T, U>(iterable: Iterable_2<T>, mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+    // (undocumented)
+    function compare<T extends Comparable<T>>(a: Iterable_2<T>, b: Iterable_2<T>): Comparison;
+    // (undocumented)
+    function compareWith<T>(a: Iterable_2<T>, b: Iterable_2<T>, comparer: Comparer<T>): Comparison;
+    // (undocumented)
     function concat<T>(...iterables: Array<Iterable_2<T>>): Iterable_2<T>;
     // (undocumented)
-    function count<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): number;
+    function count<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): number;
+    // (undocumented)
+    function distinct<T>(iterable: Iterable_2<T>): Iterable_2<T>;
     // (undocumented)
     function empty<T>(): Iterable_2<T>;
     // (undocumented)
     function equals<T>(a: Iterable_2<T>, b: Iterable_2<T>): boolean;
     // (undocumented)
-    function every<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): boolean;
+    function every<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): boolean;
     // (undocumented)
-    function filter<T, U extends T = T>(iterable: Iterable_2<T>, predicate: Predicate<T, U, [number]>): Iterable_2<U>;
+    function filter<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [number]>): Iterable_2<U>;
     // (undocumented)
-    function find<T, U extends T = T>(iterable: Iterable_2<T>, predicate: Predicate<T, U, [number]>): Option_2<U>;
+    function filter<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
     // (undocumented)
-    function first<T>(iterable: Iterable_2<T>): Option_2<T>;
+    function find<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [number]>): Option<U>;
+    // (undocumented)
+    function find<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Option<T>;
+    // (undocumented)
+    function findLast<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [number]>): Option<U>;
+    // (undocumented)
+    function findLast<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Option<T>;
+    // (undocumented)
+    function first<T>(iterable: Iterable_2<T>): Option<T>;
     // (undocumented)
     function flatMap<T, U = T>(iterable: Iterable_2<T>, mapper: Mapper<T, Iterable_2<U>, [number]>): Iterable_2<U>;
     // (undocumented)
     function flatten<T>(iterable: Iterable_2<Iterable_2<T>>): Iterable_2<T>;
     // (undocumented)
+    function forEach<T>(iterable: Iterable_2<T>, callback: Callback<T, void, [number]>): void;
+    // (undocumented)
     function from<T>(arrayLike: ArrayLike<T>): Iterable_2<T>;
     // (undocumented)
-    function get<T>(iterable: Iterable_2<T>, index: number): Option_2<T>;
+    function get<T>(iterable: Iterable_2<T>, index: number): Option<T>;
     // (undocumented)
     function groupBy<T, K>(iterable: Iterable_2<T>, grouper: Mapper<T, K, [number]>): Iterable_2<[K, Iterable_2<T>]>;
     // (undocumented)
     function has<T>(iterable: Iterable_2<T>, index: number): boolean;
+    // (undocumented)
+    function hash<T>(iterable: Iterable_2<T>, hash: Hash): void;
     // (undocumented)
     function includes<T>(iterable: Iterable_2<T>, value: T): boolean;
     // (undocumented)
@@ -53,11 +82,17 @@ namespace Iterable_2 {
     // (undocumented)
     function join<T>(iterable: Iterable_2<T>, separator: string): string;
     // (undocumented)
-    function last<T>(iterable: Iterable_2<T>): Option_2<T>;
+    function last<T>(iterable: Iterable_2<T>): Option<T>;
     // (undocumented)
     function map<T, U = T>(iterable: Iterable_2<T>, mapper: Mapper<T, U, [number]>): Iterable_2<U>;
     // (undocumented)
+    function none<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): boolean;
+    // (undocumented)
     function reduce<T, U = T>(iterable: Iterable_2<T>, reducer: Reducer<T, U, [number]>, accumulator: U): U;
+    // (undocumented)
+    function reject<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [number]>): Iterable_2<Exclude<T, U>>;
+    // (undocumented)
+    function reject<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
     // (undocumented)
     function rest<T>(iterable: Iterable_2<T>): Iterable_2<T>;
     // (undocumented)
@@ -69,13 +104,21 @@ namespace Iterable_2 {
     // (undocumented)
     function skipLast<T>(iterable: Iterable_2<T>, count?: number): Iterable_2<T>;
     // (undocumented)
-    function skipUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): Iterable_2<T>;
+    function skipLastUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
     // (undocumented)
-    function skipWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): Iterable_2<T>;
+    function skipLastWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    // (undocumented)
+    function skipUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    // (undocumented)
+    function skipWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
     // (undocumented)
     function slice<T>(iterable: Iterable_2<T>, start: number, end?: number): Iterable_2<T>;
     // (undocumented)
-    function some<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): boolean;
+    function some<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): boolean;
+    // (undocumented)
+    function sort<T extends Comparable<T>>(iterable: Iterable_2<T>): Iterable_2<T>;
+    // (undocumented)
+    function sortWith<T>(iterable: Iterable_2<T>, comparer: Comparer<T>): Iterable_2<T>;
     // (undocumented)
     function subtract<T>(left: Iterable_2<T>, right: Iterable_2<T>): Iterable_2<T>;
     // (undocumented)
@@ -83,9 +126,21 @@ namespace Iterable_2 {
     // (undocumented)
     function takeLast<T>(iterable: Iterable_2<T>, count?: number): Iterable_2<T>;
     // (undocumented)
-    function takeUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): Iterable_2<T>;
+    function takeLastUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
     // (undocumented)
-    function takeWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, T, [number]>): Iterable_2<T>;
+    function takeLastWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    // (undocumented)
+    function takeUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    // (undocumented)
+    function takeWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    // (undocumented)
+    function toJSON<T>(iterable: Iterable_2<T>): Array<Serializable.ToJSON<T>>;
+    // (undocumented)
+    function trim<T>(iterable: Iterable_2<T>, predicate: Predicate<T>): Iterable_2<T>;
+    // (undocumented)
+    function trimLeading<T>(iterable: Iterable_2<T>, predicate: Predicate<T>): Iterable_2<T>;
+    // (undocumented)
+    function trimTrailing<T>(iterable: Iterable_2<T>, predicate: Predicate<T>): Iterable_2<T>;
 }
 
 export { Iterable_2 as Iterable }

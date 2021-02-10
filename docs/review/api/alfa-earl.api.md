@@ -6,6 +6,7 @@
 
 import { Document as Document_2 } from '@siteimprove/alfa-json-ld';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Some } from '@siteimprove/alfa-option';
 
 // @public (undocumented)
 export interface EARL extends Document_2 {
@@ -20,15 +21,17 @@ export interface EARL extends Document_2 {
 }
 
 // @public (undocumented)
-export interface Serializable {
+export interface Serializable<T extends EARL = EARL> {
     // (undocumented)
-    toEARL(): EARL;
+    toEARL(): T;
 }
 
 // @public (undocumented)
 export namespace Serializable {
     // (undocumented)
-    export function isSerializable(value: unknown): value is Serializable;
+    export function isSerializable<T extends EARL>(value: unknown): value is Serializable<T>;
+    // (undocumented)
+    export function toEARL<T extends EARL>(value: Serializable<T>): Some<T>;
     // (undocumented)
     export function toEARL(value: unknown): Option_2<EARL>;
 }

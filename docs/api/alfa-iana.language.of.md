@@ -15,9 +15,9 @@ static of(primary: Language.Primary, extended?: Option<Language.Extended>, scrip
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  primary | [Language.Primary](./alfa-iana.language.primary.md) |  |
-|  extended | Option&lt;[Language.Extended](./alfa-iana.language.extended.md)<!-- -->&gt; |  |
-|  script | Option&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt; |  |
-|  region | Option&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt; |  |
+|  extended | [Option](./alfa-option.option.md)<!-- -->&lt;[Language.Extended](./alfa-iana.language.extended.md)<!-- -->&gt; |  |
+|  script | [Option](./alfa-option.option.md)<!-- -->&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt; |  |
+|  region | [Option](./alfa-option.option.md)<!-- -->&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt; |  |
 |  variants | Array&lt;[Language.Variant](./alfa-iana.language.variant.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>

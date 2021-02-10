@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-map<U>(mapper: Mapper<T, U, [number]>, index?: number): Cons<U>;
+map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,6 @@ map<U>(mapper: Mapper<T, U, [number]>, index?: number): Cons<U>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
-|  index | number |  |
 
 <b>Returns:</b>
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isSerializable(value: unknown): value is Serializable;
+function isSerializable<T extends EARL>(value: unknown): value is Serializable<T>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isSerializable(value: unknown): value is Serializable;
 
 <b>Returns:</b>
 
-value is [Serializable](./alfa-earl.serializable.md)
+value is [Serializable](./alfa-earl.serializable.md)<!-- -->&lt;T&gt;
 

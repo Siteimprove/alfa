@@ -4,8 +4,6 @@
 
 ## Selector.Visited class
 
- https://drafts.csswg.org/selectors/\#visited-pseudo
-
 <b>Signature:</b>
 
 ```typescript
@@ -17,5 +15,6 @@ export class Visited extends Pseudo.Class
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [matches(element, context)](./alfa-selector.selector.visited.matches.md) |  |  |
 |  [of()](./alfa-selector.selector.visited.of.md) | <code>static</code> |  |
 

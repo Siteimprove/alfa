@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-filter<U extends T>(predicate: Predicate<T, U>, ifError?: Thunk<string>): Flag<U>;
+filter<U extends T>(refinement: Refinement<T, U>, ifError?: Thunk<string>): Flag<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
 |  ifError | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;string&gt; |  |
 
 <b>Returns:</b>

@@ -6,13 +6,21 @@
 
 // @public (undocumented)
 export interface Assertions {
+    // (undocumented)
     <T>(value: T, message?: string): void;
+    // (undocumented)
     deepEqual<T>(actual: T, expected: T, message?: string): void;
+    // (undocumented)
     equal<T>(actual: T, expected: T, message?: string): void;
-    fail(message?: string): void;
+    // (undocumented)
+    fail(message?: string): never;
+    // (undocumented)
     notDeepEqual<T>(actual: T, expected: T, message?: string): void;
+    // (undocumented)
     notEqual<T>(actual: T, expected: T, message?: string): void;
+    // (undocumented)
     rejects<T>(block: Function | Promise<T>, error?: RegExp | Function | Object | Error, message?: string): void;
+    // (undocumented)
     throws(block: Function, error?: RegExp | Function | Object | Error, message?: string): void;
 }
 

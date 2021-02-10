@@ -8,7 +8,7 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [WebElement](./alfa-webdriver.webelement.md) |  https://w3c.github.io/webdriver/\#dfn-web-elements |
+|  [WebElement](./alfa-webdriver.webelement.md) |  |
 
 ## Namespaces
 

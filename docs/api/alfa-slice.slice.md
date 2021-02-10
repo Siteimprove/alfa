@@ -15,10 +15,11 @@ export declare namespace Slice
 |  Function | Description |
 |  --- | --- |
 |  [isSlice(value)](./alfa-slice.slice.isslice.md) |  |
+|  [isSlice(value)](./alfa-slice.slice.isslice_1.md) |  |
 
-## Interfaces
+## Type Aliases
 
-|  Interface | Description |
+|  Type Alias | Description |
 |  --- | --- |
 |  [JSON](./alfa-slice.slice.json.md) |  |
 

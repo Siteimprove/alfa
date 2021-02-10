@@ -11,5 +11,5 @@ optional(): Argument<Option<T>>;
 ```
 <b>Returns:</b>
 
-[Argument](./alfa-command.argument.md)<!-- -->&lt;Option&lt;T&gt;&gt;
+[Argument](./alfa-command.argument.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt;
 

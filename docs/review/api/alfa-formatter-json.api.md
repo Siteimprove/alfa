@@ -9,7 +9,7 @@ import { Formatter } from '@siteimprove/alfa-formatter';
 // @public (undocumented)
 function <I, T, Q>(): Formatter<I, T, Q>;
 
-export default default;
+export default default_2;
 
 
 // (No @packageDocumentation comment for this package)

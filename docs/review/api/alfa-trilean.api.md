@@ -8,40 +8,35 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
-export function every<T>(predicate: Predicate<T>): Predicate<Iterable_2<T>>;
-
-// @public (undocumented)
-export type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => Trilean;
-
-// @public (undocumented)
-export namespace Predicate {
-    // (undocumented)
-    export function and<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T>;
-    // (undocumented)
-    export function equals<T>(...values: Array<T>): Predicate<T>;
-    // (undocumented)
-    export function fold<T, V, W, X>(predicate: Predicate<T>, value: T, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, ifUndefined: Mapper<T, X>): V | W | X;
-    // (undocumented)
-    export function nand<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T>;
-    // (undocumented)
-    export function nor<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T>;
-    // (undocumented)
-    export function not<T>(predicate: Predicate<T>): Predicate<T>;
-    // (undocumented)
-    export function or<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T>;
-    // (undocumented)
-    export function property<T, K extends keyof T>(property: K, predicate: Predicate<T[K]>): Predicate<T>;
-    // (undocumented)
-    export function test<T>(predicate: Predicate<T>, value: T): Trilean;
-    // (undocumented)
-    export function xor<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T>;
-}
-
-// @public (undocumented)
-export function some<T>(predicate: Predicate<T>): Predicate<Iterable_2<T>>;
-
-// @public (undocumented)
 export type Trilean = boolean | undefined;
+
+// @public (undocumented)
+export namespace Trilean {
+    // (undocumented)
+    export function and<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
+    // (undocumented)
+    export function every<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Trilean;
+    // (undocumented)
+    export function fold<T, A extends Array<unknown> = [], V = T, W = T, X = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, ifUndefined: Mapper<T, X>, value: T, ...args: A): V | W | X;
+    // (undocumented)
+    export function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+    // (undocumented)
+    export function none<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Trilean;
+    // (undocumented)
+    export function nor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+    // (undocumented)
+    export function not<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<T, A>;
+    // (undocumented)
+    export function or<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
+    // (undocumented)
+    export type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => Trilean;
+    // (undocumented)
+    export function some<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [number]>): Trilean;
+    // (undocumented)
+    export function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): Trilean;
+    // (undocumented)
+    export function xor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+}
 
 
 // (No @packageDocumentation comment for this package)

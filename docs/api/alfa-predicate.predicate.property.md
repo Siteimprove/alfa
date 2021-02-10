@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>(property: K, predicate: Predicate<T[K], T[K], A>): Predicate<T, T, A>;
+function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>(property: K, predicate: Predicate<T[K], A>): Predicate<T, A>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  property | K |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T\[K\], T\[K\], A&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T\[K\], A&gt; |  |
 
 <b>Returns:</b>
 
-[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, A&gt;
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

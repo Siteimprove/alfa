@@ -10,9 +10,9 @@
 export declare namespace Cascade 
 ```
 
-## Functions
+## Interfaces
 
-|  Function | Description |
+|  Interface | Description |
 |  --- | --- |
-|  [from(node, device)](./alfa-cascade.cascade.from.md) |  |
+|  [JSON](./alfa-cascade.cascade.json.md) |  |
 

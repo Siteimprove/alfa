@@ -4,8 +4,6 @@
 
 ## Viewport.height property
 
- https://www.w3.org/TR/mediaqueries/\#height
-
 <b>Signature:</b>
 
 ```typescript

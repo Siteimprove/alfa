@@ -9,3 +9,5 @@
 ```typescript
 type Output = Promise<Result<string>>;
 ```
+<b>References:</b> [Result](./alfa-result.result.md)
+

@@ -7,15 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-function createPlugin<T>(identify: Predicate<unknown, T>, transform: Mapper<T, Page>): unexpected.PluginDefinition;
+function createPlugin<I, J, T = unknown, Q = never>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q>>, handlers?: Iterable<Handler<J, T, Q>>, options?: Asserter.Options): unexpected.PluginDefinition;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  identify | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;unknown, T&gt; |  |
-|  transform | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Page](./alfa-web.page.md)<!-- -->&gt; |  |
+|  transform | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I, [Future.Maybe](./alfa-future.future.maybe.md)<!-- -->&lt;J&gt;&gt; |  |
+|  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;J, T, Q&gt;&gt; |  |
+|  handlers | Iterable&lt;[Handler](./alfa-assert.handler.md)<!-- -->&lt;J, T, Q&gt;&gt; |  |
+|  options | [Asserter.Options](./alfa-assert.asserter.options.md) |  |
 
 <b>Returns:</b>
 

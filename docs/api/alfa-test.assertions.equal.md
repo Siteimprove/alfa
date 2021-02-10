@@ -4,8 +4,6 @@
 
 ## Assertions.equal() method
 
- https://nodejs.org/api/assert.html\#assert\_assert\_equal\_actual\_expected\_message
-
 <b>Signature:</b>
 
 ```typescript

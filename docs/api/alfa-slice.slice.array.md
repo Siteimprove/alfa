@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get array(): Readonly<Array<T>>;
+get array(): ReadonlyArray<T>;
 ```

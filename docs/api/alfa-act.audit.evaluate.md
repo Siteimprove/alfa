@@ -7,8 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-evaluate(): Future<Iterable<Outcome<I, T, Q>>>;
+evaluate(performance?: Performance<Audit.Event<I, T, Q>>): Future<Iterable<Outcome<I, T, Q>>>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  performance | [Performance](./alfa-performance.performance.md)<!-- -->&lt;[Audit.Event](./alfa-act.audit.event.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
+
 <b>Returns:</b>
 
 [Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt;&gt;&gt;

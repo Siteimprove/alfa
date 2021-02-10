@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-find<U extends V>(predicate: Predicate<V, U, [K]>): Option<U>;
+find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, U, \[K\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[K\]&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;U&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

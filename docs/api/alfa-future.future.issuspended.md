@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-isSuspended(): boolean;
+abstract isSuspended(): boolean;
 ```
 <b>Returns:</b>
 

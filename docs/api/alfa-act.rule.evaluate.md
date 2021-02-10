@@ -4,6 +4,14 @@
 
 ## Rule.Evaluate interface
 
+<b>Signature:</b>
+
+```typescript
+interface Evaluate<I, T, Q> 
+```
+
+## Remarks
+
 We use a short-lived cache during audits for rules to store their outcomes. It effectively acts as a memoization layer on top of each rule evaluation procedure, which comes in handy when dealing with composite rules that are dependant on the outcomes of other rules. There are several ways in which audits of such rules can be performed:
 
 1. Put the onus on the caller to construct an audit with dependency-ordered rules. This is just crazy.
@@ -14,8 +22,3 @@ We use a short-lived cache during audits for rules to store their outcomes. It e
 
 Given that 3. is the simpler, and non-crazy, approach, we can use this approach in combination with memoization to avoid the risk of repeating rule evaluation procedures.
 
-<b>Signature:</b>
-
-```typescript
-interface Evaluate<I, T, Q> 
-```

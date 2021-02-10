@@ -15,7 +15,7 @@ static of(name: string, value?: Option<Feature.Value>): Feature;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  value | Option&lt;[Feature.Value](./alfa-media.media.feature.value.md)<!-- -->&gt; |  |
+|  value | [Option](./alfa-option.option.md)<!-- -->&lt;[Feature.Value](./alfa-media.media.feature.value.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

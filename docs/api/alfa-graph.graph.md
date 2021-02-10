@@ -16,10 +16,24 @@ export declare namespace Graph
 |  --- | --- |
 |  [from(iterable)](./alfa-graph.graph.from.md) |  |
 |  [isGraph(value)](./alfa-graph.graph.isgraph.md) |  |
+|  [isGraph(value)](./alfa-graph.graph.isgraph_1.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
+|  --- | --- |
+|  [Traversal](./alfa-graph.graph.traversal.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [BreadthFirst](./alfa-graph.graph.breadthfirst.md) |  |
+|  [DepthFirst](./alfa-graph.graph.depthfirst.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
 |  --- | --- |
 |  [JSON](./alfa-graph.graph.json.md) |  |
 

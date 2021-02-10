@@ -14,9 +14,9 @@ static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feat
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  modifier | Option&lt;[Modifier](./alfa-media.media.modifier.md)<!-- -->&gt; |  |
-|  type | Option&lt;[Type](./alfa-media.media.type.md)<!-- -->&gt; |  |
-|  condition | Option&lt;[Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md) \| [Negation](./alfa-media.media.negation.md)<!-- -->&gt; |  |
+|  modifier | [Option](./alfa-option.option.md)<!-- -->&lt;[Modifier](./alfa-media.media.modifier.md)<!-- -->&gt; |  |
+|  type | [Option](./alfa-option.option.md)<!-- -->&lt;[Type](./alfa-media.media.type.md)<!-- -->&gt; |  |
+|  condition | [Option](./alfa-option.option.md)<!-- -->&lt;[Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md) \| [Negation](./alfa-media.media.negation.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

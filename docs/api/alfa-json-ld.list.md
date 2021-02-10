@@ -9,3 +9,5 @@
 ```typescript
 export declare type List = Array<Scalar | Dictionary | null>;
 ```
+<b>References:</b> [Scalar](./alfa-json-ld.scalar.md)<!-- -->, [Dictionary](./alfa-json-ld.dictionary.md)
+

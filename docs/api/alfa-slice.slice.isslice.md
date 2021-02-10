@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isSlice<T>(value: unknown): value is Slice<T>;
+function isSlice<T>(value: Iterable<T>): value is Slice<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

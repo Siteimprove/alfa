@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Outcome](./alfa-act.outcome.md) &gt; [isApplicable](./alfa-act.outcome.isapplicable.md)
 
-## Outcome.isApplicable() function
+## Outcome.isApplicable variable
 
 <b>Signature:</b>
 
 ```typescript
-function isApplicable<I, T, Q>(outcome: Outcome<I, T, Q>): outcome is Applicable<I, T, Q>;
+isApplicable: typeof Applicable.isApplicable
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  outcome | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt; |  |
-
-<b>Returns:</b>
-
-outcome is [Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q&gt;
-

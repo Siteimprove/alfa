@@ -10,3 +10,9 @@
 |  --- | --- |
 |  [Lazy](./alfa-lazy.lazy.md) |  |
 
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Lazy](./alfa-lazy.lazy.md) |  |
+

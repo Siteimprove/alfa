@@ -42,7 +42,7 @@ interface Document_2 extends Dictionary {
 
 export { Document_2 as Document }
 
-// @public
+// @public (undocumented)
 export function expand(element: Scalar | List | Dictionary): Result<List, string>;
 
 // @public (undocumented)
@@ -63,7 +63,7 @@ export function isScalar(element: Scalar | List | Dictionary | null): element is
 // @public (undocumented)
 export function isValueObject(element: Scalar | List | Dictionary | null): element is ValueObject;
 
-// @public
+// @public (undocumented)
 export type Keyword = "@context" | "@id" | "@value" | "@language" | "@type" | "@container" | "@list" | "@set" | "@reverse" | "@index" | "@base" | "@vocab" | "@graph";
 
 // @public (undocumented)

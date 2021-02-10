@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function eof<I extends Iterable<unknown>, E>(ifError: Thunk<E>): Parser<I, void, E>;
+function eof<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ifError | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;E&gt; |  |
+|  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I extends Iterable&lt;infer T&gt; ? T : unknown, E&gt; |  |
 
 <b>Returns:</b>
 

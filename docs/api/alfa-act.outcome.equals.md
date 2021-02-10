@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-abstract equals(value: unknown): value is this;
+abstract equals<I, T, Q>(value: Outcome<I, T, Q>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

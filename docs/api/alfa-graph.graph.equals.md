@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals<T>(value: Graph<T>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

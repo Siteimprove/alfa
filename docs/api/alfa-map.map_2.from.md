@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function from<K, V>(iterable: Iterable<[K, V]>): Map<K, V>;
+function from<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;\[K, V\]&gt; |  |
+|  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
 
 <b>Returns:</b>
 

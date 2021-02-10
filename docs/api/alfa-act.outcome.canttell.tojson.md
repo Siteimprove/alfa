@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): CantTell.JSON;
+toJSON(): CantTell.JSON<T>;
 ```
 <b>Returns:</b>
 
-[CantTell.JSON](./alfa-act.outcome.canttell.json.md)
+[CantTell.JSON](./alfa-act.outcome.canttell.json.md)<!-- -->&lt;T&gt;
 

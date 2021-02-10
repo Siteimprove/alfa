@@ -11,3 +11,5 @@ export declare type Interview<Q, S, T, D extends number = 3> = T | {
     [K in keyof Q]: Question<K, Q[K], S, D extends -1 ? T : Interview<Q, S, T, Depths[D]>>;
 }[keyof Q];
 ```
+<b>References:</b> [Question](./alfa-act.question.md)<!-- -->, [Interview](./alfa-act.interview.md)
+

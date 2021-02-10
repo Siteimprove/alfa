@@ -4,8 +4,6 @@
 
 ## Response\_2.status property
 
- https://fetch.spec.whatwg.org/\#dom-response-status
-
 <b>Signature:</b>
 
 ```typescript

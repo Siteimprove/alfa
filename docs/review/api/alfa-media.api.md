@@ -11,7 +11,7 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Length } from '@siteimprove/alfa-css';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
 import { String as String_2 } from '@siteimprove/alfa-css';
@@ -36,6 +36,7 @@ export namespace Media {
         // (undocumented)
         LessThanEqual = "<="
     }
+    // (undocumented)
     export class Condition implements Equatable, Serializable {
         // (undocumented)
         get combinator(): Combinator;
@@ -70,6 +71,7 @@ export namespace Media {
             type: "condition";
         }
     }
+    // (undocumented)
     export class Feature implements Equatable, Serializable {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -78,13 +80,13 @@ export namespace Media {
         // (undocumented)
         get name(): string;
         // (undocumented)
-        static of(name: string, value?: Option_2<Feature.Value>): Feature;
+        static of(name: string, value?: Option<Feature.Value>): Feature;
         // (undocumented)
         toJSON(): Feature.JSON;
         // (undocumented)
         toString(): string;
         // (undocumented)
-        get value(): Option_2<Feature.Value>;
+        get value(): Option<Feature.Value>;
         }
     // (undocumented)
     export namespace Feature {
@@ -113,6 +115,7 @@ export namespace Media {
     export function isFeature(value: unknown): value is Feature;
     // (undocumented)
     export function isNegation(value: unknown): value is Negation;
+    // (undocumented)
     export class List implements Iterable_2<Query>, Equatable, Serializable {
         // (undocumented)
         [Symbol.iterator](): Iterator<Query>;
@@ -134,6 +137,7 @@ export namespace Media {
         // (undocumented)
         export type JSON = Array<Query.JSON>;
     }
+    // (undocumented)
     export enum Modifier {
         // (undocumented)
         Not = "not",
@@ -168,24 +172,25 @@ export namespace Media {
         }
     }
     // (undocumented)
-    export function parse(input: string): Option_2<List>;
+    export function parse(input: string): Option<List>;
+    // (undocumented)
     export class Query implements Equatable, Serializable {
         // (undocumented)
-        get condition(): Option_2<Feature | Condition | Negation>;
+        get condition(): Option<Feature | Condition | Negation>;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         matches(device: Device): boolean;
         // (undocumented)
-        get modifier(): Option_2<Modifier>;
+        get modifier(): Option<Modifier>;
         // (undocumented)
-        static of(modifier: Option_2<Modifier>, type: Option_2<Type>, condition: Option_2<Feature | Condition | Negation>): Query;
+        static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feature | Condition | Negation>): Query;
         // (undocumented)
         toJSON(): Query.JSON;
         // (undocumented)
         toString(): string;
         // (undocumented)
-        get type(): Option_2<Type>;
+        get type(): Option<Type>;
         }
     // (undocumented)
     export namespace Query {
@@ -201,6 +206,7 @@ export namespace Media {
             type: Type.JSON | null;
         }
     }
+    // (undocumented)
     export class Type implements Equatable, Serializable {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -225,6 +231,13 @@ export namespace Media {
             name: string;
         }
     }
+}
+
+// Warning: (ae-internal-missing-underscore) The name "Resolver" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export namespace Resolver {
+    export function length(length: Length, device: Device): Length<"px">;
 }
 
 

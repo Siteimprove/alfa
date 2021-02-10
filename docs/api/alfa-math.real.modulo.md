@@ -6,8 +6,6 @@
 
 Compute the modulus of a division of two reals.
 
- https://en.wikipedia.org/wiki/Modulo\_operation
-
 <b>Signature:</b>
 
 ```typescript

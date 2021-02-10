@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-slice](./alfa-slice.md) &gt; [Slice](./alfa-slice.slice.md) &gt; [JSON](./alfa-slice.slice.json.md)
 
-## Slice.JSON interface
+## Slice.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Array<json.JSON> 
+type JSON<T> = Array<Serializable.ToJSON<T>>;
 ```
-<b>Extends:</b> Array&lt;json.JSON&gt;
+<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

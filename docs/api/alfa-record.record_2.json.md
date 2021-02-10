@@ -2,10 +2,14 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-record](./alfa-record.md) &gt; [Record\_2](./alfa-record.record_2.md) &gt; [JSON](./alfa-record.record_2.json.md)
 
-## Record\_2.JSON interface
+## Record\_2.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+type JSON<T> = {
+        [K in Key<T>]: Serializable.ToJSON<T[K]>;
+    };
 ```
+<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+

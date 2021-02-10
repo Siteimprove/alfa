@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function takeUntil<T>(iterable: Iterable<T>, predicate: Predicate<T, T, [number]>): Iterable<T>;
+function takeUntil<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Iterable<T>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function takeUntil<T>(iterable: Iterable<T>, predicate: Predicate<T, T, [number]
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

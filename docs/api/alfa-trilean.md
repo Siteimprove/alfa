@@ -4,23 +4,15 @@
 
 ## alfa-trilean package
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [every(predicate)](./alfa-trilean.every.md) |  |
-|  [some(predicate)](./alfa-trilean.some.md) |  |
-
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Predicate](./alfa-trilean.predicate.md) |  |
+|  [Trilean](./alfa-trilean.trilean.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Predicate](./alfa-trilean.predicate.md) |  |
 |  [Trilean](./alfa-trilean.trilean.md) |  |
 

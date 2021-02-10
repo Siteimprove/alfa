@@ -24,11 +24,6 @@ export declare namespace Outcome
 |  Function | Description |
 |  --- | --- |
 |  [from(rule, target, expectations)](./alfa-act.outcome.from.md) |  |
-|  [isApplicable(outcome)](./alfa-act.outcome.isapplicable.md) |  |
-|  [isCantTell(outcome)](./alfa-act.outcome.iscanttell.md) |  |
-|  [isFailed(outcome)](./alfa-act.outcome.isfailed.md) |  |
-|  [isInapplicable(outcome)](./alfa-act.outcome.isinapplicable.md) |  |
-|  [isPassed(outcome)](./alfa-act.outcome.ispassed.md) |  |
 
 ## Interfaces
 
@@ -41,10 +36,25 @@ export declare namespace Outcome
 
 |  Namespace | Description |
 |  --- | --- |
+|  [Applicable](./alfa-act.outcome.applicable.md) |  |
 |  [CantTell](./alfa-act.outcome.canttell.md) |  |
 |  [Failed](./alfa-act.outcome.failed.md) |  |
 |  [Inapplicable](./alfa-act.outcome.inapplicable.md) |  |
 |  [Passed](./alfa-act.outcome.passed.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [cantTell](./alfa-act.outcome.canttell.md) |  |
+|  [failed](./alfa-act.outcome.failed.md) |  |
+|  [inapplicable](./alfa-act.outcome.inapplicable.md) |  |
+|  [isApplicable](./alfa-act.outcome.isapplicable.md) |  |
+|  [isCantTell](./alfa-act.outcome.iscanttell.md) |  |
+|  [isFailed](./alfa-act.outcome.isfailed.md) |  |
+|  [isInapplicable](./alfa-act.outcome.isinapplicable.md) |  |
+|  [isPassed](./alfa-act.outcome.ispassed.md) |  |
+|  [passed](./alfa-act.outcome.passed.md) |  |
 
 ## Type Aliases
 

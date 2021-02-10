@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-some(predicate: Predicate<T, T, [Iterable<B>]>): boolean;
+some(predicate: Predicate<T, [Iterable<B>]>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
 
 <b>Returns:</b>
 

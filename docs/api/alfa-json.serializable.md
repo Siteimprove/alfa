@@ -16,4 +16,11 @@ export declare namespace Serializable
 |  --- | --- |
 |  [isSerializable(value)](./alfa-json.serializable.isserializable.md) |  |
 |  [toJSON(value)](./alfa-json.serializable.tojson.md) |  |
+|  [toJSON(value)](./alfa-json.serializable.tojson_1.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [ToJSON](./alfa-json.serializable.tojson.md) |  |
 

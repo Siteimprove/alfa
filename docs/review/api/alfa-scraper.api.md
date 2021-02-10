@@ -15,6 +15,7 @@ import * as puppeteer from 'puppeteer';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Timeout } from '@siteimprove/alfa-time';
+import { URL as URL_2 } from '@siteimprove/alfa-url';
 
 // @public (undocumented)
 export type Awaiter<T = unknown> = (page: puppeteer.Page, timeout: Timeout) => Promise<Result<T, string>>;
@@ -66,12 +67,10 @@ export namespace Credentials {
 
 // @public (undocumented)
 export class Scraper {
-    // (undocumented)
     close(): Promise<void>;
     // (undocumented)
     static of(browser?: Promise<puppeteer.Browser>): Promise<Scraper>;
-    // (undocumented)
-    scrape(url: string | URL, options?: Scraper.scrape.Options): Promise<Result<Page, string>>;
+    scrape(url: string | URL_2, options?: Scraper.scrape.Options): Promise<Result<Page, string>>;
     // (undocumented)
     static with<T>(mapper: Mapper<Scraper, Promise<T>>, browser?: Promise<puppeteer.Browser>): Promise<T>;
 }

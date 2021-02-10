@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Outcome.JSON 
+interface JSON<T> extends Outcome.JSON 
 ```
 <b>Extends:</b> [Outcome.JSON](./alfa-act.outcome.json.md)
 
@@ -15,7 +15,7 @@ interface JSON extends Outcome.JSON
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [expectations](./alfa-act.outcome.failed.json.expectations.md) | Array&lt;\[string, [Result.JSON](./alfa-result.result.json.md)<!-- -->\]&gt; |  |
+|  [expectations](./alfa-act.outcome.failed.json.expectations.md) | Array&lt;\[string, [Result.JSON](./alfa-result.result.json.md)<!-- -->&lt;[Diagnostic.JSON](./alfa-act.diagnostic.json.md)<!-- -->&gt;\]&gt; |  |
 |  [outcome](./alfa-act.outcome.failed.json.outcome.md) | "failed" |  |
-|  [target](./alfa-act.outcome.failed.json.target.md) | json.JSON |  |
+|  [target](./alfa-act.outcome.failed.json.target.md) | json.[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
 

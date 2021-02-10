@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function count<T>(iterable: Iterable<T>, predicate: Predicate<T, T, [number]>): number;
+function count<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): number;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function count<T>(iterable: Iterable<T>, predicate: Predicate<T, T, [number]>): 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

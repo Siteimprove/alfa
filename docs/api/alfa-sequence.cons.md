@@ -15,6 +15,7 @@ export declare namespace Cons
 |  Function | Description |
 |  --- | --- |
 |  [isCons(value)](./alfa-sequence.cons.iscons.md) |  |
+|  [isCons(value)](./alfa-sequence.cons.iscons_1.md) |  |
 
 ## Type Aliases
 

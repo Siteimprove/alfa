@@ -75,7 +75,9 @@ export class Display implements Equatable, Hashable, Serializable {
     hash(hash: Hash): void;
     // (undocumented)
     static of(resolution: number, scan?: Display.Scan): Display;
+    // (undocumented)
     get resolution(): number;
+    // (undocumented)
     get scan(): Display.Scan;
     // (undocumented)
     toJSON(): Display.JSON;
@@ -105,7 +107,7 @@ export namespace Display {
     export function standard(): Display;
 }
 
-// @public
+// @public (undocumented)
 export class Preference<N extends Preference.Name = Preference.Name> implements Equatable, Hashable, Serializable {
     // (undocumented)
     equals(value: unknown): value is this;
@@ -140,11 +142,17 @@ export namespace Preference {
     export type Name = keyof Preferences;
     // (undocumented)
     export interface Preferences {
+        // (undocumented)
         "forced-colors": "none" | "active";
+        // (undocumented)
         "prefers-color-scheme": "no-preference" | "light" | "dark";
+        // (undocumented)
         "prefers-contrast": "no-preference" | "high" | "low";
+        // (undocumented)
         "prefers-reduced-motion": "no-preference" | "reduce";
+        // (undocumented)
         "prefers-reduced-transparency": "no-preference" | "reduce";
+        // (undocumented)
         inverted: "none" | "inverted";
     }
     // (undocumented)
@@ -154,7 +162,7 @@ export namespace Preference {
     {};
 }
 
-// @public
+// @public (undocumented)
 export class Scripting implements Equatable, Hashable, Serializable {
     // (undocumented)
     get enabled(): boolean;
@@ -189,6 +197,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
+    // (undocumented)
     get height(): number;
     // (undocumented)
     isLandscape(): boolean;
@@ -196,9 +205,11 @@ export class Viewport implements Equatable, Hashable, Serializable {
     isPortrait(): boolean;
     // (undocumented)
     static of(width: number, height?: number, orientation?: Viewport.Orientation): Viewport;
+    // (undocumented)
     get orientation(): Viewport.Orientation;
     // (undocumented)
     toJSON(): Viewport.JSON;
+    // (undocumented)
     get width(): number;
     }
 

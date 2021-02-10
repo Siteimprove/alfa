@@ -8,7 +8,7 @@ import { Mapper } from '@siteimprove/alfa-mapper';
 import { Reducer } from '@siteimprove/alfa-reducer';
 
 // @public (undocumented)
-export type Thunk<T> = () => T;
+export type Thunk<T = void> = () => T;
 
 // @public (undocumented)
 export namespace Thunk {

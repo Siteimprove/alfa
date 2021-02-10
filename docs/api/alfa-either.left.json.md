@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+interface JSON<L> 
 ```
 
 ## Properties
@@ -15,5 +15,5 @@ interface JSON
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [type](./alfa-either.left.json.type.md) | "left" |  |
-|  [value](./alfa-either.left.json.value.md) | json.JSON |  |
+|  [value](./alfa-either.left.json.value.md) | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;L&gt; |  |
 

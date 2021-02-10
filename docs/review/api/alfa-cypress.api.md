@@ -4,18 +4,30 @@
 
 ```ts
 
-import { JQuery as JQuery_2 } from '@siteimprove/alfa-jquery';
+import * as act from '@siteimprove/alfa-act';
+import { Asserter } from '@siteimprove/alfa-assert';
+import { Formatter } from '@siteimprove/alfa-formatter';
+import { Handler } from '@siteimprove/alfa-assert';
+import { JQuery } from '@siteimprove/alfa-jquery';
+import { Mapper } from '@siteimprove/alfa-mapper';
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)
-export namespace Cypress {
+namespace Cypress_2 {
     // (undocumented)
-    export function asPage(value: Type): Page;
+    function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, Q>>, handlers?: Iterable<Handler<Page, T, Q>>, options?: Asserter.Options): void;
     // (undocumented)
-    export function isType(value: unknown): value is Type;
+    namespace Handler {
+        // (undocumented)
+        function persist<I, T, Q>(output: Mapper<I, string>, format?: Formatter<I, T, Q>): Handler<I, T, Q>;
+    }
     // (undocumented)
-    export type Type = globalThis.Node | JQuery_2.Type;
+    function toPage(value: Type): Page;
+    // (undocumented)
+    type Type = globalThis.Node | JQuery.Type;
 }
+
+export { Cypress_2 as Cypress }
 
 
 // (No @packageDocumentation comment for this package)

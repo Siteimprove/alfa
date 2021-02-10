@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Formatter<I, T = unknown, Q = never> = (input: I, outcomes: Iterable<Outcome<I, T, Q>>) => string;
+export declare type Formatter<I = unknown, T = unknown, Q = never> = (input: I, rules: Iterable<Rule<I, T, Q>>, outcomes: Iterable<Outcome<I, T, Q>>) => string;
 ```
+<b>References:</b> [Rule](./alfa-act.rule.md)<!-- -->, [Outcome](./alfa-act.outcome.md)
+

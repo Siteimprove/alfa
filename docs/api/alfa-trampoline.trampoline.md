@@ -16,7 +16,9 @@ export declare namespace Trampoline
 |  --- | --- |
 |  [delay(thunk)](./alfa-trampoline.trampoline.delay.md) |  |
 |  [done(value)](./alfa-trampoline.trampoline.done.md) |  |
+|  [empty()](./alfa-trampoline.trampoline.empty.md) |  |
 |  [isTrampoline(value)](./alfa-trampoline.trampoline.istrampoline.md) |  |
+|  [isTrampoline(value)](./alfa-trampoline.trampoline.istrampoline_1.md) |  |
 |  [sequence(futures)](./alfa-trampoline.trampoline.sequence.md) |  |
 |  [suspend(thunk)](./alfa-trampoline.trampoline.suspend.md) |  |
 |  [traverse(values, mapper)](./alfa-trampoline.trampoline.traverse.md) |  |

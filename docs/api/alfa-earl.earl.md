@@ -15,5 +15,5 @@ export interface EARL extends Document
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@context"](./alfa-earl.earl.__context_.md) | { earl?: "http://www.w3.org/ns/earl\#"; cnt?: "http://www.w3.org/2011/content\#"; dct?: "http://purl.org/dc/terms/"; http?: "http://www.w3.org/2011/http\#"; ptr?: "http://www.w3.org/2009/pointers\#"; } |  |
+|  ["@context"?](./alfa-earl.earl.__context_.md) | { earl?: "http://www.w3.org/ns/earl\#"; cnt?: "http://www.w3.org/2011/content\#"; dct?: "http://purl.org/dc/terms/"; http?: "http://www.w3.org/2011/http\#"; ptr?: "http://www.w3.org/2009/pointers\#"; } | <i>(Optional)</i> |
 

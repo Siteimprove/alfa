@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function from<T>(iterable: Iterable<[T, Iterable<T>]>): Graph<T>;
+function from<T>(iterable: Iterable<readonly [T, Iterable<T>]>): Graph<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;\[T, Iterable&lt;T&gt;\]&gt; |  |
+|  iterable | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
 
 <b>Returns:</b>
 

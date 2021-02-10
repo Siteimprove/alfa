@@ -14,5 +14,5 @@ export declare namespace Jasmine
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin(identify, transform)](./alfa-jasmine.jasmine.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-jasmine.jasmine.createplugin.md) |  |
 

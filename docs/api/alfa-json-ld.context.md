@@ -15,6 +15,6 @@ export interface Context extends Dictionary
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@base"](./alfa-json-ld.context.__base_.md) | string |  |
-|  ["@version"](./alfa-json-ld.context.__version_.md) | 1.1 |  |
+|  ["@base"?](./alfa-json-ld.context.__base_.md) | string | <i>(Optional)</i> |
+|  ["@version"?](./alfa-json-ld.context.__version_.md) | 1.1 | <i>(Optional)</i> |
 

@@ -4,26 +4,33 @@
 
 ```ts
 
+import { Callback } from '@siteimprove/alfa-callback';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
-// @public
-export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
+// @public (undocumented)
+export abstract class Trampoline<T> implements Functor<T>, Monad<T>, Iterable_2<T> {
+    // (undocumented)
+    [Symbol.iterator](): Iterator<T>;
     // (undocumented)
     abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
     // (undocumented)
-    isDone(): boolean;
+    abstract isDone(): boolean;
     // (undocumented)
-    isSuspended(): boolean;
+    abstract isSuspended(): boolean;
+    // (undocumented)
+    iterator(): Iterator<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Trampoline<U>;
     // (undocumented)
     run(): T;
     // (undocumented)
     protected abstract step(): Trampoline<T>;
+    // (undocumented)
+    tee(callback: Callback<T>): Trampoline<T>;
 }
 
 // @public (undocumented)
@@ -32,6 +39,10 @@ export namespace Trampoline {
     export function delay<T>(thunk: Thunk<T>): Trampoline<T>;
     // (undocumented)
     export function done<T>(value: T): Trampoline<T>;
+    // (undocumented)
+    export function empty(): Trampoline<void>;
+    // (undocumented)
+    export function isTrampoline<T>(value: Iterable_2<T>): value is Trampoline<T>;
     // (undocumented)
     export function isTrampoline<T>(value: unknown): value is Trampoline<T>;
     // (undocumented)

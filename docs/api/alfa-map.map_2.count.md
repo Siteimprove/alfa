@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-count(predicate: Predicate<V, V, [K]>): number;
+count(predicate: Predicate<V, [K]>): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, V, \[K\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[K\]&gt; |  |
 
 <b>Returns:</b>
 

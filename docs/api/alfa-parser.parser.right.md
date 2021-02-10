@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function right<I, T, U, E, A extends Array<unknown>>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, U, E, A>;
+function right<I, T, U, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, U, E, A>;
 ```
 
 ## Parameters

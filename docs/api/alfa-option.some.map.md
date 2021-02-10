@@ -18,5 +18,5 @@ map<U>(mapper: Mapper<T, U>): Option<U>;
 
 <b>Returns:</b>
 
-Option&lt;U&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

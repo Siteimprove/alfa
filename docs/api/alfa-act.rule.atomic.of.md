@@ -9,6 +9,8 @@
 ```typescript
 static of<I, T = unknown, Q = never>(properties: {
             uri: string;
+            requirements?: Iterable<Requirement>;
+            tags?: Iterable<Tag>;
             evaluate: Atomic.Evaluate<I, T, Q>;
         }): Atomic<I, T, Q>;
 ```
@@ -17,7 +19,7 @@ static of<I, T = unknown, Q = never>(properties: {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | { uri: string; evaluate: [Atomic.Evaluate](./alfa-act.rule.atomic.evaluate.md)<!-- -->&lt;I, T, Q&gt;; } |  |
+|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt;; evaluate: [Atomic.Evaluate](./alfa-act.rule.atomic.evaluate.md)<!-- -->&lt;I, T, Q&gt;; } |  |
 
 <b>Returns:</b>
 

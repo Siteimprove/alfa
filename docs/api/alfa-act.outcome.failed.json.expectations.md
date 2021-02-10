@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-expectations: Array<[string, Result.JSON]>;
+expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
 ```

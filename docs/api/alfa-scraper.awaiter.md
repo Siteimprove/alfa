@@ -9,3 +9,5 @@
 ```typescript
 export declare type Awaiter<T = unknown> = (page: puppeteer.Page, timeout: Timeout) => Promise<Result<T, string>>;
 ```
+<b>References:</b> [Timeout](./alfa-time.timeout.md)<!-- -->, [Result](./alfa-result.result.md)
+

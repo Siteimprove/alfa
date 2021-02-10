@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-static of(resources: Graph<Resource>): Site;
+static of<R extends Resource>(resources: Graph<R>): Site<R>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resources | [Graph](./alfa-graph.graph.md)<!-- -->&lt;[Resource](./alfa-web.resource.md)<!-- -->&gt; |  |
+|  resources | [Graph](./alfa-graph.graph.md)<!-- -->&lt;R&gt; |  |
 
 <b>Returns:</b>
 
-[Site](./alfa-web.site.md)
+[Site](./alfa-web.site.md)<!-- -->&lt;R&gt;
 

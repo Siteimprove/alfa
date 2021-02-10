@@ -6,7 +6,7 @@
 
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Matrix } from '@siteimprove/alfa-math';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Vector } from '@siteimprove/alfa-math';
 
@@ -14,7 +14,8 @@ import { Vector } from '@siteimprove/alfa-math';
 export class Transformation implements Equatable, Serializable {
     // (undocumented)
     apply(transformation: Transformation): Transformation;
-    decompose(): Option_2<Transformation.Components>;
+    // (undocumented)
+    decompose(): Option<Transformation.Components>;
     // (undocumented)
     static empty(): Transformation;
     // (undocumented)

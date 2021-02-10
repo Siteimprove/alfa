@@ -4,8 +4,6 @@
 
 ## Preference.Preferences."prefers-reduced-transparency" property
 
- https://drafts.csswg.org/mediaqueries-5/\#prefers-reduced-transparency
-
 <b>Signature:</b>
 
 ```typescript

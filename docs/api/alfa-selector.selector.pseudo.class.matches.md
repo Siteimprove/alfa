@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-matches(element: dom.Element, scope?: Iterable<dom.Element>): boolean;
+matches(element: dom.Element, context?: Context): boolean;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ matches(element: dom.Element, scope?: Iterable<dom.Element>): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | dom.Element |  |
-|  scope | Iterable&lt;dom.Element&gt; |  |
+|  context | [Context](./alfa-selector.context.md) |  |
 
 <b>Returns:</b>
 

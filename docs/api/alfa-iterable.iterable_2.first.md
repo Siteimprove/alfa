@@ -18,5 +18,5 @@ function first<T>(iterable: Iterable<T>): Option<T>;
 
 <b>Returns:</b>
 
-Option&lt;T&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

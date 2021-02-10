@@ -7,17 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function and<T, U extends T = T, V extends U = U, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<U, V, A>): Predicate<T, V, A>;
+function and<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  left | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U, A&gt; |  |
-|  right | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;U, V, A&gt; |  |
+|  predicates | \[[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;, [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;, ...Array&lt;[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;&gt;\] |  |
 
 <b>Returns:</b>
 
-[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, V, A&gt;
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

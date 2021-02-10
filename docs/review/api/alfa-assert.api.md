@@ -4,44 +4,56 @@
 
 ```ts
 
-import { Attribute } from '@siteimprove/alfa-dom';
-import { Document as Document_2 } from '@siteimprove/alfa-dom';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
+import { Formatter } from '@siteimprove/alfa-formatter';
 import { Future } from '@siteimprove/alfa-future';
-import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { List } from '@siteimprove/alfa-list';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
-import { Question } from '@siteimprove/alfa-rules';
+import { Mapper } from '@siteimprove/alfa-mapper';
+import { Outcome } from '@siteimprove/alfa-act';
+import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
-import { Text as Text_2 } from '@siteimprove/alfa-dom';
-import * as web from '@siteimprove/alfa-web';
 
 // @public (undocumented)
-export namespace Assert {
+export class Asserter<I, T, Q> {
     // (undocumented)
-    export class Error<T> implements Equatable {
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        static of<T>(target: T, reasons: Iterable_2<string>): Error<T>;
-        // (undocumented)
-        readonly reasons: List<string>;
-        // (undocumented)
-        readonly target: T;
-        // (undocumented)
-        toJSON(): {
-            target: T;
-            reasons: List.JSON;
-        };
-    }
+    get expect(): Mapper<I, Assertion<I, T, Q>>;
     // (undocumented)
-    export namespace Page {
-        // (undocumented)
-        export function isAccessible(page: web.Page, scope?: Iterable_2<Rule<web.Page, Target, Question>>): Future<Option_2<Error<Target>>>;
-        // (undocumented)
-        export type Target = Document_2 | Element_2 | Attribute | Text_2 | Iterable_2<Element_2>;
+    static of<I, T, Q>(rules: Iterable<Rule<I, T, Q>>, handlers?: Iterable<Handler<I, T, Q>>, options?: Asserter.Options): Asserter<I, T, Q>;
     }
+
+// @public (undocumented)
+export namespace Asserter {
+    // (undocumented)
+    export interface Options extends Assertion.Options {
+    }
+}
+
+// @public (undocumented)
+export class Assertion<I, T, Q> {
+    // (undocumented)
+    accessible(): Future<Result<string>>;
+    // (undocumented)
+    get be(): this;
+    // (undocumented)
+    static of<I, T, Q>(input: I, rules: Iterable<Rule<I, T, Q>>, handlers?: Iterable<Handler<I, T, Q>>, options?: Assertion.Options): Assertion<I, T, Q>;
+    // (undocumented)
+    get to(): this;
+}
+
+// @public (undocumented)
+export namespace Assertion {
+    // (undocumented)
+    export interface Options {
+    }
+}
+
+// @public (undocumented)
+export interface Handler<I, T, Q> {
+    // (undocumented)
+    (input: I, rules: Iterable<Rule<I, T, Q>>, outcomes: Iterable<Outcome<I, T, Q>>, message: string): Future.Maybe<string>;
+}
+
+// @public (undocumented)
+export namespace Handler {
+    export function persist<I, T, Q>(output: Mapper<I, string>, format?: Formatter<I, T, Q>): Handler<I, T, Q>;
 }
 
 

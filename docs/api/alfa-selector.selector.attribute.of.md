@@ -14,11 +14,11 @@ static of(namespace: Option<string>, name: string, value?: Option<string>, match
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  namespace | Option&lt;string&gt; |  |
+|  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  name | string |  |
-|  value | Option&lt;string&gt; |  |
-|  matcher | Option&lt;[Attribute.Matcher](./alfa-selector.selector.attribute.matcher.md)<!-- -->&gt; |  |
-|  modifier | Option&lt;[Attribute.Modifier](./alfa-selector.selector.attribute.modifier.md)<!-- -->&gt; |  |
+|  value | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  matcher | [Option](./alfa-option.option.md)<!-- -->&lt;[Attribute.Matcher](./alfa-selector.selector.attribute.matcher.md)<!-- -->&gt; |  |
+|  modifier | [Option](./alfa-option.option.md)<!-- -->&lt;[Attribute.Modifier](./alfa-selector.selector.attribute.modifier.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

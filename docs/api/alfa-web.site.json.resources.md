@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-resources: Graph.JSON;
+resources: Graph.JSON<R>;
 ```

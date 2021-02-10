@@ -4,8 +4,6 @@
 
 ## Selector.Focus class
 
- https://drafts.csswg.org/selectors/\#focus-pseudo
-
 <b>Signature:</b>
 
 ```typescript
@@ -17,5 +15,6 @@ export class Focus extends Pseudo.Class
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [matches(element, context)](./alfa-selector.selector.focus.matches.md) |  |  |
 |  [of()](./alfa-selector.selector.focus.of.md) | <code>static</code> |  |
 

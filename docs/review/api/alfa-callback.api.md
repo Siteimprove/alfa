@@ -4,8 +4,16 @@
 
 ```ts
 
+import { Mapper } from '@siteimprove/alfa-mapper';
+
 // @public (undocumented)
-export type Callback<T, R = void> = (value: T) => R;
+export type Callback<T, R = void, A extends Array<unknown> = []> = (value: T, ...args: A) => R;
+
+// @public (undocumented)
+export namespace Callback {
+    // (undocumented)
+    export function contraMap<T, R, U, A extends Array<unknown> = []>(callback: Callback<T, R, A>, mapper: Mapper<U, T>): Callback<U, R, A>;
+}
 
 
 // (No @packageDocumentation comment for this package)

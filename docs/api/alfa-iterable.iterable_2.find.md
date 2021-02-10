@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function find<T, U extends T = T>(iterable: Iterable<T>, predicate: Predicate<T, U, [number]>): Option<U>;
+function find<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<T, U, [number]>): Option<U>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function find<T, U extends T = T>(iterable: Iterable<T>, predicate: Predicate<T,
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;U&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

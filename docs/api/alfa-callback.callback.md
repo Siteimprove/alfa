@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Callback<T, R = void> = (value: T) => R;
+export declare type Callback<T, R = void, A extends Array<unknown> = []> = (value: T, ...args: A) => R;
 ```

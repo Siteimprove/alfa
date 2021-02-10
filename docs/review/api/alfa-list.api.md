@@ -4,22 +4,27 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Callback } from '@siteimprove/alfa-callback';
 import { Collection } from '@siteimprove/alfa-collection';
+import { Comparable } from '@siteimprove/alfa-comparable';
+import { Comparer } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
 
 // Warning: (ae-internal-missing-underscore) The name "Branch" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class Branch<T> implements Node_2<T> {
+export class Branch<T> implements Node<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -29,7 +34,7 @@ export class Branch<T> implements Node_2<T> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get(index: number, shift: number): Option_2<T>;
+    get(index: number, shift: number): Option<T>;
     // (undocumented)
     isEmpty(): this is Empty;
     // (undocumented)
@@ -47,7 +52,7 @@ export class Branch<T> implements Node_2<T> {
 // Warning: (ae-internal-missing-underscore) The name "Empty" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export interface Empty extends Node_2<never> {
+export interface Empty extends Node<never> {
 }
 
 // @internal (undocumented)
@@ -56,13 +61,13 @@ export const Empty: Empty;
 // Warning: (ae-internal-missing-underscore) The name "Leaf" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class Leaf<T> implements Node_2<T> {
+export class Leaf<T> implements Node<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get(index: number): Option_2<T>;
+    get(index: number): Option<T>;
     // (undocumented)
     hasCapacity(): boolean;
     // (undocumented)
@@ -88,25 +93,41 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     apply<U>(mapper: List<Mapper<T, U>>): List<U>;
     // (undocumented)
+    collect<U>(mapper: Mapper<T, Option<U>, [number]>): List<U>;
+    // (undocumented)
+    collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+    // (undocumented)
+    compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
+    // (undocumented)
     concat(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
-    count(predicate: Predicate<T, T, [number]>): number;
+    count(predicate: Predicate<T, [number]>): number;
+    // (undocumented)
+    distinct(): List<T>;
     // (undocumented)
     static empty<T = never>(): List<T>;
     // (undocumented)
+    equals<T>(value: List<T>): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    every(predicate: Predicate<T>): boolean;
+    every(predicate: Predicate<T, [number]>): boolean;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U, [number]>): List<U>;
+    filter<U extends T>(refinement: Refinement<T, U, [number]>): List<U>;
     // (undocumented)
-    find<U extends T>(predicate: Predicate<T, U, [number]>): Option_2<U>;
+    filter(predicate: Predicate<T, [number]>): List<T>;
     // (undocumented)
-    first(): Option_2<T>;
+    find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+    // (undocumented)
+    find(predicate: Predicate<T, [number]>): Option<T>;
+    // (undocumented)
+    first(): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, List<U>, [number]>): List<U>;
     // (undocumented)
-    get(index: number): Option_2<T>;
+    forEach(callback: Callback<T, void, [number]>): void;
+    // (undocumented)
+    get(index: number): Option<T>;
     // (undocumented)
     groupBy<K>(grouper: Mapper<T, K>): Map_2<K, List<T>>;
     // (undocumented)
@@ -118,23 +139,27 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     insert(index: number, value: T): List<T>;
     // (undocumented)
-    intersect(list: List<T>): List<T>;
+    intersect(iterable: List<T>): List<T>;
     // (undocumented)
     isEmpty(): this is List<never>;
     // (undocumented)
     join(separator: string): string;
     // (undocumented)
-    last(): Option_2<T>;
+    last(): Option<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U, [number]>): List<U>;
     // (undocumented)
-    static of<T>(...values: Array<T>): List<T>;
+    none(predicate: Predicate<T, [number]>): boolean;
+    // (undocumented)
+    static of<T>(...values: Array_2<T>): List<T>;
     // (undocumented)
     prepend(value: T): List<T>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
     // (undocumented)
-    reject(predicate: Predicate<T, T, [number]>): List<T>;
+    reject<U extends T>(refinement: Refinement<T, U, [number]>): List<Exclude<T, U>>;
+    // (undocumented)
+    reject(predicate: Predicate<T, [number]>): List<T>;
     // (undocumented)
     rest(): List<T>;
     // (undocumented)
@@ -148,27 +173,29 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     skipLast(count?: number): List<T>;
     // (undocumented)
-    skipUntil(predicate: Predicate<T, T, [number]>): List<T>;
+    skipUntil(predicate: Predicate<T, [number]>): List<T>;
     // (undocumented)
-    skipWhile(predicate: Predicate<T, T, [number]>): List<T>;
+    skipWhile(predicate: Predicate<T, [number]>): List<T>;
     // (undocumented)
     slice(start: number, end?: number): List<T>;
     // (undocumented)
-    some(predicate: Predicate<T>): boolean;
+    some(predicate: Predicate<T, [number]>): boolean;
     // (undocumented)
-    subtract(list: List<T>): List<T>;
+    sortWith(comparer: Comparer<T>): List<T>;
+    // (undocumented)
+    subtract(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
     take(count: number): List<T>;
     // (undocumented)
     takeLast(count?: number): List<T>;
     // (undocumented)
-    takeUntil(predicate: Predicate<T, T, [number]>): List<T>;
+    takeUntil(predicate: Predicate<T, [number]>): List<T>;
     // (undocumented)
-    takeWhile(predicate: Predicate<T, T, [number]>): List<T>;
+    takeWhile(predicate: Predicate<T, [number]>): List<T>;
     // (undocumented)
-    toArray(): Array<T>;
+    toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(): List.JSON;
+    toJSON(): List.JSON<T>;
     // (undocumented)
     toString(): string;
 }
@@ -176,44 +203,52 @@ export class List<T> implements Collection.Indexed<T> {
 // @public (undocumented)
 export namespace List {
     // (undocumented)
+    export function compare<T extends Comparable<T>>(a: List<T>, b: Iterable_2<T>): Comparison;
+    // (undocumented)
     export function from<T>(iterable: Iterable_2<T>): List<T>;
+    // (undocumented)
+    export function fromArray<T>(array: Array_2<T>): List<T>;
+    // (undocumented)
+    export function fromIterable<T>(iterable: Iterable_2<T>): List<T>;
+    // (undocumented)
+    export function isList<T>(value: Iterable_2<T>): value is List<T>;
     // (undocumented)
     export function isList<T>(value: unknown): value is List<T>;
     // (undocumented)
-    export interface JSON extends Array<json.JSON> {
-    }
+    export type JSON<T> = Collection.Indexed.JSON<T>;
+    // (undocumented)
+    export function sort<T extends Comparable<T>>(list: List<T>): List<T>;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "Node" should be prefixed with an underscore because the declaration is marked as @internal
+//
 // @internal (undocumented)
-interface Node_2<T> extends Functor<T>, Iterable_2<T>, Equatable {
+export interface Node<T> extends Functor<T>, Iterable_2<T>, Equatable {
     // (undocumented)
-    get(index: number, shift: number): Option_2<T>;
+    get(index: number, shift: number): Option<T>;
     // (undocumented)
     isEmpty(): this is Empty;
     // (undocumented)
     isLeaf(): this is Leaf<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Node_2<U>;
+    map<U>(mapper: Mapper<T, U>): Node<U>;
     // (undocumented)
-    set(index: number, value: T, shift: number): Node_2<T>;
+    set(index: number, value: T, shift: number): Node<T>;
 }
 
 // @internal (undocumented)
-namespace Node_2 {
+export namespace Node {
     const // (undocumented)
     Bits = 5;
     const // (undocumented)
     Capacity: number;
     // (undocumented)
-    function fragment(index: number, shift: number): number;
+    export function fragment(index: number, shift: number): number;
     // (undocumented)
-    function overflow(shift: number): number;
+    export function overflow(shift: number): number;
     // (undocumented)
-    function underflow(shift: number): number;
+    export function underflow(shift: number): number;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "Node" should be prefixed with an underscore because the declaration is marked as @internal
-export { Node_2 as Node }
 
 
 // (No @packageDocumentation comment for this package)

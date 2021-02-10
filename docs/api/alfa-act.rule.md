@@ -22,7 +22,9 @@ export declare namespace Rule
 |  Function | Description |
 |  --- | --- |
 |  [isAtomic(value)](./alfa-act.rule.isatomic.md) |  |
+|  [isAtomic(value)](./alfa-act.rule.isatomic_1.md) |  |
 |  [isComposite(value)](./alfa-act.rule.iscomposite.md) |  |
+|  [isComposite(value)](./alfa-act.rule.iscomposite_1.md) |  |
 |  [isRule(value)](./alfa-act.rule.isrule.md) |  |
 
 ## Interfaces
@@ -30,7 +32,7 @@ export declare namespace Rule
 |  Interface | Description |
 |  --- | --- |
 |  [EARL](./alfa-act.rule.earl.md) |  |
-|  [Evaluate](./alfa-act.rule.evaluate.md) | We use a short-lived cache during audits for rules to store their outcomes. It effectively acts as a memoization layer on top of each rule evaluation procedure, which comes in handy when dealing with composite rules that are dependant on the outcomes of other rules. There are several ways in which audits of such rules can be performed:<!-- -->1. Put the onus on the caller to construct an audit with dependency-ordered rules. This is just crazy.<!-- -->2. Topologically sort rules based on their dependencies before performing an audit. This requires graph operations.<!-- -->3. Disregard order entirely and simply run rule evaluation procedures as their outcomes are needed, thereby risking repeating some of these procedures. This requires nothing.<!-- -->Given that 3. is the simpler, and non-crazy, approach, we can use this approach in combination with memoization to avoid the risk of repeating rule evaluation procedures. |
+|  [Evaluate](./alfa-act.rule.evaluate.md) |  |
 |  [JSON](./alfa-act.rule.json.md) |  |
 
 ## Namespaces

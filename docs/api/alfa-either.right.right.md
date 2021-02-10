@@ -11,5 +11,5 @@ right(): Option<R>;
 ```
 <b>Returns:</b>
 
-Option&lt;R&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;R&gt;
 

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-reject(predicate: Predicate<V, V, [K]>): Keyed<K, V>;
+reject<U extends V>(refinement: Refinement<V, U, [K]>): Keyed<K, Exclude<V, U>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, V, \[K\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[K\]&gt; |  |
 
 <b>Returns:</b>
 
-[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, Exclude&lt;V, U&gt;&gt;
 

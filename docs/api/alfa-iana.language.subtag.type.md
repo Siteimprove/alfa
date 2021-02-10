@@ -4,8 +4,6 @@
 
 ## Language.Subtag.type property
 
- https://tools.ietf.org/html/bcp47\#section-3.1.3
-
 <b>Signature:</b>
 
 ```typescript

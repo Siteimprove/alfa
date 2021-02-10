@@ -4,7 +4,7 @@
 
 ```ts
 
-import { Cheerio as Cheerio_2 } from '@siteimprove/alfa-cheerio';
+import { Cheerio } from '@siteimprove/alfa-cheerio';
 import { Page } from '@siteimprove/alfa-web';
 import V from 'vue';
 import { Wrapper } from '@vue/test-utils';
@@ -12,11 +12,9 @@ import { Wrapper } from '@vue/test-utils';
 // @public (undocumented)
 namespace Vue_2 {
     // (undocumented)
-    function asPage(value: Type): Page;
+    function toPage(value: Type): Page;
     // (undocumented)
-    function isType(value: unknown): value is Type;
-    // (undocumented)
-    type Type = Wrapper<V | null> | Cheerio_2.Type;
+    type Type = Wrapper<V | null> | Cheerio.Type;
 }
 
 export { Vue_2 as Vue }

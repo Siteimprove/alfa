@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-filter<U extends T>(predicate: Predicate<T, U, [number]>): Indexed<U>;
+filter<U extends T>(refinement: Refinement<T, U, [number]>): Indexed<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

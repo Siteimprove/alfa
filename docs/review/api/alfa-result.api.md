@@ -4,14 +4,18 @@
 
 ```ts
 
+import { Callback } from '@siteimprove/alfa-callback';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
 import { Functor } from '@siteimprove/alfa-functor';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { None } from '@siteimprove/alfa-option';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
@@ -27,7 +31,11 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    err(): Option_2<E>;
+    err(): Option<E>;
+    // (undocumented)
+    every(): boolean;
+    // (undocumented)
+    everyErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     flatMap(): this;
     // (undocumented)
@@ -39,6 +47,12 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): U;
     // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    includes(): boolean;
+    // (undocumented)
+    includesErr(error: E): boolean;
+    // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)
     isOk(): this is Ok<never>;
@@ -48,6 +62,10 @@ export class Err<E> implements Result<never, E> {
     mapErr<F>(mapper: Mapper<E, F>): Err<F>;
     // (undocumented)
     mapOrElse<T, U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
+    // (undocumented)
+    none(): boolean;
+    // (undocumented)
+    noneErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     static of<E>(error: E): Err<E>;
     // (undocumented)
@@ -59,7 +77,15 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     reduce<U>(reducer: unknown, accumulator: U): U;
     // (undocumented)
-    toJSON(): Err.JSON;
+    some(): boolean;
+    // (undocumented)
+    someErr(predicate: Predicate<E>): boolean;
+    // (undocumented)
+    tee(): Err<E>;
+    // (undocumented)
+    teeErr(callback: Callback<E>): Err<E>;
+    // (undocumented)
+    toJSON(): Err.JSON<E>;
     // (undocumented)
     toString(): string;
 }
@@ -69,11 +95,11 @@ export namespace Err {
     // (undocumented)
     export function isErr<E>(value: unknown): value is Err<E>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<E> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        error: json.JSON;
+        error: Serializable.ToJSON<E>;
         // (undocumented)
         type: "err";
     }
@@ -92,6 +118,10 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     err(): None;
     // (undocumented)
+    every(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    everyErr(): boolean;
+    // (undocumented)
     flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F>;
     // (undocumented)
     get(): T;
@@ -101,6 +131,12 @@ export class Ok<T> implements Result<T, never> {
     getOr(): T;
     // (undocumented)
     getOrElse(): T;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    includes(value: T): boolean;
+    // (undocumented)
+    includesErr(): boolean;
     // (undocumented)
     isErr(): this is Err<never>;
     // (undocumented)
@@ -112,9 +148,13 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     mapOrElse<E, U>(ok: Mapper<T, U>): U;
     // (undocumented)
+    none(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    noneErr(): boolean;
+    // (undocumented)
     static of<T>(value: T): Ok<T>;
     // (undocumented)
-    ok(): Option_2<T>;
+    ok(): Option<T>;
     // (undocumented)
     or(): this;
     // (undocumented)
@@ -122,7 +162,15 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
-    toJSON(): Ok.JSON;
+    some(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    someErr(): boolean;
+    // (undocumented)
+    tee(callback: Callback<T>): Ok<T>;
+    // (undocumented)
+    teeErr(): Ok<T>;
+    // (undocumented)
+    toJSON(): Ok.JSON<T>;
     // (undocumented)
     toString(): string;
     }
@@ -132,24 +180,28 @@ export namespace Ok {
     // (undocumented)
     export function isOk<T>(value: unknown): value is Ok<T>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         type: "ok";
         // (undocumented)
-        value: json.JSON;
+        value: Serializable.ToJSON<T>;
     }
 }
 
 // @public (undocumented)
-export interface Result<T, E = T> extends Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable, Serializable {
+export interface Result<T, E = T> extends Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
     // (undocumented)
     and<U>(result: Result<U, E>): Result<U, E>;
     // (undocumented)
     andThen<U>(result: Mapper<T, Result<U, E>>): Result<U, E>;
     // (undocumented)
-    err(): Option_2<E>;
+    err(): Option<E>;
+    // (undocumented)
+    every(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    everyErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
     // (undocumented)
@@ -161,6 +213,10 @@ export interface Result<T, E = T> extends Monad<T>, Functor<T>, Foldable<T>, Ite
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
     // (undocumented)
+    includes(value: T): boolean;
+    // (undocumented)
+    includesErr(error: E): boolean;
+    // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)
     isOk(): this is Ok<T>;
@@ -171,7 +227,11 @@ export interface Result<T, E = T> extends Monad<T>, Functor<T>, Foldable<T>, Ite
     // (undocumented)
     mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
     // (undocumented)
-    ok(): Option_2<T>;
+    none(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    noneErr(predicate: Predicate<E>): boolean;
+    // (undocumented)
+    ok(): Option<T>;
     // (undocumented)
     or<F>(result: Result<T, F>): Result<T, F>;
     // (undocumented)
@@ -179,7 +239,15 @@ export interface Result<T, E = T> extends Monad<T>, Functor<T>, Foldable<T>, Ite
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
-    toJSON(): Result.JSON;
+    some(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    someErr(predicate: Predicate<E>): boolean;
+    // (undocumented)
+    tee(callback: Callback<T>): Result<T, E>;
+    // (undocumented)
+    teeErr(callback: Callback<E>): Result<T, E>;
+    // (undocumented)
+    toJSON(): Result.JSON<T, E>;
 }
 
 // @public (undocumented)
@@ -191,7 +259,7 @@ export namespace Result {
     // (undocumented)
     export function isResult<T, E>(value: unknown): value is Result<T, E>;
     // (undocumented)
-    export type JSON = Ok.JSON | Err.JSON;
+    export type JSON<T, E = T> = Ok.JSON<T> | Err.JSON<E>;
     // (undocumented)
     export function of<T, E>(value: T): Result<T, E>;
 }

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-isDone(): boolean;
+abstract isDone(): boolean;
 ```
 <b>Returns:</b>
 

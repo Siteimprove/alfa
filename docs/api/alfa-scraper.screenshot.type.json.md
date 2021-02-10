@@ -9,3 +9,5 @@
 ```typescript
 type JSON = PNG.JSON | JPEG.JSON;
 ```
+<b>References:</b> [PNG.JSON](./alfa-scraper.screenshot.type.png.json.md)<!-- -->, [JPEG.JSON](./alfa-scraper.screenshot.type.jpeg.json.md)
+

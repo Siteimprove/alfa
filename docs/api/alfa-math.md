@@ -9,13 +9,13 @@
 |  Namespace | Description |
 |  --- | --- |
 |  [Matrix](./alfa-math.matrix.md) |  |
-|  [Real](./alfa-math.real.md) |  https://en.wikipedia.org/wiki/Real\_number |
+|  [Real](./alfa-math.real.md) |  |
 |  [Vector](./alfa-math.vector.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Matrix](./alfa-math.matrix.md) |  https://en.wikipedia.org/wiki/Matrix\_(mathematics) |
-|  [Vector](./alfa-math.vector.md) |  https://en.wikipedia.org/wiki/Vector\_(mathematics\_and\_physics) |
+|  [Matrix](./alfa-math.matrix.md) |  |
+|  [Vector](./alfa-math.vector.md) |  |
 

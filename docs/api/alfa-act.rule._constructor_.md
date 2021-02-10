@@ -9,7 +9,7 @@ Constructs a new instance of the `Rule` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(uri: string, evaluator: Rule.Evaluate<I, T, Q>);
+protected constructor(uri: string, requirements: Array<Requirement>, tags: Array<Tag>, evaluator: Rule.Evaluate<I, T, Q>);
 ```
 
 ## Parameters
@@ -17,5 +17,7 @@ protected constructor(uri: string, evaluator: Rule.Evaluate<I, T, Q>);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  uri | string |  |
+|  requirements | Array&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt; |  |
+|  tags | Array&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt; |  |
 |  evaluator | [Rule.Evaluate](./alfa-act.rule.evaluate.md)<!-- -->&lt;I, T, Q&gt; |  |
 

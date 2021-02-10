@@ -9,23 +9,86 @@ import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Nth } from '@siteimprove/alfa-css';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Serializable } from '@siteimprove/alfa-json';
 
-// @public
+// @public (undocumented)
+export class Context {
+    // (undocumented)
+    active(element: Element_2): Context;
+    // (undocumented)
+    static active(element: Element_2): Context;
+    // (undocumented)
+    addState(element: Element_2, state: Context.State): Context;
+    // (undocumented)
+    static empty(): Context;
+    // (undocumented)
+    focus(element: Element_2): Context;
+    // (undocumented)
+    static focus(element: Element_2): Context;
+    // (undocumented)
+    getState(element: Element_2): Context.State;
+    // (undocumented)
+    hasState(element: Element_2, state: Context.State): boolean;
+    // (undocumented)
+    hover(element: Element_2): Context;
+    // (undocumented)
+    static hover(element: Element_2): Context;
+    // (undocumented)
+    isActive(element: Element_2): boolean;
+    // (undocumented)
+    isFocused(element: Element_2): boolean;
+    // (undocumented)
+    isHovered(element: Element_2): boolean;
+    // (undocumented)
+    isVisited(element: Element_2): boolean;
+    // (undocumented)
+    static of(state: Iterable<[Element_2, Context.State]>): Context;
+    // (undocumented)
+    setState(element: Element_2, state: Context.State): Context;
+    // (undocumented)
+    visit(element: Element_2): Context;
+    // (undocumented)
+    static visit(element: Element_2): Context;
+}
+
+// @public (undocumented)
+export namespace Context {
+    // (undocumented)
+    export enum State {
+        // (undocumented)
+        Active = 2,
+        // (undocumented)
+        Focus = 4,
+        // (undocumented)
+        Hover = 1,
+        // (undocumented)
+        None = 0,
+        // (undocumented)
+        Visited = 8
+    }
+}
+
+// @public (undocumented)
 export type Selector = Selector.Simple | Selector.Compound | Selector.Complex | Selector.Relative | Selector.List;
 
 // @public (undocumented)
 export namespace Selector {
+    // (undocumented)
     export class Active extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Active;
     }
+    // (undocumented)
     export class After extends Pseudo.Element {
         // (undocumented)
         static of(): After;
     }
+    // (undocumented)
     export class Attribute extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Attribute>;
@@ -90,10 +153,12 @@ export namespace Selector {
             CaseSensitive = "s"
         }
     }
+    // (undocumented)
     export class Before extends Pseudo.Element {
         // (undocumented)
         static of(): Before;
     }
+    // (undocumented)
     export class Class extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Class>;
@@ -120,6 +185,7 @@ export namespace Selector {
             type: "class";
         }
     }
+    // (undocumented)
     export enum Combinator {
         // (undocumented)
         Descendant = " ",
@@ -130,6 +196,7 @@ export namespace Selector {
         // (undocumented)
         Sibling = "~"
     }
+    // (undocumented)
     export class Complex extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Complex>;
@@ -140,7 +207,7 @@ export namespace Selector {
         // (undocumented)
         get left(): Simple | Compound | Complex;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
         // (undocumented)
@@ -164,6 +231,7 @@ export namespace Selector {
             type: "complex";
         }
     }
+    // (undocumented)
     export class Compound extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Compound>;
@@ -172,7 +240,7 @@ export namespace Selector {
         // (undocumented)
         get left(): Simple;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(left: Simple, right: Simple | Compound): Compound;
         // (undocumented)
@@ -194,10 +262,49 @@ export namespace Selector {
             type: "compound";
         }
     }
+    // (undocumented)
+    export class Empty extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): Empty;
+    }
+    // (undocumented)
+    export class FirstChild extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): FirstChild;
+    }
+    // (undocumented)
+    export class FirstOfType extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): FirstOfType;
+    }
+    // (undocumented)
     export class Focus extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Focus;
     }
+    // (undocumented)
+    export class FocusVisible extends Pseudo.Class {
+        // (undocumented)
+        matches(): boolean;
+        // (undocumented)
+        static of(): FocusVisible;
+    }
+    // (undocumented)
+    export class FocusWithin extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2, context?: Context): boolean;
+        // (undocumented)
+        static of(): FocusWithin;
+    }
+    // (undocumented)
     export class Has extends Pseudo.Class {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -218,10 +325,14 @@ export namespace Selector {
             selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
         }
     }
+    // (undocumented)
     export class Hover extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Hover;
     }
+    // (undocumented)
     export class Id extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Id>;
@@ -248,11 +359,12 @@ export namespace Selector {
             type: "id";
         }
     }
+    // (undocumented)
     export class Is extends Pseudo.Class {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(selector: Simple | Compound | Complex | List<Simple | Compound | Complex>): Is;
         // (undocumented)
@@ -287,10 +399,28 @@ export namespace Selector {
         // (undocumented)
         type: string;
     }
+    // (undocumented)
+    export class LastChild extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): LastChild;
+    }
+    // (undocumented)
+    export class LastOfType extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): LastOfType;
+    }
+    // (undocumented)
     export class Link extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Link;
     }
+    // (undocumented)
     export class List<T extends Simple | Compound | Complex | Relative = Simple | Compound | Complex | Relative> extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Simple | Compound | Complex | Relative>;
@@ -299,7 +429,7 @@ export namespace Selector {
         // (undocumented)
         get left(): T;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of<T extends Simple | Compound | Complex | Relative>(left: T, right: T | List<T>): List<T>;
         // (undocumented)
@@ -322,12 +452,13 @@ export namespace Selector {
         }
     }
     // (undocumented)
-    export function matches(selector: string | Selector, scope?: Iterable_2<Element_2>): Predicate<Element_2>;
+    export function matches(selector: string | Selector, context?: Context): Predicate<Element_2>;
+    // (undocumented)
     export class Not extends Pseudo.Class {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(selector: Simple | Compound | Complex | List<Simple | Compound | Complex>): Not;
         // (undocumented)
@@ -346,7 +477,89 @@ export namespace Selector {
         }
     }
     // (undocumented)
-    export function parse(input: string): Option_2<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | Relative | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | Relative>>;
+    export class NthChild extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(index: Nth): NthChild;
+        // (undocumented)
+        toJSON(): NthChild.JSON;
+    }
+    // (undocumented)
+    export namespace NthChild {
+        // (undocumented)
+        export interface JSON extends Pseudo.Class.JSON {
+            // (undocumented)
+            index: Nth.JSON;
+        }
+    }
+    // (undocumented)
+    export class NthLastChild extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(index: Nth): NthLastChild;
+        // (undocumented)
+        toJSON(): NthLastChild.JSON;
+    }
+    // (undocumented)
+    export namespace NthLastChild {
+        // (undocumented)
+        export interface JSON extends Pseudo.Class.JSON {
+            // (undocumented)
+            index: Nth.JSON;
+        }
+    }
+    // (undocumented)
+    export class NthLastOfType extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(index: Nth): NthLastOfType;
+        // (undocumented)
+        toJSON(): NthLastOfType.JSON;
+    }
+    // (undocumented)
+    export namespace NthLastOfType {
+        // (undocumented)
+        export interface JSON extends Pseudo.Class.JSON {
+            // (undocumented)
+            index: Nth.JSON;
+        }
+    }
+    // (undocumented)
+    export class NthOfType extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(index: Nth): NthOfType;
+        // (undocumented)
+        toJSON(): NthOfType.JSON;
+    }
+    // (undocumented)
+    export namespace NthOfType {
+        // (undocumented)
+        export interface JSON extends Pseudo.Class.JSON {
+            // (undocumented)
+            index: Nth.JSON;
+        }
+    }
+    // (undocumented)
+    export class OnlyChild extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): OnlyChild;
+    }
+    // (undocumented)
+    export class OnlyOfType extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2): boolean;
+        // (undocumented)
+        static of(): OnlyOfType;
+    }
+    // (undocumented)
+    export function parse(input: string): Option_2<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>>;
     // (undocumented)
     export namespace Pseudo {
         // (undocumented)
@@ -357,7 +570,7 @@ export namespace Selector {
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
-            matches(element: dom.Element, scope?: Iterable_2<dom.Element>): boolean;
+            matches(element: dom.Element, context?: Context): boolean;
             // (undocumented)
             get name(): string;
             // (undocumented)
@@ -385,7 +598,7 @@ export namespace Selector {
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
-            matches(element: dom.Element, scope?: Iterable_2<dom.Element>): boolean;
+            matches(element: dom.Element, context?: Context): boolean;
             // (undocumented)
             get name(): string;
             // (undocumented)
@@ -410,6 +623,7 @@ export namespace Selector {
     }
     // (undocumented)
     export type Pseudo = Pseudo.Class | Pseudo.Element;
+    // (undocumented)
     export class Relative extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Relative>;
@@ -440,6 +654,7 @@ export namespace Selector {
             type: "relative";
         }
     }
+    // (undocumented)
     export class Root extends Pseudo.Class {
         // (undocumented)
         matches(element: Element_2): boolean;
@@ -452,16 +667,19 @@ export namespace Selector {
         abstract [Symbol.iterator](): Iterator<Simple | Compound | Complex | Relative>;
         // (undocumented)
         abstract equals(value: unknown): value is this;
-        abstract matches(element: Element_2, scope?: Iterable_2<Element_2>): boolean;
+        // (undocumented)
+        abstract matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         abstract toJSON(): JSON;
     }
+    // (undocumented)
     export type Simple = Type | Universal | Attribute | Class | Id | Pseudo;
     // (undocumented)
     export namespace Simple {
         // (undocumented)
         export type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | Pseudo.JSON;
     }
+    // (undocumented)
     export class Type extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Type>;
@@ -492,6 +710,7 @@ export namespace Selector {
             type: "type";
         }
     }
+    // (undocumented)
     export class Universal extends Selector {
         // (undocumented)
         [Symbol.iterator](): Iterator<Universal>;
@@ -520,7 +739,10 @@ export namespace Selector {
             type: "universal";
         }
     }
+    // (undocumented)
     export class Visited extends Pseudo.Class {
+        // (undocumented)
+        matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Visited;
     }

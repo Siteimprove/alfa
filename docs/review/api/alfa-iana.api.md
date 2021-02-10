@@ -6,24 +6,24 @@
 
 import { Equatable } from '@siteimprove/alfa-equatable';
 import * as json from '@siteimprove/alfa-json';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Language implements Equatable, Serializable {
-    constructor(primary: Language.Primary, extended: Option_2<Language.Extended>, script: Option_2<Language.Script>, region: Option_2<Language.Region>, variants: Array<Language.Variant>);
+    constructor(primary: Language.Primary, extended: Option<Language.Extended>, script: Option<Language.Script>, region: Option<Language.Region>, variants: Array<Language.Variant>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get extended(): Option_2<Language.Extended>;
+    get extended(): Option<Language.Extended>;
     // (undocumented)
-    static of(primary: Language.Primary, extended?: Option_2<Language.Extended>, script?: Option_2<Language.Script>, region?: Option_2<Language.Region>, variants?: Array<Language.Variant>): Language;
+    static of(primary: Language.Primary, extended?: Option<Language.Extended>, script?: Option<Language.Script>, region?: Option<Language.Region>, variants?: Array<Language.Variant>): Language;
     // (undocumented)
     get primary(): Language.Primary;
     // (undocumented)
-    get region(): Option_2<Language.Region>;
+    get region(): Option<Language.Region>;
     // (undocumented)
-    get script(): Option_2<Language.Script>;
+    get script(): Option<Language.Script>;
     // (undocumented)
     toJSON(): Language.JSON;
     // (undocumented)
@@ -34,13 +34,16 @@ export class Language implements Equatable, Serializable {
 
 // @public (undocumented)
 export namespace Language {
+    // (undocumented)
     export class Extended extends Subtag {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string, prefix: string, scope?: Option_2<Scope>): Extended;
+        static of(name: string, prefix: string, scope?: Option<Scope>): Extended;
+        // (undocumented)
         get prefix(): string;
-        get scope(): Option_2<Scope>;
+        // (undocumented)
+        get scope(): Option<Scope>;
         // (undocumented)
         toJSON(): Extended.JSON;
         // (undocumented)
@@ -75,12 +78,14 @@ export namespace Language {
         // (undocumented)
         variants: Array<Variant.JSON>;
     }
+    // (undocumented)
     export class Primary extends Subtag {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string, scope?: Option_2<Scope>): Primary;
-        get scope(): Option_2<Scope>;
+        static of(name: string, scope?: Option<Scope>): Primary;
+        // (undocumented)
+        get scope(): Option<Scope>;
         // (undocumented)
         toJSON(): Primary.JSON;
         // (undocumented)
@@ -96,6 +101,7 @@ export namespace Language {
             type: "primary";
         }
     }
+    // (undocumented)
     export class Region extends Subtag {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -116,6 +122,7 @@ export namespace Language {
     }
     // (undocumented)
     export type Scope = "macrolanguage" | "collection" | "special" | "private-use";
+    // (undocumented)
     export class Script extends Subtag {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -134,10 +141,12 @@ export namespace Language {
             type: "script";
         }
     }
+    // (undocumented)
     export abstract class Subtag implements Equatable, Serializable {
         protected constructor(name: string);
         // (undocumented)
         abstract equals(value: unknown): value is this;
+        // (undocumented)
         get name(): string;
         // (undocumented)
         protected readonly _name: string;
@@ -145,6 +154,7 @@ export namespace Language {
         abstract toJSON(): Subtag.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
         abstract get type(): string;
     }
     // (undocumented)
@@ -159,11 +169,13 @@ export namespace Language {
             type: string;
         }
     }
+    // (undocumented)
     export class Variant extends Subtag {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         static of(name: string, prefixes: Array<string>): Variant;
+        // (undocumented)
         get prefixes(): Array<string>;
         // (undocumented)
         toJSON(): Variant.JSON;
@@ -185,7 +197,7 @@ export namespace Language {
 // @public (undocumented)
 export namespace Language {
     // (undocumented)
-    export function parse(input: string): Option_2<Language>;
+    export function parse(input: string): Option<Language>;
 }
 
 

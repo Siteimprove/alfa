@@ -4,12 +4,10 @@
 
 ## Assertions.fail() method
 
- https://nodejs.org/api/assert.html\#assert\_assert\_fail\_message
-
 <b>Signature:</b>
 
 ```typescript
-fail(message?: string): void;
+fail(message?: string): never;
 ```
 
 ## Parameters
@@ -20,5 +18,5 @@ fail(message?: string): void;
 
 <b>Returns:</b>
 
-void
+never
 

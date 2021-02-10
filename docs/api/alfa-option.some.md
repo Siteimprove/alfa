@@ -15,6 +15,7 @@ export declare namespace Some
 |  Function | Description |
 |  --- | --- |
 |  [isSome(value)](./alfa-option.some.issome.md) |  |
+|  [isSome(value)](./alfa-option.some.issome_1.md) |  |
 
 ## Interfaces
 

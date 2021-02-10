@@ -11,3 +11,5 @@ type Values<F extends Flags> = {
             [N in keyof F]: F[N] extends Flag<infer T> ? T : never;
         };
 ```
+<b>References:</b> [Flags](./alfa-command.command.flags.md)<!-- -->, [Flag](./alfa-command.flag.md)
+

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of(method: string, url: string, headers?: Headers, body?: ArrayBuffer): Request;
+static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Request;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ static of(method: string, url: string, headers?: Headers, body?: ArrayBuffer): R
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  method | string |  |
-|  url | string |  |
+|  url | [URL](./alfa-url.url.md) |  |
 |  headers | Headers |  |
 |  body | ArrayBuffer |  |
 

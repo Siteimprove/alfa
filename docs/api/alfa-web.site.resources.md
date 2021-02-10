@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get resources(): Graph<Resource>;
+get resources(): Graph<R>;
 ```

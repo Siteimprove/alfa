@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function separatedList<I, T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>): Parser<I, Iterable<T>, E, A>;
+function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>): Parser<I, Iterable<T>, E, A>;
 ```
 
 ## Parameters

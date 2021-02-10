@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export function parse(input: string): Option<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | Relative | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | Relative>>;
+export function parse(input: string): Option<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ export function parse(input: string): Option<Type | Universal | Attribute | Clas
 
 <b>Returns:</b>
 
-Option&lt;[Type](./alfa-selector.selector.type.md) \| [Universal](./alfa-selector.selector.universal.md) \| [Attribute](./alfa-selector.selector.attribute.md) \| [Class](./alfa-selector.selector.class.md) \| [Id](./alfa-selector.selector.id.md) \| [Pseudo.Class](./alfa-selector.selector.pseudo.class.md) \| [Pseudo.Element](./alfa-selector.selector.pseudo.element.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [Relative](./alfa-selector.selector.relative.md) \| [List](./alfa-selector.selector.list.md)<!-- -->&lt;[Type](./alfa-selector.selector.type.md) \| [Universal](./alfa-selector.selector.universal.md) \| [Attribute](./alfa-selector.selector.attribute.md) \| [Class](./alfa-selector.selector.class.md) \| [Id](./alfa-selector.selector.id.md) \| [Pseudo.Class](./alfa-selector.selector.pseudo.class.md) \| [Pseudo.Element](./alfa-selector.selector.pseudo.element.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [Relative](./alfa-selector.selector.relative.md)<!-- -->&gt;&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;[Type](./alfa-selector.selector.type.md) \| [Universal](./alfa-selector.selector.universal.md) \| [Attribute](./alfa-selector.selector.attribute.md) \| [Class](./alfa-selector.selector.class.md) \| [Id](./alfa-selector.selector.id.md) \| [Pseudo.Class](./alfa-selector.selector.pseudo.class.md) \| [Pseudo.Element](./alfa-selector.selector.pseudo.element.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [List](./alfa-selector.selector.list.md)<!-- -->&lt;[Type](./alfa-selector.selector.type.md) \| [Universal](./alfa-selector.selector.universal.md) \| [Attribute](./alfa-selector.selector.attribute.md) \| [Class](./alfa-selector.selector.class.md) \| [Id](./alfa-selector.selector.id.md) \| [Pseudo.Class](./alfa-selector.selector.pseudo.class.md) \| [Pseudo.Element](./alfa-selector.selector.pseudo.element.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md)<!-- -->&gt;&gt;
 

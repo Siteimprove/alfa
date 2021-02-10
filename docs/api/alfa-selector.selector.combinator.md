@@ -4,8 +4,6 @@
 
 ## Selector.Combinator enum
 
- https://drafts.csswg.org/selectors/\#selector-combinator
-
 <b>Signature:</b>
 
 ```typescript

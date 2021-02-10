@@ -4,14 +4,16 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Callback } from '@siteimprove/alfa-callback';
 import { Collection } from '@siteimprove/alfa-collection';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
 
 // @public (undocumented)
 class Set_2<T> implements Collection.Unkeyed<T> {
@@ -22,25 +24,39 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     apply<U>(mapper: Set_2<Mapper<T, U>>): Set_2<U>;
     // (undocumented)
+    collect<U>(mapper: Mapper<T, Option<U>>): Set_2<U>;
+    // (undocumented)
+    collectFirst<U>(mapper: Mapper<T, Option<U>>): Option<U>;
+    // (undocumented)
     concat(iterable: Iterable_2<T>): Set_2<T>;
     // (undocumented)
     count(predicate: Predicate<T>): number;
     // (undocumented)
     delete(value: T): Set_2<T>;
     // (undocumented)
+    distinct(): Set_2<T>;
+    // (undocumented)
     static empty<T>(): Set_2<T>;
+    // (undocumented)
+    equals<T>(value: Set_2<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U>): Set_2<U>;
+    filter<U extends T>(refinement: Refinement<T, U>): Set_2<U>;
     // (undocumented)
-    find<U extends T>(predicate: Predicate<T, U>): Option_2<U>;
+    filter(predicate: Predicate<T>): Set_2<T>;
+    // (undocumented)
+    find<U extends T>(refinement: Refinement<T, U>): Option<U>;
+    // (undocumented)
+    find(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Set_2<U>>): Set_2<U>;
     // (undocumented)
-    get(value: T): Option_2<T>;
+    forEach(callback: Callback<T>): void;
+    // (undocumented)
+    get(value: T): Option<T>;
     // (undocumented)
     has(value: T): boolean;
     // (undocumented)
@@ -52,9 +68,13 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Set_2<U>;
     // (undocumented)
-    static of<T>(...values: Array<T>): Set_2<T>;
+    none(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    static of<T>(...values: Array_2<T>): Set_2<T>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+    // (undocumented)
+    reject<U extends T>(refinement: Refinement<T, U>): Set_2<Exclude<T, U>>;
     // (undocumented)
     reject(predicate: Predicate<T>): Set_2<T>;
     // (undocumented)
@@ -62,9 +82,9 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
-    toArray(): Array<T>;
+    toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(): Set_2.JSON;
+    toJSON(): Set_2.JSON<T>;
     // (undocumented)
     toString(): string;
     }
@@ -74,10 +94,15 @@ namespace Set_2 {
     // (undocumented)
     function from<T>(iterable: Iterable_2<T>): Set_2<T>;
     // (undocumented)
+    function fromArray<T>(array: Array_2<T>): Set_2<T>;
+    // (undocumented)
+    function fromIterable<T>(iterable: Iterable_2<T>): Set_2<T>;
+    // (undocumented)
+    function isSet<T>(value: Iterable_2<T>): value is Set_2<T>;
+    // (undocumented)
     function isSet<T>(value: unknown): value is Set_2<T>;
     // (undocumented)
-    interface JSON extends Array<json.JSON> {
-    }
+    type JSON<T> = Collection.Unkeyed.JSON<T>;
 }
 
 export { Set_2 as Set }

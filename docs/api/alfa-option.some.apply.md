@@ -14,9 +14,9 @@ apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | Option&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+|  mapper | [Option](./alfa-option.option.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
 <b>Returns:</b>
 
-Option&lt;U&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

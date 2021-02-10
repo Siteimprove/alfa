@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Map.JSON;
+toJSON(): Map.JSON<K, V>;
 ```
 <b>Returns:</b>
 
-Map.JSON
+Map.JSON&lt;K, V&gt;
 

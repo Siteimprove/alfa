@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function empty<T>(): Sequence<T>;
+function empty<T = never>(): Sequence<T>;
 ```
 <b>Returns:</b>
 

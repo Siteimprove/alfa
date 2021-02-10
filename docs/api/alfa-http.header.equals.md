@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals(value: Header): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Header](./alfa-http.header.md) |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

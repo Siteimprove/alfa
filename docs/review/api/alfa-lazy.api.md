@@ -6,14 +6,17 @@
 
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
-import { JSON as JSON_2 } from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Lazy<T> implements Monad<T>, Functor<T>, Equatable, Serializable {
+export class Lazy<T> implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> {
+    // (undocumented)
+    [Symbol.iterator](): Iterator<T>;
+    // (undocumented)
+    equals<T>(value: Lazy<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -23,16 +26,24 @@ export class Lazy<T> implements Monad<T>, Functor<T>, Equatable, Serializable {
     // (undocumented)
     force(): T;
     // (undocumented)
+    iterator(): Iterator<T>;
+    // (undocumented)
     map<U>(mapper: Mapper<T, U>): Lazy<U>;
     // (undocumented)
     static of<T>(thunk: Thunk<T>): Lazy<T>;
     // (undocumented)
-    toJSON(): JSON_2;
+    toJSON(): Lazy.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)
     toThunk(): Thunk<T>;
     }
+
+// @public (undocumented)
+export namespace Lazy {
+    // (undocumented)
+    export type JSON<T> = Serializable.ToJSON<T>;
+}
 
 
 // (No @packageDocumentation comment for this package)

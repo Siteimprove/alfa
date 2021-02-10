@@ -5,6 +5,9 @@
 ```ts
 
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Comparable } from '@siteimprove/alfa-comparable';
+import { Comparer } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -15,11 +18,12 @@ import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export interface None extends Option_2<never> {
+export interface None extends Option<never> {
 }
 
 // @public (undocumented)
@@ -37,19 +41,23 @@ export namespace None {
 }
 
 // @public (undocumented)
-interface Option_2<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable {
+export interface Option<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> {
     // (undocumented)
-    and<U>(option: Option_2<U>): Option_2<U>;
+    and<U>(option: Option<U>): Option<U>;
     // (undocumented)
-    andThen<U>(option: Mapper<T, Option_2<U>>): Option_2<U>;
+    andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
     // (undocumented)
-    apply<U>(mapper: Option_2<Mapper<T, U>>): Option_2<U>;
+    apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
+    // (undocumented)
+    compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U>): Option_2<U>;
+    filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Option_2<U>>): Option_2<U>;
+    filter(predicate: Predicate<T>): Option<T>;
+    // (undocumented)
+    flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
     // (undocumented)
     get(): T;
     // (undocumented)
@@ -63,59 +71,79 @@ interface Option_2<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>,
     // (undocumented)
     isSome(): this is Some<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Option_2<U>;
+    map<U>(mapper: Mapper<T, U>): Option<U>;
     // (undocumented)
-    or<U>(option: Option_2<U>): Option_2<T | U>;
+    none(predicate: Predicate<T>): boolean;
     // (undocumented)
-    orElse<U>(option: Thunk<Option_2<U>>): Option_2<T | U>;
+    or<U>(option: Option<U>): Option<T | U>;
+    // (undocumented)
+    orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+    // (undocumented)
+    reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
+    // (undocumented)
+    reject(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
     toArray(): Array<T>;
     // (undocumented)
-    toJSON(): Option_2.JSON;
+    toJSON(): Option.JSON<T>;
 }
 
 // @public (undocumented)
-namespace Option_2 {
+export namespace Option {
     // (undocumented)
-    function empty<T>(): Option_2<T>;
+    export function compare<T extends Comparable<T>>(a: Option<T>, b: Option<T>): Comparison;
     // (undocumented)
-    function flatten<T>(option: Option_2<Option_2<T>>): Option_2<T>;
+    export function empty<T>(): Option<T>;
     // (undocumented)
-    function from<T>(value: T | null | undefined): Option_2<NonNullable<T>>;
+    export function flatten<T>(option: Option<Option<T>>): Option<T>;
     // (undocumented)
-    function isOption<T>(value: unknown): value is Option_2<T>;
+    export function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
     // (undocumented)
-    type JSON = Some.JSON | None.JSON;
+    export function isNone<T>(value: Iterable<T>): value is None;
     // (undocumented)
-    type Maybe<T> = T | Option_2<T>;
+    export function isNone(value: unknown): value is None;
     // (undocumented)
-    function of<T>(value: T): Option_2<T>;
+    export function isOption<T>(value: Iterable<T>): value is Option<T>;
+    // (undocumented)
+    export function isOption<T>(value: unknown): value is Option<T>;
+    // (undocumented)
+    export function isSome<T>(value: Iterable<T>): value is Some<T>;
+    // (undocumented)
+    export function isSome<T>(value: unknown): value is Some<T>;
+    // (undocumented)
+    export type JSON<T> = Some.JSON<T> | None.JSON;
+    // (undocumented)
+    export type Maybe<T> = T | Option<T>;
+    // (undocumented)
+    export function of<T>(value: T): Option<T>;
 }
 
-export { Option_2 as Option }
-
 // @public (undocumented)
-export class Some<T> implements Option_2<T> {
+export class Some<T> implements Option<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
-    and<U>(option: Option_2<U>): Option_2<U>;
+    and<U>(option: Option<U>): Option<U>;
     // (undocumented)
-    andThen<U>(option: Mapper<T, Option_2<U>>): Option_2<U>;
+    andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
     // (undocumented)
-    apply<U>(mapper: Option_2<Mapper<T, U>>): Option_2<U>;
+    apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
+    // (undocumented)
+    compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
-    filter<U extends T>(predicate: Predicate<T, U>): Option_2<U>;
+    filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Option_2<U>>): Option_2<U>;
+    filter(predicate: Predicate<T>): Option<T>;
+    // (undocumented)
+    flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
     // (undocumented)
     get(): T;
     // (undocumented)
@@ -131,21 +159,27 @@ export class Some<T> implements Option_2<T> {
     // (undocumented)
     isSome(): this is Some<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Option_2<U>;
+    map<U>(mapper: Mapper<T, U>): Option<U>;
+    // (undocumented)
+    none(predicate: Predicate<T>): boolean;
     // (undocumented)
     static of<T>(value: T): Some<T>;
     // (undocumented)
-    or(): Option_2<T>;
+    or(): Option<T>;
     // (undocumented)
-    orElse(): Option_2<T>;
+    orElse(): Option<T>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+    // (undocumented)
+    reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
+    // (undocumented)
+    reject(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
     toArray(): [T];
     // (undocumented)
-    toJSON(): Some.JSON;
+    toJSON(): Some.JSON<T>;
     // (undocumented)
     toString(): string;
     }
@@ -153,15 +187,17 @@ export class Some<T> implements Option_2<T> {
 // @public (undocumented)
 export namespace Some {
     // (undocumented)
+    export function isSome<T>(value: Iterable<T>): value is Some<T>;
+    // (undocumented)
     export function isSome<T>(value: unknown): value is Some<T>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         type: "some";
         // (undocumented)
-        value: json.JSON;
+        value: Serializable.ToJSON<T>;
     }
 }
 

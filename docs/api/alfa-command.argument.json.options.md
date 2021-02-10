@@ -11,6 +11,6 @@ options: {
             [key: string]: json.JSON;
             optional: boolean;
             repeatable: boolean;
-            default: json.JSON | null;
+            default: string | null;
         };
 ```

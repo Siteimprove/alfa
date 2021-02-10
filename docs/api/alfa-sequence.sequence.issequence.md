@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isSequence<T>(value: unknown): value is Sequence<T>;
+function isSequence<T>(value: Iterable<T>): value is Sequence<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

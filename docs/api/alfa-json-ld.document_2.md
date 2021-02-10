@@ -15,5 +15,5 @@ export interface Document extends Dictionary
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@context"](./alfa-json-ld.document_2.__context_.md) | [Context](./alfa-json-ld.context.md) |  |
+|  ["@context"?](./alfa-json-ld.document_2.__context_.md) | [Context](./alfa-json-ld.context.md) | <i>(Optional)</i> |
 

@@ -14,5 +14,5 @@ export declare namespace Jest
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin(identify, transform)](./alfa-jest.jest.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-jest.jest.createplugin.md) |  |
 

@@ -19,7 +19,7 @@ static withArguments<F extends Command.Flags, A extends Command.Arguments>(name:
 |  description | string |  |
 |  flags | F |  |
 |  args | A |  |
-|  parent | Option&lt;[Command](./alfa-command.command.md)<!-- -->&gt; |  |
+|  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Command](./alfa-command.command.md)<!-- -->&gt; |  |
 |  run | (command: [Command](./alfa-command.command.md)<!-- -->&lt;F, A, {}&gt;) =&gt; [Command.Runner](./alfa-command.command.runner.md)<!-- -->&lt;F, A&gt; |  |
 
 <b>Returns:</b>

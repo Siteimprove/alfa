@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-reject(predicate: Predicate<T, T, [Iterable<B>]>): Branched<T, B>;
+reject<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<Exclude<T, U>, B>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
 
 <b>Returns:</b>
 
-[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;Exclude&lt;T, U&gt;, B&gt;
 

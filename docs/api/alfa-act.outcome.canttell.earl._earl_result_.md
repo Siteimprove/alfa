@@ -12,5 +12,6 @@
                 "earl:outcome": {
                     "@id": "earl:cantTell";
                 };
+                "earl:pointer"?: earl.EARL;
             };
 ```

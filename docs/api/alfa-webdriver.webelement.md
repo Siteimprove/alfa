@@ -14,6 +14,5 @@ export declare namespace WebElement
 
 |  Function | Description |
 |  --- | --- |
-|  [asPage(webElement, browser)](./alfa-webdriver.webelement.aspage.md) |  |
-|  [isType(value)](./alfa-webdriver.webelement.istype.md) |  https://w3c.github.io/webdriver/\#dfn-represents-a-web-element |
+|  [toPage(webElement, browser)](./alfa-webdriver.webelement.topage.md) |  |
 

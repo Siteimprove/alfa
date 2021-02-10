@@ -4,6 +4,8 @@
 
 ## Scraper.close() method
 
+Close the scraper and its associated browser.
+
 <b>Signature:</b>
 
 ```typescript

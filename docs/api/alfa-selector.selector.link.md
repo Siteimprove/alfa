@@ -4,8 +4,6 @@
 
 ## Selector.Link class
 
- https://drafts.csswg.org/selectors/\#link-pseudo
-
 <b>Signature:</b>
 
 ```typescript
@@ -17,5 +15,6 @@ export class Link extends Pseudo.Class
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [matches(element, context)](./alfa-selector.selector.link.matches.md) |  |  |
 |  [of()](./alfa-selector.selector.link.of.md) | <code>static</code> |  |
 

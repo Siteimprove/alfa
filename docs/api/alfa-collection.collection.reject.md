@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-reject(predicate: Predicate<T>): Collection<T>;
+reject<U extends T>(refinement: Refinement<T, U>): Collection<Exclude<T, U>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
 
 <b>Returns:</b>
 
-[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
+[Collection](./alfa-collection.collection.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

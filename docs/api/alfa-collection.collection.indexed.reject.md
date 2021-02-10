@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-reject(predicate: Predicate<T, T, [number]>): Indexed<T>;
+reject<U extends T>(refinement: Refinement<T, U, [number]>): Indexed<Exclude<T, U>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
 
 <b>Returns:</b>
 
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

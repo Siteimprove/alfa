@@ -4,8 +4,6 @@
 
 ## expand() function
 
- https://www.w3.org/TR/json-ld-api/\#expansion-algorithm
-
 <b>Signature:</b>
 
 ```typescript

@@ -19,7 +19,7 @@ static withSubcommands<F extends Command.Flags, S extends Command.Subcommands>(n
 |  description | string |  |
 |  flags | F |  |
 |  subcommands | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Command](./alfa-command.command.md)<!-- -->, S&gt; |  |
-|  parent | Option&lt;[Command](./alfa-command.command.md)<!-- -->&gt; |  |
+|  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Command](./alfa-command.command.md)<!-- -->&gt; |  |
 |  run | (command: [Command](./alfa-command.command.md)<!-- -->&lt;F, {}, S&gt;) =&gt; [Command.Runner](./alfa-command.command.runner.md)<!-- -->&lt;F, {}&gt; |  |
 
 <b>Returns:</b>

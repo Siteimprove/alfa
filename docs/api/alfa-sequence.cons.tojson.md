@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Cons.JSON;
+toJSON(): Cons.JSON<T>;
 ```
 <b>Returns:</b>
 
-[Cons.JSON](./alfa-sequence.cons.json.md)
+[Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->&lt;T&gt;
 

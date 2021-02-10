@@ -6,9 +6,10 @@
 
 import { Outcome } from '@siteimprove/alfa-act';
 import { Result } from '@siteimprove/alfa-result';
+import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
-export type Formatter<I, T = unknown, Q = never> = (input: I, outcomes: Iterable<Outcome<I, T, Q>>) => string;
+export type Formatter<I = unknown, T = unknown, Q = never> = (input: I, rules: Iterable<Rule<I, T, Q>>, outcomes: Iterable<Outcome<I, T, Q>>) => string;
 
 // @public (undocumented)
 export namespace Formatter {

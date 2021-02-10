@@ -2,17 +2,17 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-clone](./alfa-clone.md) &gt; [Clone](./alfa-clone.clone.md)
 
-## Clone interface
+## Clone namespace
 
 <b>Signature:</b>
 
 ```typescript
-export interface Clone<T> 
+export declare namespace Clone 
 ```
 
-## Methods
+## Functions
 
-|  Method | Description |
+|  Function | Description |
 |  --- | --- |
-|  [clone()](./alfa-clone.clone.clone.md) |  |
+|  [clone(value)](./alfa-clone.clone.clone.md) |  |
 

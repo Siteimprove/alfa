@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals<I, T, Q>(value: Inapplicable<I, T, Q>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

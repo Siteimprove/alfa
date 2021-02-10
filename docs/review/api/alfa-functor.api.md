@@ -12,6 +12,15 @@ export interface Functor<T> {
     map<U>(mapper: Mapper<T, U>): Functor<U>;
 }
 
+// @public (undocumented)
+export namespace Functor {
+    // (undocumented)
+    export interface Invariant<T> {
+        // (undocumented)
+        contraMap<U>(mapper: Mapper<U, T>): Invariant<U>;
+    }
+}
+
 
 // (No @packageDocumentation comment for this package)
 

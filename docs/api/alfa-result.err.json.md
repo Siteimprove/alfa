@@ -7,13 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+interface JSON<E> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [error](./alfa-result.err.json.error.md) | json.JSON |  |
+|  [error](./alfa-result.err.json.error.md) | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;E&gt; |  |
 |  [type](./alfa-result.err.json.type.md) | "err" |  |
 

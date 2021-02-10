@@ -14,12 +14,12 @@ export declare namespace Media
 
 |  Class | Description |
 |  --- | --- |
-|  [Condition](./alfa-media.media.condition.md) |  https://drafts.csswg.org/mediaqueries/\#media-condition |
-|  [Feature](./alfa-media.media.feature.md) |  https://drafts.csswg.org/mediaqueries/\#media-feature |
-|  [List](./alfa-media.media.list.md) |  https://drafts.csswg.org/mediaqueries/\#media-query-list |
+|  [Condition](./alfa-media.media.condition.md) |  |
+|  [Feature](./alfa-media.media.feature.md) |  |
+|  [List](./alfa-media.media.list.md) |  |
 |  [Negation](./alfa-media.media.negation.md) |  |
-|  [Query](./alfa-media.media.query.md) |  https://drafts.csswg.org/mediaqueries/\#media-query |
-|  [Type](./alfa-media.media.type.md) |  https://drafts.csswg.org/mediaqueries/\#media-type |
+|  [Query](./alfa-media.media.query.md) |  |
+|  [Type](./alfa-media.media.type.md) |  |
 
 ## Enumerations
 
@@ -27,7 +27,7 @@ export declare namespace Media
 |  --- | --- |
 |  [Combinator](./alfa-media.media.combinator.md) |  |
 |  [Comparator](./alfa-media.media.comparator.md) |  |
-|  [Modifier](./alfa-media.media.modifier.md) |  https://drafts.csswg.org/mediaqueries/\#media-query-modifier |
+|  [Modifier](./alfa-media.media.modifier.md) |  |
 
 ## Functions
 

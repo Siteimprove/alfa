@@ -10,3 +10,9 @@
 |  --- | --- |
 |  [Clone](./alfa-clone.clone.md) |  |
 
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Clone](./alfa-clone.clone.md) |  |
+

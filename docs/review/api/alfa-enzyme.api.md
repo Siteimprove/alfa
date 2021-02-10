@@ -4,7 +4,7 @@
 
 ```ts
 
-import { Cheerio as Cheerio_2 } from '@siteimprove/alfa-cheerio';
+import { Cheerio } from '@siteimprove/alfa-cheerio';
 import { Page } from '@siteimprove/alfa-web';
 import { ReactWrapper } from 'enzyme';
 import { ShallowWrapper } from 'enzyme';
@@ -12,11 +12,9 @@ import { ShallowWrapper } from 'enzyme';
 // @public (undocumented)
 export namespace Enzyme {
     // (undocumented)
-    export function asPage(enzyme: Type): Page;
+    export function toPage(value: Type): Page;
     // (undocumented)
-    export function isType(value: unknown): value is Type;
-    // (undocumented)
-    export type Type = ReactWrapper | ShallowWrapper | Cheerio_2.Type;
+    export type Type = ReactWrapper | ShallowWrapper | Cheerio.Type;
 }
 
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-matches(element: Element): boolean;
+matches(element: Element, context?: Context): boolean;
 ```
 
 ## Parameters
@@ -15,6 +15,7 @@ matches(element: Element): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | Element |  |
+|  context | [Context](./alfa-selector.context.md) |  |
 
 <b>Returns:</b>
 

@@ -15,11 +15,14 @@ export declare namespace Set
 |  Function | Description |
 |  --- | --- |
 |  [from(iterable)](./alfa-set.set_2.from.md) |  |
+|  [fromArray(array)](./alfa-set.set_2.fromarray.md) |  |
+|  [fromIterable(iterable)](./alfa-set.set_2.fromiterable.md) |  |
 |  [isSet(value)](./alfa-set.set_2.isset.md) |  |
+|  [isSet(value)](./alfa-set.set_2.isset_1.md) |  |
 
-## Interfaces
+## Type Aliases
 
-|  Interface | Description |
+|  Type Alias | Description |
 |  --- | --- |
 |  [JSON](./alfa-set.set_2.json.md) |  |
 

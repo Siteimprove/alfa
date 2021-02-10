@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-map](./alfa-map.md) &gt; [Map\_2](./alfa-map.map_2.md) &gt; [JSON](./alfa-map.map_2.json.md)
 
-## Map\_2.JSON interface
+## Map\_2.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Array<[json.JSON, json.JSON]> 
+type JSON<K, V> = Collection.Keyed.JSON<K, V>;
 ```
-<b>Extends:</b> Array&lt;\[json.JSON, json.JSON\]&gt;
+<b>References:</b> [Collection.Keyed.JSON](./alfa-collection.collection.keyed.json.md)
 

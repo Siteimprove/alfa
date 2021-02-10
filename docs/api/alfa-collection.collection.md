@@ -10,9 +10,24 @@
 export declare namespace Collection 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [compare(a, b)](./alfa-collection.collection.compare.md) |  |
+|  [sort(collection)](./alfa-collection.collection.sort.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
+|  --- | --- |
+|  [Indexed](./alfa-collection.collection.indexed.md) |  |
+|  [Keyed](./alfa-collection.collection.keyed.md) |  |
+|  [Unkeyed](./alfa-collection.collection.unkeyed.md) |  |
+
+## Namespaces
+
+|  Namespace | Description |
 |  --- | --- |
 |  [Indexed](./alfa-collection.collection.indexed.md) |  |
 |  [Keyed](./alfa-collection.collection.keyed.md) |  |

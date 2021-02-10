@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type JSON = Array<json.JSON>;
+type JSON<T> = Collection.Indexed.JSON<T>;
 ```
+<b>References:</b> [Collection.Indexed.JSON](./alfa-collection.collection.indexed.json.md)
+

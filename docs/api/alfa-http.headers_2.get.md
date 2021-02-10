@@ -18,5 +18,5 @@ get(name: string): Option<Header>;
 
 <b>Returns:</b>
 
-Option&lt;[Header](./alfa-http.header.md)<!-- -->&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;[Header](./alfa-http.header.md)<!-- -->&gt;
 

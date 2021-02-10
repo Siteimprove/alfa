@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isCons<T>(value: unknown): value is Cons<T>;
+function isCons<T>(value: Iterable<T>): value is Cons<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

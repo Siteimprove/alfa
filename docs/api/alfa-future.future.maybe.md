@@ -9,3 +9,5 @@
 ```typescript
 type Maybe<T> = T | Future<T>;
 ```
+<b>References:</b> [Future](./alfa-future.future.md)
+

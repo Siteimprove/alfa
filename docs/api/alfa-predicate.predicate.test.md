@@ -7,18 +7,18 @@
 <b>Signature:</b>
 
 ```typescript
-function test<T, U extends T = T, A extends Array<unknown> = []>(predicate: Predicate<T, U, A>, value: T, ...args: A): value is U;
+function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U, A&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
 |  value | T |  |
 |  args | A |  |
 
 <b>Returns:</b>
 
-value is U
+boolean
 

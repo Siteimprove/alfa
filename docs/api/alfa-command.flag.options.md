@@ -15,9 +15,9 @@ interface Options
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [aliases](./alfa-command.flag.options.aliases.md) | Array&lt;string&gt; |  |
-|  [default](./alfa-command.flag.options.default.md) | Option&lt;string&gt; |  |
+|  [default](./alfa-command.flag.options.default.md) | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  [negatable](./alfa-command.flag.options.negatable.md) | boolean |  |
 |  [optional](./alfa-command.flag.options.optional.md) | boolean |  |
 |  [repeatable](./alfa-command.flag.options.repeatable.md) | boolean |  |
-|  [type](./alfa-command.flag.options.type.md) | Option&lt;string&gt; |  |
+|  [type](./alfa-command.flag.options.type.md) | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 

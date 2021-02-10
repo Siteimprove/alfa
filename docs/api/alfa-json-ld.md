@@ -8,7 +8,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [expand(element)](./alfa-json-ld.expand.md) |  https://www.w3.org/TR/json-ld-api/\#expansion-algorithm |
+|  [expand(element)](./alfa-json-ld.expand.md) |  |
 |  [isDictionary(element)](./alfa-json-ld.isdictionary.md) |  |
 |  [isKeyword(key)](./alfa-json-ld.iskeyword.md) |  |
 |  [isList(element)](./alfa-json-ld.islist.md) |  |
@@ -31,7 +31,7 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Keyword](./alfa-json-ld.keyword.md) |  https://www.w3.org/TR/json-ld/\#syntax-tokens-and-keywords |
+|  [Keyword](./alfa-json-ld.keyword.md) |  |
 |  [List](./alfa-json-ld.list.md) |  |
 |  [Scalar](./alfa-json-ld.scalar.md) |  |
 

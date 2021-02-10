@@ -14,6 +14,7 @@ export declare namespace Branched
 
 |  Function | Description |
 |  --- | --- |
+|  [from(values)](./alfa-branched.branched.from.md) |  |
 |  [isBranched(value)](./alfa-branched.branched.isbranched.md) |  |
 |  [sequence(values)](./alfa-branched.branched.sequence.md) |  |
 |  [traverse(values, mapper)](./alfa-branched.branched.traverse.md) |  |

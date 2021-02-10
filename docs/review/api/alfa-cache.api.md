@@ -5,32 +5,30 @@
 ```ts
 
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-class Cache_2<K, V> {
+export class Cache<K, V> {
     // (undocumented)
-    static empty<K, V>(): Cache_2<K, V>;
+    static empty<K, V>(): Cache<K, V>;
     // (undocumented)
-    get(key: K): Option_2<V>;
+    get(key: K): Option<V>;
     // (undocumented)
     get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
     // (undocumented)
     has(key: K): boolean;
     // (undocumented)
-    merge(iterable: Iterable_2<[K, V]>): this;
+    merge(iterable: Iterable_2<readonly [K, V]>): this;
     // (undocumented)
     set(key: K, value: V): this;
     }
 
 // @public (undocumented)
-namespace Cache_2 {
+export namespace Cache {
     // (undocumented)
-    function from<K, V>(iterable: Iterable_2<[K, V]>): Cache_2<K, V>;
+    export function from<K, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
 }
-
-export { Cache_2 as Cache }
 
 
 // (No @packageDocumentation comment for this package)

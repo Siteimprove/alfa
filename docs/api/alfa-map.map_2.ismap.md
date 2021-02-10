@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isMap<K, V>(value: unknown): value is Map<K, V>;
+function isMap<K, V>(value: Iterable<readonly [K, V]>): value is Map<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;readonly \[K, V\]&gt; |  |
 
 <b>Returns:</b>
 

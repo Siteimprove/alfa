@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals<I, T, Q>(value: Rule<I, T, Q>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

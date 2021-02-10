@@ -15,6 +15,8 @@ interface EARL extends earl.EARL
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  ["@context"](./alfa-act.rule.earl.__context_.md) | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
 |  ["@id"](./alfa-act.rule.earl.__id_.md) | string |  |
 |  ["@type"](./alfa-act.rule.earl.__type_.md) | \["earl:TestCriterion", "earl:TestCase"\] |  |
+|  ["dct:isPartOf"](./alfa-act.rule.earl._dct_ispartof_.md) | { "@set": Array&lt;[Requirement.EARL](./alfa-act.requirement.earl.md)<!-- -->&gt;; } |  |
 

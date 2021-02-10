@@ -16,4 +16,5 @@ export declare namespace Serializable
 |  --- | --- |
 |  [isSerializable(value)](./alfa-earl.serializable.isserializable.md) |  |
 |  [toEARL(value)](./alfa-earl.serializable.toearl.md) |  |
+|  [toEARL(value)](./alfa-earl.serializable.toearl_1.md) |  |
 

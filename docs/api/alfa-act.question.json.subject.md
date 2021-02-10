@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-subject: json.JSON;
+subject: Serializable.ToJSON<S>;
 ```

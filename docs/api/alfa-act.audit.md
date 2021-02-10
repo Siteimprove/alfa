@@ -2,18 +2,31 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Audit](./alfa-act.audit.md)
 
-## Audit class
+## Audit namespace
 
 <b>Signature:</b>
 
 ```typescript
-export declare class Audit<I, T = unknown, Q = never> 
+export declare namespace Audit 
 ```
 
-## Methods
+## Classes
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [evaluate()](./alfa-act.audit.evaluate.md) |  |  |
-|  [of(input, rules, oracle)](./alfa-act.audit.of.md) | <code>static</code> |  |
+|  Class | Description |
+|  --- | --- |
+|  [Event](./alfa-act.audit.event.md) |  |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Event](./alfa-act.audit.event.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [end](./alfa-act.audit.end.md) |  |
+|  [event](./alfa-act.audit.event.md) |  |
+|  [start](./alfa-act.audit.start.md) |  |
 

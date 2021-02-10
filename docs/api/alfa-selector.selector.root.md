@@ -4,8 +4,6 @@
 
 ## Selector.Root class
 
- https://drafts.csswg.org/selectors/\#root-pseudo
-
 <b>Signature:</b>
 
 ```typescript

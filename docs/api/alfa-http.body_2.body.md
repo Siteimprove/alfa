@@ -4,8 +4,6 @@
 
 ## Body\_2.body property
 
- https://fetch.spec.whatwg.org/\#dom-body-body
-
 <b>Signature:</b>
 
 ```typescript

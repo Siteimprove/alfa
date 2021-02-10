@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-function compare<T extends Comparable<U>, U>(a: T, b: U): Comparison;
+function compare(a: string, b: string): Comparison;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | T |  |
-|  b | U |  |
+|  a | string |  |
+|  b | string |  |
 
 <b>Returns:</b>
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-neighbors(node: T): Option<Set<T>>;
+neighbors(node: T): Iterable<T>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ neighbors(node: T): Option<Set<T>>;
 
 <b>Returns:</b>
 
-Option&lt;Set&lt;T&gt;&gt;
+Iterable&lt;T&gt;
 

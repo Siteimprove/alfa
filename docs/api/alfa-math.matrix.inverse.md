@@ -6,8 +6,6 @@
 
 Compute the inverse of an invertible matrix.
 
- https://en.wikipedia.org/wiki/Invertible\_matrix  https://en.wikipedia.org/wiki/Cramers\_rule
-
 <b>Signature:</b>
 
 ```typescript

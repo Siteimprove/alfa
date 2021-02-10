@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isSet<T>(value: unknown): value is Set<T>;
+function isSet<T>(value: Iterable<T>): value is Set<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

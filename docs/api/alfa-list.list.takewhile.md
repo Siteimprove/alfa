@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-takeWhile(predicate: Predicate<T, T, [number]>): List<T>;
+takeWhile(predicate: Predicate<T, [number]>): List<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

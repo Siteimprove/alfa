@@ -4,8 +4,6 @@
 
 ## Vector type
 
- https://en.wikipedia.org/wiki/Vector\_(mathematics\_and\_physics)
-
 <b>Signature:</b>
 
 ```typescript

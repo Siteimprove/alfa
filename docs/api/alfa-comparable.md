@@ -22,3 +22,9 @@
 |  --- | --- |
 |  [Comparable](./alfa-comparable.comparable.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Comparer](./alfa-comparable.comparer.md) |  |
+

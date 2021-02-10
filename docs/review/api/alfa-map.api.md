@@ -4,29 +4,31 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Callback } from '@siteimprove/alfa-callback';
 import { Collection } from '@siteimprove/alfa-collection';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
 
 // Warning: (ae-internal-missing-underscore) The name "Collision" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class Collision<K, V> implements Node_2<K, V> {
+export class Collision<K, V> implements Node<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
     // (undocumented)
-    delete(key: K, hash: number): Status<Node_2<K, V>>;
+    delete(key: K, hash: number): Status<Node<K, V>>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get(key: K, hash: number, shift: number): Option_2<V>;
+    get(key: K, hash: number, shift: number): Option<V>;
     // (undocumented)
     isEmpty(): this is Empty;
     // (undocumented)
@@ -38,13 +40,13 @@ export class Collision<K, V> implements Node_2<K, V> {
     // Warning: (ae-forgotten-export) The symbol "Status" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    set(key: K, value: V, hash: number, shift: number): Status<Node_2<K, V>>;
+    set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Empty" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export interface Empty extends Node_2<never, never> {
+export interface Empty extends Node<never, never> {
 }
 
 // @internal (undocumented)
@@ -53,15 +55,15 @@ export const Empty: Empty;
 // Warning: (ae-internal-missing-underscore) The name "Leaf" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class Leaf<K, V> implements Node_2<K, V> {
+export class Leaf<K, V> implements Node<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
     // (undocumented)
-    delete(key: K, hash: number): Status<Node_2<K, V>>;
+    delete(key: K, hash: number): Status<Node<K, V>>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get(key: K, hash: number, shift: number): Option_2<V>;
+    get(key: K, hash: number, shift: number): Option<V>;
     // (undocumented)
     isEmpty(): this is Empty;
     // (undocumented)
@@ -73,7 +75,7 @@ export class Leaf<K, V> implements Node_2<K, V> {
     // (undocumented)
     static of<K, V>(hash: number, key: K, value: V): Leaf<K, V>;
     // (undocumented)
-    set(key: K, value: V, hash: number, shift: number): Status<Node_2<K, V>>;
+    set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
     // (undocumented)
     get value(): V;
     }
@@ -85,25 +87,39 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     apply<U>(mapper: Map_2<K, Mapper<V, U>>): Map_2<K, U>;
     // (undocumented)
-    concat(iterable: Iterable_2<[K, V]>): Map_2<K, V>;
+    collect<U>(mapper: Mapper<V, Option<U>, [K]>): Map_2<K, U>;
     // (undocumented)
-    count(predicate: Predicate<V, V, [K]>): number;
+    collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U>;
+    // (undocumented)
+    concat(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
+    // (undocumented)
+    count(predicate: Predicate<V, [K]>): number;
     // (undocumented)
     delete(key: K): Map_2<K, V>;
     // (undocumented)
+    distinct(): Map_2<K, V>;
+    // (undocumented)
     static empty<K = never, V = never>(): Map_2<K, V>;
+    // (undocumented)
+    equals<K, V>(value: Map_2<K, V>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    every(predicate: Predicate<V, V, [K]>): boolean;
+    every(predicate: Predicate<V, [K]>): boolean;
     // (undocumented)
-    filter<U extends V>(predicate: Predicate<V, U, [K]>): Map_2<K, U>;
+    filter<U extends V>(refinement: Refinement<V, U, [K]>): Map_2<K, U>;
     // (undocumented)
-    find<U extends V>(predicate: Predicate<V, U, [K]>): Option_2<U>;
+    filter(predicate: Predicate<V, [K]>): Map_2<K, V>;
+    // (undocumented)
+    find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+    // (undocumented)
+    find(predicate: Predicate<V, [K]>): Option<V>;
     // (undocumented)
     flatMap<L, U>(mapper: Mapper<V, Map_2<L, U>, [K]>): Map_2<L, U>;
     // (undocumented)
-    get(key: K): Option_2<V>;
+    forEach(callback: Callback<V, void, [K]>): void;
+    // (undocumented)
+    get(key: K): Option<V>;
     // (undocumented)
     has(key: K): boolean;
     // (undocumented)
@@ -113,25 +129,31 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     isEmpty(): this is Map_2<K, never>;
     // (undocumented)
+    iterator(): Iterator<[K, V]>;
+    // (undocumented)
     keys(): Iterable_2<K>;
     // (undocumented)
     map<U>(mapper: Mapper<V, U, [K]>): Map_2<K, U>;
     // (undocumented)
-    static of<K, V>(...entries: Array<[K, V]>): Map_2<K, V>;
+    none(predicate: Predicate<V, [K]>): boolean;
+    // (undocumented)
+    static of<K, V>(...entries: Array_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
     reduce<R>(reducer: Reducer<V, R, [K]>, accumulator: R): R;
     // (undocumented)
-    reject(predicate: Predicate<V, V, [K]>): Map_2<K, V>;
+    reject<U extends V>(refinement: Refinement<V, U, [K]>): Map_2<K, Exclude<V, U>>;
+    // (undocumented)
+    reject(predicate: Predicate<V, [K]>): Map_2<K, V>;
     // (undocumented)
     set(key: K, value: V): Map_2<K, V>;
     // (undocumented)
     get size(): number;
     // (undocumented)
-    some(predicate: Predicate<V, V, [K]>): boolean;
+    some(predicate: Predicate<V, [K]>): boolean;
     // (undocumented)
-    toArray(): Array<[K, V]>;
+    toArray(): Array_2<[K, V]>;
     // (undocumented)
-    toJSON(): Map_2.JSON;
+    toJSON(): Map_2.JSON<K, V>;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -141,57 +163,61 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
 // @public (undocumented)
 namespace Map_2 {
     // (undocumented)
-    function from<K, V>(iterable: Iterable_2<[K, V]>): Map_2<K, V>;
+    function from<K, V>(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
+    // (undocumented)
+    function fromArray<K, V>(array: Array_2<readonly [K, V]>): Map_2<K, V>;
+    // (undocumented)
+    function fromIterable<K, V>(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
+    // (undocumented)
+    function isMap<K, V>(value: Iterable_2<readonly [K, V]>): value is Map_2<K, V>;
     // (undocumented)
     function isMap<K, V>(value: unknown): value is Map_2<K, V>;
     // (undocumented)
-    interface JSON extends Array<[json.JSON, json.JSON]> {
-    }
+    type JSON<K, V> = Collection.Keyed.JSON<K, V>;
 }
 
 export { Map_2 as Map }
 
+// Warning: (ae-internal-missing-underscore) The name "Node" should be prefixed with an underscore because the declaration is marked as @internal
+//
 // @internal (undocumented)
-interface Node_2<K, V> extends Functor<V>, Iterable_2<[K, V]>, Equatable {
+export interface Node<K, V> extends Functor<V>, Iterable_2<[K, V]>, Equatable {
     // (undocumented)
-    delete(key: K, hash: number, shift: number): Status<Node_2<K, V>>;
+    delete(key: K, hash: number, shift: number): Status<Node<K, V>>;
     // (undocumented)
-    get(key: K, hash: number, shift: number): Option_2<V>;
+    get(key: K, hash: number, shift: number): Option<V>;
     // (undocumented)
     isEmpty(): this is Empty;
     // (undocumented)
     isLeaf(): this is Leaf<K, V>;
     // (undocumented)
-    map<U>(mapper: Mapper<V, U, [K]>): Node_2<K, U>;
+    map<U>(mapper: Mapper<V, U, [K]>): Node<K, U>;
     // (undocumented)
-    set(key: K, value: V, hash: number, shift: number): Status<Node_2<K, V>>;
+    set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
 }
 
 // @internal (undocumented)
-namespace Node_2 {
+export namespace Node {
     const // (undocumented)
     Bits = 5;
     // (undocumented)
-    function fragment(hash: number, shift: number): number;
+    export function fragment(hash: number, shift: number): number;
     // (undocumented)
-    function index(fragment: number, mask: number): number;
+    export function index(fragment: number, mask: number): number;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "Node" should be prefixed with an underscore because the declaration is marked as @internal
-export { Node_2 as Node }
 
 // Warning: (ae-internal-missing-underscore) The name "Sparse" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class Sparse<K, V> implements Node_2<K, V> {
+export class Sparse<K, V> implements Node<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
     // (undocumented)
-    delete(key: K, hash: number, shift: number): Status<Node_2<K, V>>;
+    delete(key: K, hash: number, shift: number): Status<Node<K, V>>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get(key: K, hash: number, shift: number): Option_2<V>;
+    get(key: K, hash: number, shift: number): Option<V>;
     // (undocumented)
     isEmpty(): this is Empty;
     // (undocumented)
@@ -199,9 +225,9 @@ export class Sparse<K, V> implements Node_2<K, V> {
     // (undocumented)
     map<U>(mapper: Mapper<V, U, [K]>): Sparse<K, U>;
     // (undocumented)
-    static of<K, V>(mask: number, nodes: Array<Node_2<K, V>>): Sparse<K, V>;
+    static of<K, V>(mask: number, nodes: Array<Node<K, V>>): Sparse<K, V>;
     // (undocumented)
-    set(key: K, value: V, hash: number, shift: number): Status<Node_2<K, V>>;
+    set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
 }
 
 

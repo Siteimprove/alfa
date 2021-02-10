@@ -9,3 +9,5 @@
 ```typescript
 type Question<R> = R extends Rule<any, any, infer Q> ? Q : never;
 ```
+<b>References:</b> [Rule](./alfa-act.rule.md)
+

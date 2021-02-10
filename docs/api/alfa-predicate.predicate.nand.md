@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-function nand<T, U extends T = T, V extends U = U, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A>;
+function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  left | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U, A&gt; |  |
-|  right | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, V, A&gt; |  |
+|  left | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
+|  right | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
 
 <b>Returns:</b>
 
-[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, A&gt;
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

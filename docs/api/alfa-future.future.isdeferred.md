@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-isDeferred(): boolean;
+abstract isDeferred(): boolean;
 ```
 <b>Returns:</b>
 

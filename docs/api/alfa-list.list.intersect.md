@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-intersect(list: List<T>): List<T>;
+intersect(iterable: List<T>): List<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  list | [List](./alfa-list.list.md)<!-- -->&lt;T&gt; |  |
+|  iterable | [List](./alfa-list.list.md)<!-- -->&lt;T&gt; |  |
 
 <b>Returns:</b>
 

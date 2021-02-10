@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isComposite<I, T, Q>(value: unknown): value is Composite<I, T, Q>;
+function isComposite<I, T, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 

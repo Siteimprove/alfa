@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-skipWhile(predicate: Predicate<T, T, [number]>): List<T>;
+skipWhile(predicate: Predicate<T, [number]>): List<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
 <b>Returns:</b>
 

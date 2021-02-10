@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals<K, V>(value: Map<K, V>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Map&lt;K, V&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

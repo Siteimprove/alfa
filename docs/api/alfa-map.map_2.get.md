@@ -18,5 +18,5 @@ get(key: K): Option<V>;
 
 <b>Returns:</b>
 
-Option&lt;V&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;V&gt;
 

@@ -15,6 +15,7 @@ export declare namespace Left
 |  Function | Description |
 |  --- | --- |
 |  [isLeft(value)](./alfa-either.left.isleft.md) |  |
+|  [isLeft(value)](./alfa-either.left.isleft_1.md) |  |
 
 ## Interfaces
 

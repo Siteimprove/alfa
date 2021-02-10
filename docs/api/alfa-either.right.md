@@ -15,6 +15,7 @@ export declare namespace Right
 |  Function | Description |
 |  --- | --- |
 |  [isRight(value)](./alfa-either.right.isright.md) |  |
+|  [isRight(value)](./alfa-either.right.isright_1.md) |  |
 
 ## Interfaces
 

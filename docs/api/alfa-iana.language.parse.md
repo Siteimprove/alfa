@@ -18,5 +18,5 @@ function parse(input: string): Option<Language>;
 
 <b>Returns:</b>
 
-Option&lt;[Language](./alfa-iana.language.md)<!-- -->&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;[Language](./alfa-iana.language.md)<!-- -->&gt;
 

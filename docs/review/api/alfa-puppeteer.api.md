@@ -5,14 +5,15 @@
 ```ts
 
 import { JSHandle } from 'puppeteer';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)
 export namespace Puppeteer {
     // (undocumented)
-    export function asPage(value: Type): Promise<Page>;
+    export function toNode(value: Type): Promise<Node_2>;
     // (undocumented)
-    export function isType(value: unknown): value is Type;
+    export function toPage(value: Type): Promise<Page>;
     // (undocumented)
     export type Type = JSHandle<globalThis.Node>;
 }

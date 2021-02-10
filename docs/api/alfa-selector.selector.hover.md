@@ -4,8 +4,6 @@
 
 ## Selector.Hover class
 
- https://drafts.csswg.org/selectors/\#hover-pseudo
-
 <b>Signature:</b>
 
 ```typescript
@@ -17,5 +15,6 @@ export class Hover extends Pseudo.Class
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [matches(element, context)](./alfa-selector.selector.hover.matches.md) |  |  |
 |  [of()](./alfa-selector.selector.hover.of.md) | <code>static</code> |  |
 

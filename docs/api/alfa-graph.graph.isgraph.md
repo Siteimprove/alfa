@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isGraph<T>(value: unknown): value is Graph<T>;
+function isGraph<T>(value: Iterable<readonly [T, Iterable<T>]>): value is Graph<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
 
 <b>Returns:</b>
 

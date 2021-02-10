@@ -5,26 +5,25 @@
 ```ts
 
 import { Equatable } from '@siteimprove/alfa-equatable';
-import * as json from '@siteimprove/alfa-json';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export class Slice<T> implements Iterable<T>, Equatable, Serializable {
+export class Slice<T> implements Iterable<T>, Equatable, Serializable<Slice.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
-    get array(): Readonly<Array<T>>;
+    get array(): ReadonlyArray<T>;
     // (undocumented)
     static empty<T>(): Slice<T>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get(index: number): Option_2<T>;
+    get(index: number): Option<T>;
     // (undocumented)
     get length(): number;
     // (undocumented)
-    static of<T>(array: Readonly<Array<T>>, start?: number, end?: number): Slice<T>;
+    static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
     // (undocumented)
     get offset(): number;
     // (undocumented)
@@ -32,7 +31,7 @@ export class Slice<T> implements Iterable<T>, Equatable, Serializable {
     // (undocumented)
     toArray(): Array<T>;
     // (undocumented)
-    toJSON(): Slice.JSON;
+    toJSON(): Slice.JSON<T>;
     // (undocumented)
     toString(): string;
 }
@@ -40,10 +39,11 @@ export class Slice<T> implements Iterable<T>, Equatable, Serializable {
 // @public (undocumented)
 export namespace Slice {
     // (undocumented)
+    export function isSlice<T>(value: Iterable<T>): value is Slice<T>;
+    // (undocumented)
     export function isSlice<T>(value: unknown): value is Slice<T>;
     // (undocumented)
-    export interface JSON extends Array<json.JSON> {
-    }
+    export type JSON<T> = Array<Serializable.ToJSON<T>>;
 }
 
 

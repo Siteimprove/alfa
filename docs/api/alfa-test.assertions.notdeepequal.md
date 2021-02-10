@@ -4,8 +4,6 @@
 
 ## Assertions.notDeepEqual() method
 
- https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message
-
 <b>Signature:</b>
 
 ```typescript

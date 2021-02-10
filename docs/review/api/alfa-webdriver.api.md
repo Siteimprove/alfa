@@ -7,16 +7,16 @@
 import { Browser } from 'webdriverio';
 import { Page } from '@siteimprove/alfa-web';
 
-// @public
+// @public (undocumented)
 export interface WebElement {
+    // (undocumented)
     ["element-6066-11e4-a52e-4f735466cecf"]?: string;
 }
 
 // @public (undocumented)
 export namespace WebElement {
     // (undocumented)
-    export function asPage(webElement: WebElement, browser: Browser): Promise<Page>;
-    export function isType(value: unknown): value is WebElement;
+    export function toPage(webElement: WebElement, browser: Browser): Promise<Page>;
 }
 
 

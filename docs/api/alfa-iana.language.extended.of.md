@@ -16,7 +16,7 @@ static of(name: string, prefix: string, scope?: Option<Scope>): Extended;
 |  --- | --- | --- |
 |  name | string |  |
 |  prefix | string |  |
-|  scope | Option&lt;[Scope](./alfa-iana.language.scope.md)<!-- -->&gt; |  |
+|  scope | [Option](./alfa-option.option.md)<!-- -->&lt;[Scope](./alfa-iana.language.scope.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

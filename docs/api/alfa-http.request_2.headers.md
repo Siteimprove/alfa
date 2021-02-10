@@ -4,8 +4,6 @@
 
 ## Request\_2.headers property
 
- https://fetch.spec.whatwg.org/\#dom-request-headers
-
 <b>Signature:</b>
 
 ```typescript

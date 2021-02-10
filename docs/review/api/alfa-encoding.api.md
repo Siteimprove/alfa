@@ -4,13 +4,15 @@
 
 ```ts
 
-// @public
+// @public (undocumented)
 export namespace Decoder {
+    // (undocumented)
     export function decode(input: Uint8Array): string;
 }
 
-// @public
+// @public (undocumented)
 export namespace Encoder {
+    // (undocumented)
     export function encode(input: string): Uint8Array;
 }
 

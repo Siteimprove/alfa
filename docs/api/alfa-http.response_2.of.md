@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of(url: string, status: number, headers?: Headers, body?: ArrayBuffer): Response;
+static of(url: URL, status: number, headers?: Headers, body?: ArrayBuffer): Response;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  url | string |  |
+|  url | [URL](./alfa-url.url.md) |  |
 |  status | number |  |
 |  headers | Headers |  |
 |  body | ArrayBuffer |  |

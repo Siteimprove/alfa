@@ -16,22 +16,30 @@ namespace JSON_2 {
         // (undocumented)
         [key: string]: JSON_2 | undefined;
     }
+    // (undocumented)
+    function parse(value: string): JSON_2;
+    // (undocumented)
+    function stringify(value: JSON_2): string;
 }
 
 export { JSON_2 as JSON }
 
 // @public (undocumented)
-export interface Serializable {
+export interface Serializable<T extends JSON_2 = JSON_2> {
     // (undocumented)
-    toJSON(): JSON_2;
+    toJSON(): T;
 }
 
 // @public (undocumented)
 export namespace Serializable {
     // (undocumented)
-    export function isSerializable(value: unknown): value is Serializable;
+    export function isSerializable<T extends JSON_2>(value: unknown): value is Serializable<T>;
     // (undocumented)
-    export function toJSON(value: unknown): JSON_2;
+    export type ToJSON<T> = T extends Serializable<infer U> ? U : T extends JSON_2 ? T : JSON_2;
+    // (undocumented)
+    export function toJSON<T extends JSON_2>(value: Serializable<T>): T;
+    // (undocumented)
+    export function toJSON<T>(value: T): ToJSON<T>;
 }
 
 

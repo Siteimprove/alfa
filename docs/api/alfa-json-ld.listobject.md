@@ -15,5 +15,5 @@ export interface ListObject extends Dictionary
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@list"](./alfa-json-ld.listobject.__list_.md) | [List](./alfa-json-ld.list.md) |  |
+|  ["@list"?](./alfa-json-ld.listobject.__list_.md) | [List](./alfa-json-ld.list.md) | <i>(Optional)</i> |
 

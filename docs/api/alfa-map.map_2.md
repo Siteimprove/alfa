@@ -15,11 +15,14 @@ export declare namespace Map
 |  Function | Description |
 |  --- | --- |
 |  [from(iterable)](./alfa-map.map_2.from.md) |  |
+|  [fromArray(array)](./alfa-map.map_2.fromarray.md) |  |
+|  [fromIterable(iterable)](./alfa-map.map_2.fromiterable.md) |  |
 |  [isMap(value)](./alfa-map.map_2.ismap.md) |  |
+|  [isMap(value)](./alfa-map.map_2.ismap_1.md) |  |
 
-## Interfaces
+## Type Aliases
 
-|  Interface | Description |
+|  Type Alias | Description |
 |  --- | --- |
 |  [JSON](./alfa-map.map_2.json.md) |  |
 

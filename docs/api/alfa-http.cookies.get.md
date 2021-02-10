@@ -18,5 +18,5 @@ get(name: string): Option<Cookie>;
 
 <b>Returns:</b>
 
-Option&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt;
 

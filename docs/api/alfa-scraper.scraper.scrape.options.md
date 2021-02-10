@@ -14,11 +14,11 @@ interface Options
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [awaiter](./alfa-scraper.scraper.scrape.options.awaiter.md) | [Awaiter](./alfa-scraper.awaiter.md) |  |
-|  [cookies](./alfa-scraper.scraper.scrape.options.cookies.md) | Iterable&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt; |  |
-|  [credentials](./alfa-scraper.scraper.scrape.options.credentials.md) | [Credentials](./alfa-scraper.credentials.md) |  |
-|  [device](./alfa-scraper.scraper.scrape.options.device.md) | [Device](./alfa-device.device.md) |  |
-|  [headers](./alfa-scraper.scraper.scrape.options.headers.md) | Iterable&lt;[Header](./alfa-http.header.md)<!-- -->&gt; |  |
-|  [screenshot](./alfa-scraper.scraper.scrape.options.screenshot.md) | [Screenshot](./alfa-scraper.screenshot.md) |  |
-|  [timeout](./alfa-scraper.scraper.scrape.options.timeout.md) | [Timeout](./alfa-time.timeout.md) |  |
+|  [awaiter?](./alfa-scraper.scraper.scrape.options.awaiter.md) | [Awaiter](./alfa-scraper.awaiter.md) | <i>(Optional)</i> |
+|  [cookies?](./alfa-scraper.scraper.scrape.options.cookies.md) | Iterable&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  [credentials?](./alfa-scraper.scraper.scrape.options.credentials.md) | [Credentials](./alfa-scraper.credentials.md) | <i>(Optional)</i> |
+|  [device?](./alfa-scraper.scraper.scrape.options.device.md) | [Device](./alfa-device.device.md) | <i>(Optional)</i> |
+|  [headers?](./alfa-scraper.scraper.scrape.options.headers.md) | Iterable&lt;[Header](./alfa-http.header.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  [screenshot?](./alfa-scraper.scraper.scrape.options.screenshot.md) | [Screenshot](./alfa-scraper.screenshot.md) | <i>(Optional)</i> |
+|  [timeout?](./alfa-scraper.scraper.scrape.options.timeout.md) | [Timeout](./alfa-time.timeout.md) | <i>(Optional)</i> |
 

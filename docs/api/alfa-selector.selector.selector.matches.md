@@ -4,12 +4,10 @@
 
 ## Selector.Selector.matches() method
 
- https://drafts.csswg.org/selectors/\#match
-
 <b>Signature:</b>
 
 ```typescript
-abstract matches(element: Element, scope?: Iterable<Element>): boolean;
+abstract matches(element: Element, context?: Context): boolean;
 ```
 
 ## Parameters
@@ -17,7 +15,7 @@ abstract matches(element: Element, scope?: Iterable<Element>): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | Element |  |
-|  scope | Iterable&lt;Element&gt; |  |
+|  context | [Context](./alfa-selector.context.md) |  |
 
 <b>Returns:</b>
 

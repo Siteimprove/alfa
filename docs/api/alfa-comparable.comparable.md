@@ -15,4 +15,14 @@ export declare namespace Comparable
 |  Function | Description |
 |  --- | --- |
 |  [compare(a, b)](./alfa-comparable.comparable.compare.md) |  |
+|  [compare(a, b)](./alfa-comparable.comparable.compare_1.md) |  |
+|  [compare(a, b)](./alfa-comparable.comparable.compare_2.md) |  |
+|  [compare(a, b)](./alfa-comparable.comparable.compare_3.md) |  |
+|  [compare(a, b)](./alfa-comparable.comparable.compare_4.md) |  |
+|  [compareBigInt(a, b)](./alfa-comparable.comparable.comparebigint.md) |  |
+|  [compareBoolean(a, b)](./alfa-comparable.comparable.compareboolean.md) |  |
+|  [compareComparable(a, b)](./alfa-comparable.comparable.comparecomparable.md) |  |
+|  [compareNumber(a, b)](./alfa-comparable.comparable.comparenumber.md) |  |
+|  [compareString(a, b)](./alfa-comparable.comparable.comparestring.md) |  |
+|  [isComparable(value)](./alfa-comparable.comparable.iscomparable.md) |  |
 

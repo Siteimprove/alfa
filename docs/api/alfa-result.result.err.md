@@ -11,5 +11,5 @@ err(): Option<E>;
 ```
 <b>Returns:</b>
 
-Option&lt;E&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;E&gt;
 

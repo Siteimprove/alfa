@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-concat(iterable: Iterable<[K, V]>): Keyed<K, V>;
+concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;\[K, V\]&gt; |  |
+|  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
 
 <b>Returns:</b>
 

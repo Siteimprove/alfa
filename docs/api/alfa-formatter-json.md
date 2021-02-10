@@ -8,5 +8,5 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [default()](./alfa-formatter-json.default.md) |  |
+|  [default\_2()](./alfa-formatter-json.default_2.md) |  |
 

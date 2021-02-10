@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Outcome.JSON 
+interface JSON<T> extends Outcome.JSON 
 ```
 <b>Extends:</b> [Outcome.JSON](./alfa-act.outcome.json.md)
 
@@ -16,5 +16,5 @@ interface JSON extends Outcome.JSON
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [outcome](./alfa-act.outcome.canttell.json.outcome.md) | "cantTell" |  |
-|  [target](./alfa-act.outcome.canttell.json.target.md) | json.JSON |  |
+|  [target](./alfa-act.outcome.canttell.json.target.md) | json.[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
 

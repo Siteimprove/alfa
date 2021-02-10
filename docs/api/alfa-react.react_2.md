@@ -14,8 +14,7 @@ export declare namespace React
 
 |  Function | Description |
 |  --- | --- |
-|  [asPage(value)](./alfa-react.react_2.aspage.md) |  |
-|  [isType(value)](./alfa-react.react_2.istype.md) |  |
+|  [toPage(value)](./alfa-react.react_2.topage.md) |  |
 
 ## Type Aliases
 

@@ -14,7 +14,7 @@ static of(namespace: Option<string>): Universal;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  namespace | Option&lt;string&gt; |  |
+|  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 
 <b>Returns:</b>
 

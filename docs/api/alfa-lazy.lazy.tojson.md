@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): JSON;
+toJSON(): Lazy.JSON<T>;
 ```
 <b>Returns:</b>
 
-JSON
+[Lazy.JSON](./alfa-lazy.lazy.json.md)<!-- -->&lt;T&gt;
 

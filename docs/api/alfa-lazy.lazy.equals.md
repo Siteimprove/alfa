@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals<T>(value: Lazy<T>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

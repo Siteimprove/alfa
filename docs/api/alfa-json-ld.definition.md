@@ -15,9 +15,9 @@ export interface Definition extends Dictionary
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@container"](./alfa-json-ld.definition.__container_.md) | string |  |
+|  ["@container"?](./alfa-json-ld.definition.__container_.md) | string | <i>(Optional)</i> |
 |  ["@id"](./alfa-json-ld.definition.__id_.md) | string |  |
-|  ["@language"](./alfa-json-ld.definition.__language_.md) | string |  |
+|  ["@language"?](./alfa-json-ld.definition.__language_.md) | string | <i>(Optional)</i> |
 |  ["@reverse"](./alfa-json-ld.definition.__reverse_.md) | boolean |  |
-|  ["@type"](./alfa-json-ld.definition.__type_.md) | string |  |
+|  ["@type"?](./alfa-json-ld.definition.__type_.md) | string | <i>(Optional)</i> |
 

@@ -4,8 +4,6 @@
 
 ## Preference.Preferences."forced-colors" property
 
- https://drafts.csswg.org/mediaqueries-5/\#forced-colors
-
 <b>Signature:</b>
 
 ```typescript

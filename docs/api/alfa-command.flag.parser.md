@@ -9,3 +9,5 @@
 ```typescript
 type Parser<T, A extends Array<unknown> = []> = parser.Parser<Array<string>, Set<T>, string, A>;
 ```
+<b>References:</b> [Parser](./alfa-parser.parser.md)<!-- -->, [Set](./alfa-command.flag.set.md)
+

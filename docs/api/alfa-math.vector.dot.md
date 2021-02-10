@@ -6,8 +6,6 @@
 
 Compute the dot product of two non-empty, equal length vectors.
 
- https://en.wikipedia.org/wiki/Dot\_product
-
 <b>Signature:</b>
 
 ```typescript

@@ -18,5 +18,5 @@ get<K extends Record.Key<T>>(key: K): Option<T[K]>;
 
 <b>Returns:</b>
 
-Option&lt;T\[K\]&gt;
+[Option](./alfa-option.option.md)<!-- -->&lt;T\[K\]&gt;
 

@@ -16,8 +16,10 @@ export declare namespace Future
 |  --- | --- |
 |  [defer(continuation)](./alfa-future.future.defer.md) |  |
 |  [delay(thunk)](./alfa-future.future.delay.md) |  |
+|  [empty()](./alfa-future.future.empty.md) |  |
 |  [from(promise)](./alfa-future.future.from.md) |  |
 |  [isFuture(value)](./alfa-future.future.isfuture.md) |  |
+|  [isFuture(value)](./alfa-future.future.isfuture_1.md) |  |
 |  [now(value)](./alfa-future.future.now.md) |  |
 |  [sequence(futures)](./alfa-future.future.sequence.md) |  |
 |  [suspend(thunk)](./alfa-future.future.suspend.md) |  |

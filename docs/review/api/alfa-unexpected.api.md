@@ -4,15 +4,17 @@
 
 ```ts
 
+import { Asserter } from '@siteimprove/alfa-assert';
+import { Future } from '@siteimprove/alfa-future';
+import { Handler } from '@siteimprove/alfa-assert';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Page } from '@siteimprove/alfa-web';
-import { Predicate } from '@siteimprove/alfa-predicate';
+import { Rule } from '@siteimprove/alfa-act';
 import * as unexpected from 'unexpected';
 
 // @public (undocumented)
 export namespace Unexpected {
     // (undocumented)
-    export function createPlugin<T>(identify: Predicate<unknown, T>, transform: Mapper<T, Page>): unexpected.PluginDefinition;
+    export function createPlugin<I, J, T = unknown, Q = never>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q>>, handlers?: Iterable<Handler<J, T, Q>>, options?: Asserter.Options): unexpected.PluginDefinition;
 }
 
 

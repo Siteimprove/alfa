@@ -9,3 +9,5 @@
 ```typescript
 type JSON = Array<Query.JSON>;
 ```
+<b>References:</b> [Query.JSON](./alfa-media.media.query.json.md)
+

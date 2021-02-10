@@ -9,6 +9,8 @@
 ```typescript
 static of<I, T = unknown, Q = never>(properties: {
             uri: string;
+            requirements?: Iterable<Requirement>;
+            tags?: Iterable<Tag>;
             composes: Iterable<Rule<I, T, Q>>;
             evaluate: Composite.Evaluate<I, T, Q>;
         }): Composite<I, T, Q>;
@@ -18,7 +20,7 @@ static of<I, T = unknown, Q = never>(properties: {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | { uri: string; composes: Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule.composite.evaluate.md)<!-- -->&lt;I, T, Q&gt;; } |  |
+|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule.composite.evaluate.md)<!-- -->&lt;I, T, Q&gt;; } |  |
 
 <b>Returns:</b>
 

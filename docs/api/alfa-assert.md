@@ -4,9 +4,24 @@
 
 ## alfa-assert package
 
+## Classes
+
+|  Class | Description |
+|  --- | --- |
+|  [Asserter](./alfa-assert.asserter.md) |  |
+|  [Assertion](./alfa-assert.assertion.md) |  |
+
+## Interfaces
+
+|  Interface | Description |
+|  --- | --- |
+|  [Handler](./alfa-assert.handler.md) |  |
+
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Assert](./alfa-assert.assert.md) |  |
+|  [Asserter](./alfa-assert.asserter.md) |  |
+|  [Assertion](./alfa-assert.assertion.md) |  |
+|  [Handler](./alfa-assert.handler.md) |  |
 

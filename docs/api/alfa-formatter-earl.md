@@ -8,5 +8,5 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [default()](./alfa-formatter-earl.default.md) |  |
+|  [default\_2()](./alfa-formatter-earl.default_2.md) |  |
 

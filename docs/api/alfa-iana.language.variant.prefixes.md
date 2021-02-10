@@ -4,8 +4,6 @@
 
 ## Language.Variant.prefixes property
 
- https://tools.ietf.org/html/bcp47\#section-3.1.8
-
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,12 @@
 
 ## alfa-callback package
 
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Callback](./alfa-callback.callback.md) |  |
+
 ## Type Aliases
 
 |  Type Alias | Description |

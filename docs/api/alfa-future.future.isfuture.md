@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isFuture<T>(value: unknown): value is Future<T>;
+function isFuture<T>(value: AsyncIterable<T>): value is Future<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | AsyncIterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

@@ -14,5 +14,5 @@ export declare namespace Unexpected
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin(identify, transform)](./alfa-unexpected.unexpected.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-unexpected.unexpected.createplugin.md) |  |
 

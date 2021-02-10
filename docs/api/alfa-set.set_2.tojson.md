@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Set.JSON;
+toJSON(): Set.JSON<T>;
 ```
 <b>Returns:</b>
 
-Set.JSON
+Set.JSON&lt;T&gt;
 

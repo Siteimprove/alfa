@@ -15,14 +15,14 @@
 |  Interface | Description |
 |  --- | --- |
 |  [None](./alfa-option.none.md) |  |
-|  [Option\_2](./alfa-option.option_2.md) |  |
+|  [Option](./alfa-option.option.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
 |  [None](./alfa-option.none.md) |  |
-|  [Option\_2](./alfa-option.option_2.md) |  |
+|  [Option](./alfa-option.option.md) |  |
 |  [Some](./alfa-option.some.md) |  |
 
 ## Variables

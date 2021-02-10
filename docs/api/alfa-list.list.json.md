@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-list](./alfa-list.md) &gt; [List](./alfa-list.list.md) &gt; [JSON](./alfa-list.list.json.md)
 
-## List.JSON interface
+## List.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Array<json.JSON> 
+type JSON<T> = Collection.Indexed.JSON<T>;
 ```
-<b>Extends:</b> Array&lt;json.JSON&gt;
+<b>References:</b> [Collection.Indexed.JSON](./alfa-collection.collection.indexed.json.md)
 

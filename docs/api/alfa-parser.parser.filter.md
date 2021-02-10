@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function filter<I, T, U extends T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>, predicate: Predicate<T, U>, ifError: Thunk<E>): Parser<I, U, E, A>;
+function filter<I, T, U extends T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, refinement: Refinement<T, U>, ifError: Thunk<E>): Parser<I, U, E, A>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function filter<I, T, U extends T, E, A extends Array<unknown>>(parser: Parser<I
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
 |  ifError | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;E&gt; |  |
 
 <b>Returns:</b>

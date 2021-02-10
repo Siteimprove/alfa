@@ -15,5 +15,5 @@ interface EARL extends Outcome.EARL
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["earl:result"](./alfa-act.outcome.canttell.earl._earl_result_.md) | { "@type": "earl:TestResult"; "earl:outcome": { "@id": "earl:cantTell"; }; } |  |
+|  ["earl:result"](./alfa-act.outcome.canttell.earl._earl_result_.md) | { "@type": "earl:TestResult"; "earl:outcome": { "@id": "earl:cantTell"; }; "earl:pointer"?: earl.[EARL](./alfa-earl.earl.md)<!-- -->; } |  |
 

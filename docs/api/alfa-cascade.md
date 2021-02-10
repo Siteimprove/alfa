@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cascade](./alfa-cascade.cascade.md) |  https://drafts.csswg.org/css-cascade/ |
+|  [Cascade](./alfa-cascade.cascade.md) |  |
 
 ## Namespaces
 

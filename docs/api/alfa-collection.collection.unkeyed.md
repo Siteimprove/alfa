@@ -2,34 +2,17 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-collection](./alfa-collection.md) &gt; [Collection](./alfa-collection.collection.md) &gt; [Unkeyed](./alfa-collection.collection.unkeyed.md)
 
-## Collection.Unkeyed interface
+## Collection.Unkeyed namespace
 
 <b>Signature:</b>
 
 ```typescript
-interface Unkeyed<T> extends Collection<T>, Iterable<T> 
+namespace Unkeyed 
 ```
-<b>Extends:</b> [Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;
 
-## Methods
+## Type Aliases
 
-|  Method | Description |
+|  Type Alias | Description |
 |  --- | --- |
-|  [add(value)](./alfa-collection.collection.unkeyed.add.md) |  |
-|  [apply(mapper)](./alfa-collection.collection.unkeyed.apply.md) |  |
-|  [concat(iterable)](./alfa-collection.collection.unkeyed.concat.md) |  |
-|  [count(predicate)](./alfa-collection.collection.unkeyed.count.md) |  |
-|  [delete(value)](./alfa-collection.collection.unkeyed.delete.md) |  |
-|  [every(predicate)](./alfa-collection.collection.unkeyed.every.md) |  |
-|  [filter(predicate)](./alfa-collection.collection.unkeyed.filter.md) |  |
-|  [find(predicate)](./alfa-collection.collection.unkeyed.find.md) |  |
-|  [flatMap(mapper)](./alfa-collection.collection.unkeyed.flatmap.md) |  |
-|  [get(value)](./alfa-collection.collection.unkeyed.get.md) |  |
-|  [has(value)](./alfa-collection.collection.unkeyed.has.md) |  |
-|  [includes(value)](./alfa-collection.collection.unkeyed.includes.md) |  |
-|  [isEmpty()](./alfa-collection.collection.unkeyed.isempty.md) |  |
-|  [map(mapper)](./alfa-collection.collection.unkeyed.map.md) |  |
-|  [reduce(reducer, accumulator)](./alfa-collection.collection.unkeyed.reduce.md) |  |
-|  [reject(predicate)](./alfa-collection.collection.unkeyed.reject.md) |  |
-|  [some(predicate)](./alfa-collection.collection.unkeyed.some.md) |  |
+|  [JSON](./alfa-collection.collection.unkeyed.json.md) |  |
 

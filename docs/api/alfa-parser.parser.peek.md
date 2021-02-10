@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function peek<I, T, E, A extends Array<unknown>>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
+function peek<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

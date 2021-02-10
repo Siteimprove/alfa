@@ -14,12 +14,17 @@ export declare namespace List
 
 |  Function | Description |
 |  --- | --- |
+|  [compare(a, b)](./alfa-list.list.compare.md) |  |
 |  [from(iterable)](./alfa-list.list.from.md) |  |
+|  [fromArray(array)](./alfa-list.list.fromarray.md) |  |
+|  [fromIterable(iterable)](./alfa-list.list.fromiterable.md) |  |
 |  [isList(value)](./alfa-list.list.islist.md) |  |
+|  [isList(value)](./alfa-list.list.islist_1.md) |  |
+|  [sort(list)](./alfa-list.list.sort.md) |  |
 
-## Interfaces
+## Type Aliases
 
-|  Interface | Description |
+|  Type Alias | Description |
 |  --- | --- |
 |  [JSON](./alfa-list.list.json.md) |  |
 

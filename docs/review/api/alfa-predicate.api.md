@@ -4,61 +4,36 @@
 
 ```ts
 
+import { Callback } from '@siteimprove/alfa-callback';
 import { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
-export type Predicate<T, U extends T = T, A extends Array<unknown> = []> = ((value: T, ...args: A) => boolean) | ((value: T, ...args: A) => value is U);
+export type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => boolean;
 
 // @public (undocumented)
 export namespace Predicate {
     // (undocumented)
-    export function and<T, U extends T = T, V extends U = U, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<U, V, A>): Predicate<T, V, A>;
+    export function and<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
     // (undocumented)
-    export function and<T, U extends T = T, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, U, A>, ...rest: Array<Predicate<T, U, A>>): Predicate<T, U, A>;
+    export function equals<T>(...values: Array<T>): Predicate<unknown>;
     // (undocumented)
-    export function equals<T>(...values: Array<T>): Predicate<unknown, T>;
+    export function fold<T, A extends Array<unknown> = [], V = T, W = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, value: T, ...args: A): V | W;
     // (undocumented)
-    export function fold<T, U extends T = T, A extends Array<unknown> = [], V = U, W = T>(predicate: Predicate<T, U, A>, ifTrue: Mapper<U, V>, ifFalse: Mapper<T, W>, value: T, ...args: A): V | W;
+    export function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
     // (undocumented)
-    export function isBigInt(value: unknown): value is bigint;
+    export function nor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
     // (undocumented)
-    export function isBoolean(value: unknown): value is boolean;
+    export function not<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<T, A>;
     // (undocumented)
-    export function isFunction(value: unknown): value is Function;
+    export function or<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
     // (undocumented)
-    export function isNull(value: unknown): value is null;
+    export function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>(property: K, predicate: Predicate<T[K], A>): Predicate<T, A>;
     // (undocumented)
-    export function isNumber(value: unknown): value is number;
+    export function tee<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, callback: Callback<T, void, [result: boolean, ...args: A]>): Predicate<T, A>;
     // (undocumented)
-    export function isObject(value: unknown): value is {
-        [key: string]: unknown;
-    };
+    export function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): boolean;
     // (undocumented)
-    export function isString(value: unknown): value is string;
-    // (undocumented)
-    export function isSymbol(value: unknown): value is symbol;
-    // (undocumented)
-    export function isUndefined(value: unknown): value is undefined;
-    // (undocumented)
-    export function nand<T, U extends T = T, V extends U = U, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A>;
-    // (undocumented)
-    export function nor<T, U extends T = T, V extends T = T, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A>;
-    // (undocumented)
-    export function not<T, U extends T = T, A extends Array<unknown> = []>(predicate: Predicate<T, U, A>): Predicate<T, T, A>;
-    // (undocumented)
-    export function or<T, U extends T = T, V extends T = T, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, U | V, A>;
-    // (undocumented)
-    export function or<T, U extends T = T, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, U, A>, ...rest: Array<Predicate<T, U, A>>): Predicate<T, U, A>;
-    // (undocumented)
-    export function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>(property: K, predicate: Predicate<T[K], T[K], A>): Predicate<T, T, A>;
-    // (undocumented)
-    export function test<T, U extends T = T, A extends Array<unknown> = []>(predicate: Predicate<T, U, A>, value: T, ...args: A): value is U;
-    // (undocumented)
-    export function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, T, A>, value: T, ...args: A): boolean;
-    // (undocumented)
-    export function xor<T, U extends T = T, V extends T = T, A extends Array<unknown> = []>(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, U | V, A>;
-    const // (undocumented)
-    isPrimitive: Predicate<unknown, string | number | bigint | boolean | symbol | null | undefined, []>;
+    export function xor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
 }
 
 

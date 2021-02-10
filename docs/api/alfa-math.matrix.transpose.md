@@ -6,8 +6,6 @@
 
 Compute the transpose of a matrix.
 
- https://en.wikipedia.org/wiki/Transpose
-
 <b>Signature:</b>
 
 ```typescript

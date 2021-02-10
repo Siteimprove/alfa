@@ -10,6 +10,12 @@ export interface Clone<T> {
     clone(): T;
 }
 
+// @public (undocumented)
+export namespace Clone {
+    // (undocumented)
+    export function clone<T extends Clone<T>>(value: Clone<T>): T;
+}
+
 
 // (No @packageDocumentation comment for this package)
 

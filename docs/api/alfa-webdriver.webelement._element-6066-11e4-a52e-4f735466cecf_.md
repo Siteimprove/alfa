@@ -4,8 +4,6 @@
 
 ## WebElement."element-6066-11e4-a52e-4f735466cecf" property
 
- https://w3c.github.io/webdriver/\#dfn-web-element-reference
-
 <b>Signature:</b>
 
 ```typescript

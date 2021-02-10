@@ -14,14 +14,21 @@ export declare namespace Sequence
 
 |  Function | Description |
 |  --- | --- |
+|  [compare(a, b)](./alfa-sequence.sequence.compare.md) |  |
 |  [empty()](./alfa-sequence.sequence.empty.md) |  |
 |  [flatten(sequence)](./alfa-sequence.sequence.flatten.md) |  |
 |  [from(iterable)](./alfa-sequence.sequence.from.md) |  |
 |  [fromArray(array)](./alfa-sequence.sequence.fromarray.md) |  |
 |  [fromIterable(iterable)](./alfa-sequence.sequence.fromiterable.md) |  |
 |  [fromIterator(iterator)](./alfa-sequence.sequence.fromiterator.md) |  |
+|  [isCons(value)](./alfa-sequence.sequence.iscons.md) |  |
+|  [isCons(value)](./alfa-sequence.sequence.iscons_1.md) |  |
+|  [isNil(value)](./alfa-sequence.sequence.isnil.md) |  |
+|  [isNil(value)](./alfa-sequence.sequence.isnil_1.md) |  |
 |  [isSequence(value)](./alfa-sequence.sequence.issequence.md) |  |
+|  [isSequence(value)](./alfa-sequence.sequence.issequence_1.md) |  |
 |  [of(head, tail)](./alfa-sequence.sequence.of.md) |  |
+|  [sort(sequence)](./alfa-sequence.sequence.sort.md) |  |
 
 ## Type Aliases
 
