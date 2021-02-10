@@ -1047,6 +1047,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-css@workspace:packages/alfa-css"
   dependencies:
+    "@siteimprove/alfa-array": ^0.10.0
     "@siteimprove/alfa-device": ^0.10.0
     "@siteimprove/alfa-equatable": ^0.10.0
     "@siteimprove/alfa-hash": ^0.10.0
@@ -1605,6 +1606,7 @@ __metadata:
     "@siteimprove/alfa-emitter": ^0.10.0
     "@siteimprove/alfa-json": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
+    "@siteimprove/alfa-thunk": ^0.10.0
   languageName: unknown
   linkType: soft
 
@@ -1655,7 +1657,7 @@ __metadata:
     "@siteimprove/alfa-dom": ^0.10.0
     "@siteimprove/alfa-http": ^0.10.0
     "@siteimprove/alfa-option": ^0.10.0
-    "@siteimprove/alfa-predicate": ^0.10.0
+    "@siteimprove/alfa-refinement": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@types/react": ^17.0.0
@@ -1726,12 +1728,14 @@ __metadata:
     "@siteimprove/alfa-act": ^0.10.0
     "@siteimprove/alfa-affine": ^0.10.0
     "@siteimprove/alfa-aria": ^0.10.0
+    "@siteimprove/alfa-array": ^0.10.0
     "@siteimprove/alfa-branched": ^0.10.0
     "@siteimprove/alfa-cache": ^0.10.0
     "@siteimprove/alfa-compatibility": ^0.10.0
     "@siteimprove/alfa-css": ^0.10.0
     "@siteimprove/alfa-device": ^0.10.0
     "@siteimprove/alfa-dom": ^0.10.0
+    "@siteimprove/alfa-earl": ^0.10.0
     "@siteimprove/alfa-equatable": ^0.10.0
     "@siteimprove/alfa-future": ^0.10.0
     "@siteimprove/alfa-http": ^0.10.0
@@ -1747,6 +1751,7 @@ __metadata:
     "@siteimprove/alfa-record": ^0.10.0
     "@siteimprove/alfa-refinement": ^0.10.0
     "@siteimprove/alfa-result": ^0.10.0
+    "@siteimprove/alfa-sarif": ^0.10.0
     "@siteimprove/alfa-selector": ^0.10.0
     "@siteimprove/alfa-sequence": ^0.10.0
     "@siteimprove/alfa-set": ^0.10.0
