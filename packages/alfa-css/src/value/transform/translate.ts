@@ -90,8 +90,7 @@ export class Translate<
 }
 
 export namespace Translate {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "translate";
     x: Length.JSON | Percentage.JSON;
     y: Length.JSON | Percentage.JSON;

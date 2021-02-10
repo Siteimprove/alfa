@@ -5,26 +5,30 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
 import { isFocusable } from "../common/predicate/is-focusable";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, property } = Predicate;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
+  requirements: [Criterion.of("4.1.2"), Technique.of("ARIA5")],
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
           .filter(isElement)
-          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()));
+          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()))
+          .filter(not(isIgnored(device)));
       },
 
       expectations(target) {
@@ -55,7 +59,6 @@ function hasRequiredValues(device: Device): Predicate<Element> {
         for (const attribute of role.attributes) {
           if (
             role.isAttributeRequired(attribute) &&
-            role.implicitAttributeValue(attribute).isNone() &&
             node.attribute(attribute).every(property("value", isEmpty))
           ) {
             return false;

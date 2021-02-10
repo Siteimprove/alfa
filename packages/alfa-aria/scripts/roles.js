@@ -102,7 +102,7 @@ puppeteer.launch().then(async (browser) => {
 
             const children = {
               presentational:
-                role.querySelector("role-childpresentational")?.textContent ===
+                role.querySelector(".role-childpresentational")?.textContent ===
                   "True" ?? false,
 
               required: [

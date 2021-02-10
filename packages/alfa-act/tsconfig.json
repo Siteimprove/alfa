@@ -10,7 +10,9 @@
     "src/oracle.ts",
     "src/outcome.ts",
     "src/question.ts",
-    "src/rule.ts"
+    "src/requirement.ts",
+    "src/rule.ts",
+    "src/tag.ts"
   ],
   "references": [
     {
@@ -44,10 +46,16 @@
       "path": "../alfa-option"
     },
     {
+      "path": "../alfa-performance"
+    },
+    {
       "path": "../alfa-record"
     },
     {
       "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-sarif"
     },
     {
       "path": "../alfa-sequence"

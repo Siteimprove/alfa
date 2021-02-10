@@ -1,0 +1,8 @@
+contact_links:
+  - name: Ask a question
+    url: https://github.com/Siteimprove/alfa/discussions/categories/questions
+    about: If you have a general question about Alfa then we would be happy to provide an answer
+
+  - name: Suggest a feature
+    url: https://github.com/Siteimprove/alfa/discussions/categories/ideas
+    about: Do you have an idea for a new feature that you would like to share?

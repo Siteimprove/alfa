@@ -10,7 +10,16 @@
   ],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-comparable"
     },
     {
       "path": "../alfa-equatable"

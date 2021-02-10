@@ -40,8 +40,8 @@ export class Integer extends Numeric<"integer"> {
 }
 
 export namespace Integer {
-  export interface JSON extends Numeric.JSON {
-    type: "integer";
+  export interface JSON extends Numeric.JSON<"integer"> {
+    value: number;
   }
 
   export function isInteger(value: unknown): value is Integer {

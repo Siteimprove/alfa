@@ -10,6 +10,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
@@ -29,6 +32,9 @@
     },
     {
       "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-option"

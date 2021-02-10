@@ -40,7 +40,7 @@ export abstract class Dimension<
 }
 
 export namespace Dimension {
-  export interface JSON extends Numeric.JSON {
+  export interface JSON<T extends string = string> extends Numeric.JSON<T> {
     unit: Unit;
   }
 

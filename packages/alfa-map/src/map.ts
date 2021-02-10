@@ -1,3 +1,5 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { FNV } from "@siteimprove/alfa-fnv";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -8,8 +10,6 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
-
-import * as json from "@siteimprove/alfa-json";
 
 import { Empty, Node } from "./node";
 
@@ -43,6 +43,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public isEmpty(): this is Map<K, never> {
     return this._size === 0;
+  }
+
+  public forEach(callback: Callback<V, void, [K]>): void {
+    Iterable.forEach(this, ([key, value]) => callback(value, key));
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Map<K, U> {
@@ -119,6 +123,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
   }
 
+  public none(predicate: Predicate<V, [K]>): boolean {
+    return Iterable.none(this, ([key, value]) => predicate(value, key));
+  }
+
   public every(predicate: Predicate<V, [K]>): boolean {
     return Iterable.every(this, ([key, value]) => predicate(value, key));
   }
@@ -192,7 +200,11 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<K, V>(value: Map<K, V>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Map &&
       value._size === this._size &&
@@ -217,15 +229,19 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.map(this._root, (entry) => entry[1]);
   }
 
-  public *[Symbol.iterator](): Iterator<[K, V]> {
+  public *iterator(): Iterator<[K, V]> {
     yield* this._root;
+  }
+
+  public [Symbol.iterator](): Iterator<[K, V]> {
+    return this.iterator();
   }
 
   public toArray(): Array<[K, V]> {
     return [...this];
   }
 
-  public toJSON(): Map.JSON {
+  public toJSON(): Map.JSON<K, V> {
     return this.toArray().map(([key, value]) => [
       Serializable.toJSON(key),
       Serializable.toJSON(value),
@@ -250,19 +266,45 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 }
 
 export namespace Map {
-  export interface JSON extends Array<[json.JSON, json.JSON]> {}
+  export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
+
+  export function isMap<K, V>(
+    value: Iterable<readonly [K, V]>
+  ): value is Map<K, V>;
+
+  export function isMap<K, V>(value: unknown): value is Map<K, V>;
 
   export function isMap<K, V>(value: unknown): value is Map<K, V> {
     return value instanceof Map;
   }
 
   export function from<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V> {
-    return isMap<K, V>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (map, [key, value]) => map.set(key, value),
-          Map.empty<K, V>()
-        );
+    if (isMap(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
+  }
+
+  export function fromArray<K, V>(array: Array<readonly [K, V]>): Map<K, V> {
+    return Array.reduce(
+      array,
+      (map, [key, value]) => map.set(key, value),
+      Map.empty()
+    );
+  }
+
+  export function fromIterable<K, V>(
+    iterable: Iterable<readonly [K, V]>
+  ): Map<K, V> {
+    return Iterable.reduce(
+      iterable,
+      (map, [key, value]) => map.set(key, value),
+      Map.empty()
+    );
   }
 }

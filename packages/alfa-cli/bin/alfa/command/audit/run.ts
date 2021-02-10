@@ -4,15 +4,16 @@ import * as fs from "fs";
 
 import { Audit, Outcome } from "@siteimprove/alfa-act";
 import { Command } from "@siteimprove/alfa-command";
-import { Node } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None } from "@siteimprove/alfa-option";
 import { Ok } from "@siteimprove/alfa-result";
-import rules, { Question } from "@siteimprove/alfa-rules";
 import { Page } from "@siteimprove/alfa-web";
 
+import rules from "@siteimprove/alfa-rules";
+
 import { Oracle } from "../../oracle";
+import { Profiler } from "../../profiler";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
@@ -23,7 +24,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const formatter = await Formatter.load(flags.format);
+  const formatter = await Formatter.load<any, any, any>(flags.format);
 
   if (formatter.isErr()) {
     return formatter;
@@ -59,7 +60,23 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     flags.interactive ? Oracle(page) : undefined
   );
 
+  for (const _ of flags.cpuProfile) {
+    await Profiler.CPU.start();
+  }
+
+  for (const _ of flags.heapProfile) {
+    await Profiler.Heap.start();
+  }
+
   let outcomes = await audit.evaluate();
+
+  for (const path of flags.cpuProfile) {
+    fs.writeFileSync(path, JSON.stringify(await Profiler.CPU.stop()) + "\n");
+  }
+
+  for (const path of flags.heapProfile) {
+    fs.writeFileSync(path, JSON.stringify(await Profiler.Heap.stop()) + "\n");
+  }
 
   if (flags.outcomes.isSome()) {
     const filter = new Set(flags.outcomes.get());
@@ -81,7 +98,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     });
   }
 
-  const output = formatter.get()(page, outcomes);
+  const output = formatter.get()(page, rules, outcomes);
 
   if (flags.output.isNone()) {
     return Ok.of(output);

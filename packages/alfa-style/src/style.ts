@@ -6,7 +6,6 @@ import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Context } from "@siteimprove/alfa-selector";
@@ -32,23 +31,21 @@ export class Style implements Serializable {
 
     // First pass: Resolve cascading variables which will be used in the second
     // pass.
-    let variables = Map.empty<string, Value<Array<Token>>>();
+    const variables = new Map<string, Value<Array<Token>>>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
 
       if (name.startsWith("--")) {
+        const previous = variables.get(name);
+
         if (
-          variables
-            .get(name)
-            .every((previous) => shouldOverride(previous.source, declaration))
+          previous === undefined ||
+          shouldOverride(previous.source, declaration)
         ) {
           const tokens = Lexer.lex(value);
 
-          variables = variables.set(
-            name,
-            Value.of(tokens, Option.of(declaration))
-          );
+          variables.set(name, Value.of(tokens, Option.of(declaration)));
         }
       }
     }
@@ -60,30 +57,28 @@ export class Style implements Serializable {
 
       // If the replaced value is invalid, remove the variable entirely.
       if (value.isNone()) {
-        variables = variables.delete(name);
+        variables.delete(name);
       }
 
       // Otherwise, use the replaced value as the new value of the variable.
       else {
-        variables = variables.set(
-          name,
-          Value.of(value.get().get(), variable.source)
-        );
+        variables.set(name, Value.of(value.get().get(), variable.source));
       }
     }
 
     // Second pass: Resolve cascading properties using the cascading variables
     // from the first pass.
-    let properties = Map.empty<Name, Value>();
+    const properties = new Map<Name, Value>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
 
       if (Property.isName(name)) {
+        const previous = properties.get(name);
+
         if (
-          properties
-            .get(name)
-            .every((previous) => shouldOverride(previous.source, declaration))
+          previous === undefined ||
+          shouldOverride(previous.source, declaration)
         ) {
           const property = Property.get(name);
 
@@ -93,10 +88,7 @@ export class Style implements Serializable {
             variables,
             parent
           )) {
-            properties = properties.set(
-              name,
-              Value.of(result, Option.of(declaration))
-            );
+            properties.set(name, Value.of(result, Option.of(declaration)));
           }
         }
       }
@@ -111,17 +103,13 @@ export class Style implements Serializable {
           parent
         )) {
           for (const [name, value] of result) {
+            const previous = properties.get(name);
+
             if (
-              properties
-                .get(name)
-                .every((previous) =>
-                  shouldOverride(previous.source, declaration)
-                )
+              previous === undefined ||
+              shouldOverride(previous.source, declaration)
             ) {
-              properties = properties.set(
-                name,
-                Value.of(value, Option.of(declaration))
-              );
+              properties.set(name, Value.of(value, Option.of(declaration)));
             }
           }
         }
@@ -134,8 +122,8 @@ export class Style implements Serializable {
   private static _empty = new Style(
     Device.standard(),
     None,
-    Map.empty(),
-    Map.empty()
+    new Map(),
+    new Map()
   );
 
   public static empty(): Style {
@@ -144,8 +132,8 @@ export class Style implements Serializable {
 
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
-  private readonly _variables: Map<string, Value<Array<Token>>>;
-  private readonly _properties: Map<Name, Value>;
+  private readonly _variables: ReadonlyMap<string, Value<Array<Token>>>;
+  private readonly _properties: ReadonlyMap<Name, Value>;
 
   // We cache computed properties but not specified properties as these are
   // inexpensive to resolve from cascaded and computed properties.
@@ -154,8 +142,8 @@ export class Style implements Serializable {
   private constructor(
     device: Device,
     parent: Option<Style>,
-    variables: Map<string, Value<Array<Token>>>,
-    properties: Map<Name, Value>
+    variables: ReadonlyMap<string, Value<Array<Token>>>,
+    properties: ReadonlyMap<Name, Value>
   ) {
     this._device = device;
     this._parent = parent;
@@ -171,11 +159,11 @@ export class Style implements Serializable {
     return this._parent.getOrElse(() => Style._empty);
   }
 
-  public get variables(): Iterable<[string, Value<Array<Token>>]> {
+  public get variables(): ReadonlyMap<string, Value<Array<Token>>> {
     return this._variables;
   }
 
-  public get properties(): Iterable<[string, Value]> {
+  public get properties(): ReadonlyMap<string, Value> {
     return this._properties;
   }
 
@@ -184,7 +172,9 @@ export class Style implements Serializable {
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>> {
-    return this._properties.get(name) as Option<Value<Style.Cascaded<N>>>;
+    return Option.from(this._properties.get(name)) as Option<
+      Value<Style.Cascaded<N>>
+    >;
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>> {
@@ -194,13 +184,15 @@ export class Style implements Serializable {
 
     return this.cascaded(name)
       .map((cascaded) => {
+        // If we have a cascade value, act upon it.
+        // In these cases, `initial`/`unset` have been explicitly set and their source is needed.
         const { value, source } = cascaded;
 
         if (Keyword.isKeyword(value)) {
           switch (value.value) {
             // https://drafts.csswg.org/css-cascade/#initial
             case "initial":
-              return this.initial(name);
+              return this.initial(name, source);
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
@@ -208,13 +200,18 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
-              return inherits ? this.inherited(name) : this.initial(name);
+              return inherits
+                ? this.inherited(name)
+                : this.initial(name, source);
           }
         }
 
         return Value.of(value, source);
       })
       .getOrElse(() => {
+        // If we don't have a cascade value, take the initial or parent value depending whether
+        // this is an inherited property.
+        // In these case, `initial` is a fallback value and has no source per se.
         if (inherits === false) {
           return this.initial(name);
         }
@@ -235,8 +232,11 @@ export class Style implements Serializable {
     ) as Value<Style.Computed<N>>;
   }
 
-  public initial<N extends Name>(name: N): Value<Style.Initial<N>> {
-    return Value.of(Property.get(name).initial as Style.Computed<N>);
+  public initial<N extends Name>(
+    name: N,
+    source: Option<Declaration> = None
+  ): Value<Style.Initial<N>> {
+    return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
   public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
@@ -332,7 +332,7 @@ function shouldOverride(
 function parseLonghand<N extends Property.Name>(
   property: Property.WithName<N>,
   value: string,
-  variables: Map<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Array<Token>>>,
   parent: Option<Style>
 ) {
   const tokens = substitute(Lexer.lex(value), variables, parent);
@@ -361,7 +361,7 @@ function parseLonghand<N extends Property.Name>(
 function parseShorthand<N extends Property.Shorthand.Name>(
   shorthand: Property.Shorthand.WithName<N>,
   value: string,
-  variables: Map<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Array<Token>>>,
   parent: Option<Style>
 ) {
   const tokens = substitute(Lexer.lex(value), variables, parent);
@@ -418,14 +418,13 @@ function parseShorthand<N extends Property.Shorthand.Name>(
  */
 function resolve(
   name: string,
-  variables: Map<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Array<Token>>>,
   parent: Option<Style>,
   fallback: Option<Array<Token>> = None,
   visited = Set.empty<string>()
 ): Option<Array<Token>> {
   return (
-    variables
-      .get(name)
+    Option.from(variables.get(name))
       .map((value) =>
         // The initial value of a custom property is the "guaranteed-invalid"
         // value. We therefore reject the value of the variable if it's the
@@ -455,7 +454,8 @@ function resolve(
 
       .getOrElse(() =>
         parent.flatMap((parent) => {
-          const variables = Map.from(parent.variables);
+          const variables = parent.variables;
+
           const grandparent =
             parent.parent === Style.empty() ? None : Option.of(parent.parent);
 
@@ -493,7 +493,7 @@ const substitutionLimit = 1024;
  */
 function substitute(
   tokens: Array<Token>,
-  variables: Map<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Array<Token>>>,
   parent: Option<Style>,
   visited = Set.empty<string>()
 ): Option<Either<Array<Token>>> {

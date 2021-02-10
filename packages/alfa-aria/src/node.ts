@@ -28,7 +28,7 @@ const { equals } = Predicate;
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
  */
-export abstract class Node implements Serializable {
+export abstract class Node implements Serializable<Node.JSON> {
   protected readonly _node: dom.Node;
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
@@ -211,6 +211,7 @@ export namespace Node {
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
+    node: string;
     children: Array<JSON>;
   }
 
@@ -538,6 +539,12 @@ export namespace Node {
               return children(state).map((children) =>
                 Container.of(node, children)
               );
+            }
+
+            // If the element has a role that designates its children as
+            // presentational then set the state as presentational.
+            if (role.some((role) => role.hasPresentationalChildren())) {
+              state = state.presentational(true);
             }
 
             return children(state).flatMap((children) =>

@@ -32,9 +32,9 @@ const { nor } = Predicate;
 
 export function h(
   name: string,
-  attributes: Array<Attribute> | Record<string, string | boolean> = [],
-  children: Array<Node | string> = [],
-  style: Array<Declaration> | Record<string, string> = []
+  attributes?: Array<Attribute> | Record<string, string | boolean>,
+  children?: Array<Node | string>,
+  style?: Array<Declaration> | Record<string, string>
 ): Element {
   return h.element(name, attributes, children, style);
 }
@@ -110,7 +110,7 @@ export namespace h {
 
   export function document(
     children: Array<Node | string>,
-    style: Array<Sheet> = []
+    style?: Array<Sheet>
   ): Document {
     return Document.of(
       children.map((child) =>
@@ -122,7 +122,7 @@ export namespace h {
 
   export function shadow(
     children: Array<Node | string>,
-    style: Array<Sheet> = [],
+    style?: Array<Sheet>,
     mode?: Shadow.Mode
   ): Shadow {
     return Shadow.of(
@@ -136,8 +136,8 @@ export namespace h {
 
   export function type(
     name: string,
-    publicId: string | null = null,
-    systemId: string | null = null
+    publicId?: string,
+    systemId?: string
   ): Type {
     return Type.of(name, Option.from(publicId), Option.from(systemId));
   }
@@ -150,8 +150,8 @@ export namespace h {
 
   export function sheet(
     rules: Array<Rule>,
-    disabled: boolean = false,
-    condition: string | null = null
+    disabled?: boolean,
+    condition?: string
   ): Sheet {
     return Sheet.of(rules, disabled, Option.from(condition));
   }
@@ -181,7 +181,7 @@ export namespace h {
   export function declaration(
     name: string,
     value: string,
-    important: boolean = false
+    important?: boolean
   ): Declaration {
     return Declaration.of(name, value, important);
   }
@@ -210,7 +210,7 @@ export namespace h {
 
     export function namespace(
       namespace: string,
-      prefix: string | null = null
+      prefix?: string
     ): NamespaceRule {
       return NamespaceRule.of(namespace, Option.from(prefix));
     }
@@ -224,9 +224,10 @@ export namespace h {
 
     export function style(
       selector: string,
-      declarations: Array<Declaration> | Record<string, string>
+      declarations: Array<Declaration> | Record<string, string>,
+      hint?: boolean
     ): StyleRule {
-      return StyleRule.of(selector, block(declarations));
+      return StyleRule.of(selector, block(declarations), hint);
     }
 
     export function supports(

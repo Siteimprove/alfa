@@ -341,3 +341,23 @@ test(`.from() doesn't inherit presentational roles into children of implicitly
     ],
   ]);
 });
+
+test(`.from() doesn't expose children of elements with roles that designate
+      their children as presentational`, (t) => {
+  const img = <img src="#" />;
+
+  const button = <button>{img}</button>;
+
+  t.deepEqual(Node.from(button, device).toJSON(), [
+    [
+      Element.of(
+        button,
+        Option.of(Role.of("button")),
+        None,
+        [],
+        [Container.of(img)]
+      ).toJSON(),
+      [],
+    ],
+  ]);
+});

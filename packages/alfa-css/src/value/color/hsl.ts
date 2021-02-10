@@ -129,8 +129,7 @@ export class HSL<
 }
 
 export namespace HSL {
-  export interface JSON extends Value.JSON {
-    type: "color";
+  export interface JSON extends Value.JSON<"color"> {
     format: "hsl";
     hue: Number.JSON | Angle.JSON;
     saturation: Percentage.JSON;

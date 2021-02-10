@@ -1,5 +1,8 @@
+import { Callback } from "@siteimprove/alfa-callback";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,6 +11,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 const { isObject } = Refinement;
+const { compareComparable } = Comparable;
 
 // Re-export the global `Iterable` interface to ensure that it merges with the
 // `Iterable` namespace.
@@ -40,6 +44,17 @@ export namespace Iterable {
     return true;
   }
 
+  export function forEach<T>(
+    iterable: Iterable<T>,
+    callback: Callback<T, void, [number]>
+  ): void {
+    let index = 0;
+
+    for (const value of iterable) {
+      callback(value, index++);
+    }
+  }
+
   export function* map<T, U = T>(
     iterable: Iterable<T>,
     mapper: Mapper<T, U, [number]>
@@ -47,7 +62,7 @@ export namespace Iterable {
     let index = 0;
 
     for (const value of iterable) {
-      yield mapper(value, index);
+      yield mapper(value, index++);
     }
   }
 
@@ -147,6 +162,32 @@ export namespace Iterable {
     return None;
   }
 
+  export function findLast<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [number]>
+  ): Option<U>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T>;
+
+  export function findLast<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): Option<T> {
+    let index = 0;
+    let result: Option<T> = None;
+
+    for (const value of iterable) {
+      if (predicate(value, index++)) {
+        result = Some.of(value);
+      }
+    }
+
+    return result;
+  }
+
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
     return some(iterable, Predicate.equals(value));
   }
@@ -178,6 +219,13 @@ export namespace Iterable {
     }
 
     return false;
+  }
+
+  export function none<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [number]>
+  ): boolean {
+    return every(iterable, not(predicate));
   }
 
   export function every<T>(
@@ -509,22 +557,68 @@ export namespace Iterable {
     return result;
   }
 
-  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
-    const ita = a[Symbol.iterator]();
-    const itb = b[Symbol.iterator]();
+  export function sort<T extends Comparable<T>>(
+    iterable: Iterable<T>
+  ): Iterable<T> {
+    return sortWith(iterable, compareComparable);
+  }
+
+  export function* sortWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
+  ): Iterable<T> {
+    yield* [...iterable].sort(comparer);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Iterable<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return compareWith(a, b, compareComparable);
+  }
+
+  export function compareWith<T>(
+    a: Iterable<T>,
+    b: Iterable<T>,
+    comparer: Comparer<T>
+  ): Comparison {
+    const iteratorA = a[Symbol.iterator]();
+    const iteratorB = b[Symbol.iterator]();
 
     while (true) {
-      const a = ita.next();
-      const b = itb.next();
+      const a = iteratorA.next();
+      const b = iteratorB.next();
 
-      switch (a.done) {
-        case true:
-          return b.done === true;
+      if (a.done === true) {
+        return b.done === true ? Comparison.Equal : Comparison.Less;
+      }
 
-        default:
-          if (b.done === true || !Equatable.equals(a.value, b.value)) {
-            return false;
-          }
+      if (b.done === true) {
+        return Comparison.Greater;
+      }
+
+      const result = comparer(a.value, b.value);
+
+      if (result !== 0) {
+        return result;
+      }
+    }
+  }
+
+  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
+    const iteratorA = a[Symbol.iterator]();
+    const iteratorB = b[Symbol.iterator]();
+
+    while (true) {
+      const a = iteratorA.next();
+      const b = iteratorB.next();
+
+      if (a.done === true) {
+        return b.done === true;
+      }
+
+      if (b.done === true || !Equatable.equals(a.value, b.value)) {
+        return false;
       }
     }
   }
@@ -577,5 +671,11 @@ export namespace Iterable {
     }
 
     return groups;
+  }
+
+  export function toJSON<T>(
+    iterable: Iterable<T>
+  ): Array<Serializable.ToJSON<T>> {
+    return [...map(iterable, (value) => Serializable.toJSON(value))];
   }
 }

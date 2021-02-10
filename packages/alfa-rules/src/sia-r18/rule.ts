@@ -5,6 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
+import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -19,6 +20,7 @@ const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
+  requirements: [Technique.of("ARIA5")],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").attributes);
 

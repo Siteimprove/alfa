@@ -1,3 +1,5 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -8,8 +10,6 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
-
-import * as json from "@siteimprove/alfa-json";
 
 const { not } = Predicate;
 
@@ -36,6 +36,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   public isEmpty(): this is Set<never> {
     return this._values.isEmpty();
+  }
+
+  public forEach(callback: Callback<T>): void {
+    Iterable.forEach(this, callback);
   }
 
   public map<U>(mapper: Mapper<T, U>): Set<U> {
@@ -103,6 +107,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return Iterable.some(this, predicate);
   }
 
+  public none(predicate: Predicate<T>): boolean {
+    return Iterable.none(this, predicate);
+  }
+
   public every(predicate: Predicate<T>): boolean {
     return Iterable.every(this, predicate);
   }
@@ -156,7 +164,11 @@ export class Set<T> implements Collection.Unkeyed<T> {
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T>(value: Set<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Set && value._values.equals(this._values);
   }
 
@@ -178,8 +190,8 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return [...this];
   }
 
-  public toJSON(): Set.JSON {
-    return this.toArray().map(Serializable.toJSON);
+  public toJSON(): Set.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value));
   }
 
   public toString(): string {
@@ -190,19 +202,37 @@ export class Set<T> implements Collection.Unkeyed<T> {
 }
 
 export namespace Set {
-  export interface JSON extends Array<json.JSON> {}
+  export type JSON<T> = Collection.Unkeyed.JSON<T>;
+
+  export function isSet<T>(value: Iterable<T>): value is Set<T>;
+
+  export function isSet<T>(value: unknown): value is Set<T>;
 
   export function isSet<T>(value: unknown): value is Set<T> {
     return value instanceof Set;
   }
 
   export function from<T>(iterable: Iterable<T>): Set<T> {
-    return isSet<T>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (set, value) => set.add(value),
-          Set.empty<T>()
-        );
+    if (isSet(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
+  }
+
+  export function fromArray<T>(array: Array<T>): Set<T> {
+    return Array.reduce(array, (set, value) => set.add(value), Set.empty());
+  }
+
+  export function fromIterable<T>(iterable: Iterable<T>): Set<T> {
+    return Iterable.reduce(
+      iterable,
+      (set, value) => set.add(value),
+      Set.empty()
+    );
   }
 }

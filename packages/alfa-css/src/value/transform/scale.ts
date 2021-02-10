@@ -78,8 +78,7 @@ export class Scale extends Value<"transform"> {
 }
 
 export namespace Scale {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "scale";
     x: Number.JSON;
     y: Number.JSON;

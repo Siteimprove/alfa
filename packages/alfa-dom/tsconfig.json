@@ -10,6 +10,8 @@
     "src/namespace.ts",
     "src/node.ts",
     "src/node/attribute.ts",
+    "src/node/attribute/predicate.ts",
+    "src/node/attribute/predicate/has-name.ts",
     "src/node/comment.ts",
     "src/node/document.ts",
     "src/node/element.ts",
@@ -46,6 +48,7 @@
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
     "test/h.spec.ts",
+    "test/node.spec.tsx",
     "test/node/attribute.spec.ts",
     "test/node/element.spec.tsx"
   ],
@@ -76,6 +79,9 @@
     },
     {
       "path": "../alfa-refinement"
+    },
+    {
+      "path": "../alfa-sarif"
     },
     {
       "path": "../alfa-sequence"

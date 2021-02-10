@@ -14,15 +14,15 @@ export abstract class Value<T extends string = string>
 
   public abstract hash(hash: Hash): void;
 
-  public abstract toJSON(): Value.JSON;
+  public abstract toJSON(): Value.JSON<T>;
 
   public abstract toString(): string;
 }
 
 export namespace Value {
-  export interface JSON {
+  export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
-    type: string;
+    type: T;
   }
 
   export function isValue<T extends string>(

@@ -8,11 +8,17 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 const { equals } = Predicate;
 
 export abstract class Node
-  implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
+  implements
+    Iterable<Node>,
+    Equatable,
+    json.Serializable<Node.JSON>,
+    earl.Serializable<Node.EARL>,
+    sarif.Serializable<sarif.Location> {
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
 
@@ -218,6 +224,86 @@ export abstract class Node
   }
 
   /**
+   * Construct a sequence of descendants of this node sorted by tab index. Only
+   * nodes with a non-negative tab index are included in the sequence.
+   *
+   * @see https://html.spec.whatwg.org/#tabindex-value
+   */
+  public tabOrder(): Sequence<Element> {
+    const candidates = (node: Node): Sequence<Element> => {
+      if (Element.isElement(node)) {
+        const element = node;
+
+        const tabIndex = element.tabIndex();
+
+        if (element.shadow.isSome()) {
+          // If the element has a negative tab index and is a shadow host then
+          // none of its descendants will be part of the tab order.
+          if (tabIndex.some((i) => i < 0)) {
+            return Sequence.empty();
+          } else {
+            return Sequence.of(element);
+          }
+        }
+
+        if (element.content.isSome()) {
+          return Sequence.of(element);
+        }
+
+        if (Slot.isSlot(element)) {
+          return Sequence.from(element.assignedNodes()).filter(
+            Element.isElement
+          );
+        }
+
+        if (tabIndex.some((i) => i >= 0)) {
+          return Sequence.of(
+            element,
+            Lazy.of(() => element.children().flatMap(candidates))
+          );
+        }
+      }
+
+      return node.children().flatMap(candidates);
+    };
+
+    return candidates(this)
+      .sortWith((a, b) =>
+        a.tabIndex().compareWith(b.tabIndex(), (a, b) => {
+          if (a === 0) {
+            return b === 0 ? 0 : 1;
+          }
+
+          if (b === 0) {
+            return -1;
+          }
+
+          return a < b ? -1 : a > b ? 1 : 0;
+        })
+      )
+      .flatMap((element) => {
+        const tabIndex = element.tabIndex();
+
+        for (const shadow of element.shadow) {
+          if (tabIndex.some((i) => i >= 0)) {
+            return Sequence.of(
+              element,
+              Lazy.of(() => shadow.tabOrder())
+            );
+          } else {
+            return shadow.tabOrder();
+          }
+        }
+
+        for (const content of element.content) {
+          return content.tabOrder();
+        }
+
+        return Sequence.of(element);
+      });
+  }
+
+  /**
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
    */
@@ -255,6 +341,16 @@ export abstract class Node
         "ptr:XPathPointer",
       ],
       "ptr:expression": this.path(),
+    };
+  }
+
+  public toSARIF(): sarif.Location {
+    return {
+      logicalLocations: [
+        {
+          fullyQualifiedName: this.path(),
+        },
+      ],
     };
   }
 
@@ -309,6 +405,7 @@ import { Element } from "./node/element";
 import { Fragment } from "./node/fragment";
 import { Text } from "./node/text";
 import { Type } from "./node/type";
+import { Slot } from "./node/slot";
 
 export namespace Node {
   export interface JSON {

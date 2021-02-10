@@ -60,10 +60,19 @@ export const Display: Property<Display> = Property.of(
   [Keyword.of("inline"), Keyword.of("flow")],
   either(
     map(Keyword.parse("contents", "none"), (box) => [box]),
-    map(Keyword.parse("block", "inline", "run-in"), (outside) => [
-      outside,
-      Keyword.of("flow"),
-    ])
+    either(
+      map(Keyword.parse("block", "inline", "run-in"), (outside) => [
+        outside,
+        Keyword.of("flow"),
+      ]),
+      map(
+        Keyword.parse("flow", "flow-root", "table", "flex", "grid", "ruby"),
+        (inside) => [
+          inside.value === "ruby" ? Keyword.of("inline") : Keyword.of("block"),
+          inside,
+        ]
+      )
+    )
   ),
   (style) => style.specified("display")
 );

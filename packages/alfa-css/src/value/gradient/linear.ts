@@ -97,8 +97,7 @@ export class Linear<
 }
 
 export namespace Linear {
-  export interface JSON extends Value.JSON {
-    type: "gradient";
+  export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
     direction: Direction.JSON;
     items: Array<Gradient.Item.JSON>;
@@ -120,7 +119,7 @@ export namespace Linear {
 
     export const parseVertical = map(
       Token.parseIdent(
-        (ident) => ident.value === "top" || ident.value === "left"
+        (ident) => ident.value === "top" || ident.value === "bottom"
       ),
       (ident) => ident.value as Vertical
     );

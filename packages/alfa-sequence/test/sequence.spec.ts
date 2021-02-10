@@ -13,6 +13,10 @@ test("#size gets the size of a sequence", (t) => {
   t.equal(seq.size, 4);
 });
 
+test("#size does not overflow for large sequences", (t) => {
+  t.equal(Sequence.from(array(100000)).size, 100000);
+});
+
 test("#isEmpty() returns true if a sequence is empty", (t) => {
   t(Sequence.empty().isEmpty());
 });
@@ -217,6 +221,15 @@ test("#join() joins the values of a sequence to a string", (t) => {
   const seq = Sequence.from(["foo", "bar", "baz"]);
 
   t.equal(seq.join("-"), "foo-bar-baz");
+});
+
+test("#sortWith() sorts a sequence according to a comparer", (t) => {
+  const seq = Sequence.from([5, 3, 6, 7, 1, 2, 4]);
+
+  t.deepEqual(
+    [...seq.sortWith((a, b) => (a > b ? 1 : a < b ? -1 : 0))],
+    [1, 2, 3, 4, 5, 6, 7]
+  );
 });
 
 test("#equals() checks if two sequences are equal", (t) => {
