@@ -20,8 +20,8 @@ export type Interview<Q, S, T, D extends number = 3> =
   | {
       [K in keyof Q]: Question<
         K,
-        Q[K],
         S,
+        Q[K],
         D extends -1 ? T : Interview<Q, S, T, Depths[D]>
       >;
     }[keyof Q];

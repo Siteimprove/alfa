@@ -5,14 +5,14 @@ import { Monad } from "@siteimprove/alfa-monad";
 
 import * as json from "@siteimprove/alfa-json";
 
-export class Question<Q, A, S, T = A>
+export class Question<Q, S, A, T = A>
   implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
   public static of<Q, A, S>(
     uri: string,
     type: Q,
     subject: S,
     message: string
-  ): Question<Q, A, S> {
+  ): Question<Q, S, A> {
     return new Question(uri, type, subject, message, (answer) => answer);
   }
 
@@ -52,7 +52,7 @@ export class Question<Q, A, S, T = A>
     return this._message;
   }
 
-  public map<U>(mapper: Mapper<T, U>): Question<Q, A, S, U> {
+  public map<U>(mapper: Mapper<T, U>): Question<Q, S, A, U> {
     return new Question(
       this._uri,
       this._type,
@@ -63,8 +63,8 @@ export class Question<Q, A, S, T = A>
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Question<Q, A, S, U>>
-  ): Question<Q, A, S, U> {
+    mapper: Mapper<T, Question<Q, S, A, U>>
+  ): Question<Q, S, A, U> {
     return new Question(
       this._uri,
       this._type,

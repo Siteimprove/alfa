@@ -6,5 +6,5 @@ import { Rule } from "./rule";
 
 export type Oracle<I, T, Q> = <A>(
   rule: Rule<I, T, Q>,
-  question: { [K in keyof Q]: Question<K, Q[K], T, A> }[keyof Q]
+  question: { [K in keyof Q]: Question<K, T, Q[K], A> }[keyof Q]
 ) => Future<Option<A>>;
