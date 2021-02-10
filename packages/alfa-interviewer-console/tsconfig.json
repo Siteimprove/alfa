@@ -3,12 +3,21 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "esModuleInterop": true,
-    "jsxFactory": "React.createElement"
+    "jsxFactory": "React.createElement",
+    "jsxFragmentFactory": "React.Fragment"
   },
-  "files": ["src/console.tsx", "src/index.ts"],
+  "files": [
+    "src/component/source.tsx",
+    "src/console.tsx",
+    "src/index.ts",
+    "test/console.spec.tsx"
+  ],
   "references": [
     {
       "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-dom"
     },
     {
       "path": "../alfa-future"
