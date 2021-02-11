@@ -1,11 +1,11 @@
 import { Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 import { Element } from "./element";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export class Text extends Node implements Slotable {
   public static of(data: string): Text {

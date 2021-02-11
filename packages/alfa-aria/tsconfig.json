@@ -26,6 +26,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-branched"
     },
     {
@@ -42,6 +45,9 @@
     },
     {
       "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-graph"
     },
     {
       "path": "../alfa-hash"
@@ -66,6 +72,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-sequence"

@@ -4,6 +4,9 @@
   "files": ["src/future.ts", "src/index.ts", "test/future.spec.ts"],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-callback"
     },
     {
@@ -14,9 +17,6 @@
     },
     {
       "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-list"
     },
     {
       "path": "../alfa-mapper"

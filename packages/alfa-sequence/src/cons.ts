@@ -1,5 +1,10 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Callback } from "@siteimprove/alfa-callback";
+import { Collection } from "@siteimprove/alfa-collection";
+import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
@@ -7,12 +12,11 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import * as json from "@siteimprove/alfa-json";
-
-import { Nil } from "./nil";
 import { Sequence } from "./sequence";
+import { Nil } from "./nil";
 
 const { not, equals } = Predicate;
 
@@ -26,7 +30,6 @@ export class Cons<T> implements Sequence<T> {
 
   private readonly _head: T;
   private readonly _tail: Lazy<Sequence<T>>;
-  private _size: Option<number> = None;
 
   private constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
@@ -34,25 +37,42 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public get size(): number {
-    if (this._size.isNone()) {
-      this._size = Option.of(1 + this._tail.force().size);
-    }
-
-    return this._size.get();
+    return Iterable.size(this);
   }
 
   public isEmpty(): this is Sequence<never> {
     return false;
   }
 
+  public forEach(callback: Callback<T, void, [number]>): void {
+    Iterable.forEach(this, callback);
+  }
+
+  public map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
+
+  /**
+   * @internal
+   */
+  public map<U>(mapper: Mapper<T, U, [number]>, index: number): Cons<U>;
+
   public map<U>(mapper: Mapper<T, U, [number]>, index = 0): Cons<U> {
     return new Cons(
       mapper(this._head, index),
       this._tail.map((tail) =>
-        Cons.isCons<T>(tail) ? tail.map(mapper, index - 1) : tail.map(mapper)
+        Cons.isCons(tail) ? tail.map(mapper, index + 1) : Nil
       )
     );
   }
+
+  public flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
+
+  /**
+   * @internal
+   */
+  public flatMap<U>(
+    mapper: Mapper<T, Sequence<U>, [number]>,
+    index: number
+  ): Sequence<U>;
 
   public flatMap<U>(
     mapper: Mapper<T, Sequence<U>, [number]>,
@@ -61,28 +81,25 @@ export class Cons<T> implements Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
-      const head = mapper(next._head, index);
+      const head = mapper(next._head, index++);
 
       if (Cons.isCons<U>(head)) {
         return new Cons(
           head._head,
-          head._tail.flatMap((left) =>
-            next._tail.map((right) =>
-              left.concat(
-                Cons.isCons<T>(right)
-                  ? right.flatMap(mapper, index + 1)
-                  : right.flatMap(mapper)
-              )
-            )
-          )
+          head._tail.map((left) => {
+            const right = next._tail.force();
+
+            return Cons.isCons(right)
+              ? left.concat(right.flatMap(mapper, index))
+              : left;
+          })
         );
       }
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
-        index++;
       } else {
         return Nil;
       }
@@ -98,7 +115,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return accumulator;
@@ -111,26 +128,32 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U, [number]>,
-    index = 0
-  ): Sequence<U> {
+    refinement: Refinement<T, U, [number]>
+  ): Sequence<U>;
+
+  public filter(predicate: Predicate<T, [number]>): Sequence<T>;
+
+  /**
+   * @internal
+   */
+  public filter(predicate: Predicate<T, [number]>, index: number): Sequence<T>;
+
+  public filter(predicate: Predicate<T, [number]>, index = 0): Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
-      if (predicate(next._head, index)) {
+      if (predicate(next._head, index++)) {
         return new Cons(
           next._head,
           next._tail.map((tail) =>
-            Cons.isCons<T>(tail)
-              ? tail.filter(predicate, index + 1)
-              : tail.filter(predicate)
+            Cons.isCons(tail) ? tail.filter(predicate, index) : Nil
           )
         );
       }
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return Nil;
@@ -138,11 +161,21 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public reject(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public reject<U extends T>(
+    refinement: Refinement<T, U, [number]>
+  ): Sequence<Exclude<T, U>>;
+
+  public reject(predicate: Predicate<T, [number]>): Sequence<T>;
+
+  public reject(predicate: Predicate<T, [number]>): Sequence<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U> {
+  public find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+
+  public find(predicate: Predicate<T, [number]>): Option<T>;
+
+  public find(predicate: Predicate<T, [number]>): Option<T> {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -155,7 +188,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return None;
@@ -167,6 +200,16 @@ export class Cons<T> implements Sequence<T> {
     return this.some(equals(value));
   }
 
+  public collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
+
+  /**
+   * @internal
+   */
+  public collect<U>(
+    mapper: Mapper<T, Option<U>, [number]>,
+    index: number
+  ): Sequence<U>;
+
   public collect<U>(
     mapper: Mapper<T, Option<U>, [number]>,
     index: number = 0
@@ -174,22 +217,20 @@ export class Cons<T> implements Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
-      const value = mapper(next._head, index);
+      const value = mapper(next._head, index++);
 
       if (value.isSome()) {
         return new Cons(
           value.get(),
           next._tail.map((tail) =>
-            Cons.isCons<T>(tail)
-              ? tail.collect(mapper, index + 1)
-              : tail.collect(mapper)
+            Cons.isCons(tail) ? tail.collect(mapper, index) : Nil
           )
         );
       }
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return Nil;
@@ -202,7 +243,7 @@ export class Cons<T> implements Sequence<T> {
     let index = 0;
 
     while (true) {
-      const value = mapper(next._head, index);
+      const value = mapper(next._head, index++);
 
       if (value.isSome()) {
         return value;
@@ -210,7 +251,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return None;
@@ -218,7 +259,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public some(predicate: Predicate<T, T, [number]>): boolean {
+  public some(predicate: Predicate<T, [number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -229,7 +270,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return false;
@@ -237,7 +278,11 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public every(predicate: Predicate<T, T, [number]>): boolean {
+  public none(predicate: Predicate<T, [number]>): boolean {
+    return this.every(not(predicate));
+  }
+
+  public every(predicate: Predicate<T, [number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -248,7 +293,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return true;
@@ -256,12 +301,19 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public count(predicate: Predicate<T, T, [number]>): number {
+  public count(predicate: Predicate<T, [number]>): number {
     return this.reduce(
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
     );
   }
+
+  public distinct(): Sequence<T>;
+
+  /**
+   * @internal
+   */
+  public distinct(seen: Set<T>): Sequence<T>;
 
   public distinct(seen: Set<T> = Set.empty()): Sequence<T> {
     let next: Cons<T> = this;
@@ -270,7 +322,7 @@ export class Cons<T> implements Sequence<T> {
       if (seen.has(next._head)) {
         const tail = next._tail.force();
 
-        if (Cons.isCons<T>(tail)) {
+        if (Cons.isCons(tail)) {
           next = tail;
         } else {
           return Nil;
@@ -278,10 +330,8 @@ export class Cons<T> implements Sequence<T> {
       } else {
         return Cons.of(
           next._head,
-          this._tail.map((tail) =>
-            Cons.isCons<T>(tail)
-              ? tail.distinct(seen.add(next._head))
-              : tail.distinct()
+          next._tail.map((tail) =>
+            Cons.isCons(tail) ? tail.distinct(seen.add(next._head)) : Nil
           )
         );
       }
@@ -293,7 +343,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public has(index: number): boolean {
-    return this.skip(index).first().isSome();
+    return this.get(index).isSome();
   }
 
   public set(index: number, value: T): Cons<T> {
@@ -358,7 +408,7 @@ export class Cons<T> implements Sequence<T> {
     while (true) {
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return Option.of(next._head);
@@ -367,17 +417,35 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public take(count: number): Sequence<T> {
-    return this.takeWhile(() => count-- > 0);
+    if (count <= 0) {
+      return Nil;
+    }
+
+    return new Cons(
+      this._head,
+      count === 1
+        ? Lazy.force(Nil)
+        : this._tail.map((tail) =>
+            Cons.isCons(tail) ? tail.take(count - 1) : Nil
+          )
+    );
   }
 
-  public takeWhile(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public takeWhile(predicate: Predicate<T, [number]>): Sequence<T> {
     return this.takeUntil(not(predicate));
   }
 
+  public takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+
+  /**
+   * @internal
+   */
   public takeUntil(
-    predicate: Predicate<T, T, [number]>,
-    index = 0
-  ): Sequence<T> {
+    predicate: Predicate<T, [number]>,
+    index: number
+  ): Sequence<T>;
+
+  public takeUntil(predicate: Predicate<T, [number]>, index = 0): Sequence<T> {
     if (predicate(this._head, index)) {
       return Nil;
     }
@@ -385,7 +453,7 @@ export class Cons<T> implements Sequence<T> {
     return new Cons(
       this._head,
       this._tail.map((tail) =>
-        Cons.isCons<T>(tail)
+        Cons.isCons(tail)
           ? tail.takeUntil(predicate, index + 1)
           : tail.takeUntil(predicate)
       )
@@ -397,17 +465,12 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public skip(count: number): Sequence<T> {
-    return this.skipWhile(() => count-- > 0);
-  }
-
-  public skipWhile(predicate: Predicate<T, T, [number]>): Sequence<T> {
     let next: Cons<T> = this;
-    let index = 0;
 
-    while (predicate(next._head, index++)) {
+    while (count-- > 0) {
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return Nil;
@@ -417,7 +480,24 @@ export class Cons<T> implements Sequence<T> {
     return next;
   }
 
-  public skipUntil(predicate: Predicate<T, T, [number]>): Sequence<T> {
+  public skipWhile(predicate: Predicate<T, [number]>): Sequence<T> {
+    let next: Cons<T> = this;
+    let index = 0;
+
+    while (predicate(next._head, index++)) {
+      const tail = next._tail.force();
+
+      if (Cons.isCons(tail)) {
+        next = tail;
+      } else {
+        return Nil;
+      }
+    }
+
+    return next;
+  }
+
+  public skipUntil(predicate: Predicate<T, [number]>): Sequence<T> {
     return this.skipWhile(not(predicate));
   }
 
@@ -454,7 +534,7 @@ export class Cons<T> implements Sequence<T> {
     while (true) {
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         result += `${separator}${tail._head}`;
         next = tail;
       } else {
@@ -463,16 +543,29 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
+  public sortWith(comparer: Comparer<T>): Sequence<T> {
+    return Sequence.fromArray(Array.sortWith(this.toArray(), comparer));
+  }
+
+  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+    return Iterable.compareWith(this, iterable, comparer);
+  }
+
+  public subtract(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => !Iterable.includes(iterable, value));
+  }
+
+  public intersect(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => Iterable.includes(iterable, value));
+  }
+
   public groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>> {
     return this.reduce((groups, value, index) => {
       const group = grouper(value, index);
 
       return groups.set(
         group,
-        Sequence.of(
-          value,
-          Lazy.force(groups.get(group).getOrElse(() => Sequence.empty<T>()))
-        )
+        new Cons(value, Lazy.force(groups.get(group).getOrElse(() => Nil)))
       );
     }, Map.empty<K, Sequence<T>>()).map((group) => group.reverse());
   }
@@ -493,7 +586,7 @@ export class Cons<T> implements Sequence<T> {
       const ta = a._tail.force();
       const tb = b._tail.force();
 
-      if (Cons.isCons<T>(ta) && Cons.isCons<T>(tb)) {
+      if (Cons.isCons(ta) && Cons.isCons(tb)) {
         a = ta;
         b = tb;
       } else {
@@ -521,7 +614,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         break;
@@ -543,7 +636,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return array;
@@ -551,8 +644,8 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Cons.JSON {
-    const json: Cons.JSON = [];
+  public toJSON(): Cons.JSON<T> {
+    const json: Cons.JSON<T> = [];
 
     let next: Cons<T> = this;
 
@@ -561,7 +654,7 @@ export class Cons<T> implements Sequence<T> {
 
       const tail = next._tail.force();
 
-      if (Cons.isCons<T>(tail)) {
+      if (Cons.isCons(tail)) {
         next = tail;
       } else {
         return json;
@@ -575,7 +668,11 @@ export class Cons<T> implements Sequence<T> {
 }
 
 export namespace Cons {
-  export type JSON = Array<json.JSON>;
+  export type JSON<T> = Collection.Indexed.JSON<T>;
+
+  export function isCons<T>(value: Iterable<T>): value is Cons<T>;
+
+  export function isCons<T>(value: unknown): value is Cons<T>;
 
   export function isCons<T>(value: unknown): value is Cons<T> {
     return value instanceof Cons;

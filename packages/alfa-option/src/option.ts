@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -8,10 +9,13 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { None } from "./none";
 import { Some } from "./some";
+
+const { compareComparable } = Comparable;
 
 export interface Option<T>
   extends Functor<T>,
@@ -21,14 +25,16 @@ export interface Option<T>
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable {
+    Serializable<Option.JSON<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
-  filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
+  filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
+  filter(predicate: Predicate<T>): Option<T>;
+  reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
   reject(predicate: Predicate<T>): Option<T>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;
@@ -41,17 +47,38 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
   toArray(): Array<T>;
-  toJSON(): Option.JSON;
+  toJSON(): Option.JSON<T>;
 }
 
 export namespace Option {
   export type Maybe<T> = T | Option<T>;
 
-  export type JSON = Some.JSON | None.JSON;
+  export type JSON<T> = Some.JSON<T> | None.JSON;
+
+  export function isOption<T>(value: Iterable<T>): value is Option<T>;
+
+  export function isOption<T>(value: unknown): value is Option<T>;
 
   export function isOption<T>(value: unknown): value is Option<T> {
-    return Some.isSome(value) || value === None;
+    return isSome(value) || isNone(value);
+  }
+
+  export function isSome<T>(value: Iterable<T>): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T> {
+    return Some.isSome(value);
+  }
+
+  export function isNone<T>(value: Iterable<T>): value is None;
+
+  export function isNone(value: unknown): value is None;
+
+  export function isNone(value: unknown): value is None {
+    return value === None;
   }
 
   export function of<T>(value: T): Option<T> {
@@ -68,5 +95,12 @@ export namespace Option {
 
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Option<T>,
+    b: Option<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

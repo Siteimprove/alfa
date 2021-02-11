@@ -3,6 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -11,16 +12,19 @@ import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r3.html",
+  requirements: [Criterion.of("4.1.1"), Technique.of("H93")],
   evaluate({ document }) {
     return {
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(and(Element.isElement, hasId(not(isEmpty))));
+          .filter(isElement)
+          .filter(hasId(not(isEmpty)));
       },
 
       expectations(target) {

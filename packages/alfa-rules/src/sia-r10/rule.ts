@@ -1,47 +1,47 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasInputType } from "../common/predicate/has-input-type";
 import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
-const { isElement, hasName, hasNamespace } = Element;
-const { and, or, not, equals } = Predicate;
+const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r10.html",
+  requirements: [Criterion.of("1.3.5")],
   evaluate({ device, document }) {
     return {
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasAttribute("autocomplete", hasTokens),
-                hasNamespace(Namespace.HTML),
-                hasName("input", "select", "textarea"),
-                isPerceivable(device),
-                not(
-                  and(
-                    hasName("input"),
-                    hasInputType(equals("hidden", "button", "submit", "reset"))
-                  )
-                ),
-                not(hasAttribute("aria-disabled", equals("true"))),
-                or(
-                  isTabbable(device),
-                  hasRole((role) => role.isWidget())
+              hasNamespace(Namespace.HTML),
+              hasName("input", "select", "textarea"),
+              not(hasInputType("hidden", "button", "submit", "reset")),
+              hasAttribute("autocomplete", hasTokens),
+              or(
+                isTabbable(device),
+                hasRole((role) => role.isWidget())
+              ),
+              isPerceivable(device),
+              (element) =>
+                Node.from(element, device).some((ariaNode) =>
+                  ariaNode
+                    .attribute("aria-disabled")
+                    .none((ariaDisabled) => ariaDisabled.value === "true")
                 )
-              )
             )
           )
           .map((element) => element.attribute("autocomplete").get());

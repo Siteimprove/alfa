@@ -1,9 +1,9 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-const { isObject } = Predicate;
+const { isObject } = Refinement;
 
 export class Cache<K, V> {
   public static empty<K, V>(): Cache<K, V> {

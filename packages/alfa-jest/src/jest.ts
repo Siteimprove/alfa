@@ -1,10 +1,9 @@
 /// <reference types="jest" />
 
-import { Assert } from "@siteimprove/alfa-assert";
+import { Rule } from "@siteimprove/alfa-act";
+import { Asserter, Handler } from "@siteimprove/alfa-assert";
+import { Future } from "@siteimprove/alfa-future";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Page } from "@siteimprove/alfa-web";
 
 declare global {
   namespace jest {
@@ -15,24 +14,30 @@ declare global {
 }
 
 export namespace Jest {
-  export function createPlugin<T>(
-    identify: Predicate<unknown, T>,
-    transform: Mapper<T, Page>
+  export function createPlugin<I, J, T = unknown, Q = never>(
+    transform: Mapper<I, Future.Maybe<J>>,
+    rules: Iterable<Rule<J, T, Q>>,
+    handlers: Iterable<Handler<J, T, Q>> = [],
+    options: Asserter.Options = {}
   ): void {
-    expect.extend({
-      async toBeAccessible(value: unknown) {
-        let error: Option<Assert.Error<Assert.Page.Target>> = None;
+    const asserter = Asserter.of(rules, handlers, options);
 
-        if (identify(value)) {
-          error = await Assert.Page.isAccessible(transform(value));
-        }
+    expect.extend({
+      async toBeAccessible(value: I) {
+        const input = await transform(value);
+
+        const error = await asserter.expect(input).to.be.accessible();
+
+        const message = error.isOk() ? error.get() : error.getErr();
 
         return {
-          pass: error.isNone(),
+          pass: error.isOk(),
           message: () =>
             this.utils.matcherHint("toBeAccessible", "received", "", {
               isNot: this.isNot,
-            }),
+            }) +
+            " but " +
+            message,
         };
       },
     });

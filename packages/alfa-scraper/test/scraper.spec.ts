@@ -1,63 +1,67 @@
+import * as url from "url";
+
 import { test } from "@siteimprove/alfa-test";
 
 import { Scraper } from "../src/scraper";
 
+const fixture = `${url.pathToFileURL(__dirname).href}/fixture`;
+
 test("#scrape() scrapes a page with a hash fragment", async (t) =>
   await Scraper.with(async (scraper) => {
-    const url = `file://${__dirname}/fixture/internal-link.html`;
+    const url = `${fixture}/internal-link.html`;
     const result = await scraper.scrape(url + "#foo");
 
     t.equal(result.isOk(), true);
 
     const { response } = result.get();
 
-    t.equal(response.url, url);
+    t.equal(response.url.toString(), url);
   }));
 
 test("#scrape() scrapes a page with an immediate meta refresh", async (t) =>
   await Scraper.with(async (scraper) => {
-    const url = `file://${__dirname}/fixture/meta-refresh-immediate.html`;
+    const url = `${fixture}/meta-refresh-immediate.html`;
     const result = await scraper.scrape(url);
 
     t.equal(result.isOk(), true);
 
     const { response } = result.get();
 
-    t.equal(response.url, "https://example.com/");
+    t.equal(response.url.toString(), "https://example.com/");
   }));
 
 test("#scrape() scrapes a page with a delayed meta refresh", async (t) =>
   await Scraper.with(async (scraper) => {
-    const url = `file://${__dirname}/fixture/meta-refresh-delayed.html`;
+    const url = `${fixture}/meta-refresh-delayed.html`;
     const result = await scraper.scrape(url);
 
     t.equal(result.isOk(), true);
 
     const { response } = result.get();
 
-    t.equal(response.url, url);
+    t.equal(response.url.toString(), url);
   }));
 
 test("#scrape() scrapes a page with an immediate location change", async (t) =>
   await Scraper.with(async (scraper) => {
-    const url = `file://${__dirname}/fixture/location-change-immediate.html`;
+    const url = `${fixture}/location-change-immediate.html`;
     const result = await scraper.scrape(url);
 
     t.equal(result.isOk(), true);
 
     const { response } = result.get();
 
-    t.equal(response.url, "https://example.com/");
+    t.equal(response.url.toString(), "https://example.com/");
   }));
 
 test("#scrape() scrapes a page with a delayed location change", async (t) =>
   await Scraper.with(async (scraper) => {
-    const url = `file://${__dirname}/fixture/location-change-delayed.html`;
+    const url = `${fixture}/location-change-delayed.html`;
     const result = await scraper.scrape(url);
 
     t.equal(result.isOk(), true);
 
     const { response } = result.get();
 
-    t.equal(response.url, url);
+    t.equal(response.url.toString(), url);
   }));

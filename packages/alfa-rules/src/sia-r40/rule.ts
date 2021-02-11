@@ -8,11 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasRole } from "../common/predicate/has-role";
+import { hasExplicitRole } from "../common/predicate/has-explicit-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { and, not } = Predicate;
 const { hasName } = Role;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r40.html",
@@ -21,11 +22,9 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
-            and(
-              Element.isElement,
-              and(hasRole(hasName("region")), not(isIgnored(device)))
-            )
+            and(hasExplicitRole(hasName("region")), not(isIgnored(device)))
           );
       },
 

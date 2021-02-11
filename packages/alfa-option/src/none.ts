@@ -1,3 +1,5 @@
+import { Comparison } from "@siteimprove/alfa-comparable";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
@@ -84,11 +86,17 @@ export const None: None = new (class None {
     return value();
   }
 
+  public compareWith<T>(option: Option<T>): Comparison {
+    return option.isNone() ? Comparison.Equal : Comparison.Less;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof None;
   }
 
-  public hash(): void {}
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, false);
+  }
 
   public *[Symbol.iterator](): Iterator<never> {}
 

@@ -11,9 +11,9 @@ const { map, either } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#images
  */
-export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
-  "image"
-> {
+export class Image<
+  I extends URL | Gradient = URL | Gradient
+> extends Value<"image"> {
   public static of<I extends URL | Gradient>(image: I): Image<I> {
     return new Image(image);
   }
@@ -54,8 +54,7 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
 }
 
 export namespace Image {
-  export interface JSON extends Value.JSON {
-    type: "image";
+  export interface JSON extends Value.JSON<"image"> {
     image: URL.JSON | Gradient.JSON;
   }
 

@@ -3,13 +3,14 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
 const { fromCharCode } = String;
-const { and } = Predicate;
+const { and } = Refinement;
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#terminal-symbols
@@ -431,12 +432,13 @@ export namespace Token {
 }
 
 function parseToken<T extends Token>(
-  predicate: Predicate<Token, T>
+  refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) =>
-    input
-      .get(0)
-      .filter(predicate)
-      .map((token) => Ok.of([input.slice(1), token] as const))
-      .getOrElse(() => Err.of("Expected token"));
+  return (input) => {
+    for (const token of input.get(0).filter(refinement)) {
+      return Result.of([input.slice(1), token]);
+    }
+
+    return Err.of("Expected token");
+  };
 }

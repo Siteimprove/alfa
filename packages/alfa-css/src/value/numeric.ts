@@ -1,6 +1,4 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
@@ -32,7 +30,7 @@ export abstract class Numeric<T extends string = string> extends Value<T> {
     Hash.writeFloat64(hash, this._value);
   }
 
-  public abstract toJSON(): Numeric.JSON;
+  public abstract toJSON(): Numeric.JSON<T>;
 
   public toString(): string {
     return `${this._value}`;
@@ -40,7 +38,7 @@ export abstract class Numeric<T extends string = string> extends Value<T> {
 }
 
 export namespace Numeric {
-  export interface JSON extends Value.JSON {
+  export interface JSON<T extends string = string> extends Value.JSON<T> {
     [key: string]: json.JSON;
     value: number;
   }

@@ -1,4 +1,5 @@
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "./namespace";
 
@@ -13,25 +14,27 @@ import { Type } from "./node/type";
 import { Block } from "./style/block";
 import { Declaration } from "./style/declaration";
 import {
-  Rule,
   FontFaceRule,
   KeyframeRule,
   KeyframesRule,
   MediaRule,
   NamespaceRule,
   PageRule,
+  Rule,
   StyleRule,
   SupportsRule,
 } from "./style/rule";
 import { Sheet } from "./style/sheet";
+import { Shadow } from "./node/shadow";
 
 const { entries } = Object;
+const { nor } = Predicate;
 
 export function h(
   name: string,
-  attributes: Array<Attribute> | Record<string, string | boolean> = [],
-  children: Array<Node | string> = [],
-  style: Array<Declaration> | Record<string, string> = []
+  attributes?: Array<Attribute> | Record<string, string | boolean>,
+  children?: Array<Node | string>,
+  style?: Array<Declaration> | Record<string, string>
 ): Element {
   return h.element(name, attributes, children, style);
 }
@@ -72,16 +75,29 @@ export namespace h {
       .filter(Namespace.isNamespace)
       .getOr(Namespace.HTML);
 
-    return Element.of(
+    const content = children.find(Document.isDocument);
+    const shadow = children.find(Shadow.isShadow);
+
+    const element = Element.of(
       Option.of(namespace),
       None,
       name,
       attributes,
-      children.map((child) =>
-        typeof child === "string" ? h.text(child) : child
-      ),
+      children
+        .filter(nor(Document.isDocument, Shadow.isShadow))
+        .map((child) => (typeof child === "string" ? h.text(child) : child)),
       style.length === 0 ? None : Option.of(block)
     );
+
+    if (content !== undefined) {
+      element._attachContent(content);
+    }
+
+    if (shadow !== undefined) {
+      element._attachShadow(shadow);
+    }
+
+    return element;
   }
 
   export function attribute(name: string, value: string): Attribute {
@@ -94,7 +110,7 @@ export namespace h {
 
   export function document(
     children: Array<Node | string>,
-    style: Array<Sheet> = []
+    style?: Array<Sheet>
   ): Document {
     return Document.of(
       children.map((child) =>
@@ -104,10 +120,24 @@ export namespace h {
     );
   }
 
+  export function shadow(
+    children: Array<Node | string>,
+    style?: Array<Sheet>,
+    mode?: Shadow.Mode
+  ): Shadow {
+    return Shadow.of(
+      children!.map((child) =>
+        typeof child === "string" ? text(child) : child
+      ),
+      style,
+      mode
+    );
+  }
+
   export function type(
     name: string,
-    publicId: string | null = null,
-    systemId: string | null = null
+    publicId?: string,
+    systemId?: string
   ): Type {
     return Type.of(name, Option.from(publicId), Option.from(systemId));
   }
@@ -120,8 +150,8 @@ export namespace h {
 
   export function sheet(
     rules: Array<Rule>,
-    disabled: boolean = false,
-    condition: string | null = null
+    disabled?: boolean,
+    condition?: string
   ): Sheet {
     return Sheet.of(rules, disabled, Option.from(condition));
   }
@@ -151,7 +181,7 @@ export namespace h {
   export function declaration(
     name: string,
     value: string,
-    important: boolean = false
+    important?: boolean
   ): Declaration {
     return Declaration.of(name, value, important);
   }
@@ -180,7 +210,7 @@ export namespace h {
 
     export function namespace(
       namespace: string,
-      prefix: string | null = null
+      prefix?: string
     ): NamespaceRule {
       return NamespaceRule.of(namespace, Option.from(prefix));
     }
@@ -194,9 +224,10 @@ export namespace h {
 
     export function style(
       selector: string,
-      declarations: Array<Declaration> | Record<string, string>
+      declarations: Array<Declaration> | Record<string, string>,
+      hint?: boolean
     ): StyleRule {
-      return StyleRule.of(selector, block(declarations));
+      return StyleRule.of(selector, block(declarations), hint);
     }
 
     export function supports(

@@ -4,7 +4,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Record<T>
@@ -12,21 +14,24 @@ export class Record<T>
     Foldable<Record.Value<T>>,
     Iterable<Record.Entry<T>>,
     Equatable,
-    Serializable {
+    Serializable<Record.JSON<T>> {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
-    const values = List.from(keys.map((key) => properties[key]));
 
-    return new Record(Indices.from(keys), keys, values);
+    return new Record(
+      new Map(Iterable.map(keys, (key, i) => [key, i])),
+      keys,
+      List.from(keys.map((key) => properties[key]))
+    );
   }
 
-  private readonly _indices: Indices<T>;
-  private readonly _keys: Array<Record.Key<T>>;
+  private readonly _indices: ReadonlyMap<string, number>;
+  private readonly _keys: ReadonlyArray<Record.Key<T>>;
   private readonly _values: List<Record.Value<T>>;
 
   private constructor(
-    indices: Indices<T>,
-    keys: Array<Record.Key<T>>,
+    indices: ReadonlyMap<string, number>,
+    keys: ReadonlyArray<Record.Key<T>>,
     values: List<T[Record.Key<T>]>
   ) {
     this._indices = indices;
@@ -35,29 +40,27 @@ export class Record<T>
   }
 
   public has(key: string): key is Record.Key<T> {
-    return this._indices.hasOwnProperty(key);
+    return this._indices.has(key);
   }
 
   public get<K extends Record.Key<T>>(key: K): Option<T[K]> {
-    if (!this.has(key)) {
+    const i = this._indices.get(key);
+
+    if (i === undefined) {
       return None;
     }
-
-    const i = this._indices[key];
 
     return this._values.get(i) as Option<T[K]>;
   }
 
   public set<K extends Record.Key<T>>(key: K, value: T[K]): Record<T> {
-    if (!this.has(key)) {
+    const i = this._indices.get(key);
+
+    if (i === undefined) {
       return this;
     }
 
-    return new Record(
-      this._indices,
-      this._keys,
-      this._values.set(this._indices[key], value)
-    );
+    return new Record(this._indices, this._keys, this._values.set(i, value));
   }
 
   public reduce<R>(
@@ -71,7 +74,21 @@ export class Record<T>
     );
   }
 
-  public equals(value: unknown): value is this {
+  public some(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean {
+    return Iterable.some(this, ([key, value]) => predicate(value, key));
+  }
+
+  public every(
+    predicate: Predicate<Record.Value<T>, [Record.Key<T>]>
+  ): boolean {
+    return Iterable.every(this, ([key, value]) => predicate(value, key));
+  }
+
+  public equals(value: Record<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Record &&
       value._keys.length === this._keys.length &&
@@ -104,14 +121,14 @@ export class Record<T>
     return [...this];
   }
 
-  public toJSON(): Record.JSON {
+  public toJSON(): Record.JSON<T> {
     const json: { [key: string]: json.JSON } = {};
 
     for (const [key, value] of this) {
       json[key] = Serializable.toJSON(value);
     }
 
-    return json;
+    return json as Record.JSON<T>;
   }
 
   public toString(): string {
@@ -130,37 +147,19 @@ export namespace Record {
 
   export type Entry<T> = { [K in Key<T>]: [K, T[K]] }[Key<T>];
 
-  export interface JSON {
-    [key: string]: json.JSON;
-  }
+  export type JSON<T> = { [K in Key<T>]: Serializable.ToJSON<T[K]> };
 
   export function isRecord<T>(value: unknown): value is Record<T> {
     return value instanceof Record;
   }
 
   export function from<T>(entries: Iterable<Entry<T>>): Record<T> {
-    const record: { [key: string]: unknown } = {};
+    const record = {} as { [K in Key<T>]: T[K] };
 
     for (const [key, value] of entries) {
       record[key] = value;
     }
 
-    return Record.of((record as unknown) as T);
-  }
-}
-
-type Indices<T> = { [K in keyof T]: number };
-
-namespace Indices {
-  export function from<T>(keys: Iterable<Record.Key<T>>): Indices<T> {
-    const indices: { [key: string]: number } = {};
-
-    let i = 0;
-
-    for (const key of keys) {
-      indices[key] = i++;
-    }
-
-    return indices as Indices<T>;
+    return Record.of(record as T);
   }
 }

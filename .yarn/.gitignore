@@ -1,0 +1,8 @@
+*
+!.gitignore
+
+!**/*.cjs
+
+!releases
+!plugins
+!versions

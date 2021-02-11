@@ -1,37 +1,39 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Element,
-  Text,
-  Namespace,
-  Node,
-  Attribute,
-} from "@siteimprove/alfa-dom";
+import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
-import { Style } from "@siteimprove/alfa-style";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { contrast } from "../common/expectation/contrast";
+import { getBackground, getForeground } from "../common/expectation/get-colors";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasRole } from "../common/predicate/has-role";
-import { hasValue } from "../common/predicate/has-value";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import {
+  hasRole,
+  isPerceivable,
+  isLargeText,
+  isSemanticallyDisabled,
+} from "../common/predicate";
+
+import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Question } from "../common/question";
 
-import { Contrast } from "./diagnostic/contrast";
+import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
 
 const { flatMap, map } = Iterable;
-const { and, or, not, equals, test } = Predicate;
-const { min, max, round } = Math;
+const { or, not } = Predicate;
+const { and, test } = Refinement;
+const { max } = Math;
+const { isElement } = Element;
+const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r69.html",
+  requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -41,7 +43,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
           if (
             test(
               and(
-                Element.isElement,
+                isElement,
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
                   hasRole((role) => role.isWidget()),
@@ -54,7 +56,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
             return;
           }
 
-          if (test(and(Text.isText, isPerceivable(device)), node)) {
+          if (test(and(isText, isPerceivable(device)), node)) {
             yield node;
           }
 
@@ -86,7 +88,7 @@ export default Rule.Atomic.of<Page, Text, Question>({
             const pairings = [
               ...flatMap(foregrounds, (foreground) =>
                 map(backgrounds, (background) =>
-                  Contrast.Pairing.of(
+                  Diagnostic.Pairing.of(
                     foreground,
                     background,
                     contrast(foreground, background)
@@ -128,314 +130,3 @@ export default Rule.Atomic.of<Page, Text, Question>({
     };
   },
 });
-
-export namespace Outcomes {
-  export const HasSufficientContrast = (
-    highest: number,
-    threshold: number,
-    pairings: Array<Contrast.Pairing>
-  ) =>
-    Ok.of(
-      Contrast.of(
-        `The highest possible contrast of the text is 1:${highest} which is
-        above the required contrast of 1:${threshold}`,
-        threshold,
-        pairings
-      )
-    );
-
-  export const HasInsufficientContrast = (
-    highest: number,
-    threshold: number,
-    pairings: Array<Contrast.Pairing>
-  ) =>
-    Err.of(
-      Contrast.of(
-        `The highest possible contrast of the text is 1:${highest} which is
-        below the required contrast of 1:${threshold}`,
-        threshold,
-        pairings
-      )
-    );
-}
-
-/**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-large-scale
- */
-function isLargeText(device: Device): Predicate<Text> {
-  return (text) => {
-    const parent = text.parent({ flattened: true }).filter(Element.isElement);
-
-    if (parent.isNone()) {
-      return false;
-    }
-
-    const style = Style.from(parent.get(), device);
-
-    const size = style.computed("font-size").value.withUnit("pt");
-
-    if (size.value >= 18) {
-      return true;
-    }
-
-    const weight = style.computed("font-weight").value;
-
-    return size.value >= 14 && weight.value >= 700;
-  };
-}
-
-/**
- * Determine the approximate foreground color of an element if possible.
- */
-function getForeground(
-  element: Element,
-  device: Device
-): Option<Iterable<RGB<Percentage, Percentage>>> {
-  const style = Style.from(element, device);
-
-  const color = resolveColor(style.computed("color").value, style);
-
-  if (color.isNone()) {
-    return None;
-  }
-
-  if (color.get().alpha.value === 1) {
-    return Option.of([color.get()]);
-  }
-
-  return getBackground(element, device).map((backdrops) =>
-    map(backdrops, (backdrop) => composite(color.get(), backdrop))
-  );
-}
-
-/**
- * Determine the approximate background color of an element if possible. It is
- * possible for multiple background colors to be returned, with each color
- * representing a possible background color of the element. Note that it is
- * possible that some of the colors will never manifest; they're simply a
- * worst-case guess at the possible colors that might.
- */
-function getBackground(
-  element: Element,
-  device: Device
-): Option<Array<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map((layers) =>
-    layers.reduce<Array<RGB<Percentage, Percentage>>>(
-      (backdrops, layer) =>
-        layer.reduce<Array<RGB<Percentage, Percentage>>>(
-          (layers, color) =>
-            layers.concat(
-              backdrops.map((backdrop) => composite(color, backdrop))
-            ),
-          []
-        ),
-      // We make the initial backdrop solid white as this can be assumed to be
-      // the color of the canvas onto which the other backgrounds are rendered.
-      [
-        RGB.of(
-          Percentage.of(1),
-          Percentage.of(1),
-          Percentage.of(1),
-          Percentage.of(1)
-        ),
-      ]
-    )
-  );
-}
-
-function getLayers(
-  element: Element,
-  device: Device
-): Option<Array<Array<RGB<Percentage, Percentage>>>> {
-  const layers: Array<Array<RGB<Percentage, Percentage>>> = [];
-
-  const style = Style.from(element, device);
-
-  const color = resolveColor(style.computed("background-color").value, style);
-
-  if (color.isSome()) {
-    layers.push([color.get()]);
-  } else {
-    return None;
-  }
-
-  for (const image of style.computed("background-image").value) {
-    if (image.type === "keyword") {
-      continue;
-    }
-
-    // We currently have no way of extracting colors from images, so we simply
-    // bail out if we encounter a background image.
-    if (image.image.type === "url") {
-      return None;
-    }
-
-    // For each gradient, we extract all color stops into a background layer of
-    // their own. As gradients need a start and an end point, there will always
-    // be at least two color stops.
-    const stops: Array<RGB<Percentage, Percentage>> = [];
-
-    layers.push(stops);
-
-    for (const item of image.image.items) {
-      if (item.type === "stop") {
-        const color = resolveColor(item.color, style);
-
-        if (color.isSome()) {
-          stops.push(color.get());
-        } else {
-          return None;
-        }
-      }
-    }
-  }
-
-  // If the background layer does not have a lower layer that is fully opaque, we
-  // need to also locate the background layers sitting behind the current layer.
-  // As Alfa does not yet implement a layout system, we have to assume that the
-  // DOM tree will reflect the layout at least to some extent; we therefore
-  // simply use the background layers of the ancestors of the element.
-  //
-  // When we have a layout system in place, we should instead use Picasso
-  // (https://github.com/siteimprove/picasso) for spatially indexing the box
-  // tree in which case the background layers sitting behind the current layer
-  // can be found by issuing a range query for the box of the current element.
-  for (const layer of layers) {
-    if (layer.every((color) => color.alpha.value === 1)) {
-      return Option.of(layers);
-    } else {
-      break;
-    }
-  }
-
-  const parent = element
-    .parent({
-      flattened: true,
-    })
-    .filter(Element.isElement);
-
-  // Only use the background layers from the parent if there is one. If there
-  // isn't, this means we're at the root. In that case, we simply return the
-  // layers we've found so far.
-  if (parent.isSome()) {
-    return parent.flatMap((parent) =>
-      getLayers(parent, device).map((parentLayers) =>
-        parentLayers.concat(layers)
-      )
-    );
-  }
-
-  return Option.of(layers);
-}
-
-function resolveColor(
-  color: RGB<Percentage, Percentage> | Current | System,
-  style: Style
-): Option<RGB<Percentage, Percentage>> {
-  const opacity = style.computed("opacity").value;
-
-  switch (color.type) {
-    case "keyword":
-      if (color.value === "currentcolor") {
-        color = style.computed("color").value;
-
-        if (color.type === "color") {
-          return Option.of(
-            RGB.of(
-              color.red,
-              color.green,
-              color.blue,
-              Percentage.of(color.alpha.value * opacity.value)
-            )
-          );
-        }
-      }
-
-      if (color.value === "canvastext") {
-        return Option.of(
-          RGB.of(
-            Percentage.of(0),
-            Percentage.of(0),
-            Percentage.of(0),
-            Percentage.of(opacity.value)
-          )
-        );
-      }
-
-      return None;
-
-    case "color":
-      return Option.of(
-        RGB.of(
-          color.red,
-          color.green,
-          color.blue,
-          Percentage.of(color.alpha.value * opacity.value)
-        )
-      );
-  }
-}
-
-/**
- * @see https://drafts.fxtf.org/compositing-1/#simplealphacompositing
- */
-function composite(
-  foreground: RGB<Percentage, Percentage>,
-  background: RGB<Percentage, Percentage>
-): RGB<Percentage, Percentage> {
-  if (foreground.alpha.value === 1) {
-    return foreground;
-  }
-
-  const alpha = background.alpha.value * (1 - foreground.alpha.value);
-
-  const [red, green, blue] = [
-    [foreground.red, background.red],
-    [foreground.green, background.green],
-    [foreground.blue, background.blue],
-  ].map(([a, b]) => a.value * foreground.alpha.value + b.value * alpha);
-
-  return RGB.of(
-    Percentage.of(red),
-    Percentage.of(green),
-    Percentage.of(blue),
-    Percentage.of(foreground.alpha.value + alpha)
-  );
-}
-
-/**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-relative-luminance
- */
-function luminance(color: RGB): number {
-  const [red, green, blue] = [color.red, color.green, color.blue].map((c) => {
-    const component = c.type === "number" ? c.value / 0xff : c.value;
-
-    return component <= 0.03928
-      ? component / 12.92
-      : Math.pow((component + 0.055) / 1.055, 2.4);
-  });
-
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-}
-
-/**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-contrast-ratio
- */
-function contrast(foreground: RGB, background: RGB): number {
-  const lf = luminance(foreground);
-  const lb = luminance(background);
-
-  const contrast = (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
-
-  return round(contrast * 100) / 100;
-}
-
-/**
- * @see https://act-rules.github.io/glossary/#disabled-element
- */
-const isSemanticallyDisabled: Predicate<Element> = or(
-  Element.isDisabled,
-  hasAttribute(
-    and(Attribute.hasName("aria-disabled"), hasValue(equals("true")))
-  )
-);

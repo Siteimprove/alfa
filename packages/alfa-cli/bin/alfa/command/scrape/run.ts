@@ -15,6 +15,7 @@ import {
   Screenshot,
 } from "@siteimprove/alfa-scraper";
 import { Timeout } from "@siteimprove/alfa-time";
+import { URL } from "@siteimprove/alfa-url";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
@@ -139,7 +140,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   const timeout = Timeout.of(flags.timeout);
 
   const result = await scraper.scrape(
-    new URL(target, url.pathToFileURL(process.cwd() + path.sep)),
+    URL.parse(target, url.pathToFileURL(process.cwd() + path.sep).href).get(),
     {
       timeout,
       awaiter,

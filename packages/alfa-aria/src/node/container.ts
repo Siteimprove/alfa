@@ -27,6 +27,7 @@ export class Container extends Node {
   public toJSON(): Container.JSON {
     return {
       type: "container",
+      node: this._node.path(),
       children: this._children.map((child) => child.toJSON()),
     };
   }

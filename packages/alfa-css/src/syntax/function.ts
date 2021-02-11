@@ -1,13 +1,15 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
 import { Token } from "./token";
+
+const { flatMap, peek, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#function
@@ -97,4 +99,36 @@ export namespace Function {
 
     return Result.of([input, Function.of(name, value)]);
   };
+
+  export const parse = <T>(
+    name?: string,
+    body?: Parser<Slice<Token>, T, string>
+  ) =>
+    flatMap(
+      right(
+        peek(
+          Token.parseFunction((fn) => name === undefined || fn.value === name)
+        ),
+        Function.consume
+      ),
+      (fn) => (input) => {
+        if (body === undefined) {
+          return Result.of([input, [fn, undefined as never] as const]);
+        }
+
+        const result = body(Slice.of(fn.value));
+
+        if (result.isErr()) {
+          return result;
+        }
+
+        const [remainder, value] = result.get();
+
+        if (remainder.length > 0) {
+          return Err.of(`Unexpected token ${remainder.get(0).get()}`);
+        }
+
+        return Result.of([input, [fn, value] as const]);
+      }
+    );
 }

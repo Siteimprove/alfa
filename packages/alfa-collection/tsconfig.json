@@ -7,6 +7,12 @@
       "path": "../alfa-applicative"
     },
     {
+      "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-comparable"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
@@ -38,6 +44,9 @@
     },
     {
       "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

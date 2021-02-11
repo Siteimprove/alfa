@@ -3,6 +3,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 export type Parser<I, T, E = never, A extends Array<unknown> = []> = (
@@ -22,6 +23,16 @@ export namespace Parser {
       ]);
   }
 
+  export function mapResult<I, T, U, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    mapper: Mapper<T, Result<U, E>>
+  ): Parser<I, U, E, A> {
+    return (input, ...args) =>
+      parser(input, ...args).flatMap(([remainder, value]) =>
+        mapper(value).map((result) => [remainder, result])
+      );
+  }
+
   export function flatMap<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, Parser<I, U, E, A>>
@@ -34,16 +45,24 @@ export namespace Parser {
 
   export function filter<I, T, U extends T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    predicate: Predicate<T, U>,
+    refinement: Refinement<T, U>,
     ifError: Thunk<E>
-  ): Parser<I, U, E, A> {
-    return flatMap(parser, (value) => (input, ..._) => {
-      const result: Result<readonly [I, U], E> = predicate(value)
-        ? Result.of([input, value])
-        : Err.of(ifError());
+  ): Parser<I, U, E, A>;
 
-      return result;
-    });
+  export function filter<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    predicate: Predicate<T>,
+    ifError: Thunk<E>
+  ): Parser<I, T, E, A>;
+
+  export function filter<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    predicate: Predicate<T>,
+    ifError: Thunk<E>
+  ): Parser<I, T, E, A> {
+    return mapResult(parser, (value) =>
+      predicate(value) ? Result.of(value) : Err.of(ifError())
+    );
   }
 
   export function zeroOrMore<I, T, E, A extends Array<unknown> = []>(
@@ -79,12 +98,20 @@ export namespace Parser {
 
   export function take<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    n: number
+    count: number
+  ): Parser<I, Iterable<T>, E, A> {
+    return takeBetween(parser, count, count);
+  }
+
+  export function takeBetween<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    lower: number,
+    upper: number
   ): Parser<I, Iterable<T>, E, A> {
     return (input, ...args) => {
       const values: Array<T> = [];
 
-      for (let i = 0; i < n; i++) {
+      for (let i = 0; i < upper; i++) {
         const result = parser(input, ...args);
 
         if (result.isOk()) {
@@ -93,7 +120,11 @@ export namespace Parser {
           values.push(value);
           input = remainder;
         } else if (result.isErr()) {
-          return result;
+          if (values.length < lower) {
+            return result;
+          } else {
+            break;
+          }
         }
       }
 
@@ -101,7 +132,21 @@ export namespace Parser {
     };
   }
 
-  export function takeUntil<I, T, U, E, A extends Array<unknown> = []>(
+  export function takeAtLeast<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    lower: number
+  ): Parser<I, Iterable<T>, E, A> {
+    return takeBetween(parser, lower, Infinity);
+  }
+
+  export function takeAtMost<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    upper: number
+  ): Parser<I, Iterable<T>, E, A> {
+    return takeBetween(parser, 0, upper);
+  }
+
+  export function takeUntil<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     condition: Parser<I, unknown, E, A>
   ): Parser<I, Iterable<T>, E, A> {
@@ -136,12 +181,22 @@ export namespace Parser {
 
   export function tee<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    callback: Callback<T>
+    callback: Callback<T, void, [remainder: I, ...args: A]>
   ): Parser<I, T, E, A> {
-    return map(parser, (value) => {
-      callback(value);
-      return value;
-    });
+    return (input, ...args) =>
+      parser(input, ...args).tee(([remainder, result]) => {
+        callback(result, remainder, ...args);
+      });
+  }
+
+  export function teeErr<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    callback: Callback<E, void, A>
+  ): Parser<I, T, E, A> {
+    return (input, ...args) =>
+      parser(input, ...args).teeErr((err) => {
+        callback(err, ...args);
+      });
   }
 
   export function option<I, T, E, A extends Array<unknown> = []>(

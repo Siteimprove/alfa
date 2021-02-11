@@ -9,27 +9,51 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
 import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
+import { Requirement } from "./requirement";
+import { Tag } from "./tag";
 
 const { flatMap, flatten, reduce } = Iterable;
 
-export abstract class Rule<I, T = unknown, Q = never>
-  implements Equatable, json.Serializable, earl.Serializable {
+export abstract class Rule<I = unknown, T = unknown, Q = never>
+  implements
+    Equatable,
+    json.Serializable<Rule.JSON>,
+    earl.Serializable<Rule.EARL>,
+    sarif.Serializable<sarif.ReportingDescriptor> {
   protected readonly _uri: string;
+  protected readonly _requirements: Array<Requirement>;
+  protected readonly _tags: Array<Tag>;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
 
-  protected constructor(uri: string, evaluator: Rule.Evaluate<I, T, Q>) {
+  protected constructor(
+    uri: string,
+    requirements: Array<Requirement>,
+    tags: Array<Tag>,
+    evaluator: Rule.Evaluate<I, T, Q>
+  ) {
     this._uri = uri;
+    this._requirements = requirements;
+    this._tags = tags;
     this._evaluate = evaluator;
   }
 
   public get uri(): string {
     return this._uri;
+  }
+
+  public get requirements(): Iterable<Requirement> {
+    return this._requirements[Symbol.iterator]();
+  }
+
+  public get tags(): Iterable<Tag> {
+    return this._tags[Symbol.iterator]();
   }
 
   public evaluate(
@@ -40,7 +64,11 @@ export abstract class Rule<I, T = unknown, Q = never>
     return this._evaluate(input, oracle, outcomes);
   }
 
-  public equals(value: unknown): value is this {
+  public equals<I, T, Q>(value: Rule<I, T, Q>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Rule && value._uri === this._uri;
   }
 
@@ -50,9 +78,20 @@ export abstract class Rule<I, T = unknown, Q = never>
     return {
       "@context": {
         earl: "http://www.w3.org/ns/earl#",
+        dct: "http://purl.org/dc/terms/",
       },
       "@type": ["earl:TestCriterion", "earl:TestCase"],
       "@id": this._uri,
+      "dct:isPartOf": {
+        "@set": this._requirements.map((requirement) => requirement.toEARL()),
+      },
+    };
+  }
+
+  public toSARIF(): sarif.ReportingDescriptor {
+    return {
+      id: this._uri,
+      helpUri: this._uri,
     };
   }
 }
@@ -62,11 +101,20 @@ export namespace Rule {
     [key: string]: json.JSON;
     type: string;
     uri: string;
+    requirements: Array<Requirement.JSON>;
+    tags: Array<Tag.JSON>;
   }
 
   export interface EARL extends earl.EARL {
+    "@context": {
+      earl: "http://www.w3.org/ns/earl#";
+      dct: "http://purl.org/dc/terms/";
+    };
     "@type": ["earl:TestCriterion", "earl:TestCase"];
     "@id": string;
+    "dct:isPartOf": {
+      "@set": Array<Requirement.EARL>;
+    };
   }
 
   export type Input<R> = R extends Rule<infer I, any, any> ? I : never;
@@ -80,6 +128,7 @@ export namespace Rule {
   }
 
   /**
+   * @remarks
    * We use a short-lived cache during audits for rules to store their outcomes.
    * It effectively acts as a memoization layer on top of each rule evaluation
    * procedure, which comes in handy when dealing with composite rules that are
@@ -106,16 +155,32 @@ export namespace Rule {
     >;
   }
 
-  export class Atomic<I, T = unknown, Q = never> extends Rule<I, T, Q> {
+  export class Atomic<I = unknown, T = unknown, Q = never> extends Rule<
+    I,
+    T,
+    Q
+  > {
     public static of<I, T = unknown, Q = never>(properties: {
       uri: string;
+      requirements?: Iterable<Requirement>;
+      tags?: Iterable<Tag>;
       evaluate: Atomic.Evaluate<I, T, Q>;
     }): Atomic<I, T, Q> {
-      return new Atomic(properties.uri, properties.evaluate);
+      return new Atomic(
+        properties.uri,
+        Array.from(properties.requirements ?? []),
+        Array.from(properties.tags ?? []),
+        properties.evaluate
+      );
     }
 
-    private constructor(uri: string, evaluate: Atomic.Evaluate<I, T, Q>) {
-      super(uri, (input, oracle, outcomes) =>
+    private constructor(
+      uri: string,
+      requirements: Array<Requirement>,
+      tags: Array<Tag>,
+      evaluate: Atomic.Evaluate<I, T, Q>
+    ) {
+      super(uri, requirements, tags, (input, oracle, outcomes) =>
         outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
 
@@ -144,6 +209,10 @@ export namespace Rule {
       return {
         type: "atomic",
         uri: this._uri,
+        requirements: this._requirements.map((requirement) =>
+          requirement.toJSON()
+        ),
+        tags: this._tags.map((tag) => tag.toJSON()),
       };
     }
   }
@@ -158,24 +227,40 @@ export namespace Rule {
         applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
         expectations(
           target: T
-        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
+        ): {
+          [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+        };
       };
     }
   }
+
+  export function isAtomic<I, T, Q>(
+    value: Rule<I, T, Q>
+  ): value is Atomic<I, T, Q>;
+
+  export function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q>;
 
   export function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q> {
     return value instanceof Atomic;
   }
 
-  export class Composite<I, T = unknown, Q = never> extends Rule<I, T, Q> {
+  export class Composite<I = unknown, T = unknown, Q = never> extends Rule<
+    I,
+    T,
+    Q
+  > {
     public static of<I, T = unknown, Q = never>(properties: {
       uri: string;
+      requirements?: Iterable<Requirement>;
+      tags?: Iterable<Tag>;
       composes: Iterable<Rule<I, T, Q>>;
       evaluate: Composite.Evaluate<I, T, Q>;
     }): Composite<I, T, Q> {
       return new Composite(
         properties.uri,
-        properties.composes,
+        Array.from(properties.requirements ?? []),
+        Array.from(properties.tags ?? []),
+        Array.from(properties.composes),
         properties.evaluate
       );
     }
@@ -184,10 +269,12 @@ export namespace Rule {
 
     private constructor(
       uri: string,
-      composes: Iterable<Rule<I, T, Q>>,
+      requirements: Array<Requirement>,
+      tags: Array<Tag>,
+      composes: Array<Rule<I, T, Q>>,
       evaluate: Composite.Evaluate<I, T, Q>
     ) {
-      super(uri, (input, oracle, outcomes) =>
+      super(uri, requirements, tags, (input, oracle, outcomes) =>
         outcomes.get(this, () =>
           Future.traverse(this._composes, (rule) =>
             rule.evaluate(input, oracle, outcomes)
@@ -224,17 +311,21 @@ export namespace Rule {
         )
       );
 
-      this._composes = Array.from(composes);
+      this._composes = composes;
     }
 
     public get composes(): Iterable<Rule<I, T, Q>> {
-      return this._composes;
+      return this._composes[Symbol.iterator]();
     }
 
     public toJSON(): Composite.JSON {
       return {
         type: "composite",
         uri: this._uri,
+        requirements: this._requirements.map((requirement) =>
+          requirement.toJSON()
+        ),
+        tags: this._tags.map((tag) => tag.toJSON()),
         composes: this._composes.map((rule) => rule.toJSON()),
       };
     }
@@ -251,10 +342,20 @@ export namespace Rule {
       (input: Readonly<I>): {
         expectations(
           outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): { [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>> };
+        ): {
+          [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+        };
       };
     }
   }
+
+  export function isComposite<I, T, Q>(
+    value: Rule<I, T, Q>
+  ): value is Composite<I, T, Q>;
+
+  export function isComposite<I, T, Q>(
+    value: unknown
+  ): value is Composite<I, T, Q>;
 
   export function isComposite<I, T, Q>(
     value: unknown

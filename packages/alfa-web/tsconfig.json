@@ -13,6 +13,9 @@
       "path": "../alfa-earl"
     },
     {
+      "path": "../alfa-encoding"
+    },
+    {
       "path": "../alfa-graph"
     },
     {
@@ -22,7 +25,10 @@
       "path": "../alfa-json"
     },
     {
-      "path": "../alfa-predicate"
+      "path": "../alfa-refinement"
+    },
+    {
+      "path": "../alfa-sarif"
     },
     {
       "path": "../alfa-test"
