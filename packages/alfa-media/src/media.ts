@@ -639,14 +639,12 @@ export namespace Media {
 
     public matches(device: Device): boolean {
       const negated = this._modifier.some(equals(Modifier.Not));
-
-      return (
-        !this._mediaType.some((type) => !type.matches(device) || negated) &&
-        !this._condition.some(
-          (condition) => !condition.matches(device) || negated
-        ) &&
-        !negated
+      const type = this._mediaType.every((type) => type.matches(device));
+      const condition = this.condition.every((condition) =>
+        condition.matches(device)
       );
+
+      return negated !== (type && condition);
     }
 
     public equals(value: unknown): value is this {
