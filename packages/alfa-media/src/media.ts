@@ -20,6 +20,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import { Resolver } from "./resolver";
+import { Hashable } from "@siteimprove/alfa-hash";
 
 const {
   map,
@@ -35,6 +36,10 @@ const {
 const { equals } = Predicate;
 
 export namespace Media {
+  export interface Queryable extends Equatable, /*Hashable,*/ Serializable {
+    matches: Predicate<Device>;
+  }
+
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query-modifier
    */
@@ -63,7 +68,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-type
    */
-  export class Type implements Equatable, Serializable {
+  export class Type implements Queryable {
     public static of(name: string): Type {
       return new Type(name);
     }
@@ -76,6 +81,10 @@ export namespace Media {
 
     public get name(): string {
       return this._name;
+    }
+
+    public get type(): "type" {
+      return "type";
     }
 
     public matches(device: Device): boolean {
@@ -97,12 +106,17 @@ export namespace Media {
       }
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Type): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Type && value._name === this._name;
     }
 
     public toJSON(): Type.JSON {
       return {
+        type: "type",
         name: this._name,
       };
     }
@@ -115,6 +129,7 @@ export namespace Media {
   export namespace Type {
     export interface JSON {
       [key: string]: json.JSON;
+      type: "type";
       name: string;
     }
   }
@@ -127,7 +142,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
-  export class Feature implements Equatable, Serializable {
+  export class Feature implements Queryable {
     public static of(
       name: string,
       value: Option<Feature.Value> = None
@@ -149,6 +164,10 @@ export namespace Media {
 
     public get value(): Option<Feature.Value> {
       return this._value;
+    }
+
+    public get type(): "feature" {
+      return "feature";
     }
 
     public matches(device: Device): boolean {
@@ -201,7 +220,11 @@ export namespace Media {
       return false;
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Feature): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Feature &&
         value._name === this._name &&
@@ -320,7 +343,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-condition
    */
-  export class Condition implements Equatable, Serializable {
+  export class Condition implements Queryable {
     public static of(
       combinator: Combinator,
       left: Feature | Condition | Negation,
@@ -353,6 +376,10 @@ export namespace Media {
 
     public get right(): Feature | Condition | Negation {
       return this._right;
+    }
+
+    public get type(): "condition" {
+      return "condition";
     }
 
     public matches(device: Device): boolean {
@@ -402,7 +429,7 @@ export namespace Media {
     return value instanceof Condition;
   }
 
-  export class Negation implements Equatable, Serializable {
+  export class Negation implements Queryable {
     public static of(condition: Feature | Condition | Negation): Negation {
       return new Negation(condition);
     }
@@ -415,6 +442,10 @@ export namespace Media {
 
     public get condition(): Feature | Condition | Negation {
       return this._condition;
+    }
+
+    public get type(): "negation" {
+      return "negation";
     }
 
     public matches(device: Device): boolean {
@@ -534,17 +565,17 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query
    */
-  export class Query implements Equatable, Serializable {
+  export class Query implements Queryable {
     public static of(
       modifier: Option<Modifier>,
-      type: Option<Type>,
+      mediaType: Option<Type>,
       condition: Option<Feature | Condition | Negation>
     ): Query {
-      return new Query(modifier, type, condition);
+      return new Query(modifier, mediaType, condition);
     }
 
     private readonly _modifier: Option<Modifier>;
-    private readonly _type: Option<Type>;
+    private readonly _mediaType: Option<Type>;
     private readonly _condition: Option<Feature | Condition | Negation>;
 
     private constructor(
@@ -553,7 +584,7 @@ export namespace Media {
       condition: Option<Feature | Condition | Negation>
     ) {
       this._modifier = modifier;
-      this._type = type;
+      this._mediaType = type;
       this._condition = condition;
     }
 
@@ -561,19 +592,23 @@ export namespace Media {
       return this._modifier;
     }
 
-    public get type(): Option<Type> {
-      return this._type;
+    public get mediaType(): Option<Type> {
+      return this._mediaType;
     }
 
     public get condition(): Option<Feature | Condition | Negation> {
       return this._condition;
     }
 
+    public get type(): "query" {
+      return "query";
+    }
+
     public matches(device: Device): boolean {
       const negated = this._modifier.some(equals(Modifier.Not));
 
       return (
-        !this._type.some((type) => !type.matches(device) || negated) &&
+        !this._mediaType.some((type) => !type.matches(device) || negated) &&
         !this._condition.some(
           (condition) => !condition.matches(device) || negated
         ) &&
@@ -585,15 +620,16 @@ export namespace Media {
       return (
         value instanceof Query &&
         value._modifier.equals(this._modifier) &&
-        value._type.equals(this._type) &&
+        value._mediaType.equals(this._mediaType) &&
         value._condition.equals(this._condition)
       );
     }
 
     public toJSON(): Query.JSON {
       return {
+        type: "query",
         modifier: this._modifier.getOr(null),
-        type: this._type.map((type) => type.toJSON()).getOr(null),
+        mediaType: this._mediaType.map((type) => type.toJSON()).getOr(null),
         condition: this._condition
           .map((condition) => condition.toJSON())
           .getOr(null),
@@ -603,7 +639,7 @@ export namespace Media {
     public toString(): string {
       const modifier = this._modifier.getOr("");
 
-      const type = this._type
+      const type = this._mediaType
         .map((type) => (modifier === "" ? `${type}` : `${modifier} ${type}`))
         .getOr("");
 
@@ -618,8 +654,9 @@ export namespace Media {
   export namespace Query {
     export interface JSON {
       [key: string]: json.JSON;
+      type: "query";
       modifier: string | null;
-      type: Type.JSON | null;
+      mediaType: Type.JSON | null;
       condition: Feature.JSON | Condition.JSON | Negation.JSON | null;
     }
   }
