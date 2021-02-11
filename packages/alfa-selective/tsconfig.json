@@ -1,13 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/either.ts", "src/index.ts", "src/left.ts", "src/right.ts"],
+  "files": ["src/index.ts", "src/selective.ts", "test/selective.spec.ts"],
   "references": [
     {
-      "path": "../alfa-equatable"
+      "path": "../alfa-either"
     },
     {
-      "path": "../alfa-foldable"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-functor"
@@ -22,13 +22,10 @@
       "path": "../alfa-mapper"
     },
     {
-      "path": "../alfa-monad"
+      "path": "../alfa-predicate"
     },
     {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-reducer"
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"
