@@ -9,5 +9,3 @@
 !**/types/**/*.d.ts
 
 .pnp.*
-
-.vscode
