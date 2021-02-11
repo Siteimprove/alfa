@@ -4,9 +4,6 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Media } from "../src";
 import { Device, Display, Viewport } from "@siteimprove/alfa-device";
-import { Some } from "@siteimprove/alfa-option";
-import { String } from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 const smallPortrait /* smartphone */ = Device.of(
   Device.Type.Screen,

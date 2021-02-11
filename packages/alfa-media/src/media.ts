@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import {
   Angle,
   Length,
@@ -23,7 +21,6 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Resolver } from "./resolver";
 import { Hashable } from "@siteimprove/alfa-hash";
-import { Callback } from "@siteimprove/alfa-callback";
 
 const {
   map,
@@ -768,21 +765,7 @@ export namespace Media {
 
   const parseList = map(
     separatedList(
-      tee(
-        parseQuery,
-        (result, input, remainder) => {
-          // console.log("success on");
-          // console.log(input.toJSON());
-          // console.log("Yielding");
-          // console.log(result.toJSON());
-          // console.log("Remaining");
-          // console.log(remainder.toJSON());
-        },
-        (_, input) => {
-          // console.log("Crash on");
-          // console.log(input.toJSON());
-        }
-      ),
+      parseQuery,
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (queries) => List.of(queries)
@@ -798,17 +781,4 @@ export namespace Media {
       })
       .ok();
   }
-}
-
-function tee<I, T, E, A extends Array<unknown> = []>(
-  parser: Parser<I, T, E, A>,
-  callback: Callback<T, void, [input: I, remainder: I, ...args: A]>,
-  callbackError: Callback<E, void, [input: I, ...args: A]>
-): Parser<I, T, E, A> {
-  return (input, ...args) =>
-    parser(input, ...args)
-      .tee(([remainder, result]) => {
-        callback(result, input, remainder, ...args);
-      })
-      .teeErr((error) => callbackError(error, input, ...args));
 }
