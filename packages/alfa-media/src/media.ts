@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import {
   Angle,
   Length,
@@ -21,6 +23,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Resolver } from "./resolver";
 import { Hashable } from "@siteimprove/alfa-hash";
+import { Callback } from "@siteimprove/alfa-callback";
 
 const {
   map,
@@ -36,6 +39,8 @@ const {
 const { equals } = Predicate;
 
 export namespace Media {
+  import oneOrMore = Parser.oneOrMore;
+
   export interface Queryable extends Equatable, /*Hashable,*/ Serializable {
     matches: Predicate<Device>;
   }
@@ -516,14 +521,23 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-and
    */
   const parseAnd = right(
-    left(Token.parseIdent("and"), Token.parseWhitespace),
+    left(
+      right(option(Token.parseWhitespace), Token.parseIdent("and")),
+      Token.parseWhitespace
+    ),
     parseInParens
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-or
    */
-  const parseOr = right(Token.parseIdent("or"), parseInParens);
+  const parseOr = right(
+    left(
+      right(option(Token.parseWhitespace), Token.parseIdent("or")),
+      Token.parseWhitespace
+    ),
+    parseInParens
+  );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-condition
@@ -531,21 +545,41 @@ export namespace Media {
   parseCondition = either(
     parseNot,
     either(
-      parseInParens,
-      either(
-        map(pair(parseInParens, zeroOrMore(parseAnd)), (result) => {
-          const [left, right] = result;
-          return [left, ...right].reduce((left, right) =>
-            Condition.of(Combinator.And, left, right)
-          );
-        }),
-        map(pair(parseInParens, zeroOrMore(parseOr)), (result) => {
-          const [left, right] = result;
-          return [left, ...right].reduce((left, right) =>
-            Condition.of(Combinator.Or, left, right)
-          );
-        })
-      )
+      map(
+        pair(
+          parseInParens,
+          either(
+            map(
+              oneOrMore(parseAnd),
+              (queries) =>
+                ["and", queries] as [
+                  "and",
+                  Iterable<Feature | Negation | Condition>
+                ]
+            ),
+            map(
+              oneOrMore(parseOr),
+              (queries) =>
+                ["or", queries] as [
+                  "or",
+                  Iterable<Feature | Negation | Condition>
+                ]
+            )
+          )
+        ),
+        ([left, [combinator, right]]) =>
+          Iterable.reduce(
+            right,
+            (left, right) =>
+              Condition.of(
+                combinator === "and" ? Combinator.And : Combinator.Or,
+                left,
+                right
+              ),
+            left
+          )
+      ),
+      parseInParens
     )
   );
 
@@ -554,12 +588,11 @@ export namespace Media {
    */
   const parseConditionWithoutOr = either(
     parseNot,
-    map(pair(parseInParens, zeroOrMore(parseAnd)), (result) => {
-      const [left, right] = result;
-      return [left, ...right].reduce((left, right) =>
+    map(pair(parseInParens, zeroOrMore(parseAnd)), ([left, right]) =>
+      [left, ...right].reduce((left, right) =>
         Condition.of(Combinator.And, left, right)
-      );
-    })
+      )
+    )
   );
 
   /**
@@ -737,7 +770,21 @@ export namespace Media {
 
   const parseList = map(
     separatedList(
-      parseQuery,
+      tee(
+        parseQuery,
+        (result, input, remainder) => {
+          // console.log("success on");
+          // console.log(input.toJSON());
+          // console.log("Yielding");
+          // console.log(result.toJSON());
+          // console.log("Remaining");
+          // console.log(remainder.toJSON());
+        },
+        (_, input) => {
+          // console.log("Crash on");
+          // console.log(input.toJSON());
+        }
+      ),
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (queries) => List.of(queries)
@@ -753,4 +800,17 @@ export namespace Media {
       })
       .ok();
   }
+}
+
+function tee<I, T, E, A extends Array<unknown> = []>(
+  parser: Parser<I, T, E, A>,
+  callback: Callback<T, void, [input: I, remainder: I, ...args: A]>,
+  callbackError: Callback<E, void, [input: I, ...args: A]>
+): Parser<I, T, E, A> {
+  return (input, ...args) =>
+    parser(input, ...args)
+      .tee(([remainder, result]) => {
+        callback(result, input, remainder, ...args);
+      })
+      .teeErr((error) => callbackError(error, input, ...args));
 }
