@@ -1,3 +1,5 @@
+node_modules
+
 **/*.log
 **/*.tsbuildinfo
 
@@ -7,5 +9,3 @@
 
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
-
-.pnp.*
