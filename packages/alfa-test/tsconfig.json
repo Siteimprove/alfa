@@ -4,6 +4,7 @@
   "files": [
     "src/format.ts",
     "src/index.ts",
+    "src/stack.ts",
     "src/test.ts",
     "src/types.ts",
     "test/test.spec.ts"
