@@ -128,8 +128,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
    */
   public get cannotBeABaseURL(): boolean {
     const specialSchemes = ["ftp", "file", "http", "https", "ws", "wss"];
-    return (
-      !specialSchemes.includes(this._scheme) && !this._path.get(0).equals("")
+    return !(
+      specialSchemes.includes(this._scheme) || this._path.get(0).equals("")
     );
   }
 
@@ -364,6 +364,7 @@ export namespace URL {
           // joins the segments with "/". We therefore remove the leading "/"
           // and split the segments by "/" into an array.
           segments,
+          // pathname.replace(/^\//, "").split("/"),
 
           // `URL#search` exposes the query portion of the URL with a leading
           // "?" which we need to remove.
