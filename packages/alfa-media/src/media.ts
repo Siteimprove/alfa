@@ -9,8 +9,8 @@ import {
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -20,25 +20,26 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import { Resolver } from "./resolver";
-import { Hashable } from "@siteimprove/alfa-hash";
 
 const {
-  map,
+  delimited,
   either,
+  left,
+  map,
+  oneOrMore,
   option,
   pair,
-  left,
   right,
-  delimited,
-  zeroOrMore,
   separatedList,
+  zeroOrMore,
 } = Parser;
+
 const { equals } = Predicate;
 
 export namespace Media {
-  import oneOrMore = Parser.oneOrMore;
-
-  export interface Queryable extends Equatable, /*Hashable,*/ Serializable {
+  export interface Queryable
+    extends Equatable,
+      /*Hashable,*/ json.Serializable {
     matches: Predicate<Device>;
   }
 
