@@ -242,12 +242,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     }
 
     if (this.cannotBeABaseURL) {
-      for (const path of this._path) output += path;
+      output += this._path.get(0).get();
     } else {
-      if (this._host.isNone() && this._scheme === "file") {
-        output += "//";
-      }
-
       if (
         this._host.isNone() &&
         this._path.size > 1 &&
@@ -257,7 +253,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       }
 
       for (const segment of this._path) {
-        segment === "" ? (output += segment) : (output += "/" + segment);
+        output += "/" + segment;
       }
     }
 
