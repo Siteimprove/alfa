@@ -3,18 +3,18 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 import { Property } from "../property";
 
-import * as Color from "./outline-color";
-import * as Style from "./outline-style";
-import * as Width from "./outline-width";
+import * as Color from "./text-decoration-color";
+import * as Line from "./text-decoration-line";
+import * as Style from "./text-decoration-style";
 
 /**
- * @see https://drafts.csswg.org/css-ui/#outline
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration
  * @internal
  */
 export default Property.shorthand(
-  ["outline-width", "outline-style", "outline-color"],
+  ["text-decoration-line", "text-decoration-style", "text-decoration-color"],
   (input) => {
-    let width: Width.Specified | undefined;
+    let line: Line.Specified | undefined;
     let style: Style.Specified | undefined;
     let color: Color.Specified | undefined;
 
@@ -23,11 +23,11 @@ export default Property.shorthand(
         input = remainder;
       }
 
-      if (width === undefined) {
-        const result = Width.parse(input);
+      if (line === undefined) {
+        const result = Line.parse(input);
 
         if (result.isOk()) {
-          [input, width] = result.get();
+          [input, line] = result.get();
           continue;
         }
       }
@@ -53,16 +53,16 @@ export default Property.shorthand(
       break;
     }
 
-    if (width === undefined && style === undefined && color === undefined) {
-      return Err.of(`Expected one of width, style, or color`);
+    if (line === undefined && style === undefined && color === undefined) {
+      return Err.of(`Expected one of line, style, or color`);
     }
 
     return Result.of([
       input,
       [
-        ["outline-width", width ?? Keyword.of("initial")],
-        ["outline-style", style ?? Keyword.of("initial")],
-        ["outline-color", color ?? Keyword.of("initial")],
+        ["text-decoration-line", line ?? Keyword.of("initial")],
+        ["text-decoration-style", style ?? Keyword.of("initial")],
+        ["text-decoration-color", color ?? Keyword.of("initial")],
       ],
     ]);
   }

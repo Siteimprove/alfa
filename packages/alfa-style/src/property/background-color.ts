@@ -1,4 +1,4 @@
-import { Color, Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
+import { Current, Color, Percentage, RGB, System } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
@@ -19,14 +19,16 @@ export type Computed = RGB<Percentage, Percentage> | Current | System;
 export const parse = Color.parse;
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
  * @internal
  */
 export default Property.of<Specified, Computed>(
-  Color.system("canvastext"),
+  Color.rgb(
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(0)
+  ),
   parse,
-  (value) => value.map((color) => Resolver.color(color)),
-  {
-    inherits: true,
-  }
+  (value) => value.map((color) => Resolver.color(color))
 );

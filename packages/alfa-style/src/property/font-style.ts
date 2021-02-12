@@ -6,9 +6,9 @@ import { Property } from "../property";
  * @internal
  */
 export type Specified =
-  | Keyword<"visible">
-  | Keyword<"hidden">
-  | Keyword<"collapse">;
+  | Keyword<"normal">
+  | Keyword<"italic">
+  | Keyword<"oblique">;
 
 /**
  * @internal
@@ -18,16 +18,15 @@ export type Computed = Specified;
 /**
  * @internal
  */
-export const parse = Keyword.parse("visible", "hidden", "collapse");
+export const parse = Keyword.parse("normal", "italic", "oblique");
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/visibility
- * @internal
+ * @see https://drafts.csswg.org/css-fonts/#font-style-prop
  */
 export default Property.of<Specified, Computed>(
-  Keyword.of("visible"),
+  Keyword.of("normal"),
   parse,
-  (visibility) => visibility,
+  (fontStyle) => fontStyle,
   {
     inherits: true,
   }

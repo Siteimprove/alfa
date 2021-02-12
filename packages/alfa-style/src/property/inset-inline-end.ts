@@ -25,21 +25,21 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/width
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-end
  * @internal
  */
 export default Property.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
-  (width, style) =>
-    width.map((width) => {
-      switch (width.type) {
+  (insetInlineEnd, style) =>
+    insetInlineEnd.map((insetInlineEnd) => {
+      switch (insetInlineEnd.type) {
         case "keyword":
         case "percentage":
-          return width;
+          return insetInlineEnd;
 
         case "length":
-          return Resolver.length(width, style);
+          return Resolver.length(insetInlineEnd, style);
       }
     })
 );

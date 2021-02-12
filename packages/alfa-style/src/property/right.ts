@@ -25,21 +25,21 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/width
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/right
  * @internal
  */
 export default Property.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
-  (width, style) =>
-    width.map((width) => {
-      switch (width.type) {
+  (right, style) =>
+    right.map((right) => {
+      switch (right.type) {
         case "keyword":
         case "percentage":
-          return width;
+          return right;
 
         case "length":
-          return Resolver.length(width, style);
+          return Resolver.length(right, style);
       }
     })
 );

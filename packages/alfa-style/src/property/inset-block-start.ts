@@ -25,21 +25,21 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/width
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-start
  * @internal
  */
 export default Property.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
-  (width, style) =>
-    width.map((width) => {
-      switch (width.type) {
+  (insetBlockStart, style) =>
+    insetBlockStart.map((insetBlockStart) => {
+      switch (insetBlockStart.type) {
         case "keyword":
         case "percentage":
-          return width;
+          return insetBlockStart;
 
         case "length":
-          return Resolver.length(width, style);
+          return Resolver.length(insetBlockStart, style);
       }
     })
 );

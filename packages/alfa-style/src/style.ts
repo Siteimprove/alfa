@@ -228,7 +228,10 @@ export class Style implements Serializable {
     }
 
     return this._computed.get(name, () =>
-      Property.get(name).compute(this)
+      Property.get(name).compute(
+        this.specified(name) as Value<Style.Specified<Name>>,
+        this
+      )
     ) as Value<Style.Computed<N>>;
   }
 
