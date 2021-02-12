@@ -9,7 +9,7 @@ import {
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hashable } from "@siteimprove/alfa-hash";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -37,9 +37,7 @@ const {
 const { equals } = Predicate;
 
 export namespace Media {
-  export interface Queryable
-    extends Equatable,
-      /*Hashable,*/ json.Serializable {
+  export interface Queryable extends Equatable, Hashable, json.Serializable {
     matches: Predicate<Device>;
   }
 
@@ -115,6 +113,10 @@ export namespace Media {
 
     public equals(value: unknown): boolean {
       return value instanceof Type && value._name === this._name;
+    }
+
+    public hash(hash: Hash) {
+      Hash.writeString(hash, this._name);
     }
 
     public toJSON(): Type.JSON {
@@ -233,6 +235,11 @@ export namespace Media {
         value._name === this._name &&
         value._value.equals(this._value)
       );
+    }
+
+    public hash(hash: Hash) {
+      Hash.writeString(hash, this._name);
+      this._value.hash(hash);
     }
 
     public toJSON(): Feature.JSON {
@@ -395,13 +402,23 @@ export namespace Media {
       }
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Condition): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Condition &&
         value._combinator === this._combinator &&
         value._left.equals(this._left) &&
         value._right.equals(this._right)
       );
+    }
+
+    public hash(hash: Hash) {
+      Hash.writeString(hash, this._combinator);
+      this._left.hash(hash);
+      this._right.hash(hash);
     }
 
     public toJSON(): Condition.JSON {
@@ -455,10 +472,18 @@ export namespace Media {
       return !this._condition.matches(device);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Negation): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Negation && value._condition.equals(this._condition)
       );
+    }
+
+    public hash(hash: Hash) {
+      this._condition.hash(hash);
     }
 
     public toJSON(): Negation.JSON {
@@ -645,13 +670,23 @@ export namespace Media {
       return negated !== (type && condition);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Query): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Query &&
         value._modifier.equals(this._modifier) &&
         value._mediaType.equals(this._mediaType) &&
         value._condition.equals(this._condition)
       );
+    }
+
+    public hash(hash: Hash) {
+      this._modifier.hash(hash);
+      this._mediaType.hash(hash);
+      this._condition.hash(hash);
     }
 
     public toJSON(): Query.JSON {
@@ -717,7 +752,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query-list
    */
-  export class List implements Iterable<Query>, Equatable, Serializable {
+  export class List implements Iterable<Query>, Queryable {
     public static of(queries: Iterable<Query>): List {
       return new List(queries);
     }
@@ -739,12 +774,22 @@ export namespace Media {
       );
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: List): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof List &&
         value._queries.length === this._queries.length &&
         value._queries.every((query, i) => query.equals(this._queries[i]))
       );
+    }
+
+    public hash(hash: Hash) {
+      for (const query of this._queries) {
+        query.hash(hash);
+      }
     }
 
     public *[Symbol.iterator](): Iterator<Query> {
