@@ -46,10 +46,9 @@ export default Rule.Atomic.of<Page, Attribute>({
             test(
               and(isText, or(isVisible(device), not(isIgnored(device)))),
               node
-            ) &&
-            lang !== None
+            )
           ) {
-            yield lang.get();
+            yield* lang;
           }
 
           const children = node.children({ flattened: true });
