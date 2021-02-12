@@ -10,7 +10,6 @@ import {
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as cheerio from "cheerio";
 import * as dom from "domhandler";
 
 const { keys } = Object;
@@ -22,11 +21,7 @@ export namespace Cheerio {
   // type "Cheerio".
   export type Type = ReturnType<typeof import("cheerio")>;
 
-  export function isType(value: unknown): value is Type {
-    return value instanceof cheerio;
-  }
-
-  export function asPage(value: Type): Page {
+  export function toPage(value: Type): Page {
     return Page.of(
       Request.empty(),
       Response.empty(),

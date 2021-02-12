@@ -10,7 +10,11 @@ import { Headers } from "./headers";
 /**
  * @see https://fetch.spec.whatwg.org/#request-class
  */
-export class Request implements Body, json.Serializable, earl.Serializable {
+export class Request
+  implements
+    Body,
+    json.Serializable<Request.JSON>,
+    earl.Serializable<Request.EARL> {
   public static of(
     method: string,
     url: URL,

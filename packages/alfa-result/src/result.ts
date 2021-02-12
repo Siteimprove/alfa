@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -46,6 +47,8 @@ export interface Result<T, E = T>
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
   err(): Option<E>;
+  tee(callback: Callback<T>): Result<T, E>;
+  teeErr(callback: Callback<E>): Result<T, E>;
   toJSON(): Result.JSON<T, E>;
 }
 

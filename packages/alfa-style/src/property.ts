@@ -179,6 +179,8 @@ export namespace Property {
 
 import { Background } from "./property/background";
 import { Box } from "./property/box";
+import { Clip } from "./property/clip";
+import { ClipPath } from "./property/clip-path";
 import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
@@ -211,10 +213,13 @@ const Longhands = {
   "background-size": Background.Size,
   bottom: Inset.Bottom,
   "box-shadow": Box.Shadow,
+  clip: Clip,
+  "clip-path": ClipPath,
   color: Color,
   display: Display,
   "font-family": Font.Family,
   "font-size": Font.Size,
+  "font-stretch": Font.Stretch,
   "font-style": Font.Style,
   "font-weight": Font.Weight,
   height: Height,
@@ -254,6 +259,7 @@ const Shorthands = {
   background: Background.Shorthand,
   "background-repeat": Background.Repeat.Shorthand,
   "background-position": Background.Position.Shorthand,
+  font: Font.Shorthand,
   "inset-block": Inset.Block.Shorthand,
   "inset-line": Inset.Line.Shorthand,
   outline: Outline.Shorthand,

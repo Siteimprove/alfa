@@ -4,22 +4,13 @@
   "files": ["src/index.ts", "src/sarif.ts"],
   "references": [
     {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-encoding"
-    },
-    {
       "path": "../alfa-formatter"
     },
     {
-      "path": "../alfa-test"
+      "path": "../alfa-sarif"
     },
     {
-      "path": "../alfa-web"
+      "path": "../alfa-test"
     }
   ]
 }

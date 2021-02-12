@@ -5,7 +5,7 @@ import { Option } from "@siteimprove/alfa-option";
 
 import { Cookie } from "./cookie";
 
-export class Cookies implements Iterable<Cookie>, Serializable {
+export class Cookies implements Iterable<Cookie>, Serializable<Cookies.JSON> {
   /**
    * @remarks
    * If the iterable contains cookies with duplicate names, the last cookie with

@@ -69,9 +69,9 @@ export interface Sequence<T> extends Collection.Indexed<T> {
 
   // Sequence<T> methods
 
-  groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   subtract(iterable: Iterable<T>): Sequence<T>;
   intersect(iterable: Iterable<T>): Sequence<T>;
+  groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
 
   // Serializable methods

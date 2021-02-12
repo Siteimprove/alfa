@@ -223,6 +223,15 @@ test("#join() joins the values of a sequence to a string", (t) => {
   t.equal(seq.join("-"), "foo-bar-baz");
 });
 
+test("#sortWith() sorts a sequence according to a comparer", (t) => {
+  const seq = Sequence.from([5, 3, 6, 7, 1, 2, 4]);
+
+  t.deepEqual(
+    [...seq.sortWith((a, b) => (a > b ? 1 : a < b ? -1 : 0))],
+    [1, 2, 3, 4, 5, 6, 7]
+  );
+});
+
 test("#equals() checks if two sequences are equal", (t) => {
   t(seq.equals(Sequence.from([1, 2, 3, 4])));
   t(!seq.equals(Sequence.from([2, 3, 4, 5])));

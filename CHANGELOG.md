@@ -23,7 +23,51 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Added
 
+- [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result#tee()` and `Result#teeErr()` are now available.
+
+- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.teeErr()` is now available.
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, and `Array.distinct()` are now available.
+
+- [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
+
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
+
+- [@siteimprove/alfa-either](packages/alfa-either): `Either<L, R>` now provides an implementation of `Hashable`.
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Linear.parse()` now correctly parses gradient sides and corners specified as `bottom`.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` now correctly considers elements with large negative text indents and no `white-space: nowrap` as hidden.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Node.from()` now correctly handles children of elements with roles that designate their children as presentational.
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): The user agent styles now include previously missing definitions for form controls.
+
+## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
+
+### Breaking
+
+- [@siteimprove/alfa-assert](packages/alfa-assert): The package has been reworked to solve several long-standing issues in its design. This also affects all the integration packages that make use of this package. For more information, please see the associated issue and pull request. ([#270](../../issues/270), [#287](../../pull/287))
+
+### Added
+
 - [@siteimprove/alfa-array](packages/alfa-array): `Array.reduce()` is now available.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Implementations of SIA-R66 and SIA-R96 are now available. ([#665](../../pull/665), [#666](../../pull/666))
+
+- [@siteimprove/alfa-protractor](packages/alfa-protractor): A new package has been added with conversion functions for the Protractor browser automation framework. ([#428](../../pull/428))
+
+### Changed
+
+- [@siteimprove/alfa-css](packages/alfa-css): The `Value.JSON` type is now optionally parametric. ([#667](../../pull/667))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `isVisible()` function now correctly accounts for content and text hidden by offscreening and text indents that cause full clipping. ([#519](../../issues/519), [#524](../../issues/524), [#616](../../pull/616))
 
 ## [0.9.0](../../compare/v0.8.0...v0.9.0) (2021-01-21)
 

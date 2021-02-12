@@ -370,6 +370,10 @@ function merge<T, B>(
   value: T,
   branches: Option<List<B>>
 ): List<Value<T, B>> {
+  if (values.size === 0) {
+    return List.of(Value.of(value, branches));
+  }
+
   branches = values
     .find((existing) => Equatable.equals(existing.value, value))
     .map((existing) =>

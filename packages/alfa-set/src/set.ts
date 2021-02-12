@@ -164,7 +164,11 @@ export class Set<T> implements Collection.Unkeyed<T> {
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T>(value: Set<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Set && value._values.equals(this._values);
   }
 

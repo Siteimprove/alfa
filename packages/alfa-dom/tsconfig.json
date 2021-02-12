@@ -81,6 +81,9 @@
       "path": "../alfa-refinement"
     },
     {
+      "path": "../alfa-sarif"
+    },
+    {
       "path": "../alfa-sequence"
     },
     {
