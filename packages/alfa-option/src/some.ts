@@ -79,6 +79,10 @@ export class Some<T> implements Option<T> {
     return test(not(predicate), this._value);
   }
 
+  public every<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+
+  public every(predicate: Predicate<T>): boolean;
+
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
