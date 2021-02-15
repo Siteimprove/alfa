@@ -1,7 +1,21 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/media.ts", "src/resolver.ts", "test/media.spec.ts"],
+  "files": [
+    "src/condition/condition.ts",
+    "src/condition/expression.ts",
+    "src/condition/index.ts",
+    "src/condition/negation.ts",
+    "src/feature/feature.ts",
+    "src/feature/index.ts",
+    "src/index.ts",
+    "src/media.ts",
+    "src/query.ts",
+    "src/query-list.ts",
+    "src/resolver.ts",
+    "src/type.ts",
+    "test/media.spec.ts"
+  ],
   "references": [
     {
       "path": "../alfa-css"

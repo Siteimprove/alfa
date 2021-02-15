@@ -54,7 +54,7 @@ test("parse() parses 'screen, (orientation: landscape) and ((max-width: 640px) o
         modifier: null,
         mediaType: null,
         condition: {
-          type: "condition",
+          type: "expression",
           combinator: "and",
           left: {
             type: "feature",
@@ -62,7 +62,7 @@ test("parse() parses 'screen, (orientation: landscape) and ((max-width: 640px) o
             value: { type: "string", value: "landscape" },
           },
           right: {
-            type: "condition",
+            type: "expression",
             combinator: "or",
             left: {
               type: "feature",
@@ -94,7 +94,7 @@ test("parse() parses 'screen and (orientation: portrait) and (min-width: 100px)"
       modifier: null,
       mediaType: { type: "type", name: "screen" },
       condition: {
-        type: "condition",
+        type: "expression",
         combinator: "and",
         left: {
           type: "feature",
