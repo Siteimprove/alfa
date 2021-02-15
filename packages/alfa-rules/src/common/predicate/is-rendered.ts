@@ -16,7 +16,7 @@ export function isRendered(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
-  return function isRendered(node) {
+  return function isRendered(node): boolean {
     return cache
       .get(device, Cache.empty)
       .get(context, Cache.empty)
