@@ -40,6 +40,20 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     );
   }
 
+  /**
+   * @see https://tools.ietf.org/html/rfc2606#section-3
+   */
+  public static example(): URL {
+    return URL.parse("https://example.com").get();
+  }
+
+  /**
+   * @see https://tools.ietf.org/html/rfc6694#section-3
+   */
+  public static blank(): URL {
+    return URL.parse("about:blank").get();
+  }
+
   private readonly _scheme: string;
   private readonly _username: Option<string>;
   private readonly _password: Option<string>;
