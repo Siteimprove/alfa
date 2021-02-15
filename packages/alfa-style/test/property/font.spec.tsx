@@ -124,12 +124,16 @@ test("#cascaded() parses `font: 16px sans-serif`", (t) => {
     unit: "px",
   });
 
-  t.deepEqual(style.cascaded("font-family").get().toJSON().value, [
-    {
-      type: "keyword",
-      value: "sans-serif",
-    },
-  ]);
+  t.deepEqual(style.cascaded("font-family").get().toJSON().value, {
+    type: "list",
+    separator: ", ",
+    values: [
+      {
+        type: "keyword",
+        value: "sans-serif",
+      },
+    ],
+  });
 });
 
 test("#cascaded() assigns percentage to font-size, not font-stretch", (t) => {
@@ -160,13 +164,17 @@ test("#cascaded() correctly handles line-height and font-family stack", (t) => {
     value: 1.1,
   });
 
-  t.deepEqual(style.cascaded("font-family").get().toJSON().value, [
-    {
-      type: "string",
-      value: "new century schoolbook",
-    },
-    { type: "keyword", value: "serif" },
-  ]);
+  t.deepEqual(style.cascaded("font-family").get().toJSON().value, {
+    type: "list",
+    separator: ", ",
+    values: [
+      {
+        type: "string",
+        value: "new century schoolbook",
+      },
+      { type: "keyword", value: "serif" },
+    ],
+  });
 });
 
 test("#cascaded parses `condensed oblique753 12pt 'Helvetica Neue', serif`", (t) => {
@@ -201,8 +209,18 @@ test("#cascaded parses `condensed oblique753 12pt 'Helvetica Neue', serif`", (t)
     unit: "pt",
   });
 
-  t.deepEqual(style.cascaded("font-family").get().toJSON().value, [
-    { type: "string", value: "Helvetica Neue" },
-    { type: "keyword", value: "serif" },
-  ]);
+  t.deepEqual(style.cascaded("font-family").get().toJSON().value, {
+    type: "list",
+    separator: ", ",
+    values: [
+      {
+        type: "string",
+        value: "Helvetica Neue",
+      },
+      {
+        type: "keyword",
+        value: "serif",
+      },
+    ],
+  });
 });

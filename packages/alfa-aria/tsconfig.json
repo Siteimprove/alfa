@@ -26,6 +26,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-branched"
     },
     {

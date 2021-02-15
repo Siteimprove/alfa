@@ -30,7 +30,18 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               and(hasNamespace(Namespace.HTML), (element) =>
-                Style.from(element, device).cascaded("font-size").isSome()
+                Style.from(element, device)
+                  .cascaded("font-size")
+                  .some(({ value: fontSize }) => {
+                    switch (fontSize.type) {
+                      case "length":
+                      case "percentage":
+                        return fontSize.value > 0;
+
+                      default:
+                        return true;
+                    }
+                  })
               ),
               and(hasTextContent(), isVisible(device))
             )

@@ -33,7 +33,9 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
 
-- [@siteimprove/alfa-trampoline](packages-alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
+
+- [@siteimprove/alfa-either](packages/alfa-either): `Either<L, R>` now provides an implementation of `Hashable`.
 
 ### Fixed
 
@@ -42,6 +44,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` now correctly considers elements with large negative text indents and no `white-space: nowrap` as hidden.
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `Node.from()` now correctly handles children of elements with roles that designate their children as presentational.
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): The user agent styles now include previously missing definitions for form controls.
 
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 

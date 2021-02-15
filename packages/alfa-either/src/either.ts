@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -16,6 +17,7 @@ export interface Either<L, R = L>
     Foldable<L | R>,
     Iterable<L | R>,
     Equatable,
+    Hashable,
     Serializable<Either.JSON<L, R>> {
   isLeft(): this is Left<L>;
   isRight(): this is Right<R>;
@@ -40,11 +42,11 @@ export namespace Either {
     return Left.isLeft(value) || Right.isRight(value);
   }
 
-  export function left<L>(value: L): Either<L, never> {
+  export function left<L, R = never>(value: L): Either<L, R> {
     return Left.of(value);
   }
 
-  export function right<R>(value: R): Either<never, R> {
+  export function right<R, L = never>(value: R): Either<L, R> {
     return Right.of(value);
   }
 }
