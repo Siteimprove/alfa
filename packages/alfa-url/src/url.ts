@@ -24,7 +24,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     port: Option<number> = None,
     path: Iterable<string> = [],
     query: Option<string> = None,
-    fragment: Option<string> = None
+    fragment: Option<string> = None,
+    cannotBeABase: boolean = false
   ): URL {
     return new URL(
       scheme,
@@ -34,7 +35,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       port,
       Sequence.from(path),
       query,
-      fragment
+      fragment,
+      cannotBeABase
     );
   }
 
@@ -46,6 +48,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   private readonly _path: Sequence<string>;
   private readonly _query: Option<string>;
   private readonly _fragment: Option<string>;
+  private readonly _cannotBeABase: boolean;
 
   private constructor(
     scheme: string,
@@ -55,7 +58,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     port: Option<number>,
     path: Sequence<string>,
     query: Option<string>,
-    fragment: Option<string>
+    fragment: Option<string>,
+    cannotBeABase: boolean
   ) {
     this._scheme = scheme;
     this._username = username;
@@ -65,6 +69,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     this._path = path;
     this._query = query;
     this._fragment = fragment;
+    this._cannotBeABase = cannotBeABase;
   }
 
   /**
@@ -126,11 +131,15 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   /**
    * @see https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag
    */
-  public get cannotBeABaseURL(): boolean {
-    const specialSchemes = ["ftp", "file", "http", "https", "ws", "wss"];
-    return !(
-      specialSchemes.includes(this._scheme) || this._path.get(0).equals("")
-    );
+  public get cannotBeABase(): boolean {
+    return this._cannotBeABase;
+  }
+
+  /**
+   * @see https://url.spec.whatwg.org/#is-special
+   */
+  public isSpecial(): boolean {
+    return URL.isSpecialScheme(this._scheme);
   }
 
   /**
@@ -160,7 +169,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       this._port,
       this._path,
       this._query,
-      None
+      None,
+      this._cannotBeABase
     );
   }
 
@@ -184,7 +194,8 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       value._port.equals(this._port) &&
       value._path.equals(this._path) &&
       value._query.equals(this._query) &&
-      value._fragment.equals(this._fragment)
+      value._fragment.equals(this._fragment) &&
+      value._cannotBeABase === this._cannotBeABase
     );
   }
 
@@ -197,6 +208,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     this._path.hash(hash);
     this._query.hash(hash);
     this._fragment.hash(hash);
+    Hash.writeBoolean(hash, this._cannotBeABase);
   }
 
   public toJSON(): URL.JSON {
@@ -209,7 +221,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       path: this._path.toArray(),
       query: this._query.getOr(null),
       fragment: this._fragment.getOr(null),
-      cannotBeABaseURL: this.cannotBeABaseURL,
+      cannotBeABase: this._cannotBeABase,
     };
   }
 
@@ -241,7 +253,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       }
     }
 
-    if (this.cannotBeABaseURL) {
+    if (this._cannotBeABase) {
       output += this._path.get(0).get();
     } else {
       if (
@@ -280,7 +292,7 @@ export namespace URL {
     path: Array<string>;
     query: string | null;
     fragment: string | null;
-    cannotBeABaseURL: boolean;
+    cannotBeABase: boolean;
   }
 
   export function from(json: JSON): URL {
@@ -335,22 +347,25 @@ export namespace URL {
         hash,
       } = new global.URL(url, base?.toString());
 
-      const segments = pathname.replace(/^\//, "").split("/");
-      if (pathname.startsWith("/")) {
-        segments.unshift("");
-      }
+      // `URL#protocol` appends a ":" to the scheme which we need to remove.
+      const scheme = protocol.replace(/:$/, "");
 
       return Result.of(
         URL.of(
-          // `URL#protocol` appends a ":" to the scheme which we need to remove.
-          protocol.replace(/:$/, ""),
+          scheme,
 
-          // `URL#username`, `URL#password`, and `URL#hostname` expose the
-          // username, password, and host as-is and so the only thing we need to
-          // do is reject them when empty.
+          // `URL#username` `URL#password` expose the username and password
+          // as-is and so the only thing we need to do is reject them when
+          // empty.
           Option.of(username).reject(isEmpty),
           Option.of(password).reject(isEmpty),
-          Option.of(hostname).reject(isEmpty),
+
+          // `URL#hostname` exposes the host as an empty string if the host is
+          // `null`. For the `file` scheme, however, the empty string is
+          // significant and we therefore don't translate it into `None`.
+          scheme === "file"
+            ? Option.of(hostname)
+            : Option.of(hostname).reject(isEmpty),
 
           // `URL#port` exposes the port number as a string to we convert it to
           // a number.
@@ -359,8 +374,7 @@ export namespace URL {
           // `URL#pathname` exposes the path segments with a leading "/" and
           // joins the segments with "/". We therefore remove the leading "/"
           // and split the segments by "/" into an array.
-          segments,
-          // pathname.replace(/^\//, "").split("/"),
+          pathname.replace(/^\//, "").split("/"),
 
           // `URL#search` exposes the query portion of the URL with a leading
           // "?" which we need to remove.
@@ -372,11 +386,33 @@ export namespace URL {
           // "#" which we need to remove.
           Option.of(hash)
             .reject(isEmpty)
-            .map((hash) => hash.replace(/^#/, ""))
+            .map((hash) => hash.replace(/^#/, "")),
+
+          // The URL cannot be used as a base URL when the scheme either isn't
+          // special or the pathname doesn't start with a leading "/".
+          !(isSpecialScheme(scheme) || pathname[0] === "/")
         )
       );
     } catch (err) {
       return Err.of(err.message);
+    }
+  }
+
+  /**
+   * @see https://url.spec.whatwg.org/#special-scheme
+   */
+  export function isSpecialScheme(scheme: string): boolean {
+    switch (scheme) {
+      case "ftp":
+      case "file":
+      case "http":
+      case "https":
+      case "ws":
+      case "wss":
+        return true;
+
+      default:
+        return false;
     }
   }
 }
