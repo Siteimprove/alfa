@@ -6,27 +6,28 @@ import { Property } from "../property";
 
 const { either } = Parser;
 
-export type Opacity = Opacity.Specified | Opacity.Computed;
-
-export namespace Opacity {
-  export type Specified = Number | Percentage;
-
-  export type Computed = Number;
-}
+/**
+ * @internal
+ */
+export type Specified = Number | Percentage;
 
 /**
- * @see https://drafts.csswg.org/css-color/#propdef-opacity
+ * @internal
  */
-export const Opacity: Property<
-  Opacity.Specified,
-  Opacity.Computed
-> = Property.of(
+export type Computed = Number;
+
+/**
+ * @internal
+ */
+export const parse = either(Number.parse, Percentage.parse);
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/opacity
+ */
+export default Property.of<Specified, Computed>(
   Number.of(1),
-  either(Number.parse, Percentage.parse),
-  (style) =>
-    style
-      .specified("opacity")
-      .map((opacity) => Number.of(Real.clamp(opacity.value, 0, 1))),
+  parse,
+  (value) => value.map((opacity) => Number.of(Real.clamp(opacity.value, 0, 1))),
   {
     inherits: true,
   }

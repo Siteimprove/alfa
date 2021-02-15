@@ -6,25 +6,30 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-export namespace LetterSpacing {
-  export type Specified = Keyword<"normal"> | Length;
-
-  export type Computed = Length<"px">;
-}
+/**
+ * @internal
+ */
+export type Specified = Keyword<"normal"> | Length;
 
 /**
- * @see https://drafts.csswg.org/css-text-3/#letter-spacing-property
+ * @internal
  */
-export const LetterSpacing: Property<
-  LetterSpacing.Specified,
-  LetterSpacing.Computed
-> = Property.of(
-  // The real initial value is `normal`, which is not a computed value…
-  // Replacing it with the computed value.
+export type Computed = Length<"px">;
+
+/**
+ * @internal
+ */
+export const parse = either(Keyword.parse("normal"), Length.parse);
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing
+ * @internal
+ */
+export default Property.of<Specified, Computed>(
   Length.of(0, "px"),
-  either(Keyword.parse("normal"), Length.parse),
-  (style) =>
-    style.specified("letter-spacing").map((spacing) => {
+  parse,
+  (value, style) =>
+    value.map((spacing) => {
       switch (spacing.type) {
         case "keyword":
           return Length.of(0, "px");
@@ -33,5 +38,7 @@ export const LetterSpacing: Property<
           return Resolver.length(spacing, style);
       }
     }),
-  { inherits: true }
+  {
+    inherits: true,
+  }
 );

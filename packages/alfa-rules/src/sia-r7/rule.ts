@@ -1,37 +1,69 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  Element,
+  Namespace,
+  Text,
+  Node,
+} from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { isIgnored } from "../common/predicate";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
+import { isVisible } from "../common/predicate/is-visible";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { not, or } = Predicate;
+const { and, test } = Refinement;
+const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
   requirements: [Criterion.of("3.1.2"), Technique.of("H58")],
-  evaluate({ document }) {
+  evaluate({ device, document }) {
     return {
       applicability() {
+        function* visit(
+          node: Node,
+          lang: Option<Attribute>
+        ): Iterable<Attribute> {
+          if (test(and(isElement, hasAttribute("lang", not(isEmpty))), node)) {
+            lang = node.attribute("lang");
+          }
+
+          if (
+            test(
+              and(isText, or(isVisible(device), not(isIgnored(device)))),
+              node
+            )
+          ) {
+            yield* lang;
+          }
+
+          const children = node.children({ flattened: true });
+
+          for (const child of children) {
+            yield* visit(child, lang);
+          }
+        }
+
         return document
-          .descendants()
+          .descendants({ composed: true, nested: true })
           .filter(isElement)
           .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
-          .flatMap((body) =>
-            body
-              .descendants()
-              .filter(isElement)
-              .filter(hasAttribute("lang", not(isEmpty)))
-              .map((element) => element.attribute("lang").get())
-          );
+          .flatMap((element) => Sequence.from(visit(element, None)))
+          .distinct();
       },
 
       expectations(target) {
