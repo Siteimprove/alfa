@@ -21,11 +21,14 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Resolver } from "./resolver";
 
+const { isLength } = Length;
+
 const {
   delimited,
   either,
   left,
   map,
+  mapResult,
   oneOrMore,
   option,
   pair,
@@ -37,8 +40,6 @@ const {
 const { equals } = Predicate;
 
 export namespace Media {
-  import isLength = Length.isLength;
-
   export interface Queryable extends Equatable, Hashable, json.Serializable {
     matches: Predicate<Device>;
   }
@@ -149,24 +150,26 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
-  export class Feature<T extends Feature.Value = Feature.Value>
-    implements Queryable {
-    public static of<T extends Feature.Value = Feature.Value>(
-      name: string,
-      value: Option<T> = None
-    ): Feature<T> {
+  export class Feature<
+    N extends string = string,
+    T extends Feature.Value = Feature.Value
+  > implements Queryable {
+    public static of<
+      N extends string = string,
+      T extends Feature.Value = Feature.Value
+    >(name: N, value: Option<T> = None): Feature<N, T> {
       return new Feature(name, value);
     }
 
-    private readonly _name: string;
-    private readonly _value: Option<T>;
+    protected readonly _name: N;
+    protected readonly _value: Option<T>;
 
-    protected constructor(name: string, value: Option<T>) {
+    protected constructor(name: N, value: Option<T>) {
       this._name = name;
       this._value = value;
     }
 
-    public get name(): string {
+    public get name(): N {
       return this._name;
     }
 
@@ -180,12 +183,12 @@ export namespace Media {
 
     public matches(device: Device): boolean {
       switch (this._name) {
-        case "orientation":
-          return this._value.some(
-            (value) =>
-              value.type === "string" &&
-              value.value === device.viewport.orientation
-          );
+        // case "orientation":
+        //   return this._value.some(
+        //     (value) =>
+        //       value.type === "string" &&
+        //       value.value === device.viewport.orientation
+        //   );
 
         case "scripting":
           return device.scripting.enabled
@@ -261,6 +264,8 @@ export namespace Media {
   }
 
   export namespace Feature {
+    import isString = String.isString;
+
     export interface JSON {
       [key: string]: json.JSON;
       type: "feature";
@@ -277,6 +282,47 @@ export namespace Media {
         | Length.JSON
         | Angle.JSON
         | Percentage.JSON;
+    }
+
+    type Features = {
+      orientation: [String, Orientation];
+    };
+
+    export function from<K extends keyof Features>(
+      name: K,
+      value: Option<Features[K][0]>
+    ): Result<Features[K][1], string>;
+
+    export function from(name: string, value: Option<Value>): Err<string>;
+
+    export function from(
+      name: string,
+      value: Option<Value>
+    ): Result<Feature, string> {
+      switch (name) {
+        case "orientation":
+          return value.every(isString)
+            ? Ok.of(Orientation.myof(value))
+            : Err.of("Orientation must take a string");
+        default:
+          return Err.of("Unknown feature");
+      }
+    }
+  }
+
+  class Orientation extends Feature<"orientation", String> {
+    public static myof(value: Option<String>): Orientation {
+      return new Orientation(value);
+    }
+
+    private constructor(value: Option<String>) {
+      super("orientation", value);
+    }
+
+    public matches(device: Device): boolean {
+      return this._value.some(
+        (value) => value.value === device.viewport.orientation
+      );
     }
   }
 
@@ -321,7 +367,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-plain
    */
-  const parseFeaturePlain = map(
+  const parseFeaturePlain: Parser<Slice<Token>, Feature, string> = mapResult(
     pair(
       parseFeatureName,
       right(
@@ -332,14 +378,21 @@ export namespace Media {
     (result) => {
       const [name, value] = result;
 
-      return Feature.of(name, Option.of(value));
+      return name === "orientation"
+        ? Feature.from(name, Option.of(value))
+        : (Ok.of(Feature.of(name, Option.of(value))) as Result<
+            Feature,
+            string
+          >);
     }
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
    */
-  const parseFeatureBoolean = map(parseFeatureName, (name) => Feature.of(name));
+  const parseFeatureBoolean = map(parseFeatureName, (name) =>
+    Feature.of<string, never>(name)
+  );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
