@@ -329,7 +329,7 @@ export namespace Media {
     }
 
     public matches(device: Device): boolean {
-      return this._value.some(
+      return this._value.every(
         (value) => value.value === device.viewport.orientation
       );
     }
