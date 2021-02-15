@@ -37,6 +37,8 @@ const {
 const { equals } = Predicate;
 
 export namespace Media {
+  import isLength = Length.isLength;
+
   export interface Queryable extends Equatable, Hashable, json.Serializable {
     matches: Predicate<Device>;
   }
@@ -147,18 +149,19 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
-  export class Feature implements Queryable {
-    public static of(
+  export class Feature<T extends Feature.Value = Feature.Value>
+    implements Queryable {
+    public static of<T extends Feature.Value = Feature.Value>(
       name: string,
-      value: Option<Feature.Value> = None
-    ): Feature {
+      value: Option<T> = None
+    ): Feature<T> {
       return new Feature(name, value);
     }
 
     private readonly _name: string;
-    private readonly _value: Option<Feature.Value>;
+    private readonly _value: Option<T>;
 
-    private constructor(name: string, value: Option<Feature.Value>) {
+    protected constructor(name: string, value: Option<T>) {
       this._name = name;
       this._value = value;
     }
@@ -167,7 +170,7 @@ export namespace Media {
       return this._name;
     }
 
-    public get value(): Option<Feature.Value> {
+    public get value(): Option<T> {
       return this._value;
     }
 
@@ -196,28 +199,28 @@ export namespace Media {
         case "max-width":
           return this._value.some(
             (value) =>
-              value.type === "length" &&
+              isLength(value) &&
               device.viewport.width <= Resolver.length(value, device).value
           );
 
         case "min-width":
           return this._value.some(
             (value) =>
-              value.type === "length" &&
+              isLength(value) &&
               device.viewport.width >= Resolver.length(value, device).value
           );
 
         case "max-height":
           return this._value.some(
             (value) =>
-              value.type === "length" &&
+              isLength(value) &&
               device.viewport.height <= Resolver.length(value, device).value
           );
 
         case "min-height":
           return this._value.some(
             (value) =>
-              value.type === "length" &&
+              isLength(value) &&
               device.viewport.height >= Resolver.length(value, device).value
           );
       }
