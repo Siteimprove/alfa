@@ -40,6 +40,8 @@ const {
 const { equals } = Predicate;
 
 export namespace Media {
+  import isString = String.isString;
+
   export interface Queryable extends Equatable, Hashable, json.Serializable {
     matches: Predicate<Device>;
   }
@@ -285,7 +287,7 @@ export namespace Media {
     }
 
     type Features = {
-      orientation: [String, Orientation];
+      orientation: [Orientation.Value, Orientation];
     };
 
     export function from<K extends keyof Features>(
@@ -301,28 +303,43 @@ export namespace Media {
     ): Result<Feature, string> {
       switch (name) {
         case "orientation":
-          return value.every(isString)
+          return value.every(Orientation.validate)
             ? Ok.of(Orientation.myof(value))
-            : Err.of("Orientation must take a string");
+            : Err.of("Orientation must be landscape or portrait");
         default:
           return Err.of("Unknown feature");
       }
     }
   }
 
-  class Orientation extends Feature<"orientation", String> {
-    public static myof(value: Option<String>): Orientation {
+  class Orientation extends Feature<"orientation", Orientation.Value> {
+    public static myof(value: Option<Orientation.Value>): Orientation {
       return new Orientation(value);
     }
 
-    private constructor(value: Option<String>) {
+    private constructor(value: Option<Orientation.Value>) {
       super("orientation", value);
+    }
+
+    public static validate(value: Feature.Value): value is Orientation.Value {
+      return (
+        isString(value) &&
+        (value.value === "landscape" || value.value === "portrait")
+      );
     }
 
     public matches(device: Device): boolean {
       return this._value.some(
         (value) => value.value === device.viewport.orientation
       );
+    }
+  }
+
+  namespace Orientation {
+    export type Value = String<"landscape"> | String<"portrait">;
+
+    export function isOrientation(value: unknown): value is Orientation {
+      return value instanceof Orientation;
     }
   }
 
