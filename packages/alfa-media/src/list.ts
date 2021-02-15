@@ -68,6 +68,10 @@ export class List implements Iterable<Query>, Media.Queryable {
 export namespace List {
   export type JSON = Array<Query.JSON>;
 
+  export function isList(value: unknown): value is List {
+    return value instanceof List;
+  }
+
   export const parse = map(
     separatedList(
       Query.parse,
