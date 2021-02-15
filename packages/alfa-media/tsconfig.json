@@ -11,7 +11,7 @@
     "src/index.ts",
     "src/media.ts",
     "src/query.ts",
-    "src/query-list.ts",
+    "src/list.ts",
     "src/resolver.ts",
     "src/type.ts",
     "test/media.spec.ts"
