@@ -157,13 +157,13 @@ export namespace Feature {
 
   export function from(
     name: string,
-    value?: Feature.Value
+    value: Option<Value>
   ): Result<Feature, string> {
     switch (name) {
       case "orientation":
-        return orientation(Option.from(value));
+        return orientation(value ?? None);
       default:
-        return Ok.of(Feature.of(name, Option.from(value)));
+        return Ok.of(Feature.of(name, value));
       // return Err.of("Unknown feature");
     }
   }
@@ -216,14 +216,14 @@ export namespace Feature {
     (result) => {
       const [name, value] = result;
 
-      return from(name, value);
+      return from(name, Option.of(value));
     }
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
    */
-  const parseBoolean = mapResult(parseName, from);
+  const parseBoolean = mapResult(parseName, (name) => from(name, None));
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
