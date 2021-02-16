@@ -54,7 +54,7 @@ export namespace Component {
    * @see https://drafts.csswg.org/css-syntax/#consume-a-component-value
    */
   export const consume: Parser<Slice<Token>, Component> = (input) => {
-    const next = input.get(0).get();
+    const next = input.array[input.offset];
 
     if (
       Token.isOpenParenthesis(next) ||
