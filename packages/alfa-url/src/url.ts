@@ -402,9 +402,9 @@ export namespace URL {
             .reject(isEmpty)
             .map((hash) => hash.replace(/^#/, "")),
 
-          // The URL cannot be used as a base URL when the scheme either isn't
-          // special or the pathname doesn't start with a leading "/".
-          !(isSpecialScheme(scheme) || pathname[0] === "/")
+          // The URL cannot be used as a base URL when the scheme isn't
+          // special and the pathname doesn't start with a leading "/".
+          !isSpecialScheme(scheme) && pathname[0] !== "/"
         )
       );
     } catch (err) {
