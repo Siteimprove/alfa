@@ -64,8 +64,8 @@ export namespace Negation {
     type: "negation";
     condition: Feature.JSON | Expression.JSON | Negation.JSON;
   }
-}
 
-export function isNegation(value: unknown): value is Negation {
-  return value instanceof Negation;
+  export function isNegation(value: unknown): value is Negation {
+    return value instanceof Negation;
+  }
 }
