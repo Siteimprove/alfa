@@ -6,7 +6,6 @@ import { Token } from "./token";
 
 const { fromCharCode } = String;
 const { zeroOrMore } = Parser;
-const { or } = Predicate;
 
 export namespace Lexer {
   export function lex(input: string): Array<Token> {
@@ -19,17 +18,15 @@ export namespace Lexer {
     const tokens: Array<Token> = [];
 
     for (let i = 0, n = points.length; i < n; ) {
-      const result = consumeToken([points, i]);
+      let token: Token | null;
 
-      if (result.isOk()) {
-        let token: Token;
+      [[, i], token] = consumeToken([points, i]);
 
-        [[, i], token] = result.get();
-
-        tokens.push(token);
-      } else {
+      if (token === null) {
         break;
       }
+
+      tokens.push(token);
     }
 
     return tokens;
@@ -83,7 +80,8 @@ const isLowercaseLetter: Predicate<number> = (code) =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#letter
  */
-const isLetter = or(isUppercaseLetter, isLowercaseLetter);
+const isLetter: Predicate<number> = (code) =>
+  isUppercaseLetter(code) || isLowercaseLetter(code);
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-ascii-code-point
@@ -98,7 +96,8 @@ const isNewline: Predicate<number> = (code) => code === 0xa;
 /**
  * @see https://drafts.csswg.org/css-syntax/#whitespace
  */
-const isWhitespace = or(isNewline, (code) => code === 0x9 || code === 0x20);
+const isWhitespace: Predicate<number> = (code) =>
+  isNewline(code) || code === 0x9 || code === 0x20;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-printable-code-point
@@ -112,18 +111,14 @@ const isNonPrintable: Predicate<number> = (code) =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#name-start-code-point
  */
-const isNameStart = or(
-  isLetter,
-  or(isNonAscii, (code) => code === 0x5f)
-);
+const isNameStart: Predicate<number> = (code) =>
+  isLetter(code) || isNonAscii(code) || code === 0x5f;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#name-code-point
  */
-const isName = or(
-  isNameStart,
-  or(isDigit, (code) => code === 0x2d)
-);
+const isName: Predicate<number> = (code) =>
+  isNameStart(code) || isDigit(code) || code === 0x2d;
 
 /**
  * @see https://infra.spec.whatwg.org/#surrogate
@@ -181,40 +176,41 @@ const startsIdentifier: Predicate<[Array<number>, number]> = ([input, i]) => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-name
  */
-const consumeName: Parser<[Array<number>, number], string> = ([input, i]) => {
+const consumeName: Parser.Infallible<[Array<number>, number], string> = ([
+  input,
+  i,
+]) => {
   let name = "";
+  let code: number;
 
   for (const n = input.length; i < n; ) {
-    const code = input[i];
+    code = input[i];
 
     if (isName(code)) {
       i++;
       name += fromCharCode(code);
     } else if (startsValidEscape([input, i])) {
-      let code: number;
-
-      [[input, i], code] = consumeEscapedCodePoint([input, i + 1]).get();
-
+      [[input, i], code] = consumeEscapedCodePoint([input, i + 1]);
       name += fromCharCode(code);
     } else {
       break;
     }
   }
 
-  return Result.of([[input, i], name]);
+  return [[input, i], name];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-an-escaped-code-point
  */
-const consumeEscapedCodePoint: Parser<[Array<number>, number], number> = ([
-  input,
-  i,
-]) => {
+const consumeEscapedCodePoint: Parser.Infallible<
+  [Array<number>, number],
+  number
+> = ([input, i]) => {
   const byte = input[i];
 
   if (isNaN(byte)) {
-    return Result.of([[input, i], 0xfffd]);
+    return [[input, i], 0xfffd];
   }
 
   i++;
@@ -255,22 +251,22 @@ const consumeEscapedCodePoint: Parser<[Array<number>, number], number> = ([
     }
 
     if (code === 0 || isSurrogate(code) || code > 0x10ffff) {
-      return Result.of([[input, i], 0xfffd]);
+      return [[input, i], 0xfffd];
     }
 
-    return Result.of([[input, i], code]);
+    return [[input, i], code];
   }
 
-  return Result.of([[input, i], byte]);
+  return [[input, i], byte];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-number
  */
-const consumeNumber: Parser<[Array<number>, number], Token.Number> = ([
-  input,
-  i,
-]) => {
+const consumeNumber: Parser.Infallible<
+  [Array<number>, number],
+  Token.Number
+> = ([input, i]) => {
   const number: Array<number> = [];
 
   let code = input[i];
@@ -319,54 +315,51 @@ const consumeNumber: Parser<[Array<number>, number], Token.Number> = ([
     }
   }
 
-  return Result.of([
-    [input, i],
-    Token.Number.of(convert(number), isInteger, isSigned),
-  ]);
+  return [[input, i], Token.number(convert(number), isInteger, isSigned)];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-numeric-token
  */
-const consumeNumeric: Parser<
+const consumeNumeric: Parser.Infallible<
   [Array<number>, number],
   Token.Number | Token.Dimension | Token.Percentage
 > = ([input, i]) => {
   let number: Token.Number;
 
-  [[input, i], number] = consumeNumber([input, i]).get();
+  [[input, i], number] = consumeNumber([input, i]);
 
   if (startsIdentifier([input, i])) {
     let name: string;
 
-    [[input, i], name] = consumeName([input, i]).get();
+    [[input, i], name] = consumeName([input, i]);
 
-    return Result.of([
+    return [
       [input, i],
-      Token.Dimension.of(number.value, name, number.isInteger, number.isSigned),
-    ]);
+      Token.dimension(number.value, name, number.isInteger, number.isSigned),
+    ];
   }
 
   if (input[i] === 0x25) {
-    return Result.of([
+    return [
       [input, i + 1],
-      Token.Percentage.of(number.value / 100, number.isInteger),
-    ]);
+      Token.percentage(number.value / 100, number.isInteger),
+    ];
   }
 
-  return Result.of([[input, i], number]);
+  return [[input, i], number];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-an-ident-like-token
  */
-const consumeIdentifierLike: Parser<
+const consumeIdentifierLike: Parser.Infallible<
   [Array<number>, number],
   Token.Ident | Token.Function | Token.URL | Token.BadURL
 > = ([input, i]) => {
   let string: string;
 
-  [[input, i], string] = consumeName([input, i]).get();
+  [[input, i], string] = consumeName([input, i]);
 
   const code = input[i];
 
@@ -383,32 +376,33 @@ const consumeIdentifierLike: Parser<
       (isWhitespace(input[i]) &&
         (input[i + 1] === 0x22 || input[i + 1] === 0x27))
     ) {
-      return Result.of([[input, i], Token.Function.of(string)]);
+      return [[input, i], Token.func(string)];
     }
 
     return consumeURL([input, i]);
   }
 
   if (code === 0x28) {
-    return Result.of([[input, i + 1], Token.Function.of(string)]);
+    return [[input, i + 1], Token.func(string)];
   }
 
-  return Result.of([[input, i], Token.Ident.of(string)]);
+  return [[input, i], Token.ident(string)];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-string-token
  */
-const consumeString: Parser<[Array<number>, number], Token.String> = ([
-  input,
-  i,
-]) => {
+const consumeString: Parser.Infallible<
+  [Array<number>, number],
+  Token.String
+> = ([input, i]) => {
   const end = input[i++];
 
   let string = "";
+  let code: number;
 
   while (i < input.length) {
-    const code = input[i++];
+    code = input[i++];
 
     if (isNewline(code) || code === end) {
       break;
@@ -417,24 +411,25 @@ const consumeString: Parser<[Array<number>, number], Token.String> = ([
     string += fromCharCode(code);
   }
 
-  return Result.of([[input, i], Token.String.of(string)]);
+  return [[input, i], Token.string(string)];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-url-token
  */
-const consumeURL: Parser<[Array<number>, number], Token.URL | Token.BadURL> = ([
-  input,
-  i,
-]) => {
+const consumeURL: Parser.Infallible<
+  [Array<number>, number],
+  Token.URL | Token.BadURL
+> = ([input, i]) => {
   while (isWhitespace(input[i])) {
     i++;
   }
 
   let value = "";
+  let code: number;
 
   while (i < input.length) {
-    const code = input[i];
+    code = input[i];
 
     if (code === 0x29) {
       i++;
@@ -465,10 +460,7 @@ const consumeURL: Parser<[Array<number>, number], Token.URL | Token.BadURL> = ([
 
     if (code === 0x5c) {
       if (startsValidEscape([input, i])) {
-        let code: number;
-
-        [[input, i], code] = consumeEscapedCodePoint([input, i]).get();
-
+        [[input, i], code] = consumeEscapedCodePoint([input, i]);
         value += fromCharCode(code);
         continue;
       } else {
@@ -480,21 +472,23 @@ const consumeURL: Parser<[Array<number>, number], Token.URL | Token.BadURL> = ([
     value += fromCharCode(code);
   }
 
-  return Result.of([[input, i], Token.URL.of(value)]);
+  return [[input, i], Token.url(value)];
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-remnants-of-bad-url
  */
-const consumeBadURL: Parser<[Array<number>, number], Token.BadURL> = ([
-  input,
-  i,
-]) => {
+const consumeBadURL: Parser.Infallible<
+  [Array<number>, number],
+  Token.BadURL
+> = ([input, i]) => {
+  let code: number;
+
   while (i < input.length) {
     if (startsValidEscape([input, i])) {
-      [[input, i]] = consumeEscapedCodePoint([input, i]).get();
+      [[input, i]] = consumeEscapedCodePoint([input, i]);
     } else {
-      const code = input[i++];
+      code = input[i++];
 
       if (code === 0x29) {
         break;
@@ -502,13 +496,17 @@ const consumeBadURL: Parser<[Array<number>, number], Token.BadURL> = ([
     }
   }
 
-  return Result.of([[input, i], Token.BadURL.of()]);
+  return [[input, i], Token.badURL()];
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-comments
+ * @see https://drafts.csswg.org/css-syntax/#consume-a-token
  */
-const consumeComments: Parser<[Array<number>, number], void> = ([input, i]) => {
+const consumeToken: Parser.Infallible<
+  [Array<number>, number],
+  Token | null
+> = ([input, i]) => {
+  // https://drafts.csswg.org/css-syntax/#consume-comments
   while (i < input.length) {
     if (input[i] === 0x2f && input[i + 1] === 0x2a) {
       i += 2;
@@ -526,21 +524,8 @@ const consumeComments: Parser<[Array<number>, number], void> = ([input, i]) => {
     }
   }
 
-  return Result.of([[input, i], undefined]);
-};
-
-/**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-token
- */
-const consumeToken: Parser<[Array<number>, number], Token, string> = ([
-  input,
-  i,
-]) => {
-  for ([[input, i]] of consumeComments([input, i])) {
-  }
-
   if (i >= input.length) {
-    return Err.of("Unexpected end of input");
+    return [[input, i], null];
   }
 
   const code = input[i];
@@ -552,7 +537,7 @@ const consumeToken: Parser<[Array<number>, number], Token, string> = ([
       i++;
     }
 
-    return Result.of([[input, i], Token.Whitespace.of()]);
+    return [[input, i], Token.whitespace()];
   }
 
   if (isNameStart(code)) {
@@ -575,31 +560,31 @@ const consumeToken: Parser<[Array<number>, number], Token, string> = ([
 
         let name: string;
 
-        [[input, i], name] = consumeName([input, i]).get();
+        [[input, i], name] = consumeName([input, i]);
 
-        return Result.of([[input, i], Token.Hash.of(name, isIdentifier)]);
+        return [[input, i], Token.hash(name, isIdentifier)];
       }
 
-      return Result.of([[input, i + 1], Token.Delim.of(code)]);
+      return [[input, i + 1], Token.delim(code)];
 
     case 0x27:
       return consumeString([input, i]);
 
     case 0x28:
-      return Result.of([[input, i + 1], Token.OpenParenthesis.of()]);
+      return [[input, i + 1], Token.openParenthesis()];
 
     case 0x29:
-      return Result.of([[input, i + 1], Token.CloseParenthesis.of()]);
+      return [[input, i + 1], Token.closeParenthesis()];
 
     case 0x2b:
       if (startsNumber([input, i])) {
         return consumeNumeric([input, i]);
       }
 
-      return Result.of([[input, i + 1], Token.Delim.of(code)]);
+      return [[input, i + 1], Token.delim(code)];
 
     case 0x2c:
-      return Result.of([[input, i + 1], Token.Comma.of()]);
+      return [[input, i + 1], Token.comma()];
 
     case 0x2d:
       if (startsNumber([input, i])) {
@@ -607,27 +592,27 @@ const consumeToken: Parser<[Array<number>, number], Token, string> = ([
       }
 
       if (input[i + 1] === 0x2d && input[i + 2] === 0x3e) {
-        return Result.of([[input, i + 3], Token.CloseComment.of()]);
+        return [[input, i + 3], Token.closeComment()];
       }
 
       if (startsIdentifier([input, i])) {
         return consumeIdentifierLike([input, i]);
       }
 
-      return Result.of([[input, i + 1], Token.Delim.of(code)]);
+      return [[input, i + 1], Token.delim(code)];
 
     case 0x2e:
       if (startsNumber([input, i])) {
         return consumeNumeric([input, i]);
       }
 
-      return Result.of([[input, i + 1], Token.Delim.of(code)]);
+      return [[input, i + 1], Token.delim(code)];
 
     case 0x3a:
-      return Result.of([[input, i + 1], Token.Colon.of()]);
+      return [[input, i + 1], Token.colon()];
 
     case 0x3b:
-      return Result.of([[input, i + 1], Token.Semicolon.of()]);
+      return [[input, i + 1], Token.semicolon()];
 
     case 0x3c:
       if (
@@ -635,10 +620,10 @@ const consumeToken: Parser<[Array<number>, number], Token, string> = ([
         input[i + 2] === 0x2d &&
         input[i + 3] === 0x2d
       ) {
-        return Result.of([[input, i + 4], Token.OpenComment.of()]);
+        return [[input, i + 4], Token.openComment()];
       }
 
-      return Result.of([[input, i + 1], Token.Delim.of(code)]);
+      return [[input, i + 1], Token.delim(code)];
 
     case 0x40:
       i++;
@@ -646,34 +631,34 @@ const consumeToken: Parser<[Array<number>, number], Token, string> = ([
       if (startsIdentifier([input, i])) {
         let name: string;
 
-        [[input, i], name] = consumeName([input, i]).get();
+        [[input, i], name] = consumeName([input, i]);
 
-        return Result.of([[input, i], Token.AtKeyword.of(name)]);
+        return [[input, i], Token.atKeyword(name)];
       }
 
-      return Result.of([[input, i], Token.Delim.of(code)]);
+      return [[input, i], Token.delim(code)];
 
     case 0x5b:
-      return Result.of([[input, i + 1], Token.OpenSquareBracket.of()]);
+      return [[input, i + 1], Token.openSquareBracket()];
 
     case 0x5c:
       if (startsValidEscape([input, i])) {
         return consumeIdentifierLike([input, i]);
       }
 
-      return Result.of([[input, i + 1], Token.Delim.of(code)]);
+      return [[input, i + 1], Token.delim(code)];
 
     case 0x5d:
-      return Result.of([[input, i + 1], Token.CloseSquareBracket.of()]);
+      return [[input, i + 1], Token.closeSquareBracket()];
 
     case 0x7b:
-      return Result.of([[input, i + 1], Token.OpenCurlyBracket.of()]);
+      return [[input, i + 1], Token.openCurlyBracket()];
 
     case 0x7d:
-      return Result.of([[input, i + 1], Token.CloseCurlyBracket.of()]);
+      return [[input, i + 1], Token.closeCurlyBracket()];
   }
 
-  return Result.of([[input, i + 1], Token.Delim.of(code)]);
+  return [[input, i + 1], Token.delim(code)];
 };
 
 /**
@@ -690,12 +675,12 @@ function convert(input: Array<number>): number {
     s = 1;
   }
 
-  let n: Iterable<number>;
+  let n: Array<number>;
 
   let v = 0;
 
   for ([[input, i], n] of zeroOrMore(digit)([input, i])) {
-    v = [...n].reduce((v, c) => 10 * v + (c - 0x30), v);
+    v = n.reduce((v, c) => 10 * v + (c - 0x30), v);
   }
 
   if (input[i] === 0x2e) {
@@ -706,7 +691,7 @@ function convert(input: Array<number>): number {
   let d = 0;
 
   for ([[input, i], n] of zeroOrMore(digit)([input, i])) {
-    [f, d] = [...n].reduce(([f, d], c) => [10 * f + (c - 0x30), d + 1], [f, d]);
+    [f, d] = n.reduce(([f, d], c) => [10 * f + (c - 0x30), d + 1], [f, d]);
   }
 
   if (input[i] === 0x45 || input[i] === 0x65) {
@@ -724,7 +709,7 @@ function convert(input: Array<number>): number {
   let e = 0;
 
   for ([[input, i], n] of zeroOrMore(digit)([input, i])) {
-    e = [...n].reduce((e, c) => 10 * e + (c - 0x30), e);
+    e = n.reduce((e, c) => 10 * e + (c - 0x30), e);
   }
 
   // To account for floating point precision errors, we flip the sign of the

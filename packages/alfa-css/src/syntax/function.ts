@@ -78,13 +78,14 @@ export namespace Function {
    * @see https://drafts.csswg.org/css-syntax/#consume-a-function
    */
   export const consume: Parser<Slice<Token>, Function> = (input) => {
-    const name = input.get(0).filter(Token.isFunction).get().value;
+    const { value: name } = input.array[input.offset] as Token.Function;
+
     const value: Array<Token> = [];
 
     input = input.slice(1);
 
     while (input.length > 0) {
-      const next = input.get(0).get();
+      const next = input.array[input.offset];
 
       if (Token.isCloseParenthesis(next)) {
         input = input.slice(1);

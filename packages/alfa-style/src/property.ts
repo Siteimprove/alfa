@@ -1,11 +1,16 @@
 import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Slice } from "@siteimprove/alfa-slice";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import * as parser from "@siteimprove/alfa-parser";
 
 import { Style } from "./style";
 import { Value } from "./value";
+
+const { left, either, eof } = Parser;
+
+const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 
 /**
  * @internal
@@ -19,7 +24,15 @@ export class Property<T = unknown, U = T> {
       inherits: false,
     }
   ): Property<T, U> {
-    return new Property(initial, parse, compute, options);
+    return new Property(
+      initial,
+      left(
+        either(parseDefaults, parse),
+        eof(() => "Expected end of input")
+      ),
+      compute,
+      options
+    );
   }
 
   private readonly _initial: U;
@@ -64,9 +77,21 @@ export namespace Property {
     readonly inherits: boolean;
   }
 
-  export type Parser<T = Value.Parsed> = parser.Parser<Slice<Token>, T, string>;
+  export type Parser<T = Value.Parsed> = parser.Parser<
+    Slice<Token>,
+    Value.Default | T,
+    string
+  >;
 
   export namespace Value {
+    /**
+     * The default keywords recognised by all properties.
+     */
+    export type Default =
+      | Keyword<"initial">
+      | Keyword<"inherit">
+      | Keyword<"unset">;
+
     /**
      * Extract the parsed type of a named property.
      *
@@ -91,11 +116,7 @@ export namespace Property {
      * The declared type includes the parsed type in addition to the defaulting
      * keywords recognised by all properties.
      */
-    export type Declared<N extends Name> =
-      | Parsed<N>
-      | Keyword<"initial">
-      | Keyword<"inherit">
-      | Keyword<"unset">;
+    export type Declared<N extends Name> = Parsed<N> | Default;
 
     /**
      * Extract the cascaded type of a named property.
@@ -144,7 +165,13 @@ export namespace Property {
       properties: Array<N>,
       parse: Shorthand.Parser<N>
     ) {
-      return new Shorthand(properties, parse);
+      return new Shorthand(
+        properties,
+        left(
+          either(parseDefaults, parse),
+          eof(() => "Expected end of input")
+        )
+      );
     }
 
     private readonly _properties: Array<N>;
@@ -167,7 +194,8 @@ export namespace Property {
   export namespace Shorthand {
     export type Parser<N extends Property.Name = Property.Name> = parser.Parser<
       Slice<Token>,
-      Iterable<{ [M in N]: readonly [M, Property.Value.Declared<M>] }[N]>,
+      | Property.Value.Default
+      | Iterable<{ [M in N]: readonly [M, Property.Value.Declared<M>] }[N]>,
       string
     >;
   }
