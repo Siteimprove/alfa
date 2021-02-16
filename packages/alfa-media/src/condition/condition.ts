@@ -3,11 +3,10 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Feature } from "../feature/feature";
+import { Feature } from "../feature/";
 
 import { Expression } from "./expression";
 import { Negation } from "./negation";
-import { Foo } from "../feature/foo";
 
 const {
   delimited,
@@ -49,7 +48,7 @@ export namespace Condition {
       delimited(option(Token.parseWhitespace), (input) => parse(input)),
       Token.parseCloseParenthesis
     ),
-    Foo.parse
+    Feature.parse
   );
 
   /**
