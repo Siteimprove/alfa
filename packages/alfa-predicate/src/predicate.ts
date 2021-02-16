@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -34,21 +35,29 @@ export namespace Predicate {
   export function and<T, A extends Array<unknown> = []>(
     ...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]
   ): Predicate<T, A> {
-    return (value, ...args) =>
-      predicates.reduce<boolean>(
-        (holds, predicate) => holds && predicate(value, ...args),
-        true
-      );
+    return (value, ...args) => {
+      for (let i = 0, n = predicates.length; i < n; i++) {
+        if (!predicates[i](value, ...args)) {
+          return false;
+        }
+      }
+
+      return true;
+    };
   }
 
   export function or<T, A extends Array<unknown> = []>(
     ...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]
   ): Predicate<T, A> {
-    return (value, ...args) =>
-      predicates.reduce<boolean>(
-        (holds, predicate) => holds || predicate(value, ...args),
-        false
-      );
+    return (value, ...args) => {
+      for (let i = 0, n = predicates.length; i < n; i++) {
+        if (predicates[i](value, ...args)) {
+          return true;
+        }
+      }
+
+      return false;
+    };
   }
 
   export function xor<T, A extends Array<unknown> = []>(
@@ -82,5 +91,18 @@ export namespace Predicate {
     A extends Array<unknown> = []
   >(property: K, predicate: Predicate<T[K], A>): Predicate<T, A> {
     return (value, ...args) => predicate(value[property], ...args);
+  }
+
+  export function tee<T, A extends Array<unknown> = []>(
+    predicate: Predicate<T, A>,
+    callback: Callback<T, void, [result: boolean, ...args: A]>
+  ): Predicate<T, A> {
+    return (value, ...args) => {
+      const result = predicate(value, ...args);
+
+      callback(value, result, ...args);
+
+      return result;
+    };
   }
 }

@@ -64,13 +64,14 @@ export class Performance<T>
 
   public once(): Promise<Performance.Entry<T>>;
 
-  public once(listener: Callback<Performance.Entry<T>>): void;
+  public once(listener: Callback<Performance.Entry<T>>): this;
 
   public once(
     listener?: Callback<Performance.Entry<T>>
-  ): void | Promise<Performance.Entry<T>> {
+  ): this | Promise<Performance.Entry<T>> {
     if (listener) {
-      return this._emitter.once(listener);
+      this._emitter.once(listener);
+      return this;
     } else {
       return this._emitter.once();
     }

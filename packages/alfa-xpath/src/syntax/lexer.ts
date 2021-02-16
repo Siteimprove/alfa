@@ -1,7 +1,7 @@
-import { Some, None } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token";
@@ -75,7 +75,7 @@ const lexToken: Parser<Slice<number>, Token, string> = (input) => {
   }
 
   if (isCharacter(next)) {
-    return Ok.of([input.slice(1), Token.Character.of(next)] as const);
+    return Result.of([input.slice(1), Token.Character.of(next)]);
   }
 
   return Err.of("Unexpected character");
@@ -194,7 +194,7 @@ const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
     token = Token.Double.of(value);
   }
 
-  return Ok.of([input, token] as const);
+  return Result.of([input, token]);
 };
 
 const lexString: Parser<Slice<number>, Token> = (input) => {
@@ -228,7 +228,7 @@ const lexString: Parser<Slice<number>, Token> = (input) => {
     next = input.get(0);
   }
 
-  return Ok.of([input, Token.String.of(value)] as const);
+  return Result.of([input, Token.String.of(value)]);
 };
 
 const lexCommentContents: Parser<Slice<number>, string> = (input) => {
@@ -262,7 +262,7 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
         next = input.get(0);
 
         if (next.includes(0x29)) {
-          return Ok.of([input.slice(1), value + ")"] as const);
+          return Result.of([input.slice(1), value + ")"]);
         }
         break;
 
@@ -273,7 +273,7 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
     }
   }
 
-  return Ok.of([input, value] as const);
+  return Result.of([input, value]);
 };
 
 const lexComment = map(lexCommentContents, (value) => {
@@ -312,9 +312,9 @@ const lexName: Parser<Slice<number>, Token> = (input) => {
         next = input.get(0);
       }
 
-      return Ok.of([input, Token.Name.of(Some.of(prefix), value)] as const);
+      return Result.of([input, Token.Name.of(Option.of(prefix), value)]);
     }
   }
 
-  return Ok.of([input, Token.Name.of(None, value)] as const);
+  return Result.of([input, Token.Name.of(None, value)]);
 };

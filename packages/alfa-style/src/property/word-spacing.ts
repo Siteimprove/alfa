@@ -6,32 +6,39 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-export namespace WordSpacing {
-  export type Specified = Keyword<"normal"> | Length;
-
-  export type Computed = Length<"px">;
-}
+/**
+ * @internal
+ */
+export type Specified = Keyword<"normal"> | Length;
 
 /**
- * @see https://drafts.csswg.org/css-text-3/#word-spacing-property
+ * @internal
  */
-export const WordSpacing: Property<
-  WordSpacing.Specified,
-  WordSpacing.Computed
-> = Property.of(
-  // The real initial value is `normal`, which is not a computed value…
-  // Replacing it with the computed value.
+export type Computed = Length<"px">;
+
+/**
+ * @internal
+ */
+export const parse = either(Keyword.parse("normal"), Length.parse);
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/word-spacing
+ * @internal
+ */
+export default Property.of<Specified, Computed>(
   Length.of(0, "px"),
-  either(Keyword.parse("normal"), Length.parse),
-  (style) =>
-    style.specified("word-spacing").map((spacing) => {
-      switch (spacing.type) {
+  parse,
+  (wordSpacing, style) =>
+    wordSpacing.map((wordSpacing) => {
+      switch (wordSpacing.type) {
         case "keyword":
           return Length.of(0, "px");
 
         case "length":
-          return Resolver.length(spacing, style);
+          return Resolver.length(wordSpacing, style);
       }
     }),
-  { inherits: true }
+  {
+    inherits: true,
+  }
 );

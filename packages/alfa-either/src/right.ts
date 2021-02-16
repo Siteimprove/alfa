@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -56,10 +57,19 @@ export class Right<R> implements Either<never, R> {
     return reducer(accumulator, this._value);
   }
 
-  public equals(value: unknown): value is this {
+  public equals<R>(value: Right<R>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Right && Equatable.equals(value._value, this._value)
     );
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeBoolean(hash, true);
+    Hashable.hash(hash, this._value);
   }
 
   public *[Symbol.iterator](): Iterator<R> {
@@ -84,6 +94,10 @@ export namespace Right {
     type: "right";
     value: Serializable.ToJSON<R>;
   }
+
+  export function isRight<R>(value: Iterable<R>): value is Right<R>;
+
+  export function isRight<R>(value: unknown): value is Right<R>;
 
   export function isRight<R>(value: unknown): value is Right<R> {
     return value instanceof Right;

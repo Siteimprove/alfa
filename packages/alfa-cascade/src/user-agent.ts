@@ -153,6 +153,52 @@ export const UserAgent = h.sheet([
   }),
 
   /**
+   * @see https://html.spec.whatwg.org/#form-controls
+   */
+
+  h.rule.style("input, select, button, textarea", {
+    letterSpacing: "initial",
+    wordSpacing: "initial",
+    lineHeight: "initial",
+    textTransform: "initial",
+    textIndent: "initial",
+    textShadow: "initial",
+  }),
+
+  h.rule.style("input, select, textarea", {
+    textAlign: "initial",
+  }),
+
+  h.rule.style(
+    "input:is([type=reset i], [type=button i], [type=submit i]), button",
+    {
+      textAlign: "center",
+    }
+  ),
+
+  h.rule.style(
+    "input:is([type=reset i], [type=button i], [type=submit i], [type=color i]), button",
+    {
+      display: "inline-block",
+    }
+  ),
+
+  h.rule.style(
+    "input:is([type=radio i], [type=checkbox i], [type=reset i], [type=button i], [type=submit i], [type=color i], [type=search i]), select, button",
+    {
+      boxSizing: "border-box",
+    }
+  ),
+
+  h.rule.style("textarea", { whiteSpace: "pre-wrap" }),
+
+  // <button> element defaults applied consistently by browsers.
+  h.rule.style("button", {
+    fontStyle: "normal",
+    fontWeight: "400",
+  }),
+
+  /**
    * @see https://html.spec.whatwg.org/#the-hr-element-rendering
    */
 

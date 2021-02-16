@@ -60,13 +60,21 @@ export class Slice<T>
     );
   }
 
-  public *[Symbol.iterator](): Iterator<T> {
+  public *iterator(): Iterator<T> {
     for (let i = this._offset, n = i + this._length; i < n; i++) {
       yield this._array[i];
     }
   }
 
-  public equals(value: unknown): value is this {
+  public [Symbol.iterator](): Iterator<T> {
+    return this.iterator();
+  }
+
+  public equals<T>(value: Slice<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     if (value instanceof Slice && value._length === this._length) {
       for (let i = 0, n = value._length; i < n; i++) {
         if (
@@ -113,5 +121,5 @@ export namespace Slice {
 }
 
 function clamp(value: number, length: number): number {
-  return Math.max(0, Math.min(value, length));
+  return value < 0 ? 0 : value > length ? length : value;
 }

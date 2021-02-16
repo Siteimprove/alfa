@@ -195,7 +195,11 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<K, V>(value: Map<K, V>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Map &&
       value._size === this._size &&
@@ -219,8 +223,12 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.map(this._root, (entry) => entry[1]);
   }
 
-  public *[Symbol.iterator](): Iterator<[K, V]> {
+  public *iterator(): Iterator<[K, V]> {
     yield* this._root;
+  }
+
+  public [Symbol.iterator](): Iterator<[K, V]> {
+    return this.iterator();
   }
 
   public toArray(): Array<[K, V]> {

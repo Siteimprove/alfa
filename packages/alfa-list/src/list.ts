@@ -348,7 +348,11 @@ export class List<T> implements Collection.Indexed<T> {
     }, Map.empty<K, List<T>>());
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T>(value: List<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof List &&
       value._size === this._size &&

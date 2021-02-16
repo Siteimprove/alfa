@@ -4,6 +4,12 @@
   "files": ["src/cypress.ts", "src/cypress/add-command.ts", "src/index.ts"],
   "references": [
     {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-assert"
+    },
+    {
       "path": "../alfa-device"
     },
     {
@@ -23,9 +29,6 @@
     },
     {
       "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
     },
     {
       "path": "../alfa-test"

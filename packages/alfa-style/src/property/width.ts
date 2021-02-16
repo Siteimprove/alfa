@@ -6,24 +6,33 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-export type Width = Width.Specified | Width.Computed;
-
-export namespace Width {
-  export type Auto = Keyword<"auto">;
-
-  export type Specified = Auto | Length | Percentage;
-
-  export type Computed = Auto | Length<"px"> | Percentage;
-}
+/**
+ * @internal
+ */
+export type Specified = Keyword<"auto"> | Length | Percentage;
 
 /**
- * @see https://drafts.csswg.org/css-sizing/#propdef-width
+ * @internal
  */
-export const Width: Property<Width.Specified, Width.Computed> = Property.of(
+export type Computed = Keyword<"auto"> | Length<"px"> | Percentage;
+
+/**
+ * @internal
+ */
+export const parse = either(
+  Keyword.parse("auto"),
+  either(Length.parse, Percentage.parse)
+);
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/width
+ * @internal
+ */
+export default Property.of<Specified, Computed>(
   Keyword.of("auto"),
-  either(Keyword.parse("auto"), either(Length.parse, Percentage.parse)),
-  (style) =>
-    style.specified("width").map((width) => {
+  parse,
+  (width, style) =>
+    width.map((width) => {
       switch (width.type) {
         case "keyword":
         case "percentage":

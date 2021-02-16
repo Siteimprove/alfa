@@ -9,9 +9,14 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 export type Parser<I, T, E = never, A extends Array<unknown> = []> = (
   input: I,
   ...args: A
-) => Result<readonly [I, T], E>;
+) => Result<[I, T], E>;
 
 export namespace Parser {
+  export type Infallible<I, T, A extends Array<unknown> = []> = (
+    input: I,
+    ...args: A
+  ) => [I, T];
+
   export function map<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, U>
@@ -67,18 +72,18 @@ export namespace Parser {
 
   export function zeroOrMore<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return (input, ...args) => {
       const values: Array<T> = [];
+
+      let value: T;
 
       while (true) {
         const result = parser(input, ...args);
 
         if (result.isOk()) {
-          const [remainder, value] = result.get();
-
+          [input, value] = result.get();
           values.push(value);
-          input = remainder;
         } else {
           break;
         }
@@ -90,16 +95,19 @@ export namespace Parser {
 
   export function oneOrMore<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return flatMap(parser, (head) =>
-      map(zeroOrMore(parser), (tail) => [head, ...tail])
+      map(zeroOrMore(parser), (tail) => {
+        tail.unshift(head);
+        return tail;
+      })
     );
   }
 
   export function take<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     count: number
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return takeBetween(parser, count, count);
   }
 
@@ -107,18 +115,18 @@ export namespace Parser {
     parser: Parser<I, T, E, A>,
     lower: number,
     upper: number
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return (input, ...args) => {
       const values: Array<T> = [];
+
+      let value: T;
 
       for (let i = 0; i < upper; i++) {
         const result = parser(input, ...args);
 
         if (result.isOk()) {
-          const [remainder, value] = result.get();
-
+          [input, value] = result.get();
           values.push(value);
-          input = remainder;
         } else if (result.isErr()) {
           if (values.length < lower) {
             return result;
@@ -135,23 +143,25 @@ export namespace Parser {
   export function takeAtLeast<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     lower: number
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return takeBetween(parser, lower, Infinity);
   }
 
   export function takeAtMost<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     upper: number
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return takeBetween(parser, 0, upper);
   }
 
   export function takeUntil<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     condition: Parser<I, unknown, E, A>
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return (input, ...args) => {
       const values: Array<T> = [];
+
+      let value: T;
 
       while (true) {
         if (condition(input, ...args).isOk()) {
@@ -161,10 +171,8 @@ export namespace Parser {
         const result = parser(input, ...args);
 
         if (result.isOk()) {
-          const [remainder, value] = result.get();
-
+          [input, value] = result.get();
           values.push(value);
-          input = remainder;
         } else if (result.isErr()) {
           return result;
         }
@@ -181,22 +189,34 @@ export namespace Parser {
 
   export function tee<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    callback: Callback<T>
+    callback: Callback<T, void, [remainder: I, ...args: A]>
   ): Parser<I, T, E, A> {
-    return map(parser, (value) => {
-      callback(value);
-      return value;
-    });
+    return (input, ...args) =>
+      parser(input, ...args).tee(([remainder, result]) => {
+        callback(result, remainder, ...args);
+      });
+  }
+
+  export function teeErr<I, T, E, A extends Array<unknown> = []>(
+    parser: Parser<I, T, E, A>,
+    callback: Callback<E, void, A>
+  ): Parser<I, T, E, A> {
+    return (input, ...args) =>
+      parser(input, ...args).teeErr((err) => {
+        callback(err, ...args);
+      });
   }
 
   export function option<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
   ): Parser<I, Option<T>, E, A> {
     return (input, ...args) => {
-      const result = map(parser, (value) => Option.of(value))(input, ...args);
+      const result = parser(input, ...args);
 
       if (result.isOk()) {
-        return result;
+        const [input, value] = result.get();
+
+        return Result.of([input, Option.of(value)]);
       }
 
       return Result.of([input, None]);
@@ -209,7 +229,8 @@ export namespace Parser {
   ): Parser<I, T | U, E, A>;
 
   export function either<I, T, E, A extends Array<unknown> = []>(
-    parser: Parser<I, T, E, A>,
+    left: Parser<I, T, E, A>,
+    right: Parser<I, T, E, A>,
     ...rest: Array<Parser<I, T, E, A>>
   ): Parser<I, T, E, A>;
 
@@ -280,10 +301,13 @@ export namespace Parser {
   export function separatedList<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>
-  ): Parser<I, Iterable<T>, E, A> {
+  ): Parser<I, Array<T>, E, A> {
     return map(
       pair(parser, zeroOrMore(right(separator, parser))),
-      ([first, rest]) => [first, ...rest]
+      ([first, rest]) => {
+        rest.unshift(first);
+        return rest;
+      }
     );
   }
 

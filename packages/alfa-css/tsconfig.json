@@ -66,6 +66,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-device"
     },
     {

@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -122,6 +123,15 @@ export class Ok<T> implements Result<T, never> {
 
   public err(): None {
     return None;
+  }
+
+  public tee(callback: Callback<T>): Ok<T> {
+    callback(this._value);
+    return this;
+  }
+
+  public teeErr(): Ok<T> {
+    return this;
   }
 
   public equals(value: unknown): value is this {

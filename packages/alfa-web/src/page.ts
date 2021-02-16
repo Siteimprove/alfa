@@ -1,16 +1,23 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
+import { Decoder } from "@siteimprove/alfa-encoding";
 import { Response, Request } from "@siteimprove/alfa-http";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Resource } from "./resource";
 
 /**
  * @see https://en.wikipedia.org/wiki/Web_page
  */
-export class Page implements Resource, json.Serializable, earl.Serializable {
+export class Page
+  implements
+    Resource,
+    json.Serializable<Page.JSON>,
+    earl.Serializable<Page.EARL>,
+    sarif.Serializable<sarif.Artifact> {
   public static of(
     request: Request,
     response: Response,
@@ -72,6 +79,17 @@ export class Page implements Resource, json.Serializable, earl.Serializable {
       "@id": this.response.url.toString(),
       "dct:source": this.response.url.toString(),
       "dct:hasPart": [this._request.toEARL(), this._response.toEARL()],
+    };
+  }
+
+  public toSARIF(): sarif.Artifact {
+    return {
+      location: {
+        uri: this.response.url.toString(),
+      },
+      contents: {
+        text: Decoder.decode(new Uint8Array(this.response.body)),
+      },
     };
   }
 }

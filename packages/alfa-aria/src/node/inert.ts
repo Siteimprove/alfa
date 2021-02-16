@@ -22,6 +22,7 @@ export class Inert extends Node {
   public toJSON(): Inert.JSON {
     return {
       type: "inert",
+      node: this._node.path(),
       children: this._children.map((child) => child.toJSON()),
     };
   }

@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -122,6 +123,15 @@ export class Err<E> implements Result<never, E> {
 
   public err(): Option<E> {
     return Option.of(this._error);
+  }
+
+  public tee(): Err<E> {
+    return this;
+  }
+
+  public teeErr(callback: Callback<E>): Err<E> {
+    callback(this._error);
+    return this;
   }
 
   public equals(value: unknown): value is this {

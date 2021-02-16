@@ -3,7 +3,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-export class Diagnostic implements Equatable, Serializable {
+export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
   public static of(message: string): Diagnostic {
     return new Diagnostic(normalize(message));
   }
@@ -18,7 +18,11 @@ export class Diagnostic implements Equatable, Serializable {
     return this._message;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Diagnostic): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Diagnostic && value._message === this._message;
   }
 

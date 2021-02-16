@@ -98,7 +98,8 @@ export namespace Declaration {
    * @see https://drafts.csswg.org/css-syntax/#consume-a-declaration
    */
   export const consume: Parser<Slice<Token>, Declaration, string> = (input) => {
-    const name = input.get(0).filter(Token.isIdent).get().value;
+    const { value: name } = input.array[input.offset] as Token.Ident;
+
     const value: Array<Token> = [];
 
     input = input.slice(1);
