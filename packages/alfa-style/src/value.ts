@@ -10,7 +10,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import * as json from "@siteimprove/alfa-json";
 
 export class Value<T = unknown>
-  implements Monad<T>, Functor<T>, Iterable<T>, Equatable, Serializable {
+  implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Serializable {
   public static of<T>(value: T, source: Option<Declaration> = None): Value<T> {
     return new Value(value, source);
   }

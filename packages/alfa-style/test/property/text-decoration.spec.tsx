@@ -161,18 +161,3 @@ test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
     source: h.declaration("text-decoration", "underline solid red").toJSON(),
   });
 });
-
-test("#cascaded() parses `text-indent`", (t) => {
-  const element = <div style={{ textIndent: "5px" }}></div>;
-
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-indent").get().toJSON(), {
-    value: {
-      type: "length",
-      unit: "px",
-      value: 5,
-    },
-    source: h.declaration("text-indent", "5px").toJSON(),
-  });
-});

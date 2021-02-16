@@ -6,10 +6,12 @@ import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style";
 
+const device = Device.standard();
+
 test("#cascaded() parses `box-shadow: auto`", (t) => {
   const element = <div style={{ boxShadow: "auto" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -23,7 +25,7 @@ test("#cascaded() parses `box-shadow: auto`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -67,7 +69,7 @@ test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px 3px" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -111,7 +113,7 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px 3px 4px" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -155,7 +157,7 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px inset" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -199,7 +201,7 @@ test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
 test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
   const element = <div style={{ boxShadow: "inset 1px 2px" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -243,7 +245,7 @@ test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px red" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -288,7 +290,7 @@ test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
 test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
   const element = <div style={{ boxShadow: "red 1px 2px" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
@@ -333,7 +335,7 @@ test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
 test("#cascaded() parses `box-shadow: red 1px 2px inset`", (t) => {
   const element = <div style={{ boxShadow: "red 1px 2px inset" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {

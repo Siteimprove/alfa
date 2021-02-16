@@ -42,10 +42,10 @@ export interface WebElement {
 export namespace WebElement {
   export async function toPage(
     webElement: WebElement,
-    browser: Browser
+    browser: Browser<"async">
   ): Promise<Page> {
-    const element = await browser.execute((element: globalThis.Element) => {
-      return toElement(element);
+    const element = await browser.execute((element) => {
+      return toElement(element as globalThis.Element);
 
       function toNode(node: globalThis.Node): Node.JSON {
         switch (node.nodeType) {
