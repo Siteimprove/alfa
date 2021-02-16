@@ -7,6 +7,7 @@ import { Feature } from "../feature/feature";
 
 import { Expression } from "./expression";
 import { Negation } from "./negation";
+import { Foo } from "../feature/foo";
 
 const {
   delimited,
@@ -48,7 +49,7 @@ export namespace Condition {
       delimited(option(Token.parseWhitespace), (input) => parse(input)),
       Token.parseCloseParenthesis
     ),
-    Feature.parse
+    Foo.parse
   );
 
   /**
