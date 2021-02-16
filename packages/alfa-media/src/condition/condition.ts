@@ -28,12 +28,11 @@ export type Condition = Expression | Feature | Negation;
 export namespace Condition {
   export type JSON = Expression.JSON | Feature.JSON | Negation.JSON;
 
-  // re-exporting the various instance tests under the union namespace
-  export const isExpression = Expression.isExpression;
+  export const { isExpression } = Expression;
 
-  export const isFeature = Feature.isFeature;
+  export const { isFeature } = Feature;
 
-  export const isNegation = Negation.isNegation;
+  export const { isNegation } = Negation;
 
   // Hoist the condition parser to break the recursive initialisation between
   // its different subparsers.
