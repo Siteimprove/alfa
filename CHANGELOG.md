@@ -47,6 +47,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): The user agent styles now include previously missing definitions for form controls.
 
+- [@siteimprove/alfa-url](packages/alfa-url): `URL#toString()` now correctly serializes URLs that cannot be used as base URLs
+
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 
 ### Breaking
