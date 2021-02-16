@@ -1,4 +1,4 @@
-import { Token } from "@siteimprove/alfa-css";
+import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable } from "@siteimprove/alfa-hash";
@@ -22,8 +22,8 @@ export namespace Media {
     LessThanEqual = "<=",
   }
 
-  export function parse(input: Slice<Token>) {
-    return List.parse(input)
+  export function parse(input: string) {
+    return List.parse(Slice.of(Lexer.lex(input)))
       .flatMap(([tokens, selector]) => {
         const result: Result<List, string> =
           tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token");

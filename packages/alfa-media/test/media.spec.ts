@@ -1,8 +1,6 @@
 /// <reference lib="dom" />
 
-import { Lexer } from "@siteimprove/alfa-css";
 import { Device, Display, Viewport } from "@siteimprove/alfa-device";
-import { Slice } from "@siteimprove/alfa-slice";
 import { test } from "@siteimprove/alfa-test";
 
 import { Media } from "../src";
@@ -19,12 +17,9 @@ const largeLandscape /* desktop screen */ = Device.of(
   Display.of(90)
 );
 
-function parse(input: string) {
-  return Media.parse(Slice.of(Lexer.lex(input)));
-}
-
+// Simple query
 test("parse() parses '(orientation: portrait)'", (t) => {
-  t.deepEqual(parse("(orientation: portrait)").get().toJSON(), [
+  t.deepEqual(Media.parse("(orientation: portrait)").get().toJSON(), [
     {
       type: "query",
       modifier: null,
@@ -41,9 +36,10 @@ test("parse() parses '(orientation: portrait)'", (t) => {
   ]);
 });
 
+// Query list with complex query
 test("parse() parses 'screen, (orientation: landscape) and ((max-width: 640px) or (not (min-height: 100px)))'", (t) => {
   t.deepEqual(
-    parse(
+    Media.parse(
       "screen, (orientation: landscape) and ((max-width: 640px) or (not (min-height: 100px)))"
     )
       .get()
@@ -90,9 +86,10 @@ test("parse() parses 'screen, (orientation: landscape) and ((max-width: 640px) o
   );
 });
 
+// Mixing type and features in a single query
 test("parse() parses 'screen and (orientation: portrait) and (min-width: 100px)", (t) => {
   t.deepEqual(
-    parse("screen and (orientation: portrait) and (min-width: 100px)")
+    Media.parse("screen and (orientation: portrait) and (min-width: 100px)")
       .get()
       .toJSON()[0],
     {
@@ -119,7 +116,7 @@ test("parse() parses 'screen and (orientation: portrait) and (min-width: 100px)"
 
 test("parse() does not create modifier in the absence of type", (t) => {
   t.deepEqual(
-    parse("not screen and (orientation: landscape)").get().toJSON()[0],
+    Media.parse("not screen and (orientation: landscape)").get().toJSON()[0],
     {
       type: "query",
       modifier: "not",
@@ -132,7 +129,7 @@ test("parse() does not create modifier in the absence of type", (t) => {
     }
   );
 
-  t.deepEqual(parse("not (orientation: landscape)").get().toJSON()[0], {
+  t.deepEqual(Media.parse("not (orientation: landscape)").get().toJSON()[0], {
     type: "query",
     modifier: null,
     mediaType: null,
@@ -147,22 +144,25 @@ test("parse() does not create modifier in the absence of type", (t) => {
   });
 });
 
+// Correct parsing of <media-condition-without-or>
 test("parse() fails to parse 'screen and (orientation: portrait) or (min-width: 100px)", (t) => {
   t.deepEqual(
-    parse("screen and (orientation: portrait) or (min-width: 100px)").isNone(),
+    Media.parse(
+      "screen and (orientation: portrait) or (min-width: 100px)"
+    ).isNone(),
     true
   );
 });
 
 test("matches() matches simple orientation query", (t) => {
-  const isPortrait = parse("(orientation: portrait)").get();
+  const isPortrait = Media.parse("(orientation: portrait)").get();
 
   t.deepEqual(isPortrait.matches(smallPortrait), true);
   t.deepEqual(isPortrait.matches(largeLandscape), false);
 });
 
 test("matches() matches conjunction query", (t) => {
-  const isLargeLandscape = parse(
+  const isLargeLandscape = Media.parse(
     "(min-width: 640px) and (orientation: landscape)"
   ).get();
 
@@ -171,7 +171,7 @@ test("matches() matches conjunction query", (t) => {
 });
 
 test("matches() matches disjunction query", (t) => {
-  const isLargeOrPortrait = parse(
+  const isLargeOrPortrait = Media.parse(
     "(min-width: 640px) or (orientation: portrait)"
   ).get();
 
@@ -180,15 +180,19 @@ test("matches() matches disjunction query", (t) => {
 });
 
 test("matches() matches negation query", (t) => {
-  const isNotLandscape = parse("not (orientation: landscape)").get();
+  const isNotLandscape = Media.parse("not (orientation: landscape)").get();
 
   t.deepEqual(isNotLandscape.matches(smallPortrait), true);
   t.deepEqual(isNotLandscape.matches(largeLandscape), false);
 });
 
 test("matches() matches query with a media type", (t) => {
-  const isScreenPortrait = parse("screen and (orientation: portrait)").get();
-  const isPrintPortrait = parse("print and (orientation: portrait)").get();
+  const isScreenPortrait = Media.parse(
+    "screen and (orientation: portrait)"
+  ).get();
+  const isPrintPortrait = Media.parse(
+    "print and (orientation: portrait)"
+  ).get();
 
   t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
   t.deepEqual(isPrintPortrait.matches(smallPortrait), false);
@@ -197,10 +201,12 @@ test("matches() matches query with a media type", (t) => {
 });
 
 test("matches() disregards 'only' modifier", (t) => {
-  const isScreenPortrait = parse(
+  const isScreenPortrait = Media.parse(
     "only screen and (orientation: portrait)"
   ).get();
-  const isPrintPortrait = parse("only print and (orientation: portrait)").get();
+  const isPrintPortrait = Media.parse(
+    "only print and (orientation: portrait)"
+  ).get();
 
   t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
   t.deepEqual(isPrintPortrait.matches(smallPortrait), false);
@@ -209,10 +215,10 @@ test("matches() disregards 'only' modifier", (t) => {
 });
 
 test("matches() honors 'not' modifier", (t) => {
-  const isNotScreenPortrait = parse(
+  const isNotScreenPortrait = Media.parse(
     "not screen and (orientation: portrait)"
   ).get();
-  const isNotPrintPortrait = parse(
+  const isNotPrintPortrait = Media.parse(
     "not print and (orientation: portrait)"
   ).get();
 
