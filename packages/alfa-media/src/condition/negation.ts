@@ -3,24 +3,22 @@ import { Hash } from "@siteimprove/alfa-hash";
 
 import { Media } from "../media";
 
-import { Feature } from "../feature/feature";
-
-import { Expression } from "./expression";
+import { Condition } from "./condition";
 
 import * as json from "@siteimprove/alfa-json";
 
 export class Negation implements Media.Queryable {
-  public static of(condition: Feature | Expression | Negation): Negation {
+  public static of(condition: Condition): Negation {
     return new Negation(condition);
   }
 
-  private readonly _condition: Feature | Expression | Negation;
+  private readonly _condition: Condition;
 
-  private constructor(condition: Feature | Expression | Negation) {
+  private constructor(condition: Condition) {
     this._condition = condition;
   }
 
-  public get condition(): Feature | Expression | Negation {
+  public get condition(): Condition {
     return this._condition;
   }
 
@@ -62,7 +60,7 @@ export namespace Negation {
   export interface JSON {
     [key: string]: json.JSON;
     type: "negation";
-    condition: Feature.JSON | Expression.JSON | Negation.JSON;
+    condition: Condition.JSON;
   }
 
   export function isNegation(value: unknown): value is Negation {

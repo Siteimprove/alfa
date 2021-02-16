@@ -5,31 +5,29 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Media } from "../media";
 
-import { Feature } from "../feature/feature";
-
-import { Negation } from "./negation";
+import { Condition } from "./condition";
 
 /**
- * Given that they only differ by their #matches() method, Conjuction and Disjunction
+ * Given that they only differ by their #matches() method, Conjunction and Disjunction
  * are grouped together into the (sub-optimal) name "Expression"
  */
 export class Expression implements Media.Queryable {
   public static of(
     combinator: Expression.Combinator,
-    left: Feature | Expression | Negation,
-    right: Feature | Expression | Negation
+    left: Condition,
+    right: Condition
   ): Expression {
     return new Expression(combinator, left, right);
   }
 
   private readonly _combinator: Expression.Combinator;
-  private readonly _left: Feature | Expression | Negation;
-  private readonly _right: Feature | Expression | Negation;
+  private readonly _left: Condition;
+  private readonly _right: Condition;
 
   private constructor(
     operator: Expression.Combinator,
-    left: Feature | Expression | Negation,
-    right: Feature | Expression | Negation
+    left: Condition,
+    right: Condition
   ) {
     this._combinator = operator;
     this._left = left;
@@ -40,11 +38,11 @@ export class Expression implements Media.Queryable {
     return this._combinator;
   }
 
-  public get left(): Feature | Expression | Negation {
+  public get left(): Condition {
     return this._left;
   }
 
-  public get right(): Feature | Expression | Negation {
+  public get right(): Condition {
     return this._right;
   }
 
@@ -100,8 +98,8 @@ export namespace Expression {
     [key: string]: json.JSON;
     type: "expression";
     combinator: string;
-    left: Feature.JSON | Expression.JSON | Negation.JSON;
-    right: Feature.JSON | Expression.JSON | Negation.JSON;
+    left: Condition.JSON;
+    right: Condition.JSON;
   }
 
   export enum Combinator {

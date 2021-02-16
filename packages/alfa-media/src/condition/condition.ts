@@ -23,14 +23,21 @@ const {
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-condition
  */
+export type Condition = Expression | Feature | Negation;
+
 export namespace Condition {
+  export type JSON = Expression.JSON | Feature.JSON | Negation.JSON;
+
+  // re-exporting the various instance tests under the union namespace
+  export const isExpression = Expression.isExpression;
+
+  export const isFeature = Feature.isFeature;
+
+  export const isNegation = Negation.isNegation;
+
   // Hoist the condition parser to break the recursive initialisation between
   // its different subparsers.
-  export let parse: Parser<
-    Slice<Token>,
-    Feature | Expression | Negation,
-    string
-  >;
+  export let parse: Parser<Slice<Token>, Condition, string>;
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-in-parens
@@ -86,19 +93,11 @@ export namespace Condition {
           either(
             map(
               oneOrMore(parseAnd),
-              (queries) =>
-                ["and", queries] as [
-                  "and",
-                  Iterable<Feature | Negation | Expression>
-                ]
+              (queries) => ["and", queries] as ["and", Iterable<Condition>]
             ),
             map(
               oneOrMore(parseOr),
-              (queries) =>
-                ["or", queries] as [
-                  "or",
-                  Iterable<Feature | Negation | Expression>
-                ]
+              (queries) => ["or", queries] as ["or", Iterable<Condition>]
             )
           )
         ),
