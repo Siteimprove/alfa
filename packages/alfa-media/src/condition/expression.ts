@@ -109,7 +109,7 @@ export namespace Expression {
     Or = "or",
   }
 
-  export function isCondition(value: unknown): value is Expression {
+  export function isExpression(value: unknown): value is Expression {
     return value instanceof Expression;
   }
 }
