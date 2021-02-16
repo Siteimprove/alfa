@@ -66,8 +66,7 @@ export class Left<L> implements Either<L, never> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, false);
-    Hashable.hash(hash, this._value);
+    hash.writeBoolean(false).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator](): Iterator<L> {
