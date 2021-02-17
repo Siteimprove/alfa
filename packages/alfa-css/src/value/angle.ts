@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Token } from "../syntax/token";
-import { Converter, Convertible } from "./converter";
+import { Converter } from "./converter";
 import { Unit } from "./unit";
 import { Dimension } from "./dimension";
 
@@ -26,6 +26,10 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
 
   public get type(): "angle" {
     return "angle";
+  }
+
+  public get canonicalUnit(): "deg" {
+    return "deg";
   }
 
   public hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U> {

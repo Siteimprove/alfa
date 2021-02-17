@@ -1,5 +1,5 @@
+import { Comparable } from "@siteimprove/alfa-comparable";
 import {
-  Angle,
   Length,
   Lexer,
   Number,
@@ -9,8 +9,10 @@ import {
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -28,6 +30,7 @@ const {
   left,
   right,
   delimited,
+  oneOrMore,
   zeroOrMore,
   separatedList,
   eof,
@@ -127,84 +130,26 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
-  export class Feature implements Equatable, Serializable {
-    public static of(
-      name: string,
-      value: Option<Feature.Value> = None
-    ): Feature {
-      return new Feature(name, value);
-    }
+  export abstract class Feature<T = unknown>
+    implements Equatable, Serializable {
+    protected readonly _value: Option<Value<T>>;
 
-    private readonly _name: string;
-    private readonly _value: Option<Feature.Value>;
-
-    private constructor(name: string, value: Option<Feature.Value>) {
-      this._name = name;
+    protected constructor(value: Option<Value<T>>) {
       this._value = value;
     }
 
-    public get name(): string {
-      return this._name;
-    }
+    public abstract get name(): string;
 
-    public get value(): Option<Feature.Value> {
+    public get value(): Option<Value<T>> {
       return this._value;
     }
 
-    public matches(device: Device): boolean {
-      switch (this._name) {
-        case "orientation":
-          return this._value.some(
-            (value) =>
-              value.type === "string" &&
-              value.value === device.viewport.orientation
-          );
-
-        case "scripting":
-          return device.scripting.enabled
-            ? this._value.every(
-                (value) => value.type === "string" && value.value === "enabled"
-              )
-            : this._value.some(
-                (value) => value.type === "string" && value.value === "none"
-              );
-
-        case "max-width":
-          return this._value.some(
-            (value) =>
-              value.type === "length" &&
-              device.viewport.width <= Resolver.length(value, device).value
-          );
-
-        case "min-width":
-          return this._value.some(
-            (value) =>
-              value.type === "length" &&
-              device.viewport.width >= Resolver.length(value, device).value
-          );
-
-        case "max-height":
-          return this._value.some(
-            (value) =>
-              value.type === "length" &&
-              device.viewport.height <= Resolver.length(value, device).value
-          );
-
-        case "min-height":
-          return this._value.some(
-            (value) =>
-              value.type === "length" &&
-              device.viewport.height >= Resolver.length(value, device).value
-          );
-      }
-
-      return false;
-    }
+    public abstract matches(device: Device): boolean;
 
     public equals(value: unknown): value is this {
       return (
         value instanceof Feature &&
-        value._name === this._name &&
+        value.name === this.name &&
         value._value.equals(this._value)
       );
     }
@@ -212,13 +157,13 @@ export namespace Media {
     public toJSON(): Feature.JSON {
       return {
         type: "feature",
-        name: this._name,
+        name: this.name,
         value: this._value.map((value) => value.toJSON()).getOr(null),
       };
     }
 
     public toString(): string {
-      return `${this._name}${this._value
+      return `${this.name}${this._value
         .map((value) => `: ${value}`)
         .getOr("")}`;
     }
@@ -232,20 +177,355 @@ export namespace Media {
       value: Value.JSON | null;
     }
 
-    export type Value = Number | String | Length | Angle | Percentage;
+    export class Unknown extends Feature {
+      public static of(value: Value, name: string): Unknown {
+        return new Unknown(Option.of(value), name);
+      }
 
-    export namespace Value {
-      export type JSON =
-        | Number.JSON
-        | String.JSON
-        | Length.JSON
-        | Angle.JSON
-        | Percentage.JSON;
+      public static boolean(name: string): Unknown {
+        return new Unknown(None, name);
+      }
+
+      private readonly _name: string;
+
+      private constructor(value: Option<Value>, name: string) {
+        super(value);
+        this._name = name;
+      }
+
+      public get name(): string {
+        return this._name;
+      }
+
+      public matches(): boolean {
+        return false;
+      }
     }
+
+    export const { of: unknown, boolean: booleanUnknown } = Unknown;
+
+    /**
+     * @see https://drafts.csswg.org/mediaqueries/#width
+     */
+    export class Width extends Feature<Length> {
+      public static of(value: Value<Length>): Width {
+        return new Width(Option.of(value));
+      }
+
+      private static _boolean = new Width(None);
+
+      public static boolean(): Width {
+        return Width._boolean;
+      }
+
+      public get name(): "width" {
+        return "width";
+      }
+
+      public matches(device: Device): boolean {
+        const {
+          viewport: { width },
+        } = device;
+
+        const value = this._value.map((value) =>
+          value.map((length) => Resolver.length(length, device))
+        );
+
+        return width > 0
+          ? value.some((value) => value.matches(Length.of(width, "px")))
+          : value.every((value) => value.matches(Length.of(0, "px")));
+      }
+    }
+
+    export const { of: width, boolean: booleanWidth } = Width;
+
+    /**
+     * @see https://drafts.csswg.org/mediaqueries/#height
+     */
+    export class Height extends Feature<Length> {
+      public static of(value: Value<Length>): Height {
+        return new Height(Option.of(value));
+      }
+
+      private static _boolean = new Width(None);
+
+      public static boolean(): Width {
+        return Height._boolean;
+      }
+
+      public get name(): "height" {
+        return "height";
+      }
+
+      public matches(device: Device): boolean {
+        const {
+          viewport: { height },
+        } = device;
+
+        const value = this._value.map((value) =>
+          value.map((length) => Resolver.length(length, device))
+        );
+
+        return height > 0
+          ? value.some((value) => value.matches(Length.of(height, "px")))
+          : value.every((value) => value.matches(Length.of(0, "px")));
+      }
+    }
+
+    export const { of: height, boolean: booleanHeight } = Height;
+
+    /**
+     * @see https://drafts.csswg.org/mediaqueries/#orientation
+     */
+    export class Orientation extends Feature<String> {
+      public static of(value: Value<String>): Orientation {
+        return new Orientation(Option.of(value));
+      }
+
+      private static _boolean = new Orientation(None);
+
+      public static boolean(): Orientation {
+        return Orientation._boolean;
+      }
+
+      public get name(): "orientation" {
+        return "orientation";
+      }
+
+      public matches(device: Device): boolean {
+        return this._value.every((value) =>
+          value.matches(String.of(device.viewport.orientation as string))
+        );
+      }
+    }
+
+    export const { of: orientation, boolean: booleanOrientation } = Orientation;
+
+    /**
+     * @see https://drafts.csswg.org/mediaqueries-5/#scripting
+     */
+    export class Scripting extends Feature<String> {
+      public static of(value: Value<String>): Scripting {
+        return new Scripting(Option.of(value));
+      }
+
+      private static _boolean = new Scripting(None);
+
+      public static boolean(): Scripting {
+        return Scripting._boolean;
+      }
+
+      public get name(): "scripting" {
+        return "scripting";
+      }
+
+      public matches(device: Device): boolean {
+        return device.scripting.enabled
+          ? this._value.every((value) => value.matches(String.of("enabled")))
+          : this._value.some((value) => value.matches(String.of("none")));
+      }
+    }
+
+    export const { of: scripting, boolean: booleanScripting } = Scripting;
   }
 
   export function isFeature(value: unknown): value is Feature {
     return value instanceof Feature;
+  }
+
+  export interface Value<T = unknown>
+    extends Functor<T>,
+      Serializable<Value.JSON> {
+    map<U>(mapper: Mapper<T, U>): Value<U>;
+    matches(value: T): boolean;
+    toJSON(): Value.JSON;
+  }
+
+  export namespace Value {
+    export interface JSON {
+      [key: string]: json.JSON;
+      type: string;
+    }
+
+    export class Discrete<T>
+      implements Value<T>, Serializable<Discrete.JSON<T>> {
+      public static of<T>(value: T): Discrete<T> {
+        return new Discrete(value);
+      }
+
+      private readonly _value: T;
+
+      private constructor(value: T) {
+        this._value = value;
+      }
+
+      public get value(): T {
+        return this._value;
+      }
+
+      public map<U>(mapper: Mapper<T, U>): Discrete<U> {
+        return new Discrete(mapper(this._value));
+      }
+
+      public matches(value: T): boolean {
+        return Equatable.equals(this._value, value);
+      }
+
+      public toJSON(): Discrete.JSON<T> {
+        return {
+          type: "discrete",
+          value: Serializable.toJSON(this._value),
+        };
+      }
+    }
+
+    export namespace Discrete {
+      export interface JSON<T> {
+        [key: string]: json.JSON;
+        type: "discrete";
+        value: Serializable.ToJSON<T>;
+      }
+    }
+
+    export const { of: discrete } = Discrete;
+
+    export class Range<T> implements Value<T>, Serializable<Range.JSON<T>> {
+      public static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T> {
+        return new Range(Option.of(minimum), Option.of(maximum));
+      }
+
+      public static minimum<T>(minimum: Bound<T>): Range<T> {
+        return new Range(Option.of(minimum), None);
+      }
+
+      public static maximum<T>(maximum: Bound<T>): Range<T> {
+        return new Range(None, Option.of(maximum));
+      }
+
+      private readonly _minimum: Option<Bound<T>>;
+      private readonly _maximum: Option<Bound<T>>;
+
+      private constructor(
+        minimum: Option<Bound<T>>,
+        maximum: Option<Bound<T>>
+      ) {
+        this._minimum = minimum;
+        this._maximum = maximum;
+      }
+
+      public get minimum(): Option<Bound<T>> {
+        return this._minimum;
+      }
+
+      public get maximum(): Option<Bound<T>> {
+        return this._maximum;
+      }
+
+      public map<U>(mapper: Mapper<T, U>): Range<U> {
+        return new Range(
+          this._minimum.map((bound) => bound.map(mapper)),
+          this._maximum.map((bound) => bound.map(mapper))
+        );
+      }
+
+      public matches(value: T): boolean {
+        if (!Comparable.isComparable<T>(value)) {
+          return false;
+        }
+
+        for (const minimum of this._minimum) {
+          if (minimum.isInclusive) {
+            if (value.compare(minimum.value) <= 0) {
+              return false;
+            }
+          } else {
+            if (value.compare(minimum.value) < 0) {
+              return false;
+            }
+          }
+        }
+
+        for (const maximum of this._maximum) {
+          if (maximum.isInclusive) {
+            if (value.compare(maximum.value) >= 0) {
+              return false;
+            }
+          } else {
+            if (value.compare(maximum.value) > 0) {
+              return false;
+            }
+          }
+        }
+
+        return true;
+      }
+
+      public toJSON(): Range.JSON<T> {
+        return {
+          type: "range",
+          minimum: this._minimum.map((bound) => bound.toJSON()).getOr(null),
+          maximum: this._maximum.map((bound) => bound.toJSON()).getOr(null),
+        };
+      }
+    }
+
+    export namespace Range {
+      export interface JSON<T> {
+        [key: string]: json.JSON;
+        type: "range";
+        minimum: Bound.JSON<T> | null;
+        maximum: Bound.JSON<T> | null;
+      }
+    }
+
+    export const {
+      of: range,
+      minimum: minimumRange,
+      maximum: maximumRange,
+    } = Range;
+
+    export class Bound<T> implements Functor<T>, Serializable<Bound.JSON<T>> {
+      public static of<T>(value: T, isInclusive: boolean): Bound<T> {
+        return new Bound(value, isInclusive);
+      }
+
+      private readonly _value: T;
+      private readonly _isInclusive: boolean;
+
+      private constructor(value: T, isInclusive: boolean) {
+        this._value = value;
+        this._isInclusive = isInclusive;
+      }
+
+      public get value(): T {
+        return this._value;
+      }
+
+      public get isInclusive(): boolean {
+        return this._isInclusive;
+      }
+
+      public map<U>(mapper: Mapper<T, U>): Bound<U> {
+        return new Bound(mapper(this._value), this._isInclusive);
+      }
+
+      public toJSON(): Bound.JSON<T> {
+        return {
+          value: Serializable.toJSON(this._value),
+          isInclusive: this._isInclusive,
+        };
+      }
+    }
+
+    export namespace Bound {
+      export interface JSON<T> {
+        [key: string]: json.JSON;
+        value: Serializable.ToJSON<T>;
+        isInclusive: boolean;
+      }
+    }
+
+    export const { of: bound } = Bound;
   }
 
   /**
@@ -272,11 +552,7 @@ export namespace Media {
             Token.parseNumber((number) => number.isInteger)
           )
         ),
-        (result) => {
-          const [left, right] = result;
-
-          return Percentage.of(left.value / right.value);
-        }
+        ([left, right]) => Percentage.of(left.value / right.value)
       ),
       Length.parse
     )
@@ -293,17 +569,86 @@ export namespace Media {
         parseFeatureValue
       )
     ),
-    (result) => {
-      const [name, value] = result;
+    ([name, value]) => {
+      if (name.startsWith("min-") || name.startsWith("max-")) {
+        const range = name.startsWith("min-")
+          ? Value.minimumRange
+          : Value.maximumRange;
 
-      return Feature.of(name, Option.of(value));
+        name = name.slice(4);
+
+        switch (name) {
+          case "width":
+            if (value.type === "length") {
+              return Feature.width(range(Value.bound(value, true)));
+            } else {
+              break;
+            }
+
+          case "height":
+            if (value.type === "length") {
+              return Feature.height(range(Value.bound(value, true)));
+            } else {
+              break;
+            }
+        }
+      } else {
+        switch (name) {
+          case "width":
+            if (value.type === "length") {
+              return Feature.width(Value.discrete(value));
+            } else {
+              break;
+            }
+
+          case "height":
+            if (value.type === "length") {
+              return Feature.height(Value.discrete(value));
+            } else {
+              break;
+            }
+
+          case "orientation":
+            if (value.type === "string") {
+              return Feature.orientation(Value.discrete(value));
+            } else {
+              break;
+            }
+
+          case "scripting":
+            if (value.type === "string") {
+              return Feature.scripting(Value.discrete(value));
+            } else {
+              break;
+            }
+        }
+      }
+
+      return Feature.unknown(Value.discrete(value), name);
     }
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
    */
-  const parseFeatureBoolean = map(parseFeatureName, (name) => Feature.of(name));
+  const parseFeatureBoolean = map(parseFeatureName, (name) => {
+    switch (name) {
+      case "width":
+        return Feature.booleanWidth();
+
+      case "height":
+        return Feature.booleanHeight();
+
+      case "orientation":
+        return Feature.booleanOrientation();
+
+      case "scripting":
+        return Feature.booleanScripting();
+
+      default:
+        return Feature.booleanUnknown(name);
+    }
+  });
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
@@ -451,8 +796,11 @@ export namespace Media {
     return value instanceof Negation;
   }
 
-  // Hoist the condition parser to break the recursive initialisation between
-  // its different subparsers.
+  /**
+   * @remarks
+   * The condition parser is forward-declared as it is needed within its
+   * subparsers.
+   */
   let parseCondition: Parser<
     Slice<Token>,
     Feature | Condition | Negation,
@@ -477,7 +825,10 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-not
    */
   const parseNot = map(
-    right(left(Token.parseIdent("not"), Token.parseWhitespace), parseInParens),
+    right(
+      delimited(option(Token.parseWhitespace), Token.parseIdent("not")),
+      parseInParens
+    ),
     (condition) => Negation.of(condition)
   );
 
@@ -485,14 +836,17 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-and
    */
   const parseAnd = right(
-    left(Token.parseIdent("and"), Token.parseWhitespace),
+    delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
     parseInParens
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-or
    */
-  const parseOr = right(Token.parseIdent("or"), parseInParens);
+  const parseOr = right(
+    delimited(option(Token.parseWhitespace), Token.parseIdent("or")),
+    parseInParens
+  );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-condition
@@ -500,21 +854,28 @@ export namespace Media {
   parseCondition = either(
     parseNot,
     either(
-      parseInParens,
-      either(
-        map(pair(parseInParens, zeroOrMore(parseAnd)), (result) => {
-          const [left, right] = result;
-          return [left, ...right].reduce((left, right) =>
-            Condition.of(Combinator.And, left, right)
-          );
-        }),
-        map(pair(parseInParens, zeroOrMore(parseOr)), (result) => {
-          const [left, right] = result;
-          return [left, ...right].reduce((left, right) =>
-            Condition.of(Combinator.Or, left, right)
-          );
-        })
-      )
+      map(
+        pair(
+          parseInParens,
+          either(
+            map(
+              oneOrMore(parseAnd),
+              (queries) => [Combinator.And, queries] as const
+            ),
+            map(
+              oneOrMore(parseOr),
+              (queries) => [Combinator.Or, queries] as const
+            )
+          )
+        ),
+        ([left, [combinator, right]]) =>
+          Iterable.reduce(
+            right,
+            (left, right) => Condition.of(combinator, left, right),
+            left
+          )
+      ),
+      parseInParens
     )
   );
 
@@ -523,12 +884,11 @@ export namespace Media {
    */
   const parseConditionWithoutOr = either(
     parseNot,
-    map(pair(parseInParens, zeroOrMore(parseAnd)), (result) => {
-      const [left, right] = result;
-      return [left, ...right].reduce((left, right) =>
+    map(pair(parseInParens, zeroOrMore(parseAnd)), ([left, right]) =>
+      [left, ...right].reduce((left, right) =>
         Condition.of(Combinator.And, left, right)
-      );
-    })
+      )
+    )
   );
 
   /**
@@ -633,18 +993,19 @@ export namespace Media {
     ),
     map(
       pair(
-        pair(option(left(parseModifier, Token.parseWhitespace)), parseType),
+        pair(
+          option(delimited(option(Token.parseWhitespace), parseModifier)),
+          parseType
+        ),
         option(
           right(
-            delimited(Token.parseWhitespace, Token.parseIdent("and")),
+            delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
             parseConditionWithoutOr
           )
         )
       ),
-      (result) => {
-        const [[modifier, type], condition] = result;
-        return Query.of(modifier, Option.of(type), condition);
-      }
+      ([[modifier, type], condition]) =>
+        Query.of(modifier, Option.of(type), condition)
     )
   );
 
@@ -700,11 +1061,11 @@ export namespace Media {
 
   const parseList = left(
     map(
-    separatedList(
-      parseQuery,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (queries) => List.of(queries)
+      separatedList(
+        parseQuery,
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      ),
+      (queries) => List.of(queries)
     ),
     eof((token) => `Unexpected token ${token}`)
   );

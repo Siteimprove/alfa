@@ -27,6 +27,10 @@ export class Length<U extends Unit.Length = Unit.Length>
     return "length";
   }
 
+  public get canonicalUnit(): "px" {
+    return "px";
+  }
+
   public hasUnit<U extends Unit.Length>(unit: U): this is Length<U> {
     return (this._unit as Unit.Length) === unit;
   }
