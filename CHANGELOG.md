@@ -41,6 +41,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-slice](packages/alfa-slice): `Slice<T>` now provides an implementation of `Collection.Indexed<T>`
 
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()` is now available.
+
 ### Changed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `color` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713))

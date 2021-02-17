@@ -97,6 +97,13 @@ export namespace Iterable {
     return accumulator;
   }
 
+  export function apply<T, U>(
+    iterable: Iterable<T>,
+    mapper: Iterable<Mapper<T, U>>
+  ): Iterable<U> {
+    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
+  }
+
   export function filter<T, U extends T>(
     iterable: Iterable<T>,
     refinement: Refinement<T, U, [index: number]>
