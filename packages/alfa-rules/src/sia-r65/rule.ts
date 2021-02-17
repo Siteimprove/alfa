@@ -16,6 +16,7 @@ import { hasTextDecoration } from "../common/predicate/has-text-decoration";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 import { Question } from "../common/question";
+import { hasBoxShadow } from "../common/predicate/has-box-shadow";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
@@ -90,8 +91,11 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
       .filter(isElement)
       .some(
         or(
+          // For these properties, we assume that the difference is to set it or remove it, not to make small changes on it.
           xor(hasOutline(device), hasOutline(device, withFocus)),
           xor(hasTextDecoration(device), hasTextDecoration(device, withFocus)),
+          xor(hasBoxShadow(device), hasBoxShadow(device, withFocus)),
+          // These properties are essentially always set, so any difference in the color is good enough.
           hasDifferentColors(device, withFocus)
         )
       );
