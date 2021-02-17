@@ -1,3 +1,4 @@
+import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Declaration,
@@ -222,7 +223,7 @@ export namespace SelectorMap {
           return;
         }
 
-        for (const selector of Selector.parse(rule.selector)) {
+        for (const [, selector] of Selector.parse(Lexer.lex(rule.selector))) {
           const origin = rule.owner.includes(UserAgent)
             ? Origin.UserAgent
             : Origin.Author;
@@ -238,9 +239,9 @@ export namespace SelectorMap {
       // For media rules, we recurse into the child rules if and only if the
       // media condition matches the device.
       else if (MediaRule.isMedia(rule)) {
-        const query = Media.parse(rule.condition);
+        const query = Media.parse(Lexer.lex(rule.condition));
 
-        if (query.none((query) => query.matches(device))) {
+        if (query.none(([, query]) => query.matches(device))) {
           return;
         }
 
@@ -252,9 +253,9 @@ export namespace SelectorMap {
       // For import rules, we recurse into the imported style sheet if and only
       // if the import condition matches the device.
       else if (ImportRule.isImport(rule)) {
-        const query = Media.parse(rule.condition);
+        const query = Media.parse(Lexer.lex(rule.condition));
 
-        if (query.none((query) => query.matches(device))) {
+        if (query.none(([, query]) => query.matches(device))) {
           return;
         }
 
@@ -278,9 +279,9 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parse(sheet.condition.get());
+        const query = Media.parse(Lexer.lex(sheet.condition.get()));
 
-        if (query.isNone() || !query.get().matches(device)) {
+        if (query.every(([, query]) => !query.matches(device))) {
           continue;
         }
       }

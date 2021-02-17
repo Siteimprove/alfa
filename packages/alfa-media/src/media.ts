@@ -11,10 +11,9 @@ import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -31,6 +30,7 @@ const {
   delimited,
   zeroOrMore,
   separatedList,
+  eof,
 } = Parser;
 const { equals } = Predicate;
 
@@ -698,22 +698,16 @@ export namespace Media {
     export type JSON = Array<Query.JSON>;
   }
 
-  const parseList = map(
+  const parseList = left(
+    map(
     separatedList(
       parseQuery,
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (queries) => List.of(queries)
+    ),
+    eof((token) => `Unexpected token ${token}`)
   );
 
-  export function parse(input: string) {
-    return parseList(Slice.of(Lexer.lex(input)))
-      .flatMap(([tokens, selector]) => {
-        const result: Result<typeof selector, string> =
-          tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token");
-
-        return result;
-      })
-      .ok();
-  }
+  export const parse = parseList;
 }
