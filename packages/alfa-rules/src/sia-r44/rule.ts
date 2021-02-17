@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
-import { Keyword } from "@siteimprove/alfa-css";
+import { Lexer, Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -120,7 +120,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
 function isOrientationConditional(declaration: Declaration): boolean {
   return some(declaration.ancestors(), (rule) => {
     if (MediaRule.isMedia(rule)) {
-      for (const media of Media.parse(rule.condition)) {
+      for (const [, media] of Media.parse(Lexer.lex(rule.condition))) {
         for (const { condition } of media) {
           if (condition.isSome()) {
             if (hasOrientationCondition(condition.get())) {

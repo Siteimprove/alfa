@@ -1,11 +1,17 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
+import { Lexer } from "@siteimprove/alfa-css";
+
 import { Selector } from "../src/selector";
 import { Context } from "../src/context";
 
+function parse(input: string) {
+  return Selector.parse(Lexer.lex(input)).map(([, selector]) => selector);
+}
+
 test(".parse() parses a type selector", (t) => {
-  t.deepEqual(Selector.parse("div").get().toJSON(), {
+  t.deepEqual(parse("div").get().toJSON(), {
     type: "type",
     name: "div",
     namespace: null,
@@ -13,7 +19,7 @@ test(".parse() parses a type selector", (t) => {
 });
 
 test(".parse() parses an uppercase type selector", (t) => {
-  t.deepEqual(Selector.parse("DIV").get().toJSON(), {
+  t.deepEqual(parse("DIV").get().toJSON(), {
     type: "type",
     name: "DIV",
     namespace: null,
@@ -21,7 +27,7 @@ test(".parse() parses an uppercase type selector", (t) => {
 });
 
 test(".parse() parses a type selector with a namespace", (t) => {
-  t.deepEqual(Selector.parse("svg|a").get().toJSON(), {
+  t.deepEqual(parse("svg|a").get().toJSON(), {
     type: "type",
     name: "a",
     namespace: "svg",
@@ -29,7 +35,7 @@ test(".parse() parses a type selector with a namespace", (t) => {
 });
 
 test(".parse() parses a type selector with an empty namespace", (t) => {
-  t.deepEqual(Selector.parse("|a").get().toJSON(), {
+  t.deepEqual(parse("|a").get().toJSON(), {
     type: "type",
     name: "a",
     namespace: "",
@@ -37,14 +43,14 @@ test(".parse() parses a type selector with an empty namespace", (t) => {
 });
 
 test(".parse() parses the universal selector with an empty namespace", (t) => {
-  t.deepEqual(Selector.parse("|*").get().toJSON(), {
+  t.deepEqual(parse("|*").get().toJSON(), {
     type: "universal",
     namespace: "",
   });
 });
 
 test(".parse() parses a type selector with the universal namespace", (t) => {
-  t.deepEqual(Selector.parse("*|a").get().toJSON(), {
+  t.deepEqual(parse("*|a").get().toJSON(), {
     type: "type",
     name: "a",
     namespace: "*",
@@ -52,28 +58,28 @@ test(".parse() parses a type selector with the universal namespace", (t) => {
 });
 
 test(".parse() parses the universal selector with the universal namespace", (t) => {
-  t.deepEqual(Selector.parse("*|*").get().toJSON(), {
+  t.deepEqual(parse("*|*").get().toJSON(), {
     type: "universal",
     namespace: "*",
   });
 });
 
 test(".parse() parses a class selector", (t) => {
-  t.deepEqual(Selector.parse(".foo").get().toJSON(), {
+  t.deepEqual(parse(".foo").get().toJSON(), {
     type: "class",
     name: "foo",
   });
 });
 
 test(".parse() parses an ID selector", (t) => {
-  t.deepEqual(Selector.parse("#foo").get().toJSON(), {
+  t.deepEqual(parse("#foo").get().toJSON(), {
     type: "id",
     name: "foo",
   });
 });
 
 test(".parse() parses a compound selector", (t) => {
-  t.deepEqual(Selector.parse("#foo.bar").get().toJSON(), {
+  t.deepEqual(parse("#foo.bar").get().toJSON(), {
     type: "compound",
     left: {
       type: "id",
@@ -87,14 +93,14 @@ test(".parse() parses a compound selector", (t) => {
 });
 
 test(".parse() parses the universal selector", (t) => {
-  t.deepEqual(Selector.parse("*").get().toJSON(), {
+  t.deepEqual(parse("*").get().toJSON(), {
     type: "universal",
     namespace: null,
   });
 });
 
 test(".parse() parses a compound selector with a type in prefix position", (t) => {
-  t.deepEqual(Selector.parse("div.foo").get().toJSON(), {
+  t.deepEqual(parse("div.foo").get().toJSON(), {
     type: "compound",
     left: {
       type: "type",
@@ -109,7 +115,7 @@ test(".parse() parses a compound selector with a type in prefix position", (t) =
 });
 
 test(".parse() parses a single descendant selector", (t) => {
-  t.deepEqual(Selector.parse("div .foo").get().toJSON(), {
+  t.deepEqual(parse("div .foo").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -125,7 +131,7 @@ test(".parse() parses a single descendant selector", (t) => {
 });
 
 test(".parse() parses a single descendant selector with a right-hand type selector", (t) => {
-  t.deepEqual(Selector.parse("div span").get().toJSON(), {
+  t.deepEqual(parse("div span").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -142,7 +148,7 @@ test(".parse() parses a single descendant selector with a right-hand type select
 });
 
 test(".parse() parses a double descendant selector", (t) => {
-  t.deepEqual(Selector.parse("div .foo #bar").get().toJSON(), {
+  t.deepEqual(parse("div .foo #bar").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -166,7 +172,7 @@ test(".parse() parses a double descendant selector", (t) => {
 });
 
 test(".parse() parses a direct descendant selector", (t) => {
-  t.deepEqual(Selector.parse("div > .foo").get().toJSON(), {
+  t.deepEqual(parse("div > .foo").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.DirectDescendant,
     left: {
@@ -182,7 +188,7 @@ test(".parse() parses a direct descendant selector", (t) => {
 });
 
 test(".parse() parses a sibling selector", (t) => {
-  t.deepEqual(Selector.parse("div ~ .foo").get().toJSON(), {
+  t.deepEqual(parse("div ~ .foo").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Sibling,
     left: {
@@ -198,7 +204,7 @@ test(".parse() parses a sibling selector", (t) => {
 });
 
 test(".parse() parses a direct sibling selector", (t) => {
-  t.deepEqual(Selector.parse("div + .foo").get().toJSON(), {
+  t.deepEqual(parse("div + .foo").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.DirectSibling,
     left: {
@@ -214,7 +220,7 @@ test(".parse() parses a direct sibling selector", (t) => {
 });
 
 test(".parse() parses a list of simple selectors", (t) => {
-  t.deepEqual(Selector.parse(".foo, .bar, .baz").get().toJSON(), {
+  t.deepEqual(parse(".foo, .bar, .baz").get().toJSON(), {
     type: "list",
     left: {
       type: "class",
@@ -235,7 +241,7 @@ test(".parse() parses a list of simple selectors", (t) => {
 });
 
 test(".parse() parses a list of simple and compound selectors", (t) => {
-  t.deepEqual(Selector.parse(".foo, #bar.baz").get().toJSON(), {
+  t.deepEqual(parse(".foo, #bar.baz").get().toJSON(), {
     type: "list",
     left: {
       type: "class",
@@ -256,7 +262,7 @@ test(".parse() parses a list of simple and compound selectors", (t) => {
 });
 
 test(".parse() parses a list of descendant selectors", (t) => {
-  t.deepEqual(Selector.parse("div .foo, span .baz").get().toJSON(), {
+  t.deepEqual(parse("div .foo, span .baz").get().toJSON(), {
     type: "list",
     left: {
       type: "complex",
@@ -288,7 +294,7 @@ test(".parse() parses a list of descendant selectors", (t) => {
 });
 
 test(".parse() parses a list of sibling selectors", (t) => {
-  t.deepEqual(Selector.parse("div ~ .foo, span ~ .baz").get().toJSON(), {
+  t.deepEqual(parse("div ~ .foo, span ~ .baz").get().toJSON(), {
     type: "list",
     left: {
       type: "complex",
@@ -320,7 +326,7 @@ test(".parse() parses a list of sibling selectors", (t) => {
 });
 
 test(".parse() parses a list of selectors with no whitespace", (t) => {
-  t.deepEqual(Selector.parse(".foo,.bar").get().toJSON(), {
+  t.deepEqual(parse(".foo,.bar").get().toJSON(), {
     type: "list",
     left: {
       type: "class",
@@ -334,7 +340,7 @@ test(".parse() parses a list of selectors with no whitespace", (t) => {
 });
 
 test(".parse() parses a compound selector relative to a class selector", (t) => {
-  t.deepEqual(Selector.parse(".foo div.bar").get().toJSON(), {
+  t.deepEqual(parse(".foo div.bar").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -357,7 +363,7 @@ test(".parse() parses a compound selector relative to a class selector", (t) => 
 });
 
 test(".parse() parses a compound selector relative to a compound selector", (t) => {
-  t.deepEqual(Selector.parse("span.foo div.bar").get().toJSON(), {
+  t.deepEqual(parse("span.foo div.bar").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -388,7 +394,7 @@ test(".parse() parses a compound selector relative to a compound selector", (t) 
 });
 
 test(".parse() parses a descendant selector relative to a sibling selector", (t) => {
-  t.deepEqual(Selector.parse("div ~ span .foo").get().toJSON(), {
+  t.deepEqual(parse("div ~ span .foo").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -413,7 +419,7 @@ test(".parse() parses a descendant selector relative to a sibling selector", (t)
 });
 
 test(".parse() parses an attribute selector without a value", (t) => {
-  t.deepEqual(Selector.parse("[foo]").get().toJSON(), {
+  t.deepEqual(parse("[foo]").get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: null,
@@ -424,7 +430,7 @@ test(".parse() parses an attribute selector without a value", (t) => {
 });
 
 test(".parse() parses an attribute selector with an ident value", (t) => {
-  t.deepEqual(Selector.parse("[foo=bar]").get().toJSON(), {
+  t.deepEqual(parse("[foo=bar]").get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: null,
@@ -435,7 +441,7 @@ test(".parse() parses an attribute selector with an ident value", (t) => {
 });
 
 test(".parse() parses an attribute selector with a string value", (t) => {
-  t.deepEqual(Selector.parse('[foo="bar"]').get().toJSON(), {
+  t.deepEqual(parse('[foo="bar"]').get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: null,
@@ -446,7 +452,7 @@ test(".parse() parses an attribute selector with a string value", (t) => {
 });
 
 test(".parse() parses an attribute selector with a matcher", (t) => {
-  t.deepEqual(Selector.parse("[foo*=bar]").get().toJSON(), {
+  t.deepEqual(parse("[foo*=bar]").get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: null,
@@ -457,7 +463,7 @@ test(".parse() parses an attribute selector with a matcher", (t) => {
 });
 
 test(".parse() parses an attribute selector with a casing modifier", (t) => {
-  t.deepEqual(Selector.parse("[foo=bar i]").get().toJSON(), {
+  t.deepEqual(parse("[foo=bar i]").get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: null,
@@ -468,7 +474,7 @@ test(".parse() parses an attribute selector with a casing modifier", (t) => {
 });
 
 test(".parse() parses an attribute selector with a namespace", (t) => {
-  t.deepEqual(Selector.parse("[foo|bar]").get().toJSON(), {
+  t.deepEqual(parse("[foo|bar]").get().toJSON(), {
     type: "attribute",
     name: "bar",
     namespace: "foo",
@@ -479,7 +485,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
 });
 
 test(".parse() parses an attribute selector with a namespace", (t) => {
-  t.deepEqual(Selector.parse("[*|foo]").get().toJSON(), {
+  t.deepEqual(parse("[*|foo]").get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: "*",
@@ -490,7 +496,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
 });
 
 test(".parse() parses an attribute selector with a namespace", (t) => {
-  t.deepEqual(Selector.parse("[|foo]").get().toJSON(), {
+  t.deepEqual(parse("[|foo]").get().toJSON(), {
     type: "attribute",
     name: "foo",
     namespace: "",
@@ -501,7 +507,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
 });
 
 test(".parse() parses an attribute selector with a namespace", (t) => {
-  t.deepEqual(Selector.parse("[foo|bar=baz]").get().toJSON(), {
+  t.deepEqual(parse("[foo|bar=baz]").get().toJSON(), {
     type: "attribute",
     name: "bar",
     namespace: "foo",
@@ -512,7 +518,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
 });
 
 test(".parse() parses an attribute selector with a namespace", (t) => {
-  t.deepEqual(Selector.parse("[foo|bar|=baz]").get().toJSON(), {
+  t.deepEqual(parse("[foo|bar|=baz]").get().toJSON(), {
     type: "attribute",
     name: "bar",
     namespace: "foo",
@@ -523,7 +529,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
 });
 
 test(".parse() parses an attribute selector when part of a compound selector", (t) => {
-  t.deepEqual(Selector.parse(".foo[foo]").get().toJSON(), {
+  t.deepEqual(parse(".foo[foo]").get().toJSON(), {
     type: "compound",
     left: {
       type: "class",
@@ -541,7 +547,7 @@ test(".parse() parses an attribute selector when part of a compound selector", (
 });
 
 test(".parse() parses an attribute selector when part of a descendant selector", (t) => {
-  t.deepEqual(Selector.parse("div [foo]").get().toJSON(), {
+  t.deepEqual(parse("div [foo]").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -561,7 +567,7 @@ test(".parse() parses an attribute selector when part of a descendant selector",
 });
 
 test(".parse() parses an attribute selector when part of a compound selector relative to a class selector", (t) => {
-  t.deepEqual(Selector.parse(".foo div[foo]").get().toJSON(), {
+  t.deepEqual(parse(".foo div[foo]").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -588,14 +594,14 @@ test(".parse() parses an attribute selector when part of a compound selector rel
 });
 
 test(".parse() parses a pseudo-element selector", (t) => {
-  t.deepEqual(Selector.parse("::before").get().toJSON(), {
+  t.deepEqual(parse("::before").get().toJSON(), {
     type: "pseudo-element",
     name: "before",
   });
 });
 
 test(".parse() parses a pseudo-element selector when part of a compound selector", (t) => {
-  t.deepEqual(Selector.parse(".foo::before").get().toJSON(), {
+  t.deepEqual(parse(".foo::before").get().toJSON(), {
     type: "compound",
     left: {
       type: "class",
@@ -609,7 +615,7 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
 });
 
 test(".parse() parses a pseudo-element selector when part of a descendant selector", (t) => {
-  t.deepEqual(Selector.parse("div ::before").get().toJSON(), {
+  t.deepEqual(parse("div ::before").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -625,7 +631,7 @@ test(".parse() parses a pseudo-element selector when part of a descendant select
 });
 
 test(".parse() parses a pseudo-element selector when part of a compound selector relative to a class selector", (t) => {
-  t.deepEqual(Selector.parse(".foo div::before").get().toJSON(), {
+  t.deepEqual(parse(".foo div::before").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -648,19 +654,19 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
 });
 
 test(".parse() only allows pseudo-element selectors as the last selector", (t) => {
-  t.equal(Selector.parse("::foo.foo").isNone(), true);
-  t.equal(Selector.parse("::foo+foo").isNone(), true);
+  t.equal(parse("::foo.foo").isErr(), true);
+  t.equal(parse("::foo+foo").isErr(), true);
 });
 
 test(".parse() parses a named pseudo-class selector", (t) => {
-  t.deepEqual(Selector.parse(":hover").get().toJSON(), {
+  t.deepEqual(parse(":hover").get().toJSON(), {
     type: "pseudo-class",
     name: "hover",
   });
 });
 
 test(".parse() parses a functional pseudo-class selector", (t) => {
-  t.deepEqual(Selector.parse(":not(.foo)").get().toJSON(), {
+  t.deepEqual(parse(":not(.foo)").get().toJSON(), {
     type: "pseudo-class",
     name: "not",
     selector: {
@@ -671,7 +677,7 @@ test(".parse() parses a functional pseudo-class selector", (t) => {
 });
 
 test(".parse() parses a pseudo-class selector when part of a compound selector", (t) => {
-  t.deepEqual(Selector.parse("div:hover").get().toJSON(), {
+  t.deepEqual(parse("div:hover").get().toJSON(), {
     type: "compound",
     left: {
       type: "type",
@@ -686,7 +692,7 @@ test(".parse() parses a pseudo-class selector when part of a compound selector",
 });
 
 test(".parse() parses a pseudo-class selector when part of a compound selector relative to a class selector", (t) => {
-  t.deepEqual(Selector.parse(".foo div:hover").get().toJSON(), {
+  t.deepEqual(parse(".foo div:hover").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -709,7 +715,7 @@ test(".parse() parses a pseudo-class selector when part of a compound selector r
 });
 
 test(".parse() parses a compound type, class, and pseudo-class selector relative to a class selector", (t) => {
-  t.deepEqual(Selector.parse(".foo div.bar:hover").get().toJSON(), {
+  t.deepEqual(parse(".foo div.bar:hover").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.Descendant,
     left: {
@@ -739,7 +745,7 @@ test(".parse() parses a compound type, class, and pseudo-class selector relative
 });
 
 test(".parse() parses a simple selector relative to a compound selector", (t) => {
-  t.deepEqual(Selector.parse(".foo > div.bar").get().toJSON(), {
+  t.deepEqual(parse(".foo > div.bar").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.DirectDescendant,
     left: {
@@ -762,7 +768,7 @@ test(".parse() parses a simple selector relative to a compound selector", (t) =>
 });
 
 test(".parse() parses a relative selector relative to a compound selector", (t) => {
-  t.deepEqual(Selector.parse(".foo > .bar + div.baz").get().toJSON(), {
+  t.deepEqual(parse(".foo > .bar + div.baz").get().toJSON(), {
     type: "complex",
     combinator: Selector.Combinator.DirectSibling,
     left: {
@@ -793,7 +799,7 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
 });
 
 test(".parse() parses an :nth-child selector", (t) => {
-  t.deepEqual(Selector.parse(":nth-child(odd)").get().toJSON(), {
+  t.deepEqual(parse(":nth-child(odd)").get().toJSON(), {
     type: "pseudo-class",
     name: "nth-child",
     index: {
@@ -804,7 +810,7 @@ test(".parse() parses an :nth-child selector", (t) => {
 });
 
 test("#matches() checks if an element matches an :nth-child selector", (t) => {
-  const selector = Selector.parse(":nth-child(odd)").get();
+  const selector = parse(":nth-child(odd)").get();
 
   const a = <p />;
   const b = <p />;
@@ -826,7 +832,7 @@ test("#matches() checks if an element matches an :nth-child selector", (t) => {
 });
 
 test("#matches() checks if an element matches an :nth-last-child selector", (t) => {
-  const selector = Selector.parse(":nth-last-child(odd)").get();
+  const selector = parse(":nth-last-child(odd)").get();
 
   const a = <p />;
   const b = <p />;
@@ -848,7 +854,7 @@ test("#matches() checks if an element matches an :nth-last-child selector", (t) 
 });
 
 test("#matches() checks if an element matches a :first-child selector", (t) => {
-  const selector = Selector.parse(":first-child").get();
+  const selector = parse(":first-child").get();
 
   const a = <p />;
   const b = <p />;
@@ -864,7 +870,7 @@ test("#matches() checks if an element matches a :first-child selector", (t) => {
 });
 
 test("#matches() checks if an element matches a :last-child selector", (t) => {
-  const selector = Selector.parse(":last-child").get();
+  const selector = parse(":last-child").get();
 
   const a = <p />;
   const b = <p />;
@@ -880,7 +886,7 @@ test("#matches() checks if an element matches a :last-child selector", (t) => {
 });
 
 test("#matches() checks if an element matches an :only-child selector", (t) => {
-  const selector = Selector.parse(":only-child").get();
+  const selector = parse(":only-child").get();
 
   const a = <p />;
   const b = <p />;
@@ -901,7 +907,7 @@ test("#matches() checks if an element matches an :only-child selector", (t) => {
 });
 
 test("#matches() checks if an element matches an :nth-of-type selector", (t) => {
-  const selector = Selector.parse(":nth-of-type(odd)").get();
+  const selector = parse(":nth-of-type(odd)").get();
 
   const a = <p />;
   const b = <p />;
@@ -925,7 +931,7 @@ test("#matches() checks if an element matches an :nth-of-type selector", (t) => 
 });
 
 test("#matches() checks if an element matches an :nth-last-of-type selector", (t) => {
-  const selector = Selector.parse(":nth-last-of-type(odd)").get();
+  const selector = parse(":nth-last-of-type(odd)").get();
 
   const a = <p />;
   const b = <p />;
@@ -949,7 +955,7 @@ test("#matches() checks if an element matches an :nth-last-of-type selector", (t
 });
 
 test("#matches() checks if an element matches a :first-of-type selector", (t) => {
-  const selector = Selector.parse(":first-of-type").get();
+  const selector = parse(":first-of-type").get();
 
   const a = <p />;
   const b = <p />;
@@ -966,7 +972,7 @@ test("#matches() checks if an element matches a :first-of-type selector", (t) =>
 });
 
 test("#matches() checks if an element matches a :last-of-type selector", (t) => {
-  const selector = Selector.parse(":last-of-type").get();
+  const selector = parse(":last-of-type").get();
 
   const a = <p />;
   const b = <p />;
@@ -983,7 +989,7 @@ test("#matches() checks if an element matches a :last-of-type selector", (t) => 
 });
 
 test("#matches() checks if an element matches a :only-of-type selector", (t) => {
-  const selector = Selector.parse(":only-of-type").get();
+  const selector = parse(":only-of-type").get();
 
   const a = <p />;
   const b = <p />;
@@ -1006,7 +1012,7 @@ test("#matches() checks if an element matches a :only-of-type selector", (t) => 
 });
 
 test("#matches() checks if an element matches a :hover selector", (t) => {
-  const selector = Selector.parse(":hover").get();
+  const selector = parse(":hover").get();
 
   const p = <p />;
 
@@ -1015,7 +1021,7 @@ test("#matches() checks if an element matches a :hover selector", (t) => {
 });
 
 test("#matches() checks if an element matches an :active selector", (t) => {
-  const selector = Selector.parse(":active").get();
+  const selector = parse(":active").get();
 
   const p = <p />;
 
@@ -1024,7 +1030,7 @@ test("#matches() checks if an element matches an :active selector", (t) => {
 });
 
 test("#matches() checks if an element matches a :focus selector", (t) => {
-  const selector = Selector.parse(":focus").get();
+  const selector = parse(":focus").get();
 
   const p = <p />;
 
@@ -1033,7 +1039,7 @@ test("#matches() checks if an element matches a :focus selector", (t) => {
 });
 
 test("#matches() checks if an element matches a :focus-within selector", (t) => {
-  const selector = Selector.parse(":focus-within").get();
+  const selector = parse(":focus-within").get();
 
   const button = <button />;
   const p = <p>{button}</p>;
@@ -1044,7 +1050,7 @@ test("#matches() checks if an element matches a :focus-within selector", (t) => 
 });
 
 test("#matches() checks if an element matches a :link selector", (t) => {
-  const selector = Selector.parse(":link").get();
+  const selector = parse(":link").get();
 
   // These elements are links
   for (const element of [
@@ -1069,7 +1075,7 @@ test("#matches() checks if an element matches a :link selector", (t) => {
 });
 
 test("#matches() checks if an element matches a :visited selector", (t) => {
-  const selector = Selector.parse(":visited").get();
+  const selector = parse(":visited").get();
 
   // These elements are links
   for (const element of [
