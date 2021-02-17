@@ -21,6 +21,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Lexer.lex()` now returns `Slice<Token>` as the returned array would always be wrapped in a slice by the caller.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector.parse()` is now an instance of `Parser<Slice<Token>, Selector, string>` to allow it being used in parser combinators.
+
+- [@siteimprove/alfa-media](packages/alfa-media): `Media.parse()` is now an instance of `Parser<Slice<Token>, Media.List, string>` to allow it being used in parser combinators.
+
 ### Added
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
