@@ -1,9 +1,11 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -16,7 +18,8 @@ import { isTabbable } from "../common/predicate/is-tabbable";
 import { Question } from "../common/question";
 
 const { isElement } = Element;
-const { or, xor, test } = Predicate;
+const { isKeyword } = Keyword;
+const { or, xor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
@@ -88,8 +91,28 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
       .some(
         or(
           xor(hasOutline(device), hasOutline(device, withFocus)),
-          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus))
+          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus)),
+          hasDifferentColors(device, withFocus)
         )
       );
+  };
+}
+
+function hasDifferentColors(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentColors(element: Element): boolean {
+    const color1 = Style.from(element, device, context1).computed("color");
+    const color2 = Style.from(element, device, context2).computed("color");
+
+    // keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, we let the user decide if one color is a keyword.
+    if (isKeyword(color1) || isKeyword(color2)) {
+      return false;
+    }
+
+    return !color1.equals(color2);
   };
 }
