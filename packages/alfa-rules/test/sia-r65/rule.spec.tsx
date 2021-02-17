@@ -304,3 +304,35 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     }),
   ]);
 });
+
+test(`evaluate() passes an <a> element that removes the default focus outline
+      and applies a different background color on focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          "background-color": "red",
+        }),
+
+        h.rule.style("a:focus", {
+          outline: "none",
+          textDecoration: "none",
+          "background-color": "blue",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [
+    passed(R65, target, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+    passed(R65, <button />, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+  ]);
+});

@@ -92,7 +92,8 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
         or(
           xor(hasOutline(device), hasOutline(device, withFocus)),
           xor(hasTextDecoration(device), hasTextDecoration(device, withFocus)),
-          hasDifferentColors(device, withFocus)
+          hasDifferentColors(device, withFocus),
+          hasDifferentBackgroundColors(device, withFocus)
         )
       );
   };
@@ -113,6 +114,31 @@ function hasDifferentColors(
       return false;
     }
 
+    return !color1.equals(color2);
+  };
+}
+
+function hasDifferentBackgroundColors(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentBackgroundColors(element: Element): boolean {
+    const color1 = Style.from(element, device, context1).computed(
+      "background-color"
+    );
+    const color2 = Style.from(element, device, context2).computed(
+      "background-color"
+    );
+
+    // Keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, if one color is a keyword we let the user decide.
+    if (isKeyword(color1) || isKeyword(color2)) {
+      return false;
+    }
+
+    // Technically, different solid backgrounds could render as the same color if one is fully transparent
+    // and the parent happens to have the same color… We Assume that this won't happen often…
     return !color1.equals(color2);
   };
 }
