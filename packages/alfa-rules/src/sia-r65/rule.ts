@@ -1,9 +1,11 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -14,12 +16,10 @@ import { hasTextDecoration } from "../common/predicate/has-text-decoration";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 import { Question } from "../common/question";
-import { Style } from "@siteimprove/alfa-style";
-import { Keyword } from "@siteimprove/alfa-css";
-import isKeyword = Keyword.isKeyword;
 
 const { isElement } = Element;
-const { or, xor, test } = Predicate;
+const { isKeyword } = Keyword;
+const { or, xor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
