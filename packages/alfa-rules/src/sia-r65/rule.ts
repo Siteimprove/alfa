@@ -11,12 +11,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasOutline } from "../common/predicate/has-outline";
-import { hasTextDecoration } from "../common/predicate/has-text-decoration";
-import { isTabbable } from "../common/predicate/is-tabbable";
+import {
+  hasBoxShadow,
+  hasOutline,
+  hasTextDecoration,
+  isTabbable,
+} from "../common/predicate";
 
 import { Question } from "../common/question";
-import { hasBoxShadow } from "../common/predicate/has-box-shadow";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;

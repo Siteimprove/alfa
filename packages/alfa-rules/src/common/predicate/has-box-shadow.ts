@@ -1,12 +1,10 @@
 import { Color, Keyword, Shadow } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
-import { Iterable } from "@siteimprove/alfa-iterable";
-
-const { isTransparent } = Color;
 
 /**
  * Known assumptions:
@@ -34,7 +32,7 @@ export function hasBoxShadow(
 
 function isVisibleShadow(shadow: Shadow): boolean {
   // If the shadow color is transparent, it is not visible.
-  if (isTransparent(shadow.color)) {
+  if (Color.isTransparent(shadow.color)) {
     return false;
   }
 
