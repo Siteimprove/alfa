@@ -19,26 +19,28 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   // Collection<T> methods
 
   isEmpty(): this is Sequence<never>;
-  forEach(callback: Callback<T, void, [number]>): void;
-  map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
-  flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
-  reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+  forEach(callback: Callback<T, void, [index: number]>): void;
+  map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
+  flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
+  reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
   apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
-  filter<U extends T>(refinement: Refinement<T, U, [number]>): Sequence<U>;
-  filter(predicate: Predicate<T, [number]>): Sequence<T>;
+  filter<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+  filter(predicate: Predicate<T, [index: number]>): Sequence<T>;
   reject<U extends T>(
-    refinement: Refinement<T, U, [number]>
+    refinement: Refinement<T, U, [index: number]>
   ): Sequence<Exclude<T, U>>;
-  reject(predicate: Predicate<T, [number]>): Sequence<T>;
-  find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
-  find(predicate: Predicate<T, [number]>): Option<T>;
+  reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
+  find(predicate: Predicate<T, [index: number]>): Option<T>;
   includes(value: T): boolean;
-  collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
-  collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
-  some(predicate: Predicate<T, [number]>): boolean;
-  none(predicate: Predicate<T, [number]>): boolean;
-  every(predicate: Predicate<T, [number]>): boolean;
-  count(predicate: Predicate<T, [number]>): number;
+  collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
+  collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
+  some(predicate: Predicate<T, [index: number]>): boolean;
+  none(predicate: Predicate<T, [index: number]>): boolean;
+  every(predicate: Predicate<T, [index: number]>): boolean;
+  count(predicate: Predicate<T, [index: number]>): number;
   distinct(): Sequence<T>;
 
   // Indexed<T> methods
@@ -53,13 +55,20 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
-  takeWhile(predicate: Predicate<T, [number]>): Sequence<T>;
-  takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+  takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLast(count: number): Sequence<T>;
+  takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skip(count: number): Sequence<T>;
-  skipWhile(predicate: Predicate<T, [number]>): Sequence<T>;
-  skipUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+  skipWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  skipUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skipLast(count: number): Sequence<T>;
+  skipLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  skipLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  trim(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T>;
   rest(): Sequence<T>;
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;
@@ -71,7 +80,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
 
   subtract(iterable: Iterable<T>): Sequence<T>;
   intersect(iterable: Iterable<T>): Sequence<T>;
-  groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
+  groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
 
   // Serializable methods

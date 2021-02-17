@@ -21,6 +21,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Lexer.lex()` now returns `Slice<Token>` as the returned array would always be wrapped in a slice by the caller.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector.parse()` is now an instance of `Parser<Slice<Token>, Selector, string>` to allow it being used in parser combinators.
+
+- [@siteimprove/alfa-media](packages/alfa-media): `Media.parse()` is now an instance of `Parser<Slice<Token>, Media.List, string>` to allow it being used in parser combinators.
+
 ### Added
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
@@ -29,7 +37,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.Infallible<I, T, A>` and `Parser.teeErr()` are now available.
 
-- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, and `Array.distinct()` are now available.
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, `Array.distinct()`, and `Array.allocate()` are now available.
 
 - [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
 
@@ -37,9 +45,15 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-either](packages/alfa-either): `Either<L, R>` now provides an implementation of `Hashable`.
 
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#takeLastWhile()`, `Indexed#takeLastUntil()`, `Indexed#skipLastWhile()`, `Indexed#skipLastUntil()`, `Indexed#trim()`, `Indexed#trimLeading()`, and `Indexed#trimTrailing()` are now available and implemented by `List` and `Sequence`.
+
+- [@siteimprove/alfa-slice](packages/alfa-slice): `Slice<T>` now provides an implementation of `Collection.Indexed<T>`
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()` is now available.
+
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `color`, and presence/absence of a box shadow as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#715](../../pull/715))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `background-color` or `color`, and presence/absence of a `box-shadow` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#714](../../pull/714), [#715](../../pull/715))
 
 ### Fixed
 

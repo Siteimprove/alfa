@@ -1,205 +1,196 @@
-import { Assertions, test } from "@siteimprove/alfa-test";
-
-import { Slice } from "@siteimprove/alfa-slice";
+import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
 import { Nth } from "../../src/syntax/nth";
 
-function parse(t: Assertions, input: string, expected: Nth.JSON) {
-  t.deepEqual(
-    Nth.parse(Slice.of(Lexer.lex(input)))
-      .map(([, nth]) => nth)
-      .get()
-      .toJSON(),
-    expected,
-    input
-  );
+function parse(input: string) {
+  return Nth.parse(Lexer.lex(input)).map(([, nth]) => nth.toJSON());
 }
 
 test(".parse() parses an `an+b` expression", (t) => {
-  parse(t, "6n+4", {
+  t.deepEqual(parse("6n+4").get(), {
     step: 6,
     offset: 4,
   });
 });
 
 test(".parse() parses the `even` keyword", (t) => {
-  parse(t, "even", {
+  t.deepEqual(parse("even").get(), {
     step: 2,
     offset: 0,
   });
 });
 
 test(".parse() parses the `odd` keyword", (t) => {
-  parse(t, "odd", {
+  t.deepEqual(parse("odd").get(), {
     step: 2,
     offset: 1,
   });
 });
 
 test(".parse() parses an `an+b` expression without the `an` part", (t) => {
-  parse(t, "4", {
+  t.deepEqual(parse("4").get(), {
     step: 0,
     offset: 4,
   });
 });
 
 test(".parse() parses an `an+b` expression without the `b` part", (t) => {
-  parse(t, "4n", {
+  t.deepEqual(parse("4n").get(), {
     step: 4,
     offset: 0,
   });
 });
 
 test(".parse() parses an unsigned `an` and a signed `b`", (t) => {
-  parse(t, "4n+6", {
+  t.deepEqual(parse("4n+6").get(), {
     step: 4,
     offset: 6,
   });
 
-  parse(t, "4n-6", {
+  t.deepEqual(parse("4n-6").get(), {
     step: 4,
     offset: -6,
   });
 });
 
 test(".parse() parses a signed `an` and a signed `b`", (t) => {
-  parse(t, "+4n+6", {
+  t.deepEqual(parse("+4n+6").get(), {
     step: 4,
     offset: 6,
   });
 
-  parse(t, "+4n-6", {
+  t.deepEqual(parse("+4n-6").get(), {
     step: 4,
     offset: -6,
   });
 
-  parse(t, "-4n+6", {
+  t.deepEqual(parse("-4n+6").get(), {
     step: -4,
     offset: 6,
   });
 
-  parse(t, "-4n-6", {
+  t.deepEqual(parse("-4n-6").get(), {
     step: -4,
     offset: -6,
   });
 });
 
 test(".parse() parses a signed `an` and no `b`", (t) => {
-  parse(t, "+4n", {
+  t.deepEqual(parse("+4n").get(), {
     step: 4,
     offset: 0,
   });
 
-  parse(t, "-4n", {
+  t.deepEqual(parse("-4n").get(), {
     step: -4,
     offset: 0,
   });
 });
 
 test(".parse() parses a signed `b` and no `an`", (t) => {
-  parse(t, "+6", {
+  t.deepEqual(parse("+6").get(), {
     step: 0,
     offset: 6,
   });
 
-  parse(t, "-6", {
+  t.deepEqual(parse("-6").get(), {
     step: 0,
     offset: -6,
   });
 });
 
 test(".parse() parses an `an` with no `a`", (t) => {
-  parse(t, "n", {
+  t.deepEqual(parse("n").get(), {
     step: 1,
     offset: 0,
   });
 
-  parse(t, "-n", {
+  t.deepEqual(parse("-n").get(), {
     step: -1,
     offset: 0,
   });
 });
 
 test(".parse() parses an `an` with no `a` and a `b`", (t) => {
-  parse(t, "n+4", {
+  t.deepEqual(parse("n+4").get(), {
     step: 1,
     offset: 4,
   });
 
-  parse(t, "-n+4", {
+  t.deepEqual(parse("-n+4").get(), {
     step: -1,
     offset: 4,
   });
 
-  parse(t, "n-4", {
+  t.deepEqual(parse("n-4").get(), {
     step: 1,
     offset: -4,
   });
 
-  parse(t, "-n-4", {
+  t.deepEqual(parse("-n-4").get(), {
     step: -1,
     offset: -4,
   });
 });
 
 test(".parse() accepts whitespace around the `b` sign when the `an` part is present", (t) => {
-  parse(t, "4n + 6", {
+  t.deepEqual(parse("4n + 6").get(), {
     step: 4,
     offset: 6,
   });
 
-  parse(t, "4n+ 6", {
+  t.deepEqual(parse("4n+ 6").get(), {
     step: 4,
     offset: 6,
   });
 
-  parse(t, "4n +6", {
+  t.deepEqual(parse("4n +6").get(), {
     step: 4,
     offset: 6,
   });
 
-  parse(t, "4n - 6", {
-    step: 4,
-    offset: -6,
-  });
-
-  parse(t, "4n- 6", {
+  t.deepEqual(parse("4n - 6").get(), {
     step: 4,
     offset: -6,
   });
 
-  parse(t, "4n -6", {
+  t.deepEqual(parse("4n- 6").get(), {
     step: 4,
     offset: -6,
   });
 
-  parse(t, "n + 6", {
+  t.deepEqual(parse("4n -6").get(), {
+    step: 4,
+    offset: -6,
+  });
+
+  t.deepEqual(parse("n + 6").get(), {
     step: 1,
     offset: 6,
   });
 
-  parse(t, "n+ 6", {
+  t.deepEqual(parse("n+ 6").get(), {
     step: 1,
     offset: 6,
   });
 
-  parse(t, "n +6", {
+  t.deepEqual(parse("n +6").get(), {
     step: 1,
     offset: 6,
   });
 
-  parse(t, "n - 6", {
+  t.deepEqual(parse("n - 6").get(), {
     step: 1,
     offset: -6,
   });
 
-  parse(t, "n- 6", {
+  t.deepEqual(parse("n- 6").get(), {
     step: 1,
     offset: -6,
   });
 
-  parse(t, "n -6", {
+  t.deepEqual(parse("n -6").get(), {
     step: 1,
     offset: -6,
   });

@@ -1,28 +1,16 @@
-import { Assertions, test } from "@siteimprove/alfa-test";
-
-import { Slice } from "@siteimprove/alfa-slice";
+import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
 import { Position } from "../../src/value/position";
 
-function parse(
-  t: Assertions,
-  input: string,
-  expected: Position.JSON,
-  legacySyntax: boolean = false
-) {
-  t.deepEqual(
-    Position.parse(legacySyntax)(Slice.of(Lexer.lex(input)))
-      .map(([, position]) => position)
-      .get()
-      .toJSON(),
-    expected,
-    input
+function parse(input: string, legacySyntax: boolean = false) {
+  return Position.parse(legacySyntax)(Lexer.lex(input)).map(([, position]) =>
+    position.toJSON()
   );
 }
 
-test("parse() parses 1-token positions", (t) => {
-  parse(t, "center", {
+test(".parse() parses 1-token positions", (t) => {
+  t.deepEqual(parse("center").get(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -34,7 +22,7 @@ test("parse() parses 1-token positions", (t) => {
     },
   });
 
-  parse(t, "right", {
+  t.deepEqual(parse("right").get(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -50,7 +38,7 @@ test("parse() parses 1-token positions", (t) => {
     },
   });
 
-  parse(t, "top", {
+  t.deepEqual(parse("top").get(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -66,7 +54,7 @@ test("parse() parses 1-token positions", (t) => {
     },
   });
 
-  parse(t, "10px", {
+  t.deepEqual(parse("10px").get(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -80,7 +68,7 @@ test("parse() parses 1-token positions", (t) => {
   });
 
   // "10px" is not consumed
-  parse(t, "top 10px", {
+  t.deepEqual(parse("top 10px").get(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -97,7 +85,7 @@ test("parse() parses 1-token positions", (t) => {
   });
 
   // "left" is not consumed
-  parse(t, "10px left", {
+  t.deepEqual(parse("10px left").get(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -111,8 +99,8 @@ test("parse() parses 1-token positions", (t) => {
   });
 });
 
-test("parse() parses 2-token positions", (t) => {
-  parse(t, "left bottom", {
+test(".parse() parses 2-token positions", (t) => {
+  t.deepEqual(parse("left bottom").get(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -132,7 +120,7 @@ test("parse() parses 2-token positions", (t) => {
     },
   });
 
-  parse(t, "bottom left", {
+  t.deepEqual(parse("bottom left").get(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -152,7 +140,7 @@ test("parse() parses 2-token positions", (t) => {
     },
   });
 
-  parse(t, "left center", {
+  t.deepEqual(parse("left center").get(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -168,7 +156,7 @@ test("parse() parses 2-token positions", (t) => {
     },
   });
 
-  parse(t, "center left", {
+  t.deepEqual(parse("center left").get(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -184,7 +172,7 @@ test("parse() parses 2-token positions", (t) => {
     },
   });
 
-  parse(t, "left 10px", {
+  t.deepEqual(parse("left 10px").get(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -201,7 +189,7 @@ test("parse() parses 2-token positions", (t) => {
     },
   });
 
-  parse(t, "10px top", {
+  t.deepEqual(parse("10px top").get(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -218,7 +206,7 @@ test("parse() parses 2-token positions", (t) => {
     },
   });
 
-  parse(t, "10px 20%", {
+  t.deepEqual(parse("10px 20%").get(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -232,53 +220,43 @@ test("parse() parses 2-token positions", (t) => {
   });
 
   // "20%" is not consumed
-  parse(
-    t,
-    "10px top 20%",
-    {
-      type: "position",
-      horizontal: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      vertical: {
-        offset: null,
-        side: {
-          type: "keyword",
-          value: "top",
-        },
-        type: "side",
-      },
+  t.deepEqual(parse("10px top 20%", true).get(), {
+    type: "position",
+    horizontal: {
+      type: "length",
+      unit: "px",
+      value: 10,
     },
-    true
-  );
+    vertical: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
 
   // "20%" is not consumed
-  parse(
-    t,
-    "left 10px 20%",
-    {
-      type: "position",
-      horizontal: {
-        offset: null,
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+  t.deepEqual(parse("left 10px 20%", true).get(), {
+    type: "position",
+    horizontal: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "left",
       },
-      vertical: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
+      type: "side",
     },
-    true
-  );
+    vertical: {
+      type: "length",
+      unit: "px",
+      value: 10,
+    },
+  });
 
   // "10px" not consumed
-  parse(t, "left top 10px", {
+  t.deepEqual(parse("left top 10px").get(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -299,7 +277,7 @@ test("parse() parses 2-token positions", (t) => {
   });
 
   // "left" not consumed
-  parse(t, "top 10px left", {
+  t.deepEqual(parse("top 10px left").get(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -316,7 +294,7 @@ test("parse() parses 2-token positions", (t) => {
   });
 
   // "10px" not consumed
-  parse(t, "top left 10px", {
+  t.deepEqual(parse("top left 10px").get(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -337,7 +315,7 @@ test("parse() parses 2-token positions", (t) => {
   });
 
   // "right 10px" not consumed
-  parse(t, "center 20% right 10px", {
+  t.deepEqual(parse("center 20% right 10px").get(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -350,122 +328,102 @@ test("parse() parses 2-token positions", (t) => {
   });
 });
 
-test("parse() parses 3-token positions", (t) => {
-  parse(
-    t,
-    "left 10px center",
-    {
-      type: "position",
-      horizontal: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+test(".parse() parses 3-token positions", (t) => {
+  t.deepEqual(parse("left 10px center", true).get(), {
+    type: "position",
+    horizontal: {
+      offset: {
+        type: "length",
+        unit: "px",
+        value: 10,
       },
-      vertical: {
+      side: {
         type: "keyword",
-        value: "center",
+        value: "left",
       },
+      type: "side",
     },
-    true
-  );
+    vertical: {
+      type: "keyword",
+      value: "center",
+    },
+  });
 
-  parse(
-    t,
-    "left top 10px",
-    {
-      type: "position",
-      horizontal: {
-        offset: null,
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+  t.deepEqual(parse("left top 10px", true).get(), {
+    type: "position",
+    horizontal: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "left",
       },
-      vertical: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "top",
-        },
-        type: "side",
-      },
+      type: "side",
     },
-    true
-  );
+    vertical: {
+      offset: {
+        type: "length",
+        unit: "px",
+        value: 10,
+      },
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
 
-  parse(
-    t,
-    "top 10px left",
-    {
-      type: "position",
-      horizontal: {
-        offset: null,
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+  t.deepEqual(parse("top 10px left", true).get(), {
+    type: "position",
+    horizontal: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "left",
       },
-      vertical: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "top",
-        },
-        type: "side",
-      },
+      type: "side",
     },
-    true
-  );
+    vertical: {
+      offset: {
+        type: "length",
+        unit: "px",
+        value: 10,
+      },
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
 
-  parse(
-    t,
-    "top left 10px",
-    {
-      type: "position",
-      horizontal: {
-        offset: {
-          type: "length",
-          unit: "px",
-          value: 10,
-        },
-        side: {
-          type: "keyword",
-          value: "left",
-        },
-        type: "side",
+  t.deepEqual(parse("top left 10px", true).get(), {
+    type: "position",
+    horizontal: {
+      offset: {
+        type: "length",
+        unit: "px",
+        value: 10,
       },
-      vertical: {
-        offset: null,
-        side: {
-          type: "keyword",
-          value: "top",
-        },
-        type: "side",
+      side: {
+        type: "keyword",
+        value: "left",
       },
+      type: "side",
     },
-    true
-  );
+    vertical: {
+      offset: null,
+      side: {
+        type: "keyword",
+        value: "top",
+      },
+      type: "side",
+    },
+  });
 });
 
-test("parse() parses 4-token positions", (t) => {
-  parse(t, "right 10px bottom 20%", {
+test(".parse() parses 4-token positions", (t) => {
+  t.deepEqual(parse("right 10px bottom 20%").get(), {
     type: "position",
     horizontal: {
       offset: {
@@ -492,7 +450,7 @@ test("parse() parses 4-token positions", (t) => {
     },
   });
 
-  parse(t, "bottom 20% right 10px", {
+  t.deepEqual(parse("bottom 20% right 10px").get(), {
     type: "position",
     horizontal: {
       offset: {
