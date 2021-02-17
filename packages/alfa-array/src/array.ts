@@ -37,6 +37,10 @@ export namespace Array {
     return [];
   }
 
+  export function allocate<T>(capacity: number): Array<T> {
+    return new global.Array<T>(capacity);
+  }
+
   /**
    * @remarks
    * Unlike the built-in function of the same name, this function will pass
