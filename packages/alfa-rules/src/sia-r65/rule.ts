@@ -111,12 +111,14 @@ function hasDifferentBackgroundColors(
       "background-color"
     );
 
-    // keywords can get tricky and may ultimately yield the same used value,
-    // to keep on the safe side, we let the user decide if one color is a keyword.
+    // Keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, if one color is a keyword we let the user decide.
     if (isKeyword(color1) || isKeyword(color2)) {
       return false;
     }
 
+    // Technically, different solid backgrounds could render as the same color if one is fully transparent
+    // and the parent happens to have the same color… We Assume that this won't happen often…
     return !color1.equals(color2);
   };
 }
