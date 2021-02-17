@@ -39,7 +39,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `color` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `color`, and presence/absence of a box shadow as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#715](../../pull/715))
 
 ### Fixed
 
