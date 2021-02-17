@@ -14,6 +14,9 @@ import { hasTextDecoration } from "../common/predicate/has-text-decoration";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 import { Question } from "../common/question";
+import { Style } from "@siteimprove/alfa-style";
+import { Keyword } from "@siteimprove/alfa-css";
+import isKeyword = Keyword.isKeyword;
 
 const { isElement } = Element;
 const { or, xor, test } = Predicate;
@@ -88,8 +91,28 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
       .some(
         or(
           xor(hasOutline(device), hasOutline(device, withFocus)),
-          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus))
+          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus)),
+          hasDifferentColors(device, withFocus)
         )
       );
+  };
+}
+
+function hasDifferentColors(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentColors(element: Element): boolean {
+    const color1 = Style.from(element, device, context1).computed("color");
+    const color2 = Style.from(element, device, context2).computed("color");
+
+    // keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, we let the user decide if one color is a keyword.
+    if (isKeyword(color1) || isKeyword(color2)) {
+      return false;
+    }
+
+    return !color1.equals(color2);
   };
 }
