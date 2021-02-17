@@ -37,6 +37,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-either](packages/alfa-either): `Either<L, R>` now provides an implementation of `Hashable`.
 
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#takeLastWhile()`, `Indexed#takeLastUntil()`, `Indexed#skipLastWhile()`, `Indexed#skipLastUntil()`, `Indexed#trim()`, `Indexed#trimLeading()`, and `Indexed#trimTrailing()` are now available and implemented by `List` and `Sequence`.
+
 ### Changed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `color` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713))

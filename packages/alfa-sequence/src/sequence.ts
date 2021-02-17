@@ -58,10 +58,17 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLast(count: number): Sequence<T>;
+  takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skip(count: number): Sequence<T>;
   skipWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skipUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skipLast(count: number): Sequence<T>;
+  skipLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  skipLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  trim(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T>;
+  trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T>;
   rest(): Sequence<T>;
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;

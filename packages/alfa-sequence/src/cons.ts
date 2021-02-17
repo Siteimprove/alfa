@@ -479,6 +479,14 @@ export class Cons<T> implements Sequence<T> {
     return this.skip(this.size - count);
   }
 
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.reverse().takeWhile(predicate).reverse();
+  }
+
+  public takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.takeLastWhile(not(predicate));
+  }
+
   public skip(count: number): Sequence<T> {
     let next: Cons<T> = this;
 
@@ -518,6 +526,26 @@ export class Cons<T> implements Sequence<T> {
 
   public skipLast(count: number): Sequence<T> {
     return this.take(this.size - count);
+  }
+
+  public skipLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.reverse().skipWhile(predicate).reverse();
+  }
+
+  public skipLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.skipLastWhile(not(predicate));
+  }
+
+  public trim(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.trimLeading(predicate).trimTrailing(predicate);
+  }
+
+  public trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.skipWhile(predicate);
+  }
+
+  public trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.skipLastWhile(predicate);
   }
 
   public rest(): Sequence<T> {

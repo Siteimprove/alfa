@@ -286,6 +286,14 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.takeLast(this, count));
   }
 
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T> {
+    return List.from(Iterable.takeLastWhile(this, predicate));
+  }
+
+  public takeLastUntil(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.takeLastWhile(not(predicate));
+  }
+
   public skip(count: number): List<T> {
     return List.from(Iterable.skip(this, count));
   }
@@ -306,6 +314,26 @@ export class List<T> implements Collection.Indexed<T> {
     }
 
     return list;
+  }
+
+  public skipLastWhile(predicate: Predicate<T, [index: number]>): List<T> {
+    return List.from(Iterable.skipLastWhile(this, predicate));
+  }
+
+  public skipLastUntil(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.skipLastWhile(not(predicate));
+  }
+
+  public trim(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.trimLeading(predicate).trimTrailing(predicate);
+  }
+
+  public trimLeading(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.skipWhile(predicate);
+  }
+
+  public trimTrailing(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.skipLastWhile(predicate);
   }
 
   public rest(): List<T> {

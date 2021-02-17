@@ -177,10 +177,17 @@ export namespace Collection {
     takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLast(count: number): Indexed<T>;
+    takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
+    takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     skip(count: number): Indexed<T>;
     skipWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     skipUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     skipLast(count: number): Indexed<T>;
+    skipLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
+    skipLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
+    trim(predicate: Predicate<T, [index: number]>): Indexed<T>;
+    trimLeading(predicate: Predicate<T, [index: number]>): Indexed<T>;
+    trimTrailing(predicate: Predicate<T, [index: number]>): Indexed<T>;
     rest(): Indexed<T>;
     slice(start: number, end?: number): Indexed<T>;
     reverse(): Indexed<T>;
