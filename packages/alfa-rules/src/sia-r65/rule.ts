@@ -17,8 +17,8 @@ import { isTabbable } from "../common/predicate/is-tabbable";
 
 import { Question } from "../common/question";
 
-const { isKeyword } = Keyword;
 const { isElement } = Element;
+const { isKeyword } = Keyword;
 const { or, xor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -92,9 +92,29 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
         or(
           xor(hasOutline(device), hasOutline(device, withFocus)),
           xor(hasTextDecoration(device), hasTextDecoration(device, withFocus)),
+          hasDifferentColors(device, withFocus),
           hasDifferentBackgroundColors(device, withFocus)
         )
       );
+  };
+}
+
+function hasDifferentColors(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentColors(element: Element): boolean {
+    const color1 = Style.from(element, device, context1).computed("color");
+    const color2 = Style.from(element, device, context2).computed("color");
+
+    // keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, we let the user decide if one color is a keyword.
+    if (isKeyword(color1) || isKeyword(color2)) {
+      return false;
+    }
+
+    return !color1.equals(color2);
   };
 }
 

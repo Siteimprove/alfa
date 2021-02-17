@@ -7,7 +7,7 @@ All notable changes to Alfa will be documented in this file. The format is based
 
 The changelog includes a single entry for every released version of Alfa. Each entry is identified by two pieces of information: The version number and the date, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format, of the release. The very first entry in the changelog, labelled `[Unreleased]`, includes all upcoming changes for inclusion in the next release.
 
-Each entry may begin with an general description of the changes introduced in the release and must then list each notable change as separate list items. For each item, the following should be included:
+Each entry may begin with a general description of the changes introduced in the release and must then list each notable change as separate list items. For each item, the following should be included:
 
 - The name of the package affected, as the first point in the item: `[@siteimprove/alfa-<package>](packages/alfa-<package>): <description>`. If more than one package is affected, the package names must be separated by a comma.
 
@@ -39,7 +39,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `background-color` as a valid focus indicator. ([#658](../../issues/658), [#714](../../pull/714))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `background-color` and `color` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#714](../../pull/714))
 
 ### Fixed
 
