@@ -325,6 +325,102 @@ test(`.from() determines the name of an <a> element with a <figure> child elemen
   ]);
 });
 
+test(`.from() determines the name of an <a> element with text in its subtree`, (t) => {
+  const text = h.text("Hello world");
+  const a = (
+    <a href="#" title="Content">
+      {text}
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [Name.Source.data(text)])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <a> element with text in its subtree, when the source is nested`, (t) => {
+  const text = h.text("Hello world");
+  const span = <span>{text}</span>;
+
+  const a = (
+    <a href="#" title="Content">
+      {span}
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world", [
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                span,
+                Name.of("Hello world", [Name.Source.data(text)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
+test(`.from() determines the name of an <a> element with text in its subtree, when there are multiple nested sources`, (t) => {
+  const text1 = h.text("Hello world");
+  const text2 = h.text("Hello world");
+
+  const span1 = <span>{text1}</span>;
+  const span2 = <span>{text2}</span>;
+
+  const a = (
+    <a href="#" title="Content">
+      {span1}
+      {span2}
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toArray(), [
+    [
+      Option.of(
+        Name.of("Hello world Hello world", [
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                span1,
+                Name.of("Hello world", [Name.Source.data(text1)])
+              ),
+            ])
+          ),
+          Name.Source.descendant(
+            a,
+            Name.of("Hello world", [
+              Name.Source.descendant(
+                span2,
+                Name.of("Hello world", [Name.Source.data(text2)])
+              ),
+            ])
+          ),
+        ])
+      ),
+      [],
+    ],
+  ]);
+});
+
 test(`.from() determines the name of an <area> element with an alt attribute`, (t) => {
   const area = <area alt="Hello world" />;
 
