@@ -118,6 +118,14 @@ function svg(
   );
 }
 
+const nameFromDescendants = (
+  element: Element,
+  device: Device,
+  state: Name.State
+) => {
+  return Name.fromDescendants(element, device, state.visit(element));
+};
+
 const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
   for (const name of attributes) {
     for (const attribute of element.attribute(name)) {
