@@ -216,6 +216,13 @@ import BackgroundRepeat from "./property/background-repeat";
 import BackgroundRepeatX from "./property/background-repeat-x";
 import BackgroundRepeatY from "./property/background-repeat-y";
 import BackgroundSize from "./property/background-size";
+import BorderBlockEndColor from "./property/border-block-end-color";
+import BorderBlockEndStyle from "./property/border-block-end-style";
+import BorderBlockEndWidth from "./property/border-block-end-width";
+import BorderBlockStartColor from "./property/border-block-start-color";
+import BorderBlockStartStyle from "./property/border-block-start-style";
+import BorderBlockStartWidth from "./property/border-block-start-width";
+import BorderBottomColor from "./property/border-bottom-color";
 import Bottom from "./property/bottom";
 import BoxShadow from "./property/box-shadow";
 import Clip from "./property/clip";
@@ -278,6 +285,13 @@ const Longhands = {
   "background-repeat-x": BackgroundRepeatX,
   "background-repeat-y": BackgroundRepeatY,
   "background-size": BackgroundSize,
+  "border-block-end-color": BorderBlockEndColor,
+  "border-block-end-style": BorderBlockEndStyle,
+  "border-block-end-width": BorderBlockEndWidth,
+  "border-block-start-color": BorderBlockStartColor,
+  "border-block-start-style": BorderBlockStartStyle,
+  "border-block-start-width": BorderBlockStartWidth,
+  "border-bottom-color": BorderBottomColor,
   bottom: Bottom,
   "box-shadow": BoxShadow,
   clip: Clip,
