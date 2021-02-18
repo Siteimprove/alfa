@@ -241,8 +241,11 @@ type Features = {
 
 const Features: Features = {
   [Namespace.HTML]: {
-    a: html((element) =>
-      element.attribute("href").isSome() ? Option.of(Role.of("link")) : None
+    a: html(
+      (element) =>
+        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+      () => [],
+      (element, device, state) => nameFromDescendants(element, device, state)
     ),
 
     area: html(
