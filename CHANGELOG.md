@@ -67,7 +67,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-url](packages/alfa-url): `URL#toString()` now correctly serializes URLs that cannot be used as base URLs. ([#459](../../issues/459), [#676](../../pull/676))
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): Accessible name computation for `<a>` elements now gives priority to the subtree over `title`. ([#669](../../issues/669), [#716](../../pull/716))
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now gives priority to the subtree over the `title` attribute for `<a>` elements. ([#669](../../issues/669), [#716](../../pull/716))
 
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 
