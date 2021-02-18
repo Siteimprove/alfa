@@ -137,6 +137,14 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
+  public takeLastWhile(): Nil {
+    return this;
+  }
+
+  public takeLastUntil(): Nil {
+    return this;
+  }
+
   public skip(): Nil {
     return this;
   }
@@ -150,6 +158,26 @@ export const Nil: Nil = new (class Nil {
   }
 
   public skipLast(): Nil {
+    return this;
+  }
+
+  public skipLastWhile(): Nil {
+    return this;
+  }
+
+  public skipLastUntil(): Nil {
+    return this;
+  }
+
+  public trim(): Nil {
+    return this;
+  }
+
+  public trimLeading(): Nil {
+    return this;
+  }
+
+  public trimTrailing(): Nil {
     return this;
   }
 

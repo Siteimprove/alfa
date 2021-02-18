@@ -3,11 +3,11 @@ import { Cascade } from "@siteimprove/alfa-cascade";
 import { Lexer, Keyword, Component, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
-import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -17,7 +17,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { takeUntil, map, either, option, pair, right, left, eof } = Parser;
+const { takeUntil, map, option, pair, right, left } = Parser;
 
 type Name = Property.Name;
 
@@ -27,11 +27,9 @@ export class Style implements Serializable {
     device: Device,
     parent: Option<Style> = None
   ): Style {
-    declarations = Array.from(declarations);
-
     // First pass: Resolve cascading variables which will be used in the second
     // pass.
-    const variables = new Map<string, Value<Array<Token>>>();
+    const variables = new Map<string, Value<Slice<Token>>>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
@@ -43,9 +41,10 @@ export class Style implements Serializable {
           previous === undefined ||
           shouldOverride(previous.source, declaration)
         ) {
-          const tokens = Lexer.lex(value);
-
-          variables.set(name, Value.of(tokens, Option.of(declaration)));
+          variables.set(
+            name,
+            Value.of(Lexer.lex(value), Option.of(declaration))
+          );
         }
       }
     }
@@ -53,16 +52,18 @@ export class Style implements Serializable {
     // Pre-substitute the resolved cascading variables from above, replacing
     // any `var()` function references with their substituted tokens.
     for (const [name, variable] of variables) {
-      const value = substitute(variable.value, variables, parent);
+      const substitution = substitute(variable.value, variables, parent);
 
       // If the replaced value is invalid, remove the variable entirely.
-      if (value.isNone()) {
+      if (substitution.isNone()) {
         variables.delete(name);
       }
 
       // Otherwise, use the replaced value as the new value of the variable.
       else {
-        variables.set(name, Value.of(value.get().get(), variable.source));
+        const [tokens] = substitution.get();
+
+        variables.set(name, Value.of(tokens, variable.source));
       }
     }
 
@@ -80,10 +81,8 @@ export class Style implements Serializable {
           previous === undefined ||
           shouldOverride(previous.source, declaration)
         ) {
-          const property = Property.get(name);
-
           for (const result of parseLonghand(
-            property,
+            Property.get(name),
             value,
             variables,
             parent
@@ -91,13 +90,9 @@ export class Style implements Serializable {
             properties.set(name, Value.of(result, Option.of(declaration)));
           }
         }
-      }
-
-      if (Property.Shorthand.isName(name)) {
-        const shorthand = Property.Shorthand.get(name);
-
+      } else if (Property.Shorthand.isName(name)) {
         for (const result of parseShorthand(
-          shorthand,
+          Property.Shorthand.get(name),
           value,
           variables,
           parent
@@ -132,7 +127,7 @@ export class Style implements Serializable {
 
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
-  private readonly _variables: ReadonlyMap<string, Value<Array<Token>>>;
+  private readonly _variables: ReadonlyMap<string, Value<Slice<Token>>>;
   private readonly _properties: ReadonlyMap<Name, Value>;
 
   // We cache computed properties but not specified properties as these are
@@ -142,7 +137,7 @@ export class Style implements Serializable {
   private constructor(
     device: Device,
     parent: Option<Style>,
-    variables: ReadonlyMap<string, Value<Array<Token>>>,
+    variables: ReadonlyMap<string, Value<Slice<Token>>>,
     properties: ReadonlyMap<Name, Value>
   ) {
     this._device = device;
@@ -159,7 +154,7 @@ export class Style implements Serializable {
     return this._parent.getOrElse(() => Style._empty);
   }
 
-  public get variables(): ReadonlyMap<string, Value<Array<Token>>> {
+  public get variables(): ReadonlyMap<string, Value<Slice<Token>>> {
     return this._variables;
   }
 
@@ -184,8 +179,6 @@ export class Style implements Serializable {
 
     return this.cascaded(name)
       .map((cascaded) => {
-        // If we have a cascade value, act upon it.
-        // In these cases, `initial`/`unset` have been explicitly set and their source is needed.
         const { value, source } = cascaded;
 
         if (Keyword.isKeyword(value)) {
@@ -196,22 +189,19 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
-              return this.inherited(name);
+              return this.inherited(name, source);
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
               return inherits
-                ? this.inherited(name)
+                ? this.inherited(name, source)
                 : this.initial(name, source);
           }
         }
 
-        return Value.of(value, source);
+        return cascaded as Value<Style.Specified<N>>;
       })
       .getOrElse(() => {
-        // If we don't have a cascade value, take the initial or parent value depending whether
-        // this is an inherited property.
-        // In these case, `initial` is a fallback value and has no source per se.
         if (inherits === false) {
           return this.initial(name);
         }
@@ -228,7 +218,10 @@ export class Style implements Serializable {
     }
 
     return this._computed.get(name, () =>
-      Property.get(name).compute(this)
+      Property.get(name).compute(
+        this.specified(name) as Value<Style.Specified<Name>>,
+        this
+      )
     ) as Value<Style.Computed<N>>;
   }
 
@@ -239,8 +232,17 @@ export class Style implements Serializable {
     return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
-  public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
-    return this.parent.computed(name);
+  public inherited<N extends Name>(
+    name: N,
+    source: Option<Declaration> = None
+  ): Value<Style.Inherited<N>> {
+    const inherited = this.parent.computed(name);
+
+    if (source.isSome()) {
+      return Value.of(inherited.value, source);
+    }
+
+    return inherited;
   }
 
   public toJSON(): Style.JSON {
@@ -332,27 +334,23 @@ function shouldOverride(
 function parseLonghand<N extends Property.Name>(
   property: Property.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>
 ) {
-  const tokens = substitute(Lexer.lex(value), variables, parent);
+  const substitution = substitute(Lexer.lex(value), variables, parent);
 
-  if (tokens.isNone()) {
-    return Option.of(Keyword.of("unset"));
+  if (substitution.isNone()) {
+    return Result.of(Keyword.of("unset"));
   }
 
-  const result = left(
-    either(
-      Keyword.parse("initial", "inherit", "unset"),
-      property.parse as Property.Parser
-    ),
-    eof(() => "Expected end of input")
-  )(Slice.of(trim(tokens.get().get())))
-    .map(([, value]) => value)
-    .ok();
+  const [tokens, substituted] = substitution.get();
 
-  if (result.isNone() && tokens.get().isRight()) {
-    return Option.of(Keyword.of("unset"));
+  const parse = property.parse as Property.Parser;
+
+  const result = parse(trim(tokens)).map(([, value]) => value);
+
+  if (result.isErr() && substituted) {
+    return Result.of(Keyword.of("unset"));
   }
 
   return result;
@@ -361,13 +359,13 @@ function parseLonghand<N extends Property.Name>(
 function parseShorthand<N extends Property.Shorthand.Name>(
   shorthand: Property.Shorthand.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>
 ) {
-  const tokens = substitute(Lexer.lex(value), variables, parent);
+  const substitution = substitute(Lexer.lex(value), variables, parent);
 
-  if (tokens.isNone()) {
-    return Option.of(
+  if (substitution.isNone()) {
+    return Result.of(
       Iterable.map(
         shorthand.properties,
         (property) => [property, Keyword.of("unset")] as const
@@ -375,27 +373,23 @@ function parseShorthand<N extends Property.Shorthand.Name>(
     );
   }
 
-  const result = left(
-    either(
-      Keyword.parse("initial", "inherit", "unset"),
-      shorthand.parse as Property.Shorthand.Parser
-    ),
-    eof(() => "Expected end of input")
-  )(Slice.of(trim(tokens.get().get())))
-    .map(([, value]) => {
-      if (Keyword.isKeyword(value)) {
-        return Iterable.map(
-          shorthand.properties,
-          (property) => [property, value] as const
-        );
-      }
+  const [tokens, substituted] = substitution.get();
 
-      return value;
-    })
-    .ok();
+  const parse = shorthand.parse as Property.Shorthand.Parser;
 
-  if (result.isNone() && tokens.get().isRight()) {
-    return Option.of(
+  const result = parse(trim(tokens)).map(([, value]) => {
+    if (Keyword.isKeyword(value)) {
+      return Iterable.map(
+        shorthand.properties,
+        (property) => [property, value] as const
+      );
+    }
+
+    return value;
+  });
+
+  if (result.isErr() && substituted) {
+    return Result.of(
       Iterable.map(
         shorthand.properties,
         (property) => [property, Keyword.of("unset")] as const
@@ -405,6 +399,8 @@ function parseShorthand<N extends Property.Shorthand.Name>(
 
   return result;
 }
+
+const parseInitial = Keyword.parse("initial");
 
 /**
  * Resolve a cascading variable with an optional fallback. The value of the
@@ -418,11 +414,11 @@ function parseShorthand<N extends Property.Shorthand.Name>(
  */
 function resolve(
   name: string,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>,
-  fallback: Option<Array<Token>> = None,
+  fallback: Option<Slice<Token>> = None,
   visited = Set.empty<string>()
-): Option<Array<Token>> {
+): Option<Slice<Token>> {
   return (
     Option.from(variables.get(name))
       .map((value) =>
@@ -430,9 +426,7 @@ function resolve(
         // value. We therefore reject the value of the variable if it's the
         // keyword `initial`.
         // https://drafts.csswg.org/css-variables/#guaranteed-invalid
-        Option.of(value.value).reject((tokens) =>
-          Keyword.parse("initial")(Slice.of(tokens)).isOk()
-        )
+        Option.of(value.value).reject((tokens) => parseInitial(tokens).isOk())
       )
 
       // If the value of the variable is invalid, as indicated by it being
@@ -443,12 +437,9 @@ function resolve(
           // Substitute any additional cascading variables within the fallback
           // value.
           .map((tokens) =>
-            substitute(
-              tokens,
-              variables,
-              parent,
-              visited.add(name)
-            ).map((substituted) => substituted.get())
+            substitute(tokens, variables, parent, visited.add(name)).map(
+              ([tokens]) => tokens
+            )
           )
       )
 
@@ -460,9 +451,7 @@ function resolve(
             parent.parent === Style.empty() ? None : Option.of(parent.parent);
 
           return resolve(name, variables, grandparent).flatMap((tokens) =>
-            substitute(tokens, variables, grandparent).map((substituted) =>
-              substituted.get()
-            )
+            substitute(tokens, variables, grandparent).map(([tokens]) => tokens)
           );
         })
       )
@@ -478,10 +467,8 @@ function resolve(
 const substitutionLimit = 1024;
 
 /**
- * Substitute `var()` functions in an array of tokens. If any tokens are
- * substituted, the result will be wrapped in `Right`, otherwise `Left`. If
- * any syntactically invalid `var()` functions are encountered, `None` is
- * returned.
+ * Substitute `var()` functions in an array of tokens. If any syntactically
+ * invalid `var()` functions are encountered, `null` is returned.
  *
  * @see https://drafts.csswg.org/css-variables/#substitute-a-var
  *
@@ -492,44 +479,45 @@ const substitutionLimit = 1024;
  * same element.
  */
 function substitute(
-  tokens: Array<Token>,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  tokens: Slice<Token>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>,
   visited = Set.empty<string>()
-): Option<Either<Array<Token>>> {
+): Option<[tokens: Slice<Token>, substituted: boolean]> {
   const replaced: Array<Token> = [];
 
-  let offset = 0;
   let substituted = false;
 
-  while (offset < tokens.length) {
-    const next = tokens[offset];
+  while (tokens.length > 0) {
+    const next = tokens.array[tokens.offset];
 
     if (next.type === "function" && next.value === "var") {
-      const result = parseVar(Slice.of(tokens, offset));
+      const result = parseVar(tokens);
 
       if (result.isErr()) {
         return None;
       }
 
-      const [remainder, [name, fallback]] = result.get();
+      let name: string;
+      let fallback: Option<Slice<Token>>;
 
-      if (visited.has(name.value)) {
+      [tokens, [name, fallback]] = result.get();
+
+      if (visited.has(name)) {
         return None;
       }
 
-      const value = resolve(name.value, variables, parent, fallback, visited);
+      const value = resolve(name, variables, parent, fallback, visited);
 
       if (value.isNone()) {
         return None;
       }
 
       replaced.push(...value.get());
-      offset = remainder.offset;
       substituted = true;
     } else {
       replaced.push(next);
-      offset++;
+      tokens = tokens.slice(1);
     }
   }
 
@@ -539,21 +527,11 @@ function substitute(
     return None;
   }
 
-  return Option.of(
-    substituted ? Either.right(replaced) : Either.left(replaced)
-  );
+  return Option.of([Slice.of(replaced), substituted]);
 }
 
-function trim(tokens: Array<Token>): Array<Token> {
-  while (tokens.length > 0 && Token.isWhitespace(tokens[0])) {
-    tokens.splice(0, 1);
-  }
-
-  while (tokens.length > 0 && Token.isWhitespace(tokens[tokens.length - 1])) {
-    tokens.splice(tokens.length - 1, 1);
-  }
-
-  return tokens;
+function trim(tokens: Slice<Token>): Slice<Token> {
+  return tokens.trim(Token.isWhitespace);
 }
 
 /**
@@ -562,14 +540,17 @@ function trim(tokens: Array<Token>): Array<Token> {
 const parseVar = right(
   Token.parseFunction("var"),
   pair(
-    Token.parseIdent((ident) => ident.value.startsWith("--")),
+    map(
+      Token.parseIdent((ident) => ident.value.startsWith("--")),
+      (ident) => ident.value
+    ),
     left(
       option(
         right(
           pair(Token.parseComma, option(Token.parseWhitespace)),
           map(
             takeUntil(Component.consume, Token.parseCloseParenthesis),
-            (components) => [...Iterable.flatten(components)]
+            (components) => Slice.of([...Iterable.flatten(components)])
           )
         )
       ),

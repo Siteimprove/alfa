@@ -68,7 +68,7 @@ export namespace Token {
     public abstract toJSON(): Token.JSON;
   }
 
-  export namespace Token {
+  namespace Token {
     export interface JSON {
       [key: string]: json.JSON;
       type: string;
@@ -116,11 +116,13 @@ export namespace Token {
       type: "ident";
       value: string;
     }
+
+    export function isIdent(value: unknown): value is Ident {
+      return value instanceof Ident;
+    }
   }
 
-  export function isIdent(value: unknown): value is Ident {
-    return value instanceof Ident;
-  }
+  export const { of: ident, isIdent } = Ident;
 
   export function parseIdent(query: string | Predicate<Ident> = () => true) {
     let predicate: Predicate<Ident>;
@@ -181,11 +183,12 @@ export namespace Token {
       type: "function";
       value: string;
     }
+    export function isFunction(value: unknown): value is Function {
+      return value instanceof Function;
+    }
   }
 
-  export function isFunction(value: unknown): value is Function {
-    return value instanceof Function;
-  }
+  export const { of: func, isFunction } = Function;
 
   export function parseFunction(
     query: string | Predicate<Function> = () => true
@@ -246,6 +249,8 @@ export namespace Token {
     }
   }
 
+  export const { of: atKeyword } = AtKeyword;
+
   export class Hash extends Token {
     public static of(value: string, isIdentifier: boolean): Hash {
       return new Hash(value, isIdentifier);
@@ -299,11 +304,13 @@ export namespace Token {
       value: string;
       isIdentifier: boolean;
     }
+
+    export function isHash(value: unknown): value is Hash {
+      return value instanceof Hash;
+    }
   }
 
-  export function isHash(value: unknown): value is Hash {
-    return value instanceof Hash;
-  }
+  export const { of: hash, isHash } = Hash;
 
   export function parseHash(predicate: Predicate<Hash> = () => true) {
     return parseToken(and(isHash, predicate));
@@ -350,11 +357,13 @@ export namespace Token {
       type: "string";
       value: string;
     }
+
+    export function isString(value: unknown): value is String {
+      return value instanceof String;
+    }
   }
 
-  export function isString(value: unknown): value is String {
-    return value instanceof String;
-  }
+  export const { of: string, isString } = String;
 
   export function parseString(predicate: Predicate<String> = () => true) {
     return parseToken(and(isString, predicate));
@@ -401,11 +410,13 @@ export namespace Token {
       type: "url";
       value: string;
     }
+
+    export function isURL(value: unknown): value is URL {
+      return value instanceof URL;
+    }
   }
 
-  export function isURL(value: unknown): value is URL {
-    return value instanceof URL;
-  }
+  export const { of: url, isURL } = URL;
 
   export function parseURL(predicate: Predicate<URL> = () => true) {
     return parseToken(and(isURL, predicate));
@@ -445,9 +456,20 @@ export namespace Token {
     }
   }
 
+  export const { of: badURL } = BadURL;
+
   export class Delim extends Token {
+    private static _delims = new Map<number, Delim>();
+
     public static of(value: number): Delim {
-      return new Delim(value);
+      let delim = Delim._delims.get(value);
+
+      if (delim === undefined) {
+        delim = new Delim(value);
+        Delim._delims.set(value, delim);
+      }
+
+      return delim;
     }
 
     private readonly _value: number;
@@ -486,11 +508,13 @@ export namespace Token {
       type: "delim";
       value: number;
     }
+
+    export function isDelim(value: unknown): value is Delim {
+      return value instanceof Delim;
+    }
   }
 
-  export function isDelim(value: unknown): value is Delim {
-    return value instanceof Delim;
-  }
+  export const { of: delim, isDelim } = Delim;
 
   export function parseDelim(
     query: string | number | Predicate<Delim> = () => true
@@ -578,11 +602,13 @@ export namespace Token {
       isInteger: boolean;
       isSigned: boolean;
     }
+
+    export function isNumber(value: unknown): value is Number {
+      return value instanceof Number;
+    }
   }
 
-  export function isNumber(value: unknown): value is Number {
-    return value instanceof Number;
-  }
+  export const { of: number, isNumber } = Number;
 
   export function parseNumber(predicate: Predicate<Number> = () => true) {
     return parseToken(and(isNumber, predicate));
@@ -641,11 +667,13 @@ export namespace Token {
       value: number;
       isInteger: boolean;
     }
+
+    export function isPercentage(value: unknown): value is Percentage {
+      return value instanceof Percentage;
+    }
   }
 
-  export function isPercentage(value: unknown): value is Percentage {
-    return value instanceof Percentage;
-  }
+  export const { of: percentage, isPercentage } = Percentage;
 
   export function parsePercentage(
     predicate: Predicate<Percentage> = () => true
@@ -738,19 +766,23 @@ export namespace Token {
       isInteger: boolean;
       isSigned: boolean;
     }
+
+    export function isDimension(value: unknown): value is Dimension {
+      return value instanceof Dimension;
+    }
   }
 
-  export function isDimension(value: unknown): value is Dimension {
-    return value instanceof Dimension;
-  }
+  export const { of: dimension, isDimension } = Dimension;
 
   export function parseDimension(predicate: Predicate<Dimension> = () => true) {
     return parseToken(and(isDimension, predicate));
   }
 
   export class Whitespace extends Token {
+    private static _instance = new Whitespace();
+
     public static of(): Whitespace {
-      return new Whitespace();
+      return Whitespace._instance;
     }
 
     private constructor() {
@@ -780,17 +812,21 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "whitespace";
     }
+
+    export function isWhitespace(value: unknown): value is Whitespace {
+      return value instanceof Whitespace;
+    }
   }
 
-  export function isWhitespace(value: unknown): value is Whitespace {
-    return value instanceof Whitespace;
-  }
+  export const { of: whitespace, isWhitespace } = Whitespace;
 
   export const parseWhitespace = parseToken(isWhitespace);
 
   export class Colon extends Token {
+    private static _instance = new Colon();
+
     public static of(): Colon {
-      return new Colon();
+      return Colon._instance;
     }
 
     private constructor() {
@@ -820,17 +856,21 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "colon";
     }
+
+    export function isColon(value: unknown): value is Colon {
+      return value instanceof Colon;
+    }
   }
 
-  export function isColon(value: unknown): value is Colon {
-    return value instanceof Colon;
-  }
+  export const { of: colon, isColon } = Colon;
 
   export const parseColon = parseToken(isColon);
 
   export class Semicolon extends Token {
+    private static _instance = new Semicolon();
+
     public static of(): Semicolon {
-      return new Semicolon();
+      return Semicolon._instance;
     }
 
     private constructor() {
@@ -860,17 +900,21 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "semicolon";
     }
+
+    export function isSemicolon(value: unknown): value is Semicolon {
+      return value instanceof Semicolon;
+    }
   }
 
-  export function isSemicolon(value: unknown): value is Semicolon {
-    return value instanceof Semicolon;
-  }
+  export const { of: semicolon, isSemicolon } = Semicolon;
 
   export const parseSemicolon = parseToken(isSemicolon);
 
   export class Comma extends Token {
+    private static _instance = new Comma();
+
     public static of(): Comma {
-      return new Comma();
+      return Comma._instance;
     }
 
     private constructor() {
@@ -900,17 +944,21 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "comma";
     }
+
+    export function isComma(value: unknown): value is Comma {
+      return value instanceof Comma;
+    }
   }
 
-  export function isComma(value: unknown): value is Comma {
-    return value instanceof Comma;
-  }
+  export const { of: comma, isComma } = Comma;
 
   export const parseComma = parseToken(isComma);
 
   export class OpenParenthesis extends Token {
+    private static _instance = new OpenParenthesis();
+
     public static of(): OpenParenthesis {
-      return new OpenParenthesis();
+      return OpenParenthesis._instance;
     }
 
     private constructor() {
@@ -944,17 +992,23 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "open-parenthesis";
     }
+
+    export function isOpenParenthesis(
+      value: unknown
+    ): value is OpenParenthesis {
+      return value instanceof OpenParenthesis;
+    }
   }
 
-  export function isOpenParenthesis(value: unknown): value is OpenParenthesis {
-    return value instanceof OpenParenthesis;
-  }
+  export const { of: openParenthesis, isOpenParenthesis } = OpenParenthesis;
 
   export const parseOpenParenthesis = parseToken(isOpenParenthesis);
 
   export class CloseParenthesis extends Token {
+    private static _instance = new CloseParenthesis();
+
     public static of(): CloseParenthesis {
-      return new CloseParenthesis();
+      return CloseParenthesis._instance;
     }
 
     private constructor() {
@@ -988,19 +1042,23 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "close-parenthesis";
     }
+
+    export function isCloseParenthesis(
+      value: unknown
+    ): value is CloseParenthesis {
+      return value instanceof CloseParenthesis;
+    }
   }
 
-  export function isCloseParenthesis(
-    value: unknown
-  ): value is CloseParenthesis {
-    return value instanceof CloseParenthesis;
-  }
+  export const { of: closeParenthesis, isCloseParenthesis } = CloseParenthesis;
 
   export const parseCloseParenthesis = parseToken(isCloseParenthesis);
 
   export class OpenSquareBracket extends Token {
+    private static _instance = new OpenSquareBracket();
+
     public static of(): OpenSquareBracket {
-      return new OpenSquareBracket();
+      return OpenSquareBracket._instance;
     }
 
     private constructor() {
@@ -1034,19 +1092,26 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "open-square-bracket";
     }
+
+    export function isOpenSquareBracket(
+      value: unknown
+    ): value is OpenSquareBracket {
+      return value instanceof OpenSquareBracket;
+    }
   }
 
-  export function isOpenSquareBracket(
-    value: unknown
-  ): value is OpenSquareBracket {
-    return value instanceof OpenSquareBracket;
-  }
+  export const {
+    of: openSquareBracket,
+    isOpenSquareBracket,
+  } = OpenSquareBracket;
 
   export const parseOpenSquareBracket = parseToken(isOpenSquareBracket);
 
   export class CloseSquareBracket extends Token {
+    private static _instance = new CloseSquareBracket();
+
     public static of(): CloseSquareBracket {
-      return new CloseSquareBracket();
+      return CloseSquareBracket._instance;
     }
 
     private constructor() {
@@ -1080,19 +1145,26 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "close-square-bracket";
     }
+
+    export function isCloseSquareBracket(
+      value: unknown
+    ): value is CloseSquareBracket {
+      return value instanceof CloseSquareBracket;
+    }
   }
 
-  export function isCloseSquareBracket(
-    value: unknown
-  ): value is CloseSquareBracket {
-    return value instanceof CloseSquareBracket;
-  }
+  export const {
+    of: closeSquareBracket,
+    isCloseSquareBracket,
+  } = CloseSquareBracket;
 
   export const parseCloseSquareBracket = parseToken(isCloseSquareBracket);
 
   export class OpenCurlyBracket extends Token {
+    private static _instance = new OpenCurlyBracket();
+
     public static of(): OpenCurlyBracket {
-      return new OpenCurlyBracket();
+      return OpenCurlyBracket._instance;
     }
 
     private constructor() {
@@ -1126,19 +1198,23 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "open-curly-bracket";
     }
+
+    export function isOpenCurlyBracket(
+      value: unknown
+    ): value is OpenCurlyBracket {
+      return value instanceof OpenCurlyBracket;
+    }
   }
 
-  export function isOpenCurlyBracket(
-    value: unknown
-  ): value is OpenCurlyBracket {
-    return value instanceof OpenCurlyBracket;
-  }
+  export const { of: openCurlyBracket, isOpenCurlyBracket } = OpenCurlyBracket;
 
   export const parseOpenCurlyBracket = parseToken(isOpenCurlyBracket);
 
   export class CloseCurlyBracket extends Token {
+    private static _instance = new CloseCurlyBracket();
+
     public static of(): CloseCurlyBracket {
-      return new CloseCurlyBracket();
+      return CloseCurlyBracket._instance;
     }
 
     private constructor() {
@@ -1172,19 +1248,26 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "close-curly-bracket";
     }
+
+    export function isCloseCurlyBracket(
+      value: unknown
+    ): value is CloseCurlyBracket {
+      return value instanceof CloseCurlyBracket;
+    }
   }
 
-  export function isCloseCurlyBracket(
-    value: unknown
-  ): value is CloseCurlyBracket {
-    return value instanceof CloseCurlyBracket;
-  }
+  export const {
+    of: closeCurlyBracket,
+    isCloseCurlyBracket,
+  } = CloseCurlyBracket;
 
   export const parseCloseCurlyBracket = parseToken(isCloseCurlyBracket);
 
   export class OpenComment extends Token {
+    private static _instance = new OpenComment();
+
     public static of(): OpenComment {
-      return new OpenComment();
+      return OpenComment._instance;
     }
 
     private constructor() {
@@ -1214,17 +1297,21 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "open-comment";
     }
+
+    export function isOpenComment(value: unknown): value is OpenComment {
+      return value instanceof OpenComment;
+    }
   }
 
-  export function isOpenComment(value: unknown): value is OpenComment {
-    return value instanceof OpenComment;
-  }
+  export const { of: openComment, isOpenComment } = OpenComment;
 
   export const parseOpenComment = parseToken(isOpenComment);
 
   export class CloseComment extends Token {
+    private static _instance = new CloseComment();
+
     public static of(): CloseComment {
-      return new CloseComment();
+      return CloseComment._instance;
     }
 
     private constructor() {
@@ -1254,11 +1341,13 @@ export namespace Token {
     export interface JSON extends Token.JSON {
       type: "close-comment";
     }
+
+    export function isCloseComment(value: unknown): value is CloseComment {
+      return value instanceof CloseComment;
+    }
   }
 
-  export function isCloseComment(value: unknown): value is CloseComment {
-    return value instanceof CloseComment;
-  }
+  export const { of: closeComment, isCloseComment } = CloseComment;
 
   export const parseCloseComment = parseToken(isCloseComment);
 }
@@ -1267,7 +1356,9 @@ function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
   return (input) => {
-    for (const token of input.get(0).filter(refinement)) {
+    const token = input.array[input.offset];
+
+    if (token !== undefined && refinement(token)) {
       return Result.of([input.slice(1), token]);
     }
 
