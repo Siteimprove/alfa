@@ -118,14 +118,6 @@ function svg(
   );
 }
 
-const nameFromDescendants = (
-  element: Element,
-  device: Device,
-  state: Name.State
-) => {
-  return Name.fromDescendants(element, device, state.visit(element));
-};
-
 const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
   for (const name of attributes) {
     for (const attribute of element.attribute(name)) {
@@ -245,7 +237,8 @@ const Features: Features = {
       (element) =>
         element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
       () => [],
-      (element, device, state) => nameFromDescendants(element, device, state)
+      (element, device, state) =>
+        Name.fromDescendants(element, device, state.visit(element))
     ),
 
     area: html(
