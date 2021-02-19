@@ -11,18 +11,19 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-type
  */
-export class Type implements Media.Queryable<Type.JSON> {
-  public static of(name: string): Type {
+export class Type<T extends string = string>
+  implements Media.Queryable<Type.JSON> {
+  public static of<T extends string = string>(name: T): Type<T> {
     return new Type(name);
   }
 
-  private readonly _name: string;
+  private readonly _name: T;
 
-  private constructor(name: string) {
+  private constructor(name: T) {
     this._name = name;
   }
 
-  public get name(): string {
+  public get name(): T {
     return this._name;
   }
 
@@ -49,7 +50,7 @@ export class Type implements Media.Queryable<Type.JSON> {
     return value instanceof Type && value._name === this._name;
   }
 
-  public toJSON(): Type.JSON {
+  public toJSON(): Type.JSON<T> {
     return {
       name: this._name,
     };
@@ -61,9 +62,13 @@ export class Type implements Media.Queryable<Type.JSON> {
 }
 
 export namespace Type {
-  export interface JSON {
+  export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
-    name: string;
+    name: T;
+  }
+
+  export function isType(value: unknown): value is Type {
+    return value instanceof Type;
   }
 
   /**

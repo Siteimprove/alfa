@@ -68,6 +68,8 @@ export namespace Media {
     LessThanEqual = "<=",
   }
 
+  export const { of: type, isType } = Type;
+
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
