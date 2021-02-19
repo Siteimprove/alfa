@@ -1,7 +1,6 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
 import {
   Length,
-  Lexer,
   Number,
   Percentage,
   String,
@@ -35,9 +34,14 @@ const {
   separatedList,
   eof,
 } = Parser;
-const { equals } = Predicate;
 
 export namespace Media {
+  export interface Queryable<T extends json.JSON = json.JSON>
+    extends Equatable,
+      json.Serializable<T> {
+    matches: Predicate<Device>;
+  }
+
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query-modifier
    */
@@ -66,7 +70,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-type
    */
-  export class Type implements Equatable, Serializable {
+  export class Type implements Queryable<Type.JSON> {
     public static of(name: string): Type {
       return new Type(name);
     }
@@ -131,7 +135,7 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
   export abstract class Feature<T = unknown>
-    implements Equatable, Serializable {
+    implements Queryable<Feature.JSON> {
     protected readonly _value: Option<Value<T>>;
 
     protected constructor(value: Option<Value<T>>) {
@@ -665,7 +669,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-condition
    */
-  export class Condition implements Equatable, Serializable {
+  export class Condition implements Queryable<Condition.JSON> {
     public static of(
       combinator: Combinator,
       left: Feature | Condition | Negation,
@@ -747,7 +751,7 @@ export namespace Media {
     return value instanceof Condition;
   }
 
-  export class Negation implements Equatable, Serializable {
+  export class Negation implements Queryable<Negation.JSON> {
     public static of(condition: Feature | Condition | Negation): Negation {
       return new Negation(condition);
     }
@@ -894,7 +898,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query
    */
-  export class Query implements Equatable, Serializable {
+  export class Query implements Queryable<Query.JSON> {
     public static of(
       modifier: Option<Modifier>,
       type: Option<Type>,
@@ -1012,7 +1016,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query-list
    */
-  export class List implements Iterable<Query>, Equatable, Serializable {
+  export class List implements Iterable<Query>, Queryable<List.JSON> {
     public static of(queries: Iterable<Query>): List {
       return new List(queries);
     }
