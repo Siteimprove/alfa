@@ -5,6 +5,7 @@
     "src/index.ts",
     "src/media.ts",
     "src/resolver.ts",
+    "src/type.ts",
     "test/matches.spec.ts",
     "test/parse.spec.ts"
   ],
