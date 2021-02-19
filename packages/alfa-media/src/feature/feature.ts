@@ -7,7 +7,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Media } from "../media";
 import { Resolver } from "../resolver";
-import { Value } from "../value/value";
+import { Value } from "../value";
 
 const { map, either, option, pair, right, delimited } = Parser;
 

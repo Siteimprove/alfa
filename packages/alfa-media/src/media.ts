@@ -10,7 +10,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import * as json from "@siteimprove/alfa-json";
 
 import { Condition } from "./condition";
-import { Feature } from "./feature/feature";
 import { Type } from "./type";
 
 const {
