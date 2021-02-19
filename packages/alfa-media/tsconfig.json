@@ -3,6 +3,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/index.ts",
+    "src/condition.ts",
     "src/feature/feature.ts",
     "src/media.ts",
     "src/resolver.ts",

@@ -49,7 +49,7 @@ test(".parse() parses a list of queries", (t) => {
         modifier: null,
         mediaType: null,
         condition: {
-          type: "condition",
+          type: "expression",
           combinator: "and",
           left: {
             type: "feature",
@@ -63,7 +63,7 @@ test(".parse() parses a list of queries", (t) => {
             },
           },
           right: {
-            type: "condition",
+            type: "expression",
             combinator: "or",
             left: {
               type: "feature",
@@ -119,7 +119,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
           name: "screen",
         },
         condition: {
-          type: "condition",
+          type: "expression",
           combinator: "and",
           left: {
             type: "feature",
