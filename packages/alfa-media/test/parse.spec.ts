@@ -11,8 +11,9 @@ function parse(input: string) {
 test(".parse() parses a simple query", (t) => {
   t.deepEqual(parse("(orientation: portrait)").get(), [
     {
+      type: "query",
       modifier: null,
-      type: null,
+      mediaType: null,
       condition: {
         type: "feature",
         name: "orientation",
@@ -35,15 +36,18 @@ test(".parse() parses a list of queries", (t) => {
     ).get(),
     [
       {
+        type: "query",
         modifier: null,
-        type: {
+        mediaType: {
+          type: "type",
           name: "screen",
         },
         condition: null,
       },
       {
+        type: "query",
         modifier: null,
-        type: null,
+        mediaType: null,
         condition: {
           type: "condition",
           combinator: "and",
@@ -108,8 +112,10 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
     parse("screen and (orientation: portrait) and (min-width: 100px)").get(),
     [
       {
+        type: "query",
         modifier: null,
-        type: {
+        mediaType: {
+          type: "type",
           name: "screen",
         },
         condition: {
@@ -151,8 +157,10 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
 test(".parse() does not create a modifier in the absence of a type", (t) => {
   t.deepEqual(parse("not screen and (orientation: landscape)").get(), [
     {
+      type: "query",
       modifier: "not",
-      type: {
+      mediaType: {
+        type: "type",
         name: "screen",
       },
       condition: {
@@ -171,8 +179,9 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
 
   t.deepEqual(parse("not (orientation: landscape)").get(), [
     {
+      type: "query",
       modifier: null,
-      type: null,
+      mediaType: null,
       condition: {
         type: "negation",
         condition: {

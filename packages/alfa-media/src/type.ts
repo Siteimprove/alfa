@@ -53,6 +53,7 @@ export class Type<T extends string = string>
   public toJSON(): Type.JSON<T> {
     return {
       name: this._name,
+      type: "type",
     };
   }
 
@@ -65,6 +66,7 @@ export namespace Type {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
     name: T;
+    type: "type";
   }
 
   export function isType(value: unknown): value is Type {

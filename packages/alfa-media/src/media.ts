@@ -840,23 +840,23 @@ export namespace Media {
   export class Query implements Queryable<Query.JSON> {
     public static of(
       modifier: Option<Modifier>,
-      type: Option<Type>,
+      mediaType: Option<Type>,
       condition: Option<Feature | Condition | Negation>
     ): Query {
-      return new Query(modifier, type, condition);
+      return new Query(modifier, mediaType, condition);
     }
 
     private readonly _modifier: Option<Modifier>;
-    private readonly _type: Option<Type>;
+    private readonly _mediaType: Option<Type>;
     private readonly _condition: Option<Feature | Condition | Negation>;
 
     private constructor(
       modifier: Option<Modifier>,
-      type: Option<Type>,
+      mediaType: Option<Type>,
       condition: Option<Feature | Condition | Negation>
     ) {
       this._modifier = modifier;
-      this._type = type;
+      this._mediaType = mediaType;
       this._condition = condition;
     }
 
@@ -864,8 +864,8 @@ export namespace Media {
       return this._modifier;
     }
 
-    public get type(): Option<Type> {
-      return this._type;
+    public get mediaType(): Option<Type> {
+      return this._mediaType;
     }
 
     public get condition(): Option<Feature | Condition | Negation> {
@@ -876,7 +876,7 @@ export namespace Media {
       const negated = this._modifier.some(
         (modifier) => modifier === Modifier.Not
       );
-      const type = this._type.every((type) => type.matches(device));
+      const type = this._mediaType.every((type) => type.matches(device));
       const condition = this.condition.every((condition) =>
         condition.matches(device)
       );
@@ -888,7 +888,7 @@ export namespace Media {
       return (
         value instanceof Query &&
         value._modifier.equals(this._modifier) &&
-        value._type.equals(this._type) &&
+        value._mediaType.equals(this._mediaType) &&
         value._condition.equals(this._condition)
       );
     }
@@ -896,17 +896,18 @@ export namespace Media {
     public toJSON(): Query.JSON {
       return {
         modifier: this._modifier.getOr(null),
-        type: this._type.map((type) => type.toJSON()).getOr(null),
+        mediaType: this._mediaType.map((type) => type.toJSON()).getOr(null),
         condition: this._condition
           .map((condition) => condition.toJSON())
           .getOr(null),
+        type: "query",
       };
     }
 
     public toString(): string {
       const modifier = this._modifier.getOr("");
 
-      const type = this._type
+      const type = this._mediaType
         .map((type) => (modifier === "" ? `${type}` : `${modifier} ${type}`))
         .getOr("");
 
@@ -922,8 +923,9 @@ export namespace Media {
     export interface JSON {
       [key: string]: json.JSON;
       modifier: string | null;
-      type: Type.JSON | null;
+      mediaType: Type.JSON | null;
       condition: Feature.JSON | Condition.JSON | Negation.JSON | null;
+      type: "query";
     }
   }
 
