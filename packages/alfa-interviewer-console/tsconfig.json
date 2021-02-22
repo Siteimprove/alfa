@@ -7,6 +7,7 @@
     "jsxFragmentFactory": "React.Fragment"
   },
   "files": [
+    "src/component/prompt/boolean.tsx",
     "src/component/source.tsx",
     "src/console.tsx",
     "src/index.ts",
