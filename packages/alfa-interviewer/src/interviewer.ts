@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Rule, Oracle } from "@siteimprove/alfa-act";
 import { Result, Err } from "@siteimprove/alfa-result";
 
@@ -26,6 +28,15 @@ export namespace Interviewer {
 
     if (scope === undefined) {
       patterns.push(...candidates(name, defaultScope));
+
+      // For unscoped names, also attempt resolving the name as a file path to
+      // allow loading local modules. This is only supported in Node.js and so
+      // we lazily attempt importing the "path" module.
+      try {
+        const path = await import("path");
+
+        patterns.push(path.resolve(name));
+      } catch {}
     }
 
     for (const pattern of patterns) {
