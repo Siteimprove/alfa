@@ -280,14 +280,20 @@ export namespace Feature {
             }
 
           case "orientation":
-            if (value.type === "string") {
+            if (
+              value.type === "string" &&
+              ["landscape", "portrait"].includes(value.value)
+            ) {
               return Feature.orientation(Value.discrete(value));
             } else {
               break;
             }
 
           case "scripting":
-            if (value.type === "string") {
+            if (
+              value.type === "string" &&
+              ["none", "initial-only", "enabled"].includes(value.value)
+            ) {
               return Feature.scripting(Value.discrete(value));
             } else {
               break;
