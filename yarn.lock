@@ -1861,7 +1861,7 @@ __metadata:
     "@siteimprove/alfa-mapper": ^0.10.0
     "@siteimprove/alfa-result": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
-    "@types/node": ^14.14.25
+    "@types/node": ^14.14.31
   languageName: unknown
   linkType: soft
 
@@ -1987,7 +1987,8 @@ __metadata:
     "@siteimprove/alfa-url": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@siteimprove/alfa-xpath": ^0.10.0
-    "@types/node": ^14.0.12
+    "@types/node": ^14.14.31
+    enquirer: ^2.3.0
   bin:
     alfa: bin/alfa.js
   languageName: unknown
@@ -2429,6 +2430,7 @@ __metadata:
     "@siteimprove/alfa-act": ^0.10.0
     "@siteimprove/alfa-result": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
+    "@types/node": ^14.14.31
   languageName: unknown
   linkType: soft
 
@@ -3025,7 +3027,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-highlight": ^0.10.0
-    "@types/node": ^14.6.2
+    "@types/node": ^14.14.31
   languageName: unknown
   linkType: soft
 
@@ -3180,7 +3182,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@types/node": ^14.6.2
+    "@types/node": ^14.14.31
     axios: ^0.21.0
     lerna: ^3.22.1
     minimist: ^1.2.0
@@ -3384,10 +3386,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>= 8, @types/node@npm:^14.0.12, @types/node@npm:^14.14.25, @types/node@npm:^14.6.2":
+"@types/node@npm:*, @types/node@npm:>= 8":
   version: 14.14.25
   resolution: "@types/node@npm:14.14.25"
   checksum: 64c42730f4169e49ec378870622ef06c5d820b31340e224cc1b45bf06c8b0cfa28daa587b4ae2b8ea1f712ef049bae4d9c92925b157ba9ba7cde3b22ff552513
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^14.14.31":
+  version: 14.14.31
+  resolution: "@types/node@npm:14.14.31"
+  checksum: 635dc8a0898a923621e02ca179e17baa39fdfa44f0096fcc1b7046c9b32317e74a99956a7b45ca0e8069874f51f4e7873a418239a318a4b6e7936f6510ac5992
   languageName: node
   linkType: hard
 
@@ -3719,6 +3728,13 @@ __metadata:
     json-schema-traverse: ^0.4.1
     uri-js: ^4.2.2
   checksum: 19a8f3b0a06001eb68e6268f4f9f04424b32baadd5df6ba8292cd473e22e5f4019ed9ab17c3e3510394178ed8bef9b42ad0bdb5c675d65f042421a774780ce1a
+  languageName: node
+  linkType: hard
+
+"ansi-colors@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "ansi-colors@npm:4.1.1"
+  checksum: 50d8dfbce25602caea1b170ecf4c71c4c9c58d2d1e3186fb5712848c0610d05fe60b8bb6a9eaebd9b54f1db3baf6f603e04214cce597cc7799bc9f47fd9a797a
   languageName: node
   linkType: hard
 
@@ -6024,6 +6040,15 @@ __metadata:
   dependencies:
     once: ^1.4.0
   checksum: 7da60e458bdb5e16c006a45e85ef3bc1e3791db5ba275b0913258ccddc8899acb9252c4ddbcce87bd1b46e2a3f97315aafb9f0c0330e8aac44defb504a9d3ccd
+  languageName: node
+  linkType: hard
+
+"enquirer@npm:^2.3.0":
+  version: 2.3.6
+  resolution: "enquirer@npm:2.3.6"
+  dependencies:
+    ansi-colors: ^4.1.1
+  checksum: e249bb97bf7d5a91d51081547ea5aa1d849604e5de74feff2c48f7174fc6c9dfcfeea42ef5536e9a3be58964a248c322d6897269ae7bba3e1b6d24f152d9d685
   languageName: node
   linkType: hard
 
