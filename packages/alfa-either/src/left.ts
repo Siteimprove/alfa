@@ -29,22 +29,6 @@ export class Left<L> implements Either<L, never> {
     return false;
   }
 
-  public get(): L {
-    return this._value;
-  }
-
-  public left(): Option<L> {
-    return Option.of(this._value);
-  }
-
-  public right(): None {
-    return None;
-  }
-
-  public either<T>(left: Mapper<L, T>): T {
-    return left(this._value);
-  }
-
   public map<T>(mapper: Mapper<L, T>): Either<T, T> {
     return new Left(mapper(this._value));
   }
@@ -55,6 +39,22 @@ export class Left<L> implements Either<L, never> {
 
   public reduce<T>(reducer: Reducer<L, T>, accumulator: T): T {
     return reducer(accumulator, this._value);
+  }
+
+  public either<T>(left: Mapper<L, T>): T {
+    return left(this._value);
+  }
+
+  public get(): L {
+    return this._value;
+  }
+
+  public left(): Option<L> {
+    return Option.of(this._value);
+  }
+
+  public right(): None {
+    return None;
   }
 
   public equals<L>(value: Left<L>): boolean;

@@ -16,10 +16,10 @@ jobs:
     name: Analyze
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2.1.4
         with:
           node-version: 14
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2.1.4
         with:
           path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}

@@ -37,6 +37,10 @@ export namespace Array {
     return [];
   }
 
+  export function allocate<T>(capacity: number): Array<T> {
+    return new global.Array<T>(capacity);
+  }
+
   /**
    * @remarks
    * Unlike the built-in function of the same name, this function will pass
@@ -68,7 +72,7 @@ export namespace Array {
 
   export function forEach<T>(
     array: ReadonlyArray<T>,
-    callback: Callback<T, void, [number]>
+    callback: Callback<T, void, [index: number]>
   ): void {
     for (let i = 0, n = array.length; i < n; i++) {
       callback(array[i], i);
@@ -77,7 +81,7 @@ export namespace Array {
 
   export function map<T, U = T>(
     array: ReadonlyArray<T>,
-    mapper: Mapper<T, U, [number]>
+    mapper: Mapper<T, U, [index: number]>
   ): Array<U> {
     const result = new global.Array<U>(array.length);
 
@@ -90,7 +94,7 @@ export namespace Array {
 
   export function flatMap<T, U = T>(
     array: ReadonlyArray<T>,
-    mapper: Mapper<T, ReadonlyArray<U>, [number]>
+    mapper: Mapper<T, ReadonlyArray<U>, [index: number]>
   ): Array<U> {
     const result: Array<U> = [];
 
@@ -107,7 +111,7 @@ export namespace Array {
 
   export function reduce<T, U = T>(
     array: ReadonlyArray<T>,
-    reducer: Reducer<T, U, [number]>,
+    reducer: Reducer<T, U, [index: number]>,
     accumulator: U
   ): U {
     for (let i = 0, n = array.length; i < n; i++) {
@@ -117,20 +121,27 @@ export namespace Array {
     return accumulator;
   }
 
+  export function apply<T, U>(
+    iterable: ReadonlyArray<T>,
+    mapper: ReadonlyArray<Mapper<T, U>>
+  ): Array<U> {
+    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
+  }
+
   export function filter<T, U extends T>(
     array: ReadonlyArray<T>,
-    refinement: Refinement<T, U, [number]>
-  ): Iterable<U>;
+    refinement: Refinement<T, U, [index: number]>
+  ): Array<U>;
 
   export function filter<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
-  ): Iterable<T>;
+    predicate: Predicate<T, [index: number]>
+  ): Array<T>;
 
   export function filter<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
-  ): Iterable<T> {
+    predicate: Predicate<T, [index: number]>
+  ): Array<T> {
     const result: Array<T> = [];
 
     for (let i = 0, n = array.length; i < n; i++) {
@@ -146,34 +157,34 @@ export namespace Array {
 
   export function reject<T, U extends T>(
     array: ReadonlyArray<T>,
-    refinement: Refinement<T, U, [number]>
-  ): Iterable<Exclude<T, U>>;
+    refinement: Refinement<T, U, [index: number]>
+  ): Array<Exclude<T, U>>;
 
   export function reject<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
-  ): Iterable<T>;
+    predicate: Predicate<T, [index: number]>
+  ): Array<T>;
 
   export function reject<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
-  ): Iterable<T> {
+    predicate: Predicate<T, [index: number]>
+  ): Array<T> {
     return filter(array, not(predicate));
   }
 
   export function find<T, U extends T>(
     array: ReadonlyArray<T>,
-    refinement: Refinement<T, U, [number]>
+    refinement: Refinement<T, U, [index: number]>
   ): Option<U>;
 
   export function find<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): Option<T>;
 
   export function find<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): Option<T> {
     for (let i = 0, n = array.length; i < n; i++) {
       const value = array[i];
@@ -188,17 +199,17 @@ export namespace Array {
 
   export function findLast<T, U extends T>(
     array: ReadonlyArray<T>,
-    refinement: Refinement<T, U, [number]>
+    refinement: Refinement<T, U, [index: number]>
   ): Option<U>;
 
   export function findLast<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): Option<T>;
 
   export function findLast<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): Option<T> {
     for (let i = array.length - 1; i >= 0; i--) {
       const value = array[i];
@@ -217,7 +228,7 @@ export namespace Array {
 
   export function collect<T, U>(
     array: ReadonlyArray<T>,
-    mapper: Mapper<T, Option<U>, [number]>
+    mapper: Mapper<T, Option<U>, [index: number]>
   ): Array<U> {
     const result: Array<U> = [];
 
@@ -232,7 +243,7 @@ export namespace Array {
 
   export function collectFirst<T, U>(
     array: ReadonlyArray<T>,
-    mapper: Mapper<T, Option<U>, [number]>
+    mapper: Mapper<T, Option<U>, [index: number]>
   ): Option<U> {
     for (let i = 0, n = array.length; i < n; i++) {
       const value = mapper(array[i], i);
@@ -247,7 +258,7 @@ export namespace Array {
 
   export function some<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): boolean {
     for (let i = 0, n = array.length; i < n; i++) {
       if (predicate(array[i], i)) {
@@ -260,14 +271,14 @@ export namespace Array {
 
   export function none<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): boolean {
     return every(array, not(predicate));
   }
 
   export function every<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): boolean {
     for (let i = 0, n = array.length; i < n; i++) {
       if (!predicate(array[i], i)) {
@@ -280,7 +291,7 @@ export namespace Array {
 
   export function count<T>(
     array: ReadonlyArray<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [index: number]>
   ): number {
     return reduce(
       array,
@@ -305,6 +316,22 @@ export namespace Array {
     return result;
   }
 
+  export function get<T>(array: ReadonlyArray<T>, index: number): Option<T> {
+    return index < array.length ? Option.of(array[index]) : None;
+  }
+
+  export function has<T>(array: ReadonlyArray<T>, index: number): boolean {
+    return index < array.length;
+  }
+
+  export function set<T>(array: Array<T>, index: number, value: T): Array<T> {
+    if (index < array.length) {
+      array[index] = value;
+    }
+
+    return array;
+  }
+
   export function insert<T>(
     array: Array<T>,
     index: number,
@@ -322,6 +349,35 @@ export namespace Array {
   export function prepend<T>(array: Array<T>, value: T): Array<T> {
     array.unshift(value);
     return array;
+  }
+
+  export function concat<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.concat(array, ...iterables)];
+  }
+
+  export function subtract<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.subtract(array, ...iterables)];
+  }
+
+  export function intersect<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.intersect(array, ...iterables)];
+  }
+
+  export function first<T>(array: ReadonlyArray<T>): Option<T> {
+    return array.length > 0 ? Option.of(array[0]) : None;
+  }
+
+  export function last<T>(array: ReadonlyArray<T>): Option<T> {
+    return array.length > 0 ? Option.of(array[array.length - 1]) : None;
   }
 
   export function sort<T extends Comparable<T>>(array: Array<T>): Array<T> {
@@ -396,6 +452,10 @@ export namespace Array {
     }
 
     hash.writeUint32(array.length);
+  }
+
+  export function iterator<T>(array: ReadonlyArray<T>): Iterator<T> {
+    return array[Symbol.iterator]();
   }
 
   export function toJSON<T>(

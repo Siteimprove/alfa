@@ -24,8 +24,8 @@
     "@siteimprove/alfa-http": "^0.10.0",
     "@siteimprove/alfa-option": "^0.10.0",
     "@siteimprove/alfa-web": "^0.10.0",
-    "rxjs": "^6.5.2",
-    "zone.js": "^0.11.1"
+    "rxjs": "^6.6.3",
+    "zone.js": "^0.11.4"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.10.0"

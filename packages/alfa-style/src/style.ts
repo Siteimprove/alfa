@@ -29,7 +29,7 @@ export class Style implements Serializable {
   ): Style {
     // First pass: Resolve cascading variables which will be used in the second
     // pass.
-    const variables = new Map<string, Value<Array<Token>>>();
+    const variables = new Map<string, Value<Slice<Token>>>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
@@ -127,17 +127,17 @@ export class Style implements Serializable {
 
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
-  private readonly _variables: ReadonlyMap<string, Value<Array<Token>>>;
+  private readonly _variables: ReadonlyMap<string, Value<Slice<Token>>>;
   private readonly _properties: ReadonlyMap<Name, Value>;
 
   // We cache computed properties but not specified properties as these are
   // inexpensive to resolve from cascaded and computed properties.
-  private readonly _computed = Cache.empty<Name, Value>();
+  private readonly _computed = new Map<Name, Value>();
 
   private constructor(
     device: Device,
     parent: Option<Style>,
-    variables: ReadonlyMap<string, Value<Array<Token>>>,
+    variables: ReadonlyMap<string, Value<Slice<Token>>>,
     properties: ReadonlyMap<Name, Value>
   ) {
     this._device = device;
@@ -154,7 +154,7 @@ export class Style implements Serializable {
     return this._parent.getOrElse(() => Style._empty);
   }
 
-  public get variables(): ReadonlyMap<string, Value<Array<Token>>> {
+  public get variables(): ReadonlyMap<string, Value<Slice<Token>>> {
     return this._variables;
   }
 
@@ -217,12 +217,18 @@ export class Style implements Serializable {
       return this.initial(name);
     }
 
-    return this._computed.get(name, () =>
-      Property.get(name).compute(
+    let value = this._computed.get(name);
+
+    if (value === undefined) {
+      value = Property.get(name).compute(
         this.specified(name) as Value<Style.Specified<Name>>,
         this
-      )
-    ) as Value<Style.Computed<N>>;
+      );
+
+      this._computed.set(name, value);
+    }
+
+    return value as Value<Style.Computed<N>>;
   }
 
   public initial<N extends Name>(
@@ -334,7 +340,7 @@ function shouldOverride(
 function parseLonghand<N extends Property.Name>(
   property: Property.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>
 ) {
   const substitution = substitute(Lexer.lex(value), variables, parent);
@@ -347,7 +353,7 @@ function parseLonghand<N extends Property.Name>(
 
   const parse = property.parse as Property.Parser;
 
-  const result = parse(Slice.of(trim(tokens))).map(([, value]) => value);
+  const result = parse(trim(tokens)).map(([, value]) => value);
 
   if (result.isErr() && substituted) {
     return Result.of(Keyword.of("unset"));
@@ -359,7 +365,7 @@ function parseLonghand<N extends Property.Name>(
 function parseShorthand<N extends Property.Shorthand.Name>(
   shorthand: Property.Shorthand.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>
 ) {
   const substitution = substitute(Lexer.lex(value), variables, parent);
@@ -377,7 +383,7 @@ function parseShorthand<N extends Property.Shorthand.Name>(
 
   const parse = shorthand.parse as Property.Shorthand.Parser;
 
-  const result = parse(Slice.of(trim(tokens))).map(([, value]) => {
+  const result = parse(trim(tokens)).map(([, value]) => {
     if (Keyword.isKeyword(value)) {
       return Iterable.map(
         shorthand.properties,
@@ -414,11 +420,11 @@ const parseInitial = Keyword.parse("initial");
  */
 function resolve(
   name: string,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>,
-  fallback: Option<Array<Token>> = None,
+  fallback: Option<Slice<Token>> = None,
   visited = Set.empty<string>()
-): Option<Array<Token>> {
+): Option<Slice<Token>> {
   return (
     Option.from(variables.get(name))
       .map((value) =>
@@ -426,9 +432,7 @@ function resolve(
         // value. We therefore reject the value of the variable if it's the
         // keyword `initial`.
         // https://drafts.csswg.org/css-variables/#guaranteed-invalid
-        Option.of(value.value).reject((tokens) =>
-          parseInitial(Slice.of(tokens)).isOk()
-        )
+        Option.of(value.value).reject((tokens) => parseInitial(tokens).isOk())
       )
 
       // If the value of the variable is invalid, as indicated by it being
@@ -481,44 +485,45 @@ const substitutionLimit = 1024;
  * same element.
  */
 function substitute(
-  tokens: Array<Token>,
-  variables: ReadonlyMap<string, Value<Array<Token>>>,
+  tokens: Slice<Token>,
+  variables: ReadonlyMap<string, Value<Slice<Token>>>,
   parent: Option<Style>,
   visited = Set.empty<string>()
-): Option<[tokens: Array<Token>, substituted: boolean]> {
+): Option<[tokens: Slice<Token>, substituted: boolean]> {
   const replaced: Array<Token> = [];
 
-  let offset = 0;
   let substituted = false;
 
-  while (offset < tokens.length) {
-    const next = tokens[offset];
+  while (tokens.length > 0) {
+    const next = tokens.array[tokens.offset];
 
     if (next.type === "function" && next.value === "var") {
-      const result = parseVar(Slice.of(tokens, offset));
+      const result = parseVar(tokens);
 
       if (result.isErr()) {
         return None;
       }
 
-      const [remainder, [name, fallback]] = result.get();
+      let name: string;
+      let fallback: Option<Slice<Token>>;
 
-      if (visited.has(name.value)) {
+      [tokens, [name, fallback]] = result.get();
+
+      if (visited.has(name)) {
         return None;
       }
 
-      const value = resolve(name.value, variables, parent, fallback, visited);
+      const value = resolve(name, variables, parent, fallback, visited);
 
       if (value.isNone()) {
         return None;
       }
 
       replaced.push(...value.get());
-      offset = remainder.offset;
       substituted = true;
     } else {
       replaced.push(next);
-      offset++;
+      tokens = tokens.slice(1);
     }
   }
 
@@ -528,19 +533,11 @@ function substitute(
     return None;
   }
 
-  return Option.of([replaced, substituted]);
+  return Option.of([Slice.of(replaced), substituted]);
 }
 
-function trim(tokens: Array<Token>): Array<Token> {
-  while (tokens.length > 0 && Token.isWhitespace(tokens[0])) {
-    tokens.splice(0, 1);
-  }
-
-  while (tokens.length > 0 && Token.isWhitespace(tokens[tokens.length - 1])) {
-    tokens.splice(tokens.length - 1, 1);
-  }
-
-  return tokens;
+function trim(tokens: Slice<Token>): Slice<Token> {
+  return tokens.trim(Token.isWhitespace);
 }
 
 /**
@@ -549,14 +546,17 @@ function trim(tokens: Array<Token>): Array<Token> {
 const parseVar = right(
   Token.parseFunction("var"),
   pair(
-    Token.parseIdent((ident) => ident.value.startsWith("--")),
+    map(
+      Token.parseIdent((ident) => ident.value.startsWith("--")),
+      (ident) => ident.value
+    ),
     left(
       option(
         right(
           pair(Token.parseComma, option(Token.parseWhitespace)),
           map(
             takeUntil(Component.consume, Token.parseCloseParenthesis),
-            (components) => [...Iterable.flatten(components)]
+            (components) => Slice.of([...Iterable.flatten(components)])
           )
         )
       ),

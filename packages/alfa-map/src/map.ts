@@ -195,6 +195,20 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
+  public subtract(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Iterable.reduce<readonly [K, V], Map<K, V>>(
+      iterable,
+      (map, [key]) => map.delete(key),
+      this
+    );
+  }
+
+  public intersect(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Map.fromIterable(
+      Iterable.filter(iterable, ([key]) => this.has(key))
+    );
+  }
+
   public equals<K, V>(value: Map<K, V>): boolean;
 
   public equals(value: unknown): value is this;
