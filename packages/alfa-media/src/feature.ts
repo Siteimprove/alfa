@@ -8,8 +8,10 @@ import * as json from "@siteimprove/alfa-json";
 import { Media } from "./media";
 import { Resolver } from "./resolver";
 import { Value } from "./value";
+import { Slice } from "@siteimprove/alfa-slice";
+import { Err, Result } from "@siteimprove/alfa-result";
 
-const { delimited, either, map, option, separatedPair } = Parser;
+const { delimited, either, map, mapResult, option, separatedPair } = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-feature
@@ -26,6 +28,10 @@ export abstract class Feature<N extends string = string, T = unknown>
 
   public get value(): Option<Value<T>> {
     return this._value;
+  }
+
+  public get isKnown(): boolean {
+    return true;
   }
 
   public abstract matches(device: Device): boolean;
@@ -77,6 +83,10 @@ export namespace Feature {
 
     public get name(): string {
       return this._name;
+    }
+
+    public get isKnown(): false {
+      return false;
     }
 
     public matches(): boolean {
@@ -314,9 +324,18 @@ export namespace Feature {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
    */
-  export const parse = delimited(
-    Token.parseOpenParenthesis,
-    delimited(option(Token.parseWhitespace), either(parsePlain, parseBoolean)),
-    Token.parseCloseParenthesis
+  export const parse = mapResult(
+    delimited(
+      Token.parseOpenParenthesis,
+      delimited(
+        option(Token.parseWhitespace),
+        either(parsePlain, parseBoolean)
+      ),
+      Token.parseCloseParenthesis
+    ),
+    (feature) =>
+      feature.isKnown
+        ? Result.of(feature)
+        : Err.of(`Unknown feature ${feature}`)
   );
 }

@@ -239,11 +239,14 @@ test(".parse() return 'not all' for syntactically incorrect queries", (t) => {
   // t.deepEqual(parse("or and (orientation), screen").get(), result);
 
   // unknown mf-name
-  // t.deepEqual(parse("(unknown), screen").get(), result);
-  // t.deepEqual(parse("(max-weight: 3px) or (orientation), screen").get(), result);
+  t.deepEqual(parse("(unknown), screen").get(), result);
+  t.deepEqual(
+    parse("(max-weight: 3px) or (orientation), screen").get(),
+    result
+  );
 
   // invalid min-/max- prefix
-  // t.deepEqual(parse("(min-orientation: portrait), screen").get(), result);
+  t.deepEqual(parse("(min-orientation: portrait), screen").get(), result);
 
   // unknown mf-value
   t.deepEqual(parse("(max-width: 3km), screen").get(), result);
