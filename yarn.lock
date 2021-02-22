@@ -1899,7 +1899,6 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-iterable": ^0.10.0
     "@siteimprove/alfa-option": ^0.10.0
-    "@siteimprove/alfa-refinement": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-thunk": ^0.10.0
   languageName: unknown

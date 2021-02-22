@@ -1,16 +1,13 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-const { isObject } = Refinement;
-
-export class Cache<K, V> {
-  public static empty<K, V>(): Cache<K, V> {
+export class Cache<K extends object, V> {
+  public static empty<K extends object, V>(): Cache<K, V> {
     return new Cache();
   }
 
-  private readonly _storage = Storage.empty<K, V>();
+  private readonly _storage = new WeakMap<K, V>();
 
   private constructor() {}
 
@@ -19,14 +16,14 @@ export class Cache<K, V> {
   public get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
 
   public get<U extends V = V>(key: K, ifMissing?: Thunk<U>): V | Option<V> {
-    if (this.has(key)) {
-      const value = this._storage.get(key);
+    if (this._storage.has(key)) {
+      const value = this._storage.get(key)!;
 
       if (ifMissing === undefined) {
-        return value;
+        return Option.of(value);
       }
 
-      return value.getOrElse(ifMissing);
+      return value;
     }
 
     if (ifMissing === undefined) {
@@ -59,58 +56,9 @@ export class Cache<K, V> {
 }
 
 export namespace Cache {
-  export function from<K, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V> {
+  export function from<K extends object, V>(
+    iterable: Iterable<readonly [K, V]>
+  ): Cache<K, V> {
     return Cache.empty<K, V>().merge(iterable);
-  }
-}
-
-class Storage<K, V> {
-  public static empty<K, V>(): Storage<K, V> {
-    return new Storage();
-  }
-
-  private readonly _objects: WeakMap<object, V> = new WeakMap();
-  private readonly _primitives: Map<unknown, V> = new Map();
-
-  private constructor() {}
-
-  public get(key: K): Option<V> {
-    let value: V;
-
-    if (isObject(key)) {
-      if (this._objects.has(key)) {
-        value = this._objects.get(key)!;
-      } else {
-        return None;
-      }
-    } else {
-      if (this._primitives.has(key)) {
-        value = this._primitives.get(key)!;
-      } else {
-        return None;
-      }
-    }
-
-    return Some.of(value);
-  }
-
-  public has(key: K) {
-    if (isObject(key)) {
-      return this._objects.has(key);
-    } else {
-      return this._primitives.has(key);
-    }
-  }
-
-  public set(key: K, value: V) {
-    if (isObject(key)) {
-      this._objects.set(key, value);
-    } else {
-      this._primitives.set(key, value);
-    }
-  }
-
-  public toJSON() {
-    return {};
   }
 }
