@@ -262,6 +262,14 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public subtract(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.subtract(this, iterable));
+  }
+
+  public intersect(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.intersect(this, iterable));
+  }
+
   public first(): Option<T> {
     return this._tail.isEmpty() ? None : Option.of(this._tail.values[0]);
   }
@@ -358,14 +366,6 @@ export class List<T> implements Collection.Indexed<T> {
 
   public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
-  }
-
-  public subtract(iterable: Iterable<T>): List<T> {
-    return List.from(Iterable.subtract(this, iterable));
-  }
-
-  public intersect(iterable: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, iterable));
   }
 
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {

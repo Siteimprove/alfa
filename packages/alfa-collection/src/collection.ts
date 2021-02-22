@@ -83,6 +83,8 @@ export namespace Collection {
     set(key: K, value: V): Keyed<K, V>;
     delete(key: K, value: V): Keyed<K, V>;
     concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
+    subtract(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
+    intersect(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
   }
 
   export namespace Keyed {
@@ -125,6 +127,8 @@ export namespace Collection {
     add(value: T): Unkeyed<T>;
     delete(value: T): Unkeyed<T>;
     concat(iterable: Iterable<T>): Unkeyed<T>;
+    subtract(iterable: Iterable<T>): Unkeyed<T>;
+    intersect(iterable: Iterable<T>): Unkeyed<T>;
   }
 
   export namespace Unkeyed {
@@ -171,6 +175,8 @@ export namespace Collection {
     append(value: T): Indexed<T>;
     prepend(value: T): Indexed<T>;
     concat(iterable: Iterable<T>): Indexed<T>;
+    subtract(iterable: Iterable<T>): Indexed<T>;
+    intersect(iterable: Iterable<T>): Indexed<T>;
     first(): Option<T>;
     last(): Option<T>;
     take(count: number): Indexed<T>;

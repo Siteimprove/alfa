@@ -52,6 +52,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   append(value: T): Sequence<T>;
   prepend(value: T): Sequence<T>;
   concat(iterable: Iterable<T>): Sequence<T>;
+  subtract(iterable: Iterable<T>): Sequence<T>;
+  intersect(iterable: Iterable<T>): Sequence<T>;
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
@@ -78,8 +80,6 @@ export interface Sequence<T> extends Collection.Indexed<T> {
 
   // Sequence<T> methods
 
-  subtract(iterable: Iterable<T>): Sequence<T>;
-  intersect(iterable: Iterable<T>): Sequence<T>;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
 
