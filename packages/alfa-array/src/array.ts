@@ -121,6 +121,13 @@ export namespace Array {
     return accumulator;
   }
 
+  export function apply<T, U>(
+    iterable: ReadonlyArray<T>,
+    mapper: ReadonlyArray<Mapper<T, U>>
+  ): Array<U> {
+    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
+  }
+
   export function filter<T, U extends T>(
     array: ReadonlyArray<T>,
     refinement: Refinement<T, U, [index: number]>
@@ -309,6 +316,22 @@ export namespace Array {
     return result;
   }
 
+  export function get<T>(array: ReadonlyArray<T>, index: number): Option<T> {
+    return index < array.length ? Option.of(array[index]) : None;
+  }
+
+  export function has<T>(array: ReadonlyArray<T>, index: number): boolean {
+    return index < array.length;
+  }
+
+  export function set<T>(array: Array<T>, index: number, value: T): Array<T> {
+    if (index < array.length) {
+      array[index] = value;
+    }
+
+    return array;
+  }
+
   export function insert<T>(
     array: Array<T>,
     index: number,
@@ -326,6 +349,35 @@ export namespace Array {
   export function prepend<T>(array: Array<T>, value: T): Array<T> {
     array.unshift(value);
     return array;
+  }
+
+  export function concat<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.concat(array, ...iterables)];
+  }
+
+  export function subtract<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.subtract(array, ...iterables)];
+  }
+
+  export function intersect<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.intersect(array, ...iterables)];
+  }
+
+  export function first<T>(array: ReadonlyArray<T>): Option<T> {
+    return array.length > 0 ? Option.of(array[0]) : None;
+  }
+
+  export function last<T>(array: ReadonlyArray<T>): Option<T> {
+    return array.length > 0 ? Option.of(array[array.length - 1]) : None;
   }
 
   export function sort<T extends Comparable<T>>(array: Array<T>): Array<T> {
@@ -400,6 +452,10 @@ export namespace Array {
     }
 
     Hash.writeUint32(hash, array.length);
+  }
+
+  export function iterator<T>(array: ReadonlyArray<T>): Iterator<T> {
+    return array[Symbol.iterator]();
   }
 
   export function toJSON<T>(
