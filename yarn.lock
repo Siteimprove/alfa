@@ -1786,8 +1786,8 @@ __metadata:
     "@siteimprove/alfa-option": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
-    rxjs: ^6.5.2
-    zone.js: ^0.11.1
+    rxjs: ^6.6.3
+    zone.js: ^0.11.4
   languageName: unknown
   linkType: soft
 
@@ -1943,7 +1943,7 @@ __metadata:
     "@siteimprove/alfa-mapper": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
     "@types/chai": ^4.1.7
-    chai: ^4.2.0
+    chai: ^4.3.0
   languageName: unknown
   linkType: soft
 
@@ -1988,7 +1988,7 @@ __metadata:
     "@siteimprove/alfa-web": ^0.10.0
     "@siteimprove/alfa-xpath": ^0.10.0
     "@types/node": ^14.14.31
-    enquirer: ^2.3.0
+    enquirer: ^2.3.6
   bin:
     alfa: bin/alfa.js
   languageName: unknown
@@ -2060,8 +2060,8 @@ __metadata:
     "@siteimprove/alfa-json": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
     "@types/browserslist": ^4.4.0
-    browserslist: ^4.4.1
-    mdn-browser-compat-data: 1.1.2
+    browserslist: ^4.16.3
+    mdn-browser-compat-data: ^1.1.2
   languageName: unknown
   linkType: soft
 
@@ -2129,7 +2129,7 @@ __metadata:
     "@siteimprove/alfa-mapper": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
-    cypress: ^6.0.1
+    cypress: ^6.5.0
   languageName: unknown
   linkType: soft
 
@@ -2224,7 +2224,7 @@ __metadata:
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@types/enzyme": ^3.1.18
-    enzyme: ^3.7.0
+    enzyme: ^3.11.0
   languageName: unknown
   linkType: soft
 
@@ -2372,8 +2372,8 @@ __metadata:
   resolution: "@siteimprove/alfa-highlight@workspace:packages/alfa-highlight"
   dependencies:
     chalk: ^4.1.0
-    emphasize: ^4.0.0
-    highlight.js: ^10.1.2
+    emphasize: ^4.2.0
+    highlight.js: ^10.6.0
   languageName: unknown
   linkType: soft
 
@@ -2463,7 +2463,7 @@ __metadata:
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@types/jasmine": ^3.3.12
-    jasmine: ^3.4.0
+    jasmine: ^3.6.4
   languageName: unknown
   linkType: soft
 
@@ -2478,7 +2478,7 @@ __metadata:
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@types/jest": ^26.0.10
-    jest: ^26.4.2
+    jest: ^26.6.3
   languageName: unknown
   linkType: soft
 
@@ -2493,7 +2493,7 @@ __metadata:
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@types/jquery": ^3.3.29
-    jquery: ^3.4.1
+    jquery: ^3.5.1
   languageName: unknown
   linkType: soft
 
@@ -2737,8 +2737,8 @@ __metadata:
     "@siteimprove/alfa-web": ^0.10.0
     "@types/react": ^17.0.0
     "@types/react-test-renderer": ^17.0.0
-    react: ^17.0.0
-    react-test-renderer: ^17.0.0
+    react: ^17.0.1
+    react-test-renderer: ^17.0.1
   languageName: unknown
   linkType: soft
 
@@ -3114,8 +3114,8 @@ __metadata:
     "@siteimprove/alfa-test": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@vue/test-utils": ^1.0.0-beta.29
-    vue: ^2.6.10
-    vue-template-compiler: ^2.6.10
+    vue: ^2.6.12
+    vue-template-compiler: ^2.6.12
   languageName: unknown
   linkType: soft
 
@@ -3183,11 +3183,11 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@types/node": ^14.14.31
-    axios: ^0.21.0
+    axios: ^0.21.1
     lerna: ^3.22.1
-    minimist: ^1.2.0
-    prettier: 2.2.1
-    typescript: ^4.0.2
+    minimist: ^1.2.5
+    prettier: ^2.2.1
+    typescript: ^4.1.5
   languageName: unknown
   linkType: soft
 
@@ -3390,6 +3390,13 @@ __metadata:
   version: 14.14.25
   resolution: "@types/node@npm:14.14.25"
   checksum: 64c42730f4169e49ec378870622ef06c5d820b31340e224cc1b45bf06c8b0cfa28daa587b4ae2b8ea1f712ef049bae4d9c92925b157ba9ba7cde3b22ff552513
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:12.12.50":
+  version: 12.12.50
+  resolution: "@types/node@npm:12.12.50"
+  checksum: 02e4e057a353e61eb8b4146633cc766f932951bc11cff9707af03aca8eaf9813133bfca3f2d4b4329cb41a0b892698bf04a1fce1e134813bd8a00dd5b7d36288
   languageName: node
   linkType: hard
 
@@ -4152,7 +4159,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.0":
+"axios@npm:^0.21.1":
   version: 0.21.1
   resolution: "axios@npm:0.21.1"
   dependencies:
@@ -4370,7 +4377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.4.1":
+"browserslist@npm:^4.16.3":
   version: 4.16.3
   resolution: "browserslist@npm:4.16.3"
   dependencies:
@@ -4656,7 +4663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.2.0":
+"chai@npm:^4.3.0":
   version: 4.3.0
   resolution: "chai@npm:4.3.0"
   dependencies:
@@ -5444,13 +5451,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^6.0.1":
-  version: 6.4.0
-  resolution: "cypress@npm:6.4.0"
+"cypress@npm:^6.5.0":
+  version: 6.6.0
+  resolution: "cypress@npm:6.6.0"
   dependencies:
     "@cypress/listr-verbose-renderer": ^0.4.1
     "@cypress/request": ^2.88.5
     "@cypress/xvfb": ^1.2.4
+    "@types/node": 12.12.50
     "@types/sinonjs__fake-timers": ^6.0.1
     "@types/sizzle": ^2.3.2
     arch: ^2.1.2
@@ -5463,7 +5471,7 @@ __metadata:
     commander: ^5.1.0
     common-tags: ^1.8.0
     dayjs: ^1.9.3
-    debug: ^4.1.1
+    debug: 4.3.2
     eventemitter2: ^6.4.2
     execa: ^4.0.2
     executable: ^4.1.1
@@ -5480,7 +5488,7 @@ __metadata:
     moment: ^2.29.1
     ospath: ^1.2.2
     pretty-bytes: ^5.4.1
-    ramda: ~0.26.1
+    ramda: ~0.27.1
     request-progress: ^3.0.0
     supports-color: ^7.2.0
     tmp: ~0.2.1
@@ -5489,7 +5497,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 90919d83dab9f291b5c1178dbd68c1fc084039991273e69f7be30cfaf788d2e8e9989671ef22322d906e7c753125f10fad06a7f87b57d353514bdba1a0b5279d
+  checksum: 669a9aea6b8b195fe2d41c599722f8fe65356f99b3f4a4d0acec87b49089dc9fd2beb39ad682c7b83b0ee403d511f0bcf5cb8f1b156a11e49ad2db376656b0b4
   languageName: node
   linkType: hard
 
@@ -5559,7 +5567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1":
+"debug@npm:4, debug@npm:4.3.2, debug@npm:^4.1.0, debug@npm:^4.1.1":
   version: 4.3.2
   resolution: "debug@npm:4.3.2"
   dependencies:
@@ -6014,7 +6022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emphasize@npm:^4.0.0":
+"emphasize@npm:^4.2.0":
   version: 4.2.0
   resolution: "emphasize@npm:4.2.0"
   dependencies:
@@ -6043,7 +6051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enquirer@npm:^2.3.0":
+"enquirer@npm:^2.3.6":
   version: 2.3.6
   resolution: "enquirer@npm:2.3.6"
   dependencies:
@@ -6092,7 +6100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enzyme@npm:^3.7.0":
+"enzyme@npm:^3.11.0":
   version: 3.11.0
   resolution: "enzyme@npm:3.11.0"
   dependencies:
@@ -7279,7 +7287,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^10.1.2":
+"highlight.js@npm:^10.6.0":
   version: 10.6.0
   resolution: "highlight.js@npm:10.6.0"
   checksum: ffe7a217915e6d4ea4545c5006df3b9d7de981eb0a9ddee77b57ab4d450b25e5d1bf7d5c2ea3b0696bd43f3fef12237507b17c082725a5a057be064a3f2582b0
@@ -8231,7 +8239,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jasmine@npm:^3.4.0":
+"jasmine@npm:^3.6.4":
   version: 3.6.4
   resolution: "jasmine@npm:3.6.4"
   dependencies:
@@ -8684,7 +8692,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jest@npm:^26.4.2":
+"jest@npm:^26.6.3":
   version: 26.6.3
   resolution: "jest@npm:26.6.3"
   dependencies:
@@ -8697,7 +8705,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jquery@npm:^3.4.1":
+"jquery@npm:^3.5.1":
   version: 3.5.1
   resolution: "jquery@npm:3.5.1"
   checksum: c50818c84837902a60938c85786feb612f346a9918f7285409d605449460790b3815ad8aaf5806f19e89f1a79b27d327802b421ab354fe213f3fd1801e3562e6
@@ -9545,7 +9553,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"mdn-browser-compat-data@npm:1.1.2":
+"mdn-browser-compat-data@npm:^1.1.2":
   version: 1.1.2
   resolution: "mdn-browser-compat-data@npm:1.1.2"
   dependencies:
@@ -10929,7 +10937,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.2.1":
+"prettier@npm:^2.2.1":
   version: 2.2.1
   resolution: "prettier@npm:2.2.1"
   bin:
@@ -11277,10 +11285,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"ramda@npm:~0.26.1":
-  version: 0.26.1
-  resolution: "ramda@npm:0.26.1"
-  checksum: 22e3fbfabdf45d7f7e8e0ff198be6c1f94d1cc16dd68f4c1786436b4583f8f1ef610a3bf0e8e8984c11346791da6ebadbe5b63dd29f2939bdfed7362d277c07b
+"ramda@npm:~0.27.1":
+  version: 0.27.1
+  resolution: "ramda@npm:0.27.1"
+  checksum: 9aa4655dffdca66f8ba2ceabebe51996d6c75f6a2fb901a150885ace22c5950c211dd589868780b7a91c1443771702634d4370e7572d8c63c60e4b4f61aa57a9
   languageName: node
   linkType: hard
 
@@ -11344,7 +11352,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:^17.0.0":
+"react-test-renderer@npm:^17.0.1":
   version: 17.0.1
   resolution: "react-test-renderer@npm:17.0.1"
   dependencies:
@@ -11358,7 +11366,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"react@npm:^17.0.0, react@npm:^17.0.1":
+"react@npm:^17.0.1":
   version: 17.0.1
   resolution: "react@npm:17.0.1"
   dependencies:
@@ -11874,7 +11882,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.3.3, rxjs@npm:^6.4.0, rxjs@npm:^6.5.2":
+"rxjs@npm:^6.3.3, rxjs@npm:^6.4.0, rxjs@npm:^6.6.3":
   version: 6.6.3
   resolution: "rxjs@npm:6.6.3"
   dependencies:
@@ -13159,7 +13167,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-typescript@^4.0.2:
+typescript@^4.1.5:
   version: 4.1.5
   resolution: "typescript@npm:4.1.5"
   bin:
@@ -13169,7 +13177,7 @@ typescript@^4.0.2:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.2#builtin<compat/typescript>":
+"typescript@patch:typescript@^4.1.5#builtin<compat/typescript>":
   version: 4.1.5
   resolution: "typescript@patch:typescript@npm%3A4.1.5#builtin<compat/typescript>::version=4.1.5&hash=cc6730"
   bin:
@@ -13441,7 +13449,7 @@ typescript@^4.0.2:
   languageName: node
   linkType: hard
 
-"vue-template-compiler@npm:^2.6.10":
+"vue-template-compiler@npm:^2.6.12":
   version: 2.6.12
   resolution: "vue-template-compiler@npm:2.6.12"
   dependencies:
@@ -13451,7 +13459,7 @@ typescript@^4.0.2:
   languageName: node
   linkType: hard
 
-"vue@npm:^2.6.10":
+"vue@npm:^2.6.12":
   version: 2.6.12
   resolution: "vue@npm:2.6.12"
   checksum: 92ed547e55a4b27a2a45aa9ab7ff5999f891dc9754562a37226dd190b323d9f99daec892dd8bd39786e404e6e065d808e165b1a0c127ce8d45fd1bde79ec7312
@@ -13978,11 +13986,11 @@ typescript@^4.0.2:
   languageName: node
   linkType: hard
 
-"zone.js@npm:^0.11.1":
-  version: 0.11.3
-  resolution: "zone.js@npm:0.11.3"
+"zone.js@npm:^0.11.4":
+  version: 0.11.4
+  resolution: "zone.js@npm:0.11.4"
   dependencies:
     tslib: ^2.0.0
-  checksum: de74c0e338f957a52ee905e6eb5406ccd0043b2e3666633816896dd0f56325953c9c747d6e3c6bf043062ad05117092d4d91bbb8cf5d55b0b73ee2d0b26af4be
+  checksum: 737caa3bbc336d9fcc6a753659d79a6a99e67382fdaf95dfe366fcc0160a1508307caca1d0e0064760ef70bf15a2b9052c64e2ff3fe0a16b83ba95475cfe94cc
   languageName: node
   linkType: hard
