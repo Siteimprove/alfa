@@ -1,13 +1,13 @@
-import { Lexer, Token, Function, Nth } from "@siteimprove/alfa-css";
+import { Token, Function, Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as dom from "@siteimprove/alfa-dom";
@@ -2060,29 +2060,5 @@ export namespace Selector {
     eof((token) => `Unexpected token ${token}`)
   );
 
-  export function parse(input: string) {
-    return parseList(Slice.of(Lexer.lex(input)))
-      .flatMap(([tokens, selector]) => {
-        const result: Result<typeof selector, string> =
-          tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token");
-
-        return result;
-      })
-      .ok();
-  }
-
-  export function matches(
-    selector: string | Selector,
-    context?: Context
-  ): Predicate<Element> {
-    let parsed: Selector;
-
-    if (isString(selector)) {
-      parsed = parse(selector).getOrElse(() => Not.of(Universal.empty()));
-    } else {
-      parsed = selector;
-    }
-
-    return (element) => parsed.matches(element, context);
-  }
+  export const parse = parseSelector;
 }

@@ -1,6 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token";
 
@@ -8,7 +9,7 @@ const { fromCharCode } = String;
 const { zeroOrMore } = Parser;
 
 export namespace Lexer {
-  export function lex(input: string): Array<Token> {
+  export function lex(input: string): Slice<Token> {
     const points = new Array<number>(input.length);
 
     for (let i = 0, n = input.length; i < n; i++) {
@@ -29,7 +30,7 @@ export namespace Lexer {
       tokens.push(token);
     }
 
-    return tokens;
+    return Slice.of(tokens);
   }
 }
 

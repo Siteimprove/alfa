@@ -44,18 +44,18 @@ export class Cons<T> implements Sequence<T> {
     return false;
   }
 
-  public forEach(callback: Callback<T, void, [number]>): void {
+  public forEach(callback: Callback<T, void, [index: number]>): void {
     Iterable.forEach(this, callback);
   }
 
-  public map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
+  public map<U>(mapper: Mapper<T, U, [index: number]>): Cons<U>;
 
   /**
    * @internal
    */
-  public map<U>(mapper: Mapper<T, U, [number]>, index: number): Cons<U>;
+  public map<U>(mapper: Mapper<T, U, [index: number]>, index: number): Cons<U>;
 
-  public map<U>(mapper: Mapper<T, U, [number]>, index = 0): Cons<U> {
+  public map<U>(mapper: Mapper<T, U, [index: number]>, index = 0): Cons<U> {
     return new Cons(
       mapper(this._head, index),
       this._tail.map((tail) =>
@@ -64,18 +64,20 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
-  public flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
+  public flatMap<U>(
+    mapper: Mapper<T, Sequence<U>, [index: number]>
+  ): Sequence<U>;
 
   /**
    * @internal
    */
   public flatMap<U>(
-    mapper: Mapper<T, Sequence<U>, [number]>,
+    mapper: Mapper<T, Sequence<U>, [index: number]>,
     index: number
   ): Sequence<U>;
 
   public flatMap<U>(
-    mapper: Mapper<T, Sequence<U>, [number]>,
+    mapper: Mapper<T, Sequence<U>, [index: number]>,
     index = 0
   ): Sequence<U> {
     let next: Cons<T> = this;
@@ -106,7 +108,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U {
+  public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -128,17 +130,23 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public filter<U extends T>(
-    refinement: Refinement<T, U, [number]>
+    refinement: Refinement<T, U, [index: number]>
   ): Sequence<U>;
 
-  public filter(predicate: Predicate<T, [number]>): Sequence<T>;
+  public filter(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
   /**
    * @internal
    */
-  public filter(predicate: Predicate<T, [number]>, index: number): Sequence<T>;
+  public filter(
+    predicate: Predicate<T, [index: number]>,
+    index: number
+  ): Sequence<T>;
 
-  public filter(predicate: Predicate<T, [number]>, index = 0): Sequence<T> {
+  public filter(
+    predicate: Predicate<T, [index: number]>,
+    index = 0
+  ): Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
@@ -162,20 +170,22 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U, [number]>
+    refinement: Refinement<T, U, [index: number]>
   ): Sequence<Exclude<T, U>>;
 
-  public reject(predicate: Predicate<T, [number]>): Sequence<T>;
+  public reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
-  public reject(predicate: Predicate<T, [number]>): Sequence<T> {
+  public reject(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+  public find<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Option<U>;
 
-  public find(predicate: Predicate<T, [number]>): Option<T>;
+  public find(predicate: Predicate<T, [index: number]>): Option<T>;
 
-  public find(predicate: Predicate<T, [number]>): Option<T> {
+  public find(predicate: Predicate<T, [index: number]>): Option<T> {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -200,18 +210,18 @@ export class Cons<T> implements Sequence<T> {
     return this.some(equals(value));
   }
 
-  public collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
+  public collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
 
   /**
    * @internal
    */
   public collect<U>(
-    mapper: Mapper<T, Option<U>, [number]>,
+    mapper: Mapper<T, Option<U>, [index: number]>,
     index: number
   ): Sequence<U>;
 
   public collect<U>(
-    mapper: Mapper<T, Option<U>, [number]>,
+    mapper: Mapper<T, Option<U>, [index: number]>,
     index: number = 0
   ): Sequence<U> {
     let next: Cons<T> = this;
@@ -238,7 +248,9 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U> {
+  public collectFirst<U>(
+    mapper: Mapper<T, Option<U>, [index: number]>
+  ): Option<U> {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -259,7 +271,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public some(predicate: Predicate<T, [number]>): boolean {
+  public some(predicate: Predicate<T, [index: number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -278,11 +290,11 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public none(predicate: Predicate<T, [number]>): boolean {
+  public none(predicate: Predicate<T, [index: number]>): boolean {
     return this.every(not(predicate));
   }
 
-  public every(predicate: Predicate<T, [number]>): boolean {
+  public every(predicate: Predicate<T, [index: number]>): boolean {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -301,7 +313,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public count(predicate: Predicate<T, [number]>): number {
+  public count(predicate: Predicate<T, [index: number]>): number {
     return this.reduce(
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
       0
@@ -398,6 +410,14 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public subtract(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => !Iterable.includes(iterable, value));
+  }
+
+  public intersect(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => Iterable.includes(iterable, value));
+  }
+
   public first(): Option<T> {
     return Option.of(this._head);
   }
@@ -431,21 +451,24 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
-  public takeWhile(predicate: Predicate<T, [number]>): Sequence<T> {
+  public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.takeUntil(not(predicate));
   }
 
-  public takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+  public takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
   /**
    * @internal
    */
   public takeUntil(
-    predicate: Predicate<T, [number]>,
+    predicate: Predicate<T, [index: number]>,
     index: number
   ): Sequence<T>;
 
-  public takeUntil(predicate: Predicate<T, [number]>, index = 0): Sequence<T> {
+  public takeUntil(
+    predicate: Predicate<T, [index: number]>,
+    index = 0
+  ): Sequence<T> {
     if (predicate(this._head, index)) {
       return Nil;
     }
@@ -464,6 +487,14 @@ export class Cons<T> implements Sequence<T> {
     return this.skip(this.size - count);
   }
 
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.reverse().takeWhile(predicate).reverse();
+  }
+
+  public takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.takeLastWhile(not(predicate));
+  }
+
   public skip(count: number): Sequence<T> {
     let next: Cons<T> = this;
 
@@ -480,7 +511,7 @@ export class Cons<T> implements Sequence<T> {
     return next;
   }
 
-  public skipWhile(predicate: Predicate<T, [number]>): Sequence<T> {
+  public skipWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     let next: Cons<T> = this;
     let index = 0;
 
@@ -497,12 +528,32 @@ export class Cons<T> implements Sequence<T> {
     return next;
   }
 
-  public skipUntil(predicate: Predicate<T, [number]>): Sequence<T> {
+  public skipUntil(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.skipWhile(not(predicate));
   }
 
   public skipLast(count: number): Sequence<T> {
     return this.take(this.size - count);
+  }
+
+  public skipLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.reverse().skipWhile(predicate).reverse();
+  }
+
+  public skipLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.skipLastWhile(not(predicate));
+  }
+
+  public trim(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.trimLeading(predicate).trimTrailing(predicate);
+  }
+
+  public trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.skipWhile(predicate);
+  }
+
+  public trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    return this.skipLastWhile(predicate);
   }
 
   public rest(): Sequence<T> {
@@ -551,15 +602,9 @@ export class Cons<T> implements Sequence<T> {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
-  public subtract(iterable: Iterable<T>): Sequence<T> {
-    return this.filter((value) => !Iterable.includes(iterable, value));
-  }
-
-  public intersect(iterable: Iterable<T>): Sequence<T> {
-    return this.filter((value) => Iterable.includes(iterable, value));
-  }
-
-  public groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>> {
+  public groupBy<K>(
+    grouper: Mapper<T, K, [index: number]>
+  ): Map<K, Sequence<T>> {
     return this.reduce((groups, value, index) => {
       const group = grouper(value, index);
 

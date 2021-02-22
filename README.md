@@ -127,7 +127,7 @@ Alfa will run in any [ECMAScript 2018](https://www.ecma-international.org/ecma-2
 
 ## Building
 
-In order to build Alfa, a recent version (>= 10) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. For builds, [npm](https://www.npmjs.com/) is **not** supported as Alfa makes use of [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 12) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install

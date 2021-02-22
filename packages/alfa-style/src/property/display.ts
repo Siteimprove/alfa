@@ -74,19 +74,48 @@ export type Computed = Specified;
  * @internal
  */
 export const parse = either(
-  map(Keyword.parse("contents", "none"), (box) => [box] as const),
+  map(Keyword.parse("contents", "none"), (keyword) => [keyword] as const),
   either(
     map(
       Keyword.parse("block", "inline", "run-in"),
-      (outside) => [outside, Keyword.of("flow")] as const
+      (keyword) => [keyword, Keyword.of("flow")] as const
     ),
-    map(
-      Keyword.parse("flow", "flow-root", "table", "flex", "grid", "ruby"),
-      (inside) =>
-        [
-          inside.value === "ruby" ? Keyword.of("inline") : Keyword.of("block"),
-          inside,
-        ] as const
+    either(
+      map(
+        Keyword.parse("flow", "flow-root", "table", "flex", "grid", "ruby"),
+        (keyword) =>
+          [
+            keyword.value === "ruby"
+              ? Keyword.of("inline")
+              : Keyword.of("block"),
+            keyword,
+          ] as const
+      ),
+      map(
+        Keyword.parse(
+          "inline-block",
+          "inline-table",
+          "inline-flex",
+          "inline-grid"
+        ),
+        (keyword) => {
+          const inline = Keyword.of("inline");
+
+          switch (keyword.value) {
+            case "inline-block":
+              return [inline, Keyword.of("flow-root")] as const;
+
+            case "inline-table":
+              return [inline, Keyword.of("table")] as const;
+
+            case "inline-flex":
+              return [inline, Keyword.of("flex")] as const;
+
+            case "inline-grid":
+              return [inline, Keyword.of("grid")] as const;
+          }
+        }
+      )
     )
   )
 );

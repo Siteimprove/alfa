@@ -9,7 +9,7 @@ import {
 } from "@siteimprove/alfa-http";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
-import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Timeout } from "@siteimprove/alfa-time";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
@@ -113,7 +113,9 @@ export class Scraper {
 
       await page.setJavaScriptEnabled(device.scripting.enabled);
 
-      await page.authenticate(credentials);
+      if (credentials !== null) {
+        await page.authenticate(credentials);
+      }
 
       await page.setExtraHTTPHeaders(
         [...headers].reduce<Record<string, string>>((headers, header) => {
@@ -158,7 +160,7 @@ export class Scraper {
             await takeScreenshot(page, screenshot);
           }
 
-          return Ok.of(
+          return Result.of(
             Page.of(
               parseRequest((await request)!),
               await parseResponse((await response)!),
@@ -199,7 +201,7 @@ export namespace Scraper {
   }
 }
 
-function parseRequest(request: puppeteer.Request): Request {
+function parseRequest(request: puppeteer.HTTPRequest): Request {
   return Request.of(
     request.method(),
     URL.parse(request.url()).get(),
@@ -209,7 +211,9 @@ function parseRequest(request: puppeteer.Request): Request {
   );
 }
 
-async function parseResponse(response: puppeteer.Response): Promise<Response> {
+async function parseResponse(
+  response: puppeteer.HTTPResponse
+): Promise<Response> {
   return Response.of(
     URL.parse(response.url()).get(),
     response.status(),
@@ -239,7 +243,8 @@ async function takeScreenshot(
         type: "png",
         omitBackground: !screenshot.type.background,
         fullPage: true,
-      });
+        encoding: "binary",
+      }) as Promise<Buffer>;
 
     case "jpeg":
       return page.screenshot({
@@ -247,6 +252,7 @@ async function takeScreenshot(
         type: "jpeg",
         quality: screenshot.type.quality,
         fullPage: true,
-      });
+        encoding: "binary",
+      }) as Promise<Buffer>;
   }
 }

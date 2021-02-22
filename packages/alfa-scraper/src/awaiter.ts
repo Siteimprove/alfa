@@ -9,7 +9,7 @@ export type Awaiter<T = unknown> = (
 ) => Promise<Result<T, string>>;
 
 export namespace Awaiter {
-  export function ready(): Awaiter<puppeteer.Response> {
+  export function ready(): Awaiter<puppeteer.HTTPResponse | null> {
     return async (page, timeout) => {
       try {
         return Ok.of(
@@ -26,7 +26,7 @@ export namespace Awaiter {
     };
   }
 
-  export function loaded(): Awaiter<puppeteer.Response> {
+  export function loaded(): Awaiter<puppeteer.HTTPResponse | null> {
     return async (page, timeout) => {
       try {
         return Ok.of(
@@ -43,7 +43,7 @@ export namespace Awaiter {
     };
   }
 
-  export function idle(): Awaiter<puppeteer.Response> {
+  export function idle(): Awaiter<puppeteer.HTTPResponse | null> {
     return async (page, timeout) => {
       try {
         return Ok.of(
@@ -62,8 +62,8 @@ export namespace Awaiter {
 
   export function duration(
     duration: number,
-    after: Awaiter<puppeteer.Response> = loaded()
-  ): Awaiter<puppeteer.Response> {
+    after: Awaiter<puppeteer.HTTPResponse | null> = loaded()
+  ): Awaiter<puppeteer.HTTPResponse | null> {
     return async (page, timeout) => {
       const result = await after(page, timeout);
 
@@ -77,7 +77,7 @@ export namespace Awaiter {
 
   export function selector(
     selector: string
-  ): Awaiter<puppeteer.ElementHandle<Element>> {
+  ): Awaiter<puppeteer.ElementHandle<Element> | null> {
     return async (page, timeout) => {
       try {
         return Ok.of(
@@ -93,7 +93,7 @@ export namespace Awaiter {
 
   export function xpath(
     expression: string
-  ): Awaiter<puppeteer.ElementHandle<Element>> {
+  ): Awaiter<puppeteer.ElementHandle<Element> | null> {
     return async (page, timeout) => {
       try {
         return Ok.of(

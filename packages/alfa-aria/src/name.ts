@@ -726,10 +726,7 @@ export namespace Name {
     )
       .map((names) => Sequence.from(names).collect((name) => name))
       .map((names) => {
-        const data = names
-          .map((name) => name.value)
-          .join(" ")
-          .trim();
+        const data = flatten(names.map((name) => name.value).join(" "));
 
         if (data === "") {
           return None;
@@ -750,7 +747,7 @@ export namespace Name {
   export function fromLabel(
     attribute: Attribute
   ): Branched<Option<Name>, Browser> {
-    const data = flatten(attribute.value).trim();
+    const data = flatten(attribute.value);
 
     if (data === "") {
       return Branched.of(None);
@@ -783,20 +780,22 @@ export namespace Name {
     )
       .map((names) => Sequence.from(names).collect((name) => name))
       .map((names) => {
-        const data = names
-          .map((name) => name.value)
-          .join(" ")
-          .trim();
+        const name = flatten(names.map((name) => name.value).join(" "));
 
-        if (data === "") {
+        if (name === "") {
           return None;
         }
 
         return Option.of(
-          Name.of(
-            data,
-            names.map((name) => Source.reference(attribute, name))
-          )
+          Name.of(name, [
+            Source.reference(
+              attribute,
+              Name.of(
+                name,
+                names.flatMap((name) => Sequence.from(name.source))
+              )
+            ),
+          ])
         );
       });
   }
@@ -872,6 +871,6 @@ function isHidden(element: Element, device: Device): boolean {
     !isRendered(element, device) ||
     element
       .attribute("aria-hidden")
-      .some((attribute) => attribute.value === "true")
+      .some((attribute) => attribute.value.toLowerCase() === "true")
   );
 }

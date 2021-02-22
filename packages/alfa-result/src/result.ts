@@ -15,8 +15,8 @@ import { Err } from "./err";
 import { Ok } from "./ok";
 
 export interface Result<T, E = T>
-  extends Monad<T>,
-    Functor<T>,
+  extends Functor<T>,
+    Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
