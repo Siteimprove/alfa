@@ -124,17 +124,17 @@ export namespace Array {
   export function filter<T, U extends T>(
     array: ReadonlyArray<T>,
     refinement: Refinement<T, U, [index: number]>
-  ): Iterable<U>;
+  ): Array<U>;
 
   export function filter<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T>;
+  ): Array<T>;
 
   export function filter<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T> {
+  ): Array<T> {
     const result: Array<T> = [];
 
     for (let i = 0, n = array.length; i < n; i++) {
@@ -151,17 +151,17 @@ export namespace Array {
   export function reject<T, U extends T>(
     array: ReadonlyArray<T>,
     refinement: Refinement<T, U, [index: number]>
-  ): Iterable<Exclude<T, U>>;
+  ): Array<Exclude<T, U>>;
 
   export function reject<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T>;
+  ): Array<T>;
 
   export function reject<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T> {
+  ): Array<T> {
     return filter(array, not(predicate));
   }
 
