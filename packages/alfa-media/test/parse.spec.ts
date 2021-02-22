@@ -1,14 +1,21 @@
+/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";
 
 import { Media } from "../src";
+import { Query } from "../src/query";
+import { Condition } from "../src/condition";
 
 function parse(input: string) {
   return Media.parse(Lexer.lex(input)).map(([, query]) => query.toJSON());
 }
 
 test(".parse() parses a simple query", (t) => {
+  const foo = Lexer.lex("(orientation: portrait)");
+
+  // console.dir(Query.parseQuery(foo).toJSON(), { depth: null });
+
   t.deepEqual(parse("(orientation: portrait)").get(), [
     {
       type: "query",
@@ -202,7 +209,14 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
 
 test(".parse() does not parse a list that mixes combinators", (t) => {
   t.deepEqual(
-    parse("screen and (orientation: portrait) or (min-width: 100px)").isErr(),
-    true
+    parse("screen and (orientation: portrait) or (min-width: 100px)").get(),
+    [
+      {
+        type: "query",
+        modifier: "not",
+        mediaType: { type: "type", name: "all" },
+        condition: null,
+      },
+    ]
   );
 });

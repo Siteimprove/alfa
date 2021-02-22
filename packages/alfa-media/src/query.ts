@@ -8,8 +8,9 @@ import * as json from "@siteimprove/alfa-json";
 import { Condition } from "./condition";
 import { Media } from "./media";
 import { Type } from "./type";
+import { Result } from "@siteimprove/alfa-result";
 
-const { delimited, either, map, option, pair, right } = Parser;
+const { delimited, either, eof, left, map, option, pair, peek, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-query
@@ -125,7 +126,7 @@ export namespace Query {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-query
    */
-  export const parse = either(
+  export const parseQuery = either(
     map(Condition.parse, (condition) =>
       Query.of(None, None, Option.of(condition))
     ),
@@ -145,5 +146,26 @@ export namespace Query {
       ([[modifier, type], condition]) =>
         Query.of(modifier, Option.of(type), condition)
     )
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#error-handling
+   *
+   * If the query does not respect the grammar, the parser panics until the end of the query
+   * (next comma or eof)
+   */
+  const notAll = () =>
+    Query.of(Option.of(Modifier.Not), Option.of(Type.of("all")), None);
+
+  export const parse = either(
+    left(
+      parseQuery,
+      either(
+        peek(Token.parseComma),
+        eof((token) => `Unexpected token ${token}`)
+      )
+    ),
+    (input) =>
+      Result.of([input.skipUntil((token) => token.type === "comma"), notAll()])
   );
 }
