@@ -8,7 +8,6 @@ import * as json from "@siteimprove/alfa-json";
 import { Media } from "./media";
 import { Resolver } from "./resolver";
 import { Value } from "./value";
-import { Slice } from "@siteimprove/alfa-slice";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 const { delimited, either, map, mapResult, option, separatedPair } = Parser;
