@@ -51,7 +51,6 @@
     { "path": "alfa-http" },
     { "path": "alfa-iana" },
     { "path": "alfa-interviewer" },
-    { "path": "alfa-interviewer-console" },
     { "path": "alfa-iterable" },
     { "path": "alfa-jasmine" },
     { "path": "alfa-jest" },
