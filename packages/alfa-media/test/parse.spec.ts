@@ -5,17 +5,12 @@ import { Lexer } from "@siteimprove/alfa-css";
 
 import { Media } from "../src";
 import { Query } from "../src/query";
-import { Condition } from "../src/condition";
 
 function parse(input: string) {
   return Media.parse(Lexer.lex(input)).map(([, query]) => query.toJSON());
 }
 
 test(".parse() parses a simple query", (t) => {
-  const foo = Lexer.lex("(orientation: portrait)");
-
-  // console.dir(Query.parseQuery(foo).toJSON(), { depth: null });
-
   t.deepEqual(parse("(orientation: portrait)").get(), [
     {
       type: "query",
@@ -207,16 +202,63 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
   ]);
 });
 
-test(".parse() does not parse a list that mixes combinators", (t) => {
+test(".parse() return 'not all' for syntactically incorrect queries", (t) => {
+  // wiping out the ful query, but keeping the rest of the query list.
+  const result: Media.List.JSON = [
+    {
+      type: "query",
+      modifier: "not",
+      mediaType: { type: "type", name: "all" },
+      condition: null,
+    },
+    {
+      type: "query",
+      modifier: null,
+      mediaType: { type: "type", name: "screen" },
+      condition: null,
+    },
+  ];
+
+  // "or" after a media type"
+  t.deepEqual(parse("screen or (min-width: 100px), screen").get(), result);
+
+  // mixing combinators
   t.deepEqual(
-    parse("screen and (orientation: portrait) or (min-width: 100px)").get(),
-    [
-      {
-        type: "query",
-        modifier: "not",
-        mediaType: { type: "type", name: "all" },
-        condition: null,
-      },
-    ]
+    parse(
+      "(orientation: portrait) and (scripting: none) or (min-width: 100px), screen"
+    ).get(),
+    result
   );
+
+  // invalid token in parenthesis
+  // t.deepEqual(parse("(example, all, ), screen").get(),
+  //   result
+  // );
+
+  // forbidden media-type keyword
+  // t.deepEqual(parse("or and (orientation), screen").get(), result);
+
+  // unknown mf-name
+  // t.deepEqual(parse("(unknown), screen").get(), result);
+  // t.deepEqual(parse("(max-weight: 3px) or (orientation), screen").get(), result);
+
+  // invalid min-/max- prefix
+  // t.deepEqual(parse("(min-orientation: portrait), screen").get(), result);
+
+  // unknown mf-value
+  t.deepEqual(parse("(max-width: 3km), screen").get(), result);
+
+  // disallowed mf-value
+  // t.deepEqual(parse("(orientation: 2px), screen").get(), result);
+});
+
+test(".parse() accepts unknown media types", (t) => {
+  t.deepEqual(parse("unknown").get(), [
+    {
+      type: "query",
+      modifier: null,
+      mediaType: { type: "type", name: "unknown" },
+      condition: null,
+    },
+  ]);
 });
