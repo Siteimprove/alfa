@@ -871,6 +871,6 @@ function isHidden(element: Element, device: Device): boolean {
     !isRendered(element, device) ||
     element
       .attribute("aria-hidden")
-      .some((attribute) => attribute.value === "true")
+      .some((attribute) => attribute.value.toLowerCase() === "true")
   );
 }
