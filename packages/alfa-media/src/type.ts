@@ -1,5 +1,5 @@
-import { Device } from "@siteimprove/alfa-device";
 import { Token } from "@siteimprove/alfa-css";
+import { Device } from "@siteimprove/alfa-device";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -7,7 +7,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Media } from "./media";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-const { map } = Parser;
+const { mapResult } = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-type
@@ -87,7 +87,7 @@ export namespace Type {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-type
    */
-  export const parse = map(Token.parseIdent(), (ident) =>
+  export const parse = mapResult(Token.parseIdent(), (ident) =>
     Type.from(ident.value)
   );
 }
