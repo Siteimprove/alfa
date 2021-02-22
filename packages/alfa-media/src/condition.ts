@@ -6,7 +6,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Feature } from "./feature/feature";
+import { Feature } from "./feature";
 import { Media } from "./media";
 
 const {
