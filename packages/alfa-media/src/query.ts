@@ -9,6 +9,7 @@ import { Condition } from "./condition";
 import { Media } from "./media";
 import { Type } from "./type";
 import { Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 const { delimited, either, eof, left, map, option, pair, peek, right } = Parser;
 
@@ -157,6 +158,45 @@ export namespace Query {
   const notAll = () =>
     Query.of(Option.of(Modifier.Not), Option.of(Type.of("all")), None);
 
+  /**
+   * Skips a full invalid media-query
+   *
+   * We need to skip until the next *top level* comma, so counting parenthesis on the way…
+   */
+  function skipInvalid(input: Slice<Token>): Slice<Token> {
+    let depth = 0; // parenthesis nesting depth
+
+    while (true) {
+      input = input.skipUntil((token) =>
+        ["comma", "open-parenthesis", "close-parenthesis"].includes(token.type)
+      );
+
+      // EOF, everything was bad
+      if (input.isEmpty()) {
+        return input;
+      }
+
+      const token = input.first().get()!;
+
+      // top-level comma !
+      if (depth === 0 && token.type === "comma") {
+        return input;
+      }
+
+      // counting parenthesis
+      if (token.type === "open-parenthesis") {
+        depth++;
+      }
+
+      if (token.type === "close-parenthesis") {
+        depth = depth === 0 ? 0 : depth - 1;
+      }
+
+      // skip this token, it has been handled.
+      input = input.skip(1);
+    }
+  }
+
   export const parse = either(
     left(
       parseQuery,
@@ -165,7 +205,6 @@ export namespace Query {
         eof((token) => `Unexpected token ${token}`)
       )
     ),
-    (input) =>
-      Result.of([input.skipUntil((token) => token.type === "comma"), notAll()])
+    (input) => Result.of([skipInvalid(input), notAll()])
   );
 }

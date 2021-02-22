@@ -4,7 +4,6 @@ import { test } from "@siteimprove/alfa-test";
 import { Lexer } from "@siteimprove/alfa-css";
 
 import { Media } from "../src";
-import { Query } from "../src/query";
 
 function parse(input: string) {
   return Media.parse(Lexer.lex(input)).map(([, query]) => query.toJSON());
@@ -231,9 +230,7 @@ test(".parse() return 'not all' for syntactically incorrect queries", (t) => {
   );
 
   // invalid token in parenthesis
-  // t.deepEqual(parse("(example, all, ), screen").get(),
-  //   result
-  // );
+  t.deepEqual(parse("(example, all, ), screen").get(), result);
 
   // forbidden media-type keyword
   t.deepEqual(parse("or and (orientation), screen").get(), result);
