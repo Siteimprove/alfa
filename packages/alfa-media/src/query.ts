@@ -9,7 +9,7 @@ import { Condition } from "./condition";
 import { Media } from "./media";
 import { Type } from "./type";
 
-const { map, either, option, pair, right, delimited } = Parser;
+const { delimited, either, map, option, pair, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-query

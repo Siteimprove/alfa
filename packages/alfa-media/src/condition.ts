@@ -10,13 +10,13 @@ import { Feature } from "./feature";
 import { Media } from "./media";
 
 const {
-  map,
+  delimited,
   either,
+  map,
+  oneOrMore,
   option,
   pair,
   right,
-  delimited,
-  oneOrMore,
   zeroOrMore,
 } = Parser;
 

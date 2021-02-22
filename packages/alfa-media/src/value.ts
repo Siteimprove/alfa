@@ -15,7 +15,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-const { map, either, option, pair, right, delimited } = Parser;
+const { delimited, either, map, option, separatedPair } = Parser;
 
 export interface Value<T = unknown>
   extends Functor<T>,
@@ -217,12 +217,10 @@ export namespace Value {
     ),
     either(
       map(
-        pair(
+        separatedPair(
           Token.parseNumber((number) => number.isInteger),
-          right(
-            delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-            Token.parseNumber((number) => number.isInteger)
-          )
+          delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+          Token.parseNumber((number) => number.isInteger)
         ),
         ([left, right]) => Percentage.of(left.value / right.value)
       ),

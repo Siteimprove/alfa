@@ -9,7 +9,7 @@ import { Media } from "./media";
 import { Resolver } from "./resolver";
 import { Value } from "./value";
 
-const { map, either, option, pair, right, delimited } = Parser;
+const { delimited, either, map, option, separatedPair } = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-feature
@@ -225,12 +225,10 @@ export namespace Feature {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-plain
    */
   const parsePlain = map(
-    pair(
+    separatedPair(
       parseName,
-      right(
-        delimited(option(Token.parseWhitespace), Token.parseColon),
-        Value.parse
-      )
+      delimited(option(Token.parseWhitespace), Token.parseColon),
+      Value.parse
     ),
     ([name, value]) => {
       if (name.startsWith("min-") || name.startsWith("max-")) {

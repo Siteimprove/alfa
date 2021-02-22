@@ -11,7 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Query } from "./query";
 import { Type } from "./type";
 
-const { map, option, left, delimited, separatedList, eof } = Parser;
+const { delimited, eof, left, map, option, separatedList } = Parser;
 
 export namespace Media {
   export interface Queryable<T extends json.JSON = json.JSON>
