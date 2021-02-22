@@ -236,7 +236,7 @@ test(".parse() return 'not all' for syntactically incorrect queries", (t) => {
   // );
 
   // forbidden media-type keyword
-  // t.deepEqual(parse("or and (orientation), screen").get(), result);
+  t.deepEqual(parse("or and (orientation), screen").get(), result);
 
   // unknown mf-name
   t.deepEqual(parse("(unknown), screen").get(), result);

@@ -5,6 +5,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import * as json from "@siteimprove/alfa-json";
 
 import { Media } from "./media";
+import { Err, Result } from "@siteimprove/alfa-result";
 
 const { map } = Parser;
 
@@ -73,8 +74,20 @@ export namespace Type {
     return value instanceof Type;
   }
 
+  export function from<N extends string = string>(
+    name: N
+  ): Result<Type<N>, string> {
+    if (["only", "not", "and", "or"].includes(name)) {
+      return Err.of(`Forbidden media-type ${name}`);
+    } else {
+      return Result.of(Type.of(name));
+    }
+  }
+
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-type
    */
-  export const parse = map(Token.parseIdent(), (ident) => Type.of(ident.value));
+  export const parse = map(Token.parseIdent(), (ident) =>
+    Type.from(ident.value)
+  );
 }
