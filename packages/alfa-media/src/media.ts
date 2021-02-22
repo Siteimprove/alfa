@@ -20,13 +20,6 @@ export namespace Media {
     matches: Predicate<Device>;
   }
 
-  export enum Comparator {
-    GreaterThan = ">",
-    GreaterThanEqual = ">=",
-    LessThan = "<",
-    LessThanEqual = "<=",
-  }
-
   export const { of: type, isType } = Type;
 
   export const { of: query, isQuery } = Query;
