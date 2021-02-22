@@ -1861,7 +1861,7 @@ __metadata:
     "@siteimprove/alfa-mapper": ^0.10.0
     "@siteimprove/alfa-result": ^0.10.0
     "@siteimprove/alfa-test": ^0.10.0
-    "@types/node": ^14.14.25
+    "@types/node": ^14.14.31
   languageName: unknown
   linkType: soft
 
@@ -1986,7 +1986,7 @@ __metadata:
     "@siteimprove/alfa-url": ^0.10.0
     "@siteimprove/alfa-web": ^0.10.0
     "@siteimprove/alfa-xpath": ^0.10.0
-    "@types/node": ^14.0.12
+    "@types/node": ^14.14.31
     enquirer: ^2.3.0
   bin:
     alfa: bin/alfa.js
@@ -2999,7 +2999,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-highlight": ^0.10.0
-    "@types/node": ^14.6.2
+    "@types/node": ^14.14.31
   languageName: unknown
   linkType: soft
 
@@ -3154,7 +3154,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@types/node": ^14.6.2
+    "@types/node": ^14.14.31
     axios: ^0.21.0
     lerna: ^3.22.1
     minimist: ^1.2.0
@@ -3358,10 +3358,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>= 8, @types/node@npm:^14.0.12, @types/node@npm:^14.14.25, @types/node@npm:^14.6.2":
+"@types/node@npm:*, @types/node@npm:>= 8":
   version: 14.14.25
   resolution: "@types/node@npm:14.14.25"
   checksum: 64c42730f4169e49ec378870622ef06c5d820b31340e224cc1b45bf06c8b0cfa28daa587b4ae2b8ea1f712ef049bae4d9c92925b157ba9ba7cde3b22ff552513
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^14.14.31":
+  version: 14.14.31
+  resolution: "@types/node@npm:14.14.31"
+  checksum: 635dc8a0898a923621e02ca179e17baa39fdfa44f0096fcc1b7046c9b32317e74a99956a7b45ca0e8069874f51f4e7873a418239a318a4b6e7936f6510ac5992
   languageName: node
   linkType: hard
 
