@@ -28,7 +28,7 @@
     "@siteimprove/alfa-jquery": "^0.10.0",
     "@siteimprove/alfa-mapper": "^0.10.0",
     "@siteimprove/alfa-web": "^0.10.0",
-    "cypress": "^6.0.1"
+    "cypress": "^6.5.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.10.0"

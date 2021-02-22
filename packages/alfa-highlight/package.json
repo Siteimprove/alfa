@@ -20,8 +20,8 @@
   ],
   "dependencies": {
     "chalk": "^4.1.0",
-    "emphasize": "^4.0.0",
-    "highlight.js": "^10.1.2"
+    "emphasize": "^4.2.0",
+    "highlight.js": "^10.6.0"
   },
   "publishConfig": {
     "access": "public",

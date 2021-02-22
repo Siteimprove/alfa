@@ -24,7 +24,7 @@
     "@siteimprove/alfa-mapper": "^0.10.0",
     "@siteimprove/alfa-web": "^0.10.0",
     "@types/jasmine": "^3.3.12",
-    "jasmine": "^3.4.0"
+    "jasmine": "^3.6.4"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.10.0"
