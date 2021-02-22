@@ -55,6 +55,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()`, `Iterable.set()`, `Iterable.insert()`, `Iterable.append()`, `Iterable.prepend()`, and `Iterable.iterator()` are now available.
 
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.isLessThan()`, `Comparable.isLessThanOrEqual()`, `Comparable.isGreaterThan()`, and `Comparable.isGreaterThanOrEqual()` are now available.
+
 ### Changed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `background-color` or `color`, and presence/absence of a `box-shadow` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#714](../../pull/714), [#715](../../pull/715))
