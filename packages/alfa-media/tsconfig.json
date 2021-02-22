@@ -6,6 +6,7 @@
     "src/condition.ts",
     "src/feature.ts",
     "src/media.ts",
+    "src/query.ts",
     "src/resolver.ts",
     "src/type.ts",
     "src/value.ts",
