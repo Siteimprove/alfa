@@ -18,14 +18,14 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "^0.10.0",
-    "@siteimprove/alfa-hash": "^0.10.0",
-    "@siteimprove/alfa-iterable": "^0.10.0",
-    "@siteimprove/alfa-json": "^0.10.0",
-    "@siteimprove/alfa-map": "^0.10.0"
+    "@siteimprove/alfa-equatable": "workspace:*",
+    "@siteimprove/alfa-hash": "workspace:*",
+    "@siteimprove/alfa-iterable": "workspace:*",
+    "@siteimprove/alfa-json": "workspace:*",
+    "@siteimprove/alfa-map": "workspace:*"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.10.0"
+    "@siteimprove/alfa-test": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

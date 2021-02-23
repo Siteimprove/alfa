@@ -18,12 +18,12 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-option": "^0.10.0",
-    "@siteimprove/alfa-refinement": "^0.10.0",
+    "@siteimprove/alfa-option": "workspace:*",
+    "@siteimprove/alfa-refinement": "workspace:*",
     "@types/sarif": "^2.1.3"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.10.0"
+    "@siteimprove/alfa-test": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

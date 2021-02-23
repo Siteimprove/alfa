@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.10.0"
+    "@siteimprove/alfa-test": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

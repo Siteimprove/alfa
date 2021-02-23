@@ -18,21 +18,21 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-css": "^0.10.0",
-    "@siteimprove/alfa-dom": "^0.10.0",
-    "@siteimprove/alfa-equatable": "^0.10.0",
-    "@siteimprove/alfa-iterable": "^0.10.0",
-    "@siteimprove/alfa-json": "^0.10.0",
-    "@siteimprove/alfa-map": "^0.10.0",
-    "@siteimprove/alfa-option": "^0.10.0",
-    "@siteimprove/alfa-parser": "^0.10.0",
-    "@siteimprove/alfa-predicate": "^0.10.0",
-    "@siteimprove/alfa-refinement": "^0.10.0",
-    "@siteimprove/alfa-result": "^0.10.0",
-    "@siteimprove/alfa-slice": "^0.10.0"
+    "@siteimprove/alfa-css": "workspace:*",
+    "@siteimprove/alfa-dom": "workspace:*",
+    "@siteimprove/alfa-equatable": "workspace:*",
+    "@siteimprove/alfa-iterable": "workspace:*",
+    "@siteimprove/alfa-json": "workspace:*",
+    "@siteimprove/alfa-map": "workspace:*",
+    "@siteimprove/alfa-option": "workspace:*",
+    "@siteimprove/alfa-parser": "workspace:*",
+    "@siteimprove/alfa-predicate": "workspace:*",
+    "@siteimprove/alfa-refinement": "workspace:*",
+    "@siteimprove/alfa-result": "workspace:*",
+    "@siteimprove/alfa-slice": "workspace:*"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.10.0"
+    "@siteimprove/alfa-test": "workspace:*"
   },
   "publishConfig": {
     "access": "public",
