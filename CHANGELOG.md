@@ -31,6 +31,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cache](packages/alfa-cache): `Cache<K, V>` now requires that `K` be an object type.
 
+- [@siteimprove/alfa-act](packages/alfa-act): The `Oracle<Q>` type has now become `Oracle<I, T, Q>`. As such, the input type `I` and test target type `T` must now be declared up front. Additionally, the `Question<Q, A, S, T>` type has now become `Question<Q, S, A, T>` to ensure alignment with the remaining types of the package. ([#699](../../pull/699))
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): The `--interactive` flag of the `alfa audit` command has been removed. A new `--interviewer` flag has instead been made available which allows callers to point to an `Interviewer` implementation for answering questions during an audit. ([#255](../../issues/255), [#699](../../pull/699))
+
 ### Added
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
@@ -56,6 +60,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()`, `Iterable.set()`, `Iterable.insert()`, `Iterable.append()`, `Iterable.prepend()`, and `Iterable.iterator()` are now available.
 
 - [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.isLessThan()`, `Comparable.isLessThanOrEqual()`, `Comparable.isGreaterThan()`, and `Comparable.isGreaterThanOrEqual()` are now available.
+
+- [@siteimprove/alfa-interviewer](packages/alfa-interviewer): A new package has been added with types for modelling ACT rule interviewers and functionality for loading these from external and local modules. ([#699](../../pull/699))
 
 ### Changed
 
