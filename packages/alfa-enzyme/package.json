@@ -18,15 +18,15 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-cheerio": "workspace:*",
-    "@siteimprove/alfa-dom": "workspace:*",
-    "@siteimprove/alfa-react": "workspace:*",
-    "@siteimprove/alfa-web": "workspace:*",
+    "@siteimprove/alfa-cheerio": "workspace:^0.10.0",
+    "@siteimprove/alfa-dom": "workspace:^0.10.0",
+    "@siteimprove/alfa-react": "workspace:^0.10.0",
+    "@siteimprove/alfa-web": "workspace:^0.10.0",
     "@types/enzyme": "^3.1.18",
     "enzyme": "^3.11.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:*"
+    "@siteimprove/alfa-test": "workspace:^0.10.0"
   },
   "publishConfig": {
     "access": "public",

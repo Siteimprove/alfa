@@ -18,18 +18,18 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-earl": "workspace:*",
-    "@siteimprove/alfa-encoding": "workspace:*",
-    "@siteimprove/alfa-equatable": "workspace:*",
-    "@siteimprove/alfa-iterable": "workspace:*",
-    "@siteimprove/alfa-json": "workspace:*",
-    "@siteimprove/alfa-map": "workspace:*",
-    "@siteimprove/alfa-option": "workspace:*",
-    "@siteimprove/alfa-refinement": "workspace:*",
-    "@siteimprove/alfa-url": "workspace:*"
+    "@siteimprove/alfa-earl": "workspace:^0.10.0",
+    "@siteimprove/alfa-encoding": "workspace:^0.10.0",
+    "@siteimprove/alfa-equatable": "workspace:^0.10.0",
+    "@siteimprove/alfa-iterable": "workspace:^0.10.0",
+    "@siteimprove/alfa-json": "workspace:^0.10.0",
+    "@siteimprove/alfa-map": "workspace:^0.10.0",
+    "@siteimprove/alfa-option": "workspace:^0.10.0",
+    "@siteimprove/alfa-refinement": "workspace:^0.10.0",
+    "@siteimprove/alfa-url": "workspace:^0.10.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:*"
+    "@siteimprove/alfa-test": "workspace:^0.10.0"
   },
   "publishConfig": {
     "access": "public",

@@ -18,10 +18,10 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-mapper": "workspace:*"
+    "@siteimprove/alfa-mapper": "workspace:^0.10.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:*"
+    "@siteimprove/alfa-test": "workspace:^0.10.0"
   },
   "publishConfig": {
     "access": "public",
