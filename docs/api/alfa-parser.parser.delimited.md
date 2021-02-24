@@ -7,16 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-function delimited<I, T, E, A extends Array<unknown> = []>(left: Parser<I, unknown, E, A>, separator: Parser<I, T, E, A>, right?: Parser<I, unknown, E, A>): Parser<I, T, E, A>;
+function delimited<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, unknown, E, A>, separator: Parser<I, T, E, A>): Parser<I, T, E, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  left | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
+|  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
 |  separator | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  right | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
 
 <b>Returns:</b>
 

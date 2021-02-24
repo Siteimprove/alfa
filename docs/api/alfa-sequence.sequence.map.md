@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
+map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

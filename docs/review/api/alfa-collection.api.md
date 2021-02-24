@@ -79,33 +79,33 @@ export namespace Collection {
         // (undocumented)
         apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
         // (undocumented)
-        collect<U>(mapper: Mapper<T, Option<U>, [number]>): Indexed<U>;
+        collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Indexed<U>;
         // (undocumented)
-        collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+        collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
         // (undocumented)
         compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
         // (undocumented)
         concat(iterable: Iterable_2<T>): Indexed<T>;
         // (undocumented)
-        count(predicate: Predicate<T, [number]>): number;
+        count(predicate: Predicate<T, [index: number]>): number;
         // (undocumented)
         distinct(): Indexed<T>;
         // (undocumented)
-        every(predicate: Predicate<T, [number]>): boolean;
+        every(predicate: Predicate<T, [index: number]>): boolean;
         // (undocumented)
-        filter<U extends T>(refinement: Refinement<T, U, [number]>): Indexed<U>;
+        filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
         // (undocumented)
-        filter(predicate: Predicate<T, [number]>): Indexed<T>;
+        filter(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
-        find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+        find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
         // (undocumented)
-        find(predicate: Predicate<T, [number]>): Option<T>;
+        find(predicate: Predicate<T, [index: number]>): Option<T>;
         // (undocumented)
         first(): Option<T>;
         // (undocumented)
-        flatMap<U>(mapper: Mapper<T, Indexed<U>, [number]>): Indexed<U>;
+        flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
         // (undocumented)
-        forEach(callback: Callback<T, void, [number]>): void;
+        forEach(callback: Callback<T, void, [index: number]>): void;
         // (undocumented)
         get(index: number): Option<T>;
         // (undocumented)
@@ -115,23 +115,25 @@ export namespace Collection {
         // (undocumented)
         insert(index: number, value: T): Indexed<T>;
         // (undocumented)
+        intersect(iterable: Iterable_2<T>): Indexed<T>;
+        // (undocumented)
         isEmpty(): this is Indexed<never>;
         // (undocumented)
         join(separator: string): string;
         // (undocumented)
         last(): Option<T>;
         // (undocumented)
-        map<U>(mapper: Mapper<T, U, [number]>): Indexed<U>;
+        map<U>(mapper: Mapper<T, U, [index: number]>): Indexed<U>;
         // (undocumented)
-        none(predicate: Predicate<T, [number]>): boolean;
+        none(predicate: Predicate<T, [index: number]>): boolean;
         // (undocumented)
         prepend(value: T): Indexed<T>;
         // (undocumented)
-        reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+        reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
         // (undocumented)
-        reject<U extends T>(refinement: Refinement<T, U, [number]>): Indexed<Exclude<T, U>>;
+        reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<Exclude<T, U>>;
         // (undocumented)
-        reject(predicate: Predicate<T, [number]>): Indexed<T>;
+        reject(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
         rest(): Indexed<T>;
         // (undocumented)
@@ -143,23 +145,39 @@ export namespace Collection {
         // (undocumented)
         skipLast(count: number): Indexed<T>;
         // (undocumented)
-        skipUntil(predicate: Predicate<T, [number]>): Indexed<T>;
+        skipLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
-        skipWhile(predicate: Predicate<T, [number]>): Indexed<T>;
+        skipLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        skipUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        skipWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
         slice(start: number, end?: number): Indexed<T>;
         // (undocumented)
-        some(predicate: Predicate<T, [number]>): boolean;
+        some(predicate: Predicate<T, [index: number]>): boolean;
         // (undocumented)
         sortWith(comparer: Comparer<T>): Indexed<T>;
+        // (undocumented)
+        subtract(iterable: Iterable_2<T>): Indexed<T>;
         // (undocumented)
         take(count: number): Indexed<T>;
         // (undocumented)
         takeLast(count: number): Indexed<T>;
         // (undocumented)
-        takeUntil(predicate: Predicate<T, [number]>): Indexed<T>;
+        takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
-        takeWhile(predicate: Predicate<T, [number]>): Indexed<T>;
+        takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        trim(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        trimLeading(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        trimTrailing(predicate: Predicate<T, [index: number]>): Indexed<T>;
     }
     // (undocumented)
     export namespace Indexed {
@@ -171,31 +189,31 @@ export namespace Collection {
         // (undocumented)
         apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
         // (undocumented)
-        collect<U>(mapper: Mapper<V, Option<U>, [K]>): Keyed<K, U>;
+        collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Keyed<K, U>;
         // (undocumented)
-        collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U>;
+        collectFirst<U>(mapper: Mapper<V, Option<U>, [key: K]>): Option<U>;
         // (undocumented)
         concat(iterable: Iterable_2<readonly [K, V]>): Keyed<K, V>;
         // (undocumented)
-        count(predicate: Predicate<V, [K]>): number;
+        count(predicate: Predicate<V, [key: K]>): number;
         // (undocumented)
         delete(key: K, value: V): Keyed<K, V>;
         // (undocumented)
         distinct(): Keyed<K, V>;
         // (undocumented)
-        every(predicate: Predicate<V, [K]>): boolean;
+        every(predicate: Predicate<V, [key: K]>): boolean;
         // (undocumented)
-        filter<U extends V>(refinement: Refinement<V, U, [K]>): Keyed<K, U>;
+        filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, U>;
         // (undocumented)
-        filter(predicate: Predicate<V, [K]>): Keyed<K, V>;
+        filter(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
         // (undocumented)
-        find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+        find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
         // (undocumented)
-        find(predicate: Predicate<V, [K]>): Option<V>;
+        find(predicate: Predicate<V, [key: K]>): Option<V>;
         // (undocumented)
-        flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [K]>): Keyed<K, U>;
+        flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
         // (undocumented)
-        forEach(callback: Callback<V, void, [K]>): void;
+        forEach(callback: Callback<V, void, [key: K]>): void;
         // (undocumented)
         get(key: K): Option<V>;
         // (undocumented)
@@ -203,21 +221,25 @@ export namespace Collection {
         // (undocumented)
         includes(value: V): boolean;
         // (undocumented)
+        intersect(iterable: Iterable_2<readonly [K, V]>): Keyed<K, V>;
+        // (undocumented)
         isEmpty(): this is Keyed<K, never>;
         // (undocumented)
-        map<U>(mapper: Mapper<V, U, [K]>): Keyed<K, U>;
+        map<U>(mapper: Mapper<V, U, [key: K]>): Keyed<K, U>;
         // (undocumented)
-        none(predicate: Predicate<V, [K]>): boolean;
+        none(predicate: Predicate<V, [key: K]>): boolean;
         // (undocumented)
-        reduce<U>(reducer: Reducer<V, U, [K]>, accumulator: U): U;
+        reduce<U>(reducer: Reducer<V, U, [key: K]>, accumulator: U): U;
         // (undocumented)
-        reject<U extends V>(refinement: Refinement<V, U, [K]>): Keyed<K, Exclude<V, U>>;
+        reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, Exclude<V, U>>;
         // (undocumented)
-        reject(predicate: Predicate<V, [K]>): Keyed<K, V>;
+        reject(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
         // (undocumented)
         set(key: K, value: V): Keyed<K, V>;
         // (undocumented)
-        some(predicate: Predicate<V, [K]>): boolean;
+        some(predicate: Predicate<V, [key: K]>): boolean;
+        // (undocumented)
+        subtract(iterable: Iterable_2<readonly [K, V]>): Keyed<K, V>;
     }
     // (undocumented)
     export namespace Keyed {
@@ -268,6 +290,8 @@ export namespace Collection {
         // (undocumented)
         includes(value: T): boolean;
         // (undocumented)
+        intersect(iterable: Iterable_2<T>): Unkeyed<T>;
+        // (undocumented)
         isEmpty(): this is Unkeyed<never>;
         // (undocumented)
         map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
@@ -281,6 +305,8 @@ export namespace Collection {
         reject(predicate: Predicate<T>): Unkeyed<T>;
         // (undocumented)
         some(predicate: Predicate<T>): boolean;
+        // (undocumented)
+        subtract(iterable: Iterable_2<T>): Unkeyed<T>;
     }
     // (undocumented)
     export namespace Unkeyed {

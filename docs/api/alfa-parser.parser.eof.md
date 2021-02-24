@@ -2,21 +2,15 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-parser](./alfa-parser.md) &gt; [Parser](./alfa-parser.parser.md) &gt; [eof](./alfa-parser.parser.eof.md)
 
-## Parser.eof() function
+## Parser.eof variable
+
+> Warning: This API is now obsolete.
+> 
+> Use `end()`
+> 
 
 <b>Signature:</b>
 
 ```typescript
-function eof<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
+eof: typeof end
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I extends Iterable&lt;infer T&gt; ? T : unknown, E&gt; |  |
-
-<b>Returns:</b>
-
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E&gt;
-

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-type Type = JSHandle<globalThis.Node>;
+type Type = JSHandle;
 ```

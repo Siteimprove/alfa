@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): number;
+function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): number;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): n
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -93,15 +93,15 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     apply<U>(mapper: List<Mapper<T, U>>): List<U>;
     // (undocumented)
-    collect<U>(mapper: Mapper<T, Option<U>, [number]>): List<U>;
+    collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): List<U>;
     // (undocumented)
-    collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+    collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
     compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     concat(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
-    count(predicate: Predicate<T, [number]>): number;
+    count(predicate: Predicate<T, [index: number]>): number;
     // (undocumented)
     distinct(): List<T>;
     // (undocumented)
@@ -111,21 +111,21 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    every(predicate: Predicate<T, [number]>): boolean;
+    every(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
-    filter<U extends T>(refinement: Refinement<T, U, [number]>): List<U>;
+    filter<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
     // (undocumented)
-    filter(predicate: Predicate<T, [number]>): List<T>;
+    filter(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
-    find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+    find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
     // (undocumented)
-    find(predicate: Predicate<T, [number]>): Option<T>;
+    find(predicate: Predicate<T, [index: number]>): Option<T>;
     // (undocumented)
     first(): Option<T>;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, List<U>, [number]>): List<U>;
+    flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U>;
     // (undocumented)
-    forEach(callback: Callback<T, void, [number]>): void;
+    forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
     get(index: number): Option<T>;
     // (undocumented)
@@ -139,7 +139,7 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     insert(index: number, value: T): List<T>;
     // (undocumented)
-    intersect(iterable: List<T>): List<T>;
+    intersect(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
     isEmpty(): this is List<never>;
     // (undocumented)
@@ -147,19 +147,19 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     last(): Option<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U, [number]>): List<U>;
+    map<U>(mapper: Mapper<T, U, [index: number]>): List<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [number]>): boolean;
+    none(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     static of<T>(...values: Array_2<T>): List<T>;
     // (undocumented)
     prepend(value: T): List<T>;
     // (undocumented)
-    reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+    reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
-    reject<U extends T>(refinement: Refinement<T, U, [number]>): List<Exclude<T, U>>;
+    reject<U extends T>(refinement: Refinement<T, U, [index: number]>): List<Exclude<T, U>>;
     // (undocumented)
-    reject(predicate: Predicate<T, [number]>): List<T>;
+    reject(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
     rest(): List<T>;
     // (undocumented)
@@ -173,13 +173,17 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     skipLast(count?: number): List<T>;
     // (undocumented)
-    skipUntil(predicate: Predicate<T, [number]>): List<T>;
+    skipLastUntil(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
-    skipWhile(predicate: Predicate<T, [number]>): List<T>;
+    skipLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    skipUntil(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    skipWhile(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
     slice(start: number, end?: number): List<T>;
     // (undocumented)
-    some(predicate: Predicate<T, [number]>): boolean;
+    some(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     sortWith(comparer: Comparer<T>): List<T>;
     // (undocumented)
@@ -189,15 +193,25 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     takeLast(count?: number): List<T>;
     // (undocumented)
-    takeUntil(predicate: Predicate<T, [number]>): List<T>;
+    takeLastUntil(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
-    takeWhile(predicate: Predicate<T, [number]>): List<T>;
+    takeLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    takeUntil(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
     toJSON(): List.JSON<T>;
     // (undocumented)
     toString(): string;
+    // (undocumented)
+    trim(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    trimLeading(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    trimTrailing(predicate: Predicate<T, [index: number]>): List<T>;
 }
 
 // @public (undocumented)

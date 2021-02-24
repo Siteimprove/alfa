@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-media](./alfa-media.md) &gt; [Media](./alfa-media.media.md) &gt; [parse](./alfa-media.media.parse.md)
 
-## Media.parse() function
+## Media.parse variable
 
 <b>Signature:</b>
 
 ```typescript
-function parse(input: string): Option<List>;
+parse: Parser<Slice<Token>, List, string, []>
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  input | string |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[List](./alfa-media.media.list.md)<!-- -->&gt;
-

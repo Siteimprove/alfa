@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of(scheme: string, username?: Option<string>, password?: Option<string>, host?: Option<string>, port?: Option<number>, path?: Iterable<string>, query?: Option<string>, fragment?: Option<string>): URL;
+static of(scheme: string, username?: Option<string>, password?: Option<string>, host?: Option<string>, port?: Option<number>, path?: Iterable<string>, query?: Option<string>, fragment?: Option<string>, cannotBeABase?: boolean): URL;
 ```
 
 ## Parameters
@@ -22,6 +22,7 @@ static of(scheme: string, username?: Option<string>, password?: Option<string>, 
 |  path | Iterable&lt;string&gt; |  |
 |  query | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  fragment | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  cannotBeABase | boolean |  |
 
 <b>Returns:</b>
 

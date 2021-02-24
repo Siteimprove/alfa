@@ -15,6 +15,7 @@ export declare namespace URL
 |  Function | Description |
 |  --- | --- |
 |  [from(json)](./alfa-url.url.from.md) |  |
+|  [isSpecialScheme(scheme)](./alfa-url.url.isspecialscheme.md) |  |
 |  [parse(url, base)](./alfa-url.url.parse.md) |  |
 
 ## Interfaces

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function findLast<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Option<U>;
+function findLast<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Option<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function findLast<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinemen
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

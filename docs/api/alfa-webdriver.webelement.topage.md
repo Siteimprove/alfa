@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function toPage(webElement: WebElement, browser: Browser): Promise<Page>;
+function toPage(webElement: WebElement, browser: Browser<"async">): Promise<Page>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function toPage(webElement: WebElement, browser: Browser): Promise<Page>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  webElement | [WebElement](./alfa-webdriver.webelement.md) |  |
-|  browser | Browser |  |
+|  browser | Browser&lt;"async"&gt; |  |
 
 <b>Returns:</b>
 

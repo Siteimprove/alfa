@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function from<K, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V>;
+function from<K extends object, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V>;
 ```
 
 ## Parameters

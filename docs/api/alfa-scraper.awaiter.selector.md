@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function selector(selector: string): Awaiter<puppeteer.ElementHandle<Element>>;
+function selector(selector: string): Awaiter<puppeteer.ElementHandle<Element> | null>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function selector(selector: string): Awaiter<puppeteer.ElementHandle<Element>>;
 
 <b>Returns:</b>
 
-[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.ElementHandle&lt;Element&gt;&gt;
+[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.ElementHandle&lt;Element&gt; \| null&gt;
 

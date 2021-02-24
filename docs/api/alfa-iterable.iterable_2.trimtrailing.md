@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function trimTrailing<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
+function trimTrailing<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): Iterable<T>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function trimTrailing<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterab
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

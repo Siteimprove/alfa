@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[K\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

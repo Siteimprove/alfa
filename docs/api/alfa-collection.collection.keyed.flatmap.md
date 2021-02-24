@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [K]>): Keyed<K, U>;
+flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;, \[K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

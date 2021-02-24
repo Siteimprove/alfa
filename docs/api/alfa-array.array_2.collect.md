@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function collect<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [number]>): Array<U>;
+function collect<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [index: number]>): Array<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function collect<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [nu
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

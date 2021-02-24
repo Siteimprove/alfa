@@ -49,6 +49,7 @@
 |  [@siteimprove/alfa-highlight](./alfa-highlight.md) |  |
 |  [@siteimprove/alfa-http](./alfa-http.md) |  |
 |  [@siteimprove/alfa-iana](./alfa-iana.md) |  |
+|  [@siteimprove/alfa-interviewer](./alfa-interviewer.md) |  |
 |  [@siteimprove/alfa-iterable](./alfa-iterable.md) |  |
 |  [@siteimprove/alfa-jasmine](./alfa-jasmine.md) |  |
 |  [@siteimprove/alfa-jest](./alfa-jest.md) |  |

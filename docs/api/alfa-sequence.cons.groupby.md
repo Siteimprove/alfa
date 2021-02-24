@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
+groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K, \[number\]&gt; |  |
+|  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<U>(mapper: Mapper<T, List<U>, [number]>): List<U>;
+flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [List](./alfa-list.list.md)<!-- -->&lt;U&gt;, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [List](./alfa-list.list.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

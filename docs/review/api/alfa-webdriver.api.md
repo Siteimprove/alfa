@@ -16,7 +16,7 @@ export interface WebElement {
 // @public (undocumented)
 export namespace WebElement {
     // (undocumented)
-    export function toPage(webElement: WebElement, browser: Browser): Promise<Page>;
+    export function toPage(webElement: WebElement, browser: Browser<"async">): Promise<Page>;
 }
 
 

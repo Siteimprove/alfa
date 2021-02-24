@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<U>(mapper: Mapper<T, Indexed<U>, [number]>): Indexed<U>;
+flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

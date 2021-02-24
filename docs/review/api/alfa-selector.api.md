@@ -11,8 +11,10 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Nth } from '@siteimprove/alfa-css';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
-import { Predicate } from '@siteimprove/alfa-predicate';
+import { Parser } from '@siteimprove/alfa-parser';
 import { Serializable } from '@siteimprove/alfa-json';
+import { Slice } from '@siteimprove/alfa-slice';
+import { Token } from '@siteimprove/alfa-css';
 
 // @public (undocumented)
 export class Context {
@@ -452,8 +454,6 @@ export namespace Selector {
         }
     }
     // (undocumented)
-    export function matches(selector: string | Selector, context?: Context): Predicate<Element_2>;
-    // (undocumented)
     export class Not extends Pseudo.Class {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -558,8 +558,6 @@ export namespace Selector {
         // (undocumented)
         static of(): OnlyOfType;
     }
-    // (undocumented)
-    export function parse(input: string): Option_2<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>>;
     // (undocumented)
     export namespace Pseudo {
         // (undocumented)
@@ -746,6 +744,8 @@ export namespace Selector {
         // (undocumented)
         static of(): Visited;
     }
+    const // (undocumented)
+    parse: Parser<Slice<Token>, Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>, string, []>;
     {};
 }
 

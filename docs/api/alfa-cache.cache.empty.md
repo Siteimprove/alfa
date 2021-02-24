@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static empty<K, V>(): Cache<K, V>;
+static empty<K extends object, V>(): Cache<K, V>;
 ```
 <b>Returns:</b>
 

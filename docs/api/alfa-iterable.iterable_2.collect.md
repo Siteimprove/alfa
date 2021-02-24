@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function collect<T, U>(iterable: Iterable<T>, mapper: Mapper<T, Option<U>, [number]>): Iterable<U>;
+function collect<T, U>(iterable: Iterable<T>, mapper: Mapper<T, Option<U>, [index: number]>): Iterable<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function collect<T, U>(iterable: Iterable<T>, mapper: Mapper<T, Option<U>, [numb
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

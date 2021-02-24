@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-collect<U>(mapper: Mapper<V, Option<U>, [K]>): Keyed<K, U>;
+collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Keyed<K, U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

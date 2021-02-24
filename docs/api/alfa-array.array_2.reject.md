@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Iterable<Exclude<T, U>>;
+function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array<Exclude<T, U>>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-Iterable&lt;Exclude&lt;T, U&gt;&gt;
+Array&lt;Exclude&lt;T, U&gt;&gt;
 

@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-selector](./alfa-selector.md) &gt; [Selector](./alfa-selector.selector.md) &gt; [parse](./alfa-selector.selector.parse.md)
 
-## Selector.parse() function
+## Selector.parse variable
 
 <b>Signature:</b>
 
 ```typescript
-export function parse(input: string): Option<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>>;
+parse: Parser<Slice<Token>, Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>, string, []>
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  input | string |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Type](./alfa-selector.selector.type.md) \| [Universal](./alfa-selector.selector.universal.md) \| [Attribute](./alfa-selector.selector.attribute.md) \| [Class](./alfa-selector.selector.class.md) \| [Id](./alfa-selector.selector.id.md) \| [Pseudo.Class](./alfa-selector.selector.pseudo.class.md) \| [Pseudo.Element](./alfa-selector.selector.pseudo.element.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [List](./alfa-selector.selector.list.md)<!-- -->&lt;[Type](./alfa-selector.selector.type.md) \| [Universal](./alfa-selector.selector.universal.md) \| [Attribute](./alfa-selector.selector.attribute.md) \| [Class](./alfa-selector.selector.class.md) \| [Id](./alfa-selector.selector.id.md) \| [Pseudo.Class](./alfa-selector.selector.pseudo.class.md) \| [Pseudo.Element](./alfa-selector.selector.pseudo.element.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md)<!-- -->&gt;&gt;
-

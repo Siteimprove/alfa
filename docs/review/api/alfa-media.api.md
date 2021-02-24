@@ -12,9 +12,12 @@ import * as json from '@siteimprove/alfa-json';
 import { Length } from '@siteimprove/alfa-css';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
+import { Parser } from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
+import { Slice } from '@siteimprove/alfa-slice';
 import { String as String_2 } from '@siteimprove/alfa-css';
+import { Token } from '@siteimprove/alfa-css';
 
 // @public (undocumented)
 export namespace Media {
@@ -172,8 +175,6 @@ export namespace Media {
         }
     }
     // (undocumented)
-    export function parse(input: string): Option<List>;
-    // (undocumented)
     export class Query implements Equatable, Serializable {
         // (undocumented)
         get condition(): Option<Feature | Condition | Negation>;
@@ -231,6 +232,8 @@ export namespace Media {
             name: string;
         }
     }
+    const // (undocumented)
+    parse: Parser<Slice<Token>, List, string, []>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Resolver" should be prefixed with an underscore because the declaration is marked as @internal

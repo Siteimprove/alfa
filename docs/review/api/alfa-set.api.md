@@ -64,7 +64,11 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     includes(value: T): boolean;
     // (undocumented)
+    intersect(iterable: Iterable_2<T>): Set_2<T>;
+    // (undocumented)
     isEmpty(): this is Set_2<never>;
+    // (undocumented)
+    iterator(): Iterator<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Set_2<U>;
     // (undocumented)
@@ -81,6 +85,8 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     get size(): number;
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    subtract(iterable: Iterable_2<T>): Set_2<T>;
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)

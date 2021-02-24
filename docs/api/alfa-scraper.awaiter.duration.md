@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function duration(duration: number, after?: Awaiter<puppeteer.Response>): Awaiter<puppeteer.Response>;
+function duration(duration: number, after?: Awaiter<puppeteer.HTTPResponse | null>): Awaiter<puppeteer.HTTPResponse | null>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function duration(duration: number, after?: Awaiter<puppeteer.Response>): Awaite
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  duration | number |  |
-|  after | [Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.Response&gt; |  |
+|  after | [Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.HTTPResponse \| null&gt; |  |
 
 <b>Returns:</b>
 
-[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.Response&gt;
+[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.HTTPResponse \| null&gt;
 

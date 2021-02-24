@@ -7,18 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function either<I, T, E, A extends Array<unknown> = []>(...parsers: [
-        Parser<I, T, E, A>,
-        Parser<I, T, E, A>,
-        ...Array<Parser<I, T, E, A>>
-    ]): Parser<I, T, E, A>;
+function either<I, T, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, T, E, A>, ...rest: Array<Parser<I, T, E, A>>): Parser<I, T, E, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  parsers | \[ [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;, [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;, ...Array&lt;[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;&gt; \] |  |
+|  left | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
+|  right | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
+|  rest | Array&lt;[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;&gt; |  |
 
 <b>Returns:</b>
 

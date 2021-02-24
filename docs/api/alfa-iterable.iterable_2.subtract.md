@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-function subtract<T>(left: Iterable<T>, right: Iterable<T>): Iterable<T>;
+function subtract<T>(iterable: Iterable<T>, ...iterables: Array<Iterable<T>>): Iterable<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  left | Iterable&lt;T&gt; |  |
-|  right | Iterable&lt;T&gt; |  |
+|  iterable | Iterable&lt;T&gt; |  |
+|  iterables | Array&lt;Iterable&lt;T&gt;&gt; |  |
 
 <b>Returns:</b>
 

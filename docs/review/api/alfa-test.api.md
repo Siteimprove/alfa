@@ -37,6 +37,12 @@ export interface Notifier {
     error(message: string): void;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Frame" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "stack" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export function stack(error: Error): Iterable<Frame>;
+
 // Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "test" because one of its declarations is marked as @internal
 //
 // @public (undocumented)

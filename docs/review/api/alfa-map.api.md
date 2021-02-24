@@ -127,6 +127,8 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     includes(value: V): boolean;
     // (undocumented)
+    intersect(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
+    // (undocumented)
     isEmpty(): this is Map_2<K, never>;
     // (undocumented)
     iterator(): Iterator<[K, V]>;
@@ -150,6 +152,8 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     get size(): number;
     // (undocumented)
     some(predicate: Predicate<V, [K]>): boolean;
+    // (undocumented)
+    subtract(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
     toArray(): Array_2<[K, V]>;
     // (undocumented)

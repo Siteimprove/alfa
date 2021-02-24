@@ -24,21 +24,27 @@ type Array_2<T> = globalThis.Array<T>;
 // @public (undocumented)
 namespace Array_2 {
     // (undocumented)
+    function allocate<T>(capacity: number): Array_2<T>;
+    // (undocumented)
     function append<T>(array: Array_2<T>, value: T): Array_2<T>;
+    // (undocumented)
+    function apply<T, U>(iterable: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array_2<U>;
     // (undocumented)
     function clone<T extends Clone<T>>(array: ReadonlyArray<T>): Array_2<T>;
     // (undocumented)
-    function collect<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [number]>): Array_2<U>;
+    function collect<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [index: number]>): Array_2<U>;
     // (undocumented)
-    function collectFirst<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+    function collectFirst<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
     function compare<T extends Comparable<T>>(a: ReadonlyArray<T>, b: Iterable_2<T>): Comparison;
     // (undocumented)
     function compareWith<T>(a: ReadonlyArray<T>, b: Iterable_2<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
+    function concat<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;
+    // (undocumented)
     function copy<T>(array: ReadonlyArray<T>): Array_2<T>;
     // (undocumented)
-    function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): number;
+    function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): number;
     // (undocumented)
     function distinct<T>(array: ReadonlyArray<T>): Array_2<T>;
     // (undocumented)
@@ -46,27 +52,33 @@ namespace Array_2 {
     // (undocumented)
     function equals<T>(a: ReadonlyArray<T>, b: ReadonlyArray<T>): boolean;
     // (undocumented)
-    function every<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): boolean;
+    function every<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
-    function filter<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Iterable_2<U>;
+    function filter<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array_2<U>;
     // (undocumented)
-    function filter<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    function filter<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Array_2<T>;
     // (undocumented)
-    function find<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Option<U>;
+    function find<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Option<U>;
     // (undocumented)
-    function find<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): Option<T>;
+    function find<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Option<T>;
     // (undocumented)
-    function findLast<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Option<U>;
+    function findLast<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Option<U>;
     // (undocumented)
-    function findLast<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): Option<T>;
+    function findLast<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Option<T>;
     // (undocumented)
-    function flatMap<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, ReadonlyArray<U>, [number]>): Array_2<U>;
+    function first<T>(array: ReadonlyArray<T>): Option<T>;
+    // (undocumented)
+    function flatMap<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, ReadonlyArray<U>, [index: number]>): Array_2<U>;
     // (undocumented)
     function flatten<T>(array: ReadonlyArray<ReadonlyArray<T>>): Array_2<T>;
     // (undocumented)
-    function forEach<T>(array: ReadonlyArray<T>, callback: Callback<T, void, [number]>): void;
+    function forEach<T>(array: ReadonlyArray<T>, callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
     function from<T>(iterable: Iterable_2<T>): Array_2<T>;
+    // (undocumented)
+    function get<T>(array: ReadonlyArray<T>, index: number): Option<T>;
+    // (undocumented)
+    function has<T>(array: ReadonlyArray<T>, index: number): boolean;
     // (undocumented)
     function hash<T>(array: ReadonlyArray<T>, hash: Hash): void;
     // (undocumented)
@@ -74,35 +86,45 @@ namespace Array_2 {
     // (undocumented)
     function insert<T>(array: Array_2<T>, index: number, value: T): Array_2<T>;
     // (undocumented)
+    function intersect<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;
+    // (undocumented)
     function isArray<T>(value: Iterable_2<T>): value is Array_2<T>;
     // (undocumented)
     function isArray<T>(value: unknown): value is Array_2<T>;
     // (undocumented)
     function isEmpty<T>(array: ReadonlyArray<T>): array is Array_2<never>;
     // (undocumented)
-    function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [number]>): Array_2<U>;
+    function iterator<T>(array: ReadonlyArray<T>): Iterator<T>;
     // (undocumented)
-    function none<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): boolean;
+    function last<T>(array: ReadonlyArray<T>): Option<T>;
+    // (undocumented)
+    function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [index: number]>): Array_2<U>;
+    // (undocumented)
+    function none<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     function of<T>(...values: Array_2<T>): Array_2<T>;
     // (undocumented)
     function prepend<T>(array: Array_2<T>, value: T): Array_2<T>;
     // (undocumented)
-    function reduce<T, U = T>(array: ReadonlyArray<T>, reducer: Reducer<T, U, [number]>, accumulator: U): U;
+    function reduce<T, U = T>(array: ReadonlyArray<T>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
-    function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Iterable_2<Exclude<T, U>>;
+    function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array_2<Exclude<T, U>>;
     // (undocumented)
-    function reject<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): Iterable_2<T>;
+    function reject<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Array_2<T>;
     // (undocumented)
     function search<T>(array: ReadonlyArray<T>, value: T, comparer: Comparer<T>): number;
     // (undocumented)
+    function set<T>(array: Array_2<T>, index: number, value: T): Array_2<T>;
+    // (undocumented)
     function size<T>(array: ReadonlyArray<T>): number;
     // (undocumented)
-    function some<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): boolean;
+    function some<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     function sort<T extends Comparable<T>>(array: Array_2<T>): Array_2<T>;
     // (undocumented)
     function sortWith<T>(array: Array_2<T>, comparer: Comparer<T>): Array_2<T>;
+    // (undocumented)
+    function subtract<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;
     // (undocumented)
     function toJSON<T>(array: ReadonlyArray<T>): Array_2<Serializable.ToJSON<T>>;
 }

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function map<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, U, [number]>): Iterable<U>;
+function map<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, U, [index: number]>): Iterable<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function map<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, U, [number]>): I
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

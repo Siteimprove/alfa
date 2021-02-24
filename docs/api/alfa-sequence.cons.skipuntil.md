@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-skipUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+skipUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

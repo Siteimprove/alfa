@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-none(predicate: Predicate<V, [K]>): boolean;
+none(predicate: Predicate<V, [key: K]>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[K\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

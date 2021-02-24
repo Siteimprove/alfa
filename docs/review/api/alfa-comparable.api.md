@@ -34,6 +34,14 @@ export namespace Comparable {
     export function compareString(a: string, b: string): Comparison;
     // (undocumented)
     export function isComparable<T>(value: unknown): value is Comparable<T>;
+    // (undocumented)
+    export function isGreaterThan<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
+    export function isGreaterThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
+    export function isLessThan<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
+    export function isLessThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
 }
 
 // @public (undocumented)

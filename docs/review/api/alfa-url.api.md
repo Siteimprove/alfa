@@ -17,9 +17,15 @@ import { Serializable } from '@siteimprove/alfa-json';
 // @public (undocumented)
 export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     // (undocumented)
+    static blank(): URL;
+    // (undocumented)
+    get cannotBeABase(): boolean;
+    // (undocumented)
     equals(value: URL): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    static example(): URL;
     // (undocumented)
     get fragment(): Option<string>;
     // (undocumented)
@@ -29,7 +35,9 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     // (undocumented)
     get host(): Option<string>;
     // (undocumented)
-    static of(scheme: string, username?: Option<string>, password?: Option<string>, host?: Option<string>, port?: Option<number>, path?: Iterable_2<string>, query?: Option<string>, fragment?: Option<string>): URL;
+    isSpecial(): boolean;
+    // (undocumented)
+    static of(scheme: string, username?: Option<string>, password?: Option<string>, host?: Option<string>, port?: Option<number>, path?: Iterable_2<string>, query?: Option<string>, fragment?: Option<string>, cannotBeABase?: boolean): URL;
     // (undocumented)
     get password(): Option<string>;
     // (undocumented)
@@ -54,9 +62,13 @@ export namespace URL {
     // (undocumented)
     export function from(json: JSON): URL;
     // (undocumented)
+    export function isSpecialScheme(scheme: string): boolean;
+    // (undocumented)
     export interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
+        // (undocumented)
+        cannotBeABase: boolean;
         // (undocumented)
         fragment: string | null;
         // (undocumented)

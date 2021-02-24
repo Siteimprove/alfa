@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-reject(predicate: Predicate<V, [K]>): Keyed<K, V>;
+reject(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[K\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

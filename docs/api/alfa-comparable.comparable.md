@@ -25,4 +25,8 @@ export declare namespace Comparable
 |  [compareNumber(a, b)](./alfa-comparable.comparable.comparenumber.md) |  |
 |  [compareString(a, b)](./alfa-comparable.comparable.comparestring.md) |  |
 |  [isComparable(value)](./alfa-comparable.comparable.iscomparable.md) |  |
+|  [isGreaterThan(a, b)](./alfa-comparable.comparable.isgreaterthan.md) |  |
+|  [isGreaterThanOrEqual(a, b)](./alfa-comparable.comparable.isgreaterthanorequal.md) |  |
+|  [isLessThan(a, b)](./alfa-comparable.comparable.islessthan.md) |  |
+|  [isLessThanOrEqual(a, b)](./alfa-comparable.comparable.islessthanorequal.md) |  |
 

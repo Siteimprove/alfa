@@ -23,17 +23,17 @@ export type Awaiter<T = unknown> = (page: puppeteer.Page, timeout: Timeout) => P
 // @public (undocumented)
 export namespace Awaiter {
     // (undocumented)
-    export function duration(duration: number, after?: Awaiter<puppeteer.Response>): Awaiter<puppeteer.Response>;
+    export function duration(duration: number, after?: Awaiter<puppeteer.HTTPResponse | null>): Awaiter<puppeteer.HTTPResponse | null>;
     // (undocumented)
-    export function idle(): Awaiter<puppeteer.Response>;
+    export function idle(): Awaiter<puppeteer.HTTPResponse | null>;
     // (undocumented)
-    export function loaded(): Awaiter<puppeteer.Response>;
+    export function loaded(): Awaiter<puppeteer.HTTPResponse | null>;
     // (undocumented)
-    export function ready(): Awaiter<puppeteer.Response>;
+    export function ready(): Awaiter<puppeteer.HTTPResponse | null>;
     // (undocumented)
-    export function selector(selector: string): Awaiter<puppeteer.ElementHandle<Element>>;
+    export function selector(selector: string): Awaiter<puppeteer.ElementHandle<Element> | null>;
     // (undocumented)
-    export function xpath(expression: string): Awaiter<puppeteer.ElementHandle<Element>>;
+    export function xpath(expression: string): Awaiter<puppeteer.ElementHandle<Element> | null>;
 }
 
 // @public (undocumented)

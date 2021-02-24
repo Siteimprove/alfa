@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function every<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): boolean;
+function every<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): boolean;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function every<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): boo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

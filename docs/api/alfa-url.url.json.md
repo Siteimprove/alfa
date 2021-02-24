@@ -14,6 +14,7 @@ interface JSON
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [cannotBeABase](./alfa-url.url.json.cannotbeabase.md) | boolean |  |
 |  [fragment](./alfa-url.url.json.fragment.md) | string \| null |  |
 |  [host](./alfa-url.url.json.host.md) | string \| null |  |
 |  [password](./alfa-url.url.json.password.md) | string \| null |  |

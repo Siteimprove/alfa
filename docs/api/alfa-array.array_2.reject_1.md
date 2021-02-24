@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function reject<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): Iterable<T>;
+function reject<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Array<T>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function reject<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [number]>): 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-Iterable&lt;T&gt;
+Array&lt;T&gt;
 

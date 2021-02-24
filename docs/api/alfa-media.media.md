@@ -36,7 +36,6 @@ export declare namespace Media
 |  [isCondition(value)](./alfa-media.media.iscondition.md) |  |
 |  [isFeature(value)](./alfa-media.media.isfeature.md) |  |
 |  [isNegation(value)](./alfa-media.media.isnegation.md) |  |
-|  [parse(input)](./alfa-media.media.parse.md) |  |
 
 ## Namespaces
 
@@ -48,4 +47,10 @@ export declare namespace Media
 |  [Negation](./alfa-media.media.negation.md) |  |
 |  [Query](./alfa-media.media.query.md) |  |
 |  [Type](./alfa-media.media.type.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [parse](./alfa-media.media.parse.md) |  |
 

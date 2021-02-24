@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-function loaded(): Awaiter<puppeteer.Response>;
+function loaded(): Awaiter<puppeteer.HTTPResponse | null>;
 ```
 <b>Returns:</b>
 
-[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.Response&gt;
+[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&lt;puppeteer.HTTPResponse \| null&gt;
 

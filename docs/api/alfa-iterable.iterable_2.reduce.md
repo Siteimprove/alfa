@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function reduce<T, U = T>(iterable: Iterable<T>, reducer: Reducer<T, U, [number]>, accumulator: U): U;
+function reduce<T, U = T>(iterable: Iterable<T>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function reduce<T, U = T>(iterable: Iterable<T>, reducer: Reducer<T, U, [number]
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
 
 <b>Returns:</b>

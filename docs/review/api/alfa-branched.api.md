@@ -32,6 +32,8 @@ export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Ite
     // (undocumented)
     distinct(): Branched<T, B>;
     // (undocumented)
+    equals<T, B>(value: Branched<T, B>): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     every(predicate: Predicate<T, [Iterable_2<B>]>): boolean;

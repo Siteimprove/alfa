@@ -9,9 +9,9 @@ import { Option } from '@siteimprove/alfa-option';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Cache<K, V> {
+export class Cache<K extends object, V> {
     // (undocumented)
-    static empty<K, V>(): Cache<K, V>;
+    static empty<K extends object, V>(): Cache<K, V>;
     // (undocumented)
     get(key: K): Option<V>;
     // (undocumented)
@@ -27,7 +27,7 @@ export class Cache<K, V> {
 // @public (undocumented)
 export namespace Cache {
     // (undocumented)
-    export function from<K, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
+    export function from<K extends object, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
 }
 
 

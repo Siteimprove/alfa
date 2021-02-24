@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function filter<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Iterable<T>;
+function filter<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): Iterable<T>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function filter<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): It
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

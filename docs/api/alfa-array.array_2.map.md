@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [number]>): Array<U>;
+function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [index: number]>): Array<U>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [number]>):
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

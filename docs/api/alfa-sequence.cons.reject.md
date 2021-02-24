@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-reject<U extends T>(refinement: Refinement<T, U, [number]>): Sequence<Exclude<T, U>>;
+reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<Exclude<T, U>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

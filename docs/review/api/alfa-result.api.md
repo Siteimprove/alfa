@@ -191,7 +191,7 @@ export namespace Ok {
 }
 
 // @public (undocumented)
-export interface Result<T, E = T> extends Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
+export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
     // (undocumented)
     and<U>(result: Result<U, E>): Result<U, E>;
     // (undocumented)

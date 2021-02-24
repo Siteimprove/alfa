@@ -30,17 +30,17 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
     // (undocumented)
-    collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
+    collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
     // @internal (undocumented)
-    collect<U>(mapper: Mapper<T, Option<U>, [number]>, index: number): Sequence<U>;
+    collect<U>(mapper: Mapper<T, Option<U>, [index: number]>, index: number): Sequence<U>;
     // (undocumented)
-    collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+    collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
     compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     concat(iterable: Iterable_2<T>): Cons<T>;
     // (undocumented)
-    count(predicate: Predicate<T, [number]>): number;
+    count(predicate: Predicate<T, [index: number]>): number;
     // (undocumented)
     distinct(): Sequence<T>;
     // @internal (undocumented)
@@ -48,29 +48,29 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    every(predicate: Predicate<T, [number]>): boolean;
+    every(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
-    filter<U extends T>(refinement: Refinement<T, U, [number]>): Sequence<U>;
+    filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
-    filter(predicate: Predicate<T, [number]>): Sequence<T>;
+    filter(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // @internal (undocumented)
-    filter(predicate: Predicate<T, [number]>, index: number): Sequence<T>;
+    filter(predicate: Predicate<T, [index: number]>, index: number): Sequence<T>;
     // (undocumented)
-    find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+    find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
     // (undocumented)
-    find(predicate: Predicate<T, [number]>): Option<T>;
+    find(predicate: Predicate<T, [index: number]>): Option<T>;
     // (undocumented)
     first(): Option<T>;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
+    flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
     // @internal (undocumented)
-    flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>, index: number): Sequence<U>;
+    flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>, index: number): Sequence<U>;
     // (undocumented)
-    forEach(callback: Callback<T, void, [number]>): void;
+    forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
     get(index: number): Option<T>;
     // (undocumented)
-    groupBy<K>(grouper: Mapper<T, K, [number]>): Map_2<K, Sequence<T>>;
+    groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map_2<K, Sequence<T>>;
     // (undocumented)
     has(index: number): boolean;
     // (undocumented)
@@ -90,21 +90,21 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     last(): Option<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U, [number]>): Cons<U>;
+    map<U>(mapper: Mapper<T, U, [index: number]>): Cons<U>;
     // @internal (undocumented)
-    map<U>(mapper: Mapper<T, U, [number]>, index: number): Cons<U>;
+    map<U>(mapper: Mapper<T, U, [index: number]>, index: number): Cons<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [number]>): boolean;
+    none(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     static of<T>(head: T, tail?: Lazy<Sequence<T>>): Cons<T>;
     // (undocumented)
     prepend(value: T): Cons<T>;
     // (undocumented)
-    reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+    reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
-    reject<U extends T>(refinement: Refinement<T, U, [number]>): Sequence<Exclude<T, U>>;
+    reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<Exclude<T, U>>;
     // (undocumented)
-    reject(predicate: Predicate<T, [number]>): Sequence<T>;
+    reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     rest(): Sequence<T>;
     // (undocumented)
@@ -118,13 +118,17 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     skipLast(count: number): Sequence<T>;
     // (undocumented)
-    skipUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+    skipLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
-    skipWhile(predicate: Predicate<T, [number]>): Sequence<T>;
+    skipLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    skipUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    skipWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     slice(start: number, end?: number): Sequence<T>;
     // (undocumented)
-    some(predicate: Predicate<T, [number]>): boolean;
+    some(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     sortWith(comparer: Comparer<T>): Sequence<T>;
     // (undocumented)
@@ -134,17 +138,27 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     takeLast(count: number): Sequence<T>;
     // (undocumented)
-    takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
-    // @internal (undocumented)
-    takeUntil(predicate: Predicate<T, [number]>, index: number): Sequence<T>;
+    takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
-    takeWhile(predicate: Predicate<T, [number]>): Sequence<T>;
+    takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // @internal (undocumented)
+    takeUntil(predicate: Predicate<T, [index: number]>, index: number): Sequence<T>;
+    // (undocumented)
+    takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
     toJSON(): Cons.JSON<T>;
     // (undocumented)
     toString(): string;
+    // (undocumented)
+    trim(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T>;
 }
 
 // @public (undocumented)
@@ -177,37 +191,37 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
     // (undocumented)
-    collect<U>(mapper: Mapper<T, Option<U>, [number]>): Sequence<U>;
+    collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
     // (undocumented)
-    collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U>;
+    collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
     compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     concat(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)
-    count(predicate: Predicate<T, [number]>): number;
+    count(predicate: Predicate<T, [index: number]>): number;
     // (undocumented)
     distinct(): Sequence<T>;
     // (undocumented)
-    every(predicate: Predicate<T, [number]>): boolean;
+    every(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
-    filter<U extends T>(refinement: Refinement<T, U, [number]>): Sequence<U>;
+    filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
-    filter(predicate: Predicate<T, [number]>): Sequence<T>;
+    filter(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
-    find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+    find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
     // (undocumented)
-    find(predicate: Predicate<T, [number]>): Option<T>;
+    find(predicate: Predicate<T, [index: number]>): Option<T>;
     // (undocumented)
     first(): Option<T>;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
+    flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
     // (undocumented)
-    forEach(callback: Callback<T, void, [number]>): void;
+    forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
     get(index: number): Option<T>;
     // (undocumented)
-    groupBy<K>(grouper: Mapper<T, K, [number]>): Map_2<K, Sequence<T>>;
+    groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map_2<K, Sequence<T>>;
     // (undocumented)
     has(index: number): boolean;
     // (undocumented)
@@ -223,17 +237,17 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     last(): Option<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
+    map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [number]>): boolean;
+    none(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     prepend(value: T): Sequence<T>;
     // (undocumented)
-    reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+    reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
-    reject<U extends T>(refinement: Refinement<T, U, [number]>): Sequence<Exclude<T, U>>;
+    reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<Exclude<T, U>>;
     // (undocumented)
-    reject(predicate: Predicate<T, [number]>): Sequence<T>;
+    reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     rest(): Sequence<T>;
     // (undocumented)
@@ -245,13 +259,17 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     skipLast(count: number): Sequence<T>;
     // (undocumented)
-    skipUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+    skipLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
-    skipWhile(predicate: Predicate<T, [number]>): Sequence<T>;
+    skipLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    skipUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    skipWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     slice(start: number, end?: number): Sequence<T>;
     // (undocumented)
-    some(predicate: Predicate<T, [number]>): boolean;
+    some(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     sortWith(comparer: Comparer<T>): Sequence<T>;
     // (undocumented)
@@ -261,13 +279,23 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     takeLast(count: number): Sequence<T>;
     // (undocumented)
-    takeUntil(predicate: Predicate<T, [number]>): Sequence<T>;
+    takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
-    takeWhile(predicate: Predicate<T, [number]>): Sequence<T>;
+    takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
     toJSON(): Sequence.JSON<T>;
+    // (undocumented)
+    trim(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T>;
 }
 
 // @public (undocumented)

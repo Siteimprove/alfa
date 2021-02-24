@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function findLast<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Option<T>;
+function findLast<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): Option<T>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function findLast<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function filter<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [number]>): Iterable<U>;
+function filter<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array<U>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function filter<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-Iterable&lt;U&gt;
+Array&lt;U&gt;
 

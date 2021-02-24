@@ -15,7 +15,7 @@ export namespace Puppeteer {
     // (undocumented)
     export function toPage(value: Type): Promise<Page>;
     // (undocumented)
-    export type Type = JSHandle<globalThis.Node>;
+    export type Type = JSHandle;
 }
 
 
