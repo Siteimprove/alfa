@@ -14,6 +14,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
+import { Err, Result } from "@siteimprove/alfa-result";
 
 const { delimited, either, map, option, separatedPair } = Parser;
 
@@ -31,7 +32,10 @@ export namespace Value {
     type: string;
   }
 
-  export class Discrete<T> implements Value<T>, Serializable<Discrete.JSON<T>> {
+  export type AllowedValue = Length | Number | Percentage | String;
+
+  export class Discrete<T = AllowedValue>
+    implements Value<T>, Serializable<Discrete.JSON<T>> {
     public static of<T>(value: T): Discrete<T> {
       return new Discrete(value);
     }
@@ -68,11 +72,16 @@ export namespace Value {
       type: "discrete";
       value: Serializable.ToJSON<T>;
     }
+
+    export function isDiscrete(value: unknown): value is Discrete {
+      return value instanceof Discrete;
+    }
   }
 
-  export const { of: discrete } = Discrete;
+  export const { of: discrete, isDiscrete } = Discrete;
 
-  export class Range<T> implements Value<T>, Serializable<Range.JSON<T>> {
+  export class Range<T = AllowedValue>
+    implements Value<T>, Serializable<Range.JSON<T>> {
     public static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T> {
       return new Range(Option.of(minimum), Option.of(maximum));
     }
@@ -83,6 +92,29 @@ export namespace Value {
 
     public static maximum<T>(maximum: Bound<T>): Range<T> {
       return new Range(None, Option.of(maximum));
+    }
+
+    /**
+     * Combines a minimum and maximum range in a unified range.
+     */
+    public static combine<T>(
+      first: Range<T>,
+      second: Range<T>
+    ): Result<Range<T>, string> {
+      if (first._minimum.isSome() && second._minimum.isSome()) {
+        return Err.of("Can't combine two minimum ranges");
+      }
+
+      if (first._maximum.isSome() && second._maximum.isSome()) {
+        return Err.of("Can't combine two maximum ranges");
+      }
+
+      return Result.of(
+        new Range(
+          first._minimum.or(second._minimum),
+          first._maximum.or(second._maximum)
+        )
+      );
     }
 
     private readonly _minimum: Option<Bound<T>>;
@@ -156,15 +188,21 @@ export namespace Value {
       minimum: Bound.JSON<T> | null;
       maximum: Bound.JSON<T> | null;
     }
+
+    export function isRange(value: unknown): value is Range {
+      return value instanceof Range;
+    }
   }
 
   export const {
     of: range,
     minimum: minimumRange,
     maximum: maximumRange,
+    isRange,
   } = Range;
 
-  export class Bound<T> implements Functor<T>, Serializable<Bound.JSON<T>> {
+  export class Bound<T = AllowedValue>
+    implements Functor<T>, Serializable<Bound.JSON<T>> {
     public static of<T>(value: T, isInclusive: boolean): Bound<T> {
       return new Bound(value, isInclusive);
     }

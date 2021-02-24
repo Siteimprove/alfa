@@ -1,4 +1,4 @@
-import { Length, String, Token } from "@siteimprove/alfa-css";
+import { Length, Numeric, String, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -9,8 +9,21 @@ import { Media } from "./media";
 import { Resolver } from "./resolver";
 import { Value } from "./value";
 import { Err, Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
-const { delimited, either, map, mapResult, option, separatedPair } = Parser;
+const {
+  delimited,
+  either,
+  left,
+  map,
+  mapResult,
+  option,
+  pair,
+  right,
+  separatedPair,
+  tee,
+  teeErr,
+} = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-feature
@@ -57,6 +70,12 @@ export abstract class Feature<N extends string = string, T = unknown>
 }
 
 export namespace Feature {
+  import minimumRange = Value.minimumRange;
+  import maximumRange = Value.maximumRange;
+  import Range = Value.Range;
+  import isNumeric = Numeric.isNumeric;
+  import AllowedValue = Value.AllowedValue;
+
   export interface JSON<N extends string = string> {
     [key: string]: json.JSON;
     type: "feature";
@@ -224,6 +243,33 @@ export namespace Feature {
   }
 
   /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-comparison
+   */
+  enum Comparison {
+    LT = "<",
+    LE = "<=",
+    EQ = "=",
+    GE = ">=",
+    GT = ">",
+  }
+
+  const parseComparison = either(
+    either(
+      map(
+        pair(Token.parseDelim("<"), Token.parseDelim("=")),
+        () => Comparison.LE
+      ),
+      map(
+        pair(Token.parseDelim(">"), Token.parseDelim("=")),
+        () => Comparison.GE
+      )
+    ),
+    map(Token.parseDelim("="), () => Comparison.EQ),
+    map(Token.parseDelim("<"), () => Comparison.LT),
+    map(Token.parseDelim(">"), () => Comparison.GT)
+  );
+
+  /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-name
    */
   const parseName = map(Token.parseIdent(), (ident) =>
@@ -327,6 +373,93 @@ export namespace Feature {
   });
 
   /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-range
+   */
+  function combine(
+    first: Option<Value>,
+    second: Option<Value>
+  ): Result<Value, string> {
+    if (first.isNone() && second.isNone()) {
+      return Err.of("Can't combine two empty values");
+    }
+
+    if (first.isNone() || second.isNone()) {
+      // they cannot be both None due to the previous test.
+      // need to defer eval of second.get() since it may be None
+      return Result.of(first.getOrElse(() => second.get()));
+    }
+
+    // They are both Some due to the previous test.
+    const value1 = first.get();
+    const value2 = second.get();
+    if (Value.isRange(value1) && Value.isRange(value2)) {
+      return Range.combine(value1, value2);
+    }
+
+    return Err.of("Don't know how to combine these values");
+  }
+
+  function buildValue(
+    value: Value.AllowedValue,
+    comparison: Comparison,
+    isLeft: boolean
+  ): Result<Value, string> {
+    if (!isNumeric(value)) {
+      // This is not fully correct since some discrete features have 0/1 values
+      // (hence numeric but technically disallowed in range contexts)
+      return Err.of("Only numeric values may be used in a range context");
+    }
+
+    if (comparison === Comparison.EQ) {
+      return Result.of(Value.discrete(value) as Value);
+    }
+
+    const inclusive =
+      comparison === Comparison.LE || comparison === Comparison.GE;
+    // value < feature => minimum bound
+    // value > feature => maximum bound
+    // feature < value => maximum bound
+    // feature > value => minimum bound
+    const range =
+      (comparison === Comparison.LT || comparison === Comparison.LE) === isLeft
+        ? minimumRange
+        : maximumRange;
+
+    return Result.of(range(Value.bound(value, inclusive)));
+  }
+
+  export const parseLeftRange = mapResult(
+    separatedPair(Value.parse, Token.parseWhitespace, parseComparison),
+    ([value, comparison]) => buildValue(value, comparison, true)
+  );
+
+  export const parseRightRange = mapResult(
+    separatedPair(parseComparison, Token.parseWhitespace, Value.parse),
+    ([comparison, value]) => buildValue(value, comparison, false)
+  );
+
+  export const parseRange = mapResult(
+    pair(
+      tee(
+        option(left(parseLeftRange, Token.parseWhitespace)),
+        (result, input) => {
+          // console.log(`leftover: ${input}`);
+          // console.dir(result.toJSON(), { depth: null });
+        }
+      ),
+      pair(parseName, option(right(Token.parseWhitespace, parseRightRange)))
+    ),
+    ([left, [name, right]]) => {
+      return combine(left, right).map((value) =>
+        // TODO
+        name === "width"
+          ? Width.of(value as Value<Length>)
+          : Unknown.of(value, name)
+      );
+    }
+  );
+
+  /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
    */
   export const parse = mapResult(
@@ -334,7 +467,7 @@ export namespace Feature {
       Token.parseOpenParenthesis,
       delimited(
         option(Token.parseWhitespace),
-        either(parsePlain, parseBoolean)
+        either(parseRange, parsePlain, parseBoolean)
       ),
       Token.parseCloseParenthesis
     ),
