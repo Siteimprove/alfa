@@ -18,7 +18,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 const { delimited, either, map, option, separatedPair } = Parser;
 
-export interface Value<T = unknown>
+export interface Value<T = Value.AllowedValue>
   extends Functor<T>,
     Serializable<Value.JSON> {
   map<U>(mapper: Mapper<T, U>): Value<U>;

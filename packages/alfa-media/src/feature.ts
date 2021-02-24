@@ -25,8 +25,10 @@ const {
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-feature
  */
-export abstract class Feature<N extends string = string, T = unknown>
-  implements Media.Queryable<Feature.JSON> {
+export abstract class Feature<
+  N extends string = string,
+  T extends Value.AllowedValue = Value.AllowedValue
+> implements Media.Queryable<Feature.JSON> {
   protected readonly _value: Option<Value<T>>;
 
   protected constructor(value: Option<Value<T>>) {
@@ -75,7 +77,7 @@ export namespace Feature {
   }
 
   export class Unknown extends Feature {
-    public static of(value: Value, name: string): Unknown {
+    public static of(value: Value<Value.AllowedValue>, name: string): Unknown {
       return new Unknown(Option.of(value), name);
     }
 
@@ -85,7 +87,10 @@ export namespace Feature {
 
     private readonly _name: string;
 
-    private constructor(value: Option<Value>, name: string) {
+    private constructor(
+      value: Option<Value<Value.AllowedValue>>,
+      name: string
+    ) {
       super(value);
       this._name = name;
     }
@@ -123,6 +128,17 @@ export namespace Feature {
       return "width";
     }
 
+    public static validate(
+      value: Value<Value.AllowedValue>
+    ): value is Value<Length> {
+      return (
+        (Value.isDiscrete(value) && Length.isLength(value.value)) ||
+        (Value.isRange(value) &&
+          value.minimum.every((min) => Length.isLength(min.value)) &&
+          value.maximum.every((max) => Length.isLength(max.value)))
+      );
+    }
+
     public matches(device: Device): boolean {
       const {
         viewport: { width },
@@ -158,6 +174,17 @@ export namespace Feature {
       return "height";
     }
 
+    public static validate(
+      value: Value<Value.AllowedValue>
+    ): value is Value<Length> {
+      return (
+        (Value.isDiscrete(value) && Length.isLength(value.value)) ||
+        (Value.isRange(value) &&
+          value.minimum.every((min) => Length.isLength(min.value)) &&
+          value.maximum.every((max) => Length.isLength(max.value)))
+      );
+    }
+
     public matches(device: Device): boolean {
       const {
         viewport: { height },
@@ -178,8 +205,13 @@ export namespace Feature {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#orientation
    */
-  export class Orientation extends Feature<"orientation", String> {
-    public static of(value: Value<String>): Orientation {
+  export class Orientation extends Feature<
+    "orientation",
+    String<"landscape" | "portrait">
+  > {
+    public static of(
+      value: Value<String<"landscape"> | String<"portrait">>
+    ): Orientation {
       return new Orientation(Option.of(value));
     }
 
@@ -193,9 +225,23 @@ export namespace Feature {
       return "orientation";
     }
 
+    public static validate(
+      value: Value<Value.AllowedValue>
+    ): value is
+      | Value.Discrete<String<"landscape">>
+      | Value.Discrete<String<"portrait">> {
+      return (
+        Value.isDiscrete(value) &&
+        String.isString(value.value) &&
+        ["landscape", "portrait"].includes(value.value.value)
+      );
+    }
+
     public matches(device: Device): boolean {
       return this._value.every((value) =>
-        value.matches(String.of(device.viewport.orientation as string))
+        value.matches(
+          String.of(device.viewport.orientation as "landscape" | "portrait")
+        )
       );
     }
   }
@@ -205,8 +251,16 @@ export namespace Feature {
   /**
    * @see https://drafts.csswg.org/mediaqueries-5/#scripting
    */
-  export class Scripting extends Feature<"scripting", String> {
-    public static of(value: Value<String>): Scripting {
+  export class Scripting extends Feature<
+    "scripting",
+    String<"none" | "enabled" | "initial-only">
+  > {
+    public static of(
+      value:
+        | Value<String<"none">>
+        | Value<String<"enabled">>
+        | Value<String<"initial-only">>
+    ): Scripting {
       return new Scripting(Option.of(value));
     }
 
@@ -218,6 +272,19 @@ export namespace Feature {
 
     public get name(): "scripting" {
       return "scripting";
+    }
+
+    public static validate(
+      value: Value<Value.AllowedValue>
+    ): value is
+      | Value.Discrete<String<"none">>
+      | Value.Discrete<String<"enabled">>
+      | Value.Discrete<String<"initial-only">> {
+      return (
+        Value.isDiscrete(value) &&
+        String.isString(value.value) &&
+        ["none", "enabled", "initial-only"].includes(value.value.value)
+      );
     }
 
     public matches(device: Device): boolean {
@@ -284,53 +351,49 @@ export namespace Feature {
 
         name = name.slice(4);
 
+        const foo = range(Value.bound(value, true));
         switch (name) {
           case "width":
-            if (value.type === "length") {
-              return Feature.width(range(Value.bound(value, true)));
+            if (Width.validate(foo)) {
+              return Feature.width(foo);
             } else {
               break;
             }
 
           case "height":
-            if (value.type === "length") {
-              return Feature.height(range(Value.bound(value, true)));
+            if (Height.validate(foo)) {
+              return Feature.height(foo);
             } else {
               break;
             }
         }
       } else {
+        const foo = Value.discrete(value);
         switch (name) {
           case "width":
-            if (value.type === "length") {
-              return Feature.width(Value.discrete(value));
+            if (Width.validate(foo)) {
+              return Feature.width(foo);
             } else {
               break;
             }
 
           case "height":
-            if (value.type === "length") {
-              return Feature.height(Value.discrete(value));
+            if (Height.validate(foo)) {
+              return Feature.height(foo);
             } else {
               break;
             }
 
           case "orientation":
-            if (
-              value.type === "string" &&
-              ["landscape", "portrait"].includes(value.value)
-            ) {
-              return Feature.orientation(Value.discrete(value));
+            if (Orientation.validate(foo)) {
+              return Feature.orientation(foo);
             } else {
               break;
             }
 
           case "scripting":
-            if (
-              value.type === "string" &&
-              ["none", "initial-only", "enabled"].includes(value.value)
-            ) {
-              return Feature.scripting(Value.discrete(value));
+            if (Scripting.validate(foo)) {
+              return Feature.scripting(foo);
             } else {
               break;
             }
