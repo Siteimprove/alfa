@@ -252,6 +252,9 @@ test(".parse() return 'not all' for syntactically incorrect queries", (t) => {
   t.deepEqual(parse("(orientation: 2px), screen").get(), result);
   t.deepEqual(parse("(orientation: south), screen").get(), result);
   t.deepEqual(parse("(width: portrait), screen").get(), result);
+
+  // discrete feature in a range context
+  t.deepEqual(parse("(orientation = portrait), screen").get(), result);
 });
 
 test(".parse() accepts unknown media types", (t) => {

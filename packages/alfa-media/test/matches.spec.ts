@@ -21,14 +21,14 @@ function parse(input: string) {
   return Media.parse(Lexer.lex(input)).map(([, query]) => query);
 }
 
-test("matches() matches simple orientation query", (t) => {
+test(".matches() matches simple orientation query", (t) => {
   const isPortrait = parse("(orientation: portrait)").get();
 
   t.deepEqual(isPortrait.matches(smallPortrait), true);
   t.deepEqual(isPortrait.matches(largeLandscape), false);
 });
 
-test("matches() matches conjunction query", (t) => {
+test(".matches() matches conjunction query", (t) => {
   const isLargeLandscape = parse(
     "(min-width: 640px) and (orientation: landscape)"
   ).get();
@@ -37,7 +37,7 @@ test("matches() matches conjunction query", (t) => {
   t.deepEqual(isLargeLandscape.matches(smallPortrait), false);
 });
 
-test("matches() matches disjunction query", (t) => {
+test(".matches() matches disjunction query", (t) => {
   const isLargeOrPortrait = parse(
     "(min-width: 640px) or (orientation: portrait)"
   ).get();
@@ -46,14 +46,14 @@ test("matches() matches disjunction query", (t) => {
   t.deepEqual(isLargeOrPortrait.matches(smallPortrait), true);
 });
 
-test("matches() matches negation query", (t) => {
+test(".matches() matches negation query", (t) => {
   const isNotLandscape = parse("not (orientation: landscape)").get();
 
   t.deepEqual(isNotLandscape.matches(smallPortrait), true);
   t.deepEqual(isNotLandscape.matches(largeLandscape), false);
 });
 
-test("matches() matches query with a media type", (t) => {
+test(".matches() matches query with a media type", (t) => {
   const isScreenPortrait = parse("screen and (orientation: portrait)").get();
   const isPrintPortrait = parse("print and (orientation: portrait)").get();
 
@@ -63,7 +63,7 @@ test("matches() matches query with a media type", (t) => {
   t.deepEqual(isPrintPortrait.matches(largeLandscape), false);
 });
 
-test("matches() disregards 'only' modifier", (t) => {
+test(".matches() disregards 'only' modifier", (t) => {
   const isScreenPortrait = parse(
     "only screen and (orientation: portrait)"
   ).get();
@@ -75,7 +75,7 @@ test("matches() disregards 'only' modifier", (t) => {
   t.deepEqual(isPrintPortrait.matches(largeLandscape), false);
 });
 
-test("matches() honors 'not' modifier", (t) => {
+test(".matches() honors 'not' modifier", (t) => {
   const isNotScreenPortrait = parse(
     "not screen and (orientation: portrait)"
   ).get();
@@ -87,4 +87,18 @@ test("matches() honors 'not' modifier", (t) => {
   t.deepEqual(isNotPrintPortrait.matches(smallPortrait), true);
   t.deepEqual(isNotScreenPortrait.matches(largeLandscape), true);
   t.deepEqual(isNotPrintPortrait.matches(largeLandscape), true);
+});
+
+test(".matches() matches ranges", (t) => {
+  const goldylocks /* not too small, not too big */ = Device.of(
+    Device.Type.Screen,
+    Viewport.of(500),
+    Display.of(100)
+  );
+
+  const isGoldylocks = parse("(300px < width <= 600px)").get();
+
+  t.deepEqual(isGoldylocks.matches(smallPortrait), false);
+  t.deepEqual(isGoldylocks.matches(goldylocks), true);
+  t.deepEqual(isGoldylocks.matches(largeLandscape), false);
 });
