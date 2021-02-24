@@ -11,7 +11,7 @@ import { Type } from "./type";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-const { delimited, either, eof, left, map, option, pair, peek, right } = Parser;
+const { delimited, either, end, left, map, option, pair, peek, right } = Parser;
 
 /**
  * @see https://drafts.csswg.org/mediaqueries/#media-query
@@ -202,7 +202,7 @@ export namespace Query {
       parseQuery,
       either(
         peek(Token.parseComma),
-        eof((token) => `Unexpected token ${token}`)
+        end((token) => `Unexpected token ${token}`)
       )
     ),
     (input) => Result.of([skipInvalid(input), notAll()])

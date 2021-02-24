@@ -9,7 +9,6 @@ import { Media } from "./media";
 import { Resolver } from "./resolver";
 import { Value } from "./value";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 const {
   delimited,
@@ -21,8 +20,6 @@ const {
   pair,
   right,
   separatedPair,
-  tee,
-  teeErr,
 } = Parser;
 
 /**
@@ -70,12 +67,6 @@ export abstract class Feature<N extends string = string, T = unknown>
 }
 
 export namespace Feature {
-  import minimumRange = Value.minimumRange;
-  import maximumRange = Value.maximumRange;
-  import Range = Value.Range;
-  import isNumeric = Numeric.isNumeric;
-  import AllowedValue = Value.AllowedValue;
-
   export interface JSON<N extends string = string> {
     [key: string]: json.JSON;
     type: "feature";
@@ -393,7 +384,7 @@ export namespace Feature {
     const value1 = first.get();
     const value2 = second.get();
     if (Value.isRange(value1) && Value.isRange(value2)) {
-      return Range.combine(value1, value2);
+      return Value.Range.combine(value1, value2);
     }
 
     return Err.of("Don't know how to combine these values");
@@ -404,7 +395,7 @@ export namespace Feature {
     comparison: Comparison,
     isLeft: boolean
   ): Result<Value, string> {
-    if (!isNumeric(value)) {
+    if (!Numeric.isNumeric(value)) {
       // This is not fully correct since some discrete features have 0/1 values
       // (hence numeric but technically disallowed in range contexts)
       return Err.of("Only numeric values may be used in a range context");
@@ -422,8 +413,8 @@ export namespace Feature {
     // feature > value => minimum bound
     const range =
       (comparison === Comparison.LT || comparison === Comparison.LE) === isLeft
-        ? minimumRange
-        : maximumRange;
+        ? Value.minimumRange
+        : Value.maximumRange;
 
     return Result.of(range(Value.bound(value, inclusive)));
   }
@@ -440,13 +431,7 @@ export namespace Feature {
 
   export const parseRange = mapResult(
     pair(
-      tee(
-        option(left(parseLeftRange, Token.parseWhitespace)),
-        (result, input) => {
-          // console.log(`leftover: ${input}`);
-          // console.dir(result.toJSON(), { depth: null });
-        }
-      ),
+      option(left(parseLeftRange, Token.parseWhitespace)),
       pair(parseName, option(right(Token.parseWhitespace, parseRightRange)))
     ),
     ([left, [name, right]]) => {
