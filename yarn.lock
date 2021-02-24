@@ -1317,6 +1317,8 @@ __metadata:
   resolution: "@siteimprove/alfa-hash@workspace:packages/alfa-hash"
   dependencies:
     "@siteimprove/alfa-encoding": "workspace:^0.11.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.11.0"
+    "@siteimprove/alfa-json": "workspace:^0.11.0"
     "@siteimprove/alfa-refinement": "workspace:^0.11.0"
     "@siteimprove/alfa-test": "workspace:^0.11.0"
   languageName: unknown

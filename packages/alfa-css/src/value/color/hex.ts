@@ -55,7 +55,7 @@ export class Hex extends Value<"color"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeUint32(hash, this._value);
+    hash.writeUint32(this._value);
   }
 
   public toJSON(): Hex.JSON {

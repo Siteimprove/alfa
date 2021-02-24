@@ -37,7 +37,7 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
   }
 
   public hash(hash: Hash): void {
-    this._depth.hash(hash);
+    hash.writeHashable(this._depth);
   }
 
   public toJSON(): Perspective.JSON {

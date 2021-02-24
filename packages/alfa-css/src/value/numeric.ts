@@ -27,7 +27,7 @@ export abstract class Numeric<T extends string = string> extends Value<T> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeFloat64(hash, this._value);
+    hash.writeFloat64(this._value);
   }
 
   public abstract toJSON(): Numeric.JSON<T>;

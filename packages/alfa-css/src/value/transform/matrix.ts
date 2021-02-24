@@ -44,7 +44,7 @@ export class Matrix extends Value<"transform"> {
   public hash(hash: Hash): void {
     for (const row of this._values) {
       for (const number of row) {
-        number.hash(hash);
+        hash.writeHashable(number);
       }
     }
   }

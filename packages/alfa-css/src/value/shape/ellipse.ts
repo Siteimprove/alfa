@@ -71,9 +71,10 @@ export class Ellipse<
   }
 
   public hash(hash: Hash) {
-    this._rx.hash(hash);
-    this._ry.hash(hash);
-    this._center.hash(hash);
+    hash
+      .writeHashable(this._rx)
+      .writeHashable(this._ry)
+      .writeHashable(this._center);
   }
 
   public toJSON(): Ellipse.JSON {

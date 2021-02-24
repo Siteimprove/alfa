@@ -68,10 +68,11 @@ export class RGB<
   }
 
   public hash(hash: Hash): void {
-    this._red.hash(hash);
-    this._green.hash(hash);
-    this._blue.hash(hash);
-    this._alpha.hash(hash);
+    hash
+      .writeHashable(this._red)
+      .writeHashable(this._green)
+      .writeHashable(this._blue)
+      .writeHashable(this._alpha);
   }
 
   public toJSON(): RGB.JSON {

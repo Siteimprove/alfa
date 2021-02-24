@@ -59,7 +59,7 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._color);
+    hash.writeString(this._color);
   }
 
   public toJSON(): Named.JSON {

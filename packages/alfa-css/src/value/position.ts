@@ -57,8 +57,7 @@ export class Position<
   }
 
   public hash(hash: Hash): void {
-    this._horizontal.hash(hash);
-    this._vertical.hash(hash);
+    hash.writeHashable(this._horizontal).writeHashable(this._vertical);
   }
 
   public toJSON(): Position.JSON {
@@ -145,8 +144,7 @@ export namespace Position {
     }
 
     public hash(hash: Hash): void {
-      this._side.hash(hash);
-      this._offset.hash(hash);
+      hash.writeHashable(this._side).writeHashable(this._offset);
     }
 
     public toJSON(): Side.JSON {

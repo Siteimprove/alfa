@@ -225,7 +225,7 @@ export const Nil: Nil = new (class Nil {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeUint32(hash, 0);
+    hash.writeUint32(0);
   }
 
   public *iterator(): Iterator<never> {}

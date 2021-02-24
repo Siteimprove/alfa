@@ -644,11 +644,11 @@ export class Cons<T> implements Sequence<T> {
     let size = 0;
 
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
       size++;
     }
 
-    Hash.writeUint32(hash, size);
+    hash.writeUint32(size);
   }
 
   public *iterator(): Iterator<T> {

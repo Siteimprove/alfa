@@ -267,7 +267,7 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._name);
+    hash.writeString(this._name);
   }
 
   public toJSON(): Role.JSON {

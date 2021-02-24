@@ -63,9 +63,7 @@ export class Translate<
   }
 
   public hash(hash: Hash): void {
-    this._x.hash(hash);
-    this._y.hash(hash);
-    this._z.hash(hash);
+    hash.writeHashable(this._x).writeHashable(this._y).writeHashable(this._z);
   }
 
   public toJSON(): Translate.JSON {

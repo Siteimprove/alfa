@@ -36,7 +36,7 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._value);
+    hash.writeString(this._value);
   }
 
   public toJSON(): Keyword.JSON<T> {
