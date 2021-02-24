@@ -66,8 +66,7 @@ export namespace Gradient {
     }
 
     public hash(hash: Hash): void {
-      this._color.hash(hash);
-      this._position.hash(hash);
+      hash.writeHashable(this._color).writeHashable(this._position);
     }
 
     public toJSON(): Stop.JSON {
@@ -153,7 +152,7 @@ export namespace Gradient {
     }
 
     public hash(hash: Hash): void {
-      this._position.hash(hash);
+      hash.writeHashable(this._position);
     }
 
     public toJSON(): Hint.JSON {

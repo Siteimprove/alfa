@@ -33,6 +33,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cache](packages/alfa-cache): `Cache<K, V>` now requires that `K` be an object type.
 
+- [@siteimprove/alfa-hash](packages/alfa-hash): The `Hash` type is now an abstract class with methods for hashing specific types of input. Additionally, `Hashable.hash()` has been removed and `Hash#writeUnknown()` introduced as a replacement. ([#670](../../pull/670))
+
 ### Added
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.

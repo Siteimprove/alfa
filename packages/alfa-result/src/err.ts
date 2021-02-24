@@ -139,8 +139,7 @@ export class Err<E> implements Result<never, E> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, false);
-    Hashable.hash(hash, this._error);
+    hash.writeBoolean(false).writeUnknown(this._error);
   }
 
   public *[Symbol.iterator]() {}

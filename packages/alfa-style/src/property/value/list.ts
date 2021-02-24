@@ -39,11 +39,10 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 
   public hash(hash: Hash): void {
     for (const value of this._values) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._values.length);
-    Hash.writeString(hash, this._separator);
+    hash.writeUint32(this._values.length).writeString(this._separator);
   }
 
   public *[Symbol.iterator](): Iterator<T> {

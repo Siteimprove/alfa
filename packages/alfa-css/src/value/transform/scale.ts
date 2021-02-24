@@ -47,8 +47,7 @@ export class Scale extends Value<"transform"> {
   }
 
   public hash(hash: Hash): void {
-    this._x.hash(hash);
-    this._y.hash(hash);
+    hash.writeHashable(this._x).writeHashable(this._y);
   }
 
   public toJSON(): Scale.JSON {

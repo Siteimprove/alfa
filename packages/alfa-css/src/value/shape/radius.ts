@@ -52,7 +52,7 @@ export class Radius<
   }
 
   public hash(hash: Hash) {
-    this._value.hash(hash);
+    hash.writeHashable(this._value);
   }
 
   public toJSON(): Radius.JSON {

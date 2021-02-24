@@ -164,7 +164,7 @@ export class Network<N, E>
   }
 
   public hash(hash: Hash): void {
-    this._nodes.hash(hash);
+    hash.writeHashable(this._nodes);
   }
 
   public *iterator(): Iterator<[N, Iterable<[N, Iterable<E>]>]> {
