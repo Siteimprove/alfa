@@ -9,6 +9,7 @@ import { Media } from "./media";
 import { Resolver } from "./resolver";
 import { Value } from "./value";
 import { Err, Result } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 const {
   delimited,
@@ -68,6 +69,12 @@ export abstract class Feature<
   }
 }
 
+interface FeatureFactory<T extends Value.AllowedValue> {
+  validate: Refinement<Value<Value.AllowedValue>, Value<T>>;
+  boolean: (name: string) => Feature;
+  of: (value: Value<T>, name?: string) => Feature;
+}
+
 export namespace Feature {
   export interface JSON<N extends string = string> {
     [key: string]: json.JSON;
@@ -76,8 +83,48 @@ export namespace Feature {
     value: Value.JSON | null;
   }
 
+  export function from(
+    name: string,
+    value?: Value<Value.AllowedValue>
+  ): Feature {
+    switch (name) {
+      case "height":
+        return fromFactory<Length>(Height, name, value);
+      case "orientation":
+        return fromFactory<String<"landscape" | "portrait">>(
+          Orientation,
+          name,
+          value
+        );
+      case "scripting":
+        return fromFactory<String<"none" | "enabled" | "initial-only">>(
+          Scripting,
+          name,
+          value
+        );
+      case "width":
+        return fromFactory<Length>(Width, name, value);
+      default:
+        return fromFactory(Unknown, name, value);
+    }
+  }
+
+  function fromFactory<
+    T extends Value.AllowedValue,
+    F extends FeatureFactory<T> = FeatureFactory<T>
+  >(factory: F, name: string, value?: Value<Value.AllowedValue>): Feature {
+    return value === undefined
+      ? factory.boolean(name)
+      : factory.validate(value)
+      ? factory.of(value)
+      : Unknown.of(value, name);
+  }
+
   export class Unknown extends Feature {
-    public static of(value: Value<Value.AllowedValue>, name: string): Unknown {
+    public static of(
+      value: Value<Value.AllowedValue>,
+      name: string = ""
+    ): Unknown {
       return new Unknown(Option.of(value), name);
     }
 
@@ -101,6 +148,12 @@ export namespace Feature {
 
     public get isKnown(): false {
       return false;
+    }
+
+    public static validate(
+      value: Value<Value.AllowedValue>
+    ): value is Value<Value.AllowedValue> {
+      return true;
     }
 
     public matches(): boolean {
@@ -210,7 +263,7 @@ export namespace Feature {
     String<"landscape" | "portrait">
   > {
     public static of(
-      value: Value<String<"landscape"> | String<"portrait">>
+      value: Value<String<"landscape" | "portrait">>
     ): Orientation {
       return new Orientation(Option.of(value));
     }
@@ -256,10 +309,7 @@ export namespace Feature {
     String<"none" | "enabled" | "initial-only">
   > {
     public static of(
-      value:
-        | Value<String<"none">>
-        | Value<String<"enabled">>
-        | Value<String<"initial-only">>
+      value: Value<String<"none" | "enabled" | "initial-only">>
     ): Scripting {
       return new Scripting(Option.of(value));
     }
@@ -303,7 +353,7 @@ export namespace Feature {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-comparison
    */
-  enum Comparison {
+  export enum Comparison {
     LT = "<",
     LE = "<=",
     EQ = "=",
@@ -351,177 +401,108 @@ export namespace Feature {
 
         name = name.slice(4);
 
-        const foo = range(Value.bound(value, true));
-        switch (name) {
-          case "width":
-            if (Width.validate(foo)) {
-              return Feature.width(foo);
-            } else {
-              break;
-            }
-
-          case "height":
-            if (Height.validate(foo)) {
-              return Feature.height(foo);
-            } else {
-              break;
-            }
-        }
+        return Feature.from(name, range(Value.bound(value, true)));
       } else {
-        const foo = Value.discrete(value);
-        switch (name) {
-          case "width":
-            if (Width.validate(foo)) {
-              return Feature.width(foo);
-            } else {
-              break;
-            }
-
-          case "height":
-            if (Height.validate(foo)) {
-              return Feature.height(foo);
-            } else {
-              break;
-            }
-
-          case "orientation":
-            if (Orientation.validate(foo)) {
-              return Feature.orientation(foo);
-            } else {
-              break;
-            }
-
-          case "scripting":
-            if (Scripting.validate(foo)) {
-              return Feature.scripting(foo);
-            } else {
-              break;
-            }
-        }
+        return Feature.from(name, Value.discrete(value));
       }
-
-      return Feature.unknown(Value.discrete(value), name);
     }
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
    */
-  const parseBoolean = map(parseName, (name) => {
-    switch (name) {
-      case "width":
-        return Feature.booleanWidth();
-
-      case "height":
-        return Feature.booleanHeight();
-
-      case "orientation":
-        return Feature.booleanOrientation();
-
-      case "scripting":
-        return Feature.booleanScripting();
-
-      default:
-        return Feature.booleanUnknown(name);
-    }
-  });
+  const parseBoolean = map(parseName, Feature.from);
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-range
    */
-  function combine(
-    first: Option<Value>,
-    second: Option<Value>
-  ): Result<Value, string> {
-    if (first.isNone() && second.isNone()) {
-      return Err.of("Can't combine two empty values");
-    }
-
-    if (first.isNone() || second.isNone()) {
-      // they cannot be both None due to the previous test.
-      // need to defer eval of second.get() since it may be None
-      return Result.of(first.getOrElse(() => second.get()));
-    }
-
-    // They are both Some due to the previous test.
-    const value1 = first.get();
-    const value2 = second.get();
-    if (Value.isRange(value1) && Value.isRange(value2)) {
-      return Value.Range.combine(value1, value2);
-    }
-
-    return Err.of("Don't know how to combine these values");
-  }
-
-  function buildValue(
-    value: Value.AllowedValue,
-    comparison: Comparison,
-    isLeft: boolean
-  ): Result<Value, string> {
-    if (!Numeric.isNumeric(value)) {
-      // This is not fully correct since some discrete features have 0/1 values
-      // (hence numeric but technically disallowed in range contexts)
-      return Err.of("Only numeric values may be used in a range context");
-    }
-
-    if (comparison === Comparison.EQ) {
-      return Result.of(Value.discrete(value) as Value);
-    }
-
-    const inclusive =
-      comparison === Comparison.LE || comparison === Comparison.GE;
-    // value < feature => minimum bound
-    // value > feature => maximum bound
-    // feature < value => maximum bound
-    // feature > value => minimum bound
-    const range =
-      (comparison === Comparison.LT || comparison === Comparison.LE) === isLeft
-        ? Value.minimumRange
-        : Value.maximumRange;
-
-    return Result.of(range(Value.bound(value, inclusive)));
-  }
-
-  export const parseLeftRange = mapResult(
+  const parseLeftRange = mapResult(
     separatedPair(Value.parse, Token.parseWhitespace, parseComparison),
-    ([value, comparison]) => buildValue(value, comparison, true)
+    ([value, comparison]) => buildRange(value, comparison, true)
   );
 
-  export const parseRightRange = mapResult(
+  const parseRightRange = mapResult(
     separatedPair(parseComparison, Token.parseWhitespace, Value.parse),
-    ([comparison, value]) => buildValue(value, comparison, false)
+    ([comparison, value]) => buildRange(value, comparison, false)
   );
 
-  export const parseRange = mapResult(
+  const parseRange = mapResult(
     pair(
       option(left(parseLeftRange, Token.parseWhitespace)),
       pair(parseName, option(right(Token.parseWhitespace, parseRightRange)))
     ),
-    ([left, [name, right]]) => {
-      return combine(left, right).map((value) =>
-        // TODO
-        name === "width"
-          ? Width.of(value as Value<Length>)
-          : Unknown.of(value, name)
-      );
-    }
+    ([left, [name, right]]) =>
+      combine(left, right).map((value) => Feature.from(name, value))
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
    */
-  export const parse = mapResult(
+  export const parseFeature = delimited(
+    Token.parseOpenParenthesis,
     delimited(
-      Token.parseOpenParenthesis,
-      delimited(
-        option(Token.parseWhitespace),
-        either(parseRange, parsePlain, parseBoolean)
-      ),
-      Token.parseCloseParenthesis
+      option(Token.parseWhitespace),
+      either(parseRange, parsePlain, parseBoolean)
     ),
-    (feature) =>
-      feature.isKnown
-        ? Result.of(feature)
-        : Err.of(`Unknown feature ${feature}`)
+    Token.parseCloseParenthesis
   );
+
+  export const parse = mapResult(parseFeature, (feature) =>
+    feature.isKnown ? Result.of(feature) : Err.of(`Unknown feature ${feature}`)
+  );
+}
+
+function combine(
+  first: Option<Value>,
+  second: Option<Value>
+): Result<Value, string> {
+  if (first.isNone() && second.isNone()) {
+    return Err.of("Can't combine two empty values");
+  }
+
+  if (first.isNone() || second.isNone()) {
+    // they cannot be both None due to the previous test.
+    // need to defer eval of second.get() since it may be None
+    return Result.of(first.getOrElse(() => second.get()));
+  }
+
+  // They are both Some due to the previous test.
+  const value1 = first.get();
+  const value2 = second.get();
+  if (Value.isRange(value1) && Value.isRange(value2)) {
+    return Value.Range.combine(value1, value2);
+  }
+
+  return Err.of("Don't know how to combine these values");
+}
+
+function buildRange(
+  value: Value.AllowedValue,
+  comparison: Feature.Comparison,
+  isLeft: boolean
+): Result<Value, string> {
+  if (!Numeric.isNumeric(value)) {
+    // This is not fully correct since some discrete features have 0/1 values
+    // (hence numeric but technically disallowed in range contexts)
+    return Err.of("Only numeric values may be used in a range context");
+  }
+
+  if (comparison === Feature.Comparison.EQ) {
+    return Result.of(Value.discrete(value) as Value);
+  }
+
+  const inclusive =
+    comparison === Feature.Comparison.LE ||
+    comparison === Feature.Comparison.GE;
+  // value < feature => minimum bound
+  // value > feature => maximum bound
+  // feature < value => maximum bound
+  // feature > value => minimum bound
+  const range =
+    (comparison === Feature.Comparison.LT ||
+      comparison === Feature.Comparison.LE) === isLeft
+      ? Value.minimumRange
+      : Value.maximumRange;
+
+  return Result.of(range(Value.bound(value, inclusive)));
 }
