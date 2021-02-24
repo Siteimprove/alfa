@@ -8,14 +8,14 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Question } from "../../src/common/question";
 
-export function oracle(answers: {
+export function oracle<I, T>(answers: {
   [uri: string]:
     | boolean
     | Option<Node>
     | Iterable<Node>
     | Option<RGB>
     | Iterable<RGB>;
-}): Oracle<Question> {
+}): Oracle<I, T, Question> {
   return (rule, question) => {
     const answer = answers[question.uri];
 

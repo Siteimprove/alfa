@@ -15,7 +15,6 @@
     "bin/alfa/command/scrape/arguments.ts",
     "bin/alfa/command/scrape/flags.ts",
     "bin/alfa/command/scrape/run.ts",
-    "bin/alfa/oracle.ts",
     "bin/alfa/profiler.ts"
   ],
   "references": [
@@ -54,6 +53,9 @@
     },
     {
       "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-interviewer"
     },
     {
       "path": "../alfa-iterable"
