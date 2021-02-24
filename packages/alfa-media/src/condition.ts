@@ -28,6 +28,8 @@ export namespace Condition {
 
   export type JSON = Expression.JSON | Feature.JSON | Negation.JSON;
 
+  export const { /*of: feature,*/ isFeature } = Feature;
+
   class Expression implements Media.Queryable<Expression.JSON> {
     public static of(
       combinator: Expression.Combinator,
