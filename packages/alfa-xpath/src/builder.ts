@@ -8,30 +8,24 @@ import { Expression } from "./expression";
 
 export class Builder<T extends Expression = Expression>
   implements Equatable, Serializable {
-  protected readonly _expression: T;
+  public readonly expression: T;
 
   public constructor(expression: T) {
-    this._expression = expression;
-  }
-
-  public get expression(): T {
-    return this._expression;
+    this.expression = expression;
   }
 
   public equals(value: unknown): value is this {
-    return (
-      value instanceof Builder && value._expression.equals(this._expression)
-    );
+    return value instanceof Builder && value.expression.equals(this.expression);
   }
 
   public toJSON(): Builder.JSON {
     return {
-      expression: this._expression.toJSON(),
+      expression: this.expression.toJSON(),
     };
   }
 
   public toString(): string {
-    return `${this._expression}`;
+    return `${this.expression}`;
   }
 }
 
