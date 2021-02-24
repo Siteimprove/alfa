@@ -1566,6 +1566,68 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
   ]);
 });
 
+test(`.from() correctly handles self-referencing aria-labelledby references`, (t) => {
+  const foo = (
+    <div id="foo" aria-labelledby="foo bar">
+      Hello
+    </div>
+  );
+
+  <div>
+    {foo}
+    <div id="bar">world</div>
+  </div>;
+
+  t.deepEqual(Name.from(foo, device).toJSON(), [
+    [
+      {
+        type: "some",
+        value: {
+          value: "Hello world",
+          sources: [
+            {
+              type: "reference",
+              attribute: "/div[1]/div[1]/@aria-labelledby",
+              name: {
+                value: "Hello world",
+                sources: [
+                  {
+                    type: "descendant",
+                    element: "/div[1]/div[1]",
+                    name: {
+                      value: "Hello",
+                      sources: [
+                        {
+                          type: "data",
+                          text: "/div[1]/div[1]/text()[1]",
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    type: "descendant",
+                    element: "/div[1]/div[2]",
+                    name: {
+                      value: "world",
+                      sources: [
+                        {
+                          type: "data",
+                          text: "/div[1]/div[2]/text()[1]",
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      [],
+    ],
+  ]);
+});
+
 test(".from() ignores nodes that are not exposed when computing name from content", (t) => {
   const heading = (
     <h1>
