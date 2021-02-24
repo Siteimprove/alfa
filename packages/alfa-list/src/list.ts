@@ -397,10 +397,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public hash(hash: Hash): void {
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._size);
+    hash.writeUint32(this._size);
   }
 
   public *[Symbol.iterator](): Iterator<T> {

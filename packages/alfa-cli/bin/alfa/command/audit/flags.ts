@@ -16,15 +16,17 @@ export const Flags = {
     .alias("o")
     .optional(),
 
-  interactive: Flag.boolean(
-    "interactive",
-    "Whether or not to run an interactive audit."
+  interviewer: Flag.string(
+    "interviewer",
+    `The interviewer to use for answering questions during the audit. If not
+    provided, questions will be left unanswered.`
   )
+    .type("name or package")
     .alias("i")
-    .default(false),
+    .optional(),
 
   format: Flag.string("format", "The reporting format to use.")
-    .type("format or package")
+    .type("name or package")
     .alias("f")
     .default("earl"),
 

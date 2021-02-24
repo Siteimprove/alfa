@@ -35,7 +35,7 @@ export class String<T extends string = string> extends Value<"string"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._value);
+    hash.writeString(this._value);
   }
 
   public toJSON(): String.JSON<T> {

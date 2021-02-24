@@ -50,6 +50,7 @@
     { "path": "alfa-highlight" },
     { "path": "alfa-http" },
     { "path": "alfa-iana" },
+    { "path": "alfa-interviewer" },
     { "path": "alfa-iterable" },
     { "path": "alfa-jasmine" },
     { "path": "alfa-jest" },

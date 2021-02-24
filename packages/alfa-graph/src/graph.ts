@@ -128,7 +128,7 @@ export class Graph<T>
   }
 
   public hash(hash: Hash): void {
-    this._nodes.hash(hash);
+    hash.writeHashable(this._nodes);
   }
 
   public *iterator(): Iterator<[T, Iterable<T>]> {

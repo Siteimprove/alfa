@@ -104,10 +104,11 @@ export class HSL<
   }
 
   public hash(hash: Hash): void {
-    this._hue.hash(hash);
-    this._saturation.hash(hash);
-    this._lightness.hash(hash);
-    this._alpha.hash(hash);
+    hash
+      .writeHashable(this._hue)
+      .writeHashable(this._saturation)
+      .writeHashable(this._lightness)
+      .writeHashable(this._alpha);
   }
 
   public toJSON(): HSL.JSON {

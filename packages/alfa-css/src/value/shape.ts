@@ -61,8 +61,7 @@ export class Shape<
   }
 
   public hash(hash: Hash) {
-    this._shape.hash(hash);
-    this._box.hash(hash);
+    hash.writeHashable(this._shape).writeHashable(this._box);
   }
 
   public toJSON(): Shape.JSON {

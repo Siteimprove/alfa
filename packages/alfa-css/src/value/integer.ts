@@ -28,7 +28,7 @@ export class Integer extends Numeric<"integer"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeInt32(hash, this._value);
+    hash.writeInt32(this._value);
   }
 
   public toJSON(): Integer.JSON {

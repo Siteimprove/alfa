@@ -38,7 +38,7 @@ export class Image<
   }
 
   public hash(hash: Hash): void {
-    this._image.hash(hash);
+    hash.writeHashable(this._image);
   }
 
   public toJSON(): Image.JSON {

@@ -448,10 +448,10 @@ export namespace Array {
 
   export function hash<T>(array: ReadonlyArray<T>, hash: Hash): void {
     for (let i = 0, n = array.length; i < n; i++) {
-      Hashable.hash(hash, array[i]);
+      hash.writeUnknown(array[i]);
     }
 
-    Hash.writeUint32(hash, array.length);
+    hash.writeUint32(array.length);
   }
 
   export function iterator<T>(array: ReadonlyArray<T>): Iterator<T> {

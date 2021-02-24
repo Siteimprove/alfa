@@ -33,7 +33,7 @@ export class Scripting implements Equatable, Hashable, Serializable {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, this._enabled);
+    hash.writeBoolean(this._enabled);
   }
 
   public toJSON(): Scripting.JSON {

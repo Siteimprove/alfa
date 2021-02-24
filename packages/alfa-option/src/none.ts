@@ -95,7 +95,7 @@ export const None: None = new (class None {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, false);
+    hash.writeBoolean(false);
   }
 
   public *[Symbol.iterator](): Iterator<never> {}
