@@ -215,6 +215,18 @@ export class Slice<T> implements Collection.Indexed<T> {
     return new Slice(array, 0, array.length);
   }
 
+  public subtract(iterable: Iterable<T>): Slice<T> {
+    const array = [...Iterable.subtract(this, iterable)];
+
+    return new Slice(array, 0, array.length);
+  }
+
+  public intersect(iterable: Iterable<T>): Slice<T> {
+    const array = [...Iterable.intersect(this, iterable)];
+
+    return new Slice(array, 0, array.length);
+  }
+
   public first(): Option<T> {
     return this.get(0);
   }

@@ -247,7 +247,11 @@ export class Branched<T, B = never>
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T, B>(value: Branched<T, B>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Branched && value._values.equals(this._values);
   }
 

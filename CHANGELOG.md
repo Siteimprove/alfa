@@ -21,15 +21,27 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Lexer.lex()` now returns `Slice<Token>` as the returned array would always be wrapped in a slice by the caller.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector.parse()` is now an instance of `Parser<Slice<Token>, Selector, string>` to allow it being used in parser combinators.
+
+- [@siteimprove/alfa-media](packages/alfa-media): `Media.parse()` is now an instance of `Parser<Slice<Token>, Media.List, string>` to allow it being used in parser combinators.
+
+- [@siteimprove/alfa-cache](packages/alfa-cache): `Cache<K, V>` now requires that `K` be an object type.
+
 ### Added
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
 
 - [@siteimprove/alfa-result](packages/alfa-result): `Result#tee()` and `Result#teeErr()` are now available.
 
-- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.Infallible<I, T, A>` and `Parser.teeErr()` are now available.
+- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.Infallible<I, T, A>`, `Parser.teeErr()`, `Parser.reject()`, `Parser.end()`, `Parser.takeBetween()`, `Parser.takeAtLeast()`, and `Parser.takeAtMost()` are now available. Additionally, `Parser.eof()` has been deprecated.
 
-- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, `Array.distinct()`, and `Array.allocate()` are now available.
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, `Array.distinct()`, `Array.allocate()`, `Array.apply()`, `Array.get()`, `Array.set()`, `Array.has()`, `Array.concat()`, `Array.subtract()`, `Array.intersect()`, `Array.first()`, `Array.last()`, and `Array.iterator()` are now available.
 
 - [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
 
@@ -39,13 +51,21 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#takeLastWhile()`, `Indexed#takeLastUntil()`, `Indexed#skipLastWhile()`, `Indexed#skipLastUntil()`, `Indexed#trim()`, `Indexed#trimLeading()`, and `Indexed#trimTrailing()` are now available and implemented by `List` and `Sequence`.
 
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-sequence](packages/alfa-sequence), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-slice](packages/alfa-slice): `Keyed#subtract()`, `Keyed#intersect()`, `Unkeyed#subtract()`, `Unkeyed#intersect()`, `Indexed#subtract()`, and `Indexed#intersect()` are now available and implemented by `List`, `Map`, `Sequence`, `Set`, and `Slice`.
+
 - [@siteimprove/alfa-slice](packages/alfa-slice): `Slice<T>` now provides an implementation of `Collection.Indexed<T>`
 
-- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()` is now available.
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()`, `Iterable.set()`, `Iterable.insert()`, `Iterable.append()`, `Iterable.prepend()`, and `Iterable.iterator()` are now available.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.isLessThan()`, `Comparable.isLessThanOrEqual()`, `Comparable.isGreaterThan()`, and `Comparable.isGreaterThanOrEqual()` are now available.
+
+- [@siteimprove/alfa-network](packages/alfa-network): A package has been added with an implementation of an immutable, directed graph that allows for multiple, unique edges. ([#696](../../pull/696))
+
+- [@siteimprove/alfa-sarif](packages/alfa-sarif): A package has been added with types for working with SARIF serialisable structures. ([#694](../../pull/694))
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `color` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `background-color` or `color`, and presence/absence of a `box-shadow` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#714](../../pull/714), [#715](../../pull/715))
 
 ### Fixed
 
@@ -57,7 +77,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cascade](packages/alfa-cascade): The user agent styles now include previously missing definitions for form controls.
 
-- [@siteimprove/alfa-url](packages/alfa-url): `URL#toString()` now correctly serializes URLs that cannot be used as base URLs.
+- [@siteimprove/alfa-url](packages/alfa-url): `URL#toString()` now correctly serializes URLs that cannot be used as base URLs. ([#459](../../issues/459), [#676](../../pull/676))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now gives priority to the subtree over the `title` attribute for `<a>` elements. ([#669](../../issues/669), [#716](../../pull/716))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `inline-block`, `inline-table`, `inline-flex`, and `inline-grid` values.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now correctly handles self-referencing `aria-labelledby` attributes. ([#717](../../issues/717))
 
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 

@@ -112,4 +112,20 @@ export namespace Comparable {
 
     return Comparison.Equal;
   }
+
+  export function isLessThan<T>(a: Comparable<T>, b: T): boolean {
+    return a.compare(b) < 0;
+  }
+
+  export function isLessThanOrEqual<T>(a: Comparable<T>, b: T): boolean {
+    return a.compare(b) <= 0;
+  }
+
+  export function isGreaterThan<T>(a: Comparable<T>, b: T): boolean {
+    return a.compare(b) > 0;
+  }
+
+  export function isGreaterThanOrEqual<T>(a: Comparable<T>, b: T): boolean {
+    return a.compare(b) >= 0;
+  }
 }

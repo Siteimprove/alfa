@@ -104,17 +104,17 @@ export namespace Declaration {
 
     input = input.slice(1);
 
-    while (input.get(0).some(Token.isWhitespace)) {
+    while (Token.isWhitespace(input.array[input.offset])) {
       input = input.slice(1);
     }
 
-    if (input.get(0).every(not(Token.isColon))) {
+    if (!Token.isColon(input.array[input.offset])) {
       return Err.of("Expected a colon");
     }
 
     input = input.slice(1);
 
-    while (input.get(0).some(Token.isWhitespace)) {
+    while (Token.isWhitespace(input.array[input.offset])) {
       input = input.slice(1);
     }
 

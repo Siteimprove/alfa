@@ -410,6 +410,14 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public subtract(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => !Iterable.includes(iterable, value));
+  }
+
+  public intersect(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => Iterable.includes(iterable, value));
+  }
+
   public first(): Option<T> {
     return Option.of(this._head);
   }
@@ -592,14 +600,6 @@ export class Cons<T> implements Sequence<T> {
 
   public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
-  }
-
-  public subtract(iterable: Iterable<T>): Sequence<T> {
-    return this.filter((value) => !Iterable.includes(iterable, value));
-  }
-
-  public intersect(iterable: Iterable<T>): Sequence<T> {
-    return this.filter((value) => Iterable.includes(iterable, value));
   }
 
   public groupBy<K>(

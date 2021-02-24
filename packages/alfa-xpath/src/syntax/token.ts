@@ -435,7 +435,9 @@ function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
   return (input) => {
-    for (const token of input.get(0).filter(refinement)) {
+    const token = input.array[input.offset];
+
+    if (token !== undefined && refinement(token)) {
       return Result.of([input.slice(1), token]);
     }
 

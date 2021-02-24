@@ -192,7 +192,7 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     Name.fromNode(
       element,
       device,
-      state.recurse(true).reference(false).descend(false)
+      state.reference(None).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
   )
     .map((names) =>
@@ -233,8 +233,12 @@ type Features = {
 
 const Features: Features = {
   [Namespace.HTML]: {
-    a: html((element) =>
-      element.attribute("href").isSome() ? Option.of(Role.of("link")) : None
+    a: html(
+      (element) =>
+        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+      () => [],
+      (element, device, state) =>
+        Name.fromDescendants(element, device, state.visit(element))
     ),
 
     area: html(

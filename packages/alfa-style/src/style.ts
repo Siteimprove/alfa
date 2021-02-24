@@ -132,7 +132,7 @@ export class Style implements Serializable {
 
   // We cache computed properties but not specified properties as these are
   // inexpensive to resolve from cascaded and computed properties.
-  private readonly _computed = Cache.empty<Name, Value>();
+  private readonly _computed = new Map<Name, Value>();
 
   private constructor(
     device: Device,
@@ -217,12 +217,18 @@ export class Style implements Serializable {
       return this.initial(name);
     }
 
-    return this._computed.get(name, () =>
-      Property.get(name).compute(
+    let value = this._computed.get(name);
+
+    if (value === undefined) {
+      value = Property.get(name).compute(
         this.specified(name) as Value<Style.Specified<Name>>,
         this
-      )
-    ) as Value<Style.Computed<N>>;
+      );
+
+      this._computed.set(name, value);
+    }
+
+    return value as Value<Style.Computed<N>>;
   }
 
   public initial<N extends Name>(

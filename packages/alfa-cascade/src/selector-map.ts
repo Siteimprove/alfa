@@ -177,7 +177,7 @@ export namespace SelectorMap {
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
-    const other: Array<SelectorMap.Node> = [];
+    const other: Array<Node> = [];
 
     const add = (
       rule: Rule,
@@ -186,33 +186,19 @@ export namespace SelectorMap {
       origin: Origin,
       order: number
     ): void => {
-      const node = SelectorMap.Node.of(
-        rule,
-        selector,
-        declarations,
-        origin,
-        order
-      );
+      const node = Node.of(rule, selector, declarations, origin, order);
 
       const keySelector = getKeySelector(selector);
 
-      if (keySelector !== null) {
-        if (keySelector instanceof Selector.Id) {
-          ids.add(keySelector.name, node);
-        }
-
-        if (keySelector instanceof Selector.Class) {
-          classes.add(keySelector.name, node);
-        }
-
-        if (keySelector instanceof Selector.Type) {
-          types.add(keySelector.name, node);
-        }
-
-        return;
+      if (keySelector === null) {
+        other.push(node);
+      } else if (keySelector instanceof Selector.Id) {
+        ids.add(keySelector.name, node);
+      } else if (keySelector instanceof Selector.Class) {
+        classes.add(keySelector.name, node);
+      } else {
+        types.add(keySelector.name, node);
       }
-
-      other.push(node);
     };
 
     const visit = (rule: Rule) => {
