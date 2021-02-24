@@ -68,10 +68,11 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
   }
 
   public hash(hash: Hash): void {
-    this._x.hash(hash);
-    this._y.hash(hash);
-    this._z.hash(hash);
-    this._angle.hash(hash);
+    hash
+      .writeHashable(this._x)
+      .writeHashable(this._y)
+      .writeHashable(this._z)
+      .writeHashable(this._angle);
   }
 
   public toJSON(): Rotate.JSON {

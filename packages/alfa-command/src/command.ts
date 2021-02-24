@@ -281,6 +281,7 @@ export class Command<
   private _helpUsage(): string {
     return `
 ${Marker.bold("Usage:")}
+
   ${Marker.bold("$")} ${this._invocation()} [flags] ${[
       ...values(this._arguments),
     ]
@@ -296,6 +297,7 @@ ${Marker.bold("Usage:")}
   private _helpVersion(): string {
     return `
 ${Marker.bold("Version:")}
+
   ${this._version}
     `.trim();
   }
@@ -310,6 +312,7 @@ ${Marker.bold("Version:")}
     return Option.of(
       `
 ${Marker.bold("Arguments:")}
+
 ${args
   .map((argument) => {
     const { options } = argument;
@@ -346,6 +349,7 @@ ${args
     return Option.of(
       `
 ${Marker.bold("Commands:")}
+
 ${[...values(this._subcommands)]
   .map(
     (command) =>
@@ -369,6 +373,7 @@ ${[...values(this._subcommands)]
     return Option.of(
       `
 ${Marker.bold("Flags:")}
+
 ${[...values(this._flags)]
   .map((flag) => {
     const { options } = flag;

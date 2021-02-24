@@ -78,7 +78,7 @@ export class Selective<S, T = never>
   }
 
   public hash(hash: Hash): void {
-    this._value.hash(hash);
+    hash.writeHashable(this._value);
   }
 
   public *iterator(): Iterator<S | T> {

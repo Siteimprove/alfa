@@ -164,6 +164,20 @@ export class Set<T> implements Collection.Unkeyed<T> {
     );
   }
 
+  public subtract(iterable: Iterable<T>): Set<T> {
+    return Iterable.reduce<T, Set<T>>(
+      iterable,
+      (set, value) => set.delete(value),
+      this
+    );
+  }
+
+  public intersect(iterable: Iterable<T>): Set<T> {
+    return Set.fromIterable(
+      Iterable.filter(iterable, (value) => this.has(value))
+    );
+  }
+
   public equals<T>(value: Set<T>): boolean;
 
   public equals(value: unknown): value is this;
@@ -174,16 +188,20 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   public hash(hash: Hash): void {
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._values.size);
+    hash.writeUint32(this._values.size);
   }
 
-  public *[Symbol.iterator](): Iterator<T> {
+  public *iterator(): Iterator<T> {
     for (const [value] of this._values) {
       yield value;
     }
+  }
+
+  public [Symbol.iterator](): Iterator<T> {
+    return this.iterator();
   }
 
   public toArray(): Array<T> {

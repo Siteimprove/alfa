@@ -13,7 +13,7 @@ function key(id: number) {
     },
 
     hash(hash: Hash): void {
-      Hash.writeNumber(hash, id);
+      hash.writeNumber(id);
     },
   };
 

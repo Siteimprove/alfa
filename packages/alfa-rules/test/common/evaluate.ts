@@ -4,16 +4,17 @@ import { Document } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { None } from "@siteimprove/alfa-option";
+import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
 export function evaluate<T, Q>(
   rule: Rule<Page, T, Q>,
   page: Partial<Page>,
-  oracle: Oracle<Q> = () => Future.now(None)
+  oracle: Oracle<Page, T, Q> = () => Future.now(None)
 ): Future<Array<Outcome.JSON>> {
   const {
-    request = Request.empty(),
-    response = Response.empty(),
+    request = Request.of("GET", URL.example()),
+    response = Response.of(URL.example(), 200),
     document = Document.empty(),
     device = Device.standard(),
   } = page;

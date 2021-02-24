@@ -1,23 +1,16 @@
-import { Assertions, test } from "@siteimprove/alfa-test";
-
-import { Slice } from "@siteimprove/alfa-slice";
+import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
 import { Calculation } from "../../src/value/calculation";
 
-function parse(t: Assertions, input: string, expected: Calculation.JSON) {
-  t.deepEqual(
-    Calculation.parse(Slice.of(Lexer.lex(input)))
-      .map(([, calculation]) => calculation)
-      .get()
-      .toJSON(),
-    expected,
-    input
+function parse(input: string) {
+  return Calculation.parse(Lexer.lex(input)).map(([, calculation]) =>
+    calculation.toJSON()
   );
 }
 
 test(".parse() parses an addition expression of numbers", (t) => {
-  parse(t, "calc(1 + 2)", {
+  t.deepEqual(parse("calc(1 + 2)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -30,7 +23,7 @@ test(".parse() parses an addition expression of numbers", (t) => {
 });
 
 test(".parse() parses an addition expression of percentages", (t) => {
-  parse(t, "calc(1% + 2%)", {
+  t.deepEqual(parse("calc(1% + 2%)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -43,7 +36,7 @@ test(".parse() parses an addition expression of percentages", (t) => {
 });
 
 test(".parse() parses an addition expression of absolute lengths", (t) => {
-  parse(t, "calc(1px + 2px)", {
+  t.deepEqual(parse("calc(1px + 2px)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -57,7 +50,7 @@ test(".parse() parses an addition expression of absolute lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of relative lengths", (t) => {
-  parse(t, "calc(1em + 2em)", {
+  t.deepEqual(parse("calc(1em + 2em)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -71,7 +64,7 @@ test(".parse() parses an addition expression of relative lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of mixed lengths", (t) => {
-  parse(t, "calc(1px + 2em)", {
+  t.deepEqual(parse("calc(1px + 2em)").get(), {
     type: "calculation",
     expression: {
       type: "sum",
@@ -98,7 +91,7 @@ test(".parse() parses an addition expression of mixed lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of a length and a percentage", (t) => {
-  parse(t, "calc(1px + 2%", {
+  t.deepEqual(parse("calc(1px + 2%").get(), {
     type: "calculation",
     expression: {
       type: "sum",
@@ -124,7 +117,7 @@ test(".parse() parses an addition expression of a length and a percentage", (t) 
 });
 
 test(".parse() parses a multiplication expression of numbers", (t) => {
-  parse(t, "calc(2 * 3)", {
+  t.deepEqual(parse("calc(2 * 3)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -137,7 +130,7 @@ test(".parse() parses a multiplication expression of numbers", (t) => {
 });
 
 test(".parse() parses a multiplication expression of a number and a percentage", (t) => {
-  parse(t, "calc(2 * 3%)", {
+  t.deepEqual(parse("calc(2 * 3%)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -150,7 +143,7 @@ test(".parse() parses a multiplication expression of a number and a percentage",
 });
 
 test(".parse() parses a multiplication expression of a number and a length", (t) => {
-  parse(t, "calc(2 * 3px)", {
+  t.deepEqual(parse("calc(2 * 3px)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -164,7 +157,7 @@ test(".parse() parses a multiplication expression of a number and a length", (t)
 });
 
 test(".parse() gives higher precedence to * and / than + and -", (t) => {
-  parse(t, "calc(2 * 3 + 4)", {
+  t.deepEqual(parse("calc(2 * 3 + 4)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -175,7 +168,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  parse(t, "calc(2 * 3 - 4)", {
+  t.deepEqual(parse("calc(2 * 3 - 4)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -186,7 +179,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  parse(t, "calc(3 / 2 + 4)", {
+  t.deepEqual(parse("calc(3 / 2 + 4)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -197,7 +190,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  parse(t, "calc(3 / 2 - 4)", {
+  t.deepEqual(parse("calc(3 / 2 - 4)").get(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -210,7 +203,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 });
 
 test(".parse() parses a nested calc() function", (t) => {
-  parse(t, "calc(2 * calc(1 + 2))", {
+  t.deepEqual(parse("calc(2 * calc(1 + 2))").get(), {
     type: "calculation",
     expression: {
       type: "value",

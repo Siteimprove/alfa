@@ -66,15 +66,15 @@ export class Viewport implements Equatable, Hashable, Serializable {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeUint32(hash, this._width);
-    Hash.writeUint32(hash, this._height);
+    hash.writeUint32(this._width);
+    hash.writeUint32(this._height);
 
     switch (this._orientation) {
       case Viewport.Orientation.Landscape:
-        Hash.writeUint8(hash, 1);
+        hash.writeUint8(1);
         break;
       case Viewport.Orientation.Portrait:
-        Hash.writeUint8(hash, 2);
+        hash.writeUint8(2);
     }
   }
 

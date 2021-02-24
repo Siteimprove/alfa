@@ -7,7 +7,7 @@ All notable changes to Alfa will be documented in this file. The format is based
 
 The changelog includes a single entry for every released version of Alfa. Each entry is identified by two pieces of information: The version number and the date, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format, of the release. The very first entry in the changelog, labelled `[Unreleased]`, includes all upcoming changes for inclusion in the next release.
 
-Each entry may begin with an general description of the changes introduced in the release and must then list each notable change as separate list items. For each item, the following should be included:
+Each entry may begin with a general description of the changes introduced in the release and must then list each notable change as separate list items. For each item, the following should be included:
 
 - The name of the package affected, as the first point in the item: `[@siteimprove/alfa-<package>](packages/alfa-<package>): <description>`. If more than one package is affected, the package names must be separated by a comma.
 
@@ -21,21 +21,59 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Lexer.lex()` now returns `Slice<Token>` as the returned array would always be wrapped in a slice by the caller.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector.parse()` is now an instance of `Parser<Slice<Token>, Selector, string>` to allow it being used in parser combinators.
+
+- [@siteimprove/alfa-media](packages/alfa-media): `Media.parse()` is now an instance of `Parser<Slice<Token>, Media.List, string>` to allow it being used in parser combinators.
+
+- [@siteimprove/alfa-cache](packages/alfa-cache): `Cache<K, V>` now requires that `K` be an object type.
+
+- [@siteimprove/alfa-act](packages/alfa-act): The `Oracle<Q>` type has now become `Oracle<I, T, Q>`. As such, the input type `I` and test target type `T` must now be declared up front. Additionally, the `Question<Q, A, S, T>` type has now become `Question<Q, S, A, T>` to ensure alignment with the remaining types of the package. ([#699](../../pull/699))
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): The `--interactive` flag of the `alfa audit` command has been removed. A new `--interviewer` flag has instead been made available which allows callers to point to an `Interviewer` implementation for answering questions during an audit. ([#255](../../issues/255), [#699](../../pull/699))
+
+- [@siteimprove/alfa-hash](packages/alfa-hash): The `Hash` type is now an abstract class with methods for hashing specific types of input. Additionally, `Hashable.hash()` has been removed and `Hash#writeUnknown()` introduced as a replacement. ([#670](../../pull/670))
+
 ### Added
 
 - [@siteimprove/alfa-predicate](packages/alfa-predicate): `Predicate.tee()` is now available.
 
 - [@siteimprove/alfa-result](packages/alfa-result): `Result#tee()` and `Result#teeErr()` are now available.
 
-- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.teeErr()` is now available.
+- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.Infallible<I, T, A>`, `Parser.teeErr()`, `Parser.reject()`, `Parser.end()`, `Parser.takeBetween()`, `Parser.takeAtLeast()`, and `Parser.takeAtMost()` are now available. Additionally, `Parser.eof()` has been deprecated.
 
-- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, and `Array.distinct()` are now available.
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.forEach()`, `Array.map()`, `Array.flatMap()`, `Array.flatten()`, `Array.filter()`, `Array.reject()`, `Array.includes()`, `Array.collect()`, `Array.collectFirst()`, `Array.some()`, `Array.none()`, `Array.every()`, `Array.count()`, `Array.distinct()`, `Array.allocate()`, `Array.apply()`, `Array.get()`, `Array.set()`, `Array.has()`, `Array.concat()`, `Array.subtract()`, `Array.intersect()`, `Array.first()`, `Array.last()`, and `Array.iterator()` are now available.
 
 - [@siteimprove/alfa-json](packages/alfa-json): `JSON.parse()` and `JSON.stringify()` are now available.
 
 - [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline#tee()` and `Trampoline.empty()` are now available.
 
 - [@siteimprove/alfa-either](packages/alfa-either): `Either<L, R>` now provides an implementation of `Hashable`.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence): `Indexed#takeLastWhile()`, `Indexed#takeLastUntil()`, `Indexed#skipLastWhile()`, `Indexed#skipLastUntil()`, `Indexed#trim()`, `Indexed#trimLeading()`, and `Indexed#trimTrailing()` are now available and implemented by `List` and `Sequence`.
+
+- [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-map](packages/alfa-map), [@siteimprove/alfa-sequence](packages/alfa-sequence), [@siteimprove/alfa-set](packages/alfa-set), [@siteimprove/alfa-slice](packages/alfa-slice): `Keyed#subtract()`, `Keyed#intersect()`, `Unkeyed#subtract()`, `Unkeyed#intersect()`, `Indexed#subtract()`, and `Indexed#intersect()` are now available and implemented by `List`, `Map`, `Sequence`, `Set`, and `Slice`.
+
+- [@siteimprove/alfa-slice](packages/alfa-slice): `Slice<T>` now provides an implementation of `Collection.Indexed<T>`
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.apply()`, `Iterable.set()`, `Iterable.insert()`, `Iterable.append()`, `Iterable.prepend()`, and `Iterable.iterator()` are now available.
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.isLessThan()`, `Comparable.isLessThanOrEqual()`, `Comparable.isGreaterThan()`, and `Comparable.isGreaterThanOrEqual()` are now available.
+
+- [@siteimprove/alfa-network](packages/alfa-network): A package has been added with an implementation of an immutable, directed graph that allows for multiple, unique edges. ([#696](../../pull/696))
+
+- [@siteimprove/alfa-sarif](packages/alfa-sarif): A package has been added with types for working with SARIF serialisable structures. ([#694](../../pull/694))
+
+- [@siteimprove/alfa-interviewer](packages/alfa-interviewer): A new package has been added with types for modelling ACT rule interviewers and functionality for loading these from external and local modules. ([#699](../../pull/699))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now automatically accepts difference in `background-color` or `color`, and presence/absence of a `box-shadow` as a valid focus indicator. ([#658](../../issues/658), [#713](../../pull/713), [#714](../../pull/714), [#715](../../pull/715))
 
 ### Fixed
 
@@ -44,6 +82,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-rules](packages/alfa-rules): `isVisible()` now correctly considers elements with large negative text indents and no `white-space: nowrap` as hidden.
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `Node.from()` now correctly handles children of elements with roles that designate their children as presentational.
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): The user agent styles now include previously missing definitions for form controls.
+
+- [@siteimprove/alfa-url](packages/alfa-url): `URL#toString()` now correctly serializes URLs that cannot be used as base URLs. ([#459](../../issues/459), [#676](../../pull/676))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now gives priority to the subtree over the `title` attribute for `<a>` elements. ([#669](../../issues/669), [#716](../../pull/716))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `inline-block`, `inline-table`, `inline-flex`, and `inline-grid` values.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now correctly handles self-referencing `aria-labelledby` attributes. ([#717](../../issues/717))
 
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 

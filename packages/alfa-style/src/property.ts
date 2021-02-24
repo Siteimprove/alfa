@@ -1,11 +1,16 @@
 import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Slice } from "@siteimprove/alfa-slice";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import * as parser from "@siteimprove/alfa-parser";
 
 import { Style } from "./style";
 import { Value } from "./value";
+
+const { left, either, eof } = Parser;
+
+const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 
 /**
  * @internal
@@ -14,23 +19,31 @@ export class Property<T = unknown, U = T> {
   public static of<T, U>(
     initial: U,
     parse: Property.Parser<T>,
-    compute: Mapper<Style, Value<U>>,
+    compute: Mapper<Value<T>, Value<U>, [style: Style]>,
     options: Property.Options = {
       inherits: false,
     }
   ): Property<T, U> {
-    return new Property(initial, parse, compute, options);
+    return new Property(
+      initial,
+      left(
+        either(parseDefaults, parse),
+        eof(() => "Expected end of input")
+      ),
+      compute,
+      options
+    );
   }
 
   private readonly _initial: U;
   private readonly _parse: Property.Parser<T>;
-  private readonly _compute: Mapper<Style, Value<U>>;
+  private readonly _compute: Mapper<Value<T>, Value<U>, [style: Style]>;
   private readonly _options: Property.Options;
 
   private constructor(
     initial: U,
     parse: Property.Parser<T>,
-    compute: Mapper<Style, Value<U>>,
+    compute: Mapper<Value<T>, Value<U>, [style: Style]>,
     options: Property.Options
   ) {
     this._initial = initial;
@@ -47,7 +60,7 @@ export class Property<T = unknown, U = T> {
     return this._parse;
   }
 
-  get compute(): Mapper<Style, Value<U>> {
+  get compute(): Mapper<Value<T>, Value<U>, [style: Style]> {
     return this._compute;
   }
 
@@ -64,9 +77,21 @@ export namespace Property {
     readonly inherits: boolean;
   }
 
-  export type Parser<T = Value.Parsed> = parser.Parser<Slice<Token>, T, string>;
+  export type Parser<T = Value.Parsed> = parser.Parser<
+    Slice<Token>,
+    Value.Default | T,
+    string
+  >;
 
   export namespace Value {
+    /**
+     * The default keywords recognised by all properties.
+     */
+    export type Default =
+      | Keyword<"initial">
+      | Keyword<"inherit">
+      | Keyword<"unset">;
+
     /**
      * Extract the parsed type of a named property.
      *
@@ -91,11 +116,7 @@ export namespace Property {
      * The declared type includes the parsed type in addition to the defaulting
      * keywords recognised by all properties.
      */
-    export type Declared<N extends Name> =
-      | Parsed<N>
-      | Keyword<"initial">
-      | Keyword<"inherit">
-      | Keyword<"unset">;
+    export type Declared<N extends Name> = Parsed<N> | Default;
 
     /**
      * Extract the cascaded type of a named property.
@@ -144,7 +165,13 @@ export namespace Property {
       properties: Array<N>,
       parse: Shorthand.Parser<N>
     ) {
-      return new Shorthand(properties, parse);
+      return new Shorthand(
+        properties,
+        left(
+          either(parseDefaults, parse),
+          eof(() => "Expected end of input")
+        )
+      );
     }
 
     private readonly _properties: Array<N>;
@@ -167,104 +194,146 @@ export namespace Property {
   export namespace Shorthand {
     export type Parser<N extends Property.Name = Property.Name> = parser.Parser<
       Slice<Token>,
-      Iterable<
-        {
-          [M in N]: [M, Property.Value.Declared<M>];
-        }[N]
-      >,
+      | Property.Value.Default
+      | Iterable<{ [M in N]: readonly [M, Property.Value.Declared<M>] }[N]>,
       string
     >;
   }
+
+  export const { of: shorthand } = Shorthand;
 }
 
-import { Background } from "./property/background";
-import { Box } from "./property/box";
-import { Clip } from "./property/clip";
-import { ClipPath } from "./property/clip-path";
-import { Color } from "./property/color";
-import { Display } from "./property/display";
-import { Font } from "./property/font";
-import { Height } from "./property/height";
-import { Inset } from "./property/box-insets";
-import { LetterSpacing } from "./property/letter-spacing";
-import { Line } from "./property/line";
-import { Opacity } from "./property/opacity";
-import { Outline } from "./property/outline";
-import { Overflow } from "./property/overflow";
-import { Position } from "./property/position";
-import { Text } from "./property/text";
-import { Transform } from "./property/transform";
-import { Visibility } from "./property/visibility";
-import { Whitespace } from "./property/whitespace";
-import { Width } from "./property/width";
-import { WordSpacing } from "./property/word-spacing";
+import Background from "./property/background";
+import BackgroundAttachment from "./property/background-attachment";
+import BackgroundClip from "./property/background-clip";
+import BackgroundColor from "./property/background-color";
+import BackgroundImage from "./property/background-image";
+import BackgroundOrigin from "./property/background-origin";
+import BackgroundPosition from "./property/background-position";
+import BackgroundPositionX from "./property/background-position-x";
+import BackgroundPositionY from "./property/background-position-y";
+import BackgroundRepeat from "./property/background-repeat";
+import BackgroundRepeatX from "./property/background-repeat-x";
+import BackgroundRepeatY from "./property/background-repeat-y";
+import BackgroundSize from "./property/background-size";
+import Bottom from "./property/bottom";
+import BoxShadow from "./property/box-shadow";
+import Clip from "./property/clip";
+import ClipPath from "./property/clip-path";
+import Color from "./property/color";
+import Display from "./property/display";
+import Font from "./property/font";
+import FontFamily from "./property/font-family";
+import FontSize from "./property/font-size";
+import FontStretch from "./property/font-stretch";
+import FontStyle from "./property/font-style";
+import FontWeight from "./property/font-weight";
+import Height from "./property/height";
+import Inset from "./property/inset";
+import InsetBlock from "./property/inset-block";
+import InsetBlockEnd from "./property/inset-block-end";
+import InsetBlockStart from "./property/inset-block-start";
+import InsetInline from "./property/inset-inline";
+import InsetInlineEnd from "./property/inset-inline-end";
+import InsetInlineStart from "./property/inset-inline-start";
+import Left from "./property/left";
+import LetterSpacing from "./property/letter-spacing";
+import LineHeight from "./property/line-height";
+import Opacity from "./property/opacity";
+import Outline from "./property/outline";
+import OutlineColor from "./property/outline-color";
+import OutlineOffset from "./property/outline-offset";
+import OutlineStyle from "./property/outline-style";
+import OutlineWidth from "./property/outline-width";
+import Overflow from "./property/overflow";
+import OverflowX from "./property/overflow-x";
+import OverflowY from "./property/overflow-y";
+import Position from "./property/position";
+import Right from "./property/right";
+import TextAlign from "./property/text-align";
+import TextDecoration from "./property/text-decoration";
+import TextDecorationColor from "./property/text-decoration-color";
+import TextDecorationLine from "./property/text-decoration-line";
+import TextDecorationStyle from "./property/text-decoration-style";
+import TextIndent from "./property/text-indent";
+import TextOverflow from "./property/text-overflow";
+import TextTransform from "./property/text-transform";
+import Top from "./property/top";
+import Transform from "./property/transform";
+import Visibility from "./property/visibility";
+import WhiteSpace from "./property/white-space";
+import Width from "./property/width";
+import WordSpacing from "./property/word-spacing";
 
 type Longhands = typeof Longhands;
+
 const Longhands = {
-  "background-color": Background.Color,
-  "background-image": Background.Image,
-  "background-repeat-x": Background.Repeat.X,
-  "background-repeat-y": Background.Repeat.Y,
-  "background-attachment": Background.Attachment,
-  "background-position-x": Background.Position.X,
-  "background-position-y": Background.Position.Y,
-  "background-clip": Background.Clip,
-  "background-origin": Background.Origin,
-  "background-size": Background.Size,
-  bottom: Inset.Bottom,
-  "box-shadow": Box.Shadow,
+  "background-attachment": BackgroundAttachment,
+  "background-clip": BackgroundClip,
+  "background-color": BackgroundColor,
+  "background-image": BackgroundImage,
+  "background-origin": BackgroundOrigin,
+  "background-position-x": BackgroundPositionX,
+  "background-position-y": BackgroundPositionY,
+  "background-repeat-x": BackgroundRepeatX,
+  "background-repeat-y": BackgroundRepeatY,
+  "background-size": BackgroundSize,
+  bottom: Bottom,
+  "box-shadow": BoxShadow,
   clip: Clip,
   "clip-path": ClipPath,
   color: Color,
   display: Display,
-  "font-family": Font.Family,
-  "font-size": Font.Size,
-  "font-stretch": Font.Stretch,
-  "font-style": Font.Style,
-  "font-weight": Font.Weight,
+  "font-family": FontFamily,
+  "font-size": FontSize,
+  "font-stretch": FontStretch,
+  "font-style": FontStyle,
+  "font-weight": FontWeight,
   height: Height,
-  "inset-block-end": Inset.Block.End,
-  "inset-block-start": Inset.Block.Start,
-  "inset-line-end": Inset.Line.End,
-  "inset-line-start": Inset.Line.Start,
-  left: Inset.Left,
+  "inset-block-end": InsetBlockEnd,
+  "inset-block-start": InsetBlockStart,
+  "inset-inline-end": InsetInlineEnd,
+  "inset-inline-start": InsetInlineStart,
+  left: Left,
   "letter-spacing": LetterSpacing,
-  "line-height": Line.Height,
+  "line-height": LineHeight,
   opacity: Opacity,
-  "outline-width": Outline.Width,
-  "outline-style": Outline.Style,
-  "outline-color": Outline.Color,
-  "outline-offset": Outline.Offset,
-  "overflow-x": Overflow.X,
-  "overflow-y": Overflow.Y,
+  "outline-color": OutlineColor,
+  "outline-offset": OutlineOffset,
+  "outline-style": OutlineStyle,
+  "outline-width": OutlineWidth,
+  "overflow-x": OverflowX,
+  "overflow-y": OverflowY,
   position: Position,
-  right: Inset.Right,
-  "text-align": Text.Align,
-  "text-decoration-line": Text.Decoration.Line,
-  "text-decoration-style": Text.Decoration.Style,
-  "text-decoration-color": Text.Decoration.Color,
-  "text-indent": Text.Indent,
-  "text-transform": Text.Transform,
-  "text-overflow": Text.Overflow,
-  top: Inset.Top,
+  right: Right,
+  "text-align": TextAlign,
+  "text-decoration-color": TextDecorationColor,
+  "text-decoration-line": TextDecorationLine,
+  "text-decoration-style": TextDecorationStyle,
+  "text-indent": TextIndent,
+  "text-transform": TextTransform,
+  "text-overflow": TextOverflow,
+  top: Top,
   transform: Transform,
   visibility: Visibility,
-  "white-space": Whitespace,
+  "white-space": WhiteSpace,
   width: Width,
   "word-spacing": WordSpacing,
 };
 
 type Shorthands = typeof Shorthands;
+
 const Shorthands = {
-  background: Background.Shorthand,
-  "background-repeat": Background.Repeat.Shorthand,
-  "background-position": Background.Position.Shorthand,
-  font: Font.Shorthand,
-  "inset-block": Inset.Block.Shorthand,
-  "inset-line": Inset.Line.Shorthand,
-  outline: Outline.Shorthand,
-  overflow: Overflow.Shorthand,
-  "text-decoration": Text.Decoration.Shorthand,
+  background: Background,
+  "background-position": BackgroundPosition,
+  "background-repeat": BackgroundRepeat,
+  font: Font,
+  inset: Inset,
+  "inset-block": InsetBlock,
+  "inset-inline": InsetInline,
+  outline: Outline,
+  overflow: Overflow,
+  "text-decoration": TextDecoration,
 };
 
 /**

@@ -6,10 +6,12 @@ import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style";
 
+const device = Device.standard();
+
 test("#cascaded() parses `clip: auto`", (t) => {
   const element = <div style={{ clip: "auto" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("clip").get().toJSON(), {
     value: {
@@ -23,7 +25,7 @@ test("#cascaded() parses `clip: auto`", (t) => {
 test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
   const element = <div style={{ clip: "rect(1px, auto, 2em, auto)" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   const cascaded = style.cascaded("clip");
 
@@ -64,7 +66,7 @@ test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
 test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
   const element = <div style={{ clip: "rect(1px auto 2em auto)" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   const cascaded = style.cascaded("clip");
 
@@ -105,7 +107,7 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
 test("#cascaded() fails clip with wrong number of arguments", (t) => {
   const element = <div style={{ clip: "rect(1px auto 2em)" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("clip").isNone(), true);
 });
@@ -113,7 +115,7 @@ test("#cascaded() fails clip with wrong number of arguments", (t) => {
 test("#cascaded() fails clip mixing comma and whitespace separation", (t) => {
   const element = <div style={{ clip: "rect(1px auto 2em, auto)" }}></div>;
 
-  const style = Style.from(element, Device.standard());
+  const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("clip").isNone(), true);
 });

@@ -98,22 +98,23 @@ export namespace Declaration {
    * @see https://drafts.csswg.org/css-syntax/#consume-a-declaration
    */
   export const consume: Parser<Slice<Token>, Declaration, string> = (input) => {
-    const name = input.get(0).filter(Token.isIdent).get().value;
+    const { value: name } = input.array[input.offset] as Token.Ident;
+
     const value: Array<Token> = [];
 
     input = input.slice(1);
 
-    while (input.get(0).some(Token.isWhitespace)) {
+    while (Token.isWhitespace(input.array[input.offset])) {
       input = input.slice(1);
     }
 
-    if (input.get(0).every(not(Token.isColon))) {
+    if (!Token.isColon(input.array[input.offset])) {
       return Err.of("Expected a colon");
     }
 
     input = input.slice(1);
 
-    while (input.get(0).some(Token.isWhitespace)) {
+    while (Token.isWhitespace(input.array[input.offset])) {
       input = input.slice(1);
     }
 

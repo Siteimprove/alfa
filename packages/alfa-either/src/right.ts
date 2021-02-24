@@ -29,22 +29,6 @@ export class Right<R> implements Either<never, R> {
     return true;
   }
 
-  public get(): R {
-    return this._value;
-  }
-
-  public left(): None {
-    return None;
-  }
-
-  public right(): Option<R> {
-    return Option.of(this._value);
-  }
-
-  public either<T>(left: unknown, right: Mapper<R, T>): T {
-    return right(this._value);
-  }
-
   public map<T>(mapper: Mapper<R, T>): Either<T, T> {
     return new Right(mapper(this._value));
   }
@@ -55,6 +39,22 @@ export class Right<R> implements Either<never, R> {
 
   public reduce<T>(reducer: Reducer<R, T>, accumulator: T): T {
     return reducer(accumulator, this._value);
+  }
+
+  public either<T>(left: unknown, right: Mapper<R, T>): T {
+    return right(this._value);
+  }
+
+  public get(): R {
+    return this._value;
+  }
+
+  public left(): None {
+    return None;
+  }
+
+  public right(): Option<R> {
+    return Option.of(this._value);
   }
 
   public equals<R>(value: Right<R>): boolean;
@@ -68,8 +68,7 @@ export class Right<R> implements Either<never, R> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, true);
-    Hashable.hash(hash, this._value);
+    hash.writeBoolean(true).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator](): Iterator<R> {

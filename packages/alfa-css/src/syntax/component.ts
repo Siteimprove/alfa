@@ -54,7 +54,7 @@ export namespace Component {
    * @see https://drafts.csswg.org/css-syntax/#consume-a-component-value
    */
   export const consume: Parser<Slice<Token>, Component> = (input) => {
-    const next = input.get(0).get();
+    const next = input.array[input.offset];
 
     if (
       Token.isOpenParenthesis(next) ||
@@ -81,7 +81,7 @@ export namespace Component {
    * @see https://drafts.csswg.org/css-syntax/#parse-component-value
    */
   export const parse: Parser<Slice<Token>, Component, string> = (input) => {
-    while (input.get(0).some(Token.isWhitespace)) {
+    while (Token.isWhitespace(input.array[input.offset])) {
       input = input.slice(1);
     }
 
@@ -91,7 +91,7 @@ export namespace Component {
 
     const component = consume(input);
 
-    while (input.get(0).some(Token.isWhitespace)) {
+    while (Token.isWhitespace(input.array[input.offset])) {
       input = input.slice(1);
     }
 

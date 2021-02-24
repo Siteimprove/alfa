@@ -16,14 +16,14 @@ jobs:
     name: Analyze
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2.1.4
         with:
-          path: .cache/yarn
+          path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}
-      - run: yarn install --frozen-lockfile --ignore-platform --cache-folder .cache/yarn
+      - run: yarn install --immutable
       - run: yarn build
       - uses: github/codeql-action/init@v1
         with:

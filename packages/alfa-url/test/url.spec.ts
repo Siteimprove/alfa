@@ -12,6 +12,7 @@ test(".parse() parses an absolute URL", (t) => {
     path: ["page.html"],
     query: null,
     fragment: null,
+    cannotBeABase: false,
   });
 });
 
@@ -25,10 +26,11 @@ test(".parse() parses a relative URL against a base URL", (t) => {
     path: ["page.html"],
     query: null,
     fragment: null,
+    cannotBeABase: false,
   });
 });
 
-test(".parse() parses the special about:blank URL", (t) => {
+test(".parse() parses the about:blank URL", (t) => {
   t.deepEqual(URL.parse("about:blank").get().toJSON(), {
     scheme: "about",
     username: null,
@@ -38,7 +40,48 @@ test(".parse() parses the special about:blank URL", (t) => {
     path: ["blank"],
     query: null,
     fragment: null,
+    cannotBeABase: true,
   });
+});
+
+test(".parse() parses the about:/blank URL", (t) => {
+  t.deepEqual(URL.parse("about:/blank").get().toJSON(), {
+    scheme: "about",
+    username: null,
+    password: null,
+    host: null,
+    port: null,
+    path: ["blank"],
+    query: null,
+    fragment: null,
+    cannotBeABase: false,
+  });
+});
+
+test(".parse() parses a file: URL", (t) => {
+  t.deepEqual(URL.parse("file:///foo").get().toJSON(), {
+    scheme: "file",
+    username: null,
+    password: null,
+    host: "",
+    port: null,
+    path: ["foo"],
+    query: null,
+    fragment: null,
+    cannotBeABase: false,
+  });
+});
+
+test("#toString() stringifies the about:blank URL", (t) => {
+  t.equal(URL.parse("about:blank").get().toString(), "about:blank");
+});
+
+test("#toString() stringifies the about:/blank URL", (t) => {
+  t.equal(URL.parse("about:/blank").get().toString(), "about:/blank");
+});
+
+test("#toString() stringifies a file: URL", (t) => {
+  t.equal(URL.parse("file:///foo").get().toString(), "file:///foo");
 });
 
 test("#equals() checks if two URLs are equal", (t) => {

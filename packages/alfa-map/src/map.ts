@@ -160,7 +160,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public get(key: K): Option<V> {
-    return this._root.get(key, this._hash(key), 0);
+    return this._root.get(key, hash(key), 0);
   }
 
   public has(key: K): boolean {
@@ -168,12 +168,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public set(key: K, value: V): Map<K, V> {
-    const { result: root, status } = this._root.set(
-      key,
-      value,
-      this._hash(key),
-      0
-    );
+    const { result: root, status } = this._root.set(key, value, hash(key), 0);
 
     if (status === "unchanged") {
       return this;
@@ -183,7 +178,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public delete(key: K): Map<K, V> {
-    const { result: root, status } = this._root.delete(key, this._hash(key), 0);
+    const { result: root, status } = this._root.delete(key, hash(key), 0);
 
     if (status === "unchanged") {
       return this;
@@ -197,6 +192,20 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
       iterable,
       (map, [key, value]) => map.set(key, value),
       this
+    );
+  }
+
+  public subtract(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Iterable.reduce<readonly [K, V], Map<K, V>>(
+      iterable,
+      (map, [key]) => map.delete(key),
+      this
+    );
+  }
+
+  public intersect(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Map.fromIterable(
+      Iterable.filter(iterable, ([key]) => this.has(key))
     );
   }
 
@@ -214,11 +223,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public hash(hash: Hash): void {
     for (const [key, value] of this) {
-      Hashable.hash(hash, key);
-      Hashable.hash(hash, value);
+      hash.writeUnknown(key).writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._size);
+    hash.writeUint32(this._size);
   }
 
   public keys(): Iterable<K> {
@@ -254,14 +262,6 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
       .join(", ");
 
     return `Map {${entries === "" ? "" : ` ${entries} `}}`;
-  }
-
-  private _hash(key: K): number {
-    const hash = FNV.empty();
-
-    Hashable.hash(hash, key);
-
-    return hash.finish();
   }
 }
 
@@ -307,4 +307,8 @@ export namespace Map {
       Map.empty()
     );
   }
+}
+
+function hash<K>(key: K): number {
+  return FNV.empty().writeUnknown(key).finish();
 }

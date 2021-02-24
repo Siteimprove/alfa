@@ -63,8 +63,7 @@ export class Circle<
   }
 
   public hash(hash: Hash) {
-    this._radius.hash(hash);
-    this._center.hash(hash);
+    hash.writeHashable(this._radius).writeHashable(this._center);
   }
 
   public toJSON(): Circle.JSON {

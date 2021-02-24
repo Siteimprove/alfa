@@ -1,0 +1,8 @@
+# https://next.yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+
+cache
+sdks
+unplugged
+
+build-state.yml
+install-state.gz
