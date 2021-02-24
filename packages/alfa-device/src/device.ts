@@ -104,10 +104,11 @@ export class Device implements Equatable, Hashable, Serializable {
         hash.writeUint8(3);
     }
 
-    this._viewport.hash(hash);
-    this._display.hash(hash);
-    this._scripting.hash(hash);
-    this._preferences.hash(hash);
+    hash
+      .writeHashable(this._viewport)
+      .writeHashable(this._display)
+      .writeHashable(this._scripting)
+      .writeHashable(this._preferences);
   }
 
   public toJSON(): Device.JSON {

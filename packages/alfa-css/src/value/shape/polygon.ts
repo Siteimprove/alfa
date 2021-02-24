@@ -77,7 +77,7 @@ export class Polygon<
   }
 
   public hash(hash: Hash): void {
-    this._fill.hash(hash);
+    hash.writeHashable(this._fill);
     Array.hash(this._vertices, hash);
   }
 

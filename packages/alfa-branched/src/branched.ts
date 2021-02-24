@@ -256,7 +256,7 @@ export class Branched<T, B = never>
   }
 
   public hash(hash: Hash): void {
-    this._values.hash(hash);
+    hash.writeHashable(this._values);
   }
 
   public *[Symbol.iterator](): Iterator<[T, Iterable<B>]> {
@@ -364,8 +364,7 @@ class Value<T, B> implements Equatable, Hashable {
   }
 
   public hash(hash: Hash): void {
-    hash.writeUnknown(this._value);
-    this._branches.hash(hash);
+    hash.writeUnknown(this._value).writeHashable(this._branches);
   }
 }
 

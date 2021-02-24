@@ -94,12 +94,13 @@ export class Shadow<
   }
 
   public hash(hash: Hash): void {
-    this._vertical.hash(hash);
-    this._horizontal.hash(hash);
-    this._blur.hash(hash);
-    this._spread.hash(hash);
-    this._color.hash(hash);
-    hash.writeBoolean(this._isInset);
+    hash
+      .writeHashable(this._vertical)
+      .writeHashable(this._horizontal)
+      .writeHashable(this._blur)
+      .writeHashable(this._spread)
+      .writeHashable(this._color)
+      .writeBoolean(this._isInset);
   }
 
   public toJSON(): Shadow.JSON {

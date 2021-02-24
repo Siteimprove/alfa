@@ -69,10 +69,10 @@ export class Linear<
   }
 
   public hash(hash: Hash): void {
-    this._direction.hash(hash);
+    hash.writeHashable(this._direction);
 
     for (const item of this._items) {
-      item.hash(hash);
+      hash.writeHashable(item);
     }
 
     hash.writeUint32(this._items.length).writeUint8(+this._repeats);

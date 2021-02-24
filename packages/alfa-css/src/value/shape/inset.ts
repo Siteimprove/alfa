@@ -106,7 +106,7 @@ export class Inset<
 
   public hash(hash: Hash): void {
     Array.hash(this._offsets, hash);
-    this._corners.hash(hash);
+    hash.writeHashable(this._corners);
   }
 
   public toJSON(): Inset.JSON<O, C> {

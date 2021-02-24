@@ -214,15 +214,16 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 
   public hash(hash: Hash): void {
-    hash.writeString(this._scheme);
-    this._username.hash(hash);
-    this._password.hash(hash);
-    this._host.hash(hash);
-    this._port.hash(hash);
-    this._path.hash(hash);
-    this._query.hash(hash);
-    this._fragment.hash(hash);
-    Hash.writeBoolean(hash, this._cannotBeABase);
+    hash
+      .writeString(this._scheme)
+      .writeHashable(this._username)
+      .writeHashable(this._password)
+      .writeHashable(this._host)
+      .writeHashable(this._port)
+      .writeHashable(this._path)
+      .writeHashable(this._query)
+      .writeHashable(this._fragment)
+      .writeBoolean(this._cannotBeABase);
   }
 
   public toJSON(): URL.JSON {

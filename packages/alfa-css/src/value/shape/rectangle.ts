@@ -78,10 +78,11 @@ export class Rectangle<
   }
 
   public hash(hash: Hash) {
-    this._top.hash(hash);
-    this._right.hash(hash);
-    this._bottom.hash(hash);
-    this._left.hash(hash);
+    hash
+      .writeHashable(this._top)
+      .writeHashable(this._right)
+      .writeHashable(this._bottom)
+      .writeHashable(this._left);
   }
 
   public toJSON(): Rectangle.JSON {
