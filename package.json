@@ -27,6 +27,6 @@
     "axios": "^0.21.1",
     "minimist": "^1.2.5",
     "prettier": "^2.2.1",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.2"
   }
 }
