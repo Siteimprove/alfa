@@ -351,26 +351,26 @@ export namespace Name {
    * @internal
    */
   export class State implements Equatable, Serializable<State.JSON> {
-    private static _empty = new State([], false, false, false);
+    private static _empty = new State([], None, false, false);
 
     public static empty(): State {
       return this._empty;
     }
 
     private readonly _visited: Array<Element>;
+    private readonly _referrer: Option<Element>;
     private readonly _isRecursing: boolean;
-    private readonly _isReferencing: boolean;
     private readonly _isDescending: boolean;
 
     private constructor(
       visited: Array<Element>,
+      referrer: Option<Element>,
       isRecursing: boolean,
-      isReferencing: boolean,
       isDescending: boolean
     ) {
       this._visited = visited;
+      this._referrer = referrer;
       this._isRecursing = isRecursing;
-      this._isReferencing = isReferencing;
       this._isDescending = isDescending;
     }
 
@@ -385,6 +385,13 @@ export namespace Name {
     }
 
     /**
+     * The element that referenced the name computation.
+     */
+    public get referrer(): Option<Element> {
+      return this._referrer;
+    }
+
+    /**
      * Whether or not the name computation is the result of recursion.
      */
     public get isRecursing(): boolean {
@@ -395,7 +402,7 @@ export namespace Name {
      * Whether or not the name computation is the result of a reference.
      */
     public get isReferencing(): boolean {
-      return this._isReferencing;
+      return this._referrer.isSome();
     }
 
     /**
@@ -416,8 +423,8 @@ export namespace Name {
 
       return new State(
         [...this._visited, element],
+        this._referrer,
         this._isRecursing,
-        this._isReferencing,
         this._isDescending
       );
     }
@@ -429,21 +436,21 @@ export namespace Name {
 
       return new State(
         this._visited,
+        this._referrer,
         isRecursing,
-        this._isReferencing,
         this._isDescending
       );
     }
 
-    public reference(isReferencing: boolean): State {
-      if (this._isReferencing === isReferencing) {
+    public reference(referrer: Option<Element>): State {
+      if (this._referrer.equals(referrer)) {
         return this;
       }
 
       return new State(
         this._visited,
+        referrer,
         this._isRecursing,
-        isReferencing,
         this._isDescending
       );
     }
@@ -455,8 +462,8 @@ export namespace Name {
 
       return new State(
         this._visited,
+        this._referrer,
         this._isRecursing,
-        this._isReferencing,
         isDescending
       );
     }
@@ -469,8 +476,8 @@ export namespace Name {
       return (
         value instanceof State &&
         Array.equals(value._visited, this._visited) &&
+        value._referrer.equals(this._referrer) &&
         value._isRecursing === this._isRecursing &&
-        value._isReferencing === this._isReferencing &&
         value._isDescending === this._isDescending
       );
     }
@@ -478,8 +485,8 @@ export namespace Name {
     public toJSON(): State.JSON {
       return {
         visited: this._visited.map((element) => element.path()),
+        referrer: this._referrer.map((element) => element.path()).getOr(null),
         isRecursing: this._isRecursing,
-        isReferencing: this._isReferencing,
         isDescending: this._isDescending,
       };
     }
@@ -489,8 +496,8 @@ export namespace Name {
     export interface JSON {
       [key: string]: json.JSON;
       visited: Array<string>;
+      referrer: string | null;
       isRecursing: boolean;
-      isReferencing: boolean;
       isDescending: boolean;
     }
   }
@@ -587,7 +594,12 @@ export namespace Name {
     const empty = Branched.of(None);
 
     if (state.hasVisited(element)) {
-      return empty;
+      // While self-references are allowed, any other forms of circular
+      // references are not. If the referrer therefore isn't the element itself,
+      // the result will be an empty name.
+      if (!state.referrer.includes(element)) {
+        return empty;
+      }
     } else {
       state = state.visit(element);
     }
@@ -626,7 +638,7 @@ export namespace Name {
             return empty;
           }
 
-          return fromReferences(attribute.get(), device, state);
+          return fromReferences(attribute.get(), element, device, state);
         },
 
         // Step 2C: Use the `aria-label` attribute, if present.
@@ -721,7 +733,7 @@ export namespace Name {
         fromNode(
           element,
           device,
-          state.recurse(true).reference(false).descend(true)
+          state.reference(None).recurse(true).descend(true)
         )
     )
       .map((names) => Sequence.from(names).collect((name) => name))
@@ -761,6 +773,7 @@ export namespace Name {
    */
   export function fromReferences(
     attribute: Attribute,
+    referrer: Element,
     device: Device,
     state: State
   ): Branched<Option<Name>, Browser> {
@@ -775,7 +788,7 @@ export namespace Name {
       fromNode(
         element,
         device,
-        state.recurse(true).reference(true).descend(false)
+        state.reference(Option.of(referrer)).recurse(true).descend(false)
       )
     )
       .map((names) => Sequence.from(names).collect((name) => name))

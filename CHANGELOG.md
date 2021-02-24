@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
+
 ### Breaking
 
 - [@siteimprove/alfa-css](packages/alfa-css): `Lexer.lex()` now returns `Slice<Token>` as the returned array would always be wrapped in a slice by the caller.
@@ -61,6 +63,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-comparable](packages/alfa-comparable): `Comparable.isLessThan()`, `Comparable.isLessThanOrEqual()`, `Comparable.isGreaterThan()`, and `Comparable.isGreaterThanOrEqual()` are now available.
 
+- [@siteimprove/alfa-network](packages/alfa-network): A package has been added with an implementation of an immutable, directed graph that allows for multiple, unique edges. ([#696](../../pull/696))
+
+- [@siteimprove/alfa-sarif](packages/alfa-sarif): A package has been added with types for working with SARIF serialisable structures. ([#694](../../pull/694))
+
 - [@siteimprove/alfa-interviewer](packages/alfa-interviewer): A new package has been added with types for modelling ACT rule interviewers and functionality for loading these from external and local modules. ([#699](../../pull/699))
 
 ### Changed
@@ -82,6 +88,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now gives priority to the subtree over the `title` attribute for `<a>` elements. ([#669](../../issues/669), [#716](../../pull/716))
 
 - [@siteimprove/alfa-style](packages/alfa-style): The `display` property now correctly parses the `inline-block`, `inline-table`, `inline-flex`, and `inline-grid` values.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now correctly handles self-referencing `aria-labelledby` attributes. ([#717](../../issues/717))
 
 ## [0.10.0](../../compare/v0.9.0...v0.10.0) (2021-01-29)
 
