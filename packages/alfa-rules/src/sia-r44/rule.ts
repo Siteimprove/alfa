@@ -5,7 +5,7 @@ import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
-import { Condition, Media } from "@siteimprove/alfa-media";
+import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -135,8 +135,10 @@ function isOrientationConditional(declaration: Declaration): boolean {
   });
 }
 
-function hasOrientationCondition(condition: Condition.Condition): boolean {
-  if (Condition.isFeature(condition)) {
+function hasOrientationCondition(
+  condition: Media.Feature | Media.Condition | Media.Negation
+): boolean {
+  if (Media.isFeature(condition)) {
     if (
       condition.name === "orientation" &&
       condition.value.some(
@@ -149,14 +151,14 @@ function hasOrientationCondition(condition: Condition.Condition): boolean {
     }
   }
 
-  if (Condition.isExpression(condition)) {
+  if (Media.isCondition(condition)) {
     return (
       hasOrientationCondition(condition.left) ||
       hasOrientationCondition(condition.right)
     );
   }
 
-  if (Condition.isNegation(condition)) {
+  if (Media.isNegation(condition)) {
     return hasOrientationCondition(condition.condition);
   }
 
