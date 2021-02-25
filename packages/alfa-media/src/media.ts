@@ -1262,7 +1262,7 @@ export namespace Media {
           Query.of(modifier, Option.of(type), condition)
       )
     ),
-    end((token) => `Unexpected token ${token}`)
+    end(() => `Unexpected token`)
   );
 
   /**
@@ -1343,12 +1343,12 @@ export namespace Media {
         ),
         (components) => Iterable.flatten(components)
       ),
-      delimited(option(Token.parseWhitespace), Token.parseComma)
+      Token.parseComma
     ),
     (queries) =>
       List.of(
         Iterable.map(queries, (tokens) =>
-          parseQuery(Slice.from(tokens))
+          parseQuery(Slice.from(tokens).trim(Token.isWhitespace))
             .map(([, query]) => query)
             .getOr(notAll)
         )
