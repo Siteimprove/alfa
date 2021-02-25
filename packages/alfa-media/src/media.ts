@@ -111,7 +111,6 @@ export namespace Media {
     public toJSON(): Type.JSON {
       return {
         name: this._name,
-        type: "type",
       };
     }
 
@@ -124,7 +123,6 @@ export namespace Media {
     export interface JSON {
       [key: string]: json.JSON;
       name: string;
-      type: "type";
     }
 
     export function isType(value: unknown): value is Type {

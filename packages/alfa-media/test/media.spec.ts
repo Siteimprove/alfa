@@ -40,7 +40,6 @@ test(".parse() parses a list of queries", (t) => {
       {
         modifier: null,
         type: {
-          type: "type",
           name: "screen",
         },
         condition: null,
@@ -116,7 +115,6 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
       {
         modifier: null,
         type: {
-          type: "type",
           name: "screen",
         },
         condition: {
@@ -160,7 +158,6 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
     {
       modifier: "not",
       type: {
-        type: "type",
         name: "screen",
       },
       condition: {
@@ -219,7 +216,6 @@ for (const input of [
       {
         modifier: "not",
         type: {
-          type: "type",
           name: "all",
         },
         condition: null,
@@ -233,7 +229,6 @@ test(`.parse() only drops invalid queries in a list, but leaves valid queries`, 
     {
       modifier: "not",
       type: {
-        type: "type",
         name: "all",
       },
       condition: null,
@@ -255,7 +250,6 @@ test(".parse() accepts unknown media types", (t) => {
     {
       modifier: null,
       type: {
-        type: "type",
         name: "unknown",
       },
       condition: null,
