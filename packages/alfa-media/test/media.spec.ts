@@ -228,6 +228,28 @@ for (const input of [
   });
 }
 
+test(`.parse() only drops invalid queries in a list, but leaves valid queries`, (t) => {
+  t.deepEqual(parse("(max-weight: 3px), (color)").get().toJSON(), [
+    {
+      modifier: "not",
+      type: {
+        type: "type",
+        name: "all",
+      },
+      condition: null,
+    },
+    {
+      modifier: null,
+      type: null,
+      condition: {
+        type: "feature",
+        name: "color",
+        value: null,
+      },
+    },
+  ]);
+});
+
 test(".parse() accepts unknown media types", (t) => {
   t.deepEqual(parse("unknown").get().toJSON(), [
     {
