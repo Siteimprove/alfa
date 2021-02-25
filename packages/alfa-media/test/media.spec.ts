@@ -222,7 +222,7 @@ for (const input of [
 }
 
 test(`.parse() only drops invalid queries in a list, but leaves valid queries`, (t) => {
-  t.deepEqual(parse("(max-weight: 3px), (color)").get().toJSON(), [
+  t.deepEqual(parse("(max-weight: 3px), (width: 100px)").get().toJSON(), [
     {
       modifier: "not",
       type: {
@@ -235,8 +235,15 @@ test(`.parse() only drops invalid queries in a list, but leaves valid queries`, 
       type: null,
       condition: {
         type: "feature",
-        name: "color",
-        value: null,
+        name: "width",
+        value: {
+          type: "discrete",
+          value: {
+            type: "length",
+            value: 100,
+            unit: "px",
+          },
+        },
       },
     },
   ]);
