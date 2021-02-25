@@ -17,7 +17,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Result, Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -202,82 +202,25 @@ export namespace Media {
       value: Value.JSON | null;
     }
 
-    export function tryFrom(name: string): Result<Feature, string>;
-
-    export function tryFrom<T>(
-      name: string,
-      value: Value<T>
-    ): Result<Feature, string>;
-
     export function tryFrom(
-      name: string,
-      value?: Value
+      value: Option<Value<any>>,
+      name: string
     ): Result<Feature, string> {
-      if (value) {
-        switch (name) {
-          case "width":
-            if (value.hasValue(Length.isLength)) {
-              return Result.of(Width.of(value));
-            } else {
-              break;
-            }
+      switch (name) {
+        case "width":
+          return Width.tryFrom(value);
 
-          case "height":
-            if (value.hasValue(Length.isLength)) {
-              return Result.of(Height.of(value));
-            } else {
-              break;
-            }
-        }
+        case "height":
+          return Height.tryFrom(value);
 
-        if (Value.isDiscrete(value)) {
-          switch (name) {
-            case "orientation":
-              if (
-                value.hasValue(
-                  and(
-                    Keyword.isKeyword,
-                    property("value", equals("landscape", "portrait"))
-                  )
-                )
-              ) {
-                return Result.of(Orientation.of(value));
-              } else {
-                break;
-              }
+        case "orientation":
+          return Orientation.tryFrom(value);
 
-            case "scripting":
-              if (
-                value.hasValue(
-                  and(
-                    Keyword.isKeyword,
-                    property("value", equals("none", "enabled", "initial-only"))
-                  )
-                )
-              ) {
-                return Result.of(Scripting.of(value));
-              } else {
-                break;
-              }
-          }
-        }
-      } else {
-        switch (name) {
-          case "width":
-            return Result.of(Width.boolean());
-
-          case "height":
-            return Result.of(Height.boolean());
-
-          case "orientation":
-            return Result.of(Orientation.boolean());
-
-          case "scripting":
-            return Result.of(Scripting.boolean());
-        }
+        case "scripting":
+          return Scripting.tryFrom(value);
       }
 
-      return Err.of(`Invalid media feature ${name}`);
+      return Err.of(`Unknown media feature ${name}`);
     }
 
     /**
@@ -313,6 +256,20 @@ export namespace Media {
       }
     }
 
+    namespace Width {
+      export function tryFrom(value: Option<Value>): Result<Width, string> {
+        return value
+          .map((value) => {
+            if (value.hasValue(Length.isLength)) {
+              return Ok.of(Width.of(value));
+            } else {
+              return Err.of(`Invalid value`);
+            }
+          })
+          .getOrElse(() => Ok.of(Width.boolean()));
+      }
+    }
+
     /**
      * @see https://drafts.csswg.org/mediaqueries/#height
      */
@@ -321,9 +278,9 @@ export namespace Media {
         return new Height(Option.of(value));
       }
 
-      private static _boolean = new Width(None);
+      private static _boolean = new Height(None);
 
-      public static boolean(): Width {
+      public static boolean(): Height {
         return Height._boolean;
       }
 
@@ -343,6 +300,22 @@ export namespace Media {
         return height > 0
           ? value.some((value) => value.matches(Length.of(height, "px")))
           : value.every((value) => value.matches(Length.of(0, "px")));
+      }
+    }
+
+    namespace Height {
+      export function tryFrom(
+        value: Option<Value<any>>
+      ): Result<Height, string> {
+        return value
+          .map((value) => {
+            if (value.hasValue(Length.isLength)) {
+              return Ok.of(Height.of(value));
+            } else {
+              return Err.of(`Invalid value`);
+            }
+          })
+          .getOrElse(() => Ok.of(Height.boolean()));
       }
     }
 
@@ -371,6 +344,30 @@ export namespace Media {
       }
     }
 
+    namespace Orientation {
+      export function tryFrom(
+        value: Option<Value<any>>
+      ): Result<Orientation, string> {
+        return value
+          .map((value) => {
+            if (
+              Value.isDiscrete(value) &&
+              value.hasValue(
+                and(
+                  Keyword.isKeyword,
+                  property("value", equals("landscape", "portrait"))
+                )
+              )
+            ) {
+              return Ok.of(Orientation.of(value));
+            } else {
+              return Err.of(`Invalid value`);
+            }
+          })
+          .getOrElse(() => Ok.of(Orientation.boolean()));
+      }
+    }
+
     /**
      * @see https://drafts.csswg.org/mediaqueries-5/#scripting
      */
@@ -393,6 +390,30 @@ export namespace Media {
         return device.scripting.enabled
           ? this._value.every((value) => value.matches(Keyword.of("enabled")))
           : this._value.some((value) => value.matches(Keyword.of("none")));
+      }
+    }
+
+    namespace Scripting {
+      export function tryFrom(
+        value: Option<Value<any>>
+      ): Result<Scripting, string> {
+        return value
+          .map((value) => {
+            if (
+              Value.isDiscrete(value) &&
+              value.hasValue(
+                and(
+                  Keyword.isKeyword,
+                  property("value", equals("none", "enabled", "initial-only"))
+                )
+              )
+            ) {
+              return Ok.of(Scripting.of(value));
+            } else {
+              return Err.of(`Invalid value`);
+            }
+          })
+          .getOrElse(() => Ok.of(Scripting.boolean()));
       }
     }
 
@@ -457,11 +478,11 @@ export namespace Media {
         name = name.slice(4);
 
         return Feature.tryFrom(
-          name,
-          range(Value.bound(value, /* isInclusive */ true))
+          Option.of(range(Value.bound(value, /* isInclusive */ true))),
+          name
         );
       } else {
-        return Feature.tryFrom(name, Value.discrete(value));
+        return Feature.tryFrom(Option.of(Value.discrete(value)), name);
       }
     }
   );
@@ -469,7 +490,9 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
    */
-  const parseFeatureBoolean = mapResult(parseFeatureName, Feature.tryFrom);
+  const parseFeatureBoolean = mapResult(parseFeatureName, (name) =>
+    Feature.tryFrom(None, name)
+  );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-lt
@@ -537,7 +560,7 @@ export namespace Media {
         )
       ),
       ([minimum, [name, maximum]]) =>
-        Feature.tryFrom(name, Value.range(minimum, maximum))
+        Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name)
     ),
 
     // <mf-value> <mf-gt> <mf-name> <mf-gt> <mf-value>
@@ -570,7 +593,7 @@ export namespace Media {
         )
       ),
       ([maximum, [name, minimum]]) =>
-        Feature.tryFrom(name, Value.range(minimum, maximum))
+        Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name)
     ),
 
     // <mf-name> <mf-comparison> <mf-value>
@@ -586,35 +609,42 @@ export namespace Media {
         switch (comparison) {
           case Comparison.Equal:
             return Feature.tryFrom(
-              name,
-              Value.range(
-                Value.bound(value, /* isInclude */ true),
-                Value.bound(value, /* isInclude */ true)
-              )
+              Option.of(
+                Value.range(
+                  Value.bound(value, /* isInclude */ true),
+                  Value.bound(value, /* isInclude */ true)
+                )
+              ),
+              name
             );
 
           case Comparison.LessThan:
           case Comparison.LessThanOrEqual:
             return Feature.tryFrom(
-              name,
-              Value.maximumRange(
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison === Comparison.LessThanOrEqual
+              Option.of(
+                Value.maximumRange(
+                  Value.bound(
+                    value,
+                    /* isInclusive */ comparison === Comparison.LessThanOrEqual
+                  )
                 )
-              )
+              ),
+              name
             );
 
           case Comparison.GreaterThan:
           case Comparison.GreaterThanOrEqual:
             return Feature.tryFrom(
-              name,
-              Value.minimumRange(
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison === Comparison.GreaterThanOrEqual
+              Option.of(
+                Value.minimumRange(
+                  Value.bound(
+                    value,
+                    /* isInclusive */ comparison ===
+                      Comparison.GreaterThanOrEqual
+                  )
                 )
-              )
+              ),
+              name
             );
         }
       }
@@ -633,35 +663,42 @@ export namespace Media {
         switch (comparison) {
           case Comparison.Equal:
             return Feature.tryFrom(
-              name,
-              Value.range(
-                Value.bound(value, /* isInclude */ true),
-                Value.bound(value, /* isInclude */ true)
-              )
+              Option.of(
+                Value.range(
+                  Value.bound(value, /* isInclude */ true),
+                  Value.bound(value, /* isInclude */ true)
+                )
+              ),
+              name
             );
 
           case Comparison.LessThan:
           case Comparison.LessThanOrEqual:
             return Feature.tryFrom(
-              name,
-              Value.minimumRange(
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison === Comparison.LessThanOrEqual
+              Option.of(
+                Value.minimumRange(
+                  Value.bound(
+                    value,
+                    /* isInclusive */ comparison === Comparison.LessThanOrEqual
+                  )
                 )
-              )
+              ),
+              name
             );
 
           case Comparison.GreaterThan:
           case Comparison.GreaterThanOrEqual:
             return Feature.tryFrom(
-              name,
-              Value.maximumRange(
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison === Comparison.GreaterThanOrEqual
+              Option.of(
+                Value.maximumRange(
+                  Value.bound(
+                    value,
+                    /* isInclusive */ comparison ===
+                      Comparison.GreaterThanOrEqual
+                  )
                 )
-              )
+              ),
+              name
             );
         }
       }
