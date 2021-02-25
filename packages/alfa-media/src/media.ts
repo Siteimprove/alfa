@@ -1,7 +1,7 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
 import {
   Length,
-  String,
+  Keyword,
   Number,
   Percentage,
   Token,
@@ -236,7 +236,7 @@ export namespace Media {
               if (
                 value.hasValue(
                   and(
-                    String.isString,
+                    Keyword.isKeyword,
                     property("value", equals("landscape", "portrait"))
                   )
                 )
@@ -250,7 +250,7 @@ export namespace Media {
               if (
                 value.hasValue(
                   and(
-                    String.isString,
+                    Keyword.isKeyword,
                     property("value", equals("none", "enabled", "initial-only"))
                   )
                 )
@@ -349,8 +349,8 @@ export namespace Media {
     /**
      * @see https://drafts.csswg.org/mediaqueries/#orientation
      */
-    class Orientation extends Feature<String> {
-      public static of(value: Value<String>): Orientation {
+    class Orientation extends Feature<Keyword> {
+      public static of(value: Value<Keyword>): Orientation {
         return new Orientation(Option.of(value));
       }
 
@@ -366,7 +366,7 @@ export namespace Media {
 
       public matches(device: Device): boolean {
         return this._value.every((value) =>
-          value.matches(String.of(device.viewport.orientation))
+          value.matches(Keyword.of(device.viewport.orientation))
         );
       }
     }
@@ -374,8 +374,8 @@ export namespace Media {
     /**
      * @see https://drafts.csswg.org/mediaqueries-5/#scripting
      */
-    class Scripting extends Feature<String> {
-      public static of(value: Value<String>): Scripting {
+    class Scripting extends Feature<Keyword> {
+      public static of(value: Value<Keyword>): Scripting {
         return new Scripting(Option.of(value));
       }
 
@@ -391,8 +391,8 @@ export namespace Media {
 
       public matches(device: Device): boolean {
         return device.scripting.enabled
-          ? this._value.every((value) => value.matches(String.of("enabled")))
-          : this._value.some((value) => value.matches(String.of("none")));
+          ? this._value.every((value) => value.matches(Keyword.of("enabled")))
+          : this._value.some((value) => value.matches(Keyword.of("none")));
       }
     }
 
@@ -424,7 +424,7 @@ export namespace Media {
   const parseFeatureValue = either(
     either(
       map(Token.parseNumber(), (number) => Number.of(number.value)),
-      map(Token.parseIdent(), (ident) => String.of(ident.value.toLowerCase()))
+      map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase()))
     ),
     either(
       map(

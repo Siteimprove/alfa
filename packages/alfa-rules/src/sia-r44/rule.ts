@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
-import { Lexer, Keyword, String } from "@siteimprove/alfa-css";
+import { Lexer, Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -143,8 +143,8 @@ function hasOrientationCondition(
       condition.name === "orientation" &&
       condition.value.some(
         (value) =>
-          value.matches(String.of("landscape")) ||
-          value.matches(String.of("portrait"))
+          value.matches(Keyword.of("landscape")) ||
+          value.matches(Keyword.of("portrait"))
       )
     ) {
       return true;

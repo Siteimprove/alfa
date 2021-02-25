@@ -20,7 +20,7 @@ test(".parse() parses a simple query", (t) => {
         value: {
           type: "discrete",
           value: {
-            type: "string",
+            type: "keyword",
             value: "portrait",
           },
         },
@@ -56,7 +56,7 @@ test(".parse() parses a list of queries", (t) => {
             value: {
               type: "discrete",
               value: {
-                type: "string",
+                type: "keyword",
                 value: "landscape",
               },
             },
@@ -126,7 +126,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
             value: {
               type: "discrete",
               value: {
-                type: "string",
+                type: "keyword",
                 value: "portrait",
               },
             },
@@ -166,7 +166,7 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
         value: {
           type: "discrete",
           value: {
-            type: "string",
+            type: "keyword",
             value: "landscape",
           },
         },
@@ -186,7 +186,7 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
           value: {
             type: "discrete",
             value: {
-              type: "string",
+              type: "keyword",
               value: "landscape",
             },
           },
