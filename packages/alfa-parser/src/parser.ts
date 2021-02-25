@@ -332,14 +332,6 @@ export namespace Parser {
     );
   }
 
-  export function separatedPair<I, T, U, E, A extends Array<unknown> = []>(
-    first: Parser<I, T, E, A>,
-    separator: Parser<I, unknown, E, A>,
-    second: Parser<I, U, E, A>
-  ): Parser<I, [T, U], E, A> {
-    return pair(first, right(separator, second));
-  }
-
   export function end<I extends Iterable<unknown>, E>(
     ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>
   ): Parser<I, void, E> {

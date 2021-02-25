@@ -3,15 +3,9 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/index.ts",
-    "src/condition.ts",
-    "src/feature.ts",
     "src/media.ts",
-    "src/query.ts",
     "src/resolver.ts",
-    "src/type.ts",
-    "src/value.ts",
-    "test/matches.spec.ts",
-    "test/parse.spec.ts"
+    "test/media.spec.ts"
   ],
   "references": [
     {

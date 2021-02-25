@@ -10,14 +10,14 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#strings
  */
-export class String<T extends string = string> extends Value<"string"> {
-  public static of<T extends string = string>(value: T): String<T> {
+export class String extends Value<"string"> {
+  public static of(value: string): String {
     return new String(value);
   }
 
-  private readonly _value: T;
+  private readonly _value: string;
 
-  private constructor(value: T) {
+  private constructor(value: string) {
     super();
     this._value = value;
   }
@@ -26,7 +26,7 @@ export class String<T extends string = string> extends Value<"string"> {
     return "string";
   }
 
-  public get value(): T {
+  public get value(): string {
     return this._value;
   }
 
@@ -38,7 +38,7 @@ export class String<T extends string = string> extends Value<"string"> {
     hash.writeString(this._value);
   }
 
-  public toJSON(): String.JSON<T> {
+  public toJSON(): String.JSON {
     return {
       type: "string",
       value: this._value,
@@ -51,9 +51,8 @@ export class String<T extends string = string> extends Value<"string"> {
 }
 
 export namespace String {
-  export interface JSON<T extends string = string>
-    extends Value.JSON<"string"> {
-    value: T;
+  export interface JSON extends Value.JSON<"string"> {
+    value: string;
   }
 
   export function isString(value: unknown): value is String {

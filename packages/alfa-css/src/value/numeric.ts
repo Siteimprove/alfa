@@ -1,10 +1,10 @@
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Value } from "../value";
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 export abstract class Numeric<T extends string = string>
   extends Value<T>

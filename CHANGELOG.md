@@ -23,23 +23,17 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Breaking
 
-- [@siteimprove/alfa-media](packages/alfa-media): `Condition` has been renamed `Expression`; a new `Condition = Expression | Feature | Negation` is exposed. The `Value` type has been reworked. ([#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Feature#value` property. The new type is used for modelling both discrete and range values with was not previously possible. ([#722](../../pull/722))
 
 ### Added
 
 - [@siteimprove/alfa-media](packages/alfa-media): Ranges in media queries are now handled. ([#109](../../issue/109), [#722](../../pull/722))
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Dimension` and `Numeric` now implement `Comparable`. ([#722](../../pull/722))
-
-- [@siteimprove/alfa-css](packages/alfa-css): Subclasses of `Dimension` now provide `CanonicalUnit`. ([#722](../../pull/722))
-
-- [@siteimprove/alfa-css](packages/alfa-css): `String` is now parametric in its value type. ([#722](../../pull/722))
-
-- [@siteimprove/alfa-parser](packages/alfa-parser): A `separatedPair` combinator is now availabel. ([#722](../../pull/722))
+- [@siteimprove/alfa-css](packages/alfa-css): `Dimension` and `Numeric` now implement `Comparable`. The `Dimension#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
 
 ### Fixed
 
-- [@siteimprove/alfa-media](packages/alfa-media): Parsing and matching of media queries has been fixed. ([#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): Several issues related to parsing and matching of media queries have been fixed. ([#722](../../pull/722))
 
 ## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
 

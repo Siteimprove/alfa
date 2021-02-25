@@ -1,20 +1,19 @@
-/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";
+import { Device, Viewport, Display } from "@siteimprove/alfa-device";
 
 import { Media } from "../src";
 
 function parse(input: string) {
-  return Media.parse(Lexer.lex(input)).map(([, query]) => query.toJSON());
+  return Media.parse(Lexer.lex(input)).map(([, query]) => query);
 }
 
 test(".parse() parses a simple query", (t) => {
-  t.deepEqual(parse("(orientation: portrait)").get(), [
+  t.deepEqual(parse("(orientation: portrait)").get().toJSON(), [
     {
-      type: "query",
       modifier: null,
-      mediaType: null,
+      type: null,
       condition: {
         type: "feature",
         name: "orientation",
@@ -34,23 +33,23 @@ test(".parse() parses a list of queries", (t) => {
   t.deepEqual(
     parse(
       "screen, (orientation: landscape) and ((max-width: 640px) or (not (min-height: 100px)))"
-    ).get(),
+    )
+      .get()
+      .toJSON(),
     [
       {
-        type: "query",
         modifier: null,
-        mediaType: {
+        type: {
           type: "type",
           name: "screen",
         },
         condition: null,
       },
       {
-        type: "query",
         modifier: null,
-        mediaType: null,
+        type: null,
         condition: {
-          type: "expression",
+          type: "condition",
           combinator: "and",
           left: {
             type: "feature",
@@ -64,7 +63,7 @@ test(".parse() parses a list of queries", (t) => {
             },
           },
           right: {
-            type: "expression",
+            type: "condition",
             combinator: "or",
             left: {
               type: "feature",
@@ -110,17 +109,18 @@ test(".parse() parses a list of queries", (t) => {
 
 test(".parse() parses a list of mixed type and feature queries", (t) => {
   t.deepEqual(
-    parse("screen and (orientation: portrait) and (min-width: 100px)").get(),
+    parse("screen and (orientation: portrait) and (min-width: 100px)")
+      .get()
+      .toJSON(),
     [
       {
-        type: "query",
         modifier: null,
-        mediaType: {
+        type: {
           type: "type",
           name: "screen",
         },
         condition: {
-          type: "expression",
+          type: "condition",
           combinator: "and",
           left: {
             type: "feature",
@@ -156,11 +156,10 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
 });
 
 test(".parse() does not create a modifier in the absence of a type", (t) => {
-  t.deepEqual(parse("not screen and (orientation: landscape)").get(), [
+  t.deepEqual(parse("not screen and (orientation: landscape)").get().toJSON(), [
     {
-      type: "query",
       modifier: "not",
-      mediaType: {
+      type: {
         type: "type",
         name: "screen",
       },
@@ -178,11 +177,10 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
     },
   ]);
 
-  t.deepEqual(parse("not (orientation: landscape)").get(), [
+  t.deepEqual(parse("not (orientation: landscape)").get().toJSON(), [
     {
-      type: "query",
       modifier: null,
-      mediaType: null,
+      type: null,
       condition: {
         type: "negation",
         condition: {
@@ -201,82 +199,53 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
   ]);
 });
 
-test(".parse() return 'not all' for syntactically incorrect queries", (t) => {
-  // wiping out the ful query, but keeping the rest of the query list.
-  const result: Media.List.JSON = [
-    {
-      type: "query",
-      modifier: "not",
-      mediaType: { type: "type", name: "all" },
-      condition: null,
-    },
-    {
-      type: "query",
-      modifier: null,
-      mediaType: { type: "type", name: "screen" },
-      condition: null,
-    },
-  ];
-
-  // "or" after a media type"
-  t.deepEqual(parse("screen or (min-width: 100px), screen").get(), result);
-
-  // mixing combinators
-  t.deepEqual(
-    parse(
-      "(orientation: portrait) and (scripting: none) or (min-width: 100px), screen"
-    ).get(),
-    result
-  );
-
-  // invalid token in parenthesis
-  t.deepEqual(parse("(example, all, ), screen").get(), result);
-
-  // forbidden media-type keyword
-  t.deepEqual(parse("or and (orientation), screen").get(), result);
-
-  // unknown mf-name
-  t.deepEqual(parse("(unknown), screen").get(), result);
-  t.deepEqual(
-    parse("(max-weight: 3px) or (orientation), screen").get(),
-    result
-  );
-
-  // invalid min-/max- prefix
-  t.deepEqual(parse("(min-orientation: portrait), screen").get(), result);
-
-  // unknown mf-value
-  t.deepEqual(parse("(max-width: 3km), screen").get(), result);
-
-  // disallowed mf-value
-  t.deepEqual(parse("(orientation: 2px), screen").get(), result);
-  t.deepEqual(parse("(orientation: south), screen").get(), result);
-  t.deepEqual(parse("(width: portrait), screen").get(), result);
-
-  // discrete feature in a range context
-  t.deepEqual(parse("(orientation = portrait), screen").get(), result);
-
-  // double range in incompatible directions
-  t.deepEqual(parse("(100px < width > 200px), screen").get(), result);
-});
+for (const input of [
+  "screen or (min-width: 100px)",
+  "(orientation: portrait) and (scripting: none) or (min-width: 100px)",
+  "(example, all, )",
+  "or and (orientation)",
+  "(unknown)",
+  "(max-weight: 3px) or (orientation)",
+  "(min-orientation: portrait)",
+  "(max-width: 3km)",
+  "(orientation: 2px)",
+  "(orientation: south)",
+  "(width: portrait)",
+  "(orientation = portrait)",
+  "(100px < width > 200px)",
+]) {
+  test(`.parse() returns "not all" for ${input}`, (t) => {
+    t.deepEqual(parse(`${input}`).get().toJSON(), [
+      {
+        modifier: "not",
+        type: {
+          type: "type",
+          name: "all",
+        },
+        condition: null,
+      },
+    ]);
+  });
+}
 
 test(".parse() accepts unknown media types", (t) => {
-  t.deepEqual(parse("unknown").get(), [
+  t.deepEqual(parse("unknown").get().toJSON(), [
     {
-      type: "query",
       modifier: null,
-      mediaType: { type: "type", name: "unknown" },
+      type: {
+        type: "type",
+        name: "unknown",
+      },
       condition: null,
     },
   ]);
 });
 
-test(".parse() parses ranges", (t) => {
-  t.deepEqual(parse("(100px < width)").get(), [
+test(".parse() parses a value < feature range", (t) => {
+  t.deepEqual(parse("(100px < width)").get().toJSON(), [
     {
-      type: "query",
       modifier: null,
-      mediaType: null,
+      type: null,
       condition: {
         type: "feature",
         name: "width",
@@ -295,12 +264,13 @@ test(".parse() parses ranges", (t) => {
       },
     },
   ]);
+});
 
-  t.deepEqual(parse("(width > 100px)").get(), [
+test(".parse() parses a feature > value range", (t) => {
+  t.deepEqual(parse("(width > 100px)").get().toJSON(), [
     {
-      type: "query",
       modifier: null,
-      mediaType: null,
+      type: null,
       condition: {
         type: "feature",
         name: "width",
@@ -319,12 +289,13 @@ test(".parse() parses ranges", (t) => {
       },
     },
   ]);
+});
 
-  t.deepEqual(parse("(100px < width <= 500px)").get(), [
+test(".parse() parses a value < feature < value range", (t) => {
+  t.deepEqual(parse("(100px < width < 500px)").get().toJSON(), [
     {
-      type: "query",
       modifier: null,
-      mediaType: null,
+      type: null,
       condition: {
         type: "feature",
         name: "width",
@@ -344,10 +315,107 @@ test(".parse() parses ranges", (t) => {
               value: 500,
               unit: "px",
             },
-            isInclusive: true,
+            isInclusive: false,
           },
         },
       },
     },
   ]);
+});
+
+const smallPortrait /* smartphone */ = Device.of(
+  Device.Type.Screen,
+  Viewport.of(200, 400, Viewport.Orientation.Portrait),
+  Display.of(300)
+);
+
+const largeLandscape /* desktop screen */ = Device.of(
+  Device.Type.Screen,
+  Viewport.of(1280, 1080, Viewport.Orientation.Landscape),
+  Display.of(90)
+);
+
+test("#matches() matches simple orientation query", (t) => {
+  const isPortrait = parse("(orientation: portrait)").get();
+
+  t.deepEqual(isPortrait.matches(smallPortrait), true);
+  t.deepEqual(isPortrait.matches(largeLandscape), false);
+});
+
+test("#matches() matches conjunction query", (t) => {
+  const isLargeLandscape = parse(
+    "(min-width: 640px) and (orientation: landscape)"
+  ).get();
+
+  t.deepEqual(isLargeLandscape.matches(largeLandscape), true);
+  t.deepEqual(isLargeLandscape.matches(smallPortrait), false);
+});
+
+test("#matches() matches disjunction query", (t) => {
+  const isLargeOrPortrait = parse(
+    "(min-width: 640px) or (orientation: portrait)"
+  ).get();
+
+  t.deepEqual(isLargeOrPortrait.matches(largeLandscape), true);
+  t.deepEqual(isLargeOrPortrait.matches(smallPortrait), true);
+});
+
+test("#matches() matches negation query", (t) => {
+  const isNotLandscape = parse("not (orientation: landscape)").get();
+
+  t.deepEqual(isNotLandscape.matches(smallPortrait), true);
+  t.deepEqual(isNotLandscape.matches(largeLandscape), false);
+});
+
+test("#matches() matches query with a media type", (t) => {
+  const isScreenPortrait = parse("screen and (orientation: portrait)").get();
+
+  const isPrintPortrait = parse("print and (orientation: portrait)").get();
+
+  t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
+  t.deepEqual(isPrintPortrait.matches(smallPortrait), false);
+  t.deepEqual(isScreenPortrait.matches(largeLandscape), false);
+  t.deepEqual(isPrintPortrait.matches(largeLandscape), false);
+});
+
+test("#matches() disregards 'only' modifier", (t) => {
+  const isScreenPortrait = parse(
+    "only screen and (orientation: portrait)"
+  ).get();
+
+  const isPrintPortrait = parse("only print and (orientation: portrait)").get();
+
+  t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
+  t.deepEqual(isPrintPortrait.matches(smallPortrait), false);
+  t.deepEqual(isScreenPortrait.matches(largeLandscape), false);
+  t.deepEqual(isPrintPortrait.matches(largeLandscape), false);
+});
+
+test("#matches() honors 'not' modifier", (t) => {
+  const isNotScreenPortrait = parse(
+    "not screen and (orientation: portrait)"
+  ).get();
+
+  const isNotPrintPortrait = parse(
+    "not print and (orientation: portrait)"
+  ).get();
+
+  t.deepEqual(isNotScreenPortrait.matches(smallPortrait), false);
+  t.deepEqual(isNotPrintPortrait.matches(smallPortrait), true);
+  t.deepEqual(isNotScreenPortrait.matches(largeLandscape), true);
+  t.deepEqual(isNotPrintPortrait.matches(largeLandscape), true);
+});
+
+test("#matches() matches ranges", (t) => {
+  const goldylocks /* not too small, not too big */ = Device.of(
+    Device.Type.Screen,
+    Viewport.of(500),
+    Display.of(100)
+  );
+
+  const isGoldylocks = parse("(300px < width <= 600px)").get();
+
+  t.deepEqual(isGoldylocks.matches(smallPortrait), false);
+  t.deepEqual(isGoldylocks.matches(goldylocks), true);
+  t.deepEqual(isGoldylocks.matches(largeLandscape), false);
 });
