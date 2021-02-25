@@ -41,7 +41,6 @@ const {
   separatedList,
 } = Parser;
 
-const { and } = Refinement;
 const { property, equals } = Predicate;
 
 export namespace Media {
@@ -58,19 +57,14 @@ export namespace Media {
     map(Token.parseIdent("not"), () => Modifier.Not)
   );
 
-  export enum Combinator {
-    And = "and",
-    Or = "or",
-  }
-
-  interface Queryable {
+  interface Matchable {
     readonly matches: Predicate<Device>;
   }
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-type
    */
-  export class Type implements Queryable, Equatable, Serializable<Type.JSON> {
+  export class Type implements Matchable, Equatable, Serializable<Type.JSON> {
     public static of(name: string): Type {
       return new Type(name);
     }
@@ -156,7 +150,11 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
   export abstract class Feature<T = unknown>
-    implements Queryable, Equatable, Serializable<Feature.JSON> {
+    implements
+      Matchable,
+      Iterable<Feature<T>>,
+      Equatable,
+      Serializable<Feature.JSON> {
     protected readonly _value: Option<Value<T>>;
 
     protected constructor(value: Option<Value<T>>) {
@@ -177,6 +175,14 @@ export namespace Media {
         value.name === this.name &&
         value._value.equals(this._value)
       );
+    }
+
+    public *iterator(): Iterator<Feature<T>> {
+      yield this;
+    }
+
+    public [Symbol.iterator](): Iterator<Feature<T>> {
+      return this.iterator();
     }
 
     public toJSON(): Feature.JSON {
@@ -353,7 +359,7 @@ export namespace Media {
             if (
               Value.isDiscrete(value) &&
               value.hasValue(
-                and(
+                Refinement.and(
                   Keyword.isKeyword,
                   property("value", equals("landscape", "portrait"))
                 )
@@ -402,7 +408,7 @@ export namespace Media {
             if (
               Value.isDiscrete(value) &&
               value.hasValue(
-                and(
+                Refinement.and(
                   Keyword.isKeyword,
                   property("value", equals("none", "enabled", "initial-only"))
                 )
@@ -939,106 +945,169 @@ export namespace Media {
     export const { of: bound } = Bound;
   }
 
-  /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-condition
-   */
-  export class Condition
-    implements Queryable, Equatable, Serializable<Condition.JSON> {
+  export class And
+    implements Matchable, Iterable<Feature>, Equatable, Serializable<And.JSON> {
     public static of(
-      combinator: Combinator,
-      left: Feature | Condition | Negation,
-      right: Feature | Condition | Negation
-    ): Condition {
-      return new Condition(combinator, left, right);
+      left: Feature | Condition,
+      right: Feature | Condition
+    ): And {
+      return new And(left, right);
     }
 
-    private readonly _combinator: Combinator;
-    private readonly _left: Feature | Condition | Negation;
-    private readonly _right: Feature | Condition | Negation;
+    private readonly _left: Feature | Condition;
+    private readonly _right: Feature | Condition;
 
-    private constructor(
-      operator: Combinator,
-      left: Feature | Condition | Negation,
-      right: Feature | Condition | Negation
-    ) {
-      this._combinator = operator;
+    private constructor(left: Feature | Condition, right: Feature | Condition) {
       this._left = left;
       this._right = right;
     }
 
-    public get combinator(): Combinator {
-      return this._combinator;
-    }
-
-    public get left(): Feature | Condition | Negation {
+    public get left(): Feature | Condition {
       return this._left;
     }
 
-    public get right(): Feature | Condition | Negation {
+    public get right(): Feature | Condition {
       return this._right;
     }
 
     public matches(device: Device): boolean {
-      switch (this._combinator) {
-        case Combinator.And:
-          return this._left.matches(device) && this._right.matches(device);
-
-        case Combinator.Or:
-          return this._left.matches(device) || this._right.matches(device);
-      }
+      return this._left.matches(device) && this._right.matches(device);
     }
 
     public equals(value: unknown): value is this {
       return (
-        value instanceof Condition &&
-        value._combinator === this._combinator &&
+        value instanceof And &&
         value._left.equals(this._left) &&
         value._right.equals(this._right)
       );
     }
 
-    public toJSON(): Condition.JSON {
+    public *iterator(): Iterator<Feature> {
+      for (const condition of [this._left, this._right]) {
+        yield* condition;
+      }
+    }
+
+    public [Symbol.iterator](): Iterator<Feature> {
+      return this.iterator();
+    }
+
+    public toJSON(): And.JSON {
       return {
-        type: "condition",
-        combinator: this._combinator,
+        type: "and",
         left: this._left.toJSON(),
         right: this._right.toJSON(),
       };
     }
 
     public toString(): string {
-      return `(${this._left}) ${this._combinator} (${this._right})`;
+      return `(${this._left}) and (${this._right})`;
     }
   }
 
-  export namespace Condition {
+  export namespace And {
     export interface JSON {
       [key: string]: json.JSON;
-      type: "condition";
-      combinator: string;
-      left: Feature.JSON | Condition.JSON | Negation.JSON;
-      right: Feature.JSON | Condition.JSON | Negation.JSON;
+      type: "and";
+      left: Feature.JSON | Condition.JSON;
+      right: Feature.JSON | Condition.JSON;
     }
 
-    export function isCondition(value: unknown): value is Condition {
-      return value instanceof Condition;
+    export function isAnd(value: unknown): value is And {
+      return value instanceof And;
     }
   }
 
-  export const { of: condition, isCondition } = Condition;
+  export const { of: and, isAnd } = And;
 
-  export class Negation implements Queryable {
-    public static of(condition: Feature | Condition | Negation): Negation {
-      return new Negation(condition);
+  export class Or
+    implements Matchable, Iterable<Feature>, Equatable, Serializable<Or.JSON> {
+    public static of(
+      left: Feature | Condition,
+      right: Feature | Condition
+    ): Or {
+      return new Or(left, right);
     }
 
-    private readonly _condition: Feature | Condition | Negation;
+    private readonly _left: Feature | Condition;
+    private readonly _right: Feature | Condition;
 
-    private constructor(condition: Feature | Condition | Negation) {
+    private constructor(left: Feature | Condition, right: Feature | Condition) {
+      this._left = left;
+      this._right = right;
+    }
+
+    public get left(): Feature | Condition {
+      return this._left;
+    }
+
+    public get right(): Feature | Condition {
+      return this._right;
+    }
+
+    public matches(device: Device): boolean {
+      return this._left.matches(device) || this._right.matches(device);
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Or &&
+        value._left.equals(this._left) &&
+        value._right.equals(this._right)
+      );
+    }
+
+    public *iterator(): Iterator<Feature> {
+      for (const condition of [this._left, this._right]) {
+        yield* condition;
+      }
+    }
+
+    public [Symbol.iterator](): Iterator<Feature> {
+      return this.iterator();
+    }
+
+    public toJSON(): Or.JSON {
+      return {
+        type: "or",
+        left: this._left.toJSON(),
+        right: this._right.toJSON(),
+      };
+    }
+
+    public toString(): string {
+      return `(${this._left}) or (${this._right})`;
+    }
+  }
+
+  export namespace Or {
+    export interface JSON {
+      [key: string]: json.JSON;
+      type: "or";
+      left: Feature.JSON | Condition.JSON;
+      right: Feature.JSON | Condition.JSON;
+    }
+
+    export function isOr(value: unknown): value is Or {
+      return value instanceof Or;
+    }
+  }
+
+  export const { of: or, isOr } = Or;
+
+  export class Not
+    implements Matchable, Iterable<Feature>, Equatable, Serializable<Not.JSON> {
+    public static of(condition: Feature | Condition): Not {
+      return new Not(condition);
+    }
+
+    private readonly _condition: Feature | Condition;
+
+    private constructor(condition: Feature | Condition) {
       this._condition = condition;
     }
 
-    public get condition(): Feature | Condition | Negation {
+    public get condition(): Feature | Condition {
       return this._condition;
     }
 
@@ -1047,14 +1116,20 @@ export namespace Media {
     }
 
     public equals(value: unknown): value is this {
-      return (
-        value instanceof Negation && value._condition.equals(this._condition)
-      );
+      return value instanceof Not && value._condition.equals(this._condition);
     }
 
-    public toJSON(): Negation.JSON {
+    public *iterator(): Iterator<Feature> {
+      yield* this._condition;
+    }
+
+    public [Symbol.iterator](): Iterator<Feature> {
+      return this.iterator();
+    }
+
+    public toJSON(): Not.JSON {
       return {
-        type: "negation",
+        type: "not",
         condition: this._condition.toJSON(),
       };
     }
@@ -1064,30 +1139,41 @@ export namespace Media {
     }
   }
 
-  export namespace Negation {
+  export namespace Not {
     export interface JSON {
       [key: string]: json.JSON;
-      type: "negation";
-      condition: Feature.JSON | Condition.JSON | Negation.JSON;
+      type: "not";
+      condition: Condition.JSON | Feature.JSON;
     }
 
-    export function isNegation(value: unknown): value is Negation {
-      return value instanceof Negation;
+    export function isNot(value: unknown): value is Not {
+      return value instanceof Not;
     }
   }
 
-  export const { of: negation, isNegation } = Negation;
+  export const { of: not, isNot } = Not;
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#media-condition
+   */
+  export type Condition = And | Or | Not;
+
+  export namespace Condition {
+    export type JSON = And.JSON | Or.JSON | Not.JSON;
+
+    export function isCondition(value: unknown): value is Condition {
+      return isAnd(value) || isOr(value) || isNot(value);
+    }
+  }
+
+  export const { isCondition } = Condition;
 
   /**
    * @remarks
    * The condition parser is forward-declared as it is needed within its
    * subparsers.
    */
-  let parseCondition: Parser<
-    Slice<Token>,
-    Feature | Condition | Negation,
-    string
-  >;
+  let parseCondition: Parser<Slice<Token>, Feature | Condition, string>;
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-in-parens
@@ -1111,7 +1197,7 @@ export namespace Media {
       delimited(option(Token.parseWhitespace), Token.parseIdent("not")),
       parseInParens
     ),
-    (condition) => Negation.of(condition)
+    not
   );
 
   /**
@@ -1140,20 +1226,14 @@ export namespace Media {
         pair(
           parseInParens,
           either(
-            map(
-              oneOrMore(parseAnd),
-              (queries) => [Combinator.And, queries] as const
-            ),
-            map(
-              oneOrMore(parseOr),
-              (queries) => [Combinator.Or, queries] as const
-            )
+            map(oneOrMore(parseAnd), (queries) => [and, queries] as const),
+            map(oneOrMore(parseOr), (queries) => [or, queries] as const)
           )
         ),
-        ([left, [combinator, right]]) =>
+        ([left, [constructor, right]]) =>
           Iterable.reduce(
             right,
-            (left, right) => Condition.of(combinator, left, right),
+            (left, right) => constructor(left, right),
             left
           )
       ),
@@ -1167,32 +1247,30 @@ export namespace Media {
   const parseConditionWithoutOr = either(
     parseNot,
     map(pair(parseInParens, zeroOrMore(parseAnd)), ([left, right]) =>
-      [left, ...right].reduce((left, right) =>
-        Condition.of(Combinator.And, left, right)
-      )
+      [left, ...right].reduce((left, right) => and(left, right))
     )
   );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query
    */
-  export class Query implements Queryable {
+  export class Query implements Matchable {
     public static of(
       modifier: Option<Modifier>,
       type: Option<Type>,
-      condition: Option<Feature | Condition | Negation>
+      condition: Option<Feature | Condition>
     ): Query {
       return new Query(modifier, type, condition);
     }
 
     private readonly _modifier: Option<Modifier>;
     private readonly _type: Option<Type>;
-    private readonly _condition: Option<Feature | Condition | Negation>;
+    private readonly _condition: Option<Feature | Condition>;
 
     private constructor(
       modifier: Option<Modifier>,
       type: Option<Type>,
-      condition: Option<Feature | Condition | Negation>
+      condition: Option<Feature | Condition>
     ) {
       this._modifier = modifier;
       this._type = type;
@@ -1207,7 +1285,7 @@ export namespace Media {
       return this._type;
     }
 
-    public get condition(): Option<Feature | Condition | Negation> {
+    public get condition(): Option<Feature | Condition> {
       return this._condition;
     }
 
@@ -1264,7 +1342,7 @@ export namespace Media {
       [key: string]: json.JSON;
       modifier: string | null;
       type: Type.JSON | null;
-      condition: Feature.JSON | Condition.JSON | Negation.JSON | null;
+      condition: Feature.JSON | Condition.JSON | Not.JSON | null;
     }
 
     export function isQuery(value: unknown): value is Query {
@@ -1306,7 +1384,7 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#media-query-list
    */
   export class List
-    implements Queryable, Iterable<Query>, Equatable, Serializable<List.JSON> {
+    implements Matchable, Iterable<Query>, Equatable, Serializable<List.JSON> {
     public static of(queries: Iterable<Query>): List {
       return new List(queries);
     }

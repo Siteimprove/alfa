@@ -136,12 +136,12 @@ function isOrientationConditional(declaration: Declaration): boolean {
 }
 
 function hasOrientationCondition(
-  condition: Media.Feature | Media.Condition | Media.Negation
+  condition: Media.Feature | Media.Condition
 ): boolean {
-  if (Media.isFeature(condition)) {
+  for (const feature of condition) {
     if (
-      condition.name === "orientation" &&
-      condition.value.some(
+      feature.name === "orientation" &&
+      feature.value.some(
         (value) =>
           value.matches(Keyword.of("landscape")) ||
           value.matches(Keyword.of("portrait"))
@@ -149,17 +149,6 @@ function hasOrientationCondition(
     ) {
       return true;
     }
-  }
-
-  if (Media.isCondition(condition)) {
-    return (
-      hasOrientationCondition(condition.left) ||
-      hasOrientationCondition(condition.right)
-    );
-  }
-
-  if (Media.isNegation(condition)) {
-    return hasOrientationCondition(condition.condition);
   }
 
   return false;

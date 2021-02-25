@@ -48,8 +48,7 @@ test(".parse() parses a list of queries", (t) => {
         modifier: null,
         type: null,
         condition: {
-          type: "condition",
-          combinator: "and",
+          type: "and",
           left: {
             type: "feature",
             name: "orientation",
@@ -62,8 +61,7 @@ test(".parse() parses a list of queries", (t) => {
             },
           },
           right: {
-            type: "condition",
-            combinator: "or",
+            type: "or",
             left: {
               type: "feature",
               name: "width",
@@ -81,7 +79,7 @@ test(".parse() parses a list of queries", (t) => {
               },
             },
             right: {
-              type: "negation",
+              type: "not",
               condition: {
                 type: "feature",
                 name: "height",
@@ -118,8 +116,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
           name: "screen",
         },
         condition: {
-          type: "condition",
-          combinator: "and",
+          type: "and",
           left: {
             type: "feature",
             name: "orientation",
@@ -179,7 +176,7 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
       modifier: null,
       type: null,
       condition: {
-        type: "negation",
+        type: "not",
         condition: {
           type: "feature",
           name: "orientation",
