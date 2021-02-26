@@ -40,7 +40,7 @@ export class Text extends Node {
   }
 
   public toString(): string {
-    return `text "${this._name}"`;
+    return `text "${this._name.map((name) => `${name}`).getOr("")}"`;
   }
 }
 
