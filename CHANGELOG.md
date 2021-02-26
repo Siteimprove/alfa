@@ -23,13 +23,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Breaking
 
-- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Feature#value` property. The new type is used for modelling both discrete and range values with was not previously possible. ([#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Feature#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
 
 ### Added
 
-- [@siteimprove/alfa-media](packages/alfa-media): Ranges in media queries are now handled. ([#109](../../issue/109), [#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): The new range syntax for media features, such as `100px < width <= 900px`, is now supported. ([#109](../../issue/109), [#722](../../pull/722))
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Dimension` and `Numeric` now implement `Comparable`. The `Dimension#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
+- [@siteimprove/alfa-css](packages/alfa-css): The `Dimension` and `Numeric` types now provide implementations of `Comparable`. The `Dimension#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
 
 ### Fixed
 
