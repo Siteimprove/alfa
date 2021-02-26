@@ -35,6 +35,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-media](packages/alfa-media): Several issues related to parsing and matching of media queries have been fixed. ([#722](../../pull/722))
 
+- [@siteimprove/alfa-style](packages/alfa-style): `var()` functions now accept spaces around variable names. ([#725](../../pull/725))
+
 ## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
 
 ### Breaking
