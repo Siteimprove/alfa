@@ -35,6 +35,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-media](packages/alfa-media): Several issues related to parsing and matching of media queries have been fixed. ([#722](../../pull/722))
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): Accessible names are now also considered empty when they consist exclusively of whitespace.
+
 ## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
 
 ### Breaking
