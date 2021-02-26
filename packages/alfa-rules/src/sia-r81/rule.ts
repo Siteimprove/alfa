@@ -50,7 +50,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
               elements
                 .reduce((groups, element) => {
                   for (const [node] of aria.Node.from(element, device)) {
-                    const name = node.name.map((name) => name.value);
+                    const name = node.name.map((name) => normalize(name.value));
 
                     groups = groups.set(
                       name,
@@ -119,6 +119,10 @@ export namespace Outcomes {
       `The links do not resolve to the same or equivalent resources`
     )
   );
+}
+
+function normalize(input: string): string {
+  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 /**

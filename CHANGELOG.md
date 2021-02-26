@@ -41,6 +41,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-style](packages/alfa-style): The source of inherited property values are no longer overwritten by the source of the `inherit` declaration.
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R41 and SIA-R81 now correctly normalize computed accessible names.
+
 ## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
 
 ### Breaking
