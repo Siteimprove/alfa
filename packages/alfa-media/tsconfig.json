@@ -1,7 +1,12 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/media.ts", "src/resolver.ts"],
+  "files": [
+    "src/index.ts",
+    "src/media.ts",
+    "src/resolver.ts",
+    "test/media.spec.ts"
+  ],
   "references": [
     {
       "path": "../alfa-css"

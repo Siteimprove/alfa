@@ -424,6 +424,14 @@ export class Slice<T> implements Collection.Indexed<T> {
 export namespace Slice {
   export type JSON<T> = Array<Serializable.ToJSON<T>>;
 
+  export function from<T>(iterable: Iterable<T>): Slice<T> {
+    if (isSlice(iterable)) {
+      return iterable;
+    }
+
+    return Slice.of([...iterable]);
+  }
+
   export function isSlice<T>(value: Iterable<T>): value is Slice<T>;
 
   export function isSlice<T>(value: unknown): value is Slice<T>;
