@@ -53,7 +53,11 @@ export namespace Component {
   /**
    * @see https://drafts.csswg.org/css-syntax/#consume-a-component-value
    */
-  export const consume: Parser<Slice<Token>, Component> = (input) => {
+  export const consume: Parser<Slice<Token>, Component, string> = (input) => {
+    if (input.length === 0) {
+      return Err.of("Unexpected end of file");
+    }
+
     const next = input.array[input.offset];
 
     if (

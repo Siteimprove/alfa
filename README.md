@@ -32,7 +32,7 @@ Alfa is distributed through [GitHub Packages](../../packages) as a set of separa
 $ npm install @siteimprove/alfa-<package-name>
 ```
 
-> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com` to your `.npmrc` file.
+> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
