@@ -779,6 +779,32 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
   });
 });
 
+test(`#cascaded() accept spaces around variable name in a var() function`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          "--hidden": "hidden",
+          overflowX: "var( --hidden )",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var( --hidden )").toJSON(),
+  });
+});
+
 test(`#cascaded() resolves :hover style for an element`, (t) => {
   const element = <div />;
 
