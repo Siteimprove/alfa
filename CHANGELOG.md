@@ -37,6 +37,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): Accessible names are now also considered empty when they consist exclusively of whitespace.
 
+- [@siteimprove/alfa-style](packages/alfa-style): `var()` functions now accept spaces around variable names. ([#725](../../pull/725))
+
 ## [0.11.0](../../compare/v0.10.0...v0.11.0) (2021-02-23)
 
 ### Breaking

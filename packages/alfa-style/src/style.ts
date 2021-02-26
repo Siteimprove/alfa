@@ -17,7 +17,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { takeUntil, map, option, pair, right, left } = Parser;
+const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
 type Name = Property.Name;
 
@@ -547,7 +547,10 @@ const parseVar = right(
   Token.parseFunction("var"),
   pair(
     map(
-      Token.parseIdent((ident) => ident.value.startsWith("--")),
+      delimited(
+        option(Token.parseWhitespace),
+        Token.parseIdent((ident) => ident.value.startsWith("--"))
+      ),
       (ident) => ident.value
     ),
     left(
