@@ -65,7 +65,7 @@ export namespace Outcomes {
 
 function hasRequiredParent(device: Device): Predicate<Element> {
   return (element) => {
-    const node = Node.from(element, device);
+    const node = aria.Node.from(element, device);
 
     return node.role
       .filter((role) => role.hasRequiredParent())
