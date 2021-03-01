@@ -1080,7 +1080,6 @@ __metadata:
     "@siteimprove/alfa-formatter": "workspace:^0.12.0"
     "@siteimprove/alfa-formatter-earl": "workspace:^0.12.0"
     "@siteimprove/alfa-http": "workspace:^0.12.0"
-    "@siteimprove/alfa-jquery": "workspace:^0.12.0"
     "@siteimprove/alfa-mapper": "workspace:^0.12.0"
     "@siteimprove/alfa-test": "workspace:^0.12.0"
     "@siteimprove/alfa-web": "workspace:^0.12.0"
@@ -1423,7 +1422,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-jquery@workspace:^0.12.0, @siteimprove/alfa-jquery@workspace:packages/alfa-jquery":
+"@siteimprove/alfa-jquery@workspace:packages/alfa-jquery":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-jquery@workspace:packages/alfa-jquery"
   dependencies:
@@ -1842,7 +1841,6 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^0.12.0"
     "@siteimprove/alfa-parser": "workspace:^0.12.0"
     "@siteimprove/alfa-predicate": "workspace:^0.12.0"
-    "@siteimprove/alfa-refinement": "workspace:^0.12.0"
     "@siteimprove/alfa-result": "workspace:^0.12.0"
     "@siteimprove/alfa-slice": "workspace:^0.12.0"
     "@siteimprove/alfa-test": "workspace:^0.12.0"
