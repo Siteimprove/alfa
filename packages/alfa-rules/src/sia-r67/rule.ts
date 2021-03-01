@@ -35,8 +35,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            Node.from(target, device).every((node) =>
-              node.role.some(not((role) => role.isPresentational()))
+            Node.from(target, device).role.some(
+              not((role) => role.isPresentational())
             ),
             () => Outcomes.IsExposed,
             () => Outcomes.IsNotExposed

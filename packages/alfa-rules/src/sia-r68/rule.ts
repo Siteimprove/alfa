@@ -55,17 +55,18 @@ export namespace Outcomes {
 }
 
 function hasRequiredChildren(device: Device): Predicate<Element> {
-  return (element) =>
-    aria.Node.from(element, device).every((node) =>
-      node.role
-        .filter((role) => role.hasRequiredChildren())
-        .every((role) =>
-          node
-            .children()
-            .filter((node) => isElement(node.node))
-            .some(isRequiredChild(role.requiredChildren))
-        )
-    );
+  return (element) => {
+    const node = aria.Node.from(element, device);
+
+    return node.role
+      .filter((role) => role.hasRequiredChildren())
+      .every((role) =>
+        node
+          .children()
+          .filter((node) => isElement(node.node))
+          .some(isRequiredChild(role.requiredChildren))
+      );
+  };
 }
 
 function isRequiredChild(

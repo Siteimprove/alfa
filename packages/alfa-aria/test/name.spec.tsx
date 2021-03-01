@@ -12,86 +12,71 @@ const device = Device.standard();
 test(`.from() determines the name of a text node`, (t) => {
   const text = h.text("Hello world");
 
-  t.deepEqual(Name.from(text, device).toJSON(), [
-    [
-      {
-        type: "some",
-        value: {
-          value: "Hello world",
-          sources: [
-            {
-              type: "data",
-              text: "/text()[1]",
-            },
-          ],
+  t.deepEqual(Name.from(text, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "data",
+          text: "/text()[1]",
         },
-      },
-      [],
-    ],
-  ]);
+      ],
+    },
+  });
 });
 
 test(`.from() determines the name of a <button> element with child text content`, (t) => {
   const button = <button>Hello world</button>;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
-      {
-        type: "some",
-        value: {
-          value: "Hello world",
-          sources: [
-            {
-              type: "descendant",
-              element: "/button[1]",
-              name: {
-                value: "Hello world",
-                sources: [
-                  {
-                    type: "data",
-                    text: "/button[1]/text()[1]",
-                  },
-                ],
+  t.deepEqual(Name.from(button, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/button[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "data",
+                text: "/button[1]/text()[1]",
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-      [],
-    ],
-  ]);
+      ],
+    },
+  });
 });
 
 test(`.from() determines the name of a <div> element with a role of button and
       with child text content`, (t) => {
   const button = <div role="button">Hello world</div>;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
-      {
-        type: "some",
-        value: {
-          value: "Hello world",
-          sources: [
-            {
-              type: "descendant",
-              element: "/div[1]",
-              name: {
-                value: "Hello world",
-                sources: [
-                  {
-                    type: "data",
-                    text: "/div[1]/text()[1]",
-                  },
-                ],
+  t.deepEqual(Name.from(button, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/div[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "data",
+                text: "/div[1]/text()[1]",
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-      [],
-    ],
-  ]);
+      ],
+    },
+  });
 });
 
 test(`.from() determines the name of a <button> element with partially hidden
@@ -103,32 +88,27 @@ test(`.from() determines the name of a <button> element with partially hidden
     </button>
   );
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
-      {
-        type: "some",
-        value: {
-          value: "Hello world",
-          sources: [
-            {
-              type: "descendant",
-              element: "/button[1]",
-              name: {
-                value: "Hello world",
-                sources: [
-                  {
-                    type: "data",
-                    text: "/button[1]/text()[1]",
-                  },
-                ],
+  t.deepEqual(Name.from(button, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/button[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "data",
+                text: "/button[1]/text()[1]",
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-      [],
-    ],
-  ]);
+      ],
+    },
+  });
 });
 
 test(`.from() determines the name of a <button> element with a <span> child
@@ -139,8 +119,7 @@ test(`.from() determines the name of a <button> element with a <span> child
     </button>
   );
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -170,18 +149,14 @@ test(`.from() determines the name of a <button> element with a <span> child
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <button> element with an aria-label
       attribute`, (t) => {
   const button = <button aria-label="Hello world" />;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -193,18 +168,14 @@ test(`.from() determines the name of a <button> element with an aria-label
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <button> element with an empty aria-label
       attribute and child text content`, (t) => {
   const button = <button aria-label="">Hello world</button>;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -225,10 +196,7 @@ test(`.from() determines the name of a <button> element with an empty aria-label
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <button> element with an aria-labelledby
@@ -240,8 +208,7 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
     <p id="foo">Hello world</p>
   </div>;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -271,10 +238,7 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <button> element with an aria-labelledby
@@ -287,8 +251,7 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
     <p id="bar">world</p>
   </div>;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -331,10 +294,7 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <button> element with a title attribute
@@ -345,8 +305,7 @@ test(`.from() determines the name of a <button> element with a title attribute
     </button>
   );
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -358,17 +317,13 @@ test(`.from() determines the name of a <button> element with a title attribute
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <img> element with an alt attribute`, (t) => {
   const img = <img alt="Hello world" />;
 
-  t.deepEqual(Name.from(img, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(img, device).toJSON(),
       {
         type: "some",
         value: {
@@ -380,10 +335,7 @@ test(`.from() determines the name of an <img> element with an alt attribute`, (t
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <a> element with a <img> child element
@@ -394,8 +346,7 @@ test(`.from() determines the name of an <a> element with a <img> child element
     </a>
   );
 
-  t.deepEqual(Name.from(a, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(a, device).toJSON(),
       {
         type: "some",
         value: {
@@ -416,10 +367,7 @@ test(`.from() determines the name of an <a> element with a <img> child element
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <a> element with a <figure> child element
@@ -432,8 +380,7 @@ test(`.from() determines the name of an <a> element with a <figure> child elemen
     </a>
   );
 
-  t.deepEqual(Name.from(a, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(a, device).toJSON(),
       {
         type: "some",
         value: {
@@ -463,10 +410,7 @@ test(`.from() determines the name of an <a> element with a <figure> child elemen
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <a> element with text in its subtree`, (t) => {
@@ -476,8 +420,7 @@ test(`.from() determines the name of an <a> element with text in its subtree`, (
     </a>
   );
 
-  t.deepEqual(Name.from(a, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(a, device).toJSON(),
       {
         type: "some",
         value: {
@@ -498,10 +441,7 @@ test(`.from() determines the name of an <a> element with text in its subtree`, (
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <a> element with text in its subtree,
@@ -512,8 +452,7 @@ test(`.from() determines the name of an <a> element with text in its subtree,
     </a>
   );
 
-  t.deepEqual(Name.from(a, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(a, device).toJSON(),
       {
         type: "some",
         value: {
@@ -543,10 +482,7 @@ test(`.from() determines the name of an <a> element with text in its subtree,
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <a> element with text in its subtree,
@@ -558,8 +494,7 @@ test(`.from() determines the name of an <a> element with text in its subtree,
     </a>
   );
 
-  t.deepEqual(Name.from(a, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(a, device).toJSON(),
       {
         type: "some",
         value: {
@@ -611,17 +546,13 @@ test(`.from() determines the name of an <a> element with text in its subtree,
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <area> element with an alt attribute`, (t) => {
   const area = <area alt="Hello world" />;
 
-  t.deepEqual(Name.from(area, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(area, device).toJSON(),
       {
         type: "some",
         value: {
@@ -633,10 +564,7 @@ test(`.from() determines the name of an <area> element with an alt attribute`, (
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <fieldset> element with a <legend> child
@@ -648,8 +576,7 @@ test(`.from() determines the name of a <fieldset> element with a <legend> child
     </fieldset>
   );
 
-  t.deepEqual(Name.from(fieldset, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(fieldset, device).toJSON(),
       {
         type: "some",
         value: {
@@ -679,10 +606,7 @@ test(`.from() determines the name of a <fieldset> element with a <legend> child
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <figure> element with a <figcaption>
@@ -694,8 +618,7 @@ test(`.from() determines the name of a <figure> element with a <figcaption>
     </figure>
   );
 
-  t.deepEqual(Name.from(figure, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(figure, device).toJSON(),
       {
         type: "some",
         value: {
@@ -725,10 +648,7 @@ test(`.from() determines the name of a <figure> element with a <figcaption>
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <table> element with a <caption> child
@@ -742,8 +662,7 @@ test(`.from() determines the name of a <table> element with a <caption> child
     </table>
   );
 
-  t.deepEqual(Name.from(table, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(table, device).toJSON(),
       {
         type: "some",
         value: {
@@ -773,10 +692,7 @@ test(`.from() determines the name of a <table> element with a <caption> child
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input> element with a <label> parent
@@ -790,8 +706,7 @@ test(`.from() determines the name of an <input> element with a <label> parent
     </label>
   </form>;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -821,10 +736,7 @@ test(`.from() determines the name of an <input> element with a <label> parent
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input> element with a <label> element
@@ -836,8 +748,7 @@ test(`.from() determines the name of an <input> element with a <label> element
     {input}
   </form>;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -867,10 +778,7 @@ test(`.from() determines the name of an <input> element with a <label> element
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input> element with both a <label>
@@ -886,8 +794,7 @@ test(`.from() determines the name of an <input> element with both a <label>
     <label for="foo">!</label>
   </form>;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -939,10 +846,7 @@ test(`.from() determines the name of an <input> element with both a <label>
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <select> element with a <label> parent
@@ -956,8 +860,7 @@ test(`.from() determines the name of a <select> element with a <label> parent
     </label>
   </form>;
 
-  t.deepEqual(Name.from(select, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(select, device).toJSON(),
       {
         type: "some",
         value: {
@@ -987,18 +890,14 @@ test(`.from() determines the name of a <select> element with a <label> parent
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input> element with a placeholder
       attribute`, (t) => {
   const input = <input placeholder="Hello world" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1010,18 +909,14 @@ test(`.from() determines the name of an <input> element with a placeholder
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input> element with a placeholder
       and a title attribute, with the title attribute taking precedence`, (t) => {
   const input = <input title="Hello title" placeholder="Hello placeholder" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1033,18 +928,14 @@ test(`.from() determines the name of an <input> element with a placeholder
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="button"> element with a
       value attribute`, (t) => {
   const input = <input type="button" value="Hello world" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1056,35 +947,27 @@ test(`.from() determines the name of an <input type="button"> element with a
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="submit"> element`, (t) => {
   const input = <input type="submit" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
           value: "Submit",
           sources: [],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="submit"> element with a
       value attribute`, (t) => {
   const input = <input type="submit" value="Hello world" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1096,35 +979,27 @@ test(`.from() determines the name of an <input type="submit"> element with a
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="reset"> element`, (t) => {
   const input = <input type="reset" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
           value: "Reset",
           sources: [],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="reset"> element with a
       value attribute`, (t) => {
   const input = <input type="reset" value="Hello world" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1136,35 +1011,27 @@ test(`.from() determines the name of an <input type="reset"> element with a
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="image"> element`, (t) => {
   const input = <input type="image" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
           value: "Submit",
           sources: [],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an <input type="image"> element with an
       alt attribute`, (t) => {
   const input = <input type="image" alt="Hello world" />;
 
-  t.deepEqual(Name.from(input, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(input, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1176,10 +1043,7 @@ test(`.from() determines the name of an <input type="image"> element with an
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <button> element with a role of
@@ -1188,8 +1052,7 @@ test(`.from() determines the name of a <button> element with a role of
   // is ignored to ensure that the button, which is focusable, remains operable.
   const button = <button role="presentation">Hello world</button>;
 
-  t.deepEqual(Name.from(button, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(button, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1210,10 +1073,7 @@ test(`.from() determines the name of a <button> element with a role of
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of a <img> element with a an empty alt
@@ -1223,8 +1083,7 @@ test(`.from() determines the name of a <img> element with a an empty alt
   // `aria-*` attribute, is exposed.
   const img = <img alt="" aria-label="Hello world" />;
 
-  t.deepEqual(Name.from(img, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(img, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1236,10 +1095,7 @@ test(`.from() determines the name of a <img> element with a an empty alt
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an SVG <svg> element with a <title> child
@@ -1250,8 +1106,7 @@ test(`.from() determines the name of an SVG <svg> element with a <title> child
     </svg>
   );
 
-  t.deepEqual(Name.from(svg, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(svg, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1281,10 +1136,7 @@ test(`.from() determines the name of an SVG <svg> element with a <title> child
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() determines the name of an SVG <a> element with child text content`, (t) => {
@@ -1294,8 +1146,7 @@ test(`.from() determines the name of an SVG <a> element with child text content`
     </a>
   );
 
-  t.deepEqual(Name.from(a, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(a, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1316,10 +1167,7 @@ test(`.from() determines the name of an SVG <a> element with child text content`
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() correctly handles aria-labelledby references to hidden elements
@@ -1333,8 +1181,7 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
     </div>
   </div>;
 
-  t.deepEqual(Name.from(label, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(label, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1373,10 +1220,7 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() correctly handles circular aria-labelledby references`, (t) => {
@@ -1397,8 +1241,7 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
     {bar}
   </div>;
 
-  t.deepEqual(Name.from(foo, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(foo, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1428,13 +1271,9 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 
-  t.deepEqual(Name.from(bar, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(bar, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1464,10 +1303,7 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() correctly handles chained aria-labelledby references`, (t) => {
@@ -1491,8 +1327,7 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
 
   // From the perspective of `foo`, `bar` has a name of "Bar" as the second
   // `aria-labelledby` reference isn't followed.
-  t.deepEqual(Name.from(foo, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(foo, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1522,15 +1357,11 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 
   // From the perspective of `bar`, it has a name of "Baz" as `bar` doesn't care
   // about `foo` and therefore only sees a single `aria-labelledby` reference.
-  t.deepEqual(Name.from(bar, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(bar, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1560,10 +1391,7 @@ test(`.from() correctly handles chained aria-labelledby references`, (t) => {
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() correctly handles self-referencing aria-labelledby references`, (t) => {
@@ -1578,8 +1406,7 @@ test(`.from() correctly handles self-referencing aria-labelledby references`, (t
     <div id="bar">world</div>
   </div>;
 
-  t.deepEqual(Name.from(foo, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(foo, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1622,10 +1449,7 @@ test(`.from() correctly handles self-referencing aria-labelledby references`, (t
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(".from() ignores nodes that are not exposed when computing name from content", (t) => {
@@ -1636,8 +1460,7 @@ test(".from() ignores nodes that are not exposed when computing name from conten
     </h1>
   );
 
-  t.deepEqual(Name.from(heading, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(heading, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1667,10 +1490,7 @@ test(".from() ignores nodes that are not exposed when computing name from conten
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });
 
 test(`.from() behaves correctly when encountering a descendant that doesn't
@@ -1681,20 +1501,15 @@ test(`.from() behaves correctly when encountering a descendant that doesn't
 
   // On its own, the <table> element has no name as it's not named by its
   // contents.
-  t.deepEqual(Name.from(table, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(table, device).toJSON(),
       {
         type: "none",
-      },
-      [],
-    ],
-  ]);
+      });
 
   // When part of an <h1> element, which is named by its content, the <table>
   // element also takes its name from its content to ensure that the name
   // propagates to the <h1> element.
-  t.deepEqual(Name.from(heading, device).toJSON(), [
-    [
+  t.deepEqual(Name.from(heading, device).toJSON(),
       {
         type: "some",
         value: {
@@ -1724,8 +1539,5 @@ test(`.from() behaves correctly when encountering a descendant that doesn't
             },
           ],
         },
-      },
-      [],
-    ],
-  ]);
+      });
 });

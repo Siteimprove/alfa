@@ -25,6 +25,5 @@ export function hasImplicitRole(
     predicate = property("name", equals(nameOrPredicate, ...names));
   }
 
-  return (element) =>
-    Role.fromImplicit(element).some((role) => role.some(predicate));
+  return (element) => Role.fromImplicit(element).some(predicate);
 }

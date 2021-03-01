@@ -45,29 +45,30 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 function hasRequiredValues(device: Device): Predicate<Element> {
-  return (element) =>
-    Node.from(element, device).every((node) => {
-      for (const role of node.role) {
-        // The `separator` role is poorly architected in the sense that its
-        // inheritance and attribute requirements depend on aspects of the
-        // element carrying the role. If the element is not focusable, the
-        // `separator` role has no required attributes.
-        if (role.is("separator") && !isFocusable(device)(element)) {
-          return true;
-        }
+  return (element) => {
+    const node = Node.from(element, device);
 
-        for (const attribute of role.attributes) {
-          if (
-            role.isAttributeRequired(attribute) &&
-            node.attribute(attribute).every(property("value", isEmpty))
-          ) {
-            return false;
-          }
-        }
+    for (const role of node.role) {
+      // The `separator` role is poorly architected in the sense that its
+      // inheritance and attribute requirements depend on aspects of the element
+      // carrying the role. If the element is not focusable, the `separator`
+      // role has no required attributes.
+      if (role.is("separator") && !isFocusable(device)(element)) {
+        return true;
       }
 
-      return true;
-    });
+      for (const attribute of role.attributes) {
+        if (
+          role.isAttributeRequired(attribute) &&
+          node.attribute(attribute).every(property("value", isEmpty))
+        ) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  };
 }
 
 export namespace Outcomes {
