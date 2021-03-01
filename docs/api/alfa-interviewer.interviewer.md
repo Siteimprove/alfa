@@ -4,6 +4,7 @@
 
 ## Interviewer type
 
+
 <b>Signature:</b>
 
 ```typescript

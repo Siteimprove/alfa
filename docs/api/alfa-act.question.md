@@ -4,6 +4,7 @@
 
 ## Question namespace
 
+
 <b>Signature:</b>
 
 ```typescript

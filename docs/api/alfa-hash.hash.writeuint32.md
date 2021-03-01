@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function writeUint32(hash: Hash, data: number): void;
+function writeUint32(hash: Hash, data: number): Hash;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ function writeUint32(hash: Hash, data: number): void;
 
 <b>Returns:</b>
 
-void
+[Hash](./alfa-hash.hash.md)
 

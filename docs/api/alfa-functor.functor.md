@@ -4,6 +4,7 @@
 
 ## Functor namespace
 
+
 <b>Signature:</b>
 
 ```typescript

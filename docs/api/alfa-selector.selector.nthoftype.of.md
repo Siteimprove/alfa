@@ -14,7 +14,7 @@ static of(index: Nth): NthOfType;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  index | Nth |  |
+|  index | [Nth](./alfa-css.nth.md) |  |
 
 <b>Returns:</b>
 

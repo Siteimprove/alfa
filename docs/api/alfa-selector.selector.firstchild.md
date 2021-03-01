@@ -4,6 +4,8 @@
 
 ## Selector.FirstChild class
 
+[https://drafts.csswg.org/selectors/\#first-child-pseudo](https://drafts.csswg.org/selectors/#first-child-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## URL.equals() method
 
+[https://url.spec.whatwg.org/\#concept-url-equals](https://url.spec.whatwg.org/#concept-url-equals)
+
 <b>Signature:</b>
 
 ```typescript

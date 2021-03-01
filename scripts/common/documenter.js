@@ -27,6 +27,12 @@ exports.documenter = {
       try {
         const result = Extractor.invoke(config, {
           localBuild: true,
+          messageCallback: (message) => {
+            // Don't about information messages.
+            if (message.logLevel === "info") {
+              message.handled = true;
+            }
+          },
         });
 
         if (!result.succeeded) {
@@ -34,6 +40,7 @@ exports.documenter = {
         }
       } catch (err) {
         console.error(err.message);
+        code = 1;
       }
     }
 

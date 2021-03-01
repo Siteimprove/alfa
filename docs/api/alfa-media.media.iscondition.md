@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-media](./alfa-media.md) &gt; [Media](./alfa-media.media.md) &gt; [isCondition](./alfa-media.media.iscondition.md)
 
-## Media.isCondition() function
+## Media.isCondition variable
 
 <b>Signature:</b>
 
 ```typescript
-function isCondition(value: unknown): value is Condition;
+isCondition: typeof Condition.isCondition
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Condition](./alfa-media.media.condition.md)
-

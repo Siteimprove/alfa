@@ -4,6 +4,7 @@
 
 ## Scraper namespace
 
+
 <b>Signature:</b>
 
 ```typescript

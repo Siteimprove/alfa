@@ -4,6 +4,8 @@
 
 ## URL.query property
 
+[https://url.spec.whatwg.org/\#concept-url-query](https://url.spec.whatwg.org/#concept-url-query)
+
 <b>Signature:</b>
 
 ```typescript

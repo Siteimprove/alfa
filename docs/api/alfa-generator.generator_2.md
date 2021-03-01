@@ -9,3 +9,8 @@
 ```typescript
 export declare type Generator<T, R = void, N = undefined> = globalThis.Generator<T, R, N>;
 ```
+
+## Remarks
+
+This is a re-export the global `Generator` interface to ensure that it merges with the `Generator` namespace.
+

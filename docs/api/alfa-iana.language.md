@@ -4,6 +4,7 @@
 
 ## Language namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,12 +15,12 @@ export declare namespace Language
 
 |  Class | Description |
 |  --- | --- |
-|  [Extended](./alfa-iana.language.extended.md) |  |
-|  [Primary](./alfa-iana.language.primary.md) |  |
-|  [Region](./alfa-iana.language.region.md) |  |
-|  [Script](./alfa-iana.language.script.md) |  |
-|  [Subtag](./alfa-iana.language.subtag.md) |  |
-|  [Variant](./alfa-iana.language.variant.md) |  |
+|  [Extended](./alfa-iana.language.extended.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.2](https://tools.ietf.org/html/bcp47#section-2.2.2) |
+|  [Primary](./alfa-iana.language.primary.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.1](https://tools.ietf.org/html/bcp47#section-2.2.1) |
+|  [Region](./alfa-iana.language.region.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.4](https://tools.ietf.org/html/bcp47#section-2.2.4) |
+|  [Script](./alfa-iana.language.script.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.3](https://tools.ietf.org/html/bcp47#section-2.2.3) |
+|  [Subtag](./alfa-iana.language.subtag.md) | [https://tools.ietf.org/html/bcp47\#section-3.1.2](https://tools.ietf.org/html/bcp47#section-3.1.2) |
+|  [Variant](./alfa-iana.language.variant.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.5](https://tools.ietf.org/html/bcp47#section-2.2.5) |
 
 ## Functions
 

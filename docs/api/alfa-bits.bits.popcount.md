@@ -24,3 +24,5 @@ number
 
 This is a 32-bit variant of the 64-bit population count algorithm outlined on Wikipedia. Until ECMAScript natively provides an efficient population count algorithm, this is the best we can do.
 
+[https://en.wikipedia.org/wiki/Hamming\_weight](https://en.wikipedia.org/wiki/Hamming_weight)
+

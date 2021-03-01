@@ -4,6 +4,7 @@
 
 ## Graph namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -28,8 +29,8 @@ export declare namespace Graph
 
 |  Variable | Description |
 |  --- | --- |
-|  [BreadthFirst](./alfa-graph.graph.breadthfirst.md) |  |
-|  [DepthFirst](./alfa-graph.graph.depthfirst.md) |  |
+|  [BreadthFirst](./alfa-graph.graph.breadthfirst.md) | [https://en.wikipedia.org/wiki/Breadth-first\_search](https://en.wikipedia.org/wiki/Breadth-first_search) |
+|  [DepthFirst](./alfa-graph.graph.depthfirst.md) | [https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search) |
 
 ## Type Aliases
 

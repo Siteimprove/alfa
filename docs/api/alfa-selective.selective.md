@@ -4,6 +4,7 @@
 
 ## Selective namespace
 
+
 <b>Signature:</b>
 
 ```typescript

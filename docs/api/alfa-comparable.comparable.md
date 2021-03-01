@@ -4,6 +4,7 @@
 
 ## Comparable namespace
 
+
 <b>Signature:</b>
 
 ```typescript

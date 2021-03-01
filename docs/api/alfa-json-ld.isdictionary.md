@@ -4,6 +4,7 @@
 
 ## isDictionary() function
 
+
 <b>Signature:</b>
 
 ```typescript

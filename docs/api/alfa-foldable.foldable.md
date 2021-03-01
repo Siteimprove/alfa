@@ -4,6 +4,7 @@
 
 ## Foldable interface
 
+
 <b>Signature:</b>
 
 ```typescript

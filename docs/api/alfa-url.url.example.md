@@ -4,6 +4,8 @@
 
 ## URL.example() method
 
+[https://tools.ietf.org/html/rfc2606\#section-3](https://tools.ietf.org/html/rfc2606#section-3)
+
 <b>Signature:</b>
 
 ```typescript

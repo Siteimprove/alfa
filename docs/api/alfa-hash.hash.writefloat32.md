@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function writeFloat32(hash: Hash, data: number): void;
+function writeFloat32(hash: Hash, data: number): Hash;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ function writeFloat32(hash: Hash, data: number): void;
 
 <b>Returns:</b>
 
-void
+[Hash](./alfa-hash.hash.md)
 

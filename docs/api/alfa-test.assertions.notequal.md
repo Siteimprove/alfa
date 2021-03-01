@@ -4,6 +4,8 @@
 
 ## Assertions.notEqual() method
 
+[https://nodejs.org/api/assert.html\#assert\_assert\_notequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message)
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## Selector.Link class
 
+[https://drafts.csswg.org/selectors/\#link-pseudo](https://drafts.csswg.org/selectors/#link-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

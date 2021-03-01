@@ -9,3 +9,5 @@
 ```typescript
 type Type = ReactWrapper | ShallowWrapper | Cheerio.Type;
 ```
+<b>References:</b> [Cheerio.Type](./alfa-cheerio.cheerio.type.md)
+

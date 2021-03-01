@@ -4,6 +4,8 @@
 
 ## URL.password property
 
+[https://url.spec.whatwg.org/\#concept-url-password](https://url.spec.whatwg.org/#concept-url-password)
+
 <b>Signature:</b>
 
 ```typescript

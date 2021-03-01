@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get name(): string;
+abstract get name(): string;
 ```

@@ -2,21 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-media](./alfa-media.md) &gt; [Media](./alfa-media.media.md) &gt; [isFeature](./alfa-media.media.isfeature.md)
 
-## Media.isFeature() function
+## Media.isFeature variable
 
 <b>Signature:</b>
 
 ```typescript
-function isFeature(value: unknown): value is Feature;
+isFeature: typeof Feature.isFeature
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Feature](./alfa-media.media.feature.md)
-

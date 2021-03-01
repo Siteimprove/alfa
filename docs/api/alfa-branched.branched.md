@@ -4,6 +4,7 @@
 
 ## Branched namespace
 
+
 <b>Signature:</b>
 
 ```typescript

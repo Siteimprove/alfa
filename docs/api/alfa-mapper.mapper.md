@@ -4,6 +4,7 @@
 
 ## Mapper type
 
+
 <b>Signature:</b>
 
 ```typescript

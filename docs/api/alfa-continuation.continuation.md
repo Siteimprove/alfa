@@ -4,6 +4,7 @@
 
 ## Continuation type
 
+
 <b>Signature:</b>
 
 ```typescript

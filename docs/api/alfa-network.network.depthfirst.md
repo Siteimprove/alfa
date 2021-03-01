@@ -4,6 +4,8 @@
 
 ## Network.DepthFirst variable
 
+[https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search)
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,7 @@
 
 ## Cookies namespace
 
+
 <b>Signature:</b>
 
 ```typescript

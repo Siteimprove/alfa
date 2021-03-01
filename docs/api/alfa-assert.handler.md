@@ -4,6 +4,7 @@
 
 ## Handler namespace
 
+
 <b>Signature:</b>
 
 ```typescript

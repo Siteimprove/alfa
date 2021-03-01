@@ -4,95 +4,113 @@
 
 ```ts
 
-import { Angle } from '@siteimprove/alfa-css';
 import { Device } from '@siteimprove/alfa-device';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Length } from '@siteimprove/alfa-css';
-import { Number as Number_2 } from '@siteimprove/alfa-css';
+import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
-import { Percentage } from '@siteimprove/alfa-css';
+import { Predicate } from '@siteimprove/alfa-predicate';
+import { Refinement } from '@siteimprove/alfa-refinement';
+import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
-import { String as String_2 } from '@siteimprove/alfa-css';
 import { Token } from '@siteimprove/alfa-css';
 
 // @public (undocumented)
 export namespace Media {
     // (undocumented)
-    export enum Combinator {
+    export class And implements Matchable, Iterable_2<Feature>, Equatable, Serializable<And.JSON> {
         // (undocumented)
-        And = "and",
-        // (undocumented)
-        Or = "or"
-    }
-    // (undocumented)
-    export enum Comparator {
-        // (undocumented)
-        GreaterThan = ">",
-        // (undocumented)
-        GreaterThanEqual = ">=",
-        // (undocumented)
-        LessThan = "<",
-        // (undocumented)
-        LessThanEqual = "<="
-    }
-    // (undocumented)
-    export class Condition implements Equatable, Serializable {
-        // (undocumented)
-        get combinator(): Combinator;
+        [Symbol.iterator](): Iterator<Feature>;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        get left(): Feature | Condition | Negation;
+        iterator(): Iterator<Feature>;
+        // (undocumented)
+        get left(): Feature | Condition;
         // (undocumented)
         matches(device: Device): boolean;
         // (undocumented)
-        static of(combinator: Combinator, left: Feature | Condition | Negation, right: Feature | Condition | Negation): Condition;
+        static of(left: Feature | Condition, right: Feature | Condition): And;
         // (undocumented)
-        get right(): Feature | Condition | Negation;
+        get right(): Feature | Condition;
         // (undocumented)
-        toJSON(): Condition.JSON;
+        toJSON(): And.JSON;
         // (undocumented)
         toString(): string;
     }
     // (undocumented)
-    export namespace Condition {
+    export namespace And {
+        // (undocumented)
+        export function isAnd(value: unknown): value is And;
         // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            combinator: string;
+            left: Feature.JSON | Condition.JSON;
             // (undocumented)
-            left: Feature.JSON | Condition.JSON | Negation.JSON;
+            right: Feature.JSON | Condition.JSON;
             // (undocumented)
-            right: Feature.JSON | Condition.JSON | Negation.JSON;
-            // (undocumented)
-            type: "condition";
+            type: "and";
         }
     }
     // (undocumented)
-    export class Feature implements Equatable, Serializable {
+    export enum Comparison {
+        // (undocumented)
+        Equal = "=",
+        // (undocumented)
+        GreaterThan = ">",
+        // (undocumented)
+        GreaterThanOrEqual = ">=",
+        // (undocumented)
+        LessThan = "<",
+        // (undocumented)
+        LessThanOrEqual = "<="
+    }
+    // (undocumented)
+    export type Condition = And | Or | Not;
+    const // (undocumented)
+    type: typeof Type.of, // (undocumented)
+    isType: typeof Type.isType;
+    // (undocumented)
+    export namespace Condition {
+        // (undocumented)
+        export function isCondition(value: unknown): value is Condition;
+        // (undocumented)
+        export type JSON = And.JSON | Or.JSON | Not.JSON;
+    }
+    // (undocumented)
+    export abstract class Feature<T = unknown> implements Matchable, Iterable_2<Feature<T>>, Equatable, Serializable<Feature.JSON> {
+        // (undocumented)
+        [Symbol.iterator](): Iterator<Feature<T>>;
+        protected constructor(value: Option<Value<T>>);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(device: Device): boolean;
+        iterator(): Iterator<Feature<T>>;
         // (undocumented)
-        get name(): string;
+        abstract matches(device: Device): boolean;
         // (undocumented)
-        static of(name: string, value?: Option<Feature.Value>): Feature;
+        abstract get name(): string;
         // (undocumented)
         toJSON(): Feature.JSON;
         // (undocumented)
         toString(): string;
         // (undocumented)
-        get value(): Option<Feature.Value>;
-        }
+        get value(): Option<Value<T>>;
+        // (undocumented)
+        protected readonly _value: Option<Value<T>>;
+    }
+    const // (undocumented)
+    isFeature: typeof Feature.isFeature;
     // (undocumented)
     export namespace Feature {
+        // (undocumented)
+        export function isFeature(value: unknown): value is Feature;
         // (undocumented)
         export interface JSON {
             // (undocumented)
@@ -105,21 +123,10 @@ export namespace Media {
             value: Value.JSON | null;
         }
         // (undocumented)
-        export type Value = Number_2 | String_2 | Length | Angle | Percentage;
-        // (undocumented)
-        export namespace Value {
-            // (undocumented)
-            export type JSON = Number_2.JSON | String_2.JSON | Length.JSON | Angle.JSON | Percentage.JSON;
-        }
+        export function tryFrom(value: Option<Value<any>>, name: string): Result<Feature, string>;
     }
     // (undocumented)
-    export function isCondition(value: unknown): value is Condition;
-    // (undocumented)
-    export function isFeature(value: unknown): value is Feature;
-    // (undocumented)
-    export function isNegation(value: unknown): value is Negation;
-    // (undocumented)
-    export class List implements Iterable_2<Query>, Equatable, Serializable {
+    export class List implements Matchable, Iterable_2<Query>, Equatable, Serializable<List.JSON> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Query>;
         // (undocumented)
@@ -138,7 +145,14 @@ export namespace Media {
     // (undocumented)
     export namespace List {
         // (undocumented)
+        export function isList(value: unknown): value is List;
+        // (undocumented)
         export type JSON = Array<Query.JSON>;
+    }
+    // (undocumented)
+    export interface Matchable {
+        // (undocumented)
+        readonly matches: Predicate<Device>;
     }
     // (undocumented)
     export enum Modifier {
@@ -147,37 +161,89 @@ export namespace Media {
         // (undocumented)
         Only = "only"
     }
+    const // (undocumented)
+    and: typeof And.of, // (undocumented)
+    isAnd: typeof And.isAnd;
     // (undocumented)
-    export class Negation implements Equatable, Serializable {
+    export class Not implements Matchable, Iterable_2<Feature>, Equatable, Serializable<Not.JSON> {
         // (undocumented)
-        get condition(): Feature | Condition | Negation;
+        [Symbol.iterator](): Iterator<Feature>;
+        // (undocumented)
+        get condition(): Feature | Condition;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
+        iterator(): Iterator<Feature>;
+        // (undocumented)
         matches(device: Device): boolean;
         // (undocumented)
-        static of(condition: Feature | Condition | Negation): Negation;
+        static of(condition: Feature | Condition): Not;
         // (undocumented)
-        toJSON(): Negation.JSON;
+        toJSON(): Not.JSON;
         // (undocumented)
         toString(): string;
     }
     // (undocumented)
-    export namespace Negation {
+    export namespace Not {
+        // (undocumented)
+        export function isNot(value: unknown): value is Not;
         // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            condition: Feature.JSON | Condition.JSON | Negation.JSON;
+            condition: Condition.JSON | Feature.JSON;
             // (undocumented)
-            type: "negation";
+            type: "not";
         }
     }
+    const // (undocumented)
+    or: typeof Or.of, // (undocumented)
+    isOr: typeof Or.isOr;
     // (undocumented)
-    export class Query implements Equatable, Serializable {
+    export class Or implements Matchable, Iterable_2<Feature>, Equatable, Serializable<Or.JSON> {
         // (undocumented)
-        get condition(): Option<Feature | Condition | Negation>;
+        [Symbol.iterator](): Iterator<Feature>;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        iterator(): Iterator<Feature>;
+        // (undocumented)
+        get left(): Feature | Condition;
+        // (undocumented)
+        matches(device: Device): boolean;
+        // (undocumented)
+        static of(left: Feature | Condition, right: Feature | Condition): Or;
+        // (undocumented)
+        get right(): Feature | Condition;
+        // (undocumented)
+        toJSON(): Or.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace Or {
+        // (undocumented)
+        export function isOr(value: unknown): value is Or;
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            left: Feature.JSON | Condition.JSON;
+            // (undocumented)
+            right: Feature.JSON | Condition.JSON;
+            // (undocumented)
+            type: "or";
+        }
+    }
+    const // (undocumented)
+    not: typeof Not.of, // (undocumented)
+    isNot: typeof Not.isNot;
+    // (undocumented)
+    export class Query implements Matchable {
+        // (undocumented)
+        get condition(): Option<Feature | Condition>;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -185,7 +251,7 @@ export namespace Media {
         // (undocumented)
         get modifier(): Option<Modifier>;
         // (undocumented)
-        static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feature | Condition | Negation>): Query;
+        static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feature | Condition>): Query;
         // (undocumented)
         toJSON(): Query.JSON;
         // (undocumented)
@@ -196,19 +262,23 @@ export namespace Media {
     // (undocumented)
     export namespace Query {
         // (undocumented)
+        export function isQuery(value: unknown): value is Query;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            condition: Feature.JSON | Condition.JSON | Negation.JSON | null;
+            condition: Feature.JSON | Condition.JSON | Not.JSON | null;
             // (undocumented)
             modifier: string | null;
             // (undocumented)
             type: Type.JSON | null;
         }
     }
+    const // (undocumented)
+    isCondition: typeof Condition.isCondition;
     // (undocumented)
-    export class Type implements Equatable, Serializable {
+    export class Type implements Matchable, Equatable, Serializable<Type.JSON> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -225,6 +295,8 @@ export namespace Media {
     // (undocumented)
     export namespace Type {
         // (undocumented)
+        export function isType(value: unknown): value is Type;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
@@ -233,14 +305,136 @@ export namespace Media {
         }
     }
     const // (undocumented)
+    query: typeof Query.of, // (undocumented)
+    isQuery: typeof Query.isQuery;
+    // (undocumented)
+    export interface Value<T = unknown> extends Functor<T>, Serializable<Value.JSON> {
+        // (undocumented)
+        hasValue<U extends T>(refinement: Refinement<T, U>): this is Value<U>;
+        // (undocumented)
+        map<U>(mapper: Mapper<T, U>): Value<U>;
+        // (undocumented)
+        matches(value: T): boolean;
+        // (undocumented)
+        toJSON(): Value.JSON;
+    }
+    // (undocumented)
+    export namespace Value {
+        // (undocumented)
+        export class Bound<T = unknown> implements Functor<T>, Serializable<Bound.JSON<T>> {
+            // (undocumented)
+            get isInclusive(): boolean;
+            // (undocumented)
+            map<U>(mapper: Mapper<T, U>): Bound<U>;
+            // (undocumented)
+            static of<T>(value: T, isInclusive: boolean): Bound<T>;
+            // (undocumented)
+            toJSON(): Bound.JSON<T>;
+            // (undocumented)
+            get value(): T;
+            }
+        // (undocumented)
+        export namespace Bound {
+            // (undocumented)
+            export interface JSON<T> {
+                // (undocumented)
+                [key: string]: json.JSON;
+                // (undocumented)
+                isInclusive: boolean;
+                // (undocumented)
+                value: Serializable.ToJSON<T>;
+            }
+        }
+        // (undocumented)
+        export class Discrete<T = unknown> implements Value<T>, Serializable<Discrete.JSON<T>> {
+            // (undocumented)
+            hasValue<U extends T>(refinement: Refinement<T, U>): this is Discrete<U>;
+            // (undocumented)
+            map<U>(mapper: Mapper<T, U>): Discrete<U>;
+            // (undocumented)
+            matches(value: T): boolean;
+            // (undocumented)
+            static of<T>(value: T): Discrete<T>;
+            // (undocumented)
+            toJSON(): Discrete.JSON<T>;
+            // (undocumented)
+            get value(): T;
+            }
+        const // (undocumented)
+        discrete: typeof Discrete.of, // (undocumented)
+        isDiscrete: typeof Discrete.isDiscrete;
+        // (undocumented)
+        export namespace Discrete {
+            // (undocumented)
+            export function isDiscrete<T>(value: unknown): value is Discrete<T>;
+            // (undocumented)
+            export interface JSON<T> {
+                // (undocumented)
+                [key: string]: json.JSON;
+                // (undocumented)
+                type: "discrete";
+                // (undocumented)
+                value: Serializable.ToJSON<T>;
+            }
+        }
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            type: string;
+        }
+        const // (undocumented)
+        range: typeof Range.of, // (undocumented)
+        minimumRange: typeof Range.minimum, // (undocumented)
+        maximumRange: typeof Range.maximum, // (undocumented)
+        isRange: typeof Range.isRange;
+        // (undocumented)
+        export class Range<T = unknown> implements Value<T>, Serializable<Range.JSON<T>> {
+            // (undocumented)
+            hasValue<U extends T>(refinement: Refinement<T, U>): this is Discrete<U>;
+            // (undocumented)
+            map<U>(mapper: Mapper<T, U>): Range<U>;
+            // (undocumented)
+            matches(value: T): boolean;
+            // (undocumented)
+            static maximum<T>(maximum: Bound<T>): Range<T>;
+            // (undocumented)
+            get maximum(): Option<Bound<T>>;
+            // (undocumented)
+            static minimum<T>(minimum: Bound<T>): Range<T>;
+            // (undocumented)
+            get minimum(): Option<Bound<T>>;
+            // (undocumented)
+            static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T>;
+            // (undocumented)
+            toJSON(): Range.JSON<T>;
+        }
+        // (undocumented)
+        export namespace Range {
+            // (undocumented)
+            export function isRange<T>(value: unknown): value is Range<T>;
+            // (undocumented)
+            export interface JSON<T> {
+                // (undocumented)
+                [key: string]: json.JSON;
+                // (undocumented)
+                maximum: Bound.JSON<T> | null;
+                // (undocumented)
+                minimum: Bound.JSON<T> | null;
+                // (undocumented)
+                type: "range";
+            }
+        }
+        const // (undocumented)
+        bound: typeof Bound.of;
+    }
+    const // (undocumented)
+    list: typeof List.of, // (undocumented)
+    isList: typeof List.isList;
+    const // (undocumented)
     parse: Parser<Slice<Token>, List, string, []>;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "Resolver" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export namespace Resolver {
-    export function length(length: Length, device: Device): Length<"px">;
+    {};
 }
 
 

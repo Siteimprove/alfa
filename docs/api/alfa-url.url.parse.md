@@ -4,6 +4,8 @@
 
 ## URL.parse() function
 
+[https://url.spec.whatwg.org/\#concept-url-parser](https://url.spec.whatwg.org/#concept-url-parser)
+
 <b>Signature:</b>
 
 ```typescript

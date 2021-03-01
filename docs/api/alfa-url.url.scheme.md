@@ -4,6 +4,8 @@
 
 ## URL.scheme property
 
+[https://url.spec.whatwg.org/\#concept-url-scheme](https://url.spec.whatwg.org/#concept-url-scheme)
+
 <b>Signature:</b>
 
 ```typescript

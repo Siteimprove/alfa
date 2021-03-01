@@ -4,6 +4,7 @@
 
 ## Network namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -28,8 +29,8 @@ export declare namespace Network
 
 |  Variable | Description |
 |  --- | --- |
-|  [BreadthFirst](./alfa-network.network.breadthfirst.md) |  |
-|  [DepthFirst](./alfa-network.network.depthfirst.md) |  |
+|  [BreadthFirst](./alfa-network.network.breadthfirst.md) | [https://en.wikipedia.org/wiki/Breadth-first\_search](https://en.wikipedia.org/wiki/Breadth-first_search) |
+|  [DepthFirst](./alfa-network.network.depthfirst.md) | [https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search) |
 
 ## Type Aliases
 

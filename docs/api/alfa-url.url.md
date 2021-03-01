@@ -4,6 +4,7 @@
 
 ## URL namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -15,8 +16,8 @@ export declare namespace URL
 |  Function | Description |
 |  --- | --- |
 |  [from(json)](./alfa-url.url.from.md) |  |
-|  [isSpecialScheme(scheme)](./alfa-url.url.isspecialscheme.md) |  |
-|  [parse(url, base)](./alfa-url.url.parse.md) |  |
+|  [isSpecialScheme(scheme)](./alfa-url.url.isspecialscheme.md) | [https://url.spec.whatwg.org/\#special-scheme](https://url.spec.whatwg.org/#special-scheme) |
+|  [parse(url, base)](./alfa-url.url.parse.md) | [https://url.spec.whatwg.org/\#concept-url-parser](https://url.spec.whatwg.org/#concept-url-parser) |
 
 ## Interfaces
 

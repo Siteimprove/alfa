@@ -4,6 +4,7 @@
 
 ## Parser type
 
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,7 @@
 
 ## default\_2() function
 
+
 <b>Signature:</b>
 
 ```typescript

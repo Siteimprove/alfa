@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function writeBoolean(hash: Hash, data: boolean): void;
+function writeBoolean(hash: Hash, data: boolean): Hash;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ function writeBoolean(hash: Hash, data: boolean): void;
 
 <b>Returns:</b>
 
-void
+[Hash](./alfa-hash.hash.md)
 

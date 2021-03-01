@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<Q, A, S>(uri: string, type: Q, subject: S, message: string): Question<Q, A, S>;
+static of<Q, A, S>(uri: string, type: Q, subject: S, message: string): Question<Q, S, A>;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ static of<Q, A, S>(uri: string, type: Q, subject: S, message: string): Question<
 
 <b>Returns:</b>
 
-[Question](./alfa-act.question.md)<!-- -->&lt;Q, A, S&gt;
+[Question](./alfa-act.question.md)<!-- -->&lt;Q, S, A&gt;
 

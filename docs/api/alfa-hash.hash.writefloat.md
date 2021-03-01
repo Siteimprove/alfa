@@ -2,23 +2,22 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-hash](./alfa-hash.md) &gt; [Hash](./alfa-hash.hash.md) &gt; [writeFloat](./alfa-hash.hash.writefloat.md)
 
-## Hash.writeFloat() function
+## Hash.writeFloat() method
 
 <b>Signature:</b>
 
 ```typescript
-function writeFloat(hash: Hash, data: number, size?: number): void;
+writeFloat(data: number, size?: number): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  hash | [Hash](./alfa-hash.hash.md) |  |
 |  data | number |  |
 |  size | number |  |
 
 <b>Returns:</b>
 
-void
+this
 

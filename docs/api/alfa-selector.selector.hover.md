@@ -4,6 +4,8 @@
 
 ## Selector.Hover class
 
+[https://drafts.csswg.org/selectors/\#hover-pseudo](https://drafts.csswg.org/selectors/#hover-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

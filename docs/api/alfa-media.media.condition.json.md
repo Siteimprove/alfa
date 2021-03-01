@@ -2,20 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-media](./alfa-media.md) &gt; [Media](./alfa-media.media.md) &gt; [Condition](./alfa-media.media.condition.md) &gt; [JSON](./alfa-media.media.condition.json.md)
 
-## Media.Condition.JSON interface
+## Media.Condition.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+type JSON = And.JSON | Or.JSON | Not.JSON;
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [combinator](./alfa-media.media.condition.json.combinator.md) | string |  |
-|  [left](./alfa-media.media.condition.json.left.md) | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) \| [Negation.JSON](./alfa-media.media.negation.json.md) |  |
-|  [right](./alfa-media.media.condition.json.right.md) | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) \| [Negation.JSON](./alfa-media.media.negation.json.md) |  |
-|  [type](./alfa-media.media.condition.json.type.md) | "condition" |  |
+<b>References:</b> [And.JSON](./alfa-media.media.and.json.md)<!-- -->, [Or.JSON](./alfa-media.media.or.json.md)<!-- -->, [Not.JSON](./alfa-media.media.not.json.md)
 

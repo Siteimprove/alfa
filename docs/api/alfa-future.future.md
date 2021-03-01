@@ -4,6 +4,7 @@
 
 ## Future namespace
 
+
 <b>Signature:</b>
 
 ```typescript

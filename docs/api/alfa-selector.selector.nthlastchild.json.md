@@ -15,5 +15,5 @@ interface JSON extends Pseudo.Class.JSON
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [index](./alfa-selector.selector.nthlastchild.json.index.md) | Nth.JSON |  |
+|  [index](./alfa-selector.selector.nthlastchild.json.index.md) | [Nth.JSON](./alfa-css.nth.json.md) |  |
 

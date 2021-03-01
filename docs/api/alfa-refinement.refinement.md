@@ -4,6 +4,7 @@
 
 ## Refinement type
 
+
 <b>Signature:</b>
 
 ```typescript

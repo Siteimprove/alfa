@@ -4,6 +4,7 @@
 
 ## Outcome namespace
 
+
 <b>Signature:</b>
 
 ```typescript

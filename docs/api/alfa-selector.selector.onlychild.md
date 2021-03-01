@@ -4,6 +4,8 @@
 
 ## Selector.OnlyChild class
 
+[https://drafts.csswg.org/selectors/\#only-child-pseudo](https://drafts.csswg.org/selectors/#only-child-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

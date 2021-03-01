@@ -4,6 +4,8 @@
 
 ## Selector.Active class
 
+[https://drafts.csswg.org/selectors/\#active-pseudo](https://drafts.csswg.org/selectors/#active-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

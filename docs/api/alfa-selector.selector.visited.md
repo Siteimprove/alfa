@@ -4,6 +4,8 @@
 
 ## Selector.Visited class
 
+[https://drafts.csswg.org/selectors/\#visited-pseudo](https://drafts.csswg.org/selectors/#visited-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

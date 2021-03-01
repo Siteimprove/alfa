@@ -4,11 +4,16 @@
 
 ## alfa-hash package
 
+## Classes
+
+|  Class | Description |
+|  --- | --- |
+|  [Hash](./alfa-hash.hash.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Hash](./alfa-hash.hash.md) |  |
 |  [Hashable](./alfa-hash.hashable.md) |  |
 
 ## Namespaces

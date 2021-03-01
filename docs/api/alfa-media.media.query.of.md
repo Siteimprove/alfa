@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feature | Condition | Negation>): Query;
+static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feature | Condition>): Query;
 ```
 
 ## Parameters
@@ -16,7 +16,7 @@ static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feat
 |  --- | --- | --- |
 |  modifier | [Option](./alfa-option.option.md)<!-- -->&lt;[Modifier](./alfa-media.media.modifier.md)<!-- -->&gt; |  |
 |  type | [Option](./alfa-option.option.md)<!-- -->&lt;[Type](./alfa-media.media.type.md)<!-- -->&gt; |  |
-|  condition | [Option](./alfa-option.option.md)<!-- -->&lt;[Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md) \| [Negation](./alfa-media.media.negation.md)<!-- -->&gt; |  |
+|  condition | [Option](./alfa-option.option.md)<!-- -->&lt;[Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

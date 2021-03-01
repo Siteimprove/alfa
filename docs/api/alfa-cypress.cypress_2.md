@@ -4,6 +4,7 @@
 
 ## Cypress\_2 namespace
 
+
 <b>Signature:</b>
 
 ```typescript

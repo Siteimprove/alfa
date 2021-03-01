@@ -8,14 +8,14 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Page](./alfa-web.page.md) |  |
-|  [Site](./alfa-web.site.md) |  |
+|  [Page](./alfa-web.page.md) | [https://en.wikipedia.org/wiki/Web\_page](https://en.wikipedia.org/wiki/Web_page) |
+|  [Site](./alfa-web.site.md) | [https://en.wikipedia.org/wiki/Web\_site](https://en.wikipedia.org/wiki/Web_site) |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Resource](./alfa-web.resource.md) |  |
+|  [Resource](./alfa-web.resource.md) | [https://en.wikipedia.org/wiki/Web\_resource](https://en.wikipedia.org/wiki/Web_resource) |
 
 ## Namespaces
 

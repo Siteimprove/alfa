@@ -4,6 +4,8 @@
 
 ## Language.Extended.scope property
 
+[https://tools.ietf.org/html/bcp47\#section-3.1.11](https://tools.ietf.org/html/bcp47#section-3.1.11)
+
 <b>Signature:</b>
 
 ```typescript

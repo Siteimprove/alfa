@@ -4,6 +4,7 @@
 
 ## Serializable namespace
 
+
 <b>Signature:</b>
 
 ```typescript

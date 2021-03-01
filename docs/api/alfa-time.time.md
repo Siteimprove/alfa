@@ -4,6 +4,7 @@
 
 ## Time class
 
+
 <b>Signature:</b>
 
 ```typescript

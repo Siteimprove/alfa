@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-condition: Feature.JSON | Condition.JSON | Negation.JSON | null;
+condition: Feature.JSON | Condition.JSON | Not.JSON | null;
 ```

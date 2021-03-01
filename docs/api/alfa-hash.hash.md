@@ -4,6 +4,7 @@
 
 ## Hash namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -15,16 +16,17 @@ export declare namespace Hash
 |  Function | Description |
 |  --- | --- |
 |  [writeBoolean(hash, data)](./alfa-hash.hash.writeboolean.md) |  |
-|  [writeFloat(hash, data, size)](./alfa-hash.hash.writefloat.md) |  |
 |  [writeFloat32(hash, data)](./alfa-hash.hash.writefloat32.md) |  |
 |  [writeFloat64(hash, data)](./alfa-hash.hash.writefloat64.md) |  |
-|  [writeInt(hash, data, size, signed)](./alfa-hash.hash.writeint.md) |  |
+|  [writeHashable(hash, data)](./alfa-hash.hash.writehashable.md) |  |
 |  [writeInt16(hash, data)](./alfa-hash.hash.writeint16.md) |  |
 |  [writeInt32(hash, data)](./alfa-hash.hash.writeint32.md) |  |
 |  [writeInt8(hash, data)](./alfa-hash.hash.writeint8.md) |  |
+|  [writeJSON(hash, data)](./alfa-hash.hash.writejson.md) |  |
 |  [writeNumber(hash, data)](./alfa-hash.hash.writenumber.md) |  |
 |  [writeString(hash, data)](./alfa-hash.hash.writestring.md) |  |
 |  [writeUint16(hash, data)](./alfa-hash.hash.writeuint16.md) |  |
 |  [writeUint32(hash, data)](./alfa-hash.hash.writeuint32.md) |  |
 |  [writeUint8(hash, data)](./alfa-hash.hash.writeuint8.md) |  |
+|  [writeUnknown(hash, data)](./alfa-hash.hash.writeunknown.md) |  |
 

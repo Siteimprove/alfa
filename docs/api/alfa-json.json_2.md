@@ -4,6 +4,7 @@
 
 ## JSON\_2 type
 
+
 <b>Signature:</b>
 
 ```typescript

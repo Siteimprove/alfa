@@ -4,6 +4,8 @@
 
 ## Assertions.throws() method
 
+[https://nodejs.org/api/assert.html\#assert\_assert\_throws\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message)
+
 <b>Signature:</b>
 
 ```typescript

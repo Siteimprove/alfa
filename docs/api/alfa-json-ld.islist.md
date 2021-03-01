@@ -4,6 +4,7 @@
 
 ## isList() function
 
+
 <b>Signature:</b>
 
 ```typescript

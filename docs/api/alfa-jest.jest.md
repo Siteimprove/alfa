@@ -4,6 +4,7 @@
 
 ## Jest namespace
 
+
 <b>Signature:</b>
 
 ```typescript

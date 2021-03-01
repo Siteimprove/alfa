@@ -4,6 +4,7 @@
 
 ## Preference namespace
 
+
 <b>Signature:</b>
 
 ```typescript

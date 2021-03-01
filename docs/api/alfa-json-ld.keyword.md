@@ -4,6 +4,8 @@
 
 ## Keyword type
 
+[https://www.w3.org/TR/json-ld/\#syntax-tokens-and-keywords](https://www.w3.org/TR/json-ld/#syntax-tokens-and-keywords)
+
 <b>Signature:</b>
 
 ```typescript

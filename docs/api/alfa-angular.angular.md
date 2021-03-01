@@ -4,6 +4,7 @@
 
 ## Angular namespace
 
+
 <b>Signature:</b>
 
 ```typescript

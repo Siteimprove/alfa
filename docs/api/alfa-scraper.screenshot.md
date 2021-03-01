@@ -4,6 +4,7 @@
 
 ## Screenshot namespace
 
+
 <b>Signature:</b>
 
 ```typescript

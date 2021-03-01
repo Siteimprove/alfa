@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get condition(): Option<Feature | Condition | Negation>;
+get condition(): Option<Feature | Condition>;
 ```

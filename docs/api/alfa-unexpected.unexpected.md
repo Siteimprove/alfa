@@ -4,6 +4,7 @@
 
 ## Unexpected namespace
 
+
 <b>Signature:</b>
 
 ```typescript

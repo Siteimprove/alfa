@@ -4,6 +4,7 @@
 
 ## Slice namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,6 +15,7 @@ export declare namespace Slice
 
 |  Function | Description |
 |  --- | --- |
+|  [from(iterable)](./alfa-slice.slice.from.md) |  |
 |  [isSlice(value)](./alfa-slice.slice.isslice.md) |  |
 |  [isSlice(value)](./alfa-slice.slice.isslice_1.md) |  |
 

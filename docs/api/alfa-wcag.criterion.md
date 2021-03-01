@@ -4,6 +4,7 @@
 
 ## Criterion namespace
 
+
 <b>Signature:</b>
 
 ```typescript

@@ -7,9 +7,13 @@
 import { Hash } from '@siteimprove/alfa-hash';
 
 // @public (undocumented)
-export class FNV implements Hash {
+export class FNV extends Hash {
     // (undocumented)
-    static empty(): FNV;
+    static empty(): Hash;
+    // (undocumented)
+    equals(value: FNV): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
     // (undocumented)
     finish(): number;
     // (undocumented)

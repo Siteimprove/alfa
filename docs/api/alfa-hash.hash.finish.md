@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-finish(): number;
+abstract finish(): number;
 ```
 <b>Returns:</b>
 

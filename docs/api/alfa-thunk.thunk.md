@@ -4,6 +4,7 @@
 
 ## Thunk type
 
+
 <b>Signature:</b>
 
 ```typescript

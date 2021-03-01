@@ -4,6 +4,7 @@
 
 ## Err namespace
 
+
 <b>Signature:</b>
 
 ```typescript

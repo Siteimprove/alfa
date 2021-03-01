@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-matches(device: Device): boolean;
+abstract matches(device: Device): boolean;
 ```
 
 ## Parameters

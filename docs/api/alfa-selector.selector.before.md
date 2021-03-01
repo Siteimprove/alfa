@@ -4,6 +4,8 @@
 
 ## Selector.Before class
 
+[https://drafts.csswg.org/css-pseudo/\#selectordef-before](https://drafts.csswg.org/css-pseudo/#selectordef-before)
+
 <b>Signature:</b>
 
 ```typescript

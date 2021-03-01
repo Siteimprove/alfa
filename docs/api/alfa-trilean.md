@@ -14,5 +14,5 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Trilean](./alfa-trilean.trilean.md) |  |
+|  [Trilean](./alfa-trilean.trilean.md) | [https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic) |
 

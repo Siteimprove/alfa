@@ -23,5 +23,5 @@ function compareComparable<T>(a: Comparable<T>, b: T): Comparison;
 
 ## Remarks
 
-This should only be used in cases where branch mispredictions caused by the more general  are undesired.
+This should only be used in cases where branch mispredictions caused by the more general [Comparable.compare()](./alfa-comparable.comparable.compare_4.md) are undesired.
 

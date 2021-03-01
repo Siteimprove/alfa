@@ -157,6 +157,8 @@ export class Slice<T> implements Collection.Indexed<T> {
 // @public (undocumented)
 export namespace Slice {
     // (undocumented)
+    export function from<T>(iterable: Iterable_2<T>): Slice<T>;
+    // (undocumented)
     export function isSlice<T>(value: Iterable_2<T>): value is Slice<T>;
     // (undocumented)
     export function isSlice<T>(value: unknown): value is Slice<T>;

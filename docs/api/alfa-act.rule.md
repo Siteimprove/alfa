@@ -4,6 +4,7 @@
 
 ## Rule namespace
 
+
 <b>Signature:</b>
 
 ```typescript

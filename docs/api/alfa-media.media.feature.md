@@ -7,24 +7,19 @@
 <b>Signature:</b>
 
 ```typescript
-namespace Feature 
+export namespace Feature 
 ```
+
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isFeature(value)](./alfa-media.media.feature.isfeature.md) |  |
+|  [tryFrom(value, name)](./alfa-media.media.feature.tryfrom.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-media.media.feature.json.md) |  |
-
-## Namespaces
-
-|  Namespace | Description |
-|  --- | --- |
-|  [Value](./alfa-media.media.feature.value.md) |  |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [Value](./alfa-media.media.feature.value.md) |  |
 

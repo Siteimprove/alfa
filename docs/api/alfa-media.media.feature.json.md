@@ -16,5 +16,5 @@ interface JSON
 |  --- | --- | --- |
 |  [name](./alfa-media.media.feature.json.name.md) | string |  |
 |  [type](./alfa-media.media.feature.json.type.md) | "feature" |  |
-|  [value](./alfa-media.media.feature.json.value.md) | [Value.JSON](./alfa-media.media.feature.value.json.md) \| null |  |
+|  [value](./alfa-media.media.feature.json.value.md) | [Value.JSON](./alfa-media.media.value.json.md) \| null |  |
 

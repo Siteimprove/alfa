@@ -15,7 +15,7 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Conformance](./alfa-wcag.conformance.md) | This namespace defines types and functions for working with conformance- related queries. |
+|  [Conformance](./alfa-wcag.conformance.md) | This namespace defines types and functions for working with conformance- related queries.[https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance) |
 |  [Criterion](./alfa-wcag.criterion.md) |  |
 |  [Technique](./alfa-wcag.technique.md) |  |
 

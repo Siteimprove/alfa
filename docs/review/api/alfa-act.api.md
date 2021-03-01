@@ -26,7 +26,7 @@ export class Audit<I, T = unknown, Q = never> {
     // (undocumented)
     evaluate(performance?: Performance_2<Audit.Event<I, T, Q>>): Future<Iterable_2<Outcome<I, T, Q>>>;
     // (undocumented)
-    static of<I, T = unknown, Q = never>(input: I, rules: Iterable_2<Rule<I, T, Q>>, oracle?: Oracle<Q>): Audit<I, T, Q>;
+    static of<I, T = unknown, Q = never>(input: I, rules: Iterable_2<Rule<I, T, Q>>, oracle?: Oracle<I, T, Q>): Audit<I, T, Q>;
     }
 
 // @public (undocumented)
@@ -110,18 +110,18 @@ export namespace Diagnostic {
 //
 // @public (undocumented)
 export type Interview<Q, S, T, D extends number = 3> = T | {
-    [K in keyof Q]: Question<K, Q[K], S, D extends -1 ? T : Interview<Q, S, T, Depths[D]>>;
+    [K in keyof Q]: Question<K, S, Q[K], D extends -1 ? T : Interview<Q, S, T, Depths[D]>>;
 }[keyof Q];
 
 // @public (undocumented)
 export namespace Interview {
     // (undocumented)
-    export function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<Q>): Future<Option_2<A>>;
+    export function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<I, T, Q>): Future<Option_2<A>>;
 }
 
 // @public (undocumented)
-export type Oracle<Q> = <I, T, A>(rule: Rule<I, T, Q>, question: {
-    [K in keyof Q]: Question<K, Q[K], T, A>;
+export type Oracle<I, T, Q> = <A>(rule: Rule<I, T, Q>, question: {
+    [K in keyof Q]: Question<K, T, Q[K], A>;
 }[keyof Q]) => Future<Option_2<A>>;
 
 // @public (undocumented)
@@ -384,18 +384,18 @@ export namespace Outcome {
 }
 
 // @public (undocumented)
-export class Question<Q, A, S, T = A> implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
+export class Question<Q, S, A, T = A> implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
     protected constructor(uri: string, type: Q, subject: S, message: string, quester: Mapper<A, T>);
     // (undocumented)
     answer(answer: A): T;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Question<Q, A, S, U>>): Question<Q, A, S, U>;
+    flatMap<U>(mapper: Mapper<T, Question<Q, S, A, U>>): Question<Q, S, A, U>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Question<Q, A, S, U>;
+    map<U>(mapper: Mapper<T, U>): Question<Q, S, A, U>;
     // (undocumented)
     get message(): string;
     // (undocumented)
-    static of<Q, A, S>(uri: string, type: Q, subject: S, message: string): Question<Q, A, S>;
+    static of<Q, A, S>(uri: string, type: Q, subject: S, message: string): Question<Q, S, A>;
     // (undocumented)
     get subject(): S;
     // (undocumented)
@@ -472,7 +472,7 @@ export abstract class Rule<I = unknown, T = unknown, Q = never> implements Equat
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: Readonly<I>, oracle?: Oracle<Q>, outcomes?: Cache_2): Future<Iterable_2<Outcome<I, T, Q>>>;
+    evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q>, outcomes?: Cache_2): Future<Iterable_2<Outcome<I, T, Q>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
     // (undocumented)
@@ -582,7 +582,7 @@ export namespace Rule {
     // (undocumented)
     export interface Evaluate<I, T, Q> {
         // (undocumented)
-        (input: Readonly<I>, oracle: Oracle<Q>, outcomes: Cache_2): Future<Iterable_2<Outcome<I, T, Q>>>;
+        (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache_2): Future<Iterable_2<Outcome<I, T, Q>>>;
     }
     // (undocumented)
     export type Input<R> = R extends Rule<infer I, any, any> ? I : never;

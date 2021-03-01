@@ -4,6 +4,7 @@
 
 ## Performance namespace
 
+
 <b>Signature:</b>
 
 ```typescript

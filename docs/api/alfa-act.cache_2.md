@@ -4,6 +4,7 @@
 
 ## Cache\_2 class
 
+
 <b>Signature:</b>
 
 ```typescript

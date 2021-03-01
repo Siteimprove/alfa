@@ -4,6 +4,8 @@
 
 ## Selector.OnlyOfType class
 
+[https://drafts.csswg.org/selectors/\#only-of-type-pseudo](https://drafts.csswg.org/selectors/#only-of-type-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

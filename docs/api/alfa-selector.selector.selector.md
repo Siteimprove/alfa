@@ -17,6 +17,6 @@ abstract class Selector implements Iterable<Simple | Compound | Complex | Relati
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector.selector._symbol.iterator_.md) |  |  |
 |  [equals(value)](./alfa-selector.selector.selector.equals.md) |  |  |
-|  [matches(element, context)](./alfa-selector.selector.selector.matches.md) |  |  |
+|  [matches(element, context)](./alfa-selector.selector.selector.matches.md) |  | [https://drafts.csswg.org/selectors/\#match](https://drafts.csswg.org/selectors/#match) |
 |  [toJSON()](./alfa-selector.selector.selector.tojson.md) |  |  |
 

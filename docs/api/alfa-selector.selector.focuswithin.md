@@ -4,6 +4,8 @@
 
 ## Selector.FocusWithin class
 
+[https://drafts.csswg.org/selectors/\#focus-within-pseudo](https://drafts.csswg.org/selectors/#focus-within-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

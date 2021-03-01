@@ -4,6 +4,8 @@
 
 ## URL.isSpecialScheme() function
 
+[https://url.spec.whatwg.org/\#special-scheme](https://url.spec.whatwg.org/#special-scheme)
+
 <b>Signature:</b>
 
 ```typescript

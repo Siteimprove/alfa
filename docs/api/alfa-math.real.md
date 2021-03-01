@@ -4,6 +4,8 @@
 
 ## Real namespace
 
+[https://en.wikipedia.org/wiki/Real\_number](https://en.wikipedia.org/wiki/Real_number)
+
 <b>Signature:</b>
 
 ```typescript
@@ -19,7 +21,7 @@ export declare namespace Real
 |  [divide(p, d)](./alfa-math.real.divide.md) |  |
 |  [equals(a, b, e)](./alfa-math.real.equals.md) | Check if two reals are equal, accounting for floating-point precision errors according to a given epsilon. |
 |  [isReal(value)](./alfa-math.real.isreal.md) |  |
-|  [modulo(p, d)](./alfa-math.real.modulo.md) | Compute the modulus of a division of two reals. |
+|  [modulo(p, d)](./alfa-math.real.modulo.md) | Compute the modulus of a division of two reals.[https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation) |
 |  [multiply(p, q)](./alfa-math.real.multiply.md) |  |
 |  [round(p, n)](./alfa-math.real.round.md) | Round a real to a given number of decimals. |
 |  [subtract(p, q)](./alfa-math.real.subtract.md) |  |

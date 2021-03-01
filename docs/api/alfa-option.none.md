@@ -4,6 +4,7 @@
 
 ## None variable
 
+
 <b>Signature:</b>
 
 ```typescript

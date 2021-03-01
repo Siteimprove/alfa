@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-static empty(): FNV;
+static empty(): Hash;
 ```
 <b>Returns:</b>
 
-[FNV](./alfa-fnv.fnv.md)
+[Hash](./alfa-hash.hash.md)
 

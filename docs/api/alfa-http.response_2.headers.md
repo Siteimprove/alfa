@@ -4,6 +4,8 @@
 
 ## Response\_2.headers property
 
+[https://fetch.spec.whatwg.org/\#dom-response-headers](https://fetch.spec.whatwg.org/#dom-response-headers)
+
 <b>Signature:</b>
 
 ```typescript

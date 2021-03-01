@@ -4,6 +4,7 @@
 
 ## Applicative interface
 
+
 <b>Signature:</b>
 
 ```typescript

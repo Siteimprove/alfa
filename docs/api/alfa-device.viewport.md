@@ -4,6 +4,7 @@
 
 ## Viewport namespace
 
+
 <b>Signature:</b>
 
 ```typescript

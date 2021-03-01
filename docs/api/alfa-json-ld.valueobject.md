@@ -4,6 +4,7 @@
 
 ## ValueObject interface
 
+
 <b>Signature:</b>
 
 ```typescript

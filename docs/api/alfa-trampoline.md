@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Trampoline](./alfa-trampoline.trampoline.md) |  |
+|  [Trampoline](./alfa-trampoline.trampoline.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
 
 ## Namespaces
 

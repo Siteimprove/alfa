@@ -4,6 +4,7 @@
 
 ## syntax namespace
 
+
 <b>Signature:</b>
 
 ```typescript

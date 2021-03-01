@@ -4,6 +4,7 @@
 
 ## isValueObject() function
 
+
 <b>Signature:</b>
 
 ```typescript

@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-hash](./alfa-hash.md) &gt; [Hashable](./alfa-hash.hashable.md) &gt; [hash](./alfa-hash.hashable.hash.md)
 
-## Hashable.hash() function
+## Hashable.hash() method
 
 <b>Signature:</b>
 
 ```typescript
-function hash(hash: Hash, value: unknown): void;
+hash(hash: Hash): void;
 ```
 
 ## Parameters
@@ -15,7 +15,6 @@ function hash(hash: Hash, value: unknown): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
-|  value | unknown |  |
 
 <b>Returns:</b>
 

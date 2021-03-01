@@ -2,17 +2,14 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-media](./alfa-media.md) &gt; [Media](./alfa-media.media.md) &gt; [Condition](./alfa-media.media.condition.md)
 
-## Media.Condition namespace
+## Media.Condition type
+
+[https://drafts.csswg.org/mediaqueries/\#media-condition](https://drafts.csswg.org/mediaqueries/#media-condition)
 
 <b>Signature:</b>
 
 ```typescript
-namespace Condition 
+export type Condition = And | Or | Not;
 ```
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-media.media.condition.json.md) |  |
+<b>References:</b> [And](./alfa-media.media.and.md)<!-- -->, [Or](./alfa-media.media.or.md)<!-- -->, [Not](./alfa-media.media.not.md)
 

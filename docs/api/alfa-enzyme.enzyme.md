@@ -4,6 +4,7 @@
 
 ## Enzyme namespace
 
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,10 +4,12 @@
 
 ## Media.Modifier enum
 
+[https://drafts.csswg.org/mediaqueries/\#media-query-modifier](https://drafts.csswg.org/mediaqueries/#media-query-modifier)
+
 <b>Signature:</b>
 
 ```typescript
-enum Modifier 
+export enum Modifier 
 ```
 
 ## Enumeration Members

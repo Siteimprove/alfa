@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<Q>): Future<Option<A>>;
+function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<I, T, Q>): Future<Option<A>>;
 ```
 
 ## Parameters
@@ -16,7 +16,7 @@ function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>,
 |  --- | --- | --- |
 |  interview | [Interview](./alfa-act.interview.md)<!-- -->&lt;Q, T, A&gt; |  |
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;Q&gt; |  |
+|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 

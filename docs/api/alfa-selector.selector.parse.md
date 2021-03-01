@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex | List<Type | Universal | Attribute | Class | Id | Pseudo.Class | Pseudo.Element | Compound | Complex>, string, []>
+parse: Parser<Slice<Token>, Simple | Compound | Complex | List<Simple | Compound | Complex>, string, []>
 ```

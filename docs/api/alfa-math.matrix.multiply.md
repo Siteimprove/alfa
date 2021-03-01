@@ -4,6 +4,8 @@
 
 ## Matrix.multiply() function
 
+[https://en.wikipedia.org/wiki/Matrix\_multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication)
+
 <b>Signature:</b>
 
 ```typescript

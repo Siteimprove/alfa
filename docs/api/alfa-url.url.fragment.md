@@ -4,6 +4,8 @@
 
 ## URL.fragment property
 
+[https://url.spec.whatwg.org/\#concept-url-fragment](https://url.spec.whatwg.org/#concept-url-fragment)
+
 <b>Signature:</b>
 
 ```typescript

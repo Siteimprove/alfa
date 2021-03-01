@@ -4,6 +4,8 @@
 
 ## Selector.LastOfType class
 
+[https://drafts.csswg.org/selectors/\#last-of-type-pseudo](https://drafts.csswg.org/selectors/#last-of-type-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

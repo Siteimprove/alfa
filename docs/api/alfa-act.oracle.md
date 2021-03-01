@@ -4,11 +4,12 @@
 
 ## Oracle type
 
+
 <b>Signature:</b>
 
 ```typescript
-export declare type Oracle<Q> = <I, T, A>(rule: Rule<I, T, Q>, question: {
-    [K in keyof Q]: Question<K, Q[K], T, A>;
+export declare type Oracle<I, T, Q> = <A>(rule: Rule<I, T, Q>, question: {
+    [K in keyof Q]: Question<K, T, Q[K], A>;
 }[keyof Q]) => Future<Option<A>>;
 ```
 <b>References:</b> [Rule](./alfa-act.rule.md)<!-- -->, [Question](./alfa-act.question.md)<!-- -->, [Future](./alfa-future.future.md)<!-- -->, [Option](./alfa-option.option.md)

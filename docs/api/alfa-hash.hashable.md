@@ -4,6 +4,7 @@
 
 ## Hashable namespace
 
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,6 +15,5 @@ export declare namespace Hashable
 
 |  Function | Description |
 |  --- | --- |
-|  [hash(hash, value)](./alfa-hash.hashable.hash.md) |  |
 |  [isHashable(value)](./alfa-hash.hashable.ishashable.md) |  |
 

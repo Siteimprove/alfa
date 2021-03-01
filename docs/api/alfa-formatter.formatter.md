@@ -4,6 +4,7 @@
 
 ## Formatter type
 
+
 <b>Signature:</b>
 
 ```typescript

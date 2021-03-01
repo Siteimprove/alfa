@@ -4,6 +4,8 @@
 
 ## Selector type
 
+[https://drafts.csswg.org/selectors/\#selector](https://drafts.csswg.org/selectors/#selector)
+
 <b>Signature:</b>
 
 ```typescript

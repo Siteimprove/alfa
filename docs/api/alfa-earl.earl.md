@@ -4,6 +4,7 @@
 
 ## EARL interface
 
+
 <b>Signature:</b>
 
 ```typescript

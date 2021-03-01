@@ -4,6 +4,7 @@
 
 ## Document\_2 interface
 
+
 <b>Signature:</b>
 
 ```typescript

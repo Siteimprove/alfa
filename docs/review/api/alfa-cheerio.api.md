@@ -4,20 +4,16 @@
 
 ```ts
 
-import * as cheerio_2 from 'cheerio';
+import * as cheerio from 'cheerio';
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)
-namespace Cheerio_2 {
+export namespace Cheerio {
     // (undocumented)
-    function asPage(value: Type): Page;
+    export function toPage(value: Type): Page;
     // (undocumented)
-    function isType(value: unknown): value is Type;
-    // (undocumented)
-    type Type = ReturnType<typeof cheerio_2>;
+    export type Type = ReturnType<typeof cheerio>;
 }
-
-export { Cheerio_2 as Cheerio }
 
 
 // (No @packageDocumentation comment for this package)

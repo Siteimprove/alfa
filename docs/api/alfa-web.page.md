@@ -4,6 +4,7 @@
 
 ## Page namespace
 
+
 <b>Signature:</b>
 
 ```typescript

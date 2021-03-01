@@ -8,7 +8,6 @@ import * as act from '@siteimprove/alfa-act';
 import { Asserter } from '@siteimprove/alfa-assert';
 import { Formatter } from '@siteimprove/alfa-formatter';
 import { Handler } from '@siteimprove/alfa-assert';
-import { JQuery } from '@siteimprove/alfa-jquery';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Page } from '@siteimprove/alfa-web';
 
@@ -24,7 +23,7 @@ namespace Cypress_2 {
     // (undocumented)
     function toPage(value: Type): Page;
     // (undocumented)
-    type Type = globalThis.Node | JQuery.Type;
+    type Type = globalThis.Node | globalThis.JQuery;
 }
 
 export { Cypress_2 as Cypress }

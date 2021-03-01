@@ -4,6 +4,7 @@
 
 ## Definition interface
 
+
 <b>Signature:</b>
 
 ```typescript

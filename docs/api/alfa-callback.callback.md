@@ -4,6 +4,7 @@
 
 ## Callback type
 
+
 <b>Signature:</b>
 
 ```typescript

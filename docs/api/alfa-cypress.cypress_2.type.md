@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-type Type = globalThis.Node | JQuery.Type;
+type Type = globalThis.Node | globalThis.JQuery;
 ```

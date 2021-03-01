@@ -6,6 +6,8 @@
 
 Compute the determinant of a non-empty, square matrix.
 
+[https://en.wikipedia.org/wiki/Determinant](https://en.wikipedia.org/wiki/Determinant) [https://en.wikipedia.org/wiki/Laplace\_expansion](https://en.wikipedia.org/wiki/Laplace_expansion)
+
 <b>Signature:</b>
 
 ```typescript

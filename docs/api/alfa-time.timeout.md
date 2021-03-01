@@ -4,6 +4,7 @@
 
 ## Timeout class
 
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## Selector.Simple type
 
+[https://drafts.csswg.org/selectors/\#simple](https://drafts.csswg.org/selectors/#simple)
+
 <b>Signature:</b>
 
 ```typescript

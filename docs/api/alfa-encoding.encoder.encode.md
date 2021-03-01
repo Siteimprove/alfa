@@ -4,6 +4,8 @@
 
 ## Encoder.encode() function
 
+[https://encoding.spec.whatwg.org/\#dom-textencoder-encode](https://encoding.spec.whatwg.org/#dom-textencoder-encode) [https://encoding.spec.whatwg.org/\#utf-8-encoder](https://encoding.spec.whatwg.org/#utf-8-encoder)
+
 <b>Signature:</b>
 
 ```typescript

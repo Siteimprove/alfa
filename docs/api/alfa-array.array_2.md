@@ -9,3 +9,8 @@
 ```typescript
 export declare type Array<T> = globalThis.Array<T>;
 ```
+
+## Remarks
+
+This is a re-export the global `Array` interface to ensure that it merges with the `Array` namespace.
+

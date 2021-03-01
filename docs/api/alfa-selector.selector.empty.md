@@ -4,6 +4,8 @@
 
 ## Selector.Empty class
 
+[https://drafts.csswg.org/selectors/\#empty-pseudo](https://drafts.csswg.org/selectors/#empty-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

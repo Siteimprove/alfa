@@ -6,6 +6,8 @@
 
 Compute the norm of a vector.
 
+[https://en.wikipedia.org/wiki/Norm\_(mathematics)](https://en.wikipedia.org/wiki/Norm_(mathematics))
+
 <b>Signature:</b>
 
 ```typescript

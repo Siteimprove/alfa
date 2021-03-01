@@ -4,6 +4,7 @@
 
 ## Context interface
 
+
 <b>Signature:</b>
 
 ```typescript

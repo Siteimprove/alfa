@@ -4,6 +4,7 @@
 
 ## Protractor namespace
 
+
 <b>Signature:</b>
 
 ```typescript

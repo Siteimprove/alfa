@@ -6,6 +6,8 @@
 
 This namespace defines types and functions for working with conformance- related queries.
 
+[https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance)
+
 <b>Signature:</b>
 
 ```typescript

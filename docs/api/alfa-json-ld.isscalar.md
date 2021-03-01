@@ -4,6 +4,7 @@
 
 ## isScalar() function
 
+
 <b>Signature:</b>
 
 ```typescript

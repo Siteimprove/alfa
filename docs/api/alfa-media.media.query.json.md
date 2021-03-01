@@ -14,7 +14,7 @@ interface JSON
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [condition](./alfa-media.media.query.json.condition.md) | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) \| [Negation.JSON](./alfa-media.media.negation.json.md) \| null |  |
+|  [condition](./alfa-media.media.query.json.condition.md) | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) \| [Not.JSON](./alfa-media.media.not.json.md) \| null |  |
 |  [modifier](./alfa-media.media.query.json.modifier.md) | string \| null |  |
 |  [type](./alfa-media.media.query.json.type.md) | [Type.JSON](./alfa-media.media.type.json.md) \| null |  |
 

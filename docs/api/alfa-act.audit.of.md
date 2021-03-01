@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T = unknown, Q = never>(input: I, rules: Iterable<Rule<I, T, Q>>, oracle?: Oracle<Q>): Audit<I, T, Q>;
+static of<I, T = unknown, Q = never>(input: I, rules: Iterable<Rule<I, T, Q>>, oracle?: Oracle<I, T, Q>): Audit<I, T, Q>;
 ```
 
 ## Parameters
@@ -16,7 +16,7 @@ static of<I, T = unknown, Q = never>(input: I, rules: Iterable<Rule<I, T, Q>>, o
 |  --- | --- | --- |
 |  input | I |  |
 |  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;Q&gt; |  |
+|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q&gt; |  |
 
 <b>Returns:</b>
 

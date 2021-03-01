@@ -4,6 +4,8 @@
 
 ## Selector.After class
 
+[https://drafts.csswg.org/css-pseudo/\#selectordef-after](https://drafts.csswg.org/css-pseudo/#selectordef-after)
+
 <b>Signature:</b>
 
 ```typescript

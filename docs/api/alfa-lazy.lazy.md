@@ -4,6 +4,7 @@
 
 ## Lazy namespace
 
+
 <b>Signature:</b>
 
 ```typescript

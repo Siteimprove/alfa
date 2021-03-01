@@ -4,6 +4,8 @@
 
 ## Selector.LastChild class
 
+[https://drafts.csswg.org/selectors/\#last-child-pseudo](https://drafts.csswg.org/selectors/#last-child-pseudo)
+
 <b>Signature:</b>
 
 ```typescript

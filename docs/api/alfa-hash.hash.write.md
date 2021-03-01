@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-write(data: Uint8Array): this;
+abstract write(data: Uint8Array): this;
 ```
 
 ## Parameters

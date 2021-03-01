@@ -4,6 +4,7 @@
 
 ## Bits namespace
 
+
 <b>Signature:</b>
 
 ```typescript
