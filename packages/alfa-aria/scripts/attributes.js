@@ -6,7 +6,7 @@ const puppeteer = require("puppeteer");
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
 
-  await page.goto("https://www.w3.org/TR/wai-aria-1.2/");
+  await page.goto("https://w3c.github.io/aria/");
 
   const attributes = await page.evaluate(() =>
     Object.fromEntries(

@@ -69,15 +69,15 @@ export class Role<N extends Role.Name = Role.Name>
   /**
    * Get the required parent of this role.
    */
-  public get requiredParent(): Iterable<Role.Name> {
-    return Roles[this._name].parent.required;
+  public get requiredParent(): Iterable<Iterable<Role.Name>> {
+    return Roles[this._name].parent.required[Symbol.iterator]();
   }
 
   /**
    * Get the required children of this role.
    */
   public get requiredChildren(): Iterable<Iterable<Role.Name>> {
-    return Roles[this._name].children.required;
+    return Roles[this._name].children.required[Symbol.iterator]();
   }
 
   /**
