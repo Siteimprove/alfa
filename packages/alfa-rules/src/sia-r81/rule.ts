@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -10,7 +11,6 @@ import { Set } from "@siteimprove/alfa-set";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as aria from "@siteimprove/alfa-aria";
 import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/expectation";
@@ -49,17 +49,17 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             .map((elements) =>
               elements
                 .reduce((groups, element) => {
-                  for (const [node] of aria.Node.from(element, device)) {
-                    const name = node.name.map((name) => normalize(name.value));
+                  const name = Node.from(element, device).name.map((name) =>
+                    normalize(name.value)
+                  );
 
-                    groups = groups.set(
-                      name,
-                      groups
-                        .get(name)
-                        .getOrElse(() => List.empty<Element>())
-                        .append(element)
-                    );
-                  }
+                  groups = groups.set(
+                    name,
+                    groups
+                      .get(name)
+                      .getOrElse(() => List.empty<Element>())
+                      .append(element)
+                  );
 
                   return groups;
                 }, Map.empty<Option<string>, List<Element>>())

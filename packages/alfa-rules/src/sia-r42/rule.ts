@@ -63,14 +63,15 @@ export namespace Outcomes {
 }
 
 function hasRequiredParent(device: Device): Predicate<Element> {
-  return (element) =>
-    Node.from(element, device).some((node) =>
-      node.role
-        .filter((role) => role.hasRequiredParent())
-        .every((role) =>
-          node.parent().some(isRequiredParent(role.requiredParent))
-        )
-    );
+  return (element) => {
+    const node = Node.from(element, device);
+
+    return node.role
+      .filter((role) => role.hasRequiredParent())
+      .every((role) =>
+        node.parent().some(isRequiredParent(role.requiredParent))
+      );
+  };
 }
 
 function isRequiredParent(

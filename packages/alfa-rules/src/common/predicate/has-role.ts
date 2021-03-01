@@ -21,5 +21,5 @@ export function hasRole(
     predicate = Role.hasName(nameOrPredicate, ...names);
   }
 
-  return (element) => Role.from(element).some((role) => role.some(predicate));
+  return (element) => Role.from(element).some(predicate);
 }
