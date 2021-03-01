@@ -25,3 +25,4 @@ jobs:
       - run: yarn install --immutable
       - run: yarn build
       - run: yarn test
+      - run: yarn document
