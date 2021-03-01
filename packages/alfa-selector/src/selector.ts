@@ -61,6 +61,7 @@ export namespace Selector {
      */
     public abstract matches(element: Element, context?: Context): boolean;
 
+    public abstract equals(value: Selector): boolean;
     public abstract equals(value: unknown): value is this;
 
     public abstract [Symbol.iterator](): Iterator<
@@ -104,7 +105,10 @@ export namespace Selector {
       return element.id.includes(this._name);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Id): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Id && value._name === this._name;
     }
 
@@ -166,7 +170,10 @@ export namespace Selector {
       return Iterable.includes(element.classes, this._name);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Class): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): value is boolean {
       return value instanceof Class && value._name === this._name;
     }
 
@@ -343,7 +350,10 @@ export namespace Selector {
       return true;
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Attribute): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Attribute &&
         value._namespace.equals(this._namespace) &&
@@ -553,7 +563,10 @@ export namespace Selector {
       return element.namespace.equals(this._namespace);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Type): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Type &&
         value._namespace.equals(this._namespace) &&
@@ -634,7 +647,10 @@ export namespace Selector {
       return element.namespace.equals(this._namespace);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Universal): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Universal && value._namespace.equals(this._namespace)
       );
@@ -694,7 +710,10 @@ export namespace Selector {
         return false;
       }
 
-      public equals(value: unknown): value is this {
+      public equals(value: Class): boolean;
+      public equals(value: unknown): value is this;
+
+      public equals(value: unknown): boolean {
         return value instanceof Class && value._name === this._name;
       }
 
@@ -737,7 +756,10 @@ export namespace Selector {
         return false;
       }
 
-      public equals(value: unknown): value is this {
+      public equals(value: Element): boolean;
+      public equals(value: unknown): value is this;
+
+      public equals(value: unknown): boolean {
         return value instanceof Element && value._name === this._name;
       }
 
@@ -913,7 +935,10 @@ export namespace Selector {
       return this._selector.matches(element, context);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Is): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Is && value._selector.equals(this._selector);
     }
 
@@ -970,7 +995,10 @@ export namespace Selector {
       return !this._selector.matches(element, context);
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Not): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Not && value._selector.equals(this._selector);
     }
 
@@ -1023,7 +1051,10 @@ export namespace Selector {
       return this._selector;
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Has): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Has && value._selector.equals(this._selector);
     }
 
@@ -1645,7 +1676,10 @@ export namespace Selector {
       );
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Compound): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Compound &&
         value._left.equals(this._left) &&
@@ -1809,7 +1843,10 @@ export namespace Selector {
       return false;
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Complex): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Complex &&
         value._combinator === this._combinator &&
@@ -1905,7 +1942,10 @@ export namespace Selector {
       return false;
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Relative): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Relative &&
         value._combinator === this._combinator &&
@@ -1993,7 +2033,10 @@ export namespace Selector {
       );
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: List): boolean;
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof List &&
         value._left.equals(this._left) &&
