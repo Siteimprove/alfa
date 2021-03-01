@@ -75,7 +75,7 @@ export namespace Outcomes {
 /**
  * Parses a list of "name=value" properties.
  *
- * @see https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
+ * {@link https://drafts.csswg.org/css-device-adapt/#parsing-algorithm}
  *
  * @remarks
  * This seems to be the iOS/Safari algorithm and other browsers might handle it
@@ -149,7 +149,7 @@ export function parsePropertiesList(
 /**
  * Parse a "maximum-scale" property.
  *
- * @see https://www.w3.org/TR/css-device-adapt-1/#min-scale-max-scale
+ * {@link https://www.w3.org/TR/css-device-adapt-1/#min-scale-max-scale}
  *
  * @remarks
  * This seems to be the iOS/Safari algorithm and other browsers might handle it
@@ -186,7 +186,7 @@ export function parseMaximumScale(scale: string | undefined): Option<number> {
 /**
  * Parse a "user-scalable" property according.
  *
- * @see https://www.w3.org/TR/css-device-adapt-1/#user-scalable
+ * {@link https://www.w3.org/TR/css-device-adapt-1/#user-scalable}
  *
  * @remark
  * This seems to be the iOS/Safari algorithm and other browsers might handle it

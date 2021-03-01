@@ -46,7 +46,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style}
  * @internal
  */
 export default Property.of<Specified, Computed>(

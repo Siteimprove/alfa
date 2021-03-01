@@ -3,6 +3,9 @@ import { Formatter } from "@siteimprove/alfa-formatter";
 
 const { stringify } = JSON;
 
+/**
+ * @public
+ */
 export default function <I, T, Q>(): Formatter<I, T, Q> {
   return function EARL(input, rules, outcomes) {
     const subject = Serializable.toEARL(input);

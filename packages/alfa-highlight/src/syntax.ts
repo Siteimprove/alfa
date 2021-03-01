@@ -49,6 +49,9 @@ const sheet: emphasize.Sheet = {
   formula: mark.inverse,
 };
 
+/**
+ * @public
+ */
 export async function syntax(language: string, value: string): Promise<string> {
   // Register the syntax for the language to highlight. By default, _every_
   // supported language from highlight.js is loaded, which is fairly expensive.
@@ -58,6 +61,9 @@ export async function syntax(language: string, value: string): Promise<string> {
   return mark.reset(emphasize.highlight(language, value, sheet).value);
 }
 
+/**
+ * @public
+ */
 export namespace syntax {
   const registered = new Set<string>();
 

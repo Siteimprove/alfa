@@ -5,15 +5,20 @@ import * as earl from "@siteimprove/alfa-earl";
 const { isObject } = Refinement;
 
 /**
- * @see https://fetch.spec.whatwg.org/#body-mixin
+ * {@link https://fetch.spec.whatwg.org/#body-mixin}
+ *
+ * @public
  */
 export interface Body {
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-body-body
+   * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
   readonly body: ArrayBuffer;
 }
 
+/**
+ * @public
+ */
 export namespace Body {
   export interface EARL extends earl.EARL {
     "@context": {

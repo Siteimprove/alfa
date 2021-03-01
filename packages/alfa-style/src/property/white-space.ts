@@ -31,7 +31,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/white-space}
  * @internal
  */
 export default Property.of<Specified, Computed>(

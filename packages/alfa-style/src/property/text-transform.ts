@@ -44,7 +44,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform}
  */
 export default Property.of<Specified, Computed>(
   Keyword.of("none"),

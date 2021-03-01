@@ -2,6 +2,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
+/**
+ * @public
+ */
 export class Cache<K extends object, V> {
   public static empty<K extends object, V>(): Cache<K, V> {
     return new Cache();
@@ -55,6 +58,9 @@ export class Cache<K extends object, V> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cache {
   export function from<K extends object, V>(
     iterable: Iterable<readonly [K, V]>

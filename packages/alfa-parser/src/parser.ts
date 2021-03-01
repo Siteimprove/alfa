@@ -7,11 +7,17 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export type Parser<I, T, E = never, A extends Array<unknown> = []> = (
   input: I,
   ...args: A
 ) => Result<[I, T], E>;
 
+/**
+ * @public
+ */
 export namespace Parser {
   export type Infallible<I, T, A extends Array<unknown> = []> = (
     input: I,

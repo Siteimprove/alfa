@@ -8,7 +8,9 @@ import { Body } from "./body";
 import { Headers } from "./headers";
 
 /**
- * @see https://fetch.spec.whatwg.org/#request-class
+ * {@link https://fetch.spec.whatwg.org/#request-class}
+ *
+ * @public
  */
 export class Request
   implements
@@ -48,28 +50,28 @@ export class Request
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-request-method
+   * {@link https://fetch.spec.whatwg.org/#dom-request-method}
    */
   public get method(): string {
     return this._method;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-request-url
+   * {@link https://fetch.spec.whatwg.org/#dom-request-url}
    */
   public get url(): URL {
     return this._url;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-request-headers
+   * {@link https://fetch.spec.whatwg.org/#dom-request-headers}
    */
   public get headers(): Headers {
     return this._headers;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-body-body
+   * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
   public get body(): ArrayBuffer {
     return this._body;
@@ -115,6 +117,9 @@ export class Request
   }
 }
 
+/**
+ * @public
+ */
 export namespace Request {
   export interface JSON {
     [key: string]: json.JSON;

@@ -4,7 +4,7 @@ export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
 
 export namespace Scope {
   /**
-   * @see https://html.spec.whatwg.org/#attr-th-scope
+   * {@link https://html.spec.whatwg.org/#attr-th-scope}
    */
   export function from(element: Element): Scope {
     return element

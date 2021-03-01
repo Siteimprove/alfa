@@ -3,6 +3,9 @@ import { Continuation } from "@siteimprove/alfa-continuation";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
+/**
+ * @public
+ */
 export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
   public static of<T = void>(): Emitter<T> {
     return new Emitter(new Map());

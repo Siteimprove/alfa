@@ -11,6 +11,9 @@ import * as json from "@siteimprove/alfa-json";
 const { fromCharCode } = String;
 const { and } = Refinement;
 
+/**
+ * @public
+ */
 export type Token =
   | Token.Ident
   | Token.Function
@@ -36,6 +39,9 @@ export type Token =
   | Token.OpenComment
   | Token.CloseComment;
 
+/**
+ * @public
+ */
 export namespace Token {
   export type JSON =
     | Ident.JSON
@@ -62,20 +68,7 @@ export namespace Token {
     | OpenComment.JSON
     | CloseComment.JSON;
 
-  abstract class Token implements Equatable, Serializable {
-    public abstract get type(): string;
-    public abstract equals(value: unknown): value is this;
-    public abstract toJSON(): Token.JSON;
-  }
-
-  namespace Token {
-    export interface JSON {
-      [key: string]: json.JSON;
-      type: string;
-    }
-  }
-
-  export class Ident extends Token {
+  export class Ident implements Equatable, Serializable<Ident.JSON> {
     public static of(value: string): Ident {
       return new Ident(value);
     }
@@ -83,7 +76,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -112,7 +104,8 @@ export namespace Token {
   }
 
   export namespace Ident {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "ident";
       value: string;
     }
@@ -138,7 +131,7 @@ export namespace Token {
     return parseToken(and(isIdent, predicate));
   }
 
-  export class Function extends Token {
+  export class Function implements Equatable, Serializable<Function.JSON> {
     public static of(value: string): Function {
       return new Function(value);
     }
@@ -146,7 +139,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -179,7 +171,8 @@ export namespace Token {
   }
 
   export namespace Function {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "function";
       value: string;
     }
@@ -206,7 +199,7 @@ export namespace Token {
     return parseToken(and(isFunction, predicate));
   }
 
-  export class AtKeyword extends Token {
+  export class AtKeyword implements Equatable, Serializable<AtKeyword.JSON> {
     public static of(value: string): AtKeyword {
       return new AtKeyword(value);
     }
@@ -214,7 +207,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -243,7 +235,8 @@ export namespace Token {
   }
 
   export namespace AtKeyword {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "at-keyword";
       value: string;
     }
@@ -251,7 +244,7 @@ export namespace Token {
 
   export const { of: atKeyword } = AtKeyword;
 
-  export class Hash extends Token {
+  export class Hash implements Equatable, Serializable<Hash.JSON> {
     public static of(value: string, isIdentifier: boolean): Hash {
       return new Hash(value, isIdentifier);
     }
@@ -260,7 +253,6 @@ export namespace Token {
     private readonly _isIdentifier: boolean;
 
     private constructor(value: string, isIdentifier: boolean) {
-      super();
       this._value = value;
       this._isIdentifier = isIdentifier;
     }
@@ -299,7 +291,8 @@ export namespace Token {
   }
 
   export namespace Hash {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "hash";
       value: string;
       isIdentifier: boolean;
@@ -316,7 +309,7 @@ export namespace Token {
     return parseToken(and(isHash, predicate));
   }
 
-  export class String extends Token {
+  export class String implements Equatable, Serializable<String.JSON> {
     public static of(value: string): String {
       return new String(value);
     }
@@ -324,7 +317,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -353,7 +345,8 @@ export namespace Token {
   }
 
   export namespace String {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "string";
       value: string;
     }
@@ -369,7 +362,7 @@ export namespace Token {
     return parseToken(and(isString, predicate));
   }
 
-  export class URL extends Token {
+  export class URL implements Equatable, Serializable<URL.JSON> {
     public static of(value: string): URL {
       return new URL(value);
     }
@@ -377,7 +370,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -406,7 +398,8 @@ export namespace Token {
   }
 
   export namespace URL {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "url";
       value: string;
     }
@@ -422,14 +415,12 @@ export namespace Token {
     return parseToken(and(isURL, predicate));
   }
 
-  export class BadURL extends Token {
+  export class BadURL implements Equatable, Serializable<BadURL.JSON> {
     public static of(): BadURL {
       return new BadURL();
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "bad-url" {
       return "bad-url";
@@ -451,14 +442,15 @@ export namespace Token {
   }
 
   export namespace BadURL {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "bad-url";
     }
   }
 
   export const { of: badURL } = BadURL;
 
-  export class Delim extends Token {
+  export class Delim implements Equatable, Serializable<Delim.JSON> {
     private static _delims = new Map<number, Delim>();
 
     public static of(value: number): Delim {
@@ -475,7 +467,6 @@ export namespace Token {
     private readonly _value: number;
 
     private constructor(value: number) {
-      super();
       this._value = value;
     }
 
@@ -504,7 +495,8 @@ export namespace Token {
   }
 
   export namespace Delim {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "delim";
       value: number;
     }
@@ -532,7 +524,7 @@ export namespace Token {
     return parseToken(and(isDelim, predicate));
   }
 
-  export class Number extends Token {
+  export class Number implements Equatable, Serializable<Number.JSON> {
     public static of(
       value: number,
       isInteger: boolean,
@@ -546,7 +538,6 @@ export namespace Token {
     private readonly _isSigned: boolean;
 
     private constructor(value: number, isInteger: boolean, isSigned: boolean) {
-      super();
       this._value = value;
       this._isInteger = isInteger;
       this._isSigned = isSigned;
@@ -596,7 +587,8 @@ export namespace Token {
   }
 
   export namespace Number {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "number";
       value: number;
       isInteger: boolean;
@@ -614,7 +606,7 @@ export namespace Token {
     return parseToken(and(isNumber, predicate));
   }
 
-  export class Percentage extends Token {
+  export class Percentage implements Equatable, Serializable<Percentage.JSON> {
     public static of(value: number, isInteger: boolean): Percentage {
       return new Percentage(value, isInteger);
     }
@@ -623,7 +615,6 @@ export namespace Token {
     private readonly _isInteger: boolean;
 
     private constructor(value: number, isInteger: boolean) {
-      super();
       this._value = value;
       this._isInteger = isInteger;
     }
@@ -662,7 +653,8 @@ export namespace Token {
   }
 
   export namespace Percentage {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "percentage";
       value: number;
       isInteger: boolean;
@@ -681,7 +673,7 @@ export namespace Token {
     return parseToken(and(isPercentage, predicate));
   }
 
-  export class Dimension extends Token {
+  export class Dimension implements Equatable, Serializable<Dimension.JSON> {
     public static of(
       value: number,
       unit: string,
@@ -702,7 +694,6 @@ export namespace Token {
       isInteger: boolean,
       isSigned: boolean
     ) {
-      super();
       this._value = value;
       this._unit = unit;
       this._isInteger = isInteger;
@@ -759,7 +750,8 @@ export namespace Token {
   }
 
   export namespace Dimension {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "dimension";
       value: number;
       unit: string;
@@ -778,16 +770,14 @@ export namespace Token {
     return parseToken(and(isDimension, predicate));
   }
 
-  export class Whitespace extends Token {
+  export class Whitespace implements Equatable, Serializable<Whitespace.JSON> {
     private static _instance = new Whitespace();
 
     public static of(): Whitespace {
       return Whitespace._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "whitespace" {
       return "whitespace";
@@ -809,7 +799,8 @@ export namespace Token {
   }
 
   export namespace Whitespace {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "whitespace";
     }
 
@@ -822,16 +813,14 @@ export namespace Token {
 
   export const parseWhitespace = parseToken(isWhitespace);
 
-  export class Colon extends Token {
+  export class Colon implements Equatable, Serializable<Colon.JSON> {
     private static _instance = new Colon();
 
     public static of(): Colon {
       return Colon._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "colon" {
       return "colon";
@@ -853,7 +842,8 @@ export namespace Token {
   }
 
   export namespace Colon {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "colon";
     }
 
@@ -866,16 +856,14 @@ export namespace Token {
 
   export const parseColon = parseToken(isColon);
 
-  export class Semicolon extends Token {
+  export class Semicolon implements Equatable, Serializable<Semicolon.JSON> {
     private static _instance = new Semicolon();
 
     public static of(): Semicolon {
       return Semicolon._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "semicolon" {
       return "semicolon";
@@ -897,7 +885,8 @@ export namespace Token {
   }
 
   export namespace Semicolon {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "semicolon";
     }
 
@@ -910,16 +899,14 @@ export namespace Token {
 
   export const parseSemicolon = parseToken(isSemicolon);
 
-  export class Comma extends Token {
+  export class Comma implements Equatable, Serializable<Comma.JSON> {
     private static _instance = new Comma();
 
     public static of(): Comma {
       return Comma._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "comma" {
       return "comma";
@@ -941,7 +928,8 @@ export namespace Token {
   }
 
   export namespace Comma {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "comma";
     }
 
@@ -954,16 +942,15 @@ export namespace Token {
 
   export const parseComma = parseToken(isComma);
 
-  export class OpenParenthesis extends Token {
+  export class OpenParenthesis
+    implements Equatable, Serializable<OpenParenthesis.JSON> {
     private static _instance = new OpenParenthesis();
 
     public static of(): OpenParenthesis {
       return OpenParenthesis._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "open-parenthesis" {
       return "open-parenthesis";
@@ -989,7 +976,8 @@ export namespace Token {
   }
 
   export namespace OpenParenthesis {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "open-parenthesis";
     }
 
@@ -1004,16 +992,15 @@ export namespace Token {
 
   export const parseOpenParenthesis = parseToken(isOpenParenthesis);
 
-  export class CloseParenthesis extends Token {
+  export class CloseParenthesis
+    implements Equatable, Serializable<CloseParenthesis.JSON> {
     private static _instance = new CloseParenthesis();
 
     public static of(): CloseParenthesis {
       return CloseParenthesis._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "close-parenthesis" {
       return "close-parenthesis";
@@ -1039,7 +1026,8 @@ export namespace Token {
   }
 
   export namespace CloseParenthesis {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "close-parenthesis";
     }
 
@@ -1054,16 +1042,15 @@ export namespace Token {
 
   export const parseCloseParenthesis = parseToken(isCloseParenthesis);
 
-  export class OpenSquareBracket extends Token {
+  export class OpenSquareBracket
+    implements Equatable, Serializable<OpenSquareBracket.JSON> {
     private static _instance = new OpenSquareBracket();
 
     public static of(): OpenSquareBracket {
       return OpenSquareBracket._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "open-square-bracket" {
       return "open-square-bracket";
@@ -1089,7 +1076,8 @@ export namespace Token {
   }
 
   export namespace OpenSquareBracket {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "open-square-bracket";
     }
 
@@ -1107,16 +1095,15 @@ export namespace Token {
 
   export const parseOpenSquareBracket = parseToken(isOpenSquareBracket);
 
-  export class CloseSquareBracket extends Token {
+  export class CloseSquareBracket
+    implements Equatable, Serializable<CloseSquareBracket.JSON> {
     private static _instance = new CloseSquareBracket();
 
     public static of(): CloseSquareBracket {
       return CloseSquareBracket._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "close-square-bracket" {
       return "close-square-bracket";
@@ -1142,7 +1129,8 @@ export namespace Token {
   }
 
   export namespace CloseSquareBracket {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "close-square-bracket";
     }
 
@@ -1160,16 +1148,15 @@ export namespace Token {
 
   export const parseCloseSquareBracket = parseToken(isCloseSquareBracket);
 
-  export class OpenCurlyBracket extends Token {
+  export class OpenCurlyBracket
+    implements Equatable, Serializable<OpenCurlyBracket.JSON> {
     private static _instance = new OpenCurlyBracket();
 
     public static of(): OpenCurlyBracket {
       return OpenCurlyBracket._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "open-curly-bracket" {
       return "open-curly-bracket";
@@ -1195,7 +1182,8 @@ export namespace Token {
   }
 
   export namespace OpenCurlyBracket {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "open-curly-bracket";
     }
 
@@ -1210,16 +1198,15 @@ export namespace Token {
 
   export const parseOpenCurlyBracket = parseToken(isOpenCurlyBracket);
 
-  export class CloseCurlyBracket extends Token {
+  export class CloseCurlyBracket
+    implements Equatable, Serializable<CloseCurlyBracket.JSON> {
     private static _instance = new CloseCurlyBracket();
 
     public static of(): CloseCurlyBracket {
       return CloseCurlyBracket._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "close-curly-bracket" {
       return "close-curly-bracket";
@@ -1245,7 +1232,8 @@ export namespace Token {
   }
 
   export namespace CloseCurlyBracket {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "close-curly-bracket";
     }
 
@@ -1263,16 +1251,15 @@ export namespace Token {
 
   export const parseCloseCurlyBracket = parseToken(isCloseCurlyBracket);
 
-  export class OpenComment extends Token {
+  export class OpenComment
+    implements Equatable, Serializable<OpenComment.JSON> {
     private static _instance = new OpenComment();
 
     public static of(): OpenComment {
       return OpenComment._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "open-comment" {
       return "open-comment";
@@ -1294,7 +1281,8 @@ export namespace Token {
   }
 
   export namespace OpenComment {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "open-comment";
     }
 
@@ -1307,16 +1295,15 @@ export namespace Token {
 
   export const parseOpenComment = parseToken(isOpenComment);
 
-  export class CloseComment extends Token {
+  export class CloseComment
+    implements Equatable, Serializable<CloseComment.JSON> {
     private static _instance = new CloseComment();
 
     public static of(): CloseComment {
       return CloseComment._instance;
     }
 
-    private constructor() {
-      super();
-    }
+    private constructor() {}
 
     public get type(): "close-comment" {
       return "close-comment";
@@ -1338,7 +1325,8 @@ export namespace Token {
   }
 
   export namespace CloseComment {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "close-comment";
     }
 

@@ -20,6 +20,9 @@ import { Nil } from "./nil";
 
 const { not, equals } = Predicate;
 
+/**
+ * @public
+ */
 export class Cons<T> implements Sequence<T> {
   public static of<T>(
     head: T,
@@ -712,6 +715,9 @@ export class Cons<T> implements Sequence<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cons {
   export type JSON<T> = Collection.Indexed.JSON<T>;
 

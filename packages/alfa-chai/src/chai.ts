@@ -13,6 +13,9 @@ declare global {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Chai {
   export function createPlugin<I, J, T = unknown, Q = never>(
     transform: Mapper<I, Future.Maybe<J>>,

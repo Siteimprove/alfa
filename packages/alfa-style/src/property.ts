@@ -110,7 +110,7 @@ export namespace Property {
     /**
      * Extract the declared type of a named property.
      *
-     * @see https://drafts.csswg.org/css-cascade/#declared
+     * {@link https://drafts.csswg.org/css-cascade/#declared}
      *
      * @remarks
      * The declared type includes the parsed type in addition to the defaulting
@@ -121,21 +121,21 @@ export namespace Property {
     /**
      * Extract the cascaded type of a named property.
      *
-     * @see https://drafts.csswg.org/css-cascade/#cascaded
+     * {@link https://drafts.csswg.org/css-cascade/#cascaded}
      */
     export type Cascaded<N extends Name> = Declared<N>;
 
     /**
      * Extract the specified type of a named property.
      *
-     * @see https://drafts.csswg.org/css-cascade/#specified
+     * {@link https://drafts.csswg.org/css-cascade/#specified}
      */
     export type Specified<N extends Name> = Parsed<N> | Computed<N>;
 
     /**
      * Extract the computed type a named property.
      *
-     * @see https://drafts.csswg.org/css-cascade/#computed
+     * {@link https://drafts.csswg.org/css-cascade/#computed}
      */
     export type Computed<N extends Name> = WithName<N> extends Property<
       infer T,

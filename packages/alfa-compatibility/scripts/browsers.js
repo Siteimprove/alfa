@@ -50,9 +50,15 @@ let code = `
 // changes, do so in \`scripts/browsers.js\` and run \`yarn generate\` to rebuild this
 // file.
 
-export type Data = typeof Data;
+/**
+ * @internal
+ */
+type Data = typeof Data;
 
-export const Data = {
+/**
+ * @internal
+ */
+const Data = {
   ${browsers
     .map(
       (browser) => `
@@ -71,6 +77,8 @@ export const Data = {
     )
     .join(",\n\n")}
 };
+
+export default Data;
 `;
 
 code = prettier.format(code, {

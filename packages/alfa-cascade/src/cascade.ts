@@ -14,7 +14,9 @@ import { SelectorMap } from "./selector-map";
 import { UserAgent } from "./user-agent";
 
 /**
- * @see https://drafts.csswg.org/css-cascade/
+ * {@link https://drafts.csswg.org/css-cascade/}
+ *
+ * @public
  */
 export class Cascade implements Serializable {
   private static readonly _cascades = Cache.empty<
@@ -94,6 +96,9 @@ export class Cascade implements Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cascade {
   export interface JSON {
     [key: string]: json.JSON;
@@ -105,7 +110,7 @@ export namespace Cascade {
 }
 
 /**
- * @see https://drafts.csswg.org/css-cascade/#cascade-sort
+ * {@link https://drafts.csswg.org/css-cascade/#cascade-sort}
  */
 const compare: Comparer<SelectorMap.Node> = (a, b) => {
   // First priority: Origin

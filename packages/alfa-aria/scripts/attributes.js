@@ -55,8 +55,14 @@ puppeteer.launch().then(async (browser) => {
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // \`scripts/attributes.js\` and run \`yarn generate\` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Attributes = typeof Attributes;
 
+/**
+ * @internal
+ */
 export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
   `;
 

@@ -156,7 +156,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow}
  * @internal
  */
 export default Property.of<Specified, Computed>(

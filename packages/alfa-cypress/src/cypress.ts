@@ -28,7 +28,6 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { JQuery } from "@siteimprove/alfa-jquery";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -45,6 +44,9 @@ declare global {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cypress {
   export function createPlugin<T = unknown, Q = never>(
     rules: Iterable<act.Rule<Page, T, Q>>,
@@ -67,11 +69,11 @@ export namespace Cypress {
     addCommand("audit", { prevSubject: true }, command);
   }
 
-  export type Type = globalThis.Node | JQuery.Type;
+  export type Type = globalThis.Node | globalThis.JQuery;
 
   export function toPage(value: Type): Page {
     if ("jquery" in value) {
-      return JQuery.toPage(value);
+      value = value.get(0);
     }
 
     const json = toJSON(value);

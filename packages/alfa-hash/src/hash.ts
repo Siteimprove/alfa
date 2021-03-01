@@ -11,6 +11,9 @@ const hashes = new WeakMap<object, number>();
 
 let uid = 1;
 
+/**
+ * @public
+ */
 export abstract class Hash implements Equatable, Hashable {
   protected constructor() {}
 
@@ -201,6 +204,9 @@ export abstract class Hash implements Equatable, Hashable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Hash {
   export function writeString(hash: Hash, data: string): Hash {
     return hash.writeString(data);

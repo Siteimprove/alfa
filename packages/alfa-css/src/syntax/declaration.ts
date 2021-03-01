@@ -13,7 +13,9 @@ import { Token } from "./token";
 const { not } = Predicate;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#declaration
+ * {@link https://drafts.csswg.org/css-syntax/#declaration}
+ *
+ * @public
  */
 export class Declaration implements Iterable<Token>, Equatable, Serializable {
   public static of(
@@ -86,6 +88,9 @@ export class Declaration implements Iterable<Token>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Declaration {
   export interface JSON {
     [key: string]: json.JSON;
@@ -95,7 +100,7 @@ export namespace Declaration {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-declaration
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-declaration}
    */
   export const consume: Parser<Slice<Token>, Declaration, string> = (input) => {
     const { value: name } = input.array[input.offset] as Token.Ident;
@@ -154,7 +159,7 @@ export namespace Declaration {
   };
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#parse-a-declaration
+   * {@link https://drafts.csswg.org/css-syntax/#parse-a-declaration}
    */
   export const parse: Parser<Slice<Token>, Declaration, string> = (input) => {
     while (input.get(0).some(Token.isWhitespace)) {
@@ -171,7 +176,7 @@ export namespace Declaration {
   };
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-list-of-declarations
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-list-of-declarations}
    */
   export const consumeList: Parser<
     Slice<Token>,
@@ -217,7 +222,7 @@ export namespace Declaration {
   };
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations
+   * {@link https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations}
    */
   export const parseList: Parser<
     Slice<Token>,

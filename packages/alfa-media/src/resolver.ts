@@ -11,7 +11,7 @@ export namespace Resolver {
   /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    *
-   * @see https://drafts.csswg.org/css-values/#lengths
+   * {@link https://drafts.csswg.org/css-values/#lengths}
    *
    * @remarks
    * Relative lengths in media queries are based on initial values of the

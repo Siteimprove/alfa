@@ -4,6 +4,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { ReactWrapper, ShallowWrapper } from "enzyme";
 
+/**
+ * @public
+ */
 export namespace Enzyme {
   export type Type = ReactWrapper | ShallowWrapper | Cheerio.Type;
 

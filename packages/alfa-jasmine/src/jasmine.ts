@@ -14,6 +14,9 @@ declare global {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Jasmine {
   export function createPlugin<I, J, T = unknown, Q = never>(
     transform: Mapper<I, Promise<J>>,

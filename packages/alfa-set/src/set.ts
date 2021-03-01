@@ -13,6 +13,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Set<T> implements Collection.Unkeyed<T> {
   public static of<T>(...values: Array<T>): Set<T> {
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
@@ -219,6 +222,9 @@ export class Set<T> implements Collection.Unkeyed<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Set {
   export type JSON<T> = Collection.Unkeyed.JSON<T>;
 

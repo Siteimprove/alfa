@@ -1,6 +1,9 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 
+/**
+ * @public
+ */
 export class Context {
   public static of(state: Iterable<[Element, Context.State]>): Context {
     return new Context(Map.from(state));
@@ -83,6 +86,9 @@ export class Context {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Context {
   export enum State {
     None = 0,

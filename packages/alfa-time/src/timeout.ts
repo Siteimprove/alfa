@@ -1,5 +1,8 @@
 import { Time } from "./time";
 
+/**
+ * @public
+ */
 export class Timeout {
   public static of(timeout: number, time: Time = Time.now()): Timeout {
     return new Timeout(timeout, time);

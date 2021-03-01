@@ -27,7 +27,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-position
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
  * @internal
  */
 export default Property.shorthand(

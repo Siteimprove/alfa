@@ -8,11 +8,14 @@ import { Value } from "../../value";
 import { Keyword } from "../keyword";
 import { Position } from "../position";
 import { Radius } from "./radius";
+import { Slice } from "@siteimprove/alfa-slice";
 
 const { map, option, pair, right } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-shapes/#funcdef-circle
+ * {@link https://drafts.csswg.org/css-shapes/#funcdef-circle}
+ *
+ * @public
  */
 export class Circle<
   R extends Radius = Radius,
@@ -80,6 +83,9 @@ export class Circle<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Circle {
   export interface JSON extends Value.JSON<"basic-shape"> {
     kind: "circle";
@@ -91,7 +97,7 @@ export namespace Circle {
     return value instanceof Circle;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Circle, string> = map(
     Function.parse(
       "circle",
       pair(

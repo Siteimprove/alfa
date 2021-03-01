@@ -17,8 +17,11 @@ import {
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
+/**
+ * @public
+ */
 export namespace JQuery {
-  export type Type = JQuery;
+  export type Type = globalThis.JQuery;
 
   export function toPage(value: Type): Page {
     return Page.of(

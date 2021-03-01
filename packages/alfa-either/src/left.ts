@@ -10,6 +10,9 @@ import * as json from "@siteimprove/alfa-json";
 import { Either } from "./either";
 import { Right } from "./right";
 
+/**
+ * @public
+ */
 export class Left<L> implements Either<L, never> {
   public static of<L>(value: L): Left<L> {
     return new Left(value);
@@ -85,6 +88,9 @@ export class Left<L> implements Either<L, never> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Left {
   export interface JSON<L> {
     [key: string]: json.JSON;

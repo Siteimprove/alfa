@@ -8,7 +8,7 @@ const { or, equals } = Predicate;
 const { and } = Refinement;
 
 /**
- * @see https://act-rules.github.io/glossary/#disabled-element
+ * {@link https://act-rules.github.io/glossary/#disabled-element}
  */
 export const isSemanticallyDisabled: Predicate<Element> = or(
   Element.isDisabled,

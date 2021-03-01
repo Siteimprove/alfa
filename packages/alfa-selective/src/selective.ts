@@ -7,6 +7,9 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
+/**
+ * @public
+ */
 export class Selective<S, T = never>
   implements
     Functor<T>,
@@ -98,6 +101,9 @@ export class Selective<S, T = never>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Selective {
   export type JSON<S, T = never> = Either.JSON<S, T>;
 }

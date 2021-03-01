@@ -5,7 +5,7 @@ import { Element } from "../../element";
 const { equals } = Predicate;
 
 /**
- * @see https://html.spec.whatwg.org/#attr-input-type
+ * {@link https://html.spec.whatwg.org/#attr-input-type}
  */
 type InputType =
   | "hidden"

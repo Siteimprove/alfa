@@ -55,7 +55,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/transform}
  * @internal
  */
 export default Property.of<Specified, Computed>(

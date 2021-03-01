@@ -16,6 +16,9 @@ import { Polygon } from "./shape/polygon";
 
 const { either } = Parser;
 
+/**
+ * @public
+ */
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
   B extends Box.Geometry = Box.Geometry
@@ -77,9 +80,12 @@ export class Shape<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Shape {
   /**
-   * @see https://drafts.csswg.org/css-shapes/#typedef-basic-shape
+   * {@link https://drafts.csswg.org/css-shapes/#typedef-basic-shape}
    */
   export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 

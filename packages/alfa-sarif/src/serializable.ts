@@ -5,10 +5,16 @@ import { SARIF } from "./sarif";
 
 const { isFunction, isObject } = Refinement;
 
+/**
+ * @public
+ */
 export interface Serializable<T extends SARIF = SARIF> {
   toSARIF(): T;
 }
 
+/**
+ * @public
+ */
 export namespace Serializable {
   export function isSerializable<T extends SARIF>(
     value: unknown

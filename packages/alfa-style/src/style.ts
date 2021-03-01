@@ -459,7 +459,7 @@ function resolve(
  * The maximum allowed number of tokens that declaration values with `var()`
  * functions may expand to.
  *
- * @see https://drafts.csswg.org/css-variables/#long-variables
+ * {@link https://drafts.csswg.org/css-variables/#long-variables}
  */
 const substitutionLimit = 1024;
 
@@ -467,7 +467,7 @@ const substitutionLimit = 1024;
  * Substitute `var()` functions in an array of tokens. If any syntactically
  * invalid `var()` functions are encountered, `null` is returned.
  *
- * @see https://drafts.csswg.org/css-variables/#substitute-a-var
+ * {@link https://drafts.csswg.org/css-variables/#substitute-a-var}
  *
  * @remarks
  * This method uses a set of visited names to detect cyclic dependencies
@@ -532,7 +532,7 @@ function trim(tokens: Slice<Token>): Slice<Token> {
 }
 
 /**
- * @see https://drafts.csswg.org/css-variables/#funcdef-var
+ * {@link https://drafts.csswg.org/css-variables/#funcdef-var}
  */
 const parseVar = right(
   Token.parseFunction("var"),

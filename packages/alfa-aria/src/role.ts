@@ -20,6 +20,9 @@ const { and, not, nor } = Predicate;
 
 const roles = new Map<string, Role>();
 
+/**
+ * @public
+ */
 export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable {
   public static of<N extends Role.Name>(name: N): Role<N> {
@@ -275,6 +278,9 @@ export class Role<N extends Role.Name = Role.Name>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Role {
   export interface JSON {
     [key: string]: json.JSON;

@@ -5,6 +5,9 @@ import { Monad } from "@siteimprove/alfa-monad";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Question<Q, S, A, T = A>
   implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
   public static of<Q, A, S>(
@@ -88,6 +91,9 @@ export class Question<Q, S, A, T = A>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Question {
   export interface JSON<Q, S> {
     [key: string]: json.JSON;

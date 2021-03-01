@@ -6,6 +6,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Value } from "../value";
 
+/**
+ * @public
+ */
 export abstract class Numeric<T extends string = string>
   extends Value<T>
   implements Comparable<Numeric<T>> {
@@ -44,6 +47,9 @@ export abstract class Numeric<T extends string = string>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Numeric {
   export interface JSON<T extends string = string> extends Value.JSON<T> {
     [key: string]: json.JSON;

@@ -14,6 +14,9 @@ import { Result } from "./result";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export class Ok<T> implements Result<T, never> {
   public static of<T>(value: T): Ok<T> {
     return new Ok(value);
@@ -158,6 +161,9 @@ export class Ok<T> implements Result<T, never> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Ok {
   export interface JSON<T> {
     [key: string]: json.JSON;

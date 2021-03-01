@@ -1,5 +1,8 @@
 import { Hash } from "@siteimprove/alfa-hash";
 
+/**
+ * @public
+ */
 export class FNV extends Hash {
   public static empty(): Hash {
     return new FNV();

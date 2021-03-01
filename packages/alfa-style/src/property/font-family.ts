@@ -39,7 +39,7 @@ export const parse = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}
  * @internal
  */
 export default Property.of<Specified, Computed>(

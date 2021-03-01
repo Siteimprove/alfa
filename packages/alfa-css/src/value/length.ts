@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 
@@ -10,7 +11,9 @@ import { Dimension } from "./dimension";
 const { map, either } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#lengths
+ * {@link https://drafts.csswg.org/css-values/#lengths}
+ *
+ * @public
  */
 export class Length<U extends Unit.Length = Unit.Length>
   extends Dimension<"length", Unit.Length, U>
@@ -77,6 +80,9 @@ export class Length<U extends Unit.Length = Unit.Length>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Length {
   export interface JSON extends Dimension.JSON<"length"> {
     unit: Unit.Length;
@@ -86,7 +92,7 @@ export namespace Length {
     return value instanceof Length;
   }
 
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Length, string> = either(
     map(
       Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
       (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)

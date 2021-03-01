@@ -3,11 +3,17 @@ import { Timeout } from "@siteimprove/alfa-time";
 
 import * as puppeteer from "puppeteer";
 
+/**
+ * @public
+ */
 export type Awaiter<T = unknown> = (
   page: puppeteer.Page,
   timeout: Timeout
 ) => Promise<Result<T, string>>;
 
+/**
+ * @public
+ */
 export namespace Awaiter {
   export function ready(): Awaiter<puppeteer.HTTPResponse | null> {
     return async (page, timeout) => {

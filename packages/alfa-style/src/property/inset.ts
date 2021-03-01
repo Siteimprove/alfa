@@ -17,7 +17,7 @@ export const parse = takeBetween(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/inset
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset}
  * @internal
  */
 export default Property.shorthand(

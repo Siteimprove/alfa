@@ -12,6 +12,9 @@ import { Text } from "./text";
 
 const { values, entries } = Object;
 
+/**
+ * @public
+ */
 export class Command<
   F extends Command.Flags = {},
   A extends Command.Arguments = {},
@@ -414,6 +417,9 @@ ${[...values(this._flags)]
   }
 }
 
+/**
+ * @public
+ */
 export namespace Command {
   export interface JSON {
     [key: string]: json.JSON;

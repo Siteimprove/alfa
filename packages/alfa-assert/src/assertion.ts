@@ -4,6 +4,9 @@ import { Result, Err } from "@siteimprove/alfa-result";
 
 import { Handler } from "./handler";
 
+/**
+ * @public
+ */
 export class Assertion<I, T, Q> {
   public static of<I, T, Q>(
     input: I,
@@ -84,6 +87,9 @@ export class Assertion<I, T, Q> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Assertion {
   export interface Options {}
 }

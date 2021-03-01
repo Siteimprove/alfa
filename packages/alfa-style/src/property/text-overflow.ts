@@ -18,7 +18,7 @@ export type Computed = Specified;
 export const parse = Keyword.parse("clip", "ellipsis");
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow}
  * @internal
  */
 export default Property.of<Specified, Computed>(

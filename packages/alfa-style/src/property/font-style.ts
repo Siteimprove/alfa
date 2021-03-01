@@ -21,7 +21,7 @@ export type Computed = Specified;
 export const parse = Keyword.parse("normal", "italic", "oblique");
 
 /**
- * @see https://drafts.csswg.org/css-fonts/#font-style-prop
+ * {@link https://drafts.csswg.org/css-fonts/#font-style-prop}
  */
 export default Property.of<Specified, Computed>(
   Keyword.of("normal"),
