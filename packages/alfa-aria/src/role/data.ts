@@ -147,6 +147,94 @@ export const Roles = {
       required: [],
     },
   },
+  associationlist: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [],
+    name: {
+      required: false,
+      prohibited: false,
+      from: ["author"],
+    },
+    parent: {
+      required: [],
+    },
+    children: {
+      presentational: false,
+      required: [["associationlistitemkey"], ["associationlistitemvalue"]],
+    },
+  },
+  associationlistitemkey: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [
+      [
+        "aria-level",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
+    name: {
+      required: false,
+      prohibited: false,
+      from: ["author"],
+    },
+    parent: {
+      required: [["associationlist"]],
+    },
+    children: {
+      presentational: false,
+      required: [],
+    },
+  },
+  associationlistitemvalue: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
+    name: {
+      required: false,
+      prohibited: false,
+      from: ["author"],
+    },
+    parent: {
+      required: [["associationlist"]],
+    },
+    children: {
+      presentational: false,
+      required: [],
+    },
+  },
   banner: {
     abstract: false,
     inherited: ["landmark"],
@@ -217,7 +305,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -237,7 +325,7 @@ export const Roles = {
       from: [],
     },
     parent: {
-      required: ["figure", "grid", "table"],
+      required: [["figure"], ["grid"], ["table"], ["treegrid"]],
     },
     children: {
       presentational: false,
@@ -250,6 +338,13 @@ export const Roles = {
     attributes: [
       [
         "aria-colindex",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-colindextext",
         {
           required: false,
           value: null,
@@ -270,6 +365,13 @@ export const Roles = {
         },
       ],
       [
+        "aria-rowindextext",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-rowspan",
         {
           required: false,
@@ -280,10 +382,10 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["row"],
+      required: [["row"]],
     },
     children: {
       presentational: false,
@@ -340,7 +442,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents", "encapsulation"],
     },
     parent: {
       required: [],
@@ -382,10 +484,10 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["row"],
+      required: [["row"]],
     },
     children: {
       presentational: false,
@@ -413,7 +515,7 @@ export const Roles = {
       [
         "aria-controls",
         {
-          required: true,
+          required: false,
           value: null,
         },
       ],
@@ -428,7 +530,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: true,
-          value: "false",
+          value: null,
         },
       ],
       [
@@ -481,6 +583,45 @@ export const Roles = {
       required: false,
       prohibited: false,
       from: ["author"],
+    },
+    parent: {
+      required: [],
+    },
+    children: {
+      presentational: false,
+      required: [],
+    },
+  },
+  comment: {
+    abstract: false,
+    inherited: ["article"],
+    attributes: [
+      [
+        "aria-level",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-posinset",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-setsize",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+    ],
+    name: {
+      required: false,
+      prohibited: false,
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -562,8 +703,8 @@ export const Roles = {
     attributes: [],
     name: {
       required: false,
-      prohibited: false,
-      from: ["author"],
+      prohibited: true,
+      from: [],
     },
     parent: {
       required: [],
@@ -822,10 +963,10 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["row"],
+      required: [["row"]],
     },
     children: {
       presentational: false,
@@ -854,7 +995,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "legend"],
     },
     parent: {
       required: [],
@@ -872,14 +1013,14 @@ export const Roles = {
         "aria-level",
         {
           required: true,
-          value: "2",
+          value: null,
         },
       ],
     ],
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -948,6 +1089,23 @@ export const Roles = {
       required: [],
     },
   },
+  label: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [],
+    name: {
+      required: true,
+      prohibited: false,
+      from: ["author", "contents"],
+    },
+    parent: {
+      required: [],
+    },
+    children: {
+      presentational: false,
+      required: [],
+    },
+  },
   landmark: {
     abstract: true,
     inherited: ["section"],
@@ -956,6 +1114,23 @@ export const Roles = {
       required: false,
       prohibited: false,
       from: ["author"],
+    },
+    parent: {
+      required: [],
+    },
+    children: {
+      presentational: false,
+      required: [],
+    },
+  },
+  legend: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [],
+    name: {
+      required: true,
+      prohibited: false,
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -983,11 +1158,18 @@ export const Roles = {
           value: null,
         },
       ],
+      [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
     ],
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -1071,7 +1253,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "encapsulation"],
     },
     parent: {
       required: [],
@@ -1113,7 +1295,7 @@ export const Roles = {
       from: ["author"],
     },
     parent: {
-      required: ["directory", "list"],
+      required: [["directory"], ["list"]],
     },
     children: {
       presentational: false,
@@ -1162,12 +1344,29 @@ export const Roles = {
       required: [],
     },
   },
+  mark: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [],
+    name: {
+      required: false,
+      prohibited: true,
+      from: [],
+    },
+    parent: {
+      required: [],
+    },
+    children: {
+      presentational: false,
+      required: [],
+    },
+  },
   marquee: {
     abstract: false,
     inherited: ["section"],
     attributes: [],
     name: {
-      required: true,
+      required: false,
       prohibited: false,
       from: ["author"],
     },
@@ -1203,15 +1402,15 @@ export const Roles = {
       [
         "aria-valuemax",
         {
-          required: true,
-          value: null,
+          required: false,
+          value: "100",
         },
       ],
       [
         "aria-valuemin",
         {
-          required: true,
-          value: null,
+          required: false,
+          value: "0",
         },
       ],
       [
@@ -1225,7 +1424,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "encapsulation"],
     },
     parent: {
       required: [],
@@ -1342,10 +1541,15 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["group", "menu", "menubar"],
+      required: [
+        ["menu"],
+        ["menubar"],
+        ["group", "menu"],
+        ["group", "menubar"],
+      ],
     },
     children: {
       presentational: false,
@@ -1354,15 +1558,28 @@ export const Roles = {
   },
   menuitemcheckbox: {
     abstract: false,
-    inherited: ["checkbox", "menuitem"],
-    attributes: [],
+    inherited: ["menuitem"],
+    attributes: [
+      [
+        "aria-checked",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["group", "menu", "menubar"],
+      required: [
+        ["menu"],
+        ["menubar"],
+        ["group", "menu"],
+        ["group", "menubar"],
+      ],
     },
     children: {
       presentational: true,
@@ -1371,15 +1588,28 @@ export const Roles = {
   },
   menuitemradio: {
     abstract: false,
-    inherited: ["menuitemcheckbox", "radio"],
-    attributes: [],
+    inherited: ["menuitem"],
+    attributes: [
+      [
+        "aria-checked",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["group", "menu", "menubar"],
+      required: [
+        ["menu"],
+        ["menubar"],
+        ["group", "menu"],
+        ["group", "menubar"],
+      ],
     },
     children: {
       presentational: true,
@@ -1458,8 +1688,8 @@ export const Roles = {
       [
         "aria-selected",
         {
-          required: true,
-          value: "false",
+          required: false,
+          value: null,
         },
       ],
       [
@@ -1473,10 +1703,10 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: [],
+      required: [["listbox"], ["group", "listbox"]],
     },
     children: {
       presentational: true,
@@ -1519,8 +1749,23 @@ export const Roles = {
   },
   progressbar: {
     abstract: false,
-    inherited: ["range", "widget", "status"],
-    attributes: [],
+    inherited: ["range", "widget"],
+    attributes: [
+      [
+        "aria-valuemax",
+        {
+          required: false,
+          value: "100",
+        },
+      ],
+      [
+        "aria-valuemin",
+        {
+          required: false,
+          value: "0",
+        },
+      ],
+    ],
     name: {
       required: true,
       prohibited: false,
@@ -1563,7 +1808,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents", "encapsulation"],
     },
     parent: {
       required: [],
@@ -1609,7 +1854,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "legend"],
     },
     parent: {
       required: [],
@@ -1694,6 +1939,20 @@ export const Roles = {
         },
       ],
       [
+        "aria-braillelabel",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-brailleroledescription",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-busy",
         {
           required: false,
@@ -1722,6 +1981,13 @@ export const Roles = {
         },
       ],
       [
+        "aria-description",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-details",
         {
           required: false,
@@ -1729,7 +1995,21 @@ export const Roles = {
         },
       ],
       [
+        "aria-disabled",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-dropeffect",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-errormessage",
         {
           required: false,
           value: null,
@@ -1750,7 +2030,21 @@ export const Roles = {
         },
       ],
       [
+        "aria-haspopup",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-hidden",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
+        "aria-invalid",
         {
           required: false,
           value: null,
@@ -1859,6 +2153,13 @@ export const Roles = {
         },
       ],
       [
+        "aria-rowindextext",
+        {
+          required: false,
+          value: null,
+        },
+      ],
+      [
         "aria-selected",
         {
           required: false,
@@ -1876,10 +2177,17 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["grid", "rowgroup", "table", "treegrid"],
+      required: [
+        ["grid"],
+        ["table"],
+        ["treegrid"],
+        ["rowgroup", "grid"],
+        ["rowgroup", "table"],
+        ["rowgroup", "treegrid"],
+      ],
     },
     children: {
       presentational: false,
@@ -1893,10 +2201,10 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author"],
     },
     parent: {
-      required: ["grid", "table", "treegrid"],
+      required: [["grid"], ["table"], ["treegrid"]],
     },
     children: {
       presentational: false,
@@ -1925,10 +2233,10 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["row"],
+      required: [["row"]],
     },
     children: {
       presentational: false,
@@ -2019,7 +2327,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "encapsulation"],
     },
     parent: {
       required: [],
@@ -2053,7 +2361,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -2110,14 +2418,14 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
-          value: "100",
+          value: null,
         },
       ],
       [
         "aria-valuemin",
         {
           required: false,
-          value: "0",
+          value: null,
         },
       ],
       [
@@ -2258,21 +2566,21 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
-          value: "",
+          value: null,
         },
       ],
       [
         "aria-valuemin",
         {
           required: false,
-          value: "",
+          value: null,
         },
       ],
       [
         "aria-valuenow",
         {
           required: false,
-          value: "0",
+          value: null,
         },
       ],
       [
@@ -2286,7 +2594,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "encapsulation"],
     },
     parent: {
       required: [],
@@ -2379,6 +2687,23 @@ export const Roles = {
       required: [],
     },
   },
+  suggestion: {
+    abstract: false,
+    inherited: ["section"],
+    attributes: [],
+    name: {
+      required: false,
+      prohibited: true,
+      from: [],
+    },
+    parent: {
+      required: [],
+    },
+    children: {
+      presentational: false,
+      required: [["insertion"], ["deletion"]],
+    },
+  },
   superscript: {
     abstract: false,
     inherited: ["section"],
@@ -2411,7 +2736,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents", "encapsulation"],
     },
     parent: {
       required: [],
@@ -2471,10 +2796,10 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["tablist"],
+      required: [["tablist"]],
     },
     children: {
       presentational: true,
@@ -2517,13 +2842,6 @@ export const Roles = {
     abstract: false,
     inherited: ["composite"],
     attributes: [
-      [
-        "aria-level",
-        {
-          required: false,
-          value: null,
-        },
-      ],
       [
         "aria-multiselectable",
         {
@@ -2575,8 +2893,8 @@ export const Roles = {
     attributes: [],
     name: {
       required: false,
-      prohibited: false,
-      from: ["author"],
+      prohibited: true,
+      from: [],
     },
     parent: {
       required: [],
@@ -2657,7 +2975,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["author"],
+      from: ["author", "encapsulation"],
     },
     parent: {
       required: [],
@@ -2733,7 +3051,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -2835,10 +3153,10 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
-      required: ["group", "tree"],
+      required: [["tree"], ["group", "treeitem"]],
     },
     children: {
       presentational: false,
@@ -3013,7 +3331,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -3033,7 +3351,7 @@ export const Roles = {
       from: ["author"],
     },
     parent: {
-      required: ["doc-bibliography"],
+      required: [["doc-bibliography"]],
     },
     children: {
       presentational: false,
@@ -3064,7 +3382,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -3203,7 +3521,7 @@ export const Roles = {
       from: ["author"],
     },
     parent: {
-      required: ["doc-endnotes"],
+      required: [["doc-endnotes"]],
     },
     children: {
       presentational: false,
@@ -3353,7 +3671,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -3404,7 +3722,7 @@ export const Roles = {
     name: {
       required: true,
       prohibited: false,
-      from: ["contents", "author"],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
