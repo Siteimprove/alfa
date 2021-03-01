@@ -17,7 +17,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { takeUntil, map, option, pair, right, left } = Parser;
+const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
 type Name = Property.Name;
 
@@ -189,12 +189,12 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
-              return this.inherited(name, source);
+              return this.inherited(name);
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
               return inherits
-                ? this.inherited(name, source)
+                ? this.inherited(name)
                 : this.initial(name, source);
           }
         }
@@ -238,17 +238,8 @@ export class Style implements Serializable {
     return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
-  public inherited<N extends Name>(
-    name: N,
-    source: Option<Declaration> = None
-  ): Value<Style.Inherited<N>> {
-    const inherited = this.parent.computed(name);
-
-    if (source.isSome()) {
-      return Value.of(inherited.value, source);
-    }
-
-    return inherited;
+  public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
+    return this.parent.computed(name);
   }
 
   public toJSON(): Style.JSON {
@@ -547,7 +538,10 @@ const parseVar = right(
   Token.parseFunction("var"),
   pair(
     map(
-      Token.parseIdent((ident) => ident.value.startsWith("--")),
+      delimited(
+        option(Token.parseWhitespace),
+        Token.parseIdent((ident) => ident.value.startsWith("--"))
+      ),
       (ident) => ident.value
     ),
     left(

@@ -23,6 +23,12 @@ export const Attributes = {
     options: ["inline", "list", "both", "none"],
     default: "none",
   },
+  "aria-brailleroledescription": {
+    kind: "property",
+    type: "string",
+    options: null,
+    default: null,
+  },
   "aria-busy": {
     kind: "state",
     type: "true-false",
@@ -44,6 +50,12 @@ export const Attributes = {
   "aria-colindex": {
     kind: "property",
     type: "integer",
+    options: null,
+    default: null,
+  },
+  "aria-colindextext": {
+    kind: "property",
+    type: "string",
     options: null,
     default: null,
   },
@@ -71,9 +83,15 @@ export const Attributes = {
     options: null,
     default: null,
   },
+  "aria-description": {
+    kind: "property",
+    type: "string",
+    options: null,
+    default: null,
+  },
   "aria-details": {
     kind: "property",
-    type: "id-reference",
+    type: "id-reference-list",
     options: null,
     default: null,
   },
@@ -146,6 +164,12 @@ export const Attributes = {
   "aria-labelledby": {
     kind: "property",
     type: "id-reference-list",
+    options: null,
+    default: null,
+  },
+  "aria-braillelabel": {
+    kind: "property",
+    type: "string",
     options: null,
     default: null,
   },
@@ -242,6 +266,12 @@ export const Attributes = {
   "aria-rowindex": {
     kind: "property",
     type: "integer",
+    options: null,
+    default: null,
+  },
+  "aria-rowindextext": {
+    kind: "property",
+    type: "string",
     options: null,
     default: null,
   },

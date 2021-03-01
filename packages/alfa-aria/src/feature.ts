@@ -1,6 +1,4 @@
-import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Node, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -27,7 +25,7 @@ export class Feature {
   public static of(
     role: Feature.Aspect.Role = () => [],
     attributes: Feature.Aspect.Attributes = () => [],
-    name: Feature.Aspect.Name = () => Branched.of(None)
+    name: Feature.Aspect.Name = () => None
   ): Feature {
     return new Feature(role, attributes, name);
   }
@@ -70,10 +68,7 @@ export namespace Feature {
 
     export type Attributes = Aspect<Iterable<aria.Attribute>>;
 
-    export type Name = Aspect<
-      Branched<Option<aria.Name>, Browser>,
-      [Device, aria.Name.State]
-    >;
+    export type Name = Aspect<Option<aria.Name>, [Device, aria.Name.State]>;
   }
 
   export function from(namespace: Namespace, name: string): Option<Feature> {
@@ -94,7 +89,7 @@ export namespace Feature {
 function html(
   role: Feature.Aspect.Role = () => [],
   attributes: Feature.Aspect.Attributes = () => [],
-  name: Feature.Aspect.Name = () => Branched.of(None)
+  name: Feature.Aspect.Name = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
@@ -107,7 +102,7 @@ function html(
 function svg(
   role: Feature.Aspect.Role = () => [],
   attributes: Feature.Aspect.Attributes = () => [],
-  name: Feature.Aspect.Name = () => Branched.of(None)
+  name: Feature.Aspect.Name = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
@@ -128,7 +123,7 @@ const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
     }
   }
 
-  return Branched.of(None);
+  return None;
 };
 
 const nameFromChild = (predicate: Predicate<Element>) => (
@@ -138,13 +133,11 @@ const nameFromChild = (predicate: Predicate<Element>) => (
 ) => {
   for (const child of element.children().filter(isElement).find(predicate)) {
     return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-      name.map((name) =>
-        Name.of(name.value, [Name.Source.descendant(element, name)])
-      )
+      Name.of(name.value, [Name.Source.descendant(element, name)])
     );
   }
 
-  return Branched.of(None);
+  return None;
 };
 
 const ids = Cache.empty<Node, Map<string, Element>>();
@@ -172,11 +165,11 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     if (target.includes(element)) {
       continue;
     } else {
-      return Branched.of(None);
+      return None;
     }
   }
 
-  const targets = labels
+  const references = labels
     .get(root, () => elements.filter(hasName("label")))
     .filter(
       or(
@@ -188,41 +181,35 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
       )
     );
 
-  return Branched.traverse(targets, (element) =>
+  const names = references.collect((element) =>
     Name.fromNode(
       element,
       device,
       state.reference(None).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
-  )
-    .map((names) =>
-      [...names]
-        .filter(([name]) => name.isSome())
-        .map(([name, element]) => [name.get(), element] as const)
+  );
+
+  const name = names
+    .map(([name]) => name.value)
+    .join(" ")
+    .trim();
+
+  if (name === "") {
+    return None;
+  }
+
+  return Option.of(
+    Name.of(
+      name,
+      names.map(([name, element]) => {
+        for (const attribute of element.attribute("for")) {
+          return Name.Source.reference(attribute, name);
+        }
+
+        return Name.Source.ancestor(element, name);
+      })
     )
-    .map((names) => {
-      const data = names
-        .map(([name]) => name.value)
-        .join(" ")
-        .trim();
-
-      if (data === "") {
-        return None;
-      }
-
-      return Option.of(
-        Name.of(
-          data,
-          names.map(([name, element]) => {
-            for (const attribute of element.attribute("for")) {
-              return Name.Source.reference(attribute, name);
-            }
-
-            return Name.Source.ancestor(element, name);
-          })
-        )
-      );
-    });
+  );
 };
 
 type Features = {
@@ -475,21 +462,21 @@ const Features: Features = {
         if (test(hasInputType("submit"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
-            () => Branched.of(Option.of(Name.of("Submit")))
+            () => Option.of(Name.of("Submit"))
           );
         }
 
         if (test(hasInputType("reset"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
-            () => Branched.of(Option.of(Name.of("Reset")))
+            () => Option.of(Name.of("Reset"))
           );
         }
 
         if (test(hasInputType("image"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "alt"),
-            () => Branched.of(Option.of(Name.of("Submit")))
+            () => Option.of(Name.of("Submit"))
           );
         }
 
@@ -601,12 +588,12 @@ const Features: Features = {
           .filter(isElement)
           .find(hasName("table"))
           .flatMap<Role>((table) => {
-            for (const [role] of Role.from(table)) {
-              if (role.some((role) => role.is("table"))) {
+            for (const role of Role.from(table)) {
+              if (role.is("table")) {
                 return Option.of(Role.of("cell"));
               }
 
-              if (role.some((role) => role.is("grid"))) {
+              if (role.is("grid")) {
                 return Option.of(Role.of("gridcell"));
               }
             }
@@ -685,12 +672,12 @@ const Features: Features = {
                 return Option.of(Role.of("rowheader"));
 
               default:
-                for (const [role] of Role.from(table.element)) {
-                  if (role.some((role) => role.is("table"))) {
+                for (const role of Role.from(table.element)) {
+                  if (role.is("table")) {
                     return Option.of(Role.of("cell"));
                   }
 
-                  if (role.some((role) => role.is("grid"))) {
+                  if (role.is("grid")) {
                     return Option.of(Role.of("gridcell"));
                   }
                 }
