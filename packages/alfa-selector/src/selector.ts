@@ -683,6 +683,10 @@ export namespace Selector {
     }
   }
 
+  function isUniversal(value: unknown): value is Universal {
+    return value instanceof Universal;
+  }
+
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-type-selector
    */
@@ -740,6 +744,10 @@ export namespace Selector {
       }
     }
 
+    export function isClass(value: unknown): value is Class {
+      return value instanceof Class;
+    }
+
     export abstract class Element extends Selector {
       protected readonly _name: string;
 
@@ -785,9 +793,17 @@ export namespace Selector {
         name: string;
       }
     }
+
+    export function isElement(value: unknown): value is Element {
+      return value instanceof Element;
+    }
   }
 
   export type Pseudo = Pseudo.Class | Pseudo.Element;
+
+  export function isPseudo(value: unknown): value is Pseudo {
+    return Pseudo.isClass(value) || Pseudo.isElement(value);
+  }
 
   const parseNth = left(
     Nth.parse,
@@ -1630,6 +1646,17 @@ export namespace Selector {
       | Pseudo.JSON;
   }
 
+  export function isSimple(value: unknown): value is Simple {
+    return (
+      isType(value) ||
+      isUniversal(value) ||
+      isAttribute(value) ||
+      isClass(value) ||
+      isId(value) ||
+      isPseudo(value)
+    );
+  }
+
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-simple-selector
    */
@@ -1710,6 +1737,10 @@ export namespace Selector {
       left: Simple.JSON;
       right: Simple.JSON | JSON;
     }
+  }
+
+  export function isCompound(value: unknown): value is Compound {
+    return value instanceof Compound;
   }
 
   /**
@@ -2104,4 +2135,77 @@ export namespace Selector {
   );
 
   export const parse = parseSelector;
+
+  /**
+   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Privacy_and_the_:visited_selector
+   */
+  export enum VisitedKind {
+    None,
+    Relevant, // ancestor of the actual element matched
+    Irrelevant, // not an ancestor of the actual match
+  }
+
+  /**
+   * If a selector contains both a relevant and an irrelevant :visited, then it is ignored.
+   * e.g. `:visited + :visited` is ignored.
+   */
+  function maxRelevance(kind1: VisitedKind, kind2: VisitedKind): VisitedKind {
+    return Math.max(kind1, kind2);
+  }
+
+  /**
+   * Checks if a selector (not a list) has a :visited pseudo-class and whether it applies to a relevant (ancestor)
+   * link of the actually matched element, or to a non-relevant (sibling) one.
+   * @param selector: the selector to check
+   * @param relevant: relevance of the branch we're in. For complex selectors:
+   *                  the right branch keeps relevance,
+   *                  the left may change it depending on combinator.
+   */
+  export function hasVisited(
+    selector:
+      | Selector.Simple
+      | Selector.Compound
+      | Selector.Complex
+      | Selector.Relative,
+    relevant: VisitedKind = VisitedKind.Relevant
+  ): VisitedKind {
+    if (isSimple(selector)) {
+      if (isPseudo(selector) && selector.name === "visited") {
+        return relevant;
+      }
+
+      return VisitedKind.None;
+    }
+
+    if (isCompound(selector)) {
+      return maxRelevance(
+        hasVisited(selector.left, relevant),
+        hasVisited(selector.right, relevant)
+      );
+    }
+
+    if (isComplex(selector)) {
+      switch (selector.combinator) {
+        case Combinator.Descendant:
+        case Combinator.DirectDescendant:
+          return maxRelevance(
+            hasVisited(selector.left, relevant),
+            hasVisited(selector.right, relevant)
+          );
+        case Combinator.Sibling:
+        case Combinator.DirectSibling:
+          // the left bit is never relevant since it only look at siblings
+          return maxRelevance(
+            hasVisited(selector.left, VisitedKind.Irrelevant),
+            hasVisited(selector.right, relevant)
+          );
+        default:
+          // should be impossible, kept for sanity.
+          return VisitedKind.None;
+      }
+    }
+
+    // Must be a relative selector, which is a complex one with only a right branch.
+    return hasVisited(selector.selector, relevant);
+  }
 }
