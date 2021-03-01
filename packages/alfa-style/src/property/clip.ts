@@ -31,7 +31,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/clip
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip}
  * @deprecated
  * @internal
  */

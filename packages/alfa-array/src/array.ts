@@ -2,7 +2,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Clone } from "@siteimprove/alfa-clone";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -16,17 +16,25 @@ import * as global from "./global";
 const { not } = Predicate;
 const { compareComparable } = Comparable;
 
-// Re-export the global `Array` interface to ensure that it merges with the
-// `Array` namespace.
+/**
+ * @remarks
+ * This is a re-export the global `Array` interface to ensure that it merges
+ * with the `Array` namespace.
+ *
+ * @public
+ */
 export type Array<T> = globalThis.Array<T>;
 
+/**
+ * @public
+ */
 export namespace Array {
   export function isArray<T>(value: Iterable<T>): value is Array<T>;
 
   export function isArray<T>(value: unknown): value is Array<T>;
 
   export function isArray<T>(value: unknown): value is Array<T> {
-    return global.isArray(value);
+    return global.Array.isArray(value);
   }
 
   export function of<T>(...values: Array<T>): Array<T> {

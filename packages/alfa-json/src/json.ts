@@ -1,7 +1,13 @@
 import * as global from "./global";
 
+/**
+ * @public
+ */
 export type JSON = string | number | boolean | null | JSON.Array | JSON.Object;
 
+/**
+ * @public
+ */
 export namespace JSON {
   export type Array = JSON[];
 

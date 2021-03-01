@@ -18,6 +18,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { ComponentFixture } from "@angular/core/testing";
 
+/**
+ * @public
+ */
 export namespace Angular {
   export type Type = ComponentFixture<unknown>;
 

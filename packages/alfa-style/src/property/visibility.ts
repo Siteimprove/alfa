@@ -21,7 +21,7 @@ export type Computed = Specified;
 export const parse = Keyword.parse("visible", "hidden", "collapse");
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/visibility
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/visibility}
  * @internal
  */
 export default Property.of<Specified, Computed>(

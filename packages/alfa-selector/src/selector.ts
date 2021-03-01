@@ -6,7 +6,6 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -32,11 +31,12 @@ const {
 } = Parser;
 
 const { and, not, property, equals } = Predicate;
-const { isString } = Refinement;
 const { isElement, hasName } = Element;
 
 /**
- * @see https://drafts.csswg.org/selectors/#selector
+ * {@link https://drafts.csswg.org/selectors/#selector}
+ *
+ * @public
  */
 export type Selector =
   | Selector.Simple
@@ -45,6 +45,9 @@ export type Selector =
   | Selector.Relative
   | Selector.List;
 
+/**
+ * @public
+ */
 export namespace Selector {
   export interface JSON {
     [key: string]: json.JSON;
@@ -57,7 +60,7 @@ export namespace Selector {
       Equatable,
       Serializable {
     /**
-     * @see https://drafts.csswg.org/selectors/#match
+     * {@link https://drafts.csswg.org/selectors/#match}
      */
     public abstract matches(element: Element, context?: Context): boolean;
 
@@ -82,7 +85,7 @@ export namespace Selector {
   >;
 
   /**
-   * @see https://drafts.csswg.org/selectors/#id-selector
+   * {@link https://drafts.csswg.org/selectors/#id-selector}
    */
   export class Id extends Selector {
     public static of(name: string): Id {
@@ -136,7 +139,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-id-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-id-selector}
    */
   const parseId = map(
     Token.parseHash((hash) => hash.isIdentifier),
@@ -144,7 +147,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#class-selector
+   * {@link https://drafts.csswg.org/selectors/#class-selector}
    */
   export class Class extends Selector {
     public static of(name: string): Class {
@@ -203,7 +206,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-ns-prefix
+   * {@link https://drafts.csswg.org/selectors/#typedef-ns-prefix}
    */
   const parseNamespace = map(
     left(
@@ -214,7 +217,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-wq-name
+   * {@link https://drafts.csswg.org/selectors/#typedef-wq-name}
    */
   const parseName = pair(
     option(parseNamespace),
@@ -222,7 +225,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#attribute-selector
+   * {@link https://drafts.csswg.org/selectors/#attribute-selector}
    */
   export class Attribute extends Selector {
     public static of(
@@ -448,7 +451,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-attr-matcher
+   * {@link https://drafts.csswg.org/selectors/#typedef-attr-matcher}
    */
   const parseMatcher = map(
     left(
@@ -473,7 +476,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-attr-modifier
+   * {@link https://drafts.csswg.org/selectors/#typedef-attr-modifier}
    */
   const parseModifier = either(
     map(Token.parseIdent("i"), () => Attribute.Modifier.CaseInsensitive),
@@ -481,7 +484,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-attribute-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-attribute-selector}
    */
   const parseAttribute = map(
     delimited(
@@ -517,7 +520,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#type-selector
+   * {@link https://drafts.csswg.org/selectors/#type-selector}
    */
   export class Type extends Selector {
     public static of(namespace: Option<string>, name: string): Type {
@@ -595,14 +598,14 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-type-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-type-selector}
    */
   const parseType = map(parseName, ([namespace, name]) =>
     Type.of(namespace, name)
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#universal-selector
+   * {@link https://drafts.csswg.org/selectors/#universal-selector}
    */
   export class Universal extends Selector {
     public static of(namespace: Option<string>): Universal {
@@ -668,7 +671,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-type-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-type-selector}
    */
   const parseUniversal = map(
     left(option(parseNamespace), Token.parseDelim("*")),
@@ -879,7 +882,7 @@ export namespace Selector {
   const parsePseudo = either(parsePseudoClass, parsePseudoElement);
 
   /**
-   * @see https://drafts.csswg.org/selectors/#matches-pseudo
+   * {@link https://drafts.csswg.org/selectors/#matches-pseudo}
    */
   export class Is extends Pseudo.Class {
     public static of(
@@ -936,7 +939,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#negation-pseudo
+   * {@link https://drafts.csswg.org/selectors/#negation-pseudo}
    */
   export class Not extends Pseudo.Class {
     public static of(
@@ -993,7 +996,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#has-pseudo
+   * {@link https://drafts.csswg.org/selectors/#has-pseudo}
    */
   export class Has extends Pseudo.Class {
     public static of(
@@ -1046,7 +1049,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#hover-pseudo
+   * {@link https://drafts.csswg.org/selectors/#hover-pseudo}
    */
   export class Hover extends Pseudo.Class {
     public static of(): Hover {
@@ -1066,7 +1069,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#active-pseudo
+   * {@link https://drafts.csswg.org/selectors/#active-pseudo}
    */
   export class Active extends Pseudo.Class {
     public static of(): Active {
@@ -1086,7 +1089,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#focus-pseudo
+   * {@link https://drafts.csswg.org/selectors/#focus-pseudo}
    */
   export class Focus extends Pseudo.Class {
     public static of(): Focus {
@@ -1106,7 +1109,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#focus-within-pseudo
+   * {@link https://drafts.csswg.org/selectors/#focus-within-pseudo}
    */
   export class FocusWithin extends Pseudo.Class {
     public static of(): FocusWithin {
@@ -1129,7 +1132,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#focus-visible-pseudo
+   * {@link https://drafts.csswg.org/selectors/#focus-visible-pseudo}
    */
   export class FocusVisible extends Pseudo.Class {
     public static of(): FocusVisible {
@@ -1149,7 +1152,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#link-pseudo
+   * {@link https://drafts.csswg.org/selectors/#link-pseudo}
    */
   export class Link extends Pseudo.Class {
     public static of(): Link {
@@ -1178,7 +1181,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#visited-pseudo
+   * {@link https://drafts.csswg.org/selectors/#visited-pseudo}
    */
   export class Visited extends Pseudo.Class {
     public static of(): Visited {
@@ -1207,7 +1210,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#root-pseudo
+   * {@link https://drafts.csswg.org/selectors/#root-pseudo}
    */
   export class Root extends Pseudo.Class {
     public static of(): Root {
@@ -1225,7 +1228,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#empty-pseudo
+   * {@link https://drafts.csswg.org/selectors/#empty-pseudo}
    */
   export class Empty extends Pseudo.Class {
     public static of(): Empty {
@@ -1242,7 +1245,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#nth-child-pseudo
+   * {@link https://drafts.csswg.org/selectors/#nth-child-pseudo}
    */
   export class NthChild extends Pseudo.Class {
     public static of(index: Nth): NthChild {
@@ -1289,7 +1292,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#nth-last-child-pseudo
+   * {@link https://drafts.csswg.org/selectors/#nth-last-child-pseudo}
    */
   export class NthLastChild extends Pseudo.Class {
     public static of(index: Nth): NthLastChild {
@@ -1337,7 +1340,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#first-child-pseudo
+   * {@link https://drafts.csswg.org/selectors/#first-child-pseudo}
    */
   export class FirstChild extends Pseudo.Class {
     public static of(): FirstChild {
@@ -1358,7 +1361,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#last-child-pseudo
+   * {@link https://drafts.csswg.org/selectors/#last-child-pseudo}
    */
   export class LastChild extends Pseudo.Class {
     public static of(): LastChild {
@@ -1379,7 +1382,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#only-child-pseudo
+   * {@link https://drafts.csswg.org/selectors/#only-child-pseudo}
    */
   export class OnlyChild extends Pseudo.Class {
     public static of(): OnlyChild {
@@ -1396,7 +1399,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#nth-of-type-pseudo
+   * {@link https://drafts.csswg.org/selectors/#nth-of-type-pseudo}
    */
   export class NthOfType extends Pseudo.Class {
     public static of(index: Nth): NthOfType {
@@ -1444,7 +1447,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#nth-last-of-type-pseudo
+   * {@link https://drafts.csswg.org/selectors/#nth-last-of-type-pseudo}
    */
   export class NthLastOfType extends Pseudo.Class {
     public static of(index: Nth): NthLastOfType {
@@ -1493,7 +1496,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#first-of-type-pseudo
+   * {@link https://drafts.csswg.org/selectors/#first-of-type-pseudo}
    */
   export class FirstOfType extends Pseudo.Class {
     public static of(): FirstOfType {
@@ -1515,7 +1518,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#last-of-type-pseudo
+   * {@link https://drafts.csswg.org/selectors/#last-of-type-pseudo}
    */
   export class LastOfType extends Pseudo.Class {
     public static of(): LastOfType {
@@ -1537,7 +1540,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#only-of-type-pseudo
+   * {@link https://drafts.csswg.org/selectors/#only-of-type-pseudo}
    */
   export class OnlyOfType extends Pseudo.Class {
     public static of(): OnlyOfType {
@@ -1559,7 +1562,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-pseudo/#selectordef-before
+   * {@link https://drafts.csswg.org/css-pseudo/#selectordef-before}
    */
   export class Before extends Pseudo.Element {
     public static of(): Before {
@@ -1572,7 +1575,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-pseudo/#selectordef-after
+   * {@link https://drafts.csswg.org/css-pseudo/#selectordef-after}
    */
   export class After extends Pseudo.Element {
     public static of(): After {
@@ -1585,7 +1588,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#simple
+   * {@link https://drafts.csswg.org/selectors/#simple}
    */
   export type Simple = Type | Universal | Attribute | Class | Id | Pseudo;
 
@@ -1600,7 +1603,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-simple-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}
    */
   const parseSimple = either(
     parseClass,
@@ -1614,7 +1617,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#compound
+   * {@link https://drafts.csswg.org/selectors/#compound}
    */
   export class Compound extends Selector {
     public static of(left: Simple, right: Simple | Compound): Compound {
@@ -1679,7 +1682,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-compound-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-compound-selector}
    */
   const parseCompound = map(oneOrMore(parseSimple), (result) => {
     const [left, ...selectors] = Iterable.reverse(result);
@@ -1692,7 +1695,7 @@ export namespace Selector {
   });
 
   /**
-   * @see https://drafts.csswg.org/selectors/#selector-combinator
+   * {@link https://drafts.csswg.org/selectors/#selector-combinator}
    */
   export enum Combinator {
     /**
@@ -1701,7 +1704,7 @@ export namespace Selector {
     Descendant = " ",
 
     /**
-     * @example div > span
+     * @example div \> span
      */
     DirectDescendant = ">",
 
@@ -1717,7 +1720,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-combinator
+   * {@link https://drafts.csswg.org/selectors/#typedef-combinator}
    */
   const parseCombinator = either(
     delimited(
@@ -1734,7 +1737,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#complex
+   * {@link https://drafts.csswg.org/selectors/#complex}
    */
   export class Complex extends Selector {
     public static of(
@@ -1855,7 +1858,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-complex-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector}
    */
   const parseComplex = map(
     pair(parseCompound, zeroOrMore(pair(parseCombinator, parseCompound))),
@@ -1871,7 +1874,7 @@ export namespace Selector {
   );
 
   /**
-   * @see https://drafts.csswg.org/selectors/#relative-selector
+   * {@link https://drafts.csswg.org/selectors/#relative-selector}
    */
   export class Relative extends Selector {
     public static of(
@@ -1944,7 +1947,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-relative-selector
+   * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
   const parseRelative = map(pair(parseCombinator, parseComplex), (result) => {
     const [combinator, selector] = result;
@@ -1953,7 +1956,7 @@ export namespace Selector {
   });
 
   /**
-   * @see https://drafts.csswg.org/selectors/#selector-list
+   * {@link https://drafts.csswg.org/selectors/#selector-list}
    */
   export class List<
     T extends Simple | Compound | Complex | Relative =
@@ -2030,7 +2033,7 @@ export namespace Selector {
   }
 
   /**
-   * @see https://drafts.csswg.org/selectors/#typedef-selector-list
+   * {@link https://drafts.csswg.org/selectors/#typedef-selector-list}
    */
   const parseList = map(
     pair(

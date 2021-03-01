@@ -16,6 +16,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export interface Collection<T>
   extends Functor<T>,
     Monad<T>,
@@ -46,6 +49,9 @@ export interface Collection<T>
   distinct(): Collection<T>;
 }
 
+/**
+ * @public
+ */
 export namespace Collection {
   export interface Keyed<K, V>
     extends Collection<V>,

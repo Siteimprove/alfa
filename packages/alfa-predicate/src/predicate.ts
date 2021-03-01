@@ -2,11 +2,17 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
+/**
+ * @public
+ */
 export type Predicate<T, A extends Array<unknown> = []> = (
   value: T,
   ...args: A
 ) => boolean;
 
+/**
+ * @public
+ */
 export namespace Predicate {
   export function test<T, A extends Array<unknown> = []>(
     predicate: Predicate<T, A>,

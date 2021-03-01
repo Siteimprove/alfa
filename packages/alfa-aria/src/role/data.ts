@@ -3,8 +3,14 @@
 // changes, do so in `scripts/roles.js` and run `yarn generate` to rebuild this
 // file.
 
+/**
+ * @internal
+ */
 export type Roles = typeof Roles;
 
+/**
+ * @internal
+ */
 export const Roles = {
   alert: {
     abstract: false,

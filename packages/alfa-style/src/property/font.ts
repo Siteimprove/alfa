@@ -108,7 +108,7 @@ export const parse = pair(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/font
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font}
  * @internal
  */
 export default Property.shorthand(

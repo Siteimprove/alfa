@@ -41,7 +41,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://drafts.csswg.org/css-ui/#outline-style
+ * {@link https://drafts.csswg.org/css-ui/#outline-style}
  * @internal
  */
 export default Property.of<Specified, Computed>(

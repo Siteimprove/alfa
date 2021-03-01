@@ -10,7 +10,9 @@ import * as sarif from "@siteimprove/alfa-sarif";
 import { Resource } from "./resource";
 
 /**
- * @see https://en.wikipedia.org/wiki/Web_page
+ * {@link https://en.wikipedia.org/wiki/Web_page}
+ *
+ * @public
  */
 export class Page
   implements
@@ -94,6 +96,9 @@ export class Page
   }
 }
 
+/**
+ * @public
+ */
 export namespace Page {
   export interface JSON {
     [key: string]: json.JSON;

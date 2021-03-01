@@ -9,7 +9,9 @@ import { Function } from "./function";
 import { Token } from "./token";
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#component-value
+ * {@link https://drafts.csswg.org/css-syntax/#component-value}
+ *
+ * @public
  */
 export class Component implements Iterable<Token>, Equatable, Serializable {
   public static of(value: Iterable<Token>): Component {
@@ -47,11 +49,14 @@ export class Component implements Iterable<Token>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Component {
   export type JSON = Array<Token.JSON>;
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-component-value
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
    */
   export const consume: Parser<Slice<Token>, Component, string> = (input) => {
     if (input.length === 0) {
@@ -82,7 +87,7 @@ export namespace Component {
   };
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#parse-component-value
+   * {@link https://drafts.csswg.org/css-syntax/#parse-component-value}
    */
   export const parse: Parser<Slice<Token>, Component, string> = (input) => {
     while (Token.isWhitespace(input.array[input.offset])) {

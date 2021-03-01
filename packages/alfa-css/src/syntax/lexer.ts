@@ -8,6 +8,9 @@ import { Token } from "./token";
 const { fromCharCode } = String;
 const { zeroOrMore } = Parser;
 
+/**
+ * @public
+ */
 export namespace Lexer {
   export function lex(input: string): Slice<Token> {
     const points = new Array<number>(input.length);
@@ -35,7 +38,7 @@ export namespace Lexer {
 }
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#digit
+ * {@link https://drafts.csswg.org/css-syntax/#digit}
  */
 const isDigit: Predicate<number> = (code) => code >= 0x30 && code <= 0x39;
 
@@ -48,7 +51,7 @@ const digit: Parser<[Array<number>, number], number, string> = ([input, i]) => {
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#hex-digit
+ * {@link https://drafts.csswg.org/css-syntax/#hex-digit}
  */
 const isHexDigit: Predicate<number> = (code) =>
   isDigit(code) ||
@@ -67,41 +70,41 @@ const hexDigit: Parser<[Array<number>, number], number, string> = ([
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#uppercase-letter
+ * {@link https://drafts.csswg.org/css-syntax/#uppercase-letter}
  */
 const isUppercaseLetter: Predicate<number> = (code) =>
   code >= 0x41 && code <= 0x5a;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#lowercase-letter
+ * {@link https://drafts.csswg.org/css-syntax/#lowercase-letter}
  */
 const isLowercaseLetter: Predicate<number> = (code) =>
   code >= 0x61 && code <= 0x7a;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#letter
+ * {@link https://drafts.csswg.org/css-syntax/#letter}
  */
 const isLetter: Predicate<number> = (code) =>
   isUppercaseLetter(code) || isLowercaseLetter(code);
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#non-ascii-code-point
+ * {@link https://drafts.csswg.org/css-syntax/#non-ascii-code-point}
  */
 const isNonAscii: Predicate<number> = (code) => code >= 0x80;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#newline
+ * {@link https://drafts.csswg.org/css-syntax/#newline}
  */
 const isNewline: Predicate<number> = (code) => code === 0xa;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#whitespace
+ * {@link https://drafts.csswg.org/css-syntax/#whitespace}
  */
 const isWhitespace: Predicate<number> = (code) =>
   isNewline(code) || code === 0x9 || code === 0x20;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#non-printable-code-point
+ * {@link https://drafts.csswg.org/css-syntax/#non-printable-code-point}
  */
 const isNonPrintable: Predicate<number> = (code) =>
   (code >= 0 && code <= 0x8) ||
@@ -110,31 +113,31 @@ const isNonPrintable: Predicate<number> = (code) =>
   code === 0x7f;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#name-start-code-point
+ * {@link https://drafts.csswg.org/css-syntax/#name-start-code-point}
  */
 const isNameStart: Predicate<number> = (code) =>
   isLetter(code) || isNonAscii(code) || code === 0x5f;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#name-code-point
+ * {@link https://drafts.csswg.org/css-syntax/#name-code-point}
  */
 const isName: Predicate<number> = (code) =>
   isNameStart(code) || isDigit(code) || code === 0x2d;
 
 /**
- * @see https://infra.spec.whatwg.org/#surrogate
+ * {@link https://infra.spec.whatwg.org/#surrogate}
  */
 const isSurrogate: Predicate<number> = (code) =>
   code >= 0xd800 && code <= 0xdfff;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#starts-with-a-valid-escape
+ * {@link https://drafts.csswg.org/css-syntax/#starts-with-a-valid-escape}
  */
 const startsValidEscape: Predicate<[Array<number>, number]> = ([input, i]) =>
   input[i] === 0x5c && !isNewline(input[i + 1]);
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#starts-with-a-number
+ * {@link https://drafts.csswg.org/css-syntax/#starts-with-a-number}
  */
 const startsNumber: Predicate<[Array<number>, number]> = ([input, i]) => {
   switch (input[i]) {
@@ -155,7 +158,7 @@ const startsNumber: Predicate<[Array<number>, number]> = ([input, i]) => {
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#would-start-an-identifier
+ * {@link https://drafts.csswg.org/css-syntax/#would-start-an-identifier}
  */
 const startsIdentifier: Predicate<[Array<number>, number]> = ([input, i]) => {
   switch (input[i]) {
@@ -175,7 +178,7 @@ const startsIdentifier: Predicate<[Array<number>, number]> = ([input, i]) => {
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-name
+ * {@link https://drafts.csswg.org/css-syntax/#consume-a-name}
  */
 const consumeName: Parser.Infallible<[Array<number>, number], string> = ([
   input,
@@ -202,7 +205,7 @@ const consumeName: Parser.Infallible<[Array<number>, number], string> = ([
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-an-escaped-code-point
+ * {@link https://drafts.csswg.org/css-syntax/#consume-an-escaped-code-point}
  */
 const consumeEscapedCodePoint: Parser.Infallible<
   [Array<number>, number],
@@ -262,7 +265,7 @@ const consumeEscapedCodePoint: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-number
+ * {@link https://drafts.csswg.org/css-syntax/#consume-a-number}
  */
 const consumeNumber: Parser.Infallible<
   [Array<number>, number],
@@ -320,7 +323,7 @@ const consumeNumber: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-numeric-token
+ * {@link https://drafts.csswg.org/css-syntax/#consume-a-numeric-token}
  */
 const consumeNumeric: Parser.Infallible<
   [Array<number>, number],
@@ -352,7 +355,7 @@ const consumeNumeric: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-an-ident-like-token
+ * {@link https://drafts.csswg.org/css-syntax/#consume-an-ident-like-token}
  */
 const consumeIdentifierLike: Parser.Infallible<
   [Array<number>, number],
@@ -391,7 +394,7 @@ const consumeIdentifierLike: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-string-token
+ * {@link https://drafts.csswg.org/css-syntax/#consume-a-string-token}
  */
 const consumeString: Parser.Infallible<
   [Array<number>, number],
@@ -416,7 +419,7 @@ const consumeString: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-url-token
+ * {@link https://drafts.csswg.org/css-syntax/#consume-a-url-token}
  */
 const consumeURL: Parser.Infallible<
   [Array<number>, number],
@@ -477,7 +480,7 @@ const consumeURL: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-remnants-of-bad-url
+ * {@link https://drafts.csswg.org/css-syntax/#consume-remnants-of-bad-url}
  */
 const consumeBadURL: Parser.Infallible<
   [Array<number>, number],
@@ -501,7 +504,7 @@ const consumeBadURL: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#consume-a-token
+ * {@link https://drafts.csswg.org/css-syntax/#consume-a-token}
  */
 const consumeToken: Parser.Infallible<
   [Array<number>, number],
@@ -663,7 +666,7 @@ const consumeToken: Parser.Infallible<
 };
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#convert-a-string-to-a-number
+ * {@link https://drafts.csswg.org/css-syntax/#convert-a-string-to-a-number}
  */
 function convert(input: Array<number>): number {
   let i = 0;

@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -9,6 +10,9 @@ import { Percentage } from "../percentage";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
+/**
+ * @public
+ */
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
@@ -93,6 +97,9 @@ export class RGB<
   }
 }
 
+/**
+ * @public
+ */
 export namespace RGB {
   export interface JSON extends Value.JSON<"color"> {
     format: "rgb";
@@ -110,14 +117,14 @@ export namespace RGB {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-alpha-value
+   * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
   const parseAlpha = either(Number.parse, Percentage.parse);
 
   /**
-   * @see https://drafts.csswg.org/css-color/#funcdef-rgb
+   * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, RGB, string> = map(
     right(
       Token.parseFunction((fn) => fn.value === "rgb" || fn.value === "rgba"),
       left(

@@ -1,9 +1,9 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -16,15 +16,20 @@ import { Percentage } from "./percentage";
 const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-images/#gradients
+ * {@link https://drafts.csswg.org/css-images/#gradients}
+ *
+ * @public
  */
 export type Gradient = Linear;
 
+/**
+ * @public
+ */
 export namespace Gradient {
   export type JSON = Linear.JSON;
 
   /**
-   * @see https://drafts.csswg.org/css-images/#color-stop
+   * {@link https://drafts.csswg.org/css-images/#color-stop}
    */
   export class Stop<
     C extends Color = Color,
@@ -96,36 +101,34 @@ export namespace Gradient {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-linear-color-stop
+   * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-stop}
    */
-  export const parseStop = either(
-    either(
-      map(
-        pair(
-          left(Color.parse, Token.parseWhitespace),
-          either(Length.parse, Percentage.parse)
-        ),
-        (result) => {
-          const [color, position] = result;
-          return Stop.of(color, Option.of(position));
-        }
+  export const parseStop: Parser<Slice<Token>, Stop, string> = either(
+    map(
+      pair(
+        left(Color.parse, Token.parseWhitespace),
+        either(Length.parse, Percentage.parse)
       ),
-      map(
-        pair(
-          either(Length.parse, Percentage.parse),
-          right(Token.parseWhitespace, Color.parse)
-        ),
-        (result) => {
-          const [position, color] = result;
-          return Stop.of(color, Option.of(position));
-        }
-      )
+      (result) => {
+        const [color, position] = result;
+        return Stop.of(color, Option.of(position));
+      }
+    ),
+    map(
+      pair(
+        either(Length.parse, Percentage.parse),
+        right(Token.parseWhitespace, Color.parse)
+      ),
+      (result) => {
+        const [position, color] = result;
+        return Stop.of(color, Option.of(position));
+      }
     ),
     map(Color.parse, (color) => Stop.of(color))
   );
 
   /**
-   * @see https://drafts.csswg.org/css-images/#color-transition-hint
+   * {@link https://drafts.csswg.org/css-images/#color-transition-hint}
    */
   export class Hint<P extends Length | Percentage = Length | Percentage>
     implements Equatable, Hashable, Serializable {
@@ -176,9 +179,9 @@ export namespace Gradient {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-linear-color-hint
+   * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-hint}
    */
-  export const parseHint = map(
+  export const parseHint: Parser<Slice<Token>, Hint, string> = map(
     either(Length.parse, Percentage.parse),
     (position) => Hint.of(position)
   );
@@ -189,12 +192,15 @@ export namespace Gradient {
     export type JSON = Stop.JSON | Hint.JSON;
   }
 
-  export const parseItem = either(parseStop, parseHint);
+  export const parseItem: Parser<Slice<Token>, Item, string> = either(
+    parseStop,
+    parseHint
+  );
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-color-stop-list
+   * {@link https://drafts.csswg.org/css-images/#typedef-color-stop-list}
    */
-  export const parseItemList = map(
+  export const parseItemList: Parser<Slice<Token>, Array<Item>, string> = map(
     pair(
       parseStop,
       oneOrMore(
@@ -212,13 +218,14 @@ export namespace Gradient {
         )
       )
     ),
-    (result) => {
-      const [first, rest] = result;
+    ([first, rest]) => {
+      const items: Array<Item> = [first];
 
-      return Iterable.concat(
-        [first],
-        Iterable.flatMap(rest, ([hint, stop]) => [...hint, stop])
-      );
+      for (const [hint, stop] of rest) {
+        items.push(...hint, stop);
+      }
+
+      return items;
     }
   );
 }
@@ -227,9 +234,12 @@ export namespace Gradient {
 // the initial declaration of `Gradient`.
 import { Linear } from "./gradient/linear";
 
+/**
+ * @public
+ */
 export namespace Gradient {
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-gradient
+   * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
-  export const parse = Linear.parse;
+  export const parse: Parser<Slice<Token>, Linear, string> = Linear.parse;
 }

@@ -43,9 +43,12 @@ const {
 
 const { property, equals } = Predicate;
 
+/**
+ * @public
+ */
 export namespace Media {
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-query-modifier
+   * {@link https://drafts.csswg.org/mediaqueries/#media-query-modifier}
    */
   export enum Modifier {
     Only = "only",
@@ -62,7 +65,7 @@ export namespace Media {
   }
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-type
+   * {@link https://drafts.csswg.org/mediaqueries/#media-type}
    */
   export class Type implements Matchable, Equatable, Serializable<Type.JSON> {
     public static of(name: string): Type {
@@ -127,7 +130,7 @@ export namespace Media {
   export const { of: type, isType } = Type;
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-type
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-type}
    */
   const parseType = map(
     Token.parseIdent((ident) => {
@@ -147,7 +150,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-feature
+   * {@link https://drafts.csswg.org/mediaqueries/#media-feature}
    */
   export abstract class Feature<T = unknown>
     implements
@@ -230,7 +233,7 @@ export namespace Media {
     }
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries/#width
+     * {@link https://drafts.csswg.org/mediaqueries/#width}
      */
     class Width extends Feature<Length> {
       public static of(value: Value<Length>): Width {
@@ -277,7 +280,7 @@ export namespace Media {
     }
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries/#height
+     * {@link https://drafts.csswg.org/mediaqueries/#height}
      */
     class Height extends Feature<Length> {
       public static of(value: Value<Length>): Height {
@@ -326,7 +329,7 @@ export namespace Media {
     }
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries/#orientation
+     * {@link https://drafts.csswg.org/mediaqueries/#orientation}
      */
     class Orientation extends Feature<Keyword> {
       public static of(value: Value<Keyword>): Orientation {
@@ -375,7 +378,7 @@ export namespace Media {
     }
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#scripting
+     * {@link https://drafts.csswg.org/mediaqueries-5/#scripting}
      */
     class Scripting extends Feature<Keyword> {
       public static of(value: Value<Keyword>): Scripting {
@@ -439,14 +442,14 @@ export namespace Media {
   }
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-name
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-name}
    */
   const parseFeatureName = map(Token.parseIdent(), (ident) =>
     ident.value.toLowerCase()
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-value
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-value}
    */
   const parseFeatureValue = either(
     either(
@@ -467,7 +470,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-plain
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-plain}
    */
   const parseFeaturePlain = mapResult(
     separated(
@@ -494,14 +497,14 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean}
    */
   const parseFeatureBoolean = mapResult(parseFeatureName, (name) =>
     Feature.tryFrom(None, name)
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-lt
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-lt}
    */
   const parseFeatureLessThan = map(
     right(Token.parseDelim("<"), option(Token.parseDelim("="))),
@@ -510,7 +513,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-gt
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-gt}
    */
   const parseFeatureGreaterThan = map(
     right(Token.parseDelim(">"), option(Token.parseDelim("="))),
@@ -519,12 +522,12 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-eq
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-eq}
    */
   const parseFeatureEqual = map(Token.parseDelim("="), () => Comparison.Equal);
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-comparison
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-comparison}
    */
   const parseFeatureComparison = either(
     parseFeatureEqual,
@@ -533,7 +536,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-range
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-range}
    */
   const parseFeatureRange = either(
     // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
@@ -712,7 +715,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-feature}
    */
   const parseFeature = delimited(
     Token.parseOpenParenthesis,
@@ -1154,7 +1157,7 @@ export namespace Media {
   export const { of: not, isNot } = Not;
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-condition
+   * {@link https://drafts.csswg.org/mediaqueries/#media-condition}
    */
   export type Condition = And | Or | Not;
 
@@ -1176,7 +1179,7 @@ export namespace Media {
   let parseCondition: Parser<Slice<Token>, Feature | Condition, string>;
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-in-parens
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-in-parens}
    */
   const parseInParens = either(
     delimited(
@@ -1190,7 +1193,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-not
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-not}
    */
   const parseNot = map(
     right(
@@ -1201,7 +1204,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-and
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-and}
    */
   const parseAnd = right(
     delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
@@ -1209,7 +1212,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-or
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-or}
    */
   const parseOr = right(
     delimited(option(Token.parseWhitespace), Token.parseIdent("or")),
@@ -1217,7 +1220,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-condition
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-condition}
    */
   parseCondition = either(
     parseNot,
@@ -1242,7 +1245,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-condition-without-or
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-condition-without-or}
    */
   const parseConditionWithoutOr = either(
     parseNot,
@@ -1252,7 +1255,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-query
+   * {@link https://drafts.csswg.org/mediaqueries/#media-query}
    */
   export class Query implements Matchable {
     public static of(
@@ -1353,7 +1356,7 @@ export namespace Media {
   export const { of: query, isQuery } = Query;
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-query
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-query}
    */
   const parseQuery = left(
     either(
@@ -1381,7 +1384,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-query-list
+   * {@link https://drafts.csswg.org/mediaqueries/#media-query-list}
    */
   export class List
     implements Matchable, Iterable<Query>, Equatable, Serializable<List.JSON> {
@@ -1444,7 +1447,7 @@ export namespace Media {
   );
 
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-query-list
+   * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-query-list}
    */
   const parseList = map(
     separatedList(

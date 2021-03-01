@@ -3,6 +3,9 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Header
   implements
     Equatable,
@@ -63,6 +66,9 @@ export class Header
   }
 }
 
+/**
+ * @public
+ */
 export namespace Header {
   export interface JSON {
     [key: string]: json.JSON;

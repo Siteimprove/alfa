@@ -129,7 +129,7 @@ function normalize(input: string): string {
  * @todo For links in table cells, account for the text in the associated table
  *       header cell.
  *
- * @see https://www.w3.org/TR/WCAG/#dfn-programmatically-determined-link-context
+ * {@link https://www.w3.org/TR/WCAG/#dfn-programmatically-determined-link-context}
  */
 function linkContext(element: Element): Set<dom.Node> {
   let context = Set.empty<dom.Node>();

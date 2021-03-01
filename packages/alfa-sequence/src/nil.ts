@@ -8,8 +8,14 @@ import { None } from "@siteimprove/alfa-option";
 import { Sequence } from "./sequence";
 import { Cons } from "./cons";
 
+/**
+ * @public
+ */
 export interface Nil extends Sequence<never> {}
 
+/**
+ * @public
+ */
 export const Nil: Nil = new (class Nil {
   public get size(): number {
     return 0;
@@ -247,6 +253,9 @@ export const Nil: Nil = new (class Nil {
   }
 })();
 
+/**
+ * @public
+ */
 export namespace Nil {
   export type JSON = Collection.Indexed.JSON<never>;
 }

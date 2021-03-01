@@ -1,8 +1,14 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
+/**
+ * @public
+ */
 export type Continuation<T, R = void> = Callback<Callback<T, R>, R>;
 
+/**
+ * @public
+ */
 export namespace Continuation {
   export function of<T, R = void>(value: T): Continuation<T, R> {
     return (callback) => callback(value);

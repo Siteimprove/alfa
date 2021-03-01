@@ -7,7 +7,7 @@ import { hasName } from "./has-name";
 const { equals } = Predicate;
 
 /**
- * @see https://html.spec.whatwg.org/#concept-fe-disabled
+ * {@link https://html.spec.whatwg.org/#concept-fe-disabled}
  */
 export function isDisabled(element: Element): boolean {
   switch (element.name) {

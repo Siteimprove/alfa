@@ -13,6 +13,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Branched<T, B = never>
   implements Collection<T>, Iterable<[T, Iterable<B>]> {
   public static of<T, B = never>(
@@ -284,6 +287,9 @@ export class Branched<T, B = never>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Branched {
   export type JSON<T, B = never> = Array<
     [Serializable.ToJSON<T>, Array<Serializable.ToJSON<B>>]

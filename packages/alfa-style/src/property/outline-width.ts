@@ -30,7 +30,7 @@ export const parse = either(
 );
 
 /**
- * @see https://drafts.csswg.org/css-ui/#outline-width
+ * {@link https://drafts.csswg.org/css-ui/#outline-width}
  * @internal
  */
 export default Property.of<Specified, Computed>(

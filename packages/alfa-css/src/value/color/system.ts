@@ -1,10 +1,20 @@
+import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
+
+import { Token } from "../../syntax/token";
+
 import { Keyword } from "../keyword";
 
 /**
- * @see https://drafts.csswg.org/css-color/#css-system-colors
+ * {@link https://drafts.csswg.org/css-color/#css-system-colors}
+ *
+ * @public
  */
 export type System = Keyword<System.Keyword>;
 
+/**
+ * @public
+ */
 export namespace System {
   export type Keyword =
     | "canvas"
@@ -21,9 +31,9 @@ export namespace System {
     | "graytext";
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-system-color
+   * {@link https://drafts.csswg.org/css-color/#typedef-system-color}
    */
-  export const parse = Keyword.parse(
+  export const parse: Parser<Slice<Token>, System, string> = Keyword.parse(
     "canvas",
     "canvastext",
     "linktext",

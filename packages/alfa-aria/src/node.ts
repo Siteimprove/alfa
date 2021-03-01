@@ -24,7 +24,9 @@ import * as predicate from "./node/predicate";
 const { equals } = Predicate;
 
 /**
- * @see https://w3c.github.io/aria/#accessibility_tree
+ * {@link https://w3c.github.io/aria/#accessibility_tree}
+ *
+ * @public
  */
 export abstract class Node implements Serializable<Node.JSON> {
   protected readonly _node: dom.Node;
@@ -93,7 +95,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-parent
+   * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
   public parent(options: Node.Traversal = {}): Option<Node> {
     const parent = this._parent;
@@ -108,7 +110,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-root
+   * {@link https://dom.spec.whatwg.org/#concept-tree-root}
    */
   public root(options: Node.Traversal = {}): Node {
     for (const parent of this.parent(options)) {
@@ -119,7 +121,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-child
+   * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
   public children(options: Node.Traversal = {}): Sequence<Node> {
     const children = Sequence.from(this._children);
@@ -134,7 +136,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-descendant
+   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
     return this.children(options).flatMap((child) =>
@@ -146,7 +148,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */
   public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
     return Sequence.of(
@@ -156,7 +158,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
+   * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
@@ -170,7 +172,7 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
    */
   public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
     return Sequence.of(

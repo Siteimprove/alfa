@@ -21,6 +21,9 @@ import { Tag } from "./tag";
 
 const { flatMap, flatten, reduce } = Iterable;
 
+/**
+ * @public
+ */
 export abstract class Rule<I = unknown, T = unknown, Q = never>
   implements
     Equatable,
@@ -96,6 +99,9 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Rule {
   export interface JSON {
     [key: string]: json.JSON;

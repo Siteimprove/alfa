@@ -13,8 +13,6 @@ import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
 
-import type * as aria from ".";
-
 const { hasInputType, hasName, isElement } = Element;
 const { or, test } = Predicate;
 
@@ -23,36 +21,36 @@ const { or, test } = Predicate;
  */
 export class Feature {
   public static of(
-    role: Feature.Aspect.Role = () => [],
-    attributes: Feature.Aspect.Attributes = () => [],
-    name: Feature.Aspect.Name = () => None
+    role: Feature.RoleAspect = () => [],
+    attributes: Feature.AttributesAspect = () => [],
+    name: Feature.NameAspect = () => None
   ): Feature {
     return new Feature(role, attributes, name);
   }
 
-  private readonly _role: Feature.Aspect.Role;
-  private readonly _attributes: Feature.Aspect.Attributes;
-  private readonly _name: Feature.Aspect.Name;
+  private readonly _role: Feature.RoleAspect;
+  private readonly _attributes: Feature.AttributesAspect;
+  private readonly _name: Feature.NameAspect;
 
   private constructor(
-    role: Feature.Aspect.Role,
-    attributes: Feature.Aspect.Attributes,
-    name: Feature.Aspect.Name
+    role: Feature.RoleAspect,
+    attributes: Feature.AttributesAspect,
+    name: Feature.NameAspect
   ) {
     this._role = role;
     this._attributes = attributes;
     this._name = name;
   }
 
-  public get role(): Feature.Aspect.Role {
+  public get role(): Feature.RoleAspect {
     return this._role;
   }
 
-  public get attributes(): Feature.Aspect.Attributes {
+  public get attributes(): Feature.AttributesAspect {
     return this._attributes;
   }
 
-  public get name(): Feature.Aspect.Name {
+  public get name(): Feature.NameAspect {
     return this._name;
   }
 }
@@ -63,13 +61,11 @@ export class Feature {
 export namespace Feature {
   export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element, T, A>;
 
-  export namespace Aspect {
-    export type Role = Aspect<Iterable<aria.Role>>;
+  export type RoleAspect = Aspect<Iterable<Role>>;
 
-    export type Attributes = Aspect<Iterable<aria.Attribute>>;
+  export type AttributesAspect = Aspect<Iterable<Attribute>>;
 
-    export type Name = Aspect<Option<aria.Name>, [Device, aria.Name.State]>;
-  }
+  export type NameAspect = Aspect<Option<Name>, [Device, Name.State]>;
 
   export function from(namespace: Namespace, name: string): Option<Feature> {
     return Option.from(Features[namespace]?.[name]).orElse(() => {
@@ -87,9 +83,9 @@ export namespace Feature {
 }
 
 function html(
-  role: Feature.Aspect.Role = () => [],
-  attributes: Feature.Aspect.Attributes = () => [],
-  name: Feature.Aspect.Name = () => None
+  role: Feature.RoleAspect = () => [],
+  attributes: Feature.AttributesAspect = () => [],
+  name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
@@ -100,9 +96,9 @@ function html(
 }
 
 function svg(
-  role: Feature.Aspect.Role = () => [],
-  attributes: Feature.Aspect.Attributes = () => [],
-  name: Feature.Aspect.Name = () => None
+  role: Feature.RoleAspect = () => [],
+  attributes: Feature.AttributesAspect = () => [],
+  name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(

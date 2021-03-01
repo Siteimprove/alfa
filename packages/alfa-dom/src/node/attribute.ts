@@ -71,7 +71,7 @@ export class Attribute extends Node {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#boolean-attribute
+   * {@link https://html.spec.whatwg.org/#boolean-attribute}
    */
   public isBoolean(): boolean {
     switch (this.name) {
@@ -100,7 +100,7 @@ export class Attribute extends Node {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#space-separated-tokens
+   * {@link https://html.spec.whatwg.org/#space-separated-tokens}
    */
   public tokens(separator: string | RegExp = /\s+/): Sequence<string> {
     return Sequence.from(
@@ -109,12 +109,12 @@ export class Attribute extends Node {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#enumerated-attribute
+   * {@link https://html.spec.whatwg.org/#enumerated-attribute}
    */
   public enumerate(): Option<string>;
 
   /**
-   * @see https://html.spec.whatwg.org/#enumerated-attribute
+   * {@link https://html.spec.whatwg.org/#enumerated-attribute}
    */
   public enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
 

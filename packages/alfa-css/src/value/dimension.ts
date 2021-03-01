@@ -5,7 +5,9 @@ import { Numeric } from "./numeric";
 import { Unit } from "./unit";
 
 /**
- * @see https://drafts.csswg.org/css-values/#dimensions
+ * {@link https://drafts.csswg.org/css-values/#dimensions}
+ *
+ * @public
  */
 export abstract class Dimension<
     T extends string = string,
@@ -26,7 +28,7 @@ export abstract class Dimension<
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#canonical-unit
+   * {@link https://drafts.csswg.org/css-values/#canonical-unit}
    */
   public abstract get canonicalUnit(): U;
 
@@ -52,6 +54,9 @@ export abstract class Dimension<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Dimension {
   export interface JSON<T extends string = string> extends Numeric.JSON<T> {
     unit: Unit;

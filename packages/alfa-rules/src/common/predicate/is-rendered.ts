@@ -10,7 +10,7 @@ const { isElement, hasName } = Element;
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
- * @see https://html.spec.whatwg.org/#being-rendered
+ * {@link https://html.spec.whatwg.org/#being-rendered}
  */
 export function isRendered(
   device: Device,

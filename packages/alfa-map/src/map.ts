@@ -15,6 +15,9 @@ import { Empty, Node } from "./node";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Map<K, V> implements Collection.Keyed<K, V> {
   public static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V> {
     return entries.reduce(
@@ -265,6 +268,9 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Map {
   export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
 

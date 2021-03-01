@@ -7,6 +7,9 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 
 import earl from "@siteimprove/alfa-formatter-earl";
 
+/**
+ * @public
+ */
 export interface Handler<I, T, Q> {
   (
     input: I,
@@ -16,6 +19,9 @@ export interface Handler<I, T, Q> {
   ): Future.Maybe<string>;
 }
 
+/**
+ * @public
+ */
 export namespace Handler {
   /**
    * Construct a handler that will write audit outcomes to disk.

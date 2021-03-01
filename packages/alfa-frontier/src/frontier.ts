@@ -8,6 +8,9 @@ import * as json from "@siteimprove/alfa-json";
 
 const { equals, property } = Predicate;
 
+/**
+ * @public
+ */
 export class Frontier implements Equatable, Serializable {
   public static of(
     scope: string | URL,
@@ -201,6 +204,9 @@ export class Frontier implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Frontier {
   export interface JSON {
     [key: string]: json.JSON;

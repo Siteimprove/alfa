@@ -3,11 +3,17 @@
 import { Rule, Oracle } from "@siteimprove/alfa-act";
 import { Result, Err } from "@siteimprove/alfa-result";
 
+/**
+ * @public
+ */
 export type Interviewer<I = unknown, T = unknown, Q = never> = (
   input: I,
   rules: Iterable<Rule<I, T, Q>>
 ) => Oracle<I, T, Q>;
 
+/**
+ * @public
+ */
 export namespace Interviewer {
   export async function load<I, T = unknown, Q = never>(
     name: string,

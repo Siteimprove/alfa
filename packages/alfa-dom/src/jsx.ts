@@ -44,13 +44,13 @@ export namespace jsx {
      * An optional record of CSS property names and their associated values.
      * This works similarly to the `style` property in React.
      *
-     * @see https://reactjs.org/docs/dom-elements.html#style
+     * {@link https://reactjs.org/docs/dom-elements.html#style}
      */
     style?: Record<string, string>;
   }
 
   /**
-   * @see https://www.typescriptlang.org/docs/handbook/jsx.html
+   * {@link https://www.typescriptlang.org/docs/handbook/jsx.html}
    *
    * @remarks
    * This namespace is currently needed to let the TypeScript compiler know the

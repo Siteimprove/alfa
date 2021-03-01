@@ -161,8 +161,14 @@ puppeteer.launch().then(async (browser) => {
 // changes, do so in \`scripts/roles.js\` and run \`yarn generate\` to rebuild this
 // file.
 
+/**
+ * @internal
+ */
 export type Roles = typeof Roles;
 
+/**
+ * @internal
+ */
 export const Roles = ${JSON.stringify(roles, null, 2)} as const;
   `;
 

@@ -12,6 +12,9 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export class Audit<I, T = unknown, Q = never> {
   public static of<I, T = unknown, Q = never>(
     input: I,
@@ -55,6 +58,9 @@ export class Audit<I, T = unknown, Q = never> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Audit {
   export class Event<I, T, Q> implements Serializable<Event.JSON> {
     public static of<I, T, Q>(

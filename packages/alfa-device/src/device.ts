@@ -11,6 +11,9 @@ import { Preference } from "./preference";
 import { Scripting } from "./scripting";
 import { Viewport } from "./viewport";
 
+/**
+ * @public
+ */
 export class Device implements Equatable, Hashable, Serializable {
   /**
    * @remarks
@@ -124,6 +127,9 @@ export class Device implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Device {
   export enum Type {
     Print = "print",

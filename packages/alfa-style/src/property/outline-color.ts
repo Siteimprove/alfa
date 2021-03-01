@@ -30,7 +30,7 @@ export type Computed =
 export const parse = Color.parse;
 
 /**
- * @see https://drafts.csswg.org/css-ui/#outline-color
+ * {@link https://drafts.csswg.org/css-ui/#outline-color}
  * @internal
  */
 export default Property.of<Specified, Computed>(

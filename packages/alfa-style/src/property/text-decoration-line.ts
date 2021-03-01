@@ -71,7 +71,7 @@ export const parse = either(Keyword.parse("none"), (input) => {
 });
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line}
  * @internal
  */
 export default Property.of<Specified, Computed>(

@@ -18,6 +18,9 @@ import { Branch, Empty, Leaf, Node } from "./node";
 const { not } = Predicate;
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
     const size = values.length;
@@ -604,6 +607,9 @@ export class List<T> implements Collection.Indexed<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace List {
   export type JSON<T> = Collection.Indexed.JSON<T>;
 

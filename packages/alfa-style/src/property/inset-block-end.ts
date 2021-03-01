@@ -25,7 +25,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-end
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-end}
  * @internal
  */
 export default Property.of<Specified, Computed>(

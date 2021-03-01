@@ -19,6 +19,9 @@ import { Item, Type, Value } from "./types";
 import { walk } from "./walk";
 import { Parser } from "./syntax/parser";
 
+/**
+ * @public
+ */
 export function* evaluate(
   scope: Node,
   expression: string | Expression | Builder,
@@ -56,6 +59,9 @@ export function* evaluate(
   }
 }
 
+/**
+ * @public
+ */
 export namespace evaluate {
   export interface Options extends Node.Traversal {}
 }

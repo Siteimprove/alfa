@@ -12,7 +12,9 @@ import { Token } from "./token";
 const { flatMap, peek, right } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#function
+ * {@link https://drafts.csswg.org/css-syntax/#function}
+ *
+ * @public
  */
 export class Function implements Iterable<Token>, Equatable, Serializable {
   public static of(name: string, value: Iterable<Token>): Function {
@@ -67,6 +69,9 @@ export class Function implements Iterable<Token>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Function {
   export interface JSON {
     [key: string]: json.JSON;
@@ -75,7 +80,7 @@ export namespace Function {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-function
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-function}
    */
   export const consume: Parser<Slice<Token>, Function> = (input) => {
     const { value: name } = input.array[input.offset] as Token.Function;

@@ -6,6 +6,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Expression } from "./expression";
 
+/**
+ * @public
+ */
 export class Builder<T extends Expression = Expression>
   implements Equatable, Serializable {
   public readonly expression: T;
@@ -29,6 +32,9 @@ export class Builder<T extends Expression = Expression>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Builder {
   export interface JSON {
     [key: string]: json.JSON;
@@ -120,10 +126,16 @@ export namespace Builder {
   }
 }
 
+/**
+ * @public
+ */
 export function context(): Builder.ContextItem {
   return new Builder.ContextItem(Expression.ContextItem.of());
 }
 
+/**
+ * @public
+ */
 export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis {
   return new Builder.Axis(
     Expression.Axis.of(
@@ -136,6 +148,9 @@ export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis {
   );
 }
 
+/**
+ * @public
+ */
 export namespace axis {
   export function self(name?: string): Builder.Axis {
     return axis("self", name);
@@ -162,6 +177,9 @@ export namespace axis {
   }
 }
 
+/**
+ * @public
+ */
 export function step(
   left: Builder<Expression.Step | Expression.Path>,
   right: Builder<Expression.Step>
@@ -171,6 +189,9 @@ export function step(
   );
 }
 
+/**
+ * @public
+ */
 export function nth(i: number): Builder<Expression.Integer> {
   return new Builder(Expression.Integer.of(i));
 }

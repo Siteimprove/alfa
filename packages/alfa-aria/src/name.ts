@@ -24,6 +24,9 @@ const { isText } = Text;
 const { equals } = Predicate;
 const { or } = Refinement;
 
+/**
+ * @public
+ */
 export class Name implements Equatable, Serializable<Name.JSON> {
   public static of(value: string, sources: Iterable<Name.Source> = []): Name {
     return new Name(value, Array.from(sources));
@@ -70,6 +73,9 @@ export class Name implements Equatable, Serializable<Name.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Name {
   export interface JSON {
     [key: string]: json.JSON;
@@ -844,8 +850,8 @@ function isRendered(node: Node, device: Device): boolean {
 }
 
 /**
- * @see https://w3c.github.io/accname/#dfn-hidden
- * @see https://github.com/w3c/accname/issues/30
+ * {@link https://w3c.github.io/accname/#dfn-hidden}
+ * {@link https://github.com/w3c/accname/issues/30}
  */
 function isHidden(element: Element, device: Device): boolean {
   return (

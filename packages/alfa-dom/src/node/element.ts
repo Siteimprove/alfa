@@ -110,14 +110,14 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-id
+   * {@link https://dom.spec.whatwg.org/#concept-id}
    */
   public get id(): Option<string> {
     return this._id;
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-class
+   * {@link https://dom.spec.whatwg.org/#concept-class}
    */
   public get classes(): Iterable<string> {
     return this._classes;
@@ -186,7 +186,7 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#void-elements
+   * {@link https://html.spec.whatwg.org/#void-elements}
    */
   public isVoid(): boolean {
     switch (this._name) {
@@ -214,7 +214,7 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#dom-tabindex
+   * {@link https://html.spec.whatwg.org/#dom-tabindex}
    */
   public tabIndex(): Option<number> {
     for (const tabIndex of this.attribute("tabindex")) {
@@ -233,14 +233,14 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#dom-slotable-assignedslot
+   * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#dom-slot-assignednodes
+   * {@link https://html.spec.whatwg.org/#dom-slot-assignednodes}
    */
   public assignedNodes(): Iterable<Slotable> {
     return Slot.findSlotables(this);

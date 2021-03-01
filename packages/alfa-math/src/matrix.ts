@@ -1,10 +1,15 @@
 import { Real } from "./real";
 
 /**
- * @see https://en.wikipedia.org/wiki/Matrix_(mathematics)
+ * {@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}
+ *
+ * @public
  */
 export type Matrix = Array<Array<number>>;
 
+/**
+ * @public
+ */
 export namespace Matrix {
   export function isMatrix(value: unknown): value is Matrix {
     return (
@@ -71,7 +76,7 @@ export namespace Matrix {
   }
 
   /**
-   * @see https://en.wikipedia.org/wiki/Matrix_multiplication
+   * {@link https://en.wikipedia.org/wiki/Matrix_multiplication}
    */
   export function multiply(m: Matrix, n: number | Matrix): Matrix {
     return typeof n === "number"
@@ -86,7 +91,7 @@ export namespace Matrix {
   /**
    * Compute the transpose of a matrix.
    *
-   * @see https://en.wikipedia.org/wiki/Transpose
+   * {@link https://en.wikipedia.org/wiki/Transpose}
    */
   export function transpose(m: Matrix): Matrix {
     return m.length === 0 ? m : m[0].map((_, i) => m.map((row) => row[i]));
@@ -95,8 +100,8 @@ export namespace Matrix {
   /**
    * Compute the determinant of a non-empty, square matrix.
    *
-   * @see https://en.wikipedia.org/wiki/Determinant
-   * @see https://en.wikipedia.org/wiki/Laplace_expansion
+   * {@link https://en.wikipedia.org/wiki/Determinant}
+   * {@link https://en.wikipedia.org/wiki/Laplace_expansion}
    *
    * @remarks
    * This function uses Laplace expansion for computing the determinant which
@@ -122,8 +127,8 @@ export namespace Matrix {
   /**
    * Compute the inverse of an invertible matrix.
    *
-   * @see https://en.wikipedia.org/wiki/Invertible_matrix
-   * @see https://en.wikipedia.org/wiki/Cramers_rule
+   * {@link https://en.wikipedia.org/wiki/Invertible_matrix}
+   * {@link https://en.wikipedia.org/wiki/Cramers_rule}
    *
    * @remarks
    * This function uses Cramer's rule for computing the inverse which has a time
@@ -136,7 +141,7 @@ export namespace Matrix {
   /**
    * Compute the (i, j) cofactor of a non-empty, square matrix.
    *
-   * @see https://en.wikipedia.org/wiki/Minor_(linear_algebra)
+   * {@link https://en.wikipedia.org/wiki/Minor_(linear_algebra)}
    * @internal
    */
   function cofactor(m: Matrix, i: number, j: number): number {
@@ -146,7 +151,7 @@ export namespace Matrix {
   /**
    * Compute the (i, j) minor of a non-empty, square matrix.
    *
-   * @see https://en.wikipedia.org/wiki/Minor_(linear_algebra)
+   * {@link https://en.wikipedia.org/wiki/Minor_(linear_algebra)}
    * @internal
    */
   function minor(m: Matrix, i: number, j: number): number {
@@ -165,7 +170,7 @@ export namespace Matrix {
   /**
    * Compute the adjugate of a non-empty, square matrix.
    *
-   * @see https://en.wikipedia.org/wiki/Adjugate_matrix
+   * {@link https://en.wikipedia.org/wiki/Adjugate_matrix}
    * @internal
    */
   function adjugate(m: Matrix): Matrix {

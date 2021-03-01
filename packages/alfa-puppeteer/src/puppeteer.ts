@@ -30,6 +30,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { JSHandle } from "puppeteer";
 
+/**
+ * @public
+ */
 export namespace Puppeteer {
   export type Type = JSHandle;
 
