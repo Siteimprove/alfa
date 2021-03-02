@@ -19,7 +19,7 @@ export type Specified =
  */
 export namespace Specified {
   /**
-   * @see https://drafts.csswg.org/css-display/#outer-role
+   * {@link https://drafts.csswg.org/css-display/#outer-role}
    */
   export type Outside =
     | Keyword<"block">
@@ -27,7 +27,7 @@ export namespace Specified {
     | Keyword<"run-in">;
 
   /**
-   * @see https://drafts.csswg.org/css-display/#inner-model
+   * {@link https://drafts.csswg.org/css-display/#inner-model}
    */
   export type Inside =
     | Keyword<"flow">
@@ -38,12 +38,12 @@ export namespace Specified {
     | Keyword<"ruby">;
 
   /**
-   * @see https://drafts.csswg.org/css-display/#list-items
+   * {@link https://drafts.csswg.org/css-display/#list-items}
    */
   export type ListItem = Keyword<"list-item">;
 
   /**
-   * @see https://drafts.csswg.org/css-display/#layout-specific-display
+   * {@link https://drafts.csswg.org/css-display/#layout-specific-display}
    */
   export type Internal =
     | Keyword<"table-row-group">
@@ -60,7 +60,7 @@ export namespace Specified {
     | Keyword<"ruby-text-container">;
 
   /**
-   * @see https://drafts.csswg.org/css-display/#box-generation
+   * {@link https://drafts.csswg.org/css-display/#box-generation}
    */
   export type Box = Keyword<"contents"> | Keyword<"none">;
 }
@@ -121,7 +121,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/display
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/display}
  * @internal
  */
 export default Property.of<Specified, Computed>(

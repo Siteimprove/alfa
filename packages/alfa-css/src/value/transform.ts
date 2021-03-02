@@ -1,4 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 
@@ -16,6 +17,9 @@ import { Translate } from "./transform/translate";
 
 const { either, oneOrMore, delimited, option, map } = Parser;
 
+/**
+ * @public
+ */
 export type Transform =
   | Matrix
   | Perspective
@@ -24,6 +28,9 @@ export type Transform =
   | Skew
   | Translate;
 
+/**
+ * @public
+ */
 export namespace Transform {
   export function matrix(...values: Matrix.Values<Number>): Matrix {
     return Matrix.of(...values);
@@ -62,23 +69,23 @@ export namespace Transform {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#typedef-transform-function
+   * {@link https://drafts.csswg.org/css-transforms/#typedef-transform-function}
    */
-  export const parse = either(
+  export const parse = either<Slice<Token>, Transform, string>(
     Matrix.parse,
-    either(
-      Perspective.parse,
-      either(
-        Rotate.parse,
-        either(Scale.parse, either(Skew.parse, Translate.parse))
-      )
-    )
+    Perspective.parse,
+    Rotate.parse,
+    Scale.parse,
+    Skew.parse,
+    Translate.parse
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#typedef-transform-list
+   * {@link https://drafts.csswg.org/css-transforms/#typedef-transform-list}
    */
-  export const parseList = oneOrMore(
-    delimited(option(Token.parseWhitespace), parse)
-  );
+  export const parseList: Parser<
+    Slice<Token>,
+    Array<Transform>,
+    string
+  > = oneOrMore(delimited(option(Token.parseWhitespace), parse));
 }

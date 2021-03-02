@@ -34,7 +34,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-x
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-x}
  * @internal
  */
 export default Property.of<Specified, Computed>(

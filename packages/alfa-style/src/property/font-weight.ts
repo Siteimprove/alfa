@@ -33,7 +33,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight}
  * @internal
  */
 export default Property.of<Specified, Computed>(

@@ -14,6 +14,9 @@ import { None } from "./none";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export class Some<T> implements Option<T> {
   public static of<T>(value: T): Some<T> {
     return new Some(value);
@@ -145,6 +148,9 @@ export class Some<T> implements Option<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Some {
   export interface JSON<T> {
     [key: string]: json.JSON;

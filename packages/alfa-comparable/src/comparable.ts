@@ -11,10 +11,16 @@ const {
   isObject,
 } = Refinement;
 
+/**
+ * @public
+ */
 export interface Comparable<T> {
   compare(value: T): Comparison;
 }
 
+/**
+ * @public
+ */
 export namespace Comparable {
   export function isComparable<T>(value: unknown): value is Comparable<T> {
     return isObject(value) && isFunction(value.compare);
@@ -56,16 +62,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link Comparable.compare} are undesired.
-   */
-  export function compareComparable<T>(a: Comparable<T>, b: T): Comparison {
-    return a.compare(b);
-  }
-
-  /**
-   * @remarks
-   * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link Comparable.compare} are undesired.
+   * more general {@link (Comparable:namespace).(compare:1)} are undesired.
    */
   export function compareString(a: string, b: string): Comparison {
     return comparePrimitive(a, b);
@@ -74,7 +71,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link Comparable.compare} are undesired.
+   * more general {@link (Comparable:namespace).(compare:2)} are undesired.
    */
   export function compareNumber(a: number, b: number): Comparison {
     return comparePrimitive(a, b);
@@ -83,7 +80,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link Comparable.compare} are undesired.
+   * more general {@link (Comparable:namespace).(compare:3)} are undesired.
    */
   export function compareBigInt(a: bigint, b: bigint): Comparison {
     return comparePrimitive(a, b);
@@ -92,10 +89,19 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link Comparable.compare} are undesired.
+   * more general {@link (Comparable:namespace).(compare:4)} are undesired.
    */
   export function compareBoolean(a: boolean, b: boolean): Comparison {
     return comparePrimitive(a, b);
+  }
+
+  /**
+   * @remarks
+   * This should only be used in cases where branch mispredictions caused by the
+   * more general {@link (Comparable:namespace).(compare:5)} are undesired.
+   */
+  export function compareComparable<T>(a: Comparable<T>, b: T): Comparison {
+    return a.compare(b);
   }
 
   function comparePrimitive<T extends string | number | bigint | boolean>(

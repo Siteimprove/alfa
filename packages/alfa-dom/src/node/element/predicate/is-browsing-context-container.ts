@@ -1,7 +1,7 @@
 import { Element } from "../../element";
 
 /**
- * @see https://html.spec.whatwg.org/#browsing-context-container
+ * {@link https://html.spec.whatwg.org/#browsing-context-container}
  */
 export function isBrowsingContextContainer(element: Element): boolean {
   switch (element.name) {

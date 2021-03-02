@@ -8,7 +8,7 @@ import * as Style from "./outline-style";
 import * as Width from "./outline-width";
 
 /**
- * @see https://drafts.csswg.org/css-ui/#outline
+ * {@link https://drafts.csswg.org/css-ui/#outline}
  * @internal
  */
 export default Property.shorthand(

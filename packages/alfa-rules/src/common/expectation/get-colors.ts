@@ -200,7 +200,7 @@ function resolveColor(
 }
 
 /**
- * @see https://drafts.fxtf.org/compositing-1/#simplealphacompositing
+ * {@link https://drafts.fxtf.org/compositing-1/#simplealphacompositing}
  */
 function composite(
   foreground: RGB<Percentage, Percentage>,

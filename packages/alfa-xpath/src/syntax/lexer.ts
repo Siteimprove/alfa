@@ -11,6 +11,9 @@ const { fromCharCode } = String;
 const { map } = Parser;
 const { and, or, not, equals } = Predicate;
 
+/**
+ * @public
+ */
 export namespace Lexer {
   export function lex(input: string): Array<Token> {
     const points = new Array<number>(input.length);
@@ -89,7 +92,7 @@ const isAlpha = or(isBetween(0x61, 0x7a), isBetween(0x41, 0x5a));
 const isNumeric = isBetween(0x30, 0x39);
 
 /**
- * @see https://www.w3.org/TR/xml/#NT-NameStartChar
+ * {@link https://www.w3.org/TR/xml/#NT-NameStartChar}
  */
 const isNameStart = or(
   equals(0x3a, 0x5f),
@@ -109,7 +112,7 @@ const isNameStart = or(
 );
 
 /**
- * @see https://www.w3.org/TR/xml/#NT-NameChar
+ * {@link https://www.w3.org/TR/xml/#NT-NameChar}
  */
 const isName = or(
   equals(0x2d, 0x2e, 0xb7),
@@ -120,12 +123,12 @@ const isName = or(
 );
 
 /**
- * @see https://www.w3.org/TR/xml-names/#NT-NCName
+ * {@link https://www.w3.org/TR/xml-names/#NT-NCName}
  */
 const isNonColonName = and(not(equals(0x3a)), isName);
 
 /**
- * @see https://www.w3.org/TR/xml/#NT-Char
+ * {@link https://www.w3.org/TR/xml/#NT-Char}
  */
 const isCharacter = or(
   equals(0x9, 0xa, 0xd),

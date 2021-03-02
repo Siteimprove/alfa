@@ -22,6 +22,9 @@ import { Screenshot } from "./screenshot";
 
 const { entries } = Object;
 
+/**
+ * @public
+ */
 export class Scraper {
   public static async of(
     browser: Promise<puppeteer.Browser> = puppeteer.launch({
@@ -187,6 +190,9 @@ export class Scraper {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Scraper {
   export namespace scrape {
     export interface Options {

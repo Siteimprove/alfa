@@ -11,6 +11,9 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Left } from "./left";
 import { Right } from "./right";
 
+/**
+ * @public
+ */
 export interface Either<L, R = L>
   extends Functor<L | R>,
     Monad<L | R>,
@@ -31,6 +34,9 @@ export interface Either<L, R = L>
   toJSON(): Either.JSON<L, R>;
 }
 
+/**
+ * @public
+ */
 export namespace Either {
   export type JSON<L, R = L> = Left.JSON<L> | Right.JSON<R>;
 

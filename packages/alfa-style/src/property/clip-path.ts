@@ -24,7 +24,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path}
  * @internal
  */
 export default Property.of<Specified, Computed>(

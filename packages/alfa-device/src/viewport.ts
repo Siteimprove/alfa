@@ -4,6 +4,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Viewport implements Equatable, Hashable, Serializable {
   public static of(
     width: number,
@@ -28,21 +31,21 @@ export class Viewport implements Equatable, Hashable, Serializable {
   }
 
   /**
-   * @see https://www.w3.org/TR/mediaqueries/#width
+   * {@link https://www.w3.org/TR/mediaqueries/#width}
    */
   public get width(): number {
     return this._width;
   }
 
   /**
-   * @see https://www.w3.org/TR/mediaqueries/#height
+   * {@link https://www.w3.org/TR/mediaqueries/#height}
    */
   public get height(): number {
     return this._height;
   }
 
   /**
-   * @see https://www.w3.org/TR/mediaqueries/#orientation
+   * {@link https://www.w3.org/TR/mediaqueries/#orientation}
    */
   public get orientation(): Viewport.Orientation {
     return this._orientation;
@@ -87,6 +90,9 @@ export class Viewport implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Viewport {
   export enum Orientation {
     Portrait = "portrait",

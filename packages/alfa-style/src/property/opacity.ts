@@ -22,7 +22,7 @@ export type Computed = Number;
 export const parse = either(Number.parse, Percentage.parse);
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/opacity
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/opacity}
  */
 export default Property.of<Specified, Computed>(
   Number.of(1),

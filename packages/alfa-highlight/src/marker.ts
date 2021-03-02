@@ -1,5 +1,8 @@
 import * as chalk from "chalk";
 
+/**
+ * @public
+ */
 export interface Marker {
   (value: string): string;
 
@@ -25,6 +28,9 @@ export interface Marker {
   readonly gray: this;
 }
 
+/**
+ * @public
+ */
 export namespace Marker {
   // Styles
   export const reset: Marker = chalk.reset;
@@ -48,4 +54,7 @@ export namespace Marker {
   export const gray: Marker = chalk.gray;
 }
 
+/**
+ * @public
+ */
 export const mark = Marker;

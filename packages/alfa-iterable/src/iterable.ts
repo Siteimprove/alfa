@@ -13,10 +13,18 @@ const { not } = Predicate;
 const { isObject } = Refinement;
 const { compareComparable } = Comparable;
 
-// Re-export the global `Iterable` interface to ensure that it merges with the
-// `Iterable` namespace.
+/**
+ * @remarks
+ * This is a re-export the global `Iterable` interface to ensure that it merges
+ * with the `Iterable` namespace.
+ *
+ * @public
+ */
 export type Iterable<T> = globalThis.Iterable<T>;
 
+/**
+ * @public
+ */
 export namespace Iterable {
   export function isIterable<T>(value: unknown): value is Iterable<T> {
     return isObject(value) && Symbol.iterator in value;

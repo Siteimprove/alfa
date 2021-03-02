@@ -14,6 +14,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Slice<T> implements Collection.Indexed<T> {
   public static of<T>(
     array: ReadonlyArray<T>,
@@ -421,6 +424,9 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Slice {
   export type JSON<T> = Array<Serializable.ToJSON<T>>;
 

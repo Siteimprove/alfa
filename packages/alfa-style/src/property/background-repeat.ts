@@ -42,7 +42,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}
  * @internal
  */
 export default Property.shorthand(

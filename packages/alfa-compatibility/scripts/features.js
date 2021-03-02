@@ -156,9 +156,15 @@ let code = `
 // changes, do so in \`scripts/features.js\` and run \`yarn generate\` to rebuild this
 // file.
 
-export type Data = typeof Data;
+/**
+ * @internal
+ */
+type Data = typeof Data;
 
-export const Data = {
+/**
+ * @internal
+ */
+const Data = {
   ${features
     .map(
       (feature) => `
@@ -184,6 +190,8 @@ export const Data = {
     )
     .join(",\n\n")}
 };
+
+export default Data;
 `;
 
 code = prettier.format(code, {

@@ -9,6 +9,9 @@ import { Attributes } from "./attribute/data";
 import { Role } from "./role";
 import { Roles } from "./role/data";
 
+/**
+ * @public
+ */
 export class Attribute<N extends Attribute.Name = Attribute.Name>
   implements Equatable, Serializable {
   public static of<N extends Attribute.Name>(
@@ -63,7 +66,7 @@ export class Attribute<N extends Attribute.Name = Attribute.Name>
   }
 
   /**
-   * @see https://www.w3.org/TR/wai-aria/#global_states
+   * {@link https://www.w3.org/TR/wai-aria/#global_states}
    */
   public isGlobal(): this is Attribute<Attribute.Global> {
     return Role.of("roletype").isAttributeSupported(this._name);
@@ -85,6 +88,9 @@ export class Attribute<N extends Attribute.Name = Attribute.Name>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Attribute {
   export interface JSON {
     [key: string]: json.JSON;

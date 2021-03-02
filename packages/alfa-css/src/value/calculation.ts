@@ -32,7 +32,9 @@ const { isNumber } = Number;
 const { isPercentage } = Percentage;
 
 /**
- * @see https://drafts.csswg.org/css-values/#math
+ * {@link https://drafts.csswg.org/css-values/#math}
+ *
+ * @public
  */
 export class Calculation extends Value<"calculation"> {
   public static of(expression: Calculation.Expression): Calculation {
@@ -79,6 +81,9 @@ export class Calculation extends Value<"calculation"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Calculation {
   export interface JSON {
     [key: string]: json.JSON;
@@ -87,7 +92,7 @@ export namespace Calculation {
   }
 
   /**
-   * @see https://drafts.css-houdini.org/css-typed-om/#numeric-typing
+   * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}
    *
    * @remarks
    * The shared `Value` interface already uses the term "type" to denote the
@@ -135,7 +140,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
      */
     public is(
       kind?: Kind.Base,
@@ -160,7 +165,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-add-two-types
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-add-two-types}
      */
     public add(kind: Kind): Result<Kind, string> {
       let a: Kind = this;
@@ -213,7 +218,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-multiply-two-types
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-multiply-two-types}
      */
     public multiply(kind: Kind): Result<Kind, string> {
       let a: Kind = this;
@@ -248,7 +253,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-invert-a-type
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-invert-a-type}
      */
     public invert(): Kind {
       return new Kind(
@@ -261,7 +266,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#apply-the-percent-hint
+     * {@link https://drafts.css-houdini.org/css-typed-om/#apply-the-percent-hint}
      */
     public apply(hint: Kind.Hint): Kind {
       return new Kind(
@@ -303,7 +308,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type}
      */
     export type Map = Record<
       {
@@ -312,7 +317,7 @@ export namespace Calculation {
     >;
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type}
      */
     export type Base =
       | "length"
@@ -323,13 +328,13 @@ export namespace Calculation {
       | "percentage";
 
     /**
-     * @see https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-percent-hint
+     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-percent-hint}
      */
     export type Hint = Exclude<Kind.Base, "percentage">;
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#calculation-tree
+   * {@link https://drafts.csswg.org/css-values/#calculation-tree}
    */
   export abstract class Expression implements Equatable, Serializable {
     public abstract get type(): string;
@@ -337,7 +342,7 @@ export namespace Calculation {
     public abstract get kind(): Kind;
 
     /**
-     * @see https://drafts.csswg.org/css-values/#simplify-a-calculation-tree
+     * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
      */
     public abstract reduce(resolve: Mapper<Numeric>): Expression;
 
@@ -366,7 +371,7 @@ export namespace Calculation {
     }
 
     /**
-     * @see https://drafts.csswg.org/css-values/#serialize-a-calculation-tree
+     * {@link https://drafts.csswg.org/css-values/#serialize-a-calculation-tree}
      */
     public abstract toString(): string;
   }
@@ -461,7 +466,7 @@ export namespace Calculation {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#calculation-tree-operator-nodes
+   * {@link https://drafts.csswg.org/css-values/#calculation-tree-operator-nodes}
    */
   export abstract class Operation<
     O extends Array<Expression> = Array<Expression>
@@ -758,7 +763,7 @@ export namespace Calculation {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-values/#typedef-calc-value
+   * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
    */
   const parseValue = either<Slice<Token>, Expression, string>(
     map(
@@ -779,7 +784,7 @@ export namespace Calculation {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-values/#typedef-calc-product
+   * {@link https://drafts.csswg.org/css-values/#typedef-calc-product}
    */
   const parseProduct = flatMap(
     pair(
@@ -812,7 +817,7 @@ export namespace Calculation {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-values/#typedef-calc-sum
+   * {@link https://drafts.csswg.org/css-values/#typedef-calc-sum}
    */
   parseSum = flatMap(
     pair(

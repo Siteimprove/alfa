@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export class Time {
   public static of(epoch: number): Time {
     return new Time(epoch);

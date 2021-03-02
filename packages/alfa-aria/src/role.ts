@@ -1,5 +1,3 @@
-import { Branched } from "@siteimprove/alfa-branched";
-import { Browser } from "@siteimprove/alfa-compatibility";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
@@ -22,6 +20,9 @@ const { and, not, nor } = Predicate;
 
 const roles = new Map<string, Role>();
 
+/**
+ * @public
+ */
 export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable {
   public static of<N extends Role.Name>(name: N): Role<N> {
@@ -69,15 +70,15 @@ export class Role<N extends Role.Name = Role.Name>
   /**
    * Get the required parent of this role.
    */
-  public get requiredParent(): Iterable<Role.Name> {
-    return Roles[this._name].parent.required;
+  public get requiredParent(): Iterable<Iterable<Role.Name>> {
+    return Roles[this._name].parent.required[Symbol.iterator]();
   }
 
   /**
    * Get the required children of this role.
    */
   public get requiredChildren(): Iterable<Iterable<Role.Name>> {
-    return Roles[this._name].children.required;
+    return Roles[this._name].children.required[Symbol.iterator]();
   }
 
   /**
@@ -277,6 +278,9 @@ export class Role<N extends Role.Name = Role.Name>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Role {
   export interface JSON {
     [key: string]: json.JSON;
@@ -366,72 +370,54 @@ export namespace Role {
    * Get the role assigned either explicitly or implicitly to an element, if
    * any.
    */
-  export function from(element: Element): Branched<Option<Role>, Browser> {
-    return fromExplicit(element).flatMap((explicit) =>
-      fromImplicit(element).map((implicit) => explicit.or(implicit))
-    );
+  export function from(element: Element): Option<Role> {
+    return fromExplicit(element).orElse(() => fromImplicit(element));
   }
 
   /**
    * Get the role explicitly assigned to an element, if any.
    */
-  export function fromExplicit(
-    element: Element
-  ): Branched<Option<Role>, Browser> {
+  export function fromExplicit(element: Element): Option<Role> {
     const roles: Sequence<string> = element
       .attribute("role")
       .map((attribute) => attribute.tokens())
       .getOrElse(() => Sequence.empty());
 
     return (
-      Branched.of<Sequence<string>, Browser>(
-        roles.map((role) => role.toLowerCase())
-      )
+      roles
+        .map((role) => role.toLowerCase())
+        .filter(isName)
+        .map(Role.of)
 
-        // Firefox currently treats the `role` attribute as case-sensitive so it
-        // is not lowercased.
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
-        .branch(roles, ...Browser.query(["firefox"]))
+        // Abstract roles are only used for ontological purposes and are not
+        // allowed to be used by authors; we therefore filter them out.
+        .reject((role) => role.isAbstract())
 
-        .map((roles) =>
-          roles
-            .filter(isName)
-            .map(Role.of)
-
-            // Abstract roles are only used for ontological purposes and are not
-            // allowed to be used by authors; we therefore filter them out.
-            .reject((role) => role.isAbstract())
-
-            // If the element is not allowed to be presentational, reject all
-            // presentational roles.
-            .reject((role) =>
-              isAllowedPresentational(element) ? false : role.isPresentational()
-            )
-
-            .first()
+        // If the element is not allowed to be presentational, reject all
+        // presentational roles.
+        .reject((role) =>
+          isAllowedPresentational(element) ? false : role.isPresentational()
         )
+
+        .first()
     );
   }
 
   /**
    * Get the role implicitly assigned to an element, if any.
    */
-  export function fromImplicit(
-    element: Element
-  ): Branched<Option<Role>, Browser> {
-    return Branched.of(
-      element.namespace.flatMap((namespace) =>
-        Feature.from(namespace, element.name).flatMap((feature) =>
-          Sequence.from(feature.role(element))
+  export function fromImplicit(element: Element): Option<Role> {
+    return element.namespace.flatMap((namespace) =>
+      Feature.from(namespace, element.name).flatMap((feature) =>
+        Sequence.from(feature.role(element))
 
-            // If the element is not allowed to be presentational, reject all
-            // presentational roles.
-            .reject((role) =>
-              isAllowedPresentational(element) ? false : role.isPresentational()
-            )
+          // If the element is not allowed to be presentational, reject all
+          // presentational roles.
+          .reject((role) =>
+            isAllowedPresentational(element) ? false : role.isPresentational()
+          )
 
-            .first()
-        )
+          .first()
       )
     );
   }

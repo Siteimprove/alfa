@@ -9,6 +9,9 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Record<T>
   implements
     Foldable<Record.Value<T>>,
@@ -140,6 +143,9 @@ export class Record<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Record {
   export type Key<T> = Extract<keyof T, string>;
 

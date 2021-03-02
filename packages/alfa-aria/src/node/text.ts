@@ -5,6 +5,9 @@ import * as dom from "@siteimprove/alfa-dom";
 import { Name } from "../name";
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Text extends Node {
   public static of(owner: dom.Node, name: Option<Name>): Text {
     return new Text(owner, name);
@@ -44,6 +47,9 @@ export class Text extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Text {
   export interface JSON extends Node.JSON {
     type: "text";

@@ -22,7 +22,7 @@ export type Computed = Length<"px">;
 export const parse = either(Keyword.parse("normal"), Length.parse);
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing}
  * @internal
  */
 export default Property.of<Specified, Computed>(

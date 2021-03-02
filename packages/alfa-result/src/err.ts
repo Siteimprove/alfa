@@ -14,6 +14,9 @@ import { Result } from "./result";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export class Err<E> implements Result<never, E> {
   public static of<E>(error: E): Err<E> {
     return new Err(error);
@@ -156,14 +159,17 @@ export class Err<E> implements Result<never, E> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Err {
-  export function isErr<E>(value: unknown): value is Err<E> {
-    return value instanceof Err;
-  }
-
   export interface JSON<E> {
     [key: string]: json.JSON;
     type: "err";
     error: Serializable.ToJSON<E>;
+  }
+
+  export function isErr<E>(value: unknown): value is Err<E> {
+    return value instanceof Err;
   }
 }

@@ -1,11 +1,17 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+/**
+ * @public
+ */
 export type Refinement<T, U extends T, A extends Array<unknown> = []> = (
   value: T,
   ...args: A
 ) => value is U;
 
+/**
+ * @public
+ */
 export namespace Refinement {
   interface Test {
     <T, U extends T, A extends Array<unknown> = []>(

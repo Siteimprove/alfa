@@ -4,7 +4,7 @@ import { Element, Text } from "@siteimprove/alfa-dom";
 import { Style } from "@siteimprove/alfa-style";
 
 /**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-large-scale
+ * {@link https://w3c.github.io/wcag/guidelines/#dfn-large-scale}
  */
 export function isLargeText(device: Device): Predicate<Text> {
   return (text) => {

@@ -2,6 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -14,7 +15,9 @@ import { Gradient } from "../gradient";
 const { map, either, pair, option, left, right, delimited } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-images/#linear-gradients
+ * {@link https://drafts.csswg.org/css-images/#linear-gradients}
+ *
+ * @public
  */
 export class Linear<
   I extends Gradient.Item = Gradient.Item,
@@ -95,6 +98,9 @@ export class Linear<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Linear {
   export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
@@ -246,7 +252,7 @@ export namespace Linear {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-side-or-corner
+   * {@link https://drafts.csswg.org/css-images/#typedef-side-or-corner}
    */
   const parseSide = map(
     right(
@@ -257,7 +263,7 @@ export namespace Linear {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-side-or-corner
+   * {@link https://drafts.csswg.org/css-images/#typedef-side-or-corner}
    */
   const parseCorner = right(
     Token.parseIdent("to"),
@@ -282,7 +288,7 @@ export namespace Linear {
     )
   );
 
-  export const parseDirection = either(
+  const parseDirection = either(
     Angle.parse,
     // Corners must be parsed before sides as sides are also valid prefixes of
     // corners.
@@ -290,9 +296,9 @@ export namespace Linear {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-images/#funcdef-linear-gradient
+   * {@link https://drafts.csswg.org/css-images/#funcdef-linear-gradient}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Linear, string> = map(
     pair(
       Token.parseFunction(
         (fn) =>

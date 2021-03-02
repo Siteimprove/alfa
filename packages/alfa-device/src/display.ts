@@ -4,6 +4,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Display implements Equatable, Hashable, Serializable {
   public static of(
     resolution: number,
@@ -21,14 +24,14 @@ export class Display implements Equatable, Hashable, Serializable {
   }
 
   /**
-   * @see https://www.w3.org/TR/mediaqueries/#resolution
+   * {@link https://www.w3.org/TR/mediaqueries/#resolution}
    */
   public get resolution(): number {
     return this._resolution;
   }
 
   /**
-   * @see https://www.w3.org/TR/mediaqueries/#scan
+   * {@link https://www.w3.org/TR/mediaqueries/#scan}
    */
   public get scan(): Display.Scan {
     return this._scan;
@@ -62,6 +65,9 @@ export class Display implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Display {
   export enum Scan {
     Interlace = "interlace",

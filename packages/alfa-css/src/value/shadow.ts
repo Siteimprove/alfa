@@ -5,6 +5,9 @@ import { Value } from "../value";
 import { Color } from "./color";
 import { Length } from "./length";
 
+/**
+ * @public
+ */
 export class Shadow<
   V extends Length = Length,
   H extends Length = V,
@@ -122,6 +125,9 @@ export class Shadow<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Shadow {
   export interface JSON extends Value.JSON<"shadow"> {
     vertical: Length.JSON;

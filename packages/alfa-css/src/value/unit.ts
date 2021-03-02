@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export type Unit =
   | Unit.Length
   | Unit.Angle
@@ -5,10 +8,13 @@ export type Unit =
   | Unit.Frequency
   | Unit.Resolution;
 
+/**
+ * @public
+ */
 export namespace Unit {
   export namespace Length {
     /**
-     * @see https://drafts.csswg.org/css-values/#relative-lengths
+     * {@link https://drafts.csswg.org/css-values/#relative-lengths}
      */
     export type Relative =
       | "em"
@@ -37,7 +43,7 @@ export namespace Unit {
     }
 
     /**
-     * @see https://drafts.csswg.org/css-values/#absolute-lengths
+     * {@link https://drafts.csswg.org/css-values/#absolute-lengths}
      */
     export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
 
@@ -58,7 +64,7 @@ export namespace Unit {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#lengths
+   * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export type Length = Length.Relative | Length.Absolute;
 
@@ -75,7 +81,7 @@ export namespace Unit {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#angles
+   * {@link https://drafts.csswg.org/css-values/#angles}
    */
   export type Angle = "deg" | "grad" | "rad" | "turn";
 
@@ -92,7 +98,7 @@ export namespace Unit {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#time
+   * {@link https://drafts.csswg.org/css-values/#time}
    */
   export type Time = "s" | "ms";
 
@@ -107,7 +113,7 @@ export namespace Unit {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#frequency
+   * {@link https://drafts.csswg.org/css-values/#frequency}
    */
   export type Frequency = "hz" | "kHz";
 
@@ -122,7 +128,7 @@ export namespace Unit {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#resolution
+   * {@link https://drafts.csswg.org/css-values/#resolution}
    */
   export type Resolution = "dpi" | "dpcm" | "dppx";
 

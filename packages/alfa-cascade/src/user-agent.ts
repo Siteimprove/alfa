@@ -1,14 +1,15 @@
 import { h } from "@siteimprove/alfa-dom";
 
 /**
- * @see https://html.spec.whatwg.org/#rendering
+ * {@link https://html.spec.whatwg.org/#rendering}
+ *
  * @internal
  */
 export const UserAgent = h.sheet([
   h.rule.namespace("http://www.w3.org/1999/xhtml"),
 
   /**
-   * @see https://html.spec.whatwg.org/#hidden-elements
+   * {@link https://html.spec.whatwg.org/#hidden-elements}
    */
 
   h.rule.style(
@@ -43,7 +44,7 @@ export const UserAgent = h.sheet([
   ]),
 
   /**
-   * @see https://html.spec.whatwg.org/#the-page
+   * {@link https://html.spec.whatwg.org/#the-page}
    */
 
   h.rule.style("html, body", {
@@ -51,7 +52,7 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#flow-content-3
+   * {@link https://html.spec.whatwg.org/#flow-content-3}
    */
 
   h.rule.style(
@@ -79,7 +80,7 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#phrasing-content-3
+   * {@link https://html.spec.whatwg.org/#phrasing-content-3}
    */
 
   h.rule.style("cite, dfn, em, i, var", { fontStyle: "italic" }),
@@ -104,7 +105,7 @@ export const UserAgent = h.sheet([
   h.rule.style("del, s, strike", { textDecoration: "line-through" }),
 
   /**
-   * @see https://html.spec.whatwg.org/#sections-and-headings
+   * {@link https://html.spec.whatwg.org/#sections-and-headings}
    */
 
   h.rule.style("article, aside, h1, h2, h3, h4, h5, h6, hgroup, nav, section", {
@@ -119,14 +120,14 @@ export const UserAgent = h.sheet([
   h.rule.style("h6", { fontSize: "0.67em", fontWeight: "bold" }),
 
   /**
-   * @see https://html.spec.whatwg.org/#section-lists
+   * {@link https://html.spec.whatwg.org/#section-lists}
    */
 
   h.rule.style("dir, dd, dl, dt, ol, ul", { display: "block" }),
   h.rule.style("li", { display: "list-item" }),
 
   /**
-   * @see https://html.spec.whatwg.org/#tables
+   * {@link https://html.spec.whatwg.org/#tables}
    */
 
   h.rule.style("table", { display: "table" }),
@@ -153,7 +154,7 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#form-controls
+   * {@link https://html.spec.whatwg.org/#form-controls}
    */
 
   h.rule.style("input, select, button, textarea", {
@@ -199,7 +200,7 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#the-hr-element-rendering
+   * {@link https://html.spec.whatwg.org/#the-hr-element-rendering}
    */
 
   h.rule.style("hr", {
@@ -208,7 +209,7 @@ export const UserAgent = h.sheet([
   }),
 
   /**
-   * @see https://html.spec.whatwg.org/#the-fieldset-and-legend-elements
+   * {@link https://html.spec.whatwg.org/#the-fieldset-and-legend-elements}
    */
 
   h.rule.style("fieldset", {

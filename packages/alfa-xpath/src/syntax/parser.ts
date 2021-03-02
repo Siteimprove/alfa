@@ -22,6 +22,9 @@ const {
 } = parser.Parser;
 const { equals, property } = Predicate;
 
+/**
+ * @public
+ */
 export namespace Parser {
   export function parse(input: string): Option<Expression> {
     return parseExpression(Slice.of(Lexer.lex(input)))
@@ -35,35 +38,35 @@ export namespace Parser {
 let parseExpression: parser.Parser<Slice<Token>, Expression, string>;
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-IntegerLiteral
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-IntegerLiteral}
  */
 const parseIntegerLiteral = map(Token.parseInteger, (integer) =>
   Expression.Integer.of(integer.value)
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-DecimalLiteral
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-DecimalLiteral}
  */
 const parseDecimalLiteral = map(Token.parseDecimal, (decimal) =>
   Expression.Decimal.of(decimal.value)
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-DoubleLiteral
+ * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-DoubleLiteral}
  */
 const parseDoubleLiteral = map(Token.parseDouble, (double) =>
   Expression.Double.of(double.value)
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-StringLiteral
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-StringLiteral}
  */
 const parseStringLiteral = map(Token.parseString, (string) =>
   Expression.String.of(string.value)
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-NumericLiteral
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-NumericLiteral}
  */
 const parseNumericLiteral = either(
   parseIntegerLiteral,
@@ -71,12 +74,12 @@ const parseNumericLiteral = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-Literal
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-Literal}
  */
 const parseLiteral = either(parseNumericLiteral, parseStringLiteral);
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ParenthesizedExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ParenthesizedExpr}
  */
 const parseParenthesizedExpression = delimited(
   Token.parseCharacter("("),
@@ -85,14 +88,14 @@ const parseParenthesizedExpression = delimited(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ContextItemExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ContextItemExpr}
  */
 const parseContextItemExpression = map(Token.parseCharacter("."), () =>
   Expression.ContextItem.of()
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-PrimaryExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-PrimaryExpr}
  */
 const parsePrimaryExpression = either(
   parseLiteral,
@@ -100,12 +103,12 @@ const parsePrimaryExpression = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementName
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementName}
  */
 const parseElementName = map(Token.parseName(), (name) => name.value);
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementNameOrWildcard
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementNameOrWildcard}
  */
 const parseElementNameOrWildcard = either(
   parseElementName,
@@ -113,12 +116,12 @@ const parseElementNameOrWildcard = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-AttributeName
+ * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-AttributeName}
  */
 const parseAttributeName = map(Token.parseName(), (name) => name.value);
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-AttribNameOrWildcard
+ * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-AttribNameOrWildcard}
  */
 const parseAttributeNameOrWildcard = either(
   parseAttributeName,
@@ -126,12 +129,12 @@ const parseAttributeNameOrWildcard = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-TypeName
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-TypeName}
  */
 const parseTypeName = map(Token.parseName(), (name) => name.value);
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-DocumentTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-DocumentTest}
  */
 const parseDocumentTest = map(
   pair(
@@ -142,7 +145,7 @@ const parseDocumentTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementTest}
  */
 const parseElementTest = map(
   right(
@@ -156,7 +159,7 @@ const parseElementTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-AttributeTest
+ * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-AttributeTest}
  */
 const parseAttributeTest = map(
   right(
@@ -170,7 +173,7 @@ const parseAttributeTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-CommentTest
+ * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-CommentTest}
  */
 const parseCommentTest = map(
   pair(
@@ -181,7 +184,7 @@ const parseCommentTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-TextTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-TextTest}
  */
 const parseTextTest = map(
   pair(
@@ -192,7 +195,7 @@ const parseTextTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-AnyKindTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-AnyKindTest}
  */
 const parseAnyKindTest = map(
   pair(
@@ -203,7 +206,7 @@ const parseAnyKindTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-KindTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-KindTest}
  */
 const parseKindTest = map(
   either(
@@ -220,7 +223,7 @@ const parseKindTest = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-NameTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-NameTest}
  */
 const parseNameTest = either(
   map(Token.parseName(), (name) =>
@@ -230,14 +233,14 @@ const parseNameTest = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-NodeTest
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-NodeTest}
  */
 const parseNodeTest = map(either(parseKindTest, parseNameTest), (test) =>
   test.isSome() ? Option.of(test.get()) : None
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ReverseAxis
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ReverseAxis}
  */
 const parseReverseAxis = left(
   map(
@@ -259,7 +262,7 @@ const parseReverseAxis = left(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-AbbrevReverseStep
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-AbbrevReverseStep}
  */
 const parseAbbreviatedReverseStep = map(
   take(Token.parseCharacter("."), 2),
@@ -267,7 +270,7 @@ const parseAbbreviatedReverseStep = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ReverseStep
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ReverseStep}
  */
 const parseReverseStep = either(
   map(pair(parseReverseAxis, parseNodeTest), (result) => {
@@ -278,7 +281,7 @@ const parseReverseStep = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ForwardAxis
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ForwardAxis}
  */
 const parseForwardAxis = left(
   map(
@@ -303,7 +306,7 @@ const parseForwardAxis = left(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-AbbrevForwardStep
+ * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-AbbrevForwardStep}
  */
 const parseAbbreviatedForwardStep = map(
   pair(option(Token.parseCharacter("@")), parseNodeTest),
@@ -325,7 +328,7 @@ const parseAbbreviatedForwardStep = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ForwardStep
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ForwardStep}
  */
 const parseForwardStep = either(
   map(pair(parseForwardAxis, parseNodeTest), (result) => {
@@ -336,7 +339,7 @@ const parseForwardStep = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-Predicate
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-Predicate}
  */
 const parsePredicate = delimited(
   Token.parseCharacter("["),
@@ -345,12 +348,12 @@ const parsePredicate = delimited(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-PredicateList
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-PredicateList}
  */
 const parsePredicateList = zeroOrMore(parsePredicate);
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-AxisStep
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-AxisStep}
  */
 const parseAxisStep = map(
   pair(either(parseReverseStep, parseForwardStep), parsePredicateList),
@@ -361,7 +364,7 @@ const parseAxisStep = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-PostfixExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-PostfixExpr}
  */
 const parsePostfixExpression = map(
   pair(parsePrimaryExpression, zeroOrMore(parsePredicate)),
@@ -377,12 +380,12 @@ const parsePostfixExpression = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-StepExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-StepExpr}
  */
 const parseStepExpression = either(parseAxisStep, parsePostfixExpression);
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-RelativePathExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-RelativePathExpr}
  */
 const parseRelativePathExpression = map(
   pair(
@@ -416,7 +419,7 @@ const parseRelativePathExpression = map(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-PathExpr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-PathExpr}
  */
 const parsePathExpression = either(
   either(
@@ -455,6 +458,6 @@ const parsePathExpression = either(
 );
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-Expr
+ * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-Expr}
  */
 parseExpression = parsePathExpression;

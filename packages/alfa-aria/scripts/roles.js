@@ -4,7 +4,7 @@ const prettier = require("prettier");
 const puppeteer = require("puppeteer");
 
 const specifications = [
-  "https://www.w3.org/TR/wai-aria-1.2/",
+  "https://w3c.github.io/aria/",
   "https://www.w3.org/TR/graphics-aria/",
   "https://www.w3.org/TR/dpub-aria/",
 ];
@@ -55,11 +55,18 @@ puppeteer.launch().then(async (browser) => {
                 .implicit-values .property-reference,
                 .implicit-values .state-reference
               `),
-              ].map((reference) => {
-                const key = hash(reference.getAttribute("href"));
-                const value = reference.nextElementSibling.textContent;
+              ].flatMap((reference) => {
+                const href = reference.getAttribute("href");
+                const key = hash(href);
+                const value = reference.parentElement.querySelector(
+                  `[href="${href}"] + .default`
+                );
 
-                return [key, value];
+                if (value === null) {
+                  return [];
+                }
+
+                return [[key, value.textContent]];
               })
             );
 
@@ -80,7 +87,8 @@ puppeteer.launch().then(async (browser) => {
                 .querySelector(".role-namefrom")
                 ?.textContent.trim()
                 .split(/\s+/)
-                .filter((from) => from !== "n/a") ?? [];
+                .filter((from) => from !== "n/a")
+                .sort() ?? [];
 
             const name = {
               required:
@@ -94,10 +102,17 @@ puppeteer.launch().then(async (browser) => {
 
             const parent = {
               required: [
-                ...role.querySelectorAll(".role-scope .role-reference"),
+                ...role.querySelectorAll(".role-scope, .role-scope li"),
               ]
-                .map((reference) => hash(reference.getAttribute("href")))
-                .sort(),
+                .map((scope) => [
+                  ...scope.querySelectorAll(":scope > .role-reference"),
+                ])
+                .filter((references) => references.length > 0)
+                .map((references) =>
+                  references.map((reference) =>
+                    hash(reference.getAttribute("href"))
+                  )
+                ),
             };
 
             const children = {
@@ -146,8 +161,14 @@ puppeteer.launch().then(async (browser) => {
 // changes, do so in \`scripts/roles.js\` and run \`yarn generate\` to rebuild this
 // file.
 
+/**
+ * @internal
+ */
 export type Roles = typeof Roles;
 
+/**
+ * @internal
+ */
 export const Roles = ${JSON.stringify(roles, null, 2)} as const;
   `;
 

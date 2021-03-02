@@ -9,7 +9,7 @@ import * as Start from "./inset-inline-start";
 const { map, pair, option, right } = Parser;
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline}
  * @internal
  */
 export default Property.shorthand(

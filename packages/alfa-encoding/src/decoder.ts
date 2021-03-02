@@ -1,10 +1,12 @@
 /**
- * @see https://encoding.spec.whatwg.org/#textdecoder
+ * {@link https://encoding.spec.whatwg.org/#textdecoder}
+ *
+ * @public
  */
 export namespace Decoder {
   /**
-   * @see https://encoding.spec.whatwg.org/#dom-textdecoder-decode
-   * @see https://encoding.spec.whatwg.org/#utf-8-decoder
+   * {@link https://encoding.spec.whatwg.org/#dom-textdecoder-decode}
+   * {@link https://encoding.spec.whatwg.org/#utf-8-decoder}
    */
   export function decode(input: Uint8Array): string {
     let output = "";

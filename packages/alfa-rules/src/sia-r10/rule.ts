@@ -37,11 +37,9 @@ export default Rule.Atomic.of<Page, Attribute>({
               ),
               isPerceivable(device),
               (element) =>
-                Node.from(element, device).some((ariaNode) =>
-                  ariaNode
-                    .attribute("aria-disabled")
-                    .none((ariaDisabled) => ariaDisabled.value === "true")
-                )
+                Node.from(element, device)
+                  .attribute("aria-disabled")
+                  .none((disabled) => disabled.value === "true")
             )
           )
           .map((element) => element.attribute("autocomplete").get());

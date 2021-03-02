@@ -23,7 +23,7 @@ const { not, equals } = Predicate;
 const { hasName, isElement } = Element;
 
 /**
- * @see https://html.spec.whatwg.org/#concept-table
+ * {@link https://html.spec.whatwg.org/#concept-table}
  */
 export class Table implements Equatable, Serializable<Table.JSON> {
   public static of(
@@ -108,7 +108,7 @@ export namespace Table {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#forming-a-table
+   * {@link https://html.spec.whatwg.org/#forming-a-table}
    */
   function formTable(element: Element): Table {
     // 1
@@ -412,7 +412,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#algorithm-for-processing-row-groups
+     * {@link https://html.spec.whatwg.org/#algorithm-for-processing-row-groups}
      */
     function processRowGroup(element: Element): void {
       // 1
@@ -442,7 +442,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#algorithm-for-ending-a-row-group
+     * {@link https://html.spec.whatwg.org/#algorithm-for-ending-a-row-group}
      */
     function endRowGroup(): void {
       // 1
@@ -459,7 +459,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#algorithm-for-processing-rows
+     * {@link https://html.spec.whatwg.org/#algorithm-for-processing-rows}
      */
     function processRow(element: Element): void {
       // 1
@@ -610,7 +610,7 @@ export namespace Table {
     /**
      * Carry out step 9.1 of the table forming algorithm.
      *
-     * @see https://html.spec.whatwg.org/#forming-a-table
+     * {@link https://html.spec.whatwg.org/#forming-a-table}
      */
     function processColumnGroup(element: Element): void {
       let children = element
@@ -695,7 +695,7 @@ export namespace Table {
      * For all downwards growing cells, extend their height to the current
      * y-coordinate.
      *
-     * @see https://html.spec.whatwg.org/#algorithm-for-growing-downward-growing-cells
+     * {@link https://html.spec.whatwg.org/#algorithm-for-growing-downward-growing-cells}
      */
     function growCells(): void {
       for (const [cell, i] of downwardGrowing) {
@@ -716,7 +716,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#algorithm-for-assigning-header-cells
+     * {@link https://html.spec.whatwg.org/#algorithm-for-assigning-header-cells}
      */
     function assignHeaders(cell: Cell, i: number): void {
       // 1
@@ -842,7 +842,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#internal-algorithm-for-scanning-and-assigning-header-cells
+     * {@link https://html.spec.whatwg.org/#internal-algorithm-for-scanning-and-assigning-header-cells}
      */
     function scanHeaderCells(
       principal: Cell,
@@ -944,7 +944,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#attr-th-scope
+     * {@link https://html.spec.whatwg.org/#attr-th-scope}
      */
     function assignScope(cell: Cell, i: number): void {
       if (!cell.isHeader()) {
@@ -976,7 +976,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#column-header
+     * {@link https://html.spec.whatwg.org/#column-header}
      */
     function isColumHeader(cell: Cell.Header): boolean {
       if (cell.scope === "column") {
@@ -1001,7 +1001,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#column-group-header
+     * {@link https://html.spec.whatwg.org/#column-group-header}
      */
     function isColumnGroupHeader(cell: Cell.Header): boolean {
       return (
@@ -1011,7 +1011,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#row-header
+     * {@link https://html.spec.whatwg.org/#row-header}
      */
     function isRowHeader(cell: Cell.Header): boolean {
       if (cell.scope === "row") {
@@ -1036,7 +1036,7 @@ export namespace Table {
     }
 
     /**
-     * @see https://html.spec.whatwg.org/#row-group-header
+     * {@link https://html.spec.whatwg.org/#row-group-header}
      */
     function isRowGroupHeader(cell: Cell.Header): boolean {
       return (

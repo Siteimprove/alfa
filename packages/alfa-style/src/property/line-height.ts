@@ -27,7 +27,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/line-height
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
  * @internal
  */
 export default Property.of<Specified, Computed>(

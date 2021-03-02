@@ -46,18 +46,18 @@ const isDescendantSelector = and(
  * Cascading origins defined in ascending order; origins defined first have
  * lower precedence than origins defined later.
  *
- * @see https://www.w3.org/TR/css-cascade/#cascading-origins
+ * {@link https://www.w3.org/TR/css-cascade/#cascading-origins}
  *
  * @internal
  */
 export enum Origin {
   /**
-   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-ua
+   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-ua}
    */
   UserAgent = 1,
 
   /**
-   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
+   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-author}
    */
   Author = 2,
 }
@@ -83,7 +83,8 @@ export enum Origin {
  * potentially matching selectors, plus the list of remaining selectors, in
  * order to determine the final set of matches.
  *
- * @see http://doc.servo.org/style/selector_map/struct.SelectorMap.html
+ * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
+ *
  * @internal
  */
 export class SelectorMap implements Serializable {
@@ -462,7 +463,7 @@ const componentBits = 10;
 const componentMax = (1 << componentBits) - 1;
 
 /**
- * @see https://www.w3.org/TR/selectors/#specificity
+ * {@link https://www.w3.org/TR/selectors/#specificity}
  */
 function getSpecificity(selector: Selector): Specificity {
   let a = 0;

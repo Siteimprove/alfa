@@ -7,6 +7,9 @@ import { Map } from "@siteimprove/alfa-map";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
+/**
+ * @public
+ */
 export class Network<N, E>
   implements
     Iterable<[N, Iterable<[N, Iterable<E>]>]>,
@@ -220,6 +223,9 @@ export class Network<N, E>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Network {
   export type JSON<N, E> = Array<
     [
@@ -268,7 +274,7 @@ export namespace Network {
   }
 
   /**
-   * @see https://en.wikipedia.org/wiki/Depth-first_search
+   * {@link https://en.wikipedia.org/wiki/Depth-first_search}
    */
   export const DepthFirst: Traversal = function* <N, E>(
     graph: Network<N, E>,
@@ -296,7 +302,7 @@ export namespace Network {
   };
 
   /**
-   * @see https://en.wikipedia.org/wiki/Breadth-first_search
+   * {@link https://en.wikipedia.org/wiki/Breadth-first_search}
    */
   export const BreadthFirst: Traversal = function* <N, E>(
     graph: Network<N, E>,

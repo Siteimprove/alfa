@@ -6,7 +6,7 @@ const puppeteer = require("puppeteer");
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
 
-  await page.goto("https://www.w3.org/TR/wai-aria-1.2/");
+  await page.goto("https://w3c.github.io/aria/");
 
   const attributes = await page.evaluate(() =>
     Object.fromEntries(
@@ -55,8 +55,14 @@ puppeteer.launch().then(async (browser) => {
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // \`scripts/attributes.js\` and run \`yarn generate\` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Attributes = typeof Attributes;
 
+/**
+ * @internal
+ */
 export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
   `;
 

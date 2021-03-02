@@ -41,7 +41,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip}
  * @internal
  */
 export default Property.of<Specified, Computed>(

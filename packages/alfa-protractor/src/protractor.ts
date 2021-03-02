@@ -29,6 +29,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { ElementFinder } from "protractor";
 
+/**
+ * @public
+ */
 export namespace Protractor {
   export type Type = ElementFinder;
 

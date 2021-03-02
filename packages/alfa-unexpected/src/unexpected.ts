@@ -16,6 +16,9 @@ declare module "unexpected" {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Unexpected {
   export function createPlugin<I, J, T = unknown, Q = never>(
     transform: Mapper<I, Future.Maybe<J>>,

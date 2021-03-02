@@ -70,7 +70,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-image
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-image}
  * @internal
  */
 export default Property.of<Specified, Computed>(

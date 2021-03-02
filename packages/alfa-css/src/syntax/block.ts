@@ -10,7 +10,9 @@ import { Component } from "./component";
 import { Token } from "./token";
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#simple-block
+ * {@link https://drafts.csswg.org/css-syntax/#simple-block}
+ *
+ * @public
  */
 export class Block implements Iterable<Token>, Equatable, Serializable {
   public static of(token: Block.Open, value: Iterable<Token>): Block {
@@ -69,6 +71,9 @@ export class Block implements Iterable<Token>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Block {
   export interface JSON {
     [key: string]: json.JSON;
@@ -93,7 +98,7 @@ export namespace Block {
     | Token.CloseCurlyBracket;
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-simple-block
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
   export const consume: Parser<Slice<Token>, Block> = (input) => {
     const token = input.array[input.offset] as Open;

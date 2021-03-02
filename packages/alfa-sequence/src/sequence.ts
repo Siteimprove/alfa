@@ -15,6 +15,9 @@ import { Nil } from "./nil";
 
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export interface Sequence<T> extends Collection.Indexed<T> {
   // Collection<T> methods
 
@@ -88,6 +91,9 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   toJSON(): Sequence.JSON<T>;
 }
 
+/**
+ * @public
+ */
 export namespace Sequence {
   export type JSON<T> = Cons.JSON<T> | Nil.JSON;
 

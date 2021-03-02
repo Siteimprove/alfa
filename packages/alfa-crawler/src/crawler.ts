@@ -8,6 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 const { isElement } = Element;
 
+/**
+ * @public
+ */
 export class Crawler {
   public static async of(
     scraper: Promise<Scraper> = Scraper.of()
@@ -80,6 +83,9 @@ export class Crawler {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Crawler {
   export namespace crawl {
     export interface Options
