@@ -9,6 +9,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 /**
+ * {@link https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf}
+ *
  * @public
  */
 export class Selective<S, T = never>
