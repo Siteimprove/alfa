@@ -4,6 +4,7 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
@@ -13,6 +14,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 export class Selective<S, T = never>
   implements
     Functor<T>,
+    Monad<T>,
     Iterable<S | T>,
     Equatable,
     Hashable,
@@ -33,6 +35,13 @@ export class Selective<S, T = never>
         (value) => Left.of(value) as Either<S, U>,
         (value) => Right.of(mapper(value))
       )
+    );
+  }
+
+  public flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U> {
+    return this._value.either(
+      (value) => new Selective(Left.of(value) as Either<S, U>),
+      (value) => mapper(value)
     );
   }
 

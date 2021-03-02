@@ -27,7 +27,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Added
 
-- [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available.
+- [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
 
 ### Changed
 
