@@ -4,6 +4,8 @@
 
 ## alfa-act package
 
+This package provides functionality for implementing rules specified in the [ACT Rules Format](https://www.w3.org/TR/act-rules-format/)<!-- -->.
+
 ## Classes
 
 |  Class | Description |

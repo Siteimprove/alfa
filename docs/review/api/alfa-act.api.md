@@ -642,6 +642,4 @@ export namespace Tag {
 }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

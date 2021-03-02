@@ -4,6 +4,8 @@
 
 ## alfa-array package
 
+This package provides functionality for working with arrays.
+
 ## Namespaces
 
 |  Namespace | Description |

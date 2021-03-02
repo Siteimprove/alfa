@@ -16,6 +16,4 @@ export namespace Angular {
 }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

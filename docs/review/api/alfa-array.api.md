@@ -132,6 +132,4 @@ namespace Array_2 {
 export { Array_2 as Array }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

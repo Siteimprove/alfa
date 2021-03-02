@@ -63,6 +63,4 @@ export namespace Transformation {
 }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```
