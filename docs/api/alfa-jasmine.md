@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Jasmine](./alfa-jasmine.jasmine.md) |  |
+|  [Jasmine](./alfa-jasmine.jasmine_namespace.md) |  |
 

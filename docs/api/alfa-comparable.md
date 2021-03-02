@@ -8,23 +8,23 @@
 
 |  Enumeration | Description |
 |  --- | --- |
-|  [Comparison](./alfa-comparable.comparison.md) |  |
+|  [Comparison](./alfa-comparable.comparison_enum.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Comparable](./alfa-comparable.comparable.md) |  |
+|  [Comparable](./alfa-comparable.comparable_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Comparable](./alfa-comparable.comparable.md) |  |
+|  [Comparable](./alfa-comparable.comparable_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Comparer](./alfa-comparable.comparer.md) |  |
+|  [Comparer](./alfa-comparable.comparer_typealias.md) |  |
 

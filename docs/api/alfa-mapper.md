@@ -8,5 +8,5 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Mapper](./alfa-mapper.mapper.md) |  |
+|  [Mapper](./alfa-mapper.mapper_typealias.md) |  |
 

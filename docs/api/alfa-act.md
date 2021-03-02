@@ -10,32 +10,32 @@ This package provides functionality for implementing rules specified in the [ACT
 
 |  Class | Description |
 |  --- | --- |
-|  [Audit](./alfa-act.audit.md) |  |
-|  [Cache\_2](./alfa-act.cache_2.md) |  |
-|  [Diagnostic](./alfa-act.diagnostic.md) |  |
-|  [Outcome](./alfa-act.outcome.md) |  |
-|  [Question](./alfa-act.question.md) |  |
-|  [Requirement](./alfa-act.requirement.md) |  |
-|  [Rule](./alfa-act.rule.md) |  |
-|  [Tag](./alfa-act.tag.md) |  |
+|  [Audit](./alfa-act.audit_class.md) |  |
+|  [Cache\_2](./alfa-act.cache_2_class.md) |  |
+|  [Diagnostic](./alfa-act.diagnostic_class.md) |  |
+|  [Outcome](./alfa-act.outcome_class.md) |  |
+|  [Question](./alfa-act.question_class.md) |  |
+|  [Requirement](./alfa-act.requirement_class.md) |  |
+|  [Rule](./alfa-act.rule_class.md) |  |
+|  [Tag](./alfa-act.tag_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Audit](./alfa-act.audit.md) |  |
-|  [Diagnostic](./alfa-act.diagnostic.md) |  |
-|  [Interview](./alfa-act.interview.md) |  |
-|  [Outcome](./alfa-act.outcome.md) |  |
-|  [Question](./alfa-act.question.md) |  |
-|  [Requirement](./alfa-act.requirement.md) |  |
-|  [Rule](./alfa-act.rule.md) |  |
-|  [Tag](./alfa-act.tag.md) |  |
+|  [Audit](./alfa-act.audit_namespace.md) |  |
+|  [Diagnostic](./alfa-act.diagnostic_namespace.md) |  |
+|  [Interview](./alfa-act.interview_namespace.md) |  |
+|  [Outcome](./alfa-act.outcome_namespace.md) |  |
+|  [Question](./alfa-act.question_namespace.md) |  |
+|  [Requirement](./alfa-act.requirement_namespace.md) |  |
+|  [Rule](./alfa-act.rule_namespace.md) |  |
+|  [Tag](./alfa-act.tag_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Interview](./alfa-act.interview.md) |  |
-|  [Oracle](./alfa-act.oracle.md) |  |
+|  [Interview](./alfa-act.interview_typealias.md) |  |
+|  [Oracle](./alfa-act.oracle_typealias.md) |  |
 

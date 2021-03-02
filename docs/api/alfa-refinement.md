@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Refinement](./alfa-refinement.refinement.md) |  |
+|  [Refinement](./alfa-refinement.refinement_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Refinement](./alfa-refinement.refinement.md) |  |
+|  [Refinement](./alfa-refinement.refinement_typealias.md) |  |
 

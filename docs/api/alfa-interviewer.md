@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Interviewer](./alfa-interviewer.interviewer.md) |  |
+|  [Interviewer](./alfa-interviewer.interviewer_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Interviewer](./alfa-interviewer.interviewer.md) |  |
+|  [Interviewer](./alfa-interviewer.interviewer_typealias.md) |  |
 

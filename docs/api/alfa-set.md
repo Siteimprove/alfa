@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Set\_2](./alfa-set.set_2.md) |  |
+|  [Set\_2](./alfa-set.set_2_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Set\_2](./alfa-set.set_2.md) |  |
+|  [Set\_2](./alfa-set.set_2_namespace.md) |  |
 

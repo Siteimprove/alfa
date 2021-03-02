@@ -8,5 +8,5 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [default\_2()](./alfa-formatter-sarif.default_2.md) |  |
+|  [default\_2()](./alfa-formatter-sarif.default_2_1_function.md) |  |
 

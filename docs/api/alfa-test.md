@@ -8,11 +8,11 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [test(name, assertion)](./alfa-test.test.md) |  |
+|  [test(name, assertion)](./alfa-test.test_1_function.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Assertions](./alfa-test.assertions.md) |  |
+|  [Assertions](./alfa-test.assertions_interface.md) |  |
 

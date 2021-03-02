@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Selective](./alfa-selective.selective.md) |  |
+|  [Selective](./alfa-selective.selective_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Selective](./alfa-selective.selective.md) |  |
+|  [Selective](./alfa-selective.selective_namespace.md) |  |
 

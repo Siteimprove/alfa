@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Map\_2](./alfa-map.map_2.md) |  |
+|  [Map\_2](./alfa-map.map_2_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Map\_2](./alfa-map.map_2.md) |  |
+|  [Map\_2](./alfa-map.map_2_namespace.md) |  |
 

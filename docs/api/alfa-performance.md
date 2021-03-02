@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Performance](./alfa-performance.performance.md) |  |
+|  [Performance](./alfa-performance.performance_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Performance](./alfa-performance.performance.md) |  |
+|  [Performance](./alfa-performance.performance_namespace.md) |  |
 

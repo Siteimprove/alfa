@@ -8,22 +8,22 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Credentials](./alfa-scraper.credentials.md) |  |
-|  [Scraper](./alfa-scraper.scraper.md) |  |
-|  [Screenshot](./alfa-scraper.screenshot.md) |  |
+|  [Credentials](./alfa-scraper.credentials_class.md) |  |
+|  [Scraper](./alfa-scraper.scraper_class.md) |  |
+|  [Screenshot](./alfa-scraper.screenshot_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Awaiter](./alfa-scraper.awaiter.md) |  |
-|  [Credentials](./alfa-scraper.credentials.md) |  |
-|  [Scraper](./alfa-scraper.scraper.md) |  |
-|  [Screenshot](./alfa-scraper.screenshot.md) |  |
+|  [Awaiter](./alfa-scraper.awaiter_namespace.md) |  |
+|  [Credentials](./alfa-scraper.credentials_namespace.md) |  |
+|  [Scraper](./alfa-scraper.scraper_namespace.md) |  |
+|  [Screenshot](./alfa-scraper.screenshot_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Awaiter](./alfa-scraper.awaiter.md) |  |
+|  [Awaiter](./alfa-scraper.awaiter_typealias.md) |  |
 

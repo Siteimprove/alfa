@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Enzyme](./alfa-enzyme.enzyme.md) |  |
+|  [Enzyme](./alfa-enzyme.enzyme_namespace.md) |  |
 

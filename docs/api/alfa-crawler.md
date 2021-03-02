@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Crawler](./alfa-crawler.crawler.md) |  |
+|  [Crawler](./alfa-crawler.crawler_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Crawler](./alfa-crawler.crawler.md) |  |
+|  [Crawler](./alfa-crawler.crawler_namespace.md) |  |
 

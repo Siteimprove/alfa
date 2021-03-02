@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Predicate](./alfa-predicate.predicate.md) |  |
+|  [Predicate](./alfa-predicate.predicate_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Predicate](./alfa-predicate.predicate.md) |  |
+|  [Predicate](./alfa-predicate.predicate_typealias.md) |  |
 

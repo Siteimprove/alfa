@@ -8,24 +8,24 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [syntax(language, value)](./alfa-highlight.syntax.md) |  |
+|  [syntax(language, value)](./alfa-highlight.syntax_1_function.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Marker](./alfa-highlight.marker.md) |  |
+|  [Marker](./alfa-highlight.marker_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Marker](./alfa-highlight.marker.md) |  |
-|  [syntax](./alfa-highlight.syntax.md) |  |
+|  [Marker](./alfa-highlight.marker_namespace.md) |  |
+|  [syntax](./alfa-highlight.syntax_namespace.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [mark](./alfa-highlight.mark.md) |  |
+|  [mark](./alfa-highlight.mark_variable.md) |  |
 

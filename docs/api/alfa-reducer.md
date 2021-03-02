@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Reducer](./alfa-reducer.reducer.md) |  |
+|  [Reducer](./alfa-reducer.reducer_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Reducer](./alfa-reducer.reducer.md) |  |
+|  [Reducer](./alfa-reducer.reducer_typealias.md) |  |
 

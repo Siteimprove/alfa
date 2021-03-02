@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Future](./alfa-future.future.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
+|  [Future](./alfa-future.future_class.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Future](./alfa-future.future.md) |  |
+|  [Future](./alfa-future.future_namespace.md) |  |
 

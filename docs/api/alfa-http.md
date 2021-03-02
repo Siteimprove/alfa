@@ -8,28 +8,28 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cookie](./alfa-http.cookie.md) |  |
-|  [Cookies](./alfa-http.cookies.md) |  |
-|  [Header](./alfa-http.header.md) |  |
-|  [Headers\_2](./alfa-http.headers_2.md) |  |
-|  [Request\_2](./alfa-http.request_2.md) | [https://fetch.spec.whatwg.org/\#request-class](https://fetch.spec.whatwg.org/#request-class) |
-|  [Response\_2](./alfa-http.response_2.md) | [https://fetch.spec.whatwg.org/\#response-class](https://fetch.spec.whatwg.org/#response-class) |
+|  [Cookie](./alfa-http.cookie_class.md) |  |
+|  [Cookies](./alfa-http.cookies_class.md) |  |
+|  [Header](./alfa-http.header_class.md) |  |
+|  [Headers\_2](./alfa-http.headers_2_class.md) |  |
+|  [Request\_2](./alfa-http.request_2_class.md) | [https://fetch.spec.whatwg.org/\#request-class](https://fetch.spec.whatwg.org/#request-class) |
+|  [Response\_2](./alfa-http.response_2_class.md) | [https://fetch.spec.whatwg.org/\#response-class](https://fetch.spec.whatwg.org/#response-class) |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Body\_2](./alfa-http.body_2.md) | [https://fetch.spec.whatwg.org/\#body-mixin](https://fetch.spec.whatwg.org/#body-mixin) |
+|  [Body\_2](./alfa-http.body_2_interface.md) | [https://fetch.spec.whatwg.org/\#body-mixin](https://fetch.spec.whatwg.org/#body-mixin) |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Body\_2](./alfa-http.body_2.md) |  |
-|  [Cookie](./alfa-http.cookie.md) |  |
-|  [Cookies](./alfa-http.cookies.md) |  |
-|  [Header](./alfa-http.header.md) |  |
-|  [Headers\_2](./alfa-http.headers_2.md) |  |
-|  [Request\_2](./alfa-http.request_2.md) |  |
-|  [Response\_2](./alfa-http.response_2.md) |  |
+|  [Body\_2](./alfa-http.body_2_namespace.md) |  |
+|  [Cookie](./alfa-http.cookie_namespace.md) |  |
+|  [Cookies](./alfa-http.cookies_namespace.md) |  |
+|  [Header](./alfa-http.header_namespace.md) |  |
+|  [Headers\_2](./alfa-http.headers_2_namespace.md) |  |
+|  [Request\_2](./alfa-http.request_2_namespace.md) |  |
+|  [Response\_2](./alfa-http.response_2_namespace.md) |  |
 

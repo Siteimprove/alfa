@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Continuation](./alfa-continuation.continuation.md) |  |
+|  [Continuation](./alfa-continuation.continuation_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Continuation](./alfa-continuation.continuation.md) |  |
+|  [Continuation](./alfa-continuation.continuation_typealias.md) |  |
 

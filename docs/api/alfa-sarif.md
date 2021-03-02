@@ -8,17 +8,17 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Serializable](./alfa-sarif.serializable.md) |  |
+|  [Serializable](./alfa-sarif.serializable_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Serializable](./alfa-sarif.serializable.md) |  |
+|  [Serializable](./alfa-sarif.serializable_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [SARIF](./alfa-sarif.sarif.md) |  |
+|  [SARIF](./alfa-sarif.sarif_typealias.md) |  |
 

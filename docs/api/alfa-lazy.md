@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Lazy](./alfa-lazy.lazy.md) |  |
+|  [Lazy](./alfa-lazy.lazy_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Lazy](./alfa-lazy.lazy.md) |  |
+|  [Lazy](./alfa-lazy.lazy_namespace.md) |  |
 

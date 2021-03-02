@@ -654,7 +654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.12.7":
+"@microsoft/api-documenter@7.12.7":
   version: 7.12.7
   resolution: "@microsoft/api-documenter@npm:7.12.7"
   dependencies:
@@ -668,6 +668,23 @@ __metadata:
   bin:
     api-documenter: bin/api-documenter
   checksum: 9fe3e17d64e3e81388d59a0439d716020a20341c05a28ef46c8c2c3c8ada4253f85594cfbb97801842e220a3a5de0765aaf8b92a88ba22600cc1c13405d03989
+  languageName: node
+  linkType: hard
+
+"@microsoft/api-documenter@patch:@microsoft/api-documenter@7.12.7#.yarn/patches/api-documenter.patch::locator=%40siteimprove%2Falfa%40workspace%3A.":
+  version: 7.12.7
+  resolution: "@microsoft/api-documenter@patch:@microsoft/api-documenter@npm%3A7.12.7#.yarn/patches/api-documenter.patch::version=7.12.7&hash=e70f24&locator=%40siteimprove%2Falfa%40workspace%3A."
+  dependencies:
+    "@microsoft/api-extractor-model": 7.12.2
+    "@microsoft/tsdoc": 0.12.24
+    "@rushstack/node-core-library": 3.36.0
+    "@rushstack/ts-command-line": 4.7.8
+    colors: ~1.2.1
+    js-yaml: ~3.13.1
+    resolve: ~1.17.0
+  bin:
+    api-documenter: bin/api-documenter
+  checksum: fd02386a837a0859c1aa20cb127a33af669f47600d22f9da64765e1444015f1251c1b27d4d51c342c5f549172b8040492a9ff84dfe59d732ddf68dcb89b4a49a
   languageName: node
   linkType: hard
 

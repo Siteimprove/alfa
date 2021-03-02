@@ -8,6 +8,6 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Time](./alfa-time.time.md) |  |
-|  [Timeout](./alfa-time.timeout.md) |  |
+|  [Time](./alfa-time.time_class.md) |  |
+|  [Timeout](./alfa-time.timeout_class.md) |  |
 

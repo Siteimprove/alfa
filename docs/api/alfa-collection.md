@@ -8,11 +8,11 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Collection](./alfa-collection.collection.md) |  |
+|  [Collection](./alfa-collection.collection_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Collection](./alfa-collection.collection.md) |  |
+|  [Collection](./alfa-collection.collection_namespace.md) |  |
 

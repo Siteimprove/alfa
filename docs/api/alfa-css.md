@@ -8,115 +8,115 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Angle](./alfa-css.angle.md) | [https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles) |
-|  [Block](./alfa-css.block.md) | [https://drafts.csswg.org/css-syntax/\#simple-block](https://drafts.csswg.org/css-syntax/#simple-block) |
-|  [Calculation](./alfa-css.calculation.md) | [https://drafts.csswg.org/css-values/\#math](https://drafts.csswg.org/css-values/#math) |
-|  [Circle](./alfa-css.circle.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-circle](https://drafts.csswg.org/css-shapes/#funcdef-circle) |
-|  [Component](./alfa-css.component.md) | [https://drafts.csswg.org/css-syntax/\#component-value](https://drafts.csswg.org/css-syntax/#component-value) |
-|  [Declaration](./alfa-css.declaration.md) | [https://drafts.csswg.org/css-syntax/\#declaration](https://drafts.csswg.org/css-syntax/#declaration) |
-|  [Dimension](./alfa-css.dimension.md) | [https://drafts.csswg.org/css-values/\#dimensions](https://drafts.csswg.org/css-values/#dimensions) |
-|  [Ellipse](./alfa-css.ellipse.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-ellipse](https://drafts.csswg.org/css-shapes/#funcdef-ellipse) |
-|  [Function\_2](./alfa-css.function_2.md) | [https://drafts.csswg.org/css-syntax/\#function](https://drafts.csswg.org/css-syntax/#function) |
-|  [Hex](./alfa-css.hex.md) |  |
-|  [HSL](./alfa-css.hsl.md) |  |
-|  [Image](./alfa-css.image.md) | [https://drafts.csswg.org/css-values/\#images](https://drafts.csswg.org/css-values/#images) |
-|  [Inset](./alfa-css.inset.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-inset](https://drafts.csswg.org/css-shapes/#funcdef-inset) |
-|  [Integer](./alfa-css.integer.md) | [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers) |
-|  [Keyword](./alfa-css.keyword.md) | [https://drafts.csswg.org/css-values/\#keywords](https://drafts.csswg.org/css-values/#keywords) |
-|  [Length](./alfa-css.length.md) | [https://drafts.csswg.org/css-values/\#lengths](https://drafts.csswg.org/css-values/#lengths) |
-|  [Linear](./alfa-css.linear.md) | [https://drafts.csswg.org/css-images/\#linear-gradients](https://drafts.csswg.org/css-images/#linear-gradients) |
-|  [Matrix](./alfa-css.matrix.md) |  |
-|  [Named](./alfa-css.named.md) |  |
-|  [Nth](./alfa-css.nth.md) | [https://drafts.csswg.org/css-syntax/\#anb](https://drafts.csswg.org/css-syntax/#anb) |
-|  [Number\_2](./alfa-css.number_2.md) | [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers) |
-|  [Numeric](./alfa-css.numeric.md) |  |
-|  [Percentage](./alfa-css.percentage.md) | [https://drafts.csswg.org/css-values/\#percentages](https://drafts.csswg.org/css-values/#percentages) |
-|  [Perspective](./alfa-css.perspective.md) |  |
-|  [Polygon](./alfa-css.polygon.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-polygon](https://drafts.csswg.org/css-shapes/#funcdef-polygon) |
-|  [Position](./alfa-css.position.md) | [https://drafts.csswg.org/css-values/\#position](https://drafts.csswg.org/css-values/#position) |
-|  [Radius](./alfa-css.radius.md) | [https://drafts.csswg.org/css-shapes/\#typedef-shape-radius](https://drafts.csswg.org/css-shapes/#typedef-shape-radius) |
-|  [Rectangle](./alfa-css.rectangle.md) | [https://drafts.fxtf.org/css-masking/\#funcdef-clip-rect](https://drafts.fxtf.org/css-masking/#funcdef-clip-rect) |
-|  [RGB](./alfa-css.rgb.md) |  |
-|  [Rotate](./alfa-css.rotate.md) |  |
-|  [Scale](./alfa-css.scale.md) |  |
-|  [Shadow](./alfa-css.shadow.md) |  |
-|  [Shape](./alfa-css.shape.md) |  |
-|  [Skew](./alfa-css.skew.md) |  |
-|  [String\_2](./alfa-css.string_2.md) | [https://drafts.csswg.org/css-values/\#strings](https://drafts.csswg.org/css-values/#strings) |
-|  [Translate](./alfa-css.translate.md) |  |
-|  [URL](./alfa-css.url.md) | [https://drafts.csswg.org/css-values/\#urls](https://drafts.csswg.org/css-values/#urls) |
-|  [Value](./alfa-css.value.md) |  |
+|  [Angle](./alfa-css.angle_class.md) | [https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles) |
+|  [Block](./alfa-css.block_class.md) | [https://drafts.csswg.org/css-syntax/\#simple-block](https://drafts.csswg.org/css-syntax/#simple-block) |
+|  [Calculation](./alfa-css.calculation_class.md) | [https://drafts.csswg.org/css-values/\#math](https://drafts.csswg.org/css-values/#math) |
+|  [Circle](./alfa-css.circle_class.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-circle](https://drafts.csswg.org/css-shapes/#funcdef-circle) |
+|  [Component](./alfa-css.component_class.md) | [https://drafts.csswg.org/css-syntax/\#component-value](https://drafts.csswg.org/css-syntax/#component-value) |
+|  [Declaration](./alfa-css.declaration_class.md) | [https://drafts.csswg.org/css-syntax/\#declaration](https://drafts.csswg.org/css-syntax/#declaration) |
+|  [Dimension](./alfa-css.dimension_class.md) | [https://drafts.csswg.org/css-values/\#dimensions](https://drafts.csswg.org/css-values/#dimensions) |
+|  [Ellipse](./alfa-css.ellipse_class.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-ellipse](https://drafts.csswg.org/css-shapes/#funcdef-ellipse) |
+|  [Function\_2](./alfa-css.function_2_class.md) | [https://drafts.csswg.org/css-syntax/\#function](https://drafts.csswg.org/css-syntax/#function) |
+|  [Hex](./alfa-css.hex_class.md) |  |
+|  [HSL](./alfa-css.hsl_class.md) |  |
+|  [Image](./alfa-css.image_class.md) | [https://drafts.csswg.org/css-values/\#images](https://drafts.csswg.org/css-values/#images) |
+|  [Inset](./alfa-css.inset_class.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-inset](https://drafts.csswg.org/css-shapes/#funcdef-inset) |
+|  [Integer](./alfa-css.integer_class.md) | [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers) |
+|  [Keyword](./alfa-css.keyword_class.md) | [https://drafts.csswg.org/css-values/\#keywords](https://drafts.csswg.org/css-values/#keywords) |
+|  [Length](./alfa-css.length_class.md) | [https://drafts.csswg.org/css-values/\#lengths](https://drafts.csswg.org/css-values/#lengths) |
+|  [Linear](./alfa-css.linear_class.md) | [https://drafts.csswg.org/css-images/\#linear-gradients](https://drafts.csswg.org/css-images/#linear-gradients) |
+|  [Matrix](./alfa-css.matrix_class.md) |  |
+|  [Named](./alfa-css.named_class.md) |  |
+|  [Nth](./alfa-css.nth_class.md) | [https://drafts.csswg.org/css-syntax/\#anb](https://drafts.csswg.org/css-syntax/#anb) |
+|  [Number\_2](./alfa-css.number_2_class.md) | [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers) |
+|  [Numeric](./alfa-css.numeric_class.md) |  |
+|  [Percentage](./alfa-css.percentage_class.md) | [https://drafts.csswg.org/css-values/\#percentages](https://drafts.csswg.org/css-values/#percentages) |
+|  [Perspective](./alfa-css.perspective_class.md) |  |
+|  [Polygon](./alfa-css.polygon_class.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-polygon](https://drafts.csswg.org/css-shapes/#funcdef-polygon) |
+|  [Position](./alfa-css.position_class.md) | [https://drafts.csswg.org/css-values/\#position](https://drafts.csswg.org/css-values/#position) |
+|  [Radius](./alfa-css.radius_class.md) | [https://drafts.csswg.org/css-shapes/\#typedef-shape-radius](https://drafts.csswg.org/css-shapes/#typedef-shape-radius) |
+|  [Rectangle](./alfa-css.rectangle_class.md) | [https://drafts.fxtf.org/css-masking/\#funcdef-clip-rect](https://drafts.fxtf.org/css-masking/#funcdef-clip-rect) |
+|  [RGB](./alfa-css.rgb_class.md) |  |
+|  [Rotate](./alfa-css.rotate_class.md) |  |
+|  [Scale](./alfa-css.scale_class.md) |  |
+|  [Shadow](./alfa-css.shadow_class.md) |  |
+|  [Shape](./alfa-css.shape_class.md) |  |
+|  [Skew](./alfa-css.skew_class.md) |  |
+|  [String\_2](./alfa-css.string_2_class.md) | [https://drafts.csswg.org/css-values/\#strings](https://drafts.csswg.org/css-values/#strings) |
+|  [Translate](./alfa-css.translate_class.md) |  |
+|  [URL](./alfa-css.url_class.md) | [https://drafts.csswg.org/css-values/\#urls](https://drafts.csswg.org/css-values/#urls) |
+|  [Value](./alfa-css.value_class.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Convertible](./alfa-css.convertible.md) | Convertible units are sets of units where each unit within a given set can be converted to another unit within the same set. With the exception of relative lengths, all units defined in CSS are convertible. |
+|  [Convertible](./alfa-css.convertible_interface.md) | Convertible units are sets of units where each unit within a given set can be converted to another unit within the same set. With the exception of relative lengths, all units defined in CSS are convertible. |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Angle](./alfa-css.angle.md) |  |
-|  [Block](./alfa-css.block.md) |  |
-|  [Box](./alfa-css.box.md) |  |
-|  [Calculation](./alfa-css.calculation.md) |  |
-|  [Circle](./alfa-css.circle.md) |  |
-|  [Color](./alfa-css.color.md) |  |
-|  [Component](./alfa-css.component.md) |  |
-|  [Converter](./alfa-css.converter.md) |  |
-|  [Current](./alfa-css.current.md) |  |
-|  [Declaration](./alfa-css.declaration.md) |  |
-|  [Dimension](./alfa-css.dimension.md) |  |
-|  [Ellipse](./alfa-css.ellipse.md) |  |
-|  [Function\_2](./alfa-css.function_2.md) |  |
-|  [Gradient](./alfa-css.gradient.md) |  |
-|  [Hex](./alfa-css.hex.md) |  |
-|  [HSL](./alfa-css.hsl.md) |  |
-|  [Image](./alfa-css.image.md) |  |
-|  [Inset](./alfa-css.inset.md) |  |
-|  [Integer](./alfa-css.integer.md) |  |
-|  [Keyword](./alfa-css.keyword.md) |  |
-|  [Length](./alfa-css.length.md) |  |
-|  [Lexer](./alfa-css.lexer.md) |  |
-|  [Linear](./alfa-css.linear.md) |  |
-|  [Matrix](./alfa-css.matrix.md) |  |
-|  [Named](./alfa-css.named.md) |  |
-|  [Nth](./alfa-css.nth.md) |  |
-|  [Number\_2](./alfa-css.number_2.md) |  |
-|  [Numeric](./alfa-css.numeric.md) |  |
-|  [Percentage](./alfa-css.percentage.md) |  |
-|  [Perspective](./alfa-css.perspective.md) |  |
-|  [Polygon](./alfa-css.polygon.md) |  |
-|  [Position](./alfa-css.position.md) |  |
-|  [Radius](./alfa-css.radius.md) |  |
-|  [Rectangle](./alfa-css.rectangle.md) |  |
-|  [RGB](./alfa-css.rgb.md) |  |
-|  [Rotate](./alfa-css.rotate.md) |  |
-|  [Scale](./alfa-css.scale.md) |  |
-|  [Shadow](./alfa-css.shadow.md) |  |
-|  [Shape](./alfa-css.shape.md) |  |
-|  [Skew](./alfa-css.skew.md) |  |
-|  [String\_2](./alfa-css.string_2.md) |  |
-|  [System](./alfa-css.system.md) |  |
-|  [Token](./alfa-css.token.md) |  |
-|  [Transform](./alfa-css.transform.md) |  |
-|  [Translate](./alfa-css.translate.md) |  |
-|  [Unit](./alfa-css.unit.md) |  |
-|  [URL](./alfa-css.url.md) |  |
-|  [Value](./alfa-css.value.md) |  |
+|  [Angle](./alfa-css.angle_namespace.md) |  |
+|  [Block](./alfa-css.block_namespace.md) |  |
+|  [Box](./alfa-css.box_namespace.md) |  |
+|  [Calculation](./alfa-css.calculation_namespace.md) |  |
+|  [Circle](./alfa-css.circle_namespace.md) |  |
+|  [Color](./alfa-css.color_namespace.md) |  |
+|  [Component](./alfa-css.component_namespace.md) |  |
+|  [Converter](./alfa-css.converter_namespace.md) |  |
+|  [Current](./alfa-css.current_namespace.md) |  |
+|  [Declaration](./alfa-css.declaration_namespace.md) |  |
+|  [Dimension](./alfa-css.dimension_namespace.md) |  |
+|  [Ellipse](./alfa-css.ellipse_namespace.md) |  |
+|  [Function\_2](./alfa-css.function_2_namespace.md) |  |
+|  [Gradient](./alfa-css.gradient_namespace.md) |  |
+|  [Hex](./alfa-css.hex_namespace.md) |  |
+|  [HSL](./alfa-css.hsl_namespace.md) |  |
+|  [Image](./alfa-css.image_namespace.md) |  |
+|  [Inset](./alfa-css.inset_namespace.md) |  |
+|  [Integer](./alfa-css.integer_namespace.md) |  |
+|  [Keyword](./alfa-css.keyword_namespace.md) |  |
+|  [Length](./alfa-css.length_namespace.md) |  |
+|  [Lexer](./alfa-css.lexer_namespace.md) |  |
+|  [Linear](./alfa-css.linear_namespace.md) |  |
+|  [Matrix](./alfa-css.matrix_namespace.md) |  |
+|  [Named](./alfa-css.named_namespace.md) |  |
+|  [Nth](./alfa-css.nth_namespace.md) |  |
+|  [Number\_2](./alfa-css.number_2_namespace.md) |  |
+|  [Numeric](./alfa-css.numeric_namespace.md) |  |
+|  [Percentage](./alfa-css.percentage_namespace.md) |  |
+|  [Perspective](./alfa-css.perspective_namespace.md) |  |
+|  [Polygon](./alfa-css.polygon_namespace.md) |  |
+|  [Position](./alfa-css.position_namespace.md) |  |
+|  [Radius](./alfa-css.radius_namespace.md) |  |
+|  [Rectangle](./alfa-css.rectangle_namespace.md) |  |
+|  [RGB](./alfa-css.rgb_namespace.md) |  |
+|  [Rotate](./alfa-css.rotate_namespace.md) |  |
+|  [Scale](./alfa-css.scale_namespace.md) |  |
+|  [Shadow](./alfa-css.shadow_namespace.md) |  |
+|  [Shape](./alfa-css.shape_namespace.md) |  |
+|  [Skew](./alfa-css.skew_namespace.md) |  |
+|  [String\_2](./alfa-css.string_2_namespace.md) |  |
+|  [System](./alfa-css.system_namespace.md) |  |
+|  [Token](./alfa-css.token_namespace.md) |  |
+|  [Transform](./alfa-css.transform_namespace.md) |  |
+|  [Translate](./alfa-css.translate_namespace.md) |  |
+|  [Unit](./alfa-css.unit_namespace.md) |  |
+|  [URL](./alfa-css.url_namespace.md) |  |
+|  [Value](./alfa-css.value_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Box](./alfa-css.box.md) | [https://drafts.csswg.org/css-backgrounds/\#typedef-box](https://drafts.csswg.org/css-backgrounds/#typedef-box) |
-|  [Color](./alfa-css.color.md) |  |
-|  [Converter](./alfa-css.converter.md) | Converters are functions that convert an input value from one unit within a set of units to another unit within the same set of units. |
-|  [Current](./alfa-css.current.md) | [https://drafts.csswg.org/css-color/\#currentcolor-color](https://drafts.csswg.org/css-color/#currentcolor-color) |
-|  [Gradient](./alfa-css.gradient.md) | [https://drafts.csswg.org/css-images/\#gradients](https://drafts.csswg.org/css-images/#gradients) |
-|  [System](./alfa-css.system.md) | [https://drafts.csswg.org/css-color/\#css-system-colors](https://drafts.csswg.org/css-color/#css-system-colors) |
-|  [Token](./alfa-css.token.md) |  |
-|  [Transform](./alfa-css.transform.md) |  |
-|  [Unit](./alfa-css.unit.md) |  |
+|  [Box](./alfa-css.box_typealias.md) | [https://drafts.csswg.org/css-backgrounds/\#typedef-box](https://drafts.csswg.org/css-backgrounds/#typedef-box) |
+|  [Color](./alfa-css.color_typealias.md) |  |
+|  [Converter](./alfa-css.converter_typealias.md) | Converters are functions that convert an input value from one unit within a set of units to another unit within the same set of units. |
+|  [Current](./alfa-css.current_typealias.md) | [https://drafts.csswg.org/css-color/\#currentcolor-color](https://drafts.csswg.org/css-color/#currentcolor-color) |
+|  [Gradient](./alfa-css.gradient_typealias.md) | [https://drafts.csswg.org/css-images/\#gradients](https://drafts.csswg.org/css-images/#gradients) |
+|  [System](./alfa-css.system_typealias.md) | [https://drafts.csswg.org/css-color/\#css-system-colors](https://drafts.csswg.org/css-color/#css-system-colors) |
+|  [Token](./alfa-css.token_typealias.md) |  |
+|  [Transform](./alfa-css.transform_typealias.md) |  |
+|  [Unit](./alfa-css.unit_typealias.md) |  |
 

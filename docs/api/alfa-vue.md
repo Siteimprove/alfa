@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Vue\_2](./alfa-vue.vue_2.md) |  |
+|  [Vue\_2](./alfa-vue.vue_2_namespace.md) |  |
 

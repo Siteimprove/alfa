@@ -8,18 +8,18 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Hash](./alfa-hash.hash.md) |  |
+|  [Hash](./alfa-hash.hash_class.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Hashable](./alfa-hash.hashable.md) |  |
+|  [Hashable](./alfa-hash.hashable_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Hash](./alfa-hash.hash.md) |  |
-|  [Hashable](./alfa-hash.hashable.md) |  |
+|  [Hash](./alfa-hash.hash_namespace.md) |  |
+|  [Hashable](./alfa-hash.hashable_namespace.md) |  |
 

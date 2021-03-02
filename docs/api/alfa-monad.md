@@ -8,5 +8,5 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Monad](./alfa-monad.monad.md) |  |
+|  [Monad](./alfa-monad.monad_interface.md) |  |
 

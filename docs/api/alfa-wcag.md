@@ -8,14 +8,14 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Criterion](./alfa-wcag.criterion.md) |  |
-|  [Technique](./alfa-wcag.technique.md) |  |
+|  [Criterion](./alfa-wcag.criterion_class.md) |  |
+|  [Technique](./alfa-wcag.technique_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Conformance](./alfa-wcag.conformance.md) | This namespace defines types and functions for working with conformance- related queries.[https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance) |
-|  [Criterion](./alfa-wcag.criterion.md) |  |
-|  [Technique](./alfa-wcag.technique.md) |  |
+|  [Conformance](./alfa-wcag.conformance_namespace.md) | This namespace defines types and functions for working with conformance- related queries.[https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance) |
+|  [Criterion](./alfa-wcag.criterion_namespace.md) |  |
+|  [Technique](./alfa-wcag.technique_namespace.md) |  |
 

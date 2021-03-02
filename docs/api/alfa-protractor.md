@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Protractor](./alfa-protractor.protractor.md) |  |
+|  [Protractor](./alfa-protractor.protractor_namespace.md) |  |
 

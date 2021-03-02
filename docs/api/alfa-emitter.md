@@ -8,5 +8,5 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Emitter](./alfa-emitter.emitter.md) |  |
+|  [Emitter](./alfa-emitter.emitter_class.md) |  |
 

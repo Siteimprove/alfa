@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Jest](./alfa-jest.jest.md) |  |
+|  [Jest](./alfa-jest.jest_namespace.md) |  |
 

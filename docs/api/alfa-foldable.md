@@ -8,5 +8,5 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Foldable](./alfa-foldable.foldable.md) |  |
+|  [Foldable](./alfa-foldable.foldable_interface.md) |  |
 

@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Language](./alfa-iana.language.md) |  |
+|  [Language](./alfa-iana.language_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Language](./alfa-iana.language.md) |  |
+|  [Language](./alfa-iana.language_namespace.md) |  |
 

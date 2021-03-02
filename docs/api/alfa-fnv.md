@@ -8,5 +8,5 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [FNV](./alfa-fnv.fnv.md) |  |
+|  [FNV](./alfa-fnv.fnv_class.md) |  |
 

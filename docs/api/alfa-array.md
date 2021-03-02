@@ -10,11 +10,11 @@ This package provides functionality for working with arrays.
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Array\_2](./alfa-array.array_2.md) |  |
+|  [Array\_2](./alfa-array.array_2_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Array\_2](./alfa-array.array_2.md) |  |
+|  [Array\_2](./alfa-array.array_2_typealias.md) |  |
 

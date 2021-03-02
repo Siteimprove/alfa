@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Puppeteer](./alfa-puppeteer.puppeteer.md) |  |
+|  [Puppeteer](./alfa-puppeteer.puppeteer_namespace.md) |  |
 

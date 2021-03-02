@@ -8,26 +8,26 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cons](./alfa-sequence.cons.md) |  |
+|  [Cons](./alfa-sequence.cons_class.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Nil](./alfa-sequence.nil.md) |  |
-|  [Sequence](./alfa-sequence.sequence.md) |  |
+|  [Nil](./alfa-sequence.nil_interface.md) |  |
+|  [Sequence](./alfa-sequence.sequence_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Cons](./alfa-sequence.cons.md) |  |
-|  [Nil](./alfa-sequence.nil.md) |  |
-|  [Sequence](./alfa-sequence.sequence.md) |  |
+|  [Cons](./alfa-sequence.cons_namespace.md) |  |
+|  [Nil](./alfa-sequence.nil_namespace.md) |  |
+|  [Sequence](./alfa-sequence.sequence_namespace.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [Nil](./alfa-sequence.nil.md) |  |
+|  [Nil](./alfa-sequence.nil_variable.md) |  |
 

@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Callback](./alfa-callback.callback.md) |  |
+|  [Callback](./alfa-callback.callback_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Callback](./alfa-callback.callback.md) |  |
+|  [Callback](./alfa-callback.callback_typealias.md) |  |
 

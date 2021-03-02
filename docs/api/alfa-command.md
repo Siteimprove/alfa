@@ -8,15 +8,15 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Argument](./alfa-command.argument.md) |  |
-|  [Command](./alfa-command.command.md) |  |
-|  [Flag](./alfa-command.flag.md) |  |
+|  [Argument](./alfa-command.argument_class.md) |  |
+|  [Command](./alfa-command.command_class.md) |  |
+|  [Flag](./alfa-command.flag_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Argument](./alfa-command.argument.md) |  |
-|  [Command](./alfa-command.command.md) |  |
-|  [Flag](./alfa-command.flag.md) |  |
+|  [Argument](./alfa-command.argument_namespace.md) |  |
+|  [Command](./alfa-command.command_namespace.md) |  |
+|  [Flag](./alfa-command.flag_namespace.md) |  |
 

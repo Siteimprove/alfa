@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Cypress\_2](./alfa-cypress.cypress_2.md) |  |
+|  [Cypress\_2](./alfa-cypress.cypress_2_namespace.md) |  |
 

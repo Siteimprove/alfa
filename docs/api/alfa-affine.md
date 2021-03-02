@@ -10,11 +10,11 @@ This package provides functionality for working with [affine transformations](ht
 
 |  Class | Description |
 |  --- | --- |
-|  [Transformation](./alfa-affine.transformation.md) |  |
+|  [Transformation](./alfa-affine.transformation_class.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Transformation](./alfa-affine.transformation.md) |  |
+|  [Transformation](./alfa-affine.transformation_namespace.md) |  |
 

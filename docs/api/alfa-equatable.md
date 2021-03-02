@@ -8,11 +8,11 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Equatable](./alfa-equatable.equatable.md) |  |
+|  [Equatable](./alfa-equatable.equatable_interface.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Equatable](./alfa-equatable.equatable.md) |  |
+|  [Equatable](./alfa-equatable.equatable_namespace.md) |  |
 
