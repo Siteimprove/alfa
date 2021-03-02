@@ -434,13 +434,7 @@ function getKeySelector(
   }
 
   if (selector instanceof Selector.Compound) {
-    const left = getKeySelector(selector.left);
-
-    if (left !== null) {
-      return left;
-    }
-
-    return getKeySelector(selector.right);
+    return getKeySelector(selector.left) ?? getKeySelector(selector.right);
   }
 
   if (selector instanceof Selector.Complex) {
