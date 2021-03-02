@@ -32,7 +32,6 @@ const {
 } = Parser;
 
 const { and, not, property, equals } = Predicate;
-const { isString } = Refinement;
 const { isElement, hasName } = Element;
 
 /**
@@ -59,6 +58,9 @@ export namespace Selector {
     /**
      * @see https://drafts.csswg.org/selectors/#match
      */
+
+    public abstract get type(): string;
+
     public abstract matches(element: Element, context?: Context): boolean;
 
     public abstract equals(value: Selector): boolean;
@@ -99,6 +101,10 @@ export namespace Selector {
 
     public get name(): string {
       return this._name;
+    }
+
+    public get type(): "id" {
+      return "id";
     }
 
     public matches(element: Element): boolean {
@@ -166,6 +172,9 @@ export namespace Selector {
       return this._name;
     }
 
+    public get type(): "class" {
+      return "class";
+    }
     public matches(element: Element): boolean {
       return Iterable.includes(element.classes, this._name);
     }
@@ -265,6 +274,10 @@ export namespace Selector {
 
     public get namespace(): Option<string> {
       return this._namespace;
+    }
+
+    public get type(): "attribute" {
+      return "attribute";
     }
 
     public get name(): string {
@@ -551,6 +564,10 @@ export namespace Selector {
       return this._name;
     }
 
+    public get type(): "type" {
+      return "type";
+    }
+
     public matches(element: Element): boolean {
       if (this._name !== element.name) {
         return false;
@@ -639,6 +656,10 @@ export namespace Selector {
       return this._namespace;
     }
 
+    public get type(): "universal" {
+      return "universal";
+    }
+
     public matches(element: Element): boolean {
       if (this._namespace.isNone() || this._namespace.includes("*")) {
         return true;
@@ -710,6 +731,10 @@ export namespace Selector {
         return this._name;
       }
 
+      public get type(): "pseudo-class" {
+        return "pseudo-class";
+      }
+
       public matches(element: dom.Element, context?: Context): boolean {
         return false;
       }
@@ -758,6 +783,10 @@ export namespace Selector {
 
       public get name(): string {
         return this._name;
+      }
+
+      public get type(): "pseudo-element" {
+        return "pseudo-element";
       }
 
       public matches(element: dom.Element, context?: Context): boolean {
@@ -1696,6 +1725,10 @@ export namespace Selector {
       return this._right;
     }
 
+    public get type(): "compound" {
+      return "compound";
+    }
+
     public matches(element: Element, context?: Context): boolean {
       return (
         this._left.matches(element, context) &&
@@ -1837,6 +1870,10 @@ export namespace Selector {
       return this._right;
     }
 
+    public get type(): "complex" {
+      return "complex";
+    }
+
     public matches(element: Element, context?: Context): boolean {
       // First, make sure that the right side of the selector, i.e. the part
       // that relates to the current element, matches.
@@ -1969,6 +2006,10 @@ export namespace Selector {
       return this._selector;
     }
 
+    public get type(): "relative" {
+      return "relative";
+    }
+
     public matches(): boolean {
       return false;
     }
@@ -2055,6 +2096,10 @@ export namespace Selector {
 
     public get right(): T | List<T> {
       return this._right;
+    }
+
+    public get type(): "list" {
+      return "list";
     }
 
     public matches(element: Element, context?: Context): boolean {
