@@ -33,6 +33,29 @@ export class Selective<S, T = never>
     );
   }
 
+  public nest<P extends S, U>(
+    refinement: Refinement<S, P>,
+    mapper: Mapper<Selective<P>, Selective<never, U>>
+  ): Selective<Exclude<S, P>, T | U>;
+
+  public nest<U>(
+    predicate: Predicate<S>,
+    mapper: Mapper<Selective<S>, Selective<never, U>>
+  ): Selective<S, T | U>;
+
+  public nest<U>(
+    predicate: Predicate<S>,
+    mapper: Mapper<Selective<S>, Selective<never, U>>
+  ): Selective<S, T | U> {
+    return this._value.either(
+      (value) =>
+        predicate(value)
+          ? new Selective(Right.of(mapper(new Selective(Left.of(value))).get()))
+          : this,
+      () => this
+    );
+  }
+
   public if<P extends S, U>(
     refinement: Refinement<S, P>,
     mapper: Mapper<P, U>
