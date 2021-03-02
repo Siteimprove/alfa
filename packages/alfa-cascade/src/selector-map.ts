@@ -24,9 +24,18 @@ import { AncestorFilter } from "./ancestor-filter";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
+const {
+  isAttribute,
+  isClass,
+  isComplex,
+  isCompound,
+  isId,
+  isType,
+  Pseudo,
+} = Selector;
 
 const isDescendantSelector = and(
-  Selector.isComplex,
+  isComplex,
   property(
     "combinator",
     equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
@@ -192,9 +201,9 @@ export namespace SelectorMap {
 
       if (keySelector === null) {
         other.push(node);
-      } else if (keySelector instanceof Selector.Id) {
+      } else if (isId(keySelector)) {
         ids.add(keySelector.name, node);
-      } else if (keySelector instanceof Selector.Class) {
+      } else if (isClass(keySelector)) {
         classes.add(keySelector.name, node);
       } else {
         types.add(keySelector.name, node);
@@ -425,19 +434,15 @@ export namespace SelectorMap {
 function getKeySelector(
   selector: Selector
 ): Selector.Id | Selector.Class | Selector.Type | null {
-  if (
-    selector instanceof Selector.Id ||
-    selector instanceof Selector.Class ||
-    selector instanceof Selector.Type
-  ) {
+  if (isId(selector) || isClass(selector) || isType(selector)) {
     return selector;
   }
 
-  if (selector instanceof Selector.Compound) {
+  if (isCompound(selector)) {
     return getKeySelector(selector.left) ?? getKeySelector(selector.right);
   }
 
-  if (selector instanceof Selector.Complex) {
+  if (isComplex(selector)) {
     return getKeySelector(selector.right);
   }
 
@@ -473,23 +478,17 @@ function getSpecificity(selector: Selector): Specificity {
       break;
     }
 
-    if (selector instanceof Selector.Id) {
+    if (isId(selector)) {
       a++;
     } else if (
-      selector instanceof Selector.Class ||
-      selector instanceof Selector.Attribute ||
-      selector instanceof Selector.Pseudo.Class
+      isClass(selector) ||
+      isAttribute(selector) ||
+      Pseudo.isClass(selector)
     ) {
       b++;
-    } else if (
-      selector instanceof Selector.Type ||
-      selector instanceof Selector.Pseudo.Element
-    ) {
+    } else if (isType(selector) || Pseudo.isElement(selector)) {
       c++;
-    } else if (
-      selector instanceof Selector.Compound ||
-      selector instanceof Selector.Complex
-    ) {
+    } else if (isCompound(selector) || isComplex(selector)) {
       queue.push(selector.left, selector.right);
     }
   }
@@ -508,15 +507,11 @@ function getSpecificity(selector: Selector): Specificity {
  * Check if a selector can be rejected based on an ancestor filter.
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  if (
-    selector instanceof Selector.Id ||
-    selector instanceof Selector.Class ||
-    selector instanceof Selector.Type
-  ) {
+  if (isId(selector) || isClass(selector) || isType(selector)) {
     return !filter.matches(selector);
   }
 
-  if (selector instanceof Selector.Compound) {
+  if (isCompound(selector)) {
     // Compound selectors are right-leaning, so recurse to the left first as it
     // is likely the shortest branch.
     return (
@@ -524,7 +519,7 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
     );
   }
 
-  if (selector instanceof Selector.Complex) {
+  if (isComplex(selector)) {
     const { combinator } = selector;
 
     if (
