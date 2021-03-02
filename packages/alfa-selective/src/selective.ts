@@ -106,4 +106,16 @@ export class Selective<S, T = never>
  */
 export namespace Selective {
   export type JSON<S, T = never> = Either.JSON<S, T>;
+
+  /**
+   * Ensure that a {@link Selective} is exhaustively matched, returning its
+   * resulting value.
+   *
+   * @remarks
+   * This function should only be used for cases where {@link Selective.get} is
+   * insufficient. If in doubt, assume that it isn't.
+   */
+  export function exhaust<T>(selective: Selective<never, T>): T {
+    return selective.get();
+  }
 }
