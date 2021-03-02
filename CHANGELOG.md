@@ -25,6 +25,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `Role#requiredParent()` now returns `Iterable<Iterable<Role.Name>>` to make it possible to model the nested parent requirements that have been introduced in the Editor's Draft of WAI-ARIA. ([#728](../../pull/728))
 
+### Added
+
+- [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))

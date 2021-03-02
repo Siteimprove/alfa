@@ -4,15 +4,19 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 /**
+ * {@link https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf}
+ *
  * @public
  */
 export class Selective<S, T = never>
   implements
     Functor<T>,
+    Monad<T>,
     Iterable<S | T>,
     Equatable,
     Hashable,
@@ -28,11 +32,13 @@ export class Selective<S, T = never>
   }
 
   public map<U>(mapper: Mapper<T, U>): Selective<S, U> {
-    return new Selective(
-      this._value.either(
-        (value) => Left.of(value) as Either<S, U>,
-        (value) => Right.of(mapper(value))
-      )
+    return this.flatMap((value) => new Selective(Right.of(mapper(value))));
+  }
+
+  public flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U> {
+    return this._value.either(
+      (value) => new Selective(Left.of(value)),
+      (value) => mapper(value)
     );
   }
 
@@ -106,4 +112,16 @@ export class Selective<S, T = never>
  */
 export namespace Selective {
   export type JSON<S, T = never> = Either.JSON<S, T>;
+
+  /**
+   * Ensure that a {@link Selective} is exhaustively matched, returning its
+   * resulting value.
+   *
+   * @remarks
+   * This function should only be used for cases where {@link Selective.get} is
+   * insufficient. If in doubt, assume that it isn't.
+   */
+  export function exhaust<T>(selective: Selective<never, T>): T {
+    return selective.get();
+  }
 }
