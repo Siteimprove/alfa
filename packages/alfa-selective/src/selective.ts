@@ -32,17 +32,12 @@ export class Selective<S, T = never>
   }
 
   public map<U>(mapper: Mapper<T, U>): Selective<S, U> {
-    return new Selective(
-      this._value.either(
-        (value) => Left.of(value) as Either<S, U>,
-        (value) => Right.of(mapper(value))
-      )
-    );
+    return this.flatMap((value) => new Selective(Right.of(mapper(value))));
   }
 
   public flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U> {
     return this._value.either(
-      (value) => new Selective(Left.of(value) as Either<S, U>),
+      (value) => new Selective(Left.of(value)),
       (value) => mapper(value)
     );
   }
