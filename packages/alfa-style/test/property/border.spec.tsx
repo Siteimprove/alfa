@@ -268,3 +268,18 @@ test("#computed() resolves `border-bottom-color: red`", (t) => {
     source: h.declaration("border-bottom-color", "red").toJSON(),
   });
 });
+
+test("#cascaded() parses `border-bottom-left-radius: 10px 10%`", (t) => {
+  const element = <div style={{ borderBottomLeftRadius: "10px 10%" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-bottom-left-radius").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-bottom-left-radius", "10px 10%").toJSON(),
+  });
+});

@@ -24,6 +24,7 @@
     "src/property/border-block-start-style.ts",
     "src/property/border-block-start-width.ts",
     "src/property/border-bottom-color.ts",
+    "src/property/border-bottom-left-radius.ts",
     "src/property/bottom.ts",
     "src/property/box-shadow.ts",
     "src/property/clip.ts",
