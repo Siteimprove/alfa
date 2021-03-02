@@ -30,7 +30,7 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-width
  * @internal
  */
 export default Property.of<Specified, Computed>(
