@@ -28,17 +28,22 @@ export function isAtTheStart(node1: Node): Predicate<Node> {
 
 /**
  * @internal
+ *
+ * Find the lowest common ancestor of two nodes:
+ * * get the ancestors chain of both
+ * * go down the chain, from root to nodes, as long as it is the same node
+ * Complexity: linear in the depth of the nodes.
  */
-export function lowestCommonAncestor(node1: Node, node2: Node): Option<Node> {
-  // ancestors, from root to nodes.
-  let ancestors1 = node1
-    .inclusiveAncestors({ flattened: true, nested: true })
-    .reverse();
-  let ancestors2 = node2
-    .inclusiveAncestors({ flattened: true, nested: true })
-    .reverse();
+export function lowestCommonAncestor(
+  node1: Node,
+  node2: Node,
+  options: Node.Traversal = {}
+): Option<Node> {
+  // Ancestors, from root to nodes.
+  let ancestors1 = node1.inclusiveAncestors(options).reverse();
+  let ancestors2 = node2.inclusiveAncestors(options).reverse();
 
-  // going down the tree as long as the node is ancestor to both nodes
+  // Going down the tree as long as the node is ancestor to both nodes
   let commonAncestor: Option<Node> = None;
   let next1 = ancestors1.first();
   let next2 = ancestors2.first();
@@ -50,6 +55,7 @@ export function lowestCommonAncestor(node1: Node, node2: Node): Option<Node> {
     next2 = ancestors2.first();
 
     if (next1.isNone() || next2.isNone()) {
+      // This is needed for the corner case of nodes in different trees but at the exact same depth…
       break;
     }
   }
