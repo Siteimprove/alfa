@@ -29,9 +29,15 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
 
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector` subclasses now have type guard functions, and `Selector#type` is now available. ([#732](../../pull/732))
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))
+
+### Fixed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector#equals()` avoids narrowing to `never` when used on a different `Selector`. ([#732](../../pull/732))
 
 ## [0.12.0](../../compare/v0.11.0...v0.12.0) (2021-02-26)
 
