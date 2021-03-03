@@ -14,21 +14,24 @@ const { and } = Refinement;
  * {@link https://act-rules.github.io/glossary/#just-before}
  *
  * ACT rules requires the second node to be perceivable content.
- * Since we cannot really enforce that at type level, and plan to use that with `<main>` as second node,
- * we extend the concept to "at the start":
+ * Since we cannot really enforce that at type level, and plan to use that
+ * with `<main>` as second node, we extend the concept to "at the start":
  *
- * there is no perceivable *content* between the first (included) and second (excluded) of the nodes,
- * in tree order in the flat tree.
+ * there is no perceivable *content* between the first (included) and
+ * second (excluded) of the nodes, in tree order in the flat tree.
  *
  * Thus:
- * * [N1, …, N2] => N1 is at the start of N2 if there is no perceivable in [N1, …, N2[
- * * [N2, …, N1] => N1 is at the start of N2 if there is no perceivable in [N2, …, N1[
- * In both cases, jumping to N1 give access to all the perceivable nodes after N2, and no more.
+ * * [N1, …, N2] => N1 is at the start of N2 if no perceivable in [N1, …, N2[
+ * * [N2, …, N1] => N1 is at the start of N2 if no perceivable in [N2, …, N1[
+ * In both cases, jumping to N1 give access to all the perceivable nodes
+ * after N2, and no more.
  *
- * Perceivable containers (e.g. <div><span>Hello</span></div>) are actually OK, only perceivable actual content is bad.
+ * Perceivable containers (e.g. <div><span>Hello</span></div>) are actually OK,
+ * only perceivable actual content is bad.
  *
- * Note that the def is actually symmetrical, but N2 is conceptually a container (`<main>`)
- * while N1 is a single point (an anchor), hence the asymmetry in the code.
+ * Note that the def is actually symmetrical, but N2 is conceptually a
+ * container (`<main>`) while N1 is a single point (an anchor),
+ * hence the asymmetry in the code.
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
  */
@@ -57,18 +60,22 @@ export function isAtTheStart(
       .inclusiveDescendants(options)
       .skipUntil(or(equals(node1), equals(node2)));
 
-    // node1 and node2 cannot be equal due to first test, so if the first one is perceivable, this is bad.
+    // node1 and node2 cannot be equal due to first test,
+    // so if the first one is perceivable, this is bad.
     if (test(isPerceivableContent, descendants.first().get())) {
       return false;
     }
 
-    // Go through descendants until we reach perceivable *content*, or the second of the nodes
+    // Go through descendants until we reach perceivable *content*,
+    // or the second of the nodes
     descendants = descendants
       .rest()
       .skipUntil(or(isPerceivableContent, equals(node1), equals(node2)));
 
-    // if we hit the second node, this is good; otherwise we've found perceivable content in between.
-    // descendant cannot be empty because it contained at least node1 and node2 which are different.
+    // if we hit the second node, this is good;
+    // otherwise we've found perceivable content in between.
+    // descendant cannot be empty because it contained at least
+    // node1 and node2 which are different.
     return test(or(equals(node1), equals(node2)), descendants.first().get());
   };
 }
@@ -102,7 +109,8 @@ export function lowestCommonAncestor(
     next2 = ancestors2.first();
 
     if (next1.isNone() || next2.isNone()) {
-      // This is needed for the corner case of nodes in different trees but at the exact same depth…
+      // This is needed for the corner case of nodes in different trees but
+      // at the exact same depth…
       break;
     }
   }
