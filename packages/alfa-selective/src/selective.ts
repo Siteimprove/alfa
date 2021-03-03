@@ -32,17 +32,12 @@ export class Selective<S, T = never>
   }
 
   public map<U>(mapper: Mapper<T, U>): Selective<S, U> {
-    return new Selective(
-      this._value.either(
-        (value) => Left.of(value) as Either<S, U>,
-        (value) => Right.of(mapper(value))
-      )
-    );
+    return this.flatMap((value) => new Selective(Right.of(mapper(value))));
   }
 
   public flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U> {
     return this._value.either(
-      (value) => new Selective(Left.of(value) as Either<S, U>),
+      (value) => new Selective(Left.of(value)),
       (value) => mapper(value)
     );
   }
@@ -119,12 +114,12 @@ export namespace Selective {
   export type JSON<S, T = never> = Either.JSON<S, T>;
 
   /**
-   * Ensure that a {@link Selective} is exhaustively matched, returning its
+   * Ensure that a {@link (Selective:class)} is exhaustively matched, returning its
    * resulting value.
    *
    * @remarks
-   * This function should only be used for cases where {@link Selective.get} is
-   * insufficient. If in doubt, assume that it isn't.
+   * This function should only be used for cases where {@link (Selective:class).get}
+   * is insufficient. If in doubt, assume that it isn't.
    */
   export function exhaust<T>(selective: Selective<never, T>): T {
     return selective.get();
