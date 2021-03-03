@@ -43,18 +43,18 @@ export function isAtTheStart(
       return true;
     }
 
-    const context = lowestCommonAncestor(node1, node2, {
-      flattened: true,
-      nested: true,
-    });
+    const context = lowestCommonAncestor(node1, node2, options);
+
     if (context.isNone()) {
       // the nodes are not even in the same tree…
       return false;
     }
 
     // Get descendants of the LCA, and skip everything before both nodes.
-    let descendants = context.get().inclusiveDescendants(options);
-    descendants = descendants.skipUntil(or(equals(node1), equals(node2)));
+    let descendants = context
+      .get()
+      .inclusiveDescendants(options)
+      .skipUntil(or(equals(node1), equals(node2)));
 
     // node1 and node2 cannot be equal due to first test, so if the first one is perceivable, this is bad.
     if (test(isPerceivableContent, descendants.first().get())) {
@@ -62,23 +62,13 @@ export function isAtTheStart(
     }
 
     // Go through descendants until we reach perceivable *content*, or the second of the nodes
-    descendants = descendants.rest();
-    descendants = descendants.skipUntil(
-      or(isPerceivableContent, equals(node1), equals(node2))
-    );
+    descendants = descendants
+      .rest()
+      .skipUntil(or(isPerceivableContent, equals(node1), equals(node2)));
 
-    // if we've found perceivable *content* which is not the second node, this is bad.
+    // if we hit the second node, this is good; otherwise we've found perceivable content in between.
     // descendant cannot be empty because it contained at least node1 and node2 which are different.
-    if (
-      test(
-        and(isPerceivableContent, not(or(equals(node1), equals(node2)))),
-        descendants.first().get()
-      )
-    ) {
-      return false;
-    }
-
-    return true;
+    return test(or(equals(node1), equals(node2)), descendants.first().get());
   };
 }
 
