@@ -11,7 +11,7 @@ const { equals, or, test } = Predicate;
 const { and } = Refinement;
 
 /**
- * @see https://act-rules.github.io/glossary/#just-before
+ * {@link https://act-rules.github.io/glossary/#just-before}
  *
  * ACT rules requires the second node to be perceivable content.
  * Since we cannot really enforce that at type level, and plan to use that with `<main>` as second node,
@@ -31,7 +31,7 @@ const { and } = Refinement;
  * while N1 is a single point (an anchor), hence the asymmetry in the code.
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
- **/
+ */
 export function isAtTheStart(
   node2: Node,
   device: Device = Device.standard()
