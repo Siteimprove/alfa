@@ -1,9 +1,28 @@
 # Releasing
 
-Alfa is managed using [Lerna](https://lerna.js.org/) which handles the process of versioning packages and committing version tags to [git](https://git-scm.com/). When a new release is to ready to be published, do:
+> :warning: Make sure to stash all local changes, including untracked files, before running any of the commands below: `git stash --include-untracked`
+
+Alfa uses the currently experimental [Yarn release workflow](https://yarnpkg.com/features/release-workflow) to manage releases. While this release workflow is geared towards individually versioned packages, we instead keep all package versions synchronised. The first step towards a release is therefore to mark all public packages for increment:
 
 ```console
-$ yarn lerna version
+$ yarn workspaces foreach \
+    --no-private \
+    --topological \
+    version --deferred <patch | minor | major>
 ```
 
-This will prompt you for the type of increment to perform (major, minor, or patch) and update the version of all packages that have changed since the last published version. Once a new version tag has been committed and pushed, the release workflow defined in [`.github/workflows/release.yml`](../.github/workflows/release.yml) kicks off and takes care of publishing updated packages and pushing a new release to GitHub.
+When finished, inspect the file created at `.yarn/versions/<hash>.yml` to verify that all packages have been marked with the chosen increment. Once verified, apply the increment:
+
+```console
+$ yarn version apply --all
+```
+
+With the increment applied and the lockfile updated, commit the changes, create a new release tag, and push:
+
+```console
+$ git commit --message <version> --all
+$ git tag --message <version> --annotate <version>
+$ git push
+```
+
+Once the release tag has been pushed, the release workflow defined in [`.github/workflows/release.yml`](../.github/workflows/release.yml) kicks off and takes care of publishing the packages and pushing a new release to GitHub.
