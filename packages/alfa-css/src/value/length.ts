@@ -50,12 +50,20 @@ export class Length<U extends Unit.Length = Unit.Length>
     throw new Error(`Cannot convert ${this._unit} to ${unit}`);
   }
 
-  public isAbsolute(): this is Length<Unit.Length.Absolute> {
-    return Unit.isAbsoluteLength(this._unit);
-  }
-
   public isRelative(): this is Length<Unit.Length.Relative> {
     return Unit.isRelativeLength(this._unit);
+  }
+
+  public isFontRelative(): this is Length<Unit.Length.Relative.Font> {
+    return Unit.isFontRelativeLength(this._unit);
+  }
+
+  public isViewportRelative(): this is Length<Unit.Length.Relative.Viewport> {
+    return Unit.isViewportRelativeLength(this._unit);
+  }
+
+  public isAbsolute(): this is Length<Unit.Length.Absolute> {
+    return Unit.isAbsoluteLength(this._unit);
   }
 
   public equals(value: unknown): value is this {

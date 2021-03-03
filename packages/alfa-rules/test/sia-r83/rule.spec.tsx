@@ -12,17 +12,18 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textOverflow: "ellipsis",
-      }}
-    >
-      {target}
-    </div>,
-  ]);
+  const document = Document.of(
+    [<div>{target}</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
@@ -35,41 +36,22 @@ test(`evaluate() passes a child text node of an element whose parent truncates
       overflow using ellipsis`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textOverflow: "ellipsis",
-      }}
-    >
-      <span>{target}</span>
-    </div>,
-  ]);
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    passed(R83, target, {
-      1: Outcomes.WrapsText,
-    }),
-  ]);
-});
-
-test(`evaluate() passes a text node that hides overflow by wrapping text using
-      the \`height\` property with a value that is equal to the value of the
-      \`line-height\` property`, async (t) => {
-  const target = h.text("Hello world");
-
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        height: "1.5em",
-        lineHeight: "1.5",
-      }}
-    >
-      {target}
-    </div>,
-  ]);
+  const document = Document.of(
+    [
+      <div>
+        <span>{target}</span>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
@@ -82,16 +64,17 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`white-space\` property`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-      }}
-    >
-      {target}
-    </div>,
-  ]);
+  const document = Document.of(
+    [<div>{target}</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, {
@@ -100,22 +83,44 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
   ]);
 });
 
-test(`evaluate() fails a text node that clips overflow by not wrapping text
-      using the \`height\` property with a value that is greater than the value
-      of the \`line-height\` property`, async (t) => {
+test(`evaluate() fails a text node that clips overflow and sets a fixed height
+      using the px unit`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        height: "1.5em",
-        lineHeight: "1.2",
-      }}
-    >
-      {target}
-    </div>,
+  const document = Document.of(
+    [<div>{target}</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          height: "20px",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText,
+    }),
   ]);
+});
+
+test(`evaluate() fails a text node that clips overflow and sets a fixed height
+      using the vh unit`, async (t) => {
+  const target = h.text("Hello world");
+
+  const document = Document.of(
+    [<div>{target}</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          height: "1vh",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, {
@@ -125,70 +130,74 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
 });
 
 test("evaluate() is inapplicable to a text node that is not visible", async (t) => {
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-      }}
-      hidden
-    >
-      Hello world
-    </div>,
-  ]);
+  const document = Document.of(
+    [<div hidden>Hello world</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
 test(`evaluate() is inapplicable to a text node that is excluded from the
       accessibility tree using the \`aria-hidden\` attribute`, async (t) => {
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-      }}
-      aria-hidden="true"
-    >
-      Hello world
-    </div>,
-  ]);
+  const document = Document.of(
+    [<div aria-hidden="true">Hello world</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
-test("evaluates() fails a clipped node with `normal` line-height", async (t) => {
-  const target = h.text("Hello World");
+test(`evaluate() is inapplicable to a text node with a fixed absolute height set
+      via the style attribute`, async (t) => {
+  const document = Document.of(
+    [
+      <div
+        style={{
+          height: "20px",
+        }}
+      >
+        Hello world
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+        }),
+      ]),
+    ]
+  );
 
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        height: "1.5em",
-        fontSize: "16px",
-      }}
-    >
-      {target}
-    </div>,
-  ]);
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, { 1: Outcomes.ClipsText }),
-  ]);
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
-test(`evaluate() is inapplicable to a text node with a fixed width and hidden
-      overflow`, async (t) => {
-  const document = Document.of([
-    <div
-      style={{
-        overflow: "hidden",
-        width: "80ch",
-      }}
-    >
-      Hello world
-    </div>,
-  ]);
+test(`evaluate() is inapplicable to a text node with a fixed relative height`, async (t) => {
+  const document = Document.of(
+    [<div>Hello world</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          height: "1.2em",
+        }),
+      ]),
+    ]
+  );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });

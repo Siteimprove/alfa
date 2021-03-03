@@ -16,22 +16,40 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#relative-lengths}
      */
-    export type Relative =
-      | "em"
-      | "ex"
-      | "ch"
-      | "rem"
-      | "vw"
-      | "vh"
-      | "vmin"
-      | "vmax";
+    export type Relative = Relative.Font | Relative.Viewport;
+
+    export namespace Relative {
+      /**
+       * {@link https://drafts.csswg.org/css-values/#font-relative-lengths}
+       */
+      export type Font = "em" | "ex" | "ch" | "rem";
+
+      /**
+       * {@link https://drafts.csswg.org/css-values/#viewport-relative-lengths}
+       */
+      export type Viewport = "vw" | "vh" | "vmin" | "vmax";
+    }
 
     export function isRelative(input: string): input is Relative {
+      return isFontRelative(input) || isViewportRelative(input);
+    }
+
+    export function isFontRelative(input: string): input is Relative.Font {
       switch (input) {
         case "em":
         case "ex":
         case "ch":
         case "rem":
+          return true;
+      }
+
+      return false;
+    }
+
+    export function isViewportRelative(
+      input: string
+    ): input is Relative.Viewport {
+      switch (input) {
         case "vw":
         case "vh":
         case "vmin":
@@ -63,21 +81,20 @@ export namespace Unit {
     }
   }
 
+  export const {
+    isRelative: isRelativeLength,
+    isFontRelative: isFontRelativeLength,
+    isViewportRelative: isViewportRelativeLength,
+    isAbsolute: isAbsoluteLength,
+  } = Length;
+
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export type Length = Length.Relative | Length.Absolute;
 
   export function isLength(input: string): input is Length {
-    return Length.isRelative(input) || Length.isAbsolute(input);
-  }
-
-  export function isRelativeLength(input: string): input is Length.Relative {
-    return Length.isRelative(input);
-  }
-
-  export function isAbsoluteLength(input: string): input is Length.Absolute {
-    return Length.isAbsolute(input);
+    return isRelativeLength(input) || isAbsoluteLength(input);
   }
 
   /**
