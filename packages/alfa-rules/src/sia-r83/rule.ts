@@ -92,12 +92,9 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
         .some((whiteSpace) => whiteSpace.value === "nowrap")
     ) {
       return style
-        .cascaded("overflow-x")
-        .some((overflow) =>
-          overflow.some(
-            (overflow) =>
-              overflow.value === "hidden" || overflow.value === "clip"
-          )
+        .computed("overflow-x")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
         );
     }
 
@@ -105,10 +102,16 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
     // relative length not set via the `style` attribute. In this case,
     // text might clip if overflow of the y-axis is hidden.
     //
-    // For heights set via the `style` attribute, we assume that its value is
+    // For font relative heights we assume that care has already been taken to
+    // ensure that the layout scales with the content.
+    //
+    // For heights set via the `style` attribute we assume that its value is
     // controlled by JavaScript and is adjusted as the content scales.
     if (
       style
+        // Use the cascaded value to avoid lengths being resolved to pixels.
+        // Otherwise, we won't be able to tell if a font relative length was
+        // used.
         .cascaded("height")
         .some((height) =>
           height.some(
@@ -121,12 +124,9 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
         )
     ) {
       return style
-        .cascaded("overflow-y")
-        .some((overflow) =>
-          overflow.some(
-            (overflow) =>
-              overflow.value === "hidden" || overflow.value === "clip"
-          )
+        .computed("overflow-y")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
         );
     }
 

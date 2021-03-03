@@ -30,12 +30,12 @@ export namespace Unit {
       export type Viewport = "vw" | "vh" | "vmin" | "vmax";
     }
 
-    export function isRelative(input: string): input is Relative {
-      return isFontRelative(input) || isViewportRelative(input);
+    export function isRelative(unit: string): unit is Relative {
+      return isFontRelative(unit) || isViewportRelative(unit);
     }
 
-    export function isFontRelative(input: string): input is Relative.Font {
-      switch (input) {
+    export function isFontRelative(unit: string): unit is Relative.Font {
+      switch (unit) {
         case "em":
         case "ex":
         case "ch":
@@ -47,9 +47,9 @@ export namespace Unit {
     }
 
     export function isViewportRelative(
-      input: string
-    ): input is Relative.Viewport {
-      switch (input) {
+      unit: string
+    ): unit is Relative.Viewport {
+      switch (unit) {
         case "vw":
         case "vh":
         case "vmin":
@@ -65,8 +65,8 @@ export namespace Unit {
      */
     export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
 
-    export function isAbsolute(input: string): input is Absolute {
-      switch (input) {
+    export function isAbsolute(unit: string): unit is Absolute {
+      switch (unit) {
         case "cm":
         case "mm":
         case "Q":
@@ -93,8 +93,8 @@ export namespace Unit {
    */
   export type Length = Length.Relative | Length.Absolute;
 
-  export function isLength(input: string): input is Length {
-    return isRelativeLength(input) || isAbsoluteLength(input);
+  export function isLength(unit: string): unit is Length {
+    return isRelativeLength(unit) || isAbsoluteLength(unit);
   }
 
   /**
@@ -102,8 +102,8 @@ export namespace Unit {
    */
   export type Angle = "deg" | "grad" | "rad" | "turn";
 
-  export function isAngle(input: string): input is Angle {
-    switch (input) {
+  export function isAngle(unit: string): unit is Angle {
+    switch (unit) {
       case "deg":
       case "grad":
       case "rad":
@@ -119,8 +119,8 @@ export namespace Unit {
    */
   export type Time = "s" | "ms";
 
-  export function isTime(input: string): input is Time {
-    switch (input) {
+  export function isTime(unit: string): unit is Time {
+    switch (unit) {
       case "s":
       case "ms":
         return true;
@@ -134,8 +134,8 @@ export namespace Unit {
    */
   export type Frequency = "hz" | "kHz";
 
-  export function isFrequency(input: string): input is Frequency {
-    switch (input) {
+  export function isFrequency(unit: string): unit is Frequency {
+    switch (unit) {
       case "hz":
       case "kHz":
         return true;
@@ -149,8 +149,8 @@ export namespace Unit {
    */
   export type Resolution = "dpi" | "dpcm" | "dppx";
 
-  export function isResolution(input: string): input is Resolution {
-    switch (input) {
+  export function isResolution(unit: string): unit is Resolution {
+    switch (unit) {
       case "dpi":
       case "dpcm":
       case "dppx":
