@@ -248,3 +248,23 @@ test(`evaluate() passes a document whose first tabbable link is visible when
     }),
   ]);
 });
+
+test("evaluates() passe a document whose first tabbable link references a container child at the start of main", async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <main>
+        <div id="content">
+          <p>This is the content</p>
+        </div>
+      </main>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
