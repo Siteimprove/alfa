@@ -7,7 +7,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { isPerceivable } from "./is-perceivable";
 import { isReplaced } from "./is-replaced";
 
-const { and, equals, or, not, test } = Predicate;
+const { equals, or, test } = Predicate;
+const { and } = Refinement;
 
 /**
  * @see https://act-rules.github.io/glossary/#just-before
@@ -116,6 +117,6 @@ export function lowestCommonAncestor(
 function isContent(options: Node.Traversal = {}): Predicate<Node> {
   return or(
     (node) => node.children(options).isEmpty(),
-    Refinement.and(Element.isElement, isReplaced)
+    and(Element.isElement, isReplaced)
   );
 }
