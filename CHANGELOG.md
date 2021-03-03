@@ -29,15 +29,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): A predicate `atTheStart` is now available, checking whether a node it "at the start" of another (no actual content between them). ([#735](../../pull/735))
-
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): R87 now automatically passes if a skip link references an element "at the start" of an element with a role of `main`. ([#735](../../pull/735))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R87 now automatically passes if a skip link references an element "at the start" of an element with a role of `main`. ([#735](../../pull/735))
 
 ## [0.12.0](../../compare/v0.11.0...v0.12.0) (2021-02-26)
 
