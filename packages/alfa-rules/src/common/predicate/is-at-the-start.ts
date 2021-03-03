@@ -1,12 +1,13 @@
-import { Node } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
+import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option, None } from "@siteimprove/alfa-option";
-import { isPerceivable } from "./is-perceivable";
-import { Device } from "@siteimprove/alfa-device";
-import test = Predicate.test;
-import and = Predicate.and;
+import { Refinement } from "@siteimprove/alfa-refinement";
 
-const { equals, or } = Predicate;
+import { isPerceivable } from "./is-perceivable";
+import { isReplaced } from "./is-replaced";
+
+const { and, equals, or, not, test } = Predicate;
 
 /**
  * @see https://act-rules.github.io/glossary/#just-before
@@ -15,7 +16,7 @@ const { equals, or } = Predicate;
  * Since we cannot really enforce that at type level, and plan to use that with `<main>` as second node,
  * we extend the concept to "at the start":
  *
- * there is no perceivable content between the first (included) and second (excluded) of the nodes,
+ * there is no perceivable *content* between the first (included) and second (excluded) of the nodes,
  * in tree order in the flat tree.
  *
  * Thus:
@@ -23,12 +24,20 @@ const { equals, or } = Predicate;
  * * [N2, …, N1] => N1 is at the start of N2 if there is no perceivable in [N2, …, N1[
  * In both cases, jumping to N1 give access to all the perceivable nodes after N2, and no more.
  *
+ * Perceivable containers (e.g. <div><span>Hello</span></div>) are actually OK, only perceivable actual content is bad.
+ *
  * Note that the def is actually symmetrical, but N2 is conceptually a container (`<main>`)
  * while N1 is a single point (an anchor), hence the asymmetry in the code.
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
  **/
-export function isAtTheStart(node2: Node, device: Device): Predicate<Node> {
+export function isAtTheStart(
+  node2: Node,
+  device: Device = Device.standard()
+): Predicate<Node> {
+  const options = { flattened: true, nested: true };
+  const isPerceivableContent = and(isPerceivable(device), isContent(options));
+
   return function isAtTheStart(node1: Node): boolean {
     if (node2.equals(node1)) {
       return true;
@@ -44,27 +53,25 @@ export function isAtTheStart(node2: Node, device: Device): Predicate<Node> {
     }
 
     // Get descendants of the LCA, and skip everything before both nodes.
-    let descendants = context
-      .get()
-      .inclusiveDescendants({ flattened: true, nested: true });
+    let descendants = context.get().inclusiveDescendants(options);
     descendants = descendants.skipUntil(or(equals(node1), equals(node2)));
 
     // node1 and node2 cannot be equal due to first test, so if the first one is perceivable, this is bad.
-    if (test(isPerceivable(device), descendants.first().get())) {
+    if (test(isPerceivableContent, descendants.first().get())) {
       return false;
     }
 
-    // Go through descendants until we reach perceivable content, or the second of the nodes
+    // Go through descendants until we reach perceivable *content*, or the second of the nodes
     descendants = descendants.rest();
     descendants = descendants.skipUntil(
-      or(isPerceivable(device), equals(node1), equals(node2))
+      or(isPerceivableContent, equals(node1), equals(node2))
     );
 
-    // if we've found perceivable content which is not the second node, this is bad.
+    // if we've found perceivable *content* which is not the second node, this is bad.
     // descendant cannot be empty because it contained at least node1 and node2 which are different.
     if (
       test(
-        and(isPerceivable(device), or(equals(node1), equals(node2))),
+        and(isPerceivableContent, not(or(equals(node1), equals(node2)))),
         descendants.first().get()
       )
     ) {
@@ -110,4 +117,15 @@ export function lowestCommonAncestor(
   }
 
   return commonAncestor;
+}
+
+/**
+ * A node is actual content (not just a container) if it has no children,
+ * or if it is a replaced element (assumed to be replaced by actual content).
+ */
+function isContent(options: Node.Traversal = {}): Predicate<Node> {
+  return or(
+    (node) => node.children(options).isEmpty(),
+    Refinement.and(Element.isElement, isReplaced)
+  );
 }
