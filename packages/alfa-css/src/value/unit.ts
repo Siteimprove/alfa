@@ -16,22 +16,40 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#relative-lengths}
      */
-    export type Relative =
-      | "em"
-      | "ex"
-      | "ch"
-      | "rem"
-      | "vw"
-      | "vh"
-      | "vmin"
-      | "vmax";
+    export type Relative = Relative.Font | Relative.Viewport;
 
-    export function isRelative(input: string): input is Relative {
-      switch (input) {
+    export namespace Relative {
+      /**
+       * {@link https://drafts.csswg.org/css-values/#font-relative-lengths}
+       */
+      export type Font = "em" | "ex" | "ch" | "rem";
+
+      /**
+       * {@link https://drafts.csswg.org/css-values/#viewport-relative-lengths}
+       */
+      export type Viewport = "vw" | "vh" | "vmin" | "vmax";
+    }
+
+    export function isRelative(unit: string): unit is Relative {
+      return isFontRelative(unit) || isViewportRelative(unit);
+    }
+
+    export function isFontRelative(unit: string): unit is Relative.Font {
+      switch (unit) {
         case "em":
         case "ex":
         case "ch":
         case "rem":
+          return true;
+      }
+
+      return false;
+    }
+
+    export function isViewportRelative(
+      unit: string
+    ): unit is Relative.Viewport {
+      switch (unit) {
         case "vw":
         case "vh":
         case "vmin":
@@ -47,8 +65,8 @@ export namespace Unit {
      */
     export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
 
-    export function isAbsolute(input: string): input is Absolute {
-      switch (input) {
+    export function isAbsolute(unit: string): unit is Absolute {
+      switch (unit) {
         case "cm":
         case "mm":
         case "Q":
@@ -63,21 +81,20 @@ export namespace Unit {
     }
   }
 
+  export const {
+    isRelative: isRelativeLength,
+    isFontRelative: isFontRelativeLength,
+    isViewportRelative: isViewportRelativeLength,
+    isAbsolute: isAbsoluteLength,
+  } = Length;
+
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export type Length = Length.Relative | Length.Absolute;
 
-  export function isLength(input: string): input is Length {
-    return Length.isRelative(input) || Length.isAbsolute(input);
-  }
-
-  export function isRelativeLength(input: string): input is Length.Relative {
-    return Length.isRelative(input);
-  }
-
-  export function isAbsoluteLength(input: string): input is Length.Absolute {
-    return Length.isAbsolute(input);
+  export function isLength(unit: string): unit is Length {
+    return isRelativeLength(unit) || isAbsoluteLength(unit);
   }
 
   /**
@@ -85,8 +102,8 @@ export namespace Unit {
    */
   export type Angle = "deg" | "grad" | "rad" | "turn";
 
-  export function isAngle(input: string): input is Angle {
-    switch (input) {
+  export function isAngle(unit: string): unit is Angle {
+    switch (unit) {
       case "deg":
       case "grad":
       case "rad":
@@ -102,8 +119,8 @@ export namespace Unit {
    */
   export type Time = "s" | "ms";
 
-  export function isTime(input: string): input is Time {
-    switch (input) {
+  export function isTime(unit: string): unit is Time {
+    switch (unit) {
       case "s":
       case "ms":
         return true;
@@ -117,8 +134,8 @@ export namespace Unit {
    */
   export type Frequency = "hz" | "kHz";
 
-  export function isFrequency(input: string): input is Frequency {
-    switch (input) {
+  export function isFrequency(unit: string): unit is Frequency {
+    switch (unit) {
       case "hz":
       case "kHz":
         return true;
@@ -132,8 +149,8 @@ export namespace Unit {
    */
   export type Resolution = "dpi" | "dpcm" | "dppx";
 
-  export function isResolution(input: string): input is Resolution {
-    switch (input) {
+  export function isResolution(unit: string): unit is Resolution {
+    switch (unit) {
       case "dpi":
       case "dpcm":
       case "dppx":

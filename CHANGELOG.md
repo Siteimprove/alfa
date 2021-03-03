@@ -29,6 +29,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
 
+- [@siteimprove/alfa-css](packages/alfa-css): `Unit.Length.Relative.Font` and `Unit.Length.Relative.Viewport` are now available for distinguishing between font and viewport relative lengths. In addition, `Unit.isFontRelativeLength()`, `Unit.isViewportRelativeLength()`, `Length#isFontRelative()`, and `Length#isViewportRelative()` are now also available. ([#734](../../pull/734))
+
 - [@siteimprove/alfa-selector](packages/alfa-selector): `Selector` subclasses now have type guard functions, and `Selector#type` is now available. ([#732](../../pull/732))
 
 ### Changed
@@ -36,6 +38,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))
 
 ### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 has been limited to testing cases where a non-inline, non-font relative `height` is likely to cause text to clip when text scale is increased. This was, based on much feedback, the most common case for true positives. Cases with `white-space: nowrap` are also still tested. ([#734](../../pull/734))
 
 - [@siteimprove/alfa-selector](packages/alfa-selector): `Selector#equals()` avoids narrowing to `never` when used on a different `Selector`. ([#732](../../pull/732))
 
