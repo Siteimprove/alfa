@@ -31,7 +31,6 @@ const {
   isId,
   isType,
   Pseudo,
-  VisitedKind,
 } = Selector;
 
 const isDescendantSelector = and(
@@ -227,33 +226,7 @@ export namespace SelectorMap {
           order++;
 
           for (const part of selector) {
-            // @see https://developer.mozilla.org/en-US/docs/Web/CSS/Privacy_and_the_:visited_selector
-            switch (Selector.hasVisited(part)) {
-              case VisitedKind.None:
-                // this part contains no :visited
-                add(rule, part, rule.style, origin, order);
-                break;
-              case Selector.VisitedKind.Irrelevant:
-                // this part contains a :visited on sibling element, and is simply discarded.
-                break;
-              case Selector.VisitedKind.Relevant:
-                // this part contains a :visited on ancestor element, only some properties are allowed.
-                const declarations = Iterable.filter(
-                  rule.style.declarations,
-                  (declaration) =>
-                    [
-                      "color",
-                      "background-color",
-                      "border-color",
-                      "column-rule-color",
-                      "outline-color",
-                    ].includes(declaration.name)
-                );
-                add(rule, part, declarations, origin, order);
-                break;
-              default:
-                break;
-            }
+            add(rule, part, rule.style, origin, order);
           }
         }
       }
