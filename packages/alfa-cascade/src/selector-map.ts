@@ -10,13 +10,14 @@ import {
   StyleRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Media } from "@siteimprove/alfa-media";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context, Selector } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { UserAgent } from "./user-agent";
 import { AncestorFilter } from "./ancestor-filter";
