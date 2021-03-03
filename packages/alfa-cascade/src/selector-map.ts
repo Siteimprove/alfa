@@ -31,7 +31,8 @@ const {
   isCompound,
   isId,
   isType,
-  Pseudo,
+  isPseudoClass,
+  isPseudoElement,
 } = Selector;
 
 const isDescendantSelector = and(
@@ -484,10 +485,10 @@ function getSpecificity(selector: Selector): Specificity {
     } else if (
       isClass(selector) ||
       isAttribute(selector) ||
-      Pseudo.isClass(selector)
+      isPseudoClass(selector)
     ) {
       b++;
-    } else if (isType(selector) || Pseudo.isElement(selector)) {
+    } else if (isType(selector) || isPseudoElement(selector)) {
       c++;
     } else if (isCompound(selector) || isComplex(selector)) {
       queue.push(selector.left, selector.right);

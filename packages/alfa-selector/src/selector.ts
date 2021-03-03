@@ -59,15 +59,15 @@ export namespace Selector {
       Iterable<Simple | Compound | Complex | Relative>,
       Equatable,
       Serializable {
+    public abstract get type(): string;
+
     /**
      * {@link https://drafts.csswg.org/selectors/#match}
      */
-
-    public abstract get type(): string;
-
     public abstract matches(element: Element, context?: Context): boolean;
 
     public abstract equals(value: Selector): boolean;
+
     public abstract equals(value: unknown): value is this;
 
     public abstract [Symbol.iterator](): Iterator<
@@ -116,6 +116,7 @@ export namespace Selector {
     }
 
     public equals(value: Id): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -184,6 +185,7 @@ export namespace Selector {
     }
 
     public equals(value: Class): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): value is boolean {
@@ -368,6 +370,7 @@ export namespace Selector {
     }
 
     public equals(value: Attribute): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -585,6 +588,7 @@ export namespace Selector {
     }
 
     public equals(value: Type): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -673,6 +677,7 @@ export namespace Selector {
     }
 
     public equals(value: Universal): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -744,6 +749,7 @@ export namespace Selector {
       }
 
       public equals(value: Class): boolean;
+
       public equals(value: unknown): value is this;
 
       public equals(value: unknown): boolean {
@@ -798,6 +804,7 @@ export namespace Selector {
       }
 
       public equals(value: Element): boolean;
+
       public equals(value: unknown): value is this;
 
       public equals(value: unknown): boolean {
@@ -834,8 +841,10 @@ export namespace Selector {
 
   export type Pseudo = Pseudo.Class | Pseudo.Element;
 
+  export const { isClass: isPseudoClass, isElement: isPseudoElement } = Pseudo;
+
   export function isPseudo(value: unknown): value is Pseudo {
-    return Pseudo.isClass(value) || Pseudo.isElement(value);
+    return isPseudoClass(value) || isPseudoElement(value);
   }
 
   const parseNth = left(
@@ -985,6 +994,7 @@ export namespace Selector {
     }
 
     public equals(value: Is): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -1045,6 +1055,7 @@ export namespace Selector {
     }
 
     public equals(value: Not): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -1101,6 +1112,7 @@ export namespace Selector {
     }
 
     public equals(value: Has): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -1741,6 +1753,7 @@ export namespace Selector {
     }
 
     public equals(value: Compound): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -1916,6 +1929,7 @@ export namespace Selector {
     }
 
     public equals(value: Complex): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -2019,6 +2033,7 @@ export namespace Selector {
     }
 
     public equals(value: Relative): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
@@ -2114,6 +2129,7 @@ export namespace Selector {
     }
 
     public equals(value: List): boolean;
+
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
