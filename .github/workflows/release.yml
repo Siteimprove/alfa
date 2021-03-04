@@ -12,12 +12,18 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
-          registry-url: https://npm.pkg.github.com/
+      - run: >
+          yarn config set
+          npmScopes.siteimprove.npmAuthToken
+          ${{ secrets.GITHUB_TOKEN }}
       - run: yarn install --immutable
       - run: yarn build
       - run: yarn test
-      - run: yarn config set npmScopes.siteimprove.npmAuthToken ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn workspaces foreach --no-private --topological npm publish
+      - run: >
+          yarn workspaces foreach
+          --no-private
+          --topological
+          npm publish
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
