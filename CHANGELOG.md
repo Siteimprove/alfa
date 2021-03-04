@@ -33,6 +33,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-selector](packages/alfa-selector): `Selector` subclasses now have type guard functions, and `Selector#type` is now available. ([#732](../../pull/732))
 
+- [@siteimprove/alfa-collection](packages/alfa-collection): `Indexed#reduceWhile()`, `Indexed#reduceUntil()`, and `Indexed#zip()` are now available.
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.reduceWhile()`, `Array.reduceUntil()`, and `Array.zip()` are now available.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.reduceWhile()`, `Iterable.reduceUntil()`, and `Iterable.zip()` are now available.
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))
