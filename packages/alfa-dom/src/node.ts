@@ -323,7 +323,11 @@ export abstract class Node
     yield* this.descendants();
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Node): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value === this;
   }
 

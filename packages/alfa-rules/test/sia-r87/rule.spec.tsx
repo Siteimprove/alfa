@@ -145,7 +145,8 @@ test(`evaluate() fails a document with a link that would be tabbable if not
   ]);
 });
 
-test(`evaluate() fails a document whose first tabbable element is not a link`, async (t) => {
+test(`evaluate() fails a document whose first tabbable element is not a
+      link`, async (t) => {
   const document = Document.of([
     <html>
       <button />
@@ -161,7 +162,8 @@ test(`evaluate() fails a document whose first tabbable element is not a link`, a
   ]);
 });
 
-test(`evaluate() fails a document whose first tabbable element is not a semantic link`, async (t) => {
+test(`evaluate() fails a document whose first tabbable element is not a
+      semantic link`, async (t) => {
   const document = Document.of([
     <html>
       <a href="#main" role="button">
@@ -241,6 +243,88 @@ test(`evaluate() passes a document whose first tabbable link is visible when
       ]),
     ]
   );
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references a
+      container child at the start of main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <main>
+        <div id="content">
+          <p>This is the content</p>
+        </div>
+      </main>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references an
+      empty child at the start of main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <main>
+        <div id="content"></div>
+        <p>This is the content</p>
+      </main>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references a
+      container around main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <div id="content">
+        <main>
+          <p>This is the content</p>
+        </main>
+      </div>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references an
+      empty element before main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <div id="content"></div>
+      <main>
+        <p>This is the content</p>
+      </main>
+    </html>,
+  ]);
 
   t.deepEqual(await evaluate(R87, { document }), [
     passed(R87, document, {

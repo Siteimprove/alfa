@@ -53,6 +53,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-scraper](packages/alfa-scraper): `Scraper.scrape()` now correctly sets the viewport height to the specified device height instead of its width.
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R87 now automatically passes if a skip link references an element "at the start" of an element with a role of `main`. ([#735](../../pull/735))
+
 ## [0.12.0](../../compare/v0.11.0...v0.12.0) (2021-02-26)
 
 ### Breaking
