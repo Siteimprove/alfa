@@ -39,6 +39,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.reduceWhile()`, `Iterable.reduceUntil()`, and `Iterable.zip()` are now available.
 
+- [@siteimprove/alfa-playwright](packages/alfa-playwright): A new package has been added with conversion functions for the Playwright browser automation framework.
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))
@@ -49,7 +51,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-selector](packages/alfa-selector): `Selector#equals()` avoids narrowing to `never` when used on a different `Selector`. ([#732](../../pull/732))
 
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): `Scraper.scrape()` now correctly sets the viewport height to the specified device height instead of its width.
+
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R87 now automatically passes if a skip link references an element "at the start" of an element with a role of `main`. ([#735](../../pull/735))
+
 
 ## [0.12.0](../../compare/v0.11.0...v0.12.0) (2021-02-26)
 

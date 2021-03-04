@@ -110,6 +110,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)        |
 | [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                   |
 | [**@siteimprove/alfa-jquery**](packages/alfa-jquery)         | [jQuery](https://jquery.com/)                |
+| [**@siteimprove/alfa-playwright**](packages/alfa-playwright) | [Playwright](https://playwright.dev/)        |
 | [**@siteimprove/alfa-protractor**](packages/alfa-protractor) | [Protractor](http://www.protractortest.org/) |
 | [**@siteimprove/alfa-puppeteer**](packages/alfa-puppeteer)   | [Puppeteer](https://pptr.dev/)               |
 | [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                |

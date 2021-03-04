@@ -68,6 +68,7 @@
     { "path": "alfa-option" },
     { "path": "alfa-parser" },
     { "path": "alfa-performance" },
+    { "path": "alfa-playwright" },
     { "path": "alfa-predicate" },
     { "path": "alfa-protractor" },
     { "path": "alfa-puppeteer" },

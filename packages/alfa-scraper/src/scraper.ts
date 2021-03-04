@@ -88,6 +88,13 @@ export class Scraper {
       cookies = [],
     } = options;
 
+    const {
+      viewport,
+      viewport: { width, height },
+      display: { resolution },
+      scripting,
+    } = device;
+
     let page: puppeteer.Page | undefined;
     try {
       page = await this._browser.newPage();
@@ -108,13 +115,13 @@ export class Scraper {
       }
 
       await page.setViewport({
-        width: device.viewport.width,
-        height: device.viewport.width,
-        deviceScaleFactor: device.display.resolution,
-        isLandscape: device.viewport.isLandscape(),
+        width,
+        height,
+        deviceScaleFactor: resolution,
+        isLandscape: viewport.isLandscape(),
       });
 
-      await page.setJavaScriptEnabled(device.scripting.enabled);
+      await page.setJavaScriptEnabled(scripting.enabled);
 
       if (credentials !== null) {
         await page.authenticate(credentials);
