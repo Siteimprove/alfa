@@ -39,6 +39,22 @@ export const Nil: Nil = new (class Nil {
     return accumulator;
   }
 
+  public reduceWhile<U>(
+    predicate: unknown,
+    reducer: unknown,
+    accumulator: U
+  ): U {
+    return accumulator;
+  }
+
+  public reduceUntil<U>(
+    predicate: unknown,
+    reducer: unknown,
+    accumulator: U
+  ): U {
+    return accumulator;
+  }
+
   public apply(): Nil {
     return this;
   }
@@ -124,6 +140,10 @@ export const Nil: Nil = new (class Nil {
   }
 
   public intersect(): Nil {
+    return this;
+  }
+
+  public zip(): Nil {
     return this;
   }
 

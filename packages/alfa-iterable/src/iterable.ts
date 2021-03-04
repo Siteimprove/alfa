@@ -105,6 +105,34 @@ export namespace Iterable {
     return accumulator;
   }
 
+  export function reduceWhile<T, U = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    let index = 0;
+
+    for (const value of iterable) {
+      if (predicate(value, index)) {
+        accumulator = reducer(accumulator, value, index++);
+      } else {
+        break;
+      }
+    }
+
+    return accumulator;
+  }
+
+  export function reduceUntil<T, U = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return reduceWhile(iterable, not(predicate), reducer, accumulator);
+  }
+
   export function apply<T, U>(
     iterable: Iterable<T>,
     mapper: Iterable<Mapper<T, U>>
@@ -390,6 +418,25 @@ export namespace Iterable {
     ...iterables: Array<Iterable<T>>
   ): Iterable<T> {
     return filter(iterable, (value) => includes(flatten(iterables), value));
+  }
+
+  export function* zip<T, U = T>(
+    a: Iterable<T>,
+    b: Iterable<U>
+  ): Iterable<[T, U]> {
+    const itA = iterator(a);
+    const itB = iterator(b);
+
+    while (true) {
+      const a = itA.next();
+      const b = itB.next();
+
+      if (a.done === true || b.done === true) {
+        return;
+      }
+
+      yield [a.value, b.value];
+    }
   }
 
   export function first<T>(iterable: Iterable<T>): Option<T> {

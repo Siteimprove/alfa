@@ -94,6 +94,22 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.reduce(this, reducer, accumulator);
   }
 
+  public reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceWhile(this, predicate, reducer, accumulator);
+  }
+
+  public reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceUntil(this, predicate, reducer, accumulator);
+  }
+
   public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
@@ -271,6 +287,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public intersect(iterable: Iterable<T>): List<T> {
     return List.from(Iterable.intersect(this, iterable));
+  }
+
+  public zip<U>(iterable: Iterable<U>): List<[T, U]> {
+    return List.from(Iterable.zip(this, iterable));
   }
 
   public first(): Option<T> {
