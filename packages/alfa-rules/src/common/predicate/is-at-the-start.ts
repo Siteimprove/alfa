@@ -93,29 +93,15 @@ export function lowestCommonAncestor(
   node2: Node,
   options: Node.Traversal = {}
 ): Option<Node> {
-  // Ancestors, from root to nodes.
-  let ancestors1 = node1.inclusiveAncestors(options).reverse();
-  let ancestors2 = node2.inclusiveAncestors(options).reverse();
-
-  // Going down the tree as long as the node is ancestor to both nodes
-  let commonAncestor: Option<Node> = None;
-  let next1 = ancestors1.first();
-  let next2 = ancestors2.first();
-  while (next1.equals(next2)) {
-    commonAncestor = next1;
-    ancestors1 = ancestors1.rest();
-    next1 = ancestors1.first();
-    ancestors2 = ancestors2.rest();
-    next2 = ancestors2.first();
-
-    if (next1.isNone() || next2.isNone()) {
-      // This is needed for the corner case of nodes in different trees but
-      // at the exact same depth…
-      break;
-    }
-  }
-
-  return commonAncestor;
+  return node1
+    .inclusiveAncestors(options)
+    .reverse()
+    .zip(node2.inclusiveAncestors(options).reverse())
+    .reduceWhile<Option<Node>>(
+      ([first1, first2]) => first1.equals(first2),
+      (_, [node]) => Option.of(node),
+      None
+    );
 }
 
 /**
