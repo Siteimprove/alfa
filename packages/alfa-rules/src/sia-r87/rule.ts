@@ -112,7 +112,6 @@ export default Rule.Atomic.of<Page, Document, Question>({
                                 mains.some((main) =>
                                   reference.some(isAtTheStart(main, device))
                                 ),
-                                // reference.some(hasRole("main")),
                                 () => Outcomes.FirstTabbableIsLinkToContent,
                                 () =>
                                   askIsMain.map((isMain) =>
