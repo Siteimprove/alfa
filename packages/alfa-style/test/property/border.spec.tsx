@@ -362,6 +362,29 @@ test("#cascaded() parses `border-collapse: separate`", (t) => {
   });
 });
 
+test(`#cascaded() parses \`border-image-source: url("foo.png")\``, (t) => {
+  const element = <div style={{ borderImageSource: `url("foo.png")` }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-image-source").get().toJSON(), {
+    value: {
+      type: "list",
+      values: [
+        {
+          type: "image",
+          image: {
+            type: "url",
+            url: "foo.png",
+          },
+        },
+      ],
+      separator: ", ",
+    },
+    source: h.declaration("border-image-source", `url("foo.png")`).toJSON(),
+  });
+});
+
 test("#cascaded() parses `border-inline-end-color: red`", (t) => {
   const element = <div style={{ borderInlineEndColor: "red" }}></div>;
 
