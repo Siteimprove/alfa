@@ -223,7 +223,7 @@ import BorderBlockStartColor from "./property/border-block-start-color";
 import BorderBlockStartStyle from "./property/border-block-start-style";
 import BorderBlockStartWidth from "./property/border-block-start-width";
 import BorderBottomColor from "./property/border-bottom-color";
-import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
+// import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
 import Bottom from "./property/bottom";
 import BoxShadow from "./property/box-shadow";
 import Clip from "./property/clip";
@@ -293,7 +293,7 @@ const Longhands = {
   "border-block-start-style": BorderBlockStartStyle,
   "border-block-start-width": BorderBlockStartWidth,
   "border-bottom-color": BorderBottomColor,
-  "border-bottom-left-radius": BorderBottomLeftRadius,
+  // "border-bottom-left-radius": BorderBottomLeftRadius,
   bottom: Bottom,
   "box-shadow": BoxShadow,
   clip: Clip,
