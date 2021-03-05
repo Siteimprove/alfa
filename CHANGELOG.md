@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.13.0](../../compare/v0.12.0...v0.13.0) (2021-03-05)
+
 ### Breaking
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `Role#requiredParent()` now returns `Iterable<Iterable<Role.Name>>` to make it possible to model the nested parent requirements that have been introduced in the Editor's Draft of WAI-ARIA. ([#728](../../pull/728))
