@@ -348,6 +348,20 @@ test("#computed() resolves `border-bottom-width: 1.2em; border-block-end-style: 
   });
 });
 
+test("#cascaded() parses `border-collapse: separate`", (t) => {
+  const element = <table style={{ borderCollapse: "separate" }}></table>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-collapse").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "separate",
+    },
+    source: h.declaration("border-collapse", "separate").toJSON(),
+  });
+});
+
 test("#cascaded() parses `border-inline-end-color: red`", (t) => {
   const element = <div style={{ borderInlineEndColor: "red" }}></div>;
 
