@@ -226,10 +226,13 @@ import BorderBottomColor from "./property/border-bottom-color";
 // import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
 import BorderBottomStyle from "./property/border-bottom-style";
 import BorderBottomWidth from "./property/border-bottom-width";
+import BorderLeftColor from "./property/border-left-color";
 import BorderLeftStyle from "./property/border-left-style";
 import BorderLeftWidth from "./property/border-left-width";
+import BorderRightColor from "./property/border-right-color";
 import BorderRightStyle from "./property/border-right-style";
 import BorderRightWidth from "./property/border-right-width";
+import BorderTopColor from "./property/border-top-color";
 import BorderTopStyle from "./property/border-top-style";
 import BorderTopWidth from "./property/border-top-width";
 import Bottom from "./property/bottom";
@@ -304,10 +307,13 @@ const Longhands = {
   // "border-bottom-left-radius": BorderBottomLeftRadius,
   "border-bottom-style": BorderBottomStyle,
   "border-bottom-width": BorderBottomWidth,
+  "border-left-color": BorderLeftColor,
   "border-left-style": BorderLeftStyle,
   "border-left-width": BorderLeftWidth,
+  "border-right-color": BorderRightColor,
   "border-right-style": BorderRightStyle,
   "border-right-width": BorderRightWidth,
+  "border-top-color": BorderTopColor,
   "border-top-style": BorderTopStyle,
   "border-top-width": BorderTopWidth,
   bottom: Bottom,

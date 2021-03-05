@@ -347,6 +347,52 @@ test("#computed() resolves `border-bottom-width: 1.2em; border-block-end-style: 
     source: null,
   });
 });
+
+test("#cascaded() parses `border-left-color: red`", (t) => {
+  const element = <div style={{ borderLeftColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-left-color").get().toJSON(), {
+    value: {
+      format: "named",
+      type: "color",
+      color: "red",
+    },
+    source: h.declaration("border-left-color", "red").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-left-color: red`", (t) => {
+  const element = <div style={{ borderLeftColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-left-color").toJSON(), {
+    value: {
+      type: "color",
+      format: "rgb",
+      red: {
+        type: "percentage",
+        value: 1,
+      },
+      green: {
+        type: "percentage",
+        value: 0,
+      },
+      blue: {
+        type: "percentage",
+        value: 0,
+      },
+      alpha: {
+        type: "percentage",
+        value: 1,
+      },
+    },
+    source: h.declaration("border-left-color", "red").toJSON(),
+  });
+});
+
 test("#cascaded() parses `border-left-style: dotted`", (t) => {
   const element = <div style={{ borderLeftStyle: "dotted" }}></div>;
 
@@ -408,6 +454,51 @@ test("#computed() resolves `border-left-width: 1.2em; border-block-end-style: no
   });
 });
 
+test("#cascaded() parses `border-right-color: red`", (t) => {
+  const element = <div style={{ borderRightColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-right-color").get().toJSON(), {
+    value: {
+      format: "named",
+      type: "color",
+      color: "red",
+    },
+    source: h.declaration("border-right-color", "red").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-right-color: red`", (t) => {
+  const element = <div style={{ borderRightColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-right-color").toJSON(), {
+    value: {
+      type: "color",
+      format: "rgb",
+      red: {
+        type: "percentage",
+        value: 1,
+      },
+      green: {
+        type: "percentage",
+        value: 0,
+      },
+      blue: {
+        type: "percentage",
+        value: 0,
+      },
+      alpha: {
+        type: "percentage",
+        value: 1,
+      },
+    },
+    source: h.declaration("border-right-color", "red").toJSON(),
+  });
+});
+
 test("#cascaded() parses `border-right-style: dotted`", (t) => {
   const element = <div style={{ borderRightStyle: "dotted" }}></div>;
 
@@ -421,6 +512,7 @@ test("#cascaded() parses `border-right-style: dotted`", (t) => {
     source: h.declaration("border-right-style", "dotted").toJSON(),
   });
 });
+
 test("#cascaded() parses `border-right-width: medium`", (t) => {
   const element = <div style={{ borderRightWidth: "medium" }}></div>;
 
@@ -465,6 +557,51 @@ test("#computed() resolves `border-right-width: 1.2em; border-block-end-style: n
     },
     // TODO: Is this correct?
     source: null,
+  });
+});
+
+test("#cascaded() parses `border-top-color: red`", (t) => {
+  const element = <div style={{ borderTopColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-top-color").get().toJSON(), {
+    value: {
+      format: "named",
+      type: "color",
+      color: "red",
+    },
+    source: h.declaration("border-top-color", "red").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-top-color: red`", (t) => {
+  const element = <div style={{ borderTopColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-top-color").toJSON(), {
+    value: {
+      type: "color",
+      format: "rgb",
+      red: {
+        type: "percentage",
+        value: 1,
+      },
+      green: {
+        type: "percentage",
+        value: 0,
+      },
+      blue: {
+        type: "percentage",
+        value: 0,
+      },
+      alpha: {
+        type: "percentage",
+        value: 1,
+      },
+    },
+    source: h.declaration("border-top-color", "red").toJSON(),
   });
 });
 
