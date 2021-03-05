@@ -393,6 +393,20 @@ test("#computed() resolves `border-inline-end-color: red`", (t) => {
   });
 });
 
+test("#cascaded() parses `border-inline-end-style: dotted`", (t) => {
+  const element = <div style={{ borderInlineEndStyle: "dotted" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-end-style").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "dotted",
+    },
+    source: h.declaration("border-inline-end-style", "dotted").toJSON(),
+  });
+});
+
 test("#cascaded() parses `border-inline-start-color: red`", (t) => {
   const element = <div style={{ borderInlineStartColor: "red" }}></div>;
 
@@ -435,6 +449,20 @@ test("#computed() resolves `border-inline-start-color: red`", (t) => {
       },
     },
     source: h.declaration("border-inline-start-color", "red").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-inline-start-style: dotted`", (t) => {
+  const element = <div style={{ borderInlineStartStyle: "dotted" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-start-style").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "dotted",
+    },
+    source: h.declaration("border-inline-start-style", "dotted").toJSON(),
   });
 });
 

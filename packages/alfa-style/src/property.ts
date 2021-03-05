@@ -227,7 +227,9 @@ import BorderBottomColor from "./property/border-bottom-color";
 import BorderBottomStyle from "./property/border-bottom-style";
 import BorderBottomWidth from "./property/border-bottom-width";
 import BorderInlineEndColor from "./property/border-inline-end-color";
+import BorderInlineEndStyle from "./property/border-inline-end-style";
 import BorderInlineStartColor from "./property/border-inline-start-color";
+import BorderInlineStartStyle from "./property/border-inline-start-style";
 import BorderLeftColor from "./property/border-left-color";
 import BorderLeftStyle from "./property/border-left-style";
 import BorderLeftWidth from "./property/border-left-width";
@@ -310,7 +312,9 @@ const Longhands = {
   "border-bottom-style": BorderBottomStyle,
   "border-bottom-width": BorderBottomWidth,
   "border-inline-end-color": BorderInlineEndColor,
+  "border-inline-end-style": BorderInlineEndStyle,
   "border-inline-start-color": BorderInlineStartColor,
+  "border-inline-start-style": BorderInlineStartStyle,
   "border-left-color": BorderLeftColor,
   "border-left-style": BorderLeftStyle,
   "border-left-width": BorderLeftWidth,
