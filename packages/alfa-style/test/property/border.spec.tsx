@@ -284,3 +284,56 @@ test("#computed() resolves `border-bottom-color: red`", (t) => {
 //     source: h.declaration("border-bottom-left-radius", "10px 10%").toJSON(),
 //   });
 // });
+
+test("#cascaded() parses `border-bottom-style: dotted`", (t) => {
+  const element = <div style={{ borderBottomStyle: "dotted" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-bottom-style").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "dotted",
+    },
+    source: h.declaration("border-bottom-style", "dotted").toJSON(),
+  });
+});
+test("#cascaded() parses `border-left-style: dotted`", (t) => {
+  const element = <div style={{ borderLeftStyle: "dotted" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-left-style").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "dotted",
+    },
+    source: h.declaration("border-left-style", "dotted").toJSON(),
+  });
+});
+test("#cascaded() parses `border-right-style: dotted`", (t) => {
+  const element = <div style={{ borderRightStyle: "dotted" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-right-style").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "dotted",
+    },
+    source: h.declaration("border-right-style", "dotted").toJSON(),
+  });
+});
+test("#cascaded() parses `border-top-style: dotted`", (t) => {
+  const element = <div style={{ borderTopStyle: "dotted" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-top-style").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "dotted",
+    },
+    source: h.declaration("border-top-style", "dotted").toJSON(),
+  });
+});
