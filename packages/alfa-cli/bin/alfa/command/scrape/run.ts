@@ -7,6 +7,7 @@ import * as url from "url";
 import type { Command } from "@siteimprove/alfa-command";
 import { Device, Display, Scripting, Viewport } from "@siteimprove/alfa-device";
 import { Header, Cookie } from "@siteimprove/alfa-http";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import {
   Awaiter,
@@ -19,7 +20,6 @@ import { URL } from "@siteimprove/alfa-url";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
