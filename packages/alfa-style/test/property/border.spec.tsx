@@ -407,6 +407,55 @@ test("#cascaded() parses `border-inline-end-style: dotted`", (t) => {
   });
 });
 
+test("#cascaded() parses `border-inline-end-width: medium`", (t) => {
+  const element = <div style={{ borderInlineEndWidth: "medium" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-end-width").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "medium",
+    },
+    source: h.declaration("border-inline-end-width", "medium").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-inline-end-width: 1.2em`", (t) => {
+  const element = <div style={{ borderInlineEndWidth: "1.2em" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-end-width").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-inline-end-width", "1.2em").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-inline-end-width: 1.2em; border-block-end-style: none`", (t) => {
+  const element = (
+    <div
+      style={{ borderInlineEndWidth: "1.2em", borderInlineEndStyle: "none" }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-inline-end-width").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 0,
+    },
+    // TODO: Is this correct?
+    source: null,
+  });
+});
+
 test("#cascaded() parses `border-inline-start-color: red`", (t) => {
   const element = <div style={{ borderInlineStartColor: "red" }}></div>;
 
@@ -463,6 +512,58 @@ test("#cascaded() parses `border-inline-start-style: dotted`", (t) => {
       value: "dotted",
     },
     source: h.declaration("border-inline-start-style", "dotted").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-inline-start-width: medium`", (t) => {
+  const element = <div style={{ borderInlineStartWidth: "medium" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-start-width").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "medium",
+    },
+    source: h.declaration("border-inline-start-width", "medium").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-inline-start-width: 1.2em`", (t) => {
+  const element = <div style={{ borderInlineStartWidth: "1.2em" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-start-width").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-inline-start-width", "1.2em").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-inline-start-width: 1.2em; border-block-end-style: none`", (t) => {
+  const element = (
+    <div
+      style={{
+        borderInlineStartWidth: "1.2em",
+        borderInlineStartStyle: "none",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-inline-start-width").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 0,
+    },
+    // TODO: Is this correct?
+    source: null,
   });
 });
 
