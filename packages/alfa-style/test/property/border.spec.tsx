@@ -298,6 +298,55 @@ test("#cascaded() parses `border-bottom-style: dotted`", (t) => {
     source: h.declaration("border-bottom-style", "dotted").toJSON(),
   });
 });
+
+test("#cascaded() parses `border-bottom-width: medium`", (t) => {
+  const element = <div style={{ borderBottomWidth: "medium" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-bottom-width").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "medium",
+    },
+    source: h.declaration("border-bottom-width", "medium").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-bottom-width: 1.2em`", (t) => {
+  const element = <div style={{ borderBottomWidth: "1.2em" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-bottom-width").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-bottom-width", "1.2em").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-bottom-width: 1.2em; border-block-end-style: none`", (t) => {
+  const element = (
+    <div
+      style={{ borderBottomWidth: "1.2em", borderBottomStyle: "none" }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-bottom-width").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 0,
+    },
+    // TODO: Is this correct?
+    source: null,
+  });
+});
 test("#cascaded() parses `border-left-style: dotted`", (t) => {
   const element = <div style={{ borderLeftStyle: "dotted" }}></div>;
 
@@ -311,6 +360,54 @@ test("#cascaded() parses `border-left-style: dotted`", (t) => {
     source: h.declaration("border-left-style", "dotted").toJSON(),
   });
 });
+
+test("#cascaded() parses `border-left-width: medium`", (t) => {
+  const element = <div style={{ borderLeftWidth: "medium" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-left-width").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "medium",
+    },
+    source: h.declaration("border-left-width", "medium").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-left-width: 1.2em`", (t) => {
+  const element = <div style={{ borderLeftWidth: "1.2em" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-left-width").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-left-width", "1.2em").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-left-width: 1.2em; border-block-end-style: none`", (t) => {
+  const element = (
+    <div style={{ borderLeftWidth: "1.2em", borderLeftStyle: "none" }}></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-left-width").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 0,
+    },
+    // TODO: Is this correct?
+    source: null,
+  });
+});
+
 test("#cascaded() parses `border-right-style: dotted`", (t) => {
   const element = <div style={{ borderRightStyle: "dotted" }}></div>;
 
@@ -324,6 +421,53 @@ test("#cascaded() parses `border-right-style: dotted`", (t) => {
     source: h.declaration("border-right-style", "dotted").toJSON(),
   });
 });
+test("#cascaded() parses `border-right-width: medium`", (t) => {
+  const element = <div style={{ borderRightWidth: "medium" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-right-width").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "medium",
+    },
+    source: h.declaration("border-right-width", "medium").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-right-width: 1.2em`", (t) => {
+  const element = <div style={{ borderRightWidth: "1.2em" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-right-width").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-right-width", "1.2em").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-right-width: 1.2em; border-block-end-style: none`", (t) => {
+  const element = (
+    <div style={{ borderRightWidth: "1.2em", borderRightStyle: "none" }}></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-right-width").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 0,
+    },
+    // TODO: Is this correct?
+    source: null,
+  });
+});
+
 test("#cascaded() parses `border-top-style: dotted`", (t) => {
   const element = <div style={{ borderTopStyle: "dotted" }}></div>;
 
@@ -335,5 +479,52 @@ test("#cascaded() parses `border-top-style: dotted`", (t) => {
       value: "dotted",
     },
     source: h.declaration("border-top-style", "dotted").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-top-width: medium`", (t) => {
+  const element = <div style={{ borderTopWidth: "medium" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-top-width").get().toJSON(), {
+    value: {
+      type: "keyword",
+      value: "medium",
+    },
+    source: h.declaration("border-top-width", "medium").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-top-width: 1.2em`", (t) => {
+  const element = <div style={{ borderTopWidth: "1.2em" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-top-width").get().toJSON(), {
+    value: {
+      type: "length",
+      unit: "em",
+      value: 1.2,
+    },
+    source: h.declaration("border-top-width", "1.2em").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-top-width: 1.2em; border-block-end-style: none`", (t) => {
+  const element = (
+    <div style={{ borderTopWidth: "1.2em", borderTopStyle: "none" }}></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-top-width").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 0,
+    },
+    // TODO: Is this correct?
+    source: null,
   });
 });

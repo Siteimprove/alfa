@@ -225,9 +225,13 @@ import BorderBlockStartWidth from "./property/border-block-start-width";
 import BorderBottomColor from "./property/border-bottom-color";
 // import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
 import BorderBottomStyle from "./property/border-bottom-style";
+import BorderBottomWidth from "./property/border-bottom-width";
 import BorderLeftStyle from "./property/border-left-style";
+import BorderLeftWidth from "./property/border-left-width";
 import BorderRightStyle from "./property/border-right-style";
+import BorderRightWidth from "./property/border-right-width";
 import BorderTopStyle from "./property/border-top-style";
+import BorderTopWidth from "./property/border-top-width";
 import Bottom from "./property/bottom";
 import BoxShadow from "./property/box-shadow";
 import Clip from "./property/clip";
@@ -299,9 +303,13 @@ const Longhands = {
   "border-bottom-color": BorderBottomColor,
   // "border-bottom-left-radius": BorderBottomLeftRadius,
   "border-bottom-style": BorderBottomStyle,
+  "border-bottom-width": BorderBottomWidth,
   "border-left-style": BorderLeftStyle,
+  "border-left-width": BorderLeftWidth,
   "border-right-style": BorderRightStyle,
+  "border-right-width": BorderRightWidth,
   "border-top-style": BorderTopStyle,
+  "border-top-width": BorderTopWidth,
   bottom: Bottom,
   "box-shadow": BoxShadow,
   clip: Clip,
