@@ -118,13 +118,13 @@ export namespace Future {
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Future<U>>
+    mapper: Mapper<T, Future<U>, [index: number]>
   ): Future<Iterable<U>> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value))
         ),
       now(Array.empty())
     );
