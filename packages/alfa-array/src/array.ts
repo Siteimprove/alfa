@@ -18,7 +18,7 @@ const { compareComparable } = Comparable;
 
 /**
  * @remarks
- * This is a re-export the global `Array` interface to ensure that it merges
+ * This is a re-export of the global `Array` interface to ensure that it merges
  * with the `Array` namespace.
  *
  * @public
