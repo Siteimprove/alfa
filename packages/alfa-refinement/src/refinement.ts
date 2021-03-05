@@ -79,11 +79,7 @@ export namespace Refinement {
     ): Refinement<T, U, A>;
 
     <T, A extends Array<unknown> = []>(
-      ...predicates: [
-        Predicate<T, A>,
-        Predicate<T, A>,
-        ...Array<Predicate<T, A>>
-      ]
+      ...predicates: Array<Predicate<T, A>>
     ): Predicate<T, A>;
   }
 
@@ -106,11 +102,7 @@ export namespace Refinement {
     ): Refinement<T, U | T, A>;
 
     <T, A extends Array<unknown> = []>(
-      ...predicates: [
-        Predicate<T, A>,
-        Predicate<T, A>,
-        ...Array<Predicate<T, A>>
-      ]
+      ...predicates: Array<Predicate<T, A>>
     ): Predicate<T, A>;
   }
 
