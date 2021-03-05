@@ -348,6 +348,96 @@ test("#computed() resolves `border-bottom-width: 1.2em; border-block-end-style: 
   });
 });
 
+test("#cascaded() parses `border-inline-end-color: red`", (t) => {
+  const element = <div style={{ borderInlineEndColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-end-color").get().toJSON(), {
+    value: {
+      format: "named",
+      type: "color",
+      color: "red",
+    },
+    source: h.declaration("border-inline-end-color", "red").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-inline-end-color: red`", (t) => {
+  const element = <div style={{ borderInlineEndColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-inline-end-color").toJSON(), {
+    value: {
+      type: "color",
+      format: "rgb",
+      red: {
+        type: "percentage",
+        value: 1,
+      },
+      green: {
+        type: "percentage",
+        value: 0,
+      },
+      blue: {
+        type: "percentage",
+        value: 0,
+      },
+      alpha: {
+        type: "percentage",
+        value: 1,
+      },
+    },
+    source: h.declaration("border-inline-end-color", "red").toJSON(),
+  });
+});
+
+test("#cascaded() parses `border-inline-start-color: red`", (t) => {
+  const element = <div style={{ borderInlineStartColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-inline-start-color").get().toJSON(), {
+    value: {
+      format: "named",
+      type: "color",
+      color: "red",
+    },
+    source: h.declaration("border-inline-start-color", "red").toJSON(),
+  });
+});
+
+test("#computed() resolves `border-inline-start-color: red`", (t) => {
+  const element = <div style={{ borderInlineStartColor: "red" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("border-inline-start-color").toJSON(), {
+    value: {
+      type: "color",
+      format: "rgb",
+      red: {
+        type: "percentage",
+        value: 1,
+      },
+      green: {
+        type: "percentage",
+        value: 0,
+      },
+      blue: {
+        type: "percentage",
+        value: 0,
+      },
+      alpha: {
+        type: "percentage",
+        value: 1,
+      },
+    },
+    source: h.declaration("border-inline-start-color", "red").toJSON(),
+  });
+});
+
 test("#cascaded() parses `border-left-color: red`", (t) => {
   const element = <div style={{ borderLeftColor: "red" }}></div>;
 
