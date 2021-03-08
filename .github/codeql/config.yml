@@ -4,4 +4,5 @@ queries:
 paths:
   - packages
 paths-ignore:
+  - "**/node_modules"
   - "**/*.spec.js"
