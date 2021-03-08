@@ -26,9 +26,9 @@ jobs:
       - run: yarn test
       - run: >
           yarn workspaces foreach
-            --no-private
-            --topological
-            version --deferred prerelease
+          --no-private
+          --topological
+          version --deferred prerelease
       - run: yarn version apply --all
       - run: |
           git commit --all --message "Prerelease"
