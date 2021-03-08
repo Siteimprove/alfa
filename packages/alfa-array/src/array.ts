@@ -11,7 +11,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as global from "./global";
+import * as builtin from "./builtin";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;
@@ -34,7 +34,7 @@ export namespace Array {
   export function isArray<T>(value: unknown): value is Array<T>;
 
   export function isArray<T>(value: unknown): value is Array<T> {
-    return global.Array.isArray(value);
+    return builtin.Array.isArray(value);
   }
 
   export function of<T>(...values: Array<T>): Array<T> {
@@ -46,7 +46,7 @@ export namespace Array {
   }
 
   export function allocate<T>(capacity: number): Array<T> {
-    return new global.Array<T>(capacity);
+    return new builtin.Array<T>(capacity);
   }
 
   /**
@@ -91,7 +91,7 @@ export namespace Array {
     array: ReadonlyArray<T>,
     mapper: Mapper<T, U, [index: number]>
   ): Array<U> {
-    const result = new global.Array<U>(array.length);
+    const result = new builtin.Array<U>(array.length);
 
     for (let i = 0, n = array.length; i < n; i++) {
       result[i] = mapper(array[i], i);

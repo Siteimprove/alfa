@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
 
-import * as global from "./global";
+import * as builtin from "./builtin";
 
 /**
  * @remarks
@@ -26,17 +26,17 @@ export namespace Promise {
   }
 
   export function resolve<T>(value: T): Promise<T> {
-    return global.Promise.resolve(value);
+    return builtin.Promise.resolve(value);
   }
 
   export function reject<T>(error: unknown): Promise<T> {
-    return global.Promise.reject(error);
+    return builtin.Promise.reject(error);
   }
 
   export function defer<T>(
     continuation: Continuation<T, void, [reject: Callback<unknown>]>
   ): Promise<T> {
-    return new global.Promise(continuation);
+    return new builtin.Promise(continuation);
   }
 
   export function all<T>(...promises: Array<Promise<T>>): Promise<Array<T>> {
