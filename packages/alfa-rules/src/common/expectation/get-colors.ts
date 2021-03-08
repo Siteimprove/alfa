@@ -9,27 +9,15 @@ import flatMap = Iterable.flatMap;
 const { map } = Iterable;
 
 /**
- * Determine the approximate foreground color of an element if possible.
+ * Determine the approximate foreground colors of an element if possible.
  */
 export function getForeground(
   element: Element,
   device: Device = Device.standard()
 ): Option<Iterable<RGB<Percentage, Percentage>>> {
-  const debug = element.id.includes("debug");
-  const show = debug
-    ? (text: string, json: any) => {
-        console.log(text);
-        console.dir(json, { depth: null });
-      }
-    : () => {
-        return;
-      };
-
   const style = Style.from(element, device);
 
   const color = resolveColor(style.computed("color").value, style);
-
-  show("color:", color.toJSON());
 
   if (color.isNone()) {
     return None;
@@ -37,54 +25,40 @@ export function getForeground(
 
   const opacity = style.computed("opacity").value;
 
-  show("opacity:", opacity.toJSON());
-
+  // If the color is not transparent, and the element is fully opaque,
+  // then we do not need to dig further
   if (color.get().alpha.value * opacity.value === 1) {
     return Option.of([color.get()]);
   }
 
+  // First, we mix the color with the element's background according to the
+  // color's alpha channel (only).
+  // For this, we fake the opacity of the element at 1. That way, the
+  // background color is correctly handled. That the background color may itself
+  // have an alpha channel, independently from its opacity, and this alpha
+  // channel needs to be taken into account (as well as the alpha/opacity of all
+  // the previous layers).
   const colors = getBackground(element, device, 1).map((backdrops) =>
-    map(backdrops, (backdrop) => {
-      show("element BG (fake):", backdrop.toJSON());
-
-      const compo = composite(color.get(), backdrop);
-      show("composite", compo.toJSON());
-
-      return compo;
-    })
+    map(backdrops, (backdrop) => composite(color.get(), backdrop))
   );
 
-  const parent = element
+  // Next, we handle the opacity of the element.
+  // For this, we need the background colors of the parent (assuming that DOM
+  // reflects layout).
+  return element
     .parent({
       flattened: true,
     })
-    .filter(Element.isElement);
-
-  if (parent.isNone()) {
-    return colors;
-  }
-
-  const parentColors = getBackground(parent.get(), device);
-
-  if (parentColors.isNone()) {
-    return colors;
-  }
-
-  if (debug) {
-    console.log("Handling opacity");
-  }
-
-  return Option.of(
-    flatMap(colors.get(), (color) =>
-      parentColors.get().map((backdrop) => {
-        show("color (FG + element BG):", color.toJSON());
-        show("parent BG:", backdrop.toJSON());
-        const composite1 = composite(color, backdrop, opacity.value);
-        show("composite:", composite1.toJSON());
-        return composite1;
-      })
-    )
-  );
+    .filter(Element.isElement)
+    .flatMap((parent) =>
+      getBackground(parent, device).map((parentColors) =>
+        flatMap(colors.get(), (color) =>
+          parentColors.map((backdrop) =>
+            composite(color, backdrop, opacity.value)
+          )
+        )
+      )
+    );
 }
 
 /**
@@ -133,14 +107,14 @@ type Layer = {
 function getLayers(
   element: Element,
   device: Device,
-  fakeOpacity?: number
+  fakeLastOpacity?: number
 ): Option<ReadonlyArray<Layer>> {
   const layers: Array<Layer> = [];
 
   const style = Style.from(element, device);
 
   const color = resolveColor(style.computed("background-color").value, style);
-  const opacity = fakeOpacity ?? style.computed("opacity").value.value;
+  const opacity = fakeLastOpacity ?? style.computed("opacity").value.value;
 
   if (color.isSome()) {
     layers.push({ colors: [color.get()], opacity });
@@ -189,15 +163,12 @@ function getLayers(
   // (https://github.com/siteimprove/picasso) for spatially indexing the box
   // tree in which case the background layers sitting behind the current layer
   // can be found by issuing a range query for the box of the current element.
-  for (const layer of layers) {
-    if (
-      layer.opacity === 1 &&
-      layer.colors.every((color) => color.alpha.value === 1)
-    ) {
-      return Option.of(layers);
-    } else {
-      break;
-    }
+  if (
+    layers.length > 0 &&
+    layers[0].opacity === 1 &&
+    layers[0].colors.every((color) => color.alpha.value === 1)
+  ) {
+    return Option.of(layers);
   }
 
   const parent = element
