@@ -15,9 +15,21 @@ export function getForeground(
   element: Element,
   device: Device = Device.standard()
 ): Option<Iterable<RGB<Percentage, Percentage>>> {
+  const debug = element.id.includes("debug");
+  const show = debug
+    ? (text: string, json: any) => {
+        console.log(text);
+        console.dir(json, { depth: null });
+      }
+    : () => {
+        return;
+      };
+
   const style = Style.from(element, device);
 
-  const color = resolveColor(style.computed("color").value, style, false);
+  const color = resolveColor(style.computed("color").value, style);
+
+  show("color:", color.toJSON());
 
   if (color.isNone()) {
     return None;
@@ -25,12 +37,21 @@ export function getForeground(
 
   const opacity = style.computed("opacity").value;
 
+  show("opacity:", opacity.toJSON());
+
   if (color.get().alpha.value * opacity.value === 1) {
     return Option.of([color.get()]);
   }
 
-  const colors = getBackground(element, device).map((backdrops) =>
-    map(backdrops, (backdrop) => composite(color.get(), backdrop))
+  const colors = getBackground(element, device, 1).map((backdrops) =>
+    map(backdrops, (backdrop) => {
+      show("element BG (fake):", backdrop.toJSON());
+
+      const compo = composite(color.get(), backdrop);
+      show("composite", compo.toJSON());
+
+      return compo;
+    })
   );
 
   const parent = element
@@ -49,11 +70,19 @@ export function getForeground(
     return colors;
   }
 
+  if (debug) {
+    console.log("Handling opacity");
+  }
+
   return Option.of(
     flatMap(colors.get(), (color) =>
-      parentColors
-        .get()
-        .map((backdrop) => composite(color, backdrop, opacity.value))
+      parentColors.get().map((backdrop) => {
+        show("color (FG + element BG):", color.toJSON());
+        show("parent BG:", backdrop.toJSON());
+        const composite1 = composite(color, backdrop, opacity.value);
+        show("composite:", composite1.toJSON());
+        return composite1;
+      })
     )
   );
 }
@@ -67,15 +96,18 @@ export function getForeground(
  */
 export function getBackground(
   element: Element,
-  device: Device = Device.standard()
+  device: Device = Device.standard(),
+  fakeLastOpacity?: number
 ): Option<Array<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map((layers) =>
+  return getLayers(element, device, fakeLastOpacity).map((layers) =>
     layers.reduce<Array<RGB<Percentage, Percentage>>>(
       (backdrops, layer) =>
-        layer.reduce<Array<RGB<Percentage, Percentage>>>(
+        layer.colors.reduce<Array<RGB<Percentage, Percentage>>>(
           (layers, color) =>
             layers.concat(
-              backdrops.map((backdrop) => composite(color, backdrop))
+              backdrops.map((backdrop) =>
+                composite(color, backdrop, layer.opacity)
+              )
             ),
           []
         ),
@@ -93,18 +125,25 @@ export function getBackground(
   );
 }
 
+type Layer = {
+  colors: ReadonlyArray<RGB<Percentage, Percentage>>;
+  opacity: number;
+};
+
 function getLayers(
   element: Element,
-  device: Device
-): Option<Array<Array<RGB<Percentage, Percentage>>>> {
-  const layers: Array<Array<RGB<Percentage, Percentage>>> = [];
+  device: Device,
+  fakeOpacity?: number
+): Option<ReadonlyArray<Layer>> {
+  const layers: Array<Layer> = [];
 
   const style = Style.from(element, device);
 
   const color = resolveColor(style.computed("background-color").value, style);
+  const opacity = fakeOpacity ?? style.computed("opacity").value.value;
 
   if (color.isSome()) {
-    layers.push([color.get()]);
+    layers.push({ colors: [color.get()], opacity });
   } else {
     return None;
   }
@@ -125,7 +164,7 @@ function getLayers(
     // be at least two color stops.
     const stops: Array<RGB<Percentage, Percentage>> = [];
 
-    layers.push(stops);
+    layers.push({ colors: stops, opacity });
 
     for (const item of image.image.items) {
       if (item.type === "stop") {
@@ -151,7 +190,10 @@ function getLayers(
   // tree in which case the background layers sitting behind the current layer
   // can be found by issuing a range query for the box of the current element.
   for (const layer of layers) {
-    if (layer.every((color) => color.alpha.value === 1)) {
+    if (
+      layer.opacity === 1 &&
+      layer.colors.every((color) => color.alpha.value === 1)
+    ) {
       return Option.of(layers);
     } else {
       break;
@@ -180,11 +222,8 @@ function getLayers(
 
 function resolveColor(
   color: RGB<Percentage, Percentage> | Current | System,
-  style: Style,
-  handleOpacity: boolean = true
+  style: Style
 ): Option<RGB<Percentage, Percentage>> {
-  const opacity = handleOpacity ? style.computed("opacity").value.value : 1;
-
   switch (color.type) {
     case "keyword":
       if (color.value === "currentcolor") {
@@ -196,7 +235,7 @@ function resolveColor(
               color.red,
               color.green,
               color.blue,
-              Percentage.of(color.alpha.value * opacity)
+              Percentage.of(color.alpha.value)
             )
           );
         }
@@ -208,7 +247,7 @@ function resolveColor(
             Percentage.of(0),
             Percentage.of(0),
             Percentage.of(0),
-            Percentage.of(opacity)
+            Percentage.of(1)
           )
         );
       }
@@ -221,7 +260,7 @@ function resolveColor(
           color.red,
           color.green,
           color.blue,
-          Percentage.of(color.alpha.value * opacity)
+          Percentage.of(color.alpha.value)
         )
       );
   }
