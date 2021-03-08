@@ -4,6 +4,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Style } from "@siteimprove/alfa-style";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import flatMap = Iterable.flatMap;
 
 const { map } = Iterable;
 
@@ -16,18 +17,44 @@ export function getForeground(
 ): Option<Iterable<RGB<Percentage, Percentage>>> {
   const style = Style.from(element, device);
 
-  const color = resolveColor(style.computed("color").value, style);
+  const color = resolveColor(style.computed("color").value, style, false);
 
   if (color.isNone()) {
     return None;
   }
 
-  if (color.get().alpha.value === 1) {
+  const opacity = style.computed("opacity").value;
+
+  if (color.get().alpha.value * opacity.value === 1) {
     return Option.of([color.get()]);
   }
 
-  return getBackground(element, device).map((backdrops) =>
+  const colors = getBackground(element, device).map((backdrops) =>
     map(backdrops, (backdrop) => composite(color.get(), backdrop))
+  );
+
+  const parent = element
+    .parent({
+      flattened: true,
+    })
+    .filter(Element.isElement);
+
+  if (parent.isNone()) {
+    return colors;
+  }
+
+  const parentColors = getBackground(parent.get(), device);
+
+  if (parentColors.isNone()) {
+    return colors;
+  }
+
+  return Option.of(
+    flatMap(colors.get(), (color) =>
+      parentColors
+        .get()
+        .map((backdrop) => composite(color, backdrop, opacity.value))
+    )
   );
 }
 
@@ -153,9 +180,10 @@ function getLayers(
 
 function resolveColor(
   color: RGB<Percentage, Percentage> | Current | System,
-  style: Style
+  style: Style,
+  handleOpacity: boolean = true
 ): Option<RGB<Percentage, Percentage>> {
-  const opacity = style.computed("opacity").value;
+  const opacity = handleOpacity ? style.computed("opacity").value.value : 1;
 
   switch (color.type) {
     case "keyword":
@@ -168,7 +196,7 @@ function resolveColor(
               color.red,
               color.green,
               color.blue,
-              Percentage.of(color.alpha.value * opacity.value)
+              Percentage.of(color.alpha.value * opacity)
             )
           );
         }
@@ -180,7 +208,7 @@ function resolveColor(
             Percentage.of(0),
             Percentage.of(0),
             Percentage.of(0),
-            Percentage.of(opacity.value)
+            Percentage.of(opacity)
           )
         );
       }
@@ -193,7 +221,7 @@ function resolveColor(
           color.red,
           color.green,
           color.blue,
-          Percentage.of(color.alpha.value * opacity.value)
+          Percentage.of(color.alpha.value * opacity)
         )
       );
   }
@@ -204,24 +232,26 @@ function resolveColor(
  */
 function composite(
   foreground: RGB<Percentage, Percentage>,
-  background: RGB<Percentage, Percentage>
+  background: RGB<Percentage, Percentage>,
+  opacity: number = 1
 ): RGB<Percentage, Percentage> {
-  if (foreground.alpha.value === 1) {
+  const foregroundOpacity = foreground.alpha.value * opacity;
+  if (foregroundOpacity === 1) {
     return foreground;
   }
 
-  const alpha = background.alpha.value * (1 - foreground.alpha.value);
+  const alpha = background.alpha.value * (1 - foregroundOpacity);
 
   const [red, green, blue] = [
     [foreground.red, background.red],
     [foreground.green, background.green],
     [foreground.blue, background.blue],
-  ].map(([a, b]) => a.value * foreground.alpha.value + b.value * alpha);
+  ].map(([a, b]) => a.value * foregroundOpacity + b.value * alpha);
 
   return RGB.of(
     Percentage.of(red),
     Percentage.of(green),
     Percentage.of(blue),
-    Percentage.of(foreground.alpha.value + alpha)
+    Percentage.of(foregroundOpacity + alpha)
   );
 }
