@@ -10,10 +10,10 @@ on:
     - cron: "0 21 * * 1"
 jobs:
   analyze:
-    runs-on: ubuntu-latest
+    name: Analyze
     strategy:
       fail-fast: false
-    name: Analyze
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.5
