@@ -12,7 +12,7 @@ const { map } = Iterable;
  */
 export function getForeground(
   element: Element,
-  device: Device
+  device: Device = Device.standard()
 ): Option<Iterable<RGB<Percentage, Percentage>>> {
   const style = Style.from(element, device);
 
@@ -40,7 +40,7 @@ export function getForeground(
  */
 export function getBackground(
   element: Element,
-  device: Device
+  device: Device = Device.standard()
 ): Option<Array<RGB<Percentage, Percentage>>> {
   return getLayers(element, device).map((layers) =>
     layers.reduce<Array<RGB<Percentage, Percentage>>>(
