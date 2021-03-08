@@ -4,9 +4,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Style } from "@siteimprove/alfa-style";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import flatMap = Iterable.flatMap;
 
-const { map } = Iterable;
+const { flatMap, map } = Iterable;
 
 /**
  * Determine the approximate foreground colors of an element if possible.
@@ -39,7 +38,7 @@ export function getForeground(
   // channel needs to be taken into account (as well as the alpha/opacity of all
   // the previous layers).
   const colors = getBackground(element, device, 1).map((backdrops) =>
-    map(backdrops, (backdrop) => composite(color.get(), backdrop))
+    map(backdrops, (backdrop) => composite(color.get(), backdrop, 1))
   );
 
   // Next, we handle the opacity of the element.
@@ -243,7 +242,7 @@ function resolveColor(
 function composite(
   foreground: RGB<Percentage, Percentage>,
   background: RGB<Percentage, Percentage>,
-  opacity: number = 1
+  opacity: number
 ): RGB<Percentage, Percentage> {
   const foregroundOpacity = foreground.alpha.value * opacity;
   if (foregroundOpacity === 1) {
