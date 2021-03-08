@@ -28,7 +28,8 @@ jobs:
           yarn workspaces foreach
           --no-private
           --topological
-          version prerelease
+          version --deferred prerelease
+      - run: yarn version apply --all
       - run: |
           git commit --all --message "Prerelease"
           git push origin main
