@@ -15,19 +15,19 @@ import * as json from "@siteimprove/alfa-json";
 import { Context } from "./context";
 
 const {
-  map,
-  flatMap,
-  either,
-  zeroOrMore,
-  oneOrMore,
-  left,
-  right,
-  pair,
-  take,
-  peek,
   delimited,
+  either,
+  end,
+  flatMap,
+  left,
+  map,
+  oneOrMore,
   option,
-  eof,
+  pair,
+  peek,
+  right,
+  take,
+  zeroOrMore,
 } = Parser;
 
 const { and, not, property, equals } = Predicate;
@@ -849,7 +849,7 @@ export namespace Selector {
 
   const parseNth = left(
     Nth.parse,
-    eof((token) => `Unexpected token ${token}`)
+    end((token) => `Unexpected token ${token}`)
   );
 
   const parsePseudoClass = right(
@@ -2196,7 +2196,7 @@ export namespace Selector {
 
   parseSelector = left(
     parseList,
-    eof((token) => `Unexpected token ${token}`)
+    end((token) => `Unexpected token ${token}`)
   );
 
   export const parse = parseSelector;
