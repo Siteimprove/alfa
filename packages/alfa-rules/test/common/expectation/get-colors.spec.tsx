@@ -1,7 +1,8 @@
-import { h } from "@siteimprove/alfa-dom";
+import { h } from "@siteimprove/alfa-dom/h";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { test } from "@siteimprove/alfa-test";
+
+import { Iterable } from "@siteimprove/alfa-iterable";
 
 import {
   getBackground,
@@ -16,6 +17,7 @@ test("getBackground() handles opacity correctly", (t) => {
       Hello
     </span>
   );
+
   h.document([
     <html>
       <div style={{ backgroundColor: "white" }}>{target}</div>
@@ -44,6 +46,7 @@ test("getBackground() handles mix of opacity and transparency", (t) => {
       Hello
     </span>
   );
+
   h.document([
     <html>
       <div style={{ backgroundColor: "red" }}>{target}</div>
@@ -59,6 +62,7 @@ test("getBackground() handles mix of opacity and transparency", (t) => {
     alpha: { type: "percentage", value: 1 },
   });
 });
+
 test("getForeground() handles opacity correctly", (t) => {
   const target = (
     <span
@@ -67,6 +71,7 @@ test("getForeground() handles opacity correctly", (t) => {
       Hello
     </span>
   );
+
   h.document([
     <html>
       <div style={{ backgroundColor: "white" }}>{target}</div>
@@ -95,13 +100,12 @@ test("getForeground() handles mix of opacity and transparency", (t) => {
       Hello
     </span>
   );
+
   h.document([
     <html>
       <div style={{ backgroundColor: "red" }}>{target}</div>
     </html>,
   ]);
-
-  // const foo = Iterable.first(getForeground(target).get()).get().toJSON();
 
   t.deepEqual(Iterable.first(getForeground(target).get()).get().toJSON(), {
     type: "color",
