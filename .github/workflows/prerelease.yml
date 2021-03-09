@@ -28,7 +28,6 @@ jobs:
           yarn workspaces foreach
           --no-private
           --topological
-          --verbose
           version --deferred prerelease
       - run: yarn version apply --all
       - run: |
