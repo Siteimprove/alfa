@@ -944,6 +944,7 @@ export namespace Selector {
     )
   );
 
+  // TODO: cue, cue-region
   const parsePseudoElement = flatMap(
     map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
     (colons) =>
@@ -961,10 +962,14 @@ export namespace Selector {
         switch (ident.value) {
           case "after":
             return Result.of(After.of());
+          case "backdrop":
+            return Result.of(Backdrop.of());
           case "before":
             return Result.of(Before.of());
           case "first-letter":
             return Result.of(FirstLetter.of());
+          case "first-line":
+            return Result.of(FirstLine.of());
         }
 
         return Err.of(`Unknown pseudo-element ::${ident.value}`);
@@ -1679,6 +1684,19 @@ export namespace Selector {
   }
 
   /**
+   * {@link https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element}
+   */
+  export class Backdrop extends Pseudo.Element {
+    public static of(): Backdrop {
+      return new Backdrop();
+    }
+
+    private constructor() {
+      super("backdrop");
+    }
+  }
+
+  /**
    * {@link https://drafts.csswg.org/css-pseudo/#selectordef-before}
    */
   export class Before extends Pseudo.Element {
@@ -1701,6 +1719,19 @@ export namespace Selector {
 
     private constructor() {
       super("first-letter");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#first-line-pseudo}
+   */
+  export class FirstLine extends Pseudo.Element {
+    public static of(): FirstLine {
+      return new FirstLine();
+    }
+
+    private constructor() {
+      super("first-line");
     }
   }
 

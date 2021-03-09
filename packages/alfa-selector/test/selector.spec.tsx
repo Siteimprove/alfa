@@ -605,6 +605,10 @@ test(".parse() parses a pseudo-element selector", (t) => {
   });
 });
 
+test(".parse() requires double colons on non-legacy pseudo-element selectors", (t) => {
+  t.deepEqual(parse(":backdrop").isErr(), true);
+});
+
 test(".parse() parses a pseudo-element selector when part of a compound selector", (t) => {
   t.deepEqual(parse(".foo::before").get().toJSON(), {
     type: "compound",
