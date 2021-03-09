@@ -948,11 +948,23 @@ export namespace Selector {
     map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
     (colons) =>
       mapResult(Token.parseIdent(), (ident) => {
+        if (
+          colons === 1 &&
+          !["after", "before", "first-letter", "first-line"].includes(
+            ident.value
+          )
+        ) {
+          return Err.of(
+            `This pseudo-element is not allowed with single colon: ::${ident.value}`
+          );
+        }
         switch (ident.value) {
-          case "before":
-            return Result.of(Before.of());
           case "after":
             return Result.of(After.of());
+          case "before":
+            return Result.of(Before.of());
+          case "first-letter":
+            return Result.of(FirstLetter.of());
         }
 
         return Err.of(`Unknown pseudo-element ::${ident.value}`);
@@ -1654,6 +1666,19 @@ export namespace Selector {
   }
 
   /**
+   * {@link https://drafts.csswg.org/css-pseudo/#selectordef-after}
+   */
+  export class After extends Pseudo.Element {
+    public static of(): After {
+      return new After();
+    }
+
+    private constructor() {
+      super("after");
+    }
+  }
+
+  /**
    * {@link https://drafts.csswg.org/css-pseudo/#selectordef-before}
    */
   export class Before extends Pseudo.Element {
@@ -1667,15 +1692,15 @@ export namespace Selector {
   }
 
   /**
-   * {@link https://drafts.csswg.org/css-pseudo/#selectordef-after}
+   * {@link https://drafts.csswg.org/css-pseudo-4/#first-letter-pseudo}
    */
-  export class After extends Pseudo.Element {
-    public static of(): After {
-      return new After();
+  export class FirstLetter extends Pseudo.Element {
+    public static of(): FirstLetter {
+      return new FirstLetter();
     }
 
     private constructor() {
-      super("after");
+      super("first-letter");
     }
   }
 
