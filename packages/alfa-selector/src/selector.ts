@@ -21,12 +21,14 @@ const {
   flatMap,
   left,
   map,
+  mapResult,
   oneOrMore,
   option,
   pair,
   peek,
   right,
   take,
+  takeBetween,
   zeroOrMore,
 } = Parser;
 
@@ -942,18 +944,19 @@ export namespace Selector {
     )
   );
 
-  const parsePseudoElement = right(
-    take(Token.parseColon, 2),
-    flatMap(Token.parseIdent(), (ident) => (input) => {
-      switch (ident.value) {
-        case "before":
-          return Result.of([input, Before.of()]);
-        case "after":
-          return Result.of([input, After.of()]);
-      }
+  const parsePseudoElement = flatMap(
+    map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
+    (colons) =>
+      mapResult(Token.parseIdent(), (ident) => {
+        switch (ident.value) {
+          case "before":
+            return Result.of(Before.of());
+          case "after":
+            return Result.of(After.of());
+        }
 
-      return Err.of(`Unknown pseudo-element ::${ident.value}`);
-    })
+        return Err.of(`Unknown pseudo-element ::${ident.value}`);
+      })
   );
 
   const parsePseudo = either(parsePseudoClass, parsePseudoElement);

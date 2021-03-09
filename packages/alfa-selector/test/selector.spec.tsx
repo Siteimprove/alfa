@@ -598,6 +598,11 @@ test(".parse() parses a pseudo-element selector", (t) => {
     type: "pseudo-element",
     name: "before",
   });
+
+  t.deepEqual(parse(":before").get().toJSON(), {
+    type: "pseudo-element",
+    name: "before",
+  });
 });
 
 test(".parse() parses a pseudo-element selector when part of a compound selector", (t) => {
