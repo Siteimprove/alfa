@@ -2077,11 +2077,11 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
-  const parseRelative = map(pair(parseCombinator, parseComplex), (result) => {
-    const [combinator, selector] = result;
+  // const parseRelative = map(pair(parseCombinator, parseComplex), (result) => {
+  //   const [combinator, selector] = result;
 
-    return Relative.of(combinator, selector);
-  });
+  //   return Relative.of(combinator, selector);
+  // });
 
   /**
    * {@link https://drafts.csswg.org/selectors/#selector-list}

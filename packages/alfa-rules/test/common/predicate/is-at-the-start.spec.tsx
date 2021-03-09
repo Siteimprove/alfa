@@ -1,11 +1,12 @@
+import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document } from "@siteimprove/alfa-dom";
+import { None, Option } from "@siteimprove/alfa-option";
+
 import {
   isAtTheStart,
   lowestCommonAncestor,
 } from "../../../src/common/predicate/is-at-the-start";
-import { None, Option } from "@siteimprove/alfa-option";
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {
   const node1 = <span>Hello</span>;
@@ -31,7 +32,7 @@ test("lowestCommonAncestor() returns the LCA of two nodes at different depths", 
     </div>
   );
 
-  const document = Document.of([
+  h.document([
     <div>
       <div>ancestor</div>
     </div>,
@@ -50,7 +51,7 @@ test("lowestCommonAncestor() returns one node when it is ancestor of the other",
     </div>
   );
 
-  const document = Document.of([
+  h.document([
     <div>
       <div>ancestor</div>
     </div>,
@@ -63,8 +64,8 @@ test("lowestCommonAncestor() returns None when nodes are in different trees", (t
   const node1 = <span>Hello</span>;
   const node2 = <span>World</span>;
 
-  const document1 = Document.of(<div>{node1}</div>);
-  const document2 = Document.of(<div>{node2}</div>);
+  h.document([<div>{node1}</div>]);
+  h.document([<div>{node2}</div>]);
 
   t.deepEqual(lowestCommonAncestor(node1, node2), None);
 });
@@ -97,7 +98,8 @@ test("isAtTheStart() returns true on perceivable successors of non-perceivable e
       </div>
     </div>
   );
-  const document = Document.of([container, <div>{target}</div>]);
+
+  h.document([container, <div>{target}</div>]);
 
   t.deepEqual(isAtTheStart(container)(target), true);
 });
@@ -111,7 +113,8 @@ test("isAtTheStart() returns true on non-perceivable predecessors of elements", 
       </div>
     </div>
   );
-  const document = Document.of([target, <div>{container}</div>]);
+
+  h.document([target, <div>{container}</div>]);
 
   t.deepEqual(isAtTheStart(container)(target), true);
 });
@@ -125,7 +128,8 @@ test("isAtTheStart() returns false on perceivable predecessors of an element", (
       </div>
     </div>
   );
-  const document = Document.of([<div>{target}</div>, container]);
+
+  h.document([<div>{target}</div>, container]);
 
   t.deepEqual(isAtTheStart(container)(target), false);
 });
@@ -139,7 +143,8 @@ test("isAtTheStart() returns false on successors of an element with perceivable 
       </div>
     </div>
   );
-  const document = Document.of([container, <div>{target}</div>]);
+
+  h.document([container, <div>{target}</div>]);
 
   t.deepEqual(isAtTheStart(container)(target), false);
 });
@@ -148,7 +153,8 @@ test("isAtTheStart() returns false when there is perceivable content between the
   const target1 = <span>Hello</span>;
   const target2 = <span></span>;
   const div = <div></div>;
-  const document = Document.of([
+
+  h.document([
     target1,
     <span>text</span>,
     div,

@@ -1,11 +1,9 @@
-import { Keyword, Token } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 
 import * as X from "./overflow-x";
-
-const { map, option, pair, delimited } = Parser;
 
 /**
  * @internal

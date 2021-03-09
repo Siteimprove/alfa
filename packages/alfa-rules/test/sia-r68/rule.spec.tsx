@@ -1,4 +1,3 @@
-import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";

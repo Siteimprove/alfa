@@ -131,7 +131,7 @@ const parseAttributeNameOrWildcard = either(
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-TypeName}
  */
-const parseTypeName = map(Token.parseName(), (name) => name.value);
+// const parseTypeName = map(Token.parseName(), (name) => name.value);
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-DocumentTest}

@@ -171,9 +171,7 @@ function getRotation(element: Element, device: Device): Option<number> {
     for (const fn of transform) {
       switch (fn.kind) {
         case "rotate": {
-          const { x, y, z, angle } = fn;
-
-          z;
+          const { x, y, angle } = fn;
 
           if (x.value !== 0 || y.value !== 0) {
             return None;

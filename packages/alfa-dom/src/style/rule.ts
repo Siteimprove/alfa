@@ -79,7 +79,6 @@ import { Namespace } from "./rule/namespace";
 import { Page } from "./rule/page";
 import { Style } from "./rule/style";
 import { Supports } from "./rule/supports";
-import { Declaration } from "./declaration";
 
 // Export CSSOM rules with a `Rule` postfix to avoid clashes with DOM nodes such
 // as `Namespace`.

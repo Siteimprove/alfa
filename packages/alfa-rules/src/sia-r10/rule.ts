@@ -131,7 +131,6 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
     case "url":
     case "photo":
       field = next;
-      next = tokens[i++];
       break;
 
     default:
@@ -156,7 +155,6 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
         case "email":
         case "impp":
           field = next;
-          next = tokens[i++];
       }
   }
 

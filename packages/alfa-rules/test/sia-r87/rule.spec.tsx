@@ -7,7 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import R87, { Outcomes } from "../../src/sia-r87/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 
 test(`evaluate() passes a document whose first tabbable link references an

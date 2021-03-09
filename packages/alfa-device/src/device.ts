@@ -103,7 +103,7 @@ export class Device implements Equatable, Hashable, Serializable {
       case Device.Type.Screen:
         hash.writeUint8(2);
         break;
-      case Device.Type.Screen:
+      case Device.Type.Speech:
         hash.writeUint8(3);
     }
 

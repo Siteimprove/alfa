@@ -20,7 +20,7 @@ puppeteer.launch().then(async (browser) => {
         const type = attribute
           .querySelector(".property-value, .state-value")
           .textContent.toLowerCase()
-          .replace(/[\s//]/g, "-");
+          .replace(/[\s/]/g, "-");
 
         const fallback =
           attribute
