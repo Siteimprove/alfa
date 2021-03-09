@@ -944,7 +944,9 @@ export namespace Selector {
     )
   );
 
-  // TODO: cue, cue-region
+  // TODO: cue, cue-region (name/func)
+  // TODO: part, slotted (func)
+  // TODO: file-selector-button, grammar-error, spelling-error (no support)
   const parsePseudoElement = flatMap(
     map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
     (colons) =>
@@ -970,6 +972,14 @@ export namespace Selector {
             return Result.of(FirstLetter.of());
           case "first-line":
             return Result.of(FirstLine.of());
+          case "marker":
+            return Result.of(Marker.of());
+          case "placeholder":
+            return Result.of(Placeholder.of());
+          case "selection":
+            return Result.of(Selection.of());
+          case "target-text":
+            return Result.of(TargetText.of());
         }
 
         return Err.of(`Unknown pseudo-element ::${ident.value}`);
@@ -1732,6 +1742,58 @@ export namespace Selector {
 
     private constructor() {
       super("first-line");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#marker-pseudo}
+   */
+  export class Marker extends Pseudo.Element {
+    public static of(): Marker {
+      return new Marker();
+    }
+
+    private constructor() {
+      super("marker");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#placeholder-pseudo}
+   */
+  export class Placeholder extends Pseudo.Element {
+    public static of(): Placeholder {
+      return new Placeholder();
+    }
+
+    private constructor() {
+      super("placeholder");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-selection}
+   */
+  export class Selection extends Pseudo.Element {
+    public static of(): Selection {
+      return new Selection();
+    }
+
+    private constructor() {
+      super("selection");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-target-text}
+   */
+  export class TargetText extends Pseudo.Element {
+    public static of(): TargetText {
+      return new TargetText();
+    }
+
+    private constructor() {
+      super("target-text");
     }
   }
 
