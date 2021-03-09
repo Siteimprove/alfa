@@ -1,4 +1,4 @@
-import * as global from "./global";
+import * as builtin from "./builtin";
 
 /**
  * @public
@@ -16,10 +16,10 @@ export namespace JSON {
   }
 
   export function parse(value: string): JSON {
-    return global.parse(value);
+    return builtin.JSON.parse(value);
   }
 
   export function stringify(value: JSON): string {
-    return global.stringify(value);
+    return builtin.JSON.stringify(value);
   }
 }

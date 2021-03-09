@@ -1,4 +1,4 @@
-// This file defines exports from the global `Array` constructor for internal
+// This file defines exports from the builtin `Array` constructor for internal
 // use only.
 
 /**

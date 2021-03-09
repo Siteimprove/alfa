@@ -5,14 +5,14 @@ import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Style } from "@siteimprove/alfa-style";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
-const { map } = Iterable;
+const { flatMap, map } = Iterable;
 
 /**
- * Determine the approximate foreground color of an element if possible.
+ * Determine the approximate foreground colors of an element if possible.
  */
 export function getForeground(
   element: Element,
-  device: Device
+  device: Device = Device.standard()
 ): Option<Iterable<RGB<Percentage, Percentage>>> {
   const style = Style.from(element, device);
 
@@ -22,13 +22,42 @@ export function getForeground(
     return None;
   }
 
-  if (color.get().alpha.value === 1) {
+  const opacity = style.computed("opacity").value;
+
+  // If the color is not transparent, and the element is fully opaque,
+  // then we do not need to dig further
+  if (color.get().alpha.value * opacity.value === 1) {
     return Option.of([color.get()]);
   }
 
-  return getBackground(element, device).map((backdrops) =>
-    map(backdrops, (backdrop) => composite(color.get(), backdrop))
+  // First, we mix the color with the element's background according to the
+  // color's alpha channel (only).
+  // For this, we fake the opacity of the element at 1. That way, the
+  // background color is correctly handled. The background color may itself have
+  // an alpha channel, independently from its opacity, and this alpha channel
+  // needs to be taken into account (as well as the alpha/opacity of all the
+  // previous layers).
+  const colors = getBackground(element, device, 1).map((backdrops) =>
+    map(backdrops, (backdrop) => composite(color.get(), backdrop, 1))
   );
+
+  // Next, we handle the opacity of the element.
+  // For this, we need the background colors of the parent (assuming that DOM
+  // reflects layout).
+  return element
+    .parent({
+      flattened: true,
+    })
+    .filter(Element.isElement)
+    .flatMap((parent) =>
+      getBackground(parent, device).map((parentColors) =>
+        flatMap(colors.get(), (color) =>
+          parentColors.map((backdrop) =>
+            composite(color, backdrop, opacity.value)
+          )
+        )
+      )
+    );
 }
 
 /**
@@ -40,15 +69,18 @@ export function getForeground(
  */
 export function getBackground(
   element: Element,
-  device: Device
+  device: Device = Device.standard(),
+  fakeLastOpacity?: number
 ): Option<Array<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map((layers) =>
+  return getLayers(element, device, fakeLastOpacity).map((layers) =>
     layers.reduce<Array<RGB<Percentage, Percentage>>>(
       (backdrops, layer) =>
-        layer.reduce<Array<RGB<Percentage, Percentage>>>(
+        layer.colors.reduce<Array<RGB<Percentage, Percentage>>>(
           (layers, color) =>
             layers.concat(
-              backdrops.map((backdrop) => composite(color, backdrop))
+              backdrops.map((backdrop) =>
+                composite(color, backdrop, layer.opacity)
+              )
             ),
           []
         ),
@@ -66,18 +98,25 @@ export function getBackground(
   );
 }
 
+type Layer = {
+  colors: ReadonlyArray<RGB<Percentage, Percentage>>;
+  opacity: number;
+};
+
 function getLayers(
   element: Element,
-  device: Device
-): Option<Array<Array<RGB<Percentage, Percentage>>>> {
-  const layers: Array<Array<RGB<Percentage, Percentage>>> = [];
+  device: Device,
+  fakeLastOpacity?: number
+): Option<ReadonlyArray<Layer>> {
+  const layers: Array<Layer> = [];
 
   const style = Style.from(element, device);
 
   const color = resolveColor(style.computed("background-color").value, style);
+  const opacity = fakeLastOpacity ?? style.computed("opacity").value.value;
 
   if (color.isSome()) {
-    layers.push([color.get()]);
+    layers.push({ colors: [color.get()], opacity });
   } else {
     return None;
   }
@@ -98,7 +137,7 @@ function getLayers(
     // be at least two color stops.
     const stops: Array<RGB<Percentage, Percentage>> = [];
 
-    layers.push(stops);
+    layers.push({ colors: stops, opacity });
 
     for (const item of image.image.items) {
       if (item.type === "stop") {
@@ -123,12 +162,12 @@ function getLayers(
   // (https://github.com/siteimprove/picasso) for spatially indexing the box
   // tree in which case the background layers sitting behind the current layer
   // can be found by issuing a range query for the box of the current element.
-  for (const layer of layers) {
-    if (layer.every((color) => color.alpha.value === 1)) {
-      return Option.of(layers);
-    } else {
-      break;
-    }
+  if (
+    layers.length > 0 &&
+    layers[0].opacity === 1 &&
+    layers[0].colors.every((color) => color.alpha.value === 1)
+  ) {
+    return Option.of(layers);
   }
 
   const parent = element
@@ -142,6 +181,8 @@ function getLayers(
   // layers we've found so far.
   if (parent.isSome()) {
     return parent.flatMap((parent) =>
+      // The fake opacity only applies to the last layer, so it is not used in
+      // the recursive calls
       getLayers(parent, device).map((parentLayers) =>
         parentLayers.concat(layers)
       )
@@ -155,8 +196,6 @@ function resolveColor(
   color: RGB<Percentage, Percentage> | Current | System,
   style: Style
 ): Option<RGB<Percentage, Percentage>> {
-  const opacity = style.computed("opacity").value;
-
   switch (color.type) {
     case "keyword":
       if (color.value === "currentcolor") {
@@ -168,7 +207,7 @@ function resolveColor(
               color.red,
               color.green,
               color.blue,
-              Percentage.of(color.alpha.value * opacity.value)
+              Percentage.of(color.alpha.value)
             )
           );
         }
@@ -180,7 +219,7 @@ function resolveColor(
             Percentage.of(0),
             Percentage.of(0),
             Percentage.of(0),
-            Percentage.of(opacity.value)
+            Percentage.of(1)
           )
         );
       }
@@ -193,7 +232,7 @@ function resolveColor(
           color.red,
           color.green,
           color.blue,
-          Percentage.of(color.alpha.value * opacity.value)
+          Percentage.of(color.alpha.value)
         )
       );
   }
@@ -204,24 +243,26 @@ function resolveColor(
  */
 function composite(
   foreground: RGB<Percentage, Percentage>,
-  background: RGB<Percentage, Percentage>
+  background: RGB<Percentage, Percentage>,
+  opacity: number
 ): RGB<Percentage, Percentage> {
-  if (foreground.alpha.value === 1) {
+  const foregroundOpacity = foreground.alpha.value * opacity;
+  if (foregroundOpacity === 1) {
     return foreground;
   }
 
-  const alpha = background.alpha.value * (1 - foreground.alpha.value);
+  const alpha = background.alpha.value * (1 - foregroundOpacity);
 
   const [red, green, blue] = [
     [foreground.red, background.red],
     [foreground.green, background.green],
     [foreground.blue, background.blue],
-  ].map(([a, b]) => a.value * foreground.alpha.value + b.value * alpha);
+  ].map(([a, b]) => a.value * foregroundOpacity + b.value * alpha);
 
   return RGB.of(
     Percentage.of(red),
     Percentage.of(green),
     Percentage.of(blue),
-    Percentage.of(foreground.alpha.value + alpha)
+    Percentage.of(foregroundOpacity + alpha)
   );
 }

@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
-import * as global from "./global";
+import * as builtin from "./builtin";
 
 const { isEmpty } = Iterable;
 
@@ -365,7 +365,7 @@ export namespace URL {
         search,
         // https://url.spec.whatwg.org/#dom-url-hash
         hash,
-      } = new global.URL(url, base?.toString());
+      } = new builtin.URL(url, base?.toString());
 
       // `URL#protocol` appends a ":" to the scheme which we need to remove.
       const scheme = protocol.replace(/:$/, "");
