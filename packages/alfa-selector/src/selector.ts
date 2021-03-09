@@ -858,132 +858,147 @@ export namespace Selector {
     Token.parseColon,
     either(
       // Non-functional pseudo-classes
-      flatMap(Token.parseIdent(), (ident) => (input) => {
+      mapResult(Token.parseIdent(), (ident) => {
         switch (ident.value) {
           case "hover":
-            return Result.of([input, Hover.of()]);
+            return Result.of(Hover.of());
           case "active":
-            return Result.of([input, Active.of()]);
+            return Result.of(Active.of());
           case "focus":
-            return Result.of([input, Focus.of()]);
+            return Result.of(Focus.of());
           case "focus-within":
-            return Result.of([input, FocusWithin.of()]);
+            return Result.of(FocusWithin.of());
           case "focus-visible":
-            return Result.of([input, FocusVisible.of()]);
+            return Result.of(FocusVisible.of());
           case "link":
-            return Result.of([input, Link.of()]);
+            return Result.of(Link.of());
           case "visited":
-            return Result.of([input, Visited.of()]);
+            return Result.of(Visited.of());
           case "root":
-            return Result.of([input, Root.of()]);
+            return Result.of(Root.of());
           case "empty":
-            return Result.of([input, Empty.of()]);
+            return Result.of(Empty.of());
           case "first-child":
-            return Result.of([input, FirstChild.of()]);
+            return Result.of(FirstChild.of());
           case "last-child":
-            return Result.of([input, LastChild.of()]);
+            return Result.of(LastChild.of());
           case "only-child":
-            return Result.of([input, OnlyChild.of()]);
+            return Result.of(OnlyChild.of());
           case "first-of-type":
-            return Result.of([input, FirstOfType.of()]);
+            return Result.of(FirstOfType.of());
           case "last-of-type":
-            return Result.of([input, LastOfType.of()]);
+            return Result.of(LastOfType.of());
           case "only-of-type":
-            return Result.of([input, OnlyOfType.of()]);
+            return Result.of(OnlyOfType.of());
         }
 
         return Err.of(`Unknown pseudo-class :${ident.value}`);
       }),
 
       // Funtional pseudo-classes
-      flatMap(
-        right(peek(Token.parseFunction()), Function.consume),
-        (fn) => (input) => {
-          const { name } = fn;
-          const tokens = Slice.of(fn.value);
+      mapResult(right(peek(Token.parseFunction()), Function.consume), (fn) => {
+        const { name } = fn;
+        const tokens = Slice.of(fn.value);
 
-          switch (name) {
-            // :<name>(<selector-list>)
-            case "is":
-            case "not":
-            case "has":
-              return parseSelector(tokens).map(([, selector]) => {
-                switch (name) {
-                  case "is":
-                    // Annotate the first value to ensure correct inference.
-                    return [input, Is.of(selector) as Pseudo.Class];
-                  case "not":
-                    return [input, Not.of(selector)];
-                  case "has":
-                    return [input, Has.of(selector)];
-                }
-              });
+        switch (name) {
+          // :<name>(<selector-list>)
+          // :has normally only accepts relative selectors, which we don't
+          // check currently.
+          case "is":
+          case "not":
+          case "has":
+            return parseSelector(tokens).map(([, selector]) => {
+              switch (name) {
+                case "is":
+                  // Annotate the first value to ensure correct inference.
+                  return Is.of(selector) as Pseudo.Class;
+                case "not":
+                  return Not.of(selector);
+                case "has":
+                  return Has.of(selector);
+              }
+            });
 
-            // :<name>(<an+b>)
-            case "nth-child":
-            case "nth-last-child":
-            case "nth-of-type":
-            case "nth-last-of-type":
-              return parseNth(tokens).map(([, nth]) => {
-                switch (name) {
-                  case "nth-child":
-                    return [input, NthChild.of(nth)];
-                  case "nth-last-child":
-                    return [input, NthLastChild.of(nth)];
-                  case "nth-of-type":
-                    return [input, NthOfType.of(nth)];
-                  case "nth-last-of-type":
-                    return [input, NthLastOfType.of(nth)];
-                }
-              });
-          }
-
-          return Err.of(`Unknown pseudo-class :${fn.name}()`);
+          // :<name>(<an+b>)
+          case "nth-child":
+          case "nth-last-child":
+          case "nth-of-type":
+          case "nth-last-of-type":
+            return parseNth(tokens).map(([, nth]) => {
+              switch (name) {
+                case "nth-child":
+                  return NthChild.of(nth);
+                case "nth-last-child":
+                  return NthLastChild.of(nth);
+                case "nth-of-type":
+                  return NthOfType.of(nth);
+                case "nth-last-of-type":
+                  return NthLastOfType.of(nth);
+              }
+            });
         }
-      )
+
+        return Err.of(`Unknown pseudo-class :${fn.name}()`);
+      })
     )
   );
 
   // TODO: cue, cue-region (name/func)
   // TODO: part, slotted (func)
   // TODO: file-selector-button, grammar-error, spelling-error (no support)
-  const parsePseudoElement = flatMap(
-    map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
-    (colons) =>
-      mapResult(Token.parseIdent(), (ident) => {
-        if (
-          colons === 1 &&
-          !["after", "before", "first-letter", "first-line"].includes(
-            ident.value
-          )
-        ) {
-          return Err.of(
-            `This pseudo-element is not allowed with single colon: ::${ident.value}`
-          );
-        }
-        switch (ident.value) {
-          case "after":
-            return Result.of(After.of());
-          case "backdrop":
-            return Result.of(Backdrop.of());
-          case "before":
-            return Result.of(Before.of());
-          case "first-letter":
-            return Result.of(FirstLetter.of());
-          case "first-line":
-            return Result.of(FirstLine.of());
-          case "marker":
-            return Result.of(Marker.of());
-          case "placeholder":
-            return Result.of(Placeholder.of());
-          case "selection":
-            return Result.of(Selection.of());
-          case "target-text":
-            return Result.of(TargetText.of());
-        }
+  const parsePseudoElement = either(
+    // Function pseudo-elements need to be first because ::cue and ::cue-region
+    // can be both, so we want to fail them as function before testing them
+    // as ident
+    right(
+      take(Token.parseColon, 2),
+      mapResult(right(peek(Token.parseFunction()), Function.consume), (fn) => {
+        const { name } = fn;
+        const tokens = Slice.of(fn.value);
 
-        return Err.of(`Unknown pseudo-element ::${ident.value}`);
+        // switch (name) {}
+        return Result.of(After.of());
       })
+    ),
+    // Non-functional pseudo-elements
+    flatMap(
+      map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
+      (colons) =>
+        mapResult(Token.parseIdent(), (ident) => {
+          if (
+            colons === 1 &&
+            !["after", "before", "first-letter", "first-line"].includes(
+              ident.value
+            )
+          ) {
+            return Err.of(
+              `This pseudo-element is not allowed with single colon: ::${ident.value}`
+            );
+          }
+          switch (ident.value) {
+            case "after":
+              return Result.of(After.of());
+            case "backdrop":
+              return Result.of(Backdrop.of());
+            case "before":
+              return Result.of(Before.of());
+            case "first-letter":
+              return Result.of(FirstLetter.of());
+            case "first-line":
+              return Result.of(FirstLine.of());
+            case "marker":
+              return Result.of(Marker.of());
+            case "placeholder":
+              return Result.of(Placeholder.of());
+            case "selection":
+              return Result.of(Selection.of());
+            case "target-text":
+              return Result.of(TargetText.of());
+          }
+
+          return Err.of(`Unknown pseudo-element ::${ident.value}`);
+        })
+    )
   );
 
   const parsePseudo = either(parsePseudoClass, parsePseudoElement);
