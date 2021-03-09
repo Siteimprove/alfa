@@ -33,10 +33,10 @@ export function getForeground(
   // First, we mix the color with the element's background according to the
   // color's alpha channel (only).
   // For this, we fake the opacity of the element at 1. That way, the
-  // background color is correctly handled. That the background color may itself
-  // have an alpha channel, independently from its opacity, and this alpha
-  // channel needs to be taken into account (as well as the alpha/opacity of all
-  // the previous layers).
+  // background color is correctly handled. The background color may itself have
+  // an alpha channel, independently from its opacity, and this alpha channel
+  // needs to be taken into account (as well as the alpha/opacity of all the
+  // previous layers).
   const colors = getBackground(element, device, 1).map((backdrops) =>
     map(backdrops, (backdrop) => composite(color.get(), backdrop, 1))
   );
@@ -181,6 +181,8 @@ function getLayers(
   // layers we've found so far.
   if (parent.isSome()) {
     return parent.flatMap((parent) =>
+      // The fake opacity only applies to the last layer, so it is not used in
+      // the recursive calls
       getLayers(parent, device).map((parentLayers) =>
         parentLayers.concat(layers)
       )
