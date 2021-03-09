@@ -1,4 +1,4 @@
-import { Document } from "@siteimprove/alfa-dom";
+import { h } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { test } from "@siteimprove/alfa-test";
@@ -16,7 +16,7 @@ test("getBackground() handles opacity correctly", (t) => {
       Hello
     </span>
   );
-  const document = Document.of([
+  h.document([
     <html>
       <div style={{ backgroundColor: "white" }}>{target}</div>
     </html>,
@@ -44,7 +44,7 @@ test("getBackground() handles mix of opacity and transparency", (t) => {
       Hello
     </span>
   );
-  const document = Document.of([
+  h.document([
     <html>
       <div style={{ backgroundColor: "red" }}>{target}</div>
     </html>,
@@ -67,7 +67,7 @@ test("getForeground() handles opacity correctly", (t) => {
       Hello
     </span>
   );
-  const document = Document.of([
+  h.document([
     <html>
       <div style={{ backgroundColor: "white" }}>{target}</div>
     </html>,
@@ -95,7 +95,7 @@ test("getForeground() handles mix of opacity and transparency", (t) => {
       Hello
     </span>
   );
-  const document = Document.of([
+  h.document([
     <html>
       <div style={{ backgroundColor: "red" }}>{target}</div>
     </html>,
