@@ -1,5 +1,4 @@
 import { Document } from "@siteimprove/alfa-dom";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import R94, { Outcomes } from "../../src/sia-r94/rule";

@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Iterable } from "@siteimprove/alfa-iterable";

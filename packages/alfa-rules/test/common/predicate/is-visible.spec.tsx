@@ -1,4 +1,3 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 

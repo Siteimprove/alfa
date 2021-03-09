@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 

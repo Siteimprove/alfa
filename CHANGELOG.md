@@ -27,6 +27,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-promise](packages/alfa-promise): A new package has been added with funcitonality for working with promises.
 
+- [@siteimprove/alfa-dom](packages/alfa-dom): A new `@siteimprove/alfa-dom/jsx-runtime` module is now available for compatibility with the new importless JSX mode.
+
 ### Changed
 
 - [@siteimprove/alfa-branched](packages/alfa-branched), [@siteimprove/alfa-future](packages/alfa-future), [@siteimprove/alfa-trampoline](packages/alfa-trampoline): The mapper passed to `Branched.traverse()`, `Future.traverse()`, and `Trampoline.traverse()` is now passed the index of the value being processed.
