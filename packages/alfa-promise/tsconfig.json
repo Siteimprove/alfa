@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
-    "src/global.ts",
+    "src/builtin.ts",
     "src/index.ts",
     "src/promise.ts",
     "test/promise.spec.ts"

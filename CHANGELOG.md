@@ -33,7 +33,9 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
--[@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now correctly compute foreground colors in presence of an `opacity` attribute. ([#739](../../pull/739)) 
+- [@siteimprove/alfa-array](packages/alfa-array), [@siteimprove/alfa-json](packages/alfa-json), [@siteimprove/alfa-promise](alfa-promise), [@siteimprove/alfa-url](packages/alfa-url): Avoid redefining the `global` variable used in certain environments, such as Jest.
+
+-[@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now correctly compute foreground colors in presence of an `opacity` attribute. ([#739](../../pull/739))
 
 ## [0.13.0](../../compare/v0.12.0...v0.13.0) (2021-03-05)
 

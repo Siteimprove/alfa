@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 
-// This file defines exports from the global `URL` constructor for internal
+// This file defines exports from the builtin `URL` constructor for internal
 // use only.
 
 /**
