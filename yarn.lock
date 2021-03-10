@@ -2155,7 +2155,7 @@ __metadata:
     execa: ^5.0.0
     minimist: ^1.2.5
     prettier: ^2.2.1
-    typescript: ^4.2.2
+    typescript: ^4.2.3
   languageName: unknown
   linkType: soft
 
@@ -9412,23 +9412,23 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-typescript@^4.2.2:
-  version: 4.2.2
-  resolution: "typescript@npm:4.2.2"
+typescript@^4.2.3:
+  version: 4.2.3
+  resolution: "typescript@npm:4.2.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: e035ade8bac05c23dbd30045122f7b0c6f63693c23c394b563161118c0bea66887ec470337d3e9f44e6459793332f741c731e86eeffd83ddebff23f70f71669b
+  checksum: b4a2020c021211184ac15caf59936b2089c13e79685f340a31aaa839c9de2f73b44a5e3757292de6cdad2ed967aef80d4592161b814cc29c0570f261850c4bca
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.2.2#builtin<compat/typescript>":
-  version: 4.2.2
-  resolution: "typescript@patch:typescript@npm%3A4.2.2#builtin<compat/typescript>::version=4.2.2&hash=a45b0e"
+"typescript@patch:typescript@^4.2.3#builtin<compat/typescript>":
+  version: 4.2.3
+  resolution: "typescript@patch:typescript@npm%3A4.2.3#builtin<compat/typescript>::version=4.2.3&hash=a45b0e"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 2d2aa64c276224577202e90e3d791829bd8be56607993ae2e21fc4b8c6dc6b6850a3f2d69fca3ddabf1ec36e26c5cfad941dd27d84be4ce73a661c994e76cf1c
+  checksum: 497e9ee95621aaec4b07a96d60665c155ed5ace0684927d7d7c9d32c611be065b210b032a897b603d42c7adb461f4ba6c69e471e1ae62c7742a9cbb6e7a2db45
   languageName: node
   linkType: hard
 
