@@ -1652,7 +1652,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-promise@workspace:packages/alfa-promise":
+"@siteimprove/alfa-promise@workspace:^0.13.0, @siteimprove/alfa-promise@workspace:packages/alfa-promise":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-promise@workspace:packages/alfa-promise"
   dependencies:
@@ -1822,12 +1822,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-scraper@workspace:packages/alfa-scraper"
   dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.13.0"
     "@siteimprove/alfa-device": "workspace:^0.13.0"
     "@siteimprove/alfa-dom": "workspace:^0.13.0"
     "@siteimprove/alfa-equatable": "workspace:^0.13.0"
     "@siteimprove/alfa-http": "workspace:^0.13.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.13.0"
     "@siteimprove/alfa-json": "workspace:^0.13.0"
     "@siteimprove/alfa-mapper": "workspace:^0.13.0"
+    "@siteimprove/alfa-promise": "workspace:^0.13.0"
     "@siteimprove/alfa-puppeteer": "workspace:^0.13.0"
     "@siteimprove/alfa-result": "workspace:^0.13.0"
     "@siteimprove/alfa-test": "workspace:^0.13.0"
