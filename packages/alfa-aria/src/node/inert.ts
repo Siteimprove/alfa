@@ -2,6 +2,9 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Inert extends Node {
   public static of(owner: dom.Node): Inert {
     return new Inert(owner);
@@ -22,6 +25,7 @@ export class Inert extends Node {
   public toJSON(): Inert.JSON {
     return {
       type: "inert",
+      node: this._node.path(),
       children: this._children.map((child) => child.toJSON()),
     };
   }
@@ -31,6 +35,9 @@ export class Inert extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Inert {
   export interface JSON extends Node.JSON {
     type: "inert";

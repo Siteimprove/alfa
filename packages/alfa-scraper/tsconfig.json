@@ -11,6 +11,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-device"
     },
     {
@@ -23,10 +26,16 @@
       "path": "../alfa-http"
     },
     {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-json"
     },
     {
       "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-promise"
     },
     {
       "path": "../alfa-puppeteer"

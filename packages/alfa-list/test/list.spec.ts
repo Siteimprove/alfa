@@ -107,7 +107,7 @@ test("#skipLast() removes the last value of a singleton list", (t) => {
 test("#skipLast() behaves for large lists", (t) => {
   let list = List.from(array(100000));
 
-  for (let i = 100000; i-- >= 0; i) {
+  for (let i = 100000; i >= 0; i--) {
     list = list.skipLast();
     t(list.get(i).isNone());
   }

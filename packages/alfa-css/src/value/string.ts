@@ -8,7 +8,9 @@ import { Value } from "../value";
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#strings
+ * {@link https://drafts.csswg.org/css-values/#strings}
+ *
+ * @public
  */
 export class String extends Value<"string"> {
   public static of(value: string): String {
@@ -35,7 +37,7 @@ export class String extends Value<"string"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._value);
+    hash.writeString(this._value);
   }
 
   public toJSON(): String.JSON {
@@ -50,9 +52,11 @@ export class String extends Value<"string"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace String {
-  export interface JSON extends Value.JSON {
-    type: "string";
+  export interface JSON extends Value.JSON<"string"> {
     value: string;
   }
 

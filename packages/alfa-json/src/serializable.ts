@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { JSON } from "./json";
@@ -15,10 +13,16 @@ const {
   isNull,
 } = Refinement;
 
+/**
+ * @public
+ */
 export interface Serializable<T extends JSON = JSON> {
   toJSON(): T;
 }
 
+/**
+ * @public
+ */
 export namespace Serializable {
   export type ToJSON<T> = T extends Serializable<infer U>
     ? U

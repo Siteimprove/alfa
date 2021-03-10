@@ -1,7 +1,8 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { FNV } from "@siteimprove/alfa-fnv";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -10,12 +11,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Empty, Node } from "./node";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Map<K, V> implements Collection.Keyed<K, V> {
   public static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V> {
     return entries.reduce(
@@ -161,7 +163,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public get(key: K): Option<V> {
-    return this._root.get(key, this._hash(key), 0);
+    return this._root.get(key, hash(key), 0);
   }
 
   public has(key: K): boolean {
@@ -169,12 +171,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public set(key: K, value: V): Map<K, V> {
-    const { result: root, status } = this._root.set(
-      key,
-      value,
-      this._hash(key),
-      0
-    );
+    const { result: root, status } = this._root.set(key, value, hash(key), 0);
 
     if (status === "unchanged") {
       return this;
@@ -184,7 +181,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public delete(key: K): Map<K, V> {
-    const { result: root, status } = this._root.delete(key, this._hash(key), 0);
+    const { result: root, status } = this._root.delete(key, hash(key), 0);
 
     if (status === "unchanged") {
       return this;
@@ -201,7 +198,25 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  public equals(value: unknown): value is this {
+  public subtract(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Iterable.reduce<readonly [K, V], Map<K, V>>(
+      iterable,
+      (map, [key]) => map.delete(key),
+      this
+    );
+  }
+
+  public intersect(iterable: Iterable<readonly [K, V]>): Map<K, V> {
+    return Map.fromIterable(
+      Iterable.filter(iterable, ([key]) => this.has(key))
+    );
+  }
+
+  public equals<K, V>(value: Map<K, V>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Map &&
       value._size === this._size &&
@@ -211,11 +226,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public hash(hash: Hash): void {
     for (const [key, value] of this) {
-      Hashable.hash(hash, key);
-      Hashable.hash(hash, value);
+      hash.writeUnknown(key).writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._size);
+    hash.writeUint32(this._size);
   }
 
   public keys(): Iterable<K> {
@@ -226,8 +240,12 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.map(this._root, (entry) => entry[1]);
   }
 
-  public *[Symbol.iterator](): Iterator<[K, V]> {
+  public *iterator(): Iterator<[K, V]> {
     yield* this._root;
+  }
+
+  public [Symbol.iterator](): Iterator<[K, V]> {
+    return this.iterator();
   }
 
   public toArray(): Array<[K, V]> {
@@ -248,30 +266,55 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
     return `Map {${entries === "" ? "" : ` ${entries} `}}`;
   }
-
-  private _hash(key: K): number {
-    const hash = FNV.empty();
-
-    Hashable.hash(hash, key);
-
-    return hash.finish();
-  }
 }
 
+/**
+ * @public
+ */
 export namespace Map {
   export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
+
+  export function isMap<K, V>(
+    value: Iterable<readonly [K, V]>
+  ): value is Map<K, V>;
+
+  export function isMap<K, V>(value: unknown): value is Map<K, V>;
 
   export function isMap<K, V>(value: unknown): value is Map<K, V> {
     return value instanceof Map;
   }
 
   export function from<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V> {
-    return isMap<K, V>(iterable)
-      ? iterable
-      : Iterable.reduce(
-          iterable,
-          (map, [key, value]) => map.set(key, value),
-          Map.empty<K, V>()
-        );
+    if (isMap(iterable)) {
+      return iterable;
+    }
+
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
+
+    return fromIterable(iterable);
   }
+
+  export function fromArray<K, V>(array: Array<readonly [K, V]>): Map<K, V> {
+    return Array.reduce(
+      array,
+      (map, [key, value]) => map.set(key, value),
+      Map.empty()
+    );
+  }
+
+  export function fromIterable<K, V>(
+    iterable: Iterable<readonly [K, V]>
+  ): Map<K, V> {
+    return Iterable.reduce(
+      iterable,
+      (map, [key, value]) => map.set(key, value),
+      Map.empty()
+    );
+  }
+}
+
+function hash<K>(key: K): number {
+  return FNV.empty().writeUnknown(key).finish();
 }

@@ -12,20 +12,19 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Page } from "@siteimprove/alfa-web";
 
-import { isValidElement, ReactElement } from "react";
+import { ReactElement } from "react";
 import * as TestRenderer from "react-test-renderer";
 
 const { keys } = Object;
 const { isBoolean, isObject, isString } = Refinement;
 
+/**
+ * @public
+ */
 export namespace React {
   export type Type = ReactElement<unknown>;
 
-  export function isType(value: unknown): value is Type {
-    return isObject(value) && isValidElement(value);
-  }
-
-  export function asPage(value: Type): Page {
+  export function toPage(value: Type): Page {
     const tree = TestRenderer.create(value).toJSON();
 
     if (tree === null) {

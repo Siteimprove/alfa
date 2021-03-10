@@ -3,17 +3,16 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Result } from "@siteimprove/alfa-result";
-import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { or } = Refinement;
-
 /**
- * @see https://drafts.csswg.org/css-syntax/#simple-block
+ * {@link https://drafts.csswg.org/css-syntax/#simple-block}
+ *
+ * @public
  */
 export class Block implements Iterable<Token>, Equatable, Serializable {
   public static of(token: Block.Open, value: Iterable<Token>): Block {
@@ -72,6 +71,9 @@ export class Block implements Iterable<Token>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Block {
   export interface JSON {
     [key: string]: json.JSON;
@@ -96,25 +98,17 @@ export namespace Block {
     | Token.CloseCurlyBracket;
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-simple-block
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
   export const consume: Parser<Slice<Token>, Block> = (input) => {
-    const token = input
-      .get(0)
-      .filter(
-        or(
-          Token.isOpenParenthesis,
-          or(Token.isOpenSquareBracket, Token.isOpenCurlyBracket)
-        )
-      )
-      .get();
+    const token = input.array[input.offset] as Open;
 
     const value: Array<Token> = [];
 
     input = input.slice(1);
 
     while (input.length > 0) {
-      const next = input.get(0).get();
+      const next = input.array[input.offset];
 
       if (next.type === token.mirror.type) {
         input = input.slice(1);

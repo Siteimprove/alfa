@@ -3,8 +3,11 @@ import { Continuation } from "@siteimprove/alfa-continuation";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
+/**
+ * @public
+ */
 export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
-  public static of<T>(): Emitter<T> {
+  public static of<T = void>(): Emitter<T> {
     return new Emitter(new Map());
   }
 
@@ -31,35 +34,46 @@ export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
     );
   }
 
-  public on(listener: Callback<T>): void {
+  public on(listener: Callback<T>): this {
     this._listeners.set(listener, listener);
+    return this;
   }
 
   public once(): Promise<T>;
 
-  public once(listener: Callback<T>): void;
+  public once(listener: Callback<T>): this;
 
-  public once(listener?: Callback<T>): void | Promise<T> {
+  public once(listener?: Callback<T>): this | Promise<T> {
     const once: Continuation<T> = (done) => {
       const listener: Callback<T> = (event) => {
-        this.off(listener);
+        this._listeners.delete(done);
         done(event);
       };
 
-      this.on(listener);
+      this._listeners.set(done, listener);
     };
 
-    return listener ? once(listener) : new Promise(once);
+    if (listener) {
+      once(listener);
+      return this;
+    } else {
+      return new Promise(once);
+    }
   }
 
-  public off(listener: Callback<never>): void {
+  public off(listener: Callback<never>): this {
     this._listeners.delete(listener);
+    return this;
   }
 
-  public emit(event: T): void {
+  public emit(event: T): boolean {
+    const empty = this._listeners.size === 0;
+
     for (const [, listener] of this._listeners) {
       listener(event);
     }
+
+    return !empty;
   }
 
   public async *asyncIterator(): AsyncIterator<T> {

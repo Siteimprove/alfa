@@ -10,6 +10,9 @@ import { Name } from "../name";
 import { Node } from "../node";
 import { Role } from "../role";
 
+/**
+ * @public
+ */
 export class Element extends Node {
   public static of(
     owner: dom.Node,
@@ -95,6 +98,7 @@ export class Element extends Node {
   public toJSON(): Element.JSON {
     return {
       type: "element",
+      node: this._node.path(),
       role: this._role.map((role) => role.name).getOr(null),
       name: this._name.map((name) => name.value).getOr(null),
       attributes: this._attributes.map((attribute) => attribute.toJSON()),
@@ -113,6 +117,9 @@ export class Element extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Element {
   export interface JSON extends Node.JSON {
     type: "element";

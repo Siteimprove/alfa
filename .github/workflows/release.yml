@@ -5,26 +5,26 @@ on:
       - "v*"
 jobs:
   publish:
-    runs-on: ubuntu-latest
     name: Publish
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
-          registry-url: https://npm.pkg.github.com/
-      - run: yarn install --frozen-lockfile --ignore-platform
+      - uses: actions/cache@v2.1.4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ hashFiles('yarn.lock') }}
+      - run: >
+          yarn config set
+          npmScopes.siteimprove.npmAuthToken
+          ${{ secrets.GITHUB_TOKEN }}
+      - run: yarn install --immutable
       - run: yarn build
       - run: yarn test
-      - run: yarn lerna publish --yes from-package
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body: |
-            [Changelog for this release](CHANGELOG.md)
-          prerelease: true
+      - run: >
+          yarn workspaces foreach
+          --no-private
+          --topological
+          npm publish

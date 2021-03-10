@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -8,6 +9,9 @@ import { Number } from "../number";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
+/**
+ * @public
+ */
 export class Scale extends Value<"transform"> {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x, y);
@@ -47,8 +51,7 @@ export class Scale extends Value<"transform"> {
   }
 
   public hash(hash: Hash): void {
-    this._x.hash(hash);
-    this._y.hash(hash);
+    hash.writeHashable(this._x).writeHashable(this._y);
   }
 
   public toJSON(): Scale.JSON {
@@ -77,9 +80,11 @@ export class Scale extends Value<"transform"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Scale {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "scale";
     x: Number.JSON;
     y: Number.JSON;
@@ -90,7 +95,7 @@ export namespace Scale {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-scale
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scale}
    */
   const parseScale = map(
     right(
@@ -119,7 +124,7 @@ export namespace Scale {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex}
    */
   const parseScaleX = map(
     right(
@@ -133,7 +138,7 @@ export namespace Scale {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley}
    */
   const parseScaleY = map(
     right(
@@ -146,5 +151,9 @@ export namespace Scale {
     (y) => Scale.of(Number.of(1), y)
   );
 
-  export const parse = either(parseScale, either(parseScaleX, parseScaleY));
+  export const parse: Parser<Slice<Token>, Scale, string> = either(
+    parseScale,
+    parseScaleX,
+    parseScaleY
+  );
 }

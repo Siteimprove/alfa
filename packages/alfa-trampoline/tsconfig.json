@@ -7,6 +7,9 @@
       "path": "../alfa-array"
     },
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-functor"
     },
     {

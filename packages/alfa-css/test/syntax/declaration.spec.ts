@@ -1,13 +1,11 @@
 import { Assertions, test } from "@siteimprove/alfa-test";
 
-import { Slice } from "@siteimprove/alfa-slice";
-
 import { Lexer } from "../../src/syntax/lexer";
 import { Declaration } from "../../src/syntax/declaration";
 
 function consume(t: Assertions, input: string, expected: Declaration.JSON) {
   t.deepEqual(
-    Declaration.consume(Slice.of(Lexer.lex(input)))
+    Declaration.consume(Lexer.lex(input))
       .map(([, declaration]) => declaration)
       .get()
       .toJSON(),

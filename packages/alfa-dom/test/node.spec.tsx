@@ -1,7 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { h } from "../h";
-import { jsx } from "../jsx";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;

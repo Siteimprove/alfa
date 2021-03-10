@@ -14,7 +14,9 @@ import { Unit } from "./unit";
 const { map, either, pair, right } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#position
+ * {@link https://drafts.csswg.org/css-values/#position}
+ *
+ * @public
  */
 export class Position<
   H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>,
@@ -57,8 +59,7 @@ export class Position<
   }
 
   public hash(hash: Hash): void {
-    this._horizontal.hash(hash);
-    this._vertical.hash(hash);
+    hash.writeHashable(this._horizontal).writeHashable(this._vertical);
   }
 
   public toJSON(): Position.JSON {
@@ -74,11 +75,11 @@ export class Position<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Position {
-  import parseWhitespace = Token.parseWhitespace;
-
-  export interface JSON extends Value.JSON {
-    type: "position";
+  export interface JSON extends Value.JSON<"position"> {
     horizontal: Component.JSON;
     vertical: Component.JSON;
   }
@@ -146,8 +147,7 @@ export namespace Position {
     }
 
     public hash(hash: Hash): void {
-      this._side.hash(hash);
-      this._offset.hash(hash);
+      hash.writeHashable(this._side).writeHashable(this._offset);
     }
 
     public toJSON(): Side.JSON {
@@ -166,8 +166,7 @@ export namespace Position {
   }
 
   export namespace Side {
-    export interface JSON extends Value.JSON {
-      type: "side";
+    export interface JSON extends Value.JSON<"side"> {
       side: Keyword.JSON;
       offset: Length.JSON | Percentage.JSON | null;
     }
@@ -192,7 +191,7 @@ export namespace Position {
       export const parseKeywordValue = map(
         pair(
           parseHorizontal,
-          right(parseWhitespace, either(Length.parse, Percentage.parse))
+          right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
         ),
         ([keyword, value]) => Side.of(keyword, Some.of(value))
       );
@@ -213,7 +212,7 @@ export namespace Position {
       export const parseKeywordValue = map(
         pair(
           parseVertical,
-          right(parseWhitespace, either(Length.parse, Percentage.parse))
+          right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
         ),
         ([keyword, value]) => Side.of(keyword, Some.of(value))
       );
@@ -235,7 +234,7 @@ export namespace Position {
    * Notation:
    *
    *   - H/V: keyword, top | bottom | right | left | center
-   *   - h/v: numeric, <length | percentage>
+   *   - h/v: numeric, \<length | percentage\>
    *   - Hh/Vv: keyword (excluding center) and numeric
    *
    * Syntax:
@@ -245,8 +244,8 @@ export namespace Position {
    *   - 2 tokens: H V | H v | h V | h v | V H
    *   - 1 token:  H | V | h
    *
-   * @see https://drafts.csswg.org/css-values/#typedef-position
-   * @see https://drafts.csswg.org/css-backgrounds/#typedef-bg-position
+   * {@link https://drafts.csswg.org/css-values/#typedef-position}
+   * {@link https://drafts.csswg.org/css-backgrounds/#typedef-bg-position}
    */
   export function parse(
     legacySyntax: boolean = false
@@ -267,14 +266,14 @@ export namespace Position {
       map(
         pair(
           Horizontal.parseKeywordValue,
-          right(parseWhitespace, Vertical.parseKeywordValue)
+          right(Token.parseWhitespace, Vertical.parseKeywordValue)
         ),
         mapHV
       ),
       map(
         pair(
           Vertical.parseKeywordValue,
-          right(parseWhitespace, Horizontal.parseKeywordValue)
+          right(Token.parseWhitespace, Horizontal.parseKeywordValue)
         ),
         mapVH
       )
@@ -286,11 +285,11 @@ export namespace Position {
             either(
               pair(
                 Horizontal.parseKeywordValue,
-                right(parseWhitespace, Vertical.parseKeyword)
+                right(Token.parseWhitespace, Vertical.parseKeyword)
               ),
               pair(
                 Horizontal.parseKeyword,
-                right(parseWhitespace, Vertical.parseKeywordValue)
+                right(Token.parseWhitespace, Vertical.parseKeywordValue)
               )
             ),
             mapHV
@@ -299,11 +298,11 @@ export namespace Position {
             either(
               pair(
                 Vertical.parseKeywordValue,
-                right(parseWhitespace, Horizontal.parseKeyword)
+                right(Token.parseWhitespace, Horizontal.parseKeyword)
               ),
               pair(
                 Vertical.parseKeyword,
-                right(parseWhitespace, Horizontal.parseKeywordValue)
+                right(Token.parseWhitespace, Horizontal.parseKeywordValue)
               )
             ),
             mapVH
@@ -315,14 +314,17 @@ export namespace Position {
       map(
         pair(
           either(Horizontal.parseKeyword, parseValue),
-          right(parseWhitespace, either(Vertical.parseKeyword, parseValue))
+          right(
+            Token.parseWhitespace,
+            either(Vertical.parseKeyword, parseValue)
+          )
         ),
         mapHV
       ),
       map(
         pair(
           Vertical.parseKeyword,
-          right(parseWhitespace, Horizontal.parseKeyword)
+          right(Token.parseWhitespace, Horizontal.parseKeyword)
         ),
         mapVH
       )

@@ -3,9 +3,15 @@
 // changes, do so in `scripts/features.js` and run `yarn generate` to rebuild this
 // file.
 
-export type Data = typeof Data;
+/**
+ * @internal
+ */
+type Data = typeof Data;
 
-export const Data = {
+/**
+ * @internal
+ */
+const Data = {
   "css.properties.border-radius": {
     support: {
       chrome: {
@@ -414,3 +420,5 @@ export const Data = {
     },
   },
 };
+
+export default Data;

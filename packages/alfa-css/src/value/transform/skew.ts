@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -10,6 +11,9 @@ import { Unit } from "../unit";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
+/**
+ * @public
+ */
 export class Skew<
   X extends Angle = Angle,
   Y extends Angle = Angle
@@ -52,8 +56,7 @@ export class Skew<
   }
 
   public hash(hash: Hash): void {
-    this._x.hash(hash);
-    this._y.hash(hash);
+    hash.writeHashable(this._x).writeHashable(this._y);
   }
 
   public toJSON(): Skew.JSON {
@@ -78,9 +81,11 @@ export class Skew<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Skew {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "skew";
     x: Angle.JSON;
     y: Angle.JSON;
@@ -98,7 +103,7 @@ export namespace Skew {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-skew
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skew}
    */
   const parseSkew = map(
     right(
@@ -130,7 +135,7 @@ export namespace Skew {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-skewx
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewx}
    */
   const parseSkewX = map(
     right(
@@ -144,7 +149,7 @@ export namespace Skew {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-skewy
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewy}
    */
   const parseSkewY = map(
     right(
@@ -157,5 +162,9 @@ export namespace Skew {
     (y) => Skew.of<Angle, Angle>(Angle.of(0, "deg"), y)
   );
 
-  export const parse = either(parseSkew, either(parseSkewX, parseSkewY));
+  export const parse: Parser<Slice<Token>, Skew, string> = either(
+    parseSkew,
+    parseSkewX,
+    parseSkewY
+  );
 }

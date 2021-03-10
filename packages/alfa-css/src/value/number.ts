@@ -1,4 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 import { Numeric } from "./numeric";
@@ -6,7 +7,9 @@ import { Numeric } from "./numeric";
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#numbers
+ * {@link https://drafts.csswg.org/css-values/#numbers}
+ *
+ * @public
  */
 export class Number extends Numeric<"number"> {
   public static of(value: number): Number {
@@ -33,9 +36,12 @@ export class Number extends Numeric<"number"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Number {
-  export interface JSON extends Numeric.JSON {
-    type: "number";
+  export interface JSON extends Numeric.JSON<"number"> {
+    value: number;
   }
 
   export function isNumber(value: unknown): value is Number {
@@ -43,17 +49,19 @@ export namespace Number {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#zero-value
+   * {@link https://drafts.csswg.org/css-values/#zero-value}
    */
-  export const parseZero = map(
+  export const parseZero: Parser<Slice<Token>, Number, string> = map(
     Token.parseNumber((number) => number.value === 0),
     (number) => Number.of(number.value)
   );
 
   /**
-   * @see https://drafts.csswg.org/css-values/#number-value
+   * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse = map(Token.parseNumber(), (number) =>
-    Number.of(number.value)
-  );
+  export const parse: Parser<
+    Slice<Token>,
+    Number,
+    string
+  > = map(Token.parseNumber(), (number) => Number.of(number.value));
 }

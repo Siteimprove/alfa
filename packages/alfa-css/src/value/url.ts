@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 import { Value } from "../value";
@@ -7,7 +8,9 @@ import { Value } from "../value";
 const { map, right, either, left, delimited, option } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#urls
+ * {@link https://drafts.csswg.org/css-values/#urls}
+ *
+ * @public
  */
 export class URL extends Value<"url"> {
   public static of(url: string): URL {
@@ -34,7 +37,7 @@ export class URL extends Value<"url"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._url);
+    hash.writeString(this._url);
   }
 
   public toJSON(): URL.JSON {
@@ -49,9 +52,11 @@ export class URL extends Value<"url"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace URL {
-  export interface JSON extends Value.JSON {
-    type: "url";
+  export interface JSON extends Value.JSON<"url"> {
     url: string;
   }
 
@@ -60,9 +65,9 @@ export namespace URL {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-values/#url-value
+   * {@link https://drafts.csswg.org/css-values/#url-value}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, URL, string> = map(
     either(
       Token.parseURL(),
       right(

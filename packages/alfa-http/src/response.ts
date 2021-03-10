@@ -8,9 +8,15 @@ import { Body } from "./body";
 import { Headers } from "./headers";
 
 /**
- * @see https://fetch.spec.whatwg.org/#response-class
+ * {@link https://fetch.spec.whatwg.org/#response-class}
+ *
+ * @public
  */
-export class Response implements Body, json.Serializable, earl.Serializable {
+export class Response
+  implements
+    Body,
+    json.Serializable<Response.JSON>,
+    earl.Serializable<Response.EARL> {
   public static of(
     url: URL,
     status: number,
@@ -44,28 +50,28 @@ export class Response implements Body, json.Serializable, earl.Serializable {
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-url
+   * {@link https://fetch.spec.whatwg.org/#dom-response-url}
    */
   public get url(): URL {
     return this._url;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-status
+   * {@link https://fetch.spec.whatwg.org/#dom-response-status}
    */
   public get status(): number {
     return this._status;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-headers
+   * {@link https://fetch.spec.whatwg.org/#dom-response-headers}
    */
   public get headers(): Headers {
     return this._headers;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-body-body
+   * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
   public get body(): ArrayBuffer {
     return this._body;
@@ -110,6 +116,9 @@ export class Response implements Body, json.Serializable, earl.Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Response {
   export interface JSON {
     [key: string]: json.JSON;

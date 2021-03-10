@@ -1,6 +1,6 @@
 import { Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,11 +9,14 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { None } from "./none";
 import { Option } from "./option";
+import { None } from "./none";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export class Some<T> implements Option<T> {
   public static of<T>(value: T): Some<T> {
     return new Some(value);
@@ -122,8 +125,7 @@ export class Some<T> implements Option<T> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, true);
-    Hashable.hash(hash, this._value);
+    hash.writeBoolean(true).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator](): Iterator<T> {
@@ -146,12 +148,19 @@ export class Some<T> implements Option<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Some {
   export interface JSON<T> {
     [key: string]: json.JSON;
     type: "some";
     value: Serializable.ToJSON<T>;
   }
+
+  export function isSome<T>(value: Iterable<T>): value is Some<T>;
+
+  export function isSome<T>(value: unknown): value is Some<T>;
 
   export function isSome<T>(value: unknown): value is Some<T> {
     return value instanceof Some;

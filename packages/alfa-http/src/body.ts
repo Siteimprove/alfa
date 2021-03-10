@@ -5,20 +5,21 @@ import * as earl from "@siteimprove/alfa-earl";
 const { isObject } = Refinement;
 
 /**
- * @see https://fetch.spec.whatwg.org/#body-mixin
+ * {@link https://fetch.spec.whatwg.org/#body-mixin}
+ *
+ * @public
  */
 export interface Body {
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-body-body
+   * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
   readonly body: ArrayBuffer;
 }
 
+/**
+ * @public
+ */
 export namespace Body {
-  export function isBody(value: unknown): value is Body {
-    return isObject(value) && value.body instanceof ArrayBuffer;
-  }
-
   export interface EARL extends earl.EARL {
     "@context": {
       cnt: "http://www.w3.org/2011/content#";
@@ -26,5 +27,9 @@ export namespace Body {
     "@type": ["cnt:Content", "cnt:ContentAsText"];
     "cnt:characterEncoding": "utf-8";
     "cnt:chars": string;
+  }
+
+  export function isBody(value: unknown): value is Body {
+    return isObject(value) && value.body instanceof ArrayBuffer;
   }
 }

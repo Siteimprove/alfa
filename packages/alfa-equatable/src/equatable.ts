@@ -1,8 +1,14 @@
+/**
+ * @public
+ */
 export interface Equatable {
   equals(value: this): boolean;
   equals(value: unknown): value is this;
 }
 
+/**
+ * @public
+ */
 export namespace Equatable {
   function isFunction(value: unknown): value is Function {
     return typeof value === "function";

@@ -4,6 +4,9 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Container extends Node {
   public static of(owner: dom.Node, children: Iterable<Node> = []): Container {
     return new Container(owner, Array.from(children));
@@ -27,6 +30,7 @@ export class Container extends Node {
   public toJSON(): Container.JSON {
     return {
       type: "container",
+      node: this._node.path(),
       children: this._children.map((child) => child.toJSON()),
     };
   }
@@ -39,6 +43,9 @@ export class Container extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Container {
   export interface JSON extends Node.JSON {
     type: "container";

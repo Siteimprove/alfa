@@ -2,7 +2,7 @@
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
-Alfa is an open and standards-based accessibility conformance testing engine. It is used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Alfa is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine, which Alfa will replace, and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). It also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
+Alfa is an open and standards-based accessibility conformance testing engine. It is used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Alfa is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine, which Alfa has replaced, and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). It also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
 ## Contents
 
@@ -22,7 +22,7 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 
 - Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. However, this does not mean that Alfa does not rely on third-party dependencies, only that there are limitations to what third-party dependencies may be used for.
 
-- Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high-quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure. **This goal is currently far from met and will be prioritised**.
+- Alfa wants to foster a thriving ecosystem with people from many different backgrounds building on top of the core capabilities of Alfa. To this end, high-quality documentation is paramount to success. Picking up and putting any one of the many subsystems within Alfa to use should be a straightforward experience with every subsystem clearly stating its purpose and structure. **This goal is currently far from met and will be prioritised**.
 
 ## Usage
 
@@ -32,7 +32,7 @@ Alfa is distributed through [GitHub Packages](../../packages) as a set of separa
 $ npm install @siteimprove/alfa-<package-name>
 ```
 
-> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com` to your `.npmrc` file.
+> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
@@ -98,17 +98,25 @@ Crawler.with(async (crawler) => {
 
 Alfa ships with several ready-made integrations to various tools, making it easy and simple to integrate accessibility conformance testing as part of your development workflow. If you have suggestions for additional integerations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use.
 
-| Package                                                      | Integrates with                            | Description                                           |
-| :----------------------------------------------------------- | :----------------------------------------- | :---------------------------------------------------- |
-| [**@siteimprove/alfa-angular**](packages/alfa-angular)       | [Angular](https://angular.io/)             | Angular integration for supported assertion libraries |
-| [**@siteimprove/alfa-chai**](packages/alfa-chai)             | [Chai](https://www.chaijs.com/)            | Chai accessibility assertions                         |
-| [**@siteimprove/alfa-cypress**](packages/alfa-cypress)       | [Cypress](https://www.cypress.io/)         | Cypress integration for supported assertion libraries |
-| [**@siteimprove/alfa-enzyme**](packages/alfa-enzyme)         | [Enzyme](https://github.com/airbnb/enzyme) | Enzyme integration for supported assertion libraries  |
-| [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)      | Jasmine accessibility assertions                      |
-| [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                 | Jest accessibility assertions                         |
-| [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)              | React integration for supported assertion libraries   |
-| [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)    | Unexpected accessibility assertions                   |
-| [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                  | Vue integration for supported assertion libraries     |
+> :warning: The integrations are still experimental and subject to change.
+
+| Package                                                      | Integrates with                              |
+| :----------------------------------------------------------- | :------------------------------------------- |
+| [**@siteimprove/alfa-angular**](packages/alfa-angular)       | [Angular](https://angular.io/)               |
+| [**@siteimprove/alfa-chai**](packages/alfa-chai)             | [Chai](https://www.chaijs.com/)              |
+| [**@siteimprove/alfa-cheerio**](packages/alfa-cheerio)       | [Cheerio](https://cheerio.js.org/)           |
+| [**@siteimprove/alfa-cypress**](packages/alfa-cypress)       | [Cypress](https://www.cypress.io/)           |
+| [**@siteimprove/alfa-enzyme**](packages/alfa-enzyme)         | [Enzyme](https://github.com/airbnb/enzyme)   |
+| [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)        |
+| [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                   |
+| [**@siteimprove/alfa-jquery**](packages/alfa-jquery)         | [jQuery](https://jquery.com/)                |
+| [**@siteimprove/alfa-playwright**](packages/alfa-playwright) | [Playwright](https://playwright.dev/)        |
+| [**@siteimprove/alfa-protractor**](packages/alfa-protractor) | [Protractor](http://www.protractortest.org/) |
+| [**@siteimprove/alfa-puppeteer**](packages/alfa-puppeteer)   | [Puppeteer](https://pptr.dev/)               |
+| [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                |
+| [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)      |
+| [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                    |
+| [**@siteimprove/alfa-webdriver**](packages/alfa-webdriver)   | [WebdriverIO](https://webdriver.io/)         |
 
 ## Examples
 
@@ -120,7 +128,7 @@ Alfa will run in any [ECMAScript 2018](https://www.ecma-international.org/ecma-2
 
 ## Building
 
-In order to build Alfa, a recent version (>= 10) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. For builds, [npm](https://www.npmjs.com/) is **not** supported as Alfa makes use of [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 12) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install
@@ -140,7 +148,7 @@ As new code is pulled from the repository, changes to dependencies and code may 
 $ yarn build
 ```
 
-If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](CONTRIBUTING.md). If you have any questions, you are also welcome to [open an issue][].
+If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](docs/contributing.md). If you have any questions, you are also welcome to [open an issue][].
 
 ## Architecture
 
@@ -160,4 +168,4 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
-[open an issue]: ../../issues/new "Open a new issue"
+[open an issue]: ../../issues/new/choose "Open a new issue"

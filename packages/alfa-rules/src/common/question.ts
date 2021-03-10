@@ -18,7 +18,7 @@ export namespace Question {
     type: Q,
     subject: S,
     message: string
-  ): act.Question<Q, Question[Q], S> {
+  ): act.Question<Q, S, Question[Q]> {
     return act.Question.of(uri, type, subject, message);
   }
 }

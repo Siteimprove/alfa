@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -11,6 +12,9 @@ import { Percentage } from "../percentage";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
+/**
+ * @public
+ */
 export class HSL<
   H extends Number | Angle = Number | Angle,
   A extends Number | Percentage = Number | Percentage
@@ -104,10 +108,11 @@ export class HSL<
   }
 
   public hash(hash: Hash): void {
-    this._hue.hash(hash);
-    this._saturation.hash(hash);
-    this._lightness.hash(hash);
-    this._alpha.hash(hash);
+    hash
+      .writeHashable(this._hue)
+      .writeHashable(this._saturation)
+      .writeHashable(this._lightness)
+      .writeHashable(this._alpha);
   }
 
   public toJSON(): HSL.JSON {
@@ -128,9 +133,11 @@ export class HSL<
   }
 }
 
+/**
+ * @public
+ */
 export namespace HSL {
-  export interface JSON extends Value.JSON {
-    type: "color";
+  export interface JSON extends Value.JSON<"color"> {
     format: "hsl";
     hue: Number.JSON | Angle.JSON;
     saturation: Percentage.JSON;
@@ -146,19 +153,25 @@ export namespace HSL {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-alpha-value
+   * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parse, Percentage.parse);
+  const parseAlpha: Parser<Slice<Token>, Number | Percentage, string> = either(
+    Number.parse,
+    Percentage.parse
+  );
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-hue
+   * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
-  const parseHue = either(Number.parse, Angle.parse);
+  const parseHue: Parser<Slice<Token>, Number | Angle, string> = either(
+    Number.parse,
+    Angle.parse
+  );
 
   /**
-   * @see https://drafts.csswg.org/css-color/#funcdef-hsl
+   * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, HSL, string> = map(
     right(
       Token.parseFunction((fn) => fn.value === "hsl" || fn.value === "hsla"),
       left(
@@ -217,7 +230,7 @@ export namespace HSL {
 }
 
 /**
- * @see https://drafts.csswg.org/css-color/#hsl-to-rgb
+ * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
  */
 function hslToRgb(
   hue: number,
@@ -239,7 +252,7 @@ function hslToRgb(
 }
 
 /**
- * @see https://drafts.csswg.org/css-color/#hsl-to-rgb
+ * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
  */
 function hueToRgb(t1: number, t2: number, hue: number): number {
   if (hue < 1) {

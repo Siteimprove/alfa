@@ -1,13 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["chai.ts", "src/cypress.ts", "src/index.ts"],
+  "files": ["src/cypress.ts", "src/cypress/add-command.ts", "src/index.ts"],
   "references": [
     {
-      "path": "../alfa-assert"
+      "path": "../alfa-act"
     },
     {
-      "path": "../alfa-chai"
+      "path": "../alfa-assert"
     },
     {
       "path": "../alfa-device"
@@ -16,16 +16,16 @@
       "path": "../alfa-dom"
     },
     {
-      "path": "../alfa-future"
+      "path": "../alfa-formatter"
+    },
+    {
+      "path": "../alfa-formatter-earl"
     },
     {
       "path": "../alfa-http"
     },
     {
-      "path": "../alfa-jquery"
-    },
-    {
-      "path": "../alfa-option"
+      "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-test"

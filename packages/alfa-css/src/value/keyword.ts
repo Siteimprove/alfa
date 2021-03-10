@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 import { Value } from "../value";
@@ -9,7 +10,9 @@ const { map } = Parser;
 const { equals } = Predicate;
 
 /**
- * @see https://drafts.csswg.org/css-values/#keywords
+ * {@link https://drafts.csswg.org/css-values/#keywords}
+ *
+ * @public
  */
 export class Keyword<T extends string = string> extends Value<"keyword"> {
   public static of<T extends string>(value: T): Keyword<T> {
@@ -36,10 +39,10 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._value);
+    hash.writeString(this._value);
   }
 
-  public toJSON(): Keyword.JSON {
+  public toJSON(): Keyword.JSON<T> {
     return {
       type: "keyword",
       value: this._value,
@@ -51,17 +54,22 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Keyword {
-  export interface JSON extends Value.JSON {
-    type: "keyword";
-    value: string;
+  export interface JSON<T extends string = string>
+    extends Value.JSON<"keyword"> {
+    value: T;
   }
 
   export function isKeyword(value: unknown): value is Keyword {
     return value instanceof Keyword;
   }
 
-  export function parse<T extends string>(...keywords: Array<T>) {
+  export function parse<T extends string>(
+    ...keywords: Array<T>
+  ): Parser<Slice<Token>, { [K in T]: Keyword<K> }[T], string> {
     return map(
       Token.parseIdent((ident) =>
         keywords.some(equals(ident.value.toLowerCase()))

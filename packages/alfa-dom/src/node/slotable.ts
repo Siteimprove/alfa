@@ -9,7 +9,7 @@ export interface Slotable extends Node {
   /**
    * Get the slot that this slotable is assigned to.
    *
-   * @see https://dom.spec.whatwg.org/#dom-slotable-assignedslot
+   * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
   assignedSlot(): Option<Slot>;
 }
@@ -20,7 +20,7 @@ export namespace Slotable {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#slotable-name
+   * {@link https://dom.spec.whatwg.org/#slotable-name}
    */
   export function name(slotable: Slotable): string {
     return Element.isElement(slotable)
@@ -32,7 +32,7 @@ export namespace Slotable {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#find-a-slot
+   * {@link https://dom.spec.whatwg.org/#find-a-slot}
    */
   export function findSlot(slotable: Slotable): Option<Slot> {
     const name = Slotable.name(slotable);

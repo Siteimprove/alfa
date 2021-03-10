@@ -5,6 +5,9 @@ import { Value } from "../value";
 import { Color } from "./color";
 import { Length } from "./length";
 
+/**
+ * @public
+ */
 export class Shadow<
   V extends Length = Length,
   H extends Length = V,
@@ -94,12 +97,13 @@ export class Shadow<
   }
 
   public hash(hash: Hash): void {
-    this._vertical.hash(hash);
-    this._horizontal.hash(hash);
-    this._blur.hash(hash);
-    this._spread.hash(hash);
-    this._color.hash(hash);
-    Hash.writeBoolean(hash, this._isInset);
+    hash
+      .writeHashable(this._vertical)
+      .writeHashable(this._horizontal)
+      .writeHashable(this._blur)
+      .writeHashable(this._spread)
+      .writeHashable(this._color)
+      .writeBoolean(this._isInset);
   }
 
   public toJSON(): Shadow.JSON {
@@ -121,9 +125,11 @@ export class Shadow<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Shadow {
-  export interface JSON extends Value.JSON {
-    type: "shadow";
+  export interface JSON extends Value.JSON<"shadow"> {
     vertical: Length.JSON;
     horizontal: Length.JSON;
     blur: Length.JSON;

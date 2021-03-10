@@ -46,17 +46,17 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             .map((elements) =>
               elements
                 .reduce((groups, element) => {
-                  for (const [node] of Node.from(element, device)) {
-                    const name = node.name.map((name) => name.value);
+                  const name = Node.from(element, device).name.map((name) =>
+                    normalize(name.value)
+                  );
 
-                    groups = groups.set(
-                      name,
-                      groups
-                        .get(name)
-                        .getOrElse(() => List.empty<Element>())
-                        .append(element)
-                    );
-                  }
+                  groups = groups.set(
+                    name,
+                    groups
+                      .get(name)
+                      .getOrElse(() => List.empty<Element>())
+                      .append(element)
+                  );
 
                   return groups;
                 }, Map.empty<Option<string>, List<Element>>())
@@ -117,4 +117,8 @@ export namespace Outcomes {
       `The links do not resolve to the same or equivalent resources`
     )
   );
+}
+
+function normalize(input: string): string {
+  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }

@@ -5,6 +5,9 @@ import * as dom from "@siteimprove/alfa-dom";
 import { Name } from "../name";
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Text extends Node {
   public static of(owner: dom.Node, name: Option<Name>): Text {
     return new Text(owner, name);
@@ -33,16 +36,20 @@ export class Text extends Node {
   public toJSON(): Text.JSON {
     return {
       type: "text",
+      node: this._node.path(),
       name: this._name.map((name) => name.value).getOr(null),
       children: this._children.map((child) => child.toJSON()),
     };
   }
 
   public toString(): string {
-    return `text "${this._name}"`;
+    return `text "${this._name.map((name) => `${name}`).getOr("")}"`;
   }
 }
 
+/**
+ * @public
+ */
 export namespace Text {
   export interface JSON extends Node.JSON {
     type: "text";

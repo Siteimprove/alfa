@@ -3,9 +3,15 @@
 // changes, do so in `scripts/browsers.js` and run `yarn generate` to rebuild this
 // file.
 
-export type Data = typeof Data;
+/**
+ * @internal
+ */
+type Data = typeof Data;
 
-export const Data = {
+/**
+ * @internal
+ */
+const Data = {
   chrome: {
     releases: {
       "1": { date: 1228953600000 },
@@ -299,3 +305,5 @@ export const Data = {
     },
   },
 };
+
+export default Data;

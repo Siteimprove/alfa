@@ -1,4 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 import { Numeric } from "./numeric";
@@ -6,7 +7,9 @@ import { Numeric } from "./numeric";
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#percentages
+ * {@link https://drafts.csswg.org/css-values/#percentages}
+ *
+ * @public
  */
 export class Percentage extends Numeric<"percentage"> {
   public static of(value: number): Percentage {
@@ -33,20 +36,27 @@ export class Percentage extends Numeric<"percentage"> {
   }
 
   public toString(): string {
-    return `${this._value}%`;
+    return `${this._value * 100}%`;
   }
 }
 
+/**
+ * @public
+ */
 export namespace Percentage {
-  export interface JSON extends Numeric.JSON {
-    type: "percentage";
+  export interface JSON extends Numeric.JSON<"percentage"> {
+    value: number;
   }
 
   export function isPercentage(value: unknown): value is Percentage {
     return value instanceof Percentage;
   }
 
-  export const parse = map(Token.parsePercentage(), (percentage) =>
+  export const parse: Parser<
+    Slice<Token>,
+    Percentage,
+    string
+  > = map(Token.parsePercentage(), (percentage) =>
     Percentage.of(percentage.value)
   );
 }

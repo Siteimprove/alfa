@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 
@@ -8,7 +9,9 @@ import { Numeric } from "./numeric";
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#integers
+ * {@link https://drafts.csswg.org/css-values/#integers}
+ *
+ * @public
  */
 export class Integer extends Numeric<"integer"> {
   public static of(value: number): Integer {
@@ -28,7 +31,7 @@ export class Integer extends Numeric<"integer"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeInt32(hash, this._value);
+    hash.writeInt32(this._value);
   }
 
   public toJSON(): Integer.JSON {
@@ -39,16 +42,19 @@ export class Integer extends Numeric<"integer"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Integer {
-  export interface JSON extends Numeric.JSON {
-    type: "integer";
+  export interface JSON extends Numeric.JSON<"integer"> {
+    value: number;
   }
 
   export function isInteger(value: unknown): value is Integer {
     return value instanceof Integer;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Integer, string> = map(
     Token.parseNumber((number) => number.isInteger),
     (integer) => Integer.of(integer.value)
   );

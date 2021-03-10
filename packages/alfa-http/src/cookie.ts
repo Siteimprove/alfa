@@ -3,7 +3,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-export class Cookie implements Equatable, Serializable {
+/**
+ * @public
+ */
+export class Cookie implements Equatable, Serializable<Cookie.JSON> {
   public static of(name: string, value: string): Cookie {
     return new Cookie(name, value);
   }
@@ -24,7 +27,11 @@ export class Cookie implements Equatable, Serializable {
     return this._value;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Cookie): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Cookie &&
       value._name === this._name &&
@@ -44,6 +51,9 @@ export class Cookie implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cookie {
   export interface JSON {
     [key: string]: json.JSON;

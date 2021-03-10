@@ -1,6 +1,6 @@
 import { Value } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
@@ -39,11 +39,10 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 
   public hash(hash: Hash): void {
     for (const value of this._values) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._values.length);
-    Hash.writeString(hash, this._separator);
+    hash.writeUint32(this._values.length).writeString(this._separator);
   }
 
   public *[Symbol.iterator](): Iterator<T> {
@@ -64,8 +63,7 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 }
 
 export namespace List {
-  export interface JSON extends Value.JSON {
-    type: "list";
+  export interface JSON extends Value.JSON<"list"> {
     values: Array<json.JSON>;
     separator: string;
   }

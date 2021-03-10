@@ -3,7 +3,6 @@
   "private": true,
   "name": "@siteimprove/alfa",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.0",
   "license": "MIT",
   "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
   "repository": {
@@ -21,13 +20,13 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/node": "^14.6.2",
-    "axios": "^0.21.0",
+    "@types/async": "^3.2.5",
+    "@types/node": "^14.14.31",
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
     "execa": "^5.0.0",
-    "lerna": "^3.19.0",
-    "minimist": "^1.2.0",
-    "prettier": "2.2.1",
-    "source-map-support": "^0.5.16",
-    "typescript": "^4.0.2"
+    "minimist": "^1.2.5",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
   }
 }

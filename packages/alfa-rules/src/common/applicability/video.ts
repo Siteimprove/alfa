@@ -38,7 +38,7 @@ export function video(
                   (trackElement) =>
                     trackElement
                       .attribute("kind")
-                      // @see https://html.spec.whatwg.org/multipage/media.html#attr-track-kind
+                      // {@link https://html.spec.whatwg.org/multipage/media.html#attr-track-kind}
                       .map(
                         (kind) =>
                           kind

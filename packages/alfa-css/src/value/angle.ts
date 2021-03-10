@@ -1,15 +1,18 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
-import { Converter, Convertible } from "./converter";
+import { Converter } from "./converter";
 import { Unit } from "./unit";
 import { Dimension } from "./dimension";
 
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#angles
+ * {@link https://drafts.csswg.org/css-values/#angles}
+ *
+ * @public
  */
 export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
   "angle",
@@ -26,6 +29,10 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
 
   public get type(): "angle" {
     return "angle";
+  }
+
+  public get canonicalUnit(): "deg" {
+    return "deg";
   }
 
   public hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U> {
@@ -50,7 +57,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
 
   public hash(hash: Hash): void {
     super.hash(hash);
-    Hash.writeString(hash, this._unit);
+    hash.writeString(this._unit);
   }
 
   public toJSON(): Angle.JSON {
@@ -66,9 +73,11 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Angle {
-  export interface JSON extends Dimension.JSON {
-    type: "angle";
+  export interface JSON extends Dimension.JSON<"angle"> {
     unit: Unit.Angle;
   }
 
@@ -76,7 +85,7 @@ export namespace Angle {
     return value instanceof Angle;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Angle, string> = map(
     Token.parseDimension((dimension) => Unit.isAngle(dimension.unit)),
     (dimension) => Angle.of(dimension.value, dimension.unit as Unit.Angle)
   );

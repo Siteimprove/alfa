@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -8,6 +9,9 @@ import { Length } from "../length";
 
 const { map, left, right, filter, delimited, option } = Parser;
 
+/**
+ * @public
+ */
 export class Perspective<D extends Length = Length> extends Value<"transform"> {
   public static of<D extends Length>(depth: D): Perspective<D> {
     return new Perspective(depth);
@@ -37,7 +41,7 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
   }
 
   public hash(hash: Hash): void {
-    this._depth.hash(hash);
+    hash.writeHashable(this._depth);
   }
 
   public toJSON(): Perspective.JSON {
@@ -53,9 +57,11 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Perspective {
-  export interface JSON extends Value.JSON {
-    type: "transform";
+  export interface JSON extends Value.JSON<"transform"> {
     kind: "perspective";
     depth: Length.JSON;
   }
@@ -67,9 +73,9 @@ export namespace Perspective {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-perspective
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-perspective}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Perspective, string> = map(
     right(
       Token.parseFunction("perspective"),
       left(

@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
 /**
- * @see https://html.spec.whatwg.org/#inert
+ * {@link https://html.spec.whatwg.org/#inert}
  */
 export function isInert(device: Device): Predicate<Element> {
   return (element) => {

@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 
@@ -10,7 +11,9 @@ import { Dimension } from "./dimension";
 const { map, either } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#lengths
+ * {@link https://drafts.csswg.org/css-values/#lengths}
+ *
+ * @public
  */
 export class Length<U extends Unit.Length = Unit.Length>
   extends Dimension<"length", Unit.Length, U>
@@ -25,6 +28,10 @@ export class Length<U extends Unit.Length = Unit.Length>
 
   public get type(): "length" {
     return "length";
+  }
+
+  public get canonicalUnit(): "px" {
+    return "px";
   }
 
   public hasUnit<U extends Unit.Length>(unit: U): this is Length<U> {
@@ -43,12 +50,20 @@ export class Length<U extends Unit.Length = Unit.Length>
     throw new Error(`Cannot convert ${this._unit} to ${unit}`);
   }
 
-  public isAbsolute(): this is Length<Unit.Length.Absolute> {
-    return Unit.isAbsoluteLength(this._unit);
-  }
-
   public isRelative(): this is Length<Unit.Length.Relative> {
     return Unit.isRelativeLength(this._unit);
+  }
+
+  public isFontRelative(): this is Length<Unit.Length.Relative.Font> {
+    return Unit.isFontRelativeLength(this._unit);
+  }
+
+  public isViewportRelative(): this is Length<Unit.Length.Relative.Viewport> {
+    return Unit.isViewportRelativeLength(this._unit);
+  }
+
+  public isAbsolute(): this is Length<Unit.Length.Absolute> {
+    return Unit.isAbsoluteLength(this._unit);
   }
 
   public equals(value: unknown): value is this {
@@ -57,7 +72,7 @@ export class Length<U extends Unit.Length = Unit.Length>
 
   public hash(hash: Hash): void {
     super.hash(hash);
-    Hash.writeString(hash, this._unit);
+    hash.writeString(this._unit);
   }
 
   public toJSON(): Length.JSON {
@@ -73,9 +88,11 @@ export class Length<U extends Unit.Length = Unit.Length>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Length {
-  export interface JSON extends Dimension.JSON {
-    type: "length";
+  export interface JSON extends Dimension.JSON<"length"> {
     unit: Unit.Length;
   }
 
@@ -83,7 +100,7 @@ export namespace Length {
     return value instanceof Length;
   }
 
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Length, string> = either(
     map(
       Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
       (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)

@@ -8,12 +8,11 @@ import {
   Rotate,
   Scale,
   Skew,
+  Transform,
   Translate,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as css from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
@@ -22,42 +21,48 @@ import { List } from "./value/list";
 
 const { map, either } = Parser;
 
-export type Transform = Transform.Specified | Transform.Computed;
+/**
+ * @internal
+ */
+export type Specified =
+  | Keyword<"none">
+  | List<Matrix | Perspective | Rotate | Scale | Skew | Translate>;
 
-export namespace Transform {
-  export type None = Keyword<"none">;
+/**
+ * @internal
+ */
+export type Computed =
+  | Keyword<"none">
+  | List<
+      | Matrix
+      | Perspective<Length<"px">>
+      | Rotate<Angle<"deg">>
+      | Scale
+      | Skew<Angle<"deg">, Angle<"deg">>
+      | Translate<
+          Length<"px"> | Percentage,
+          Length<"px"> | Percentage,
+          Length<"px">
+        >
+    >;
 
-  export type Specified =
-    | None
-    | List<Matrix | Perspective | Rotate | Scale | Skew | Translate>;
+/**
+ * @internal
+ */
+export const parse = either(
+  Keyword.parse("none"),
+  map(Transform.parseList, (transforms) => List.of(transforms))
+);
 
-  export type Computed =
-    | None
-    | List<
-        | Matrix
-        | Perspective<Length<"px">>
-        | Rotate<Angle<"deg">>
-        | Scale
-        | Skew<Angle<"deg">, Angle<"deg">>
-        | Translate<
-            Length<"px"> | Percentage,
-            Length<"px"> | Percentage,
-            Length<"px">
-          >
-      >;
-}
-
-export const Transform: Property<
-  Transform.Specified,
-  Transform.Computed
-> = Property.of(
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/transform}
+ * @internal
+ */
+export default Property.of<Specified, Computed>(
   Keyword.of("none"),
-  either(
-    Keyword.parse("none"),
-    map(css.Transform.parseList, (transforms) => List.of(transforms))
-  ),
-  (style) =>
-    style.specified("transform").map((transform) => {
+  parse,
+  (transform, style) =>
+    transform.map((transform) => {
       switch (transform.type) {
         case "keyword":
           return transform;
@@ -96,9 +101,11 @@ export const Transform: Property<
                     transform.x.type === "percentage"
                       ? transform.x
                       : Resolver.length(transform.x, style),
+
                     transform.y.type === "percentage"
                       ? transform.y
                       : Resolver.length(transform.y, style),
+
                     Resolver.length(transform.z, style)
                   );
               }

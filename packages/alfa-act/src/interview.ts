@@ -15,22 +15,28 @@ import { Rule } from "./rule";
  */
 type Depths = [-1, 0, 1, 2];
 
+/**
+ * @public
+ */
 export type Interview<Q, S, T, D extends number = 3> =
   | T
   | {
       [K in keyof Q]: Question<
         K,
-        Q[K],
         S,
+        Q[K],
         D extends -1 ? T : Interview<Q, S, T, Depths[D]>
       >;
     }[keyof Q];
 
+/**
+ * @public
+ */
 export namespace Interview {
   export function conduct<I, T, Q, A>(
     interview: Interview<Q, T, A>,
     rule: Rule<I, T, Q>,
-    oracle: Oracle<Q>
+    oracle: Oracle<I, T, Q>
   ): Future<Option<A>> {
     if (interview instanceof Question) {
       return oracle(rule, interview).flatMap((answer) =>

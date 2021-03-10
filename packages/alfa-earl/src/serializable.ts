@@ -5,10 +5,16 @@ import { EARL } from "./earl";
 
 const { isFunction, isObject } = Refinement;
 
+/**
+ * @public
+ */
 export interface Serializable<T extends EARL = EARL> {
   toEARL(): T;
 }
 
+/**
+ * @public
+ */
 export namespace Serializable {
   export function isSerializable<T extends EARL>(
     value: unknown

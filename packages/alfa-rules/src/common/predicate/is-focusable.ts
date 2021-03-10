@@ -8,7 +8,7 @@ const { hasTabIndex, isDisabled } = Element;
 const { and, not } = Predicate;
 
 /**
- * @see https://html.spec.whatwg.org/#focusable-area
+ * {@link https://html.spec.whatwg.org/#focusable-area}
  */
 export function isFocusable(device: Device): Predicate<Element> {
   return and(hasTabIndex(), and(not(isDisabled), isRendered(device)));

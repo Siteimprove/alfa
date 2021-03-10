@@ -4,7 +4,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -13,7 +13,9 @@ const { fromCharCode } = String;
 const { and } = Refinement;
 
 /**
- * @see https://www.w3.org/TR/xpath-31/#terminal-symbols
+ * {@link https://www.w3.org/TR/xpath-31/#terminal-symbols}
+ *
+ * @public
  */
 export type Token =
   | Token.Integer
@@ -24,6 +26,9 @@ export type Token =
   | Token.Name
   | Token.Character;
 
+/**
+ * @public
+ */
 export namespace Token {
   export type JSON =
     | Integer.JSON
@@ -34,20 +39,7 @@ export namespace Token {
     | Name.JSON
     | Character.JSON;
 
-  abstract class Token implements Equatable, Serializable {
-    public abstract get type(): string;
-    public abstract equals(value: unknown): value is this;
-    public abstract toJSON(): Token.JSON;
-  }
-
-  export namespace Token {
-    export interface JSON {
-      [key: string]: json.JSON;
-      type: string;
-    }
-  }
-
-  export class Integer extends Token {
+  export class Integer implements Equatable, Serializable<Integer.JSON> {
     public static of(value: number): Integer {
       return new Integer(value);
     }
@@ -55,7 +47,6 @@ export namespace Token {
     private readonly _value: number;
 
     private constructor(value: number) {
-      super();
       this._value = value;
     }
 
@@ -84,7 +75,8 @@ export namespace Token {
   }
 
   export namespace Integer {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "integer";
       value: number;
     }
@@ -96,7 +88,7 @@ export namespace Token {
 
   export const parseInteger = parseToken(isInteger);
 
-  export class Decimal extends Token {
+  export class Decimal implements Equatable, Serializable<Decimal.JSON> {
     public static of(value: number): Decimal {
       return new Decimal(value);
     }
@@ -104,7 +96,6 @@ export namespace Token {
     private readonly _value: number;
 
     private constructor(value: number) {
-      super();
       this._value = value;
     }
 
@@ -133,7 +124,8 @@ export namespace Token {
   }
 
   export namespace Decimal {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "decimal";
       value: number;
     }
@@ -145,7 +137,7 @@ export namespace Token {
 
   export const parseDecimal = parseToken(isDecimal);
 
-  export class Double extends Token {
+  export class Double implements Equatable, Serializable<Double.JSON> {
     public static of(value: number): Double {
       return new Double(value);
     }
@@ -153,7 +145,6 @@ export namespace Token {
     private readonly _value: number;
 
     private constructor(value: number) {
-      super();
       this._value = value;
     }
 
@@ -182,7 +173,8 @@ export namespace Token {
   }
 
   export namespace Double {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "double";
       value: number;
     }
@@ -194,7 +186,7 @@ export namespace Token {
 
   export const parseDouble = parseToken(isDouble);
 
-  export class String extends Token {
+  export class String implements Equatable, Serializable<String.JSON> {
     public static of(value: string): String {
       return new String(value);
     }
@@ -202,7 +194,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -231,7 +222,8 @@ export namespace Token {
   }
 
   export namespace String {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "string";
       value: string;
     }
@@ -243,7 +235,7 @@ export namespace Token {
 
   export const parseString = parseToken(isString);
 
-  export class Comment extends Token {
+  export class Comment implements Equatable, Serializable<Comment.JSON> {
     public static of(value: string): Comment {
       return new Comment(value);
     }
@@ -251,7 +243,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(value: string) {
-      super();
       this._value = value;
     }
 
@@ -280,7 +271,8 @@ export namespace Token {
   }
 
   export namespace Comment {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "comment";
       value: string;
     }
@@ -292,7 +284,7 @@ export namespace Token {
 
   export const parseComment = parseToken(isComment);
 
-  export class Name extends Token {
+  export class Name implements Equatable, Serializable<Name.JSON> {
     public static of(prefix: Option<string>, value: string): Name {
       return new Name(prefix, value);
     }
@@ -301,7 +293,6 @@ export namespace Token {
     private readonly _value: string;
 
     private constructor(prefix: Option<string>, value: string) {
-      super();
       this._prefix = prefix;
       this._value = value;
     }
@@ -342,7 +333,8 @@ export namespace Token {
   }
 
   export namespace Name {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "name";
       prefix: string | null;
       value: string;
@@ -367,7 +359,7 @@ export namespace Token {
     return parseToken(and(isName, predicate));
   };
 
-  export class Character extends Token {
+  export class Character implements Equatable, Serializable<Character.JSON> {
     public static of(value: number): Character {
       return new Character(value);
     }
@@ -375,7 +367,6 @@ export namespace Token {
     private readonly _value: number;
 
     private constructor(value: number) {
-      super();
       this._value = value;
     }
 
@@ -404,7 +395,8 @@ export namespace Token {
   }
 
   export namespace Character {
-    export interface JSON extends Token.JSON {
+    export interface JSON {
+      [key: string]: json.JSON;
       type: "character";
       value: number;
     }
@@ -434,10 +426,13 @@ export namespace Token {
 function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) =>
-    input
-      .get(0)
-      .filter(refinement)
-      .map((token) => Ok.of([input.slice(1), token] as const))
-      .getOrElse(() => Err.of("Expected token"));
+  return (input) => {
+    const token = input.array[input.offset];
+
+    if (token !== undefined && refinement(token)) {
+      return Result.of([input.slice(1), token]);
+    }
+
+    return Err.of("Expected token");
+  };
 }

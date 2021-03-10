@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
@@ -7,7 +6,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import R65, { Outcomes } from "../../src/sia-r65/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 
 test(`evaluate() passes an <a> element that uses the default focus outline`, async (t) => {
@@ -271,4 +270,98 @@ test(`evaluate() fails an <a> element that removes the default focus outline
       }),
     ]
   );
+});
+
+test(`evaluate() passes an <a> element that removes the default focus outline
+      and applies a different color on focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          color: "red",
+        }),
+
+        h.rule.style("a:focus", {
+          outline: "none",
+          textDecoration: "none",
+          color: "blue",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [
+    passed(R65, target, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+    passed(R65, <button />, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element that removes the default focus outline
+      and applies a different background color on focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          "background-color": "red",
+        }),
+
+        h.rule.style("a:focus", {
+          outline: "none",
+          textDecoration: "none",
+          "background-color": "blue",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [
+    passed(R65, target, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+    passed(R65, <button />, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element that removes the default focus outline
+      and applies a box shadow on focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          "box-shadow": "none",
+        }),
+
+        h.rule.style("a:focus", {
+          outline: "none",
+          "box-shadow": "10px 5px 5px red",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [
+    passed(R65, target, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+    passed(R65, <button />, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+  ]);
 });

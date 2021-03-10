@@ -5,8 +5,14 @@ import { Role } from "../../role";
 
 const { equals, property } = Predicate;
 
+/**
+ * @public
+ */
 export function hasRole(predicate?: Predicate<Role>): Predicate<Node>;
 
+/**
+ * @public
+ */
 export function hasRole<N extends Role.Name>(
   name: N,
   ...rest: Array<N>

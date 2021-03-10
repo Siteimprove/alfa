@@ -1,8 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/array.ts", "src/global.ts", "src/index.ts"],
+  "files": ["src/array.ts", "src/builtin.ts", "src/index.ts"],
   "references": [
+    {
+      "path": "../alfa-callback"
+    },
     {
       "path": "../alfa-clone"
     },
@@ -22,10 +25,16 @@
       "path": "../alfa-json"
     },
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-option"
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-reducer"
     },
     {
       "path": "../alfa-refinement"

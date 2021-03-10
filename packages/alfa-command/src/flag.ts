@@ -11,7 +11,10 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
 
-export class Flag<T = unknown> implements Functor<T>, Serializable {
+/**
+ * @public
+ */
+export class Flag<T = unknown> implements Functor<T>, Serializable<Flag.JSON> {
   public static of<T>(
     name: string,
     description: string,
@@ -248,7 +251,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(this._name, this._description, options, parse);
   }
 
-  public repeatable(): Flag<Iterable<T>> {
+  public repeatable(): Flag<Array<T>> {
     const options = { ...this._options, repeatable: true };
 
     const repeat = (previous: Flag.Set<Array<T>>): Flag.Parser<Array<T>> => (
@@ -341,6 +344,9 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Flag {
   export interface JSON {
     [key: string]: json.JSON;
