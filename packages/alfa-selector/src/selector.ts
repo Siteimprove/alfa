@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Token, Function, Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -27,6 +28,7 @@ const {
   pair,
   peek,
   right,
+  separatedList,
   take,
   takeBetween,
   zeroOrMore,
@@ -51,6 +53,8 @@ export type Selector =
  * @public
  */
 export namespace Selector {
+  import Ident = Token.Ident;
+
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
@@ -944,20 +948,26 @@ export namespace Selector {
   );
 
   // TODO: cue, cue-region (name/func)
-  // TODO: part, slotted (func)
-  // TODO: file-selector-button, grammar-error, spelling-error (no support)
+  // TODO: slotted (func)
   const parsePseudoElement = either(
     // Function pseudo-elements need to be first because ::cue and ::cue-region
     // can be both, so we want to fail them as function before testing them
-    // as ident
+    // as non-function
     right(
       take(Token.parseColon, 2),
       mapResult(right(peek(Token.parseFunction()), Function.consume), (fn) => {
         const { name } = fn;
         const tokens = Slice.of(fn.value);
 
-        // switch (name) {}
-        return Result.of(After.of());
+        switch (name) {
+          case "part":
+            return separatedList(
+              Token.parseIdent(),
+              Token.parseWhitespace
+            )(tokens).map(([, idents]) => Part.of(idents));
+        }
+
+        return Err.of(`Unknown pseudo-element ::${name}()`);
       })
     ),
     // Non-functional pseudo-elements
@@ -982,16 +992,22 @@ export namespace Selector {
               return Result.of(Backdrop.of());
             case "before":
               return Result.of(Before.of());
+            case "file-selector-button":
+              return Result.of(FileSelectorButton.of());
             case "first-letter":
               return Result.of(FirstLetter.of());
             case "first-line":
               return Result.of(FirstLine.of());
+            case "grammar-error":
+              return Result.of(GrammarError.of());
             case "marker":
               return Result.of(Marker.of());
             case "placeholder":
               return Result.of(Placeholder.of());
             case "selection":
               return Result.of(Selection.of());
+            case "spelling-error":
+              return Result.of(SpellingError.of());
             case "target-text":
               return Result.of(TargetText.of());
           }
@@ -1735,6 +1751,19 @@ export namespace Selector {
   }
 
   /**
+   *{@link https://drafts.csswg.org/css-pseudo-4/#file-selector-button-pseudo}
+   */
+  export class FileSelectorButton extends Pseudo.Element {
+    public static of(): FileSelectorButton {
+      return new FileSelectorButton();
+    }
+
+    private constructor() {
+      super("file-selector-button");
+    }
+  }
+
+  /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#first-letter-pseudo}
    */
   export class FirstLetter extends Pseudo.Element {
@@ -1761,6 +1790,19 @@ export namespace Selector {
   }
 
   /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-grammar-error}
+   */
+  export class GrammarError extends Pseudo.Element {
+    public static of(): GrammarError {
+      return new GrammarError();
+    }
+
+    private constructor() {
+      super("grammar-error");
+    }
+  }
+
+  /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#marker-pseudo}
    */
   export class Marker extends Pseudo.Element {
@@ -1770,6 +1812,35 @@ export namespace Selector {
 
     private constructor() {
       super("marker");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-shadow-parts-1/#part}
+   */
+  export class Part extends Pseudo.Element {
+    public static of(idents: Array<Ident>): Part {
+      return new Part(idents);
+    }
+
+    private readonly _idents: Array<Ident>;
+
+    private constructor(idents: Array<Ident>) {
+      super("part");
+      this._idents = idents;
+    }
+
+    public toJSON(): Part.JSON {
+      return {
+        ...super.toJSON(),
+        idents: Array.toJSON(this._idents),
+      };
+    }
+  }
+
+  export namespace Part {
+    export interface JSON extends Pseudo.Element.JSON {
+      idents: Array<Ident.JSON>;
     }
   }
 
@@ -1796,6 +1867,19 @@ export namespace Selector {
 
     private constructor() {
       super("selection");
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-spelling-error}
+   */
+  export class SpellingError extends Pseudo.Element {
+    public static of(): SpellingError {
+      return new SpellingError();
+    }
+
+    private constructor() {
+      super("spelling-error");
     }
   }
 
