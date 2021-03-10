@@ -71,9 +71,12 @@ test(".repeatable().optional() constructs a repeatable, optional flag", (t) => {
 test(".repeatable().default() constructs a repeatable flag with a default value", (t) => {
   const flag = Flag.string("foo", "").repeatable().default(["default"]);
 
+  let argv: Array<string>;
+  let set: Flag.Set<Array<string>>;
+
   // When parsed without arguments, the value should be equal to the default
   // value.
-  let [argv, set] = flag.parse([]).get();
+  [, set] = flag.parse([]).get();
   t.deepEqual(set.value, ["default"]);
 
   // When parsed with valid arguments, the default value should not be applied.
@@ -88,7 +91,7 @@ test(".repeatable().default() constructs a repeatable flag with a default value"
   // When parsing the flag the third time, the value should remain the same as
   // there are no more arguments left. As the flag has a default value, this
   // does not cause an error.
-  [argv, set] = set.parse(argv).get();
+  [, set] = set.parse(argv).get();
   t.deepEqual(set.value, ["hello", "world"]);
 });
 
