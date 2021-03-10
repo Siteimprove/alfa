@@ -2,8 +2,8 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    // The WebdriverIO types are currently broken so we skip checking library
-    // types.
+    // The WebdriverIO types currently require types for `ts-node` which we
+    // don't have available. We therefore skip checking library types.
     "skipLibCheck": true
   },
   "files": ["src/index.ts", "src/web-element.ts"],
