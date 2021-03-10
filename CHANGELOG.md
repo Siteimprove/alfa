@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-scraper](packages/alfa-awaiter): The `Awaiter` type has been simplified and now only returns either an error or no error. ([#737](../../pull/737))
+
 ### Added
 
 - [@siteimprove/alfa-continuation](packages/alfa-continuation): `Continuation<T, R>` now accepts a third type parameter, `A`, denoting additional arguments passed to the continuation.
@@ -28,6 +32,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-promise](packages/alfa-promise): A new package has been added with funcitonality for working with promises.
 
 - [@siteimprove/alfa-dom](packages/alfa-dom): A new `@siteimprove/alfa-dom/jsx-runtime` module is now available for compatibility with the new importless JSX mode.
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): A new awaiter, `Awaiter.animations()`, is now available. This awaiter polls the document for active animations and resolves when no animations are active. Additionally, a new option, `fit: boolean`, is now available in `Scraper#scrape()`. When set, which it is by default, the viewport will expand to fit the contents of the page. This is needed to accurately scrape pages that toggle content depending on scroll position. ([#737](../../pull/737))
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): Two new flags, `--await-animations` and `--[no-]fit` are now available in the `alfa scrape` command. These flags reflect the corresponding features in the scraper. ([#737](../../pull/737))
 
 ### Changed
 
