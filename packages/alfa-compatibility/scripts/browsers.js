@@ -1,6 +1,6 @@
 const fs = require("fs");
 const prettier = require("prettier");
-const data = require("mdn-browser-compat-data");
+const data = require("@mdn/browser-compat-data");
 
 /**
  * @type {Array<import("mdn-browser-compat-data/types").BrowserNames>}

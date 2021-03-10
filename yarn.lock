@@ -654,6 +654,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mdn/browser-compat-data@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "@mdn/browser-compat-data@npm:3.1.3"
+  dependencies:
+    extend: 3.0.2
+  checksum: f7d6945613b49878f4953239288d046678bf43798893a26ace6c69b38172c84461b137404d399f9dc55304e7181d39987e43877c520dff6a8887fcb0f05bac4b
+  languageName: node
+  linkType: hard
+
 "@samverschueren/stream-to-observable@npm:^0.3.0":
   version: 0.3.1
   resolution: "@samverschueren/stream-to-observable@npm:0.3.1"
@@ -1011,12 +1020,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
+    "@mdn/browser-compat-data": ^3.1.3
     "@siteimprove/alfa-iterable": "workspace:^0.14.1"
     "@siteimprove/alfa-json": "workspace:^0.14.1"
     "@siteimprove/alfa-test": "workspace:^0.14.1"
     "@types/browserslist": ^4.4.0
     browserslist: ^4.16.3
-    mdn-browser-compat-data: ^1.1.2
   languageName: unknown
   linkType: soft
 
@@ -7040,15 +7049,6 @@ fsevents@^2.1.2:
   version: 1.2.1
   resolution: "marky@npm:1.2.1"
   checksum: f518e5f3a88ccdfcbea716b56f8e39032914ffaa126ec2fdc4af08b3e21251936d3fd237d7cfc86049f8ef9ab2e1bc46b3f2314cd862d7369aadec23f7ff48e2
-  languageName: node
-  linkType: hard
-
-"mdn-browser-compat-data@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "mdn-browser-compat-data@npm:1.1.2"
-  dependencies:
-    extend: 3.0.2
-  checksum: cf57909a2cafb0cf072c40ac660a7124baeabe9bcef5c14325dec68a07edd59c1551e4b04e2e6d7feae2854a684e90dd9c7b41e4b452a91986c906e952461b55
   languageName: node
   linkType: hard
 
