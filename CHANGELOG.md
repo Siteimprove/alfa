@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-cheerio](packages/alfa-cheerio): The package now compiles correctly when the `esModuleInterop` compiler option is used.
+
 ## [0.14.0](../../compare/v0.13.0...v0.14.0) (2021-03-10)
 
 ### Breaking

@@ -11,7 +11,10 @@ import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "domhandler";
-import * as cheerio from "cheerio";
+
+// Cheerio has to be imported as a CommonJS module to ensure compatibility with
+// the `esModuleInterop` TypeScript option.
+import cheerio = require("cheerio");
 
 const { keys } = Object;
 
