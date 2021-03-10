@@ -1,5 +1,4 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 
