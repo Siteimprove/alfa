@@ -23,7 +23,7 @@
     "@siteimprove/alfa-future": "workspace:^0.14.1",
     "@siteimprove/alfa-mapper": "workspace:^0.14.1",
     "@types/chai": "^4.1.7",
-    "chai": "^4.3.0"
+    "chai": "^4.3.3"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.14.1"

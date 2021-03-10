@@ -22,7 +22,7 @@
     "@siteimprove/alfa-dom": "workspace:^0.14.1",
     "@siteimprove/alfa-http": "workspace:^0.14.1",
     "@siteimprove/alfa-web": "workspace:^0.14.1",
-    "webdriverio": "^7.0.7"
+    "webdriverio": "^7.1.1"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.14.1"

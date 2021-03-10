@@ -23,7 +23,7 @@
     "@siteimprove/alfa-http": "workspace:^0.14.1",
     "@siteimprove/alfa-option": "workspace:^0.14.1",
     "@siteimprove/alfa-web": "workspace:^0.14.1",
-    "puppeteer": "^7.1.0"
+    "puppeteer": "^8.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.14.1"
