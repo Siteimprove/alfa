@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/alfa-cypress](packages/alfa-cypress): The Cypress integration now uses a Chai plugin as its main entry point rather than a custom command. For more information, please see the associated pull request. ([#740](../../pull/740))
+
 ### Fixed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): `isTransparent()` now correctly handles text nodes of transparent elements. ([#741](../../pull/741))
