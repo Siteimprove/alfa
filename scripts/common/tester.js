@@ -9,7 +9,7 @@ exports.tester = {
     async.eachLimit(
       system.readDirectory(root, [".spec.ts", ".spec.tsx"]),
       os.cpus().length,
-      (fileName, done) =>
+      (fileName, done) => {
         exec
           .node(fileName.replace(/\.tsx?$/, ".js"), [], {
             nodeOptions: [...process.execArgv, "--enable-source-maps"],
@@ -18,9 +18,12 @@ exports.tester = {
           .then(
             () => done(),
             (err) => done(err)
-          ),
-      () => {
-        system.exit(1);
+          );
+      },
+      (err) => {
+        if (err) {
+          system.exit(1);
+        }
       }
     );
   },
