@@ -5,7 +5,7 @@ import { Property } from "../property";
 
 import { List } from "./value/list";
 
-const { delimited, either, map, option, separatedList, oneOrMore } = Parser;
+const { delimited, either, map, option, separatedList } = Parser;
 
 /**
  * @internal
