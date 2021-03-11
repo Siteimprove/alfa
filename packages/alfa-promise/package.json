@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-promise",
   "homepage": "https://siteimprove.com",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "license": "MIT",
   "description": "Functionality for working with promises",
   "repository": {
@@ -18,12 +18,12 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^0.14.1",
-    "@siteimprove/alfa-callback": "workspace:^0.14.1",
-    "@siteimprove/alfa-continuation": "workspace:^0.14.1"
+    "@siteimprove/alfa-array": "workspace:^0.14.2",
+    "@siteimprove/alfa-callback": "workspace:^0.14.2",
+    "@siteimprove/alfa-continuation": "workspace:^0.14.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.14.1"
+    "@siteimprove/alfa-test": "workspace:^0.14.2"
   },
   "publishConfig": {
     "access": "public",
