@@ -12,7 +12,7 @@ import * as Stretch from "./font-stretch";
 import * as Style from "./font-style";
 import * as Weight from "./font-weight";
 
-const { map, option, pair, right } = Parser;
+const { map, option, pair, right, delimited } = Parser;
 
 /**
  * @internal
@@ -91,18 +91,15 @@ export const parsePrelude: Parser<
 export const parse = pair(
   parsePrelude,
   pair(
-    right(option(Token.parseWhitespace), Size.parse),
+    delimited(option(Token.parseWhitespace), Size.parse),
     pair(
       option(
         right(
-          pair(
-            pair(option(Token.parseWhitespace), Token.parseDelim("/")),
-            option(Token.parseWhitespace)
-          ),
+          delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
           LineHeight.parse
         )
       ),
-      right(Token.parseWhitespace, Family.parse)
+      delimited(option(Token.parseWhitespace), Family.parse)
     )
   )
 );

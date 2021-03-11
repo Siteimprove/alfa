@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `font-family` property now correctly parses font families specified as whitespace-separated idents.
+
 ## [0.14.2](../../compare/v0.14.1...v0.14.2) (2021-03-11)
 
 ### Fixed
