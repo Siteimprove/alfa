@@ -19,7 +19,7 @@ const { test, property } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r18",
   requirements: [Technique.of("ARIA5")],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").attributes);

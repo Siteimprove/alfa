@@ -16,7 +16,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r46.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r46",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
   evaluate({ device, document }) {
     const data = new Map<Element, [cell: Cell, table: Table]>();

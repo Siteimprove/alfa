@@ -17,7 +17,7 @@ const { and } = Refinement;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r17.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r17",
   requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
   evaluate({ device, document }) {
     return {

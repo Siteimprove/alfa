@@ -18,7 +18,7 @@ const { isText } = Text;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Text>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r57",
   evaluate({ document, device }) {
     return {
       *applicability() {

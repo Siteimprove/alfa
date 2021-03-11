@@ -13,7 +13,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r85.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r85",
   evaluate({ device, document }) {
     return {
       applicability() {

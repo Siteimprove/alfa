@@ -24,7 +24,7 @@ const { not, fold } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r87.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
   evaluate({ device, document, response }) {
     return {

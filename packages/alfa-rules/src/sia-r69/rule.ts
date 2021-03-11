@@ -32,7 +32,7 @@ const { isElement } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r69.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r69",
   requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
   evaluate({ device, document }) {
     return {

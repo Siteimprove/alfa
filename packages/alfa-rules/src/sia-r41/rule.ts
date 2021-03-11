@@ -25,7 +25,7 @@ const { flatten } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r41",
   requirements: [Criterion.of("2.4.9")],
   evaluate({ device, document, response }) {
     return {

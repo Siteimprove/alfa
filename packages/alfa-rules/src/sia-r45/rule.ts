@@ -16,7 +16,7 @@ const { isElement, hasId, hasName, hasNamespace } = Element;
 const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r45",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
   evaluate({ device, document }) {
     const headers = document

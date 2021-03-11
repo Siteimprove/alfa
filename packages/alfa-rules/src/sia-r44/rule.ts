@@ -23,7 +23,7 @@ const { not } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r44",
   requirements: [Criterion.of("1.3.4")],
   evaluate({ device, document }) {
     let landscape: Device;
