@@ -36,7 +36,7 @@ test(".repeatable() constructs a repeatable flag", (t) => {
 
   // When parsing the flag the second time, the second value should be combined
   // with the first value.
-  [, set] = set.parse(argv).get();
+  [argv, set] = set.parse(argv).get();
   t.deepEqual(set.value, ["hello", "world"]);
 
   // When parsing the flag the third time, an error should be returned as there
