@@ -11,7 +11,7 @@ import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r86.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r86",
   evaluate({ device, document }) {
     return {
       applicability() {

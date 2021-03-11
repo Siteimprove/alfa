@@ -19,7 +19,7 @@ const { or, nor } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r48.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r48",
   requirements: [Technique.of("G60")],
   evaluate({ document }) {
     return {

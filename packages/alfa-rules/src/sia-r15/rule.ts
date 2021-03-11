@@ -22,7 +22,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
   evaluate({ device, document, response }) {
     return {

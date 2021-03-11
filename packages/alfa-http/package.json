@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-http",
-  "homepage": "https://siteimprove.com",
+  "homepage": "https://alfa.siteimprove.com",
   "version": "0.14.2",
   "license": "MIT",
   "description": "Types for modelling HTTP primitives",

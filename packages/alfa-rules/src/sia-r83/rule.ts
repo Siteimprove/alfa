@@ -20,7 +20,7 @@ const { isElement, hasNamespace } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r83.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
   evaluate({ device, document }) {
     return {

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-mapper",
-  "homepage": "https://siteimprove.com",
+  "homepage": "https://alfa.siteimprove.com",
   "version": "0.14.2",
   "license": "MIT",
   "description": "Types for modelling mapper functions, which are functions that map values from one domain into another domain",
