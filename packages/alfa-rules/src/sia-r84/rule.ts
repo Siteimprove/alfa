@@ -74,7 +74,7 @@ export namespace Outcomes {
  *
  * - A computed `width` or `height` that is not `auto`; and
  * - A corresponding computed `overflow-x` or `overflow-y`, respectively, that
- *   is `auto`, `clip`, or `scroll`.
+ *   is `auto` or `scroll`.
  */
 function isPossiblyScrollable(device: Device): Predicate<Element> {
   const properties = [
@@ -93,7 +93,6 @@ function isPossiblyScrollable(device: Device): Predicate<Element> {
         style.computed(overflow).some((overflow) => {
           switch (overflow.value) {
             case "auto":
-            case "clip":
             case "scroll":
               return true;
 
