@@ -25,6 +25,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): `isTransparent()` now correctly handles text nodes of transparent elements. ([#741](../../pull/741))
 
+- [@siteimprove/alfa-style](packages/alfa-style): The `font-family` property now correctly parses font families specified as whitespace-separated idents. ([#742](../../pull/742))
+
 ## [0.14.2](../../compare/v0.14.1...v0.14.2) (2021-03-11)
 
 ### Fixed
