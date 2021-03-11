@@ -8,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test(`#cascaded() parses \`background-image: url("foo.png")\``, (t) => {
-  const element = <div style={{ backgroundImage: `url("foo.png")` }}></div>;
+  const element = <div style={{ backgroundImage: `url("foo.png")` }} />;
 
   const style = Style.from(element, device);
 

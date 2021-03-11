@@ -71,7 +71,7 @@ test("lowestCommonAncestor() returns None when nodes are in different trees", (t
 });
 
 test("isAtTheStart() returns true on an element itself", (t) => {
-  const target = <div></div>;
+  const target = <div />;
 
   t.deepEqual(isAtTheStart(target)(target), true);
 });
@@ -94,7 +94,7 @@ test("isAtTheStart() returns true on perceivable successors of non-perceivable e
   const container = (
     <div>
       <div>
-        <div></div>
+        <div />
       </div>
     </div>
   );
@@ -109,7 +109,7 @@ test("isAtTheStart() returns true on non-perceivable predecessors of elements", 
   const target = (
     <div>
       <div>
-        <div></div>
+        <div />
       </div>
     </div>
   );
@@ -124,7 +124,7 @@ test("isAtTheStart() returns false on perceivable predecessors of an element", (
   const container = (
     <div>
       <div>
-        <div></div>
+        <div />
       </div>
     </div>
   );
@@ -151,8 +151,8 @@ test("isAtTheStart() returns false on successors of an element with perceivable 
 
 test("isAtTheStart() returns false when there is perceivable content between the two elements", (t) => {
   const target1 = <span>Hello</span>;
-  const target2 = <span></span>;
-  const div = <div></div>;
+  const target2 = <span />;
+  const div = <div />;
 
   h.document([
     target1,

@@ -23,7 +23,7 @@ test("evaluate() passes a text node that is included in a landmark", async (t) =
 test("evaluate() fails a text node that is not included in a landmark", async (t) => {
   const target = h.text("This text is not included in a landmark");
 
-  const document = Document.of([<div>{target}</div>, <main></main>]);
+  const document = Document.of([<div>{target}</div>, <main />]);
 
   t.deepEqual(await evaluate(R57, { document }), [
     failed(R57, target, {
@@ -35,7 +35,7 @@ test("evaluate() fails a text node that is not included in a landmark", async (t
 test("evaluate() is not applicable to text nodes not in the accessibility tree", async (t) => {
   const document = Document.of([
     <div hidden>This text is not in the accessibility tree</div>,
-    <main></main>,
+    <main />,
   ]);
 
   t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);

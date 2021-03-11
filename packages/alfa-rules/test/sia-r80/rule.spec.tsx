@@ -34,7 +34,7 @@ test(`evaluate() fails an element with a line height specified using an absolute
 });
 
 test("evaluate() is inapplicable to an element that has no text", async (t) => {
-  const document = Document.of([<div style={{ lineHeight: "24px" }}></div>]);
+  const document = Document.of([<div style={{ lineHeight: "24px" }} />]);
 
   t.deepEqual(await evaluate(R80, { document }), [inapplicable(R80)]);
 });

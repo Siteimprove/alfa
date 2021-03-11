@@ -54,7 +54,7 @@ test(`isVisible() returns false when an element is hidden by reducing its size
 });
 
 test("isVisible() returns false on empty elements", (t) => {
-  const element = <div></div>;
+  const element = <div />;
 
   t.equal(isVisible(element), false);
 });
