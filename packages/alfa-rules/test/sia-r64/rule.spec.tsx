@@ -20,7 +20,7 @@ test("evaluate() passes a heading that has an accessible name", async (t) => {
 });
 
 test("evaluate() fails a heading that has no accessible name", async (t) => {
-  const target = <h1></h1>;
+  const target = <h1 />;
 
   const document = Document.of([target]);
 

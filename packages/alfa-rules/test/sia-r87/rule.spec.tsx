@@ -278,7 +278,7 @@ test(`evaluates() passe a document whose first tabbable link references an
       <a href="#content">Skip to content</a>
 
       <main>
-        <div id="content"></div>
+        <div id="content" />
         <p>This is the content</p>
       </main>
     </html>,
@@ -318,7 +318,7 @@ test(`evaluates() passe a document whose first tabbable link references an
     <html>
       <a href="#content">Skip to content</a>
 
-      <div id="content"></div>
+      <div id="content" />
       <main>
         <p>This is the content</p>
       </main>

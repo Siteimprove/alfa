@@ -8,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `background-color: red`", (t) => {
-  const element = <div style={{ backgroundColor: "red" }}></div>;
+  const element = <div style={{ backgroundColor: "red" }} />;
 
   const style = Style.from(element, device);
 
@@ -23,7 +23,7 @@ test("#cascaded() parses `background-color: red`", (t) => {
 });
 
 test("#computed() resolves `background-color: red`", (t) => {
-  const element = <div style={{ backgroundColor: "red" }}></div>;
+  const element = <div style={{ backgroundColor: "red" }} />;
 
   const style = Style.from(element, device);
 

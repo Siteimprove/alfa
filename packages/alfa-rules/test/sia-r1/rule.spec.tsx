@@ -25,7 +25,7 @@ test("evaluate() passes a document that that a non-empty <title> element", async
 });
 
 test("evaluate() fails a document that has no <title> element", async (t) => {
-  const document = Document.of([<html></html>]);
+  const document = Document.of([<html />]);
 
   t.deepEqual(await evaluate(R1, { document }), [
     failed(R1, document, { 1: Outcomes.HasNoTitle, 2: Outcomes.HasEmptyTitle }),
@@ -36,7 +36,7 @@ test("evaluate() fails a document that has an empty <title> element", async (t) 
   const document = Document.of([
     <html>
       <head>
-        <title></title>
+        <title />
       </head>
     </html>,
   ]);

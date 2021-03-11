@@ -8,7 +8,7 @@ const { entries } = Object;
 export function jsx(
   name: string,
   properties: jsx.Properties | null = null,
-  ...children: Array<Node | string>
+  ...children: Array<jsx.Child>
 ): Element {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
@@ -37,6 +37,8 @@ export function jsx(
 }
 
 export namespace jsx {
+  export type Child = Node | string;
+
   export interface Properties {
     [name: string]: unknown;
 

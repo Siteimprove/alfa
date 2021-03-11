@@ -9,7 +9,7 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes an object with a non-empty name", async (t) => {
-  const target = <object aria-label="Some object"></object>;
+  const target = <object aria-label="Some object" />;
 
   const document = Document.of([target]);
 
@@ -21,7 +21,7 @@ test("evaluate() passes an object with a non-empty name", async (t) => {
 });
 
 test("evaluate() fails an object with an empty name", async (t) => {
-  const target = <object aria-label=""></object>;
+  const target = <object aria-label="" />;
 
   const document = Document.of([target]);
 
@@ -47,7 +47,7 @@ test("evaluate() fails an object with no name", async (t) => {
 });
 
 test("evaluate() is inapplicable if there is no object", async (t) => {
-  const target = <img src="foo.jpg"></img>;
+  const target = <img src="foo.jpg" />;
 
   const document = Document.of([target]);
 
@@ -55,7 +55,7 @@ test("evaluate() is inapplicable if there is no object", async (t) => {
 });
 
 test("evaluate() is inapplicable on empty object", async (t) => {
-  const target = <object title="Some object"></object>;
+  const target = <object title="Some object" />;
 
   const document = Document.of([target]);
 
