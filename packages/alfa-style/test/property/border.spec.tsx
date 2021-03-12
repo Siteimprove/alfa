@@ -269,21 +269,49 @@ test("#computed() resolves `border-bottom-color: red`", (t) => {
   });
 });
 
-// TODO
-// test("#cascaded() parses `border-bottom-left-radius: 10px 10%`", (t) => {
-//   const element = <div style={{ borderBottomLeftRadius: "10px 10%" }}></div>;
+test("#cascaded() parses `border-bottom-left-radius: 10%`", (t) => {
+  const element = <div style={{ borderBottomLeftRadius: "10%" }}></div>;
 
-//   const style = Style.from(element, device);
+  const style = Style.from(element, device);
 
-//   t.deepEqual(style.cascaded("border-bottom-left-radius").get().toJSON(), {
-//     value: {
-//       type: "length",
-//       unit: "em",
-//       value: 1.2,
-//     },
-//     source: h.declaration("border-bottom-left-radius", "10px 10%").toJSON(),
-//   });
-// });
+  t.deepEqual(style.cascaded("border-bottom-left-radius").get().toJSON(), {
+    value: {
+      type: "radius",
+      horizontal: {
+        type: "percentage",
+        value: 0.1,
+      },
+      vertical: {
+        type: "percentage",
+        value: 0.1,
+      },
+    },
+    source: h.declaration("border-bottom-left-radius", "10%").toJSON(),
+  });
+});
+
+// TODO: Pass test
+test("#cascaded() parses `border-bottom-left-radius: 10px 10%`", (t) => {
+  const element = <div style={{ borderBottomLeftRadius: "10px 10%" }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.cascaded("border-bottom-left-radius").get().toJSON(), {
+    value: {
+      type: "radius",
+      horizontal: {
+        type: "length",
+        unit: "px",
+        value: 10,
+      },
+      vertical: {
+        type: "percentage",
+        value: 0.1,
+      },
+    },
+    source: h.declaration("border-bottom-left-radius", "10px 10%").toJSON(),
+  });
+});
 
 test("#cascaded() parses `border-bottom-style: dotted`", (t) => {
   const element = <div style={{ borderBottomStyle: "dotted" }}></div>;
