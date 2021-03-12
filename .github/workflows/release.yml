@@ -12,6 +12,10 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
+      - uses: actions/cache@v2.1.4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ hashFiles('yarn.lock') }}
       - run: >
           yarn config set
           npmScopes.siteimprove.npmAuthToken

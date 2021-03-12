@@ -13,7 +13,7 @@ const { isElement, hasName, hasNamespace, hasTabIndex } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r95.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r95",
   requirements: [Criterion.of("2.1.1")],
   evaluate({ device, document }) {
     return {

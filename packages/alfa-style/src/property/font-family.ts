@@ -31,7 +31,13 @@ export const parse = map(
   separatedList(
     either(
       Keyword.parse("serif", "sans-serif", "cursive", "fantasy", "monospace"),
-      String.parse
+      either(
+        String.parse,
+        map(
+          separatedList(Token.parseIdent(), Token.parseWhitespace),
+          (idents) => String.of(idents.map((ident) => ident.value).join(" "))
+        )
+      )
     ),
     delimited(option(Token.parseWhitespace), Token.parseComma)
   ),

@@ -2,8 +2,14 @@
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // `scripts/criteria.js` and run `yarn generate` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Criteria = typeof Criteria;
 
+/**
+ * @internal
+ */
 export const Criteria = {
   "1.1.1": {
     title: "Non-text Content",

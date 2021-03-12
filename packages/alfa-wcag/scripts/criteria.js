@@ -60,8 +60,14 @@ puppeteer.launch().then(async (browser) => {
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // \`scripts/criteria.js\` and run \`yarn generate\` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Criteria = typeof Criteria;
 
+/**
+ * @internal
+ */
 export const Criteria = ${JSON.stringify(criteria, null, 2)} as const;
   `;
 
@@ -69,5 +75,8 @@ export const Criteria = ${JSON.stringify(criteria, null, 2)} as const;
     parser: "typescript",
   });
 
-  fs.writeFileSync(path.join(__dirname, "../src/criterion/data.ts"), code);
+  fs.writeFileSync(
+    path.join(__dirname, "..", "src", "criterion", "data.ts"),
+    code
+  );
 });

@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 import { Context } from "@siteimprove/alfa-selector";
@@ -10,7 +9,7 @@ import { Style } from "../src/style";
 const device = Device.standard();
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
-  const element = <div style={{ color: "red" }}></div>;
+  const element = <div style={{ color: "red" }} />;
 
   const style = Style.from(element, device);
 
@@ -888,7 +887,7 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
 });
 
 test(`#specified() keeps the !important flag of properties set to initial`, (t) => {
-  const element = <div style={{ backgroundColor: "initial !important" }}></div>;
+  const element = <div style={{ backgroundColor: "initial !important" }} />;
 
   const style = Style.from(element, device);
 

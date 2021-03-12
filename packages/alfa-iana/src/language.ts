@@ -202,6 +202,8 @@ export namespace Language {
     }
   }
 
+  export const { of: primary } = Primary;
+
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.2}
    */
@@ -268,6 +270,8 @@ export namespace Language {
     }
   }
 
+  export const { of: extended } = Extended;
+
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.3}
    */
@@ -302,6 +306,8 @@ export namespace Language {
     }
   }
 
+  export const { of: script } = Script;
+
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.4}
    */
@@ -335,6 +341,8 @@ export namespace Language {
       type: "region";
     }
   }
+
+  export const { of: region } = Region;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.5}
@@ -386,9 +394,11 @@ export namespace Language {
       prefixes: Array<string>;
     }
   }
+
+  export const { of: variant } = Variant;
 }
 
-import * as subtags from "./language/subtags";
+import * as data from "./language/data";
 
 /**
  * @public
@@ -399,25 +409,25 @@ export namespace Language {
 
     return parts
       .get(0)
-      .flatMap((name) => subtags.Primary.get(name))
+      .flatMap((name) => data.Primary.get(name))
       .map((primary) => {
         parts = parts.slice(1);
 
         const extended = parts
           .get(0)
-          .flatMap((name) => subtags.Extended.get(name));
+          .flatMap((name) => data.Extended.get(name));
 
         if (extended.isSome()) {
           parts = parts.slice(1);
         }
 
-        const script = parts.get(0).flatMap((name) => subtags.Script.get(name));
+        const script = parts.get(0).flatMap((name) => data.Script.get(name));
 
         if (script.isSome()) {
           parts = parts.slice(1);
         }
 
-        const region = parts.get(0).flatMap((name) => subtags.Region.get(name));
+        const region = parts.get(0).flatMap((name) => data.Region.get(name));
 
         if (region.isSome()) {
           parts = parts.slice(1);
@@ -428,7 +438,7 @@ export namespace Language {
         while (true) {
           const variant = parts
             .get(0)
-            .flatMap((name) => subtags.Variant.get(name));
+            .flatMap((name) => data.Variant.get(name));
 
           if (variant.isSome()) {
             parts = parts.slice(1);

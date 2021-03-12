@@ -1,7 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { jsx } from "../../jsx";
-
 test("#tabIndex() returns the tab index explicitly assigned to an element", (t) => {
   t.equal((<div tabindex="42" />).tabIndex().get(), 42);
 });

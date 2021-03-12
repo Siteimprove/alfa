@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
@@ -8,7 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import R87, { Outcomes } from "../../src/sia-r87/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 
 test(`evaluate() passes a document whose first tabbable link references an
@@ -279,7 +278,7 @@ test(`evaluates() passe a document whose first tabbable link references an
       <a href="#content">Skip to content</a>
 
       <main>
-        <div id="content"></div>
+        <div id="content" />
         <p>This is the content</p>
       </main>
     </html>,
@@ -319,7 +318,7 @@ test(`evaluates() passe a document whose first tabbable link references an
     <html>
       <a href="#content">Skip to content</a>
 
-      <div id="content"></div>
+      <div id="content" />
       <main>
         <p>This is the content</p>
       </main>

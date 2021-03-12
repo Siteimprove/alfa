@@ -15,7 +15,7 @@ import { Scale } from "./transform/scale";
 import { Skew } from "./transform/skew";
 import { Translate } from "./transform/translate";
 
-const { either, oneOrMore, delimited, option, map } = Parser;
+const { either, oneOrMore, delimited, option } = Parser;
 
 /**
  * @public

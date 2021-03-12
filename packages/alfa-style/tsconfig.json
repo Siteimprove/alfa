@@ -1,6 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom"
+  },
   "files": [
     "src/index.ts",
     "src/property.ts",
@@ -76,6 +80,7 @@
     "test/property/box-shadow.spec.tsx",
     "test/property/clip.spec.tsx",
     "test/property/font.spec.tsx",
+    "test/property/font-family.spec.tsx",
     "test/property/font-size.spec.tsx",
     "test/property/inset-block.spec.tsx",
     "test/property/text-decoration.spec.tsx",

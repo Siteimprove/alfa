@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r20.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r20",
   evaluate({ document }) {
     return {
       applicability() {

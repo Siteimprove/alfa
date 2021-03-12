@@ -16,7 +16,7 @@ const { not } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r3.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r3",
   requirements: [Criterion.of("4.1.1"), Technique.of("H93")],
   evaluate({ document }) {
     return {

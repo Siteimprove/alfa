@@ -6,7 +6,7 @@ import { URL } from "@siteimprove/alfa-url";
 
 import * as json from "@siteimprove/alfa-json";
 
-const { equals, property } = Predicate;
+const { equals } = Predicate;
 
 /**
  * @public

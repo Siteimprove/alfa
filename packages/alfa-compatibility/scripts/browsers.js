@@ -1,6 +1,7 @@
 const fs = require("fs");
+const path = require("path");
 const prettier = require("prettier");
-const data = require("mdn-browser-compat-data");
+const data = require("@mdn/browser-compat-data");
 
 /**
  * @type {Array<import("mdn-browser-compat-data/types").BrowserNames>}
@@ -85,4 +86,4 @@ code = prettier.format(code, {
   parser: "typescript",
 });
 
-fs.writeFileSync("src/browser/data.ts", code);
+fs.writeFileSync(path.join(__dirname, "..", "src", "browser", "data.ts"), code);

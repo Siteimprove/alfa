@@ -45,11 +45,11 @@ export namespace Unexpected {
         unexpected.addAssertion<I>(
           `<Element> [not] to be accessible`,
           async (expect, value) => {
-            const target = await transform(value);
+            const input = await transform(value);
 
-            const error = await asserter.expect(target).to.be.accessible();
+            const result = await asserter.expect(input).to.be.accessible();
 
-            expect(error.isOk(), "[not] to be", true);
+            expect(result.isOk(), "[not] to be", true);
           }
         );
       },
