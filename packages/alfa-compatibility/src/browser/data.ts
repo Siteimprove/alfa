@@ -6,12 +6,12 @@
 /**
  * @internal
  */
-type Data = typeof Data;
+export type Browsers = typeof Browsers;
 
 /**
  * @internal
  */
-const Data = {
+export const Browsers = {
   chrome: {
     releases: {
       "1": { date: 1228953600000 },
@@ -355,5 +355,3 @@ const Data = {
     },
   },
 };
-
-export default Data;
