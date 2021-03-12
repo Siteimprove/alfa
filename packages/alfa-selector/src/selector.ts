@@ -960,6 +960,13 @@ export namespace Selector {
         const tokens = Slice.of(fn.value);
 
         switch (name) {
+          case "cue":
+          case "cue-region":
+            return parseSelector(tokens).map(([, selector]) =>
+              name === "cue"
+                ? (Cue.of(selector) as Pseudo.Element)
+                : CueRegion.of(selector)
+            );
           case "part":
             return separatedList(
               Token.parseIdent(),
@@ -992,6 +999,10 @@ export namespace Selector {
               return Result.of(Backdrop.of());
             case "before":
               return Result.of(Before.of());
+            case "cue":
+              return Result.of(Cue.of());
+            case "cue-region":
+              return Result.of(CueRegion.of());
             case "file-selector-button":
               return Result.of(FileSelectorButton.of());
             case "first-letter":
@@ -1751,6 +1762,72 @@ export namespace Selector {
   }
 
   /**
+   * {@link https://w3c.github.io/webvtt/#the-cue-pseudo-element}
+   */
+  class Cue extends Pseudo.Element {
+    public static of(selector?: Selector): Cue {
+      return new Cue(Option.from(selector));
+    }
+
+    private readonly _selector: Option<Selector>;
+
+    private constructor(selector: Option<Selector>) {
+      super("cue");
+      this._selector = selector;
+    }
+
+    public get selector(): Option<Selector> {
+      return this._selector;
+    }
+
+    public toJSON(): Cue.JSON {
+      return {
+        ...super.toJSON(),
+        selector: this._selector.toJSON(),
+      };
+    }
+  }
+
+  export namespace Cue {
+    export interface JSON extends Pseudo.Element.JSON {
+      selector: Option.JSON<Selector>;
+    }
+  }
+
+  /**
+   * {@link https://w3c.github.io/webvtt/#the-cue-region-pseudo-element}
+   */
+  class CueRegion extends Pseudo.Element {
+    public static of(selector?: Selector): CueRegion {
+      return new CueRegion(Option.from(selector));
+    }
+
+    private readonly _selector: Option<Selector>;
+
+    private constructor(selector: Option<Selector>) {
+      super("cue-region");
+      this._selector = selector;
+    }
+
+    public get selector(): Option<Selector> {
+      return this._selector;
+    }
+
+    public toJSON(): CueRegion.JSON {
+      return {
+        ...super.toJSON(),
+        selector: this._selector.toJSON(),
+      };
+    }
+  }
+
+  export namespace CueRegion {
+    export interface JSON extends Pseudo.Element.JSON {
+      selector: Option.JSON<Selector>;
+    }
+  }
+
+  /**
    *{@link https://drafts.csswg.org/css-pseudo-4/#file-selector-button-pseudo}
    */
   export class FileSelectorButton extends Pseudo.Element {
@@ -1819,15 +1896,19 @@ export namespace Selector {
    * {@link https://drafts.csswg.org/css-shadow-parts-1/#part}
    */
   export class Part extends Pseudo.Element {
-    public static of(idents: Array<Ident>): Part {
-      return new Part(idents);
+    public static of(idents: Iterable<Ident>): Part {
+      return new Part(Array.from(idents));
     }
 
-    private readonly _idents: Array<Ident>;
+    private readonly _idents: ReadonlyArray<Ident>;
 
     private constructor(idents: Array<Ident>) {
       super("part");
       this._idents = idents;
+    }
+
+    public get idents(): Iterable<Ident> {
+      return this._idents;
     }
 
     public toJSON(): Part.JSON {
