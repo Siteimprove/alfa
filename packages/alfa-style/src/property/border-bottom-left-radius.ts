@@ -19,7 +19,6 @@ export type Computed = BorderRadius<Length<"px"> | Percentage>;
  */
 export default Property.of<Specified, Computed>(
   BorderRadius.of(Length.of(0, "px"), Length.of(0, "px")),
-  // TODO
   BorderRadius.parse,
   (value, style) =>
     value.map((value) => {

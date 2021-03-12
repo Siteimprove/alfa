@@ -328,7 +328,7 @@ test("#cascaded() parses `border-bottom-width: 1.2em`", (t) => {
   });
 });
 
-test("#computed() resolves `border-bottom-width: 1.2em; border-block-end-style: none`", (t) => {
+test("#computed() resolves `border-bottom-width: 1.2em; border-bottom-style: none`", (t) => {
   const element = (
     <div
       style={{ borderBottomWidth: "1.2em", borderBottomStyle: "none" }}
@@ -473,7 +473,7 @@ test("#cascaded() parses `border-inline-end-width: 1.2em`", (t) => {
   });
 });
 
-test("#computed() resolves `border-inline-end-width: 1.2em; border-block-end-style: none`", (t) => {
+test("#computed() resolves `border-inline-end-width: 1.2em; border-inline-end-style: none`", (t) => {
   const element = (
     <div
       style={{ borderInlineEndWidth: "1.2em", borderInlineEndStyle: "none" }}
@@ -581,7 +581,7 @@ test("#cascaded() parses `border-inline-start-width: 1.2em`", (t) => {
   });
 });
 
-test("#computed() resolves `border-inline-start-width: 1.2em; border-block-end-style: none`", (t) => {
+test("#computed() resolves `border-inline-start-width: 1.2em; border-inline-start-style: none`", (t) => {
   const element = (
     <div
       style={{
@@ -692,7 +692,7 @@ test("#cascaded() parses `border-left-width: 1.2em`", (t) => {
   });
 });
 
-test("#computed() resolves `border-left-width: 1.2em; border-block-end-style: none`", (t) => {
+test("#computed() resolves `border-left-width: 1.2em; border-left-style: none`", (t) => {
   const element = (
     <div style={{ borderLeftWidth: "1.2em", borderLeftStyle: "none" }}></div>
   );
@@ -798,7 +798,7 @@ test("#cascaded() parses `border-right-width: 1.2em`", (t) => {
   });
 });
 
-test("#computed() resolves `border-right-width: 1.2em; border-block-end-style: none`", (t) => {
+test("#computed() resolves `border-right-width: 1.2em; border-right-style: none`", (t) => {
   const element = (
     <div style={{ borderRightWidth: "1.2em", borderRightStyle: "none" }}></div>
   );
@@ -904,7 +904,7 @@ test("#cascaded() parses `border-top-width: 1.2em`", (t) => {
   });
 });
 
-test("#computed() resolves `border-top-width: 1.2em; border-block-end-style: none`", (t) => {
+test("#computed() resolves `border-top-width: 1.2em; border-top-style: none`", (t) => {
   const element = (
     <div style={{ borderTopWidth: "1.2em", borderTopStyle: "none" }}></div>
   );
