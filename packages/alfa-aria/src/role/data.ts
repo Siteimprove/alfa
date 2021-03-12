@@ -1401,45 +1401,6 @@ export const Roles = {
       required: [],
     },
   },
-  meter: {
-    abstract: false,
-    inherited: ["range"],
-    attributes: [
-      [
-        "aria-valuemax",
-        {
-          required: false,
-          value: "100",
-        },
-      ],
-      [
-        "aria-valuemin",
-        {
-          required: false,
-          value: "0",
-        },
-      ],
-      [
-        "aria-valuenow",
-        {
-          required: true,
-          value: null,
-        },
-      ],
-    ],
-    name: {
-      required: true,
-      prohibited: false,
-      from: ["author", "encapsulation"],
-    },
-    parent: {
-      required: [],
-    },
-    children: {
-      presentational: true,
-      required: [],
-    },
-  },
   menu: {
     abstract: false,
     inherited: ["select"],
@@ -1616,6 +1577,45 @@ export const Roles = {
         ["group", "menu"],
         ["group", "menubar"],
       ],
+    },
+    children: {
+      presentational: true,
+      required: [],
+    },
+  },
+  meter: {
+    abstract: false,
+    inherited: ["range"],
+    attributes: [
+      [
+        "aria-valuemax",
+        {
+          required: false,
+          value: "100",
+        },
+      ],
+      [
+        "aria-valuemin",
+        {
+          required: false,
+          value: "0",
+        },
+      ],
+      [
+        "aria-valuenow",
+        {
+          required: true,
+          value: null,
+        },
+      ],
+    ],
+    name: {
+      required: true,
+      prohibited: false,
+      from: ["author", "encapsulation"],
+    },
+    parent: {
+      required: [],
     },
     children: {
       presentational: true,

@@ -155,7 +155,7 @@ axios.get(registry).then(({ data }) => {
       switch (type.value) {
         case "language":
           if (scope !== undefined) {
-            args.push(`Option.of("${scope.value}")`);
+            args.push(`option("${scope.value}")`);
           }
           break;
 
@@ -163,7 +163,7 @@ axios.get(registry).then(({ data }) => {
           args.push(`"${prefixes[0].value}"`);
 
           if (scope !== undefined) {
-            args.push(`Option.of("${scope.value}")`);
+            args.push(`option("${scope.value}")`);
           }
           break;
 
@@ -202,25 +202,31 @@ axios.get(registry).then(({ data }) => {
 
   const lines = [
     `
-    // This file has been automatically generated based on the IANA Language Subtag
-    // Registry. Do therefore not modify it directly! If you wish to make changes,
-    // do so in \`scripts/subtags.js\` and run \`yarn generate\` to rebuild this file.
+// This file has been automatically generated based on the IANA Language Subtag
+// Registry. Do therefore not modify it directly! If you wish to make changes,
+// do so in \`scripts/subtags.js\` and run \`yarn generate\` to rebuild this file.
 
-    import { Map } from "@siteimprove/alfa-map";
-    import { Option } from "@siteimprove/alfa-option";
+import { Map } from "@siteimprove/alfa-map";
+import { Option } from "@siteimprove/alfa-option";
 
-    import { Language } from "../language";
+import { Language } from "../language";
+
+const { of: option } = Option;
+const { primary, extended, script, region, variant } = Language;
     `,
   ];
 
   for (const [group, subtags] of groups) {
     lines.push(`
+      /**
+       * @internal
+       */
       export const ${group} = Map.from([
         ${subtags
           .map((subtag) => {
             const type = getType(subtag);
 
-            return `["${subtag.name}", Language.${type}.of(${subtag.args.join(
+            return `["${subtag.name}", ${type.toLowerCase()}(${subtag.args.join(
               ", "
             )})]`;
           })

@@ -202,6 +202,8 @@ export namespace Language {
     }
   }
 
+  export const { of: primary } = Primary;
+
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.2}
    */
@@ -268,6 +270,8 @@ export namespace Language {
     }
   }
 
+  export const { of: extended } = Extended;
+
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.3}
    */
@@ -302,6 +306,8 @@ export namespace Language {
     }
   }
 
+  export const { of: script } = Script;
+
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.4}
    */
@@ -335,6 +341,8 @@ export namespace Language {
       type: "region";
     }
   }
+
+  export const { of: region } = Region;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.5}
@@ -386,6 +394,8 @@ export namespace Language {
       prefixes: Array<string>;
     }
   }
+
+  export const { of: variant } = Variant;
 }
 
 import * as subtags from "./language/subtags";

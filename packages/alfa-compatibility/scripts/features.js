@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const prettier = require("prettier");
 const data = require("@mdn/browser-compat-data");
 
@@ -199,4 +200,4 @@ code = prettier.format(code, {
   parser: "typescript",
 });
 
-fs.writeFileSync("src/feature/data.ts", code);
+fs.writeFileSync(path.join(__dirname, "..", "src", "feature", "data.ts", code));
