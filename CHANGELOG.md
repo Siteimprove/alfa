@@ -33,6 +33,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 no longer considers elements with `overflow: clip` as possibly scrollable. ([#744](../../pull/744))
 
+- [@siteimprove/alfa-selector](packages/alfa-selector): CSS pseudo-elements are now parsed, thus preventing the parser from entirely dropping declaration containing one of them. ([#745](../../pull/754))
+
 ## [0.14.2](../../compare/v0.14.1...v0.14.2) (2021-03-11)
 
 ### Fixed
