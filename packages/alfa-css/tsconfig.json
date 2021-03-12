@@ -13,6 +13,7 @@
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
+    "src/value/border-radius.ts",
     "src/value/box.ts",
     "src/value/calculation.ts",
     "src/value/color.ts",
