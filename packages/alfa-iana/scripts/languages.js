@@ -204,7 +204,7 @@ axios.get(registry).then(({ data }) => {
     `
 // This file has been automatically generated based on the IANA Language Subtag
 // Registry. Do therefore not modify it directly! If you wish to make changes,
-// do so in \`scripts/subtags.js\` and run \`yarn generate\` to rebuild this file.
+// do so in \`scripts/languages.js\` and run \`yarn generate\` to rebuild this file.
 
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
@@ -239,5 +239,5 @@ const { primary, extended, script, region, variant } = Language;
     parser: "typescript",
   });
 
-  fs.writeFileSync(path.join(__dirname, "../src/language/subtags.ts"), code);
+  fs.writeFileSync(path.join(__dirname, "../src/language/data.ts"), code);
 });

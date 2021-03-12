@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "generate": "node scripts/subtags.js"
+    "generate": "node scripts/languages.js"
   },
   "dependencies": {
     "@siteimprove/alfa-equatable": "workspace:^0.14.2",
