@@ -1783,6 +1783,14 @@ export namespace Selector {
       return this._selector;
     }
 
+    public equals(value: Cue): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof Cue && value.selector.equals(this.selector);
+    }
+
     public toJSON(): Cue.JSON {
       return {
         ...super.toJSON(),
@@ -1814,6 +1822,14 @@ export namespace Selector {
 
     public get selector(): Option<Selector> {
       return this._selector;
+    }
+
+    public equals(value: CueRegion): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof CueRegion && value.selector.equals(this.selector);
     }
 
     public toJSON(): CueRegion.JSON {
@@ -1914,6 +1930,14 @@ export namespace Selector {
       return this._idents;
     }
 
+    public equals(value: Part): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof Part && Array.equals(value._idents, this._idents);
+    }
+
     public toJSON(): Part.JSON {
       return {
         ...super.toJSON(),
@@ -1971,6 +1995,17 @@ export namespace Selector {
 
     public get selectors(): Iterable<Simple | Compound> {
       return this._selectors;
+    }
+
+    public equals(value: Slotted): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        value instanceof Slotted &&
+        Array.equals(value._selectors, this._selectors)
+      );
     }
 
     public toJSON(): Slotted.JSON {
