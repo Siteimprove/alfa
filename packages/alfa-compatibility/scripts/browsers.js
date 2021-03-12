@@ -54,12 +54,12 @@ let code = `
 /**
  * @internal
  */
-type Data = typeof Data;
+export type Browsers = typeof Browsers;
 
 /**
  * @internal
  */
-const Data = {
+export const Browsers = {
   ${browsers
     .map(
       (browser) => `
@@ -78,8 +78,6 @@ const Data = {
     )
     .join(",\n\n")}
 };
-
-export default Data;
 `;
 
 code = prettier.format(code, {
