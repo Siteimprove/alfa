@@ -947,8 +947,6 @@ export namespace Selector {
     )
   );
 
-  // TODO: cue, cue-region (name/func)
-  // TODO: slotted (func)
   const parsePseudoElement = either(
     // Function pseudo-elements need to be first because ::cue and ::cue-region
     // can be both, so we want to fail them as function before testing them
@@ -972,6 +970,11 @@ export namespace Selector {
               Token.parseIdent(),
               Token.parseWhitespace
             )(tokens).map(([, idents]) => Part.of(idents));
+          case "slotted":
+            return separatedList(
+              parseCompound,
+              Token.parseWhitespace
+            )(tokens).map(([, selectors]) => Slotted.of(selectors));
         }
 
         return Err.of(`Unknown pseudo-element ::${name}()`);
@@ -1952,6 +1955,39 @@ export namespace Selector {
   }
 
   /**
+   * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
+   */
+  export class Slotted extends Pseudo.Element {
+    public static of(selectors: Iterable<Simple | Compound>): Slotted {
+      return new Slotted(Array.from(selectors));
+    }
+
+    private readonly _selectors: ReadonlyArray<Simple | Compound>;
+
+    private constructor(selectors: Array<Simple | Compound>) {
+      super("slotted");
+      this._selectors = selectors;
+    }
+
+    public get selectors(): Iterable<Simple | Compound> {
+      return this._selectors;
+    }
+
+    public toJSON(): Slotted.JSON {
+      return {
+        ...super.toJSON(),
+        selectors: Array.toJSON(this._selectors),
+      };
+    }
+  }
+
+  export namespace Slotted {
+    export interface JSON extends Pseudo.Element.JSON {
+      selectors: Array<Simple.JSON | Compound.JSON>;
+    }
+  }
+
+  /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-spelling-error}
    */
   export class SpellingError extends Pseudo.Element {
@@ -2096,16 +2132,22 @@ export namespace Selector {
 
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-compound-selector}
+   *
+   * parseCompound is recursively called when parsing ::slotted, hence needs
+   * a type anotation.
    */
-  const parseCompound = map(oneOrMore(parseSimple), (result) => {
-    const [left, ...selectors] = Iterable.reverse(result);
+  const parseCompound: Parser<Slice<Token>, Simple | Compound, string> = map(
+    oneOrMore(parseSimple),
+    (result) => {
+      const [left, ...selectors] = Iterable.reverse(result);
 
-    return Iterable.reduce(
-      selectors,
-      (right, left) => Compound.of(left, right),
-      left as Simple | Compound
-    );
-  });
+      return Iterable.reduce(
+        selectors,
+        (right, left) => Compound.of(left, right),
+        left as Simple | Compound
+      );
+    }
+  );
 
   /**
    * {@link https://drafts.csswg.org/selectors/#selector-combinator}
