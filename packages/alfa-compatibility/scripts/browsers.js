@@ -86,4 +86,4 @@ code = prettier.format(code, {
   parser: "typescript",
 });
 
-fs.writeFileSync(path.join(__dirname, "..", "src", "browser", "data.ts", code));
+fs.writeFileSync(path.join(__dirname, "..", "src", "browser", "data.ts"), code);

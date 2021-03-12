@@ -200,4 +200,4 @@ code = prettier.format(code, {
   parser: "typescript",
 });
 
-fs.writeFileSync(path.join(__dirname, "..", "src", "feature", "data.ts", code));
+fs.writeFileSync(path.join(__dirname, "..", "src", "feature", "data.ts"), code);
