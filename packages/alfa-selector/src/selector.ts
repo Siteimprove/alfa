@@ -55,17 +55,17 @@ export type Selector =
 export namespace Selector {
   import Ident = Token.Ident;
 
-  export interface JSON {
+  export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
-    type: string;
+    type: T;
   }
 
-  abstract class Selector
+  abstract class Selector<T extends string = string>
     implements
       Iterable<Simple | Compound | Complex | Relative>,
       Equatable,
       Serializable {
-    public abstract get type(): string;
+    public abstract get type(): T;
 
     /**
      * {@link https://drafts.csswg.org/selectors/#match}
@@ -97,7 +97,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#id-selector}
    */
-  export class Id extends Selector {
+  export class Id extends Selector<"id"> {
     public static of(name: string): Id {
       return new Id(name);
     }
@@ -146,8 +146,7 @@ export namespace Selector {
   }
 
   export namespace Id {
-    export interface JSON extends Selector.JSON {
-      type: "id";
+    export interface JSON extends Selector.JSON<"id"> {
       name: string;
     }
   }
@@ -167,7 +166,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#class-selector}
    */
-  export class Class extends Selector {
+  export class Class extends Selector<"class"> {
     public static of(name: string): Class {
       return new Class(name);
     }
@@ -215,8 +214,7 @@ export namespace Selector {
   }
 
   export namespace Class {
-    export interface JSON extends Selector.JSON {
-      type: "class";
+    export interface JSON extends Selector.JSON<"class"> {
       name: string;
     }
   }
@@ -252,7 +250,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#attribute-selector}
    */
-  export class Attribute extends Selector {
+  export class Attribute extends Selector<"attribute"> {
     public static of(
       namespace: Option<string>,
       name: string,
@@ -425,8 +423,7 @@ export namespace Selector {
   }
 
   export namespace Attribute {
-    export interface JSON extends Selector.JSON {
-      type: "attribute";
+    export interface JSON extends Selector.JSON<"attribute"> {
       namespace: string | null;
       name: string;
       value: string | null;
@@ -555,7 +552,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#type-selector}
    */
-  export class Type extends Selector {
+  export class Type extends Selector<"type"> {
     public static of(namespace: Option<string>, name: string): Type {
       return new Type(namespace, name);
     }
@@ -627,8 +624,7 @@ export namespace Selector {
   }
 
   export namespace Type {
-    export interface JSON extends Selector.JSON {
-      type: "type";
+    export interface JSON extends Selector.JSON<"type"> {
       namespace: string | null;
       name: string;
     }
@@ -648,7 +644,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#universal-selector}
    */
-  export class Universal extends Selector {
+  export class Universal extends Selector<"universal"> {
     public static of(namespace: Option<string>): Universal {
       return new Universal(namespace);
     }
@@ -713,8 +709,7 @@ export namespace Selector {
   }
 
   export namespace Universal {
-    export interface JSON extends Selector.JSON {
-      type: "universal";
+    export interface JSON extends Selector.JSON<"universal"> {
       namespace: string | null;
     }
   }
@@ -734,15 +729,17 @@ export namespace Selector {
   export namespace Pseudo {
     export type JSON = Class.JSON | Element.JSON;
 
-    export abstract class Class extends Selector {
-      protected readonly _name: string;
+    export abstract class Class<
+      N extends string = string
+    > extends Selector<"pseudo-class"> {
+      protected readonly _name: N;
 
-      protected constructor(name: string) {
+      protected constructor(name: N) {
         super();
         this._name = name;
       }
 
-      public get name(): string {
+      public get name(): N {
         return this._name;
       }
 
@@ -766,7 +763,7 @@ export namespace Selector {
         yield this;
       }
 
-      public toJSON(): Class.JSON {
+      public toJSON(): Class.JSON<N> {
         return {
           type: "pseudo-class",
           name: this._name,
@@ -779,9 +776,9 @@ export namespace Selector {
     }
 
     export namespace Class {
-      export interface JSON extends Selector.JSON {
-        type: "pseudo-class";
-        name: string;
+      export interface JSON<N extends string = string>
+        extends Selector.JSON<"pseudo-class"> {
+        name: N;
       }
     }
 
@@ -789,15 +786,17 @@ export namespace Selector {
       return value instanceof Class;
     }
 
-    export abstract class Element extends Selector {
-      protected readonly _name: string;
+    export abstract class Element<
+      N extends string = string
+    > extends Selector<"pseudo-element"> {
+      protected readonly _name: N;
 
-      protected constructor(name: string) {
+      protected constructor(name: N) {
         super();
         this._name = name;
       }
 
-      public get name(): string {
+      public get name(): N {
         return this._name;
       }
 
@@ -821,7 +820,7 @@ export namespace Selector {
         yield this;
       }
 
-      public toJSON(): Element.JSON {
+      public toJSON(): Element.JSON<N> {
         return {
           type: "pseudo-element",
           name: this._name,
@@ -834,9 +833,9 @@ export namespace Selector {
     }
 
     export namespace Element {
-      export interface JSON extends Selector.JSON {
-        type: "pseudo-element";
-        name: string;
+      export interface JSON<N extends string = string>
+        extends Selector.JSON<"pseudo-element"> {
+        name: N;
       }
     }
 
@@ -865,7 +864,7 @@ export namespace Selector {
       mapResult(Token.parseIdent(), (ident) => {
         switch (ident.value) {
           case "hover":
-            return Result.of(Hover.of());
+            return Result.of(Hover.of() as Pseudo.Class);
           case "active":
             return Result.of(Active.of());
           case "focus":
@@ -997,7 +996,7 @@ export namespace Selector {
           }
           switch (ident.value) {
             case "after":
-              return Result.of(After.of());
+              return Result.of(After.of() as Pseudo.Element);
             case "backdrop":
               return Result.of(Backdrop.of());
             case "before":
@@ -1036,7 +1035,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#matches-pseudo}
    */
-  export class Is extends Pseudo.Class {
+  export class Is extends Pseudo.Class<"is"> {
     public static of(
       selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
     ): Is {
@@ -1089,7 +1088,7 @@ export namespace Selector {
   }
 
   export namespace Is {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"is"> {
       selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
     }
   }
@@ -1097,7 +1096,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#negation-pseudo}
    */
-  export class Not extends Pseudo.Class {
+  export class Not extends Pseudo.Class<"not"> {
     public static of(
       selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
     ): Not {
@@ -1150,7 +1149,7 @@ export namespace Selector {
   }
 
   export namespace Not {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"not"> {
       selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
     }
   }
@@ -1158,7 +1157,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#has-pseudo}
    */
-  export class Has extends Pseudo.Class {
+  export class Has extends Pseudo.Class<"has"> {
     public static of(
       selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
     ): Has {
@@ -1207,7 +1206,7 @@ export namespace Selector {
   }
 
   export namespace Has {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"has"> {
       selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
     }
   }
@@ -1215,7 +1214,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#hover-pseudo}
    */
-  export class Hover extends Pseudo.Class {
+  export class Hover extends Pseudo.Class<"hover"> {
     public static of(): Hover {
       return new Hover();
     }
@@ -1235,7 +1234,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#active-pseudo}
    */
-  export class Active extends Pseudo.Class {
+  export class Active extends Pseudo.Class<"active"> {
     public static of(): Active {
       return new Active();
     }
@@ -1255,7 +1254,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#focus-pseudo}
    */
-  export class Focus extends Pseudo.Class {
+  export class Focus extends Pseudo.Class<"focus"> {
     public static of(): Focus {
       return new Focus();
     }
@@ -1275,7 +1274,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#focus-within-pseudo}
    */
-  export class FocusWithin extends Pseudo.Class {
+  export class FocusWithin extends Pseudo.Class<"focus-within"> {
     public static of(): FocusWithin {
       return new FocusWithin();
     }
@@ -1298,7 +1297,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#focus-visible-pseudo}
    */
-  export class FocusVisible extends Pseudo.Class {
+  export class FocusVisible extends Pseudo.Class<"focus-visible"> {
     public static of(): FocusVisible {
       return new FocusVisible();
     }
@@ -1318,7 +1317,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#link-pseudo}
    */
-  export class Link extends Pseudo.Class {
+  export class Link extends Pseudo.Class<"link"> {
     public static of(): Link {
       return new Link();
     }
@@ -1347,7 +1346,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#visited-pseudo}
    */
-  export class Visited extends Pseudo.Class {
+  export class Visited extends Pseudo.Class<"visited"> {
     public static of(): Visited {
       return new Visited();
     }
@@ -1376,7 +1375,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#root-pseudo}
    */
-  export class Root extends Pseudo.Class {
+  export class Root extends Pseudo.Class<"root"> {
     public static of(): Root {
       return new Root();
     }
@@ -1394,7 +1393,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#empty-pseudo}
    */
-  export class Empty extends Pseudo.Class {
+  export class Empty extends Pseudo.Class<"empty"> {
     public static of(): Empty {
       return new Empty();
     }
@@ -1411,7 +1410,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#nth-child-pseudo}
    */
-  export class NthChild extends Pseudo.Class {
+  export class NthChild extends Pseudo.Class<"nth-child"> {
     public static of(index: Nth): NthChild {
       return new NthChild(index);
     }
@@ -1450,7 +1449,7 @@ export namespace Selector {
   }
 
   export namespace NthChild {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"nth-child"> {
       index: Nth.JSON;
     }
   }
@@ -1458,7 +1457,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#nth-last-child-pseudo}
    */
-  export class NthLastChild extends Pseudo.Class {
+  export class NthLastChild extends Pseudo.Class<"nth-last-child"> {
     public static of(index: Nth): NthLastChild {
       return new NthLastChild(index);
     }
@@ -1498,7 +1497,7 @@ export namespace Selector {
   }
 
   export namespace NthLastChild {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"nth-last-child"> {
       index: Nth.JSON;
     }
   }
@@ -1506,7 +1505,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#first-child-pseudo}
    */
-  export class FirstChild extends Pseudo.Class {
+  export class FirstChild extends Pseudo.Class<"first-child"> {
     public static of(): FirstChild {
       return new FirstChild();
     }
@@ -1527,7 +1526,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#last-child-pseudo}
    */
-  export class LastChild extends Pseudo.Class {
+  export class LastChild extends Pseudo.Class<"last-child"> {
     public static of(): LastChild {
       return new LastChild();
     }
@@ -1548,7 +1547,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#only-child-pseudo}
    */
-  export class OnlyChild extends Pseudo.Class {
+  export class OnlyChild extends Pseudo.Class<"only-child"> {
     public static of(): OnlyChild {
       return new OnlyChild();
     }
@@ -1565,7 +1564,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#nth-of-type-pseudo}
    */
-  export class NthOfType extends Pseudo.Class {
+  export class NthOfType extends Pseudo.Class<"nth-of-type"> {
     public static of(index: Nth): NthOfType {
       return new NthOfType(index);
     }
@@ -1605,7 +1604,7 @@ export namespace Selector {
   }
 
   export namespace NthOfType {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"nth-of-type"> {
       index: Nth.JSON;
     }
   }
@@ -1613,7 +1612,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#nth-last-of-type-pseudo}
    */
-  export class NthLastOfType extends Pseudo.Class {
+  export class NthLastOfType extends Pseudo.Class<"nth-last-of-type"> {
     public static of(index: Nth): NthLastOfType {
       return new NthLastOfType(index);
     }
@@ -1654,7 +1653,7 @@ export namespace Selector {
   }
 
   export namespace NthLastOfType {
-    export interface JSON extends Pseudo.Class.JSON {
+    export interface JSON extends Pseudo.Class.JSON<"nth-last-of-type"> {
       index: Nth.JSON;
     }
   }
@@ -1662,7 +1661,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#first-of-type-pseudo}
    */
-  export class FirstOfType extends Pseudo.Class {
+  export class FirstOfType extends Pseudo.Class<"first-of-type"> {
     public static of(): FirstOfType {
       return new FirstOfType();
     }
@@ -1684,7 +1683,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#last-of-type-pseudo}
    */
-  export class LastOfType extends Pseudo.Class {
+  export class LastOfType extends Pseudo.Class<"last-of-type"> {
     public static of(): LastOfType {
       return new LastOfType();
     }
@@ -1706,7 +1705,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#only-of-type-pseudo}
    */
-  export class OnlyOfType extends Pseudo.Class {
+  export class OnlyOfType extends Pseudo.Class<"only-of-type"> {
     public static of(): OnlyOfType {
       return new OnlyOfType();
     }
@@ -1728,7 +1727,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo/#selectordef-after}
    */
-  export class After extends Pseudo.Element {
+  export class After extends Pseudo.Element<"after"> {
     public static of(): After {
       return new After();
     }
@@ -1741,7 +1740,7 @@ export namespace Selector {
   /**
    * {@link https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element}
    */
-  export class Backdrop extends Pseudo.Element {
+  export class Backdrop extends Pseudo.Element<"backdrop"> {
     public static of(): Backdrop {
       return new Backdrop();
     }
@@ -1754,7 +1753,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo/#selectordef-before}
    */
-  export class Before extends Pseudo.Element {
+  export class Before extends Pseudo.Element<"before"> {
     public static of(): Before {
       return new Before();
     }
@@ -1767,7 +1766,7 @@ export namespace Selector {
   /**
    * {@link https://w3c.github.io/webvtt/#the-cue-pseudo-element}
    */
-  class Cue extends Pseudo.Element {
+  class Cue extends Pseudo.Element<"cue"> {
     public static of(selector?: Selector): Cue {
       return new Cue(Option.from(selector));
     }
@@ -1800,7 +1799,7 @@ export namespace Selector {
   }
 
   export namespace Cue {
-    export interface JSON extends Pseudo.Element.JSON {
+    export interface JSON extends Pseudo.Element.JSON<"cue"> {
       selector: Option.JSON<Selector>;
     }
   }
@@ -1808,7 +1807,7 @@ export namespace Selector {
   /**
    * {@link https://w3c.github.io/webvtt/#the-cue-region-pseudo-element}
    */
-  class CueRegion extends Pseudo.Element {
+  class CueRegion extends Pseudo.Element<"cue-region"> {
     public static of(selector?: Selector): CueRegion {
       return new CueRegion(Option.from(selector));
     }
@@ -1841,7 +1840,7 @@ export namespace Selector {
   }
 
   export namespace CueRegion {
-    export interface JSON extends Pseudo.Element.JSON {
+    export interface JSON extends Pseudo.Element.JSON<"cue-region"> {
       selector: Option.JSON<Selector>;
     }
   }
@@ -1849,7 +1848,7 @@ export namespace Selector {
   /**
    *{@link https://drafts.csswg.org/css-pseudo-4/#file-selector-button-pseudo}
    */
-  export class FileSelectorButton extends Pseudo.Element {
+  export class FileSelectorButton extends Pseudo.Element<"file-selector-button"> {
     public static of(): FileSelectorButton {
       return new FileSelectorButton();
     }
@@ -1862,7 +1861,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#first-letter-pseudo}
    */
-  export class FirstLetter extends Pseudo.Element {
+  export class FirstLetter extends Pseudo.Element<"first-letter"> {
     public static of(): FirstLetter {
       return new FirstLetter();
     }
@@ -1875,7 +1874,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#first-line-pseudo}
    */
-  export class FirstLine extends Pseudo.Element {
+  export class FirstLine extends Pseudo.Element<"first-line"> {
     public static of(): FirstLine {
       return new FirstLine();
     }
@@ -1888,7 +1887,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-grammar-error}
    */
-  export class GrammarError extends Pseudo.Element {
+  export class GrammarError extends Pseudo.Element<"grammar-error"> {
     public static of(): GrammarError {
       return new GrammarError();
     }
@@ -1901,7 +1900,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#marker-pseudo}
    */
-  export class Marker extends Pseudo.Element {
+  export class Marker extends Pseudo.Element<"marker"> {
     public static of(): Marker {
       return new Marker();
     }
@@ -1914,7 +1913,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-shadow-parts-1/#part}
    */
-  export class Part extends Pseudo.Element {
+  export class Part extends Pseudo.Element<"part"> {
     public static of(idents: Iterable<Ident>): Part {
       return new Part(Array.from(idents));
     }
@@ -1947,7 +1946,7 @@ export namespace Selector {
   }
 
   export namespace Part {
-    export interface JSON extends Pseudo.Element.JSON {
+    export interface JSON extends Pseudo.Element.JSON<"part"> {
       idents: Array<Ident.JSON>;
     }
   }
@@ -1955,7 +1954,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#placeholder-pseudo}
    */
-  export class Placeholder extends Pseudo.Element {
+  export class Placeholder extends Pseudo.Element<"placeholder"> {
     public static of(): Placeholder {
       return new Placeholder();
     }
@@ -1968,7 +1967,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-selection}
    */
-  export class Selection extends Pseudo.Element {
+  export class Selection extends Pseudo.Element<"selection"> {
     public static of(): Selection {
       return new Selection();
     }
@@ -1981,7 +1980,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
    */
-  export class Slotted extends Pseudo.Element {
+  export class Slotted extends Pseudo.Element<"slotted"> {
     public static of(selectors: Iterable<Simple | Compound>): Slotted {
       return new Slotted(Array.from(selectors));
     }
@@ -2017,7 +2016,7 @@ export namespace Selector {
   }
 
   export namespace Slotted {
-    export interface JSON extends Pseudo.Element.JSON {
+    export interface JSON extends Pseudo.Element.JSON<"slotted"> {
       selectors: Array<Simple.JSON | Compound.JSON>;
     }
   }
@@ -2025,7 +2024,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-spelling-error}
    */
-  export class SpellingError extends Pseudo.Element {
+  export class SpellingError extends Pseudo.Element<"spelling-error"> {
     public static of(): SpellingError {
       return new SpellingError();
     }
@@ -2038,7 +2037,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/css-pseudo-4/#selectordef-target-text}
    */
-  export class TargetText extends Pseudo.Element {
+  export class TargetText extends Pseudo.Element<"target-text"> {
     public static of(): TargetText {
       return new TargetText();
     }
@@ -2091,7 +2090,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#compound}
    */
-  export class Compound extends Selector {
+  export class Compound extends Selector<"compound"> {
     public static of(left: Simple, right: Simple | Compound): Compound {
       return new Compound(left, right);
     }
@@ -2154,8 +2153,7 @@ export namespace Selector {
   }
 
   export namespace Compound {
-    export interface JSON extends Selector.JSON {
-      type: "compound";
+    export interface JSON extends Selector.JSON<"compound"> {
       left: Simple.JSON;
       right: Simple.JSON | JSON;
     }
@@ -2229,7 +2227,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#complex}
    */
-  export class Complex extends Selector {
+  export class Complex extends Selector<"complex"> {
     public static of(
       combinator: Combinator,
       left: Simple | Compound | Complex,
@@ -2343,8 +2341,7 @@ export namespace Selector {
   }
 
   export namespace Complex {
-    export interface JSON extends Selector.JSON {
-      type: "complex";
+    export interface JSON extends Selector.JSON<"complex"> {
       combinator: string;
       left: Simple.JSON | Compound.JSON | JSON;
       right: Simple.JSON | Compound.JSON;
@@ -2374,7 +2371,7 @@ export namespace Selector {
   /**
    * {@link https://drafts.csswg.org/selectors/#relative-selector}
    */
-  export class Relative extends Selector {
+  export class Relative extends Selector<"relative"> {
     public static of(
       combinator: Combinator,
       selector: Simple | Compound | Complex
@@ -2445,8 +2442,7 @@ export namespace Selector {
   }
 
   export namespace Relative {
-    export interface JSON extends Selector.JSON {
-      type: "relative";
+    export interface JSON extends Selector.JSON<"relative"> {
       combinator: string;
       selector: Simple.JSON | Compound.JSON | Complex.JSON;
     }
@@ -2470,7 +2466,7 @@ export namespace Selector {
       | Compound
       | Complex
       | Relative
-  > extends Selector {
+  > extends Selector<"list"> {
     public static of<T extends Simple | Compound | Complex | Relative>(
       left: T,
       right: T | List<T>
@@ -2539,8 +2535,7 @@ export namespace Selector {
   }
 
   export namespace List {
-    export interface JSON extends Selector.JSON {
-      type: "list";
+    export interface JSON extends Selector.JSON<"list"> {
       left: Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON;
       right: Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | JSON;
     }
