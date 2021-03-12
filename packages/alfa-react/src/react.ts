@@ -18,6 +18,9 @@ import * as TestRenderer from "react-test-renderer";
 const { keys } = Object;
 const { isBoolean, isObject, isString } = Refinement;
 
+/**
+ * @public
+ */
 export namespace React {
   export type Type = ReactElement<unknown>;
 

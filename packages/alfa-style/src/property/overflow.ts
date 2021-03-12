@@ -17,7 +17,7 @@ export const parse = pair(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow}
  * @internal
  */
 export default Property.shorthand(

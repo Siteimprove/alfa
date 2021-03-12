@@ -1,10 +1,16 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 
+/**
+ * @public
+ */
 export type Callback<T, R = void, A extends Array<unknown> = []> = (
   value: T,
   ...args: A
 ) => R;
 
+/**
+ * @public
+ */
 export namespace Callback {
   export function contraMap<T, R, U, A extends Array<unknown> = []>(
     callback: Callback<T, R, A>,

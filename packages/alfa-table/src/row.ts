@@ -9,7 +9,7 @@ import { Anchored } from "./anchored";
 import { Slot } from "./slot";
 
 /**
- * @see https://html.spec.whatwg.org/#concept-row
+ * {@link https://html.spec.whatwg.org/#concept-row}
  */
 export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
   public static of(y: number): Row {
@@ -60,7 +60,7 @@ export namespace Row {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#concept-row-group
+   * {@link https://html.spec.whatwg.org/#concept-row-group}
    */
   export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
     public static of(element: Element, y: number, height: number): Group {

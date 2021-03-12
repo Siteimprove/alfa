@@ -6,6 +6,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import { now } from "./now";
 
+/**
+ * @public
+ */
 export class Performance<T>
   implements
     AsyncIterable<Performance.Entry<T>>,
@@ -99,6 +102,9 @@ export class Performance<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Performance {
   export interface JSON {
     [key: string]: json.JSON;

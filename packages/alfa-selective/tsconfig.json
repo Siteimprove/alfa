@@ -22,6 +22,9 @@
       "path": "../alfa-mapper"
     },
     {
+      "path": "../alfa-monad"
+    },
+    {
       "path": "../alfa-predicate"
     },
     {

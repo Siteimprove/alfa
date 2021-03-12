@@ -3,6 +3,9 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export abstract class Requirement
   implements
     Equatable,
@@ -37,6 +40,9 @@ export abstract class Requirement
   }
 }
 
+/**
+ * @public
+ */
 export namespace Requirement {
   export interface JSON {
     [key: string]: json.JSON;

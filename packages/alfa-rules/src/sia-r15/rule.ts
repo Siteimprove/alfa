@@ -22,7 +22,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
   evaluate({ device, document, response }) {
     return {
@@ -39,17 +39,17 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             )
           )
           .reduce((groups, iframe) => {
-            for (const [node] of Node.from(iframe, device)) {
-              const name = node.name.map((name) => name.value);
+            const name = Node.from(iframe, device).name.map((name) =>
+              normalize(name.value)
+            );
 
-              groups = groups.set(
-                name,
-                groups
-                  .get(name)
-                  .getOrElse(() => List.empty<Element>())
-                  .append(iframe)
-              );
-            }
+            groups = groups.set(
+              name,
+              groups
+                .get(name)
+                .getOrElse(() => List.empty<Element>())
+                .append(iframe)
+            );
 
             return groups;
           }, Map.empty<Option<string>, List<Element>>())
@@ -106,4 +106,8 @@ export namespace Outcomes {
       `The \`<iframe>\` elements do not embed the same or equivalent resources`
     )
   );
+}
+
+function normalize(input: string): string {
+  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }

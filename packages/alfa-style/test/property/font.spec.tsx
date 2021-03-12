@@ -1,6 +1,4 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -9,7 +7,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `font: 16px sans-serif`", (t) => {
-  const element = <div style={{ font: "16px sans-serif" }}></div>;
+  const element = <div style={{ font: "16px sans-serif" }} />;
 
   const style = Style.from(element, device);
 
@@ -32,7 +30,7 @@ test("#cascaded() parses `font: 16px sans-serif`", (t) => {
 });
 
 test("#cascaded() assigns percentage to font-size, not font-stretch", (t) => {
-  const element = <div style={{ font: "80% sans-serif" }}></div>;
+  const element = <div style={{ font: "80% sans-serif" }} />;
 
   const style = Style.from(element, device);
 
@@ -44,7 +42,7 @@ test("#cascaded() assigns percentage to font-size, not font-stretch", (t) => {
 
 test("#cascaded() correctly handles line-height and font-family stack", (t) => {
   const element = (
-    <div style={{ font: "x-large/110% 'new century schoolbook', serif" }}></div>
+    <div style={{ font: "x-large/110% 'new century schoolbook', serif" }} />
   );
 
   const style = Style.from(element, device);
@@ -78,7 +76,7 @@ test("#cascaded parses `condensed oblique753 12pt 'Helvetica Neue', serif`", (t)
       style={{
         font: "condensed oblique 753 12pt 'Helvetica Neue', serif",
       }}
-    ></div>
+    />
   );
 
   const style = Style.from(element, device);

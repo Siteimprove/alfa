@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -9,6 +10,9 @@ import { Percentage } from "../percentage";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
+/**
+ * @public
+ */
 export class Translate<
   X extends Length | Percentage = Length | Percentage,
   Y extends Length | Percentage = Length | Percentage,
@@ -63,9 +67,7 @@ export class Translate<
   }
 
   public hash(hash: Hash): void {
-    this._x.hash(hash);
-    this._y.hash(hash);
-    this._z.hash(hash);
+    hash.writeHashable(this._x).writeHashable(this._y).writeHashable(this._z);
   }
 
   public toJSON(): Translate.JSON {
@@ -89,6 +91,9 @@ export class Translate<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Translate {
   export interface JSON extends Value.JSON<"transform"> {
     kind: "translate";
@@ -106,7 +111,7 @@ export namespace Translate {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translate
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translate}
    */
   const parseTranslate = map(
     right(
@@ -139,7 +144,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex}
    */
   const parseTranslateX = map(
     right(
@@ -161,7 +166,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey}
    */
   const parseTranslateY = map(
     right(
@@ -183,7 +188,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translatez
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translatez}
    */
   const parseTranslateZ = map(
     right(
@@ -202,7 +207,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d}
    */
   const parseTranslate3d = map(
     right(
@@ -234,11 +239,11 @@ export namespace Translate {
     }
   );
 
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Translate, string> = either(
     parseTranslate,
-    either(
-      either(parseTranslateX, parseTranslateY),
-      either(parseTranslateZ, parseTranslate3d)
-    )
+    parseTranslateX,
+    parseTranslateY,
+    parseTranslateZ,
+    parseTranslate3d
   );
 }

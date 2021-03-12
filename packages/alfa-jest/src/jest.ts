@@ -13,6 +13,9 @@ declare global {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Jest {
   export function createPlugin<I, J, T = unknown, Q = never>(
     transform: Mapper<I, Future.Maybe<J>>,
@@ -26,12 +29,12 @@ export namespace Jest {
       async toBeAccessible(value: I) {
         const input = await transform(value);
 
-        const error = await asserter.expect(input).to.be.accessible();
+        const result = await asserter.expect(input).to.be.accessible();
 
-        const message = error.isOk() ? error.get() : error.getErr();
+        const message = result.isOk() ? result.get() : result.getErr();
 
         return {
-          pass: error.isOk(),
+          pass: result.isOk(),
           message: () =>
             this.utils.matcherHint("toBeAccessible", "received", "", {
               isNot: this.isNot,

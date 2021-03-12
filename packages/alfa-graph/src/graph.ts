@@ -6,6 +6,9 @@ import { Map } from "@siteimprove/alfa-map";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
+/**
+ * @public
+ */
 export class Graph<T>
   implements
     Iterable<[T, Iterable<T>]>,
@@ -128,7 +131,7 @@ export class Graph<T>
   }
 
   public hash(hash: Hash): void {
-    this._nodes.hash(hash);
+    hash.writeHashable(this._nodes);
   }
 
   public *iterator(): Iterator<[T, Iterable<T>]> {
@@ -163,6 +166,9 @@ export class Graph<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Graph {
   export type JSON<T> = Array<
     [Serializable.ToJSON<T>, Array<Serializable.ToJSON<T>>]
@@ -200,7 +206,7 @@ export namespace Graph {
   }
 
   /**
-   * @see https://en.wikipedia.org/wiki/Depth-first_search
+   * {@link https://en.wikipedia.org/wiki/Depth-first_search}
    */
   export const DepthFirst: Traversal = function* <T>(graph: Graph<T>, root: T) {
     const stack = [root];
@@ -225,7 +231,7 @@ export namespace Graph {
   };
 
   /**
-   * @see https://en.wikipedia.org/wiki/Breadth-first_search
+   * {@link https://en.wikipedia.org/wiki/Breadth-first_search}
    */
   export const BreadthFirst: Traversal = function* <T>(
     graph: Graph<T>,

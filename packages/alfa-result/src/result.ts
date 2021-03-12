@@ -14,9 +14,12 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
 import { Ok } from "./ok";
 
+/**
+ * @public
+ */
 export interface Result<T, E = T>
-  extends Monad<T>,
-    Functor<T>,
+  extends Functor<T>,
+    Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
@@ -52,6 +55,9 @@ export interface Result<T, E = T>
   toJSON(): Result.JSON<T, E>;
 }
 
+/**
+ * @public
+ */
 export namespace Result {
   export type JSON<T, E = T> = Ok.JSON<T> | Err.JSON<E>;
 

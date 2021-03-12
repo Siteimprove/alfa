@@ -18,7 +18,7 @@ const { isElement, hasNamespace } = Element;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r84.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r84",
   requirements: [
     Criterion.of("2.1.1"),
     Criterion.of("2.1.3"),
@@ -74,7 +74,7 @@ export namespace Outcomes {
  *
  * - A computed `width` or `height` that is not `auto`; and
  * - A corresponding computed `overflow-x` or `overflow-y`, respectively, that
- *   is `auto`, `clip`, or `scroll`.
+ *   is `auto` or `scroll`.
  */
 function isPossiblyScrollable(device: Device): Predicate<Element> {
   const properties = [
@@ -93,7 +93,6 @@ function isPossiblyScrollable(device: Device): Predicate<Element> {
         style.computed(overflow).some((overflow) => {
           switch (overflow.value) {
             case "auto":
-            case "clip":
             case "scroll":
               return true;
 

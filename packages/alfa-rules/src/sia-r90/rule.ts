@@ -15,7 +15,7 @@ const { isElement, hasNamespace } = Element;
 const { and, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r90.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r90",
   requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
   evaluate({ device, document }) {
     return {

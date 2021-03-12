@@ -11,6 +11,9 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
 
+/**
+ * @public
+ */
 export class Argument<T = unknown>
   implements Functor<T>, Serializable<Argument.JSON> {
   public static of<T>(
@@ -148,6 +151,9 @@ export class Argument<T = unknown>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Argument {
   export interface JSON {
     [key: string]: json.JSON;

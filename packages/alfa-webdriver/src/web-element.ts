@@ -1,7 +1,6 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
-
-import { Browser } from "webdriverio";
+/// <reference types="webdriverio/async" />
 
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -30,19 +29,24 @@ import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
 /**
- * @see https://w3c.github.io/webdriver/#dfn-web-elements
+ * {@link https://w3c.github.io/webdriver/#dfn-web-elements}
+ *
+ * @public
  */
 export interface WebElement {
   /**
-   * @see https://w3c.github.io/webdriver/#dfn-web-element-reference
+   * {@link https://w3c.github.io/webdriver/#dfn-web-element-reference}
    */
   ["element-6066-11e4-a52e-4f735466cecf"]?: string;
 }
 
+/**
+ * @public
+ */
 export namespace WebElement {
   export async function toPage(
     webElement: WebElement,
-    browser: Browser<"async">
+    browser: WebdriverIO.Browser
   ): Promise<Page> {
     const element = await browser.execute((element) => {
       return toElement(element as globalThis.Element);

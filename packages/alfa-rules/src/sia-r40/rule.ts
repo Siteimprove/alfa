@@ -16,7 +16,7 @@ const { hasName } = Role;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r40.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r40",
   evaluate({ device, document }) {
     return {
       applicability() {

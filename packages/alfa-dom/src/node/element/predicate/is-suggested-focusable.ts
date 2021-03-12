@@ -1,7 +1,7 @@
 import { Element } from "../../element";
 
 /**
- * @see https://html.spec.whatwg.org/#tabindex-value
+ * {@link https://html.spec.whatwg.org/#tabindex-value}
  *
  * @remarks
  * Draggable elements for which the user agent supports drag operations without

@@ -5,13 +5,19 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import * as data from "./browser/data";
+import data from "./browser/data";
 
+/**
+ * @public
+ */
 export type Browser<
   N extends Browser.Name = Browser.Name,
   V extends Browser.Version<N> = Browser.Version<N>
 > = Browser.Release<N, V>;
 
+/**
+ * @public
+ */
 export namespace Browser {
   export type Name = Data.Name;
 
@@ -78,11 +84,11 @@ export namespace Browser {
   export type Scope<N extends Name = Name> = Iterable<Release<N>>;
 
   export function isBrowser(browser: string): browser is Name {
-    return browser in data.Data;
+    return browser in data;
   }
 
   function* getBrowsers(): Iterable<Name> {
-    for (const browser in data.Data) {
+    for (const browser in data) {
       if (isBrowser(browser)) {
         yield browser;
       }
@@ -93,11 +99,11 @@ export namespace Browser {
     browser: N,
     version: string
   ): version is Version<N> {
-    return version in data.Data[browser].releases;
+    return version in data[browser].releases;
   }
 
   function* getVersions<N extends Name>(browser: N): Iterable<Version<N>> {
-    for (const version in data.Data[browser].releases) {
+    for (const version in data[browser].releases) {
       if (isVersion(browser, version)) {
         yield version;
       }
@@ -110,7 +116,7 @@ export namespace Browser {
 
   const releases = [...getBrowsers()].reduce(
     <N extends Name>(support: Releases, browser: N) => {
-      const releases = data.Data[browser].releases as Data.Releases<N>;
+      const releases = data[browser].releases as Data.Releases<N>;
 
       return {
         ...support,
@@ -250,9 +256,9 @@ namespace Data {
     ? Extract<keyof T, E>
     : never;
 
-  export type Name = Keys<data.Data>;
+  export type Name = Keys<data>;
 
-  export type Browser<N extends Name> = data.Data[N];
+  export type Browser<N extends Name> = data[N];
 
   export type Releases<N extends Name> = Browser<N>["releases"];
 

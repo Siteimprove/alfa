@@ -3,6 +3,9 @@ import { Branched } from "@siteimprove/alfa-branched";
 
 import { Criteria } from "./criterion/data";
 
+/**
+ * @public
+ */
 export class Criterion<
   C extends Criterion.Chapter = Criterion.Chapter
 > extends Requirement {
@@ -99,6 +102,9 @@ export class Criterion<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Criterion {
   export interface JSON extends Requirement.JSON {
     chapter: Chapter;

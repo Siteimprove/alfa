@@ -22,7 +22,7 @@ export type Computed = Length<"px"> | Percentage;
 export const parse = either(Length.parse, Percentage.parse);
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}
  * @internal
  */
 export default Property.of<Specified, Computed>(

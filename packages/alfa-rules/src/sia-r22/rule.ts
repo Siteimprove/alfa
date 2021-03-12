@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r22.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r22",
   requirements: [Technique.of("G87"), Technique.of("G93"), Technique.of("H95")],
   evaluate({ device, document }) {
     return {

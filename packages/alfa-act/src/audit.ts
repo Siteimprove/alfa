@@ -12,20 +12,27 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export class Audit<I, T = unknown, Q = never> {
   public static of<I, T = unknown, Q = never>(
     input: I,
     rules: Iterable<Rule<I, T, Q>>,
-    oracle: Oracle<Q> = () => Future.now(None)
+    oracle: Oracle<I, T, Q> = () => Future.now(None)
   ): Audit<I, T, Q> {
     return new Audit(input, List.from(rules), oracle);
   }
 
   private readonly _input: I;
   private readonly _rules: List<Rule<I, T, Q>>;
-  private readonly _oracle: Oracle<Q>;
+  private readonly _oracle: Oracle<I, T, Q>;
 
-  private constructor(input: I, rules: List<Rule<I, T, Q>>, oracle: Oracle<Q>) {
+  private constructor(
+    input: I,
+    rules: List<Rule<I, T, Q>>,
+    oracle: Oracle<I, T, Q>
+  ) {
     this._input = input;
     this._rules = rules;
     this._oracle = oracle;
@@ -51,6 +58,9 @@ export class Audit<I, T = unknown, Q = never> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Audit {
   export class Event<I, T, Q> implements Serializable<Event.JSON> {
     public static of<I, T, Q>(

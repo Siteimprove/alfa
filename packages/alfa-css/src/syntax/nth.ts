@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -9,7 +10,9 @@ import { Token } from "./token";
 const { map, right, pair, delimited, option, either } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#anb
+ * {@link https://drafts.csswg.org/css-syntax/#anb}
+ *
+ * @public
  */
 export class Nth implements Iterable<Token>, Equatable, Serializable {
   public static of(step: number, offset: number = 0): Nth {
@@ -91,6 +94,9 @@ export class Nth implements Iterable<Token>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Nth {
   export interface JSON {
     [key: string]: json.JSON;
@@ -103,9 +109,9 @@ export namespace Nth {
    * The An+B syntax isn't really meant for the tokens produced by the CSS lexer
    * and so the resulting parser ends up being quite complex.
    *
-   * @see https://drafts.csswg.org/css-syntax/#anb-production
+   * {@link https://drafts.csswg.org/css-syntax/#anb-production}
    */
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Nth, string> = either(
     // odd | even
     map(
       Token.parseIdent(

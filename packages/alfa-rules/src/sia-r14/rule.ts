@@ -20,7 +20,7 @@ const { isText } = Text;
 const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r14",
   requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
   evaluate({ device, document }) {
     return {

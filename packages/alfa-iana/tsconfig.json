@@ -4,7 +4,7 @@
   "files": [
     "src/index.ts",
     "src/language.ts",
-    "src/language/subtags.ts",
+    "src/language/data.ts",
     "test/language.spec.ts"
   ],
   "references": [

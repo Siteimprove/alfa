@@ -9,7 +9,7 @@ import * as Start from "./inset-block-start";
 const { map, pair, option, right } = Parser;
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block}
  * @internal
  */
 export default Property.shorthand(

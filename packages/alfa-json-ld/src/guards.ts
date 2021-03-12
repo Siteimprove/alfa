@@ -9,6 +9,9 @@ import {
 
 const { isArray } = Array;
 
+/**
+ * @public
+ */
 export function isKeyword(key: string): key is Keyword {
   switch (key) {
     case "@context":
@@ -30,6 +33,9 @@ export function isKeyword(key: string): key is Keyword {
   }
 }
 
+/**
+ * @public
+ */
 export function isScalar(
   element: Scalar | List | Dictionary | null
 ): element is Scalar {
@@ -43,24 +49,36 @@ export function isScalar(
   }
 }
 
+/**
+ * @public
+ */
 export function isList(
   element: Scalar | List | Dictionary | null
 ): element is List {
   return element !== null && isArray(element);
 }
 
+/**
+ * @public
+ */
 export function isDictionary(
   element: Scalar | List | Dictionary | null
 ): element is Dictionary {
   return element !== null && !isList(element) && typeof element === "object";
 }
 
+/**
+ * @public
+ */
 export function isListObject(
   element: Scalar | List | Dictionary | null
 ): element is ListObject {
   return isDictionary(element) && element["@list"] !== undefined;
 }
 
+/**
+ * @public
+ */
 export function isValueObject(
   element: Scalar | List | Dictionary | null
 ): element is ValueObject {

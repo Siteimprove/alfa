@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -9,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `text-decoration: underline`", (t) => {
-  const element = <div style={{ textDecoration: "underline" }}></div>;
+  const element = <div style={{ textDecoration: "underline" }} />;
 
   const style = Style.from(element, device);
 
@@ -45,7 +44,7 @@ test("#cascaded() parses `text-decoration: underline`", (t) => {
 });
 
 test("#cascaded() parses `text-decoration: underline overline`", (t) => {
-  const element = <div style={{ textDecoration: "underline overline" }}></div>;
+  const element = <div style={{ textDecoration: "underline overline" }} />;
 
   const style = Style.from(element, device);
 
@@ -69,7 +68,7 @@ test("#cascaded() parses `text-decoration: underline overline`", (t) => {
 });
 
 test("#cascaded() parses `text-decoration: underline solid`", (t) => {
-  const element = <div style={{ textDecoration: "underline solid" }}></div>;
+  const element = <div style={{ textDecoration: "underline solid" }} />;
 
   const style = Style.from(element, device);
 
@@ -97,7 +96,7 @@ test("#cascaded() parses `text-decoration: underline solid`", (t) => {
 });
 
 test("#cascaded() parses `text-decoration: underline red`", (t) => {
-  const element = <div style={{ textDecoration: "underline red" }}></div>;
+  const element = <div style={{ textDecoration: "underline red" }} />;
 
   const style = Style.from(element, device);
 
@@ -126,7 +125,7 @@ test("#cascaded() parses `text-decoration: underline red`", (t) => {
 });
 
 test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
-  const element = <div style={{ textDecoration: "underline solid red" }}></div>;
+  const element = <div style={{ textDecoration: "underline solid red" }} />;
 
   const style = Style.from(element, device);
 

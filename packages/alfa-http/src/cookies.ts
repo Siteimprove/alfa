@@ -5,6 +5,9 @@ import { Option } from "@siteimprove/alfa-option";
 
 import { Cookie } from "./cookie";
 
+/**
+ * @public
+ */
 export class Cookies implements Iterable<Cookie>, Serializable<Cookies.JSON> {
   /**
    * @remarks
@@ -64,6 +67,9 @@ export class Cookies implements Iterable<Cookie>, Serializable<Cookies.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cookies {
   export interface JSON extends Array<Cookie.JSON> {}
 

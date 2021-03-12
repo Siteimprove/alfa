@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -9,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `clip: auto`", (t) => {
-  const element = <div style={{ clip: "auto" }}></div>;
+  const element = <div style={{ clip: "auto" }} />;
 
   const style = Style.from(element, device);
 
@@ -23,7 +22,7 @@ test("#cascaded() parses `clip: auto`", (t) => {
 });
 
 test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
-  const element = <div style={{ clip: "rect(1px, auto, 2em, auto)" }}></div>;
+  const element = <div style={{ clip: "rect(1px, auto, 2em, auto)" }} />;
 
   const style = Style.from(element, device);
 
@@ -64,7 +63,7 @@ test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
 });
 
 test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
-  const element = <div style={{ clip: "rect(1px auto 2em auto)" }}></div>;
+  const element = <div style={{ clip: "rect(1px auto 2em auto)" }} />;
 
   const style = Style.from(element, device);
 
@@ -105,7 +104,7 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
 });
 
 test("#cascaded() fails clip with wrong number of arguments", (t) => {
-  const element = <div style={{ clip: "rect(1px auto 2em)" }}></div>;
+  const element = <div style={{ clip: "rect(1px auto 2em)" }} />;
 
   const style = Style.from(element, device);
 
@@ -113,7 +112,7 @@ test("#cascaded() fails clip with wrong number of arguments", (t) => {
 });
 
 test("#cascaded() fails clip mixing comma and whitespace separation", (t) => {
-  const element = <div style={{ clip: "rect(1px auto 2em, auto)" }}></div>;
+  const element = <div style={{ clip: "rect(1px auto 2em, auto)" }} />;
 
   const style = Style.from(element, device);
 

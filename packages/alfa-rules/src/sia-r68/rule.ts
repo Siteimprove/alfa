@@ -21,7 +21,7 @@ const { isElement, hasNamespace } = Element;
 const { and, equals, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r68.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r68",
   requirements: [Criterion.of("1.3.1")],
   evaluate({ device, document }) {
     return {
@@ -55,17 +55,18 @@ export namespace Outcomes {
 }
 
 function hasRequiredChildren(device: Device): Predicate<Element> {
-  return (element) =>
-    aria.Node.from(element, device).every((node) =>
-      node.role
-        .filter((role) => role.hasRequiredChildren())
-        .every((role) =>
-          node
-            .children()
-            .filter((node) => isElement(node.node))
-            .some(isRequiredChild(role.requiredChildren))
-        )
-    );
+  return (element) => {
+    const node = aria.Node.from(element, device);
+
+    return node.role
+      .filter((role) => role.hasRequiredChildren())
+      .every((role) =>
+        node
+          .children()
+          .filter((node) => isElement(node.node))
+          .some(isRequiredChild(role.requiredChildren))
+      );
+  };
 }
 
 function isRequiredChild(

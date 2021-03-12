@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -16,12 +17,14 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { isKeyboardActionable } from "../common/predicate/is-keyboard-actionable";
 
 import { Question } from "../common/question";
+import { isAtTheStart } from "../common/predicate/is-at-the-start";
 
-const { not, fold } = Predicate;
 const { hasName, isElement } = Element;
+const { not, fold } = Predicate;
+const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r87.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
   evaluate({ device, document, response }) {
     return {
@@ -60,6 +63,11 @@ export default Rule.Atomic.of<Page, Document, Question>({
               )
             )
           );
+
+        // there can be more than one element with a role of main, going to any of these is OK.
+        const mains = document
+          .inclusiveDescendants({ flattened: true })
+          .filter(and(isElement, hasRole("main")));
 
         const askIsMain = Question.of(
           "first-tabbable-reference-is-main",
@@ -101,7 +109,9 @@ export default Rule.Atomic.of<Page, Document, Question>({
                         () =>
                           reference.isSome()
                             ? expectation(
-                                reference.some(hasRole("main")),
+                                mains.some((main) =>
+                                  reference.some(isAtTheStart(main, device))
+                                ),
                                 () => Outcomes.FirstTabbableIsLinkToContent,
                                 () =>
                                   askIsMain.map((isMain) =>

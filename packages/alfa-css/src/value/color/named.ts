@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -8,6 +9,9 @@ import { Number } from "../number";
 
 const { map } = Parser;
 
+/**
+ * @public
+ */
 export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
@@ -59,7 +63,7 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._color);
+    hash.writeString(this._color);
   }
 
   public toJSON(): Named.JSON {
@@ -75,6 +79,9 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Named {
   export interface JSON extends Value.JSON<"color"> {
     format: "named";
@@ -83,7 +90,7 @@ export namespace Named {
 
   export type Color = keyof Colors;
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Named, string> = map(
     Token.parseIdent((ident) => ident.value.toLowerCase() in Colors),
     (ident) => Named.of(ident.value.toLowerCase() as Color)
   );
@@ -92,7 +99,7 @@ export namespace Named {
 type Colors = typeof Colors;
 
 /**
- * @see https://drafts.csswg.org/css-color/#named-colors
+ * {@link https://drafts.csswg.org/css-color/#named-colors}
  */
 const Colors = {
   // The "transparent" color is a little special in that while it is defined

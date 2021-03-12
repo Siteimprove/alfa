@@ -30,8 +30,11 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { JSHandle } from "puppeteer";
 
+/**
+ * @public
+ */
 export namespace Puppeteer {
-  export type Type = JSHandle<globalThis.Node>;
+  export type Type = JSHandle;
 
   export async function toNode(value: Type): Promise<Node> {
     return Node.from(await toJSON(value));

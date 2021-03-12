@@ -20,6 +20,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { Wrapper } from "@vue/test-utils";
 import V from "vue";
 
+/**
+ * @public
+ */
 export namespace Vue {
   export type Type = Wrapper<V | null> | Cheerio.Type;
 

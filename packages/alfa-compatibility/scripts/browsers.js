@@ -1,6 +1,7 @@
 const fs = require("fs");
+const path = require("path");
 const prettier = require("prettier");
-const data = require("mdn-browser-compat-data");
+const data = require("@mdn/browser-compat-data");
 
 /**
  * @type {Array<import("mdn-browser-compat-data/types").BrowserNames>}
@@ -50,9 +51,15 @@ let code = `
 // changes, do so in \`scripts/browsers.js\` and run \`yarn generate\` to rebuild this
 // file.
 
-export type Data = typeof Data;
+/**
+ * @internal
+ */
+type Data = typeof Data;
 
-export const Data = {
+/**
+ * @internal
+ */
+const Data = {
   ${browsers
     .map(
       (browser) => `
@@ -71,10 +78,12 @@ export const Data = {
     )
     .join(",\n\n")}
 };
+
+export default Data;
 `;
 
 code = prettier.format(code, {
   parser: "typescript",
 });
 
-fs.writeFileSync("src/browser/data.ts", code);
+fs.writeFileSync(path.join(__dirname, "..", "src", "browser", "data.ts", code));

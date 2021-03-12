@@ -31,7 +31,13 @@ export const parse = map(
   separatedList(
     either(
       Keyword.parse("serif", "sans-serif", "cursive", "fantasy", "monospace"),
-      String.parse
+      either(
+        String.parse,
+        map(
+          separatedList(Token.parseIdent(), Token.parseWhitespace),
+          (idents) => String.of(idents.map((ident) => ident.value).join(" "))
+        )
+      )
     ),
     delimited(option(Token.parseWhitespace), Token.parseComma)
   ),
@@ -39,7 +45,7 @@ export const parse = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}
  * @internal
  */
 export default Property.of<Specified, Computed>(

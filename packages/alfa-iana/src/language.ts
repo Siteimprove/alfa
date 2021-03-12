@@ -5,6 +5,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Language implements Equatable, Serializable {
   public static of(
     primary: Language.Primary,
@@ -90,6 +93,9 @@ export class Language implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Language {
   export interface JSON {
     [key: string]: json.JSON;
@@ -108,7 +114,7 @@ export namespace Language {
     | "private-use";
 
   /**
-   * @see https://tools.ietf.org/html/bcp47#section-3.1.2
+   * {@link https://tools.ietf.org/html/bcp47#section-3.1.2}
    */
   export abstract class Subtag implements Equatable, Serializable {
     protected readonly _name: string;
@@ -118,12 +124,12 @@ export namespace Language {
     }
 
     /**
-     * @see https://tools.ietf.org/html/bcp47#section-3.1.3
+     * {@link https://tools.ietf.org/html/bcp47#section-3.1.3}
      */
     public abstract get type(): string;
 
     /**
-     * @see https://tools.ietf.org/html/bcp47#section-3.1.4
+     * {@link https://tools.ietf.org/html/bcp47#section-3.1.4}
      */
     public get name(): string {
       return this._name;
@@ -147,7 +153,7 @@ export namespace Language {
   }
 
   /**
-   * @see https://tools.ietf.org/html/bcp47#section-2.2.1
+   * {@link https://tools.ietf.org/html/bcp47#section-2.2.1}
    */
   export class Primary extends Subtag {
     public static of(name: string, scope: Option<Scope> = None): Primary {
@@ -166,7 +172,7 @@ export namespace Language {
     }
 
     /**
-     * @see https://tools.ietf.org/html/bcp47#section-3.1.11
+     * {@link https://tools.ietf.org/html/bcp47#section-3.1.11}
      */
     public get scope(): Option<Scope> {
       return this._scope;
@@ -196,8 +202,10 @@ export namespace Language {
     }
   }
 
+  export const { of: primary } = Primary;
+
   /**
-   * @see https://tools.ietf.org/html/bcp47#section-2.2.2
+   * {@link https://tools.ietf.org/html/bcp47#section-2.2.2}
    */
   export class Extended extends Subtag {
     public static of(
@@ -222,14 +230,14 @@ export namespace Language {
     }
 
     /**
-     * @see https://tools.ietf.org/html/bcp47#section-3.1.8
+     * {@link https://tools.ietf.org/html/bcp47#section-3.1.8}
      */
     public get prefix(): string {
       return this._prefix;
     }
 
     /**
-     * @see https://tools.ietf.org/html/bcp47#section-3.1.11
+     * {@link https://tools.ietf.org/html/bcp47#section-3.1.11}
      */
     public get scope(): Option<Scope> {
       return this._scope;
@@ -262,8 +270,10 @@ export namespace Language {
     }
   }
 
+  export const { of: extended } = Extended;
+
   /**
-   * @see https://tools.ietf.org/html/bcp47#section-2.2.3
+   * {@link https://tools.ietf.org/html/bcp47#section-2.2.3}
    */
   export class Script extends Subtag {
     public static of(name: string): Script {
@@ -296,8 +306,10 @@ export namespace Language {
     }
   }
 
+  export const { of: script } = Script;
+
   /**
-   * @see https://tools.ietf.org/html/bcp47#section-2.2.4
+   * {@link https://tools.ietf.org/html/bcp47#section-2.2.4}
    */
   export class Region extends Subtag {
     public static of(name: string): Region {
@@ -330,8 +342,10 @@ export namespace Language {
     }
   }
 
+  export const { of: region } = Region;
+
   /**
-   * @see https://tools.ietf.org/html/bcp47#section-2.2.5
+   * {@link https://tools.ietf.org/html/bcp47#section-2.2.5}
    */
   export class Variant extends Subtag {
     public static of(name: string, prefixes: Array<string>): Variant {
@@ -350,7 +364,7 @@ export namespace Language {
     }
 
     /**
-     * @see https://tools.ietf.org/html/bcp47#section-3.1.8
+     * {@link https://tools.ietf.org/html/bcp47#section-3.1.8}
      */
     public get prefixes(): Array<string> {
       return this._prefixes;
@@ -380,35 +394,40 @@ export namespace Language {
       prefixes: Array<string>;
     }
   }
+
+  export const { of: variant } = Variant;
 }
 
-import * as subtags from "./language/subtags";
+import * as data from "./language/data";
 
+/**
+ * @public
+ */
 export namespace Language {
   export function parse(input: string): Option<Language> {
     let parts = Slice.of(input.toLowerCase().split("-"));
 
     return parts
       .get(0)
-      .flatMap((name) => subtags.Primary.get(name))
+      .flatMap((name) => data.Primary.get(name))
       .map((primary) => {
         parts = parts.slice(1);
 
         const extended = parts
           .get(0)
-          .flatMap((name) => subtags.Extended.get(name));
+          .flatMap((name) => data.Extended.get(name));
 
         if (extended.isSome()) {
           parts = parts.slice(1);
         }
 
-        const script = parts.get(0).flatMap((name) => subtags.Script.get(name));
+        const script = parts.get(0).flatMap((name) => data.Script.get(name));
 
         if (script.isSome()) {
           parts = parts.slice(1);
         }
 
-        const region = parts.get(0).flatMap((name) => subtags.Region.get(name));
+        const region = parts.get(0).flatMap((name) => data.Region.get(name));
 
         if (region.isSome()) {
           parts = parts.slice(1);
@@ -419,7 +438,7 @@ export namespace Language {
         while (true) {
           const variant = parts
             .get(0)
-            .flatMap((name) => subtags.Variant.get(name));
+            .flatMap((name) => data.Variant.get(name));
 
           if (variant.isSome()) {
             parts = parts.slice(1);

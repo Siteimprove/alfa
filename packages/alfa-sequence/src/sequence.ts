@@ -15,14 +15,25 @@ import { Nil } from "./nil";
 
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export interface Sequence<T> extends Collection.Indexed<T> {
-  // Collection<T> methods
-
   isEmpty(): this is Sequence<never>;
   forEach(callback: Callback<T, void, [index: number]>): void;
   map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
   flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
   reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+  reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U;
+  reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U;
   apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
   filter<U extends T>(
     refinement: Refinement<T, U, [index: number]>
@@ -42,9 +53,6 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   every(predicate: Predicate<T, [index: number]>): boolean;
   count(predicate: Predicate<T, [index: number]>): number;
   distinct(): Sequence<T>;
-
-  // Indexed<T> methods
-
   get(index: number): Option<T>;
   has(index: number): boolean;
   set(index: number, value: T): Sequence<T>;
@@ -52,6 +60,9 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   append(value: T): Sequence<T>;
   prepend(value: T): Sequence<T>;
   concat(iterable: Iterable<T>): Sequence<T>;
+  subtract(iterable: Iterable<T>): Sequence<T>;
+  intersect(iterable: Iterable<T>): Sequence<T>;
+  zip<U>(iterable: Iterable<U>): Sequence<[T, U]>;
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
@@ -75,19 +86,14 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   join(separator: string): string;
   sortWith(comparer: Comparer<T>): Sequence<T>;
   compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
-
-  // Sequence<T> methods
-
-  subtract(iterable: Iterable<T>): Sequence<T>;
-  intersect(iterable: Iterable<T>): Sequence<T>;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
-
-  // Serializable methods
-
   toJSON(): Sequence.JSON<T>;
 }
 
+/**
+ * @public
+ */
 export namespace Sequence {
   export type JSON<T> = Cons.JSON<T> | Nil.JSON;
 

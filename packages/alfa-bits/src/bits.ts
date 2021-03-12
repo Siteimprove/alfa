@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export namespace Bits {
   export function bit(i: number): number {
     return 1 << i;
@@ -29,7 +32,7 @@ export namespace Bits {
    * on Wikipedia. Until ECMAScript natively provides an efficient population
    * count algorithm, this is the best we can do.
    *
-   * @see https://en.wikipedia.org/wiki/Hamming_weight
+   * {@link https://en.wikipedia.org/wiki/Hamming_weight}
    */
   export function popCount(bits: number): number {
     bits -= (bits >> 1) & 0x55555555;

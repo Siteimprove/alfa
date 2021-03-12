@@ -8,7 +8,9 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
- * @see http://blog.higher-order.com/assets/trampolines.pdf
+ * {@link http://blog.higher-order.com/assets/trampolines.pdf}
+ *
+ * @public
  */
 export abstract class Future<T>
   implements Functor<T>, Monad<T>, AsyncIterable<T> {
@@ -74,6 +76,9 @@ export abstract class Future<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Future {
   export type Maybe<T> = T | Future<T>;
 
@@ -113,13 +118,13 @@ export namespace Future {
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Future<U>>
+    mapper: Mapper<T, Future<U>, [index: number]>
   ): Future<Iterable<U>> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value))
         ),
       now(Array.empty())
     );

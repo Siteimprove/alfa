@@ -19,7 +19,7 @@ export type Computed = Length<"px">;
 export const parse = Length.parse;
 
 /**
- * @see https://drafts.csswg.org/css-ui/#outline-offset
+ * {@link https://drafts.csswg.org/css-ui/#outline-offset}
  */
 export default Property.of<Specified, Computed>(
   Length.of(0, "px"),

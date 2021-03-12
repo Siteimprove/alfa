@@ -48,7 +48,7 @@ export const parseAbsolute = Keyword.parse(
 export const parse = either(Percentage.parse, parseAbsolute);
 
 /**
- * @see https://drafts.csswg.org/css-fonts/#font-stretch-prop
+ * {@link https://drafts.csswg.org/css-fonts/#font-stretch-prop}
  */
 export default Property.of<Specified, Computed>(
   Percentage.of(1),

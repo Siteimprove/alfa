@@ -8,7 +8,7 @@ import * as Line from "./text-decoration-line";
 import * as Style from "./text-decoration-style";
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration}
  * @internal
  */
 export default Property.shorthand(

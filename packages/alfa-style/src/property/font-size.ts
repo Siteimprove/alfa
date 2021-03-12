@@ -89,7 +89,7 @@ const bases = {
  * that we will compute font sizes that are slightly larger than what browsers
  * would render.
  *
- * @see https://drafts.csswg.org/css-fonts/#absolute-size-mapping
+ * {@link https://drafts.csswg.org/css-fonts/#absolute-size-mapping}
  */
 const factors = {
   "xx-small": 3 / 5,
@@ -103,7 +103,7 @@ const factors = {
 } as const;
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/font-size
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-size}
  */
 export default Property.of<Specified, Computed>(
   Length.of(16, "px"),

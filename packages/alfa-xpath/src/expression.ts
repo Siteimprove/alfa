@@ -4,12 +4,18 @@ import { Option, None } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export type Expression =
   | Expression.Primary
   | Expression.Path
   | Expression.Axis
   | Expression.Filter;
 
+/**
+ * @public
+ */
 export namespace Expression {
   export type JSON = Primary.JSON | Path.JSON | Axis.JSON | Filter.JSON;
 

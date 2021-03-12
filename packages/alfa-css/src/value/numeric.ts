@@ -1,3 +1,4 @@
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 
@@ -5,7 +6,12 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Value } from "../value";
 
-export abstract class Numeric<T extends string = string> extends Value<T> {
+/**
+ * @public
+ */
+export abstract class Numeric<T extends string = string>
+  extends Value<T>
+  implements Comparable<Numeric<T>> {
   /**
    * The number of decimals stored for every numeric value.
    */
@@ -26,8 +32,12 @@ export abstract class Numeric<T extends string = string> extends Value<T> {
     return value instanceof Numeric && value._value === this._value;
   }
 
+  public compare(value: Numeric<T>): Comparison {
+    return Comparable.compareNumber(this._value, value._value);
+  }
+
   public hash(hash: Hash): void {
-    Hash.writeFloat64(hash, this._value);
+    hash.writeFloat64(this._value);
   }
 
   public abstract toJSON(): Numeric.JSON<T>;
@@ -37,6 +47,9 @@ export abstract class Numeric<T extends string = string> extends Value<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Numeric {
   export interface JSON<T extends string = string> extends Value.JSON<T> {
     [key: string]: json.JSON;

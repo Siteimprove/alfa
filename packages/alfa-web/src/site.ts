@@ -5,7 +5,9 @@ import * as json from "@siteimprove/alfa-json";
 import { Resource } from "./resource";
 
 /**
- * @see https://en.wikipedia.org/wiki/Web_site
+ * {@link https://en.wikipedia.org/wiki/Web_site}
+ *
+ * @public
  */
 export class Site<R extends Resource = Resource>
   implements json.Serializable<Site.JSON<R>> {
@@ -30,6 +32,9 @@ export class Site<R extends Resource = Resource>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Site {
   export interface JSON<R extends Resource = Resource> {
     [key: string]: json.JSON;
