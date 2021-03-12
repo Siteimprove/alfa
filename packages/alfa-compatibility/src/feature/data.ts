@@ -6,12 +6,12 @@
 /**
  * @internal
  */
-type Data = typeof Data;
+export type Features = typeof Features;
 
 /**
  * @internal
  */
-const Data = {
+export const Features = {
   "css.properties.border-radius": {
     support: {
       chrome: {
@@ -457,5 +457,3 @@ const Data = {
     },
   },
 };
-
-export default Data;

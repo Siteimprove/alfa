@@ -161,12 +161,12 @@ let code = `
 /**
  * @internal
  */
-type Data = typeof Data;
+export type Features = typeof Features;
 
 /**
  * @internal
  */
-const Data = {
+export const Features = {
   ${features
     .map(
       (feature) => `
@@ -192,8 +192,6 @@ const Data = {
     )
     .join(",\n\n")}
 };
-
-export default Data;
 `;
 
 code = prettier.format(code, {
