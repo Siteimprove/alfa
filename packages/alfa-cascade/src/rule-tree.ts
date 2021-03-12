@@ -45,7 +45,9 @@ import * as json from "@siteimprove/alfa-json";
  * rules that match most elements, such as the universal selector or `html` and
  * `body`.
  *
- * @see http://doc.servo.org/style/rule_tree/struct.RuleTree.html
+ * {@link http://doc.servo.org/style/rule_tree/struct.RuleTree.html}
+ *
+ * @public
  */
 export class RuleTree implements Serializable {
   public static empty(): RuleTree {

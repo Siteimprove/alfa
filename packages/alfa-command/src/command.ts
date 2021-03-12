@@ -12,6 +12,9 @@ import { Text } from "./text";
 
 const { values, entries } = Object;
 
+/**
+ * @public
+ */
 export class Command<
   F extends Command.Flags = {},
   A extends Command.Arguments = {},
@@ -281,6 +284,7 @@ export class Command<
   private _helpUsage(): string {
     return `
 ${Marker.bold("Usage:")}
+
   ${Marker.bold("$")} ${this._invocation()} [flags] ${[
       ...values(this._arguments),
     ]
@@ -296,6 +300,7 @@ ${Marker.bold("Usage:")}
   private _helpVersion(): string {
     return `
 ${Marker.bold("Version:")}
+
   ${this._version}
     `.trim();
   }
@@ -310,6 +315,7 @@ ${Marker.bold("Version:")}
     return Option.of(
       `
 ${Marker.bold("Arguments:")}
+
 ${args
   .map((argument) => {
     const { options } = argument;
@@ -346,6 +352,7 @@ ${args
     return Option.of(
       `
 ${Marker.bold("Commands:")}
+
 ${[...values(this._subcommands)]
   .map(
     (command) =>
@@ -369,6 +376,7 @@ ${[...values(this._subcommands)]
     return Option.of(
       `
 ${Marker.bold("Flags:")}
+
 ${[...values(this._flags)]
   .map((flag) => {
     const { options } = flag;
@@ -409,6 +417,9 @@ ${[...values(this._flags)]
   }
 }
 
+/**
+ * @public
+ */
 export namespace Command {
   export interface JSON {
     [key: string]: json.JSON;

@@ -4,13 +4,18 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 const { isObject } = Refinement;
 
 /**
- * @see https://en.wikipedia.org/wiki/Web_resource
+ * {@link https://en.wikipedia.org/wiki/Web_resource}
+ *
+ * @public
  */
 export interface Resource {
   readonly request: Request;
   readonly response: Response;
 }
 
+/**
+ * @public
+ */
 export namespace Resource {
   export function isResource(value: unknown): value is Resource {
     return (

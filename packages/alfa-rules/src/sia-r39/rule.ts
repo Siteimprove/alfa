@@ -16,7 +16,7 @@ const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r39.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r39",
   requirements: [
     Criterion.of("1.1.1"),
     Technique.of("G94"),

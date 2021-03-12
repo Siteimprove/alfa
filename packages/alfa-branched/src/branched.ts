@@ -13,6 +13,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Branched<T, B = never>
   implements Collection<T>, Iterable<[T, Iterable<B>]> {
   public static of<T, B = never>(
@@ -247,12 +250,16 @@ export class Branched<T, B = never>
     );
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T, B>(value: Branched<T, B>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value instanceof Branched && value._values.equals(this._values);
   }
 
   public hash(hash: Hash): void {
-    this._values.hash(hash);
+    hash.writeHashable(this._values);
   }
 
   public *[Symbol.iterator](): Iterator<[T, Iterable<B>]> {
@@ -280,6 +287,9 @@ export class Branched<T, B = never>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Branched {
   export type JSON<T, B = never> = Array<
     [Serializable.ToJSON<T>, Array<Serializable.ToJSON<B>>]
@@ -308,13 +318,13 @@ export namespace Branched {
 
   export function traverse<T, U, B>(
     values: Iterable<T>,
-    mapper: Mapper<T, Branched<U, B>>
+    mapper: Mapper<T, Branched<U, B>, [index: number]>
   ): Branched<Iterable<U>, B> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => values.append(value))
+          mapper(value, i).map((value) => values.append(value))
         ),
       Branched.of(List.empty())
     );
@@ -360,8 +370,7 @@ class Value<T, B> implements Equatable, Hashable {
   }
 
   public hash(hash: Hash): void {
-    Hashable.hash(hash, this._value);
-    this._branches.hash(hash);
+    hash.writeUnknown(this._value).writeHashable(this._branches);
   }
 }
 

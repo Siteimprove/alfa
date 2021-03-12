@@ -1,7 +1,7 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
@@ -13,22 +13,30 @@ const { not } = Predicate;
 const { isObject } = Refinement;
 const { compareComparable } = Comparable;
 
-// Re-export the global `Iterable` interface to ensure that it merges with the
-// `Iterable` namespace.
+/**
+ * @remarks
+ * This is a re-export of the global `Iterable` interface to ensure that it
+ * merges with the `Iterable` namespace.
+ *
+ * @public
+ */
 export type Iterable<T> = globalThis.Iterable<T>;
 
+/**
+ * @public
+ */
 export namespace Iterable {
   export function isIterable<T>(value: unknown): value is Iterable<T> {
     return isObject(value) && Symbol.iterator in value;
   }
+
+  export function* empty<T>(): Iterable<T> {}
 
   export function* from<T>(arrayLike: ArrayLike<T>): Iterable<T> {
     for (let i = 0, n = arrayLike.length; i < n; i++) {
       yield arrayLike[i];
     }
   }
-
-  export function* empty<T>(): Iterable<T> {}
 
   export function size<T>(iterable: Iterable<T>): number {
     return reduce(iterable, (size) => size + 1, 0);
@@ -95,6 +103,34 @@ export namespace Iterable {
     }
 
     return accumulator;
+  }
+
+  export function reduceWhile<T, U = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    let index = 0;
+
+    for (const value of iterable) {
+      if (predicate(value, index)) {
+        accumulator = reducer(accumulator, value, index++);
+      } else {
+        break;
+      }
+    }
+
+    return accumulator;
+  }
+
+  export function reduceUntil<T, U = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return reduceWhile(iterable, not(predicate), reducer, accumulator);
   }
 
   export function apply<T, U>(
@@ -283,9 +319,123 @@ export namespace Iterable {
     return index < 0 ? false : !isEmpty(skip(iterable, index));
   }
 
-  export function* concat<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
+  export function* set<T>(
+    iterable: Iterable<T>,
+    index: number,
+    value: T
+  ): Iterable<T> {
+    const it = iterator(iterable);
+
+    while (index-- > 0) {
+      const next = it.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
+
+    const next = it.next();
+
+    if (next.done === true) {
+      return;
+    }
+
+    yield value;
+
+    while (true) {
+      const next = it.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
+  }
+
+  export function* insert<T>(
+    iterable: Iterable<T>,
+    index: number,
+    value: T
+  ): Iterable<T> {
+    const it = iterator(iterable);
+
+    while (index-- > 0) {
+      const next = it.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
+
+    yield value;
+
+    while (true) {
+      const next = it.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
+  }
+
+  export function* append<T>(iterable: Iterable<T>, value: T): Iterable<T> {
+    yield* iterable;
+    yield value;
+  }
+
+  export function* prepend<T>(iterable: Iterable<T>, value: T): Iterable<T> {
+    yield value;
+    yield* iterable;
+  }
+
+  export function* concat<T>(
+    iterable: Iterable<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Iterable<T> {
+    yield* iterable;
+
     for (const iterable of iterables) {
       yield* iterable;
+    }
+  }
+
+  export function subtract<T>(
+    iterable: Iterable<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Iterable<T> {
+    return reject(iterable, (value) => includes(flatten(iterables), value));
+  }
+
+  export function intersect<T>(
+    iterable: Iterable<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Iterable<T> {
+    return filter(iterable, (value) => includes(flatten(iterables), value));
+  }
+
+  export function* zip<T, U = T>(
+    a: Iterable<T>,
+    b: Iterable<U>
+  ): Iterable<[T, U]> {
+    const itA = iterator(a);
+    const itB = iterator(b);
+
+    while (true) {
+      const a = itA.next();
+      const b = itB.next();
+
+      if (a.done === true || b.done === true) {
+        return;
+      }
+
+      yield [a.value, b.value];
     }
   }
 
@@ -308,10 +458,10 @@ export namespace Iterable {
   }
 
   export function* take<T>(iterable: Iterable<T>, count: number): Iterable<T> {
-    const iterator = iterable[Symbol.iterator]();
+    const it = iterator(iterable);
 
     while (count-- > 0) {
-      const next = iterator.next();
+      const next = it.next();
 
       if (next.done === true) {
         return;
@@ -393,10 +543,10 @@ export namespace Iterable {
   }
 
   export function* skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
-    const iterator = iterable[Symbol.iterator]();
+    const it = iterator(iterable);
 
     while (count-- > 0) {
-      const next = iterator.next();
+      const next = it.next();
 
       if (next.done === true) {
         return;
@@ -404,7 +554,7 @@ export namespace Iterable {
     }
 
     while (true) {
-      const next = iterator.next();
+      const next = it.next();
 
       if (next.done === true) {
         return;
@@ -442,12 +592,12 @@ export namespace Iterable {
     iterable: Iterable<T>,
     count: number = 1
   ): Iterable<T> {
-    const iterator = iterable[Symbol.iterator]();
+    const it = iterator(iterable);
 
     const first: Array<T> = [];
 
     while (count-- > 0) {
-      const next = iterator.next();
+      const next = it.next();
 
       if (next.done === true) {
         return;
@@ -457,7 +607,7 @@ export namespace Iterable {
     }
 
     while (true) {
-      const next = iterator.next();
+      const next = it.next();
 
       if (next.done === true) {
         return;
@@ -545,20 +695,20 @@ export namespace Iterable {
   }
 
   export function join<T>(iterable: Iterable<T>, separator: string): string {
-    const iterator = iterable[Symbol.iterator]();
+    const it = iterator(iterable);
 
-    let next = iterator.next();
+    let next = it.next();
 
     if (next.done === true) {
       return "";
     }
 
     let result = `${next.value}`;
-    next = iterator.next();
+    next = it.next();
 
     while (next.done !== true) {
       result += `${separator}${next.value}`;
-      next = iterator.next();
+      next = it.next();
     }
 
     return result;
@@ -589,12 +739,12 @@ export namespace Iterable {
     b: Iterable<T>,
     comparer: Comparer<T>
   ): Comparison {
-    const iteratorA = a[Symbol.iterator]();
-    const iteratorB = b[Symbol.iterator]();
+    const itA = iterator(a);
+    const itB = iterator(b);
 
     while (true) {
-      const a = iteratorA.next();
-      const b = iteratorB.next();
+      const a = itA.next();
+      const b = itB.next();
 
       if (a.done === true) {
         return b.done === true ? Comparison.Equal : Comparison.Less;
@@ -613,12 +763,12 @@ export namespace Iterable {
   }
 
   export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
-    const iteratorA = a[Symbol.iterator]();
-    const iteratorB = b[Symbol.iterator]();
+    const itA = iterator(a);
+    const itB = iterator(b);
 
     while (true) {
-      const a = iteratorA.next();
-      const b = iteratorB.next();
+      const a = itA.next();
+      const b = itB.next();
 
       if (a.done === true) {
         return b.done === true;
@@ -634,25 +784,15 @@ export namespace Iterable {
     let size = 0;
 
     for (const value of iterable) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
       size++;
     }
 
-    Hash.writeUint32(hash, size);
+    hash.writeUint32(size);
   }
 
-  export function subtract<T>(
-    left: Iterable<T>,
-    right: Iterable<T>
-  ): Iterable<T> {
-    return filter(left, (left) => !includes(right, left));
-  }
-
-  export function intersect<T>(
-    left: Iterable<T>,
-    right: Iterable<T>
-  ): Iterable<T> {
-    return filter(left, (left) => includes(right, left));
+  export function iterator<T>(iterable: Iterable<T>): Iterator<T> {
+    return iterable[Symbol.iterator]();
   }
 
   export function groupBy<T, K>(

@@ -1,6 +1,6 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,6 +14,9 @@ import { Result } from "./result";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export class Ok<T> implements Result<T, never> {
   public static of<T>(value: T): Ok<T> {
     return new Ok(value);
@@ -139,8 +142,7 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, true);
-    Hashable.hash(hash, this._value);
+    hash.writeBoolean(true).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator]() {
@@ -159,6 +161,9 @@ export class Ok<T> implements Result<T, never> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Ok {
   export interface JSON<T> {
     [key: string]: json.JSON;

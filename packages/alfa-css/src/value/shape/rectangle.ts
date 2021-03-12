@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
@@ -11,8 +12,10 @@ import { Length } from "../length";
 const { either, map, option, pair, take, right, delimited } = Parser;
 
 /**
- * @see https://drafts.fxtf.org/css-masking/#funcdef-clip-rect
- * @deprecated
+ * {@link https://drafts.fxtf.org/css-masking/#funcdef-clip-rect}
+ *
+ * @public
+ * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export class Rectangle<
   O extends Length | Rectangle.Auto = Length | Rectangle.Auto
@@ -78,10 +81,11 @@ export class Rectangle<
   }
 
   public hash(hash: Hash) {
-    this._top.hash(hash);
-    this._right.hash(hash);
-    this._bottom.hash(hash);
-    this._left.hash(hash);
+    hash
+      .writeHashable(this._top)
+      .writeHashable(this._right)
+      .writeHashable(this._bottom)
+      .writeHashable(this._left);
   }
 
   public toJSON(): Rectangle.JSON {
@@ -100,6 +104,10 @@ export class Rectangle<
   }
 }
 
+/**
+ * @public
+ * @deprecated Deprecated as of CSS Masking Module Level 1
+ */
 export namespace Rectangle {
   export type Auto = Keyword<"auto">;
 
@@ -117,7 +125,11 @@ export namespace Rectangle {
 
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
-  export const parse = map(
+  export const parse: Parser<
+    Slice<Token>,
+    Rectangle,
+    string
+  > = map(
     Function.parse(
       "rect",
       either(

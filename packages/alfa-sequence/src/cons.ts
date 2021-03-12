@@ -3,7 +3,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
@@ -20,6 +20,9 @@ import { Nil } from "./nil";
 
 const { not, equals } = Predicate;
 
+/**
+ * @public
+ */
 export class Cons<T> implements Sequence<T> {
   public static of<T>(
     head: T,
@@ -120,9 +123,42 @@ export class Cons<T> implements Sequence<T> {
       if (Cons.isCons(tail)) {
         next = tail;
       } else {
-        return accumulator;
+        break;
       }
     }
+
+    return accumulator;
+  }
+
+  public reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    let next: Cons<T> = this;
+    let index = 0;
+
+    while (predicate(next._head, index)) {
+      accumulator = reducer(accumulator, next._head, index++);
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons(tail)) {
+        next = tail;
+      } else {
+        break;
+      }
+    }
+
+    return accumulator;
+  }
+
+  public reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return this.reduceWhile(not(predicate), reducer, accumulator);
   }
 
   public apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U> {
@@ -400,14 +436,37 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public concat(iterable: Iterable<T>): Cons<T> {
-    if (iterable === Nil) {
-      return this;
+    const sequence = Sequence.from(iterable);
+
+    if (Cons.isCons(sequence)) {
+      return new Cons(
+        this._head,
+        this._tail.map((tail) => tail.concat(sequence))
+      );
     }
 
-    return new Cons(
-      this._head,
-      this._tail.map((tail) => tail.concat(iterable))
-    );
+    return this;
+  }
+
+  public subtract(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => !Iterable.includes(iterable, value));
+  }
+
+  public intersect(iterable: Iterable<T>): Sequence<T> {
+    return this.filter((value) => Iterable.includes(iterable, value));
+  }
+
+  public zip<U>(iterable: Iterable<U>): Sequence<[T, U]> {
+    const sequence = Sequence.from(iterable);
+
+    if (Cons.isCons(sequence)) {
+      return new Cons(
+        [this._head, sequence._head],
+        this._tail.map((tail) => tail.zip(sequence.rest()))
+      );
+    }
+
+    return Nil;
   }
 
   public first(): Option<T> {
@@ -594,14 +653,6 @@ export class Cons<T> implements Sequence<T> {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
-  public subtract(iterable: Iterable<T>): Sequence<T> {
-    return this.filter((value) => !Iterable.includes(iterable, value));
-  }
-
-  public intersect(iterable: Iterable<T>): Sequence<T> {
-    return this.filter((value) => Iterable.includes(iterable, value));
-  }
-
   public groupBy<K>(
     grouper: Mapper<T, K, [index: number]>
   ): Map<K, Sequence<T>> {
@@ -644,11 +695,11 @@ export class Cons<T> implements Sequence<T> {
     let size = 0;
 
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
       size++;
     }
 
-    Hash.writeUint32(hash, size);
+    hash.writeUint32(size);
   }
 
   public *iterator(): Iterator<T> {
@@ -712,6 +763,9 @@ export class Cons<T> implements Sequence<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cons {
   export type JSON<T> = Collection.Indexed.JSON<T>;
 

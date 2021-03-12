@@ -9,7 +9,7 @@ import { videoTextAlternative } from "../common/expectation/media-text-alternati
 import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r31.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r31",
   evaluate({ device, document }) {
     return {
       applicability() {

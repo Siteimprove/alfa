@@ -17,7 +17,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { takeUntil, map, option, pair, right, left } = Parser;
+const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
 type Name = Property.Name;
 
@@ -132,7 +132,7 @@ export class Style implements Serializable {
 
   // We cache computed properties but not specified properties as these are
   // inexpensive to resolve from cascaded and computed properties.
-  private readonly _computed = Cache.empty<Name, Value>();
+  private readonly _computed = new Map<Name, Value>();
 
   private constructor(
     device: Device,
@@ -189,12 +189,12 @@ export class Style implements Serializable {
 
             // https://drafts.csswg.org/css-cascade/#inherit
             case "inherit":
-              return this.inherited(name, source);
+              return this.inherited(name);
 
             // https://drafts.csswg.org/css-cascade/#inherit-initial
             case "unset":
               return inherits
-                ? this.inherited(name, source)
+                ? this.inherited(name)
                 : this.initial(name, source);
           }
         }
@@ -217,12 +217,18 @@ export class Style implements Serializable {
       return this.initial(name);
     }
 
-    return this._computed.get(name, () =>
-      Property.get(name).compute(
+    let value = this._computed.get(name);
+
+    if (value === undefined) {
+      value = Property.get(name).compute(
         this.specified(name) as Value<Style.Specified<Name>>,
         this
-      )
-    ) as Value<Style.Computed<N>>;
+      );
+
+      this._computed.set(name, value);
+    }
+
+    return value as Value<Style.Computed<N>>;
   }
 
   public initial<N extends Name>(
@@ -232,17 +238,8 @@ export class Style implements Serializable {
     return Value.of(Property.get(name).initial as Style.Computed<N>, source);
   }
 
-  public inherited<N extends Name>(
-    name: N,
-    source: Option<Declaration> = None
-  ): Value<Style.Inherited<N>> {
-    const inherited = this.parent.computed(name);
-
-    if (source.isSome()) {
-      return Value.of(inherited.value, source);
-    }
-
-    return inherited;
+  public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
+    return this.parent.computed(name);
   }
 
   public toJSON(): Style.JSON {
@@ -462,7 +459,7 @@ function resolve(
  * The maximum allowed number of tokens that declaration values with `var()`
  * functions may expand to.
  *
- * @see https://drafts.csswg.org/css-variables/#long-variables
+ * {@link https://drafts.csswg.org/css-variables/#long-variables}
  */
 const substitutionLimit = 1024;
 
@@ -470,7 +467,7 @@ const substitutionLimit = 1024;
  * Substitute `var()` functions in an array of tokens. If any syntactically
  * invalid `var()` functions are encountered, `null` is returned.
  *
- * @see https://drafts.csswg.org/css-variables/#substitute-a-var
+ * {@link https://drafts.csswg.org/css-variables/#substitute-a-var}
  *
  * @remarks
  * This method uses a set of visited names to detect cyclic dependencies
@@ -535,13 +532,16 @@ function trim(tokens: Slice<Token>): Slice<Token> {
 }
 
 /**
- * @see https://drafts.csswg.org/css-variables/#funcdef-var
+ * {@link https://drafts.csswg.org/css-variables/#funcdef-var}
  */
 const parseVar = right(
   Token.parseFunction("var"),
   pair(
     map(
-      Token.parseIdent((ident) => ident.value.startsWith("--")),
+      delimited(
+        option(Token.parseWhitespace),
+        Token.parseIdent((ident) => ident.value.startsWith("--"))
+      ),
       (ident) => ident.value
     ),
     left(

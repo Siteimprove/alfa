@@ -19,7 +19,7 @@ export namespace Resolver {
   /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    *
-   * @see https://drafts.csswg.org/css-values/#lengths
+   * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export function length(length: Length, style: Style): Length<"px"> {
     const { unit, value } = length;
@@ -72,7 +72,7 @@ export namespace Resolver {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-color/#resolving-color-values
+   * {@link https://drafts.csswg.org/css-color/#resolving-color-values}
    */
   export function color(color: Color) {
     switch (color.type) {

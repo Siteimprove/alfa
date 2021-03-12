@@ -7,7 +7,9 @@ import { Criterion } from "./criterion";
  * This namespace defines types and functions for working with conformance-
  * related queries.
  *
- * @see https://www.w3.org/TR/WCAG/#conformance
+ * {@link https://www.w3.org/TR/WCAG/#conformance}
+ *
+ * @public
  */
 export namespace Conformance {
   /**

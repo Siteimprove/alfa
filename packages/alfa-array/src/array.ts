@@ -2,7 +2,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Clone } from "@siteimprove/alfa-clone";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -11,22 +11,30 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as global from "./global";
+import * as builtin from "./builtin";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;
 
-// Re-export the global `Array` interface to ensure that it merges with the
-// `Array` namespace.
+/**
+ * @remarks
+ * This is a re-export of the global `Array` interface to ensure that it merges
+ * with the `Array` namespace.
+ *
+ * @public
+ */
 export type Array<T> = globalThis.Array<T>;
 
+/**
+ * @public
+ */
 export namespace Array {
   export function isArray<T>(value: Iterable<T>): value is Array<T>;
 
   export function isArray<T>(value: unknown): value is Array<T>;
 
   export function isArray<T>(value: unknown): value is Array<T> {
-    return global.isArray(value);
+    return builtin.Array.isArray(value);
   }
 
   export function of<T>(...values: Array<T>): Array<T> {
@@ -38,7 +46,7 @@ export namespace Array {
   }
 
   export function allocate<T>(capacity: number): Array<T> {
-    return new global.Array<T>(capacity);
+    return new builtin.Array<T>(capacity);
   }
 
   /**
@@ -83,7 +91,7 @@ export namespace Array {
     array: ReadonlyArray<T>,
     mapper: Mapper<T, U, [index: number]>
   ): Array<U> {
-    const result = new global.Array<U>(array.length);
+    const result = new builtin.Array<U>(array.length);
 
     for (let i = 0, n = array.length; i < n; i++) {
       result[i] = mapper(array[i], i);
@@ -96,7 +104,7 @@ export namespace Array {
     array: ReadonlyArray<T>,
     mapper: Mapper<T, ReadonlyArray<U>, [index: number]>
   ): Array<U> {
-    const result: Array<U> = [];
+    const result = empty<U>();
 
     for (let i = 0, n = array.length; i < n; i++) {
       result.push(...mapper(array[i], i));
@@ -121,21 +129,56 @@ export namespace Array {
     return accumulator;
   }
 
+  export function reduceWhile<T, U = T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    for (let i = 0, n = array.length; i < n; i++) {
+      const value = array[i];
+
+      if (predicate(value, i)) {
+        accumulator = reducer(accumulator, value, i);
+      } else {
+        break;
+      }
+    }
+
+    return accumulator;
+  }
+
+  export function reduceUntil<T, U = T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return reduceWhile(array, not(predicate), reducer, accumulator);
+  }
+
+  export function apply<T, U>(
+    iterable: ReadonlyArray<T>,
+    mapper: ReadonlyArray<Mapper<T, U>>
+  ): Array<U> {
+    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
+  }
+
   export function filter<T, U extends T>(
     array: ReadonlyArray<T>,
     refinement: Refinement<T, U, [index: number]>
-  ): Iterable<U>;
+  ): Array<U>;
 
   export function filter<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T>;
+  ): Array<T>;
 
   export function filter<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T> {
-    const result: Array<T> = [];
+  ): Array<T> {
+    const result = empty<T>();
 
     for (let i = 0, n = array.length; i < n; i++) {
       const value = array[i];
@@ -151,17 +194,17 @@ export namespace Array {
   export function reject<T, U extends T>(
     array: ReadonlyArray<T>,
     refinement: Refinement<T, U, [index: number]>
-  ): Iterable<Exclude<T, U>>;
+  ): Array<Exclude<T, U>>;
 
   export function reject<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T>;
+  ): Array<T>;
 
   export function reject<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
-  ): Iterable<T> {
+  ): Array<T> {
     return filter(array, not(predicate));
   }
 
@@ -223,7 +266,7 @@ export namespace Array {
     array: ReadonlyArray<T>,
     mapper: Mapper<T, Option<U>, [index: number]>
   ): Array<U> {
-    const result: Array<U> = [];
+    const result = empty<U>();
 
     for (let i = 0, n = array.length; i < n; i++) {
       for (const value of mapper(array[i], i)) {
@@ -294,7 +337,7 @@ export namespace Array {
   }
 
   export function distinct<T>(array: ReadonlyArray<T>): Array<T> {
-    const result: Array<T> = [];
+    const result = empty<T>();
 
     for (let i = 0, n = array.length; i < n; i++) {
       const value = array[i];
@@ -307,6 +350,22 @@ export namespace Array {
     }
 
     return result;
+  }
+
+  export function get<T>(array: ReadonlyArray<T>, index: number): Option<T> {
+    return index < array.length ? Option.of(array[index]) : None;
+  }
+
+  export function has<T>(array: ReadonlyArray<T>, index: number): boolean {
+    return index < array.length;
+  }
+
+  export function set<T>(array: Array<T>, index: number, value: T): Array<T> {
+    if (index < array.length) {
+      array[index] = value;
+    }
+
+    return array;
   }
 
   export function insert<T>(
@@ -326,6 +385,55 @@ export namespace Array {
   export function prepend<T>(array: Array<T>, value: T): Array<T> {
     array.unshift(value);
     return array;
+  }
+
+  export function concat<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.concat(array, ...iterables)];
+  }
+
+  export function subtract<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.subtract(array, ...iterables)];
+  }
+
+  export function intersect<T>(
+    array: ReadonlyArray<T>,
+    ...iterables: Array<Iterable<T>>
+  ): Array<T> {
+    return [...Iterable.intersect(array, ...iterables)];
+  }
+
+  export function zip<T, U = T>(
+    array: ReadonlyArray<T>,
+    iterable: Iterable<U>
+  ): Array<[T, U]> {
+    const result = empty<[T, U]>();
+    const it = Iterable.iterator(iterable);
+
+    for (let i = 0, n = array.length; i < n; i++) {
+      const next = it.next();
+
+      if (next.done === true) {
+        break;
+      }
+
+      result.push([array[i], next.value]);
+    }
+
+    return result;
+  }
+
+  export function first<T>(array: ReadonlyArray<T>): Option<T> {
+    return array.length > 0 ? Option.of(array[0]) : None;
+  }
+
+  export function last<T>(array: ReadonlyArray<T>): Option<T> {
+    return array.length > 0 ? Option.of(array[array.length - 1]) : None;
   }
 
   export function sort<T extends Comparable<T>>(array: Array<T>): Array<T> {
@@ -396,10 +504,14 @@ export namespace Array {
 
   export function hash<T>(array: ReadonlyArray<T>, hash: Hash): void {
     for (let i = 0, n = array.length; i < n; i++) {
-      Hashable.hash(hash, array[i]);
+      hash.writeUnknown(array[i]);
     }
 
-    Hash.writeUint32(hash, array.length);
+    hash.writeUint32(array.length);
+  }
+
+  export function iterator<T>(array: ReadonlyArray<T>): Iterator<T> {
+    return array[Symbol.iterator]();
   }
 
   export function toJSON<T>(

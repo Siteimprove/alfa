@@ -17,7 +17,9 @@ import { Context, Dictionary, Keyword, List, Scalar } from "./types";
 const { keys } = Object;
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#expansion-algorithm
+ * {@link https://www.w3.org/TR/json-ld-api/#expansion-algorithm}
+ *
+ * @public
  */
 export function expand(
   element: Scalar | List | Dictionary
@@ -32,7 +34,7 @@ export function expand(
 }
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#expansion-algorithm
+ * {@link https://www.w3.org/TR/json-ld-api/#expansion-algorithm}
  */
 function expandElement(
   activeContext: Context,
@@ -676,7 +678,7 @@ function expandElement(
 }
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#value-expansion
+ * {@link https://www.w3.org/TR/json-ld-api/#value-expansion}
  */
 function expandValue(
   activeContext: Context,
@@ -737,7 +739,7 @@ function expandValue(
 }
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#iri-expansion
+ * {@link https://www.w3.org/TR/json-ld-api/#iri-expansion}
  */
 function expandIdentifier(
   activeContext: Context,
@@ -849,24 +851,24 @@ namespace expandIdentifier {
 }
 
 /**
- * @see https://tools.ietf.org/html/rfc3987#section-2.2
+ * {@link https://tools.ietf.org/html/rfc3987#section-2.2}
  */
 const absoluteIri = /^[a-z][a-z0-9+.-]*:\/\//;
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#dfn-absolute-iri
+ * {@link https://www.w3.org/TR/json-ld-api/#dfn-absolute-iri}
  */
 function isAbsoluteIri(url: string): boolean {
   return absoluteIri.test(url);
 }
 
 /**
- * @see https://tools.ietf.org/html/rfc3987#section-2.2
+ * {@link https://tools.ietf.org/html/rfc3987#section-2.2}
  */
 const relativeIri = /^\/\//;
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#dfn-relative-iri
+ * {@link https://www.w3.org/TR/json-ld-api/#dfn-relative-iri}
  */
 function isRelativeIri(url: string): boolean {
   return relativeIri.test(url);
@@ -901,7 +903,7 @@ function getMapping(
 }
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#context-processing-algorithm
+ * {@link https://www.w3.org/TR/json-ld-api/#context-processing-algorithm}
  */
 function processContext(
   activeContext: Context,
@@ -1034,7 +1036,7 @@ function processContext(
 }
 
 /**
- * @see https://www.w3.org/TR/json-ld-api/#create-term-definition
+ * {@link https://www.w3.org/TR/json-ld-api/#create-term-definition}
  */
 function createTermDefinition(
   activeContext: Context,

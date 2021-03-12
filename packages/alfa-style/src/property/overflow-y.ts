@@ -1,11 +1,8 @@
-import { Keyword, Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Keyword } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 
 import * as X from "./overflow-x";
-
-const { map, option, pair, delimited } = Parser;
 
 /**
  * @internal
@@ -34,7 +31,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y}
  * @internal
  */
 export default Property.of<Specified, Computed>(

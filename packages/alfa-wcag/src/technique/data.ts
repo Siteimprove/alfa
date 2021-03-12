@@ -2,8 +2,14 @@
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // `scripts/techniques.js` and run `yarn generate` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Techniques = typeof Techniques;
 
+/**
+ * @internal
+ */
 export const Techniques = {
   ARIA1: {
     title:
@@ -344,8 +350,12 @@ export const Techniques = {
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/css/C40",
   },
   C41: {
-    title: "Creating a focus indicator within the component",
+    title: "Creating a strong focus indicator within the component",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/css/C41",
+  },
+  C42: {
+    title: "Using min-height and min-width to ensure sufficient target spacing",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/css/C42",
   },
   F1: {
     title:
@@ -369,7 +379,7 @@ export const Techniques = {
   },
   F7: {
     title:
-      "Failure of Success Criterion 2.2.2 due to an object or applet, such as Java or Flash,",
+      "Failure of Success Criterion 2.2.2 due to an object or applet for more than five seconds",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/failures/F7",
   },
   F8: {
@@ -793,163 +803,6 @@ export const Techniques = {
     title:
       "Failure of Success Criterion 2.5.X Dragging due to not providing a single pointer",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/failures/F108",
-  },
-  FLASH1: {
-    title: "Setting the name property for a non-text object",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH1",
-  },
-  FLASH2: {
-    title: "Setting the description property for a non-text object in Flash",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH2",
-  },
-  FLASH3: {
-    title: "Marking objects in Flash so that they can be ignored by AT",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH3",
-  },
-  FLASH4: {
-    title: "Providing submit buttons in Flash",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH4",
-  },
-  FLASH5: {
-    title: "Combining adjacent image and text buttons for the same resource",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH5",
-  },
-  FLASH6: {
-    title: "Creating accessible hotspots using invisible buttons",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH6",
-  },
-  FLASH7: {
-    title: "Using scripting to change control labels",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH7",
-  },
-  FLASH8: {
-    title: "Adding a group name to the accessible name of a form control",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH8",
-  },
-  FLASH9: {
-    title: "Applying captions to prerecorded synchronized media",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH9",
-  },
-  FLASH10: {
-    title: "Indicating required form controls in Flash",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH10",
-  },
-  FLASH11: {
-    title: "Providing a longer text description of an object",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH11",
-  },
-  FLASH12: {
-    title:
-      "Providing client-side validation and adding error text via the accessible description",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH12",
-  },
-  FLASH13: {
-    title:
-      "Using HTML language attributes to specify language in Flash content",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH13",
-  },
-  FLASH14: {
-    title: "Using redundant keyboard and mouse event handlers in Flash",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH14",
-  },
-  FLASH15: {
-    title:
-      "Using the tabIndex property to specify a logical reading order and a logical tab order",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH15",
-  },
-  FLASH16: {
-    title:
-      "Making actions keyboard accessible by using the click event on standard components",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH16",
-  },
-  FLASH17: {
-    title:
-      "Providing keyboard access to a Flash object and avoiding a keyboard trap",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH17",
-  },
-  FLASH18: {
-    title:
-      "Providing a control to turn off sounds that play automatically in Flash",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH18",
-  },
-  FLASH19: {
-    title:
-      "Providing a script that warns the user a time limit is about to expire and provides",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH19",
-  },
-  FLASH20: {
-    title:
-      "Reskinning Flash components to provide highly visible focus indication",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH20",
-  },
-  FLASH21: {
-    title:
-      "Using the DataGrid component to associate column headers with cells",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH21",
-  },
-  FLASH22: {
-    title: "Adding keyboard-accessible actions to static elements",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH22",
-  },
-  FLASH23: {
-    title: "Adding summary information to a DataGrid",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH23",
-  },
-  FLASH24: {
-    title: "Allowing the user to extend the default time limit",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH24",
-  },
-  FLASH25: {
-    title: "Labeling a form control by setting its accessible name",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH25",
-  },
-  FLASH26: {
-    title: "Applying audio descriptions to Flash video",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH26",
-  },
-  FLASH27: {
-    title: "Providing button labels that describe the purpose of a button",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH27",
-  },
-  FLASH28: {
-    title:
-      "Providing text alternatives for ASCII art, emoticons, and leetspeak in Flash",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH28",
-  },
-  FLASH29: {
-    title: "Setting the label property for form components",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH29",
-  },
-  FLASH30: {
-    title: "Specifying accessible names for image buttons",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH30",
-  },
-  FLASH31: {
-    title: "Specifying caption text for a DataGrid",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH31",
-  },
-  FLASH32: {
-    title: "Using auto labeling to associate text labels with form controls",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH32",
-  },
-  FLASH33: {
-    title: "Using relative values for Flash object dimensions",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH33",
-  },
-  FLASH34: {
-    title:
-      "Turning off sounds that play automatically when an assistive technology is detected",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH34",
-  },
-  FLASH35: {
-    title:
-      "Using script to scroll Flash content, and providing a mechanism to pause it",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH35",
-  },
-  FLASH36: {
-    title:
-      "Using scripts to control blinking and stop it in five seconds or less",
-    uri: "https://www.w3.org/WAI/WCAG21/Techniques/flash/FLASH36",
   },
   G1: {
     title:
@@ -1689,6 +1542,14 @@ export const Techniques = {
       "Ensuring that a single pointer operable alternative is available for dragging movements",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G219",
   },
+  G220: {
+    title: "Provide a contact-us link",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G220",
+  },
+  G221: {
+    title: "Provide data from a previous step in a process",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G221",
+  },
   H2: {
     title: "Combining adjacent image and text links for the same resource",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/html/H2",
@@ -1949,6 +1810,10 @@ export const Techniques = {
   H98: {
     title: "Using HTML 5.2 autocomplete attributes",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/html/H98",
+  },
+  H99: {
+    title: "Provide page list navigation",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/html/H99",
   },
   PDF1: {
     title:

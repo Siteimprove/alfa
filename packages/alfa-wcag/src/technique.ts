@@ -2,6 +2,9 @@ import { Requirement } from "@siteimprove/alfa-act";
 
 import { Techniques } from "./technique/data";
 
+/**
+ * @public
+ */
 export class Technique<
   N extends Technique.Name = Technique.Name
 > extends Requirement {
@@ -63,6 +66,9 @@ export class Technique<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Technique {
   export interface JSON extends Requirement.JSON {
     name: Name;

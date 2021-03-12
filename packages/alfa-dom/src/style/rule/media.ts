@@ -1,8 +1,6 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 import { Condition } from "./condition";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 

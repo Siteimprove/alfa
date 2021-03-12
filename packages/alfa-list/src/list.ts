@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
@@ -18,6 +18,9 @@ import { Branch, Empty, Leaf, Node } from "./node";
 const { not } = Predicate;
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
     const size = values.length;
@@ -89,6 +92,22 @@ export class List<T> implements Collection.Indexed<T> {
 
   public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
     return Iterable.reduce(this, reducer, accumulator);
+  }
+
+  public reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceWhile(this, predicate, reducer, accumulator);
+  }
+
+  public reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceUntil(this, predicate, reducer, accumulator);
   }
 
   public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
@@ -262,6 +281,18 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public subtract(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.subtract(this, iterable));
+  }
+
+  public intersect(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.intersect(this, iterable));
+  }
+
+  public zip<U>(iterable: Iterable<U>): List<[T, U]> {
+    return List.from(Iterable.zip(this, iterable));
+  }
+
   public first(): Option<T> {
     return this._tail.isEmpty() ? None : Option.of(this._tail.values[0]);
   }
@@ -360,14 +391,6 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
-  public subtract(iterable: Iterable<T>): List<T> {
-    return List.from(Iterable.subtract(this, iterable));
-  }
-
-  public intersect(iterable: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, iterable));
-  }
-
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
@@ -397,10 +420,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public hash(hash: Hash): void {
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._size);
+    hash.writeUint32(this._size);
   }
 
   public *[Symbol.iterator](): Iterator<T> {
@@ -604,6 +627,9 @@ export class List<T> implements Collection.Indexed<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace List {
   export type JSON<T> = Collection.Indexed.JSON<T>;
 

@@ -19,7 +19,7 @@ const { isElement } = Element;
 const { isText } = Text;
 
 /**
- * @see https://html.spec.whatwg.org/#concept-cell
+ * {@link https://html.spec.whatwg.org/#concept-cell}
  */
 export abstract class Cell
   implements Anchored, Equatable, Serializable<Cell.JSON> {
@@ -72,7 +72,7 @@ export abstract class Cell
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#empty-cell
+   * {@link https://html.spec.whatwg.org/#empty-cell}
    */
   public isEmpty(): boolean {
     return this._element.children().none(

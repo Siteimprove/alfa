@@ -2,8 +2,14 @@
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // `scripts/attributes.js` and run `yarn generate` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Attributes = typeof Attributes;
 
+/**
+ * @internal
+ */
 export const Attributes = {
   "aria-activedescendant": {
     kind: "property",
@@ -22,6 +28,18 @@ export const Attributes = {
     type: "token",
     options: ["inline", "list", "both", "none"],
     default: "none",
+  },
+  "aria-braillelabel": {
+    kind: "property",
+    type: "string",
+    options: null,
+    default: null,
+  },
+  "aria-brailleroledescription": {
+    kind: "property",
+    type: "string",
+    options: null,
+    default: null,
   },
   "aria-busy": {
     kind: "state",
@@ -44,6 +62,12 @@ export const Attributes = {
   "aria-colindex": {
     kind: "property",
     type: "integer",
+    options: null,
+    default: null,
+  },
+  "aria-colindextext": {
+    kind: "property",
+    type: "string",
     options: null,
     default: null,
   },
@@ -71,9 +95,15 @@ export const Attributes = {
     options: null,
     default: null,
   },
+  "aria-description": {
+    kind: "property",
+    type: "string",
+    options: null,
+    default: null,
+  },
   "aria-details": {
     kind: "property",
-    type: "id-reference",
+    type: "id-reference-list",
     options: null,
     default: null,
   },
@@ -242,6 +272,12 @@ export const Attributes = {
   "aria-rowindex": {
     kind: "property",
     type: "integer",
+    options: null,
+    default: null,
+  },
+  "aria-rowindextext": {
+    kind: "property",
+    type: "string",
     options: null,
     default: null,
   },

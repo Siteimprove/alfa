@@ -5,7 +5,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import * as json from "@siteimprove/alfa-json";
 
 /**
- * @see https://html.spec.whatwg.org/#concept-slots
+ * {@link https://html.spec.whatwg.org/#concept-slots}
  */
 export class Slot
   implements Comparable<Slot>, Equatable, Serializable<Slot.JSON> {

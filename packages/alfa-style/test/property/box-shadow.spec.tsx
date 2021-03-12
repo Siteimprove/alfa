@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -9,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `box-shadow: auto`", (t) => {
-  const element = <div style={{ boxShadow: "auto" }}></div>;
+  const element = <div style={{ boxShadow: "auto" }} />;
 
   const style = Style.from(element, device);
 
@@ -23,7 +22,7 @@ test("#cascaded() parses `box-shadow: auto`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
-  const element = <div style={{ boxShadow: "1px 2px" }}></div>;
+  const element = <div style={{ boxShadow: "1px 2px" }} />;
 
   const style = Style.from(element, device);
 
@@ -67,7 +66,7 @@ test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
-  const element = <div style={{ boxShadow: "1px 2px 3px" }}></div>;
+  const element = <div style={{ boxShadow: "1px 2px 3px" }} />;
 
   const style = Style.from(element, device);
 
@@ -111,7 +110,7 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
-  const element = <div style={{ boxShadow: "1px 2px 3px 4px" }}></div>;
+  const element = <div style={{ boxShadow: "1px 2px 3px 4px" }} />;
 
   const style = Style.from(element, device);
 
@@ -155,7 +154,7 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
-  const element = <div style={{ boxShadow: "1px 2px inset" }}></div>;
+  const element = <div style={{ boxShadow: "1px 2px inset" }} />;
 
   const style = Style.from(element, device);
 
@@ -199,7 +198,7 @@ test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
-  const element = <div style={{ boxShadow: "inset 1px 2px" }}></div>;
+  const element = <div style={{ boxShadow: "inset 1px 2px" }} />;
 
   const style = Style.from(element, device);
 
@@ -243,7 +242,7 @@ test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
-  const element = <div style={{ boxShadow: "1px 2px red" }}></div>;
+  const element = <div style={{ boxShadow: "1px 2px red" }} />;
 
   const style = Style.from(element, device);
 
@@ -288,7 +287,7 @@ test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
-  const element = <div style={{ boxShadow: "red 1px 2px" }}></div>;
+  const element = <div style={{ boxShadow: "red 1px 2px" }} />;
 
   const style = Style.from(element, device);
 
@@ -333,7 +332,7 @@ test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
 });
 
 test("#cascaded() parses `box-shadow: red 1px 2px inset`", (t) => {
-  const element = <div style={{ boxShadow: "red 1px 2px inset" }}></div>;
+  const element = <div style={{ boxShadow: "red 1px 2px inset" }} />;
 
   const style = Style.from(element, device);
 

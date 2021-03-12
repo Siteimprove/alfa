@@ -21,6 +21,9 @@ import { Tag } from "./tag";
 
 const { flatMap, flatten, reduce } = Iterable;
 
+/**
+ * @public
+ */
 export abstract class Rule<I = unknown, T = unknown, Q = never>
   implements
     Equatable,
@@ -58,7 +61,7 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
 
   public evaluate(
     input: Readonly<I>,
-    oracle: Oracle<Q> = () => Future.now(None),
+    oracle: Oracle<I, T, Q> = () => Future.now(None),
     outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q>>> {
     return this._evaluate(input, oracle, outcomes);
@@ -96,6 +99,9 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Rule {
   export interface JSON {
     [key: string]: json.JSON;
@@ -150,7 +156,7 @@ export namespace Rule {
    * rule evaluation procedures.
    */
   export interface Evaluate<I, T, Q> {
-    (input: Readonly<I>, oracle: Oracle<Q>, outcomes: Cache): Future<
+    (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache): Future<
       Iterable<Outcome<I, T, Q>>
     >;
   }
@@ -370,7 +376,7 @@ function resolve<I, T, Q>(
     [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q>,
-  oracle: Oracle<Q>
+  oracle: Oracle<I, T, Q>
 ): Future<Outcome.Applicable<I, T, Q>> {
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(

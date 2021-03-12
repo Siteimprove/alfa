@@ -2,23 +2,24 @@ name: Integrate
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
       - "*"
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build
     strategy:
       matrix:
-        node-version: [12, 14]
-    name: Build
+        os: [ubuntu-latest, windows-latest]
+        node: [12, 14]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2.1.5
         with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v1
+          node-version: ${{ matrix.node }}
+      - uses: actions/cache@v2.1.4
         with:
           path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}

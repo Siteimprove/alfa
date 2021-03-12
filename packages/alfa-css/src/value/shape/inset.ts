@@ -3,6 +3,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
@@ -16,7 +17,9 @@ const { either, map, filter, option, pair, right, takeAtMost } = Parser;
 const { parseDelim, parseWhitespace } = Token;
 
 /**
- * @see https://drafts.csswg.org/css-shapes/#funcdef-inset
+ * {@link https://drafts.csswg.org/css-shapes/#funcdef-inset}
+ *
+ * @public
  */
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
@@ -106,7 +109,7 @@ export class Inset<
 
   public hash(hash: Hash): void {
     Array.hash(this._offsets, hash);
-    this._corners.hash(hash);
+    hash.writeHashable(this._corners);
   }
 
   public toJSON(): Inset.JSON<O, C> {
@@ -156,6 +159,9 @@ export class Inset<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Inset {
   export type Offset = Length | Percentage;
 
@@ -222,7 +228,7 @@ export namespace Inset {
         .getOr(horizontal)
   );
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Inset, string> = map(
     Function.parse(
       "inset",
       pair(

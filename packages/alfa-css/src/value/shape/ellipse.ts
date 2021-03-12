@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
@@ -12,7 +13,9 @@ import { Radius } from "./radius";
 const { map, option, pair, right } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-shapes/#funcdef-ellipse
+ * {@link https://drafts.csswg.org/css-shapes/#funcdef-ellipse}
+ *
+ * @public
  */
 export class Ellipse<
   R extends Radius = Radius,
@@ -71,9 +74,10 @@ export class Ellipse<
   }
 
   public hash(hash: Hash) {
-    this._rx.hash(hash);
-    this._ry.hash(hash);
-    this._center.hash(hash);
+    hash
+      .writeHashable(this._rx)
+      .writeHashable(this._ry)
+      .writeHashable(this._center);
   }
 
   public toJSON(): Ellipse.JSON {
@@ -91,6 +95,9 @@ export class Ellipse<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Ellipse {
   export interface JSON extends Value.JSON<"basic-shape"> {
     kind: "ellipse";
@@ -103,7 +110,7 @@ export namespace Ellipse {
     return value instanceof Ellipse;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Ellipse, string> = map(
     Function.parse(
       "ellipse",
       pair(

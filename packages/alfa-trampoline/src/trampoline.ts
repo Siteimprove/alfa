@@ -7,7 +7,9 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
- * @see http://blog.higher-order.com/assets/trampolines.pdf
+ * {@link http://blog.higher-order.com/assets/trampolines.pdf}
+ *
+ * @public
  */
 export abstract class Trampoline<T>
   implements Functor<T>, Monad<T>, Iterable<T> {
@@ -53,6 +55,9 @@ export abstract class Trampoline<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Trampoline {
   export function isTrampoline<T>(value: Iterable<T>): value is Trampoline<T>;
 
@@ -80,13 +85,13 @@ export namespace Trampoline {
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Trampoline<U>>
+    mapper: Mapper<T, Trampoline<U>, [index: number]>
   ): Trampoline<Iterable<U>> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value))
         ),
       done(Array.empty())
     );

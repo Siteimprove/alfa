@@ -17,7 +17,7 @@ const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r10.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r10",
   requirements: [Criterion.of("1.3.5")],
   evaluate({ device, document }) {
     return {
@@ -37,11 +37,9 @@ export default Rule.Atomic.of<Page, Attribute>({
               ),
               isPerceivable(device),
               (element) =>
-                Node.from(element, device).some((ariaNode) =>
-                  ariaNode
-                    .attribute("aria-disabled")
-                    .none((ariaDisabled) => ariaDisabled.value === "true")
-                )
+                Node.from(element, device)
+                  .attribute("aria-disabled")
+                  .none((disabled) => disabled.value === "true")
             )
           )
           .map((element) => element.attribute("autocomplete").get());
@@ -133,7 +131,6 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
     case "url":
     case "photo":
       field = next;
-      next = tokens[i++];
       break;
 
     default:
@@ -158,7 +155,6 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
         case "email":
         case "impp":
           field = next;
-          next = tokens[i++];
       }
   }
 

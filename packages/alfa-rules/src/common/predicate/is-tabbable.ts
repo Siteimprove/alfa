@@ -9,7 +9,7 @@ const { hasName, hasNamespace, hasTabIndex, isDisabled } = Element;
 const { and, not } = Predicate;
 
 /**
- * @see https://html.spec.whatwg.org/#sequential-focus-navigation
+ * {@link https://html.spec.whatwg.org/#sequential-focus-navigation}
  */
 export function isTabbable(device: Device): Predicate<Element> {
   return and(
@@ -26,11 +26,11 @@ export function isTabbable(device: Device): Predicate<Element> {
  * containers (<iframe> elements) redirect focus to either their first
  * focusable descendant or the next element in the sequential focus
  * navigation order.
- * @see https://html.spec.whatwg.org/#browsing-context-container
- * @see https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
+ * {@link https://html.spec.whatwg.org/#browsing-context-container}
+ * {@link https://html.spec.whatwg.org/#sequential-navigation-search-algorithm}
 
  * <label> elements redirect focus to their control.
- * @see https://html.spec.whatwg.org/#the-label-element
+ * {@link https://html.spec.whatwg.org/#the-label-element}
  */
 const redirectsFocus: Predicate<Element> = and(
   hasNamespace(Namespace.HTML),

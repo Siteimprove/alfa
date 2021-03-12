@@ -1,4 +1,3 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
@@ -97,7 +96,7 @@ test(`evaluate() fails a focusable <div> element with a role of separator and no
 });
 
 test("evaluate() is inapplicable to elements that are not exposed", async (t) => {
-  const target = <div role="combobox" style={{ display: "none" }}></div>;
+  const target = <div role="combobox" style={{ display: "none" }} />;
 
   const document = Document.of([target]);
 

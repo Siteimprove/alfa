@@ -1,7 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -26,6 +24,9 @@ const { isText } = Text;
 const { equals } = Predicate;
 const { or } = Refinement;
 
+/**
+ * @public
+ */
 export class Name implements Equatable, Serializable<Name.JSON> {
   public static of(value: string, sources: Iterable<Name.Source> = []): Name {
     return new Name(value, Array.from(sources));
@@ -72,6 +73,9 @@ export class Name implements Equatable, Serializable<Name.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Name {
   export interface JSON {
     [key: string]: json.JSON;
@@ -351,26 +355,26 @@ export namespace Name {
    * @internal
    */
   export class State implements Equatable, Serializable<State.JSON> {
-    private static _empty = new State([], false, false, false);
+    private static _empty = new State([], None, false, false);
 
     public static empty(): State {
       return this._empty;
     }
 
     private readonly _visited: Array<Element>;
+    private readonly _referrer: Option<Element>;
     private readonly _isRecursing: boolean;
-    private readonly _isReferencing: boolean;
     private readonly _isDescending: boolean;
 
     private constructor(
       visited: Array<Element>,
+      referrer: Option<Element>,
       isRecursing: boolean,
-      isReferencing: boolean,
       isDescending: boolean
     ) {
       this._visited = visited;
+      this._referrer = referrer;
       this._isRecursing = isRecursing;
-      this._isReferencing = isReferencing;
       this._isDescending = isDescending;
     }
 
@@ -385,6 +389,13 @@ export namespace Name {
     }
 
     /**
+     * The element that referenced the name computation.
+     */
+    public get referrer(): Option<Element> {
+      return this._referrer;
+    }
+
+    /**
      * Whether or not the name computation is the result of recursion.
      */
     public get isRecursing(): boolean {
@@ -395,7 +406,7 @@ export namespace Name {
      * Whether or not the name computation is the result of a reference.
      */
     public get isReferencing(): boolean {
-      return this._isReferencing;
+      return this._referrer.isSome();
     }
 
     /**
@@ -416,8 +427,8 @@ export namespace Name {
 
       return new State(
         [...this._visited, element],
+        this._referrer,
         this._isRecursing,
-        this._isReferencing,
         this._isDescending
       );
     }
@@ -429,21 +440,21 @@ export namespace Name {
 
       return new State(
         this._visited,
+        this._referrer,
         isRecursing,
-        this._isReferencing,
         this._isDescending
       );
     }
 
-    public reference(isReferencing: boolean): State {
-      if (this._isReferencing === isReferencing) {
+    public reference(referrer: Option<Element>): State {
+      if (this._referrer.equals(referrer)) {
         return this;
       }
 
       return new State(
         this._visited,
+        referrer,
         this._isRecursing,
-        isReferencing,
         this._isDescending
       );
     }
@@ -455,8 +466,8 @@ export namespace Name {
 
       return new State(
         this._visited,
+        this._referrer,
         this._isRecursing,
-        this._isReferencing,
         isDescending
       );
     }
@@ -469,8 +480,8 @@ export namespace Name {
       return (
         value instanceof State &&
         Array.equals(value._visited, this._visited) &&
+        value._referrer.equals(this._referrer) &&
         value._isRecursing === this._isRecursing &&
-        value._isReferencing === this._isReferencing &&
         value._isDescending === this._isDescending
       );
     }
@@ -478,8 +489,8 @@ export namespace Name {
     public toJSON(): State.JSON {
       return {
         visited: this._visited.map((element) => element.path()),
+        referrer: this._referrer.map((element) => element.path()).getOr(null),
         isRecursing: this._isRecursing,
-        isReferencing: this._isReferencing,
         isDescending: this._isDescending,
       };
     }
@@ -489,23 +500,17 @@ export namespace Name {
     export interface JSON {
       [key: string]: json.JSON;
       visited: Array<string>;
+      referrer: string | null;
       isRecursing: boolean;
-      isReferencing: boolean;
       isDescending: boolean;
     }
   }
 
-  export function from(
-    node: Element | Text,
-    device: Device
-  ): Branched<Option<Name>, Browser> {
+  export function from(node: Element | Text, device: Device): Option<Name> {
     return fromNode(node, device, State.empty());
   }
 
-  const names = Cache.empty<
-    Device,
-    Cache<Node, Branched<Option<Name>, Browser>>
-  >();
+  const names = Cache.empty<Device, Cache<Node, Option<Name>>>();
 
   /**
    * @internal
@@ -514,7 +519,7 @@ export namespace Name {
     node: Element | Text,
     device: Device,
     state: State
-  ): Branched<Option<Name>, Browser> {
+  ): Option<Name> {
     // Construct a thunk with the computed name of the node. We first need to
     // decide whether or not we can pull the name of the node from the cache and
     // so the actual computation of the name must be delayed.
@@ -583,125 +588,128 @@ export namespace Name {
     element: Element,
     device: Device,
     state: State
-  ): Branched<Option<Name>, Browser> {
-    const empty = Branched.of(None);
-
+  ): Option<Name> {
     if (state.hasVisited(element)) {
-      return empty;
+      // While self-references are allowed, any other forms of circular
+      // references are not. If the referrer therefore isn't the element itself,
+      // the result will be an empty name.
+      if (!state.referrer.includes(element)) {
+        return None;
+      }
     } else {
       state = state.visit(element);
     }
 
-    return Role.from(element).flatMap((role) => {
-      // The following code handles the _generic_ steps of the accessible name
-      // computation, that is any steps that are shared for all namespaces. All
-      // remaining steps are handled by namespace-specific feature mappings.
+    // The following code handles the _generic_ steps of the accessible name
+    // computation, that is any steps that are shared for all namespaces. All
+    // remaining steps are handled by namespace-specific feature mappings.
 
-      // Step 1: Does the role prohibit naming?
-      // https://w3c.github.io/accname/#step1
-      if (role.some((role) => role.isNameProhibited())) {
-        return empty;
-      }
+    const role = Role.from(element);
 
-      // Step 2A: Is the element hidden and not referenced?
-      // https://w3c.github.io/accname/#step2A
-      if (!state.isReferencing && isHidden(element, device)) {
-        return empty;
-      }
+    // Step 1: Does the role prohibit naming?
+    // https://w3c.github.io/accname/#step1
+    if (role.some((role) => role.isNameProhibited())) {
+      return None;
+    }
 
-      return fromSteps(
-        // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
-        // https://w3c.github.io/accname/#step2B
-        () => {
-          // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
-          // are not allowed. If the element is therefore being referenced
-          // already then this step produces an empty name.
-          if (state.isReferencing) {
-            return empty;
-          }
+    // Step 2A: Is the element hidden and not referenced?
+    // https://w3c.github.io/accname/#step2A
+    if (!state.isReferencing && isHidden(element, device)) {
+      return None;
+    }
 
-          const attribute = element.attribute("aria-labelledby");
-
-          if (attribute.isNone()) {
-            return empty;
-          }
-
-          return fromReferences(attribute.get(), device, state);
-        },
-
-        // Step 2C: Use the `aria-label` attribute, if present.
-        // https://w3c.github.io/accname/#step2C
-        () => {
-          const attribute = element.attribute("aria-label");
-
-          if (attribute.isNone()) {
-            return empty;
-          }
-
-          return fromLabel(attribute.get());
-        },
-
-        // Step 2D: Use native features, if present and allowed.
-        // https://w3c.github.io/accname/#step2D
-        () => {
-          // Using native features is only allowed if the role, if any, of the
-          // element is not presentational and the element has a namespace with
-          // which to look up its feature mapping, if it exists. If the role of
-          // element therefore is presentational or the element has no namespace
-          // then this step produces an empty name.
-          if (
-            role.some((role) => role.isPresentational()) ||
-            element.namespace.isNone()
-          ) {
-            return empty;
-          }
-
-          const feature = Feature.from(element.namespace.get(), element.name);
-
-          if (feature.isNone()) {
-            return empty;
-          }
-
-          return feature.get().name(element, device, state);
-        },
-
-        // Step 2F: Use the subtree content, if referencing or allowed.
-        // https://w3c.github.io/accname/#step2F
-        () => {
-          // Using the subtree content is only allowed if the element is either
-          // being referenced or the role, if any, of the element allows it to
-          // be named by its content. If the element therefore isn't being
-          // referenced and is not allowed to be named by its content then this
-          // step produces an empty name.
-          if (
-            !state.isReferencing &&
-            !role.every((role) => role.isNamedBy("contents"))
-          ) {
-            return empty;
-          }
-
-          return fromDescendants(element, device, state);
-        },
-
-        // Step 2H: Use the subtree content, if descending.
-        // https://w3c.github.io/accname/#step2H
-        () => {
-          // Unless we're already descending then this step produces an empty
-          // name.
-          if (!state.isDescending) {
-            return empty;
-          }
-
-          return fromDescendants(element, device, state);
+    return fromSteps(
+      // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
+      // https://w3c.github.io/accname/#step2B
+      () => {
+        // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
+        // are not allowed. If the element is therefore being referenced
+        // already then this step produces an empty name.
+        if (state.isReferencing) {
+          return None;
         }
-      );
-    });
+
+        const attribute = element.attribute("aria-labelledby");
+
+        if (attribute.isNone()) {
+          return None;
+        }
+
+        return fromReferences(attribute.get(), element, device, state);
+      },
+
+      // Step 2C: Use the `aria-label` attribute, if present.
+      // https://w3c.github.io/accname/#step2C
+      () => {
+        const attribute = element.attribute("aria-label");
+
+        if (attribute.isNone()) {
+          return None;
+        }
+
+        return fromLabel(attribute.get());
+      },
+
+      // Step 2D: Use native features, if present and allowed.
+      // https://w3c.github.io/accname/#step2D
+      () => {
+        // Using native features is only allowed if the role, if any, of the
+        // element is not presentational and the element has a namespace with
+        // which to look up its feature mapping, if it exists. If the role of
+        // element therefore is presentational or the element has no namespace
+        // then this step produces an empty name.
+        if (
+          role.some((role) => role.isPresentational()) ||
+          element.namespace.isNone()
+        ) {
+          return None;
+        }
+
+        const feature = Feature.from(element.namespace.get(), element.name);
+
+        if (feature.isNone()) {
+          return None;
+        }
+
+        return feature.get().name(element, device, state);
+      },
+
+      // Step 2F: Use the subtree content, if referencing or allowed.
+      // https://w3c.github.io/accname/#step2F
+      () => {
+        // Using the subtree content is only allowed if the element is either
+        // being referenced or the role, if any, of the element allows it to
+        // be named by its content. If the element therefore isn't being
+        // referenced and is not allowed to be named by its content then this
+        // step produces an empty name.
+        if (
+          !state.isReferencing &&
+          !role.every((role) => role.isNamedBy("contents"))
+        ) {
+          return None;
+        }
+
+        return fromDescendants(element, device, state);
+      },
+
+      // Step 2H: Use the subtree content, if descending.
+      // https://w3c.github.io/accname/#step2H
+      () => {
+        // Unless we're already descending then this step produces an empty
+        // name.
+        if (!state.isDescending) {
+          return None;
+        }
+
+        return fromDescendants(element, device, state);
+      }
+    );
   }
 
   /**
    * @internal
    */
-  export function fromText(text: Text): Branched<Option<Name>, Browser> {
+  export function fromText(text: Text): Option<Name> {
     // Step 2G: Use the data of the text node.
     // https://w3c.github.io/accname/#step2G
     return fromData(text);
@@ -714,49 +722,43 @@ export namespace Name {
     element: Element,
     device: Device,
     state: State
-  ): Branched<Option<Name>, Browser> {
-    return Branched.traverse(
-      element.children().filter(or(isText, isElement)),
-      (element) =>
+  ): Option<Name> {
+    const names = element
+      .children()
+      .filter(or(isText, isElement))
+      .collect((element) =>
         fromNode(
           element,
           device,
-          state.recurse(true).reference(false).descend(true)
+          state.reference(None).recurse(true).descend(true)
         )
-    )
-      .map((names) => Sequence.from(names).collect((name) => name))
-      .map((names) => {
-        const data = names
-          .map((name) => name.value)
-          .join(" ")
-          .trim();
+      );
 
-        if (data === "") {
-          return None;
-        }
+    const name = flatten(names.map((name) => name.value).join(" "));
 
-        return Option.of(
-          Name.of(
-            data,
-            names.map((name) => Source.descendant(element, name))
-          )
-        );
-      });
+    if (name === "") {
+      return None;
+    }
+
+    return Option.of(
+      Name.of(
+        name,
+        names.map((name) => Source.descendant(element, name))
+      )
+    );
   }
 
   /**
    * @internal
    */
-  export function fromLabel(
-    attribute: Attribute
-  ): Branched<Option<Name>, Browser> {
-    const data = flatten(attribute.value).trim();
+  export function fromLabel(attribute: Attribute): Option<Name> {
+    const name = flatten(attribute.value);
 
-    if (data === "") {
-      return Branched.of(None);
+    if (name === "") {
+      return None;
     }
 
-    return Branched.of(Option.of(Name.of(data, [Source.label(attribute)])));
+    return Option.of(Name.of(name, [Source.label(attribute)]));
   }
 
   /**
@@ -764,9 +766,10 @@ export namespace Name {
    */
   export function fromReferences(
     attribute: Attribute,
+    referrer: Element,
     device: Device,
     state: State
-  ): Branched<Option<Name>, Browser> {
+  ): Option<Name> {
     const root = attribute.owner.get().root();
 
     const references = root
@@ -774,70 +777,53 @@ export namespace Name {
       .filter(isElement)
       .filter(hasId(equals(...attribute.tokens())));
 
-    return Branched.traverse(references, (element) =>
+    const names = references.collect((element) =>
       fromNode(
         element,
         device,
-        state.recurse(true).reference(true).descend(false)
+        state.reference(Option.of(referrer)).recurse(true).descend(false)
       )
-    )
-      .map((names) => Sequence.from(names).collect((name) => name))
-      .map((names) => {
-        const data = names
-          .map((name) => name.value)
-          .join(" ")
-          .trim();
+    );
 
-        if (data === "") {
-          return None;
-        }
+    const name = flatten(names.map((name) => name.value).join(" "));
 
-        return Option.of(
+    if (name === "") {
+      return None;
+    }
+
+    return Option.of(
+      Name.of(name, [
+        Source.reference(
+          attribute,
           Name.of(
-            data,
-            names.map((name) => Source.reference(attribute, name))
+            name,
+            names.flatMap((name) => Sequence.from(name.source))
           )
-        );
-      });
+        ),
+      ])
+    );
   }
 
   /**
    * @internal
    */
-  export function fromData(text: Text): Branched<Option<Name>, Browser> {
-    const data = flatten(text.data);
+  export function fromData(text: Text): Option<Name> {
+    const name = flatten(text.data);
 
-    if (data === "") {
-      return Branched.of(None);
+    if (name === "") {
+      return None;
     }
 
-    return Branched.of(Option.of(Name.of(data, [Source.data(text)])));
+    return Option.of(Name.of(name, [Source.data(text)]));
   }
 
   /**
    * @internal
    */
   export function fromSteps(
-    ...steps: Array<Thunk<Branched<Option<Name>, Browser>>>
-  ): Branched<Option<Name>, Browser> {
-    const step = (
-      name: Branched<Option<Name>, Browser>,
-      i: number = 0
-    ): Branched<Option<Name>, Browser> => {
-      if (i >= steps.length) {
-        return name;
-      }
-
-      return name.flatMap((name) => {
-        if (name.isSome()) {
-          return Branched.of(name);
-        }
-
-        return step(steps[i](), i + 1);
-      });
-    };
-
-    return step(Branched.of(None));
+    ...steps: Array<Thunk<Option<Name>>>
+  ): Option<Name> {
+    return Array.collectFirst(steps, (step) => step());
   }
 
   export const { hasValue } = predicate;
@@ -864,14 +850,14 @@ function isRendered(node: Node, device: Device): boolean {
 }
 
 /**
- * @see https://w3c.github.io/accname/#dfn-hidden
- * @see https://github.com/w3c/accname/issues/30
+ * {@link https://w3c.github.io/accname/#dfn-hidden}
+ * {@link https://github.com/w3c/accname/issues/30}
  */
 function isHidden(element: Element, device: Device): boolean {
   return (
     !isRendered(element, device) ||
     element
       .attribute("aria-hidden")
-      .some((attribute) => attribute.value === "true")
+      .some((attribute) => attribute.value.toLowerCase() === "true")
   );
 }

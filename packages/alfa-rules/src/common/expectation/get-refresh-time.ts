@@ -7,7 +7,7 @@ const digit = /\d/;
  * Parse the content attribute of a <meta http-equiv="refresh" content ="…" /> element
  * and return the time before the refresh occurs.
  *
- * @see https://html.spec.whatwg.org/#attr-meta-http-equiv-refresh
+ * {@link https://html.spec.whatwg.org/#attr-meta-http-equiv-refresh}
  */
 export function getRefreshTime(content: string): Option<number> {
   if (content.length === 0) {

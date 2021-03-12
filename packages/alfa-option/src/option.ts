@@ -17,6 +17,9 @@ import { Some } from "./some";
 
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export interface Option<T>
   extends Functor<T>,
     Monad<T>,
@@ -52,6 +55,9 @@ export interface Option<T>
   toJSON(): Option.JSON<T>;
 }
 
+/**
+ * @public
+ */
 export namespace Option {
   export type Maybe<T> = T | Option<T>;
 

@@ -19,6 +19,9 @@ const defaultNotifier: Notifier = {
   },
 };
 
+/**
+ * @public
+ */
 export async function test(
   name: string,
   assertion: (assert: Assertions) => void | Promise<void>
@@ -33,9 +36,6 @@ export async function test(
   notifier: Notifier
 ): Promise<void>;
 
-/**
- * @internal
- */
 export async function test(
   name: string,
   assertion: (assert: Assertions) => void | Promise<void>,

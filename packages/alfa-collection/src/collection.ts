@@ -16,6 +16,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export interface Collection<T>
   extends Functor<T>,
     Monad<T>,
@@ -46,13 +49,14 @@ export interface Collection<T>
   distinct(): Collection<T>;
 }
 
+/**
+ * @public
+ */
 export namespace Collection {
   export interface Keyed<K, V>
     extends Collection<V>,
       Iterable<[K, V]>,
       Serializable<Keyed.JSON<K, V>> {
-    // Collection<T> methods
-
     isEmpty(): this is Keyed<K, never>;
     forEach(callback: Callback<V, void, [key: K]>): void;
     map<U>(mapper: Mapper<V, U, [key: K]>): Keyed<K, U>;
@@ -75,14 +79,13 @@ export namespace Collection {
     every(predicate: Predicate<V, [key: K]>): boolean;
     count(predicate: Predicate<V, [key: K]>): number;
     distinct(): Keyed<K, V>;
-
-    // Keyed<K, V> methods
-
     get(key: K): Option<V>;
     has(key: K): boolean;
     set(key: K, value: V): Keyed<K, V>;
     delete(key: K, value: V): Keyed<K, V>;
     concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
+    subtract(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
+    intersect(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
   }
 
   export namespace Keyed {
@@ -95,8 +98,6 @@ export namespace Collection {
     extends Collection<T>,
       Iterable<T>,
       Serializable<Unkeyed.JSON<T>> {
-    // Collection<T> methods
-
     isEmpty(): this is Unkeyed<never>;
     forEach(callback: Callback<T>): void;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
@@ -117,14 +118,13 @@ export namespace Collection {
     every(predicate: Predicate<T>): boolean;
     count(predicate: Predicate<T>): number;
     distinct(): Unkeyed<T>;
-
-    // Unkeyed<T> methods
-
     get(value: T): Option<T>;
     has(value: T): boolean;
     add(value: T): Unkeyed<T>;
     delete(value: T): Unkeyed<T>;
     concat(iterable: Iterable<T>): Unkeyed<T>;
+    subtract(iterable: Iterable<T>): Unkeyed<T>;
+    intersect(iterable: Iterable<T>): Unkeyed<T>;
   }
 
   export namespace Unkeyed {
@@ -135,13 +135,21 @@ export namespace Collection {
     extends Collection<T>,
       Iterable<T>,
       Serializable<Indexed.JSON<T>> {
-    // Collection<T> methods
-
     isEmpty(): this is Indexed<never>;
     forEach(callback: Callback<T, void, [index: number]>): void;
     map<U>(mapper: Mapper<T, U, [index: number]>): Indexed<U>;
     flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
     reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    reduceWhile<U>(
+      predicate: Predicate<T, [index: number]>,
+      reducer: Reducer<T, U, [index: number]>,
+      accumulator: U
+    ): U;
+    reduceUntil<U>(
+      predicate: Predicate<T, [index: number]>,
+      reducer: Reducer<T, U, [index: number]>,
+      accumulator: U
+    ): U;
     apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
     filter<U extends T>(
       refinement: Refinement<T, U, [index: number]>
@@ -161,9 +169,6 @@ export namespace Collection {
     every(predicate: Predicate<T, [index: number]>): boolean;
     count(predicate: Predicate<T, [index: number]>): number;
     distinct(): Indexed<T>;
-
-    // Indexed<T> methods
-
     get(index: number): Option<T>;
     has(index: number): boolean;
     set(index: number, value: T): Indexed<T>;
@@ -171,6 +176,9 @@ export namespace Collection {
     append(value: T): Indexed<T>;
     prepend(value: T): Indexed<T>;
     concat(iterable: Iterable<T>): Indexed<T>;
+    subtract(iterable: Iterable<T>): Indexed<T>;
+    intersect(iterable: Iterable<T>): Indexed<T>;
+    zip<U>(iterable: Iterable<U>): Indexed<[T, U]>;
     first(): Option<T>;
     last(): Option<T>;
     take(count: number): Indexed<T>;

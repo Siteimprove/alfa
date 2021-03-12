@@ -4,6 +4,9 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Assertion } from "./assertion";
 import { Handler } from "./handler";
 
+/**
+ * @public
+ */
 export class Asserter<I, T, Q> {
   public static of<I, T, Q>(
     rules: Iterable<Rule<I, T, Q>>,
@@ -33,6 +36,9 @@ export class Asserter<I, T, Q> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Asserter {
   export interface Options extends Assertion.Options {}
 }

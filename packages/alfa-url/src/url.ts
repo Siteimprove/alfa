@@ -8,12 +8,14 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
-import * as global from "./global";
+import * as builtin from "./builtin";
 
 const { isEmpty } = Iterable;
 
 /**
- * @see https://url.spec.whatwg.org/
+ * {@link https://url.spec.whatwg.org/}
+ *
+ * @public
  */
 export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   public static of(
@@ -41,14 +43,14 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 
   /**
-   * @see https://tools.ietf.org/html/rfc2606#section-3
+   * {@link https://tools.ietf.org/html/rfc2606#section-3}
    */
   public static example(): URL {
     return URL.parse("https://example.com").get();
   }
 
   /**
-   * @see https://tools.ietf.org/html/rfc6694#section-3
+   * {@link https://tools.ietf.org/html/rfc6694#section-3}
    */
   public static blank(): URL {
     return URL.parse("about:blank").get();
@@ -87,77 +89,77 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-scheme
+   * {@link https://url.spec.whatwg.org/#concept-url-scheme}
    */
   public get scheme(): string {
     return this._scheme;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-username
+   * {@link https://url.spec.whatwg.org/#concept-url-username}
    */
   public get username(): Option<string> {
     return this._username;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-password
+   * {@link https://url.spec.whatwg.org/#concept-url-password}
    */
   public get password(): Option<string> {
     return this._password;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-host
+   * {@link https://url.spec.whatwg.org/#concept-url-host}
    */
   public get host(): Option<string> {
     return this._host;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-port
+   * {@link https://url.spec.whatwg.org/#concept-url-port}
    */
   public get port(): Option<number> {
     return this._port;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-path
+   * {@link https://url.spec.whatwg.org/#concept-url-path}
    */
   public get path(): Sequence<string> {
     return this._path;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-query
+   * {@link https://url.spec.whatwg.org/#concept-url-query}
    */
   public get query(): Option<string> {
     return this._query;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-fragment
+   * {@link https://url.spec.whatwg.org/#concept-url-fragment}
    */
   public get fragment(): Option<string> {
     return this._fragment;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag
+   * {@link https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag}
    */
   public get cannotBeABase(): boolean {
     return this._cannotBeABase;
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#is-special
+   * {@link https://url.spec.whatwg.org/#is-special}
    */
   public isSpecial(): boolean {
     return URL.isSpecialScheme(this._scheme);
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#include-credentials
+   * {@link https://url.spec.whatwg.org/#include-credentials}
    */
   public hasCredentials(): boolean {
     return this._username.isSome() || this._password.isSome();
@@ -189,12 +191,12 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-equals
+   * {@link https://url.spec.whatwg.org/#concept-url-equals}
    */
   public equals(value: URL): boolean;
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-equals
+   * {@link https://url.spec.whatwg.org/#concept-url-equals}
    */
   public equals(value: unknown): value is this;
 
@@ -214,15 +216,16 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._scheme);
-    this._username.hash(hash);
-    this._password.hash(hash);
-    this._host.hash(hash);
-    this._port.hash(hash);
-    this._path.hash(hash);
-    this._query.hash(hash);
-    this._fragment.hash(hash);
-    Hash.writeBoolean(hash, this._cannotBeABase);
+    hash
+      .writeString(this._scheme)
+      .writeHashable(this._username)
+      .writeHashable(this._password)
+      .writeHashable(this._host)
+      .writeHashable(this._port)
+      .writeHashable(this._path)
+      .writeHashable(this._query)
+      .writeHashable(this._fragment)
+      .writeBoolean(this._cannotBeABase);
   }
 
   public toJSON(): URL.JSON {
@@ -240,7 +243,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-serializer
+   * {@link https://url.spec.whatwg.org/#concept-url-serializer}
    */
   public toString(): string {
     let output = this._scheme + ":";
@@ -295,6 +298,9 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace URL {
   export interface JSON {
     [key: string]: json.JSON;
@@ -323,7 +329,7 @@ export namespace URL {
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#concept-url-parser
+   * {@link https://url.spec.whatwg.org/#concept-url-parser}
    *
    * @remarks
    * Parsing URLs is tricky business and so this function relies on the presence
@@ -359,7 +365,7 @@ export namespace URL {
         search,
         // https://url.spec.whatwg.org/#dom-url-hash
         hash,
-      } = new global.URL(url, base?.toString());
+      } = new builtin.URL(url, base?.toString());
 
       // `URL#protocol` appends a ":" to the scheme which we need to remove.
       const scheme = protocol.replace(/:$/, "");
@@ -413,7 +419,7 @@ export namespace URL {
   }
 
   /**
-   * @see https://url.spec.whatwg.org/#special-scheme
+   * {@link https://url.spec.whatwg.org/#special-scheme}
    */
   export function isSpecialScheme(scheme: string): boolean {
     switch (scheme) {

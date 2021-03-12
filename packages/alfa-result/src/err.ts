@@ -1,6 +1,6 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,6 +14,9 @@ import { Result } from "./result";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export class Err<E> implements Result<never, E> {
   public static of<E>(error: E): Err<E> {
     return new Err(error);
@@ -139,8 +142,7 @@ export class Err<E> implements Result<never, E> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, false);
-    Hashable.hash(hash, this._error);
+    hash.writeBoolean(false).writeUnknown(this._error);
   }
 
   public *[Symbol.iterator]() {}
@@ -157,14 +159,17 @@ export class Err<E> implements Result<never, E> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Err {
-  export function isErr<E>(value: unknown): value is Err<E> {
-    return value instanceof Err;
-  }
-
   export interface JSON<E> {
     [key: string]: json.JSON;
     type: "err";
     error: Serializable.ToJSON<E>;
+  }
+
+  export function isErr<E>(value: unknown): value is Err<E> {
+    return value instanceof Err;
   }
 }

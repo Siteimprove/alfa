@@ -4,6 +4,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
@@ -26,7 +27,9 @@ const {
 const { parseComma, parseWhitespace } = Token;
 
 /**
- * @see https://drafts.csswg.org/css-shapes/#funcdef-polygon
+ * {@link https://drafts.csswg.org/css-shapes/#funcdef-polygon}
+ *
+ * @public
  */
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
@@ -77,7 +80,7 @@ export class Polygon<
   }
 
   public hash(hash: Hash): void {
-    this._fill.hash(hash);
+    hash.writeHashable(this._fill);
     Array.hash(this._vertices, hash);
   }
 
@@ -98,6 +101,9 @@ export class Polygon<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Polygon {
   export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 
@@ -122,7 +128,11 @@ export namespace Polygon {
     parseLengthPercentage
   );
 
-  export const parse = map(
+  export const parse: Parser<
+    Slice<Token>,
+    Polygon,
+    string
+  > = map(
     Function.parse(
       "polygon",
       pair(

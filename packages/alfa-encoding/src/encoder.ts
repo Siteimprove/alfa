@@ -1,10 +1,12 @@
 /**
- * @see https://encoding.spec.whatwg.org/#textencoder
+ * {@link https://encoding.spec.whatwg.org/#textencoder}
+ *
+ * @public
  */
 export namespace Encoder {
   /**
-   * @see https://encoding.spec.whatwg.org/#dom-textencoder-encode
-   * @see https://encoding.spec.whatwg.org/#utf-8-encoder
+   * {@link https://encoding.spec.whatwg.org/#dom-textencoder-encode}
+   * {@link https://encoding.spec.whatwg.org/#utf-8-encoder}
    */
   export function encode(input: string): Uint8Array {
     const output: Array<number> = [];

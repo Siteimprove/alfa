@@ -201,7 +201,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background}
  * @internal
  */
 export default Property.shorthand(

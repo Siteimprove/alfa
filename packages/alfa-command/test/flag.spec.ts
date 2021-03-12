@@ -20,11 +20,11 @@ test(".optional() constructs an optional flag", (t) => {
 
   // When parsed without arguments, the value should be `None` as the flag is
   // optional.
-  let [argv, set] = flag.parse([]).get();
+  let [, set] = flag.parse([]).get();
   t.equal(set.value.isNone(), true);
 
   // When parsed with valid arguments, the value should be wrapped in `Option`.
-  [argv, set] = flag.parse(["--foo", "hello"]).get();
+  [, set] = flag.parse(["--foo", "hello"]).get();
   t.deepEqual(set.value.get(), "hello");
 });
 
@@ -47,13 +47,8 @@ test(".repeatable() constructs a repeatable flag", (t) => {
 test(".repeatable().optional() constructs a repeatable, optional flag", (t) => {
   const flag = Flag.string("foo", "").repeatable().optional();
 
-  // When parsed without arguments, the value should be `None` as the flag is
-  // optional.
-  let [argv, set] = flag.parse([]).get();
-  t.equal(set.value.isNone(), true);
-
   // When parsed with valid arguments, the value be wrapped in `Option`.
-  [argv, set] = flag.parse(["--foo", "hello", "--foo", "world"]).get();
+  let [argv, set] = flag.parse(["--foo", "hello", "--foo", "world"]).get();
   t.deepEqual(set.value.get(), ["hello"]);
 
   // When parsing the flag the second time, the second value should be combined
@@ -64,20 +59,20 @@ test(".repeatable().optional() constructs a repeatable, optional flag", (t) => {
   // When parsing the flag the third time, the value should remain the same as
   // there are no more arguments left. As the flag is optional, this does not
   // cause an error.
-  [argv, set] = set.parse(argv).get();
+  [, set] = set.parse(argv).get();
   t.deepEqual(set.value.get(), ["hello", "world"]);
+
+  // When parsed without arguments, the value should be `None` as the flag is
+  // optional.
+  [, set] = flag.parse([]).get();
+  t.equal(set.value.isNone(), true);
 });
 
 test(".repeatable().default() constructs a repeatable flag with a default value", (t) => {
   const flag = Flag.string("foo", "").repeatable().default(["default"]);
 
-  // When parsed without arguments, the value should be equal to the default
-  // value.
-  let [argv, set] = flag.parse([]).get();
-  t.deepEqual(set.value, ["default"]);
-
   // When parsed with valid arguments, the default value should not be applied.
-  [argv, set] = flag.parse(["--foo", "hello", "--foo", "world"]).get();
+  let [argv, set] = flag.parse(["--foo", "hello", "--foo", "world"]).get();
   t.deepEqual(set.value, ["hello"]);
 
   // When parsing the flag the second time, the second value should be combined
@@ -88,8 +83,13 @@ test(".repeatable().default() constructs a repeatable flag with a default value"
   // When parsing the flag the third time, the value should remain the same as
   // there are no more arguments left. As the flag has a default value, this
   // does not cause an error.
-  [argv, set] = set.parse(argv).get();
+  [, set] = set.parse(argv).get();
   t.deepEqual(set.value, ["hello", "world"]);
+
+  // When parsed without arguments, the value should be equal to the default
+  // value.
+  [, set] = flag.parse([]).get();
+  t.deepEqual(set.value, ["default"]);
 });
 
 test(".negatable() constructs a negatable flag", (t) => {

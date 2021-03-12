@@ -4,6 +4,9 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export class Cache {
   public static empty(): Cache {
     return new Cache();

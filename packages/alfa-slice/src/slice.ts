@@ -14,6 +14,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Slice<T> implements Collection.Indexed<T> {
   public static of<T>(
     array: ReadonlyArray<T>,
@@ -83,6 +86,22 @@ export class Slice<T> implements Collection.Indexed<T> {
 
   public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
     return Iterable.reduce(this, reducer, accumulator);
+  }
+
+  public reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceWhile(this, predicate, reducer, accumulator);
+  }
+
+  public reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceUntil(this, predicate, reducer, accumulator);
   }
 
   public apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U> {
@@ -211,6 +230,24 @@ export class Slice<T> implements Collection.Indexed<T> {
     for (const value of iterable) {
       array.push(value);
     }
+
+    return new Slice(array, 0, array.length);
+  }
+
+  public subtract(iterable: Iterable<T>): Slice<T> {
+    const array = [...Iterable.subtract(this, iterable)];
+
+    return new Slice(array, 0, array.length);
+  }
+
+  public intersect(iterable: Iterable<T>): Slice<T> {
+    const array = [...Iterable.intersect(this, iterable)];
+
+    return new Slice(array, 0, array.length);
+  }
+
+  public zip<U>(iterable: Iterable<U>): Slice<[T, U]> {
+    const array = [...Iterable.zip(this, iterable)];
 
     return new Slice(array, 0, array.length);
   }
@@ -409,8 +446,19 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Slice {
   export type JSON<T> = Array<Serializable.ToJSON<T>>;
+
+  export function from<T>(iterable: Iterable<T>): Slice<T> {
+    if (isSlice(iterable)) {
+      return iterable;
+    }
+
+    return Slice.of([...iterable]);
+  }
 
   export function isSlice<T>(value: Iterable<T>): value is Slice<T>;
 

@@ -1,6 +1,8 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
+import { Token } from "../../syntax/token";
 import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
@@ -10,7 +12,9 @@ import { Percentage } from "../percentage";
 const { either, map, filter } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-shapes/#typedef-shape-radius
+ * {@link https://drafts.csswg.org/css-shapes/#typedef-shape-radius}
+ *
+ * @public
  */
 export class Radius<
   R extends Length | Percentage | Radius.Side =
@@ -52,7 +56,7 @@ export class Radius<
   }
 
   public hash(hash: Hash) {
-    this._value.hash(hash);
+    hash.writeHashable(this._value);
   }
 
   public toJSON(): Radius.JSON {
@@ -68,6 +72,9 @@ export class Radius<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Radius {
   export interface JSON extends Value.JSON<"basic-shape"> {
     kind: "radius";
@@ -78,12 +85,12 @@ export namespace Radius {
 
   export namespace Side {
     /**
-     * @see https://drafts.csswg.org/css-shapes/#closest-side
+     * {@link https://drafts.csswg.org/css-shapes/#closest-side}
      */
     export type Closest = Keyword<"closest-side">;
 
     /**
-     * @see https://drafts.csswg.org/css-shapes/#farthest-side
+     * {@link https://drafts.csswg.org/css-shapes/#farthest-side}
      */
     export type Farthest = Keyword<"farthest-side">;
   }
@@ -92,7 +99,7 @@ export namespace Radius {
     return value instanceof Radius;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Radius, string> = map(
     either(
       filter(
         either(Length.parse, Percentage.parse),

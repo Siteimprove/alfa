@@ -1,4 +1,3 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
@@ -9,7 +8,7 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed } from "../common/outcome";
 
-const target = <input type="text"></input>;
+const target = <input type="text" />;
 
 const perceivableError = <span>Visible error</span>;
 

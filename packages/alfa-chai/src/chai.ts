@@ -13,6 +13,9 @@ declare global {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Chai {
   export function createPlugin<I, J, T = unknown, Q = never>(
     transform: Mapper<I, Future.Maybe<J>>,
@@ -26,20 +29,20 @@ export namespace Chai {
       chai.Assertion.addMethod("accessible", async function () {
         const input = await transform(this._obj);
 
-        const error = await asserter.expect(input).to.be.accessible();
+        const result = await asserter.expect(input).to.be.accessible();
 
-        const message = error.isOk() ? error.get() : error.getErr();
+        const message = result.isOk() ? result.get() : result.getErr();
 
         this.assert(
-          error.isOk(),
+          result.isOk(),
           `expected #{this} to be accessible${
-            error.isErr() ? ` but ${message}` : ""
+            result.isErr() ? ` but ${message}` : ""
           }`,
           `expected #{this} to not be accessible${
-            error.isOk() ? ` but ${message}` : ""
+            result.isOk() ? ` but ${message}` : ""
           }`,
           /* Expected */ true,
-          /* Actual */ error.isOk(),
+          /* Actual */ result.isOk(),
           /* Show diff */ false
         );
       });

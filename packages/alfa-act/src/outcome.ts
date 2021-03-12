@@ -12,6 +12,9 @@ import * as sarif from "@siteimprove/alfa-sarif";
 import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export abstract class Outcome<I, T, Q = never>
   implements
     Equatable,
@@ -53,6 +56,9 @@ export abstract class Outcome<I, T, Q = never>
   public abstract toSARIF(): sarif.Result;
 }
 
+/**
+ * @public
+ */
 export namespace Outcome {
   export interface JSON {
     [key: string]: json.JSON;
@@ -602,7 +608,7 @@ export namespace Outcome {
       (expectations) =>
         Trilean.every(expectations, (expectation) =>
           expectation.map((expectation) => expectation.isOk()).getOr(undefined)
-      ),
+        ),
       () =>
         Passed.of(
           rule,

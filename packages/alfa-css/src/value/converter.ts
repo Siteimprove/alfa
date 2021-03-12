@@ -6,6 +6,8 @@ const { PI } = Math;
  * Convertible units are sets of units where each unit within a given set can be
  * converted to another unit within the same set. With the exception of relative
  * lengths, all units defined in CSS are convertible.
+ *
+ * @public
  */
 export interface Convertible<U extends string> {
   withUnit<V extends U>(unit: V): Convertible<V>;
@@ -48,6 +50,8 @@ function rates<U extends string>(fn: () => Rates<U>): Rates<U> {
 /**
  * Converters are functions that convert an input value from one unit within a
  * set of units to another unit within the same set of units.
+ *
+ * @public
  */
 export type Converter<U extends string> = (
   value: number,
@@ -63,9 +67,12 @@ function converter<U extends string>(rates: Rates<U>): Converter<U> {
   return (value, from, to) => value * (rates[from] / rates[to]);
 }
 
+/**
+ * @public
+ */
 export namespace Converter {
   /**
-   * @see https://drafts.csswg.org/css-values/#lengths
+   * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export const length: Converter<Unit.Length.Absolute> = converter(
     rates(() => {
@@ -93,7 +100,7 @@ export namespace Converter {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-values/#angles
+   * {@link https://drafts.csswg.org/css-values/#angles}
    */
   export const angle: Converter<Unit.Angle> = converter({
     deg: 1,
@@ -103,7 +110,7 @@ export namespace Converter {
   });
 
   /**
-   * @see https://drafts.csswg.org/css-values/#time
+   * {@link https://drafts.csswg.org/css-values/#time}
    */
   export const time: Converter<Unit.Time> = converter({
     s: 1,
@@ -111,7 +118,7 @@ export namespace Converter {
   });
 
   /**
-   * @see https://drafts.csswg.org/css-values/#frequency
+   * {@link https://drafts.csswg.org/css-values/#frequency}
    */
   export const frequency: Converter<Unit.Frequency> = converter({
     hz: 1,

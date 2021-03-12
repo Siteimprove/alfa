@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
@@ -8,6 +9,9 @@ import { Number } from "../number";
 
 const { map } = Parser;
 
+/**
+ * @public
+ */
 export class Hex extends Value<"color"> {
   public static of(value: number): Hex {
     return new Hex(value);
@@ -55,7 +59,7 @@ export class Hex extends Value<"color"> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeUint32(hash, this._value);
+    hash.writeUint32(this._value);
   }
 
   public toJSON(): Hex.JSON {
@@ -71,6 +75,9 @@ export class Hex extends Value<"color"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Hex {
   export interface JSON extends Value.JSON<"color"> {
     format: "hex";
@@ -82,9 +89,9 @@ export namespace Hex {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-hex-color
+   * {@link https://drafts.csswg.org/css-color/#typedef-hex-color}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Hex, string> = map(
     map(
       Token.parseHash((hash) => {
         switch (hash.value.length) {

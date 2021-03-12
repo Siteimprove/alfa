@@ -4,8 +4,14 @@ import { Name } from "../../name";
 
 const { equals } = Predicate;
 
+/**
+ * @public
+ */
 export function hasValue(predicate: Predicate<string>): Predicate<Name>;
 
+/**
+ * @public
+ */
 export function hasValue(
   value: string,
   ...rest: Array<string>

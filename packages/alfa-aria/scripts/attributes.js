@@ -6,45 +6,47 @@ const puppeteer = require("puppeteer");
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
 
-  await page.goto("https://www.w3.org/TR/wai-aria-1.2/");
+  await page.goto("https://w3c.github.io/aria/");
 
   const attributes = await page.evaluate(() =>
     Object.fromEntries(
-      [...document.querySelectorAll(".property, .state")].map((attribute) => {
-        const key = attribute
-          .querySelector(".property-name, .state-name")
-          .getAttribute("title");
+      [...document.querySelectorAll(".property, .state")]
+        .map((attribute) => {
+          const key = attribute
+            .querySelector(".property-name, .state-name")
+            .getAttribute("title");
 
-        const kind = attribute.matches(".property") ? "property" : "state";
+          const kind = attribute.matches(".property") ? "property" : "state";
 
-        const type = attribute
-          .querySelector(".property-value, .state-value")
-          .textContent.toLowerCase()
-          .replace(/[\s//]/g, "-");
+          const type = attribute
+            .querySelector(".property-value, .state-value")
+            .textContent.toLowerCase()
+            .replace(/[\s/]/g, "-");
 
-        const fallback =
-          attribute
-            .querySelector(".value-name .default")
-            ?.textContent.replace(/\(default\):?/, "")
-            .trim() ?? null;
+          const fallback =
+            attribute
+              .querySelector(".value-name .default")
+              ?.textContent.replace(/\(default\):?/, "")
+              .trim() ?? null;
 
-        const options =
-          type === "token" || type === "token-list"
-            ? [...attribute.querySelectorAll(".value-name")].map((option) =>
-                option.textContent.replace(/\(default\):?/, "").trim()
-              )
-            : null;
+          const options =
+            type === "token" || type === "token-list"
+              ? [...attribute.querySelectorAll(".value-name")].map((option) =>
+                  option.textContent.replace(/\(default\):?/, "").trim()
+                )
+              : null;
 
-        return [
-          key,
-          {
-            kind,
-            type,
-            options,
-            default: fallback,
-          },
-        ];
-      })
+          return [
+            key,
+            {
+              kind,
+              type,
+              options,
+              default: fallback,
+            },
+          ];
+        })
+        .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0))
     )
   );
 
@@ -55,8 +57,14 @@ puppeteer.launch().then(async (browser) => {
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // \`scripts/attributes.js\` and run \`yarn generate\` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Attributes = typeof Attributes;
 
+/**
+ * @internal
+ */
 export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
   `;
 
@@ -64,5 +72,8 @@ export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
     parser: "typescript",
   });
 
-  fs.writeFileSync(path.join(__dirname, "../src/attribute/data.ts"), code);
+  fs.writeFileSync(
+    path.join(__dirname, "..", "src", "attribute", "data.ts"),
+    code
+  );
 });
