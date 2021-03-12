@@ -906,8 +906,8 @@ export namespace Selector {
 
         switch (name) {
           // :<name>(<selector-list>)
-          // :has normally only accepts relative selectors, which we don't
-          // check currently.
+          // :has() normally only accepts relative selectors, we currently
+          // accept all.
           case "is":
           case "not":
           case "has":
