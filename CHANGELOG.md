@@ -21,9 +21,25 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles text nodes of clipped elements.
+
+- [@siteimprove/alfa-cypress](packages/alfa-cypress): `Cypress.createPlugin()` no longer creates an asynchronous Chai plugin, which was causing assertion errors to not count as test failures.
+
+## [0.15.0](../../compare/v0.14.2...v0.15.0) (2021-03-15)
+
 ### Breaking
 
 - [@siteimprove/alfa-cypress](packages/alfa-cypress): The Cypress integration now uses a Chai plugin as its main entry point rather than a custom command. For more information, please see the associated pull request. ([#740](../../pull/740))
+
+### Added
+
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline<T>` now provides an implementation of `Foldable<T>` and `Applicative<T>`.
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result<T, E>` now provides an implementation of `Applicative<T>`.
+
+- [@siteimprove/alfa-future](packages/alfa-future): `Future<T>` now provides an implementation of `Applicative<T>`.
 
 ### Fixed
 
