@@ -25,13 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
             nested: true,
           })
           .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasRole("paragraph"),
-              isVisible(device)
-            )
-          );
+          .filter(and(hasRole("paragraph"), isVisible(device)));
       },
 
       expectations(target) {
