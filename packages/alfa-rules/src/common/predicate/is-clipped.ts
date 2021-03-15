@@ -69,10 +69,14 @@ function isClippedBySize(
           if (indent.value < 0 || whitespace.value === "nowrap") {
             switch (indent.type) {
               case "percentage":
-                return abs(indent.value) >= 1;
+                if (abs(indent.value) >= 1) {
+                  return true;
+                }
 
               case "length":
-                return abs(indent.value) >= 999;
+                if (abs(indent.value) >= 999) {
+                  return true;
+                }
             }
           }
         }

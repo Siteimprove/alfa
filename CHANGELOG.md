@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles text nodes of clipped elements.
+
 ## [0.15.0](../../compare/v0.14.2...v0.15.0) (2021-03-15)
 
 ### Breaking
