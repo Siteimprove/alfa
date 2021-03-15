@@ -1302,6 +1302,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-future@workspace:packages/alfa-future"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.14.2"
     "@siteimprove/alfa-array": "workspace:^0.14.2"
     "@siteimprove/alfa-callback": "workspace:^0.14.2"
     "@siteimprove/alfa-continuation": "workspace:^0.14.2"
@@ -1774,6 +1775,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-result@workspace:packages/alfa-result"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.14.2"
     "@siteimprove/alfa-callback": "workspace:^0.14.2"
     "@siteimprove/alfa-equatable": "workspace:^0.14.2"
     "@siteimprove/alfa-foldable": "workspace:^0.14.2"
@@ -2050,12 +2052,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-trampoline@workspace:packages/alfa-trampoline"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.14.2"
     "@siteimprove/alfa-array": "workspace:^0.14.2"
     "@siteimprove/alfa-callback": "workspace:^0.14.2"
+    "@siteimprove/alfa-foldable": "workspace:^0.14.2"
     "@siteimprove/alfa-functor": "workspace:^0.14.2"
     "@siteimprove/alfa-iterable": "workspace:^0.14.2"
     "@siteimprove/alfa-mapper": "workspace:^0.14.2"
     "@siteimprove/alfa-monad": "workspace:^0.14.2"
+    "@siteimprove/alfa-reducer": "workspace:^0.14.2"
     "@siteimprove/alfa-test": "workspace:^0.14.2"
     "@siteimprove/alfa-thunk": "workspace:^0.14.2"
   languageName: unknown
