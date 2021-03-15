@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.15.0](../../compare/v0.14.2...v0.15.0) (2021-03-15)
+
 ### Breaking
 
 - [@siteimprove/alfa-cypress](packages/alfa-cypress): The Cypress integration now uses a Chai plugin as its main entry point rather than a custom command. For more information, please see the associated pull request. ([#740](../../pull/740))
