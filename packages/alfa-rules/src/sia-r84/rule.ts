@@ -78,22 +78,31 @@ export namespace Outcomes {
  */
 function isPossiblyScrollable(device: Device): Predicate<Element> {
   const properties = [
-    ["overflow-x", "width"],
-    ["overflow-y", "height"],
+    ["x", "width"],
+    ["y", "height"],
   ] as const;
 
   return (element) => {
     const style = Style.from(element, device);
 
     return properties.some(
-      ([overflow, dimension]) =>
+      ([axis, dimension]) =>
         style
           .computed(dimension)
           .some((dimension) => dimension.value !== "auto") &&
-        style.computed(overflow).some((overflow) => {
+        style.computed(`overflow-${axis}` as const).some((overflow) => {
           switch (overflow.value) {
             case "auto":
             case "scroll":
+              // For the x-axis, the content is likely only scrollable if
+              // `white-space: nowrap` is used. Otherwise, the content is likely
+              // to instead break along the y-axis.
+              if (axis === "x") {
+                return style
+                  .computed("white-space")
+                  .some((whitespace) => whitespace.value === "nowrap");
+              }
+
               return true;
 
             default:
