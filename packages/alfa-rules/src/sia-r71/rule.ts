@@ -8,9 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { isVisible } from "../common/predicate/is-visible";
+import { hasRole, isVisible } from "../common/predicate";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -26,7 +26,11 @@ export default Rule.Atomic.of<Page, Element>({
           })
           .filter(isElement)
           .filter(
-            and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
+            and(
+              hasNamespace(Namespace.HTML),
+              hasRole("paragraph"),
+              isVisible(device)
+            )
           );
       },
 
