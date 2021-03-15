@@ -47,10 +47,10 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsNotJustified = Ok.of(
-    Diagnostic.of(`The text of the \`<p>\` element is not justified`)
+    Diagnostic.of(`The text of the paragraph is not justified`)
   );
 
   export const IsJustified = Err.of(
-    Diagnostic.of(`The text of the \`<p>\` element is justified`)
+    Diagnostic.of(`The text of the paragraph is justified`)
   );
 }
