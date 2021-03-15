@@ -25,6 +25,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-cypress](packages/alfa-cypress): The Cypress integration now uses a Chai plugin as its main entry point rather than a custom command. For more information, please see the associated pull request. ([#740](../../pull/740))
 
+### Added
+
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline<T>` now provides an implementation of `Foldable<T>` and `Applicative<T>`.
+
 ### Fixed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): `isTransparent()` now correctly handles text nodes of transparent elements. ([#741](../../pull/741))
