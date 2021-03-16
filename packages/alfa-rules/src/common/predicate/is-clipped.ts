@@ -39,20 +39,18 @@ function isClippedBySize(
     if (isElement(node)) {
       const style = Style.from(node, device, context);
 
-      const { value: height } = style.computed("height");
-      const { value: width } = style.computed("width");
       const { value: x } = style.computed("overflow-x");
       const { value: y } = style.computed("overflow-y");
 
-      if (
-        height.type !== "keyword" &&
-        height.value <= 1 &&
-        width.type !== "keyword" &&
-        width.value <= 1 &&
-        x.value === "hidden" &&
-        y.value === "hidden"
-      ) {
-        return true;
+      if (x.value === "hidden" || y.value === "hidden") {
+        const { value: height } = style.computed("height");
+        const { value: width } = style.computed("width");
+
+        for (const dimension of [height, width]) {
+          if (dimension.type !== "keyword" && dimension.value <= 1) {
+            return true;
+          }
+        }
       }
     }
 
