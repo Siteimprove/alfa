@@ -44,20 +44,22 @@ export function getForeground(
   // Next, we handle the opacity of the element.
   // For this, we need the background colors of the parent (assuming that DOM
   // reflects layout).
-  return element
-    .parent({
-      flattened: true,
-    })
-    .filter(Element.isElement)
-    .flatMap((parent) =>
-      getBackground(parent, device).map((parentColors) =>
-        flatMap(colors.get(), (color) =>
-          parentColors.map((backdrop) =>
-            composite(color, backdrop, opacity.value)
+  return colors.flatMap((colors) =>
+    element
+      .parent({
+        flattened: true,
+      })
+      .filter(Element.isElement)
+      .flatMap((parent) =>
+        getBackground(parent, device).map((parentColors) =>
+          flatMap(colors, (color) =>
+            parentColors.map((backdrop) =>
+              composite(color, backdrop, opacity.value)
+            )
           )
         )
       )
-    );
+  );
 }
 
 /**

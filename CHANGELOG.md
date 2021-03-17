@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fix a panic in SIA-R66 and SIA-R69 when background colors cannot be determined.
+
 ## [0.15.1](../../compare/v0.15.0...v0.15.1) (2021-03-17)
 
 ### Fixed
