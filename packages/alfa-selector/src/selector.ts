@@ -990,7 +990,7 @@ export namespace Selector {
               case "after":
               case "before":
               case "first-letter":
-              case "firt-line":
+              case "first-line":
                 break;
 
               default:
