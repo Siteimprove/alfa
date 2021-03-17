@@ -53,8 +53,6 @@ export type Selector =
  * @public
  */
 export namespace Selector {
-  import Ident = Token.Ident;
-
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
     type: T;
@@ -913,7 +911,6 @@ export namespace Selector {
             return parseSelector(tokens).map(([, selector]) => {
               switch (name) {
                 case "is":
-                  // Annotate the first value to ensure correct inference.
                   return Is.of(selector) as Pseudo.Class;
                 case "not":
                   return Not.of(selector);
@@ -947,9 +944,9 @@ export namespace Selector {
   );
 
   const parsePseudoElement = either(
-    // Function pseudo-elements need to be first because ::cue and ::cue-region
-    // can be both, so we want to fail them as function before testing them
-    // as non-function
+    // Functional pseudo-elements need to be first because ::cue and
+    // ::cue-region can be both functional and non-functional, so we want to
+    // fail them as functional before testing them as non-functional.
     right(
       take(Token.parseColon, 2),
       mapResult(right(peek(Token.parseFunction()), Function.consume), (fn) => {
@@ -964,11 +961,13 @@ export namespace Selector {
                 ? (Cue.of(selector) as Pseudo.Element)
                 : CueRegion.of(selector)
             );
+
           case "part":
             return separatedList(
               Token.parseIdent(),
               Token.parseWhitespace
             )(tokens).map(([, idents]) => Part.of(idents));
+
           case "slotted":
             return separatedList(
               parseCompound,
@@ -984,16 +983,23 @@ export namespace Selector {
       map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
       (colons) =>
         mapResult(Token.parseIdent(), (ident) => {
-          if (
-            colons === 1 &&
-            !["after", "before", "first-letter", "first-line"].includes(
-              ident.value
-            )
-          ) {
-            return Err.of(
-              `This pseudo-element is not allowed with single colon: ::${ident.value}`
-            );
+          if (colons === 1) {
+            switch (ident.value) {
+              // Legacy pseudo-elements must be accepted with both a single and
+              // double colon.
+              case "after":
+              case "before":
+              case "first-letter":
+              case "firt-line":
+                break;
+
+              default:
+                return Err.of(
+                  `This pseudo-element is not allowed with single colon: ::${ident.value}`
+                );
+            }
           }
+
           switch (ident.value) {
             case "after":
               return Result.of(After.of() as Pseudo.Element);
@@ -1914,18 +1920,18 @@ export namespace Selector {
    * {@link https://drafts.csswg.org/css-shadow-parts-1/#part}
    */
   export class Part extends Pseudo.Element<"part"> {
-    public static of(idents: Iterable<Ident>): Part {
+    public static of(idents: Iterable<Token.Ident>): Part {
       return new Part(Array.from(idents));
     }
 
-    private readonly _idents: ReadonlyArray<Ident>;
+    private readonly _idents: ReadonlyArray<Token.Ident>;
 
-    private constructor(idents: Array<Ident>) {
+    private constructor(idents: Array<Token.Ident>) {
       super("part");
       this._idents = idents;
     }
 
-    public get idents(): Iterable<Ident> {
+    public get idents(): Iterable<Token.Ident> {
       return this._idents;
     }
 
@@ -1947,7 +1953,7 @@ export namespace Selector {
 
   export namespace Part {
     export interface JSON extends Pseudo.Element.JSON<"part"> {
-      idents: Array<Ident.JSON>;
+      idents: Array<Token.Ident.JSON>;
     }
   }
 
@@ -2165,9 +2171,6 @@ export namespace Selector {
 
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-compound-selector}
-   *
-   * parseCompound is recursively called when parsing ::slotted, hence needs
-   * a type anotation.
    */
   const parseCompound: Parser<Slice<Token>, Simple | Compound, string> = map(
     oneOrMore(parseSimple),
