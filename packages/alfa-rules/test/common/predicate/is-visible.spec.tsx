@@ -33,13 +33,21 @@ test(`isVisible() returns false when an element is hidden using the
 
 test(`isVisible() returns false when an element is hidden by reducing its size
       to 0 and clipping overflow`, (t) => {
-  const element = (
+  for (const element of [
+    <div style={{ width: "0", overflowX: "hidden" }}>Hello World</div>,
+
+    <div style={{ width: "0", overflowY: "hidden" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowX: "hidden" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowY: "hidden" }}>Hello World</div>,
+
     <div style={{ width: "0", height: "0", overflow: "hidden" }}>
       Hello World
-    </div>
-  );
-
-  t.equal(isVisible(element), false);
+    </div>,
+  ]) {
+    t.equal(isVisible(element), false);
+  }
 });
 
 test(`isVisible() returns false when an element is hidden by reducing its size
