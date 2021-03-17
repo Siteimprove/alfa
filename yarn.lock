@@ -1892,6 +1892,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-selector@workspace:packages/alfa-selector"
   dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.15.0"
     "@siteimprove/alfa-css": "workspace:^0.15.0"
     "@siteimprove/alfa-dom": "workspace:^0.15.0"
     "@siteimprove/alfa-equatable": "workspace:^0.15.0"

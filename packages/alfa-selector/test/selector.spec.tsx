@@ -597,6 +597,34 @@ test(".parse() parses a pseudo-element selector", (t) => {
     type: "pseudo-element",
     name: "before",
   });
+
+  t.deepEqual(parse(":before").get().toJSON(), {
+    type: "pseudo-element",
+    name: "before",
+  });
+});
+
+test(`.parse() requires double colons on non-legacy pseudo-element selectors`, (t) => {
+  t.deepEqual(parse(":backdrop").isErr(), true);
+});
+
+test(`.parse() parses ::cue both as functional and non-functional selector`, (t) => {
+  t.deepEqual(parse("::cue(*)").get().toJSON(), {
+    type: "pseudo-element",
+    name: "cue",
+    selector: {
+      type: "some",
+      value: { type: "universal", namespace: null },
+    },
+  });
+
+  t.deepEqual(parse("::cue").get().toJSON(), {
+    type: "pseudo-element",
+    name: "cue",
+    selector: {
+      type: "none",
+    },
+  });
 });
 
 test(".parse() parses a pseudo-element selector when part of a compound selector", (t) => {
