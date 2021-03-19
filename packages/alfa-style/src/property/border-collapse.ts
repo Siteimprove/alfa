@@ -19,7 +19,7 @@ export type Computed = Specified;
 export const parse = Keyword.parse("collapse", "separate");
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse}
  * @internal
  */
 export default Property.of<Specified, Computed>(

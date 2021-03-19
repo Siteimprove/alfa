@@ -8,7 +8,7 @@ import * as parser from "@siteimprove/alfa-parser";
 import { Style } from "./style";
 import { Value } from "./value";
 
-const { left, either, eof } = Parser;
+const { left, either, end } = Parser;
 
 const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 
@@ -28,10 +28,42 @@ export class Property<T = unknown, U = T> {
       initial,
       left(
         either(parseDefaults, parse),
-        eof(() => "Expected end of input")
+        end(() => "Expected end of input")
       ),
       compute,
       options
+    );
+  }
+
+  public static extend<T, U>(
+    property: Property<T, U>,
+    overrides: {
+      initial?: U;
+      parse?: Property.Parser<T>;
+      compute?: Mapper<Value<T>, Value<U>, [style: Style]>;
+      options?: Property.Options;
+    } = {}
+  ): Property<T, U> {
+    const {
+      initial = property._initial,
+      parse,
+      compute = property._compute,
+      options = {},
+    } = overrides;
+
+    return new Property(
+      initial,
+      parse === undefined
+        ? property._parse
+        : left(
+            either(parseDefaults, parse),
+            end(() => "Expected end of input")
+          ),
+      compute,
+      {
+        ...property._options,
+        ...options,
+      }
     );
   }
 
@@ -169,7 +201,7 @@ export namespace Property {
         properties,
         left(
           either(parseDefaults, parse),
-          eof(() => "Expected end of input")
+          end(() => "Expected end of input")
         )
       );
     }
@@ -224,6 +256,7 @@ import BorderBlockStartStyle from "./property/border-block-start-style";
 import BorderBlockStartWidth from "./property/border-block-start-width";
 import BorderBottomColor from "./property/border-bottom-color";
 import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
+import BorderBottomRightRadius from "./property/border-bottom-right-radius";
 import BorderBottomStyle from "./property/border-bottom-style";
 import BorderBottomWidth from "./property/border-bottom-width";
 import BorderCollapse from "./property/border-collapse";
@@ -241,6 +274,8 @@ import BorderRightColor from "./property/border-right-color";
 import BorderRightStyle from "./property/border-right-style";
 import BorderRightWidth from "./property/border-right-width";
 import BorderTopColor from "./property/border-top-color";
+import BorderTopLeftRadius from "./property/border-top-left-radius";
+import BorderTopRightRadius from "./property/border-top-right-radius";
 import BorderTopStyle from "./property/border-top-style";
 import BorderTopWidth from "./property/border-top-width";
 import Bottom from "./property/bottom";
@@ -313,6 +348,7 @@ const Longhands = {
   "border-block-start-width": BorderBlockStartWidth,
   "border-bottom-color": BorderBottomColor,
   "border-bottom-left-radius": BorderBottomLeftRadius,
+  "border-bottom-right-radius": BorderBottomRightRadius,
   "border-bottom-style": BorderBottomStyle,
   "border-bottom-width": BorderBottomWidth,
   "border-collapse": BorderCollapse,
@@ -330,6 +366,8 @@ const Longhands = {
   "border-right-style": BorderRightStyle,
   "border-right-width": BorderRightWidth,
   "border-top-color": BorderTopColor,
+  "border-top-left-radius": BorderTopLeftRadius,
+  "border-top-right-radius": BorderTopRightRadius,
   "border-top-style": BorderTopStyle,
   "border-top-width": BorderTopWidth,
   bottom: Bottom,

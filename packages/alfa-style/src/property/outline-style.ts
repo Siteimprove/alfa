@@ -8,7 +8,6 @@ import { Property } from "../property";
 export type Specified =
   | Keyword<"auto">
   | Keyword<"none">
-  | Keyword<"hidden">
   | Keyword<"dotted">
   | Keyword<"dashed">
   | Keyword<"solid">
@@ -29,7 +28,6 @@ export type Computed = Specified;
 export const parse = Keyword.parse(
   "auto",
   "none",
-  "hidden",
   "dotted",
   "dashed",
   "solid",

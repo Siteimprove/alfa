@@ -70,7 +70,7 @@ export const parseList = map(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-source
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-source}
  * @internal
  */
 export default Property.of<Specified, Computed>(

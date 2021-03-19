@@ -40,7 +40,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style}
  * @internal
  */
 export default Property.of<Specified, Computed>(

@@ -3,7 +3,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-import { Value } from "../value";
 
 const { either } = Parser;
 
@@ -30,22 +29,22 @@ export const parse = either(
 );
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width}
  * @internal
  */
 export default Property.of<Specified, Computed>(
   Length.of(3, "px"),
   parse,
-  (borderWidth, style) => {
-    if (
-      style
-        .computed("border-top-style")
-        .some(({ value }) => value === "none" || value === "hidden")
-    ) {
-      return Value.of(Length.of(0, "px"));
-    }
+  (borderWidth, style) =>
+    borderWidth.map((value) => {
+      if (
+        style
+          .computed("border-top-style")
+          .some(({ value }) => value === "none" || value === "hidden")
+      ) {
+        return Length.of(0, "px");
+      }
 
-    return borderWidth.map((value) => {
       switch (value.type) {
         case "keyword":
           switch (value.value) {
@@ -62,6 +61,5 @@ export default Property.of<Specified, Computed>(
         case "length":
           return Resolver.length(value, style);
       }
-    });
-  }
+    })
 );

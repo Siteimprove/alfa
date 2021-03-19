@@ -26,7 +26,7 @@ export type Computed = RGB<Percentage, Percentage> | Current | System;
 export const parse = Color.parse;
 
 /**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color}
  * @internal
  */
 export default Property.of<Specified, Computed>(

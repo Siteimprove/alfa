@@ -1,51 +1,25 @@
-import { Keyword, Length } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Length } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-import { Value } from "../value";
 
-const { either } = Parser;
-
-/**
- * @internal
- */
-export type Specified =
-  | Length
-  | Keyword<"thin">
-  | Keyword<"medium">
-  | Keyword<"thick">;
+import Base from "./border-top-width";
 
 /**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width}
  * @internal
  */
-export type Computed = Length<"px">;
+export default Property.extend(Base, {
+  compute: (borderWidth, style) =>
+    borderWidth.map((value) => {
+      if (
+        style
+          .computed("border-left-style")
+          .some(({ value }) => value === "none" || value === "hidden")
+      ) {
+        return Length.of(0, "px");
+      }
 
-/**
- * @internal
- */
-export const parse = either(
-  Keyword.parse("thin", "medium", "thick"),
-  Length.parse
-);
-
-/**
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width
- * @internal
- */
-export default Property.of<Specified, Computed>(
-  Length.of(3, "px"),
-  parse,
-  (borderWidth, style) => {
-    if (
-      style
-        .computed("border-left-style")
-        .some(({ value }) => value === "none" || value === "hidden")
-    ) {
-      return Value.of(Length.of(0, "px"));
-    }
-
-    return borderWidth.map((value) => {
       switch (value.type) {
         case "keyword":
           switch (value.value) {
@@ -62,6 +36,5 @@ export default Property.of<Specified, Computed>(
         case "length":
           return Resolver.length(value, style);
       }
-    });
-  }
-);
+    }),
+});
