@@ -1,34 +1,52 @@
-import { Length, Percentage, BorderRadius } from "@siteimprove/alfa-css";
+import { Length, Percentage } from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-/**
- * @internal
- */
-export type Specified = BorderRadius<Length | Percentage>;
+const { takeBetween, either, map } = Parser;
 
 /**
  * @internal
  */
-export type Computed = BorderRadius<Length<"px"> | Percentage>;
+export type Specified = readonly [
+  horizontal: Length | Percentage,
+  vertical: Length | Percentage
+];
+
+/**
+ * @internal
+ */
+export type Computed = readonly [
+  horizontal: Length<"px"> | Percentage,
+  vertical: Length<"px"> | Percentage
+];
+
+/**
+ * @internal
+ */
+export const parse = map(
+  takeBetween(either(Length.parse, Percentage.parse), 1, 2),
+  ([horizontal, vertical = horizontal]) => [horizontal, vertical] as const
+);
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius
  * @internal
  */
 export default Property.of<Specified, Computed>(
-  BorderRadius.of(Length.of(0, "px"), Length.of(0, "px")),
-  BorderRadius.parse,
+  [Length.of(0, "px"), Length.of(0, "px")],
+  parse,
   (value, style) =>
-    value.map((value) => {
-      return BorderRadius.of(
-        Length.isLength(value.horizontal)
-          ? Resolver.length(value.horizontal, style)
-          : value.horizontal,
-        Length.isLength(value.vertical)
-          ? Resolver.length(value.vertical, style)
-          : value.vertical
-      );
+    value.map(([horizontal, vertical]) => {
+      return [
+        horizontal.type === "length"
+          ? Resolver.length(horizontal, style)
+          : horizontal,
+
+        vertical.type === "length"
+          ? Resolver.length(vertical, style)
+          : vertical,
+      ];
     })
 );

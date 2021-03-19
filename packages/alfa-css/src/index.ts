@@ -1,7 +1,6 @@
 export * from "./syntax";
 export * from "./value";
 export * from "./value/angle";
-export * from "./value/border-radius";
 export * from "./value/box";
 export * from "./value/calculation";
 export * from "./value/color";
