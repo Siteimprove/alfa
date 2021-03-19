@@ -29,6 +29,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
+- [@siteimprove/alfa-aria](packages/alfa-aria): Roles who prohibit naming are now correctly considered when referenced by `aria-labelledby`. ([#750](../../pull/750))
+
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750)) 
 
 ## [0.15.2](../../compare/v0.15.1...v0.15.2) (2021-03-18)
