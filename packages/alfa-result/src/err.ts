@@ -56,6 +56,10 @@ export class Err<E> implements Result<never, E> {
     return accumulator;
   }
 
+  public apply(): this {
+    return this;
+  }
+
   public includes(): boolean {
     return false;
   }

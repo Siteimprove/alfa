@@ -21,6 +21,54 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.15.2](../../compare/v0.15.1...v0.15.2) (2021-03-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fix a panic in SIA-R66 and SIA-R69 when background colors cannot be determined.
+
+## [0.15.1](../../compare/v0.15.0...v0.15.1) (2021-03-17)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles text nodes of clipped elements.
+
+- [@siteimprove/alfa-cypress](packages/alfa-cypress): `Cypress.createPlugin()` no longer creates an asynchronous Chai plugin, which was causing assertion errors to not count as test failures.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 now only applies to elements that are possibly scrollable along the x-axis if they also specify `white-space: nowrap`. ([#746](../../pull/746))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles cases where only one of `width` or `height` has been set to `0` and only one of `overflow-x` or `overflow-y` set to `hidden`. Either of these cases will cause a block to collapse and its contents be hidden.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): CSS pseudo-elements are now parsed, thus preventing the parser from entirely dropping declaration containing one of them. ([#745](../../pull/754))
+
+## [0.15.0](../../compare/v0.14.2...v0.15.0) (2021-03-15)
+
+### Breaking
+
+- [@siteimprove/alfa-cypress](packages/alfa-cypress): The Cypress integration now uses a Chai plugin as its main entry point rather than a custom command. For more information, please see the associated pull request. ([#740](../../pull/740))
+
+### Added
+
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline<T>` now provides an implementation of `Foldable<T>` and `Applicative<T>`.
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result<T, E>` now provides an implementation of `Applicative<T>`.
+
+- [@siteimprove/alfa-future](packages/alfa-future): `Future<T>` now provides an implementation of `Applicative<T>`.
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isTransparent()` now correctly handles text nodes of transparent elements. ([#741](../../pull/741))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `font-family` property now correctly parses font families specified as whitespace-separated idents. ([#742](../../pull/742))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 no longer considers elements with `overflow: clip` as possibly scrollable. ([#744](../../pull/744))
+
+## [0.14.2](../../compare/v0.14.1...v0.14.2) (2021-03-11)
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The `@siteimprove/alfa-dom/jsx-runtime` module has been fixed and now correctly exposes the `jsx()`, `jsxs()`, and `jsxDEV()` entries.
+
 ## [0.14.1](../../compare/v0.14.0...v0.14.1) (2021-03-10)
 
 ### Fixed

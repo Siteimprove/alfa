@@ -12,6 +12,7 @@
     "src/h.ts",
     "src/index.ts",
     "src/jsx.ts",
+    "src/jsx-runtime.ts",
     "src/namespace.ts",
     "src/node.ts",
     "src/node/attribute.ts",

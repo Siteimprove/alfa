@@ -21,7 +21,7 @@ const { isText } = Text;
 const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r62.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
   evaluate({ device, document }) {
     return {

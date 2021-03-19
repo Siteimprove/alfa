@@ -323,7 +323,7 @@ test(`.from() assigns implicit row and column headers for the same
   const table = Table.from(
     <table>
       <tr>
-        <td></td>
+        <td />
         <th>A</th>
         <th>B</th>
       </tr>
@@ -485,7 +485,7 @@ test(`.from() assigns headers within a row group`, (t) => {
 test(`.from() assigns headers within a column group`, (t) => {
   const table = Table.from(
     <table>
-      <colgroup span="2"></colgroup>
+      <colgroup span="2" />
       <tr>
         <th colspan="2" scope="colgroup">
           A

@@ -18,7 +18,7 @@ const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r82.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r82",
   requirements: [Criterion.of("3.3.1")],
   evaluate({ device, document }) {
     return {

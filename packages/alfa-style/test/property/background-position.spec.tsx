@@ -8,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `background-position: left`", (t) => {
-  const element = <div style={{ backgroundPosition: `left` }}></div>;
+  const element = <div style={{ backgroundPosition: `left` }} />;
 
   const style = Style.from(element, device);
 
@@ -46,7 +46,7 @@ test("#cascaded() parses `background-position: left`", (t) => {
 });
 
 test("#cascaded() parses `background-position: top`", (t) => {
-  const element = <div style={{ backgroundPosition: `top` }}></div>;
+  const element = <div style={{ backgroundPosition: `top` }} />;
 
   const style = Style.from(element, device);
 

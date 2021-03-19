@@ -37,10 +37,10 @@ test("evaluate() passes on implicit headers", async (t) => {
         {target2}
       </tr>
       <tr>
-        <td></td>
+        <td />
       </tr>
       <tr>
-        <td headers="col2"></td>
+        <td headers="col2" />
       </tr>
     </table>,
   ]);

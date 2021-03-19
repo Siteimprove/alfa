@@ -29,6 +29,12 @@ export const Attributes = {
     options: ["inline", "list", "both", "none"],
     default: "none",
   },
+  "aria-braillelabel": {
+    kind: "property",
+    type: "string",
+    options: null,
+    default: null,
+  },
   "aria-brailleroledescription": {
     kind: "property",
     type: "string",
@@ -170,12 +176,6 @@ export const Attributes = {
   "aria-labelledby": {
     kind: "property",
     type: "id-reference-list",
-    options: null,
-    default: null,
-  },
-  "aria-braillelabel": {
-    kind: "property",
-    type: "string",
     options: null,
     default: null,
   },

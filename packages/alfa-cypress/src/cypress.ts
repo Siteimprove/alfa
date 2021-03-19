@@ -2,6 +2,12 @@
 /// <reference lib="dom.iterable" />
 /// <reference types="cypress" />
 
+// While it may be tempting to pull in @siteimprove/alfa-chai for this module as
+// Cypress uses Chai for all its assertion methods, it's a trap! Cypress bundles
+// its own copy of the TypeScript typings for Chai and so we have to avoid the
+// two being referenced in the same compilation unit as they'd be considered
+// incompatible.
+
 import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -34,12 +40,17 @@ import { Page } from "@siteimprove/alfa-web";
 import * as act from "@siteimprove/alfa-act";
 import earl from "@siteimprove/alfa-formatter-earl";
 
-import { addCommand } from "./cypress/add-command";
-
 declare global {
+  namespace Chai {
+    interface Assertion {
+      accessible(): Promise<void>;
+    }
+  }
+
   namespace Cypress {
-    interface Chainable<Subject> {
-      audit(): Chainable<Subject>;
+    interface Chainer<Subject> {
+      (chainer: "be.accessible"): Chainable<Subject>;
+      (chainer: "not.be.accessible"): Chainable<Subject>;
     }
   }
 }
@@ -52,21 +63,41 @@ export namespace Cypress {
     rules: Iterable<act.Rule<Page, T, Q>>,
     handlers: Iterable<Handler<Page, T, Q>> = [],
     options: Asserter.Options = {}
-  ): void {
+  ): globalThis.Chai.ChaiPlugin {
     const asserter = Asserter.of(rules, handlers, options);
 
-    const command = (value: Type) =>
-      cy.wrap(value, { log: false }).should(() => {
-        const input = toPage(value);
+    return (chai) => {
+      chai.Assertion.addMethod("accessible", function () {
+        const input = toPage(this._obj);
 
-        const error = asserter.expect(input).to.be.accessible().get();
+        const result = asserter
+          .expect(input)
+          .to.be.accessible()
 
-        const message = error.isOk() ? error.get() : error.getErr();
+          // Cypress has aversions towards promises and asynchronous functions.
+          // We therefore have to synchronously unwrap the future, which it is
+          // fortunately designed for. This _will_ panic if the value isn't
+          // available, but this shouldn't happen in practice as the assertion
+          // handlers can't be asynchronous either.
+          // https://github.com/cypress-io/cypress/issues/4742
+          .get();
 
-        assert.isTrue(error.isOk(), message);
+        const message = result.isOk() ? result.get() : result.getErr();
+
+        this.assert(
+          result.isOk(),
+          `expected #{this} to be accessible${
+            result.isErr() ? ` but ${message}` : ""
+          }`,
+          `expected #{this} to not be accessible${
+            result.isOk() ? ` but ${message}` : ""
+          }`,
+          /* Expected */ true,
+          /* Actual */ result.isOk(),
+          /* Show diff */ false
+        );
       });
-
-    addCommand("audit", { prevSubject: true }, command);
+    };
   }
 
   export type Type = globalThis.Node | globalThis.JQuery;
@@ -316,14 +347,32 @@ export namespace Cypress {
   }
 
   export namespace Handler {
+    /**
+     * @remarks
+     * Cypress has this rather odd model of relying on synchronously enqueued
+     * hooks and commands to provide a feeling of using a synchronous API. As
+     * the handler will run _as part of_ a command, this means that we can't
+     * register any additional commands when the handler runs; this must instead
+     * be handled beforehand. The handler therefore starts by registering an
+     * `after()` hook that will write any files collected during the test run
+     * _after_ the tests are done.
+     */
     export function persist<I, T, Q>(
       output: Mapper<I, string>,
       format: Formatter<I, T, Q> = earl()
     ): Handler<I, T, Q> {
+      const files = new Map<string, string>();
+
+      after(() => {
+        for (const [file, data] of files) {
+          cy.writeFile(file, data);
+        }
+      });
+
       return (input, rules, outcomes, message) => {
         const file = output(input);
 
-        cy.writeFile(file, format(input, rules, outcomes) + "\n");
+        files.set(file, format(input, rules, outcomes) + "\n");
 
         return `${message}, see the full report at ${file}`;
       };

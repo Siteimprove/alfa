@@ -16,7 +16,7 @@ const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove/github.io/sanshikan/rules/sia-r6.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r6",
   requirements: [Criterion.of("3.1.1")],
   evaluate({ document }) {
     return {

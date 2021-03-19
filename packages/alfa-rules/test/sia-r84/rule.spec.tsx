@@ -72,6 +72,23 @@ test(`evaluate() fails a scrollable element that is neither focusable nor has
   ]);
 });
 
+test(`evaluate() fails an element that restricts its width while making overflow
+      scrollable and not wrapping text`, async (t) => {
+  const target = (
+    <div style={{ width: "200px", overflow: "scroll", whiteSpace: "nowrap" }}>
+      Hello world
+    </div>
+  );
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R84, { document }), [
+    failed(R84, target, {
+      1: Outcomes.IsNotReachable,
+    }),
+  ]);
+});
+
 test(`evaluate() is inapplicable to an element that restricts its width while
       hiding overflow on the x-axis`, async (t) => {
   const target = (
@@ -87,6 +104,17 @@ test(`evaluate() is inapplicable to an element that restricts its height while
       hiding overflow on the y-axis`, async (t) => {
   const target = (
     <div style={{ height: "200px", overflowY: "hidden" }}>Hello world</div>
+  );
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R84, { document }), [inapplicable(R84)]);
+});
+
+test(`evaluate() is inapplicable to an element that restricts its width while
+      making overflow scrollable, but wraps text`, async (t) => {
+  const target = (
+    <div style={{ width: "200px", overflow: "scroll" }}>Hello world</div>
   );
 
   const document = Document.of([target]);

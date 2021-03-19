@@ -33,13 +33,21 @@ test(`isVisible() returns false when an element is hidden using the
 
 test(`isVisible() returns false when an element is hidden by reducing its size
       to 0 and clipping overflow`, (t) => {
-  const element = (
+  for (const element of [
+    <div style={{ width: "0", overflowX: "hidden" }}>Hello World</div>,
+
+    <div style={{ width: "0", overflowY: "hidden" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowX: "hidden" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowY: "hidden" }}>Hello World</div>,
+
     <div style={{ width: "0", height: "0", overflow: "hidden" }}>
       Hello World
-    </div>
-  );
-
-  t.equal(isVisible(element), false);
+    </div>,
+  ]) {
+    t.equal(isVisible(element), false);
+  }
 });
 
 test(`isVisible() returns false when an element is hidden by reducing its size
@@ -54,7 +62,7 @@ test(`isVisible() returns false when an element is hidden by reducing its size
 });
 
 test("isVisible() returns false on empty elements", (t) => {
-  const element = <div></div>;
+  const element = <div />;
 
   t.equal(isVisible(element), false);
 });
@@ -345,7 +353,8 @@ test("isVisible() returns true for textarea with no child", (t) => {
   t.equal(isVisible(element), true);
 });
 
-test("isVisible() returns false for an absolutely positioned element clipped by rect(1px, 1px, 1px, 1px)", (t) => {
+test(`isVisible() returns false for an absolutely positioned element clipped by
+      \`rect(1px, 1px, 1px, 1px)\``, (t) => {
   const element = (
     <div style={{ clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" }}>
       Invisible text
@@ -355,10 +364,21 @@ test("isVisible() returns false for an absolutely positioned element clipped by 
   t.equal(isVisible(element), false);
 });
 
-test("isVisible() returns true for a relatively positioned element clipped by rect(1px, 1px, 1px, 1px)", (t) => {
+test(`isVisible() returns true for a relatively positioned element clipped by
+      \`rect(1px, 1px, 1px, 1px)\``, (t) => {
   const element = (
     <div style={{ clip: "rect(1px, 1px, 1px, 1px)" }}>Invisible text</div>
   );
 
   t.equal(isVisible(element), true);
+});
+
+test(`isVisible() returns false for a text node with a parent element with
+      \`opacity: 0\``, (t) => {
+  const text = h.text("Hello world");
+
+  const element = <div style={{ opacity: "0" }}>{text}</div>;
+
+  t.equal(isVisible(text), false);
+  t.equal(isVisible(element), false);
 });

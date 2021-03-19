@@ -171,7 +171,10 @@ export namespace Awaiter {
         }
 
         await page.waitForFunction(
-          () => document.getAnimations().length === 0,
+          () =>
+            document
+              .getAnimations()
+              .every((animation) => animation.playState !== "running"),
           {
             timeout: timeout.remaining(),
           }

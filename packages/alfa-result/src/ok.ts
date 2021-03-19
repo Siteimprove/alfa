@@ -56,6 +56,10 @@ export class Ok<T> implements Result<T, never> {
     return reducer(accumulator, this._value);
   }
 
+  public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
+    return mapper.map((mapper) => mapper(this._value));
+  }
+
   public includes(value: T): boolean {
     return Equatable.equals(this._value, value);
   }
