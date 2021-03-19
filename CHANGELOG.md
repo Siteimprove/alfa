@@ -21,6 +21,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.15.2](../../compare/v0.15.1...v0.15.2) (2021-03-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fix a panic in SIA-R66 and SIA-R69 when background colors cannot be determined.
+
 ## [0.15.1](../../compare/v0.15.0...v0.15.1) (2021-03-17)
 
 ### Fixed
@@ -32,6 +38,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 now only applies to elements that are possibly scrollable along the x-axis if they also specify `white-space: nowrap`. ([#746](../../pull/746))
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles cases where only one of `width` or `height` has been set to `0` and only one of `overflow-x` or `overflow-y` set to `hidden`. Either of these cases will cause a block to collapse and its contents be hidden.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): CSS pseudo-elements are now parsed, thus preventing the parser from entirely dropping declaration containing one of them. ([#745](../../pull/754))
 
 ## [0.15.0](../../compare/v0.14.2...v0.15.0) (2021-03-15)
 
@@ -54,8 +62,6 @@ Items that are related, such as breaking changes, new features, or changes to ex
 - [@siteimprove/alfa-style](packages/alfa-style): The `font-family` property now correctly parses font families specified as whitespace-separated idents. ([#742](../../pull/742))
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 no longer considers elements with `overflow: clip` as possibly scrollable. ([#744](../../pull/744))
-
-- [@siteimprove/alfa-selector](packages/alfa-selector): CSS pseudo-elements are now parsed, thus preventing the parser from entirely dropping declaration containing one of them. ([#745](../../pull/754))
 
 ## [0.14.2](../../compare/v0.14.1...v0.14.2) (2021-03-11)
 
