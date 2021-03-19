@@ -22,16 +22,19 @@ for (const vertical of ["top", "bottom"] as const) {
       const style = Style.from(element, device);
 
       t.deepEqual(style.cascaded(property).get().toJSON(), {
-        value: [
-          {
-            type: "percentage",
-            value: 0.1,
-          },
-          {
-            type: "percentage",
-            value: 0.1,
-          },
-        ],
+        value: {
+          type: "tuple",
+          values: [
+            {
+              type: "percentage",
+              value: 0.1,
+            },
+            {
+              type: "percentage",
+              value: 0.1,
+            },
+          ],
+        },
         source: h.declaration(property, "10%").toJSON(),
       });
     });
@@ -47,17 +50,20 @@ for (const vertical of ["top", "bottom"] as const) {
       const style = Style.from(element, device);
 
       t.deepEqual(style.cascaded(property).get().toJSON(), {
-        value: [
-          {
-            type: "length",
-            unit: "px",
-            value: 10,
-          },
-          {
-            type: "percentage",
-            value: 0.1,
-          },
-        ],
+        value: {
+          type: "tuple",
+          values: [
+            {
+              type: "length",
+              unit: "px",
+              value: 10,
+            },
+            {
+              type: "percentage",
+              value: 0.1,
+            },
+          ],
+        },
         source: h.declaration(property, "10px 10%").toJSON(),
       });
     });

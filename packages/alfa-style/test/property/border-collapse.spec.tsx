@@ -8,7 +8,13 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `border-collapse: separate`", (t) => {
-  const element = <table style={{ borderCollapse: "separate" }}></table>;
+  const element = (
+    <table
+      style={{
+        borderCollapse: "separate",
+      }}
+    />
+  );
 
   const style = Style.from(element, device);
 

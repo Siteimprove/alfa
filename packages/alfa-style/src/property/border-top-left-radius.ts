@@ -4,23 +4,23 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
+import { Tuple } from "./value/tuple";
+
 const { takeBetween, either, map, delimited, option } = Parser;
 
 /**
  * @internal
  */
-export type Specified = readonly [
-  horizontal: Length | Percentage,
-  vertical: Length | Percentage
-];
+export type Specified = Tuple<
+  [horizontal: Length | Percentage, vertical: Length | Percentage]
+>;
 
 /**
  * @internal
  */
-export type Computed = readonly [
-  horizontal: Length<"px"> | Percentage,
-  vertical: Length<"px"> | Percentage
-];
+export type Computed = Tuple<
+  [horizontal: Length<"px"> | Percentage, vertical: Length<"px"> | Percentage]
+>;
 
 /**
  * @internal
@@ -34,7 +34,7 @@ export const parse = map(
     1,
     2
   ),
-  ([horizontal, vertical = horizontal]) => [horizontal, vertical] as const
+  ([horizontal, vertical = horizontal]) => Tuple.of(horizontal, vertical)
 );
 
 /**
@@ -42,18 +42,13 @@ export const parse = map(
  * @internal
  */
 export default Property.of<Specified, Computed>(
-  [Length.of(0, "px"), Length.of(0, "px")],
+  Tuple.of(Length.of(0, "px"), Length.of(0, "px")),
   parse,
   (value, style) =>
-    value.map(([horizontal, vertical]) => {
-      return [
-        horizontal.type === "length"
-          ? Resolver.length(horizontal, style)
-          : horizontal,
-
-        vertical.type === "length"
-          ? Resolver.length(vertical, style)
-          : vertical,
-      ];
+    value.map(({ values: [h, v] }) => {
+      return Tuple.of(
+        h.type === "length" ? Resolver.length(h, style) : h,
+        v.type === "length" ? Resolver.length(v, style) : v
+      );
     })
 );

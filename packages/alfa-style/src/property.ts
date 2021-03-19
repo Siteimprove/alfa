@@ -260,6 +260,7 @@ import BorderBottomRightRadius from "./property/border-bottom-right-radius";
 import BorderBottomStyle from "./property/border-bottom-style";
 import BorderBottomWidth from "./property/border-bottom-width";
 import BorderCollapse from "./property/border-collapse";
+import BorderImageOutset from "./property/border-image-outset";
 import BorderImageSource from "./property/border-image-source";
 import BorderInlineEndColor from "./property/border-inline-end-color";
 import BorderInlineEndStyle from "./property/border-inline-end-style";
@@ -352,6 +353,7 @@ const Longhands = {
   "border-bottom-style": BorderBottomStyle,
   "border-bottom-width": BorderBottomWidth,
   "border-collapse": BorderCollapse,
+  "border-image-outset": BorderImageOutset,
   "border-image-source": BorderImageSource,
   "border-inline-end-color": BorderInlineEndColor,
   "border-inline-end-style": BorderInlineEndStyle,

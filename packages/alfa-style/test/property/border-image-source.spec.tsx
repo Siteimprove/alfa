@@ -8,7 +8,13 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test(`#cascaded() parses \`border-image-source: url("foo.png")\``, (t) => {
-  const element = <div style={{ borderImageSource: `url("foo.png")` }}></div>;
+  const element = (
+    <div
+      style={{
+        borderImageSource: `url("foo.png")`,
+      }}
+    />
+  );
 
   const style = Style.from(element, device);
 
