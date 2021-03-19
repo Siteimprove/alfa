@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
@@ -13,7 +14,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
  * @public
  */
 export abstract class Future<T>
-  implements Functor<T>, Monad<T>, AsyncIterable<T> {
+  implements Functor<T>, Monad<T>, Applicative<T>, AsyncIterable<T> {
   protected abstract step(): Future<T>;
 
   public then(callback: Callback<T>): void {
@@ -55,6 +56,10 @@ export abstract class Future<T>
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
+
+  public apply<U>(mapper: Future<Mapper<T, U>>): Future<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
 
   public tee(callback: Callback<T>): Future<T> {
     return this.map((value) => {
