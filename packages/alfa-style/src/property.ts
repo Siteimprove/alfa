@@ -265,6 +265,7 @@ import BorderEndStartRadius from "./property/border-end-start-radius";
 import BorderImageOutset from "./property/border-image-outset";
 import BorderImageRepeat from "./property/border-image-repeat";
 import BorderImageSource from "./property/border-image-source";
+import BorderImageWidth from "./property/border-image-width";
 import BorderInlineEndColor from "./property/border-inline-end-color";
 import BorderInlineEndStyle from "./property/border-inline-end-style";
 import BorderInlineEndWidth from "./property/border-inline-end-width";
@@ -363,6 +364,7 @@ const Longhands = {
   "border-image-outset": BorderImageOutset,
   "border-image-repeat": BorderImageRepeat,
   "border-image-source": BorderImageSource,
+  "border-image-width": BorderImageWidth,
   "border-inline-end-color": BorderInlineEndColor,
   "border-inline-end-style": BorderInlineEndStyle,
   "border-inline-end-width": BorderInlineEndWidth,
@@ -375,8 +377,8 @@ const Longhands = {
   "border-right-color": BorderRightColor,
   "border-right-style": BorderRightStyle,
   "border-right-width": BorderRightWidth,
-  "border-start-end-radius": BorderEndEndRadius,
-  "border-start-start-radius": BorderEndStartRadius,
+  "border-start-end-radius": BorderStartEndRadius,
+  "border-start-start-radius": BorderStartStartRadius,
   "border-top-color": BorderTopColor,
   "border-top-left-radius": BorderTopLeftRadius,
   "border-top-right-radius": BorderTopRightRadius,

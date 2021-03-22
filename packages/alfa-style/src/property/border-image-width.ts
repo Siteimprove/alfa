@@ -1,4 +1,10 @@
-import { Token, Length, Number } from "@siteimprove/alfa-css";
+import {
+  Token,
+  Length,
+  Number,
+  Percentage,
+  Keyword,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
@@ -24,7 +30,7 @@ export type Specified = Tuple<
  * @internal
  */
 export namespace Specified {
-  export type Item = Length | Number;
+  export type Item = Length | Percentage | Number | Keyword<"auto">;
 }
 
 /**
@@ -43,7 +49,7 @@ export type Computed = Tuple<
  * @internal
  */
 export namespace Computed {
-  export type Item = Length<"px"> | Number;
+  export type Item = Length<"px"> | Percentage | Number | Keyword<"auto">;
 }
 
 /**
@@ -53,10 +59,13 @@ export const parse = map(
   takeBetween(
     delimited(
       option(Token.parseWhitespace),
-      filter(
-        either(Length.parse, Number.parse),
-        (size) => size.value >= 0,
-        () => `Negative sizes are not allowed`
+      either(
+        filter(
+          either(Length.parse, either(Percentage.parse, Number.parse)),
+          (size) => size.value >= 0,
+          () => `Negative sizes are not allowed`
+        ),
+        Keyword.parse("auto")
       )
     ),
     1,
@@ -67,11 +76,11 @@ export const parse = map(
 );
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width}
  * @internal
  */
 export default Property.of<Specified, Computed>(
-  Tuple.of(Number.of(0), Number.of(0), Number.of(0), Number.of(0)),
+  Tuple.of(Number.of(1), Number.of(1), Number.of(1), Number.of(1)),
   parse,
   (value, style) =>
     value.map(({ values: [t, r, b, l] }) =>
