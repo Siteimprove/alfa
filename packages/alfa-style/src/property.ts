@@ -260,6 +260,8 @@ import BorderBottomRightRadius from "./property/border-bottom-right-radius";
 import BorderBottomStyle from "./property/border-bottom-style";
 import BorderBottomWidth from "./property/border-bottom-width";
 import BorderCollapse from "./property/border-collapse";
+import BorderEndEndRadius from "./property/border-end-end-radius";
+import BorderEndStartRadius from "./property/border-end-start-radius";
 import BorderImageOutset from "./property/border-image-outset";
 import BorderImageRepeat from "./property/border-image-repeat";
 import BorderImageSource from "./property/border-image-source";
@@ -275,6 +277,8 @@ import BorderLeftWidth from "./property/border-left-width";
 import BorderRightColor from "./property/border-right-color";
 import BorderRightStyle from "./property/border-right-style";
 import BorderRightWidth from "./property/border-right-width";
+import BorderStartEndRadius from "./property/border-start-end-radius";
+import BorderStartStartRadius from "./property/border-start-start-radius";
 import BorderTopColor from "./property/border-top-color";
 import BorderTopLeftRadius from "./property/border-top-left-radius";
 import BorderTopRightRadius from "./property/border-top-right-radius";
@@ -354,6 +358,8 @@ const Longhands = {
   "border-bottom-style": BorderBottomStyle,
   "border-bottom-width": BorderBottomWidth,
   "border-collapse": BorderCollapse,
+  "border-end-end-radius": BorderEndEndRadius,
+  "border-end-start-radius": BorderEndStartRadius,
   "border-image-outset": BorderImageOutset,
   "border-image-repeat": BorderImageRepeat,
   "border-image-source": BorderImageSource,
@@ -369,6 +375,8 @@ const Longhands = {
   "border-right-color": BorderRightColor,
   "border-right-style": BorderRightStyle,
   "border-right-width": BorderRightWidth,
+  "border-start-end-radius": BorderEndEndRadius,
+  "border-start-start-radius": BorderEndStartRadius,
   "border-top-color": BorderTopColor,
   "border-top-left-radius": BorderTopLeftRadius,
   "border-top-right-radius": BorderTopRightRadius,
