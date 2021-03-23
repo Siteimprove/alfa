@@ -47,8 +47,20 @@ function isClippedBySize(
         const { value: width } = style.computed("width");
 
         for (const dimension of [height, width]) {
-          if (dimension.type !== "keyword" && dimension.value <= 1) {
-            return true;
+          switch (dimension.type) {
+            case "percentage":
+              if (dimension.value <= 0) {
+                return true;
+              } else {
+                break;
+              }
+
+            case "length":
+              if (dimension.value <= 1) {
+                return true;
+              } else {
+                break;
+              }
           }
         }
       }
@@ -95,10 +107,6 @@ function isClippedByMasking(device: Device, context: Context): Predicate<Node> {
       const { value: clip } = style.computed("clip");
       const { value: position } = style.computed("position");
 
-      // If element is absolutely positioned, the clip rectangle is not "auto", and one of its dimension (horizontal/vertical)
-      // has equals non-"auto" values, then the element is totally clipped (0 pixels height or width clipping).
-      // This does not handle "auto" values in rect() since these depend on the box size which we don't currently have.
-      // Additionally, it is assumed that rect(auto, 0px, auto, 0px) is unlikely to be used as clipping method…
       if (
         (position.value === "absolute" || position.value === "fixed") &&
         clip.type === "shape" &&
