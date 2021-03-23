@@ -1,41 +1,16 @@
-import { Keyword, Length } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Length } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either } = Parser;
-
-/**
- * @internal
- */
-export type Specified =
-  | Length
-  | Keyword<"thin">
-  | Keyword<"medium">
-  | Keyword<"thick">;
-
-/**
- * @internal
- */
-export type Computed = Length<"px">;
-
-/**
- * @internal
- */
-export const parse = either(
-  Keyword.parse("thin", "medium", "thick"),
-  Length.parse
-);
+import Base from "./border-top-width";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Length.of(3, "px"),
-  parse,
-  (borderWidth, style) =>
+export default Property.extend(Base, {
+  compute: (borderWidth, style) =>
     borderWidth.map((value) => {
       if (
         style
@@ -61,5 +36,5 @@ export default Property.of<Specified, Computed>(
         case "length":
           return Resolver.length(value, style);
       }
-    })
-);
+    }),
+});

@@ -2,7 +2,6 @@ import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
-import { Resolver } from "../resolver";
 
 import { Tuple } from "./value/tuple";
 
