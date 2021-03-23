@@ -926,7 +926,7 @@ __metadata:
     "@siteimprove/alfa-mapper": "workspace:^0.15.2"
     "@siteimprove/alfa-test": "workspace:^0.15.2"
     "@types/chai": ^4.1.7
-    chai: ^4.3.3
+    chai: ^4.3.4
   languageName: unknown
   linkType: soft
 
@@ -1111,7 +1111,7 @@ __metadata:
     "@siteimprove/alfa-mapper": "workspace:^0.15.2"
     "@siteimprove/alfa-test": "workspace:^0.15.2"
     "@siteimprove/alfa-web": "workspace:^0.15.2"
-    cypress: ^6.6.0
+    cypress: ^6.8.0
   languageName: unknown
   linkType: soft
 
@@ -1358,7 +1358,7 @@ __metadata:
   dependencies:
     chalk: ^4.1.0
     emphasize: ^4.2.0
-    highlight.js: ^10.6.0
+    highlight.js: ^10.7.1
   languageName: unknown
   linkType: soft
 
@@ -1432,7 +1432,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^0.15.2"
     "@siteimprove/alfa-web": "workspace:^0.15.2"
     "@types/jasmine": ^3.3.12
-    jasmine: ^3.6.4
+    jasmine: ^3.7.0
   languageName: unknown
   linkType: soft
 
@@ -1732,8 +1732,8 @@ __metadata:
     "@siteimprove/alfa-web": "workspace:^0.15.2"
     "@types/react": ^17.0.0
     "@types/react-test-renderer": ^17.0.0
-    react: ^17.0.1
-    react-test-renderer: ^17.0.1
+    react: ^17.0.2
+    react-test-renderer: ^17.0.2
   languageName: unknown
   linkType: soft
 
@@ -2160,7 +2160,7 @@ __metadata:
     "@siteimprove/alfa-http": "workspace:^0.15.2"
     "@siteimprove/alfa-test": "workspace:^0.15.2"
     "@siteimprove/alfa-web": "workspace:^0.15.2"
-    webdriverio: ^7.1.1
+    webdriverio: ^7.2.2
   languageName: unknown
   linkType: soft
 
@@ -2539,15 +2539,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/config@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@wdio/config@npm:7.1.1"
+"@wdio/config@npm:7.2.1":
+  version: 7.2.1
+  resolution: "@wdio/config@npm:7.2.1"
   dependencies:
     "@wdio/logger": 7.0.0
-    "@wdio/types": 7.1.1
+    "@wdio/types": 7.2.1
     deepmerge: ^4.0.0
     glob: ^7.1.2
-  checksum: 4381e26ec637818c9cafe9529e774f66b98a8fdb073b501157e693ec823725aa35237c7998d343c42e21b3c7ae8f02ce7b090dda10e048b1c92ad6ef67aa6459
+  checksum: 05a708e05f0ddb46c63c960171b1e2e1865cc09d9f9ffeb635ff3b134637125cbf42cc8f04398de6a2f4a2d3cc2b5f448875431bf2935b1c367f38d81502bf53
   languageName: node
   linkType: hard
 
@@ -2570,31 +2570,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/repl@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@wdio/repl@npm:7.1.1"
+"@wdio/repl@npm:7.2.1":
+  version: 7.2.1
+  resolution: "@wdio/repl@npm:7.2.1"
   dependencies:
-    "@wdio/utils": 7.1.1
-  checksum: e7ab92582dee7ba9b944857c985041d2751796baff70fe3dd0c9e5246dc90da8195270b20b03a41a5328ae53a51d807c4fe08afb3c1ca72b7e47b8f859d789e3
+    "@wdio/utils": 7.2.1
+  checksum: 7c2b53f1cdf9b26d0157c9f7ddbe30f37982ea013258868c5f034deec3417f3ce83027bc25136d329eb58c497d7b191befd4422d4733c4403f1d71ddd5ca7db3
   languageName: node
   linkType: hard
 
-"@wdio/types@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@wdio/types@npm:7.1.1"
+"@wdio/types@npm:7.2.1":
+  version: 7.2.1
+  resolution: "@wdio/types@npm:7.2.1"
   dependencies:
     got: ^11.8.1
-  checksum: d1fb9316194aad42655eba4d856686cf17adffb46f02a54a180d3e7fcec4b84b62c1b0d81f0aa55281dfa10dd0ff8717ea339bebff53a5ceaff3e8ce7eb4254a
+  checksum: d7a1ff2c86b072854e190e896fd8ddf6465daa5a2309a9c1d66ccc453798d89683f458b8d1833682ac4b5f97a2ee950a373d2d8e72c656e5f541936247e698fb
   languageName: node
   linkType: hard
 
-"@wdio/utils@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@wdio/utils@npm:7.1.1"
+"@wdio/utils@npm:7.2.1":
+  version: 7.2.1
+  resolution: "@wdio/utils@npm:7.2.1"
   dependencies:
     "@wdio/logger": 7.0.0
-    "@wdio/types": 7.1.1
-  checksum: b4b7bd9961c7cfbc6b63f520a8fda7cd1e711cf88c69540bfed7564667e5e402f9e0e49c0cb100d931dc3f59aff200e33fb852cf69e51a35c9b7a971bb91c31d
+    "@wdio/types": 7.2.1
+  checksum: 7d0148d96c586e481817d2edfa6569e1ceebe99f188d41a9641b276c57530fd6780d5302cb544108b7746f4524275b30e222c766ec3062a6fe85c688fdcf5963
   languageName: node
   linkType: hard
 
@@ -3406,7 +3406,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.3":
+"chai@npm:^4.3.4":
   version: 4.3.4
   resolution: "chai@npm:4.3.4"
   dependencies:
@@ -3946,9 +3946,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^6.6.0":
-  version: 6.6.0
-  resolution: "cypress@npm:6.6.0"
+"cypress@npm:^6.8.0":
+  version: 6.8.0
+  resolution: "cypress@npm:6.8.0"
   dependencies:
     "@cypress/listr-verbose-renderer": ^0.4.1
     "@cypress/request": ^2.88.5
@@ -3992,7 +3992,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 85e8c3429ce23816c2b615c1370c4c534143e03bd9e2ad12421f1934768caba5ac2b57e35087eefb178f6e40d84eff0246df7b52d35cb98a3b7c67c46faede73
+  checksum: 22f2f93d032af872faaf1d83b79945a4e7d38adbbde765392c52b9cf705cb25544eab4e9de82330dc4dd2aa6ad628728475f8706e4e01e0e3892bcdf194397a4
   languageName: node
   linkType: hard
 
@@ -4227,28 +4227,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:^0.0.856957":
-  version: 0.0.856957
-  resolution: "devtools-protocol@npm:0.0.856957"
-  checksum: 9a292f81c36f0a51df0142ee56d4de9e7df45aec8e00f6413ebbea3b4b3c050018d28a028655eb000de4bf9c8fdcef40902619cde808a4829241c3e3542f5baf
+"devtools-protocol@npm:^0.0.862770":
+  version: 0.0.862770
+  resolution: "devtools-protocol@npm:0.0.862770"
+  checksum: afd0d7172322f18b087ddb20ea11bc821fd88bd1a2ab2f7fd6604bface3d575005228b34be8099ee58c1fb553753b12b6c7b48c7d054eb072d135432f95d98c0
   languageName: node
   linkType: hard
 
-"devtools@npm:7.1.1":
-  version: 7.1.1
-  resolution: "devtools@npm:7.1.1"
+"devtools@npm:7.2.1":
+  version: 7.2.1
+  resolution: "devtools@npm:7.2.1"
   dependencies:
-    "@wdio/config": 7.1.1
+    "@wdio/config": 7.2.1
     "@wdio/logger": 7.0.0
     "@wdio/protocols": 7.1.1
-    "@wdio/types": 7.1.1
-    "@wdio/utils": 7.1.1
+    "@wdio/types": 7.2.1
+    "@wdio/utils": 7.2.1
     chrome-launcher: ^0.13.1
     edge-paths: ^2.1.0
     puppeteer-core: ^7.1.0
     ua-parser-js: ^0.7.21
     uuid: ^8.0.0
-  checksum: 07d436581c312c52674eeca967aacee23167b5338a436bd286ab718d551f84c887f07d8d585a580972fad1a44269106a5eaa95d3ac8a51c9a76571be7e5847a1
+  checksum: 1dd74bb6c85a06815a1159f27241f6eb801ec24d0113986e11401710c9c57332650624ffc30002a4cfa13708ef55d42784a2cbe651fd86bc04d8056cfb2e728f
   languageName: node
   linkType: hard
 
@@ -5375,10 +5375,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^10.6.0":
-  version: 10.6.0
-  resolution: "highlight.js@npm:10.6.0"
-  checksum: ebdf4c14a80cb366a25ab59675df564e4ae3d9044cbed3ef6487c357bf38d08523d114c046008f42bef8cb782d7ef0c4858bc33ec25c6ade5d3f9e504c8c9bf0
+"highlight.js@npm:^10.7.1":
+  version: 10.7.1
+  resolution: "highlight.js@npm:10.7.1"
+  checksum: 3f6823cdbc5092603055be69c60d96bde1a1ddfd96ebfaf76896222fbd97167959dae6b2aae91d37f4c0d287aae6adb51566df768989ecafc821fb9bcbd8a1fb
   languageName: node
   linkType: hard
 
@@ -6036,10 +6036,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:~3.6.0":
-  version: 3.6.0
-  resolution: "jasmine-core@npm:3.6.0"
-  checksum: d44e19bad4957f43469fc2e779530f03735ad82623b0d9234cff0b630c25af5d615d068a2eec8c865f8766180c580f75e47d38dd8c72a503de0da1b40c888522
+"jasmine-core@npm:~3.7.0":
+  version: 3.7.1
+  resolution: "jasmine-core@npm:3.7.1"
+  checksum: 0ff16f55a15b4634ce0c53966f1b93bcdb7712a579164c2d053a9619390029f9a2acafaa88c4fd66872ebb0edde1087776ec10a56fd55ed1ad5dba0b50d2575b
   languageName: node
   linkType: hard
 
@@ -6056,15 +6056,15 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jasmine@npm:^3.6.4":
-  version: 3.6.4
-  resolution: "jasmine@npm:3.6.4"
+"jasmine@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "jasmine@npm:3.7.0"
   dependencies:
     glob: ^7.1.6
-    jasmine-core: ~3.6.0
+    jasmine-core: ~3.7.0
   bin:
     jasmine: bin/jasmine.js
-  checksum: a4d85ffc78e6b9c5773c0513e17d61e587d72d56efd3dda28347eb2ff81947e6c5d0f59ce15620db27b3668e560c65cb8e9443cecbb789425bacb7bed207d8c1
+  checksum: bb5177d2a06b9eef25a253ccf5b60564727790aed3f4dfcbc8bd686f257356233dc6b084b08f42e097723a2d028985a7f4ae09cae5875a440741207e85e12868
   languageName: node
   linkType: hard
 
@@ -8226,6 +8226,13 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
+"react-is@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react-is@npm:17.0.2"
+  checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
 "react-shallow-renderer@npm:^16.13.1":
   version: 16.14.1
   resolution: "react-shallow-renderer@npm:16.14.1"
@@ -8238,27 +8245,27 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:^17.0.1":
-  version: 17.0.1
-  resolution: "react-test-renderer@npm:17.0.1"
+"react-test-renderer@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react-test-renderer@npm:17.0.2"
   dependencies:
     object-assign: ^4.1.1
-    react-is: ^17.0.1
+    react-is: ^17.0.2
     react-shallow-renderer: ^16.13.1
-    scheduler: ^0.20.1
+    scheduler: ^0.20.2
   peerDependencies:
-    react: 17.0.1
-  checksum: 38613fc094a203d96671e21d9449348ccb8fa5962da6176dcb159500f461158974769e30de22e921ac910a944351e30b5016b7ba1e313155ba40461a8afc8af5
+    react: 17.0.2
+  checksum: e6b5c6ed2a0bde2c34f1ab9523ff9bc4c141a271daf730d6b852374e83acc0155d58ab71a318251e953ebfa65b8bebb9c5dce3eba1ccfcbef7cc4e1e8261c401
   languageName: node
   linkType: hard
 
-"react@npm:^17.0.1":
-  version: 17.0.1
-  resolution: "react@npm:17.0.1"
+"react@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react@npm:17.0.2"
   dependencies:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
-  checksum: 83b9df9529a2b489f00a4eaa608fc7d55518b258e046c100344ae068713e43ae64e477a140f87e38cfe75489bcfd26d27fce5818f89f4ec41bdbda7ead4bb426
+  checksum: b254cc17ce3011788330f7bbf383ab653c6848902d7936a87b09d835d091e3f295f7e9dd1597c6daac5dc80f90e778c8230218ba8ad599f74adcc11e33b9d61b
   languageName: node
   linkType: hard
 
@@ -8675,13 +8682,13 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.20.1":
-  version: 0.20.1
-  resolution: "scheduler@npm:0.20.1"
+"scheduler@npm:^0.20.2":
+  version: 0.20.2
+  resolution: "scheduler@npm:0.20.2"
   dependencies:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
-  checksum: ace896fff8ccc516a4b5a249c712fc88d4e2456587d991acc220b54690362d6a2b9d426a7f030454cb439f6f5ff2706b13ee8c44ccb953884c4756304a2f8ad6
+  checksum: c4b35cf967c8f0d3e65753252d0f260271f81a81e427241295c5a7b783abf4ea9e905f22f815ab66676f5313be0a25f47be582254db8f9241b259213e999b8fc
   languageName: node
   linkType: hard
 
@@ -9776,39 +9783,39 @@ typescript@^4.2.3:
   languageName: node
   linkType: hard
 
-"webdriver@npm:7.1.1":
-  version: 7.1.1
-  resolution: "webdriver@npm:7.1.1"
+"webdriver@npm:7.2.1":
+  version: 7.2.1
+  resolution: "webdriver@npm:7.2.1"
   dependencies:
-    "@wdio/config": 7.1.1
+    "@wdio/config": 7.2.1
     "@wdio/logger": 7.0.0
     "@wdio/protocols": 7.1.1
-    "@wdio/types": 7.1.1
-    "@wdio/utils": 7.1.1
+    "@wdio/types": 7.2.1
+    "@wdio/utils": 7.2.1
     got: ^11.0.2
     lodash.merge: ^4.6.1
-  checksum: fefde4e3b5079f169e6f324698742b8bfc4acd4bbbf01bd76e268b892a238542be9ffae59eceb806a9f08ad8511d6762b918c8c2c27ae41645d6cacc9648aea7
+  checksum: 9a2ab20e912d708ec8e6c4158135e843474cbbbcacc9504c1b8076a6c1a2db6fb2e114a7c4983e2a48ffd50eedbb451b7cbb3f4fe15811bc8fdd1f76628f2d41
   languageName: node
   linkType: hard
 
-"webdriverio@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "webdriverio@npm:7.1.1"
+"webdriverio@npm:^7.2.2":
+  version: 7.2.2
+  resolution: "webdriverio@npm:7.2.2"
   dependencies:
     "@types/aria-query": ^4.2.1
-    "@wdio/config": 7.1.1
+    "@wdio/config": 7.2.1
     "@wdio/logger": 7.0.0
     "@wdio/protocols": 7.1.1
-    "@wdio/repl": 7.1.1
-    "@wdio/types": 7.1.1
-    "@wdio/utils": 7.1.1
+    "@wdio/repl": 7.2.1
+    "@wdio/types": 7.2.1
+    "@wdio/utils": 7.2.1
     archiver: ^5.0.0
     aria-query: ^4.2.2
     atob: ^2.1.2
     css-shorthand-properties: ^1.1.1
     css-value: ^0.0.1
-    devtools: 7.1.1
-    devtools-protocol: ^0.0.856957
+    devtools: 7.2.1
+    devtools-protocol: ^0.0.862770
     fs-extra: ^9.0.1
     get-port: ^5.1.1
     grapheme-splitter: ^1.0.2
@@ -9821,8 +9828,8 @@ typescript@^4.2.3:
     resq: ^1.9.1
     rgb2hex: 0.2.3
     serialize-error: ^8.0.0
-    webdriver: 7.1.1
-  checksum: 222b09385cf911e6e900912a1db73fbdf1b4951f825d3a28e284be43cc76422a7b35074db354a52cd38ffd42e668c1aac66b46ff6a42b9acf2f529d9815e015e
+    webdriver: 7.2.1
+  checksum: de504f0c874c77c1dfb4c0b20b003c7fc9e4d0e780a88328164d5adeb47c9d63cd2d133f383e3bd5444b265e797522cc216f3d8c4c7068a024fafd027a4e2c29
   languageName: node
   linkType: hard
 

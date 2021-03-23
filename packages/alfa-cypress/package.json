@@ -27,7 +27,7 @@
     "@siteimprove/alfa-http": "workspace:^0.15.2",
     "@siteimprove/alfa-mapper": "workspace:^0.15.2",
     "@siteimprove/alfa-web": "workspace:^0.15.2",
-    "cypress": "^6.6.0"
+    "cypress": "^6.8.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.15.2"
