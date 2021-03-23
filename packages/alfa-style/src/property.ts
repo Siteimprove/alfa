@@ -8,7 +8,7 @@ import * as parser from "@siteimprove/alfa-parser";
 import { Style } from "./style";
 import { Value } from "./value";
 
-const { left, either, eof } = Parser;
+const { left, either, end } = Parser;
 
 const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 
@@ -28,10 +28,42 @@ export class Property<T = unknown, U = T> {
       initial,
       left(
         either(parseDefaults, parse),
-        eof(() => "Expected end of input")
+        end(() => "Expected end of input")
       ),
       compute,
       options
+    );
+  }
+
+  public static extend<T, U>(
+    property: Property<T, U>,
+    overrides: {
+      initial?: U;
+      parse?: Property.Parser<T>;
+      compute?: Mapper<Value<T>, Value<U>, [style: Style]>;
+      options?: Property.Options;
+    } = {}
+  ): Property<T, U> {
+    const {
+      initial = property._initial,
+      parse,
+      compute = property._compute,
+      options = {},
+    } = overrides;
+
+    return new Property(
+      initial,
+      parse === undefined
+        ? property._parse
+        : left(
+            either(parseDefaults, parse),
+            end(() => "Expected end of input")
+          ),
+      compute,
+      {
+        ...property._options,
+        ...options,
+      }
     );
   }
 
@@ -169,7 +201,7 @@ export namespace Property {
         properties,
         left(
           either(parseDefaults, parse),
-          eof(() => "Expected end of input")
+          end(() => "Expected end of input")
         )
       );
     }
@@ -216,6 +248,44 @@ import BackgroundRepeat from "./property/background-repeat";
 import BackgroundRepeatX from "./property/background-repeat-x";
 import BackgroundRepeatY from "./property/background-repeat-y";
 import BackgroundSize from "./property/background-size";
+import BorderBlockEndColor from "./property/border-block-end-color";
+import BorderBlockEndStyle from "./property/border-block-end-style";
+import BorderBlockEndWidth from "./property/border-block-end-width";
+import BorderBlockStartColor from "./property/border-block-start-color";
+import BorderBlockStartStyle from "./property/border-block-start-style";
+import BorderBlockStartWidth from "./property/border-block-start-width";
+import BorderBottomColor from "./property/border-bottom-color";
+import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
+import BorderBottomRightRadius from "./property/border-bottom-right-radius";
+import BorderBottomStyle from "./property/border-bottom-style";
+import BorderBottomWidth from "./property/border-bottom-width";
+import BorderCollapse from "./property/border-collapse";
+import BorderEndEndRadius from "./property/border-end-end-radius";
+import BorderEndStartRadius from "./property/border-end-start-radius";
+import BorderImageOutset from "./property/border-image-outset";
+import BorderImageRepeat from "./property/border-image-repeat";
+import BorderImageSlice from "./property/border-image-slice";
+import BorderImageSource from "./property/border-image-source";
+import BorderImageWidth from "./property/border-image-width";
+import BorderInlineEndColor from "./property/border-inline-end-color";
+import BorderInlineEndStyle from "./property/border-inline-end-style";
+import BorderInlineEndWidth from "./property/border-inline-end-width";
+import BorderInlineStartColor from "./property/border-inline-start-color";
+import BorderInlineStartStyle from "./property/border-inline-start-style";
+import BorderInlineStartWidth from "./property/border-inline-start-width";
+import BorderLeftColor from "./property/border-left-color";
+import BorderLeftStyle from "./property/border-left-style";
+import BorderLeftWidth from "./property/border-left-width";
+import BorderRightColor from "./property/border-right-color";
+import BorderRightStyle from "./property/border-right-style";
+import BorderRightWidth from "./property/border-right-width";
+import BorderStartEndRadius from "./property/border-start-end-radius";
+import BorderStartStartRadius from "./property/border-start-start-radius";
+import BorderTopColor from "./property/border-top-color";
+import BorderTopLeftRadius from "./property/border-top-left-radius";
+import BorderTopRightRadius from "./property/border-top-right-radius";
+import BorderTopStyle from "./property/border-top-style";
+import BorderTopWidth from "./property/border-top-width";
 import Bottom from "./property/bottom";
 import BoxShadow from "./property/box-shadow";
 import Clip from "./property/clip";
@@ -278,6 +348,44 @@ const Longhands = {
   "background-repeat-x": BackgroundRepeatX,
   "background-repeat-y": BackgroundRepeatY,
   "background-size": BackgroundSize,
+  "border-block-end-color": BorderBlockEndColor,
+  "border-block-end-style": BorderBlockEndStyle,
+  "border-block-end-width": BorderBlockEndWidth,
+  "border-block-start-color": BorderBlockStartColor,
+  "border-block-start-style": BorderBlockStartStyle,
+  "border-block-start-width": BorderBlockStartWidth,
+  "border-bottom-color": BorderBottomColor,
+  "border-bottom-left-radius": BorderBottomLeftRadius,
+  "border-bottom-right-radius": BorderBottomRightRadius,
+  "border-bottom-style": BorderBottomStyle,
+  "border-bottom-width": BorderBottomWidth,
+  "border-collapse": BorderCollapse,
+  "border-end-end-radius": BorderEndEndRadius,
+  "border-end-start-radius": BorderEndStartRadius,
+  "border-image-outset": BorderImageOutset,
+  "border-image-repeat": BorderImageRepeat,
+  "border-image-slice": BorderImageSlice,
+  "border-image-source": BorderImageSource,
+  "border-image-width": BorderImageWidth,
+  "border-inline-end-color": BorderInlineEndColor,
+  "border-inline-end-style": BorderInlineEndStyle,
+  "border-inline-end-width": BorderInlineEndWidth,
+  "border-inline-start-color": BorderInlineStartColor,
+  "border-inline-start-style": BorderInlineStartStyle,
+  "border-inline-start-width": BorderInlineStartWidth,
+  "border-left-color": BorderLeftColor,
+  "border-left-style": BorderLeftStyle,
+  "border-left-width": BorderLeftWidth,
+  "border-right-color": BorderRightColor,
+  "border-right-style": BorderRightStyle,
+  "border-right-width": BorderRightWidth,
+  "border-start-end-radius": BorderStartEndRadius,
+  "border-start-start-radius": BorderStartStartRadius,
+  "border-top-color": BorderTopColor,
+  "border-top-left-radius": BorderTopLeftRadius,
+  "border-top-right-radius": BorderTopRightRadius,
+  "border-top-style": BorderTopStyle,
+  "border-top-width": BorderTopWidth,
   bottom: Bottom,
   "box-shadow": BoxShadow,
   clip: Clip,

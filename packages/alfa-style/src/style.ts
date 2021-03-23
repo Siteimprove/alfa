@@ -21,7 +21,7 @@ const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
 type Name = Property.Name;
 
-export class Style implements Serializable {
+export class Style implements Serializable<Style.JSON> {
   public static of(
     declarations: Iterable<Declaration>,
     device: Device,
