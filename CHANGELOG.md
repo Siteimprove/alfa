@@ -31,7 +31,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): Roles that prohibit naming are now correctly considered when referenced by `aria-labelledby`. ([#750](../../pull/750))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750)) 
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750))
+
+## [0.15.3](../../compare/v0.15.2...v0.15.3) (2021-03-23)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles percentage dimensions when combined with `overflow-{x,y}: hidden`.
 
 ## [0.15.2](../../compare/v0.15.1...v0.15.2) (2021-03-18)
 
