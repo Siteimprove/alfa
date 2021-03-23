@@ -1,4 +1,4 @@
-import { Token, Length, Number, Keyword } from "@siteimprove/alfa-css";
+import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
@@ -6,7 +6,7 @@ import { Resolver } from "../resolver";
 
 import { Tuple } from "./value/tuple";
 
-const { takeBetween, either, map, filter, delimited, option } = Parser;
+const { delimited, map, option, takeBetween } = Parser;
 
 /**
  * @internal
