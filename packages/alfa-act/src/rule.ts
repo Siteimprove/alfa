@@ -51,12 +51,12 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
     return this._uri;
   }
 
-  public get requirements(): Iterable<Requirement> {
-    return this._requirements[Symbol.iterator]();
+  public get requirements(): ReadonlyArray<Requirement> {
+    return this._requirements;
   }
 
-  public get tags(): Iterable<Tag> {
-    return this._tags[Symbol.iterator]();
+  public get tags(): ReadonlyArray<Tag> {
+    return this._tags;
   }
 
   public evaluate(
@@ -320,8 +320,8 @@ export namespace Rule {
       this._composes = composes;
     }
 
-    public get composes(): Iterable<Rule<I, T, Q>> {
-      return this._composes[Symbol.iterator]();
+    public get composes(): ReadonlyArray<Rule<I, T, Q>> {
+      return this._composes;
     }
 
     public toJSON(): Composite.JSON {

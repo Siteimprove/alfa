@@ -24,8 +24,8 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
     return "list";
   }
 
-  public get values(): Iterable<T> {
-    return this._values[Symbol.iterator]();
+  public get values(): ReadonlyArray<T> {
+    return this._values;
   }
 
   public equals<T>(value: List<T>): boolean;

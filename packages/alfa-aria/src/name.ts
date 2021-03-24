@@ -44,8 +44,8 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     return this._value;
   }
 
-  public get source(): Iterable<Name.Source> {
-    return this._sources[Symbol.iterator]();
+  public get source(): ReadonlyArray<Name.Source> {
+    return this._sources;
   }
 
   public isEmpty(): boolean {
