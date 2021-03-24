@@ -78,3 +78,60 @@ for (const box of ["block", "inline"] as const) {
     });
   }
 }
+
+for (const box of ["block", "inline"] as const) {
+  const shorthand = `border-${box}-width` as const;
+
+  test(`#cascaded parses \`${shorthand}: medium\``, (t) => {
+    const element = <div />;
+
+    h.document(
+      [element],
+      [h.sheet([h.rule.style("div", [h.declaration(shorthand, "medium")])])]
+    );
+
+    const style = Style.from(element, device);
+
+    for (const side of ["start", "end"] as const) {
+      const property = `border-${box}-${side}-width` as const;
+
+      t.deepEqual(style.cascaded(property).get().toJSON(), {
+        value: {
+          type: "keyword",
+          value: "medium",
+        },
+        source: h.declaration(shorthand, "medium").toJSON(),
+      });
+    }
+  });
+
+  test(`#cascaded parses \`${shorthand}: medium thin\``, (t) => {
+    const element = <div />;
+
+    h.document(
+      [element],
+      [
+        h.sheet([
+          h.rule.style("div", [h.declaration(shorthand, "medium thin")]),
+        ]),
+      ]
+    );
+
+    const style = Style.from(element, device);
+
+    for (const [side, width] of [
+      ["start", "medium"],
+      ["end", "thin"],
+    ] as const) {
+      const property = `border-${box}-${side}-width` as const;
+
+      t.deepEqual(style.cascaded(property).get().toJSON(), {
+        value: {
+          type: "keyword",
+          value: width,
+        },
+        source: h.declaration(shorthand, "medium thin").toJSON(),
+      });
+    }
+  });
+}

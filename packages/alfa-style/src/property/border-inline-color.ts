@@ -6,7 +6,7 @@ import { Property } from "../property";
 const { delimited, map, option, takeBetween } = Parser;
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-color}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-color}
  * @internal
  */
 export default Property.shorthand(
