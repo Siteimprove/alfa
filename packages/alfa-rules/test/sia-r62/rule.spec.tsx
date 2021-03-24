@@ -209,3 +209,34 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
+
+test(`evaluate() passes an <a> element with a <div role="paragraph"> parent element
+      with non-link text content in a <span> child element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of([
+    <div role="paragraph">
+      <span>Hello</span> {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+      whose role has been changed`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of([
+    <p role="generic">
+      <span>Hello</span> {target}
+    </p>,
+  ]);
+
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+});

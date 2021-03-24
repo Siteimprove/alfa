@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -7,9 +7,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { isVisible } from "../common/predicate/is-visible";
+import { hasRole, isVisible } from "../common/predicate";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -23,9 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
             nested: true,
           })
           .filter(isElement)
-          .filter(
-            and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-          );
+          .filter(and(hasRole("paragraph"), isVisible(device)));
       },
 
       expectations(target) {
@@ -47,10 +45,10 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsNotUppercased = Ok.of(
-    Diagnostic.of(`The text of the \`<p>\` element is not uppercased`)
+    Diagnostic.of(`The text of the paragraph is not uppercased`)
   );
 
   export const IsUppercased = Err.of(
-    Diagnostic.of(`The text of the \`<p>\` element is uppercased`)
+    Diagnostic.of(`The text of the paragraph is uppercased`)
   );
 }

@@ -608,7 +608,9 @@ export namespace Name {
 
     // Step 1: Does the role prohibit naming?
     // https://w3c.github.io/accname/#step1
-    if (role.some((role) => role.isNameProhibited())) {
+    // Step 1 is skipped when referencing due to step 2B.ii.b
+    // https://w3c.github.io/accname/#step2B.ii.b
+    if (!state.isReferencing && role.some((role) => role.isNameProhibited())) {
       return None;
     }
 
