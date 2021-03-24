@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` longhand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#718](../../pull/718))
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `<p>` elements now have an implicit role of `paragraph`. ([#750](../../pull/750))
