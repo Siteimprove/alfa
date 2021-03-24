@@ -248,6 +248,7 @@ import BackgroundRepeat from "./property/background-repeat";
 import BackgroundRepeatX from "./property/background-repeat-x";
 import BackgroundRepeatY from "./property/background-repeat-y";
 import BackgroundSize from "./property/background-size";
+import BorderBlockColor from "./property/border-block-color";
 import BorderBlockEndColor from "./property/border-block-end-color";
 import BorderBlockEndStyle from "./property/border-block-end-style";
 import BorderBlockEndWidth from "./property/border-block-end-width";
@@ -435,6 +436,7 @@ const Shorthands = {
   background: Background,
   "background-position": BackgroundPosition,
   "background-repeat": BackgroundRepeat,
+  "border-block-color": BorderBlockColor,
   font: Font,
   inset: Inset,
   "inset-block": InsetBlock,

@@ -21,6 +21,7 @@
     "src/property/background-repeat-x.ts",
     "src/property/background-repeat-y.ts",
     "src/property/background-size.ts",
+    "src/property/border-block-color.ts",
     "src/property/border-block-end-color.ts",
     "src/property/border-block-end-style.ts",
     "src/property/border-block-end-width.ts",
