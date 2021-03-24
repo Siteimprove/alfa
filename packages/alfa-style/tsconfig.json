@@ -41,6 +41,7 @@
     "src/property/border-image-slice.ts",
     "src/property/border-image-source.ts",
     "src/property/border-image-width.ts",
+    "src/property/border-inline-color.ts",
     "src/property/border-inline-end-color.ts",
     "src/property/border-inline-end-style.ts",
     "src/property/border-inline-end-width.ts",

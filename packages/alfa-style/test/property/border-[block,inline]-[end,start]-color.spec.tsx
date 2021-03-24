@@ -69,7 +69,7 @@ for (const box of ["block", "inline"] as const) {
   }
 }
 
-for (const box of ["block"] as const) {
+for (const box of ["block", "inline"] as const) {
   const shorthand = `border-${box}-color` as const;
 
   test(`#cascaded parses \`${shorthand}: red\``, (t) => {

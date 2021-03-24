@@ -268,6 +268,7 @@ import BorderImageRepeat from "./property/border-image-repeat";
 import BorderImageSlice from "./property/border-image-slice";
 import BorderImageSource from "./property/border-image-source";
 import BorderImageWidth from "./property/border-image-width";
+import BorderInlineColor from "./property/border-inline-color";
 import BorderInlineEndColor from "./property/border-inline-end-color";
 import BorderInlineEndStyle from "./property/border-inline-end-style";
 import BorderInlineEndWidth from "./property/border-inline-end-width";
@@ -437,6 +438,7 @@ const Shorthands = {
   "background-position": BackgroundPosition,
   "background-repeat": BackgroundRepeat,
   "border-block-color": BorderBlockColor,
+  "border-inline-color": BorderInlineColor,
   font: Font,
   inset: Inset,
   "inset-block": InsetBlock,
