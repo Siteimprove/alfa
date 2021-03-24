@@ -63,22 +63,22 @@ export class Role<N extends Role.Name = Role.Name>
   /**
    * Get all attributes supported by this role and its inherited roles.
    */
-  public get attributes(): Iterable<Attribute.Name> {
-    return this._attributes[Symbol.iterator]();
+  public get attributes(): ReadonlyArray<Attribute.Name> {
+    return this._attributes;
   }
 
   /**
    * Get the required parent of this role.
    */
-  public get requiredParent(): Iterable<Iterable<Role.Name>> {
-    return Roles[this._name].parent.required[Symbol.iterator]();
+  public get requiredParent(): ReadonlyArray<ReadonlyArray<Role.Name>> {
+    return Roles[this._name].parent.required;
   }
 
   /**
    * Get the required children of this role.
    */
-  public get requiredChildren(): Iterable<Iterable<Role.Name>> {
-    return Roles[this._name].children.required[Symbol.iterator]();
+  public get requiredChildren(): ReadonlyArray<ReadonlyArray<Role.Name>> {
+    return Roles[this._name].children.required;
   }
 
   /**

@@ -90,6 +90,42 @@ test("evaluate() passes a table with a caption and a row", async (t) => {
   ]);
 });
 
+test("evaluate() passes a table with a caption and two rows", async (t) => {
+  const target1 = (
+    <span role="row">
+      <span role="cell">Cell</span>
+    </span>
+  );
+
+  const target2 = (
+    <span role="row">
+      <span role="cell">Cell</span>
+    </span>
+  );
+
+  const target3 = (
+    <div role="table">
+      <caption>Caption</caption>
+      {target1}
+      {target2}
+    </div>
+  );
+
+  const document = Document.of([target3]);
+
+  t.deepEqual(await evaluate(R68, { document }), [
+    passed(R68, target3, {
+      1: Outcomes.HasCorrectOwnedElements,
+    }),
+    passed(R68, target1, {
+      1: Outcomes.HasCorrectOwnedElements,
+    }),
+    passed(R68, target2, {
+      1: Outcomes.HasCorrectOwnedElements,
+    }),
+  ]);
+});
+
 test("evaluate() passes a radiogroup with a radio and a label", async (t) => {
   const target = (
     <div role="radiogroup">

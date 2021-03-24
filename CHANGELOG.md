@@ -33,6 +33,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750))
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fix a bug in SIA-R68 where the rule would fail if an element contains more than 1 required owned element, but the first owned element is not required.
+
 ## [0.15.3](../../compare/v0.15.2...v0.15.3) (2021-03-23)
 
 ### Fixed
