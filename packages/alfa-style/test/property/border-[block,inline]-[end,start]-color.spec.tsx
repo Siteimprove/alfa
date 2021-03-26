@@ -74,11 +74,9 @@ for (const box of ["block", "inline"] as const) {
 
   test(`#cascaded parses \`${shorthand}: red\``, (t) => {
     const element = <div />;
+    const declaration = h.declaration(shorthand, "red");
 
-    h.document(
-      [element],
-      [h.sheet([h.rule.style("div", [h.declaration(shorthand, "red")])])]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
@@ -91,18 +89,16 @@ for (const box of ["block", "inline"] as const) {
           format: "named",
           color: "red",
         },
-        source: h.declaration(shorthand, "red").toJSON(),
+        source: declaration.toJSON(),
       });
     }
   });
 
   test(`#cascaded parses \`${shorthand}: red blue\``, (t) => {
     const element = <div />;
+    const declaration = h.declaration(shorthand, "red blue");
 
-    h.document(
-      [element],
-      [h.sheet([h.rule.style("div", [h.declaration(shorthand, "red blue")])])]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
@@ -118,7 +114,7 @@ for (const box of ["block", "inline"] as const) {
           format: "named",
           color: color,
         },
-        source: h.declaration(shorthand, "red blue").toJSON(),
+        source: declaration.toJSON(),
       });
     }
   });

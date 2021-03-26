@@ -84,11 +84,9 @@ for (const box of ["block", "inline"] as const) {
 
   test(`#cascaded parses \`${shorthand}: medium\``, (t) => {
     const element = <div />;
+    const declaration = h.declaration(shorthand, "medium");
 
-    h.document(
-      [element],
-      [h.sheet([h.rule.style("div", [h.declaration(shorthand, "medium")])])]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
@@ -100,22 +98,16 @@ for (const box of ["block", "inline"] as const) {
           type: "keyword",
           value: "medium",
         },
-        source: h.declaration(shorthand, "medium").toJSON(),
+        source: declaration.toJSON(),
       });
     }
   });
 
   test(`#cascaded parses \`${shorthand}: medium thin\``, (t) => {
     const element = <div />;
+    const declaration = h.declaration(shorthand, "medium thin");
 
-    h.document(
-      [element],
-      [
-        h.sheet([
-          h.rule.style("div", [h.declaration(shorthand, "medium thin")]),
-        ]),
-      ]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
@@ -130,7 +122,7 @@ for (const box of ["block", "inline"] as const) {
           type: "keyword",
           value: width,
         },
-        source: h.declaration(shorthand, "medium thin").toJSON(),
+        source: declaration.toJSON(),
       });
     }
   });

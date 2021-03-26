@@ -37,11 +37,9 @@ for (const box of ["block", "inline"] as const) {
 
   test(`#cascaded parses \`${shorthand}: dotted\``, (t) => {
     const element = <div />;
+    const declaration = h.declaration(shorthand, "dotted");
 
-    h.document(
-      [element],
-      [h.sheet([h.rule.style("div", [h.declaration(shorthand, "dotted")])])]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
@@ -53,22 +51,16 @@ for (const box of ["block", "inline"] as const) {
           type: "keyword",
           value: "dotted",
         },
-        source: h.declaration(shorthand, "dotted").toJSON(),
+        source: declaration.toJSON(),
       });
     }
   });
 
   test(`#cascaded parses \`${shorthand}: dotted solid\``, (t) => {
     const element = <div />;
+    const declaration = h.declaration(shorthand, "dotted solid");
 
-    h.document(
-      [element],
-      [
-        h.sheet([
-          h.rule.style("div", [h.declaration(shorthand, "dotted solid")]),
-        ]),
-      ]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
@@ -83,7 +75,7 @@ for (const box of ["block", "inline"] as const) {
           type: "keyword",
           value: borderStyle,
         },
-        source: h.declaration(shorthand, "dotted solid").toJSON(),
+        source: declaration.toJSON(),
       });
     }
   });
