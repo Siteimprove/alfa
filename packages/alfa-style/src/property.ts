@@ -255,6 +255,7 @@ import BorderBlockEndWidth from "./property/border-block-end-width";
 import BorderBlockStartColor from "./property/border-block-start-color";
 import BorderBlockStartStyle from "./property/border-block-start-style";
 import BorderBlockStartWidth from "./property/border-block-start-width";
+import BorderBlockStyle from "./property/border-block-style";
 import BorderBlockWidth from "./property/border-block-width";
 import BorderBottomColor from "./property/border-bottom-color";
 import BorderBottomLeftRadius from "./property/border-bottom-left-radius";
@@ -276,6 +277,7 @@ import BorderInlineEndWidth from "./property/border-inline-end-width";
 import BorderInlineStartColor from "./property/border-inline-start-color";
 import BorderInlineStartStyle from "./property/border-inline-start-style";
 import BorderInlineStartWidth from "./property/border-inline-start-width";
+import BorderInlineStyle from "./property/border-inline-style";
 import BorderInlineWidth from "./property/border-inline-width";
 import BorderLeftColor from "./property/border-left-color";
 import BorderLeftStyle from "./property/border-left-style";
@@ -440,8 +442,10 @@ const Shorthands = {
   "background-position": BackgroundPosition,
   "background-repeat": BackgroundRepeat,
   "border-block-color": BorderBlockColor,
+  "border-block-style": BorderBlockStyle,
   "border-block-width": BorderBlockWidth,
   "border-inline-color": BorderInlineColor,
+  "border-inline-style": BorderInlineStyle,
   "border-inline-width": BorderInlineWidth,
   font: Font,
   inset: Inset,
