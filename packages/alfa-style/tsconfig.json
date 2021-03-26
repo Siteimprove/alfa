@@ -56,6 +56,7 @@
     "src/property/border-left-color.ts",
     "src/property/border-left-style.ts",
     "src/property/border-left-width.ts",
+    "src/property/border-radius.ts",
     "src/property/border-right-color.ts",
     "src/property/border-right-style.ts",
     "src/property/border-right-width.ts",

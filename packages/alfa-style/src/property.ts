@@ -283,6 +283,7 @@ import BorderInlineWidth from "./property/border-inline-width";
 import BorderLeftColor from "./property/border-left-color";
 import BorderLeftStyle from "./property/border-left-style";
 import BorderLeftWidth from "./property/border-left-width";
+import BorderRadius from "./property/border-radius";
 import BorderRightColor from "./property/border-right-color";
 import BorderRightStyle from "./property/border-right-style";
 import BorderRightWidth from "./property/border-right-width";
@@ -451,6 +452,7 @@ const Shorthands = {
   "border-inline-color": BorderInlineColor,
   "border-inline-style": BorderInlineStyle,
   "border-inline-width": BorderInlineWidth,
+  "border-radius": BorderRadius,
   "border-style": BorderStyle,
   "border-width": BorderWidth,
   font: Font,
