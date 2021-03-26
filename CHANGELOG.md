@@ -21,6 +21,24 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` longhand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#718](../../pull/718))
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<p>` elements now have an implicit role of `paragraph`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now targets links inside an element with a role of `paragraph`; SIA-R71, SIA-R72, SIA-R73, and SIA-R85 now target elements with a role of `paragraph`. ([#750](../../pull/750))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Roles that prohibit naming are now correctly considered when referenced by `aria-labelledby`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly passes cases where an element contains more than 1 required owned element, but the first owned element is not required.
+
 ## [0.15.3](../../compare/v0.15.2...v0.15.3) (2021-03-23)
 
 ### Fixed

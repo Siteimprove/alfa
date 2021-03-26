@@ -44,8 +44,8 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     return this._value;
   }
 
-  public get source(): Iterable<Name.Source> {
-    return this._sources[Symbol.iterator]();
+  public get source(): ReadonlyArray<Name.Source> {
+    return this._sources;
   }
 
   public isEmpty(): boolean {
@@ -608,7 +608,9 @@ export namespace Name {
 
     // Step 1: Does the role prohibit naming?
     // https://w3c.github.io/accname/#step1
-    if (role.some((role) => role.isNameProhibited())) {
+    // Step 1 is skipped when referencing due to step 2B.ii.b
+    // https://w3c.github.io/accname/#step2B.ii.b
+    if (!state.isReferencing && role.some((role) => role.isNameProhibited())) {
       return None;
     }
 

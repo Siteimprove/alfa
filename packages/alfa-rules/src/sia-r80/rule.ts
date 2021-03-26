@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Unit } from "@siteimprove/alfa-css";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -9,10 +9,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasTextContent } from "../common/predicate/has-text-content";
-import { isVisible } from "../common/predicate/is-visible";
+import { hasRole, hasTextContent, isVisible } from "../common/predicate";
 
-const { isElement, hasNamespace } = Element;
+const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -29,10 +28,11 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(isElement)
           .filter(
             and(
-              and(hasNamespace(Namespace.HTML), (element) =>
-                Style.from(element, device).cascaded("line-height").isSome()
-              ),
-              and(hasTextContent(), isVisible(device))
+              hasRole("paragraph"),
+              (element) =>
+                Style.from(element, device).cascaded("line-height").isSome(),
+              hasTextContent(),
+              isVisible(device)
             )
           );
       },

@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
@@ -7,9 +7,9 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { isVisible } from "../common/predicate/is-visible";
+import { hasRole, isVisible } from "../common/predicate";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -24,9 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
             nested: true,
           })
           .filter(isElement)
-          .filter(
-            and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-          );
+          .filter(and(hasRole("paragraph"), isVisible(device)));
       },
 
       expectations(target) {
@@ -64,16 +62,16 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    Diagnostic.of(`The line height of the \`<p>\` element is at least 1.5`)
+    Diagnostic.of(`The line height of the paragraph is at least 1.5`)
   );
 
   export const IsInsufficient = Err.of(
-    Diagnostic.of(`The line height of the \`<p>\` element is less than 1.5`)
+    Diagnostic.of(`The line height of the paragraph is less than 1.5`)
   );
 
   export const IsNormal = Err.of(
     Diagnostic.of(
-      `The line height of the \`<p>\` element is \`normal\` which will result in
+      `The line height of the paragraph is \`normal\` which will result in
       a line height of less than 1.5`
     )
   );
