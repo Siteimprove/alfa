@@ -838,13 +838,10 @@ __metadata:
   resolution: "@siteimprove/alfa-assert@workspace:packages/alfa-assert"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.15.3"
-    "@siteimprove/alfa-formatter": "workspace:^0.15.3"
-    "@siteimprove/alfa-formatter-earl": "workspace:^0.15.3"
     "@siteimprove/alfa-future": "workspace:^0.15.3"
     "@siteimprove/alfa-mapper": "workspace:^0.15.3"
     "@siteimprove/alfa-result": "workspace:^0.15.3"
     "@siteimprove/alfa-test": "workspace:^0.15.3"
-    "@types/node": ^14.14.31
   languageName: unknown
   linkType: soft
 
