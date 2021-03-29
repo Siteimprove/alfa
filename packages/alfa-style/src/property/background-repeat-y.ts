@@ -7,6 +7,12 @@ import { List } from "./value/list";
 
 const { map, delimited, option, separatedList } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "background-repeat-y": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -48,8 +54,11 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  List.of([Keyword.of("repeat")]),
-  parseList,
-  (value) => value
+export default Property.register(
+  "background-repeat-y",
+  Property.of<Specified, Computed>(
+    List.of([Keyword.of("repeat")]),
+    parseList,
+    (value) => value
+  )
 );

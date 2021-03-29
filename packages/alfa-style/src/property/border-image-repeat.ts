@@ -7,6 +7,12 @@ import { Tuple } from "./value/tuple";
 
 const { delimited, map, option, takeBetween } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "border-image-repeat": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -49,8 +55,11 @@ export const parse = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-repeat}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Tuple.of(Keyword.of("stretch"), Keyword.of("stretch")),
-  parse,
-  (value) => value
+export default Property.register(
+  "border-image-repeat",
+  Property.of<Specified, Computed>(
+    Tuple.of(Keyword.of("stretch"), Keyword.of("stretch")),
+    parse,
+    (value) => value
+  )
 );

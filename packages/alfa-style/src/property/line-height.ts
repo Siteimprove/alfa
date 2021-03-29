@@ -8,6 +8,12 @@ import * as FontSize from "./font-size";
 
 const { either } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "line-height": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -30,28 +36,31 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("normal"),
-  parse,
-  (value, style) =>
-    value.map((height) => {
-      switch (height.type) {
-        case "keyword":
-        case "number":
-          return height;
+export default Property.register(
+  "line-height",
+  Property.of<Specified, Computed>(
+    Keyword.of("normal"),
+    parse,
+    (value, style) =>
+      value.map((height) => {
+        switch (height.type) {
+          case "keyword":
+          case "number":
+            return height;
 
-        case "length":
-          return Resolver.length(height, style);
+          case "length":
+            return Resolver.length(height, style);
 
-        case "percentage": {
-          const parent = style.parent.computed("font-size")
-            .value as FontSize.Computed;
+          case "percentage": {
+            const parent = style.parent.computed("font-size")
+              .value as FontSize.Computed;
 
-          return Length.of(parent.value * height.value, parent.unit);
+            return Length.of(parent.value * height.value, parent.unit);
+          }
         }
-      }
-    }),
-  {
-    inherits: true,
-  }
+      }),
+    {
+      inherits: true,
+    }
+  )
 );

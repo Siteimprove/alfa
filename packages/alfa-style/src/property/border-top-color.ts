@@ -10,6 +10,12 @@ import {
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
+declare module "../property" {
+  interface Longhands {
+    "border-top-color": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -29,8 +35,9 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("currentcolor"),
-  parse,
-  (value) => value.map((color) => Resolver.color(color))
+export default Property.register(
+  "border-top-color",
+  Property.of<Specified, Computed>(Keyword.of("currentcolor"), parse, (value) =>
+    value.map((color) => Resolver.color(color))
+  )
 );

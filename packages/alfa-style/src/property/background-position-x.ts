@@ -9,6 +9,12 @@ import { List } from "./value/list";
 
 const { map, either, delimited, option, separatedList } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "background-position-x": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -56,37 +62,40 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  List.of([Length.of(0, "px")]),
-  parseList,
-  (value, style) =>
-    value.map((positions) =>
-      List.of(
-        Iterable.map(positions, (position) => {
-          switch (position.type) {
-            case "keyword":
-            case "percentage":
-              return position;
+export default Property.register(
+  "background-position-x",
+  Property.of<Specified, Computed>(
+    List.of([Length.of(0, "px")]),
+    parseList,
+    (value, style) =>
+      value.map((positions) =>
+        List.of(
+          Iterable.map(positions, (position) => {
+            switch (position.type) {
+              case "keyword":
+              case "percentage":
+                return position;
 
-            case "length":
-              return Resolver.length(position, style);
+              case "length":
+                return Resolver.length(position, style);
 
-            case "side":
-              return Position.Side.of(
-                position.side,
-                position.offset.map((offset) => {
-                  switch (offset.type) {
-                    case "percentage":
-                      return offset;
+              case "side":
+                return Position.Side.of(
+                  position.side,
+                  position.offset.map((offset) => {
+                    switch (offset.type) {
+                      case "percentage":
+                        return offset;
 
-                    case "length":
-                      return Resolver.length(offset, style);
-                  }
-                })
-              );
-          }
-        }),
-        ", "
+                      case "length":
+                        return Resolver.length(offset, style);
+                    }
+                  })
+                );
+            }
+          }),
+          ", "
+        )
       )
-    )
+  )
 );

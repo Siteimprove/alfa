@@ -3,15 +3,15 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
-import { Condition } from "./condition";
+import { ConditionRule } from "./condition";
 
-export class Import extends Condition {
+export class ImportRule extends ConditionRule {
   public static of(
     href: string,
     sheet: Sheet,
     condition: Option<string> = None
-  ): Import {
-    return new Import(href, sheet, condition);
+  ): ImportRule {
+    return new ImportRule(href, sheet, condition);
   }
 
   private readonly _href: string;
@@ -36,7 +36,7 @@ export class Import extends Condition {
     return this._sheet;
   }
 
-  public toJSON(): Import.JSON {
+  public toJSON(): ImportRule.JSON {
     return {
       type: "import",
       rules: [...this._sheet.rules].map((rule) => rule.toJSON()),
@@ -50,22 +50,22 @@ export class Import extends Condition {
   }
 }
 
-export namespace Import {
-  export interface JSON extends Condition.JSON {
+export namespace ImportRule {
+  export interface JSON extends ConditionRule.JSON {
     type: "import";
     href: string;
   }
 
-  export function isImport(value: unknown): value is Import {
-    return value instanceof Import;
+  export function isImportRule(value: unknown): value is ImportRule {
+    return value instanceof ImportRule;
   }
 
   /**
    * @internal
    */
-  export function fromImport(json: JSON): Trampoline<Import> {
+  export function fromImportRule(json: JSON): Trampoline<ImportRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      Import.of(json.href, Sheet.of(rules), Option.of(json.condition))
+      ImportRule.of(json.href, Sheet.of(rules), Option.of(json.condition))
     );
   }
 }

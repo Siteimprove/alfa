@@ -6,6 +6,12 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    width: Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -28,10 +34,9 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/width}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("auto"),
-  parse,
-  (width, style) =>
+export default Property.register(
+  "width",
+  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (width, style) =>
     width.map((width) => {
       switch (width.type) {
         case "keyword":
@@ -42,4 +47,5 @@ export default Property.of<Specified, Computed>(
           return Resolver.length(width, style);
       }
     })
+  )
 );
