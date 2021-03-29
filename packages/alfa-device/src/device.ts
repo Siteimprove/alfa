@@ -139,7 +139,7 @@ export namespace Device {
 
   export interface JSON {
     [key: string]: json.JSON;
-    type: Type;
+    type: `${Type}`;
     viewport: Viewport.JSON;
     display: Display.JSON;
     scripting: Scripting.JSON;
@@ -148,7 +148,7 @@ export namespace Device {
 
   export function from(json: JSON): Device {
     return Device.of(
-      json.type,
+      json.type as Type,
       Viewport.from(json.viewport),
       Display.from(json.display),
       Scripting.from(json.scripting),
