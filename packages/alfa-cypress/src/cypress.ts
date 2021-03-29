@@ -41,7 +41,7 @@ export namespace Cypress {
   export function createPlugin<T = unknown, Q = never>(
     rules: Iterable<act.Rule<Page, T, Q>>,
     handlers: Iterable<Handler<Page, T, Q>> = [],
-    options: Asserter.Options<Page, T, Q> = {}
+    options: Asserter.Options = {}
   ): globalThis.Chai.ChaiPlugin {
     const asserter = Asserter.of(rules, handlers, options);
 
