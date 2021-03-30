@@ -769,7 +769,7 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^0.15.3"
     "@siteimprove/alfa-test": "workspace:^0.15.3"
     "@siteimprove/alfa-web": "workspace:^0.15.3"
-    rxjs: ^6.6.6
+    rxjs: ^6.6.7
     zone.js: ^0.11.4
   languageName: unknown
   linkType: soft
@@ -1664,7 +1664,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^0.15.3"
     "@siteimprove/alfa-web": "workspace:^0.15.3"
     "@types/node": ^14.14.31
-    playwright: ^1.9.2
+    playwright: ^1.10.0
   languageName: unknown
   linkType: soft
 
@@ -2158,7 +2158,7 @@ __metadata:
     "@siteimprove/alfa-http": "workspace:^0.15.3"
     "@siteimprove/alfa-test": "workspace:^0.15.3"
     "@siteimprove/alfa-web": "workspace:^0.15.3"
-    webdriverio: ^7.2.2
+    webdriverio: ^7.2.3
   languageName: unknown
   linkType: soft
 
@@ -4225,10 +4225,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:^0.0.862770":
-  version: 0.0.862770
-  resolution: "devtools-protocol@npm:0.0.862770"
-  checksum: afd0d7172322f18b087ddb20ea11bc821fd88bd1a2ab2f7fd6604bface3d575005228b34be8099ee58c1fb553753b12b6c7b48c7d054eb072d135432f95d98c0
+"devtools-protocol@npm:^0.0.863986":
+  version: 0.0.863986
+  resolution: "devtools-protocol@npm:0.0.863986"
+  checksum: 197d9eb2bd986a3c9704a9edc1c6eca266ffdc5ffe391c586754a4a143a95aa38f43a0c495d4ac63202b527d3c1ea57e62a8b623fc28fa4f2a485f7b8b9c48d2
   languageName: node
   linkType: hard
 
@@ -7904,9 +7904,9 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "playwright@npm:1.9.2"
+"playwright@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "playwright@npm:1.10.0"
   dependencies:
     commander: ^6.1.0
     debug: ^4.1.1
@@ -7923,7 +7923,7 @@ fsevents@^2.1.2:
     ws: ^7.3.1
   bin:
     playwright: lib/cli/cli.js
-  checksum: a0a59553d6e805e77593ebe4d7f91620e57b15e42b0a934c360ad49cc4c6dd345295549c410b796e927ec84dbd06cc6b5230338cabe5cc10660015e9193e9aae
+  checksum: 9acc031fc69fd6224a1aa16ac6df245d753f42928f928bd701d97d7e7d893077be6efeb9f50a4fa92baf3020850a5b55e132eb59565d0d26d2c9cc78abebcba5
   languageName: node
   linkType: hard
 
@@ -8597,12 +8597,21 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.3.3, rxjs@npm:^6.6.6":
+"rxjs@npm:^6.3.3":
   version: 6.6.6
   resolution: "rxjs@npm:6.6.6"
   dependencies:
     tslib: ^1.9.0
   checksum: 3320dc74bad3b6eb0397ce0394ca6cc7bfecf32538ed18580f59ee6c1d66196b572d8ad209bf8e08e4de51bf804fdce1666e81d51e7eab33c6efba79ff54664b
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^6.6.7":
+  version: 6.6.7
+  resolution: "rxjs@npm:6.6.7"
+  dependencies:
+    tslib: ^1.9.0
+  checksum: bc334edef1bb8bbf56590b0b25734ba0deaf8825b703256a93714308ea36dff8a11d25533671adf8e104e5e8f256aa6fdfe39b2e248cdbd7a5f90c260acbbd1b
   languageName: node
   linkType: hard
 
@@ -9796,9 +9805,9 @@ typescript@^4.2.3:
   languageName: node
   linkType: hard
 
-"webdriverio@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "webdriverio@npm:7.2.2"
+"webdriverio@npm:^7.2.3":
+  version: 7.2.3
+  resolution: "webdriverio@npm:7.2.3"
   dependencies:
     "@types/aria-query": ^4.2.1
     "@wdio/config": 7.2.1
@@ -9813,7 +9822,7 @@ typescript@^4.2.3:
     css-shorthand-properties: ^1.1.1
     css-value: ^0.0.1
     devtools: 7.2.1
-    devtools-protocol: ^0.0.862770
+    devtools-protocol: ^0.0.863986
     fs-extra: ^9.0.1
     get-port: ^5.1.1
     grapheme-splitter: ^1.0.2
@@ -9827,7 +9836,7 @@ typescript@^4.2.3:
     rgb2hex: 0.2.3
     serialize-error: ^8.0.0
     webdriver: 7.2.1
-  checksum: de504f0c874c77c1dfb4c0b20b003c7fc9e4d0e780a88328164d5adeb47c9d63cd2d133f383e3bd5444b265e797522cc216f3d8c4c7068a024fafd027a4e2c29
+  checksum: b7fda80245b92cc42a0a8e8feeb0ed11fa92af2428caf8e9967e7476e712381f84fcc69795a4281e82a563c13b6db34b054bb5ac2bf20e584e009be65fde23fb
   languageName: node
   linkType: hard
 
