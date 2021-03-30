@@ -24,7 +24,7 @@
     "@siteimprove/alfa-option": "workspace:^0.15.3",
     "@siteimprove/alfa-web": "workspace:^0.15.3",
     "@types/node": "^14.14.31",
-    "playwright": "^1.9.2"
+    "playwright": "^1.10.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.15.3"
