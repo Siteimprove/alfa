@@ -40,7 +40,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            xmlLang.every((xmlLang) => xmlLang.primary === lang.primary),
+            xmlLang.every((xmlLang) => xmlLang.primary.equals(lang.primary)),
             () => Outcomes.HasMatchingLanguages,
             () => Outcomes.HasNonMatchingLanguages
           ),
