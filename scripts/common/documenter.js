@@ -28,7 +28,7 @@ exports.documenter = {
         const result = Extractor.invoke(config, {
           localBuild: process.env.CI !== "true",
           messageCallback: (message) => {
-            // Don't about information messages.
+            // Don't output information messages.
             if (message.logLevel === "info") {
               message.handled = true;
             }
