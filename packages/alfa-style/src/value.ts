@@ -9,6 +9,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Value<T = unknown>
   implements
     Functor<T>,
@@ -80,6 +83,9 @@ export class Value<T = unknown>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Value {
   export interface JSON<T = unknown> {
     [key: string]: json.JSON;

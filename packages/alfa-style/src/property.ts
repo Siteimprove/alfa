@@ -274,6 +274,12 @@ export namespace Property {
   export const { of: shorthand, register: registerShorthand } = Shorthand;
 }
 
+/**
+ * @internal
+ */
 export interface Longhands {}
 
+/**
+ * @internal
+ */
 export interface Shorthands {}

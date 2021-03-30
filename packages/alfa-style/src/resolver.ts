@@ -1,9 +1,11 @@
 import {
   Color,
   Converter,
+  Current,
   Length,
   Percentage,
   RGB,
+  System,
 } from "@siteimprove/alfa-css";
 import { Real } from "@siteimprove/alfa-math";
 
@@ -74,7 +76,9 @@ export namespace Resolver {
   /**
    * {@link https://drafts.csswg.org/css-color/#resolving-color-values}
    */
-  export function color(color: Color) {
+  export function color(
+    color: Color
+  ): Current | System | RGB<Percentage, Percentage> {
     switch (color.type) {
       case "color": {
         const [red, green, blue] = [
