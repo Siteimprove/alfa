@@ -131,6 +131,10 @@ export namespace Collection {
         // (undocumented)
         reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
         // (undocumented)
+        reduceUntil<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+        // (undocumented)
+        reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+        // (undocumented)
         reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<Exclude<T, U>>;
         // (undocumented)
         reject(predicate: Predicate<T, [index: number]>): Indexed<T>;
@@ -178,6 +182,8 @@ export namespace Collection {
         trimLeading(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
         trimTrailing(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        zip<U>(iterable: Iterable_2<U>): Indexed<[T, U]>;
     }
     // (undocumented)
     export namespace Indexed {

@@ -15,7 +15,7 @@ class Composite<I = unknown, T = unknown, Q = never> extends Rule<I, T, Q>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [composes](./alfa-act.rule_namespace.composite_class.composes_property.md) |  | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
+|  [composes](./alfa-act.rule_namespace.composite_class.composes_property.md) |  | ReadonlyArray&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
 
 ## Methods
 

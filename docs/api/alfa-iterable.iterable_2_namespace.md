@@ -54,6 +54,8 @@ export declare namespace Iterable
 |  [none(iterable, predicate)](./alfa-iterable.iterable_2_namespace.none_1_function.md) |  |
 |  [prepend(iterable, value)](./alfa-iterable.iterable_2_namespace.prepend_1_function.md) |  |
 |  [reduce(iterable, reducer, accumulator)](./alfa-iterable.iterable_2_namespace.reduce_1_function.md) |  |
+|  [reduceUntil(iterable, predicate, reducer, accumulator)](./alfa-iterable.iterable_2_namespace.reduceuntil_1_function.md) |  |
+|  [reduceWhile(iterable, predicate, reducer, accumulator)](./alfa-iterable.iterable_2_namespace.reducewhile_1_function.md) |  |
 |  [reject(iterable, refinement)](./alfa-iterable.iterable_2_namespace.reject_1_function.md) |  |
 |  [reject(iterable, predicate)](./alfa-iterable.iterable_2_namespace.reject_2_function.md) |  |
 |  [rest(iterable)](./alfa-iterable.iterable_2_namespace.rest_1_function.md) |  |
@@ -81,4 +83,5 @@ export declare namespace Iterable
 |  [trim(iterable, predicate)](./alfa-iterable.iterable_2_namespace.trim_1_function.md) |  |
 |  [trimLeading(iterable, predicate)](./alfa-iterable.iterable_2_namespace.trimleading_1_function.md) |  |
 |  [trimTrailing(iterable, predicate)](./alfa-iterable.iterable_2_namespace.trimtrailing_1_function.md) |  |
+|  [zip(a, b)](./alfa-iterable.iterable_2_namespace.zip_1_function.md) |  |
 

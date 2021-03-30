@@ -7,13 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Subtag.JSON 
+interface JSON extends Subtag.JSON<"region", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [type](./alfa-iana.language_namespace.region_namespace.json_interface.type_propertysignature.md) | "region" |  |
+<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)<!-- -->&lt;"region", [Name](./alfa-iana.language_namespace.region_namespace.name_typealias.md)<!-- -->&gt;
 

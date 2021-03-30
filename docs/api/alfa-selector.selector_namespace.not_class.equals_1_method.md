@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals(value: Not): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Not](./alfa-selector.selector_namespace.not_class.md) |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of(name: string, scope?: Option<Scope>): Primary;
+static of(name: Primary.Name): Primary;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string |  |
-|  scope | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Scope](./alfa-iana.language_namespace.scope_typealias.md)<!-- -->&gt; |  |
+|  name | [Primary.Name](./alfa-iana.language_namespace.primary_namespace.name_typealias.md) |  |
 
 <b>Returns:</b>
 

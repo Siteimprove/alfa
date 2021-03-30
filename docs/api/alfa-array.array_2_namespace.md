@@ -57,6 +57,8 @@ export declare namespace Array
 |  [of(values)](./alfa-array.array_2_namespace.of_1_function.md) |  |
 |  [prepend(array, value)](./alfa-array.array_2_namespace.prepend_1_function.md) |  |
 |  [reduce(array, reducer, accumulator)](./alfa-array.array_2_namespace.reduce_1_function.md) |  |
+|  [reduceUntil(array, predicate, reducer, accumulator)](./alfa-array.array_2_namespace.reduceuntil_1_function.md) |  |
+|  [reduceWhile(array, predicate, reducer, accumulator)](./alfa-array.array_2_namespace.reducewhile_1_function.md) |  |
 |  [reject(array, refinement)](./alfa-array.array_2_namespace.reject_1_function.md) |  |
 |  [reject(array, predicate)](./alfa-array.array_2_namespace.reject_2_function.md) |  |
 |  [search(array, value, comparer)](./alfa-array.array_2_namespace.search_1_function.md) |  |
@@ -67,4 +69,5 @@ export declare namespace Array
 |  [sortWith(array, comparer)](./alfa-array.array_2_namespace.sortwith_1_function.md) |  |
 |  [subtract(array, iterables)](./alfa-array.array_2_namespace.subtract_1_function.md) |  |
 |  [toJSON(array)](./alfa-array.array_2_namespace.tojson_1_function.md) |  |
+|  [zip(array, iterable)](./alfa-array.array_2_namespace.zip_1_function.md) |  |
 

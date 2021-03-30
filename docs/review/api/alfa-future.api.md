@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Callback } from '@siteimprove/alfa-callback';
 import { Continuation } from '@siteimprove/alfa-continuation';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -13,9 +14,11 @@ import { Monad } from '@siteimprove/alfa-monad';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export abstract class Future<T> implements Functor<T>, Monad<T>, AsyncIterable<T> {
+export abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, AsyncIterable<T> {
     // (undocumented)
     [Symbol.asyncIterator](): AsyncIterator<T>;
+    // (undocumented)
+    apply<U>(mapper: Future<Mapper<T, U>>): Future<U>;
     // (undocumented)
     asyncIterator(): AsyncIterator<T>;
     // (undocumented)
@@ -63,7 +66,7 @@ export namespace Future {
     // (undocumented)
     export function suspend<T>(thunk: Thunk<Future<T>>): Future<T>;
     // (undocumented)
-    export function traverse<T, U>(values: Iterable_2<T>, mapper: Mapper<T, Future<U>>): Future<Iterable_2<U>>;
+    export function traverse<T, U>(values: Iterable_2<T>, mapper: Mapper<T, Future<U>, [index: number]>): Future<Iterable_2<U>>;
 }
 
 

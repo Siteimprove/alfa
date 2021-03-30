@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function traverse<T, U>(values: Iterable<T>, mapper: Mapper<T, Trampoline<U>>): Trampoline<Iterable<U>>;
+function traverse<T, U>(values: Iterable<T>, mapper: Mapper<T, Trampoline<U>, [index: number]>): Trampoline<Iterable<U>>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function traverse<T, U>(values: Iterable<T>, mapper: Mapper<T, Trampoline<U>>): 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Iterable&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline_class.md)<!-- -->&lt;U&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline_class.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

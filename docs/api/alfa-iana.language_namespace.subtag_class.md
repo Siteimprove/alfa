@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-abstract class Subtag implements Equatable, Serializable 
+abstract class Subtag<T extends string = string, N extends string = string> implements Equatable, Serializable<Subtag.JSON<T, N>> 
 ```
-<b>Implements:</b> [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)
+<b>Implements:</b> [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)<!-- -->&lt;T, N&gt;&gt;
 
 ## Constructors
 
@@ -23,15 +23,16 @@ abstract class Subtag implements Equatable, Serializable
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [\_name](./alfa-iana.language_namespace.subtag_class._name_property.md) |  | string |  |
-|  [name](./alfa-iana.language_namespace.subtag_class.name_property.md) |  | string | [https://tools.ietf.org/html/bcp47\#section-3.1.4](https://tools.ietf.org/html/bcp47#section-3.1.4) |
-|  [type](./alfa-iana.language_namespace.subtag_class.type_property.md) |  | string | [https://tools.ietf.org/html/bcp47\#section-3.1.3](https://tools.ietf.org/html/bcp47#section-3.1.3) |
+|  [\_name](./alfa-iana.language_namespace.subtag_class._name_property.md) |  | N |  |
+|  [name](./alfa-iana.language_namespace.subtag_class.name_property.md) |  | N | [https://tools.ietf.org/html/bcp47\#section-3.1.4](https://tools.ietf.org/html/bcp47#section-3.1.4) |
+|  [type](./alfa-iana.language_namespace.subtag_class.type_property.md) |  | T | [https://tools.ietf.org/html/bcp47\#section-3.1.3](https://tools.ietf.org/html/bcp47#section-3.1.3) |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-iana.language_namespace.subtag_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-iana.language_namespace.subtag_class.equals_2_method.md) |  |  |
 |  [toJSON()](./alfa-iana.language_namespace.subtag_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-iana.language_namespace.subtag_class.tostring_1_method.md) |  |  |
 

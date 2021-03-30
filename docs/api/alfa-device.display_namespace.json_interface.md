@@ -15,5 +15,5 @@ interface JSON
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [resolution](./alfa-device.display_namespace.json_interface.resolution_propertysignature.md) | number |  |
-|  [scan](./alfa-device.display_namespace.json_interface.scan_propertysignature.md) | [Scan](./alfa-device.display_namespace.scan_enum.md) |  |
+|  [scan](./alfa-device.display_namespace.json_interface.scan_propertysignature.md) | \`${[Scan](./alfa-device.display_namespace.scan_enum.md)<!-- -->}\` |  |
 

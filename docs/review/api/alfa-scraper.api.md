@@ -8,9 +8,13 @@ import { Cookie } from '@siteimprove/alfa-http';
 import { Device } from '@siteimprove/alfa-device';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Header } from '@siteimprove/alfa-http';
+import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Page } from '@siteimprove/alfa-web';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Page } from 'puppeteer';
+import { Page as Page_2 } from '@siteimprove/alfa-web';
+import { Promise as Promise_2 } from '@siteimprove/alfa-promise';
 import * as puppeteer from 'puppeteer';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -18,22 +22,19 @@ import { Timeout } from '@siteimprove/alfa-time';
 import { URL as URL_2 } from '@siteimprove/alfa-url';
 
 // @public (undocumented)
-export type Awaiter<T = unknown> = (page: puppeteer.Page, timeout: Timeout) => Promise<Result<T, string>>;
+export type Awaiter = (page: Page, timeout: Timeout) => Promise_2<Option_2<string>>;
 
 // @public (undocumented)
 export namespace Awaiter {
-    // (undocumented)
-    export function duration(duration: number, after?: Awaiter<puppeteer.HTTPResponse | null>): Awaiter<puppeteer.HTTPResponse | null>;
-    // (undocumented)
-    export function idle(): Awaiter<puppeteer.HTTPResponse | null>;
-    // (undocumented)
-    export function loaded(): Awaiter<puppeteer.HTTPResponse | null>;
-    // (undocumented)
-    export function ready(): Awaiter<puppeteer.HTTPResponse | null>;
-    // (undocumented)
-    export function selector(selector: string): Awaiter<puppeteer.ElementHandle<Element> | null>;
-    // (undocumented)
-    export function xpath(expression: string): Awaiter<puppeteer.ElementHandle<Element> | null>;
+    export function all(awaiters: Iterable_2<Awaiter>): Awaiter;
+    export function animations(after?: Awaiter): Awaiter;
+    export function any(awaiters: Iterable_2<Awaiter>): Awaiter;
+    export function duration(duration: number, after?: Awaiter): Awaiter;
+    export function idle(): Awaiter;
+    export function loaded(): Awaiter;
+    export function ready(): Awaiter;
+    export function selector(selector: string): Awaiter;
+    export function xpath(expression: string): Awaiter;
 }
 
 // @public (undocumented)
@@ -70,7 +71,7 @@ export class Scraper {
     close(): Promise<void>;
     // (undocumented)
     static of(browser?: Promise<puppeteer.Browser>): Promise<Scraper>;
-    scrape(url: string | URL_2, options?: Scraper.scrape.Options): Promise<Result<Page, string>>;
+    scrape(url: string | URL_2, options?: Scraper.scrape.Options): Promise<Result<Page_2, string>>;
     // (undocumented)
     static with<T>(mapper: Mapper<Scraper, Promise<T>>, browser?: Promise<puppeteer.Browser>): Promise<T>;
 }
@@ -84,13 +85,15 @@ export namespace Scraper {
             // (undocumented)
             readonly awaiter?: Awaiter;
             // (undocumented)
-            readonly cookies?: Iterable<Cookie>;
+            readonly cookies?: Iterable_2<Cookie>;
             // (undocumented)
             readonly credentials?: Credentials;
             // (undocumented)
             readonly device?: Device;
             // (undocumented)
-            readonly headers?: Iterable<Header>;
+            readonly fit?: boolean;
+            // (undocumented)
+            readonly headers?: Iterable_2<Header>;
             // (undocumented)
             readonly screenshot?: Screenshot;
             // (undocumented)

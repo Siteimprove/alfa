@@ -56,6 +56,8 @@ export declare class Cons<T> implements Sequence<T>
 |  [of(head, tail)](./alfa-sequence.cons_class.of_1_method.md) | <code>static</code> |  |
 |  [prepend(value)](./alfa-sequence.cons_class.prepend_1_method.md) |  |  |
 |  [reduce(reducer, accumulator)](./alfa-sequence.cons_class.reduce_1_method.md) |  |  |
+|  [reduceUntil(predicate, reducer, accumulator)](./alfa-sequence.cons_class.reduceuntil_1_method.md) |  |  |
+|  [reduceWhile(predicate, reducer, accumulator)](./alfa-sequence.cons_class.reducewhile_1_method.md) |  |  |
 |  [reject(refinement)](./alfa-sequence.cons_class.reject_1_method.md) |  |  |
 |  [reject(predicate)](./alfa-sequence.cons_class.reject_2_method.md) |  |  |
 |  [rest()](./alfa-sequence.cons_class.rest_1_method.md) |  |  |
@@ -83,4 +85,5 @@ export declare class Cons<T> implements Sequence<T>
 |  [trim(predicate)](./alfa-sequence.cons_class.trim_1_method.md) |  |  |
 |  [trimLeading(predicate)](./alfa-sequence.cons_class.trimleading_1_method.md) |  |  |
 |  [trimTrailing(predicate)](./alfa-sequence.cons_class.trimtrailing_1_method.md) |  |  |
+|  [zip(iterable)](./alfa-sequence.cons_class.zip_1_method.md) |  |  |
 

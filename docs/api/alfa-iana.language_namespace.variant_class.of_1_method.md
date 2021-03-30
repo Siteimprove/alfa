@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of(name: string, prefixes: Array<string>): Variant;
+static of(name: Variant.Name): Variant;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string |  |
-|  prefixes | Array&lt;string&gt; |  |
+|  name | [Variant.Name](./alfa-iana.language_namespace.variant_namespace.name_typealias.md) |  |
 
 <b>Returns:</b>
 

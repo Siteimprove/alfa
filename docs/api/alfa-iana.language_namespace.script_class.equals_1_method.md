@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals(value: Script): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Script](./alfa-iana.language_namespace.script_class.md) |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

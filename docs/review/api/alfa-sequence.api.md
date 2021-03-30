@@ -102,6 +102,10 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
+    reduceUntil<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
+    reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
     reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<Exclude<T, U>>;
     // (undocumented)
     reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -159,6 +163,8 @@ export class Cons<T> implements Sequence<T> {
     trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    zip<U>(iterable: Iterable_2<U>): Sequence<[T, U]>;
 }
 
 // @public (undocumented)
@@ -245,6 +251,10 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
+    reduceUntil<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
+    reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
     reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<Exclude<T, U>>;
     // (undocumented)
     reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -296,6 +306,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     trimLeading(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     trimTrailing(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    zip<U>(iterable: Iterable<U>): Sequence<[T, U]>;
 }
 
 // @public (undocumented)

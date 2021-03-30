@@ -10,9 +10,22 @@
 namespace Extended 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isExtended(value)](./alfa-iana.language_namespace.extended_namespace.isextended_1_function.md) |  |
+|  [isName(name)](./alfa-iana.language_namespace.extended_namespace.isname_1_function.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-iana.language_namespace.extended_namespace.json_interface.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Name](./alfa-iana.language_namespace.extended_namespace.name_typealias.md) |  |
 

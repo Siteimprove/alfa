@@ -4,10 +4,12 @@
 
 ## Awaiter.duration() function
 
+Wait for a fixed duration after another awaiter has finished.
+
 <b>Signature:</b>
 
 ```typescript
-function duration(duration: number, after?: Awaiter<puppeteer.HTTPResponse | null>): Awaiter<puppeteer.HTTPResponse | null>;
+function duration(duration: number, after?: Awaiter): Awaiter;
 ```
 
 ## Parameters
@@ -15,9 +17,9 @@ function duration(duration: number, after?: Awaiter<puppeteer.HTTPResponse | nul
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  duration | number |  |
-|  after | [Awaiter](./alfa-scraper.awaiter_typealias.md)<!-- -->&lt;puppeteer.HTTPResponse \| null&gt; |  |
+|  after | [Awaiter](./alfa-scraper.awaiter_typealias.md) |  |
 
 <b>Returns:</b>
 
-[Awaiter](./alfa-scraper.awaiter_typealias.md)<!-- -->&lt;puppeteer.HTTPResponse \| null&gt;
+[Awaiter](./alfa-scraper.awaiter_typealias.md)
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of(name: string): Script;
+static of(name: Script.Name): Script;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string |  |
+|  name | [Script.Name](./alfa-iana.language_namespace.script_namespace.name_typealias.md) |  |
 
 <b>Returns:</b>
 

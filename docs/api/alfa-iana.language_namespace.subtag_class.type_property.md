@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-abstract get type(): string;
+abstract get type(): T;
 ```

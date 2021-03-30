@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-prefix: string;
+prefix: Primary.Name;
 ```

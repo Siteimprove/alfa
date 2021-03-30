@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseValue: Parser<Slice<Token>, Percentage | Length<Unit.Length>, string, []>
+parseValue: Parser<Slice<Token>, Length<Unit.Length> | Percentage, string, []>
 ```

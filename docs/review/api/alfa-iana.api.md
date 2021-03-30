@@ -7,6 +7,7 @@
 import { Equatable } from '@siteimprove/alfa-equatable';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
+import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
@@ -35,15 +36,15 @@ export class Language implements Equatable, Serializable {
 // @public (undocumented)
 export namespace Language {
     // (undocumented)
-    export class Extended extends Subtag {
+    export class Extended extends Subtag<"extended", Extended.Name> {
+        // (undocumented)
+        equals(value: Extended): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string, prefix: string, scope?: Option<Scope>): Extended;
+        static of(name: Extended.Name): Extended;
         // (undocumented)
-        get prefix(): string;
-        // (undocumented)
-        get scope(): Option<Scope>;
+        get prefix(): Primary.Name;
         // (undocumented)
         toJSON(): Extended.JSON;
         // (undocumented)
@@ -52,14 +53,16 @@ export namespace Language {
     // (undocumented)
     export namespace Extended {
         // (undocumented)
-        export interface JSON extends Subtag.JSON {
+        export function isExtended(value: unknown): value is Extended;
+        // (undocumented)
+        export function isName(name: string): name is Name;
+        // (undocumented)
+        export interface JSON extends Subtag.JSON<"extended", Name> {
             // (undocumented)
-            prefix: string;
-            // (undocumented)
-            scope: Scope | null;
-            // (undocumented)
-            type: "extended";
+            prefix: Primary.Name;
         }
+        // (undocumented)
+        export type Name = keyof Languages["extended"];
     }
     // (undocumented)
     export interface JSON {
@@ -79,11 +82,13 @@ export namespace Language {
         variants: Array<Variant.JSON>;
     }
     // (undocumented)
-    export class Primary extends Subtag {
+    export class Primary extends Subtag<"primary", Primary.Name> {
+        // (undocumented)
+        equals(value: Primary): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string, scope?: Option<Scope>): Primary;
+        static of(name: Primary.Name): Primary;
         // (undocumented)
         get scope(): Option<Scope>;
         // (undocumented)
@@ -94,40 +99,62 @@ export namespace Language {
     // (undocumented)
     export namespace Primary {
         // (undocumented)
-        export interface JSON extends Subtag.JSON {
+        export function isName(name: string): name is Name;
+        // (undocumented)
+        export function isPrimary(value: unknown): value is Primary;
+        // (undocumented)
+        export interface JSON extends Subtag.JSON<"primary", Name> {
             // (undocumented)
             scope: Scope | null;
-            // (undocumented)
-            type: "primary";
         }
+        // Warning: (ae-forgotten-export) The symbol "Languages" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        export type Name = keyof Languages["primary"];
     }
     // (undocumented)
-    export class Region extends Subtag {
+    export class Region extends Subtag<"region", Region.Name> {
+        // (undocumented)
+        equals(value: Region): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string): Region;
+        static of(name: Region.Name): Region;
         // (undocumented)
         toJSON(): Region.JSON;
         // (undocumented)
         get type(): "region";
     }
+    const // (undocumented)
+    primary: typeof Primary.of, // (undocumented)
+    isPrimary: typeof Primary.isPrimary, // (undocumented)
+    isPrimaryName: typeof Primary.isName;
     // (undocumented)
     export namespace Region {
         // (undocumented)
-        export interface JSON extends Subtag.JSON {
-            // (undocumented)
-            type: "region";
+        export function isName(name: string): name is Name;
+        // (undocumented)
+        export function isRegion(value: unknown): value is Region;
+        // (undocumented)
+        export interface JSON extends Subtag.JSON<"region", Name> {
         }
+        // (undocumented)
+        export type Name = keyof Languages["region"];
     }
     // (undocumented)
-    export type Scope = "macrolanguage" | "collection" | "special" | "private-use";
+    export type Scope = Exclude<Languages["primary"][Primary.Name]["scope"], null>;
+    const // (undocumented)
+    extended: typeof Extended.of, // (undocumented)
+    isExtended: typeof Extended.isExtended, // (undocumented)
+    isExtendedName: typeof Extended.isName;
     // (undocumented)
-    export class Script extends Subtag {
+    export class Script extends Subtag<"script", Script.Name> {
+        // (undocumented)
+        equals(value: Script): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string): Script;
+        static of(name: Script.Name): Script;
         // (undocumented)
         toJSON(): Script.JSON;
         // (undocumented)
@@ -136,47 +163,63 @@ export namespace Language {
     // (undocumented)
     export namespace Script {
         // (undocumented)
-        export interface JSON extends Subtag.JSON {
-            // (undocumented)
-            type: "script";
+        export function isName(name: string): name is Name;
+        // (undocumented)
+        export function isScript(value: unknown): value is Script;
+        // (undocumented)
+        export interface JSON extends Subtag.JSON<"script", Name> {
         }
+        // (undocumented)
+        export type Name = keyof Languages["script"];
     }
+    const // (undocumented)
+    script: typeof Script.of, // (undocumented)
+    isScript: typeof Script.isScript, // (undocumented)
+    isScriptName: typeof Script.isName;
     // (undocumented)
-    export abstract class Subtag implements Equatable, Serializable {
-        protected constructor(name: string);
+    export abstract class Subtag<T extends string = string, N extends string = string> implements Equatable, Serializable<Subtag.JSON<T, N>> {
+        protected constructor(name: N);
+        // (undocumented)
+        abstract equals<T extends string, N extends string>(value: Subtag<T, N>): boolean;
         // (undocumented)
         abstract equals(value: unknown): value is this;
         // (undocumented)
-        get name(): string;
+        get name(): N;
         // (undocumented)
-        protected readonly _name: string;
+        protected readonly _name: N;
         // (undocumented)
-        abstract toJSON(): Subtag.JSON;
+        abstract toJSON(): Subtag.JSON<T, N>;
         // (undocumented)
         toString(): string;
         // (undocumented)
-        abstract get type(): string;
+        abstract get type(): T;
     }
     // (undocumented)
     export namespace Subtag {
         // (undocumented)
-        export interface JSON {
+        export interface JSON<T extends string = string, N extends string = string> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            name: string;
+            name: N;
             // (undocumented)
-            type: string;
+            type: T;
         }
     }
+    const // (undocumented)
+    region: typeof Region.of, // (undocumented)
+    isRegion: typeof Region.isRegion, // (undocumented)
+    isRegionName: typeof Region.isName;
     // (undocumented)
-    export class Variant extends Subtag {
+    export class Variant extends Subtag<"variant", Variant.Name> {
+        // (undocumented)
+        equals(value: Variant): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(name: string, prefixes: Array<string>): Variant;
+        static of(name: Variant.Name): Variant;
         // (undocumented)
-        get prefixes(): Array<string>;
+        get prefixes(): ReadonlyArray<string>;
         // (undocumented)
         toJSON(): Variant.JSON;
         // (undocumented)
@@ -185,19 +228,27 @@ export namespace Language {
     // (undocumented)
     export namespace Variant {
         // (undocumented)
-        export interface JSON extends Subtag.JSON {
+        export function isName(name: string): name is Name;
+        // (undocumented)
+        export function isVariant(value: unknown): value is Variant;
+        // (undocumented)
+        export interface JSON extends Subtag.JSON<"variant", Name> {
             // (undocumented)
             prefixes: Array<string>;
-            // (undocumented)
-            type: "variant";
         }
+        // (undocumented)
+        export type Name = keyof Languages["variant"];
     }
+    const // (undocumented)
+    variant: typeof Variant.of, // (undocumented)
+    isVariant: typeof Variant.isVariant, // (undocumented)
+    isVariantName: typeof Variant.isName;
 }
 
 // @public (undocumented)
 export namespace Language {
     // (undocumented)
-    export function parse(input: string): Option<Language>;
+    export function parse(input: string): Result<Language, string>;
 }
 
 

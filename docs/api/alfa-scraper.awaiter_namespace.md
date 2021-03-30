@@ -15,10 +15,13 @@ export declare namespace Awaiter
 
 |  Function | Description |
 |  --- | --- |
-|  [duration(duration, after)](./alfa-scraper.awaiter_namespace.duration_1_function.md) |  |
-|  [idle()](./alfa-scraper.awaiter_namespace.idle_1_function.md) |  |
-|  [loaded()](./alfa-scraper.awaiter_namespace.loaded_1_function.md) |  |
-|  [ready()](./alfa-scraper.awaiter_namespace.ready_1_function.md) |  |
-|  [selector(selector)](./alfa-scraper.awaiter_namespace.selector_1_function.md) |  |
-|  [xpath(expression)](./alfa-scraper.awaiter_namespace.xpath_1_function.md) |  |
+|  [all(awaiters)](./alfa-scraper.awaiter_namespace.all_1_function.md) | Wait for all of the given awaiters. |
+|  [animations(after)](./alfa-scraper.awaiter_namespace.animations_1_function.md) | Wait for all animations to end after another awaiter has finished. |
+|  [any(awaiters)](./alfa-scraper.awaiter_namespace.any_1_function.md) | Wait for any of the given awaiters. |
+|  [duration(duration, after)](./alfa-scraper.awaiter_namespace.duration_1_function.md) | Wait for a fixed duration after another awaiter has finished. |
+|  [idle()](./alfa-scraper.awaiter_namespace.idle_1_function.md) | Wait for the network to be idle, i.e. have no requests inflight. |
+|  [loaded()](./alfa-scraper.awaiter_namespace.loaded_1_function.md) | Wait for the <code>load</code> event.[https://developer.mozilla.org/en-US/docs/Web/API/Window/load\_event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) |
+|  [ready()](./alfa-scraper.awaiter_namespace.ready_1_function.md) | Wait for the <code>DOMContentLoaded</code> event to fire.[https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded\_event](https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event) |
+|  [selector(selector)](./alfa-scraper.awaiter_namespace.selector_1_function.md) | Wait for an element matching the given selector to be present and visible. |
+|  [xpath(expression)](./alfa-scraper.awaiter_namespace.xpath_1_function.md) | Wait for an element matching the given expression to be present and visible. |
 

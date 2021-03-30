@@ -21,11 +21,7 @@ export namespace Refinement {
         // (undocumented)
         <T, U extends T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Refinement<T, U, A>): Refinement<T, U, A>;
         // (undocumented)
-        <T, A extends Array<unknown> = []>(...predicates: [
-            Predicate<T, A>,
-            Predicate<T, A>,
-            ...Array<Predicate<T, A>>
-        ]): Predicate<T, A>;
+        <T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
     }
     const // (undocumented)
     test: Test;
@@ -117,11 +113,7 @@ export namespace Refinement {
         // (undocumented)
         <T, U extends T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Refinement<T, U, A>): Refinement<T, U | T, A>;
         // (undocumented)
-        <T, A extends Array<unknown> = []>(...predicates: [
-            Predicate<T, A>,
-            Predicate<T, A>,
-            ...Array<Predicate<T, A>>
-        ]): Predicate<T, A>;
+        <T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
     }
     // (undocumented)
     export interface Test {

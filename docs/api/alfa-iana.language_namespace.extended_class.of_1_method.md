@@ -7,16 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of(name: string, prefix: string, scope?: Option<Scope>): Extended;
+static of(name: Extended.Name): Extended;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string |  |
-|  prefix | string |  |
-|  scope | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Scope](./alfa-iana.language_namespace.scope_typealias.md)<!-- -->&gt; |  |
+|  name | [Extended.Name](./alfa-iana.language_namespace.extended_namespace.name_typealias.md) |  |
 
 <b>Returns:</b>
 

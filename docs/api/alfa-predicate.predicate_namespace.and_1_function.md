@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function and<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
+function and<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicates | \[[Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt;, [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt;, ...Array&lt;[Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt;&gt;\] |  |
+|  predicates | Array&lt;[Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt;&gt; |  |
 
 <b>Returns:</b>
 

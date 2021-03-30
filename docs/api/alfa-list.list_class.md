@@ -57,6 +57,8 @@ export declare class List<T> implements Collection.Indexed<T>
 |  [of(values)](./alfa-list.list_class.of_1_method.md) | <code>static</code> |  |
 |  [prepend(value)](./alfa-list.list_class.prepend_1_method.md) |  |  |
 |  [reduce(reducer, accumulator)](./alfa-list.list_class.reduce_1_method.md) |  |  |
+|  [reduceUntil(predicate, reducer, accumulator)](./alfa-list.list_class.reduceuntil_1_method.md) |  |  |
+|  [reduceWhile(predicate, reducer, accumulator)](./alfa-list.list_class.reducewhile_1_method.md) |  |  |
 |  [reject(refinement)](./alfa-list.list_class.reject_1_method.md) |  |  |
 |  [reject(predicate)](./alfa-list.list_class.reject_2_method.md) |  |  |
 |  [rest()](./alfa-list.list_class.rest_1_method.md) |  |  |
@@ -84,4 +86,5 @@ export declare class List<T> implements Collection.Indexed<T>
 |  [trim(predicate)](./alfa-list.list_class.trim_1_method.md) |  |  |
 |  [trimLeading(predicate)](./alfa-list.list_class.trimleading_1_method.md) |  |  |
 |  [trimTrailing(predicate)](./alfa-list.list_class.trimtrailing_1_method.md) |  |  |
+|  [zip(iterable)](./alfa-list.list_class.zip_1_method.md) |  |  |
 

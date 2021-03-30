@@ -45,9 +45,29 @@ export declare namespace Language
 |  [Subtag](./alfa-iana.language_namespace.subtag_namespace.md) |  |
 |  [Variant](./alfa-iana.language_namespace.variant_namespace.md) |  |
 
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [extended](./alfa-iana.language_namespace.extended_variable.md) |  |
+|  [isExtended](./alfa-iana.language_namespace.isextended_variable.md) |  |
+|  [isExtendedName](./alfa-iana.language_namespace.isextendedname_variable.md) |  |
+|  [isPrimary](./alfa-iana.language_namespace.isprimary_variable.md) |  |
+|  [isPrimaryName](./alfa-iana.language_namespace.isprimaryname_variable.md) |  |
+|  [isRegion](./alfa-iana.language_namespace.isregion_variable.md) |  |
+|  [isRegionName](./alfa-iana.language_namespace.isregionname_variable.md) |  |
+|  [isScript](./alfa-iana.language_namespace.isscript_variable.md) |  |
+|  [isScriptName](./alfa-iana.language_namespace.isscriptname_variable.md) |  |
+|  [isVariant](./alfa-iana.language_namespace.isvariant_variable.md) |  |
+|  [isVariantName](./alfa-iana.language_namespace.isvariantname_variable.md) |  |
+|  [primary](./alfa-iana.language_namespace.primary_variable.md) |  |
+|  [region](./alfa-iana.language_namespace.region_variable.md) |  |
+|  [script](./alfa-iana.language_namespace.script_variable.md) |  |
+|  [variant](./alfa-iana.language_namespace.variant_variable.md) |  |
+
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Scope](./alfa-iana.language_namespace.scope_typealias.md) |  |
+|  [Scope](./alfa-iana.language_namespace.scope_typealias.md) | [https://tools.ietf.org/html/bcp47\#section-3.1.11](https://tools.ietf.org/html/bcp47#section-3.1.11) |
 

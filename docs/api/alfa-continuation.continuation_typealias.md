@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Continuation<T, R = void> = Callback<Callback<T, R>, R>;
+export declare type Continuation<T, R = void, A extends Array<unknown> = []> = Callback<Callback<T, R>, R, A>;
 ```
 <b>References:</b> [Callback](./alfa-callback.callback_typealias.md)
 

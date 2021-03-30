@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Selector.JSON 
+interface JSON extends Selector.JSON<"universal"> 
 ```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector_namespace.json_interface.md)
+<b>Extends:</b> [Selector.JSON](./alfa-selector.selector_namespace.json_interface.md)<!-- -->&lt;"universal"&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [namespace](./alfa-selector.selector_namespace.universal_namespace.json_interface.namespace_propertysignature.md) | string \| null |  |
-|  [type](./alfa-selector.selector_namespace.universal_namespace.json_interface.type_propertysignature.md) | "universal" |  |
 

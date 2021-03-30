@@ -21,3 +21,7 @@ function persist<I, T, Q>(output: Mapper<I, string>, format?: Formatter<I, T, Q>
 
 [Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;I, T, Q&gt;
 
+## Remarks
+
+Cypress has this rather odd model of relying on synchronously enqueued hooks and commands to provide a feeling of using a synchronous API. As the handler will run \_as part of\_ a command, this means that we can't register any additional commands when the handler runs; this must instead be handled beforehand. The handler therefore starts by registering an `after()` hook that will write any files collected during the test run \_after\_ the tests are done.
+

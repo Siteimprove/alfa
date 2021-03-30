@@ -476,11 +476,11 @@ export abstract class Rule<I = unknown, T = unknown, Q = never> implements Equat
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
     // (undocumented)
-    get requirements(): Iterable_2<Requirement>;
+    get requirements(): ReadonlyArray<Requirement>;
     // (undocumented)
     protected readonly _requirements: Array<Requirement>;
     // (undocumented)
-    get tags(): Iterable_2<Tag>;
+    get tags(): ReadonlyArray<Tag>;
     // (undocumented)
     protected readonly _tags: Array<Tag>;
     // (undocumented)
@@ -530,7 +530,7 @@ export namespace Rule {
     // (undocumented)
     export class Composite<I = unknown, T = unknown, Q = never> extends Rule<I, T, Q> {
         // (undocumented)
-        get composes(): Iterable_2<Rule<I, T, Q>>;
+        get composes(): ReadonlyArray<Rule<I, T, Q>>;
         // (undocumented)
         static of<I, T = unknown, Q = never>(properties: {
             uri: string;

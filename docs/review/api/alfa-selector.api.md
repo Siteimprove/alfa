@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as dom from '@siteimprove/alfa-dom';
 import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
@@ -79,21 +80,23 @@ export type Selector = Selector.Simple | Selector.Compound | Selector.Complex | 
 // @public (undocumented)
 export namespace Selector {
     // (undocumented)
-    export class Active extends Pseudo.Class {
+    export class Active extends Pseudo.Class<"active"> {
         // (undocumented)
         matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Active;
     }
     // (undocumented)
-    export class After extends Pseudo.Element {
+    export class After extends Pseudo.Element<"after"> {
         // (undocumented)
         static of(): After;
     }
     // (undocumented)
-    export class Attribute extends Selector {
+    export class Attribute extends Selector<"attribute"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Attribute>;
+        // (undocumented)
+        equals(value: Attribute): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -113,12 +116,14 @@ export namespace Selector {
         // (undocumented)
         toString(): string;
         // (undocumented)
+        get type(): "attribute";
+        // (undocumented)
         get value(): Option_2<string>;
         }
     // (undocumented)
     export namespace Attribute {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"attribute"> {
             // (undocumented)
             matcher: string | null;
             // (undocumented)
@@ -127,8 +132,6 @@ export namespace Selector {
             name: string;
             // (undocumented)
             namespace: string | null;
-            // (undocumented)
-            type: "attribute";
             // (undocumented)
             value: string | null;
         }
@@ -156,14 +159,21 @@ export namespace Selector {
         }
     }
     // (undocumented)
-    export class Before extends Pseudo.Element {
+    export class Backdrop extends Pseudo.Element<"backdrop"> {
+        // (undocumented)
+        static of(): Backdrop;
+    }
+    // (undocumented)
+    export class Before extends Pseudo.Element<"before"> {
         // (undocumented)
         static of(): Before;
     }
     // (undocumented)
-    export class Class extends Selector {
+    export class Class extends Selector<"class"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Class>;
+        // (undocumented)
+        equals(value: Class): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -176,15 +186,15 @@ export namespace Selector {
         toJSON(): Class.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "class";
     }
     // (undocumented)
     export namespace Class {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"class"> {
             // (undocumented)
             name: string;
-            // (undocumented)
-            type: "class";
         }
     }
     // (undocumented)
@@ -199,11 +209,13 @@ export namespace Selector {
         Sibling = "~"
     }
     // (undocumented)
-    export class Complex extends Selector {
+    export class Complex extends Selector<"complex"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Complex>;
         // (undocumented)
         get combinator(): Combinator;
+        // (undocumented)
+        equals(value: Complex): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -218,25 +230,27 @@ export namespace Selector {
         toJSON(): Complex.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "complex";
     }
     // (undocumented)
     export namespace Complex {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"complex"> {
             // (undocumented)
             combinator: string;
             // (undocumented)
             left: Simple.JSON | Compound.JSON | JSON;
             // (undocumented)
             right: Simple.JSON | Compound.JSON;
-            // (undocumented)
-            type: "complex";
         }
     }
     // (undocumented)
-    export class Compound extends Selector {
+    export class Compound extends Selector<"compound"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Compound>;
+        // (undocumented)
+        equals(value: Compound): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -251,63 +265,104 @@ export namespace Selector {
         toJSON(): Compound.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "compound";
     }
     // (undocumented)
     export namespace Compound {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"compound"> {
             // (undocumented)
             left: Simple.JSON;
             // (undocumented)
             right: Simple.JSON | JSON;
-            // (undocumented)
-            type: "compound";
         }
     }
     // (undocumented)
-    export class Empty extends Pseudo.Class {
+    export namespace Cue {
+        // (undocumented)
+        export interface JSON extends Pseudo.Element.JSON<"cue"> {
+            // (undocumented)
+            selector: Option_2.JSON<Selector>;
+        }
+    }
+    // (undocumented)
+    export namespace CueRegion {
+        // (undocumented)
+        export interface JSON extends Pseudo.Element.JSON<"cue-region"> {
+            // (undocumented)
+            selector: Option_2.JSON<Selector>;
+        }
+    }
+    // (undocumented)
+    export class Empty extends Pseudo.Class<"empty"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): Empty;
     }
     // (undocumented)
-    export class FirstChild extends Pseudo.Class {
+    export class FileSelectorButton extends Pseudo.Element<"file-selector-button"> {
+        // (undocumented)
+        static of(): FileSelectorButton;
+    }
+    // (undocumented)
+    export class FirstChild extends Pseudo.Class<"first-child"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): FirstChild;
     }
+    const // (undocumented)
+    isPseudoClass: typeof Pseudo.isClass, // (undocumented)
+    isPseudoElement: typeof Pseudo.isElement;
     // (undocumented)
-    export class FirstOfType extends Pseudo.Class {
+    export class FirstLetter extends Pseudo.Element<"first-letter"> {
+        // (undocumented)
+        static of(): FirstLetter;
+    }
+    // (undocumented)
+    export class FirstLine extends Pseudo.Element<"first-line"> {
+        // (undocumented)
+        static of(): FirstLine;
+    }
+    // (undocumented)
+    export class FirstOfType extends Pseudo.Class<"first-of-type"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): FirstOfType;
     }
     // (undocumented)
-    export class Focus extends Pseudo.Class {
+    export class Focus extends Pseudo.Class<"focus"> {
         // (undocumented)
         matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Focus;
     }
     // (undocumented)
-    export class FocusVisible extends Pseudo.Class {
+    export class FocusVisible extends Pseudo.Class<"focus-visible"> {
         // (undocumented)
         matches(): boolean;
         // (undocumented)
         static of(): FocusVisible;
     }
     // (undocumented)
-    export class FocusWithin extends Pseudo.Class {
+    export class FocusWithin extends Pseudo.Class<"focus-within"> {
         // (undocumented)
         matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): FocusWithin;
     }
     // (undocumented)
-    export class Has extends Pseudo.Class {
+    export class GrammarError extends Pseudo.Element<"grammar-error"> {
+        // (undocumented)
+        static of(): GrammarError;
+    }
+    // (undocumented)
+    export class Has extends Pseudo.Class<"has"> {
+        // (undocumented)
+        equals(value: Has): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -322,22 +377,24 @@ export namespace Selector {
     // (undocumented)
     export namespace Has {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"has"> {
             // (undocumented)
             selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
         }
     }
     // (undocumented)
-    export class Hover extends Pseudo.Class {
+    export class Hover extends Pseudo.Class<"hover"> {
         // (undocumented)
         matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Hover;
     }
     // (undocumented)
-    export class Id extends Selector {
+    export class Id extends Selector<"id"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Id>;
+        // (undocumented)
+        equals(value: Id): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -350,19 +407,21 @@ export namespace Selector {
         toJSON(): Id.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "id";
     }
     // (undocumented)
     export namespace Id {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"id"> {
             // (undocumented)
             name: string;
-            // (undocumented)
-            type: "id";
         }
     }
     // (undocumented)
-    export class Is extends Pseudo.Class {
+    export class Is extends Pseudo.Class<"is"> {
+        // (undocumented)
+        equals(value: Is): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -379,7 +438,7 @@ export namespace Selector {
     // (undocumented)
     export namespace Is {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"is"> {
             // (undocumented)
             selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
         }
@@ -391,41 +450,49 @@ export namespace Selector {
     // (undocumented)
     export function isComplex(value: unknown): value is Complex;
     // (undocumented)
+    export function isCompound(value: unknown): value is Compound;
+    // (undocumented)
     export function isId(value: unknown): value is Id;
+    // (undocumented)
+    export function isPseudo(value: unknown): value is Pseudo;
+    // (undocumented)
+    export function isSimple(value: unknown): value is Simple;
     // (undocumented)
     export function isType(value: unknown): value is Type;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        type: string;
+        type: T;
     }
     // (undocumented)
-    export class LastChild extends Pseudo.Class {
+    export class LastChild extends Pseudo.Class<"last-child"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): LastChild;
     }
     // (undocumented)
-    export class LastOfType extends Pseudo.Class {
+    export class LastOfType extends Pseudo.Class<"last-of-type"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): LastOfType;
     }
     // (undocumented)
-    export class Link extends Pseudo.Class {
+    export class Link extends Pseudo.Class<"link"> {
         // (undocumented)
         matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         static of(): Link;
     }
     // (undocumented)
-    export class List<T extends Simple | Compound | Complex | Relative = Simple | Compound | Complex | Relative> extends Selector {
+    export class List<T extends Simple | Compound | Complex | Relative = Simple | Compound | Complex | Relative> extends Selector<"list"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Simple | Compound | Complex | Relative>;
+        // (undocumented)
+        equals(value: List): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -440,21 +507,28 @@ export namespace Selector {
         toJSON(): List.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "list";
     }
     // (undocumented)
     export namespace List {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"list"> {
             // (undocumented)
             left: Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON;
             // (undocumented)
             right: Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | JSON;
-            // (undocumented)
-            type: "list";
         }
     }
     // (undocumented)
-    export class Not extends Pseudo.Class {
+    export class Marker extends Pseudo.Element<"marker"> {
+        // (undocumented)
+        static of(): Marker;
+    }
+    // (undocumented)
+    export class Not extends Pseudo.Class<"not"> {
+        // (undocumented)
+        equals(value: Not): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -471,13 +545,13 @@ export namespace Selector {
     // (undocumented)
     export namespace Not {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"not"> {
             // (undocumented)
             selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
         }
     }
     // (undocumented)
-    export class NthChild extends Pseudo.Class {
+    export class NthChild extends Pseudo.Class<"nth-child"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
@@ -488,13 +562,13 @@ export namespace Selector {
     // (undocumented)
     export namespace NthChild {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"nth-child"> {
             // (undocumented)
             index: Nth.JSON;
         }
     }
     // (undocumented)
-    export class NthLastChild extends Pseudo.Class {
+    export class NthLastChild extends Pseudo.Class<"nth-last-child"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
@@ -505,13 +579,13 @@ export namespace Selector {
     // (undocumented)
     export namespace NthLastChild {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"nth-last-child"> {
             // (undocumented)
             index: Nth.JSON;
         }
     }
     // (undocumented)
-    export class NthLastOfType extends Pseudo.Class {
+    export class NthLastOfType extends Pseudo.Class<"nth-last-of-type"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
@@ -522,13 +596,13 @@ export namespace Selector {
     // (undocumented)
     export namespace NthLastOfType {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"nth-last-of-type"> {
             // (undocumented)
             index: Nth.JSON;
         }
     }
     // (undocumented)
-    export class NthOfType extends Pseudo.Class {
+    export class NthOfType extends Pseudo.Class<"nth-of-type"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
@@ -539,94 +613,130 @@ export namespace Selector {
     // (undocumented)
     export namespace NthOfType {
         // (undocumented)
-        export interface JSON extends Pseudo.Class.JSON {
+        export interface JSON extends Pseudo.Class.JSON<"nth-of-type"> {
             // (undocumented)
             index: Nth.JSON;
         }
     }
     // (undocumented)
-    export class OnlyChild extends Pseudo.Class {
+    export class OnlyChild extends Pseudo.Class<"only-child"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): OnlyChild;
     }
     // (undocumented)
-    export class OnlyOfType extends Pseudo.Class {
+    export class OnlyOfType extends Pseudo.Class<"only-of-type"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): OnlyOfType;
     }
     // (undocumented)
+    export class Part extends Pseudo.Element<"part"> {
+        // (undocumented)
+        equals(value: Part): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get idents(): Iterable_2<Token.Ident>;
+        // (undocumented)
+        static of(idents: Iterable_2<Token.Ident>): Part;
+        // (undocumented)
+        toJSON(): Part.JSON;
+    }
+    // (undocumented)
+    export namespace Part {
+        // (undocumented)
+        export interface JSON extends Pseudo.Element.JSON<"part"> {
+            // (undocumented)
+            idents: Array_2<Token.Ident.JSON>;
+        }
+    }
+    // (undocumented)
+    export class Placeholder extends Pseudo.Element<"placeholder"> {
+        // (undocumented)
+        static of(): Placeholder;
+    }
+    // (undocumented)
     export namespace Pseudo {
         // (undocumented)
-        export abstract class Class extends Selector {
+        export abstract class Class<N extends string = string> extends Selector<"pseudo-class"> {
             // (undocumented)
             [Symbol.iterator](): Iterator<Class>;
-            protected constructor(name: string);
+            protected constructor(name: N);
+            // (undocumented)
+            equals(value: Class): boolean;
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
             matches(element: dom.Element, context?: Context): boolean;
             // (undocumented)
-            get name(): string;
+            get name(): N;
             // (undocumented)
-            protected readonly _name: string;
+            protected readonly _name: N;
             // (undocumented)
-            toJSON(): Class.JSON;
+            toJSON(): Class.JSON<N>;
             // (undocumented)
             toString(): string;
+            // (undocumented)
+            get type(): "pseudo-class";
         }
         // (undocumented)
         export namespace Class {
             // (undocumented)
-            export interface JSON extends Selector.JSON {
+            export interface JSON<N extends string = string> extends Selector.JSON<"pseudo-class"> {
                 // (undocumented)
-                name: string;
-                // (undocumented)
-                type: "pseudo-class";
+                name: N;
             }
         }
         // (undocumented)
-        export abstract class Element extends Selector {
+        export abstract class Element<N extends string = string> extends Selector<"pseudo-element"> {
             // (undocumented)
             [Symbol.iterator](): Iterator<Element>;
-            protected constructor(name: string);
+            protected constructor(name: N);
+            // (undocumented)
+            equals(value: Element): boolean;
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
             matches(element: dom.Element, context?: Context): boolean;
             // (undocumented)
-            get name(): string;
+            get name(): N;
             // (undocumented)
-            protected readonly _name: string;
+            protected readonly _name: N;
             // (undocumented)
-            toJSON(): Element.JSON;
+            toJSON(): Element.JSON<N>;
             // (undocumented)
             toString(): string;
+            // (undocumented)
+            get type(): "pseudo-element";
         }
         // (undocumented)
         export namespace Element {
             // (undocumented)
-            export interface JSON extends Selector.JSON {
+            export interface JSON<N extends string = string> extends Selector.JSON<"pseudo-element"> {
                 // (undocumented)
-                name: string;
-                // (undocumented)
-                type: "pseudo-element";
+                name: N;
             }
         }
+        // (undocumented)
+        export function isClass(value: unknown): value is Class;
+        // (undocumented)
+        export function isElement(value: unknown): value is Element;
         // (undocumented)
         export type JSON = Class.JSON | Element.JSON;
     }
     // (undocumented)
     export type Pseudo = Pseudo.Class | Pseudo.Element;
     // (undocumented)
-    export class Relative extends Selector {
+    export class Relative extends Selector<"relative"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Relative>;
         // (undocumented)
         get combinator(): Combinator;
+        // (undocumented)
+        equals(value: Relative): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -639,36 +749,45 @@ export namespace Selector {
         toJSON(): Relative.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "relative";
     }
     // (undocumented)
     export namespace Relative {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"relative"> {
             // (undocumented)
             combinator: string;
             // (undocumented)
             selector: Simple.JSON | Compound.JSON | Complex.JSON;
-            // (undocumented)
-            type: "relative";
         }
     }
     // (undocumented)
-    export class Root extends Pseudo.Class {
+    export class Root extends Pseudo.Class<"root"> {
         // (undocumented)
         matches(element: Element_2): boolean;
         // (undocumented)
         static of(): Root;
     }
     // (undocumented)
-    export abstract class Selector implements Iterable_2<Simple | Compound | Complex | Relative>, Equatable, Serializable {
+    export class Selection extends Pseudo.Element<"selection"> {
+        // (undocumented)
+        static of(): Selection;
+    }
+    // (undocumented)
+    export abstract class Selector<T extends string = string> implements Iterable_2<Simple | Compound | Complex | Relative>, Equatable, Serializable {
         // (undocumented)
         abstract [Symbol.iterator](): Iterator<Simple | Compound | Complex | Relative>;
+        // (undocumented)
+        abstract equals(value: Selector): boolean;
         // (undocumented)
         abstract equals(value: unknown): value is this;
         // (undocumented)
         abstract matches(element: Element_2, context?: Context): boolean;
         // (undocumented)
         abstract toJSON(): JSON;
+        // (undocumented)
+        abstract get type(): T;
     }
     // (undocumented)
     export type Simple = Type | Universal | Attribute | Class | Id | Pseudo;
@@ -678,9 +797,42 @@ export namespace Selector {
         export type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | Pseudo.JSON;
     }
     // (undocumented)
-    export class Type extends Selector {
+    export class Slotted extends Pseudo.Element<"slotted"> {
+        // (undocumented)
+        equals(value: Slotted): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(selectors: Iterable_2<Simple | Compound>): Slotted;
+        // (undocumented)
+        get selectors(): Iterable_2<Simple | Compound>;
+        // (undocumented)
+        toJSON(): Slotted.JSON;
+    }
+    // (undocumented)
+    export namespace Slotted {
+        // (undocumented)
+        export interface JSON extends Pseudo.Element.JSON<"slotted"> {
+            // (undocumented)
+            selectors: Array_2<Simple.JSON | Compound.JSON>;
+        }
+    }
+    // (undocumented)
+    export class SpellingError extends Pseudo.Element<"spelling-error"> {
+        // (undocumented)
+        static of(): SpellingError;
+    }
+    // (undocumented)
+    export class TargetText extends Pseudo.Element<"target-text"> {
+        // (undocumented)
+        static of(): TargetText;
+    }
+    // (undocumented)
+    export class Type extends Selector<"type"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Type>;
+        // (undocumented)
+        equals(value: Type): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -695,25 +847,27 @@ export namespace Selector {
         toJSON(): Type.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "type";
     }
     // (undocumented)
     export namespace Type {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"type"> {
             // (undocumented)
             name: string;
             // (undocumented)
             namespace: string | null;
-            // (undocumented)
-            type: "type";
         }
     }
     // (undocumented)
-    export class Universal extends Selector {
+    export class Universal extends Selector<"universal"> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Universal>;
         // (undocumented)
         static empty(): Universal;
+        // (undocumented)
+        equals(value: Universal): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -726,19 +880,19 @@ export namespace Selector {
         toJSON(): Universal.JSON;
         // (undocumented)
         toString(): string;
+        // (undocumented)
+        get type(): "universal";
     }
     // (undocumented)
     export namespace Universal {
         // (undocumented)
-        export interface JSON extends Selector.JSON {
+        export interface JSON extends Selector.JSON<"universal"> {
             // (undocumented)
             namespace: string | null;
-            // (undocumented)
-            type: "universal";
         }
     }
     // (undocumented)
-    export class Visited extends Pseudo.Class {
+    export class Visited extends Pseudo.Class<"visited"> {
         // (undocumented)
         matches(element: Element_2, context?: Context): boolean;
         // (undocumented)

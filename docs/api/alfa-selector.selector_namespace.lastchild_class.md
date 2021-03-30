@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class LastChild extends Pseudo.Class 
+export class LastChild extends Pseudo.Class<"last-child"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)<!-- -->&lt;"last-child"&gt;
 
 ## Methods
 

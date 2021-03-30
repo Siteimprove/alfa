@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Selector.JSON 
+interface JSON extends Selector.JSON<"attribute"> 
 ```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector_namespace.json_interface.md)
+<b>Extends:</b> [Selector.JSON](./alfa-selector.selector_namespace.json_interface.md)<!-- -->&lt;"attribute"&gt;
 
 ## Properties
 
@@ -19,6 +19,5 @@ interface JSON extends Selector.JSON
 |  [modifier](./alfa-selector.selector_namespace.attribute_namespace.json_interface.modifier_propertysignature.md) | string \| null |  |
 |  [name](./alfa-selector.selector_namespace.attribute_namespace.json_interface.name_propertysignature.md) | string |  |
 |  [namespace](./alfa-selector.selector_namespace.attribute_namespace.json_interface.namespace_propertysignature.md) | string \| null |  |
-|  [type](./alfa-selector.selector_namespace.attribute_namespace.json_interface.type_propertysignature.md) | "attribute" |  |
 |  [value](./alfa-selector.selector_namespace.attribute_namespace.json_interface.value_propertysignature.md) | string \| null |  |
 

@@ -9,16 +9,15 @@
 <b>Signature:</b>
 
 ```typescript
-class Extended extends Subtag 
+class Extended extends Subtag<"extended", Extended.Name> 
 ```
-<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)
+<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)<!-- -->&lt;"extended", [Extended.Name](./alfa-iana.language_namespace.extended_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [prefix](./alfa-iana.language_namespace.extended_class.prefix_property.md) |  | string | [https://tools.ietf.org/html/bcp47\#section-3.1.8](https://tools.ietf.org/html/bcp47#section-3.1.8) |
-|  [scope](./alfa-iana.language_namespace.extended_class.scope_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Scope](./alfa-iana.language_namespace.scope_typealias.md)<!-- -->&gt; | [https://tools.ietf.org/html/bcp47\#section-3.1.11](https://tools.ietf.org/html/bcp47#section-3.1.11) |
+|  [prefix](./alfa-iana.language_namespace.extended_class.prefix_property.md) |  | [Primary.Name](./alfa-iana.language_namespace.primary_namespace.name_typealias.md) | [https://tools.ietf.org/html/bcp47\#section-3.1.8](https://tools.ietf.org/html/bcp47#section-3.1.8) |
 |  [type](./alfa-iana.language_namespace.extended_class.type_property.md) |  | "extended" |  |
 
 ## Methods
@@ -26,6 +25,7 @@ class Extended extends Subtag
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-iana.language_namespace.extended_class.equals_1_method.md) |  |  |
-|  [of(name, prefix, scope)](./alfa-iana.language_namespace.extended_class.of_1_method.md) | <code>static</code> |  |
+|  [equals(value)](./alfa-iana.language_namespace.extended_class.equals_2_method.md) |  |  |
+|  [of(name)](./alfa-iana.language_namespace.extended_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-iana.language_namespace.extended_class.tojson_1_method.md) |  |  |
 

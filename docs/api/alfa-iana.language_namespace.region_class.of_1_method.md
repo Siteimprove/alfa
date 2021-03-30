@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static of(name: string): Region;
+static of(name: Region.Name): Region;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string |  |
+|  name | [Region.Name](./alfa-iana.language_namespace.region_namespace.name_typealias.md) |  |
 
 <b>Returns:</b>
 

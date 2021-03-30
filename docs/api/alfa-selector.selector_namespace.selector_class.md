@@ -7,9 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-abstract class Selector implements Iterable<Simple | Compound | Complex | Relative>, Equatable, Serializable 
+abstract class Selector<T extends string = string> implements Iterable<Simple | Compound | Complex | Relative>, Equatable, Serializable 
 ```
 <b>Implements:</b> Iterable&lt;[Simple](./alfa-selector.selector_namespace.simple_typealias.md) \| [Compound](./alfa-selector.selector_namespace.compound_class.md) \| [Complex](./alfa-selector.selector_namespace.complex_class.md) \| [Relative](./alfa-selector.selector_namespace.relative_class.md)<!-- -->&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)
+
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [type](./alfa-selector.selector_namespace.selector_class.type_property.md) |  | T |  |
 
 ## Methods
 
@@ -17,6 +23,7 @@ abstract class Selector implements Iterable<Simple | Compound | Complex | Relati
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.selector_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.selector_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.selector_class.equals_2_method.md) |  |  |
 |  [matches(element, context)](./alfa-selector.selector_namespace.selector_class.matches_1_method.md) |  | [https://drafts.csswg.org/selectors/\#match](https://drafts.csswg.org/selectors/#match) |
 |  [toJSON()](./alfa-selector.selector_namespace.selector_class.tojson_1_method.md) |  |  |
 

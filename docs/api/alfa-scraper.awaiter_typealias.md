@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Awaiter<T = unknown> = (page: puppeteer.Page, timeout: Timeout) => Promise<Result<T, string>>;
+export declare type Awaiter = (page: Page, timeout: Timeout) => Promise<Option<string>>;
 ```
-<b>References:</b> [Timeout](./alfa-time.timeout_class.md)<!-- -->, [Result](./alfa-result.result_interface.md)
+<b>References:</b> [Timeout](./alfa-time.timeout_class.md)<!-- -->, [Option](./alfa-option.option_interface.md)
 

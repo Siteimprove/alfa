@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-repeatable(): Flag<Iterable<T>>;
+repeatable(): Flag<Array<T>>;
 ```
 <b>Returns:</b>
 
-[Flag](./alfa-command.flag_class.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;
+[Flag](./alfa-command.flag_class.md)<!-- -->&lt;Array&lt;T&gt;&gt;
 

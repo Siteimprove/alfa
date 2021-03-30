@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function of<T, R = void>(value: T): Continuation<T, R>;
+function of<T, R = void, A extends Array<unknown> = []>(value: T): Continuation<T, R, A>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function of<T, R = void>(value: T): Continuation<T, R>;
 
 <b>Returns:</b>
 
-[Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;T, R&gt;
+[Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;T, R, A&gt;
 

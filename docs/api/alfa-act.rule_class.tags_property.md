@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get tags(): Iterable<Tag>;
+get tags(): ReadonlyArray<Tag>;
 ```

@@ -14,7 +14,7 @@ import { Page } from '@siteimprove/alfa-web';
 // @public (undocumented)
 namespace Cypress_2 {
     // (undocumented)
-    function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, Q>>, handlers?: Iterable<Handler<Page, T, Q>>, options?: Asserter.Options): void;
+    function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, Q>>, handlers?: Iterable<Handler<Page, T, Q>>, options?: Asserter.Options): globalThis.Chai.ChaiPlugin;
     // (undocumented)
     namespace Handler {
         // (undocumented)

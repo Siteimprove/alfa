@@ -9,15 +9,16 @@
 <b>Signature:</b>
 
 ```typescript
-export class Universal extends Selector 
+export class Universal extends Selector<"universal"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"universal"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [namespace](./alfa-selector.selector_namespace.universal_class.namespace_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;string&gt; |  |
+|  [type](./alfa-selector.selector_namespace.universal_class.type_property.md) |  | "universal" |  |
 
 ## Methods
 
@@ -26,6 +27,7 @@ export class Universal extends Selector
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.universal_class._symbol.iterator__1_method.md) |  |  |
 |  [empty()](./alfa-selector.selector_namespace.universal_class.empty_1_method.md) | <code>static</code> |  |
 |  [equals(value)](./alfa-selector.selector_namespace.universal_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.universal_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.universal_class.matches_1_method.md) |  |  |
 |  [of(namespace)](./alfa-selector.selector_namespace.universal_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.universal_class.tojson_1_method.md) |  |  |

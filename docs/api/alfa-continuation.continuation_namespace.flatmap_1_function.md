@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-function flatMap<T, U, R = void>(continuation: Continuation<T, R>, mapper: Mapper<T, Continuation<U, R>>): Continuation<U, R>;
+function flatMap<T, U, R = void, A extends Array<unknown> = []>(continuation: Continuation<T, R, A>, mapper: Mapper<T, Continuation<U, R, A>>): Continuation<U, R, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  continuation | [Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;T, R&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;U, R&gt;&gt; |  |
+|  continuation | [Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;T, R, A&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;U, R, A&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;U, R&gt;
+[Continuation](./alfa-continuation.continuation_typealias.md)<!-- -->&lt;U, R, A&gt;
 

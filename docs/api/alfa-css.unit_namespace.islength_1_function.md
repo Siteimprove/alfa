@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isLength(input: string): input is Length;
+function isLength(unit: string): unit is Length;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Length](./alfa-css.unit_namespace.length_typealias.md)
+unit is [Length](./alfa-css.unit_namespace.length_typealias.md)
 

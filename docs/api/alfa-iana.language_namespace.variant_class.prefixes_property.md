@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-get prefixes(): Array<string>;
+get prefixes(): ReadonlyArray<string>;
 ```

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get composes(): Iterable<Rule<I, T, Q>>;
+get composes(): ReadonlyArray<Rule<I, T, Q>>;
 ```

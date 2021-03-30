@@ -10,9 +10,22 @@
 namespace Variant 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isName(name)](./alfa-iana.language_namespace.variant_namespace.isname_1_function.md) |  |
+|  [isVariant(value)](./alfa-iana.language_namespace.variant_namespace.isvariant_1_function.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-iana.language_namespace.variant_namespace.json_interface.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Name](./alfa-iana.language_namespace.variant_namespace.name_typealias.md) |  |
 

@@ -4,7 +4,7 @@
 
 ```ts
 
-import * as cheerio from 'cheerio';
+import cheerio = require('cheerio');
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)

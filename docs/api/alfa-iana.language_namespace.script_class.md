@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-class Script extends Subtag 
+class Script extends Subtag<"script", Script.Name> 
 ```
-<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)
+<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)<!-- -->&lt;"script", [Script.Name](./alfa-iana.language_namespace.script_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
@@ -24,6 +24,7 @@ class Script extends Subtag
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-iana.language_namespace.script_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-iana.language_namespace.script_class.equals_2_method.md) |  |  |
 |  [of(name)](./alfa-iana.language_namespace.script_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-iana.language_namespace.script_class.tojson_1_method.md) |  |  |
 

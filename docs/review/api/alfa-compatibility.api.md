@@ -19,10 +19,10 @@ export namespace Browser {
     export function isBrowser(browser: string): browser is Name;
     // (undocumented)
     export function isVersion<N extends Name>(browser: N, version: string): version is Version<N>;
-    // Warning: (ae-forgotten-export) The symbol "Data" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Browsers" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    export type Name = Data.Name;
+    export type Name = keyof Browsers & string;
     // (undocumented)
     export type Query<N extends Name = Name> = Query.Every<N> | Query.Single<N> | Query.Range<N>;
     // (undocumented)
@@ -74,7 +74,7 @@ export namespace Browser {
     // (undocumented)
     export type Scope<N extends Name = Name> = Iterable_2<Release<N>>;
     // (undocumented)
-    export type Version<N extends Name> = Data.Version<N>;
+    export type Version<N extends Name> = N extends Name ? keyof Browsers[N]["releases"] : never;
 }
 
 // @public (undocumented)
@@ -92,15 +92,15 @@ export namespace Feature {
         readonly removed?: Browser.Version<I>;
     }
     // (undocumented)
-    export type Implementer<N extends Name> = Data_3.Implementer<N>;
+    export type Implementer<N extends Name> = N extends Name ? keyof Features[N]["support"] : never;
     // (undocumented)
     export function isFeature(feature: string): feature is Name;
     // (undocumented)
     export function isImplementer<N extends Name>(feature: N, browser: Browser.Name): browser is Implementer<N>;
-    // Warning: (ae-forgotten-export) The symbol "Data" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Features" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    export type Name = Data_3.Name;
+    export type Name = keyof Features;
     // (undocumented)
     export type Support<N extends Name = Name> = {
         readonly [I in Implementer<N>]: Implementation<N, I>;

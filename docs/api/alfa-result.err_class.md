@@ -19,6 +19,7 @@ export declare class Err<E> implements Result<never, E>
 |  [\[Symbol.iterator\]()](./alfa-result.err_class._symbol.iterator__1_method.md) |  |  |
 |  [and()](./alfa-result.err_class.and_1_method.md) |  |  |
 |  [andThen()](./alfa-result.err_class.andthen_1_method.md) |  |  |
+|  [apply()](./alfa-result.err_class.apply_1_method.md) |  |  |
 |  [equals(value)](./alfa-result.err_class.equals_1_method.md) |  |  |
 |  [err()](./alfa-result.err_class.err_1_method.md) |  |  |
 |  [every()](./alfa-result.err_class.every_1_method.md) |  |  |

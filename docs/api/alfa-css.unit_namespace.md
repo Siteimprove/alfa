@@ -15,19 +15,26 @@ export declare namespace Unit
 
 |  Function | Description |
 |  --- | --- |
-|  [isAbsoluteLength(input)](./alfa-css.unit_namespace.isabsolutelength_1_function.md) |  |
-|  [isAngle(input)](./alfa-css.unit_namespace.isangle_1_function.md) |  |
-|  [isFrequency(input)](./alfa-css.unit_namespace.isfrequency_1_function.md) |  |
-|  [isLength(input)](./alfa-css.unit_namespace.islength_1_function.md) |  |
-|  [isRelativeLength(input)](./alfa-css.unit_namespace.isrelativelength_1_function.md) |  |
-|  [isResolution(input)](./alfa-css.unit_namespace.isresolution_1_function.md) |  |
-|  [isTime(input)](./alfa-css.unit_namespace.istime_1_function.md) |  |
+|  [isAngle(unit)](./alfa-css.unit_namespace.isangle_1_function.md) |  |
+|  [isFrequency(unit)](./alfa-css.unit_namespace.isfrequency_1_function.md) |  |
+|  [isLength(unit)](./alfa-css.unit_namespace.islength_1_function.md) |  |
+|  [isResolution(unit)](./alfa-css.unit_namespace.isresolution_1_function.md) |  |
+|  [isTime(unit)](./alfa-css.unit_namespace.istime_1_function.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
 |  [Length](./alfa-css.unit_namespace.length_namespace.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [isAbsoluteLength](./alfa-css.unit_namespace.isabsolutelength_variable.md) |  |
+|  [isFontRelativeLength](./alfa-css.unit_namespace.isfontrelativelength_variable.md) |  |
+|  [isRelativeLength](./alfa-css.unit_namespace.isrelativelength_variable.md) |  |
+|  [isViewportRelativeLength](./alfa-css.unit_namespace.isviewportrelativelength_variable.md) |  |
 
 ## Type Aliases
 

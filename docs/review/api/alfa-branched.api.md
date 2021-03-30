@@ -91,7 +91,7 @@ export namespace Branched {
     // (undocumented)
     export function sequence<T, B>(values: Iterable_2<Branched<T, B>>): Branched<Iterable_2<T>, B>;
     // (undocumented)
-    export function traverse<T, U, B>(values: Iterable_2<T>, mapper: Mapper<T, Branched<U, B>>): Branched<Iterable_2<U>, B>;
+    export function traverse<T, U, B>(values: Iterable_2<T>, mapper: Mapper<T, Branched<U, B>, [index: number]>): Branched<Iterable_2<U>, B>;
 }
 
 

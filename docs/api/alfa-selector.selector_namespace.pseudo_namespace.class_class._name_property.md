@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-protected readonly _name: string;
+protected readonly _name: N;
 ```

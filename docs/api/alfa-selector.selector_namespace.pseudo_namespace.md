@@ -17,6 +17,13 @@ export namespace Pseudo
 |  [Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md) |  |
 |  [Element](./alfa-selector.selector_namespace.pseudo_namespace.element_class.md) |  |
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isClass(value)](./alfa-selector.selector_namespace.pseudo_namespace.isclass_1_function.md) |  |
+|  [isElement(value)](./alfa-selector.selector_namespace.pseudo_namespace.iselement_1_function.md) |  |
+
 ## Namespaces
 
 |  Namespace | Description |

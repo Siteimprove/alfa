@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Class.JSON;
+toJSON(): Class.JSON<N>;
 ```
 <b>Returns:</b>
 
-[Class.JSON](./alfa-selector.selector_namespace.pseudo_namespace.class_namespace.json_interface.md)
+[Class.JSON](./alfa-selector.selector_namespace.pseudo_namespace.class_namespace.json_interface.md)<!-- -->&lt;N&gt;
 

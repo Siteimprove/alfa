@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> 
+export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Result.JSON](./alfa-result.result_namespace.json_typealias.md)<!-- -->&lt;T, E&gt;&gt;
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Result.JSON](./alfa-result.result_namespace.json_typealias.md)<!-- -->&lt;T, E&gt;&gt;
 
 ## Methods
 
@@ -18,6 +18,7 @@ export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Ite
 |  --- | --- |
 |  [and(result)](./alfa-result.result_interface.and_1_methodsignature.md) |  |
 |  [andThen(result)](./alfa-result.result_interface.andthen_1_methodsignature.md) |  |
+|  [apply(mapper)](./alfa-result.result_interface.apply_1_methodsignature.md) |  |
 |  [err()](./alfa-result.result_interface.err_1_methodsignature.md) |  |
 |  [every(predicate)](./alfa-result.result_interface.every_1_methodsignature.md) |  |
 |  [everyErr(predicate)](./alfa-result.result_interface.everyerr_1_methodsignature.md) |  |

@@ -100,6 +100,10 @@ namespace Iterable_2 {
     // (undocumented)
     function reduce<T, U = T>(iterable: Iterable_2<T>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
+    function reduceUntil<T, U = T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
+    function reduceWhile<T, U = T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
     function reject<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [index: number]>): Iterable_2<Exclude<T, U>>;
     // (undocumented)
     function reject<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
@@ -153,6 +157,8 @@ namespace Iterable_2 {
     function trimLeading<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
     function trimTrailing<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
+    // (undocumented)
+    function zip<T, U = T>(a: Iterable_2<T>, b: Iterable_2<U>): Iterable_2<[T, U]>;
 }
 
 export { Iterable_2 as Iterable }

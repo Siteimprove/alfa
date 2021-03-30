@@ -157,6 +157,10 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
+    reduceUntil<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
+    reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
     reject<U extends T>(refinement: Refinement<T, U, [index: number]>): List<Exclude<T, U>>;
     // (undocumented)
     reject(predicate: Predicate<T, [index: number]>): List<T>;
@@ -212,6 +216,8 @@ export class List<T> implements Collection.Indexed<T> {
     trimLeading(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
     trimTrailing(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    zip<U>(iterable: Iterable_2<U>): List<[T, U]>;
 }
 
 // @public (undocumented)

@@ -14,8 +14,16 @@ namespace Length
 
 |  Function | Description |
 |  --- | --- |
-|  [isAbsolute(input)](./alfa-css.unit_namespace.length_namespace.isabsolute_1_function.md) |  |
-|  [isRelative(input)](./alfa-css.unit_namespace.length_namespace.isrelative_1_function.md) |  |
+|  [isAbsolute(unit)](./alfa-css.unit_namespace.length_namespace.isabsolute_1_function.md) |  |
+|  [isFontRelative(unit)](./alfa-css.unit_namespace.length_namespace.isfontrelative_1_function.md) |  |
+|  [isRelative(unit)](./alfa-css.unit_namespace.length_namespace.isrelative_1_function.md) |  |
+|  [isViewportRelative(unit)](./alfa-css.unit_namespace.length_namespace.isviewportrelative_1_function.md) |  |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Relative](./alfa-css.unit_namespace.length_namespace.relative_namespace.md) |  |
 
 ## Type Aliases
 

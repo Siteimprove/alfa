@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Compound extends Selector 
+export class Compound extends Selector<"compound"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"compound"&gt;
 
 ## Properties
 
@@ -19,6 +19,7 @@ export class Compound extends Selector
 |  --- | --- | --- | --- |
 |  [left](./alfa-selector.selector_namespace.compound_class.left_property.md) |  | [Simple](./alfa-selector.selector_namespace.simple_typealias.md) |  |
 |  [right](./alfa-selector.selector_namespace.compound_class.right_property.md) |  | [Simple](./alfa-selector.selector_namespace.simple_typealias.md) \| [Compound](./alfa-selector.selector_namespace.compound_class.md) |  |
+|  [type](./alfa-selector.selector_namespace.compound_class.type_property.md) |  | "compound" |  |
 
 ## Methods
 
@@ -26,6 +27,7 @@ export class Compound extends Selector
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.compound_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.compound_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.compound_class.equals_2_method.md) |  |  |
 |  [matches(element, context)](./alfa-selector.selector_namespace.compound_class.matches_1_method.md) |  |  |
 |  [of(left, right)](./alfa-selector.selector_namespace.compound_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.compound_class.tojson_1_method.md) |  |  |

@@ -9,15 +9,16 @@
 <b>Signature:</b>
 
 ```typescript
-export class Id extends Selector 
+export class Id extends Selector<"id"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"id"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [name](./alfa-selector.selector_namespace.id_class.name_property.md) |  | string |  |
+|  [type](./alfa-selector.selector_namespace.id_class.type_property.md) |  | "id" |  |
 
 ## Methods
 
@@ -25,6 +26,7 @@ export class Id extends Selector
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.id_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.id_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.id_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.id_class.matches_1_method.md) |  |  |
 |  [of(name)](./alfa-selector.selector_namespace.id_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.id_class.tojson_1_method.md) |  |  |

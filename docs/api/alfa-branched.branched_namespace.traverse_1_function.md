@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function traverse<T, U, B>(values: Iterable<T>, mapper: Mapper<T, Branched<U, B>>): Branched<Iterable<U>, B>;
+function traverse<T, U, B>(values: Iterable<T>, mapper: Mapper<T, Branched<U, B>, [index: number]>): Branched<Iterable<U>, B>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function traverse<T, U, B>(values: Iterable<T>, mapper: Mapper<T, Branched<U, B>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Iterable&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Branched](./alfa-branched.branched_class.md)<!-- -->&lt;U, B&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Branched](./alfa-branched.branched_class.md)<!-- -->&lt;U, B&gt;, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-abstract class Class extends Selector 
+abstract class Class<N extends string = string> extends Selector<"pseudo-class"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"pseudo-class"&gt;
 
 ## Constructors
 
@@ -21,8 +21,9 @@ abstract class Class extends Selector
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [\_name](./alfa-selector.selector_namespace.pseudo_namespace.class_class._name_property.md) |  | string |  |
-|  [name](./alfa-selector.selector_namespace.pseudo_namespace.class_class.name_property.md) |  | string |  |
+|  [\_name](./alfa-selector.selector_namespace.pseudo_namespace.class_class._name_property.md) |  | N |  |
+|  [name](./alfa-selector.selector_namespace.pseudo_namespace.class_class.name_property.md) |  | N |  |
+|  [type](./alfa-selector.selector_namespace.pseudo_namespace.class_class.type_property.md) |  | "pseudo-class" |  |
 
 ## Methods
 
@@ -30,6 +31,7 @@ abstract class Class extends Selector
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.pseudo_namespace.class_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.pseudo_namespace.class_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.pseudo_namespace.class_class.equals_2_method.md) |  |  |
 |  [matches(element, context)](./alfa-selector.selector_namespace.pseudo_namespace.class_class.matches_1_method.md) |  |  |
 |  [toJSON()](./alfa-selector.selector_namespace.pseudo_namespace.class_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-selector.selector_namespace.pseudo_namespace.class_class.tostring_1_method.md) |  |  |

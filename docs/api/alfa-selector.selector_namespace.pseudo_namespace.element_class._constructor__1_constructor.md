@@ -9,12 +9,12 @@ Constructs a new instance of the `Element` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(name: string);
+protected constructor(name: N);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string |  |
+|  name | N |  |
 

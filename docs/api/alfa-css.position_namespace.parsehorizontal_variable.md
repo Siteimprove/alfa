@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseHorizontal: Parser<Slice<Token>, Keyword<"right"> | Keyword<"left">, string, []>
+parseHorizontal: Parser<Slice<Token>, Keyword<"left"> | Keyword<"right">, string, []>
 ```

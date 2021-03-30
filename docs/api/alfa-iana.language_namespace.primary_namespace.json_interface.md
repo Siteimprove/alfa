@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Subtag.JSON 
+interface JSON extends Subtag.JSON<"primary", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)
+<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)<!-- -->&lt;"primary", [Name](./alfa-iana.language_namespace.primary_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [scope](./alfa-iana.language_namespace.primary_namespace.json_interface.scope_propertysignature.md) | [Scope](./alfa-iana.language_namespace.scope_typealias.md) \| null |  |
-|  [type](./alfa-iana.language_namespace.primary_namespace.json_interface.type_propertysignature.md) | "primary" |  |
 

@@ -45,6 +45,8 @@ export interface Sequence<T> extends Collection.Indexed<T>
 |  [none(predicate)](./alfa-sequence.sequence_interface.none_1_methodsignature.md) |  |
 |  [prepend(value)](./alfa-sequence.sequence_interface.prepend_1_methodsignature.md) |  |
 |  [reduce(reducer, accumulator)](./alfa-sequence.sequence_interface.reduce_1_methodsignature.md) |  |
+|  [reduceUntil(predicate, reducer, accumulator)](./alfa-sequence.sequence_interface.reduceuntil_1_methodsignature.md) |  |
+|  [reduceWhile(predicate, reducer, accumulator)](./alfa-sequence.sequence_interface.reducewhile_1_methodsignature.md) |  |
 |  [reject(refinement)](./alfa-sequence.sequence_interface.reject_1_methodsignature.md) |  |
 |  [reject(predicate)](./alfa-sequence.sequence_interface.reject_2_methodsignature.md) |  |
 |  [rest()](./alfa-sequence.sequence_interface.rest_1_methodsignature.md) |  |
@@ -71,4 +73,5 @@ export interface Sequence<T> extends Collection.Indexed<T>
 |  [trim(predicate)](./alfa-sequence.sequence_interface.trim_1_methodsignature.md) |  |
 |  [trimLeading(predicate)](./alfa-sequence.sequence_interface.trimleading_1_methodsignature.md) |  |
 |  [trimTrailing(predicate)](./alfa-sequence.sequence_interface.trimtrailing_1_methodsignature.md) |  |
+|  [zip(iterable)](./alfa-sequence.sequence_interface.zip_1_methodsignature.md) |  |
 

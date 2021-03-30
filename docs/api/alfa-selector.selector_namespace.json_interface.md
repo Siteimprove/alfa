@@ -7,12 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-export interface JSON 
+export interface JSON<T extends string = string> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [type](./alfa-selector.selector_namespace.json_interface.type_propertysignature.md) | string |  |
+|  [type](./alfa-selector.selector_namespace.json_interface.type_propertysignature.md) | T |  |
 

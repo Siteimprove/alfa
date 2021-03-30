@@ -19,6 +19,7 @@ export declare class Ok<T> implements Result<T, never>
 |  [\[Symbol.iterator\]()](./alfa-result.ok_class._symbol.iterator__1_method.md) |  |  |
 |  [and(result)](./alfa-result.ok_class.and_1_method.md) |  |  |
 |  [andThen(result)](./alfa-result.ok_class.andthen_1_method.md) |  |  |
+|  [apply(mapper)](./alfa-result.ok_class.apply_1_method.md) |  |  |
 |  [equals(value)](./alfa-result.ok_class.equals_1_method.md) |  |  |
 |  [err()](./alfa-result.ok_class.err_1_method.md) |  |  |
 |  [every(predicate)](./alfa-result.ok_class.every_1_method.md) |  |  |

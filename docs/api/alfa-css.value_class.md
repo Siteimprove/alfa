@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class Value<T extends string = string> implements Equatable, Hashable, Serializable 
+export declare abstract class Value<T extends string = string> implements Equatable, Hashable, Serializable<Value.JSON<T>> 
 ```
-<b>Implements:</b> [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)
+<b>Implements:</b> [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Value.JSON](./alfa-css.value_namespace.json_interface.md)<!-- -->&lt;T&gt;&gt;
 
 ## Constructors
 

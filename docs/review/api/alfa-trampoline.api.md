@@ -4,17 +4,22 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Callback } from '@siteimprove/alfa-callback';
+import { Foldable } from '@siteimprove/alfa-foldable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
+import { Reducer } from '@siteimprove/alfa-reducer';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export abstract class Trampoline<T> implements Functor<T>, Monad<T>, Iterable_2<T> {
+export abstract class Trampoline<T> implements Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable_2<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    // (undocumented)
+    apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U>;
     // (undocumented)
     abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
     // (undocumented)
@@ -25,6 +30,8 @@ export abstract class Trampoline<T> implements Functor<T>, Monad<T>, Iterable_2<
     iterator(): Iterator<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Trampoline<U>;
+    // (undocumented)
+    reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
     run(): T;
     // (undocumented)
@@ -50,7 +57,7 @@ export namespace Trampoline {
     // (undocumented)
     export function suspend<T>(thunk: Thunk<Trampoline<T>>): Trampoline<T>;
     // (undocumented)
-    export function traverse<T, U>(values: Iterable_2<T>, mapper: Mapper<T, Trampoline<U>>): Trampoline<Iterable_2<U>>;
+    export function traverse<T, U>(values: Iterable_2<T>, mapper: Mapper<T, Trampoline<U>, [index: number]>): Trampoline<Iterable_2<U>>;
 }
 
 

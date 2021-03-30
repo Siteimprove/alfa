@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-get prefix(): string;
+get prefix(): Primary.Name;
 ```

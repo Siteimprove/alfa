@@ -709,10 +709,6 @@ export namespace Gradient {
     parseItem: Parser<Slice<Token>, Item, string>;
     const // (undocumented)
     parseItemList: Parser<Slice<Token>, Array<Item>, string>;
-}
-
-// @public (undocumented)
-export namespace Gradient {
     const // (undocumented)
     parse: Parser<Slice<Token>, Linear, string>;
 }
@@ -978,7 +974,11 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
     // (undocumented)
     isAbsolute(): this is Length<Unit.Length.Absolute>;
     // (undocumented)
+    isFontRelative(): this is Length<Unit.Length.Relative.Font>;
+    // (undocumented)
     isRelative(): this is Length<Unit.Length.Relative>;
+    // (undocumented)
+    isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
     // (undocumented)
     static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
     // (undocumented)
@@ -1482,14 +1482,14 @@ export namespace Position {
         // (undocumented)
         export namespace Horizontal {
             const // (undocumented)
-            parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"right"> | Keyword<"left">, Offset<Unit.Length>>, string, []>;
+            parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"left"> | Keyword<"right">, Offset<Unit.Length>>, string, []>;
             const // (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"right"> | Keyword<"left">, Percentage | Length<Unit.Length>>, string, []>;
+            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"left"> | Keyword<"right">, Length<Unit.Length> | Percentage>, string, []>;
             const // (undocumented)
             parse: Parser<Slice<Token>, Component<Horizontal, Unit.Length>, string, []>;
         }
         const // (undocumented)
-        parseValue: Parser<Slice<Token>, Percentage | Length<Unit.Length>, string, []>;
+        parseValue: Parser<Slice<Token>, Length<Unit.Length> | Percentage, string, []>;
         // (undocumented)
         export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
         // (undocumented)
@@ -1497,7 +1497,7 @@ export namespace Position {
             const // (undocumented)
             parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"top"> | Keyword<"bottom">, Offset<Unit.Length>>, string, []>;
             const // (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"top"> | Keyword<"bottom">, Percentage | Length<Unit.Length>>, string, []>;
+            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"top"> | Keyword<"bottom">, Length<Unit.Length> | Percentage>, string, []>;
             const // (undocumented)
             parse: Parser<Slice<Token>, Component<Vertical, Unit.Length>, string, []>;
         }
@@ -1507,7 +1507,7 @@ export namespace Position {
     // (undocumented)
     export type Horizontal = Keyword<"left" | "right">;
     const // (undocumented)
-    parseHorizontal: Parser<Slice<Token>, Keyword<"right"> | Keyword<"left">, string, []>;
+    parseHorizontal: Parser<Slice<Token>, Keyword<"left"> | Keyword<"right">, string, []>;
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
         // (undocumented)
@@ -2803,32 +2803,44 @@ export type Unit = Unit.Length | Unit.Angle | Unit.Time | Unit.Frequency | Unit.
 export namespace Unit {
     // (undocumented)
     export type Angle = "deg" | "grad" | "rad" | "turn";
+    const // (undocumented)
+    isRelativeLength: typeof Length.isRelative, // (undocumented)
+    isFontRelativeLength: typeof Length.isFontRelative, // (undocumented)
+    isViewportRelativeLength: typeof Length.isViewportRelative, // (undocumented)
+    isAbsoluteLength: typeof Length.isAbsolute;
     // (undocumented)
     export type Frequency = "hz" | "kHz";
     // (undocumented)
-    export function isAbsoluteLength(input: string): input is Length.Absolute;
+    export function isAngle(unit: string): unit is Angle;
     // (undocumented)
-    export function isAngle(input: string): input is Angle;
+    export function isFrequency(unit: string): unit is Frequency;
     // (undocumented)
-    export function isFrequency(input: string): input is Frequency;
+    export function isLength(unit: string): unit is Length;
     // (undocumented)
-    export function isLength(input: string): input is Length;
+    export function isResolution(unit: string): unit is Resolution;
     // (undocumented)
-    export function isRelativeLength(input: string): input is Length.Relative;
-    // (undocumented)
-    export function isResolution(input: string): input is Resolution;
-    // (undocumented)
-    export function isTime(input: string): input is Time;
+    export function isTime(unit: string): unit is Time;
     // (undocumented)
     export namespace Length {
         // (undocumented)
         export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
         // (undocumented)
-        export function isAbsolute(input: string): input is Absolute;
+        export function isAbsolute(unit: string): unit is Absolute;
         // (undocumented)
-        export function isRelative(input: string): input is Relative;
+        export function isFontRelative(unit: string): unit is Relative.Font;
         // (undocumented)
-        export type Relative = "em" | "ex" | "ch" | "rem" | "vw" | "vh" | "vmin" | "vmax";
+        export function isRelative(unit: string): unit is Relative;
+        // (undocumented)
+        export function isViewportRelative(unit: string): unit is Relative.Viewport;
+        // (undocumented)
+        export type Relative = Relative.Font | Relative.Viewport;
+        // (undocumented)
+        export namespace Relative {
+            // (undocumented)
+            export type Font = "em" | "ex" | "ch" | "rem";
+            // (undocumented)
+            export type Viewport = "vw" | "vh" | "vmin" | "vmax";
+        }
     }
     // (undocumented)
     export type Length = Length.Relative | Length.Absolute;
@@ -2870,7 +2882,7 @@ export namespace URL {
 }
 
 // @public (undocumented)
-export abstract class Value<T extends string = string> implements Equatable, Hashable, Serializable {
+export abstract class Value<T extends string = string> implements Equatable, Hashable, Serializable<Value.JSON<T>> {
     protected constructor();
     // (undocumented)
     abstract equals(value: unknown): value is this;

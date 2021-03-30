@@ -85,6 +85,7 @@
 |  [@siteimprove/alfa-sequence](./alfa-sequence.md) |  |
 |  [@siteimprove/alfa-set](./alfa-set.md) |  |
 |  [@siteimprove/alfa-slice](./alfa-slice.md) |  |
+|  [@siteimprove/alfa-style](./alfa-style.md) |  |
 |  [@siteimprove/alfa-test](./alfa-test.md) |  |
 |  [@siteimprove/alfa-thunk](./alfa-thunk.md) |  |
 |  [@siteimprove/alfa-time](./alfa-time.md) |  |

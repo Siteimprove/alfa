@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isRelative(input: string): input is Relative;
+function isRelative(unit: string): unit is Relative;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Relative](./alfa-css.unit_namespace.length_namespace.relative_typealias.md)
+unit is [Relative](./alfa-css.unit_namespace.length_namespace.relative_typealias.md)
 

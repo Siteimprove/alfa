@@ -12,5 +12,5 @@ export declare type Iterable<T> = globalThis.Iterable<T>;
 
 ## Remarks
 
-This is a re-export the global `Iterable` interface to ensure that it merges with the `Iterable` namespace.
+This is a re-export of the global `Iterable` interface to ensure that it merges with the `Iterable` namespace.
 

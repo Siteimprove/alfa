@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Before extends Pseudo.Element 
+export class Before extends Pseudo.Element<"before"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector_namespace.pseudo_namespace.element_class.md)
+<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector_namespace.pseudo_namespace.element_class.md)<!-- -->&lt;"before"&gt;
 
 ## Methods
 

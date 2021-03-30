@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Pseudo.Class.JSON 
+interface JSON extends Pseudo.Class.JSON<"nth-last-child"> 
 ```
-<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector_namespace.pseudo_namespace.class_namespace.json_interface.md)
+<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector_namespace.pseudo_namespace.class_namespace.json_interface.md)<!-- -->&lt;"nth-last-child"&gt;
 
 ## Properties
 

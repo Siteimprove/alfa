@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-type Name = Data.Name;
+type Name = keyof Features;
 ```

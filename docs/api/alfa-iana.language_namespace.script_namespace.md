@@ -10,9 +10,22 @@
 namespace Script 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isName(name)](./alfa-iana.language_namespace.script_namespace.isname_1_function.md) |  |
+|  [isScript(value)](./alfa-iana.language_namespace.script_namespace.isscript_1_function.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-iana.language_namespace.script_namespace.json_interface.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Name](./alfa-iana.language_namespace.script_namespace.name_typealias.md) |  |
 

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get requirements(): Iterable<Requirement>;
+get requirements(): ReadonlyArray<Requirement>;
 ```

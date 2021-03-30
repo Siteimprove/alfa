@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-orientation: Orientation;
+orientation: `${Orientation}`;
 ```

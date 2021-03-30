@@ -50,7 +50,7 @@ export namespace Device {
         // (undocumented)
         scripting: Scripting.JSON;
         // (undocumented)
-        type: Type;
+        type: `${Type}`;
         // (undocumented)
         viewport: Viewport.JSON;
     }
@@ -94,7 +94,7 @@ export namespace Display {
         // (undocumented)
         resolution: number;
         // (undocumented)
-        scan: Scan;
+        scan: `${Scan}`;
     }
     // (undocumented)
     export enum Scan {
@@ -224,7 +224,7 @@ export namespace Viewport {
         // (undocumented)
         height: number;
         // (undocumented)
-        orientation: Orientation;
+        orientation: `${Orientation}`;
         // (undocumented)
         width: number;
     }

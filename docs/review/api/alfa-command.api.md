@@ -198,7 +198,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable<Flag.JSON> {
     // (undocumented)
     get parse(): Flag.Parser<T>;
     // (undocumented)
-    repeatable(): Flag<Iterable<T>>;
+    repeatable(): Flag<Array<T>>;
     // (undocumented)
     toJSON(): Flag.JSON;
     // (undocumented)

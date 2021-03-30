@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, Q>>, handlers?: Iterable<Handler<Page, T, Q>>, options?: Asserter.Options): void;
+function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, Q>>, handlers?: Iterable<Handler<Page, T, Q>>, options?: Asserter.Options): globalThis.Chai.ChaiPlugin;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, 
 
 <b>Returns:</b>
 
-void
+globalThis.Chai.ChaiPlugin
 

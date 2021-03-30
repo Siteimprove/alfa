@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class FocusWithin extends Pseudo.Class 
+export class FocusWithin extends Pseudo.Class<"focus-within"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)<!-- -->&lt;"focus-within"&gt;
 
 ## Methods
 

@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-class Primary extends Subtag 
+class Primary extends Subtag<"primary", Primary.Name> 
 ```
-<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)
+<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)<!-- -->&lt;"primary", [Primary.Name](./alfa-iana.language_namespace.primary_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
@@ -25,6 +25,7 @@ class Primary extends Subtag
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-iana.language_namespace.primary_class.equals_1_method.md) |  |  |
-|  [of(name, scope)](./alfa-iana.language_namespace.primary_class.of_1_method.md) | <code>static</code> |  |
+|  [equals(value)](./alfa-iana.language_namespace.primary_class.equals_2_method.md) |  |  |
+|  [of(name)](./alfa-iana.language_namespace.primary_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-iana.language_namespace.primary_class.tojson_1_method.md) |  |  |
 

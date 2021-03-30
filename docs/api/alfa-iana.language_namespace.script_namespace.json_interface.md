@@ -7,13 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Subtag.JSON 
+interface JSON extends Subtag.JSON<"script", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [type](./alfa-iana.language_namespace.script_namespace.json_interface.type_propertysignature.md) | "script" |  |
+<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)<!-- -->&lt;"script", [Name](./alfa-iana.language_namespace.script_namespace.name_typealias.md)<!-- -->&gt;
 

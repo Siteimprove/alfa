@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"right"> | Keyword<"left">, Percentage | Length<Unit.Length>>, string, []>
+parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"left"> | Keyword<"right">, Length<Unit.Length> | Percentage>, string, []>
 ```

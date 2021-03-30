@@ -4,12 +4,14 @@
 
 ## Awaiter.idle() function
 
+Wait for the network to be idle, i.e. have no requests inflight.
+
 <b>Signature:</b>
 
 ```typescript
-function idle(): Awaiter<puppeteer.HTTPResponse | null>;
+function idle(): Awaiter;
 ```
 <b>Returns:</b>
 
-[Awaiter](./alfa-scraper.awaiter_typealias.md)<!-- -->&lt;puppeteer.HTTPResponse \| null&gt;
+[Awaiter](./alfa-scraper.awaiter_typealias.md)
 

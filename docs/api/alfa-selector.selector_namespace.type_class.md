@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Type extends Selector 
+export class Type extends Selector<"type"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"type"&gt;
 
 ## Properties
 
@@ -19,6 +19,7 @@ export class Type extends Selector
 |  --- | --- | --- | --- |
 |  [name](./alfa-selector.selector_namespace.type_class.name_property.md) |  | string |  |
 |  [namespace](./alfa-selector.selector_namespace.type_class.namespace_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;string&gt; |  |
+|  [type](./alfa-selector.selector_namespace.type_class.type_property.md) |  | "type" |  |
 
 ## Methods
 
@@ -26,6 +27,7 @@ export class Type extends Selector
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.type_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.type_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.type_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.type_class.matches_1_method.md) |  |  |
 |  [of(namespace, name)](./alfa-selector.selector_namespace.type_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.type_class.tojson_1_method.md) |  |  |

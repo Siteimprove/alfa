@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isResolution(input: string): input is Resolution;
+function isResolution(unit: string): unit is Resolution;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Resolution](./alfa-css.unit_namespace.resolution_typealias.md)
+unit is [Resolution](./alfa-css.unit_namespace.resolution_typealias.md)
 

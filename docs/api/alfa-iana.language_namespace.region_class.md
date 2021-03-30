@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-class Region extends Subtag 
+class Region extends Subtag<"region", Region.Name> 
 ```
-<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)
+<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)<!-- -->&lt;"region", [Region.Name](./alfa-iana.language_namespace.region_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
@@ -24,6 +24,7 @@ class Region extends Subtag
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-iana.language_namespace.region_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-iana.language_namespace.region_class.equals_2_method.md) |  |  |
 |  [of(name)](./alfa-iana.language_namespace.region_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-iana.language_namespace.region_class.tojson_1_method.md) |  |  |
 

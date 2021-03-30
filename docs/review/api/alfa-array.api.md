@@ -108,6 +108,10 @@ namespace Array_2 {
     // (undocumented)
     function reduce<T, U = T>(array: ReadonlyArray<T>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)
+    function reduceUntil<T, U = T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
+    function reduceWhile<T, U = T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+    // (undocumented)
     function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array_2<Exclude<T, U>>;
     // (undocumented)
     function reject<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Array_2<T>;
@@ -127,6 +131,8 @@ namespace Array_2 {
     function subtract<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;
     // (undocumented)
     function toJSON<T>(array: ReadonlyArray<T>): Array_2<Serializable.ToJSON<T>>;
+    // (undocumented)
+    function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable_2<U>): Array_2<[T, U]>;
 }
 
 export { Array_2 as Array }

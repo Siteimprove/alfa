@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Visited extends Pseudo.Class 
+export class Visited extends Pseudo.Class<"visited"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)<!-- -->&lt;"visited"&gt;
 
 ## Methods
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function parse(input: string): Option<Language>;
+function parse(input: string): Result<Language, string>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function parse(input: string): Option<Language>;
 
 <b>Returns:</b>
 
-[Option](./alfa-option.option_interface.md)<!-- -->&lt;[Language](./alfa-iana.language_class.md)<!-- -->&gt;
+[Result](./alfa-result.result_interface.md)<!-- -->&lt;[Language](./alfa-iana.language_class.md)<!-- -->, string&gt;
 

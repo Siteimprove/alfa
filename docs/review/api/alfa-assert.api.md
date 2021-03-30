@@ -4,7 +4,6 @@
 
 ```ts
 
-import { Formatter } from '@siteimprove/alfa-formatter';
 import { Future } from '@siteimprove/alfa-future';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Outcome } from '@siteimprove/alfa-act';
@@ -49,11 +48,6 @@ export namespace Assertion {
 export interface Handler<I, T, Q> {
     // (undocumented)
     (input: I, rules: Iterable<Rule<I, T, Q>>, outcomes: Iterable<Outcome<I, T, Q>>, message: string): Future.Maybe<string>;
-}
-
-// @public (undocumented)
-export namespace Handler {
-    export function persist<I, T, Q>(output: Mapper<I, string>, format?: Formatter<I, T, Q>): Handler<I, T, Q>;
 }
 
 

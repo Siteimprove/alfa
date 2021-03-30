@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isTime(input: string): input is Time;
+function isTime(unit: string): unit is Time;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Time](./alfa-css.unit_namespace.time_typealias.md)
+unit is [Time](./alfa-css.unit_namespace.time_typealias.md)
 

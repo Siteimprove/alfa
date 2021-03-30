@@ -60,6 +60,8 @@ export declare class Slice<T> implements Collection.Indexed<T>
 |  [of(array, start, end)](./alfa-slice.slice_class.of_1_method.md) | <code>static</code> |  |
 |  [prepend(value)](./alfa-slice.slice_class.prepend_1_method.md) |  |  |
 |  [reduce(reducer, accumulator)](./alfa-slice.slice_class.reduce_1_method.md) |  |  |
+|  [reduceUntil(predicate, reducer, accumulator)](./alfa-slice.slice_class.reduceuntil_1_method.md) |  |  |
+|  [reduceWhile(predicate, reducer, accumulator)](./alfa-slice.slice_class.reducewhile_1_method.md) |  |  |
 |  [reject(refinement)](./alfa-slice.slice_class.reject_1_method.md) |  |  |
 |  [reject(predicate)](./alfa-slice.slice_class.reject_2_method.md) |  |  |
 |  [rest()](./alfa-slice.slice_class.rest_1_method.md) |  |  |
@@ -87,4 +89,5 @@ export declare class Slice<T> implements Collection.Indexed<T>
 |  [trim(predicate)](./alfa-slice.slice_class.trim_1_method.md) |  |  |
 |  [trimLeading(predicate)](./alfa-slice.slice_class.trimleading_1_method.md) |  |  |
 |  [trimTrailing(predicate)](./alfa-slice.slice_class.trimtrailing_1_method.md) |  |  |
+|  [zip(iterable)](./alfa-slice.slice_class.zip_1_method.md) |  |  |
 

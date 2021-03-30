@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class List<T extends Simple | Compound | Complex | Relative = Simple | Compound | Complex | Relative> extends Selector 
+export class List<T extends Simple | Compound | Complex | Relative = Simple | Compound | Complex | Relative> extends Selector<"list"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"list"&gt;
 
 ## Properties
 
@@ -19,6 +19,7 @@ export class List<T extends Simple | Compound | Complex | Relative = Simple | Co
 |  --- | --- | --- | --- |
 |  [left](./alfa-selector.selector_namespace.list_class.left_property.md) |  | T |  |
 |  [right](./alfa-selector.selector_namespace.list_class.right_property.md) |  | T \| [List](./alfa-selector.selector_namespace.list_class.md)<!-- -->&lt;T&gt; |  |
+|  [type](./alfa-selector.selector_namespace.list_class.type_property.md) |  | "list" |  |
 
 ## Methods
 
@@ -26,6 +27,7 @@ export class List<T extends Simple | Compound | Complex | Relative = Simple | Co
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.list_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.list_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.list_class.equals_2_method.md) |  |  |
 |  [matches(element, context)](./alfa-selector.selector_namespace.list_class.matches_1_method.md) |  |  |
 |  [of(left, right)](./alfa-selector.selector_namespace.list_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.list_class.tojson_1_method.md) |  |  |

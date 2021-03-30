@@ -43,6 +43,8 @@ interface Indexed<T> extends Collection<T>, Iterable<T>, Serializable<Indexed.JS
 |  [none(predicate)](./alfa-collection.collection_namespace.indexed_interface.none_1_methodsignature.md) |  |
 |  [prepend(value)](./alfa-collection.collection_namespace.indexed_interface.prepend_1_methodsignature.md) |  |
 |  [reduce(reducer, accumulator)](./alfa-collection.collection_namespace.indexed_interface.reduce_1_methodsignature.md) |  |
+|  [reduceUntil(predicate, reducer, accumulator)](./alfa-collection.collection_namespace.indexed_interface.reduceuntil_1_methodsignature.md) |  |
+|  [reduceWhile(predicate, reducer, accumulator)](./alfa-collection.collection_namespace.indexed_interface.reducewhile_1_methodsignature.md) |  |
 |  [reject(refinement)](./alfa-collection.collection_namespace.indexed_interface.reject_1_methodsignature.md) |  |
 |  [reject(predicate)](./alfa-collection.collection_namespace.indexed_interface.reject_2_methodsignature.md) |  |
 |  [rest()](./alfa-collection.collection_namespace.indexed_interface.rest_1_methodsignature.md) |  |
@@ -67,4 +69,5 @@ interface Indexed<T> extends Collection<T>, Iterable<T>, Serializable<Indexed.JS
 |  [trim(predicate)](./alfa-collection.collection_namespace.indexed_interface.trim_1_methodsignature.md) |  |
 |  [trimLeading(predicate)](./alfa-collection.collection_namespace.indexed_interface.trimleading_1_methodsignature.md) |  |
 |  [trimTrailing(predicate)](./alfa-collection.collection_namespace.indexed_interface.trimtrailing_1_methodsignature.md) |  |
+|  [zip(iterable)](./alfa-collection.collection_namespace.indexed_interface.zip_1_methodsignature.md) |  |
 

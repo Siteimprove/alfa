@@ -10,9 +10,22 @@
 namespace Region 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isName(name)](./alfa-iana.language_namespace.region_namespace.isname_1_function.md) |  |
+|  [isRegion(value)](./alfa-iana.language_namespace.region_namespace.isregion_1_function.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-iana.language_namespace.region_namespace.json_interface.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Name](./alfa-iana.language_namespace.region_namespace.name_typealias.md) |  |
 

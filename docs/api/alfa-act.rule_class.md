@@ -26,8 +26,8 @@ export declare abstract class Rule<I = unknown, T = unknown, Q = never> implemen
 |  [\_requirements](./alfa-act.rule_class._requirements_property.md) |  | Array&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt; |  |
 |  [\_tags](./alfa-act.rule_class._tags_property.md) |  | Array&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt; |  |
 |  [\_uri](./alfa-act.rule_class._uri_property.md) |  | string |  |
-|  [requirements](./alfa-act.rule_class.requirements_property.md) |  | Iterable&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt; |  |
-|  [tags](./alfa-act.rule_class.tags_property.md) |  | Iterable&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt; |  |
+|  [requirements](./alfa-act.rule_class.requirements_property.md) |  | ReadonlyArray&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt; |  |
+|  [tags](./alfa-act.rule_class.tags_property.md) |  | ReadonlyArray&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt; |  |
 |  [uri](./alfa-act.rule_class.uri_property.md) |  | string |  |
 
 ## Methods

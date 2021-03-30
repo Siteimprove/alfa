@@ -9,15 +9,15 @@
 <b>Signature:</b>
 
 ```typescript
-class Variant extends Subtag 
+class Variant extends Subtag<"variant", Variant.Name> 
 ```
-<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)
+<b>Extends:</b> [Subtag](./alfa-iana.language_namespace.subtag_class.md)<!-- -->&lt;"variant", [Variant.Name](./alfa-iana.language_namespace.variant_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [prefixes](./alfa-iana.language_namespace.variant_class.prefixes_property.md) |  | Array&lt;string&gt; | [https://tools.ietf.org/html/bcp47\#section-3.1.8](https://tools.ietf.org/html/bcp47#section-3.1.8) |
+|  [prefixes](./alfa-iana.language_namespace.variant_class.prefixes_property.md) |  | ReadonlyArray&lt;string&gt; | [https://tools.ietf.org/html/bcp47\#section-3.1.8](https://tools.ietf.org/html/bcp47#section-3.1.8) |
 |  [type](./alfa-iana.language_namespace.variant_class.type_property.md) |  | "variant" |  |
 
 ## Methods
@@ -25,6 +25,7 @@ class Variant extends Subtag
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-iana.language_namespace.variant_class.equals_1_method.md) |  |  |
-|  [of(name, prefixes)](./alfa-iana.language_namespace.variant_class.of_1_method.md) | <code>static</code> |  |
+|  [equals(value)](./alfa-iana.language_namespace.variant_class.equals_2_method.md) |  |  |
+|  [of(name)](./alfa-iana.language_namespace.variant_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-iana.language_namespace.variant_class.tojson_1_method.md) |  |  |
 

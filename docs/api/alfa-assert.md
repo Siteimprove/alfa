@@ -23,5 +23,4 @@
 |  --- | --- |
 |  [Asserter](./alfa-assert.asserter_namespace.md) |  |
 |  [Assertion](./alfa-assert.assertion_namespace.md) |  |
-|  [Handler](./alfa-assert.handler_namespace.md) |  |
 

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Callback } from '@siteimprove/alfa-callback';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
@@ -28,6 +29,8 @@ export class Err<E> implements Result<never, E> {
     and(): this;
     // (undocumented)
     andThen(): this;
+    // (undocumented)
+    apply(): this;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -114,6 +117,8 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, F>;
     // (undocumented)
+    apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     err(): None;
@@ -191,11 +196,13 @@ export namespace Ok {
 }
 
 // @public (undocumented)
-export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
+export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
     // (undocumented)
     and<U>(result: Result<U, E>): Result<U, E>;
     // (undocumented)
     andThen<U>(result: Mapper<T, Result<U, E>>): Result<U, E>;
+    // (undocumented)
+    apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
     // (undocumented)
     err(): Option<E>;
     // (undocumented)

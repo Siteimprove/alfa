@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Subtag.JSON 
+interface JSON extends Subtag.JSON<"variant", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)
+<b>Extends:</b> [Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)<!-- -->&lt;"variant", [Name](./alfa-iana.language_namespace.variant_namespace.name_typealias.md)<!-- -->&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [prefixes](./alfa-iana.language_namespace.variant_namespace.json_interface.prefixes_propertysignature.md) | Array&lt;string&gt; |  |
-|  [type](./alfa-iana.language_namespace.variant_namespace.json_interface.type_propertysignature.md) | "variant" |  |
 

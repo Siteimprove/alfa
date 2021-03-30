@@ -8,16 +8,16 @@ import { Callback } from '@siteimprove/alfa-callback';
 import { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
-export type Continuation<T, R = void> = Callback<Callback<T, R>, R>;
+export type Continuation<T, R = void, A extends Array<unknown> = []> = Callback<Callback<T, R>, R, A>;
 
 // @public (undocumented)
 export namespace Continuation {
     // (undocumented)
-    export function flatMap<T, U, R = void>(continuation: Continuation<T, R>, mapper: Mapper<T, Continuation<U, R>>): Continuation<U, R>;
+    export function flatMap<T, U, R = void, A extends Array<unknown> = []>(continuation: Continuation<T, R, A>, mapper: Mapper<T, Continuation<U, R, A>>): Continuation<U, R, A>;
     // (undocumented)
-    export function map<T, U, R = void>(continuation: Continuation<T, R>, mapper: Mapper<T, U>): Continuation<U, R>;
+    export function map<T, U, R = void, A extends Array<unknown> = []>(continuation: Continuation<T, R, A>, mapper: Mapper<T, U>): Continuation<U, R, A>;
     // (undocumented)
-    export function of<T, R = void>(value: T): Continuation<T, R>;
+    export function of<T, R = void, A extends Array<unknown> = []>(value: T): Continuation<T, R, A>;
 }
 
 

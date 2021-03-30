@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-abstract equals(value: unknown): value is this;
+abstract equals<T extends string, N extends string>(value: Subtag<T, N>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Subtag](./alfa-iana.language_namespace.subtag_class.md)<!-- -->&lt;T, N&gt; |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

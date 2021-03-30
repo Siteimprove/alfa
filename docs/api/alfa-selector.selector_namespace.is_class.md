@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Is extends Pseudo.Class 
+export class Is extends Pseudo.Class<"is"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)<!-- -->&lt;"is"&gt;
 
 ## Properties
 
@@ -24,6 +24,7 @@ export class Is extends Pseudo.Class
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-selector.selector_namespace.is_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.is_class.equals_2_method.md) |  |  |
 |  [matches(element, context)](./alfa-selector.selector_namespace.is_class.matches_1_method.md) |  |  |
 |  [of(selector)](./alfa-selector.selector_namespace.is_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.is_class.tojson_1_method.md) |  |  |

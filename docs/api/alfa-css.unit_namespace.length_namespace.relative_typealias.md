@@ -9,5 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Relative = "em" | "ex" | "ch" | "rem" | "vw" | "vh" | "vmin" | "vmax";
+type Relative = Relative.Font | Relative.Viewport;
 ```
+<b>References:</b> [Relative.Font](./alfa-css.unit_namespace.length_namespace.relative_namespace.font_typealias.md)<!-- -->, [Relative.Viewport](./alfa-css.unit_namespace.length_namespace.relative_namespace.viewport_typealias.md)
+

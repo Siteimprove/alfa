@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-get name(): string;
+get name(): N;
 ```

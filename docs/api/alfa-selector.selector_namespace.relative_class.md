@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Relative extends Selector 
+export class Relative extends Selector<"relative"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"relative"&gt;
 
 ## Properties
 
@@ -19,6 +19,7 @@ export class Relative extends Selector
 |  --- | --- | --- | --- |
 |  [combinator](./alfa-selector.selector_namespace.relative_class.combinator_property.md) |  | [Combinator](./alfa-selector.selector_namespace.combinator_enum.md) |  |
 |  [selector](./alfa-selector.selector_namespace.relative_class.selector_property.md) |  | [Simple](./alfa-selector.selector_namespace.simple_typealias.md) \| [Compound](./alfa-selector.selector_namespace.compound_class.md) \| [Complex](./alfa-selector.selector_namespace.complex_class.md) |  |
+|  [type](./alfa-selector.selector_namespace.relative_class.type_property.md) |  | "relative" |  |
 
 ## Methods
 
@@ -26,6 +27,7 @@ export class Relative extends Selector
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.relative_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.relative_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.relative_class.equals_2_method.md) |  |  |
 |  [matches()](./alfa-selector.selector_namespace.relative_class.matches_1_method.md) |  |  |
 |  [of(combinator, selector)](./alfa-selector.selector_namespace.relative_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.relative_class.tojson_1_method.md) |  |  |

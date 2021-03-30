@@ -17,6 +17,6 @@ interface JSON
 |  [display](./alfa-device.device_namespace.json_interface.display_propertysignature.md) | [Display.JSON](./alfa-device.display_namespace.json_interface.md) |  |
 |  [preferences](./alfa-device.device_namespace.json_interface.preferences_propertysignature.md) | Array&lt;[Preference.JSON](./alfa-device.preference_namespace.json_interface.md)<!-- -->&gt; |  |
 |  [scripting](./alfa-device.device_namespace.json_interface.scripting_propertysignature.md) | [Scripting.JSON](./alfa-device.scripting_namespace.json_interface.md) |  |
-|  [type](./alfa-device.device_namespace.json_interface.type_propertysignature.md) | [Type](./alfa-device.device_namespace.type_enum.md) |  |
+|  [type](./alfa-device.device_namespace.json_interface.type_propertysignature.md) | \`${[Type](./alfa-device.device_namespace.type_enum.md)<!-- -->}\` |  |
 |  [viewport](./alfa-device.device_namespace.json_interface.viewport_propertysignature.md) | [Viewport.JSON](./alfa-device.viewport_namespace.json_interface.md) |  |
 

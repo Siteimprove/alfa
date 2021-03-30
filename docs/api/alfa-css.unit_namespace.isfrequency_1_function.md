@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isFrequency(input: string): input is Frequency;
+function isFrequency(unit: string): unit is Frequency;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Frequency](./alfa-css.unit_namespace.frequency_typealias.md)
+unit is [Frequency](./alfa-css.unit_namespace.frequency_typealias.md)
 

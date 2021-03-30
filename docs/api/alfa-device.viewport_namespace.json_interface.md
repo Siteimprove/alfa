@@ -15,6 +15,6 @@ interface JSON
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [height](./alfa-device.viewport_namespace.json_interface.height_propertysignature.md) | number |  |
-|  [orientation](./alfa-device.viewport_namespace.json_interface.orientation_propertysignature.md) | [Orientation](./alfa-device.viewport_namespace.orientation_enum.md) |  |
+|  [orientation](./alfa-device.viewport_namespace.json_interface.orientation_propertysignature.md) | \`${[Orientation](./alfa-device.viewport_namespace.orientation_enum.md)<!-- -->}\` |  |
 |  [width](./alfa-device.viewport_namespace.json_interface.width_propertysignature.md) | number |  |
 

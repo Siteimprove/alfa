@@ -30,7 +30,9 @@ export declare class Length<U extends Unit.Length = Unit.Length> extends Dimensi
 |  [hash(hash)](./alfa-css.length_class.hash_1_method.md) |  |  |
 |  [hasUnit(unit)](./alfa-css.length_class.hasunit_1_method.md) |  |  |
 |  [isAbsolute()](./alfa-css.length_class.isabsolute_1_method.md) |  |  |
+|  [isFontRelative()](./alfa-css.length_class.isfontrelative_1_method.md) |  |  |
 |  [isRelative()](./alfa-css.length_class.isrelative_1_method.md) |  |  |
+|  [isViewportRelative()](./alfa-css.length_class.isviewportrelative_1_method.md) |  |  |
 |  [of(value, unit)](./alfa-css.length_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-css.length_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-css.length_class.tostring_1_method.md) |  |  |

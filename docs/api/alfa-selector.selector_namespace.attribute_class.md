@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Attribute extends Selector 
+export class Attribute extends Selector<"attribute"> 
 ```
-<b>Extends:</b> Selector
+<b>Extends:</b> Selector&lt;"attribute"&gt;
 
 ## Properties
 
@@ -21,6 +21,7 @@ export class Attribute extends Selector
 |  [modifier](./alfa-selector.selector_namespace.attribute_class.modifier_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Attribute.Modifier](./alfa-selector.selector_namespace.attribute_namespace.modifier_enum.md)<!-- -->&gt; |  |
 |  [name](./alfa-selector.selector_namespace.attribute_class.name_property.md) |  | string |  |
 |  [namespace](./alfa-selector.selector_namespace.attribute_class.namespace_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;string&gt; |  |
+|  [type](./alfa-selector.selector_namespace.attribute_class.type_property.md) |  | "attribute" |  |
 |  [value](./alfa-selector.selector_namespace.attribute_class.value_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;string&gt; |  |
 
 ## Methods
@@ -29,6 +30,7 @@ export class Attribute extends Selector
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-selector.selector_namespace.attribute_class._symbol.iterator__1_method.md) |  |  |
 |  [equals(value)](./alfa-selector.selector_namespace.attribute_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.attribute_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.attribute_class.matches_1_method.md) |  |  |
 |  [of(namespace, name, value, matcher, modifier)](./alfa-selector.selector_namespace.attribute_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.attribute_class.tojson_1_method.md) |  |  |

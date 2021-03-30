@@ -13,7 +13,7 @@ export type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A)
 // @public (undocumented)
 export namespace Predicate {
     // (undocumented)
-    export function and<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
+    export function and<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
     // (undocumented)
     export function equals<T>(...values: Array<T>): Predicate<unknown>;
     // (undocumented)
@@ -25,7 +25,7 @@ export namespace Predicate {
     // (undocumented)
     export function not<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<T, A>;
     // (undocumented)
-    export function or<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
+    export function or<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
     // (undocumented)
     export function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>(property: K, predicate: Predicate<T[K], A>): Predicate<T, A>;
     // (undocumented)

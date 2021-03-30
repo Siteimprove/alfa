@@ -18,6 +18,7 @@ interface Options
 |  [cookies?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.cookies_propertysignature.md) | Iterable&lt;[Cookie](./alfa-http.cookie_class.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  [credentials?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.credentials_propertysignature.md) | [Credentials](./alfa-scraper.credentials_class.md) | <i>(Optional)</i> |
 |  [device?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.device_propertysignature.md) | [Device](./alfa-device.device_class.md) | <i>(Optional)</i> |
+|  [fit?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.fit_propertysignature.md) | boolean | <i>(Optional)</i> |
 |  [headers?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.headers_propertysignature.md) | Iterable&lt;[Header](./alfa-http.header_class.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  [screenshot?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.screenshot_propertysignature.md) | [Screenshot](./alfa-scraper.screenshot_class.md) | <i>(Optional)</i> |
 |  [timeout?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.timeout_propertysignature.md) | [Timeout](./alfa-time.timeout_class.md) | <i>(Optional)</i> |

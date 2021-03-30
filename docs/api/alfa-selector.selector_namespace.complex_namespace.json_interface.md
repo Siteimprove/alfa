@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Selector.JSON 
+interface JSON extends Selector.JSON<"complex"> 
 ```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector_namespace.json_interface.md)
+<b>Extends:</b> [Selector.JSON](./alfa-selector.selector_namespace.json_interface.md)<!-- -->&lt;"complex"&gt;
 
 ## Properties
 
@@ -18,5 +18,4 @@ interface JSON extends Selector.JSON
 |  [combinator](./alfa-selector.selector_namespace.complex_namespace.json_interface.combinator_propertysignature.md) | string |  |
 |  [left](./alfa-selector.selector_namespace.complex_namespace.json_interface.left_propertysignature.md) | [Simple.JSON](./alfa-selector.selector_namespace.simple_namespace.json_typealias.md) \| [Compound.JSON](./alfa-selector.selector_namespace.compound_namespace.json_interface.md) \| [JSON](./alfa-selector.selector_namespace.complex_namespace.json_interface.md) |  |
 |  [right](./alfa-selector.selector_namespace.complex_namespace.json_interface.right_propertysignature.md) | [Simple.JSON](./alfa-selector.selector_namespace.simple_namespace.json_typealias.md) \| [Compound.JSON](./alfa-selector.selector_namespace.compound_namespace.json_interface.md) |  |
-|  [type](./alfa-selector.selector_namespace.complex_namespace.json_interface.type_propertysignature.md) | "complex" |  |
 

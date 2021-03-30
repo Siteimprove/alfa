@@ -7,13 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+interface JSON<T extends string = string, N extends string = string> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [name](./alfa-iana.language_namespace.subtag_namespace.json_interface.name_propertysignature.md) | string |  |
-|  [type](./alfa-iana.language_namespace.subtag_namespace.json_interface.type_propertysignature.md) | string |  |
+|  [name](./alfa-iana.language_namespace.subtag_namespace.json_interface.name_propertysignature.md) | N |  |
+|  [type](./alfa-iana.language_namespace.subtag_namespace.json_interface.type_propertysignature.md) | T |  |
 

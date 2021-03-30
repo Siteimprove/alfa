@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isAbsolute(input: string): input is Absolute;
+function isAbsolute(unit: string): unit is Absolute;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Absolute](./alfa-css.unit_namespace.length_namespace.absolute_typealias.md)
+unit is [Absolute](./alfa-css.unit_namespace.length_namespace.absolute_typealias.md)
 

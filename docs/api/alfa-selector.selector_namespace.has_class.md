@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export class Has extends Pseudo.Class 
+export class Has extends Pseudo.Class<"has"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector_namespace.pseudo_namespace.class_class.md)<!-- -->&lt;"has"&gt;
 
 ## Properties
 
@@ -24,6 +24,7 @@ export class Has extends Pseudo.Class
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-selector.selector_namespace.has_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.has_class.equals_2_method.md) |  |  |
 |  [of(selector)](./alfa-selector.selector_namespace.has_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.has_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-selector.selector_namespace.has_class.tostring_1_method.md) |  |  |

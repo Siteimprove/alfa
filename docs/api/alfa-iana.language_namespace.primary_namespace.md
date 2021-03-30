@@ -10,9 +10,22 @@
 namespace Primary 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isName(name)](./alfa-iana.language_namespace.primary_namespace.isname_1_function.md) |  |
+|  [isPrimary(value)](./alfa-iana.language_namespace.primary_namespace.isprimary_1_function.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-iana.language_namespace.primary_namespace.json_interface.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Name](./alfa-iana.language_namespace.primary_namespace.name_typealias.md) |  |
 

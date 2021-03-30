@@ -7,7 +7,11 @@
 <b>Signature:</b>
 
 ```typescript
-type Version<N extends Name> = Data.Version<N>;
+type Version<N extends Name> = N extends Name ? keyof Browsers[N]["releases"] : never;
 ```
 <b>References:</b> [Name](./alfa-compatibility.browser_namespace.name_typealias.md)
+
+## Remarks
+
+This type distributes the versions over the given browser names rather than narrow to a common subset of versions.
 

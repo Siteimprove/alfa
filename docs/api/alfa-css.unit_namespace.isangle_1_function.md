@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isAngle(input: string): input is Angle;
+function isAngle(unit: string): unit is Angle;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | string |  |
+|  unit | string |  |
 
 <b>Returns:</b>
 
-input is [Angle](./alfa-css.unit_namespace.angle_typealias.md)
+unit is [Angle](./alfa-css.unit_namespace.angle_typealias.md)
 

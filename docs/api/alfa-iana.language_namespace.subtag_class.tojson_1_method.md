@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-abstract toJSON(): Subtag.JSON;
+abstract toJSON(): Subtag.JSON<T, N>;
 ```
 <b>Returns:</b>
 
-[Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)
+[Subtag.JSON](./alfa-iana.language_namespace.subtag_namespace.json_interface.md)<!-- -->&lt;T, N&gt;
 
