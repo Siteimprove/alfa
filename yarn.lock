@@ -2379,10 +2379,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 14.14.25
-  resolution: "@types/node@npm:14.14.25"
-  checksum: 2140b0229c8563135c59d03e84c8a52e195fcf875f07c4f1e4738c3e8af85e858093fc60aaba76ab422cb17307b2dac8cd60667734e219db310d211ff0b3fc08
+"@types/node@npm:*, @types/node@npm:^14.14.31":
+  version: 14.14.31
+  resolution: "@types/node@npm:14.14.31"
+  checksum: 5b9ab3660ee63abc57affc836c0d50b2941a862c5b6c241c02762d8e1ad610f6b0d350d7426218dc401b5abc7d6294ee1b475da7c331e486d59a5608d1a0b777
   languageName: node
   linkType: hard
 
@@ -2390,13 +2390,6 @@ __metadata:
   version: 12.12.50
   resolution: "@types/node@npm:12.12.50"
   checksum: ae3b6ae1bf14024fe6a9fa49760199c14b22ae6e5df59ebf31c70cc21d8eed2cc639381c48abbf1a259bf8520d6519264175685b53a3a796585358759c2f3930
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^14.14.31":
-  version: 14.14.31
-  resolution: "@types/node@npm:14.14.31"
-  checksum: 5b9ab3660ee63abc57affc836c0d50b2941a862c5b6c241c02762d8e1ad610f6b0d350d7426218dc401b5abc7d6294ee1b475da7c331e486d59a5608d1a0b777
   languageName: node
   linkType: hard
 
@@ -8217,14 +8210,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.12.0 || ^17.0.0, react-is@npm:^17.0.1":
-  version: 17.0.1
-  resolution: "react-is@npm:17.0.1"
-  checksum: 5e6945a286367894d11b24f41a0065607ba62bdac0df0b567294b2e299c037e3641434e66f9be30536b8c47f7ad94d44e633feb2ba25959c2c42423844e6c2f1
-  languageName: node
-  linkType: hard
-
-"react-is@npm:^17.0.2":
+"react-is@npm:^16.12.0 || ^17.0.0, react-is@npm:^17.0.1, react-is@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
@@ -8597,16 +8583,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.3.3":
-  version: 6.6.6
-  resolution: "rxjs@npm:6.6.6"
-  dependencies:
-    tslib: ^1.9.0
-  checksum: 3320dc74bad3b6eb0397ce0394ca6cc7bfecf32538ed18580f59ee6c1d66196b572d8ad209bf8e08e4de51bf804fdce1666e81d51e7eab33c6efba79ff54664b
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:^6.6.7":
+"rxjs@npm:^6.3.3, rxjs@npm:^6.6.7":
   version: 6.6.7
   resolution: "rxjs@npm:6.6.7"
   dependencies:
