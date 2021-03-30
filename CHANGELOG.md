@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.16.0](../../compare/v0.15.3...v0.16.0) (2021-03-30)
+
 ### Breaking
 
 - [@siteimprove/alfa-assert](packages/alfa-assert): `Handler.persist()` is no longer available as it broke the ability to bundle the package using certain tools due to the dependence on Node.js.
