@@ -25,7 +25,7 @@ const { isKeyword } = Keyword;
 const { or, xor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r65",
   requirements: [Criterion.of("2.4.7")],
   evaluate({ device, document }) {
     return {

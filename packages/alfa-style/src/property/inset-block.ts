@@ -3,22 +3,30 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 
-import * as End from "./inset-block-end";
-import * as Start from "./inset-block-start";
+import * as Top from "./top";
 
-const { map, pair, option, right } = Parser;
+const { takeBetween, map, delimited, option } = Parser;
+
+declare module "../property" {
+  interface Shorthands {
+    "inset-block": Property.Shorthand<"inset-block-start" | "inset-block-end">;
+  }
+}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block}
  * @internal
  */
-export default Property.shorthand(
-  ["inset-block-start", "inset-block-end"],
-  map(
-    pair(Start.parse, option(right(option(Token.parseWhitespace), End.parse))),
-    ([start, end]) => [
-      ["inset-block-start", start],
-      ["inset-block-end", end.getOr(start)],
-    ]
+export default Property.registerShorthand(
+  "inset-block",
+  Property.shorthand(
+    ["inset-block-start", "inset-block-end"],
+    map(
+      takeBetween(delimited(option(Token.parseWhitespace), Top.parse), 1, 2),
+      ([start, end = start]) => [
+        ["inset-block-start", start],
+        ["inset-block-end", end],
+      ]
+    )
   )
 );

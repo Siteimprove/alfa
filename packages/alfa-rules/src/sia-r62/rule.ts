@@ -9,19 +9,21 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasOutline } from "../common/predicate/has-outline";
-import { hasRole } from "../common/predicate/has-role";
-import { hasTextDecoration } from "../common/predicate/has-text-decoration";
-import { isVisible } from "../common/predicate/is-visible";
+import {
+  hasOutline,
+  hasRole,
+  hasTextDecoration,
+  isVisible,
+} from "../common/predicate";
 
 import { Question } from "../common/question";
 
-const { isElement, hasName } = Element;
+const { isElement } = Element;
 const { isText } = Text;
 const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r62.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
   evaluate({ device, document }) {
     return {
@@ -49,7 +51,9 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
             // Otherwise, if the element is a <p> element with non-link text
             // content then start collecting applicable elements.
-            else if (test(and(hasName("p"), hasNonLinkText(device)), node)) {
+            else if (
+              test(and(hasRole("paragraph"), hasNonLinkText(device)), node)
+            ) {
               collect = true;
             }
           }
@@ -71,7 +75,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             flattened: true,
           })
           .filter(isElement)
-          .find(hasName("p"))
+          .find(hasRole("paragraph"))
           .get();
 
         return {

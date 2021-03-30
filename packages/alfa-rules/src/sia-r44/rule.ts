@@ -23,7 +23,7 @@ const { not } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r44",
   requirements: [Criterion.of("1.3.4")],
   evaluate({ device, document }) {
     let landscape: Device;
@@ -119,7 +119,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
 
 function isOrientationConditional(declaration: Declaration): boolean {
   return some(declaration.ancestors(), (rule) => {
-    if (MediaRule.isMedia(rule)) {
+    if (MediaRule.isMediaRule(rule)) {
       for (const [, media] of Media.parse(Lexer.lex(rule.condition))) {
         for (const { condition } of media) {
           if (condition.isSome()) {
@@ -171,9 +171,7 @@ function getRotation(element: Element, device: Device): Option<number> {
     for (const fn of transform) {
       switch (fn.kind) {
         case "rotate": {
-          const { x, y, z, angle } = fn;
-
-          z;
+          const { x, y, angle } = fn;
 
           if (x.value !== 0 || y.value !== 0) {
             return None;

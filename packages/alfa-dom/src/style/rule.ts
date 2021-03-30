@@ -7,6 +7,18 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Sheet } from "./sheet";
 
+import {
+  FontFaceRule,
+  ImportRule,
+  KeyframeRule,
+  KeyframesRule,
+  MediaRule,
+  NamespaceRule,
+  PageRule,
+  StyleRule,
+  SupportsRule,
+} from "..";
+
 export abstract class Rule implements Equatable, Serializable {
   protected _owner: Option<Sheet> = None;
   protected _parent: Option<Rule> = None;
@@ -70,54 +82,29 @@ export abstract class Rule implements Equatable, Serializable {
   }
 }
 
-import { FontFace } from "./rule/font-face";
-import { Import } from "./rule/import";
-import { Keyframe } from "./rule/keyframe";
-import { Keyframes } from "./rule/keyframes";
-import { Media } from "./rule/media";
-import { Namespace } from "./rule/namespace";
-import { Page } from "./rule/page";
-import { Style } from "./rule/style";
-import { Supports } from "./rule/supports";
-import { Declaration } from "./declaration";
-
-// Export CSSOM rules with a `Rule` postfix to avoid clashes with DOM nodes such
-// as `Namespace`.
-export {
-  FontFace as FontFaceRule,
-  Import as ImportRule,
-  Keyframe as KeyframeRule,
-  Keyframes as KeyframesRule,
-  Media as MediaRule,
-  Namespace as NamespaceRule,
-  Page as PageRule,
-  Style as StyleRule,
-  Supports as SupportsRule,
-};
-
 export namespace Rule {
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
   }
 
-  export function from(json: Style.JSON): Style;
+  export function from(json: StyleRule.JSON): StyleRule;
 
-  export function from(json: Import.JSON): Import;
+  export function from(json: ImportRule.JSON): ImportRule;
 
-  export function from(json: Media.JSON): Media;
+  export function from(json: MediaRule.JSON): MediaRule;
 
-  export function from(json: FontFace.JSON): FontFace;
+  export function from(json: FontFaceRule.JSON): FontFaceRule;
 
-  export function from(json: Page.JSON): Page;
+  export function from(json: PageRule.JSON): PageRule;
 
-  export function from(json: Keyframe.JSON): Keyframe;
+  export function from(json: KeyframeRule.JSON): KeyframeRule;
 
-  export function from(json: Keyframes.JSON): Keyframes;
+  export function from(json: KeyframesRule.JSON): KeyframesRule;
 
-  export function from(json: Namespace.JSON): Namespace;
+  export function from(json: NamespaceRule.JSON): NamespaceRule;
 
-  export function from(json: Supports.JSON): Supports;
+  export function from(json: SupportsRule.JSON): SupportsRule;
 
   export function from(json: JSON): Rule;
 
@@ -131,31 +118,31 @@ export namespace Rule {
   export function fromRule(json: JSON): Trampoline<Rule> {
     switch (json.type) {
       case "style":
-        return Style.fromStyle(json as Style.JSON);
+        return StyleRule.fromStyleRule(json as StyleRule.JSON);
 
       case "import":
-        return Import.fromImport(json as Import.JSON);
+        return ImportRule.fromImportRule(json as ImportRule.JSON);
 
       case "media":
-        return Media.fromMedia(json as Media.JSON);
+        return MediaRule.fromMediaRule(json as MediaRule.JSON);
 
       case "font-face":
-        return FontFace.fromFontFace(json as FontFace.JSON);
+        return FontFaceRule.fromFontFaceRule(json as FontFaceRule.JSON);
 
       case "page":
-        return Page.fromPage(json as Page.JSON);
-
-      case "keyframes":
-        return Keyframes.fromKeyframes(json as Keyframes.JSON);
+        return PageRule.fromPageRule(json as PageRule.JSON);
 
       case "keyframe":
-        return Keyframe.fromKeyframe(json as Keyframe.JSON);
+        return KeyframeRule.fromKeyframeRule(json as KeyframeRule.JSON);
+
+      case "keyframes":
+        return KeyframesRule.fromKeyframesRule(json as KeyframesRule.JSON);
 
       case "namespace":
-        return Namespace.fromNamespace(json as Namespace.JSON);
+        return NamespaceRule.fromNamespaceRule(json as NamespaceRule.JSON);
 
       case "supports":
-        return Supports.fromSupports(json as Supports.JSON);
+        return SupportsRule.fromSupportsRule(json as SupportsRule.JSON);
 
       default:
         throw new Error(`Unexpected rule of type: ${json.type}`);

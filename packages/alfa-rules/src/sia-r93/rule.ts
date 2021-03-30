@@ -20,7 +20,7 @@ const { isElement, hasNamespace } = Element;
 const property = "line-height";
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r93.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r93",
   requirements: [Criterion.of("1.4.12")],
   evaluate({ device, document }) {
     return {

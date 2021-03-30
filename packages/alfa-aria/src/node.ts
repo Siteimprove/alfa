@@ -19,6 +19,8 @@ import { Name } from "./name";
 import { Role } from "./role";
 import { Feature } from "./feature";
 
+import { Container, Element, Inert, Text } from ".";
+
 import * as predicate from "./node/predicate";
 
 const { equals } = Predicate;
@@ -201,11 +203,6 @@ export abstract class Node implements Serializable<Node.JSON> {
     return true;
   }
 }
-
-import { Container } from "./node/container";
-import { Element } from "./node/element";
-import { Inert } from "./node/inert";
-import { Text } from "./node/text";
 
 export namespace Node {
   export interface JSON {

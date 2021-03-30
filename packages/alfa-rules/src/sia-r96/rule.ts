@@ -15,7 +15,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r96.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r96",
   requirements: [
     Criterion.of("2.2.4"),
     Criterion.of("3.2.5"),

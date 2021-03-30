@@ -318,13 +318,13 @@ export namespace Branched {
 
   export function traverse<T, U, B>(
     values: Iterable<T>,
-    mapper: Mapper<T, Branched<U, B>>
+    mapper: Mapper<T, Branched<U, B>, [index: number]>
   ): Branched<Iterable<U>, B> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => values.append(value))
+          mapper(value, i).map((value) => values.append(value))
         ),
       Branched.of(List.empty())
     );

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "private": true,
   "name": "@siteimprove/alfa",
-  "homepage": "https://siteimprove.com",
+  "homepage": "https://alfa.siteimprove.com",
   "license": "MIT",
   "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
   "repository": {
@@ -23,11 +23,14 @@
   "devDependencies": {
     "@microsoft/api-documenter": "^7.12.7",
     "@microsoft/api-extractor": "^7.13.1",
+    "@types/async": "^3.2.5",
     "@types/node": "^14.14.31",
+    "async": "^3.2.0",
     "axios": "^0.21.1",
+    "execa": "^5.0.0",
     "minimist": "^1.2.5",
     "prettier": "^2.2.1",
-    "typescript": "^4.2.2"
+    "typescript": "^4.2.3"
   },
   "resolutions": {
     "@microsoft/api-documenter": "patch:@microsoft/api-documenter@7.12.7#.yarn/patches/api-documenter.patch"

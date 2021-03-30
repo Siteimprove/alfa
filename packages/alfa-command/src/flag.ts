@@ -251,7 +251,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable<Flag.JSON> {
     return new Flag(this._name, this._description, options, parse);
   }
 
-  public repeatable(): Flag<Iterable<T>> {
+  public repeatable(): Flag<Array<T>> {
     const options = { ...this._options, repeatable: true };
 
     const repeat = (previous: Flag.Set<Array<T>>): Flag.Parser<Array<T>> => (

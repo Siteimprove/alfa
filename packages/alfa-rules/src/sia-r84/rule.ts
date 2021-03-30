@@ -18,7 +18,7 @@ const { isElement, hasNamespace } = Element;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r84.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r84",
   requirements: [
     Criterion.of("2.1.1"),
     Criterion.of("2.1.3"),
@@ -74,27 +74,35 @@ export namespace Outcomes {
  *
  * - A computed `width` or `height` that is not `auto`; and
  * - A corresponding computed `overflow-x` or `overflow-y`, respectively, that
- *   is `auto`, `clip`, or `scroll`.
+ *   is `auto` or `scroll`.
  */
 function isPossiblyScrollable(device: Device): Predicate<Element> {
   const properties = [
-    ["overflow-x", "width"],
-    ["overflow-y", "height"],
+    ["x", "width"],
+    ["y", "height"],
   ] as const;
 
   return (element) => {
     const style = Style.from(element, device);
 
     return properties.some(
-      ([overflow, dimension]) =>
+      ([axis, dimension]) =>
         style
           .computed(dimension)
           .some((dimension) => dimension.value !== "auto") &&
-        style.computed(overflow).some((overflow) => {
+        style.computed(`overflow-${axis}` as const).some((overflow) => {
           switch (overflow.value) {
             case "auto":
-            case "clip":
             case "scroll":
+              // For the x-axis, the content is likely only scrollable if
+              // `white-space: nowrap` is used. Otherwise, the content is likely
+              // to instead break along the y-axis.
+              if (axis === "x") {
+                return style
+                  .computed("white-space")
+                  .some((whitespace) => whitespace.value === "nowrap");
+              }
+
               return true;
 
             default:

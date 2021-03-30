@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
@@ -8,7 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import R87, { Outcomes } from "../../src/sia-r87/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 
 test(`evaluate() passes a document whose first tabbable link references an
@@ -145,7 +144,8 @@ test(`evaluate() fails a document with a link that would be tabbable if not
   ]);
 });
 
-test(`evaluate() fails a document whose first tabbable element is not a link`, async (t) => {
+test(`evaluate() fails a document whose first tabbable element is not a
+      link`, async (t) => {
   const document = Document.of([
     <html>
       <button />
@@ -161,7 +161,8 @@ test(`evaluate() fails a document whose first tabbable element is not a link`, a
   ]);
 });
 
-test(`evaluate() fails a document whose first tabbable element is not a semantic link`, async (t) => {
+test(`evaluate() fails a document whose first tabbable element is not a
+      semantic link`, async (t) => {
   const document = Document.of([
     <html>
       <a href="#main" role="button">
@@ -241,6 +242,88 @@ test(`evaluate() passes a document whose first tabbable link is visible when
       ]),
     ]
   );
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references a
+      container child at the start of main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <main>
+        <div id="content">
+          <p>This is the content</p>
+        </div>
+      </main>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references an
+      empty child at the start of main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <main>
+        <div id="content" />
+        <p>This is the content</p>
+      </main>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references a
+      container around main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <div id="content">
+        <main>
+          <p>This is the content</p>
+        </main>
+      </div>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R87, { document }), [
+    passed(R87, document, {
+      1: Outcomes.FirstTabbableIsLinkToContent,
+    }),
+  ]);
+});
+
+test(`evaluates() passe a document whose first tabbable link references an
+      empty element before main`, async (t) => {
+  const document = Document.of([
+    <html>
+      <a href="#content">Skip to content</a>
+
+      <div id="content" />
+      <main>
+        <p>This is the content</p>
+      </main>
+    </html>,
+  ]);
 
   t.deepEqual(await evaluate(R87, { document }), [
     passed(R87, document, {

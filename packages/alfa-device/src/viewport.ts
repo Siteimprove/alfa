@@ -103,11 +103,15 @@ export namespace Viewport {
     [key: string]: json.JSON;
     width: number;
     height: number;
-    orientation: Orientation;
+    orientation: `${Orientation}`;
   }
 
   export function from(json: JSON): Viewport {
-    return Viewport.of(json.width, json.height, json.orientation);
+    return Viewport.of(
+      json.width,
+      json.height,
+      json.orientation as Orientation
+    );
   }
 
   export function standard(): Viewport {

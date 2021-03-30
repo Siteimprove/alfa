@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -9,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `font-size: calc(1em + 2px)`", (t) => {
-  const element = <div style={{ fontSize: "calc(1em + 2px)" }}></div>;
+  const element = <div style={{ fontSize: "calc(1em + 2px)" }} />;
 
   const style = Style.from(element, device);
 
@@ -43,7 +42,7 @@ test("#cascaded() parses `font-size: calc(1em + 2px)`", (t) => {
 });
 
 test("#computed() resolves `font-size: calc(1em + 2px)`", (t) => {
-  const element = <div style={{ fontSize: "calc(1em + 2px)" }}></div>;
+  const element = <div style={{ fontSize: "calc(1em + 2px)" }} />;
 
   const style = Style.from(element, device);
 
@@ -58,7 +57,7 @@ test("#computed() resolves `font-size: calc(1em + 2px)`", (t) => {
 });
 
 test("#cascaded() parses `font-size: calc(1em + 2%)`", (t) => {
-  const element = <div style={{ fontSize: "calc(1em + 2%)" }}></div>;
+  const element = <div style={{ fontSize: "calc(1em + 2%)" }} />;
 
   const style = Style.from(element, device);
 
@@ -91,7 +90,7 @@ test("#cascaded() parses `font-size: calc(1em + 2%)`", (t) => {
 });
 
 test("#computed() resolves `font-size: calc(1em + 2%)`", (t) => {
-  const element = <div style={{ fontSize: "calc(1em + 2%)" }}></div>;
+  const element = <div style={{ fontSize: "calc(1em + 2%)" }} />;
 
   const style = Style.from(element, device);
 
@@ -106,7 +105,7 @@ test("#computed() resolves `font-size: calc(1em + 2%)`", (t) => {
 });
 
 test("#cascaded() ignores `font-size: calc(20deg)`", (t) => {
-  const element = <div style={{ fontSize: "calc(20deg)" }}></div>;
+  const element = <div style={{ fontSize: "calc(20deg)" }} />;
 
   const style = Style.from(element, device);
 

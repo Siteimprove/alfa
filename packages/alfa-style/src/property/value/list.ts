@@ -1,10 +1,11 @@
 import { Value } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
-
+/**
+ * @internal
+ */
 export class List<T> extends Value<"list"> implements Iterable<T> {
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(Array.from(values), separator);
@@ -23,11 +24,15 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
     return "list";
   }
 
-  public get values(): Iterable<T> {
-    return this._values[Symbol.iterator]();
+  public get values(): ReadonlyArray<T> {
+    return this._values;
   }
 
-  public equals(value: unknown): value is this {
+  public equals<T>(value: List<T>): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof List &&
       value._values.length === this._values.length &&
@@ -49,10 +54,10 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
     yield* this._values;
   }
 
-  public toJSON(): List.JSON {
+  public toJSON(): List.JSON<T> {
     return {
       type: "list",
-      values: this._values.map(Serializable.toJSON),
+      values: this._values.map((value) => Serializable.toJSON(value)),
       separator: this._separator,
     };
   }
@@ -62,9 +67,20 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace List {
-  export interface JSON extends Value.JSON<"list"> {
-    values: Array<json.JSON>;
+  export interface JSON<T> extends Value.JSON<"list"> {
+    values: Array<Serializable.ToJSON<T>>;
     separator: string;
+  }
+
+  export function isList<T>(value: Iterable<T>): value is List<T>;
+
+  export function isList<T>(value: unknown): value is List<T>;
+
+  export function isList<T>(value: unknown): value is List<T> {
+    return value instanceof List;
   }
 }

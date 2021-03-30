@@ -10,6 +10,17 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
+import {
+  Attribute,
+  Comment,
+  Document,
+  Element,
+  Fragment,
+  Text,
+  Type,
+  Slot,
+} from ".";
+
 const { equals } = Predicate;
 
 export abstract class Node
@@ -323,7 +334,11 @@ export abstract class Node
     yield* this.descendants();
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Node): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value === this;
   }
 
@@ -370,6 +385,27 @@ export abstract class Node
 }
 
 export namespace Node {
+  export interface JSON {
+    [key: string]: json.JSON;
+    type: string;
+  }
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      ptr: "http://www.w3.org/2009/pointers#";
+    };
+    "@type": [
+      "ptr:Pointer",
+      "ptr:SinglePointer",
+      "ptr:ExpressionPointer",
+      "ptr:XPathPointer"
+    ];
+    "ptr:expression": string;
+    "ptr:reference"?: {
+      "@id": string;
+    };
+  }
+
   export function isNode(value: unknown): value is Node {
     return value instanceof Node;
   }
@@ -395,22 +431,6 @@ export namespace Node {
      * {@link https://html.spec.whatwg.org/#nested-browsing-context}
      */
     readonly nested?: boolean;
-  }
-}
-
-import { Attribute } from "./node/attribute";
-import { Comment } from "./node/comment";
-import { Document } from "./node/document";
-import { Element } from "./node/element";
-import { Fragment } from "./node/fragment";
-import { Text } from "./node/text";
-import { Type } from "./node/type";
-import { Slot } from "./node/slot";
-
-export namespace Node {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: string;
   }
 
   export function from(json: Element.JSON): Element;
@@ -462,21 +482,5 @@ export namespace Node {
       default:
         throw new Error(`Unexpected node of type: ${json.type}`);
     }
-  }
-
-  export interface EARL extends earl.EARL {
-    "@context": {
-      ptr: "http://www.w3.org/2009/pointers#";
-    };
-    "@type": [
-      "ptr:Pointer",
-      "ptr:SinglePointer",
-      "ptr:ExpressionPointer",
-      "ptr:XPathPointer"
-    ];
-    "ptr:expression": string;
-    "ptr:reference"?: {
-      "@id": string;
-    };
   }
 }

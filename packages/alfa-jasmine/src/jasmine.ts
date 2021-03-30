@@ -29,16 +29,16 @@ export namespace Jasmine {
     addAsyncMatcher("toBeAccessible", (util) => {
       return {
         async compare(value: I) {
-          const target = await transform(value);
+          const input = await transform(value);
 
-          const error = await asserter.expect(target).to.be.accessible();
+          const result = await asserter.expect(input).to.be.accessible();
 
-          const message = error.isOk() ? error.get() : error.getErr();
+          const message = result.isOk() ? result.get() : result.getErr();
 
           return {
-            pass: error.isOk(),
+            pass: result.isOk(),
             message:
-              util.buildFailureMessage("toBeAccessible", error.isOk(), value) +
+              util.buildFailureMessage("toBeAccessible", result.isOk(), value) +
               " " +
               message,
           };

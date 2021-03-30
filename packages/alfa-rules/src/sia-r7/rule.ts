@@ -29,7 +29,7 @@ const { and, test } = Refinement;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r7",
   requirements: [Criterion.of("3.1.2"), Technique.of("H58")],
   evaluate({ device, document }) {
     return {
@@ -69,7 +69,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: expectation(
-            Language.parse(target.value).isSome(),
+            Language.parse(target.value).isOk(),
             () => Outcomes.HasValidLanguage,
             () => Outcomes.HasNoValidLanguage
           ),

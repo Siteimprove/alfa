@@ -1,6 +1,6 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -54,6 +54,10 @@ export class Ok<T> implements Result<T, never> {
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
     return reducer(accumulator, this._value);
+  }
+
+  public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
+    return mapper.map((mapper) => mapper(this._value));
   }
 
   public includes(value: T): boolean {

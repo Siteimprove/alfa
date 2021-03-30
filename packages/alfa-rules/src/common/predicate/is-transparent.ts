@@ -30,12 +30,16 @@ export function isTransparent(
         }
 
         for (const parent of node.parent({ flattened: true })) {
-          if (isText(node) && isElement(parent)) {
-            return Style.from(parent, device, context)
+          if (
+            isText(node) &&
+            isElement(parent) &&
+            Style.from(parent, device, context)
               .computed("color")
               .some(
                 (color) => color.type === "color" && Color.isTransparent(color)
-              );
+              )
+          ) {
+            return true;
           }
 
           return isTransparent(parent);

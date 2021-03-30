@@ -16,7 +16,7 @@ import R31 from "../sia-r31/rule";
 import R36 from "../sia-r36/rule";
 
 export default Rule.Composite.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r38.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r38",
   requirements: [
     Criterion.of("1.2.3"),
     Criterion.of("1.2.5"),

@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
@@ -21,6 +22,7 @@ export interface Result<T, E = T>
   extends Functor<T>,
     Monad<T>,
     Foldable<T>,
+    Applicative<T>,
     Iterable<T>,
     Equatable,
     Hashable,
@@ -32,6 +34,7 @@ export interface Result<T, E = T>
   mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+  apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
   includes(value: T): boolean;
   includesErr(error: E): boolean;
   some(predicate: Predicate<T>): boolean;

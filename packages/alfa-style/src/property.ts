@@ -8,7 +8,7 @@ import * as parser from "@siteimprove/alfa-parser";
 import { Style } from "./style";
 import { Value } from "./value";
 
-const { left, either, eof } = Parser;
+const { left, either, end } = Parser;
 
 const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 
@@ -28,10 +28,42 @@ export class Property<T = unknown, U = T> {
       initial,
       left(
         either(parseDefaults, parse),
-        eof(() => "Expected end of input")
+        end(() => "Expected end of input")
       ),
       compute,
       options
+    );
+  }
+
+  public static extend<T, U>(
+    property: Property<T, U>,
+    overrides: {
+      initial?: U;
+      parse?: Property.Parser<T>;
+      compute?: Mapper<Value<T>, Value<U>, [style: Style]>;
+      options?: Property.Options;
+    } = {}
+  ): Property<T, U> {
+    const {
+      initial = property._initial,
+      parse,
+      compute = property._compute,
+      options = {},
+    } = overrides;
+
+    return new Property(
+      initial,
+      parse === undefined
+        ? property._parse
+        : left(
+            either(parseDefaults, parse),
+            end(() => "Expected end of input")
+          ),
+      compute,
+      {
+        ...property._options,
+        ...options,
+      }
     );
   }
 
@@ -154,12 +186,29 @@ export namespace Property {
      */
     export type Inherited<N extends Name> = Computed<N>;
   }
-}
 
-/**
- * @internal
- */
-export namespace Property {
+  export type Name = keyof Longhands;
+
+  export type WithName<N extends Name> = Longhands[N];
+
+  export const longhands = new Map<Name, Property>();
+
+  export function register<N extends Name>(
+    name: N,
+    property: WithName<N>
+  ): WithName<N> {
+    longhands.set(name, property as Property);
+    return property;
+  }
+
+  export function isName(name: string): name is Name {
+    return longhands.has(name as Name);
+  }
+
+  export function get<N extends Name>(name: N): WithName<N> {
+    return longhands.get(name) as WithName<N>;
+  }
+
   export class Shorthand<N extends Name = never> {
     public static of<N extends Name>(
       properties: Array<N>,
@@ -169,7 +218,7 @@ export namespace Property {
         properties,
         left(
           either(parseDefaults, parse),
-          eof(() => "Expected end of input")
+          end(() => "Expected end of input")
         )
       );
     }
@@ -198,176 +247,33 @@ export namespace Property {
       | Iterable<{ [M in N]: readonly [M, Property.Value.Declared<M>] }[N]>,
       string
     >;
-  }
 
-  export const { of: shorthand } = Shorthand;
-}
-
-import Background from "./property/background";
-import BackgroundAttachment from "./property/background-attachment";
-import BackgroundClip from "./property/background-clip";
-import BackgroundColor from "./property/background-color";
-import BackgroundImage from "./property/background-image";
-import BackgroundOrigin from "./property/background-origin";
-import BackgroundPosition from "./property/background-position";
-import BackgroundPositionX from "./property/background-position-x";
-import BackgroundPositionY from "./property/background-position-y";
-import BackgroundRepeat from "./property/background-repeat";
-import BackgroundRepeatX from "./property/background-repeat-x";
-import BackgroundRepeatY from "./property/background-repeat-y";
-import BackgroundSize from "./property/background-size";
-import Bottom from "./property/bottom";
-import BoxShadow from "./property/box-shadow";
-import Clip from "./property/clip";
-import ClipPath from "./property/clip-path";
-import Color from "./property/color";
-import Display from "./property/display";
-import Font from "./property/font";
-import FontFamily from "./property/font-family";
-import FontSize from "./property/font-size";
-import FontStretch from "./property/font-stretch";
-import FontStyle from "./property/font-style";
-import FontWeight from "./property/font-weight";
-import Height from "./property/height";
-import Inset from "./property/inset";
-import InsetBlock from "./property/inset-block";
-import InsetBlockEnd from "./property/inset-block-end";
-import InsetBlockStart from "./property/inset-block-start";
-import InsetInline from "./property/inset-inline";
-import InsetInlineEnd from "./property/inset-inline-end";
-import InsetInlineStart from "./property/inset-inline-start";
-import Left from "./property/left";
-import LetterSpacing from "./property/letter-spacing";
-import LineHeight from "./property/line-height";
-import Opacity from "./property/opacity";
-import Outline from "./property/outline";
-import OutlineColor from "./property/outline-color";
-import OutlineOffset from "./property/outline-offset";
-import OutlineStyle from "./property/outline-style";
-import OutlineWidth from "./property/outline-width";
-import Overflow from "./property/overflow";
-import OverflowX from "./property/overflow-x";
-import OverflowY from "./property/overflow-y";
-import Position from "./property/position";
-import Right from "./property/right";
-import TextAlign from "./property/text-align";
-import TextDecoration from "./property/text-decoration";
-import TextDecorationColor from "./property/text-decoration-color";
-import TextDecorationLine from "./property/text-decoration-line";
-import TextDecorationStyle from "./property/text-decoration-style";
-import TextIndent from "./property/text-indent";
-import TextOverflow from "./property/text-overflow";
-import TextTransform from "./property/text-transform";
-import Top from "./property/top";
-import Transform from "./property/transform";
-import Visibility from "./property/visibility";
-import WhiteSpace from "./property/white-space";
-import Width from "./property/width";
-import WordSpacing from "./property/word-spacing";
-
-type Longhands = typeof Longhands;
-
-const Longhands = {
-  "background-attachment": BackgroundAttachment,
-  "background-clip": BackgroundClip,
-  "background-color": BackgroundColor,
-  "background-image": BackgroundImage,
-  "background-origin": BackgroundOrigin,
-  "background-position-x": BackgroundPositionX,
-  "background-position-y": BackgroundPositionY,
-  "background-repeat-x": BackgroundRepeatX,
-  "background-repeat-y": BackgroundRepeatY,
-  "background-size": BackgroundSize,
-  bottom: Bottom,
-  "box-shadow": BoxShadow,
-  clip: Clip,
-  "clip-path": ClipPath,
-  color: Color,
-  display: Display,
-  "font-family": FontFamily,
-  "font-size": FontSize,
-  "font-stretch": FontStretch,
-  "font-style": FontStyle,
-  "font-weight": FontWeight,
-  height: Height,
-  "inset-block-end": InsetBlockEnd,
-  "inset-block-start": InsetBlockStart,
-  "inset-inline-end": InsetInlineEnd,
-  "inset-inline-start": InsetInlineStart,
-  left: Left,
-  "letter-spacing": LetterSpacing,
-  "line-height": LineHeight,
-  opacity: Opacity,
-  "outline-color": OutlineColor,
-  "outline-offset": OutlineOffset,
-  "outline-style": OutlineStyle,
-  "outline-width": OutlineWidth,
-  "overflow-x": OverflowX,
-  "overflow-y": OverflowY,
-  position: Position,
-  right: Right,
-  "text-align": TextAlign,
-  "text-decoration-color": TextDecorationColor,
-  "text-decoration-line": TextDecorationLine,
-  "text-decoration-style": TextDecorationStyle,
-  "text-indent": TextIndent,
-  "text-transform": TextTransform,
-  "text-overflow": TextOverflow,
-  top: Top,
-  transform: Transform,
-  visibility: Visibility,
-  "white-space": WhiteSpace,
-  width: Width,
-  "word-spacing": WordSpacing,
-};
-
-type Shorthands = typeof Shorthands;
-
-const Shorthands = {
-  background: Background,
-  "background-position": BackgroundPosition,
-  "background-repeat": BackgroundRepeat,
-  font: Font,
-  inset: Inset,
-  "inset-block": InsetBlock,
-  "inset-inline": InsetInline,
-  outline: Outline,
-  overflow: Overflow,
-  "text-decoration": TextDecoration,
-};
-
-/**
- * @internal
- */
-export namespace Property {
-  export type Name = keyof Longhands;
-
-  export type WithName<N extends Name> = Longhands[N];
-
-  export function isName(name: string): name is Name {
-    return name in Longhands;
-  }
-
-  export function get<N extends Name>(name: N): WithName<N> {
-    return Longhands[name];
-  }
-}
-
-/**
- * @internal
- */
-export namespace Property {
-  export namespace Shorthand {
     export type Name = keyof Shorthands;
 
     export type WithName<N extends Name> = Shorthands[N];
 
+    const shorthands = new Map<Name, Shorthand>();
+
+    export function register<N extends Name>(
+      name: N,
+      property: WithName<N>
+    ): WithName<N> {
+      shorthands.set(name, property as Shorthand);
+      return property;
+    }
+
     export function isName(name: string): name is Name {
-      return name in Shorthands;
+      return shorthands.has(name as Name);
     }
 
     export function get<N extends Name>(name: N): WithName<N> {
-      return Shorthands[name];
+      return shorthands.get(name) as WithName<N>;
     }
   }
+
+  export const { of: shorthand, register: registerShorthand } = Shorthand;
 }
+
+export interface Longhands {}
+
+export interface Shorthands {}

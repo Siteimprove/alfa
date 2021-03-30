@@ -88,6 +88,22 @@ export class Slice<T> implements Collection.Indexed<T> {
     return Iterable.reduce(this, reducer, accumulator);
   }
 
+  public reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceWhile(this, predicate, reducer, accumulator);
+  }
+
+  public reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceUntil(this, predicate, reducer, accumulator);
+  }
+
   public apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U> {
     const array = [...Iterable.apply(this, mapper)];
 
@@ -226,6 +242,12 @@ export class Slice<T> implements Collection.Indexed<T> {
 
   public intersect(iterable: Iterable<T>): Slice<T> {
     const array = [...Iterable.intersect(this, iterable)];
+
+    return new Slice(array, 0, array.length);
+  }
+
+  public zip<U>(iterable: Iterable<U>): Slice<[T, U]> {
+    const array = [...Iterable.zip(this, iterable)];
 
     return new Slice(array, 0, array.length);
   }

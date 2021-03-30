@@ -2,13 +2,18 @@ import { Keyword } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 
+declare module "../property" {
+  interface Longhands {
+    "outline-style": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
 export type Specified =
   | Keyword<"auto">
   | Keyword<"none">
-  | Keyword<"hidden">
   | Keyword<"dotted">
   | Keyword<"dashed">
   | Keyword<"solid">
@@ -29,7 +34,6 @@ export type Computed = Specified;
 export const parse = Keyword.parse(
   "auto",
   "none",
-  "hidden",
   "dotted",
   "dashed",
   "solid",
@@ -41,11 +45,14 @@ export const parse = Keyword.parse(
 );
 
 /**
- * {@link https://drafts.csswg.org/css-ui/#outline-style}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-style}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("none"),
-  parse,
-  (outlineStyle) => outlineStyle
+export default Property.register(
+  "outline-style",
+  Property.of<Specified, Computed>(
+    Keyword.of("none"),
+    parse,
+    (outlineStyle) => outlineStyle
+  )
 );

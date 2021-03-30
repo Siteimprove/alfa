@@ -18,7 +18,7 @@ const { equals, not } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r61",
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants({ flattened: true })

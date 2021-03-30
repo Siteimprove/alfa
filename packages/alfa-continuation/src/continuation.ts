@@ -4,27 +4,38 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 /**
  * @public
  */
-export type Continuation<T, R = void> = Callback<Callback<T, R>, R>;
+export type Continuation<T, R = void, A extends Array<unknown> = []> = Callback<
+  Callback<T, R>,
+  R,
+  A
+>;
 
 /**
  * @public
  */
 export namespace Continuation {
-  export function of<T, R = void>(value: T): Continuation<T, R> {
-    return (callback) => callback(value);
+  export function of<T, R = void, A extends Array<unknown> = []>(
+    value: T
+  ): Continuation<T, R, A> {
+    return (callback, ..._) => callback(value);
   }
 
-  export function map<T, U, R = void>(
-    continuation: Continuation<T, R>,
+  export function map<T, U, R = void, A extends Array<unknown> = []>(
+    continuation: Continuation<T, R, A>,
     mapper: Mapper<T, U>
-  ): Continuation<U, R> {
-    return (callback) => continuation((value) => callback(mapper(value)));
+  ): Continuation<U, R, A> {
+    return (callback, ...args) =>
+      continuation(
+        (value, ...args) => callback(mapper(value), ...args),
+        ...args
+      );
   }
 
-  export function flatMap<T, U, R = void>(
-    continuation: Continuation<T, R>,
-    mapper: Mapper<T, Continuation<U, R>>
-  ): Continuation<U, R> {
-    return (callback) => continuation((value) => mapper(value)(callback));
+  export function flatMap<T, U, R = void, A extends Array<unknown> = []>(
+    continuation: Continuation<T, R, A>,
+    mapper: Mapper<T, Continuation<U, R, A>>
+  ): Continuation<U, R, A> {
+    return (callback, ...args) =>
+      continuation((value) => mapper(value)(callback, ...args), ...args);
   }
 }

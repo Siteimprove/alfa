@@ -13,10 +13,16 @@ puppeteer.launch().then(async (browser) => {
       [...document.querySelectorAll("#toc ul li a")].map((technique) => {
         const uri = technique.href;
 
-        const [, name, title] = technique.textContent
+        const match = technique.textContent
           .replace(/\s+/, " ")
           .trim()
           .match(/^(\w+\d+): (.+)/);
+
+        if (match === null) {
+          return [];
+        }
+
+        const [, name, title] = match;
 
         return [
           name,
@@ -36,8 +42,14 @@ puppeteer.launch().then(async (browser) => {
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // \`scripts/techniques.js\` and run \`yarn generate\` to rebuild this file.
 
+/**
+ * @internal
+ */
 export type Techniques = typeof Techniques;
 
+/**
+ * @internal
+ */
 export const Techniques = ${JSON.stringify(techniques, null, 2)} as const;
   `;
 
@@ -45,5 +57,8 @@ export const Techniques = ${JSON.stringify(techniques, null, 2)} as const;
     parser: "typescript",
   });
 
-  fs.writeFileSync(path.join(__dirname, "../src/technique/data.ts"), code);
+  fs.writeFileSync(
+    path.join(__dirname, "..", "src", "technique", "data.ts"),
+    code
+  );
 });

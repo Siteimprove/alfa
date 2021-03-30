@@ -29,6 +29,13 @@ export const Flags = {
     .alias("h")
     .default(720),
 
+  fit: Flag.boolean(
+    "fit",
+    `Whether or not to expand the viewport to fit the contents of the page. This
+    is enabled by default, but can cause problems for pages that use viewport
+    relative measurements.`
+  ).default(true),
+
   orientation: Flag.string(
     "orientation",
     "The orientation of the browser viewport."
@@ -113,18 +120,27 @@ export const Flags = {
   awaitSelector: Flag.string(
     "await-selector",
     `A CSS selector matching an element that must be present before considering
-    the page loaded.`
+    the page loaded. This flag can be repeated to wait for multiple elements.`
   )
     .type("selector")
+    .repeatable()
     .optional(),
 
   awaitXPath: Flag.string(
     "await-xpath",
     `An XPath expression evaluating to an element that must be present before
-    considering the page loaded.`
+    considering the page loaded. This flag can be repeated to wait for multiple
+    elements.`
   )
     .type("expression")
+    .repeatable()
     .optional(),
+
+  awaitAnimations: Flag.boolean(
+    "await-animations",
+    `Whether or not to wait for animations to end before considering the page
+    loaded.`
+  ).default(false),
 
   screenshot: Flag.string(
     "screenshot",

@@ -2,7 +2,6 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -21,7 +20,7 @@ const { isElement, hasNamespace } = Element;
 const { and, equals, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r68.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r68",
   requirements: [Criterion.of("1.3.1")],
   evaluate({ device, document }) {
     return {
@@ -44,13 +43,13 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasCorrectOwnedElements = Ok.of(
-    Diagnostic.of(
-      `The element only owns elements as required by its semantic role`
-    )
+    Diagnostic.of(`The element owns elements as required by its semantic role`)
   );
 
   export const HasIncorrectOwnedElements = Err.of(
-    Diagnostic.of(`The element owns elements not required by its semantic role`)
+    Diagnostic.of(
+      `The element owns no elements as required by its semantic role`
+    )
   );
 }
 
@@ -70,13 +69,13 @@ function hasRequiredChildren(device: Device): Predicate<Element> {
 }
 
 function isRequiredChild(
-  requiredChildren: Iterable<Iterable<Role.Name>>
+  requiredChildren: ReadonlyArray<ReadonlyArray<Role.Name>>
 ): Predicate<aria.Node> {
   return (node) =>
-    [...requiredChildren].some((roles) => isRequiredChild(roles)(node));
+    requiredChildren.some((roles) => isRequiredChild(roles)(node));
 
   function isRequiredChild(
-    requiredChildren: Iterable<Role.Name>
+    requiredChildren: ReadonlyArray<Role.Name>
   ): Predicate<aria.Node> {
     return (node) => {
       const [role, ...rest] = requiredChildren;

@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
@@ -7,7 +6,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import R65, { Outcomes } from "../../src/sia-r65/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 
 test(`evaluate() passes an <a> element that uses the default focus outline`, async (t) => {

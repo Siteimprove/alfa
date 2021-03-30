@@ -39,7 +39,7 @@ export namespace Predicate {
   }
 
   export function and<T, A extends Array<unknown> = []>(
-    ...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]
+    ...predicates: Array<Predicate<T, A>>
   ): Predicate<T, A> {
     return (value, ...args) => {
       for (let i = 0, n = predicates.length; i < n; i++) {
@@ -53,7 +53,7 @@ export namespace Predicate {
   }
 
   export function or<T, A extends Array<unknown> = []>(
-    ...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]
+    ...predicates: Array<Predicate<T, A>>
   ): Predicate<T, A> {
     return (value, ...args) => {
       for (let i = 0, n = predicates.length; i < n; i++) {

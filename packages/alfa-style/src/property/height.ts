@@ -6,6 +6,12 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    height: Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -28,10 +34,9 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/height}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("auto"),
-  parse,
-  (value, style) =>
+export default Property.register(
+  "height",
+  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value, style) =>
     value.map((height) => {
       switch (height.type) {
         case "keyword":
@@ -42,4 +47,5 @@ export default Property.of<Specified, Computed>(
           return Resolver.length(height, style);
       }
     })
+  )
 );

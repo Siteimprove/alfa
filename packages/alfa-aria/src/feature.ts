@@ -540,13 +540,15 @@ const Features: Features = {
 
     output: html(() => Option.of(Role.of("status"))),
 
+    p: html(() => Option.of(Role.of("paragraph"))),
+
     section: html(() => Option.of(Role.of("region"))),
 
     select: html(
       () =>
         // Despite what the HTML AAM specifies, we always map <select> elements
         // to a listbox widget as they currently have no way of mapping to a
-        // valid combobo widget. As a combobox requires an owned textarea and a
+        // valid combobox widget. As a combobox requires an owned textarea and a
         // list of options, we will always end up mapping <select> elements to
         // an invalid combobox widget.
         Option.of(Role.of("listbox")),

@@ -3,8 +3,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 /**
  * @remarks
- * This is a re-export the global `Generator` interface to ensure that it merges
- * with the `Generator` namespace.
+ * This is a re-export of the global `Generator` interface to ensure that it
+ * merges with the `Generator` namespace.
  *
  * @public
  */

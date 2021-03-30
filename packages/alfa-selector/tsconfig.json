@@ -1,6 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom"
+  },
   "files": [
     "src/context.ts",
     "src/index.ts",
@@ -8,6 +12,9 @@
     "test/selector.spec.tsx"
   ],
   "references": [
+    {
+      "path": "../alfa-array"
+    },
     {
       "path": "../alfa-css"
     },

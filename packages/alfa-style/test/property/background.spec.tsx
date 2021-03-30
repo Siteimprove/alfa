@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -9,7 +8,7 @@ import { Style } from "../../src/style";
 const device = Device.standard();
 
 test("#cascaded() parses `background: red`", (t) => {
-  const element = <div style={{ background: `red` }}></div>;
+  const element = <div style={{ background: `red` }} />;
 
   const style = Style.from(element, device);
 
@@ -24,7 +23,7 @@ test("#cascaded() parses `background: red`", (t) => {
 });
 
 test(`#cascaded() parses \`background: url("foo.png")\``, (t) => {
-  const element = <div style={{ background: `url("foo.png")` }}></div>;
+  const element = <div style={{ background: `url("foo.png")` }} />;
 
   const style = Style.from(element, device);
 
@@ -47,7 +46,7 @@ test(`#cascaded() parses \`background: url("foo.png")\``, (t) => {
 });
 
 test(`#cascaded() parses \`background: 12px\``, (t) => {
-  const element = <div style={{ background: `12px` }}></div>;
+  const element = <div style={{ background: `12px` }} />;
 
   const style = Style.from(element, device);
 
@@ -82,7 +81,7 @@ test(`#cascaded() parses \`background: 12px\``, (t) => {
 });
 
 test(`#cascaded() parses \`background: 12px 0\``, (t) => {
-  const element = <div style={{ background: `12px 0` }}></div>;
+  const element = <div style={{ background: `12px 0` }} />;
 
   const style = Style.from(element, device);
 
@@ -118,7 +117,7 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
 });
 
 test(`#cascaded() parses \`background: 0 / cover\``, (t) => {
-  const element = <div style={{ background: `0 / cover` }}></div>;
+  const element = <div style={{ background: `0 / cover` }} />;
 
   const style = Style.from(element, device);
 

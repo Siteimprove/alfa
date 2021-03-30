@@ -2,6 +2,12 @@ import { Keyword } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 
+declare module "../property" {
+  interface Longhands {
+    position: Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -32,8 +38,11 @@ export const parse = Keyword.parse(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/position}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("static"),
-  parse,
-  (position) => position
+export default Property.register(
+  "position",
+  Property.of<Specified, Computed>(
+    Keyword.of("static"),
+    parse,
+    (position) => position
+  )
 );

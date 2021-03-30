@@ -2,7 +2,6 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -19,7 +18,7 @@ const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r42.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r42",
   requirements: [Criterion.of("1.3.1")],
   evaluate({ device, document }) {
     return {
@@ -76,13 +75,13 @@ function hasRequiredParent(device: Device): Predicate<Element> {
 }
 
 function isRequiredParent(
-  requiredParent: Iterable<Iterable<Role.Name>>
+  requiredParent: ReadonlyArray<ReadonlyArray<Role.Name>>
 ): Predicate<aria.Node> {
   return (node) =>
-    [...requiredParent].some((roles) => isRequiredParent(roles)(node));
+    requiredParent.some((roles) => isRequiredParent(roles)(node));
 
   function isRequiredParent(
-    requiredParent: Iterable<Role.Name>
+    requiredParent: ReadonlyArray<Role.Name>
   ): Predicate<aria.Node> {
     return (node) => {
       const [role, ...rest] = requiredParent;

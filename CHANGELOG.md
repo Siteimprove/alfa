@@ -21,6 +21,128 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.16.1](../../compare/v0.16.0...v0.16.1) (2021-03-30)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R6 now correctly checks for structural, not referential, equality of language tags. Prior to v0.16.0, the rule relied on the undocumented implementation detail that language tags were only constructed once.
+
+## [0.16.0](../../compare/v0.15.3...v0.16.0) (2021-03-30)
+
+### Breaking
+
+- [@siteimprove/alfa-assert](packages/alfa-assert): `Handler.persist()` is no longer available as it broke the ability to bundle the package using certain tools due to the dependence on Node.js.
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` longhand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#718](../../pull/718))
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<p>` elements now have an implicit role of `paragraph`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now targets links inside an element with a role of `paragraph`; SIA-R71, SIA-R72, SIA-R73, and SIA-R85 now target elements with a role of `paragraph`. ([#750](../../pull/750))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Roles that prohibit naming are now correctly considered when referenced by `aria-labelledby`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly passes cases where an element contains more than 1 required owned element, but the first owned element is not required.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria), [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-dom](packages/alfa-dom), [@siteimprove/alfa-iana](packages/alfa-iana), [@siteimprove/alfa-style](packages/alfa-style): Circular imports between modules in these packages were previously causing some bundlers to hoist the modules in incorrect order, leading to panics at runtime. This has now been fixed.
+
+## [0.15.3](../../compare/v0.15.2...v0.15.3) (2021-03-23)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles percentage dimensions when combined with `overflow-{x,y}: hidden`.
+
+## [0.15.2](../../compare/v0.15.1...v0.15.2) (2021-03-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fix a panic in SIA-R66 and SIA-R69 when background colors cannot be determined.
+
+## [0.15.1](../../compare/v0.15.0...v0.15.1) (2021-03-17)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles text nodes of clipped elements.
+
+- [@siteimprove/alfa-cypress](packages/alfa-cypress): `Cypress.createPlugin()` no longer creates an asynchronous Chai plugin, which was causing assertion errors to not count as test failures.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 now only applies to elements that are possibly scrollable along the x-axis if they also specify `white-space: nowrap`. ([#746](../../pull/746))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now correctly handles cases where only one of `width` or `height` has been set to `0` and only one of `overflow-x` or `overflow-y` set to `hidden`. Either of these cases will cause a block to collapse and its contents be hidden.
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): CSS pseudo-elements are now parsed, thus preventing the parser from entirely dropping declaration containing one of them. ([#745](../../pull/754))
+
+## [0.15.0](../../compare/v0.14.2...v0.15.0) (2021-03-15)
+
+### Breaking
+
+- [@siteimprove/alfa-cypress](packages/alfa-cypress): The Cypress integration now uses a Chai plugin as its main entry point rather than a custom command. For more information, please see the associated pull request. ([#740](../../pull/740))
+
+### Added
+
+- [@siteimprove/alfa-trampoline](packages/alfa-trampoline): `Trampoline<T>` now provides an implementation of `Foldable<T>` and `Applicative<T>`.
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result<T, E>` now provides an implementation of `Applicative<T>`.
+
+- [@siteimprove/alfa-future](packages/alfa-future): `Future<T>` now provides an implementation of `Applicative<T>`.
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isTransparent()` now correctly handles text nodes of transparent elements. ([#741](../../pull/741))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `font-family` property now correctly parses font families specified as whitespace-separated idents. ([#742](../../pull/742))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 no longer considers elements with `overflow: clip` as possibly scrollable. ([#744](../../pull/744))
+
+## [0.14.2](../../compare/v0.14.1...v0.14.2) (2021-03-11)
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The `@siteimprove/alfa-dom/jsx-runtime` module has been fixed and now correctly exposes the `jsx()`, `jsxs()`, and `jsxDEV()` entries.
+
+## [0.14.1](../../compare/v0.14.0...v0.14.1) (2021-03-10)
+
+### Fixed
+
+- [@siteimprove/alfa-cheerio](packages/alfa-cheerio): The package now compiles correctly when the `esModuleInterop` compiler option is used.
+
+## [0.14.0](../../compare/v0.13.0...v0.14.0) (2021-03-10)
+
+### Breaking
+
+- [@siteimprove/alfa-scraper](packages/alfa-awaiter): The `Awaiter` type has been simplified and now only returns either an error or no error. ([#737](../../pull/737))
+
+### Added
+
+- [@siteimprove/alfa-continuation](packages/alfa-continuation): `Continuation<T, R>` now accepts a third type parameter, `A`, denoting additional arguments passed to the continuation.
+
+- [@siteimprove/alfa-promise](packages/alfa-promise): A new package has been added with funcitonality for working with promises.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): A new `@siteimprove/alfa-dom/jsx-runtime` module is now available for compatibility with the new importless JSX mode.
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): A new awaiter, `Awaiter.animations()`, is now available. This awaiter polls the document for active animations and resolves when no animations are active. Additionally, a new option, `fit: boolean`, is now available in `Scraper#scrape()`. When set, which it is by default, the viewport will expand to fit the contents of the page. This is needed to accurately scrape pages that toggle content depending on scroll position. ([#737](../../pull/737))
+
+- [@siteimprove/alfa-cli](packages/alfa-cli): Two new flags, `--await-animations` and `--[no-]fit` are now available in the `alfa scrape` command. These flags reflect the corresponding features in the scraper. ([#737](../../pull/737))
+
+### Changed
+
+- [@siteimprove/alfa-branched](packages/alfa-branched), [@siteimprove/alfa-future](packages/alfa-future), [@siteimprove/alfa-trampoline](packages/alfa-trampoline): The mapper passed to `Branched.traverse()`, `Future.traverse()`, and `Trampoline.traverse()` is now passed the index of the value being processed.
+
+### Fixed
+
+- [@siteimprove/alfa-array](packages/alfa-array), [@siteimprove/alfa-json](packages/alfa-json), [@siteimprove/alfa-promise](packages/alfa-promise), [@siteimprove/alfa-url](packages/alfa-url): Avoid redefining the `global` variable used in certain environments, such as Jest.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now correctly compute foreground colors in presence of an `opacity` attribute. ([#739](../../pull/739))
+
+## [0.13.0](../../compare/v0.12.0...v0.13.0) (2021-03-05)
+
 ### Breaking
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): `Role#requiredParent()` now returns `Iterable<Iterable<Role.Name>>` to make it possible to model the nested parent requirements that have been introduced in the Editor's Draft of WAI-ARIA. ([#728](../../pull/728))
@@ -29,9 +151,31 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
 
+- [@siteimprove/alfa-css](packages/alfa-css): `Unit.Length.Relative.Font` and `Unit.Length.Relative.Viewport` are now available for distinguishing between font and viewport relative lengths. In addition, `Unit.isFontRelativeLength()`, `Unit.isViewportRelativeLength()`, `Length#isFontRelative()`, and `Length#isViewportRelative()` are now also available. ([#734](../../pull/734))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector` subclasses now have type guard functions, and `Selector#type` is now available. ([#732](../../pull/732))
+
+- [@siteimprove/alfa-collection](packages/alfa-collection): `Indexed#reduceWhile()`, `Indexed#reduceUntil()`, and `Indexed#zip()` are now available.
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.reduceWhile()`, `Array.reduceUntil()`, and `Array.zip()` are now available.
+
+- [@siteimprove/alfa-iterable](packages/alfa-iterable): `Iterable.reduceWhile()`, `Iterable.reduceUntil()`, and `Iterable.zip()` are now available.
+
+- [@siteimprove/alfa-playwright](packages/alfa-playwright): A new package has been added with conversion functions for the Playwright browser automation framework.
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): We now track the latest Editor's Draft of WAI-ARIA, which contains several fixes already implemented by browsers and assistive technologies. ([#728](../../pull/728))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 has been limited to testing cases where a non-inline, non-font relative `height` is likely to cause text to clip when text scale is increased. This was, based on much feedback, the most common case for true positives. Cases with `white-space: nowrap` are also still tested. ([#734](../../pull/734))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `Selector#equals()` avoids narrowing to `never` when used on a different `Selector`. ([#732](../../pull/732))
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): `Scraper.scrape()` now correctly sets the viewport height to the specified device height instead of its width.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R87 now automatically passes if a skip link references an element "at the start" of an element with a role of `main`. ([#735](../../pull/735))
 
 ## [0.12.0](../../compare/v0.11.0...v0.12.0) (2021-02-26)
 

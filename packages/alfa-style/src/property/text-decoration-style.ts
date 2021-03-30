@@ -1,23 +1,12 @@
-import {
-  Current,
-  Keyword,
-  Length,
-  Percentage,
-  RGB,
-  System,
-  Token,
-} from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Result } from "@siteimprove/alfa-result";
-
-import * as css from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
-import { Resolver } from "../resolver";
 
-import { List } from "./value/list";
-
-const { either } = Parser;
+declare module "../property" {
+  interface Longhands {
+    "text-decoration-style": Property<Specified, Computed>;
+  }
+}
 
 /**
  * @internal
@@ -49,8 +38,11 @@ export const parse = Keyword.parse(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("solid"),
-  parse,
-  (textDecorationStyle) => textDecorationStyle
+export default Property.register(
+  "text-decoration-style",
+  Property.of<Specified, Computed>(
+    Keyword.of("solid"),
+    parse,
+    (textDecorationStyle) => textDecorationStyle
+  )
 );

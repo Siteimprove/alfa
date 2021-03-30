@@ -13,6 +13,8 @@ import { Color } from "./color";
 import { Length } from "./length";
 import { Percentage } from "./percentage";
 
+import { Linear } from "..";
+
 const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
 
 /**
@@ -228,18 +230,10 @@ export namespace Gradient {
       return items;
     }
   );
-}
 
-// `Linear` depends on `Gradient` so the import of `Linear` must be moved after
-// the initial declaration of `Gradient`.
-import { Linear } from "./gradient/linear";
-
-/**
- * @public
- */
-export namespace Gradient {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
-  export const parse: Parser<Slice<Token>, Linear, string> = Linear.parse;
+  export const parse: Parser<Slice<Token>, Linear, string> = (input) =>
+    Linear.parse(input);
 }
