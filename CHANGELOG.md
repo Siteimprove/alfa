@@ -43,6 +43,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly passes cases where an element contains more than 1 required owned element, but the first owned element is not required.
 
+- [@siteimprove/alfa-aria](packages/alfa-aria), [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-dom](packages/alfa-dom), [@siteimprove/alfa-iana](packages/alfa-iana), [@siteimprove/alfa-style](packages/alfa-style): Circular imports between modules in these packages were previously causing some bundlers to hoist the modules in incorrect order, leading to panics at runtime. This has now been fixed.
+
 ## [0.15.3](../../compare/v0.15.2...v0.15.3) (2021-03-23)
 
 ### Fixed
