@@ -27,6 +27,9 @@ const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
 type Name = Property.Name;
 
+/**
+ * @public
+ */
 export class Style implements Serializable<Style.JSON> {
   public static of(
     declarations: Iterable<Declaration>,
@@ -263,6 +266,9 @@ export class Style implements Serializable<Style.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Style {
   export interface JSON {
     [key: string]: json.JSON;

@@ -1,7 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/page.ts", "src/resource.ts", "src/site.ts"],
+  "files": [
+    "native.ts",
+    "src/index.ts",
+    "src/native.ts",
+    "src/page.ts",
+    "src/resource.ts",
+    "src/site.ts"
+  ],
   "references": [
     {
       "path": "../alfa-device"
