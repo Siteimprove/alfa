@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.16.2](../../compare/v0.16.1...v0.16.2) (2021-03-31)
+
+This release contains only internal API changes.
+
 ## [0.16.1](../../compare/v0.16.0...v0.16.1) (2021-03-30)
 
 ### Fixed
