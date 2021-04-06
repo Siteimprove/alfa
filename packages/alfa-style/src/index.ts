@@ -58,6 +58,7 @@ import "./property/border-right-width";
 import "./property/border-start-end-radius";
 import "./property/border-start-start-radius";
 import "./property/border-style";
+import "./property/border-top";
 import "./property/border-top-color";
 import "./property/border-top-left-radius";
 import "./property/border-top-right-radius";
