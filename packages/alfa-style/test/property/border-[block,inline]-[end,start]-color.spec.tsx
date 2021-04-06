@@ -80,6 +80,9 @@ for (const box of ["block", "inline"] as const) {
 
     const style = Style.from(element, device);
 
+    console.log(declaration.toJSON());
+    console.log(style.toJSON());
+
     for (const side of ["start", "end"] as const) {
       const property = `border-${box}-${side}-color` as const;
 

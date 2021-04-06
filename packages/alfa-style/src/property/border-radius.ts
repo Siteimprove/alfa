@@ -6,6 +6,17 @@ import { Tuple } from "./value/tuple";
 
 const { delimited, either, map, option, pair, right, takeBetween } = Parser;
 
+declare module "../property" {
+  interface Shorthands {
+    "border-radius": Property.Shorthand<
+      | "border-top-left-radius"
+      | "border-top-right-radius"
+      | "border-bottom-right-radius"
+      | "border-bottom-left-radius"
+    >;
+  }
+}
+
 /**
  * @internal
  **/
@@ -56,17 +67,20 @@ const parse = map(
   }
 );
 
-export default Property.shorthand(
-  [
-    "border-top-left-radius",
-    "border-top-right-radius",
-    "border-bottom-right-radius",
-    "border-bottom-left-radius",
-  ],
-  map(parse, ([topLeft, topRight, bottomRight, bottomLeft]) => [
-    ["border-top-left-radius", topLeft],
-    ["border-top-right-radius", topRight],
-    ["border-bottom-right-radius", bottomRight],
-    ["border-bottom-left-radius", bottomLeft],
-  ])
+export default Property.registerShorthand(
+  "border-radius",
+  Property.shorthand(
+    [
+      "border-top-left-radius",
+      "border-top-right-radius",
+      "border-bottom-right-radius",
+      "border-bottom-left-radius",
+    ],
+    map(parse, ([topLeft, topRight, bottomRight, bottomLeft]) => [
+      ["border-top-left-radius", topLeft],
+      ["border-top-right-radius", topRight],
+      ["border-bottom-right-radius", bottomRight],
+      ["border-bottom-left-radius", bottomLeft],
+    ])
+  )
 );
