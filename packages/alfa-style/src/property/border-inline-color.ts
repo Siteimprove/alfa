@@ -1,7 +1,9 @@
-import { Color, Token } from "@siteimprove/alfa-css";
+import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
+
+import { parse } from "./border-top-color";
 
 const { delimited, map, option, takeBetween } = Parser;
 
@@ -22,7 +24,7 @@ export default Property.registerShorthand(
   Property.shorthand(
     ["border-inline-start-color", "border-inline-end-color"],
     map(
-      takeBetween(delimited(option(Token.parseWhitespace), Color.parse), 1, 2),
+      takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 2),
       ([start, end = start]) => [
         ["border-inline-start-color", start],
         ["border-inline-end-color", end],
