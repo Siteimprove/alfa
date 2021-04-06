@@ -1,4 +1,3 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
@@ -76,12 +75,12 @@ for (const box of ["block", "inline"] as const) {
     const element = <div />;
     const declaration = h.declaration(shorthand, "red");
 
-    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
+    const document = h.document(
+      [element],
+      [h.sheet([h.rule.style("div", [declaration])])]
+    );
 
     const style = Style.from(element, device);
-
-    console.log(declaration.toJSON());
-    console.log(style.toJSON());
 
     for (const side of ["start", "end"] as const) {
       const property = `border-${box}-${side}-color` as const;
