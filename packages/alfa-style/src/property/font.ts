@@ -14,6 +14,19 @@ import * as Weight from "./font-weight";
 
 const { map, option, pair, right, delimited } = Parser;
 
+declare module "../property" {
+  interface Shorthands {
+    font: Property.Shorthand<
+      | "font-family"
+      | "font-size"
+      | "font-stretch"
+      | "font-style"
+      | "font-weight"
+      | "line-height"
+    >;
+  }
+}
+
 /**
  * @internal
  */
@@ -108,19 +121,22 @@ export const parse = pair(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font}
  * @internal
  */
-export default Property.shorthand(
-  [
-    "font-family",
-    "font-size",
-    "font-stretch",
-    "font-style",
-    "font-weight",
-    "line-height",
-  ],
-  map(parse, ([prelude, [size, [lineHeight, family]]]) => [
-    ...prelude,
-    ["font-size", size],
-    ["line-height", lineHeight.getOr(Keyword.of("initial"))],
-    ["font-family", family],
-  ])
+export default Property.registerShorthand(
+  "font",
+  Property.shorthand(
+    [
+      "font-family",
+      "font-size",
+      "font-stretch",
+      "font-style",
+      "font-weight",
+      "line-height",
+    ],
+    map(parse, ([prelude, [size, [lineHeight, family]]]) => [
+      ...prelude,
+      ["font-size", size],
+      ["line-height", lineHeight.getOr(Keyword.of("initial"))],
+      ["font-family", family],
+    ])
+  )
 );

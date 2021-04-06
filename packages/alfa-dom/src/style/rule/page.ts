@@ -4,12 +4,12 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
-export class Page extends Rule {
+export class PageRule extends Rule {
   public static of(
     selector: string,
     declarations: Iterable<Declaration>
-  ): Page {
-    return new Page(selector, Array.from(declarations));
+  ): PageRule {
+    return new PageRule(selector, Array.from(declarations));
   }
 
   private readonly _selector: string;
@@ -32,7 +32,7 @@ export class Page extends Rule {
     return this._style;
   }
 
-  public toJSON(): Page.JSON {
+  public toJSON(): PageRule.JSON {
     return {
       type: "page",
       selector: this._selector,
@@ -49,23 +49,23 @@ export class Page extends Rule {
   }
 }
 
-export namespace Page {
+export namespace PageRule {
   export interface JSON extends Rule.JSON {
     type: "page";
     selector: string;
     style: Block.JSON;
   }
 
-  export function isPage(value: unknown): value is Page {
-    return value instanceof Page;
+  export function isPageRule(value: unknown): value is PageRule {
+    return value instanceof PageRule;
   }
 
   /**
    * @internal
    */
-  export function fromPage(json: JSON): Trampoline<Page> {
+  export function fromPageRule(json: JSON): Trampoline<PageRule> {
     return Trampoline.done(
-      Page.of(json.selector, json.style.map(Declaration.from))
+      PageRule.of(json.selector, json.style.map(Declaration.from))
     );
   }
 }

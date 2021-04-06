@@ -1,45 +1,15 @@
-import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
-
 import { Property } from "../property";
-import { Resolver } from "../resolver";
 
-const { either } = Parser;
+import Base, { Specified, Computed } from "./top";
 
-/**
- * @internal
- */
-export type Specified = Keyword<"auto"> | Length | Percentage;
-
-/**
- * @internal
- */
-export type Computed = Keyword<"auto"> | Length<"px"> | Percentage;
-
-/**
- * @internal
- */
-export const parse = either(
-  Keyword.parse("auto"),
-  either(Length.parse, Percentage.parse)
-);
+declare module "../property" {
+  interface Longhands {
+    "inset-block-start": Property<Specified, Computed>;
+  }
+}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-start}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("auto"),
-  parse,
-  (insetBlockStart, style) =>
-    insetBlockStart.map((insetBlockStart) => {
-      switch (insetBlockStart.type) {
-        case "keyword":
-        case "percentage":
-          return insetBlockStart;
-
-        case "length":
-          return Resolver.length(insetBlockStart, style);
-      }
-    })
-);
+export default Property.register("inset-block-start", Property.extend(Base));

@@ -213,7 +213,7 @@ export namespace SelectorMap {
     };
 
     const visit = (rule: Rule) => {
-      if (StyleRule.isStyle(rule)) {
+      if (StyleRule.isStyleRule(rule)) {
         // Style rules with empty style blocks aren't relevant and so can be
         // skipped entirely.
         if (rule.style.isEmpty()) {
@@ -235,7 +235,7 @@ export namespace SelectorMap {
 
       // For media rules, we recurse into the child rules if and only if the
       // media condition matches the device.
-      else if (MediaRule.isMedia(rule)) {
+      else if (MediaRule.isMediaRule(rule)) {
         const query = Media.parse(Lexer.lex(rule.condition));
 
         if (query.none(([, query]) => query.matches(device))) {
@@ -249,7 +249,7 @@ export namespace SelectorMap {
 
       // For import rules, we recurse into the imported style sheet if and only
       // if the import condition matches the device.
-      else if (ImportRule.isImport(rule)) {
+      else if (ImportRule.isImportRule(rule)) {
         const query = Media.parse(Lexer.lex(rule.condition));
 
         if (query.none(([, query]) => query.matches(device))) {
@@ -324,7 +324,7 @@ export namespace SelectorMap {
 
       // For style rules that are presentational hints, the specificity will
       // always be 0 regardless of the selector.
-      if (StyleRule.isStyle(rule) && rule.hint) {
+      if (StyleRule.isStyleRule(rule) && rule.hint) {
         this._specificity = 0;
       }
 

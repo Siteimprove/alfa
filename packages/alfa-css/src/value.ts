@@ -8,7 +8,7 @@ import * as json from "@siteimprove/alfa-json";
  * @public
  */
 export abstract class Value<T extends string = string>
-  implements Equatable, Hashable, Serializable {
+  implements Equatable, Hashable, Serializable<Value.JSON<T>> {
   protected constructor() {}
 
   public abstract get type(): T;

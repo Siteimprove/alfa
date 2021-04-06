@@ -8,5 +8,11 @@
 export * from "./attribute";
 export * from "./feature";
 export * from "./name";
-export * from "./node";
 export * from "./role";
+
+export * from "./node";
+
+export * from "./node/container";
+export * from "./node/element";
+export * from "./node/inert";
+export * from "./node/text";

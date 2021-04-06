@@ -9,6 +9,12 @@ import { List } from "./value/list";
 
 const { map, either, delimited, option, pair, separatedList } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "background-size": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -73,25 +79,28 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  List.of([[Keyword.of("auto"), Keyword.of("auto")]], ", "),
-  parseList,
-  (value, style) =>
-    value.map((sizes) =>
-      List.of(
-        Iterable.map(sizes, (size) => {
-          if (Keyword.isKeyword(size)) {
-            return size;
-          }
+export default Property.register(
+  "background-size",
+  Property.of<Specified, Computed>(
+    List.of([[Keyword.of("auto"), Keyword.of("auto")]], ", "),
+    parseList,
+    (value, style) =>
+      value.map((sizes) =>
+        List.of(
+          Iterable.map(sizes, (size) => {
+            if (Keyword.isKeyword(size)) {
+              return size;
+            }
 
-          const [x, y] = size;
+            const [x, y] = size;
 
-          return [
-            x.type === "length" ? Resolver.length(x, style) : x,
-            y.type === "length" ? Resolver.length(y, style) : y,
-          ];
-        }),
-        ", "
+            return [
+              x.type === "length" ? Resolver.length(x, style) : x,
+              y.type === "length" ? Resolver.length(y, style) : y,
+            ];
+          }),
+          ", "
+        )
       )
-    )
+  )
 );

@@ -17,7 +17,7 @@ const registry = "https://www.iana.org/assignments/language-subtag-registry";
  * @typedef {object} Subtag
  * @property {string} type
  * @property {string} name
- * @property {Array<string>} args
+ * @property {Record<string, string | null>} args
  */
 
 /**
@@ -27,15 +27,13 @@ const registry = "https://www.iana.org/assignments/language-subtag-registry";
 function getType(subtag) {
   switch (subtag.type) {
     case "language":
-      return "Primary";
+      return "primary";
     case "extlang":
-      return "Extended";
+      return "extended";
     case "script":
-      return "Script";
     case "region":
-      return "Region";
     case "variant":
-      return "Variant";
+      return subtag.type;
   }
 
   return null;
@@ -149,26 +147,20 @@ axios.get(registry).then(({ data }) => {
     const scope = record.find((field) => field.name === "Scope");
 
     for (const name of expand(tag.value)) {
-      /** @type {Array<string>} */
-      const args = [`"${name.toLowerCase()}"`];
+      /** @type {Record<string, string | null>} */
+      const args = {};
 
       switch (type.value) {
         case "language":
-          if (scope !== undefined) {
-            args.push(`option("${scope.value}")`);
-          }
+          args.scope = scope === undefined ? null : scope.value;
           break;
 
         case "extlang":
-          args.push(`"${prefixes[0].value}"`);
-
-          if (scope !== undefined) {
-            args.push(`option("${scope.value}")`);
-          }
+          args.prefix = prefixes[0].value;
           break;
 
         case "variant":
-          args.push(`[${prefixes.map((prefix) => `"${prefix.value}"`)}]`);
+          args.prefixes = prefixes.map((prefix) => prefix.value);
       }
 
       /** @type {Subtag} */
@@ -200,42 +192,35 @@ axios.get(registry).then(({ data }) => {
     return groups;
   }, new Map());
 
-  const lines = [
-    `
+  let code = `
 // This file has been automatically generated based on the IANA Language Subtag
 // Registry. Do therefore not modify it directly! If you wish to make changes,
 // do so in \`scripts/languages.js\` and run \`yarn generate\` to rebuild this file.
 
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
+/**
+ * @internal
+ */
+export type Languages = typeof Languages;
 
-import { Language } from "../language";
+/**
+ * @internal
+ */
+export const Languages = {
+  ${[...groups]
+    .map(
+      ([group, subtags]) => `
+        ${group}: {
+          ${subtags
+            .map((subtag) => `"${subtag.name}": ${JSON.stringify(subtag.args)}`)
+            .join(",\n")}
+        }
+      `
+    )
+    .join(",\n")}
+} as const;
+  `;
 
-const { of: option } = Option;
-const { primary, extended, script, region, variant } = Language;
-    `,
-  ];
-
-  for (const [group, subtags] of groups) {
-    lines.push(`
-      /**
-       * @internal
-       */
-      export const ${group} = Map.from([
-        ${subtags
-          .map((subtag) => {
-            const type = getType(subtag);
-
-            return `["${subtag.name}", ${type.toLowerCase()}(${subtag.args.join(
-              ", "
-            )})]`;
-          })
-          .join("\n,")}
-      ])
-    `);
-  }
-
-  const code = prettier.format(lines.join("\n\n"), {
+  code = prettier.format(code, {
     parser: "typescript",
   });
 

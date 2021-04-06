@@ -6,9 +6,9 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
-export class FontFace extends Rule {
-  public static of(declarations: Iterable<Declaration>): FontFace {
-    return new FontFace(Array.from(declarations));
+export class FontFaceRule extends Rule {
+  public static of(declarations: Iterable<Declaration>): FontFaceRule {
+    return new FontFaceRule(Array.from(declarations));
   }
 
   private readonly _style: Block;
@@ -25,7 +25,7 @@ export class FontFace extends Rule {
     return this._style;
   }
 
-  public toJSON(): FontFace.JSON {
+  public toJSON(): FontFaceRule.JSON {
     return {
       type: "font-face",
       style: this._style.toJSON(),
@@ -39,22 +39,22 @@ export class FontFace extends Rule {
   }
 }
 
-export namespace FontFace {
+export namespace FontFaceRule {
   export interface JSON {
     [key: string]: json.JSON;
     type: "font-face";
     style: Block.JSON;
   }
 
-  export function isFontFace(value: unknown): value is FontFace {
-    return value instanceof FontFace;
+  export function isFontFaceRule(value: unknown): value is FontFaceRule {
+    return value instanceof FontFaceRule;
   }
 
   /**
    * @internal
    */
-  export function fromFontFace(json: JSON): Trampoline<FontFace> {
-    return Trampoline.done(FontFace.of(json.style.map(Declaration.from)));
+  export function fromFontFaceRule(json: JSON): Trampoline<FontFaceRule> {
+    return Trampoline.done(FontFaceRule.of(json.style.map(Declaration.from)));
   }
 }
 

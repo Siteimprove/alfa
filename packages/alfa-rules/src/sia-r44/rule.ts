@@ -119,7 +119,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
 
 function isOrientationConditional(declaration: Declaration): boolean {
   return some(declaration.ancestors(), (rule) => {
-    if (MediaRule.isMedia(rule)) {
+    if (MediaRule.isMediaRule(rule)) {
       for (const [, media] of Media.parse(Lexer.lex(rule.condition))) {
         for (const { condition } of media) {
           if (condition.isSome()) {

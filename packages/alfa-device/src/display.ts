@@ -77,11 +77,11 @@ export namespace Display {
   export interface JSON {
     [key: string]: json.JSON;
     resolution: number;
-    scan: Scan;
+    scan: `${Scan}`;
   }
 
   export function from(json: JSON): Display {
-    return Display.of(json.resolution, json.scan);
+    return Display.of(json.resolution, json.scan as Scan);
   }
 
   export function standard(): Display {

@@ -7,6 +7,12 @@ import { List } from "./value/list";
 
 const { map, delimited, option, separatedList } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "background-origin": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -44,8 +50,11 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  List.of([Keyword.of("border-box")], ", "),
-  parseList,
-  (value) => value
+export default Property.register(
+  "background-origin",
+  Property.of<Specified, Computed>(
+    List.of([Keyword.of("border-box")], ", "),
+    parseList,
+    (value) => value
+  )
 );

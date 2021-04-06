@@ -8,6 +8,12 @@ import { List } from "./value/list";
 
 const { either } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "text-decoration-line": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -74,8 +80,11 @@ export const parse = either(Keyword.parse("none"), (input) => {
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("none"),
-  parse,
-  (textDecorationLine) => textDecorationLine
+export default Property.register(
+  "text-decoration-line",
+  Property.of<Specified, Computed>(
+    Keyword.of("none"),
+    parse,
+    (textDecorationLine) => textDecorationLine
+  )
 );

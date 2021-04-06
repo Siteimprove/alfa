@@ -6,6 +6,12 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    top: Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -28,10 +34,9 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/top}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("auto"),
-  parse,
-  (top, style) =>
+export default Property.register(
+  "top",
+  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (top, style) =>
     top.map((top) => {
       switch (top.type) {
         case "keyword":
@@ -42,4 +47,5 @@ export default Property.of<Specified, Computed>(
           return Resolver.length(top, style);
       }
     })
+  )
 );

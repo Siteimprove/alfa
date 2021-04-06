@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Namespace } from "@siteimprove/alfa-dom";
 
-import { Name } from "../src/name";
+import { Name } from "../src";
 
 const device = Device.standard();
 

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-cheerio",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.15.3",
+  "version": "0.16.2",
   "license": "MIT",
   "description": "Functionality for translating Cheerio elements into page objects",
   "repository": {
@@ -20,16 +20,16 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-device": "workspace:^0.15.3",
-    "@siteimprove/alfa-dom": "workspace:^0.15.3",
-    "@siteimprove/alfa-http": "workspace:^0.15.3",
-    "@siteimprove/alfa-option": "workspace:^0.15.3",
-    "@siteimprove/alfa-web": "workspace:^0.15.3",
+    "@siteimprove/alfa-device": "workspace:^0.16.2",
+    "@siteimprove/alfa-dom": "workspace:^0.16.2",
+    "@siteimprove/alfa-http": "workspace:^0.16.2",
+    "@siteimprove/alfa-option": "workspace:^0.16.2",
+    "@siteimprove/alfa-web": "workspace:^0.16.2",
     "cheerio": "^1.0.0-rc.5",
     "domhandler": "^4.0.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.15.3"
+    "@siteimprove/alfa-test": "workspace:^0.16.2"
   },
   "publishConfig": {
     "access": "public",
