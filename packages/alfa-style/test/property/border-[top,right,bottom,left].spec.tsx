@@ -60,7 +60,7 @@ function testStyle(
   );
 }
 
-for (const side of ["top"] as const) {
+for (const side of ["top", "right", "bottom", "left"] as const) {
   const shorthand = `border-${side}` as const;
 
   test(`#cascaded() parses \`${shorthand}: red\``, (t) => {
