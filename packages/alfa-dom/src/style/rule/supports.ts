@@ -1,18 +1,18 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Condition } from "./condition";
+import { ConditionRule } from "./condition";
 
-export class Supports extends Condition {
-  public static of(condition: string, rules: Iterable<Rule>): Supports {
-    return new Supports(condition, Array.from(rules));
+export class SupportsRule extends ConditionRule {
+  public static of(condition: string, rules: Iterable<Rule>): SupportsRule {
+    return new SupportsRule(condition, Array.from(rules));
   }
 
   private constructor(condition: string, rules: Array<Rule>) {
     super(condition, rules);
   }
 
-  public toJSON(): Supports.JSON {
+  public toJSON(): SupportsRule.JSON {
     return {
       type: "supports",
       rules: [...this._rules].map((rule) => rule.toJSON()),
@@ -31,21 +31,21 @@ export class Supports extends Condition {
   }
 }
 
-export namespace Supports {
-  export interface JSON extends Condition.JSON {
+export namespace SupportsRule {
+  export interface JSON extends ConditionRule.JSON {
     type: "supports";
   }
 
-  export function isSupports(value: unknown): value is Supports {
-    return value instanceof Supports;
+  export function isSupportsRue(value: unknown): value is SupportsRule {
+    return value instanceof SupportsRule;
   }
 
   /**
    * @internal
    */
-  export function fromSupports(json: JSON): Trampoline<Supports> {
+  export function fromSupportsRule(json: JSON): Trampoline<SupportsRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      Supports.of(json.condition, rules)
+      SupportsRule.of(json.condition, rules)
     );
   }
 }

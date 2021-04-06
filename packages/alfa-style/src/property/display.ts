@@ -5,6 +5,12 @@ import { Property } from "../property";
 
 const { map, either } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    display: Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -124,8 +130,11 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/display}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  [Keyword.of("inline"), Keyword.of("flow")],
-  parse,
-  (value) => value
+export default Property.register(
+  "display",
+  Property.of<Specified, Computed>(
+    [Keyword.of("inline"), Keyword.of("flow")],
+    parse,
+    (value) => value
+  )
 );

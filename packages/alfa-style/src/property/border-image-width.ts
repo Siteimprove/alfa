@@ -14,6 +14,12 @@ import { Tuple } from "./value/tuple";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "border-image-width": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -79,16 +85,19 @@ export const parse = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Tuple.of(Number.of(1), Number.of(1), Number.of(1), Number.of(1)),
-  parse,
-  (value, style) =>
-    value.map(({ values: [t, r, b, l] }) =>
-      Tuple.of(
-        t.type === "length" ? Resolver.length(t, style) : t,
-        r.type === "length" ? Resolver.length(r, style) : r,
-        b.type === "length" ? Resolver.length(b, style) : b,
-        l.type === "length" ? Resolver.length(l, style) : l
+export default Property.register(
+  "border-image-width",
+  Property.of<Specified, Computed>(
+    Tuple.of(Number.of(1), Number.of(1), Number.of(1), Number.of(1)),
+    parse,
+    (value, style) =>
+      value.map(({ values: [t, r, b, l] }) =>
+        Tuple.of(
+          t.type === "length" ? Resolver.length(t, style) : t,
+          r.type === "length" ? Resolver.length(r, style) : r,
+          b.type === "length" ? Resolver.length(b, style) : b,
+          l.type === "length" ? Resolver.length(l, style) : l
+        )
       )
-    )
+  )
 );

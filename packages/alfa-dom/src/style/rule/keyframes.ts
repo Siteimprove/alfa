@@ -1,11 +1,11 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Grouping } from "./grouping";
+import { GroupingRule } from "./grouping";
 
-export class Keyframes extends Grouping {
-  public static of(name: string, rules: Iterable<Rule>): Keyframes {
-    return new Keyframes(name, Array.from(rules));
+export class KeyframesRule extends GroupingRule {
+  public static of(name: string, rules: Iterable<Rule>): KeyframesRule {
+    return new KeyframesRule(name, Array.from(rules));
   }
 
   private readonly _name: string;
@@ -20,7 +20,7 @@ export class Keyframes extends Grouping {
     return this._name;
   }
 
-  public toJSON(): Keyframes.JSON {
+  public toJSON(): KeyframesRule.JSON {
     return {
       type: "keyframes",
       rules: [...this.rules].map((rule) => rule.toJSON()),
@@ -37,22 +37,22 @@ export class Keyframes extends Grouping {
   }
 }
 
-export namespace Keyframes {
-  export interface JSON extends Grouping.JSON {
+export namespace KeyframesRule {
+  export interface JSON extends GroupingRule.JSON {
     type: "keyframes";
     name: string;
   }
 
-  export function isKeyframes(value: unknown): value is Keyframes {
-    return value instanceof Keyframes;
+  export function isKeyframesRule(value: unknown): value is KeyframesRule {
+    return value instanceof KeyframesRule;
   }
 
   /**
    * @internal
    */
-  export function fromKeyframes(json: JSON): Trampoline<Keyframes> {
+  export function fromKeyframesRule(json: JSON): Trampoline<KeyframesRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      Keyframes.of(json.name, rules)
+      KeyframesRule.of(json.name, rules)
     );
   }
 }

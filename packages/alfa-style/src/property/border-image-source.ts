@@ -23,6 +23,12 @@ import { List } from "./value/list";
 
 const { map, either, delimited, option, separatedList } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "border-image-source": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -73,24 +79,27 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-source}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  List.of([Keyword.of("none")], ", "),
-  parseList,
-  (value, style) =>
-    value.map((images) =>
-      List.of(
-        Iterable.map(images, (image) => {
-          switch (image.type) {
-            case "keyword":
-              return image;
+export default Property.register(
+  "border-image-source",
+  Property.of<Specified, Computed>(
+    List.of([Keyword.of("none")], ", "),
+    parseList,
+    (value, style) =>
+      value.map((images) =>
+        List.of(
+          Iterable.map(images, (image) => {
+            switch (image.type) {
+              case "keyword":
+                return image;
 
-            case "image":
-              return resolveImage(image, style);
-          }
-        }),
-        ", "
+              case "image":
+                return resolveImage(image, style);
+            }
+          }),
+          ", "
+        )
       )
-    )
+  )
 );
 
 function resolveImage(image: Image, style: Style) {

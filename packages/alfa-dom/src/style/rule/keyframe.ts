@@ -4,9 +4,12 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
-export class Keyframe extends Rule {
-  public static of(key: string, declarations: Iterable<Declaration>): Keyframe {
-    return new Keyframe(key, Array.from(declarations));
+export class KeyframeRule extends Rule {
+  public static of(
+    key: string,
+    declarations: Iterable<Declaration>
+  ): KeyframeRule {
+    return new KeyframeRule(key, Array.from(declarations));
   }
 
   private readonly _key: string;
@@ -29,7 +32,7 @@ export class Keyframe extends Rule {
     return this._style;
   }
 
-  public toJSON(): Keyframe.JSON {
+  public toJSON(): KeyframeRule.JSON {
     return {
       type: "keyframe",
       key: this._key,
@@ -46,23 +49,23 @@ export class Keyframe extends Rule {
   }
 }
 
-export namespace Keyframe {
+export namespace KeyframeRule {
   export interface JSON extends Rule.JSON {
     type: "keyframe";
     key: string;
     style: Block.JSON;
   }
 
-  export function isKeyframe(value: unknown): value is Keyframe {
-    return value instanceof Keyframe;
+  export function isKeyframeRule(value: unknown): value is KeyframeRule {
+    return value instanceof KeyframeRule;
   }
 
   /**
    * @internal
    */
-  export function fromKeyframe(json: JSON): Trampoline<Keyframe> {
+  export function fromKeyframeRule(json: JSON): Trampoline<KeyframeRule> {
     return Trampoline.done(
-      Keyframe.of(json.key, json.style.map(Declaration.from))
+      KeyframeRule.of(json.key, json.style.map(Declaration.from))
     );
   }
 }

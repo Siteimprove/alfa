@@ -5,6 +5,12 @@ import { Property } from "../property";
 
 const { either, map } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    clip: Property<Specified, Computed>;
+  }
+}
+
 /**
  * @deprecated
  * @internal
@@ -35,8 +41,7 @@ export const parse = either(
  * @deprecated
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("auto"),
-  parse,
-  (value) => value
+export default Property.register(
+  "clip",
+  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value) => value)
 );

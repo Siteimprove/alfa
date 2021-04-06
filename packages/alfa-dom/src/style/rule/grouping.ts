@@ -1,6 +1,6 @@
 import { Rule } from "../rule";
 
-export abstract class Grouping extends Rule {
+export abstract class GroupingRule extends Rule {
   protected readonly _rules: Array<Rule>;
 
   protected constructor(rules: Array<Rule>) {
@@ -17,15 +17,15 @@ export abstract class Grouping extends Rule {
     yield* this._rules;
   }
 
-  public abstract toJSON(): Grouping.JSON;
+  public abstract toJSON(): GroupingRule.JSON;
 }
 
-export namespace Grouping {
+export namespace GroupingRule {
   export interface JSON extends Rule.JSON {
     rules: Array<Rule.JSON>;
   }
 
-  export function isGrouping(value: unknown): value is Grouping {
-    return value instanceof Grouping;
+  export function isGroupingRule(value: unknown): value is GroupingRule {
+    return value instanceof GroupingRule;
   }
 }

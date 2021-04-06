@@ -1,7 +1,6 @@
 import { h } from "./h";
 
-import { Node } from "./node";
-import { Element } from "./node/element";
+import { Node, Element } from ".";
 
 const { entries } = Object;
 

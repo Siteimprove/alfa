@@ -1,9 +1,12 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
+
+import { Languages } from "./language/data";
 
 /**
  * @public
@@ -107,37 +110,46 @@ export namespace Language {
     variants: Array<Variant.JSON>;
   }
 
-  export type Scope =
-    | "macrolanguage"
-    | "collection"
-    | "special"
-    | "private-use";
+  /**
+   * {@link https://tools.ietf.org/html/bcp47#section-3.1.11}
+   */
+  export type Scope = Exclude<
+    Languages["primary"][Primary.Name]["scope"],
+    null
+  >;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-3.1.2}
    */
-  export abstract class Subtag implements Equatable, Serializable {
-    protected readonly _name: string;
+  export abstract class Subtag<
+    T extends string = string,
+    N extends string = string
+  > implements Equatable, Serializable<Subtag.JSON<T, N>> {
+    protected readonly _name: N;
 
-    protected constructor(name: string) {
+    protected constructor(name: N) {
       this._name = name;
     }
 
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.3}
      */
-    public abstract get type(): string;
+    public abstract get type(): T;
 
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.4}
      */
-    public get name(): string {
+    public get name(): N {
       return this._name;
     }
 
+    public abstract equals<T extends string, N extends string>(
+      value: Subtag<T, N>
+    ): boolean;
+
     public abstract equals(value: unknown): value is this;
 
-    public abstract toJSON(): Subtag.JSON;
+    public abstract toJSON(): Subtag.JSON<T, N>;
 
     public toString(): string {
       return this._name;
@@ -145,26 +157,26 @@ export namespace Language {
   }
 
   export namespace Subtag {
-    export interface JSON {
+    export interface JSON<
+      T extends string = string,
+      N extends string = string
+    > {
       [key: string]: json.JSON;
-      type: string;
-      name: string;
+      type: T;
+      name: N;
     }
   }
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.1}
    */
-  export class Primary extends Subtag {
-    public static of(name: string, scope: Option<Scope> = None): Primary {
-      return new Primary(name, scope);
+  export class Primary extends Subtag<"primary", Primary.Name> {
+    public static of(name: Primary.Name): Primary {
+      return new Primary(name);
     }
 
-    private readonly _scope: Option<Scope>;
-
-    private constructor(name: string, scope: Option<Scope>) {
+    private constructor(name: Primary.Name) {
       super(name);
-      this._scope = scope;
     }
 
     public get type(): "primary" {
@@ -175,54 +187,54 @@ export namespace Language {
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.11}
      */
     public get scope(): Option<Scope> {
-      return this._scope;
+      return Option.from(Languages.primary[this._name].scope);
     }
 
-    public equals(value: unknown): value is this {
-      return (
-        value instanceof Primary &&
-        value._name === this._name &&
-        value._scope.equals(this._scope)
-      );
+    public equals(value: Primary): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof Primary && value._name === this._name;
     }
 
     public toJSON(): Primary.JSON {
       return {
         type: "primary",
         name: this._name,
-        scope: this._scope.getOr(null),
+        scope: this.scope.getOr(null),
       };
     }
   }
 
   export namespace Primary {
-    export interface JSON extends Subtag.JSON {
-      type: "primary";
+    export type Name = keyof Languages["primary"];
+
+    export interface JSON extends Subtag.JSON<"primary", Name> {
       scope: Scope | null;
+    }
+
+    export function isPrimary(value: unknown): value is Primary {
+      return value instanceof Primary;
+    }
+
+    export function isName(name: string): name is Name {
+      return name in Languages.primary;
     }
   }
 
-  export const { of: primary } = Primary;
+  export const { of: primary, isPrimary, isName: isPrimaryName } = Primary;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.2}
    */
-  export class Extended extends Subtag {
-    public static of(
-      name: string,
-      prefix: string,
-      scope: Option<Scope> = None
-    ): Extended {
-      return new Extended(name, prefix, scope);
+  export class Extended extends Subtag<"extended", Extended.Name> {
+    public static of(name: Extended.Name): Extended {
+      return new Extended(name);
     }
 
-    private readonly _prefix: string;
-    private readonly _scope: Option<Scope>;
-
-    private constructor(name: string, prefix: string, scope: Option<Scope>) {
+    private constructor(name: Extended.Name) {
       super(name);
-      this._prefix = prefix;
-      this._scope = scope;
     }
 
     public get type(): "extended" {
@@ -232,55 +244,54 @@ export namespace Language {
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.8}
      */
-    public get prefix(): string {
-      return this._prefix;
+    public get prefix(): Primary.Name {
+      return Languages.extended[this._name].prefix;
     }
 
-    /**
-     * {@link https://tools.ietf.org/html/bcp47#section-3.1.11}
-     */
-    public get scope(): Option<Scope> {
-      return this._scope;
-    }
+    public equals(value: Extended): boolean;
 
-    public equals(value: unknown): value is this {
-      return (
-        value instanceof Extended &&
-        value._name === this._name &&
-        value._prefix === this._prefix &&
-        value._scope.equals(this._scope)
-      );
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof Extended && value._name === this._name;
     }
 
     public toJSON(): Extended.JSON {
       return {
         type: "extended",
         name: this._name,
-        prefix: this._prefix,
-        scope: this._scope.getOr(null),
+        prefix: this.prefix,
       };
     }
   }
 
   export namespace Extended {
-    export interface JSON extends Subtag.JSON {
-      type: "extended";
-      prefix: string;
-      scope: Scope | null;
+    export type Name = keyof Languages["extended"];
+
+    export interface JSON extends Subtag.JSON<"extended", Name> {
+      prefix: Primary.Name;
+    }
+
+    export function isExtended(value: unknown): value is Extended {
+      return value instanceof Extended;
+    }
+
+    export function isName(name: string): name is Name {
+      return name in Languages.extended;
     }
   }
 
-  export const { of: extended } = Extended;
+  export const { of: extended, isExtended, isName: isExtendedName } = Extended;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.3}
    */
-  export class Script extends Subtag {
-    public static of(name: string): Script {
+  export class Script extends Subtag<"script", Script.Name> {
+    public static of(name: Script.Name): Script {
       return new Script(name);
     }
 
-    private constructor(name: string) {
+    private constructor(name: Script.Name) {
       super(name);
     }
 
@@ -288,7 +299,11 @@ export namespace Language {
       return "script";
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Script): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Script && value._name === this._name;
     }
 
@@ -301,22 +316,30 @@ export namespace Language {
   }
 
   export namespace Script {
-    export interface JSON extends Subtag.JSON {
-      type: "script";
+    export type Name = keyof Languages["script"];
+
+    export interface JSON extends Subtag.JSON<"script", Name> {}
+
+    export function isScript(value: unknown): value is Script {
+      return value instanceof Script;
+    }
+
+    export function isName(name: string): name is Name {
+      return name in Languages.script;
     }
   }
 
-  export const { of: script } = Script;
+  export const { of: script, isScript, isName: isScriptName } = Script;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.4}
    */
-  export class Region extends Subtag {
-    public static of(name: string): Region {
+  export class Region extends Subtag<"region", Region.Name> {
+    public static of(name: Region.Name): Region {
       return new Region(name);
     }
 
-    private constructor(name: string) {
+    private constructor(name: Region.Name) {
       super(name);
     }
 
@@ -324,7 +347,11 @@ export namespace Language {
       return "region";
     }
 
-    public equals(value: unknown): value is this {
+    public equals(value: Region): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return value instanceof Region && value._name === this._name;
     }
 
@@ -337,26 +364,31 @@ export namespace Language {
   }
 
   export namespace Region {
-    export interface JSON extends Subtag.JSON {
-      type: "region";
+    export type Name = keyof Languages["region"];
+
+    export interface JSON extends Subtag.JSON<"region", Name> {}
+
+    export function isRegion(value: unknown): value is Region {
+      return value instanceof Region;
+    }
+
+    export function isName(name: string): name is Name {
+      return name in Languages.region;
     }
   }
 
-  export const { of: region } = Region;
+  export const { of: region, isRegion, isName: isRegionName } = Region;
 
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.5}
    */
-  export class Variant extends Subtag {
-    public static of(name: string, prefixes: Array<string>): Variant {
-      return new Variant(name, prefixes);
+  export class Variant extends Subtag<"variant", Variant.Name> {
+    public static of(name: Variant.Name): Variant {
+      return new Variant(name);
     }
 
-    private readonly _prefixes: Array<string>;
-
-    private constructor(name: string, prefixes: Array<string>) {
+    private constructor(name: Variant.Name) {
       super(name);
-      this._prefixes = prefixes;
     }
 
     public get type(): "variant" {
@@ -366,68 +398,77 @@ export namespace Language {
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.8}
      */
-    public get prefixes(): Array<string> {
-      return this._prefixes;
+    public get prefixes(): ReadonlyArray<string> {
+      return Languages.variant[this._name].prefixes;
     }
 
-    public equals(value: unknown): value is this {
-      return (
-        value instanceof Variant &&
-        value._name === this._name &&
-        value._prefixes.length === this._prefixes.length &&
-        value._prefixes.every((prefix, i) => prefix === this._prefixes[i])
-      );
+    public equals(value: Variant): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof Variant && value._name === this._name;
     }
 
     public toJSON(): Variant.JSON {
       return {
         type: "variant",
         name: this._name,
-        prefixes: [...this._prefixes],
+        prefixes: [...this.prefixes],
       };
     }
   }
 
   export namespace Variant {
-    export interface JSON extends Subtag.JSON {
-      type: "variant";
+    export type Name = keyof Languages["variant"];
+
+    export interface JSON extends Subtag.JSON<"variant", Name> {
       prefixes: Array<string>;
+    }
+
+    export function isVariant(value: unknown): value is Variant {
+      return value instanceof Variant;
+    }
+
+    export function isName(name: string): name is Name {
+      return name in Languages.variant;
     }
   }
 
-  export const { of: variant } = Variant;
+  export const { of: variant, isVariant, isName: isVariantName } = Variant;
 }
-
-import * as data from "./language/data";
 
 /**
  * @public
  */
 export namespace Language {
-  export function parse(input: string): Option<Language> {
+  export function parse(input: string): Result<Language, string> {
     let parts = Slice.of(input.toLowerCase().split("-"));
 
     return parts
       .get(0)
-      .flatMap((name) => data.Primary.get(name))
-      .map((primary) => {
+      .map((name) => {
+        if (!isPrimaryName(name)) {
+          return Err.of(`${name} is not a valid primary language`);
+        }
+
+        const primary = Primary.of(name);
+
         parts = parts.slice(1);
 
-        const extended = parts
-          .get(0)
-          .flatMap((name) => data.Extended.get(name));
+        const extended = parts.get(0).filter(isExtendedName).map(Extended.of);
 
         if (extended.isSome()) {
           parts = parts.slice(1);
         }
 
-        const script = parts.get(0).flatMap((name) => data.Script.get(name));
+        const script = parts.get(0).filter(isScriptName).map(Script.of);
 
         if (script.isSome()) {
           parts = parts.slice(1);
         }
 
-        const region = parts.get(0).flatMap((name) => data.Region.get(name));
+        const region = parts.get(0).filter(isRegionName).map(Region.of);
 
         if (region.isSome()) {
           parts = parts.slice(1);
@@ -436,9 +477,7 @@ export namespace Language {
         const variants: Array<Variant> = [];
 
         while (true) {
-          const variant = parts
-            .get(0)
-            .flatMap((name) => data.Variant.get(name));
+          const variant = parts.get(0).filter(isVariantName).map(Variant.of);
 
           if (variant.isSome()) {
             parts = parts.slice(1);
@@ -448,7 +487,10 @@ export namespace Language {
           }
         }
 
-        return Language.of(primary, extended, script, region, variants);
-      });
+        return Result.of<Language, string>(
+          Language.of(primary, extended, script, region, variants)
+        );
+      })
+      .getOrElse(() => Err.of(`Expected a primary language name`));
   }
 }
