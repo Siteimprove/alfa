@@ -11,8 +11,8 @@ function parse(
   value: string,
   side: "top" | "right" | "bottom" | "left",
   color: string,
-  style: "none" | "dotted", // the only one used in the tests
-  width: number
+  style?: "dotted", // the only one used in the tests :-/
+  width?: number
 ): void {
   const shorthand = `border-${side}` as const;
 
@@ -46,7 +46,7 @@ function parse(
     {
       value: {
         type: "keyword",
-        value: style,
+        value: style ?? "initial",
       },
       source: declaration.toJSON(),
     }
@@ -58,11 +58,16 @@ function parse(
       .get()
       .toJSON(),
     {
-      value: {
-        type: "length",
-        value: width,
-        unit: "px",
-      },
+      value: width
+        ? {
+            type: "length",
+            value: width,
+            unit: "px",
+          }
+        : {
+            type: "keyword",
+            value: "initial",
+          },
       source: declaration.toJSON(),
     }
   );
@@ -72,11 +77,11 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
   const shorthand = `border-${side}` as const;
 
   test(`#cascaded() parses \`${shorthand}: red\``, (t) => {
-    parse(t, "red", side, "red", "none", 3);
+    parse(t, "red", side, "red");
   });
 
   test(`#cascaded() parses \`${shorthand}: red dotted\``, (t) => {
-    parse(t, "red dotted", side, "red", "dotted", 3);
+    parse(t, "red dotted", side, "red", "dotted");
   });
 
   test(`#cascaded() parses \`${shorthand}: 2px dotted red\``, (t) => {
