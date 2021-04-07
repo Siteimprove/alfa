@@ -7,7 +7,6 @@ import R62, { Outcomes } from "../../src/sia-r62/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-import { oracle } from "../common/oracle";
 
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
@@ -41,45 +40,8 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   ]);
 });
 
-test(`evaluate() fails an applicable <a> element that removes the default text
-      decoration on hover and focus and is determined not to be distinguishable`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = Document.of(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a:hover, a:focus", {
-          textDecoration: "none",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(
-    await evaluate(
-      R62,
-      { document },
-      oracle({
-        "is-distinguishable": true,
-        "is-distinguishable-when-visited": true,
-        "is-distinguishable-on-hover": false,
-        "is-distinguishable-on-hover-when-visited": false,
-        "is-distinguishable-on-focus": false,
-        "is-distinguishable-on-focus-when-visited": false,
-      })
-    ),
-    [
-      failed(R62, target, {
-        1: Outcomes.IsNotDistinguishable,
-        2: Outcomes.IsNotDistinguishableWhenVisited,
-      }),
-    ]
-  );
-});
-
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and is determined to be distinguishable`, async (t) => {
+test(`evaluate() fails an <a> element that removes the default text decoration
+      without replacing it with another distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = Document.of(
@@ -93,26 +55,12 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  t.deepEqual(
-    await evaluate(
-      R62,
-      { document },
-      oracle({
-        "is-distinguishable": true,
-        "is-distinguishable-when-visited": true,
-        "is-distinguishable-on-hover": true,
-        "is-distinguishable-on-hover-when-visited": true,
-        "is-distinguishable-on-focus": true,
-        "is-distinguishable-on-focus-when-visited": true,
-      })
-    ),
-    [
-      passed(R62, target, {
-        1: Outcomes.IsDistinguishable,
-        2: Outcomes.IsDistinguishableWhenVisited,
-      }),
-    ]
-  );
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
 });
 
 test(`evaluate() passes an applicable <a> element that removes the default text
@@ -139,8 +87,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   ]);
 });
 
-test(`evaluate() fails an applicable <a> element that removes the default text
-      decoration and is determined not to be distinguishable`, async (t) => {
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a bottom border`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = Document.of(
@@ -149,31 +97,151 @@ test(`evaluate() fails an applicable <a> element that removes the default text
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
+          borderBottomWidth: "1px",
+          borderBottomStyle: "solid",
+          borderBottomColor: "#000",
         }),
       ]),
     ]
   );
 
-  t.deepEqual(
-    await evaluate(
-      R62,
-      { document },
-      oracle({
-        "is-distinguishable": false,
-        "is-distinguishable-when-visited": false,
-        "is-distinguishable-on-hover": false,
-        "is-distinguishable-on-hover-when-visited": false,
-        "is-distinguishable-on-focus": false,
-        "is-distinguishable-on-focus-when-visited": false,
-      })
-    ),
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that has no distinguishing features and
+      has a transparent bottom border`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
     [
-      failed(R62, target, {
-        1: Outcomes.IsNotDistinguishable,
-        2: Outcomes.IsNotDistinguishableWhenVisited,
-      }),
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          borderBottomWidth: "1px",
+          borderBottomStyle: "solid",
+          borderBottomColor: "transparent",
+        }),
+      ]),
     ]
   );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that has no distinguishing features and
+      has a 0px bottom border`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          borderBottomWidth: "0px",
+          borderBottomStyle: "solid",
+          borderBottomColor: "#000",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a background color`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          background: "red",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that has no distinguishing features but is
+      part of a paragraph with a background color`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          background: "red",
+        }),
+
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that has no distinguishing features and
+      has a background color equal to that of the paragraph`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          background: "red",
+        }),
+
+        h.rule.style("a", {
+          textDecoration: "none",
+          background: "red",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with no visible text content`, async (t) => {

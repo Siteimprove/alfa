@@ -23,6 +23,7 @@
     "src/common/predicate.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",
+    "src/common/predicate/has-border.ts",
     "src/common/predicate/has-box-shadow.ts",
     "src/common/predicate/has-cascaded-value-declared-in-inline-style.ts",
     "src/common/predicate/has-child.ts",
