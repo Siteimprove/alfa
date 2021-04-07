@@ -9,19 +9,14 @@ import {
   Percentage,
   RGB,
   System,
-  Token,
   URL,
 } from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-import { Style } from "../style";
 
-import { List } from "./value/list";
-
-const { map, either, delimited, option, separatedList } = Parser;
+const { either } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -69,59 +64,8 @@ export default Property.register(
           return image;
 
         case "image":
-          return resolveImage(image, style);
+          return Resolver.image(image, style);
       }
     })
   )
 );
-
-function resolveImage(image: Image, style: Style) {
-  switch (image.image.type) {
-    case "url":
-      return Image.of(image.image);
-
-    case "gradient":
-      return resolveGradient(image.image, style);
-  }
-}
-
-function resolveGradient(gradient: Gradient, style: Style) {
-  switch (gradient.kind) {
-    case "linear": {
-      const { direction, items, repeats } = gradient;
-
-      return Image.of(
-        Linear.of(
-          direction.type === "angle" ? direction.withUnit("deg") : direction,
-          Iterable.map(items, (item) => resolveGradientItem(item, style)),
-          repeats
-        )
-      );
-    }
-  }
-}
-
-function resolveGradientItem(item: Gradient.Item, style: Style) {
-  switch (item.type) {
-    case "stop": {
-      const { color, position } = item;
-
-      return Gradient.Stop.of(
-        Resolver.color(color),
-        position.map((position) =>
-          position.type === "length"
-            ? Resolver.length(position, style)
-            : position
-        )
-      );
-    }
-
-    case "hint": {
-      const { position } = item;
-
-      return Gradient.Hint.of(
-        position.type === "length" ? Resolver.length(position, style) : position
-      );
-    }
-  }
-}
