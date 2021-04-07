@@ -32,19 +32,12 @@ declare module "../property" {
 /**
  * @internal
  */
-export type Specified = List<Specified.Item>;
+export type Specified = Keyword<"none"> | Image;
 
 /**
  * @internal
  */
-export namespace Specified {
-  export type Item = Keyword<"none"> | Image;
-}
-
-/**
- * @internal
- */
-export type Computed = List<
+export type Computed =
   | Keyword<"none">
   | Image<
       | URL
@@ -56,8 +49,7 @@ export type Computed = List<
           | Gradient.Hint<Length<"px"> | Percentage>,
           Angle<"deg"> | Linear.Side | Linear.Corner
         >
-    >
->;
+    >;
 
 /**
  * @internal
@@ -65,40 +57,21 @@ export type Computed = List<
 export const parse = either(Keyword.parse("none"), Image.parse);
 
 /**
- * @internal
- */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (images) => List.of(images, ", ")
-);
-
-/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-source}
  * @internal
  */
 export default Property.register(
   "border-image-source",
-  Property.of<Specified, Computed>(
-    List.of([Keyword.of("none")], ", "),
-    parseList,
-    (value, style) =>
-      value.map((images) =>
-        List.of(
-          Iterable.map(images, (image) => {
-            switch (image.type) {
-              case "keyword":
-                return image;
+  Property.of<Specified, Computed>(Keyword.of("none"), parse, (value, style) =>
+    value.map((image) => {
+      switch (image.type) {
+        case "keyword":
+          return image;
 
-              case "image":
-                return resolveImage(image, style);
-            }
-          }),
-          ", "
-        )
-      )
+        case "image":
+          return resolveImage(image, style);
+      }
+    })
   )
 );
 
