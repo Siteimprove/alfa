@@ -38,6 +38,7 @@ import "./property/border-collapse";
 import "./property/border-color";
 import "./property/border-end-end-radius";
 import "./property/border-end-start-radius";
+import "./property/border-image";
 import "./property/border-image-outset";
 import "./property/border-image-repeat";
 import "./property/border-image-slice";
