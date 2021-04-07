@@ -15,7 +15,7 @@ declare module "../property" {
 }
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-right}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-left}
  * @internal
  */
 export default Property.registerShorthand(

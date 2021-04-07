@@ -1,4 +1,4 @@
-import { Keyword, Length, Token } from "@siteimprove/alfa-css";
+import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";

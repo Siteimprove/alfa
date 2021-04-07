@@ -1,4 +1,3 @@
-import * as Color from "@siteimprove/alfa-css";
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";

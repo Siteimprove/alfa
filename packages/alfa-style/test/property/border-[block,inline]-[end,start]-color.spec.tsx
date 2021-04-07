@@ -75,10 +75,7 @@ for (const box of ["block", "inline"] as const) {
     const element = <div />;
     const declaration = h.declaration(shorthand, "red");
 
-    const document = h.document(
-      [element],
-      [h.sheet([h.rule.style("div", [declaration])])]
-    );
+    h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
     const style = Style.from(element, device);
 
