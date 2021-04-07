@@ -16,6 +16,7 @@ import "./property/background-repeat";
 import "./property/background-repeat-x";
 import "./property/background-repeat-y";
 import "./property/background-size";
+import "./property/border";
 import "./property/border-block";
 import "./property/border-block-color";
 import "./property/border-block-end";
