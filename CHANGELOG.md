@@ -25,6 +25,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` shorthand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#754](../../pull/754))
 
+### Changed
+
+- [@siteimprove/alfa-formatter-earl](packages/alfa-formatter-earl), [@siteimprove/alfa-formatter-sarif](packages/alfa-formatter-sarif): The EARL and SARIF formatters now output additional vendor data. ([#753](../../pull/753))
+
 ## [0.16.2](../../compare/v0.16.1...v0.16.2) (2021-03-31)
 
 This release contains only internal API changes.
