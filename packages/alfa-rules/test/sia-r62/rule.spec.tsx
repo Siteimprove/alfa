@@ -63,6 +63,163 @@ test(`evaluate() fails an <a> element that removes the default text decoration
   ]);
 });
 
+test(`evaluate() fails an <a> element that removes the default text decoration
+      on hover without replacing it with another distinguishing feature`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a:hover", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that removes the default text decoration
+      and focus outline on focus without replacing them with another
+      distinguishing feature`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a:focus", {
+          outline: "none",
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that removes the default text decoration
+      and focus outline on hover and focus without replacing them with another
+      distinguishing feature`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a:focus", {
+          outline: "none",
+        }),
+
+        h.rule.style("a:hover, a:focus", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that applies a text decoration only on
+      hover`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+
+        h.rule.style("a:hover", {
+          textDecoration: "underline",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that applies a text decoration only on
+      focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+
+        h.rule.style("a:focus", {
+          textDecoration: "underline",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that applies a text decoration only on
+      hover and focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+
+        h.rule.style("a:hover, a:focus", {
+          textDecoration: "underline",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableWhenVisited,
+    }),
+  ]);
+});
+
 test(`evaluate() passes an applicable <a> element that removes the default text
       decoration and instead applies an outline`, async (t) => {
   const target = <a href="#">Link</a>;
