@@ -97,9 +97,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-          borderBottomColor: "#000",
+          borderBottom: "1px solid #000",
         }),
       ]),
     ]
@@ -123,9 +121,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-          borderBottomColor: "transparent",
+          borderBottom: "1px solid transparent",
         }),
       ]),
     ]
@@ -149,9 +145,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
-          borderBottomWidth: "0px",
-          borderBottomStyle: "solid",
-          borderBottomColor: "#000",
+          borderBottom: "0px solid #000",
         }),
       ]),
     ]
