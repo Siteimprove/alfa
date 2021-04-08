@@ -20,17 +20,11 @@ test(`#cascaded() parses \`border-image-source: url("foo.png")\``, (t) => {
 
   t.deepEqual(style.cascaded("border-image-source").get().toJSON(), {
     value: {
-      type: "list",
-      values: [
-        {
-          type: "image",
-          image: {
-            type: "url",
-            url: "foo.png",
-          },
-        },
-      ],
-      separator: ", ",
+      type: "image",
+      image: {
+        type: "url",
+        url: "foo.png",
+      },
     },
     source: h.declaration("border-image-source", `url("foo.png")`).toJSON(),
   });

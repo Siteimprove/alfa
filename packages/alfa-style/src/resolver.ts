@@ -2,11 +2,15 @@ import {
   Color,
   Converter,
   Current,
+  Gradient,
+  Image,
   Length,
+  Linear,
   Percentage,
   RGB,
   System,
 } from "@siteimprove/alfa-css";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
@@ -105,6 +109,55 @@ export namespace Resolver {
 
       case "keyword":
         return color;
+    }
+  }
+
+  export function image(image: Image, style: Style) {
+    switch (image.image.type) {
+      case "url":
+        return Image.of(image.image);
+
+      case "gradient":
+        return gradient(image.image, style);
+    }
+  }
+
+  function gradient(gradient: Gradient, style: Style) {
+    switch (gradient.kind) {
+      case "linear": {
+        const { direction, items, repeats } = gradient;
+
+        return Image.of(
+          Linear.of(
+            direction.type === "angle" ? direction.withUnit("deg") : direction,
+            Iterable.map(items, (item) => gradientItem(item, style)),
+            repeats
+          )
+        );
+      }
+    }
+  }
+
+  function gradientItem(item: Gradient.Item, style: Style) {
+    switch (item.type) {
+      case "stop": {
+        const { color, position } = item;
+
+        return Gradient.Stop.of(
+          Resolver.color(color),
+          position.map((position) =>
+            position.type === "length" ? length(position, style) : position
+          )
+        );
+      }
+
+      case "hint": {
+        const { position } = item;
+
+        return Gradient.Hint.of(
+          position.type === "length" ? length(position, style) : position
+        );
+      }
     }
   }
 }
