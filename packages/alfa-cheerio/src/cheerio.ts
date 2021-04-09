@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,

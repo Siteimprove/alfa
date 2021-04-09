@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Cheerio } from "@siteimprove/alfa-cheerio";
 import { React } from "@siteimprove/alfa-react";
 import { Page } from "@siteimprove/alfa-web";

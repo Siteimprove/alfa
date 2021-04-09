@@ -25,8 +25,9 @@
     "@siteimprove/alfa-http": "workspace:^0.16.2",
     "@siteimprove/alfa-option": "workspace:^0.16.2",
     "@siteimprove/alfa-web": "workspace:^0.16.2",
-    "cheerio": "^1.0.0-rc.5",
-    "domhandler": "^4.0.0"
+    "@types/node": "^14.14.37",
+    "cheerio": "^1.0.0-rc.6",
+    "domhandler": "^4.1.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.16.2"
