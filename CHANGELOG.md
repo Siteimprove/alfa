@@ -33,6 +33,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 is now a fully automated rule and will therefore no longer pose questions during an audit. ([#760](../../pull/760))
 
+### Fixed
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): Some previously uncaught exceptions during page navigation are now caught and handled, resolving an issue where the scraper wouldn't terminate in rare cases.
+
 ## [0.16.2](../../compare/v0.16.1...v0.16.2) (2021-03-31)
 
 This release contains only internal API changes.

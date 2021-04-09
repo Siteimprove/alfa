@@ -160,64 +160,76 @@ export class Scraper {
       let origin = url.toString();
 
       while (true) {
+        // Navigate to the origin with what remains of the timeout. We wait for
+        // the `DOMContentLoaded` event as this is the earliest stage at which
+        // Puppeteer will consider the page loaded.
+        const response = page.goto(origin, {
+          timeout: timeout.remaining(),
+          waitUntil: "domcontentloaded",
+        });
+
+        // Grab the request from the resulting response as soon as possible. In
+        // event of navigation away from the origin, such as redirects, the
+        // response context will be destroyed. If we attempt to grab the request
+        // after this, things will go haywire.
+        const request = response.then((response) => response.request());
+
+        // When the response has settled, fit the viewport to the contents of
+        // the page if requested to do so. This is done by requesting the layout
+        // metrics of the page and setting the viewport accordingly.
+        const resize = response.then(async () => {
+          if (fit) {
+            const {
+              contentSize: { width, height },
+            } = await client.send("Page.getLayoutMetrics");
+
+            await page?.setViewport({
+              width: ceil(width),
+              height: ceil(height),
+            });
+          }
+        });
+
+        const load = awaiter(page, timeout);
+
         try {
-          // Navigate to the origin with what remains of the timeout. We wait
-          // for the `DOMContentLoaded` event as this is the earliest stage at
-          // which Puppeteer will consider the page loaded.
-          const response = page.goto(origin, {
-            timeout: timeout.remaining(),
-            waitUntil: "domcontentloaded",
-          });
-
-          // Grab the request from the resulting response as soon as possible.
-          // In event of navigation away from the origin, such as redirects, the
-          // response context will be destroyed. If we attempt to grab the
-          // request after this, things will go haywire.
-          const request = response.then((response) => response.request());
-
-          // When the response has settled, fit the viewport to the contents of
-          // the page if requested to do so. This is done by requesting the
-          // layout metrics of the page and setting the viewport accordingly.
-          const resize = response.then(async () => {
-            if (fit) {
-              const {
-                contentSize: { width, height },
-              } = await client.send("Page.getLayoutMetrics");
-
-              await page?.setViewport({
-                width: ceil(width),
-                height: ceil(height),
-              });
-            }
-          });
-
-          const load = awaiter(page, timeout);
-
-          await response;
-          await request;
-          await resize;
-
-          for (const error of await load) {
-            return Err.of(error);
+          // Await both the response, request, and resize promise at the same
+          // time to avoid any exceptions being dropped on the floor. At the
+          // very least, we need all of these settled before we parse the
+          // document.
+          await Promise.all([response, request, resize]);
+        } catch (err) {
+          // If the timeout was exceeded while navigating to the page, bail out
+          // with an error.
+          if (err instanceof Error && err.name === "TimeoutError") {
+            return Err.of(`Timeout exceeded while navigating to the page`);
           }
 
-          const document = await parseDocument(page);
-
-          if (screenshot !== null) {
-            await takeScreenshot(page, screenshot);
+          // Otherwise, attempt to navigate to the page again, changing its
+          // origin in case a redirect was performed.
+          else {
+            origin = page.url();
           }
-
-          return Result.of(
-            Page.of(
-              parseRequest(await request),
-              await parseResponse(await response),
-              document,
-              device
-            )
-          );
-        } catch {
-          origin = page.url();
         }
+
+        for (const error of await load) {
+          return Err.of(error);
+        }
+
+        const document = await parseDocument(page);
+
+        if (screenshot !== null) {
+          await takeScreenshot(page, screenshot);
+        }
+
+        return Result.of(
+          Page.of(
+            parseRequest(await request),
+            await parseResponse(await response),
+            document,
+            device
+          )
+        );
       }
     } finally {
       if (page !== undefined) {
