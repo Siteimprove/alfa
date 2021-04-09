@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/thenable.ts", "test/thenable.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
