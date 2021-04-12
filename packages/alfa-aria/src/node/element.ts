@@ -56,8 +56,8 @@ export class Element extends Node {
     return this._name;
   }
 
-  public get attributes(): Iterable<Attribute> {
-    return this._attributes[Symbol.iterator]();
+  public get attributes(): ReadonlyArray<Attribute> {
+    return this._attributes;
   }
 
   public attribute<N extends Attribute.Name>(

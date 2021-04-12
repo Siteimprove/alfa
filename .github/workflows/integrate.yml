@@ -24,5 +24,6 @@ jobs:
           path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}
       - run: yarn install --immutable
+      - run: yarn dedupe --check
       - run: yarn build
       - run: yarn test

@@ -20,6 +20,12 @@ import { List } from "./value/list";
 
 const { map, either, option, separatedList, delimited } = Parser;
 
+declare module "../property" {
+  interface Longhands {
+    "box-shadow": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -159,28 +165,31 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow}
  * @internal
  */
-export default Property.of<Specified, Computed>(
-  Keyword.of("auto"),
-  either(Keyword.parse("auto"), parseList),
-  (boxShadow, style) =>
-    boxShadow.map((value) => {
-      switch (value.type) {
-        case "keyword":
-          return value;
+export default Property.register(
+  "box-shadow",
+  Property.of<Specified, Computed>(
+    Keyword.of("auto"),
+    either(Keyword.parse("auto"), parseList),
+    (boxShadow, style) =>
+      boxShadow.map((value) => {
+        switch (value.type) {
+          case "keyword":
+            return value;
 
-        case "list":
-          return List.of(
-            [...value].map((shadow) =>
-              Shadow.of(
-                Resolver.length(shadow.vertical, style),
-                Resolver.length(shadow.horizontal, style),
-                Resolver.length(shadow.blur, style),
-                Resolver.length(shadow.spread, style),
-                Resolver.color(shadow.color),
-                shadow.isInset
+          case "list":
+            return List.of(
+              [...value].map((shadow) =>
+                Shadow.of(
+                  Resolver.length(shadow.vertical, style),
+                  Resolver.length(shadow.horizontal, style),
+                  Resolver.length(shadow.blur, style),
+                  Resolver.length(shadow.spread, style),
+                  Resolver.color(shadow.color),
+                  shadow.isInset
+                )
               )
-            )
-          );
-      }
-    })
+            );
+        }
+      })
+  )
 );

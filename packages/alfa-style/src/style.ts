@@ -17,10 +17,19 @@ import * as json from "@siteimprove/alfa-json";
 import { Property } from "./property";
 import { Value } from "./value";
 
+// Properties are registered by means of a side effect that is executed when the
+// properties are imported. To ensure that all properties are registered when
+// this module is imported, we import the index module which in turn imports the
+// individual properties.
+import ".";
+
 const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
 type Name = Property.Name;
 
+/**
+ * @public
+ */
 export class Style implements Serializable<Style.JSON> {
   public static of(
     declarations: Iterable<Declaration>,
@@ -257,6 +266,9 @@ export class Style implements Serializable<Style.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Style {
   export interface JSON {
     [key: string]: json.JSON;

@@ -193,9 +193,11 @@ export class Scraper {
 
           const load = awaiter(page, timeout);
 
-          await response;
-          await request;
-          await resize;
+          // Await both the response, request, and resize promise at the same
+          // time to avoid any exceptions being dropped on the floor. At the
+          // very least, we need all of these settled before we parse the
+          // document.
+          await Promise.all([response, request, resize]);
 
           for (const error of await load) {
             return Err.of(error);
@@ -215,8 +217,18 @@ export class Scraper {
               device
             )
           );
-        } catch {
-          origin = page.url();
+        } catch (err) {
+          // If the timeout was exceeded while navigating to the page, bail out
+          // with an error.
+          if (err instanceof Error && err.name === "TimeoutError") {
+            return Err.of(`Timeout exceeded while navigating to the page`);
+          }
+
+          // Otherwise, attempt to navigate to the page again, changing its
+          // origin in case a redirect was performed.
+          else {
+            origin = page.url();
+          }
         }
       }
     } finally {

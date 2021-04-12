@@ -22,6 +22,23 @@ import * as Size from "./background-size";
 
 const { map, filter, delimited, option, right, separatedList } = Parser;
 
+declare module "../property" {
+  interface Shorthands {
+    background: Property.Shorthand<
+      | "background-color"
+      | "background-image"
+      | "background-position-x"
+      | "background-position-y"
+      | "background-size"
+      | "background-repeat-x"
+      | "background-repeat-y"
+      | "background-attachment"
+      | "background-origin"
+      | "background-clip"
+    >;
+  }
+}
+
 /**
  * @internal
  */
@@ -204,55 +221,58 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background}
  * @internal
  */
-export default Property.shorthand(
-  [
-    "background-color",
-    "background-image",
-    "background-position-x",
-    "background-position-y",
-    "background-size",
-    "background-repeat-x",
-    "background-repeat-y",
-    "background-attachment",
-    "background-origin",
-    "background-clip",
-  ],
-  map(parseList, (layers) => {
-    let color: Color.Specified | undefined;
-    let image: Array<Image.Specified.Item> = [];
-    let positionX: Array<PositionX.Specified.Item> = [];
-    let positionY: Array<PositionY.Specified.Item> = [];
-    let size: Array<Size.Specified.Item> = [];
-    let repeatX: Array<RepeatX.Specified.Item> = [];
-    let repeatY: Array<RepeatY.Specified.Item> = [];
-    let attachment: Array<Attachment.Specified.Item> = [];
-    let origin: Array<Origin.Specified.Item> = [];
-    let clip: Array<Clip.Specified.Item> = [];
+export default Property.registerShorthand(
+  "background",
+  Property.shorthand(
+    [
+      "background-color",
+      "background-image",
+      "background-position-x",
+      "background-position-y",
+      "background-size",
+      "background-repeat-x",
+      "background-repeat-y",
+      "background-attachment",
+      "background-origin",
+      "background-clip",
+    ],
+    map(parseList, (layers) => {
+      let color: Color.Specified | undefined;
+      let image: Array<Image.Specified.Item> = [];
+      let positionX: Array<PositionX.Specified.Item> = [];
+      let positionY: Array<PositionY.Specified.Item> = [];
+      let size: Array<Size.Specified.Item> = [];
+      let repeatX: Array<RepeatX.Specified.Item> = [];
+      let repeatY: Array<RepeatY.Specified.Item> = [];
+      let attachment: Array<Attachment.Specified.Item> = [];
+      let origin: Array<Origin.Specified.Item> = [];
+      let clip: Array<Clip.Specified.Item> = [];
 
-    for (const layer of layers) {
-      color = layer[0];
-      image.push(layer[1] ?? Keyword.of("none"));
-      positionX.push(layer[2] ?? Percentage.of(0));
-      positionY.push(layer[3] ?? Percentage.of(0));
-      size.push(layer[4] ?? [Keyword.of("auto"), Keyword.of("auto")]);
-      repeatX.push(layer[5] ?? Keyword.of("repeat"));
-      repeatY.push(layer[6] ?? Keyword.of("repeat"));
-      attachment.push(layer[7] ?? Keyword.of("scroll"));
-      origin.push(layer[8] ?? Keyword.of("padding-box"));
-      clip.push(layer[9] ?? Keyword.of("border-box"));
-    }
+      for (const layer of layers) {
+        color = layer[0];
+        image.push(layer[1] ?? Keyword.of("none"));
+        positionX.push(layer[2] ?? Percentage.of(0));
+        positionY.push(layer[3] ?? Percentage.of(0));
+        size.push(layer[4] ?? [Keyword.of("auto"), Keyword.of("auto")]);
+        repeatX.push(layer[5] ?? Keyword.of("repeat"));
+        repeatY.push(layer[6] ?? Keyword.of("repeat"));
+        attachment.push(layer[7] ?? Keyword.of("scroll"));
+        origin.push(layer[8] ?? Keyword.of("padding-box"));
+        clip.push(layer[9] ?? Keyword.of("border-box"));
+      }
 
-    return [
-      ["background-color", color ?? Keyword.of("initial")],
-      ["background-image", List.of(image, ", ")],
-      ["background-position-x", List.of(positionX, ", ")],
-      ["background-position-y", List.of(positionY, ", ")],
-      ["background-size", List.of(size, ", ")],
-      ["background-repeat-x", List.of(repeatX, ", ")],
-      ["background-repeat-y", List.of(repeatY, ", ")],
-      ["background-attachment", List.of(attachment, ", ")],
-      ["background-origin", List.of(origin, ", ")],
-      ["background-clip", List.of(clip, ", ")],
-    ];
-  })
+      return [
+        ["background-color", color ?? Keyword.of("initial")],
+        ["background-image", List.of(image, ", ")],
+        ["background-position-x", List.of(positionX, ", ")],
+        ["background-position-y", List.of(positionY, ", ")],
+        ["background-size", List.of(size, ", ")],
+        ["background-repeat-x", List.of(repeatX, ", ")],
+        ["background-repeat-y", List.of(repeatY, ", ")],
+        ["background-attachment", List.of(attachment, ", ")],
+        ["background-origin", List.of(origin, ", ")],
+        ["background-clip", List.of(clip, ", ")],
+      ];
+    })
+  )
 );

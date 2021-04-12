@@ -1,24 +1,29 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasOutline } from "../common/predicate/has-outline";
-import { hasRole } from "../common/predicate/has-role";
-import { hasTextDecoration } from "../common/predicate/has-text-decoration";
-import { isVisible } from "../common/predicate/is-visible";
+import {
+  hasBorder,
+  hasOutline,
+  hasRole,
+  hasTextDecoration,
+  isVisible,
+} from "../common/predicate";
 
 import { Question } from "../common/question";
 
-const { isElement, hasName } = Element;
+const { isElement } = Element;
 const { isText } = Text;
-const { and, not, test } = Predicate;
+const { and, or, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
@@ -49,7 +54,9 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
             // Otherwise, if the element is a <p> element with non-link text
             // content then start collecting applicable elements.
-            else if (test(and(hasName("p"), hasNonLinkText(device)), node)) {
+            else if (
+              test(and(hasRole("paragraph"), hasNonLinkText(device)), node)
+            ) {
               collect = true;
             }
           }
@@ -71,7 +78,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             flattened: true,
           })
           .filter(isElement)
-          .find(hasName("p"))
+          .find(hasRole("paragraph"))
           .get();
 
         return {
@@ -85,38 +92,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
               target
             ),
             () => Outcomes.IsDistinguishable,
-            () =>
-              Question.of(
-                "is-distinguishable",
-                "boolean",
-                target,
-                `Can the link be distinguished from the surrounding text without
-                relying on color perception alone?`
-              ).map((isDistinguishable) =>
-                Question.of(
-                  "is-distinguishable-on-hover",
-                  "boolean",
-                  target,
-                  `When hovered, can the link be distinguished from the
-                  surrounding text without relying on color perception alone?`
-                ).map((isDistinguishableOnHover) =>
-                  Question.of(
-                    "is-distinguishable-on-focus",
-                    "boolean",
-                    target,
-                    `When focused, can the link be distinguished from the
-                    surrounding text without relying on color perception alone?`
-                  ).map((isDistinguishableOnFocus) =>
-                    expectation(
-                      isDistinguishable &&
-                        isDistinguishableOnHover &&
-                        isDistinguishableOnFocus,
-                      () => Outcomes.IsDistinguishable,
-                      () => Outcomes.IsNotDistinguishable
-                    )
-                  )
-                )
-              )
+            () => Outcomes.IsNotDistinguishable
           ),
 
           2: expectation(
@@ -137,40 +113,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
               target
             ),
             () => Outcomes.IsDistinguishableWhenVisited,
-            () =>
-              Question.of(
-                "is-distinguishable-when-visited",
-                "boolean",
-                target,
-                `When visited, can the link be distinguished from the
-                surrounding text without relying on color perception alone?`
-              ).map((isDistinguishableWhenVisited) =>
-                Question.of(
-                  "is-distinguishable-on-hover-when-visited",
-                  "boolean",
-                  target,
-                  `When visited and hovered, can the link be distinguished
-                  from the surrounding text without relying on color perception
-                  alone?`
-                ).map((isDistinguishableOnHoverWhenVisited) =>
-                  Question.of(
-                    "is-distinguishable-on-focus-when-visited",
-                    "boolean",
-                    target,
-                    `When visited and focused, can the link be distinguished
-                    from the surrounding text without relying on color
-                    perception alone?`
-                  ).map((isDistinguishableOnFocusWhenVisited) =>
-                    expectation(
-                      isDistinguishableWhenVisited &&
-                        isDistinguishableOnHoverWhenVisited &&
-                        isDistinguishableOnFocusWhenVisited,
-                      () => Outcomes.IsDistinguishableWhenVisited,
-                      () => Outcomes.IsNotDistinguishableWhenVisited
-                    )
-                  )
-                )
-              )
+            () => Outcomes.IsNotDistinguishableWhenVisited
           ),
         };
       },
@@ -226,21 +169,57 @@ function isDistinguishable(
   device: Device,
   context?: Context
 ): Predicate<Element> {
+  return or(
+    // Things like text decoration and backgrounds risk blending with the
+    // container element. We therefore need to check if these can be distinguished
+    // from what the container element might itself set.
+    hasDistinguishableTextDecoration(container, device, context),
+    hasDistinguishableBackground(container, device, context),
+
+    // We consider the mere presence of borders or outlines on the element as
+    // distinguishable features. There's of course a risk of these blending with
+    // other features of the container element, such as its background, but this
+    // should hopefully not happen (too often) in practice. When it does, we
+    // risk false negatives.
+    hasOutline(device, context),
+    hasBorder(device, context)
+  );
+}
+
+function hasDistinguishableTextDecoration(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  return (element) =>
+    test(not(hasTextDecoration(device, context)), container) &&
+    test(hasTextDecoration(device, context), element);
+}
+
+/**
+ * Check if an element has a distinguishable background from the given container
+ * element.
+ *
+ * @remarks
+ * This predicate currently only considers `background-color` as a possibly
+ * distinguishable background. Other `background-*` properties, such as
+ * `background-image`, should ideally also be considered, but `background-color`
+ * is the only property that contains just a single layer while something like
+ * `background-image` can contain multiple layers. It's therefore not trivial
+ * to handle.
+ */
+function hasDistinguishableBackground(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const reference = Style.from(container, device, context).computed(
+    "background-color"
+  ).value;
+
   return (element) => {
-    if (
-      test(not(hasOutline(device, context)), container) &&
-      test(hasOutline(device, context), element)
-    ) {
-      return true;
-    }
-
-    if (
-      test(not(hasTextDecoration(device, context)), container) &&
-      test(hasTextDecoration(device, context), element)
-    ) {
-      return true;
-    }
-
-    return false;
+    return Style.from(element, device, context)
+      .computed("background-color")
+      .none((color) => Color.isTransparent(color) || color.equals(reference));
   };
 }

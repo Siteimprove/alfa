@@ -65,3 +65,50 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
     });
   });
 }
+
+test(`#cascaded() parses \`border-color: red\``, (t) => {
+  const element = <div />;
+  const declaration = h.declaration("border-color", "red");
+
+  h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
+
+  const style = Style.from(element, device);
+
+  for (const side of ["top", "right", "bottom", "left"] as const) {
+    const property = `border-${side}-color` as const;
+    t.deepEqual(style.cascaded(property).get().toJSON(), {
+      value: {
+        format: "named",
+        type: "color",
+        color: "red",
+      },
+      source: declaration.toJSON(),
+    });
+  }
+});
+
+test(`#cascaded() parses \`border-color: red green blue black\``, (t) => {
+  const element = <div />;
+  const declaration = h.declaration("border-color", "red green blue black");
+
+  h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
+
+  const style = Style.from(element, device);
+
+  for (const [side, color] of [
+    ["top", "red"],
+    ["right", "green"],
+    ["bottom", "blue"],
+    ["left", "black"],
+  ] as const) {
+    const property = `border-${side}-color` as const;
+    t.deepEqual(style.cascaded(property).get().toJSON(), {
+      value: {
+        format: "named",
+        type: "color",
+        color: color,
+      },
+      source: declaration.toJSON(),
+    });
+  }
+});

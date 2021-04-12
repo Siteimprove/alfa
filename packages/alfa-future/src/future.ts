@@ -6,6 +6,7 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Thenable } from "@siteimprove/alfa-thenable";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
@@ -14,7 +15,12 @@ import { Thunk } from "@siteimprove/alfa-thunk";
  * @public
  */
 export abstract class Future<T>
-  implements Functor<T>, Monad<T>, Applicative<T>, AsyncIterable<T> {
+  implements
+    Functor<T>,
+    Monad<T>,
+    Applicative<T>,
+    Thenable<T>,
+    AsyncIterable<T> {
   protected abstract step(): Future<T>;
 
   public then(callback: Callback<T>): void {

@@ -2,8 +2,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element } from "../../element";
 
-import { hasName } from "./has-name";
-
 const { equals } = Predicate;
 
 /**
@@ -25,13 +23,13 @@ export function isDisabled(element: Element): boolean {
       return element
         .ancestors()
         .filter(Element.isElement)
-        .find(hasName("fieldset"))
+        .find(Element.hasName("fieldset"))
         .reject(isDisabled)
         .flatMap((fieldset) =>
           fieldset
             .descendants()
             .filter(Element.isElement)
-            .find(hasName("legend"))
+            .find(Element.hasName("legend"))
         )
         .some((legend) => legend.descendants().some(equals(element)));
 
@@ -44,7 +42,7 @@ export function isDisabled(element: Element): boolean {
       return element
         .inclusiveAncestors()
         .filter(Element.isElement)
-        .find(hasName("optgroup"))
+        .find(Element.hasName("optgroup"))
         .some(isDisabled);
 
     // https://html.spec.whatwg.org/#attr-optgroup-disabled

@@ -3,6 +3,12 @@ import { Length } from "@siteimprove/alfa-css";
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
+declare module "../property" {
+  interface Longhands {
+    "outline-offset": Property<Specified, Computed>;
+  }
+}
+
 /**
  * @internal
  */
@@ -19,11 +25,14 @@ export type Computed = Length<"px">;
 export const parse = Length.parse;
 
 /**
- * {@link https://drafts.csswg.org/css-ui/#outline-offset}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset}
  */
-export default Property.of<Specified, Computed>(
-  Length.of(0, "px"),
-  parse,
-  (outlineOffset, style) =>
-    outlineOffset.map((offset) => Resolver.length(offset, style))
+export default Property.register(
+  "outline-offset",
+  Property.of<Specified, Computed>(
+    Length.of(0, "px"),
+    parse,
+    (outlineOffset, style) =>
+      outlineOffset.map((offset) => Resolver.length(offset, style))
+  )
 );

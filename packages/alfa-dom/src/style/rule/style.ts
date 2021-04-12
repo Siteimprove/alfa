@@ -4,13 +4,13 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
-export class Style extends Rule {
+export class StyleRule extends Rule {
   public static of(
     selector: string,
     declarations: Iterable<Declaration>,
     hint = false
-  ): Style {
-    return new Style(selector, Array.from(declarations), hint);
+  ): StyleRule {
+    return new StyleRule(selector, Array.from(declarations), hint);
   }
 
   private readonly _selector: string;
@@ -43,7 +43,7 @@ export class Style extends Rule {
     return this._hint;
   }
 
-  public toJSON(): Style.JSON {
+  public toJSON(): StyleRule.JSON {
     return {
       type: "style",
       selector: this._selector,
@@ -58,23 +58,23 @@ export class Style extends Rule {
   }
 }
 
-export namespace Style {
+export namespace StyleRule {
   export interface JSON extends Rule.JSON {
     type: "style";
     selector: string;
     style: Block.JSON;
   }
 
-  export function isStyle(value: unknown): value is Style {
-    return value instanceof Style;
+  export function isStyleRule(value: unknown): value is StyleRule {
+    return value instanceof StyleRule;
   }
 
   /**
    * @internal
    */
-  export function fromStyle(json: JSON): Trampoline<Style> {
+  export function fromStyleRule(json: JSON): Trampoline<StyleRule> {
     return Trampoline.done(
-      Style.of(json.selector, json.style.map(Declaration.from))
+      StyleRule.of(json.selector, json.style.map(Declaration.from))
     );
   }
 }

@@ -21,6 +21,58 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` shorthand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#754](../../pull/754))
+
+- [@siteimprove/alfa-thenable](packages/alfa-thenable): A new package is now available with types for modelling values that can be used in `await` expressions.
+
+### Changed
+
+- [@siteimprove/alfa-formatter-earl](packages/alfa-formatter-earl), [@siteimprove/alfa-formatter-sarif](packages/alfa-formatter-sarif): The EARL and SARIF formatters now output additional vendor data. ([#753](../../pull/753))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 is now a fully automated rule and will therefore no longer pose questions during an audit. ([#760](../../pull/760))
+
+### Fixed
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): Some previously uncaught exceptions during page navigation are now caught and handled, resolving an issue where the scraper wouldn't terminate in rare cases.
+
+## [0.16.2](../../compare/v0.16.1...v0.16.2) (2021-03-31)
+
+This release contains only internal API changes.
+
+## [0.16.1](../../compare/v0.16.0...v0.16.1) (2021-03-30)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R6 now correctly checks for structural, not referential, equality of language tags. Prior to v0.16.0, the rule relied on the undocumented implementation detail that language tags were only constructed once.
+
+## [0.16.0](../../compare/v0.15.3...v0.16.0) (2021-03-30)
+
+### Breaking
+
+- [@siteimprove/alfa-assert](packages/alfa-assert): `Handler.persist()` is no longer available as it broke the ability to bundle the package using certain tools due to the dependence on Node.js.
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` longhand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#718](../../pull/718))
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<p>` elements now have an implicit role of `paragraph`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now targets links inside an element with a role of `paragraph`; SIA-R71, SIA-R72, SIA-R73, and SIA-R85 now target elements with a role of `paragraph`. ([#750](../../pull/750))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Roles that prohibit naming are now correctly considered when referenced by `aria-labelledby`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R74 and SIA-R80 now only target text inside elements with a role of `paragraph`. ([#750](../../pull/750))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R68 now correctly passes cases where an element contains more than 1 required owned element, but the first owned element is not required.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria), [@siteimprove/alfa-css](packages/alfa-css), [@siteimprove/alfa-dom](packages/alfa-dom), [@siteimprove/alfa-iana](packages/alfa-iana), [@siteimprove/alfa-style](packages/alfa-style): Circular imports between modules in these packages were previously causing some bundlers to hoist the modules in incorrect order, leading to panics at runtime. This has now been fixed.
+
 ## [0.15.3](../../compare/v0.15.2...v0.15.3) (2021-03-23)
 
 ### Fixed
