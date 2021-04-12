@@ -88,11 +88,11 @@ export namespace Position {
 
   export const parseCenter = Keyword.parse("center");
 
-  export type Vertical = Keyword<"top" | "bottom">;
+  export type Vertical = Keyword<"top"> | Keyword<"bottom">;
 
   export const parseVertical = Keyword.parse("top", "bottom");
 
-  export type Horizontal = Keyword<"left" | "right">;
+  export type Horizontal = Keyword<"left"> | Keyword<"right">;
 
   export const parseHorizontal = Keyword.parse("left", "right");
 

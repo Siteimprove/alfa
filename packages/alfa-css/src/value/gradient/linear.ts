@@ -62,12 +62,17 @@ export class Linear<
     return this._repeats;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Linear): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Linear &&
       value._direction.equals(this._direction) &&
       value._items.length === this._items.length &&
-      value._items.every((item, i) => item.equals(this._items[i]))
+      value._items.every((item, i) => item.equals(this._items[i])) &&
+      value._repeats === this._repeats
     );
   }
 
@@ -78,7 +83,7 @@ export class Linear<
       hash.writeHashable(item);
     }
 
-    hash.writeUint32(this._items.length).writeUint8(+this._repeats);
+    hash.writeUint32(this._items.length).writeBoolean(this._repeats);
   }
 
   public toJSON(): Linear.JSON {

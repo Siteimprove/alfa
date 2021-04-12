@@ -26,6 +26,7 @@
     "src/value/dimension.ts",
     "src/value/gradient.ts",
     "src/value/gradient/linear.ts",
+    "src/value/gradient/radial.ts",
     "src/value/image.ts",
     "src/value/integer.ts",
     "src/value/keyword.ts",
