@@ -1,7 +1,9 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -13,8 +15,9 @@ import { Length } from "../length";
 import { Percentage } from "../percentage";
 import { Position } from "../position";
 import { Gradient } from "../gradient";
+import { Keyword } from "../keyword";
 
-const { map, either, pair, option, left, right, delimited } = Parser;
+const { map, either, pair, option, left, right, delimited, take } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-images/#radial-gradients}
@@ -26,6 +29,19 @@ export class Radial<
   S extends Radial.Shape = Radial.Shape,
   P extends Position = Position
 > extends Value<"gradient"> {
+  public static of<
+    I extends Gradient.Item = Gradient.Item,
+    S extends Radial.Shape = Radial.Shape,
+    P extends Position = Position
+  >(
+    shape: S,
+    position: P,
+    items: Iterable<I>,
+    repeats: boolean
+  ): Radial<I, S, P> {
+    return new Radial(shape, position, Array.from(items), repeats);
+  }
+
   private readonly _shape: S;
   private readonly _position: P;
   private readonly _items: Array<I>;
@@ -258,6 +274,13 @@ export namespace Radial {
 
   export class Extent
     implements Equatable, Hashable, Serializable<Extent.JSON> {
+    public static of(
+      shape: Extent.Shape = Extent.Shape.Circle,
+      size: Extent.Size = Extent.Size.FarthestCorner
+    ): Extent {
+      return new Extent(shape, size);
+    }
+
     private readonly _shape: Extent.Shape;
     private readonly _size: Extent.Size;
 
@@ -327,4 +350,208 @@ export namespace Radial {
       size: `${Size}`;
     }
   }
+
+  const parsePosition = right(
+    delimited(option(Token.parseWhitespace), Keyword.parse("at")),
+    Position.parse(false /* legacySyntax */)
+  );
+
+  const parseCircleShape = Keyword.parse("circle");
+
+  const parseCircleRadius = Length.parse;
+
+  const parseCircle: Parser<Slice<Token>, Circle, string> = (input) => {
+    let shape: Keyword<"circle"> | undefined;
+    let radius: Length | undefined;
+
+    while (true) {
+      for ([input] of Token.parseWhitespace(input)) {
+      }
+
+      if (shape === undefined) {
+        const result = parseCircleShape(input);
+
+        if (result.isOk()) {
+          [input, shape] = result.get();
+          continue;
+        }
+      }
+
+      if (radius === undefined) {
+        const result = parseCircleRadius(input);
+
+        if (result.isOk()) {
+          [input, radius] = result.get();
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (radius === undefined) {
+      return Err.of(`Expected circle radius`);
+    }
+
+    return Result.of([input, Circle.of(radius)]);
+  };
+
+  const parseEllipseShape = Keyword.parse("ellipse");
+
+  const parseEllipseSize = take(
+    delimited(
+      option(Token.parseWhitespace),
+      either(Length.parse, Percentage.parse)
+    ),
+    2
+  );
+
+  const parseEllipse: Parser<Slice<Token>, Ellipse, string> = (input) => {
+    let shape: Keyword<"ellipse"> | undefined;
+    let horizontal: Length | Percentage | undefined;
+    let vertical: Length | Percentage | undefined;
+
+    while (true) {
+      for ([input] of Token.parseWhitespace(input)) {
+      }
+
+      if (shape === undefined) {
+        const result = parseEllipseShape(input);
+
+        if (result.isOk()) {
+          [input, shape] = result.get();
+          continue;
+        }
+      }
+
+      if (horizontal === undefined || vertical === undefined) {
+        const result = parseEllipseSize(input);
+
+        if (result.isOk()) {
+          [input, [horizontal, vertical]] = result.get();
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (horizontal === undefined || vertical === undefined) {
+      return Err.of(`Expected ellipse size`);
+    }
+
+    return Result.of([input, Ellipse.of(horizontal, vertical)]);
+  };
+
+  const parseExtentShape = map(
+    Keyword.parse("circle", "ellipse"),
+    (keyword) => keyword.value as Extent.Shape
+  );
+
+  const parseExtentSize = map(
+    Keyword.parse(
+      "closest-side",
+      "farthest-side",
+      "closest-corner",
+      "farthest-corner"
+    ),
+    (keyword) => keyword.value as Extent.Size
+  );
+
+  const parseExtent: Parser<Slice<Token>, Radial.Extent, string> = (input) => {
+    let shape: Extent.Shape | undefined;
+    let size: Extent.Size | undefined;
+
+    while (true) {
+      for ([input] of Token.parseWhitespace(input)) {
+      }
+
+      if (shape === undefined) {
+        const result = parseExtentShape(input);
+
+        if (result.isOk()) {
+          [input, shape] = result.get();
+          continue;
+        }
+      }
+
+      if (size === undefined) {
+        const result = parseExtentSize(input);
+
+        if (result.isOk()) {
+          [input, size] = result.get();
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (shape === undefined && size === undefined) {
+      return Err.of(`Expected either an extent shape or size`);
+    }
+
+    return Result.of([input, Extent.of(shape, size)]);
+  };
+
+  const parseShape = either(either(parseEllipse, parseCircle), parseExtent);
+
+  /**
+   * {@link https://drafts.csswg.org/css-images/#funcdef-radial-gradient}
+   */
+  export const parse: Parser<Slice<Token>, Radial, string> = map(
+    pair(
+      Token.parseFunction(
+        (fn) =>
+          fn.value === "radial-gradient" ||
+          fn.value === "repeating-radial-gradient"
+      ),
+      left(
+        delimited(
+          option(Token.parseWhitespace),
+          pair(
+            option(
+              left(
+                either(
+                  pair(
+                    map(parseShape, (shape) => Option.of(shape)),
+                    option(
+                      delimited(option(Token.parseWhitespace), parsePosition)
+                    )
+                  ),
+                  map(
+                    parsePosition,
+                    (position) => [None, Option.of(position)] as const
+                  )
+                ),
+                delimited(option(Token.parseWhitespace), Token.parseComma)
+              )
+            ),
+            Gradient.parseItemList
+          )
+        ),
+        Token.parseCloseParenthesis
+      )
+    ),
+    (result) => {
+      const [fn, [shapeAndPosition, items]] = result;
+
+      const shape = shapeAndPosition
+        .flatMap(([shape]) => shape)
+        .getOrElse(() => Extent.of());
+
+      const position = shapeAndPosition
+        .flatMap(([, position]) => position)
+        .getOrElse(() =>
+          Position.of(Keyword.of("center"), Keyword.of("center"))
+        );
+
+      return Radial.of(
+        shape,
+        position,
+        items,
+        fn.value.startsWith("repeating")
+      );
+    }
+  );
 }

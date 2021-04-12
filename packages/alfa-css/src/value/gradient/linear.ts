@@ -28,17 +28,17 @@ export class Linear<
     items: Iterable<I>,
     repeats: boolean
   ): Linear<I, D> {
-    return new Linear(direction, items, repeats);
+    return new Linear(direction, Array.from(items), repeats);
   }
 
   private readonly _direction: D;
   private readonly _items: Array<I>;
   private readonly _repeats: boolean;
 
-  private constructor(direction: D, items: Iterable<I>, repeats: boolean) {
+  private constructor(direction: D, items: Array<I>, repeats: boolean) {
     super();
     this._direction = direction;
-    this._items = [...items];
+    this._items = items;
     this._repeats = repeats;
   }
 

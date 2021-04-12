@@ -235,5 +235,5 @@ export namespace Gradient {
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
   export const parse: Parser<Slice<Token>, Gradient, string> = (input) =>
-    Linear.parse(input);
+    either(Linear.parse, Radial.parse)(input);
 }
