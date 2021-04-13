@@ -839,7 +839,9 @@ function isRendered(node: Node, device: Device): boolean {
   if (Element.isElement(node)) {
     const display = Style.from(node, device).computed("display").value;
 
-    const [outside] = display;
+    const {
+      values: [outside],
+    } = display;
 
     if (outside.value === "none") {
       return false;

@@ -407,7 +407,11 @@ export namespace Node {
         // As we're building the accessibility tree top-down, we only need to
         // check the element itself for `display: none` and can safely
         // disregard its ancestors as they will already have been checked.
-        if (style.computed("display").value[0].value === "none") {
+        if (
+          style
+            .computed("display")
+            .some(({ values: [outside] }) => outside.value === "none")
+        ) {
           return Inert.of(node);
         }
 

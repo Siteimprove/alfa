@@ -31,7 +31,7 @@ export function isRendered(
           Element.isElement(node) &&
           Style.from(node, device, context)
             .computed("display")
-            .some(([outside]) => outside.value === "none")
+            .some(({ values: [outside] }) => outside.value === "none")
         ) {
           return false;
         }

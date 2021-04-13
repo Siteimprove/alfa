@@ -1,7 +1,10 @@
-import { Keyword } from "@siteimprove/alfa-css";
+import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
+import { Tuple } from "./value/tuple";
 
 const { map, either } = Parser;
 
@@ -14,11 +17,15 @@ declare module "../property" {
 /**
  * @internal
  */
-export type Specified =
-  | readonly [Specified.Internal]
-  | readonly [Specified.Box]
-  | readonly [Specified.Outside, Specified.Inside]
-  | readonly [Specified.Outside, Specified.Inside, Specified.ListItem];
+export type Specified = Tuple<
+  | [
+      outside: Specified.Outside,
+      inside: Specified.Inside,
+      listitem?: Specified.ListItem
+    ]
+  | [outside: Specified.Internal, inside: Specified.Internal | Specified.Inside]
+  | [Specified.Box]
+>;
 
 /**
  * @internal
@@ -77,53 +84,168 @@ export namespace Specified {
 export type Computed = Specified;
 
 /**
+ * {@link https://drafts.csswg.org/css-display/#typedef-display-outside}
+ */
+const parseDisplayOutside = Keyword.parse("block", "inline", "run-in");
+
+/**
+ * {@link https://drafts.csswg.org/css-display/#typedef-display-inside}
+ */
+const parseDisplayInside = Keyword.parse(
+  "flow",
+  "flow-root",
+  "table",
+  "flex",
+  "grid",
+  "ruby"
+);
+
+/**
+ * {@link https://drafts.csswg.org/css-display/#typedef-display-listitem}
+ */
+const parseDisplayListItem = Keyword.parse("list-item");
+
+/**
+ * {@link https://drafts.csswg.org/css-display/#typedef-display-internal}
+ */
+const parseDisplayInternal = Keyword.parse(
+  "table-row-group",
+  "table-header-group",
+  "table-footer-group",
+  "table-row",
+  "table-cell",
+  "table-column-group",
+  "table-column",
+  "table-caption",
+  "ruby-base",
+  "ruby-text",
+  "ruby-base-container",
+  "ruby-text-container"
+);
+
+/**
+ * {@link https://drafts.csswg.org/css-display/#typedef-display-box}
+ */
+const parseDisplayBox = Keyword.parse("contents", "none");
+
+/**
+ * {@link https://drafts.csswg.org/css-display/#typedef-display-legacy}
+ */
+const parseDisplayLegacy = Keyword.parse(
+  "inline-block",
+  "inline-table",
+  "inline-flex",
+  "inline-grid"
+);
+
+/**
  * @internal
  */
-export const parse = either(
-  map(Keyword.parse("contents", "none"), (keyword) => [keyword] as const),
-  either(
-    map(
-      Keyword.parse("block", "inline", "run-in"),
-      (keyword) => [keyword, Keyword.of("flow")] as const
-    ),
-    either(
-      map(
-        Keyword.parse("flow", "flow-root", "table", "flex", "grid", "ruby"),
-        (keyword) =>
-          [
-            keyword.value === "ruby"
-              ? Keyword.of("inline")
-              : Keyword.of("block"),
-            keyword,
-          ] as const
-      ),
-      map(
-        Keyword.parse(
-          "inline-block",
-          "inline-table",
-          "inline-flex",
-          "inline-grid"
-        ),
-        (keyword) => {
-          const inline = Keyword.of("inline");
+export const parse = either<Slice<Token>, Specified, string>(
+  (input) => {
+    let outside: Specified.Outside | undefined;
+    let inside: Specified.Inside | undefined;
+    let listItem: Specified.ListItem | undefined;
 
-          switch (keyword.value) {
-            case "inline-block":
-              return [inline, Keyword.of("flow-root")] as const;
+    while (true) {
+      for ([input] of Token.parseWhitespace(input)) {
+      }
 
-            case "inline-table":
-              return [inline, Keyword.of("table")] as const;
+      if (outside === undefined) {
+        const result = parseDisplayOutside(input);
 
-            case "inline-flex":
-              return [inline, Keyword.of("flex")] as const;
-
-            case "inline-grid":
-              return [inline, Keyword.of("grid")] as const;
-          }
+        if (result.isOk()) {
+          [input, outside] = result.get();
+          continue;
         }
-      )
-    )
-  )
+      }
+
+      if (inside === undefined) {
+        const result = parseDisplayInside(input);
+
+        if (result.isOk()) {
+          [input, inside] = result.get();
+          continue;
+        }
+      }
+
+      if (listItem === undefined) {
+        const result = parseDisplayListItem(input);
+
+        if (result.isOk()) {
+          [input, listItem] = result.get();
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (
+      outside === undefined &&
+      inside === undefined &&
+      listItem === undefined
+    ) {
+      return Err.of(`Expected an outer or inner display type or a list marker`);
+    }
+
+    if (listItem === undefined) {
+      outside =
+        outside ??
+        (inside?.value === "ruby" ? Keyword.of("inline") : Keyword.of("block"));
+      inside = inside ?? Keyword.of("flow");
+    } else {
+      outside = outside ?? Keyword.of("block");
+      inside = inside ?? Keyword.of("flow");
+
+      switch (inside.value) {
+        case "flow":
+        case "flow-root":
+          break;
+        default:
+          return Err.of(`Unexpected inner display type for list marker`);
+      }
+    }
+
+    return Result.of([input, Tuple.of(outside, inside, listItem)]);
+  },
+  map(parseDisplayInternal, (keyword) => {
+    switch (keyword.value) {
+      case "table-row-group":
+      case "table-header-group":
+      case "table-footer-group":
+      case "table-row":
+      case "table-cell":
+      case "table-column-group":
+      case "table-column":
+      case "table-caption":
+        return Tuple.of(keyword, Keyword.of("flow-root"));
+
+      case "ruby-base":
+      case "ruby-text":
+      case "ruby-base-container":
+      case "ruby-text-container":
+        return Tuple.of(keyword, Keyword.of("flow"));
+    }
+  }),
+  map(parseDisplayBox, (keyword) => Tuple.of(keyword)),
+  map(parseDisplayLegacy, (keyword) => {
+    const inline = Keyword.of("inline");
+
+    switch (keyword.value) {
+      case "inline-block":
+        return Tuple.of(inline, Keyword.of("flow-root"));
+
+      case "inline-table":
+        return Tuple.of(inline, Keyword.of("table"));
+
+      case "inline-flex":
+        return Tuple.of(inline, Keyword.of("flex"));
+
+      case "inline-grid":
+        return Tuple.of(inline, Keyword.of("grid"));
+    }
+  })
 );
 
 /**
@@ -133,7 +255,7 @@ export const parse = either(
 export default Property.register(
   "display",
   Property.of<Specified, Computed>(
-    [Keyword.of("inline"), Keyword.of("flow")],
+    Tuple.of(Keyword.of("inline"), Keyword.of("flow")),
     parse,
     (value) => value
   )
