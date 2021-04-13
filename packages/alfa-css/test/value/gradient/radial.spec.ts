@@ -94,6 +94,61 @@ test("parse() parses a radial gradient with an extent", (t) => {
   });
 });
 
+test("parse() parses a radial gradient with an extent and a position", (t) => {
+  t.deepEqual(
+    parse("radial-gradient(closest-side at bottom left, red, blue)").get(),
+    {
+      type: "gradient",
+      kind: "radial",
+      shape: {
+        type: "extent",
+        shape: "circle",
+        size: "closest-side",
+      },
+      position: {
+        type: "position",
+        horizontal: {
+          type: "side",
+          side: {
+            type: "keyword",
+            value: "left",
+          },
+          offset: null,
+        },
+        vertical: {
+          type: "side",
+          side: {
+            type: "keyword",
+            value: "bottom",
+          },
+          offset: null,
+        },
+      },
+      items: [
+        {
+          type: "stop",
+          position: null,
+          color: {
+            type: "color",
+            format: "named",
+            color: "red",
+          },
+        },
+        {
+          type: "stop",
+          position: null,
+          color: {
+            type: "color",
+            format: "named",
+            color: "blue",
+          },
+        },
+      ],
+      repeats: false,
+    }
+  );
+});
+
 test("parse() parses a radial gradient with a circle", (t) => {
   for (const input of ["1px", "1px circle", "circle 1px"]) {
     t.deepEqual(
