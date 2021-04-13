@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/cache@v2.1.4
+      - uses: actions/cache@v2.1.5
         with:
           path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}
