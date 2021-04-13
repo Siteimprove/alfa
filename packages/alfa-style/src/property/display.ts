@@ -23,7 +23,7 @@ export type Specified = Tuple<
       inside: Specified.Inside,
       listitem?: Specified.ListItem
     ]
-  | [outside: Specified.Internal, inside: Specified.Internal | Specified.Inside]
+  | [outside: Specified.Internal, inside: Specified.Inside]
   | [Specified.Box]
 >;
 
@@ -189,22 +189,25 @@ export const parse = either<Slice<Token>, Specified, string>(
       return Err.of(`Expected an outer or inner display type or a list marker`);
     }
 
-    if (listItem === undefined) {
-      outside =
-        outside ??
-        (inside?.value === "ruby" ? Keyword.of("inline") : Keyword.of("block"));
-      inside = inside ?? Keyword.of("flow");
-    } else {
-      outside = outside ?? Keyword.of("block");
-      inside = inside ?? Keyword.of("flow");
+    if (inside === undefined) {
+      inside = Keyword.of("flow");
+    }
 
-      switch (inside.value) {
-        case "flow":
-        case "flow-root":
-          break;
-        default:
-          return Err.of(`Unexpected inner display type for list marker`);
-      }
+    if (outside === undefined) {
+      outside =
+        inside.value === "ruby" ? Keyword.of("inline") : Keyword.of("block");
+    }
+
+    if (listItem === undefined) {
+      return Result.of([input, Tuple.of(outside, inside)]);
+    }
+
+    switch (inside.value) {
+      case "flow":
+      case "flow-root":
+        break;
+      default:
+        return Err.of(`Unexpected inner display type for list marker`);
     }
 
     return Result.of([input, Tuple.of(outside, inside, listItem)]);

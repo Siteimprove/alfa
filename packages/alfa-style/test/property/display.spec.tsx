@@ -48,7 +48,6 @@ test("#cascaded() parses `display: block`", (t) => {
         type: "keyword",
         value: "flow",
       },
-      null,
     ],
   });
 });
@@ -65,7 +64,6 @@ test("#cascaded() parses `display: inline`", (t) => {
         type: "keyword",
         value: "flow",
       },
-      null,
     ],
   });
 });
@@ -85,6 +83,126 @@ test("#cascaded() parses `display: list-item`", (t) => {
       {
         type: "keyword",
         value: "list-item",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: inline-block`", (t) => {
+  t.deepEqual(cascaded("inline-block").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "inline",
+      },
+      {
+        type: "keyword",
+        value: "flow-root",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: inline flow`", (t) => {
+  t.deepEqual(cascaded("inline flow").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "inline",
+      },
+      {
+        type: "keyword",
+        value: "flow",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: inline flow list-item`", (t) => {
+  t.deepEqual(cascaded("inline flow list-item").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "inline",
+      },
+      {
+        type: "keyword",
+        value: "flow",
+      },
+      {
+        type: "keyword",
+        value: "list-item",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: block flow`", (t) => {
+  t.deepEqual(cascaded("block flow").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "block",
+      },
+      {
+        type: "keyword",
+        value: "flow",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: block flow list-item`", (t) => {
+  t.deepEqual(cascaded("block flow list-item").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "block",
+      },
+      {
+        type: "keyword",
+        value: "flow",
+      },
+      {
+        type: "keyword",
+        value: "list-item",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: table-row`", (t) => {
+  t.deepEqual(cascaded("table-row").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "table-row",
+      },
+      {
+        type: "keyword",
+        value: "flow-root",
+      },
+    ],
+  });
+});
+
+test("#cascaded() parses `display: ruby-text`", (t) => {
+  t.deepEqual(cascaded("ruby-text").toJSON(), {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "ruby-text",
+      },
+      {
+        type: "keyword",
+        value: "flow",
       },
     ],
   });
