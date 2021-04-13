@@ -7,6 +7,8 @@ import {
   Length,
   Linear,
   Percentage,
+  Position,
+  Radial,
   RGB,
   System,
 } from "@siteimprove/alfa-css";
@@ -124,40 +126,100 @@ export namespace Resolver {
 
   function gradient(gradient: Gradient, style: Style) {
     switch (gradient.kind) {
-      case "linear": {
-        const { direction, items, repeats } = gradient;
-
+      case "linear":
         return Image.of(
           Linear.of(
-            direction.type === "angle" ? direction.withUnit("deg") : direction,
-            Iterable.map(items, (item) => gradientItem(item, style)),
-            repeats
+            gradient.direction.type === "angle"
+              ? gradient.direction.withUnit("deg")
+              : gradient.direction,
+            Iterable.map(gradient.items, (item) => gradientItem(item, style)),
+            gradient.repeats
           )
         );
-      }
+
+      case "radial":
+        return Image.of(
+          Radial.of(
+            gradientShape(gradient.shape, style),
+            position(gradient.position, style),
+            Iterable.map(gradient.items, (item) => gradientItem(item, style)),
+            gradient.repeats
+          )
+        );
     }
   }
 
   function gradientItem(item: Gradient.Item, style: Style) {
     switch (item.type) {
-      case "stop": {
-        const { color, position } = item;
-
+      case "stop":
         return Gradient.Stop.of(
-          Resolver.color(color),
-          position.map((position) =>
+          Resolver.color(item.color),
+          item.position.map((position) =>
             position.type === "length" ? length(position, style) : position
           )
         );
-      }
 
       case "hint": {
-        const { position } = item;
-
         return Gradient.Hint.of(
-          position.type === "length" ? length(position, style) : position
+          item.position.type === "length"
+            ? length(item.position, style)
+            : item.position
         );
       }
+    }
+  }
+
+  function gradientShape(shape: Radial.Shape, style: Style) {
+    switch (shape.type) {
+      case "circle":
+        return Radial.Circle.of(length(shape.radius, style));
+
+      case "ellipse":
+        return Radial.Ellipse.of(
+          shape.horizontal.type === "length"
+            ? length(shape.horizontal, style)
+            : shape.horizontal,
+          shape.vertical.type === "length"
+            ? length(shape.vertical, style)
+            : shape.vertical
+        );
+
+      case "extent":
+        return shape;
+    }
+  }
+
+  export function position(position: Position, style: Style) {
+    return Position.of(
+      positionComponent(position.horizontal, style),
+      positionComponent(position.vertical, style)
+    );
+  }
+
+  export function positionComponent<
+    S extends Position.Horizontal | Position.Vertical
+  >(position: Position.Component<S>, style: Style) {
+    switch (position.type) {
+      case "keyword":
+      case "percentage":
+        return position;
+
+      case "length":
+        return Resolver.length(position, style);
+
+      case "side":
+        return Position.Side.of(
+          position.side,
+          position.offset.map((offset) => {
+            switch (offset.type) {
+              case "percentage":
+                return offset;
+
+              case "length":
+                return Resolver.length(offset, style);
+            }
+          })
+        );
     }
   }
 }
