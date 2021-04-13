@@ -7,6 +7,8 @@ import {
   Length,
   Linear,
   Percentage,
+  Position,
+  Radial,
   RGB,
   System,
   Token,
@@ -54,6 +56,20 @@ export type Computed = List<
             >
           | Gradient.Hint<Length<"px"> | Percentage>,
           Angle<"deg"> | Linear.Side | Linear.Corner
+        >
+      | Radial<
+          | Gradient.Stop<
+              RGB<Percentage, Percentage> | Current | System,
+              Length<"px"> | Percentage
+            >
+          | Gradient.Hint<Length<"px"> | Percentage>,
+          | Radial.Circle<Length<"px">>
+          | Radial.Ellipse<Length<"px"> | Percentage>
+          | Radial.Extent,
+          Position<
+            Position.Component<Position.Horizontal, "px">,
+            Position.Component<Position.Vertical, "px">
+          >
         >
     >
 >;
