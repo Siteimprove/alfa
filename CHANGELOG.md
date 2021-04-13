@@ -21,11 +21,17 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Breaking
+
+- [@siteimprove/afa-style](packages/alfa-style): The type of the `display` has changed from a plain tuple to the `Tuple` class. ([#763](../../pull/763))
+
 ### Added
 
 - [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` shorthand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#754](../../pull/754))
 
 - [@siteimprove/alfa-thenable](packages/alfa-thenable): A new package is now available with types for modelling values that can be used in `await` expressions.
+
+- [@siteimprove/alfa-css](packages/alfa-css): Radial gradients are now available as a type of `Gradient`. ([#438](../../pull/438))
 
 ### Changed
 
@@ -36,6 +42,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 ### Fixed
 
 - [@siteimprove/alfa-scraper](packages/alfa-scraper): Some previously uncaught exceptions during page navigation are now caught and handled, resolving an issue where the scraper wouldn't terminate in rare cases.
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `display` property now supports the full grammar as specified by CSS. ([#763](../../pull/763))
 
 ## [0.16.2](../../compare/v0.16.1...v0.16.2) (2021-03-31)
 
