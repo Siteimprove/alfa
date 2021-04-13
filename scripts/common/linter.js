@@ -5,22 +5,20 @@ const { flags } = require("./flags");
 
 const linter = new Linter({ useEslintrc: true });
 
-const formatter = linter.loadFormatter(
-  flags.pretty ? "stylish" : "visualstudio"
-);
-
 exports.linter = {
   async lint(root = "packages") {
-    const { results, errorCount } = await linter.lintFiles(
+    const formatter = await linter.loadFormatter(
+      flags.pretty ? "stylish" : "visualstudio"
+    );
+
+    const results = await linter.lintFiles(
       system
         .readDirectory(root, [".ts", ".tsx"])
         .filter((fileName) => !fileName.endsWith(".d.ts"))
     );
 
-    if (results.length !== 0) {
-      system.write(formatter(results));
-    }
+    system.write(formatter.format(results));
 
-    return errorCount === 0 ? 0 : 1;
+    return results.every((result) => result.errorCount === 0) ? 0 : 1;
   },
 };
