@@ -2,24 +2,22 @@ name: Scan
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - "*"
+      - main
   schedule:
     - cron: "0 21 * * 1"
 jobs:
   analyze:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     name: Analyze
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2.1.5
         with:
           path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}
@@ -28,4 +26,5 @@ jobs:
       - uses: github/codeql-action/init@v1
         with:
           languages: javascript
+          config-file: .github/codeql/config.yml
       - uses: github/codeql-action/analyze@v1

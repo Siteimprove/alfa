@@ -10,6 +10,9 @@ import { Name } from "../name";
 import { Node } from "../node";
 import { Role } from "../role";
 
+/**
+ * @public
+ */
 export class Element extends Node {
   public static of(
     owner: dom.Node,
@@ -53,8 +56,8 @@ export class Element extends Node {
     return this._name;
   }
 
-  public get attributes(): Iterable<Attribute> {
-    return this._attributes[Symbol.iterator]();
+  public get attributes(): ReadonlyArray<Attribute> {
+    return this._attributes;
   }
 
   public attribute<N extends Attribute.Name>(
@@ -114,6 +117,9 @@ export class Element extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Element {
   export interface JSON extends Node.JSON {
     type: "element";

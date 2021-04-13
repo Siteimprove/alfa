@@ -3,17 +3,16 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "./namespace";
 
-import { Node } from "./node";
-import { Attribute } from "./node/attribute";
-import { Document } from "./node/document";
-import { Element } from "./node/element";
-import { Fragment } from "./node/fragment";
-import { Text } from "./node/text";
-import { Type } from "./node/type";
-
-import { Block } from "./style/block";
-import { Declaration } from "./style/declaration";
 import {
+  Node,
+  Attribute,
+  Document,
+  Element,
+  Fragment,
+  Text,
+  Type,
+  Block,
+  Declaration,
   FontFaceRule,
   KeyframeRule,
   KeyframesRule,
@@ -23,9 +22,9 @@ import {
   Rule,
   StyleRule,
   SupportsRule,
-} from "./style/rule";
-import { Sheet } from "./style/sheet";
-import { Shadow } from "./node/shadow";
+  Sheet,
+  Shadow,
+} from ".";
 
 const { entries } = Object;
 const { nor } = Predicate;

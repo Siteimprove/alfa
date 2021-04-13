@@ -7,6 +7,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header";
 
+/**
+ * @public
+ */
 export class Headers
   implements
     Iterable<Header>,
@@ -79,6 +82,9 @@ export class Headers
   }
 }
 
+/**
+ * @public
+ */
 export namespace Headers {
   export interface JSON extends Array<Header.JSON> {}
 

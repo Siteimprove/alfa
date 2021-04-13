@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
@@ -18,6 +18,9 @@ import { Branch, Empty, Leaf, Node } from "./node";
 const { not } = Predicate;
 const { compareComparable } = Comparable;
 
+/**
+ * @public
+ */
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
     const size = values.length;
@@ -61,11 +64,11 @@ export class List<T> implements Collection.Indexed<T> {
     return this._tail.isEmpty();
   }
 
-  public forEach(callback: Callback<T, void, [number]>): void {
+  public forEach(callback: Callback<T, void, [index: number]>): void {
     Iterable.forEach(this, callback);
   }
 
-  public map<U>(mapper: Mapper<T, U, [number]>): List<U> {
+  public map<U>(mapper: Mapper<T, U, [index: number]>): List<U> {
     let index = 0;
 
     const tail = (this._tail as Node<T>).map((value) => mapper(value, index++));
@@ -80,44 +83,64 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
-  public flatMap<U>(mapper: Mapper<T, List<U>, [number]>): List<U> {
+  public flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U> {
     return this.reduce(
       (list, value, index) => list.concat(mapper(value, index)),
       List.empty<U>()
     );
   }
 
-  public reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U {
+  public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
     return Iterable.reduce(this, reducer, accumulator);
+  }
+
+  public reduceWhile<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceWhile(this, predicate, reducer, accumulator);
+  }
+
+  public reduceUntil<U>(
+    predicate: Predicate<T, [index: number]>,
+    reducer: Reducer<T, U, [index: number]>,
+    accumulator: U
+  ): U {
+    return Iterable.reduceUntil(this, predicate, reducer, accumulator);
   }
 
   public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
     return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
-  public filter<U extends T>(refinement: Refinement<T, U, [number]>): List<U>;
+  public filter<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): List<U>;
 
-  public filter(predicate: Predicate<T, [number]>): List<T>;
+  public filter(predicate: Predicate<T, [index: number]>): List<T>;
 
-  public filter(predicate: Predicate<T, [number]>): List<T> {
+  public filter(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.filter(this, predicate));
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U, [number]>
+    refinement: Refinement<T, U, [index: number]>
   ): List<Exclude<T, U>>;
 
-  public reject(predicate: Predicate<T, [number]>): List<T>;
+  public reject(predicate: Predicate<T, [index: number]>): List<T>;
 
-  public reject(predicate: Predicate<T, [number]>): List<T> {
+  public reject(predicate: Predicate<T, [index: number]>): List<T> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends T>(refinement: Refinement<T, U, [number]>): Option<U>;
+  public find<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Option<U>;
 
-  public find(predicate: Predicate<T, [number]>): Option<T>;
+  public find(predicate: Predicate<T, [index: number]>): Option<T>;
 
-  public find(predicate: Predicate<T, [number]>): Option<T> {
+  public find(predicate: Predicate<T, [index: number]>): Option<T> {
     return Iterable.find(this, predicate);
   }
 
@@ -125,27 +148,29 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.includes(this, value);
   }
 
-  public collect<U>(mapper: Mapper<T, Option<U>, [number]>): List<U> {
+  public collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): List<U> {
     return List.from(Iterable.collect(this, mapper));
   }
 
-  public collectFirst<U>(mapper: Mapper<T, Option<U>, [number]>): Option<U> {
+  public collectFirst<U>(
+    mapper: Mapper<T, Option<U>, [index: number]>
+  ): Option<U> {
     return Iterable.collectFirst(this, mapper);
   }
 
-  public some(predicate: Predicate<T, [number]>): boolean {
+  public some(predicate: Predicate<T, [index: number]>): boolean {
     return Iterable.some(this, predicate);
   }
 
-  public none(predicate: Predicate<T, [number]>): boolean {
+  public none(predicate: Predicate<T, [index: number]>): boolean {
     return Iterable.none(this, predicate);
   }
 
-  public every(predicate: Predicate<T, [number]>): boolean {
+  public every(predicate: Predicate<T, [index: number]>): boolean {
     return Iterable.every(this, predicate);
   }
 
-  public count(predicate: Predicate<T, [number]>): number {
+  public count(predicate: Predicate<T, [index: number]>): number {
     return Iterable.count(this, predicate);
   }
 
@@ -256,6 +281,18 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public subtract(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.subtract(this, iterable));
+  }
+
+  public intersect(iterable: Iterable<T>): List<T> {
+    return List.from(Iterable.intersect(this, iterable));
+  }
+
+  public zip<U>(iterable: Iterable<U>): List<[T, U]> {
+    return List.from(Iterable.zip(this, iterable));
+  }
+
   public first(): Option<T> {
     return this._tail.isEmpty() ? None : Option.of(this._tail.values[0]);
   }
@@ -268,11 +305,11 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.take(this, count));
   }
 
-  public takeWhile(predicate: Predicate<T, [number]>): List<T> {
+  public takeWhile(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.takeWhile(this, predicate));
   }
 
-  public takeUntil(predicate: Predicate<T, [number]>): List<T> {
+  public takeUntil(predicate: Predicate<T, [index: number]>): List<T> {
     return this.takeWhile(not(predicate));
   }
 
@@ -280,15 +317,23 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.takeLast(this, count));
   }
 
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T> {
+    return List.from(Iterable.takeLastWhile(this, predicate));
+  }
+
+  public takeLastUntil(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.takeLastWhile(not(predicate));
+  }
+
   public skip(count: number): List<T> {
     return List.from(Iterable.skip(this, count));
   }
 
-  public skipWhile(predicate: Predicate<T, [number]>): List<T> {
+  public skipWhile(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.skipWhile(this, predicate));
   }
 
-  public skipUntil(predicate: Predicate<T, [number]>): List<T> {
+  public skipUntil(predicate: Predicate<T, [index: number]>): List<T> {
     return this.skipWhile(not(predicate));
   }
 
@@ -300,6 +345,26 @@ export class List<T> implements Collection.Indexed<T> {
     }
 
     return list;
+  }
+
+  public skipLastWhile(predicate: Predicate<T, [index: number]>): List<T> {
+    return List.from(Iterable.skipLastWhile(this, predicate));
+  }
+
+  public skipLastUntil(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.skipLastWhile(not(predicate));
+  }
+
+  public trim(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.trimLeading(predicate).trimTrailing(predicate);
+  }
+
+  public trimLeading(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.skipWhile(predicate);
+  }
+
+  public trimTrailing(predicate: Predicate<T, [index: number]>): List<T> {
+    return this.skipLastWhile(predicate);
   }
 
   public rest(): List<T> {
@@ -324,14 +389,6 @@ export class List<T> implements Collection.Indexed<T> {
 
   public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
-  }
-
-  public subtract(iterable: Iterable<T>): List<T> {
-    return List.from(Iterable.subtract(this, iterable));
-  }
-
-  public intersect(iterable: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, iterable));
   }
 
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
@@ -363,10 +420,10 @@ export class List<T> implements Collection.Indexed<T> {
 
   public hash(hash: Hash): void {
     for (const value of this) {
-      Hashable.hash(hash, value);
+      hash.writeUnknown(value);
     }
 
-    Hash.writeUint32(hash, this._size);
+    hash.writeUint32(this._size);
   }
 
   public *[Symbol.iterator](): Iterator<T> {
@@ -570,6 +627,9 @@ export class List<T> implements Collection.Indexed<T> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace List {
   export type JSON<T> = Collection.Indexed.JSON<T>;
 

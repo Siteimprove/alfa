@@ -10,6 +10,17 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
+import {
+  Attribute,
+  Comment,
+  Document,
+  Element,
+  Fragment,
+  Text,
+  Type,
+  Slot,
+} from ".";
+
 const { equals } = Predicate;
 
 export abstract class Node
@@ -53,14 +64,14 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-parent
+   * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
   public parent(_: Node.Traversal = {}): Option<Node> {
     return this._parent;
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-root
+   * {@link https://dom.spec.whatwg.org/#concept-tree-root}
    */
   public root(options: Node.Traversal = {}): Node {
     for (const parent of this.parent(options)) {
@@ -71,14 +82,14 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-child
+   * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
   public children(_: Node.Traversal = {}): Sequence<Node> {
     return Sequence.from(this._children);
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-descendant
+   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
     return this.children(options).flatMap((child) =>
@@ -90,7 +101,7 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */
   public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
     return Sequence.of(
@@ -100,7 +111,7 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
+   * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
     for (const parent of this.parent(options)) {
@@ -114,7 +125,7 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
    */
   public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
     return Sequence.of(
@@ -124,14 +135,14 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-sibling
+   * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
    */
   public siblings(options: Node.Traversal = {}): Sequence<Node> {
     return this.inclusiveSiblings(options).reject(equals(this));
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
    */
   public inclusiveSiblings(options: Node.Traversal = {}): Sequence<Node> {
     for (const parent of this.parent(options)) {
@@ -142,56 +153,56 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-preceding
+   * {@link https://dom.spec.whatwg.org/#concept-tree-preceding}
    */
   public preceding(options: Node.Traversal = {}): Sequence<Node> {
     return this.inclusiveSiblings(options).takeUntil(equals(this)).reverse();
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-following
+   * {@link https://dom.spec.whatwg.org/#concept-tree-following}
    */
   public following(options: Node.Traversal = {}): Sequence<Node> {
     return this.inclusiveSiblings(options).skipUntil(equals(this)).rest();
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-first-child
+   * {@link https://dom.spec.whatwg.org/#concept-tree-first-child}
    */
   public first(options: Node.Traversal = {}): Option<Node> {
     return this.children(options).first();
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-last-child
+   * {@link https://dom.spec.whatwg.org/#concept-tree-last-child}
    */
   public last(options: Node.Traversal = {}): Option<Node> {
     return this.children(options).last();
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-previous-sibling
+   * {@link https://dom.spec.whatwg.org/#concept-tree-previous-sibling}
    */
   public previous(options: Node.Traversal = {}): Option<Node> {
     return this.preceding(options).first();
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-next-sibling
+   * {@link https://dom.spec.whatwg.org/#concept-tree-next-sibling}
    */
   public next(options: Node.Traversal = {}): Option<Node> {
     return this.following(options).first();
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-tree-index
+   * {@link https://dom.spec.whatwg.org/#concept-tree-index}
    */
   public index(options: Node.Traversal = {}): number {
     return this.preceding(options).size;
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   * {@link https://dom.spec.whatwg.org/#dom-element-closest}
    */
   public closest<T extends Node>(
     refinement: Refinement<Node, T>,
@@ -199,7 +210,7 @@ export abstract class Node
   ): Option<T>;
 
   /**
-   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   * {@link https://dom.spec.whatwg.org/#dom-element-closest}
    */
   public closest(
     predicate: Predicate<Node>,
@@ -207,7 +218,7 @@ export abstract class Node
   ): Option<Node>;
 
   /**
-   * @see https://dom.spec.whatwg.org/#dom-element-closest
+   * {@link https://dom.spec.whatwg.org/#dom-element-closest}
    */
   public closest(
     predicate: Predicate<Node>,
@@ -217,7 +228,7 @@ export abstract class Node
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-descendant-text-content
+   * {@link https://dom.spec.whatwg.org/#concept-descendant-text-content}
    */
   public textContent(options: Node.Traversal = {}): string {
     return this.descendants(options).filter(Text.isText).join("");
@@ -227,7 +238,7 @@ export abstract class Node
    * Construct a sequence of descendants of this node sorted by tab index. Only
    * nodes with a non-negative tab index are included in the sequence.
    *
-   * @see https://html.spec.whatwg.org/#tabindex-value
+   * {@link https://html.spec.whatwg.org/#tabindex-value}
    */
   public tabOrder(): Sequence<Element> {
     const candidates = (node: Node): Sequence<Element> => {
@@ -323,7 +334,11 @@ export abstract class Node
     yield* this.descendants();
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Node): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return value === this;
   }
 
@@ -370,6 +385,27 @@ export abstract class Node
 }
 
 export namespace Node {
+  export interface JSON {
+    [key: string]: json.JSON;
+    type: string;
+  }
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      ptr: "http://www.w3.org/2009/pointers#";
+    };
+    "@type": [
+      "ptr:Pointer",
+      "ptr:SinglePointer",
+      "ptr:ExpressionPointer",
+      "ptr:XPathPointer"
+    ];
+    "ptr:expression": string;
+    "ptr:reference"?: {
+      "@id": string;
+    };
+  }
+
   export function isNode(value: unknown): value is Node {
     return value instanceof Node;
   }
@@ -378,39 +414,23 @@ export namespace Node {
     /**
      * When `true`, traverse the node in shadow-including tree order.
      *
-     * @see https://dom.spec.whatwg.org/#concept-shadow-including-tree-order
+     * {@link https://dom.spec.whatwg.org/#concept-shadow-including-tree-order}
      */
     readonly composed?: boolean;
 
     /**
      * When `true`, traverse the flattened element tree rooted at the node.
      *
-     * @see https://drafts.csswg.org/css-scoping/#flat-tree
+     * {@link https://drafts.csswg.org/css-scoping/#flat-tree}
      */
     readonly flattened?: boolean;
 
     /**
      * When `true`, traverse all nested browsing contexts encountered.
      *
-     * @see https://html.spec.whatwg.org/#nested-browsing-context
+     * {@link https://html.spec.whatwg.org/#nested-browsing-context}
      */
     readonly nested?: boolean;
-  }
-}
-
-import { Attribute } from "./node/attribute";
-import { Comment } from "./node/comment";
-import { Document } from "./node/document";
-import { Element } from "./node/element";
-import { Fragment } from "./node/fragment";
-import { Text } from "./node/text";
-import { Type } from "./node/type";
-import { Slot } from "./node/slot";
-
-export namespace Node {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: string;
   }
 
   export function from(json: Element.JSON): Element;
@@ -462,21 +482,5 @@ export namespace Node {
       default:
         throw new Error(`Unexpected node of type: ${json.type}`);
     }
-  }
-
-  export interface EARL extends earl.EARL {
-    "@context": {
-      ptr: "http://www.w3.org/2009/pointers#";
-    };
-    "@type": [
-      "ptr:Pointer",
-      "ptr:SinglePointer",
-      "ptr:ExpressionPointer",
-      "ptr:XPathPointer"
-    ];
-    "ptr:expression": string;
-    "ptr:reference"?: {
-      "@id": string;
-    };
   }
 }

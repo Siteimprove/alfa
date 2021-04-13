@@ -16,6 +16,9 @@ import { Polygon } from "./shape/polygon";
 
 const { either } = Parser;
 
+/**
+ * @public
+ */
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
   B extends Box.Geometry = Box.Geometry
@@ -61,8 +64,7 @@ export class Shape<
   }
 
   public hash(hash: Hash) {
-    this._shape.hash(hash);
-    this._box.hash(hash);
+    hash.writeHashable(this._shape).writeHashable(this._box);
   }
 
   public toJSON(): Shape.JSON {
@@ -78,9 +80,12 @@ export class Shape<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Shape {
   /**
-   * @see https://drafts.csswg.org/css-shapes/#typedef-basic-shape
+   * {@link https://drafts.csswg.org/css-shapes/#typedef-basic-shape}
    */
   export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 

@@ -3,6 +3,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Cookie implements Equatable, Serializable<Cookie.JSON> {
   public static of(name: string, value: string): Cookie {
     return new Cookie(name, value);
@@ -48,6 +51,9 @@ export class Cookie implements Equatable, Serializable<Cookie.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Cookie {
   export interface JSON {
     [key: string]: json.JSON;

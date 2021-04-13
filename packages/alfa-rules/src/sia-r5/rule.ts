@@ -17,7 +17,7 @@ const { isEmpty } = Iterable;
 const { nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r5.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r5",
   requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
   evaluate({ document }) {
     return {
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: expectation(
-            Language.parse(target.value).isSome(),
+            Language.parse(target.value).isOk(),
             () => Outcomes.HasValidLanguage,
             () => Outcomes.HasNoValidLanguage
           ),

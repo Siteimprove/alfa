@@ -9,8 +9,16 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Value<T = unknown>
-  implements Monad<T>, Functor<T>, Iterable<T>, Equatable, Serializable {
+  implements
+    Functor<T>,
+    Monad<T>,
+    Iterable<T>,
+    Equatable,
+    Serializable<Value.JSON<T>> {
   public static of<T>(value: T, source: Option<Declaration> = None): Value<T> {
     return new Value(value, source);
   }
@@ -63,7 +71,7 @@ export class Value<T = unknown>
     yield this._value;
   }
 
-  public toJSON(): Value.JSON {
+  public toJSON(): Value.JSON<T> {
     return {
       value: Serializable.toJSON(this._value),
       source: this._source.map((source) => source.toJSON()).getOr(null),
@@ -75,10 +83,13 @@ export class Value<T = unknown>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Value {
-  export interface JSON {
+  export interface JSON<T = unknown> {
     [key: string]: json.JSON;
-    value: json.JSON;
+    value: Serializable.ToJSON<T>;
     source: Declaration.JSON | null;
   }
 }

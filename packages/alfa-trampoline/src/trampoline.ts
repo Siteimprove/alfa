@@ -1,16 +1,21 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
+import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Reducer } from "@siteimprove/alfa-reducer";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
- * @see http://blog.higher-order.com/assets/trampolines.pdf
+ * {@link http://blog.higher-order.com/assets/trampolines.pdf}
+ *
+ * @public
  */
 export abstract class Trampoline<T>
-  implements Functor<T>, Monad<T>, Iterable<T> {
+  implements Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T> {
   protected abstract step(): Trampoline<T>;
 
   public run(): T {
@@ -37,6 +42,14 @@ export abstract class Trampoline<T>
 
   public abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
 
+  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+    return reducer(accumulator, this.run());
+  }
+
+  public apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
   public tee(callback: Callback<T>): Trampoline<T> {
     return this.map((value) => {
       callback(value);
@@ -53,6 +66,9 @@ export abstract class Trampoline<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Trampoline {
   export function isTrampoline<T>(value: Iterable<T>): value is Trampoline<T>;
 
@@ -80,13 +96,13 @@ export namespace Trampoline {
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Trampoline<U>>
+    mapper: Mapper<T, Trampoline<U>, [index: number]>
   ): Trampoline<Iterable<U>> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value))
         ),
       done(Array.empty())
     );

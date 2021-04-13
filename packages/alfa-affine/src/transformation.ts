@@ -7,6 +7,9 @@ const { cos, sin, tan, sqrt, max } = Math;
 const { norm, normalize, dot, cross } = Vector;
 const { determinant, multiply, inverse, transpose } = Matrix;
 
+/**
+ * @public
+ */
 export class Transformation implements Equatable, Serializable {
   public static of(matrix: Matrix): Transformation {
     const [
@@ -61,7 +64,7 @@ export class Transformation implements Equatable, Serializable {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#decomposing-a-3d-matrix
+   * {@link https://drafts.csswg.org/css-transforms-2/#decomposing-a-3d-matrix}
    */
   public decompose(): Option<Transformation.Components> {
     const m = this._matrix;
@@ -185,6 +188,9 @@ export class Transformation implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Transformation {
   export type JSON = Array<Array<number>>;
 

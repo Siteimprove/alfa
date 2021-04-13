@@ -7,9 +7,10 @@ import {
   Request,
   Response,
 } from "@siteimprove/alfa-http";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
-import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Timeout } from "@siteimprove/alfa-time";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
@@ -21,7 +22,11 @@ import { Credentials } from "./credentials";
 import { Screenshot } from "./screenshot";
 
 const { entries } = Object;
+const { ceil } = Math;
 
+/**
+ * @public
+ */
 export class Scraper {
   public static async of(
     browser: Promise<puppeteer.Browser> = puppeteer.launch({
@@ -83,11 +88,21 @@ export class Scraper {
       screenshot = null,
       headers = [],
       cookies = [],
+      fit = true,
     } = options;
+
+    const {
+      viewport,
+      viewport: { width, height },
+      display: { resolution },
+      scripting,
+    } = device;
 
     let page: puppeteer.Page | undefined;
     try {
       page = await this._browser.newPage();
+
+      const client = await page.target().createCDPSession();
 
       await page.emulateMediaType(
         device.type === Device.Type.Print ? "print" : "screen"
@@ -97,34 +112,42 @@ export class Scraper {
       // throw if passed an unsupported feature. Catch these errors and pass
       // them on to the caller to deal with.
       try {
-        await page.emulateMediaFeatures(
-          [...device.preferences].map((preference) => preference.toJSON())
-        );
+        await page.emulateMediaFeatures([
+          ...Iterable.map(device.preferences, (preference) =>
+            preference.toJSON()
+          ),
+        ]);
       } catch (err) {
         return Err.of(err.message);
       }
 
       await page.setViewport({
-        width: device.viewport.width,
-        height: device.viewport.width,
-        deviceScaleFactor: device.display.resolution,
-        isLandscape: device.viewport.isLandscape(),
+        width,
+        height,
+        deviceScaleFactor: resolution,
+        isLandscape: viewport.isLandscape(),
       });
 
-      await page.setJavaScriptEnabled(device.scripting.enabled);
+      await page.setJavaScriptEnabled(scripting.enabled);
 
-      await page.authenticate(credentials);
+      if (credentials !== null) {
+        await page.authenticate(credentials);
+      }
 
       await page.setExtraHTTPHeaders(
-        [...headers].reduce<Record<string, string>>((headers, header) => {
-          headers[header.name] = header.value;
-          return headers;
-        }, {})
+        Iterable.reduce(
+          headers,
+          (headers, header) => {
+            headers[header.name] = header.value;
+            return headers;
+          },
+          {} as Record<string, string>
+        )
       );
 
       if (scheme === "http" || scheme === "https") {
         await page.setCookie(
-          ...[...cookies].map((cookie) => {
+          ...Iterable.map(cookies, (cookie) => {
             return {
               name: cookie.name,
               value: cookie.value,
@@ -138,18 +161,46 @@ export class Scraper {
 
       while (true) {
         try {
-          const response = page
-            .goto(origin, { timeout: timeout.remaining() })
-            .catch(() => null);
+          // Navigate to the origin with what remains of the timeout. We wait
+          // for the `DOMContentLoaded` event as this is the earliest stage at
+          // which Puppeteer will consider the page loaded.
+          const response = page.goto(origin, {
+            timeout: timeout.remaining(),
+            waitUntil: "domcontentloaded",
+          });
 
-          const request = response
-            .then((response) => response!.request())
-            .catch(() => null);
+          // Grab the request from the resulting response as soon as possible.
+          // In event of navigation away from the origin, such as redirects, the
+          // response context will be destroyed. If we attempt to grab the
+          // request after this, things will go haywire.
+          const request = response.then((response) => response.request());
 
-          const result = await awaiter(page, timeout);
+          // When the response has settled, fit the viewport to the contents of
+          // the page if requested to do so. This is done by requesting the
+          // layout metrics of the page and setting the viewport accordingly.
+          const resize = response.then(async () => {
+            if (fit) {
+              const {
+                contentSize: { width, height },
+              } = await client.send("Page.getLayoutMetrics");
 
-          if (result.isErr()) {
-            return result;
+              await page?.setViewport({
+                width: ceil(width),
+                height: ceil(height),
+              });
+            }
+          });
+
+          const load = awaiter(page, timeout);
+
+          // Await both the response, request, and resize promise at the same
+          // time to avoid any exceptions being dropped on the floor. At the
+          // very least, we need all of these settled before we parse the
+          // document.
+          await Promise.all([response, request, resize]);
+
+          for (const error of await load) {
+            return Err.of(error);
           }
 
           const document = await parseDocument(page);
@@ -158,16 +209,26 @@ export class Scraper {
             await takeScreenshot(page, screenshot);
           }
 
-          return Ok.of(
+          return Result.of(
             Page.of(
-              parseRequest((await request)!),
-              await parseResponse((await response)!),
+              parseRequest(await request),
+              await parseResponse(await response),
               document,
               device
             )
           );
-        } catch {
-          origin = page.url();
+        } catch (err) {
+          // If the timeout was exceeded while navigating to the page, bail out
+          // with an error.
+          if (err instanceof Error && err.name === "TimeoutError") {
+            return Err.of(`Timeout exceeded while navigating to the page`);
+          }
+
+          // Otherwise, attempt to navigate to the page again, changing its
+          // origin in case a redirect was performed.
+          else {
+            origin = page.url();
+          }
         }
       }
     } finally {
@@ -185,6 +246,9 @@ export class Scraper {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Scraper {
   export namespace scrape {
     export interface Options {
@@ -195,11 +259,12 @@ export namespace Scraper {
       readonly screenshot?: Screenshot;
       readonly headers?: Iterable<Header>;
       readonly cookies?: Iterable<Cookie>;
+      readonly fit?: boolean;
     }
   }
 }
 
-function parseRequest(request: puppeteer.Request): Request {
+function parseRequest(request: puppeteer.HTTPRequest): Request {
   return Request.of(
     request.method(),
     URL.parse(request.url()).get(),
@@ -209,7 +274,9 @@ function parseRequest(request: puppeteer.Request): Request {
   );
 }
 
-async function parseResponse(response: puppeteer.Response): Promise<Response> {
+async function parseResponse(
+  response: puppeteer.HTTPResponse
+): Promise<Response> {
   return Response.of(
     URL.parse(response.url()).get(),
     response.status(),
@@ -239,7 +306,8 @@ async function takeScreenshot(
         type: "png",
         omitBackground: !screenshot.type.background,
         fullPage: true,
-      });
+        encoding: "binary",
+      }) as Promise<Buffer>;
 
     case "jpeg":
       return page.screenshot({
@@ -247,6 +315,7 @@ async function takeScreenshot(
         type: "jpeg",
         quality: screenshot.type.quality,
         fullPage: true,
-      });
+        encoding: "binary",
+      }) as Promise<Buffer>;
   }
 }

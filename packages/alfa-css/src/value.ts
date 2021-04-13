@@ -4,8 +4,11 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export abstract class Value<T extends string = string>
-  implements Equatable, Hashable, Serializable {
+  implements Equatable, Hashable, Serializable<Value.JSON<T>> {
   protected constructor() {}
 
   public abstract get type(): T;
@@ -19,6 +22,9 @@ export abstract class Value<T extends string = string>
   public abstract toString(): string;
 }
 
+/**
+ * @public
+ */
 export namespace Value {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON;

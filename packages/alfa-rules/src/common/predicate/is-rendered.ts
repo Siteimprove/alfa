@@ -10,7 +10,7 @@ const { isElement, hasName } = Element;
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
- * @see https://html.spec.whatwg.org/#being-rendered
+ * {@link https://html.spec.whatwg.org/#being-rendered}
  */
 export function isRendered(
   device: Device,
@@ -31,7 +31,7 @@ export function isRendered(
           Element.isElement(node) &&
           Style.from(node, device, context)
             .computed("display")
-            .some(([outside]) => outside.value === "none")
+            .some(({ values: [outside] }) => outside.value === "none")
         ) {
           return false;
         }

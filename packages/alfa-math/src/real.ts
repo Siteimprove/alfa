@@ -1,7 +1,9 @@
 const { abs, min, max } = Math;
 
 /**
- * @see https://en.wikipedia.org/wiki/Real_number
+ * {@link https://en.wikipedia.org/wiki/Real_number}
+ *
+ * @public
  */
 export namespace Real {
   export function isReal(value: unknown): value is number {
@@ -27,7 +29,7 @@ export namespace Real {
   /**
    * Compute the modulus of a division of two reals.
    *
-   * @see https://en.wikipedia.org/wiki/Modulo_operation
+   * {@link https://en.wikipedia.org/wiki/Modulo_operation}
    *
    * @remarks
    * The modulo operation is different from the remainder operation supported

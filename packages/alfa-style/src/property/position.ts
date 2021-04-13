@@ -2,27 +2,47 @@ import { Keyword } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 
-export type Position = Position.Specified | Position.Computed;
-
-export namespace Position {
-  export type Specified =
-    | Keyword<"static">
-    | Keyword<"relative">
-    | Keyword<"absolute">
-    | Keyword<"sticky">
-    | Keyword<"fixed">;
-
-  export type Computed = Specified;
+declare module "../property" {
+  interface Longhands {
+    position: Property<Specified, Computed>;
+  }
 }
 
 /**
- * @see https://drafts.csswg.org/css-position/#position-property
+ * @internal
  */
-export const Position: Property<
-  Position.Specified,
-  Position.Computed
-> = Property.of(
-  Keyword.of("static"),
-  Keyword.parse("static", "relative", "absolute", "sticky", "fixed"),
-  (style) => style.specified("position")
+export type Specified =
+  | Keyword<"static">
+  | Keyword<"relative">
+  | Keyword<"absolute">
+  | Keyword<"sticky">
+  | Keyword<"fixed">;
+
+/**
+ * @internal
+ */
+export type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = Keyword.parse(
+  "static",
+  "relative",
+  "absolute",
+  "sticky",
+  "fixed"
+);
+
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/position}
+ * @internal
+ */
+export default Property.register(
+  "position",
+  Property.of<Specified, Computed>(
+    Keyword.of("static"),
+    parse,
+    (position) => position
+  )
 );

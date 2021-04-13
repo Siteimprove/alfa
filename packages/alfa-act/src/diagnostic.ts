@@ -3,6 +3,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
   public static of(message: string): Diagnostic {
     return new Diagnostic(normalize(message));
@@ -33,6 +36,9 @@ export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Diagnostic {
   export interface JSON {
     [key: string]: json.JSON;

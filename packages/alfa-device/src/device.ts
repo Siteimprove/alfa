@@ -11,6 +11,9 @@ import { Preference } from "./preference";
 import { Scripting } from "./scripting";
 import { Viewport } from "./viewport";
 
+/**
+ * @public
+ */
 export class Device implements Equatable, Hashable, Serializable {
   /**
    * @remarks
@@ -95,19 +98,20 @@ export class Device implements Equatable, Hashable, Serializable {
   public hash(hash: Hash): void {
     switch (this._type) {
       case Device.Type.Print:
-        Hash.writeUint8(hash, 1);
+        hash.writeUint8(1);
         break;
       case Device.Type.Screen:
-        Hash.writeUint8(hash, 2);
+        hash.writeUint8(2);
         break;
-      case Device.Type.Screen:
-        Hash.writeUint8(hash, 3);
+      case Device.Type.Speech:
+        hash.writeUint8(3);
     }
 
-    this._viewport.hash(hash);
-    this._display.hash(hash);
-    this._scripting.hash(hash);
-    this._preferences.hash(hash);
+    hash
+      .writeHashable(this._viewport)
+      .writeHashable(this._display)
+      .writeHashable(this._scripting)
+      .writeHashable(this._preferences);
   }
 
   public toJSON(): Device.JSON {
@@ -123,6 +127,9 @@ export class Device implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Device {
   export enum Type {
     Print = "print",
@@ -132,7 +139,7 @@ export namespace Device {
 
   export interface JSON {
     [key: string]: json.JSON;
-    type: Type;
+    type: `${Type}`;
     viewport: Viewport.JSON;
     display: Display.JSON;
     scripting: Scripting.JSON;
@@ -141,7 +148,7 @@ export namespace Device {
 
   export function from(json: JSON): Device {
     return Device.of(
-      json.type,
+      json.type as Type,
       Viewport.from(json.viewport),
       Display.from(json.display),
       Scripting.from(json.scripting),

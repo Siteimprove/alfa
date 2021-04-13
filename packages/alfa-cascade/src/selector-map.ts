@@ -1,20 +1,21 @@
+import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Declaration,
   Element,
-  Rule,
-  StyleRule,
-  Sheet,
-  MediaRule,
   ImportRule,
+  MediaRule,
+  Rule,
+  Sheet,
+  StyleRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Media } from "@siteimprove/alfa-media";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Selector, Context } from "@siteimprove/alfa-selector";
+import { Context, Selector } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -23,9 +24,19 @@ import { AncestorFilter } from "./ancestor-filter";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
+const {
+  isAttribute,
+  isClass,
+  isComplex,
+  isCompound,
+  isId,
+  isType,
+  isPseudoClass,
+  isPseudoElement,
+} = Selector;
 
 const isDescendantSelector = and(
-  Selector.isComplex,
+  isComplex,
   property(
     "combinator",
     equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
@@ -36,18 +47,18 @@ const isDescendantSelector = and(
  * Cascading origins defined in ascending order; origins defined first have
  * lower precedence than origins defined later.
  *
- * @see https://www.w3.org/TR/css-cascade/#cascading-origins
+ * {@link https://www.w3.org/TR/css-cascade/#cascading-origins}
  *
  * @internal
  */
 export enum Origin {
   /**
-   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-ua
+   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-ua}
    */
   UserAgent = 1,
 
   /**
-   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
+   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-author}
    */
   Author = 2,
 }
@@ -73,7 +84,8 @@ export enum Origin {
  * potentially matching selectors, plus the list of remaining selectors, in
  * order to determine the final set of matches.
  *
- * @see http://doc.servo.org/style/selector_map/struct.SelectorMap.html
+ * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
+ *
  * @internal
  */
 export class SelectorMap implements Serializable {
@@ -176,7 +188,7 @@ export namespace SelectorMap {
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
-    const other: Array<SelectorMap.Node> = [];
+    const other: Array<Node> = [];
 
     const add = (
       rule: Rule,
@@ -185,44 +197,30 @@ export namespace SelectorMap {
       origin: Origin,
       order: number
     ): void => {
-      const node = SelectorMap.Node.of(
-        rule,
-        selector,
-        declarations,
-        origin,
-        order
-      );
+      const node = Node.of(rule, selector, declarations, origin, order);
 
       const keySelector = getKeySelector(selector);
 
-      if (keySelector !== null) {
-        if (keySelector instanceof Selector.Id) {
-          ids.add(keySelector.name, node);
-        }
-
-        if (keySelector instanceof Selector.Class) {
-          classes.add(keySelector.name, node);
-        }
-
-        if (keySelector instanceof Selector.Type) {
-          types.add(keySelector.name, node);
-        }
-
-        return;
+      if (keySelector === null) {
+        other.push(node);
+      } else if (isId(keySelector)) {
+        ids.add(keySelector.name, node);
+      } else if (isClass(keySelector)) {
+        classes.add(keySelector.name, node);
+      } else {
+        types.add(keySelector.name, node);
       }
-
-      other.push(node);
     };
 
     const visit = (rule: Rule) => {
-      if (StyleRule.isStyle(rule)) {
+      if (StyleRule.isStyleRule(rule)) {
         // Style rules with empty style blocks aren't relevant and so can be
         // skipped entirely.
         if (rule.style.isEmpty()) {
           return;
         }
 
-        for (const selector of Selector.parse(rule.selector)) {
+        for (const [, selector] of Selector.parse(Lexer.lex(rule.selector))) {
           const origin = rule.owner.includes(UserAgent)
             ? Origin.UserAgent
             : Origin.Author;
@@ -237,10 +235,10 @@ export namespace SelectorMap {
 
       // For media rules, we recurse into the child rules if and only if the
       // media condition matches the device.
-      else if (MediaRule.isMedia(rule)) {
-        const query = Media.parse(rule.condition);
+      else if (MediaRule.isMediaRule(rule)) {
+        const query = Media.parse(Lexer.lex(rule.condition));
 
-        if (query.none((query) => query.matches(device))) {
+        if (query.none(([, query]) => query.matches(device))) {
           return;
         }
 
@@ -251,10 +249,10 @@ export namespace SelectorMap {
 
       // For import rules, we recurse into the imported style sheet if and only
       // if the import condition matches the device.
-      else if (ImportRule.isImport(rule)) {
-        const query = Media.parse(rule.condition);
+      else if (ImportRule.isImportRule(rule)) {
+        const query = Media.parse(Lexer.lex(rule.condition));
 
-        if (query.none((query) => query.matches(device))) {
+        if (query.none(([, query]) => query.matches(device))) {
           return;
         }
 
@@ -278,9 +276,9 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parse(sheet.condition.get());
+        const query = Media.parse(Lexer.lex(sheet.condition.get()));
 
-        if (query.isNone() || !query.get().matches(device)) {
+        if (query.every(([, query]) => !query.matches(device))) {
           continue;
         }
       }
@@ -326,7 +324,7 @@ export namespace SelectorMap {
 
       // For style rules that are presentational hints, the specificity will
       // always be 0 regardless of the selector.
-      if (StyleRule.isStyle(rule) && rule.hint) {
+      if (StyleRule.isStyleRule(rule) && rule.hint) {
         this._specificity = 0;
       }
 
@@ -438,25 +436,15 @@ export namespace SelectorMap {
 function getKeySelector(
   selector: Selector
 ): Selector.Id | Selector.Class | Selector.Type | null {
-  if (
-    selector instanceof Selector.Id ||
-    selector instanceof Selector.Class ||
-    selector instanceof Selector.Type
-  ) {
+  if (isId(selector) || isClass(selector) || isType(selector)) {
     return selector;
   }
 
-  if (selector instanceof Selector.Compound) {
-    const left = getKeySelector(selector.left);
-
-    if (left !== null) {
-      return left;
-    }
-
-    return getKeySelector(selector.right);
+  if (isCompound(selector)) {
+    return getKeySelector(selector.left) ?? getKeySelector(selector.right);
   }
 
-  if (selector instanceof Selector.Complex) {
+  if (isComplex(selector)) {
     return getKeySelector(selector.right);
   }
 
@@ -476,7 +464,7 @@ const componentBits = 10;
 const componentMax = (1 << componentBits) - 1;
 
 /**
- * @see https://www.w3.org/TR/selectors/#specificity
+ * {@link https://www.w3.org/TR/selectors/#specificity}
  */
 function getSpecificity(selector: Selector): Specificity {
   let a = 0;
@@ -492,23 +480,17 @@ function getSpecificity(selector: Selector): Specificity {
       break;
     }
 
-    if (selector instanceof Selector.Id) {
+    if (isId(selector)) {
       a++;
     } else if (
-      selector instanceof Selector.Class ||
-      selector instanceof Selector.Attribute ||
-      selector instanceof Selector.Pseudo.Class
+      isClass(selector) ||
+      isAttribute(selector) ||
+      isPseudoClass(selector)
     ) {
       b++;
-    } else if (
-      selector instanceof Selector.Type ||
-      selector instanceof Selector.Pseudo.Element
-    ) {
+    } else if (isType(selector) || isPseudoElement(selector)) {
       c++;
-    } else if (
-      selector instanceof Selector.Compound ||
-      selector instanceof Selector.Complex
-    ) {
+    } else if (isCompound(selector) || isComplex(selector)) {
       queue.push(selector.left, selector.right);
     }
   }
@@ -527,15 +509,11 @@ function getSpecificity(selector: Selector): Specificity {
  * Check if a selector can be rejected based on an ancestor filter.
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  if (
-    selector instanceof Selector.Id ||
-    selector instanceof Selector.Class ||
-    selector instanceof Selector.Type
-  ) {
+  if (isId(selector) || isClass(selector) || isType(selector)) {
     return !filter.matches(selector);
   }
 
-  if (selector instanceof Selector.Compound) {
+  if (isCompound(selector)) {
     // Compound selectors are right-leaning, so recurse to the left first as it
     // is likely the shortest branch.
     return (
@@ -543,7 +521,7 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
     );
   }
 
-  if (selector instanceof Selector.Complex) {
+  if (isComplex(selector)) {
     const { combinator } = selector;
 
     if (

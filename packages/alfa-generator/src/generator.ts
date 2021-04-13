@@ -1,14 +1,22 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-// Re-export the global `Generator` interface to ensure that it merges with the
-// `Generator` namespace.
+/**
+ * @remarks
+ * This is a re-export of the global `Generator` interface to ensure that it
+ * merges with the `Generator` namespace.
+ *
+ * @public
+ */
 export type Generator<T, R = void, N = undefined> = globalThis.Generator<
   T,
   R,
   N
 >;
 
+/**
+ * @public
+ */
 export namespace Generator {
   export function* map<T, U, R, N>(
     generator: Generator<T, R, N>,

@@ -1,10 +1,16 @@
 import { Descriptor, Descriptors } from "./descriptors";
 
+/**
+ * @public
+ */
 export interface Item<V extends Item.Value = Item.Value> {
   readonly type: Descriptor.For<V, Item.Type>;
   value: V;
 }
 
+/**
+ * @public
+ */
 export namespace Item {
   export type Type =
     | Descriptors.String
@@ -25,11 +31,20 @@ export namespace Item {
   export type Optional<T extends Type = Type> = Descriptors.Optional<T>;
 }
 
+/**
+ * @public
+ */
 export type Type =
   | Item.Type
   | Item.Sequence<Item.Type>
   | Item.Optional<Item.Type>;
 
+/**
+ * @public
+ */
 export type Value<T extends Type = Type> = Descriptor.Value<T>;
 
+/**
+ * @public
+ */
 export type TypeFor<V extends Value> = Descriptor.For<V, Type>;

@@ -1,25 +1,31 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasOutline } from "../common/predicate/has-outline";
-import { hasTextDecoration } from "../common/predicate/has-text-decoration";
-import { isTabbable } from "../common/predicate/is-tabbable";
+import {
+  hasBoxShadow,
+  hasOutline,
+  hasTextDecoration,
+  isTabbable,
+} from "../common/predicate";
 
 import { Question } from "../common/question";
 
 const { isElement } = Element;
-const { or, xor, test } = Predicate;
+const { isKeyword } = Keyword;
+const { or, xor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r65.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r65",
   requirements: [Criterion.of("2.4.7")],
   evaluate({ device, document }) {
     return {
@@ -87,9 +93,58 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
       .filter(isElement)
       .some(
         or(
+          // For these properties, we assume that the difference is to set it or remove it, not to make small changes on it.
           xor(hasOutline(device), hasOutline(device, withFocus)),
-          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus))
+          xor(hasTextDecoration(device), hasTextDecoration(device, withFocus)),
+          xor(hasBoxShadow(device), hasBoxShadow(device, withFocus)),
+          // These properties are essentially always set, so any difference in the color is good enough.
+          hasDifferentColors(device, withFocus),
+          hasDifferentBackgroundColors(device, withFocus)
         )
       );
+  };
+}
+
+function hasDifferentColors(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentColors(element: Element): boolean {
+    const color1 = Style.from(element, device, context1).computed("color");
+    const color2 = Style.from(element, device, context2).computed("color");
+
+    // keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, we let the user decide if one color is a keyword.
+    if (isKeyword(color1) || isKeyword(color2)) {
+      return false;
+    }
+
+    return !color1.equals(color2);
+  };
+}
+
+function hasDifferentBackgroundColors(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentBackgroundColors(element: Element): boolean {
+    const color1 = Style.from(element, device, context1).computed(
+      "background-color"
+    );
+    const color2 = Style.from(element, device, context2).computed(
+      "background-color"
+    );
+
+    // Keywords can get tricky and may ultimately yield the same used value,
+    // to keep on the safe side, if one color is a keyword we let the user decide.
+    if (isKeyword(color1) || isKeyword(color2)) {
+      return false;
+    }
+
+    // Technically, different solid backgrounds could render as the same color if one is fully transparent
+    // and the parent happens to have the same color… We Assume that this won't happen often…
+    return !color1.equals(color2);
   };
 }

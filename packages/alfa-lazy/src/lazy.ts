@@ -6,6 +6,9 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+/**
+ * @public
+ */
 export class Lazy<T>
   implements
     Functor<T>,
@@ -90,6 +93,9 @@ export class Lazy<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Lazy {
   export type JSON<T> = Serializable.ToJSON<T>;
 }

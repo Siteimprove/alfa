@@ -2,16 +2,42 @@ import { Keyword } from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 
-export type Visibility = Keyword<"visible" | "hidden" | "collapse">;
+declare module "../property" {
+  interface Longhands {
+    visibility: Property<Specified, Computed>;
+  }
+}
 
 /**
- * @see https://drafts.csswg.org/css2/visufx.html#propdef-visibility
+ * @internal
  */
-export const Visibility: Property<Visibility> = Property.of(
-  Keyword.of("visible"),
-  Keyword.parse("visible", "hidden", "collapse"),
-  (style) => style.specified("visibility"),
-  {
-    inherits: true,
-  }
+export type Specified =
+  | Keyword<"visible">
+  | Keyword<"hidden">
+  | Keyword<"collapse">;
+
+/**
+ * @internal
+ */
+export type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = Keyword.parse("visible", "hidden", "collapse");
+
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/visibility}
+ * @internal
+ */
+export default Property.register(
+  "visibility",
+  Property.of<Specified, Computed>(
+    Keyword.of("visible"),
+    parse,
+    (visibility) => visibility,
+    {
+      inherits: true,
+    }
+  )
 );

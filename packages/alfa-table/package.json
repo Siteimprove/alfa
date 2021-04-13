@@ -1,8 +1,8 @@
 {
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-table",
-  "homepage": "https://siteimprove.com",
-  "version": "0.10.0",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.17.0",
   "license": "MIT",
   "description": "An implementation of the HTML table model for forming and laying out tables",
   "repository": {
@@ -18,20 +18,20 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "^0.10.0",
-    "@siteimprove/alfa-cache": "^0.10.0",
-    "@siteimprove/alfa-comparable": "^0.10.0",
-    "@siteimprove/alfa-dom": "^0.10.0",
-    "@siteimprove/alfa-equatable": "^0.10.0",
-    "@siteimprove/alfa-json": "^0.10.0",
-    "@siteimprove/alfa-math": "^0.10.0",
-    "@siteimprove/alfa-option": "^0.10.0",
-    "@siteimprove/alfa-predicate": "^0.10.0",
-    "@siteimprove/alfa-refinement": "^0.10.0",
-    "@siteimprove/alfa-sequence": "^0.10.0"
+    "@siteimprove/alfa-array": "workspace:^0.17.0",
+    "@siteimprove/alfa-cache": "workspace:^0.17.0",
+    "@siteimprove/alfa-comparable": "workspace:^0.17.0",
+    "@siteimprove/alfa-dom": "workspace:^0.17.0",
+    "@siteimprove/alfa-equatable": "workspace:^0.17.0",
+    "@siteimprove/alfa-json": "workspace:^0.17.0",
+    "@siteimprove/alfa-math": "workspace:^0.17.0",
+    "@siteimprove/alfa-option": "workspace:^0.17.0",
+    "@siteimprove/alfa-predicate": "workspace:^0.17.0",
+    "@siteimprove/alfa-refinement": "workspace:^0.17.0",
+    "@siteimprove/alfa-sequence": "workspace:^0.17.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.10.0"
+    "@siteimprove/alfa-test": "workspace:^0.17.0"
   },
   "publishConfig": {
     "access": "public",

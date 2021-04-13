@@ -1,23 +1,16 @@
-import { Assertions, test } from "@siteimprove/alfa-test";
-
-import { Slice } from "@siteimprove/alfa-slice";
+import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../../src/syntax/lexer";
 import { Ellipse } from "../../../src/value/shape/ellipse";
 
-function parse(t: Assertions, input: string, expected: Ellipse.JSON) {
-  t.deepEqual(
-    Ellipse.parse(Slice.of(Lexer.lex(input)))
-      .map(([_, ellipse]) => ellipse)
-      .get()
-      .toJSON(),
-    expected,
-    input
+function parse(input: string) {
+  return Ellipse.parse(Lexer.lex(input)).map(([_, ellipse]) =>
+    ellipse.toJSON()
   );
 }
 
 test("parse() parses an ellipse", (t) => {
-  parse(t, "ellipse(1px 3px at right)", {
+  t.deepEqual(parse("ellipse(1px 3px at right)").get(), {
     type: "basic-shape",
     kind: "ellipse",
     rx: {

@@ -3,7 +3,7 @@ import { RGB } from "@siteimprove/alfa-css";
 const { min, max, round } = Math;
 
 /**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-relative-luminance
+ * {@link https://w3c.github.io/wcag/guidelines/#dfn-relative-luminance}
  */
 function luminance(color: RGB): number {
   const [red, green, blue] = [color.red, color.green, color.blue].map((c) => {
@@ -18,7 +18,7 @@ function luminance(color: RGB): number {
 }
 
 /**
- * @see https://w3c.github.io/wcag/guidelines/#dfn-contrast-ratio
+ * {@link https://w3c.github.io/wcag/guidelines/#dfn-contrast-ratio}
  */
 export function contrast(foreground: RGB, background: RGB): number {
   const lf = luminance(foreground);

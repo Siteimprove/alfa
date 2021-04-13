@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
@@ -5,13 +6,21 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Thenable } from "@siteimprove/alfa-thenable";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
- * @see http://blog.higher-order.com/assets/trampolines.pdf
+ * {@link http://blog.higher-order.com/assets/trampolines.pdf}
+ *
+ * @public
  */
 export abstract class Future<T>
-  implements Functor<T>, Monad<T>, AsyncIterable<T> {
+  implements
+    Functor<T>,
+    Monad<T>,
+    Applicative<T>,
+    Thenable<T>,
+    AsyncIterable<T> {
   protected abstract step(): Future<T>;
 
   public then(callback: Callback<T>): void {
@@ -54,6 +63,10 @@ export abstract class Future<T>
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 
+  public apply<U>(mapper: Future<Mapper<T, U>>): Future<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
   public tee(callback: Callback<T>): Future<T> {
     return this.map((value) => {
       callback(value);
@@ -74,6 +87,9 @@ export abstract class Future<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Future {
   export type Maybe<T> = T | Future<T>;
 
@@ -113,13 +129,13 @@ export namespace Future {
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Future<U>>
+    mapper: Mapper<T, Future<U>, [index: number]>
   ): Future<Iterable<U>> {
     return Iterable.reduce(
       values,
-      (values, value) =>
+      (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value))
         ),
       now(Array.empty())
     );

@@ -2,10 +2,15 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 /**
- * @see https://en.wikipedia.org/wiki/Three-valued_logic
+ * {@link https://en.wikipedia.org/wiki/Three-valued_logic}
+ *
+ * @public
  */
 export type Trilean = boolean | undefined;
 
+/**
+ * @public
+ */
 export namespace Trilean {
   export type Predicate<T, A extends Array<unknown> = []> = (
     value: T,

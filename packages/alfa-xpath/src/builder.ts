@@ -6,35 +6,35 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Expression } from "./expression";
 
+/**
+ * @public
+ */
 export class Builder<T extends Expression = Expression>
   implements Equatable, Serializable {
-  protected readonly _expression: T;
+  public readonly expression: T;
 
   public constructor(expression: T) {
-    this._expression = expression;
-  }
-
-  public get expression(): T {
-    return this._expression;
+    this.expression = expression;
   }
 
   public equals(value: unknown): value is this {
-    return (
-      value instanceof Builder && value._expression.equals(this._expression)
-    );
+    return value instanceof Builder && value.expression.equals(this.expression);
   }
 
   public toJSON(): Builder.JSON {
     return {
-      expression: this._expression.toJSON(),
+      expression: this.expression.toJSON(),
     };
   }
 
   public toString(): string {
-    return `${this._expression}`;
+    return `${this.expression}`;
   }
 }
 
+/**
+ * @public
+ */
 export namespace Builder {
   export interface JSON {
     [key: string]: json.JSON;
@@ -126,10 +126,16 @@ export namespace Builder {
   }
 }
 
+/**
+ * @public
+ */
 export function context(): Builder.ContextItem {
   return new Builder.ContextItem(Expression.ContextItem.of());
 }
 
+/**
+ * @public
+ */
 export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis {
   return new Builder.Axis(
     Expression.Axis.of(
@@ -142,6 +148,9 @@ export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis {
   );
 }
 
+/**
+ * @public
+ */
 export namespace axis {
   export function self(name?: string): Builder.Axis {
     return axis("self", name);
@@ -168,6 +177,9 @@ export namespace axis {
   }
 }
 
+/**
+ * @public
+ */
 export function step(
   left: Builder<Expression.Step | Expression.Path>,
   right: Builder<Expression.Step>
@@ -177,6 +189,9 @@ export function step(
   );
 }
 
+/**
+ * @public
+ */
 export function nth(i: number): Builder<Expression.Integer> {
   return new Builder(Expression.Integer.of(i));
 }

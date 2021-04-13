@@ -4,6 +4,9 @@
   "files": ["src/future.ts", "src/index.ts", "test/future.spec.ts"],
   "references": [
     {
+      "path": "../alfa-applicative"
+    },
+    {
       "path": "../alfa-array"
     },
     {
@@ -26,6 +29,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thenable"
     },
     {
       "path": "../alfa-thunk"

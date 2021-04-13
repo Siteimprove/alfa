@@ -14,7 +14,7 @@ const { isElement, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r75.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r75",
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -27,7 +27,18 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               and(hasNamespace(Namespace.HTML), (element) =>
-                Style.from(element, device).cascaded("font-size").isSome()
+                Style.from(element, device)
+                  .cascaded("font-size")
+                  .some(({ value: fontSize }) => {
+                    switch (fontSize.type) {
+                      case "length":
+                      case "percentage":
+                        return fontSize.value > 0;
+
+                      default:
+                        return true;
+                    }
+                  })
               ),
               and(hasTextContent(), isVisible(device))
             )

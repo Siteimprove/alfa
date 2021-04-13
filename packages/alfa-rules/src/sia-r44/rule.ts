@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
-import { Keyword } from "@siteimprove/alfa-css";
+import { Lexer, Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -23,7 +23,7 @@ const { not } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r44",
   requirements: [Criterion.of("1.3.4")],
   evaluate({ device, document }) {
     let landscape: Device;
@@ -119,8 +119,8 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
 
 function isOrientationConditional(declaration: Declaration): boolean {
   return some(declaration.ancestors(), (rule) => {
-    if (MediaRule.isMedia(rule)) {
-      for (const media of Media.parse(rule.condition)) {
+    if (MediaRule.isMediaRule(rule)) {
+      for (const [, media] of Media.parse(Lexer.lex(rule.condition))) {
         for (const { condition } of media) {
           if (condition.isSome()) {
             if (hasOrientationCondition(condition.get())) {
@@ -136,30 +136,19 @@ function isOrientationConditional(declaration: Declaration): boolean {
 }
 
 function hasOrientationCondition(
-  condition: Media.Feature | Media.Condition | Media.Negation
+  condition: Media.Feature | Media.Condition
 ): boolean {
-  if (Media.isFeature(condition)) {
+  for (const feature of condition) {
     if (
-      condition.name === "orientation" &&
-      condition.value.some(
+      feature.name === "orientation" &&
+      feature.value.some(
         (value) =>
-          value.type === "string" &&
-          (value.value === "landscape" || value.value === "portrait")
+          value.matches(Keyword.of("landscape")) ||
+          value.matches(Keyword.of("portrait"))
       )
     ) {
       return true;
     }
-  }
-
-  if (Media.isCondition(condition)) {
-    return (
-      hasOrientationCondition(condition.left) ||
-      hasOrientationCondition(condition.right)
-    );
-  }
-
-  if (Media.isNegation(condition)) {
-    return hasOrientationCondition(condition.condition);
   }
 
   return false;
@@ -182,9 +171,7 @@ function getRotation(element: Element, device: Device): Option<number> {
     for (const fn of transform) {
       switch (fn.kind) {
         case "rotate": {
-          const { x, y, z, angle } = fn;
-
-          z;
+          const { x, y, angle } = fn;
 
           if (x.value !== 0 || y.value !== 0) {
             return None;

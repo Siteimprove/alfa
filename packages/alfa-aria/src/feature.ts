@@ -1,6 +1,4 @@
-import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Node, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -15,8 +13,6 @@ import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
 
-import type * as aria from ".";
-
 const { hasInputType, hasName, isElement } = Element;
 const { or, test } = Predicate;
 
@@ -25,36 +21,36 @@ const { or, test } = Predicate;
  */
 export class Feature {
   public static of(
-    role: Feature.Aspect.Role = () => [],
-    attributes: Feature.Aspect.Attributes = () => [],
-    name: Feature.Aspect.Name = () => Branched.of(None)
+    role: Feature.RoleAspect = () => [],
+    attributes: Feature.AttributesAspect = () => [],
+    name: Feature.NameAspect = () => None
   ): Feature {
     return new Feature(role, attributes, name);
   }
 
-  private readonly _role: Feature.Aspect.Role;
-  private readonly _attributes: Feature.Aspect.Attributes;
-  private readonly _name: Feature.Aspect.Name;
+  private readonly _role: Feature.RoleAspect;
+  private readonly _attributes: Feature.AttributesAspect;
+  private readonly _name: Feature.NameAspect;
 
   private constructor(
-    role: Feature.Aspect.Role,
-    attributes: Feature.Aspect.Attributes,
-    name: Feature.Aspect.Name
+    role: Feature.RoleAspect,
+    attributes: Feature.AttributesAspect,
+    name: Feature.NameAspect
   ) {
     this._role = role;
     this._attributes = attributes;
     this._name = name;
   }
 
-  public get role(): Feature.Aspect.Role {
+  public get role(): Feature.RoleAspect {
     return this._role;
   }
 
-  public get attributes(): Feature.Aspect.Attributes {
+  public get attributes(): Feature.AttributesAspect {
     return this._attributes;
   }
 
-  public get name(): Feature.Aspect.Name {
+  public get name(): Feature.NameAspect {
     return this._name;
   }
 }
@@ -65,16 +61,11 @@ export class Feature {
 export namespace Feature {
   export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element, T, A>;
 
-  export namespace Aspect {
-    export type Role = Aspect<Iterable<aria.Role>>;
+  export type RoleAspect = Aspect<Iterable<Role>>;
 
-    export type Attributes = Aspect<Iterable<aria.Attribute>>;
+  export type AttributesAspect = Aspect<Iterable<Attribute>>;
 
-    export type Name = Aspect<
-      Branched<Option<aria.Name>, Browser>,
-      [Device, aria.Name.State]
-    >;
-  }
+  export type NameAspect = Aspect<Option<Name>, [Device, Name.State]>;
 
   export function from(namespace: Namespace, name: string): Option<Feature> {
     return Option.from(Features[namespace]?.[name]).orElse(() => {
@@ -92,9 +83,9 @@ export namespace Feature {
 }
 
 function html(
-  role: Feature.Aspect.Role = () => [],
-  attributes: Feature.Aspect.Attributes = () => [],
-  name: Feature.Aspect.Name = () => Branched.of(None)
+  role: Feature.RoleAspect = () => [],
+  attributes: Feature.AttributesAspect = () => [],
+  name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
@@ -105,9 +96,9 @@ function html(
 }
 
 function svg(
-  role: Feature.Aspect.Role = () => [],
-  attributes: Feature.Aspect.Attributes = () => [],
-  name: Feature.Aspect.Name = () => Branched.of(None)
+  role: Feature.RoleAspect = () => [],
+  attributes: Feature.AttributesAspect = () => [],
+  name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
@@ -128,7 +119,7 @@ const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
     }
   }
 
-  return Branched.of(None);
+  return None;
 };
 
 const nameFromChild = (predicate: Predicate<Element>) => (
@@ -138,13 +129,11 @@ const nameFromChild = (predicate: Predicate<Element>) => (
 ) => {
   for (const child of element.children().filter(isElement).find(predicate)) {
     return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-      name.map((name) =>
-        Name.of(name.value, [Name.Source.descendant(element, name)])
-      )
+      Name.of(name.value, [Name.Source.descendant(element, name)])
     );
   }
 
-  return Branched.of(None);
+  return None;
 };
 
 const ids = Cache.empty<Node, Map<string, Element>>();
@@ -172,11 +161,11 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     if (target.includes(element)) {
       continue;
     } else {
-      return Branched.of(None);
+      return None;
     }
   }
 
-  const targets = labels
+  const references = labels
     .get(root, () => elements.filter(hasName("label")))
     .filter(
       or(
@@ -188,41 +177,35 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
       )
     );
 
-  return Branched.traverse(targets, (element) =>
+  const names = references.collect((element) =>
     Name.fromNode(
       element,
       device,
-      state.recurse(true).reference(false).descend(false)
+      state.reference(None).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
-  )
-    .map((names) =>
-      [...names]
-        .filter(([name]) => name.isSome())
-        .map(([name, element]) => [name.get(), element] as const)
+  );
+
+  const name = names
+    .map(([name]) => name.value)
+    .join(" ")
+    .trim();
+
+  if (name === "") {
+    return None;
+  }
+
+  return Option.of(
+    Name.of(
+      name,
+      names.map(([name, element]) => {
+        for (const attribute of element.attribute("for")) {
+          return Name.Source.reference(attribute, name);
+        }
+
+        return Name.Source.ancestor(element, name);
+      })
     )
-    .map((names) => {
-      const data = names
-        .map(([name]) => name.value)
-        .join(" ")
-        .trim();
-
-      if (data === "") {
-        return None;
-      }
-
-      return Option.of(
-        Name.of(
-          data,
-          names.map(([name, element]) => {
-            for (const attribute of element.attribute("for")) {
-              return Name.Source.reference(attribute, name);
-            }
-
-            return Name.Source.ancestor(element, name);
-          })
-        )
-      );
-    });
+  );
 };
 
 type Features = {
@@ -233,8 +216,12 @@ type Features = {
 
 const Features: Features = {
   [Namespace.HTML]: {
-    a: html((element) =>
-      element.attribute("href").isSome() ? Option.of(Role.of("link")) : None
+    a: html(
+      (element) =>
+        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+      () => [],
+      (element, device, state) =>
+        Name.fromDescendants(element, device, state.visit(element))
     ),
 
     area: html(
@@ -471,21 +458,21 @@ const Features: Features = {
         if (test(hasInputType("submit"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
-            () => Branched.of(Option.of(Name.of("Submit")))
+            () => Option.of(Name.of("Submit"))
           );
         }
 
         if (test(hasInputType("reset"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
-            () => Branched.of(Option.of(Name.of("Reset")))
+            () => Option.of(Name.of("Reset"))
           );
         }
 
         if (test(hasInputType("image"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "alt"),
-            () => Branched.of(Option.of(Name.of("Submit")))
+            () => Option.of(Name.of("Submit"))
           );
         }
 
@@ -553,13 +540,15 @@ const Features: Features = {
 
     output: html(() => Option.of(Role.of("status"))),
 
+    p: html(() => Option.of(Role.of("paragraph"))),
+
     section: html(() => Option.of(Role.of("region"))),
 
     select: html(
       () =>
         // Despite what the HTML AAM specifies, we always map <select> elements
         // to a listbox widget as they currently have no way of mapping to a
-        // valid combobo widget. As a combobox requires an owned textarea and a
+        // valid combobox widget. As a combobox requires an owned textarea and a
         // list of options, we will always end up mapping <select> elements to
         // an invalid combobox widget.
         Option.of(Role.of("listbox")),
@@ -597,12 +586,12 @@ const Features: Features = {
           .filter(isElement)
           .find(hasName("table"))
           .flatMap<Role>((table) => {
-            for (const [role] of Role.from(table)) {
-              if (role.some((role) => role.is("table"))) {
+            for (const role of Role.from(table)) {
+              if (role.is("table")) {
                 return Option.of(Role.of("cell"));
               }
 
-              if (role.some((role) => role.is("grid"))) {
+              if (role.is("grid")) {
                 return Option.of(Role.of("gridcell"));
               }
             }
@@ -681,12 +670,12 @@ const Features: Features = {
                 return Option.of(Role.of("rowheader"));
 
               default:
-                for (const [role] of Role.from(table.element)) {
-                  if (role.some((role) => role.is("table"))) {
+                for (const role of Role.from(table.element)) {
+                  if (role.is("table")) {
                     return Option.of(Role.of("cell"));
                   }
 
-                  if (role.some((role) => role.is("grid"))) {
+                  if (role.is("grid")) {
                     return Option.of(Role.of("gridcell"));
                   }
                 }

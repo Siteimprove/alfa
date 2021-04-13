@@ -1,7 +1,7 @@
 import { Element } from "../../element";
 
 /**
- * @see https://html.spec.whatwg.org/#dom-draggable
+ * {@link https://html.spec.whatwg.org/#dom-draggable}
  */
 export function isDraggable(element: Element): boolean {
   return element

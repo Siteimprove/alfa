@@ -1,30 +1,39 @@
-import { Shape, Keyword, Token, URL } from "@siteimprove/alfa-css";
+import { Shape, Keyword, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 
 const { either } = Parser;
 
-export namespace ClipPath {
-  export type Specified = URL | Shape | Keyword<"none">;
-
-  export type Computed = Specified;
+declare module "../property" {
+  interface Longhands {
+    "clip-path": Property<Specified, Computed>;
+  }
 }
 
 /**
- * @see https://drafts.fxtf.org/css-masking/#the-clip-path
+ * @internal
  */
+export type Specified = URL | Shape | Keyword<"none">;
 
-export const ClipPath: Property<
-  ClipPath.Specified,
-  ClipPath.Computed
-> = Property.of(
-  Keyword.of("none"),
-  either<Slice<Token>, ClipPath.Specified, string>(
-    URL.parse,
-    Shape.parse,
-    Keyword.parse("none")
-  ),
-  (style) => style.specified("clip-path")
+/**
+ * @internal
+ */
+export type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = either(
+  URL.parse,
+  either(Shape.parse, Keyword.parse("none"))
+);
+
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path}
+ * @internal
+ */
+export default Property.register(
+  "clip-path",
+  Property.of<Specified, Computed>(Keyword.of("none"), parse, (value) => value)
 );

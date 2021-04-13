@@ -3,6 +3,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export abstract class Tag<T extends string = string>
   implements Equatable, Serializable<Tag.JSON> {
   protected constructor() {}
@@ -24,6 +27,9 @@ export abstract class Tag<T extends string = string>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Tag {
   export interface JSON {
     [key: string]: json.JSON;

@@ -5,7 +5,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 import * as json from "@siteimprove/alfa-json";
 
 /**
- * @see https://drafts.csswg.org/mediaqueries-5/#mf-user-preferences
+ * {@link https://drafts.csswg.org/mediaqueries-5/#mf-user-preferences}
+ *
+ * @public
  */
 export class Preference<N extends Preference.Name = Preference.Name>
   implements Equatable, Hashable, Serializable {
@@ -41,8 +43,7 @@ export class Preference<N extends Preference.Name = Preference.Name>
   }
 
   public hash(hash: Hash): void {
-    Hash.writeString(hash, this._name);
-    Hash.writeString(hash, this._value);
+    hash.writeString(this._name).writeString(this._value);
   }
 
   public toJSON(): Preference.JSON {
@@ -53,6 +54,9 @@ export class Preference<N extends Preference.Name = Preference.Name>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Preference {
   export interface JSON {
     [key: string]: json.JSON;
@@ -79,17 +83,17 @@ export namespace Preference {
 
   interface Preferences {
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#forced-colors
+     * {@link https://drafts.csswg.org/mediaqueries-5/#forced-colors}
      */
     "forced-colors": "none" | "active";
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#inverted
+     * {@link https://drafts.csswg.org/mediaqueries-5/#inverted}
      */
     inverted: "none" | "inverted";
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme
+     * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme}
      *
      * @remarks
      * For consistency, "no-preference" is also included.
@@ -97,7 +101,7 @@ export namespace Preference {
     "prefers-color-scheme": "no-preference" | "light" | "dark";
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#prefers-contrast
+     * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-contrast}
      *
      * @remarks
      * For consistency, "no-preference" is also included.
@@ -105,12 +109,12 @@ export namespace Preference {
     "prefers-contrast": "no-preference" | "high" | "low";
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion
+     * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion}
      */
     "prefers-reduced-motion": "no-preference" | "reduce";
 
     /**
-     * @see https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-transparency
+     * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-transparency}
      */
     "prefers-reduced-transparency": "no-preference" | "reduce";
   }

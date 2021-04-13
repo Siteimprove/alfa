@@ -1,11 +1,17 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+/**
+ * @public
+ */
 export type Refinement<T, U extends T, A extends Array<unknown> = []> = (
   value: T,
   ...args: A
 ) => value is U;
 
+/**
+ * @public
+ */
 export namespace Refinement {
   interface Test {
     <T, U extends T, A extends Array<unknown> = []>(
@@ -73,11 +79,7 @@ export namespace Refinement {
     ): Refinement<T, U, A>;
 
     <T, A extends Array<unknown> = []>(
-      ...predicates: [
-        Predicate<T, A>,
-        Predicate<T, A>,
-        ...Array<Predicate<T, A>>
-      ]
+      ...predicates: Array<Predicate<T, A>>
     ): Predicate<T, A>;
   }
 
@@ -100,11 +102,7 @@ export namespace Refinement {
     ): Refinement<T, U | T, A>;
 
     <T, A extends Array<unknown> = []>(
-      ...predicates: [
-        Predicate<T, A>,
-        Predicate<T, A>,
-        ...Array<Predicate<T, A>>
-      ]
+      ...predicates: Array<Predicate<T, A>>
     ): Predicate<T, A>;
   }
 

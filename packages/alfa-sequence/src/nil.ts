@@ -8,8 +8,14 @@ import { None } from "@siteimprove/alfa-option";
 import { Sequence } from "./sequence";
 import { Cons } from "./cons";
 
+/**
+ * @public
+ */
 export interface Nil extends Sequence<never> {}
 
+/**
+ * @public
+ */
 export const Nil: Nil = new (class Nil {
   public get size(): number {
     return 0;
@@ -30,6 +36,22 @@ export const Nil: Nil = new (class Nil {
   }
 
   public reduce<U>(reducer: unknown, accumulator: U): U {
+    return accumulator;
+  }
+
+  public reduceWhile<U>(
+    predicate: unknown,
+    reducer: unknown,
+    accumulator: U
+  ): U {
+    return accumulator;
+  }
+
+  public reduceUntil<U>(
+    predicate: unknown,
+    reducer: unknown,
+    accumulator: U
+  ): U {
     return accumulator;
   }
 
@@ -113,6 +135,18 @@ export const Nil: Nil = new (class Nil {
     return Sequence.from(iterable);
   }
 
+  public subtract(): Nil {
+    return this;
+  }
+
+  public intersect(): Nil {
+    return this;
+  }
+
+  public zip(): Nil {
+    return this;
+  }
+
   public first(): None {
     return None;
   }
@@ -137,6 +171,14 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
+  public takeLastWhile(): Nil {
+    return this;
+  }
+
+  public takeLastUntil(): Nil {
+    return this;
+  }
+
   public skip(): Nil {
     return this;
   }
@@ -150,6 +192,26 @@ export const Nil: Nil = new (class Nil {
   }
 
   public skipLast(): Nil {
+    return this;
+  }
+
+  public skipLastWhile(): Nil {
+    return this;
+  }
+
+  public skipLastUntil(): Nil {
+    return this;
+  }
+
+  public trim(): Nil {
+    return this;
+  }
+
+  public trimLeading(): Nil {
+    return this;
+  }
+
+  public trimTrailing(): Nil {
     return this;
   }
 
@@ -180,14 +242,6 @@ export const Nil: Nil = new (class Nil {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
-  public subtract(): Nil {
-    return this;
-  }
-
-  public intersect(): Nil {
-    return this;
-  }
-
   public groupBy<K, T>(): Map<K, Sequence<T>> {
     return Map.empty();
   }
@@ -197,7 +251,7 @@ export const Nil: Nil = new (class Nil {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeUint32(hash, 0);
+    hash.writeUint32(0);
   }
 
   public *iterator(): Iterator<never> {}
@@ -219,6 +273,9 @@ export const Nil: Nil = new (class Nil {
   }
 })();
 
+/**
+ * @public
+ */
 export namespace Nil {
   export type JSON = Collection.Indexed.JSON<never>;
 }

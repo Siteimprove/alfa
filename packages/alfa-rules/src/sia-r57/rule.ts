@@ -1,11 +1,10 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Text, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
-
-import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
@@ -19,7 +18,7 @@ const { isText } = Text;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Text>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r57",
   evaluate({ document, device }) {
     return {
       *applicability() {
@@ -47,13 +46,11 @@ export default Rule.Atomic.of<Page, Text>({
       expectations(target) {
         return {
           1: expectation(
-            aria.Node.from(target, device).every((node) =>
-              node
-                .ancestors()
-                .some((ancestor) =>
-                  ancestor.role.some((role) => role.isLandmark())
-                )
-            ),
+            Node.from(target, device)
+              .ancestors()
+              .some((ancestor) =>
+                ancestor.role.some((role) => role.isLandmark())
+              ),
             () => Outcomes.IsIncludedInLandmark,
             () => Outcomes.IsNotIncludedInLandmark
           ),

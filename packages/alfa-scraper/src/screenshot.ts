@@ -3,6 +3,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Screenshot implements Equatable, Serializable {
   public static of(
     path: string,
@@ -43,6 +46,9 @@ export class Screenshot implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Screenshot {
   export interface JSON {
     [key: string]: json.JSON;

@@ -2,7 +2,7 @@
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
-Alfa is an open and standards-based accessibility conformance testing engine. It is used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Alfa is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine, which Alfa will replace, and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). It also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
+Alfa is an open and standards-based accessibility conformance testing engine. It is used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Alfa is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine, which Alfa has replaced, and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). It also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
 ## Contents
 
@@ -32,7 +32,7 @@ Alfa is distributed through [GitHub Packages](../../packages) as a set of separa
 $ npm install @siteimprove/alfa-<package-name>
 ```
 
-> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com` to your `.npmrc` file.
+> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
@@ -110,6 +110,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)        |
 | [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                   |
 | [**@siteimprove/alfa-jquery**](packages/alfa-jquery)         | [jQuery](https://jquery.com/)                |
+| [**@siteimprove/alfa-playwright**](packages/alfa-playwright) | [Playwright](https://playwright.dev/)        |
 | [**@siteimprove/alfa-protractor**](packages/alfa-protractor) | [Protractor](http://www.protractortest.org/) |
 | [**@siteimprove/alfa-puppeteer**](packages/alfa-puppeteer)   | [Puppeteer](https://pptr.dev/)               |
 | [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                |
@@ -127,7 +128,7 @@ Alfa will run in any [ECMAScript 2018](https://www.ecma-international.org/ecma-2
 
 ## Building
 
-In order to build Alfa, a recent version (>= 10) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. For builds, [npm](https://www.npmjs.com/) is **not** supported as Alfa makes use of [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 12) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install

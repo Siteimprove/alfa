@@ -6,32 +6,48 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-export namespace WordSpacing {
-  export type Specified = Keyword<"normal"> | Length;
-
-  export type Computed = Length<"px">;
+declare module "../property" {
+  interface Longhands {
+    "word-spacing": Property<Specified, Computed>;
+  }
 }
 
 /**
- * @see https://drafts.csswg.org/css-text-3/#word-spacing-property
+ * @internal
  */
-export const WordSpacing: Property<
-  WordSpacing.Specified,
-  WordSpacing.Computed
-> = Property.of(
-  // The real initial value is `normal`, which is not a computed value…
-  // Replacing it with the computed value.
-  Length.of(0, "px"),
-  either(Keyword.parse("normal"), Length.parse),
-  (style) =>
-    style.specified("word-spacing").map((spacing) => {
-      switch (spacing.type) {
-        case "keyword":
-          return Length.of(0, "px");
+export type Specified = Keyword<"normal"> | Length;
 
-        case "length":
-          return Resolver.length(spacing, style);
-      }
-    }),
-  { inherits: true }
+/**
+ * @internal
+ */
+export type Computed = Length<"px">;
+
+/**
+ * @internal
+ */
+export const parse = either(Keyword.parse("normal"), Length.parse);
+
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/word-spacing}
+ * @internal
+ */
+export default Property.register(
+  "word-spacing",
+  Property.of<Specified, Computed>(
+    Length.of(0, "px"),
+    parse,
+    (wordSpacing, style) =>
+      wordSpacing.map((wordSpacing) => {
+        switch (wordSpacing.type) {
+          case "keyword":
+            return Length.of(0, "px");
+
+          case "length":
+            return Resolver.length(wordSpacing, style);
+        }
+      }),
+    {
+      inherits: true,
+    }
+  )
 );

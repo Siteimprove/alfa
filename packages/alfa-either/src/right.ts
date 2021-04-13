@@ -1,5 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -10,6 +10,9 @@ import * as json from "@siteimprove/alfa-json";
 import { Either } from "./either";
 import { Left } from "./left";
 
+/**
+ * @public
+ */
 export class Right<R> implements Either<never, R> {
   public static of<R>(value: R): Right<R> {
     return new Right(value);
@@ -29,22 +32,6 @@ export class Right<R> implements Either<never, R> {
     return true;
   }
 
-  public get(): R {
-    return this._value;
-  }
-
-  public left(): None {
-    return None;
-  }
-
-  public right(): Option<R> {
-    return Option.of(this._value);
-  }
-
-  public either<T>(left: unknown, right: Mapper<R, T>): T {
-    return right(this._value);
-  }
-
   public map<T>(mapper: Mapper<R, T>): Either<T, T> {
     return new Right(mapper(this._value));
   }
@@ -55,6 +42,22 @@ export class Right<R> implements Either<never, R> {
 
   public reduce<T>(reducer: Reducer<R, T>, accumulator: T): T {
     return reducer(accumulator, this._value);
+  }
+
+  public either<T>(left: unknown, right: Mapper<R, T>): T {
+    return right(this._value);
+  }
+
+  public get(): R {
+    return this._value;
+  }
+
+  public left(): None {
+    return None;
+  }
+
+  public right(): Option<R> {
+    return Option.of(this._value);
   }
 
   public equals<R>(value: Right<R>): boolean;
@@ -68,8 +71,7 @@ export class Right<R> implements Either<never, R> {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, true);
-    Hashable.hash(hash, this._value);
+    hash.writeBoolean(true).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator](): Iterator<R> {
@@ -88,6 +90,9 @@ export class Right<R> implements Either<never, R> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Right {
   export interface JSON<R> {
     [key: string]: json.JSON;

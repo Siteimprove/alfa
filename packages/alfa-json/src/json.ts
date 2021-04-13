@@ -1,7 +1,13 @@
-import * as global from "./global";
+import * as builtin from "./builtin";
 
+/**
+ * @public
+ */
 export type JSON = string | number | boolean | null | JSON.Array | JSON.Object;
 
+/**
+ * @public
+ */
 export namespace JSON {
   export type Array = JSON[];
 
@@ -10,10 +16,10 @@ export namespace JSON {
   }
 
   export function parse(value: string): JSON {
-    return global.parse(value);
+    return builtin.JSON.parse(value);
   }
 
   export function stringify(value: JSON): string {
-    return global.stringify(value);
+    return builtin.JSON.stringify(value);
   }
 }

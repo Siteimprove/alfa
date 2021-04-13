@@ -1,14 +1,13 @@
 import { h } from "./h";
 
-import { Node } from "./node";
-import { Element } from "./node/element";
+import { Node, Element } from ".";
 
 const { entries } = Object;
 
 export function jsx(
   name: string,
   properties: jsx.Properties | null = null,
-  ...children: Array<Node | string>
+  ...children: Array<jsx.Child>
 ): Element {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
@@ -37,6 +36,8 @@ export function jsx(
 }
 
 export namespace jsx {
+  export type Child = Node | string;
+
   export interface Properties {
     [name: string]: unknown;
 
@@ -44,13 +45,13 @@ export namespace jsx {
      * An optional record of CSS property names and their associated values.
      * This works similarly to the `style` property in React.
      *
-     * @see https://reactjs.org/docs/dom-elements.html#style
+     * {@link https://reactjs.org/docs/dom-elements.html#style}
      */
     style?: Record<string, string>;
   }
 
   /**
-   * @see https://www.typescriptlang.org/docs/handbook/jsx.html
+   * {@link https://www.typescriptlang.org/docs/handbook/jsx.html}
    *
    * @remarks
    * This namespace is currently needed to let the TypeScript compiler know the

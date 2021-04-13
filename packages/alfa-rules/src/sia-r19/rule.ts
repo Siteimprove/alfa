@@ -15,7 +15,7 @@ const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r19.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r19",
   evaluate({ document, device }) {
     return {
       applicability() {

@@ -1,8 +1,14 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
+/**
+ * @public
+ */
 export type Thunk<T = void> = () => T;
 
+/**
+ * @public
+ */
 export namespace Thunk {
   export function of<T>(value: T): Thunk<T> {
     return () => value;

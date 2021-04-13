@@ -1,7 +1,7 @@
 import { Element } from "../../element";
 
 /**
- * @see https://html.spec.whatwg.org/#editing-host
+ * {@link https://html.spec.whatwg.org/#editing-host}
  */
 export function isEditingHost(element: Element): boolean {
   return element
