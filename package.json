@@ -14,7 +14,8 @@
     "build": "node scripts/build.js --pretty",
     "clean": "node scripts/clean.js --pretty",
     "test": "node scripts/test.js --pretty",
-    "watch": "node scripts/watch.js --pretty"
+    "watch": "node scripts/watch.js --pretty",
+    "lint": "node scripts/lint.js --pretty"
   },
   "workspaces": [
     "packages/*"
@@ -22,8 +23,11 @@
   "devDependencies": {
     "@types/async": "^3.2.5",
     "@types/node": "^14.14.31",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "async": "^3.2.0",
     "axios": "^0.21.1",
+    "eslint": "^7.24.0",
     "execa": "^5.0.0",
     "minimist": "^1.2.5",
     "prettier": "^2.2.1",
