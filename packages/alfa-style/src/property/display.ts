@@ -86,12 +86,12 @@ export type Computed = Specified;
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-outside}
  */
-const parseDisplayOutside = Keyword.parse("block", "inline", "run-in");
+const parseOutside = Keyword.parse("block", "inline", "run-in");
 
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-inside}
  */
-const parseDisplayInside = Keyword.parse(
+const parseInside = Keyword.parse(
   "flow",
   "flow-root",
   "table",
@@ -103,12 +103,12 @@ const parseDisplayInside = Keyword.parse(
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-listitem}
  */
-const parseDisplayListItem = Keyword.parse("list-item");
+const parseListItem = Keyword.parse("list-item");
 
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-internal}
  */
-const parseDisplayInternal = Keyword.parse(
+const parseInternal = Keyword.parse(
   "table-row-group",
   "table-header-group",
   "table-footer-group",
@@ -126,12 +126,12 @@ const parseDisplayInternal = Keyword.parse(
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-box}
  */
-const parseDisplayBox = Keyword.parse("contents", "none");
+const parseBox = Keyword.parse("contents", "none");
 
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-legacy}
  */
-const parseDisplayLegacy = Keyword.parse(
+const parseLegacy = Keyword.parse(
   "inline-block",
   "inline-table",
   "inline-flex",
@@ -152,7 +152,7 @@ export const parse = either<Slice<Token>, Specified, string>(
       }
 
       if (outside === undefined) {
-        const result = parseDisplayOutside(input);
+        const result = parseOutside(input);
 
         if (result.isOk()) {
           [input, outside] = result.get();
@@ -161,7 +161,7 @@ export const parse = either<Slice<Token>, Specified, string>(
       }
 
       if (inside === undefined) {
-        const result = parseDisplayInside(input);
+        const result = parseInside(input);
 
         if (result.isOk()) {
           [input, inside] = result.get();
@@ -170,7 +170,7 @@ export const parse = either<Slice<Token>, Specified, string>(
       }
 
       if (listItem === undefined) {
-        const result = parseDisplayListItem(input);
+        const result = parseListItem(input);
 
         if (result.isOk()) {
           [input, listItem] = result.get();
@@ -212,7 +212,7 @@ export const parse = either<Slice<Token>, Specified, string>(
 
     return Result.of([input, Tuple.of(outside, inside, listItem)]);
   },
-  map(parseDisplayInternal, (keyword) => {
+  map(parseInternal, (keyword) => {
     switch (keyword.value) {
       case "table-row-group":
       case "table-header-group":
@@ -231,8 +231,8 @@ export const parse = either<Slice<Token>, Specified, string>(
         return Tuple.of(keyword, Keyword.of("flow"));
     }
   }),
-  map(parseDisplayBox, (keyword) => Tuple.of(keyword)),
-  map(parseDisplayLegacy, (keyword) => {
+  map(parseBox, (keyword) => Tuple.of(keyword)),
+  map(parseLegacy, (keyword) => {
     const inline = Keyword.of("inline");
 
     switch (keyword.value) {
