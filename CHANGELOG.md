@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.17.0](../../compare/v0.16.2...v0.17.0) (2021-04-13)
+
 ### Breaking
 
 - [@siteimprove/afa-style](packages/alfa-style): The type of the `display` has changed from a plain tuple to the `Tuple` class. ([#763](../../pull/763))
