@@ -110,8 +110,27 @@ export class Graph<T>
   public traverse(
     root: T,
     traversal: Graph.Traversal = Graph.DepthFirst
-  ): Sequence<T> {
+  ): Sequence<[node: T, parent: T]> {
     return Sequence.from(traversal(this, root));
+  }
+
+  public path(
+    from: T,
+    to: T,
+    traversal: Graph.Traversal = Graph.BreadthFirst
+  ): Sequence<T> {
+    const parents = Map.from(traversal(this, from));
+
+    const path: Array<T> = [];
+
+    while (parents.has(to)) {
+      const parent = parents.get(to).get();
+
+      path.unshift(to);
+      to = parent;
+    }
+
+    return Sequence.from(path);
   }
 
   public hasPath(from: T, to: T): boolean {
@@ -119,7 +138,9 @@ export class Graph<T>
       return false;
     }
 
-    return this.traverse(from).includes(to);
+    return this.traverse(from)
+      .map(([node]) => node)
+      .includes(to);
   }
 
   public equals<T>(value: Graph<T>): boolean;
@@ -202,30 +223,32 @@ export namespace Graph {
   }
 
   export interface Traversal {
-    <T>(graph: Graph<T>, root: T): Iterable<T>;
+    <T>(graph: Graph<T>, root: T): Iterable<[node: T, parent: T]>;
   }
 
   /**
    * {@link https://en.wikipedia.org/wiki/Depth-first_search}
    */
   export const DepthFirst: Traversal = function* <T>(graph: Graph<T>, root: T) {
-    const stack = [root];
+    const stack: Array<[node: T, parent: T]> = [
+      ...graph.neighbors(root),
+    ].map((node) => [node, root]);
 
-    let seen = Set.empty<T>();
+    let seen = Set.of(root);
 
     while (stack.length > 0) {
       const next = stack.pop()!;
 
-      if (seen.has(next)) {
+      if (seen.has(next[0])) {
         continue;
       }
 
       yield next;
 
-      seen = seen.add(next);
+      seen = seen.add(next[0]);
 
-      for (const neighbor of graph.neighbors(next)) {
-        stack.push(neighbor);
+      for (const neighbor of graph.neighbors(next[0])) {
+        stack.push([neighbor, next[0]]);
       }
     }
   };
@@ -237,7 +260,9 @@ export namespace Graph {
     graph: Graph<T>,
     root: T
   ) {
-    const queue = [root];
+    const queue: Array<[node: T, parent: T]> = [
+      ...graph.neighbors(root),
+    ].map((node) => [node, root]);
 
     let seen = Set.of(root);
 
@@ -246,13 +271,13 @@ export namespace Graph {
 
       yield next;
 
-      for (const neighbor of graph.neighbors(next)) {
+      for (const neighbor of graph.neighbors(next[0])) {
         if (seen.has(neighbor)) {
           continue;
         }
 
         seen = seen.add(neighbor);
-        queue.push(neighbor);
+        queue.push([neighbor, next[0]]);
       }
     }
   };

@@ -126,10 +126,10 @@ test("#delete() removes a node from a network", (t) => {
 });
 
 test("#traverse() traverses the subnetwork rooted at a node", (t) => {
-  t.deepEqual(
-    [...network.traverse("baz")].sort(),
-    ["baz", "foo", "bar"].sort()
-  );
+  t.deepEqual(network.traverse("baz").toJSON(), [
+    ["foo", [3], "baz"],
+    ["bar", [1], "foo"],
+  ]);
 });
 
 test("#traverse() traverses the subnetwork rooted at a node depth-first", (t) => {
@@ -164,18 +164,14 @@ test("#traverse() traverses the subnetwork rooted at a node depth-first", (t) =>
     ],
   ]);
 
-  t.deepEqual(
-    [...network.traverse(1, Network.DepthFirst)],
-    [
-      1, // 1
-      5, // |- 5
-      7, //    |- 7
-      6, //    |- 6
-      2, // |- 2
-      3, //    |- 3
-      4, //    |- 4
-    ]
-  );
+  t.deepEqual(network.traverse(1, Network.DepthFirst).toJSON(), [
+    [5, [true], 1], // |- 5
+    [7, [true], 5], //    |- 7
+    [6, [true], 5], //    |- 6
+    [2, [true], 1], // |- 2
+    [3, [true], 2], //    |- 3
+    [4, [true], 2], //    |- 4
+  ]);
 });
 
 test("#traverse() traverses the subnetwork rooted at a node breadth-first", (t) => {
@@ -210,18 +206,28 @@ test("#traverse() traverses the subnetwork rooted at a node breadth-first", (t) 
     ],
   ]);
 
-  t.deepEqual(
-    [...network.traverse(1, Network.BreadthFirst)],
-    [
-      1, // 1
-      2, // |- 2
-      5, // |- 5
-      4, //    |- 4
-      3, //    |- 3
-      6, //    |- 6
-      7, //    |- 7
-    ]
-  );
+  t.deepEqual(network.traverse(1, Network.BreadthFirst).toJSON(), [
+    [2, [true], 1], // |- 2
+    [5, [true], 1], // |- 5
+    [4, [true], 2], //    |- 4
+    [3, [true], 2], //    |- 3
+    [6, [true], 5], //    |- 6
+    [7, [true], 5], //    |- 7
+  ]);
+});
+
+test("#path() returns the path from one node to another", (t) => {
+  // foo -> bar
+  t.deepEqual(network.path("foo", "bar").toJSON(), [["bar", [1]]]);
+
+  // baz -> foo -> bar
+  t.deepEqual(network.path("baz", "bar").toJSON(), [
+    ["foo", [3]],
+    ["bar", [1]],
+  ]);
+
+  // bar has no neighbors
+  t.deepEqual(network.path("bar", "baz").toJSON(), []);
 });
 
 test("#hasPath() checks if there's a path from one node to another", (t) => {
@@ -233,9 +239,4 @@ test("#hasPath() checks if there's a path from one node to another", (t) => {
 
   // bar has no neighbors
   t.equal(network.hasPath("bar", "baz"), false);
-
-  // A node always has a path to itself
-  for (const node of ["foo", "bar", "baz"]) {
-    t.equal(network.hasPath(node, node), true);
-  }
 });
