@@ -137,9 +137,11 @@ test("#traverse() traverses the subnetwork rooted at a node depth-first", (t) =>
   // |- 2
   //    |- 3
   //    |- 4
+  //       |- 2 (cycle)
   // |- 5
   //    |- 6
   //    |- 7
+  //       |- 1 (cycle)
   const network = Network.from<number, boolean>([
     [
       1,
@@ -155,6 +157,7 @@ test("#traverse() traverses the subnetwork rooted at a node depth-first", (t) =>
         [4, [true]],
       ],
     ],
+    [4, [[2, [true]]]],
     [
       5,
       [
@@ -162,6 +165,7 @@ test("#traverse() traverses the subnetwork rooted at a node depth-first", (t) =>
         [7, [true]],
       ],
     ],
+    [7, [[1, [true]]]],
   ]);
 
   t.deepEqual(network.traverse(1, Network.DepthFirst).toJSON(), [
@@ -179,9 +183,11 @@ test("#traverse() traverses the subnetwork rooted at a node breadth-first", (t) 
   // |- 2
   //    |- 3
   //    |- 4
+  //       |- 2 (cycle)
   // |- 5
   //    |- 6
   //    |- 7
+  //       |- 1 (cycle)
   const network = Network.from<number, boolean>([
     [
       1,
@@ -197,6 +203,7 @@ test("#traverse() traverses the subnetwork rooted at a node breadth-first", (t) 
         [4, [true]],
       ],
     ],
+    [4, [[2, [true]]]],
     [
       5,
       [
@@ -204,6 +211,7 @@ test("#traverse() traverses the subnetwork rooted at a node breadth-first", (t) 
         [7, [true]],
       ],
     ],
+    [7, [[1, [true]]]],
   ]);
 
   t.deepEqual(network.traverse(1, Network.BreadthFirst).toJSON(), [

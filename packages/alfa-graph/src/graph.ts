@@ -264,7 +264,7 @@ export namespace Graph {
       ...graph.neighbors(root),
     ].map((node) => [node, root]);
 
-    let seen = Set.of(root);
+    let seen = Set.of(root, ...graph.neighbors(root));
 
     while (queue.length > 0) {
       const next = queue.shift()!;

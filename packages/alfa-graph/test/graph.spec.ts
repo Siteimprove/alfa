@@ -64,13 +64,17 @@ test("#traverse() traverses the subgraph rooted at a node depth-first", (t) => {
   // |- 2
   //    |- 3
   //    |- 4
+  //       |- 2 (cycle)
   // |- 5
   //    |- 6
   //    |- 7
+  //       |- 1 (cycle)
   const graph = Graph.from([
     [1, [2, 5]],
     [2, [3, 4]],
+    [4, [2]],
     [5, [6, 7]],
+    [7, [1]],
   ]);
 
   t.deepEqual(graph.traverse(1, Graph.DepthFirst).toJSON(), [
@@ -88,13 +92,17 @@ test("#traverse() traverses the subgraph rooted at a node breadth-first", (t) =>
   // |- 2
   //    |- 3
   //    |- 4
+  //       |- 2 (cycle)
   // |- 5
   //    |- 6
   //    |- 7
+  //       |- 1 (cycle)
   const graph = Graph.from([
     [1, [2, 5]],
     [2, [3, 4]],
+    [4, [2]],
     [5, [6, 7]],
+    [7, [1]],
   ]);
 
   t.deepEqual(graph.traverse(1, Graph.BreadthFirst).toJSON(), [
