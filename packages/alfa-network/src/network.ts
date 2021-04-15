@@ -36,6 +36,10 @@ export class Network<N, E>
     return this._nodes.size;
   }
 
+  public isEmpty(): this is Network<N, never> {
+    return this._nodes.isEmpty();
+  }
+
   public nodes(): Iterable<N> {
     return this._nodes.keys();
   }
@@ -75,9 +79,11 @@ export class Network<N, E>
     );
   }
 
-  public connect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
-
   public connect(from: N, to: N, ...edges: Array<E>): Network<N, E> {
+    if (edges.length === 0) {
+      return this;
+    }
+
     let nodes = this._nodes;
 
     if (!nodes.has(from)) {
@@ -108,10 +114,6 @@ export class Network<N, E>
       )
     );
   }
-
-  public disconnect(from: N, to: N): Network<N, E>;
-
-  public disconnect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
 
   public disconnect(from: N, to: N, ...edges: Array<E>): Network<N, E> {
     if (!this.has(from) || !this.has(to)) {
@@ -189,6 +191,43 @@ export class Network<N, E>
     return this.traverse(from)
       .map(([node]) => node)
       .includes(to);
+  }
+
+  public reverse(): Network<N, E> {
+    let reversed = Network.empty<N, E>();
+
+    for (const [node, neighbors] of this._nodes) {
+      reversed = reversed.add(node);
+
+      for (const [neighbor, edges] of neighbors) {
+        reversed = reversed.connect(neighbor, node, ...edges);
+      }
+    }
+
+    return reversed;
+  }
+
+  public *sort(): Iterable<N> {
+    let incoming = this.reverse();
+
+    const queue = incoming
+      .toArray()
+      .filter(([, edges]) => edges.length === 0)
+      .map(([node]) => node);
+
+    while (queue.length > 0) {
+      const next = queue.shift()!;
+
+      yield next;
+
+      for (const [neighbor] of this.neighbors(next)) {
+        incoming = incoming.disconnect(neighbor, next);
+
+        if (Iterable.isEmpty(incoming.neighbors(neighbor))) {
+          queue.push(neighbor);
+        }
+      }
+    }
   }
 
   public equals<N, E>(value: Network<N, E>): boolean;

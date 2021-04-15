@@ -35,6 +35,10 @@ export class Graph<T>
     return this._nodes.size;
   }
 
+  public isEmpty(): this is Graph<never> {
+    return this._nodes.isEmpty();
+  }
+
   public nodes(): Iterable<T> {
     return this._nodes.keys();
   }
@@ -141,6 +145,43 @@ export class Graph<T>
     return this.traverse(from)
       .map(([node]) => node)
       .includes(to);
+  }
+
+  public reverse(): Graph<T> {
+    let reversed = Graph.empty<T>();
+
+    for (const [node, neighbors] of this._nodes) {
+      reversed = reversed.add(node);
+
+      for (const neighbor of neighbors) {
+        reversed = reversed.connect(neighbor, node);
+      }
+    }
+
+    return reversed;
+  }
+
+  public *sort(): Iterable<T> {
+    let incoming = this.reverse();
+
+    const queue = incoming
+      .toArray()
+      .filter(([, edges]) => edges.length === 0)
+      .map(([node]) => node);
+
+    while (queue.length > 0) {
+      const next = queue.shift()!;
+
+      yield next;
+
+      for (const neighbor of this.neighbors(next)) {
+        incoming = incoming.disconnect(neighbor, next);
+
+        if (Iterable.isEmpty(incoming.neighbors(neighbor))) {
+          queue.push(neighbor);
+        }
+      }
+    }
   }
 
   public equals<T>(value: Graph<T>): boolean;

@@ -136,3 +136,36 @@ test("#hasPath() checks if there's a path from one node to another", (t) => {
   // bar has no neighbors
   t.equal(graph.hasPath("bar", "baz"), false);
 });
+
+test("#sort() topologically sorts an acyclic graph", (t) => {
+  // 1
+  // |- 2
+  //    |- 3
+  //    |- 4
+  //       |- 3
+  // 5
+  // |- 4
+  const graph = Graph.from([
+    [1, [2]],
+    [2, [3, 4]],
+    [4, [3]],
+    [5, [4]],
+  ]);
+
+  t.deepEqual([...graph.sort()], [1, 5, 2, 4, 3]);
+});
+
+test("#sort() yields nothing for a cyclic graph", (t) => {
+  // 1
+  // |- 2
+  //    |- 3
+  //    |- 4
+  //       |- 1
+  const graph = Graph.from([
+    [1, [2]],
+    [2, [3, 4]],
+    [4, [1]],
+  ]);
+
+  t.deepEqual([...graph.sort()], []);
+});

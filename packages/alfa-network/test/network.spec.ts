@@ -248,3 +248,48 @@ test("#hasPath() checks if there's a path from one node to another", (t) => {
   // bar has no neighbors
   t.equal(network.hasPath("bar", "baz"), false);
 });
+
+test("#sort() topologically sorts an acyclic network", (t) => {
+  // 1
+  // |- 2
+  //    |- 3
+  //    |- 4
+  //       |- 3
+  // 5
+  // |- 4
+  const network = Network.from<number, boolean>([
+    [1, [[2, [true]]]],
+    [
+      2,
+      [
+        [3, [true]],
+        [4, [true]],
+      ],
+    ],
+    [4, [[3, [true]]]],
+    [5, [[4, [true]]]],
+  ]);
+
+  t.deepEqual([...network.sort()], [1, 5, 2, 4, 3]);
+});
+
+test("#sort() yields nothing for a cyclic network", (t) => {
+  // 1
+  // |- 2
+  //    |- 3
+  //    |- 4
+  //       |- 1
+  const network = Network.from<number, boolean>([
+    [1, [[2, [true]]]],
+    [
+      2,
+      [
+        [3, [true]],
+        [4, [true]],
+      ],
+    ],
+    [4, [[1, [true]]]],
+  ]);
+
+  t.deepEqual([...network.sort()], []);
+});
