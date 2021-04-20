@@ -17,7 +17,6 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -35,7 +34,6 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -58,7 +56,6 @@ test(`evaluate() fails an <a> element that removes the default text decoration
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -81,7 +78,6 @@ test(`evaluate() fails an <a> element that removes the default text decoration
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -106,7 +102,6 @@ test(`evaluate() fails an <a> element that removes the default text decoration
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -134,7 +129,6 @@ test(`evaluate() fails an <a> element that removes the default text decoration
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -161,7 +155,6 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -188,7 +181,6 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -215,7 +207,6 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -239,7 +230,6 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -263,7 +253,6 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -287,7 +276,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -311,7 +299,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -335,7 +322,6 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -362,7 +348,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -390,7 +375,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableWhenVisited,
     }),
   ]);
 });
@@ -442,7 +426,6 @@ test(`evaluate() passes an <a> element with a <div role="paragraph"> parent elem
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableWhenVisited,
     }),
   ]);
 });
