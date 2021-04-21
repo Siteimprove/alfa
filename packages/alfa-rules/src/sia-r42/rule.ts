@@ -3,7 +3,6 @@ import { Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -44,10 +43,17 @@ export default Rule.Atomic.of<Page, Element>({
           .map((role) => role.requiredParent)
           .getOr([]);
 
+        const foundParents = hasRequiredParent(device, node);
+
         return {
           1: expectation(
-            hasRequiredParent(device)(node),
-            () => Outcomes.IsOwnedByContextRole(role, requiredParents),
+            !Array.isEmpty(foundParents),
+            () =>
+              Outcomes.IsOwnedByContextRole(
+                role,
+                requiredParents,
+                foundParents
+              ),
             () => Outcomes.IsNotOwnedByContextRole(role, requiredParents)
           ),
         };
@@ -59,13 +65,15 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const IsOwnedByContextRole = (
     role: Role.Name | "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>
+    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>,
+    foundParents: ReadonlyArray<Role.Name>
   ) =>
     Ok.of(
       RequiredParent.of(
         `The element is owned by an element of its required context role`,
         role,
-        requiredParents
+        requiredParents,
+        foundParents
       )
     );
 
@@ -82,63 +90,68 @@ export namespace Outcomes {
     );
 }
 
-function hasRequiredParent(device: Device): Predicate<aria.Node> {
-  return (node) => {
-    return node.role
-      .filter((role) => role.hasRequiredParent())
-      .every((role) =>
-        node.parent().some(isRequiredParent(role.requiredParent))
-      );
-  };
+function hasRequiredParent(
+  device: Device,
+  node: aria.Node
+): ReadonlyArray<Role.Name> {
+  return node.role
+    .filter((role) => role.hasRequiredParent())
+    .flatMap((role) =>
+      node
+        .parent()
+        .flatMap((parent) =>
+          Array.find(role.requiredParent, (req) =>
+            isRequiredParent(req)(parent)
+          )
+        )
+    )
+    .getOr([]);
 }
 
 function isRequiredParent(
-  requiredParent: ReadonlyArray<ReadonlyArray<Role.Name>>
+  requiredParent: ReadonlyArray<Role.Name>
 ): Predicate<aria.Node> {
-  return (node) =>
-    requiredParent.some((roles) => isRequiredParent(roles)(node));
+  return (node) => {
+    const [role, ...rest] = requiredParent;
 
-  function isRequiredParent(
-    requiredParent: ReadonlyArray<Role.Name>
-  ): Predicate<aria.Node> {
-    return (node) => {
-      const [role, ...rest] = requiredParent;
+    if (node.role.some(Role.hasName(role))) {
+      return (
+        rest.length === 0 ||
+        node
+          .parent()
+          .filter((node) => isElement(node.node))
+          .some(isRequiredParent(rest))
+      );
+    }
 
-      if (node.role.some(Role.hasName(role))) {
-        return (
-          rest.length === 0 ||
-          node
-            .parent()
-            .filter((node) => isElement(node.node))
-            .some(isRequiredParent(rest))
-        );
-      }
-
-      return false;
-    };
-  }
+    return false;
+  };
 }
 
 class RequiredParent extends Diagnostic {
   public static of(
     message: string,
     role: Role.Name | "" = "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>> = []
+    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>> = [],
+    foundParents: ReadonlyArray<Role.Name> = []
   ): RequiredParent {
-    return new RequiredParent(message, role, requiredParents);
+    return new RequiredParent(message, role, requiredParents, foundParents);
   }
 
   private readonly _role: Role.Name | "";
   private readonly _requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>;
+  private readonly _foundParents: ReadonlyArray<Role.Name>;
 
   private constructor(
     message: string,
     role: Role.Name | "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>
+    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>,
+    foundParents: ReadonlyArray<Role.Name>
   ) {
     super(message);
     this._role = role;
     this._requiredParents = requiredParents;
+    this._foundParents = foundParents;
   }
 
   public get role(): Role.Name | "" {
@@ -147,6 +160,10 @@ class RequiredParent extends Diagnostic {
 
   public get requiredParents(): ReadonlyArray<ReadonlyArray<Role.Name>> {
     return this._requiredParents;
+  }
+
+  public get foundParents(): ReadonlyArray<Role.Name> {
+    return this._foundParents;
   }
 
   public equals(value: RequiredParent): boolean;
@@ -158,8 +175,8 @@ class RequiredParent extends Diagnostic {
       value instanceof RequiredParent &&
       value._message === this._message &&
       value._role === this._role &&
-      value._requiredParents.length === this._requiredParents.length &&
-      Array.equals(value._requiredParents, this._requiredParents)
+      Array.equals(value._requiredParents, this._requiredParents) &&
+      Array.equals(value._foundParents, this._foundParents)
     );
   }
 
@@ -170,6 +187,7 @@ class RequiredParent extends Diagnostic {
       requiredParents: Array.toJSON(
         this._requiredParents.map((ancestors) => Array.toJSON(ancestors))
       ),
+      foundParents: Array.toJSON(this._foundParents),
     };
   }
 }
@@ -178,5 +196,6 @@ namespace RequiredParent {
   export interface JSON extends Diagnostic.JSON {
     role: Role.Name | "";
     requiredParents: Array<Array<Role.Name>>;
+    foundParents: Array<Role.Name>;
   }
 }
