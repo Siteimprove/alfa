@@ -15,7 +15,7 @@ test(`evaluate() passes a <button> element whose perceivable text content
 
   t.deepEqual(await evaluate(R14, { document }), [
     passed(R14, target, {
-      1: Outcomes.VisibleIsInName,
+      1: Outcomes.VisibleIsInName("hello world", "hello world"),
     }),
   ]);
 });
@@ -28,7 +28,7 @@ test(`evaluate() passes a <button> element whose perceivable text content
 
   t.deepEqual(await evaluate(R14, { document }), [
     passed(R14, target, {
-      1: Outcomes.VisibleIsInName,
+      1: Outcomes.VisibleIsInName("hello", "hello world"),
     }),
   ]);
 });
@@ -41,7 +41,7 @@ test(`evaluate() fails a <button> element whose perceivable text content
 
   t.deepEqual(await evaluate(R14, { document }), [
     failed(R14, target, {
-      1: Outcomes.VisibleIsNotInName,
+      1: Outcomes.VisibleIsNotInName("hello world", "hello"),
     }),
   ]);
 });
@@ -57,7 +57,7 @@ test(`evaluate() ignores non-perceivable text content`, async (t) => {
 
   t.deepEqual(await evaluate(R14, { document }), [
     passed(R14, target, {
-      1: Outcomes.VisibleIsInName,
+      1: Outcomes.VisibleIsInName("hello", "hello"),
     }),
   ]);
 });
