@@ -94,27 +94,6 @@ export default Rule.Atomic.of<Page, Element, Question>({
             () => Outcomes.IsDistinguishable,
             () => Outcomes.IsNotDistinguishable
           ),
-
-          2: expectation(
-            test(
-              and(
-                isDistinguishable(container, device, Context.visit(target)),
-                isDistinguishable(
-                  container,
-                  device,
-                  Context.hover(target).visit(target)
-                ),
-                isDistinguishable(
-                  container,
-                  device,
-                  Context.focus(target).visit(target)
-                )
-              ),
-              target
-            ),
-            () => Outcomes.IsDistinguishableWhenVisited,
-            () => Outcomes.IsNotDistinguishableWhenVisited
-          ),
         };
       },
     };
@@ -130,19 +109,6 @@ export namespace Outcomes {
     Diagnostic.of(
       `The link is not distinguishable from the surrounding text, either in its
       default state, or on hover and focus`
-    )
-  );
-
-  export const IsDistinguishableWhenVisited = Ok.of(
-    Diagnostic.of(
-      `When visited, the link is distinguishable from the surrounding text`
-    )
-  );
-
-  export const IsNotDistinguishableWhenVisited = Err.of(
-    Diagnostic.of(
-      `When visited, the link is not distinguishable from the surrounding text,
-      either in its default state, or on hover and focus`
     )
   );
 }
