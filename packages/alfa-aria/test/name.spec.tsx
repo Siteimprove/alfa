@@ -474,6 +474,46 @@ test(`.from() determines the name of an <a> element with text in its subtree,
 });
 
 test(`.from() determines the name of an <a> element with text in its subtree,
+      when the source is nested and doesn't itself allow naming`, (t) => {
+  const a = (
+    <a href="#" title="Content">
+      <p>Hello world</p>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/p[1]",
+                name: {
+                  value: "Hello world",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/p[1]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
+test(`.from() determines the name of an <a> element with text in its subtree,
       when there are multiple nested sources`, (t) => {
   const a = (
     <a href="#" title="Content">
