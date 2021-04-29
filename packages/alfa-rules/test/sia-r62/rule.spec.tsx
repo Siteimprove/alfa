@@ -442,3 +442,27 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
+
+test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = Document.of(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          fontWeight: "bold",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, { 1: Outcomes.IsDistinguishable }),
+  ]);
+});
