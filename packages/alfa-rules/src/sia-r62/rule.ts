@@ -142,6 +142,8 @@ function isDistinguishable(
     hasDistinguishableTextDecoration(container, device, context),
     hasDistinguishableBackground(container, device, context),
 
+    hasDistinguishableFontWeight(container, device, context),
+
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
     // other features of the container element, such as its background, but this
@@ -187,5 +189,27 @@ function hasDistinguishableBackground(
     return Style.from(element, device, context)
       .computed("background-color")
       .none((color) => Color.isTransparent(color) || color.equals(reference));
+  };
+}
+
+/**
+ * Check if an element has a different font weight than its container.
+ *
+ * This is brittle and imperfect but removes a strong pain point until we find
+ * a better solution…
+ */
+function hasDistinguishableFontWeight(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const reference = Style.from(container, device, context).computed(
+    "font-weight"
+  ).value;
+
+  return (element) => {
+    return Style.from(element, device, context)
+      .computed("font-weight")
+      .none((weight) => weight.equals(reference));
   };
 }
