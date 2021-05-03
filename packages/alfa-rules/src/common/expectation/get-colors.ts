@@ -1,9 +1,16 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
+import {
+  Current,
+  Keyword,
+  Percentage,
+  RGB,
+  System,
+} from "@siteimprove/alfa-css";
 import { Style } from "@siteimprove/alfa-style";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-style/src/property/value/list";
 
 const { flatMap, map } = Iterable;
 
@@ -105,10 +112,11 @@ type Layer = {
   opacity: number;
 };
 
-function getLayers(
+export function getLayers(
   element: Element,
   device: Device,
-  fakeLastOpacity?: number
+  fakeLastOpacity?: number,
+  debug: boolean = false
 ): Option<ReadonlyArray<Layer>> {
   const layers: Array<Layer> = [];
 
@@ -131,6 +139,22 @@ function getLayers(
     // We currently have no way of extracting colors from images, so we simply
     // bail out if we encounter a background image.
     if (image.image.type === "url") {
+      return None;
+    }
+
+    // If there is a background-size, we currently have no way of guessing
+    // whether it is large enough to go under the text or not.
+    // So we simply bail out.
+    const size = style.computed("background-size");
+    if (debug) {
+      console.log(`background size is`);
+      console.dir(size.toJSON(), { depth: null });
+    }
+    if (
+      !size.value.equals(
+        List.of([[Keyword.of("auto"), Keyword.of("auto")]], ", ")
+      )
+    ) {
       return None;
     }
 

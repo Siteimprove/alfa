@@ -9,7 +9,11 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { contrast } from "../common/expectation/contrast";
-import { getBackground, getForeground } from "../common/expectation/get-colors";
+import {
+  getBackground,
+  getForeground,
+  getLayers,
+} from "../common/expectation/get-colors";
 
 import {
   hasRole,
@@ -69,6 +73,11 @@ export default Rule.Atomic.of<Page, Text, Question>({
       },
 
       expectations(target) {
+        const foo = target.parent().get() as Element;
+
+        console.log(target.toString());
+        const layer = getLayers(foo, device, undefined, true);
+
         const foregrounds = Question.of(
           "foreground-colors",
           "color[]",
