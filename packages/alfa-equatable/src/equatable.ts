@@ -35,6 +35,12 @@ export namespace Equatable {
       return b.equals(a);
     }
 
+    if (Array.isArray(a) && Array.isArray(b)) {
+      return (
+        a.length === b.length && a.every((value, i) => equals(value, b[i]))
+      );
+    }
+
     return false;
   }
 }
