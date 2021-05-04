@@ -6,6 +6,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Property } from "../property";
 
 import { List } from "./value/list";
+import { Tuple } from "./value/tuple";
 
 import * as Attachment from "./background-attachment";
 import * as Clip from "./background-clip";
@@ -253,7 +254,7 @@ export default Property.registerShorthand(
         image.push(layer[1] ?? Keyword.of("none"));
         positionX.push(layer[2] ?? Percentage.of(0));
         positionY.push(layer[3] ?? Percentage.of(0));
-        size.push(layer[4] ?? [Keyword.of("auto"), Keyword.of("auto")]);
+        size.push(layer[4] ?? Tuple.of(Keyword.of("auto"), Keyword.of("auto")));
         repeatX.push(layer[5] ?? Keyword.of("repeat"));
         repeatY.push(layer[6] ?? Keyword.of("repeat"));
         attachment.push(layer[7] ?? Keyword.of("scroll"));
