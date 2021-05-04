@@ -105,7 +105,7 @@ type Layer = {
   opacity: number;
 };
 
-export function getLayers(
+function getLayers(
   element: Element,
   device: Device,
   fakeLastOpacity?: number

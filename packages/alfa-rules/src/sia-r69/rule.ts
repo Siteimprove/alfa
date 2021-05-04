@@ -9,11 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { contrast } from "../common/expectation/contrast";
-import {
-  getBackground,
-  getForeground,
-  getLayers,
-} from "../common/expectation/get-colors";
+import { getBackground, getForeground } from "../common/expectation/get-colors";
 
 import {
   hasRole,

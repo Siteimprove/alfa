@@ -1,6 +1,4 @@
-import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom/h";
-import { Style } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage } from "@siteimprove/alfa-css";
