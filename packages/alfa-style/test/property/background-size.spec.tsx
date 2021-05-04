@@ -34,17 +34,20 @@ test("#cascaded() parses `background-size: 10px`", (t) => {
     value: {
       type: "list",
       values: [
-        [
-          {
-            type: "length",
-            value: 10,
-            unit: "px",
-          },
-          {
-            type: "keyword",
-            value: "auto",
-          },
-        ],
+        {
+          type: "tuple",
+          values: [
+            {
+              type: "length",
+              value: 10,
+              unit: "px",
+            },
+            {
+              type: "keyword",
+              value: "auto",
+            },
+          ],
+        },
       ],
       separator: ", ",
     },
@@ -61,16 +64,19 @@ test("#cascaded() parses `background-size: 10%`", (t) => {
     value: {
       type: "list",
       values: [
-        [
-          {
-            type: "percentage",
-            value: 0.1,
-          },
-          {
-            type: "keyword",
-            value: "auto",
-          },
-        ],
+        {
+          type: "tuple",
+          values: [
+            {
+              type: "percentage",
+              value: 0.1,
+            },
+            {
+              type: "keyword",
+              value: "auto",
+            },
+          ],
+        },
       ],
       separator: ", ",
     },
@@ -87,18 +93,21 @@ test("#cascaded() parses `background-size: 10px 20px`", (t) => {
     value: {
       type: "list",
       values: [
-        [
-          {
-            type: "length",
-            value: 10,
-            unit: "px",
-          },
-          {
-            type: "length",
-            value: 20,
-            unit: "px",
-          },
-        ],
+        {
+          type: "tuple",
+          values: [
+            {
+              type: "length",
+              value: 10,
+              unit: "px",
+            },
+            {
+              type: "length",
+              value: 20,
+              unit: "px",
+            },
+          ],
+        },
       ],
       separator: ", ",
     },
@@ -115,28 +124,34 @@ test("#cascaded() parses `background-size: 10px, 20px`", (t) => {
     value: {
       type: "list",
       values: [
-        [
-          {
-            type: "length",
-            value: 10,
-            unit: "px",
-          },
-          {
-            type: "keyword",
-            value: "auto",
-          },
-        ],
-        [
-          {
-            type: "length",
-            value: 20,
-            unit: "px",
-          },
-          {
-            type: "keyword",
-            value: "auto",
-          },
-        ],
+        {
+          type: "tuple",
+          values: [
+            {
+              type: "length",
+              value: 10,
+              unit: "px",
+            },
+            {
+              type: "keyword",
+              value: "auto",
+            },
+          ],
+        },
+        {
+          type: "tuple",
+          values: [
+            {
+              type: "length",
+              value: 20,
+              unit: "px",
+            },
+            {
+              type: "keyword",
+              value: "auto",
+            },
+          ],
+        },
       ],
       separator: ", ",
     },
