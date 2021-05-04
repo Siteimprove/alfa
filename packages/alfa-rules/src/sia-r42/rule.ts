@@ -1,6 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -37,24 +36,11 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const node = aria.Node.from(target, device);
-        const role = node.role.map((role) => role.name).getOr("");
-        const requiredParents = node.role
-          .map((role) => role.requiredParent)
-          .getOr([]);
-
-        const foundParents = hasRequiredParent(device, node);
-
         return {
           1: expectation(
-            !Array.isEmpty(foundParents),
-            () =>
-              Outcomes.IsOwnedByContextRole(
-                role,
-                requiredParents,
-                foundParents
-              ),
-            () => Outcomes.IsNotOwnedByContextRole(role, requiredParents)
+            hasRequiredParent(device)(target),
+            () => Outcomes.IsOwnedByContextRole,
+            () => Outcomes.IsNotOwnedByContextRole
           ),
         };
       },
@@ -63,139 +49,54 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsOwnedByContextRole = (
-    role: Role.Name | "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>,
-    foundParents: ReadonlyArray<Role.Name>
-  ) =>
-    Ok.of(
-      RequiredParent.of(
-        `The element is owned by an element of its required context role`,
-        role,
-        requiredParents,
-        foundParents
-      )
-    );
-
-  export const IsNotOwnedByContextRole = (
-    role: Role.Name | "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>
-  ) =>
-    Err.of(
-      RequiredParent.of(
-        `The element is not owned by an element of its required context role`,
-        role,
-        requiredParents
-      )
-    );
-}
-
-function hasRequiredParent(
-  device: Device,
-  node: aria.Node
-): ReadonlyArray<Role.Name> {
-  return node.role
-    .filter((role) => role.hasRequiredParent())
-    .flatMap((role) =>
-      node
-        .parent()
-        .flatMap((parent) =>
-          Array.find(role.requiredParent, (req) =>
-            isRequiredParent(req)(parent)
-          )
-        )
+  export const IsOwnedByContextRole = Ok.of(
+    Diagnostic.of(
+      `The element is owned by an element of its required context role`
     )
-    .getOr([]);
+  );
+
+  export const IsNotOwnedByContextRole = Err.of(
+    Diagnostic.of(
+      `The element is not owned by an element of its required context role`
+    )
+  );
 }
 
-function isRequiredParent(
-  requiredParent: ReadonlyArray<Role.Name>
-): Predicate<aria.Node> {
-  return (node) => {
-    const [role, ...rest] = requiredParent;
+function hasRequiredParent(device: Device): Predicate<Element> {
+  return (element) => {
+    const node = aria.Node.from(element, device);
 
-    if (node.role.some(Role.hasName(role))) {
-      return (
-        rest.length === 0 ||
-        node
-          .parent()
-          .filter((node) => isElement(node.node))
-          .some(isRequiredParent(rest))
+    return node.role
+      .filter((role) => role.hasRequiredParent())
+      .every((role) =>
+        node.parent().some(isRequiredParent(role.requiredParent))
       );
-    }
-
-    return false;
   };
 }
 
-class RequiredParent extends Diagnostic {
-  public static of(
-    message: string,
-    role: Role.Name | "" = "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>> = [],
-    foundParents: ReadonlyArray<Role.Name> = []
-  ): RequiredParent {
-    return new RequiredParent(message, role, requiredParents, foundParents);
-  }
+function isRequiredParent(
+  requiredParent: ReadonlyArray<ReadonlyArray<Role.Name>>
+): Predicate<aria.Node> {
+  return (node) =>
+    requiredParent.some((roles) => isRequiredParent(roles)(node));
 
-  private readonly _role: Role.Name | "";
-  private readonly _requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>;
-  private readonly _foundParents: ReadonlyArray<Role.Name>;
+  function isRequiredParent(
+    requiredParent: ReadonlyArray<Role.Name>
+  ): Predicate<aria.Node> {
+    return (node) => {
+      const [role, ...rest] = requiredParent;
 
-  private constructor(
-    message: string,
-    role: Role.Name | "",
-    requiredParents: ReadonlyArray<ReadonlyArray<Role.Name>>,
-    foundParents: ReadonlyArray<Role.Name>
-  ) {
-    super(message);
-    this._role = role;
-    this._requiredParents = requiredParents;
-    this._foundParents = foundParents;
-  }
+      if (node.role.some(Role.hasName(role))) {
+        return (
+          rest.length === 0 ||
+          node
+            .parent()
+            .filter((node) => isElement(node.node))
+            .some(isRequiredParent(rest))
+        );
+      }
 
-  public get role(): Role.Name | "" {
-    return this._role;
-  }
-
-  public get requiredParents(): ReadonlyArray<ReadonlyArray<Role.Name>> {
-    return this._requiredParents;
-  }
-
-  public get foundParents(): ReadonlyArray<Role.Name> {
-    return this._foundParents;
-  }
-
-  public equals(value: RequiredParent): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return (
-      value instanceof RequiredParent &&
-      value._message === this._message &&
-      value._role === this._role &&
-      Array.equals(value._requiredParents, this._requiredParents) &&
-      Array.equals(value._foundParents, this._foundParents)
-    );
-  }
-
-  public toJSON(): RequiredParent.JSON {
-    return {
-      ...super.toJSON(),
-      role: this._role,
-      requiredParents: Array.toJSON(
-        this._requiredParents.map((ancestors) => Array.toJSON(ancestors))
-      ),
-      foundParents: Array.toJSON(this._foundParents),
+      return false;
     };
-  }
-}
-
-namespace RequiredParent {
-  export interface JSON extends Diagnostic.JSON {
-    role: Role.Name | "";
-    requiredParents: Array<Array<Role.Name>>;
-    foundParents: Array<Role.Name>;
   }
 }
