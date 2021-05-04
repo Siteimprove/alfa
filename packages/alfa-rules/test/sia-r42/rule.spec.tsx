@@ -14,11 +14,7 @@ test(`evaluates() passes an implicit listitem inside a list`, async (t) => {
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, target, {
-      1: Outcomes.IsOwnedByContextRole(
-        "listitem",
-        [["directory"], ["list"]],
-        ["list"]
-      ),
+      1: Outcomes.IsOwnedByContextRole,
     }),
   ]);
 });
@@ -30,11 +26,7 @@ test(`evaluates() passes an explicit listitem inside a list`, async (t) => {
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, target, {
-      1: Outcomes.IsOwnedByContextRole(
-        "listitem",
-        [["directory"], ["list"]],
-        ["list"]
-      ),
+      1: Outcomes.IsOwnedByContextRole,
     }),
   ]);
 });
@@ -46,10 +38,7 @@ test(`evaluates() fails an orphaned listitem`, async (t) => {
 
   t.deepEqual(await evaluate(R42, { document }), [
     failed(R42, target, {
-      1: Outcomes.IsNotOwnedByContextRole("listitem", [
-        ["directory"],
-        ["list"],
-      ]),
+      1: Outcomes.IsNotOwnedByContextRole,
     }),
   ]);
 });
@@ -65,11 +54,7 @@ test(`evaluates() skips through container nodes`, async (t) => {
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, target, {
-      1: Outcomes.IsOwnedByContextRole(
-        "listitem",
-        [["directory"], ["list"]],
-        ["list"]
-      ),
+      1: Outcomes.IsOwnedByContextRole,
     }),
   ]);
 });
@@ -85,10 +70,7 @@ test(`evaluates() fails listitem in intermediate non-container nodes`, async (t)
 
   t.deepEqual(await evaluate(R42, { document }), [
     failed(R42, target, {
-      1: Outcomes.IsNotOwnedByContextRole("listitem", [
-        ["directory"],
-        ["list"],
-      ]),
+      1: Outcomes.IsNotOwnedByContextRole,
     }),
   ]);
 });
@@ -107,11 +89,7 @@ test(`evaluates() follows \`aria-owns\``, async (t) => {
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, target, {
-      1: Outcomes.IsOwnedByContextRole(
-        "listitem",
-        [["directory"], ["list"]],
-        ["list"]
-      ),
+      1: Outcomes.IsOwnedByContextRole,
     }),
   ]);
 });
@@ -125,28 +103,13 @@ test(`evaluates() passes a \`row\` inside a \`rowgroup\` inside a \`table\``, as
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, rowGroup, {
-      1: Outcomes.IsOwnedByContextRole(
-        "rowgroup",
-        [["grid"], ["table"], ["treegrid"]],
-        ["table"]
-      ),
+      1: Outcomes.IsOwnedByContextRole,
     }),
     passed(R42, row, {
-      1: Outcomes.IsOwnedByContextRole(
-        "row",
-        [
-          ["grid"],
-          ["table"],
-          ["treegrid"],
-          ["rowgroup", "grid"],
-          ["rowgroup", "table"],
-          ["rowgroup", "treegrid"],
-        ],
-        ["rowgroup", "table"]
-      ),
+      1: Outcomes.IsOwnedByContextRole,
     }),
     passed(R42, cell, {
-      1: Outcomes.IsOwnedByContextRole("cell", [["row"]], ["row"]),
+      1: Outcomes.IsOwnedByContextRole,
     }),
   ]);
 });
@@ -159,21 +122,10 @@ test(`evaluates() fails a \`row\` inside an orphaned \`rowgroup\``, async (t) =>
 
   t.deepEqual(await evaluate(R42, { document }), [
     failed(R42, rowGroup, {
-      1: Outcomes.IsNotOwnedByContextRole("rowgroup", [
-        ["grid"],
-        ["table"],
-        ["treegrid"],
-      ]),
+      1: Outcomes.IsNotOwnedByContextRole,
     }),
     failed(R42, row, {
-      1: Outcomes.IsNotOwnedByContextRole("row", [
-        ["grid"],
-        ["table"],
-        ["treegrid"],
-        ["rowgroup", "grid"],
-        ["rowgroup", "table"],
-        ["rowgroup", "treegrid"],
-      ]),
+      1: Outcomes.IsNotOwnedByContextRole,
     }),
   ]);
 });
