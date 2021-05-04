@@ -417,3 +417,24 @@ test(`evaluate() correctly merges semi-transparent background layers against a
     }),
   ]);
 });
+
+test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
+  const target = h.text("Hello World");
+
+  const div = (
+    <div
+      style={{
+        backgroundImage:
+          "linear-gradient(to right,rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%)",
+        backgroundRepeat: "repeat-x",
+        backgroundPosition: "0px 100%",
+        backgroundSize: "100% 2px",
+      }}
+    >
+      {target}
+    </div>
+  );
+  const document = h.document([div]);
+
+  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+});
