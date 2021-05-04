@@ -73,11 +73,6 @@ export default Rule.Atomic.of<Page, Text, Question>({
       },
 
       expectations(target) {
-        const foo = target.parent().get() as Element;
-
-        console.log(target.toString());
-        const layer = getLayers(foo, device, undefined, true);
-
         const foregrounds = Question.of(
           "foreground-colors",
           "color[]",
