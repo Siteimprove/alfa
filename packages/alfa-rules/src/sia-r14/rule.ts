@@ -47,19 +47,21 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const textContent = getPerceivableTextContent(target, device);
+        let name = "";
 
         const accessibleNameIncludesTextContent = test(
-          hasAccessibleName(device, (accessibleName) =>
-            normalize(accessibleName.value).includes(textContent)
-          ),
+          hasAccessibleName(device, (accessibleName) => {
+            name = normalize(accessibleName.value);
+            return name.includes(textContent);
+          }),
           target
         );
 
         return {
           1: expectation(
             accessibleNameIncludesTextContent,
-            () => Outcomes.VisibleIsInName,
-            () => Outcomes.VisibleIsNotInName
+            () => Outcomes.VisibleIsInName(textContent, name),
+            () => Outcomes.VisibleIsNotInName(textContent, name)
           ),
         };
       },
@@ -83,15 +85,76 @@ function getPerceivableTextContent(element: Element, device: Device): string {
 }
 
 export namespace Outcomes {
-  export const VisibleIsInName = Ok.of(
-    Diagnostic.of(
-      `The visible text content of the element is included within its accessible name`
-    )
-  );
+  export const VisibleIsInName = (textContent: string, name: string) =>
+    Ok.of(
+      LabelAndName.of(
+        `The visible text content of the element is included within its accessible name`,
+        textContent,
+        name
+      )
+    );
 
-  export const VisibleIsNotInName = Err.of(
-    Diagnostic.of(
-      `The visible text content of the element is not included within its accessible name`
-    )
-  );
+  export const VisibleIsNotInName = (textContent: string, name: string) =>
+    Err.of(
+      LabelAndName.of(
+        `The visible text content of the element is not included within its accessible name`,
+        textContent,
+        name
+      )
+    );
+}
+
+class LabelAndName extends Diagnostic {
+  public static of(
+    message: string,
+    textContent: string = "",
+    name: string = ""
+  ): LabelAndName {
+    return new LabelAndName(message, textContent, name);
+  }
+
+  private readonly _textContent: string;
+  private readonly _name: string;
+
+  private constructor(message: string, textContent: string, name: string) {
+    super(message);
+    this._textContent = textContent;
+    this._name = name;
+  }
+
+  public get textContent(): string {
+    return this._textContent;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public equals(value: LabelAndName): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof LabelAndName &&
+      value._message === this._message &&
+      value._textContent === this._textContent &&
+      value._name === this._name
+    );
+  }
+
+  public toJSON(): LabelAndName.JSON {
+    return {
+      ...super.toJSON(),
+      textContent: this._textContent,
+      name: this._name,
+    };
+  }
+}
+
+namespace LabelAndName {
+  export interface JSON extends Diagnostic.JSON {
+    textContent: string;
+    name: string;
+  }
 }
