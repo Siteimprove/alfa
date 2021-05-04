@@ -1,13 +1,15 @@
 import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
+import parseWhitespace = Token.parseWhitespace;
 
-const { map, either, delimited, option, pair, separatedList } = Parser;
+const { map, either, delimited, option, pair, right, separatedList } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -24,11 +26,10 @@ export type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
+  export type Dimension = Length | Percentage | Keyword<"auto">;
+
   export type Item =
-    | [
-        Length | Percentage | Keyword<"auto">,
-        Length | Percentage | Keyword<"auto">
-      ]
+    | [Dimension, Dimension]
     | Keyword<"cover">
     | Keyword<"contain">;
 }
@@ -42,11 +43,10 @@ export type Computed = List<Computed.Item>;
  * @internal
  */
 export namespace Computed {
+  export type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
+
   export type Item =
-    | [
-        Length<"px"> | Percentage | Keyword<"auto">,
-        Length<"px"> | Percentage | Keyword<"auto">
-      ]
+    | [Dimension, Dimension]
     | Keyword<"cover">
     | Keyword<"contain">;
 }
@@ -54,10 +54,19 @@ export namespace Computed {
 /**
  * @internal
  */
+const parseDimension = either<Slice<Token>, Specified.Dimension, string>(
+  Length.parse,
+  Percentage.parse,
+  Keyword.parse("auto")
+);
+
+/**
+ * @internal
+ */
 export const parse = either(
   pair(
-    either(Length.parse, Keyword.parse("auto")),
-    map(option(either(Length.parse, Keyword.parse("auto"))), (y) =>
+    parseDimension,
+    map(option(right(parseWhitespace, parseDimension)), (y) =>
       y.getOrElse(() => Keyword.of("auto"))
     )
   ),
