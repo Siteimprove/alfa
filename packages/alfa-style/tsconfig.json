@@ -138,6 +138,7 @@
     "test/property/background-color.spec.tsx",
     "test/property/background-image.spec.tsx",
     "test/property/background-position.spec.tsx",
+    "test/property/background-size.spec.tsx",
     "test/property/border.spec.tsx",
     "test/property/border-[block,inline].spec.tsx",
     "test/property/border-[block,inline]-[end,start].spec.tsx",
