@@ -154,6 +154,7 @@
     "test/common/expectation/get-colors.spec.tsx",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
+    "test/sia-r3/rule.spec.tsx",
     "test/sia-r7/rule.spec.tsx",
     "test/sia-r9/rule.spec.tsx",
     "test/sia-r10/rule.spec.tsx",
