@@ -33,7 +33,8 @@ test(`evaluate() passes an element which content is hidden`, async (t) => {
     ]);
   });
 
-  test(`evaluate() passes an element which content is taken out of sequential focus order using tabindex`, async (t) => {
+  test(`evaluate() passes an element whose content is taken out of sequential focus order using tabindex`,
+          async (t) => {
     const target = <div aria-hidden="true">
 	<button tabindex="-1">Some button</button>
 </div>;
@@ -59,7 +60,7 @@ test(`evaluate() passes an element which content is hidden`, async (t) => {
     ]);
   });
 
-  test(`evaluate() fails an element which focusable content`, async (t) => {
+  test(`evaluate() fails an element with focusable content`, async (t) => {
     const target = <div aria-hidden="true">
 	<a href="/">Link</a>
 </div>;
@@ -73,7 +74,7 @@ test(`evaluate() passes an element which content is hidden`, async (t) => {
     ]);
   });
 
-  test(`evaluate() fails an element can't be reset once set to true on an ancestor`, async (t) => {
+  test(`evaluate() fails an element with an \`aria-hidden\` ancestor`, async (t) => {
     const target =<div aria-hidden="true">
 	<div aria-hidden="false">
 		<button>Some button</button>
@@ -125,7 +126,6 @@ test(`evaluate() passes an element which content is hidden`, async (t) => {
   
     t.deepEqual(await evaluate(R17, { document }), [inapplicable(R17)]);
   });
-
 
 
 
