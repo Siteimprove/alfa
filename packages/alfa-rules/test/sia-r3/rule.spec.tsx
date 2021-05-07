@@ -39,7 +39,7 @@ test("evaluate() passes unique id attributes in the document context.", async (t
     ]);
   });
 
-test("evaluate() fails unique id attributes in the document context.", async (t) => {
+test("evaluate() fails duplicated id attributes in the document context.", async (t) => {
     const target1 = <div id="label">Name</div>;                        
     const target2 = <div id="label">City</div>;
 
@@ -55,7 +55,7 @@ test("evaluate() fails unique id attributes in the document context.", async (t)
     ]);
   });
 
-  test("evaluate() fails unique id attributes in the document context.", async (t) => {
+  test("evaluate() fails duplicated id attributes on SVG element.", async (t) => {
     const target1 = <div id="label">Name</div>;                        
     const target2 = <svg id="label">
 	                    <text x="0" y="15">City</text>
@@ -82,4 +82,3 @@ test("evaluate() fails unique id attributes in the document context.", async (t)
   });
 
   
-
