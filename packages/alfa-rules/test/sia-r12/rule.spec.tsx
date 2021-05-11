@@ -54,3 +54,39 @@ test(`evaluates() fails <button> with no attribute`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluates() fails <button> element with no accessible name`, async (t) => {
+  const target = <button type="button" value="read more"></button>;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [
+    failed(R12, target, {
+      1: Outcomes.HasNoName,
+    }),
+  ]);
+});
+
+test(`evaluates() fails element with <button> role because it doesn't have a content with accessible name`, async (t) => {
+  const target = <span role="button"></span>;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [
+    failed(R12, target, {
+      1: Outcomes.HasNoName,
+    }),
+  ]);
+});
+
+test(`evaluates() fails element with <button> role because it doesn't have a content with accessible name`, async (t) => {
+  const target = <span role="button"></span>;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [
+    failed(R12, target, {
+      1: Outcomes.HasNoName,
+    }),
+  ]);
+});
