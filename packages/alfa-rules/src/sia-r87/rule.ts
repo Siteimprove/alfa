@@ -100,7 +100,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
                 () => Outcomes.FirstTabbableIsNotLink,
                 () =>
                   expectation(
-                    element.none(not(isIgnored(device))),
+                    element.some(isIgnored(device)),
                     () => Outcomes.FirstTabbableIsIgnored,
                     () =>
                       expectation(
