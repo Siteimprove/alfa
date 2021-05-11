@@ -55,8 +55,7 @@ test(`evaluates() fails a button with no accessible name`, async (t) => {
   ]);
 });
 
-
-test(`evaluates() fails an element with \`button\` role because and without an accessible name`, async (t) => {
+test(`evaluates() fails an element with \`button\` role without an accessible name`, async (t) => {
   const target = <span role="button"></span>;
 
   const document = Document.of([target]);
@@ -68,7 +67,6 @@ test(`evaluates() fails an element with \`button\` role because and without an a
   ]);
 });
 
-
 test(`evaluate() is inapplicable to image buttons`, async (t) => {
   const target = <input type="image" value="download" alt="Download" />;
 
@@ -76,7 +74,6 @@ test(`evaluate() is inapplicable to image buttons`, async (t) => {
 
   t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
 });
-
 
 test(`evaluate() is inapplicabile to element with no button role`, async (t) => {
   const target = <div>Press Here</div>;
