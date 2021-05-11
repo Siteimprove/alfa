@@ -83,16 +83,25 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
         return {
           1: expectation(
-            test(
-              and(
-                isDistinguishable(container, device),
-                isDistinguishable(container, device, Context.hover(target)),
-                isDistinguishable(container, device, Context.focus(target))
-              ),
-              target
-            ),
+            test(and(isDistinguishable(container, device)), target),
             () => Outcomes.IsDistinguishable,
             () => Outcomes.IsNotDistinguishable
+          ),
+          2: expectation(
+            test(
+              and(isDistinguishable(container, device, Context.hover(target))),
+              target
+            ),
+            () => Outcomes.IsDistinguishableHover,
+            () => Outcomes.IsNotDistinguishableHover
+          ),
+          3: expectation(
+            test(
+              and(isDistinguishable(container, device, Context.focus(target))),
+              target
+            ),
+            () => Outcomes.IsDistinguishableFocus,
+            () => Outcomes.IsNotDistinguishableFocus
           ),
         };
       },
@@ -104,11 +113,29 @@ export namespace Outcomes {
   export const IsDistinguishable = Ok.of(
     Diagnostic.of(`The link is distinguishable from the surrounding text`)
   );
+  export const IsDistinguishableHover = Ok.of(
+    Diagnostic.of(`The link is hoverable from the surrounding text`)
+  );
+  export const IsDistinguishableFocus = Ok.of(
+    Diagnostic.of(`The link is focused from the surrounding text`)
+  );
 
   export const IsNotDistinguishable = Err.of(
     Diagnostic.of(
-      `The link is not distinguishable from the surrounding text, either in its
-      default state, or on hover and focus`
+      `The link is not distinguishable from the surrounding text because is in
+      default state`
+    )
+  );
+  export const IsNotDistinguishableHover = Err.of(
+    Diagnostic.of(
+      `The link is not distinguishable from the surrounding text because is in
+      hover state`
+    )
+  );
+  export const IsNotDistinguishableFocus = Err.of(
+    Diagnostic.of(
+      `The link is not distinguishable from the surrounding text because is in
+      focus state`
     )
   );
 }

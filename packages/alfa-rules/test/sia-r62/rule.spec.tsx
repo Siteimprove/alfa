@@ -8,6 +8,15 @@ import R62, { Outcomes } from "../../src/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
+/**
+ * @internal
+ * Removing all decoration from links
+ */
+const emptyStyle = h.rule.style("a", {
+  outline: "none",
+  textDecoration: "none",
+});
+
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -17,6 +26,8 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableHover,
+      3: Outcomes.IsDistinguishableFocus,
     }),
   ]);
 });
@@ -34,6 +45,8 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableHover,
+      3: Outcomes.IsDistinguishableFocus,
     }),
   ]);
 });
@@ -47,6 +60,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     [
       h.sheet([
         h.rule.style("a", {
+          outline: "none",
           textDecoration: "none",
         }),
       ]),
@@ -56,6 +70,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableHover,
+      3: Outcomes.IsNotDistinguishableFocus,
     }),
   ]);
 });
@@ -77,7 +93,9 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsNotDistinguishableHover,
+      3: Outcomes.IsDistinguishableFocus,
     }),
   ]);
 });
@@ -101,7 +119,9 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsDistinguishableHover,
+      3: Outcomes.IsNotDistinguishableFocus,
     }),
   ]);
 });
@@ -128,7 +148,9 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
+      1: Outcomes.IsDistinguishable,
+      2: Outcomes.IsNotDistinguishableHover,
+      3: Outcomes.IsNotDistinguishableFocus,
     }),
   ]);
 });
@@ -141,9 +163,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     [<p>Hello {target}</p>],
     [
       h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
+        emptyStyle,
 
         h.rule.style("a:hover", {
           textDecoration: "underline",
@@ -155,6 +175,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsDistinguishableHover,
+      3: Outcomes.IsNotDistinguishableFocus,
     }),
   ]);
 });
@@ -167,9 +189,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     [<p>Hello {target}</p>],
     [
       h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
+        emptyStyle,
 
         h.rule.style("a:focus", {
           textDecoration: "underline",
@@ -181,10 +201,12 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsNotDistinguishableHover,
+      3: Outcomes.IsDistinguishableFocus,
     }),
   ]);
 });
-
+/*
 test(`evaluate() fails an <a> element that applies a text decoration only on
       hover and focus`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -193,9 +215,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     [<p>Hello {target}</p>],
     [
       h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
+        emptyStyle,
 
         h.rule.style("a:hover, a:focus", {
           textDecoration: "underline",
@@ -207,10 +227,12 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable,
+      2: Outcomes.IsDistinguishableHover,
+      3: Outcomes.IsDistinguishableFocus,
     }),
   ]);
 });
-
+/*
 test(`evaluate() passes an applicable <a> element that removes the default text
       decoration and instead applies an outline`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -466,3 +488,4 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     passed(R62, target, { 1: Outcomes.IsDistinguishable }),
   ]);
 });
+*/
