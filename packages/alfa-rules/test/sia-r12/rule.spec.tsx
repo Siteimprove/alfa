@@ -90,3 +90,35 @@ test(`evaluates() fails element with <button> role because it doesn't have a con
     }),
   ]);
 });
+
+test(`evaluate() is inapplicabile to input element with image attribute`, async (t) => {
+  const target = <input type="image" value="download" alt="Download" />;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
+});
+
+test(`evaluate() is inapplicabile to input element with image attribute`, async (t) => {
+  const target = <input type="image" value="download" alt="Download" />;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
+});
+
+test(`evaluate() is inapplicabile to element with no button role`, async (t) => {
+  const target = <div>Press Here</div>;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
+});
+
+test(`evaluate() is inapplicabile to button element with none role`, async (t) => {
+  const target = <button role="none" disabled></button>;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
+});
