@@ -32,11 +32,21 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
+        const node = Node.from(target, device);
+
+        let role: string;
+
+        if (node.role.isSome()) {
+          role = node.role.get().name;
+        } else {
+          role = "";
+        }
+
         return {
           1: expectation(
             hasRequiredValues(device)(target),
-            () => Outcomes.HasAllStates,
-            () => Outcomes.HasNotAllStates
+            () => Outcomes.HasAllStates(role),
+            () => Outcomes.HasNotAllStates(role)
           ),
         };
       },
@@ -71,14 +81,65 @@ function hasRequiredValues(device: Device): Predicate<Element> {
   };
 }
 
-export namespace Outcomes {
-  export const HasAllStates = Ok.of(
-    Diagnostic.of(`The element has all required states and properties`)
-  );
+class RoleAndRequiredAttributes extends Diagnostic {
+  public static of(
+    message: string,
+    role: string = ""
+  ): RoleAndRequiredAttributes {
+    return new RoleAndRequiredAttributes(message, role);
+  }
 
-  export const HasNotAllStates = Err.of(
-    Diagnostic.of(
-      `The element does not have all required states and properties`
-    )
-  );
+  private readonly _role: string;
+
+  private constructor(message: string, role: string) {
+    super(message);
+    this._role = role;
+  }
+
+  public get role(): string {
+    return this._role;
+  }
+
+  public equals(value: RoleAndRequiredAttributes): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof RoleAndRequiredAttributes &&
+      value._message === this._message &&
+      value._role === this._role
+    );
+  }
+
+  public toJSON(): RoleAndRequiredAttributes.JSON {
+    return {
+      ...super.toJSON(),
+      role: this._role,
+    };
+  }
+}
+
+namespace RoleAndRequiredAttributes {
+  export interface JSON extends Diagnostic.JSON {
+    role: string;
+  }
+}
+
+export namespace Outcomes {
+  export const HasAllStates = (role: string) =>
+    Ok.of(
+      RoleAndRequiredAttributes.of(
+        `The element has all required states and properties`,
+        role
+      )
+    );
+
+  export const HasNotAllStates = (role: string) =>
+    Err.of(
+      RoleAndRequiredAttributes.of(
+        `The element does not have all required states and properties`,
+        role
+      )
+    );
 }
