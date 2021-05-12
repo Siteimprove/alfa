@@ -15,7 +15,7 @@ test(`evaluate() passes a <div> element with a role of checkbox and an
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("checkbox"),
+      1: Outcomes.HasAllStates("checkbox", ["aria-checked"]),
     }),
   ]);
 });
@@ -27,7 +27,7 @@ test(`evaluate() passes an <input> element with a type of checkbox`, async (t) =
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("checkbox"),
+      1: Outcomes.HasAllStates("checkbox", ["aria-checked"]),
     }),
   ]);
 });
@@ -39,7 +39,7 @@ test(`evaluate() passes an <hr> element`, async (t) => {
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("separator"),
+      1: Outcomes.HasAllStates("separator", ["aria-valuenow"]),
     }),
   ]);
 });
@@ -51,7 +51,7 @@ test(`evaluate() passes a non-focusable <div> element with a role of separator`,
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("separator"),
+      1: Outcomes.HasAllStates("separator", ["aria-valuenow"]),
     }),
   ]);
 });
@@ -64,7 +64,7 @@ test(`evaluate() passes a focusable <div> element with a role of separator and
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("separator"),
+      1: Outcomes.HasAllStates("separator", ["aria-valuenow"]),
     }),
   ]);
 });
@@ -77,7 +77,7 @@ test(`evaluate() fails a <div> element with a role of checkbox and no
 
   t.deepEqual(await evaluate(R16, { document }), [
     failed(R16, target, {
-      1: Outcomes.HasNotAllStates("checkbox"),
+      1: Outcomes.HasNotAllStates("checkbox", ["aria-checked"]),
     }),
   ]);
 });
@@ -90,7 +90,7 @@ test(`evaluate() fails a focusable <div> element with a role of separator and no
 
   t.deepEqual(await evaluate(R16, { document }), [
     failed(R16, target, {
-      1: Outcomes.HasNotAllStates("separator"),
+      1: Outcomes.HasNotAllStates("separator", ["aria-valuenow"]),
     }),
   ]);
 });

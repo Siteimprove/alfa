@@ -241,7 +241,12 @@ export class Role<N extends Role.Name = Role.Name>
 
     return false;
   }
-
+  /**
+   * Get all required attributes
+   */
+  public requiredAttributes(): ReadonlyArray<Attribute.Name> {
+    return this.attributes.filter((attr) => this.isAttributeRequired(attr));
+  }
   /**
    * Get the implicit value of the specified attribute, if any.
    */
