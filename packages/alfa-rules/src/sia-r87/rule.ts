@@ -20,7 +20,7 @@ import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
 
 const { hasName, isElement } = Element;
-const { not, fold } = Predicate;
+const { fold } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document, Question>({
