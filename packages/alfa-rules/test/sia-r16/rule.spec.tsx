@@ -2,7 +2,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Document } from "@siteimprove/alfa-dom";
 
-import R16, { Outcomes } from "../../src/sia-r16/rule";
+import R16, {
+  Outcomes,
+  RoleAndRequiredAttributes,
+} from "../../src/sia-r16/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
@@ -15,7 +18,15 @@ test(`evaluate() passes a <div> element with a role of checkbox and an
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("checkbox", ["aria-checked"]),
+      1: Outcomes.HasAllStates(
+        RoleAndRequiredAttributes.of(
+          "",
+          "checkbox",
+          ["aria-checked"],
+          [],
+          ["aria-checked"]
+        )
+      ),
     }),
   ]);
 });
@@ -27,7 +38,15 @@ test(`evaluate() passes an <input> element with a type of checkbox`, async (t) =
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("checkbox", ["aria-checked"]),
+      1: Outcomes.HasAllStates(
+        RoleAndRequiredAttributes.of(
+          "",
+          "checkbox",
+          ["aria-checked"],
+          [],
+          ["aria-checked"]
+        )
+      ),
     }),
   ]);
 });
@@ -39,7 +58,9 @@ test(`evaluate() passes an <hr> element`, async (t) => {
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("separator", ["aria-valuenow"]),
+      1: Outcomes.HasAllStates(
+        RoleAndRequiredAttributes.of("", "separator", [], [], [])
+      ),
     }),
   ]);
 });
@@ -51,7 +72,9 @@ test(`evaluate() passes a non-focusable <div> element with a role of separator`,
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("separator", ["aria-valuenow"]),
+      1: Outcomes.HasAllStates(
+        RoleAndRequiredAttributes.of("", "separator", [], [], [])
+      ),
     }),
   ]);
 });
@@ -64,7 +87,15 @@ test(`evaluate() passes a focusable <div> element with a role of separator and
 
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
-      1: Outcomes.HasAllStates("separator", ["aria-valuenow"]),
+      1: Outcomes.HasAllStates(
+        RoleAndRequiredAttributes.of(
+          "",
+          "separator",
+          ["aria-valuenow"],
+          [],
+          ["aria-valuenow"]
+        )
+      ),
     }),
   ]);
 });
@@ -77,7 +108,15 @@ test(`evaluate() fails a <div> element with a role of checkbox and no
 
   t.deepEqual(await evaluate(R16, { document }), [
     failed(R16, target, {
-      1: Outcomes.HasNotAllStates("checkbox", ["aria-checked"]),
+      1: Outcomes.HasNotAllStates(
+        RoleAndRequiredAttributes.of(
+          "",
+          "checkbox",
+          ["aria-checked"],
+          ["aria-checked"],
+          []
+        )
+      ),
     }),
   ]);
 });
@@ -90,7 +129,15 @@ test(`evaluate() fails a focusable <div> element with a role of separator and no
 
   t.deepEqual(await evaluate(R16, { document }), [
     failed(R16, target, {
-      1: Outcomes.HasNotAllStates("separator", ["aria-valuenow"]),
+      1: Outcomes.HasNotAllStates(
+        RoleAndRequiredAttributes.of(
+          "",
+          "separator",
+          ["aria-valuenow"],
+          ["aria-valuenow"],
+          []
+        )
+      ),
     }),
   ]);
 });

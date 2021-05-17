@@ -5,7 +5,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Ok, Err, Result } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -35,18 +35,13 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const node = Node.from(target, device);
+        const diagnostic = hasRequiredValues(device, target);
 
-        const role = node.role.isSome() ? node.role.get().name : "";
-
-        const requiredAttributes = node.role.isSome()
-          ? node.role.get().requiredAttributes()
-          : [];
         return {
           1: expectation(
-            hasRequiredValues(device)(target),
-            () => Outcomes.HasAllStates(role, requiredAttributes),
-            () => Outcomes.HasNotAllStates(role, requiredAttributes)
+            diagnostic.isOk(),
+            () => Outcomes.HasAllStates(diagnostic.get()),
+            () => Outcomes.HasNotAllStates(diagnostic.getErr())
           ),
         };
       },
@@ -54,50 +49,86 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-function hasRequiredValues(device: Device): Predicate<Element> {
-  return (element) => {
-    const node = Node.from(element, device);
+function hasRequiredValues(
+  device: Device,
+  element: Element
+): Result<RoleAndRequiredAttributes> {
+  let result = true;
 
-    for (const role of node.role) {
-      // The `separator` role is poorly architected in the sense that its
-      // inheritance and attribute requirements depend on aspects of the element
-      // carrying the role. If the element is not focusable, the `separator`
-      // role has no required attributes.
-      if (role.is("separator") && !isFocusable(device)(element)) {
-        return true;
-      }
+  const node = Node.from(element, device);
 
-      for (const attribute of role.requiredAttributes()) {
-        if (node.attribute(attribute).every(property("value", isEmpty))) {
-          return false;
-        }
-      }
+  let roleName: string = "";
+  let required: Array<aria.Attribute.Name> = [];
+  let missing: Array<aria.Attribute.Name> = [];
+  let found: Array<aria.Attribute.Name> = [];
+
+  for (const role of node.role) {
+    roleName = role.name;
+    // The `separator` role is poorly architected in the sense that its
+    // inheritance and attribute requirements depend on aspects of the element
+    // carrying the role. If the element is not focusable, the `separator`
+    // role has no required attributes.
+    if (role.is("separator") && !isFocusable(device)(element)) {
+      return Ok.of(
+        RoleAndRequiredAttributes.of("", roleName, required, missing, found)
+      );
     }
 
-    return true;
-  };
+    required = Array.copy(role.requiredAttributes());
+
+    for (const attribute of required) {
+      if (node.attribute(attribute).every(property("value", isEmpty))) {
+        missing.push(attribute);
+        result = false;
+      } else {
+        found.push(attribute);
+      }
+    }
+  }
+
+  return result
+    ? Ok.of(
+        RoleAndRequiredAttributes.of("", roleName, required, missing, found)
+      )
+    : Err.of(
+        RoleAndRequiredAttributes.of("", roleName, required, missing, found)
+      );
 }
 
-class RoleAndRequiredAttributes extends Diagnostic {
+export class RoleAndRequiredAttributes extends Diagnostic {
   public static of(
     message: string,
     role: string = "",
-    requiredAttributes: ReadonlyArray<aria.Attribute.Name> = []
+    requiredAttributes: ReadonlyArray<aria.Attribute.Name> = [],
+    missingAttributes: ReadonlyArray<aria.Attribute.Name> = [],
+    foundAttributes: ReadonlyArray<aria.Attribute.Name> = []
   ): RoleAndRequiredAttributes {
-    return new RoleAndRequiredAttributes(message, role, requiredAttributes);
+    return new RoleAndRequiredAttributes(
+      message,
+      role,
+      requiredAttributes,
+      missingAttributes,
+      foundAttributes
+    );
   }
 
   private readonly _role: string;
   private readonly _requiredAttributes: ReadonlyArray<aria.Attribute.Name>;
+  private readonly _missingAttributes: ReadonlyArray<aria.Attribute.Name>;
+  private readonly _foundAttributes: ReadonlyArray<aria.Attribute.Name>;
 
   private constructor(
     message: string,
     role: string,
-    requiredAttributes: ReadonlyArray<aria.Attribute.Name>
+    requiredAttributes: ReadonlyArray<aria.Attribute.Name>,
+    missingAttributes: ReadonlyArray<aria.Attribute.Name>,
+    foundAttributes: ReadonlyArray<aria.Attribute.Name>
   ) {
     super(message);
     this._role = role;
     this._requiredAttributes = requiredAttributes;
+    this._missingAttributes = missingAttributes;
+    this._foundAttributes = foundAttributes;
   }
 
   public get role(): string {
@@ -106,6 +137,24 @@ class RoleAndRequiredAttributes extends Diagnostic {
 
   public get requiredAttributes(): ReadonlyArray<aria.Attribute.Name> {
     return this._requiredAttributes;
+  }
+
+  public get missingAttributes(): ReadonlyArray<aria.Attribute.Name> {
+    return this._missingAttributes;
+  }
+
+  public get foundAttributes(): ReadonlyArray<aria.Attribute.Name> {
+    return this._foundAttributes;
+  }
+
+  public withMessage(message: string): RoleAndRequiredAttributes {
+    return new RoleAndRequiredAttributes(
+      message,
+      this._role,
+      this._requiredAttributes,
+      this._missingAttributes,
+      this._foundAttributes
+    );
   }
 
   public equals(value: RoleAndRequiredAttributes): boolean;
@@ -117,7 +166,9 @@ class RoleAndRequiredAttributes extends Diagnostic {
       value instanceof RoleAndRequiredAttributes &&
       value._message === this._message &&
       value._role === this._role &&
-      Array.equals(value._requiredAttributes, this._requiredAttributes)
+      Array.equals(value._requiredAttributes, this._requiredAttributes) &&
+      Array.equals(value._missingAttributes, this._missingAttributes) &&
+      Array.equals(value._foundAttributes, this._foundAttributes)
     );
   }
 
@@ -126,6 +177,8 @@ class RoleAndRequiredAttributes extends Diagnostic {
       ...super.toJSON(),
       role: this._role,
       requiredAttributes: Array.copy(this._requiredAttributes),
+      missingAttributes: Array.copy(this._missingAttributes),
+      foundAttributes: Array.copy(this._foundAttributes),
     };
   }
 }
@@ -134,31 +187,23 @@ namespace RoleAndRequiredAttributes {
   export interface JSON extends Diagnostic.JSON {
     role: string;
     requiredAttributes: Array<aria.Attribute.Name>;
+    missingAttributes: Array<aria.Attribute.Name>;
+    foundAttributes: Array<aria.Attribute.Name>;
   }
 }
 
 export namespace Outcomes {
-  export const HasAllStates = (
-    role: string,
-    requiredAttributes: ReadonlyArray<aria.Attribute.Name>
-  ) =>
+  export const HasAllStates = (diagnostic: RoleAndRequiredAttributes) =>
     Ok.of(
-      RoleAndRequiredAttributes.of(
-        `The element has all required states and properties`,
-        role,
-        requiredAttributes
+      diagnostic.withMessage(
+        `The element has all required states and properties`
       )
     );
 
-  export const HasNotAllStates = (
-    role: string,
-    requiredAttributes: ReadonlyArray<aria.Attribute.Name>
-  ) =>
+  export const HasNotAllStates = (diagnostic: RoleAndRequiredAttributes) =>
     Err.of(
-      RoleAndRequiredAttributes.of(
-        `The element does not have all required states and properties`,
-        role,
-        requiredAttributes
+      diagnostic.withMessage(
+        `The element does not have all required states and properties`
       )
     );
 }
