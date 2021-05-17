@@ -27,7 +27,10 @@ export default Rule.Atomic.of<Page, Attribute>({
           hasNamespace(Namespace.HTML),
           hasName("table"),
           isPerceivable(device),
-          hasRole(not((role) => role.isPresentational()))
+          hasRole(
+            device,
+            not((role) => role.isPresentational())
+          )
         )
       )
       .reduce((headers, table) => {

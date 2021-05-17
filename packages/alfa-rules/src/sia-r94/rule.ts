@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               hasNamespace(Namespace.HTML),
-              hasRole("menuitem"),
+              hasRole(device, "menuitem"),
               not(isIgnored(device))
             )
           );

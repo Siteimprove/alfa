@@ -38,7 +38,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             // If the element is a semantic link, it might be applicable.
             if (
               test(
-                hasRole((role) => role.is("link")),
+                hasRole(device, (role) => role.is("link")),
                 node
               )
             ) {
@@ -55,7 +55,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
             // Otherwise, if the element is a <p> element with non-link text
             // content then start collecting applicable elements.
             else if (
-              test(and(hasRole("paragraph"), hasNonLinkText(device)), node)
+              test(
+                and(hasRole(device, "paragraph"), hasNonLinkText(device)),
+                node
+              )
             ) {
               collect = true;
             }
@@ -78,7 +81,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             flattened: true,
           })
           .filter(isElement)
-          .find(hasRole("paragraph"))
+          .find(hasRole(device, "paragraph"))
           .get();
 
         return {
@@ -93,27 +96,6 @@ export default Rule.Atomic.of<Page, Element, Question>({
             ),
             () => Outcomes.IsDistinguishable,
             () => Outcomes.IsNotDistinguishable
-          ),
-
-          2: expectation(
-            test(
-              and(
-                isDistinguishable(container, device, Context.visit(target)),
-                isDistinguishable(
-                  container,
-                  device,
-                  Context.hover(target).visit(target)
-                ),
-                isDistinguishable(
-                  container,
-                  device,
-                  Context.focus(target).visit(target)
-                )
-              ),
-              target
-            ),
-            () => Outcomes.IsDistinguishableWhenVisited,
-            () => Outcomes.IsNotDistinguishableWhenVisited
           ),
         };
       },
@@ -132,19 +114,6 @@ export namespace Outcomes {
       default state, or on hover and focus`
     )
   );
-
-  export const IsDistinguishableWhenVisited = Ok.of(
-    Diagnostic.of(
-      `When visited, the link is distinguishable from the surrounding text`
-    )
-  );
-
-  export const IsNotDistinguishableWhenVisited = Err.of(
-    Diagnostic.of(
-      `When visited, the link is not distinguishable from the surrounding text,
-      either in its default state, or on hover and focus`
-    )
-  );
 }
 
 function hasNonLinkText(device: Device): Predicate<Element> {
@@ -159,7 +128,7 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 
     return children
       .filter(isElement)
-      .reject(hasRole((role) => role.is("link")))
+      .reject(hasRole(device, (role) => role.is("link")))
       .some(hasNonLinkText);
   };
 }
@@ -175,6 +144,8 @@ function isDistinguishable(
     // from what the container element might itself set.
     hasDistinguishableTextDecoration(container, device, context),
     hasDistinguishableBackground(container, device, context),
+
+    hasDistinguishableFontWeight(container, device, context),
 
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
@@ -221,5 +192,27 @@ function hasDistinguishableBackground(
     return Style.from(element, device, context)
       .computed("background-color")
       .none((color) => Color.isTransparent(color) || color.equals(reference));
+  };
+}
+
+/**
+ * Check if an element has a different font weight than its container.
+ *
+ * This is brittle and imperfect but removes a strong pain point until we find
+ * a better solution…
+ */
+function hasDistinguishableFontWeight(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const reference = Style.from(container, device, context).computed(
+    "font-weight"
+  ).value;
+
+  return (element) => {
+    return Style.from(element, device, context)
+      .computed("font-weight")
+      .none((weight) => weight.equals(reference));
   };
 }

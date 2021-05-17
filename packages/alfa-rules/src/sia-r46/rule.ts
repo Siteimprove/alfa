@@ -44,7 +44,7 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(Namespace.HTML),
                 hasName("th"),
-                hasRole("rowheader", "columnheader"),
+                hasRole(device, "rowheader", "columnheader"),
                 isPerceivable(device)
               )
             );
@@ -69,7 +69,7 @@ export default Rule.Atomic.of<Page, Element>({
             table.cells.some(
               (cell) =>
                 // Does there exists a cell with the target as one of its headers?
-                hasRole((role) => role.is("cell"))(cell.element) &&
+                hasRole(device, (role) => role.is("cell"))(cell.element) &&
                 cell.headers.some((slot) => slot.equals(header.anchor))
             ),
             () => Outcomes.IsAssignedToDataCell,

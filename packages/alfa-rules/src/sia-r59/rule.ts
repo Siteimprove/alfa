@@ -15,7 +15,7 @@ const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r59",
-  evaluate({ document }) {
+  evaluate({ device, document }) {
     return {
       applicability() {
         return test(hasChild(isDocumentElement), document) ? [document] : [];
@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Document>({
         const hasHeadings = target
           .descendants({ flattened: true })
           .filter(isElement)
-          .some(and(hasNamespace(Namespace.HTML), hasRole("heading")));
+          .some(and(hasNamespace(Namespace.HTML), hasRole(device, "heading")));
 
         return {
           1: expectation(

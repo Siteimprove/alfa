@@ -1446,11 +1446,23 @@ export namespace Selector {
       return this._index.matches(indices.get(element)!);
     }
 
+    public equals(value: NthChild): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof NthChild && value._index.equals(this._index);
+    }
+
     public toJSON(): NthChild.JSON {
       return {
         ...super.toJSON(),
         index: this._index.toJSON(),
       };
+    }
+
+    public toString(): string {
+      return `:${this.name}(${this._index})`;
     }
   }
 
@@ -1494,11 +1506,23 @@ export namespace Selector {
       return this._index.matches(indices.get(element)!);
     }
 
+    public equals(value: NthLastChild): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof NthLastChild && value._index.equals(this._index);
+    }
+
     public toJSON(): NthLastChild.JSON {
       return {
         ...super.toJSON(),
         index: this._index.toJSON(),
       };
+    }
+
+    public toString(): string {
+      return `:${this.name}(${this._index})`;
     }
   }
 
@@ -1601,11 +1625,23 @@ export namespace Selector {
       return this._index.matches(indices.get(element)!);
     }
 
+    public equals(value: NthOfType): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof NthOfType && value._index.equals(this._index);
+    }
+
     public toJSON(): NthOfType.JSON {
       return {
         ...super.toJSON(),
         index: this._index.toJSON(),
       };
+    }
+
+    public toString(): string {
+      return `:${this.name}(${this._index})`;
     }
   }
 
@@ -1650,11 +1686,23 @@ export namespace Selector {
       return this._index.matches(indices.get(element)!);
     }
 
+    public equals(value: NthLastOfType): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return value instanceof NthLastOfType && value._index.equals(this._index);
+    }
+
     public toJSON(): NthLastOfType.JSON {
       return {
         ...super.toJSON(),
         index: this._index.toJSON(),
       };
+    }
+
+    public toString(): string {
+      return `:${this.name}(${this._index})`;
     }
   }
 
@@ -1802,6 +1850,12 @@ export namespace Selector {
         selector: this._selector.toJSON(),
       };
     }
+
+    public toString(): string {
+      return `::${this.name}` + this._selector.isSome()
+        ? `(${this._selector})`
+        : "";
+    }
   }
 
   export namespace Cue {
@@ -1842,6 +1896,12 @@ export namespace Selector {
         ...super.toJSON(),
         selector: this._selector.toJSON(),
       };
+    }
+
+    public toString(): string {
+      return `::${this.name}` + this._selector.isSome()
+        ? `(${this._selector})`
+        : "";
     }
   }
 
@@ -1949,6 +2009,10 @@ export namespace Selector {
         idents: Array.toJSON(this._idents),
       };
     }
+
+    public toString(): string {
+      return `::${this.name}(${this._idents})`;
+    }
   }
 
   export namespace Part {
@@ -2018,6 +2082,10 @@ export namespace Selector {
         ...super.toJSON(),
         selectors: Array.toJSON(this._selectors),
       };
+    }
+
+    public toString(): string {
+      return `::${this.name}(${this._selectors})`;
     }
   }
 
