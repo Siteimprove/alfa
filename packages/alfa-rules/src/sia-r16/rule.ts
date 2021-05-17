@@ -74,14 +74,14 @@ function hasRequiredValues(
       );
     }
 
-    required = Array.copy(role.requiredAttributes());
-
-    for (const attribute of required) {
-      if (node.attribute(attribute).every(property("value", isEmpty))) {
-        missing.push(attribute);
-        result = false;
-      } else {
-        found.push(attribute);
+    for (const attribute of role.attributes) {
+      if (role.isAttributeRequired(attribute)) {
+        if (node.attribute(attribute).every(property("value", isEmpty))) {
+          missing.push(attribute);
+          result = false;
+        } else {
+          found.push(attribute);
+        }
       }
     }
   }

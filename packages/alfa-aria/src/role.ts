@@ -242,19 +242,6 @@ export class Role<N extends Role.Name = Role.Name>
     return false;
   }
   /**
-   * Get all required attributes
-   *
-   * The `separator` role is poorly architected in the sense that its
-   * inheritance and attribute requirements depend on aspects of the element
-   * carrying the role. If the element is not focusable, the `separator`
-   * role has no required attributes.
-   *
-   * It is up to the caller to make that distinction.
-   */
-  public requiredAttributes(): ReadonlyArray<Attribute.Name> {
-    return this.attributes.filter((attr) => this.isAttributeRequired(attr));
-  }
-  /**
    * Get the implicit value of the specified attribute, if any.
    */
   public implicitAttributeValue(name: Attribute.Name): Option<string> {
