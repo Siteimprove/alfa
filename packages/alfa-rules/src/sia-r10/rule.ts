@@ -33,7 +33,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               hasAttribute("autocomplete", hasTokens),
               or(
                 isTabbable(device),
-                hasRole((role) => role.isWidget())
+                hasRole(device, (role) => role.isWidget())
               ),
               isPerceivable(device),
               (element) =>

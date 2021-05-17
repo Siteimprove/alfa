@@ -27,6 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(Namespace.HTML),
               hasRole(
+                device,
                 "checkbox",
                 "combobox",
                 "listbox",
