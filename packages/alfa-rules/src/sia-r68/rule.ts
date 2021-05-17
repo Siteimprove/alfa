@@ -113,7 +113,7 @@ function* visit(node: Node, device: Device): Iterable<Element> {
       and(
         hasNamespace(Namespace.HTML, Namespace.SVG),
         not(isIgnored(device)),
-        hasRole((role) => role.hasRequiredChildren())
+        hasRole(device, (role) => role.hasRequiredChildren())
       )
     )(node)
   ) {

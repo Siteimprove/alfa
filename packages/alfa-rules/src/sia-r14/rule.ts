@@ -37,7 +37,10 @@ export default Rule.Atomic.of<Page, Element>({
                   attribute.name === "aria-labelledby"
               ),
               isFocusable(device),
-              hasRole((role) => role.isWidget() && role.isNamedBy("contents")),
+              hasRole(
+                device,
+                (role) => role.isWidget() && role.isNamedBy("contents")
+              ),
               hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
               })

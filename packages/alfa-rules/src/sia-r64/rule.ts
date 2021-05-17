@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               hasNamespace(Namespace.HTML),
-              hasRole("heading"),
+              hasRole(device, "heading"),
               not(isIgnored(device))
             )
           );

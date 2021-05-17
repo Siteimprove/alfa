@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               hasNamespace(Namespace.HTML),
-              hasRole("img"),
+              hasRole(device, "img"),
               not(isIgnored(device))
             )
           );

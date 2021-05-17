@@ -38,7 +38,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             // If the element is a semantic link, it might be applicable.
             if (
               test(
-                hasRole((role) => role.is("link")),
+                hasRole(device, (role) => role.is("link")),
                 node
               )
             ) {
@@ -55,7 +55,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
             // Otherwise, if the element is a <p> element with non-link text
             // content then start collecting applicable elements.
             else if (
-              test(and(hasRole("paragraph"), hasNonLinkText(device)), node)
+              test(
+                and(hasRole(device, "paragraph"), hasNonLinkText(device)),
+                node
+              )
             ) {
               collect = true;
             }
@@ -78,7 +81,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             flattened: true,
           })
           .filter(isElement)
-          .find(hasRole("paragraph"))
+          .find(hasRole(device, "paragraph"))
           .get();
 
         return {
@@ -125,7 +128,7 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 
     return children
       .filter(isElement)
-      .reject(hasRole((role) => role.is("link")))
+      .reject(hasRole(device, (role) => role.is("link")))
       .some(hasNonLinkText);
   };
 }
