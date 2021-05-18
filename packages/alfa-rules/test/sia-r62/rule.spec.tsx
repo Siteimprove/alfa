@@ -1,3 +1,5 @@
+import { Device } from "@siteimprove/alfa-device";
+import { Context } from "@siteimprove/alfa-selector";
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
@@ -8,6 +10,8 @@ import R62, { Outcomes } from "../../src/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
+const device = Device.standard();
+
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -16,9 +20,9 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -35,9 +39,9 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -60,9 +64,17 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsNotDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsNotDistinguishableFocus(
+        target,
+        device,
+        Context.focus(target)
+      ),
     }),
   ]);
 });
@@ -84,9 +96,13 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -110,9 +126,13 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsNotDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsNotDistinguishableFocus(
+        target,
+        device,
+        Context.focus(target)
+      ),
     }),
   ]);
 });
@@ -139,9 +159,17 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsNotDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsNotDistinguishableFocus(
+        target,
+        device,
+        Context.focus(target)
+      ),
     }),
   ]);
 });
@@ -168,9 +196,13 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsNotDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsNotDistinguishableFocus(
+        target,
+        device,
+        Context.focus(target)
+      ),
     }),
   ]);
 });
@@ -197,9 +229,13 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -226,9 +262,9 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -251,9 +287,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -276,9 +312,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -301,9 +337,13 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -326,9 +366,13 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -351,9 +395,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -379,9 +423,13 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -408,9 +456,13 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable,
-      2: Outcomes.IsNotDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsNotDistinguishable(target, device),
+      2: Outcomes.IsNotDistinguishableHover(
+        target,
+        device,
+        Context.hover(target)
+      ),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -461,9 +513,9 @@ test(`evaluate() passes an <a> element with a <div role="paragraph"> parent elem
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });
@@ -502,9 +554,9 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable,
-      2: Outcomes.IsDistinguishableHover,
-      3: Outcomes.IsDistinguishableFocus,
+      1: Outcomes.IsDistinguishable(target, device),
+      2: Outcomes.IsDistinguishableHover(target, device, Context.hover(target)),
+      3: Outcomes.IsDistinguishableFocus(target, device, Context.focus(target)),
     }),
   ]);
 });

@@ -6,6 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
+import color from "@siteimprove/alfa-style/src/property/color";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -84,24 +85,44 @@ export default Rule.Atomic.of<Page, Element, Question>({
         return {
           1: expectation(
             test(and(isDistinguishable(container, device)), target),
-            () => Outcomes.IsDistinguishable,
-            () => Outcomes.IsNotDistinguishable
+            () => Outcomes.IsDistinguishable(target, device),
+            () => Outcomes.IsNotDistinguishable(target, device)
           ),
           2: expectation(
             test(
               and(isDistinguishable(container, device, Context.hover(target))),
               target
             ),
-            () => Outcomes.IsDistinguishableHover,
-            () => Outcomes.IsNotDistinguishableHover
+            () =>
+              Outcomes.IsDistinguishableHover(
+                target,
+                device,
+                Context.hover(target)
+              ),
+            () =>
+              Outcomes.IsNotDistinguishableHover(
+                target,
+                device,
+                Context.hover(target)
+              )
           ),
           3: expectation(
             test(
               and(isDistinguishable(container, device, Context.focus(target))),
               target
             ),
-            () => Outcomes.IsDistinguishableFocus,
-            () => Outcomes.IsNotDistinguishableFocus
+            () =>
+              Outcomes.IsDistinguishableFocus(
+                target,
+                device,
+                Context.focus(target)
+              ),
+            () =>
+              Outcomes.IsNotDistinguishableFocus(
+                target,
+                device,
+                Context.focus(target)
+              )
           ),
         };
       },
@@ -110,34 +131,78 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const IsDistinguishable = Ok.of(
-    Diagnostic.of(`The link is distinguishable from the surrounding text`)
-  );
-  export const IsDistinguishableHover = Ok.of(
-    Diagnostic.of(`The link is hoverable from the surrounding text`)
-  );
-  export const IsDistinguishableFocus = Ok.of(
-    Diagnostic.of(`The link is focused from the surrounding text`)
-  );
+  export const IsDistinguishable = (element: Element, device: Device) =>
+    Ok.of(
+      DistinguishableLinks.from(
+        `The link is distinguishable from the surrounding text`,
+        element,
+        device
+      )
+    );
+  export const IsDistinguishableHover = (
+    element: Element,
+    device: Device,
+    context: Context
+  ) =>
+    Ok.of(
+      DistinguishableLinks.from(
+        `The link is hoverable from the surrounding text`,
+        element,
+        device,
+        context
+      )
+    );
+  export const IsDistinguishableFocus = (
+    element: Element,
+    device: Device,
+    context: Context
+  ) =>
+    Ok.of(
+      DistinguishableLinks.from(
+        `The link is focused from the surrounding text`,
+        element,
+        device,
+        context
+      )
+    );
 
-  export const IsNotDistinguishable = Err.of(
-    Diagnostic.of(
-      `The link is not distinguishable from the surrounding text because is in
-      default state`
-    )
-  );
-  export const IsNotDistinguishableHover = Err.of(
-    Diagnostic.of(
-      `The link is not distinguishable from the surrounding text because is in
-      hover state`
-    )
-  );
-  export const IsNotDistinguishableFocus = Err.of(
-    Diagnostic.of(
-      `The link is not distinguishable from the surrounding text because is in
-      focus state`
-    )
-  );
+  export const IsNotDistinguishable = (element: Element, device: Device) =>
+    Err.of(
+      DistinguishableLinks.from(
+        `The link is not distinguishable from the surrounding text because is in
+      default state`,
+        element,
+        device
+      )
+    );
+  export const IsNotDistinguishableHover = (
+    element: Element,
+    device: Device,
+    context: Context
+  ) =>
+    Err.of(
+      DistinguishableLinks.from(
+        `The link is not distinguishable from the surrounding text because is in
+      hover state`,
+        element,
+        device,
+        context
+      )
+    );
+  export const IsNotDistinguishableFocus = (
+    element: Element,
+    device: Device,
+    context: Context
+  ) =>
+    Err.of(
+      DistinguishableLinks.from(
+        `The link is not distinguishable from the surrounding text because is in
+      focus state`,
+        element,
+        device,
+        context
+      )
+    );
 }
 
 function hasNonLinkText(device: Device): Predicate<Element> {
@@ -239,4 +304,298 @@ function hasDistinguishableFontWeight(
       .computed("font-weight")
       .none((weight) => weight.equals(reference));
   };
+}
+
+class DistinguishableLinks extends Diagnostic {
+  public static of(
+    message: string,
+    color: string = "",
+    borderTopWidth: string = "",
+    borderRightWidth: string = "",
+    borderBottomWidth: string = "",
+    borderLeftWidth: string = "",
+    borderTopStyle: string = "",
+    borderRightStyle: string = "",
+    borderBottomStyle: string = "",
+    borderLeftStyle: string = "",
+    borderTopColor: string = "",
+    borderRightColor: string = "",
+    borderBottomColor: string = "",
+    borderLeftColor: string = "",
+    outlineWidth: string = "",
+    outlineStyle: string = "",
+    outlineColor: string = "",
+    textDecorationColor: string = "",
+    textDecorationLine: string = "",
+    visibility: string = "",
+    fontSize: string = ""
+  ): DistinguishableLinks {
+    return new DistinguishableLinks(
+      message,
+      color,
+      borderTopWidth,
+      borderRightWidth,
+      borderBottomWidth,
+      borderLeftWidth,
+      borderTopStyle,
+      borderRightStyle,
+      borderBottomStyle,
+      borderLeftStyle,
+      borderTopColor,
+      borderRightColor,
+      borderBottomColor,
+      borderLeftColor,
+      outlineWidth,
+      outlineStyle,
+      outlineColor,
+      textDecorationColor,
+      textDecorationLine,
+      visibility,
+      fontSize
+    );
+  }
+
+  private readonly _color: string;
+  private readonly _borderTopWidth: string;
+  private readonly _borderRightWidth: string;
+  private readonly _borderBottomWidth: string;
+  private readonly _borderLeftWidth: string;
+  private readonly _borderTopStyle: string;
+  private readonly _borderRightStyle: string;
+  private readonly _borderBottomStyle: string;
+  private readonly _borderLeftStyle: string;
+  private readonly _borderTopColor: string;
+  private readonly _borderRightColor: string;
+  private readonly _borderBottomColor: string;
+  private readonly _borderLeftColor: string;
+  private readonly _outlineWidth: string;
+  private readonly _outlineStyle: string;
+  private readonly _outlineColor: string;
+  private readonly _textDecorationColor: string;
+  private readonly _textDecorationLine: string;
+  private readonly _visibility: string;
+  private readonly _fontSize: string;
+
+  private constructor(
+    message: string,
+    color: string,
+    borderTopWidth: string,
+    borderRightWidth: string,
+    borderBottomWidth: string,
+    borderLeftWidth: string,
+    borderTopStyle: string,
+    borderRightStyle: string,
+    borderBottomStyle: string,
+    borderLeftStyle: string,
+    borderTopColor: string,
+    borderRightColor: string,
+    borderBottomColor: string,
+    borderLeftColor: string,
+    outlineWidth: string,
+    outlineStyle: string,
+    outlineColor: string,
+    textDecorationColor: string,
+    textDecorationLine: string,
+    visibility: string,
+    fontSize: string
+  ) {
+    super(message);
+    this._color = color;
+    (this._borderTopWidth = borderTopWidth),
+      (this._borderRightWidth = borderRightWidth),
+      (this._borderBottomWidth = borderBottomWidth),
+      (this._borderLeftWidth = borderLeftWidth),
+      (this._borderTopStyle = borderTopStyle),
+      (this._borderRightStyle = borderRightStyle),
+      (this._borderBottomStyle = borderBottomStyle),
+      (this._borderLeftStyle = borderLeftStyle),
+      (this._borderTopColor = borderTopColor),
+      (this._borderRightColor = borderRightColor),
+      (this._borderBottomColor = borderBottomColor),
+      (this._borderLeftColor = borderLeftColor),
+      (this._outlineWidth = outlineWidth);
+    this._outlineStyle = outlineStyle;
+    this._outlineColor = outlineColor;
+    this._textDecorationColor = textDecorationColor;
+    this._textDecorationLine = textDecorationLine;
+    this._visibility = visibility;
+    this._fontSize = fontSize;
+  }
+
+  public get color(): string {
+    return this._color;
+  }
+
+  public get borderTopWidth(): string {
+    return this._borderTopWidth;
+  }
+
+  public get borderRightWidth(): string {
+    return this._borderRightWidth;
+  }
+
+  public get borderBottomWidth(): string {
+    return this._borderBottomWidth;
+  }
+
+  public get borderLeftWidth(): string {
+    return this._borderLeftWidth;
+  }
+
+  public get borderTopStyle(): string {
+    return this._borderTopStyle;
+  }
+
+  public get borderRightStyle(): string {
+    return this._borderRightStyle;
+  }
+
+  public get borderBottomStyle(): string {
+    return this._borderBottomStyle;
+  }
+
+  public get borderLeftStyle(): string {
+    return this._borderLeftStyle;
+  }
+  public get borderTopColor(): string {
+    return this._borderTopColor;
+  }
+
+  public get borderRightColor(): string {
+    return this._borderRightColor;
+  }
+
+  public get borderBottomColor(): string {
+    return this._borderBottomColor;
+  }
+
+  public get borderLeftColor(): string {
+    return this._borderLeftColor;
+  }
+
+  public get outlineWidth(): string {
+    return this._outlineWidth;
+  }
+
+  public get outlineStyle(): string {
+    return this._outlineStyle;
+  }
+
+  public get outlineColor(): string {
+    return this._outlineColor;
+  }
+
+  public get textDecorationColor(): string {
+    return this._textDecorationColor;
+  }
+
+  public get textDecorationLine(): string {
+    return this._textDecorationLine;
+  }
+
+  public get visibility(): string {
+    return this._visibility;
+  }
+
+  public get fontSize(): string {
+    return this._fontSize;
+  }
+
+  public toJSON(): DistinguishableLinks.JSON {
+    return {
+      ...super.toJSON(),
+      color: this._color,
+
+      borderTopWidth: this._borderTopWidth,
+      borderRightWidth: this._borderRightWidth,
+      borderBottomWidth: this._borderBottomWidth,
+      borderLeftWidth: this._borderLeftWidth,
+
+      borderTopStyle: this._borderTopStyle,
+      borderRightStyle: this._borderRightStyle,
+      borderBottomStyle: this._borderBottomStyle,
+      borderLeftStyle: this._borderLeftStyle,
+
+      borderTopColor: this._borderTopColor,
+      borderRightColor: this._borderRightColor,
+      borderBottomColor: this._borderBottomColor,
+      borderLeftColor: this._borderLeftColor,
+
+      outlineWidth: this._outlineWidth,
+      outlineStyle: this._outlineStyle,
+      outlineColor: this._outlineColor,
+
+      textDecorationColor: this._textDecorationColor,
+      textDecorationLine: this._textDecorationLine,
+
+      visibility: this._visibility,
+      fontSize: this._fontSize,
+    };
+  }
+}
+
+namespace DistinguishableLinks {
+  export interface JSON extends Diagnostic.JSON {
+    color: string;
+
+    borderTopWidth: string;
+    borderRightWidth: string;
+    borderBottomWidth: string;
+    borderLeftWidth: string;
+
+    borderTopStyle: string;
+    borderRightStyle: string;
+    borderBottomStyle: string;
+    borderLeftStyle: string;
+
+    borderTopColor: string;
+    borderRightColor: string;
+    borderBottomColor: string;
+    borderLeftColor: string;
+
+    outlineWidth: string;
+    outlineStyle: string;
+    outlineColor: string;
+
+    textDecorationColor: string;
+    textDecorationLine: string;
+
+    visibility: string;
+    fontSize: string;
+  }
+
+  export function from(
+    message: string,
+    element: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): DistinguishableLinks {
+    const style = Style.from(element, device, context);
+
+    return DistinguishableLinks.of(
+      message,
+      ...([
+        "color",
+        "border-top-width",
+        "border-right-width",
+        "border-bottom-width",
+        "border-left-width",
+        "border-top-style",
+        "border-right-style",
+        "border-bottom-style",
+        "border-left-style",
+        "border-top-color",
+        "border-right-color",
+        "border-bottom-color",
+        "border-left-color",
+        "outline-width",
+        "outline-style",
+        "outline-color",
+        "text-decoration-color",
+        "text-decoration-line",
+        "visibility",
+        "font-size",
+      ] as const).map((property) => style.computed(property).toString())
+    );
+  }
 }
