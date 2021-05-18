@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -40,12 +41,14 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             .filter(
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole((role) => role.is("link")),
+                hasRole(device, (role) => role.is("link")),
                 not(isIgnored(device)),
                 hasNonEmptyAccessibleName(device)
               )
             )
-            .groupBy((element) => linkContext(element).add(element.root()))
+            .groupBy((element) =>
+              linkContext(element, device).add(element.root())
+            )
             .map((elements) =>
               elements
                 .reduce((groups, element) => {
@@ -131,12 +134,12 @@ function normalize(input: string): string {
  *
  * {@link https://www.w3.org/TR/WCAG/#dfn-programmatically-determined-link-context}
  */
-function linkContext(element: Element): Set<dom.Node> {
+function linkContext(element: Element, device: Device): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
   const ancestors = element.ancestors({ flattened: true }).filter(isElement);
 
-  for (const listitem of ancestors.filter(hasRole("listitem"))) {
+  for (const listitem of ancestors.filter(hasRole(device, "listitem"))) {
     context = context.add(listitem);
   }
 
@@ -144,7 +147,7 @@ function linkContext(element: Element): Set<dom.Node> {
     context = context.add(paragraph);
   }
 
-  for (const cell of ancestors.find(hasRole("cell", "gridcell"))) {
+  for (const cell of ancestors.find(hasRole(device, "cell", "gridcell"))) {
     context = context.add(cell);
   }
 

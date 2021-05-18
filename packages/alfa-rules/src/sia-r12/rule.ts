@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               not(hasInputType("image")),
               hasNamespace(Namespace.HTML),
-              hasRole("button"),
+              hasRole(device, "button"),
               not(isIgnored(device))
             )
           );

@@ -30,6 +30,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             and(
               hasNamespace(Namespace.HTML),
               hasRole(
+                device,
                 "checkbox",
                 "combobox",
                 "listbox",
