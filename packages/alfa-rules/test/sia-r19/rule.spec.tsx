@@ -18,7 +18,6 @@ test("evaluate() passes a div element with aria-required property, whose has a v
     <div
       role="textbox"
       aria-required="true"
-      aria-label="A required textbox"
     ></div>
   );
 
@@ -26,9 +25,6 @@ test("evaluate() passes a div element with aria-required property, whose has a v
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-required").get(), {
-      1: Outcomes.HasValidValue,
-    }),
-    passed(R19, target.attribute("aria-label").get(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -71,7 +67,6 @@ test("evaluate() passes a div element with aria-errormessage property, whose has
     <div
       role="textbox"
       aria-errormessage="my-error"
-      aria-label="A textbox"
     ></div>
   );
 
@@ -79,9 +74,6 @@ test("evaluate() passes a div element with aria-errormessage property, whose has
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-errormessage").get(), {
-      1: Outcomes.HasValidValue,
-    }),
-    passed(R19, target.attribute("aria-label").get(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -110,7 +102,6 @@ test("evaluate() passes a div element with aria-valuemin, aria-valuemax and aria
       aria-valuemin="1.0"
       aria-valuemax="2.0"
       aria-valuenow="1.5"
-      aria-label="Select a value"
     ></div>
   );
 
@@ -126,9 +117,6 @@ test("evaluate() passes a div element with aria-valuemin, aria-valuemax and aria
     passed(R19, target.attribute("aria-valuenow").get(), {
       1: Outcomes.HasValidValue,
     }),
-    passed(R19, target.attribute("aria-label").get(), {
-      1: Outcomes.HasValidValue,
-    }),
   ]);
 });
 
@@ -137,7 +125,6 @@ test("evaluate() passes a div element with aria-placeholder property, whose has 
     <div
       role="textbox"
       aria-placeholder="MM-DD-YYYY"
-      aria-label="Your birthdate"
     >
       MM-DD-YYYY
     </div>
@@ -147,9 +134,6 @@ test("evaluate() passes a div element with aria-placeholder property, whose has 
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-placeholder").get(), {
-      1: Outcomes.HasValidValue,
-    }),
-    passed(R19, target.attribute("aria-label").get(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
