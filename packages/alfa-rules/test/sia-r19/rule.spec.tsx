@@ -34,7 +34,7 @@ test("evaluate() passes a div element with aria-required property, whose has a v
   ]);
 });
 
-test("evaluate() passes a div element with aria-expanded state with valid undefined value", async (t) => {
+test("evaluate() passes a div element with aria-expanded state, whose has a valid undefined value", async (t) => {
   const target = (
     <div role="button" aria-expanded="undefined">
       A button
@@ -50,7 +50,7 @@ test("evaluate() passes a div element with aria-expanded state with valid undefi
   ]);
 });
 
-test("evaluate() passes a div element with aria-pressed state with valid tristate value", async (t) => {
+test("evaluate() passes a div element with aria-pressed state, whose has a valid tristate value", async (t) => {
   const target = (
     <div role="button" aria-pressed="mixed">
       An other button
@@ -66,7 +66,7 @@ test("evaluate() passes a div element with aria-pressed state with valid tristat
   ]);
 });
 
-test("evaluate() passes a div element with aria-errormessage property with valid ID reference value", async (t) => {
+test("evaluate() passes a div element with aria-errormessage property, whose has a valid ID reference value", async (t) => {
   const target = (
     <div
       role="textbox"
@@ -87,7 +87,7 @@ test("evaluate() passes a div element with aria-errormessage property with valid
   ]);
 });
 
-test("evaluate() passes a div element with aria-rowindex property with valid integer value", async (t) => {
+test("evaluate() passes a div element with aria-rowindex property, whose has a valid integer value", async (t) => {
   const target = (
     <div role="gridcell" aria-rowindex="2">
       Fred
@@ -132,7 +132,7 @@ test("evaluate() passes a div element with aria-valuemin, aria-valuemax and aria
   ]);
 });
 
-test("evaluate() passes a div element with aria-placeholder property with valid string value", async (t) => {
+test("evaluate() passes a div element with aria-placeholder property, whose has a valid string value", async (t) => {
   const target = (
     <div
       role="textbox"
@@ -155,7 +155,7 @@ test("evaluate() passes a div element with aria-placeholder property with valid 
   ]);
 });
 
-test("evaluate() passes a div element with aria-dropeffect property with valid token list value", async (t) => {
+test("evaluate() passes a div element with aria-dropeffect property, whose has a valid token list value", async (t) => {
   const target = <div role="dialog" aria-dropeffect="copy move"></div>;
 
   const document = Document.of([target]);
@@ -167,7 +167,7 @@ test("evaluate() passes a div element with aria-dropeffect property with valid t
   ]);
 });
 
-test("evaluate() fails a div element with aria-expanded state with invalid true/false/undefined value", async (t) => {
+test("evaluate() fails a div element with aria-expanded state, whose has a invalid true/false/undefined value", async (t) => {
   const target = (
     <div role="button" aria-expanded="mixed">
       A button
@@ -183,7 +183,7 @@ test("evaluate() fails a div element with aria-expanded state with invalid true/
   ]);
 });
 
-test("evaluate() fails a div element with aria-pressed state with invalid tristate value", async (t) => {
+test("evaluate() fails a div element with aria-pressed state, whose has a invalid tristate value", async (t) => {
   const target = (
     <div role="button" aria-pressed="horizontal">
       An other button
@@ -199,7 +199,7 @@ test("evaluate() fails a div element with aria-pressed state with invalid trista
   ]);
 });
 
-test("evaluate() fails a div element with aria-rowindex property with invalid integer value", async (t) => {
+test("evaluate() fails a div element with aria-rowindex property, whose has a invalid integer value", async (t) => {
   const target = (
     <div role="gridcell" aria-rowindex="2.5">
       Fred
@@ -215,7 +215,7 @@ test("evaluate() fails a div element with aria-rowindex property with invalid in
   ]);
 });
 
-test("evaluate() fails a div element with aria-live property with invalid token value", async (t) => {
+test("evaluate() fails a div element with aria-live property, whose has a invalid token value", async (t) => {
   const target = <div role="main" aria-live="nope"></div>;
 
   const document = Document.of([target]);
@@ -227,38 +227,13 @@ test("evaluate() fails a div element with aria-live property with invalid token 
   ]);
 });
 
-test("evaluate() is inapplicable when an element does not have any ARIA states or properties", async (t) => {
-  const document = Document.of([<div>Some Content</div>]);
-
-  t.deepEqual(await evaluate(R19, { document }), [inapplicable(R19)]);
-});
-
-test("evaluate() is inapplicable when aria-checked state with empty value", async (t) => {
-  const document = Document.of([
-    <div role="checkbox" aria-checked>
-      Accept terms and conditions
-    </div>,
-  ]);
-
-  t.deepEqual(await evaluate(R19, { document }), [inapplicable(R19)]);
-});
-
-/*
-test("evaluate() is inapplicable when aria-hidden state on an element that is not an HTML or SVG element", async (t) => {
-  const document = Document.of([<math aria-hidden="true"></math>]);
-
-  t.deepEqual(await evaluate(R19, { document }), [inapplicable(R19)]);
-});
-
-
-test("evaluate() fails a div element with aria-rowindex property with invalid integer value", async (t) => {
+test("evaluate() fails a div element with aria-rowindex property, whose has a invalid integer value", async (t) => {
   const target = (
     <div
       role="spinbutton"
       aria-valuemin="one"
       aria-valuemax="three"
       aria-valuenow="two"
-      aria-label="Choose a value"
     ></div>
   );
 
@@ -274,21 +249,11 @@ test("evaluate() fails a div element with aria-rowindex property with invalid in
     failed(R19, target.attribute("aria-valuenow").get(), {
       1: Outcomes.HasNoValidValue,
     }),
-    failed(R19, target.attribute("aria-label").get(), {
-      1: Outcomes.HasNoValidValue,
-    }),
   ]);
 });
 
-
-test("evaluate() fails a div element with aria-errormessage property with invalid ID reference value", async (t) => {
-  const target = (
-    <div
-      role="textbox"
-      aria-errormessage="error1 error2"
-      aria-label="A textbox with an error"
-    ></div>
-  );
+test("evaluate() fails a div element with aria-errormessage property, whose has a invalid ID reference value", async (t) => {
+  const target = <div role="textbox" aria-errormessage="error1 error2"></div>;
 
   const document = Document.of([target]);
 
@@ -296,9 +261,21 @@ test("evaluate() fails a div element with aria-errormessage property with invali
     failed(R19, target.attribute("aria-errormessage").get(), {
       1: Outcomes.HasNoValidValue,
     }),
-    failed(R19, target.attribute("aria-label").get(), {
-      1: Outcomes.HasNoValidValue,
-    }),
   ]);
 });
-*/
+
+test("evaluate() is inapplicable when an element does not have any ARIA states or properties", async (t) => {
+  const document = Document.of([<div>Some Content</div>]);
+
+  t.deepEqual(await evaluate(R19, { document }), [inapplicable(R19)]);
+});
+
+test("evaluate() is inapplicable when aria-checked state has empty value", async (t) => {
+  const document = Document.of([
+    <div role="checkbox" aria-checked>
+      Accept terms and conditions
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R19, { document }), [inapplicable(R19)]);
+});
