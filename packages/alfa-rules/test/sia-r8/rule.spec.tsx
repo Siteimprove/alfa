@@ -7,7 +7,7 @@ import R8, { Outcomes } from "../../src/sia-r8/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test("evaluate() passes an input element with accessible name", async (t) => {
+test("evaluate() passes an input element with implicit label", async (t) => {
   const target = <input />;
 
   const label = (
@@ -29,9 +29,7 @@ test("evaluate() passes an input element with accessible name", async (t) => {
 test("evaluate() passes an input element with aria label", async (t) => {
   const target = <input aria-label="last name" disabled />;
 
-  const label = <div>last name</div>;
-
-  const document = Document.of([label, target]);
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -40,7 +38,7 @@ test("evaluate() passes an input element with aria label", async (t) => {
   ]);
 });
 
-test("evaluate() passes a select element with accessible options", async (t) => {
+test("evaluate() passes a select element with explicit label", async (t) => {
   const target = (
     <select id="country">
       <option>England</option>
@@ -96,9 +94,7 @@ test("evaluate() passes a input element with combobox role, whose has an aria-la
     </div>
   );
 
-  const label = <div>Country</div>;
-
-  const document = Document.of([label, target]);
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -107,12 +103,10 @@ test("evaluate() passes a input element with combobox role, whose has an aria-la
   ]);
 });
 
-test("evaluate() fails a input element with not attribute", async (t) => {
+test("evaluate() fails a input element without accessible name", async (t) => {
   const target = <input />;
 
-  const label = <div>last name</div>;
-
-  const document = Document.of([label, target]);
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
@@ -121,7 +115,7 @@ test("evaluate() fails a input element with not attribute", async (t) => {
   ]);
 });
 
-test("evaluate() fails a input element with trimmed aria label", async (t) => {
+test("evaluate() fails a input element with empty aria-label", async (t) => {
   const target = <input aria-label=" " />;
 
   const document = Document.of([target]);
@@ -133,7 +127,7 @@ test("evaluate() fails a input element with trimmed aria label", async (t) => {
   ]);
 });
 
-test("evaluate() fails a select element with div, whose has no text", async (t) => {
+test("evaluate() fails a select element with aria-labelledby pointing to an element with no text", async (t) => {
   const target = (
     <select aria-labelledby="country">
       <option>England</option>
@@ -177,7 +171,7 @@ test("evaluate() is inapplicable for an input element with aria-hidden", async (
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });
 
-test("evaluate() is inapplicable for a select element because it's disabled ", async (t) => {
+test("evaluate() is inapplicable for a disabled element", async (t) => {
   const target = (
     <select role="none" disabled>
       <option value="volvo">Volvo</option>
@@ -191,7 +185,7 @@ test("evaluate() is inapplicable for a select element because it's disabled ", a
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });
 
-test("evaluate() is inapplicable for an input element with style element set to none ", async (t) => {
+test("evaluate() is inapplicable for an input element which is not displayed", async (t) => {
   const target = <input aria-label="firstname" style={{ display: "none" }} />;
 
   const document = Document.of([target]);
