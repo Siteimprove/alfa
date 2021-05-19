@@ -87,7 +87,10 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             test(isDistinguishable(container, device), target),
-            () => Outcomes.IsDistinguishable(target, device),
+            () =>
+              Outcomes.IsDistinguishableDefault(
+                DistinguishingStyles.from("", target, device)
+              ),
             () => Outcomes.IsNotDistinguishable(target, device)
           ),
           2: expectation(
@@ -133,12 +136,10 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsDistinguishable = (element: Element, device: Device) =>
+  export const IsDistinguishableDefault = (styles: DistinguishingStyles) =>
     Ok.of(
-      DistinguishableLinks.from(
-        `The link is distinguishable from the surrounding text`,
-        element,
-        device
+      styles.withMessage(
+        `The link is distinguishable from the surrounding text`
       )
     );
   export const IsDistinguishableHover = (
@@ -147,7 +148,7 @@ export namespace Outcomes {
     context: Context
   ) =>
     Ok.of(
-      DistinguishableLinks.from(
+      DistinguishingStyles.from(
         `The link is hoverable from the surrounding text`,
         element,
         device,
@@ -160,7 +161,7 @@ export namespace Outcomes {
     context: Context
   ) =>
     Ok.of(
-      DistinguishableLinks.from(
+      DistinguishingStyles.from(
         `The link is focused from the surrounding text`,
         element,
         device,
@@ -170,7 +171,7 @@ export namespace Outcomes {
 
   export const IsNotDistinguishable = (element: Element, device: Device) =>
     Err.of(
-      DistinguishableLinks.from(
+      DistinguishingStyles.from(
         `The link is not distinguishable from the surrounding text because is in
       default state`,
         element,
@@ -183,7 +184,7 @@ export namespace Outcomes {
     context: Context
   ) =>
     Err.of(
-      DistinguishableLinks.from(
+      DistinguishingStyles.from(
         `The link is not distinguishable from the surrounding text because is in
       hover state`,
         element,
@@ -197,7 +198,7 @@ export namespace Outcomes {
     context: Context
   ) =>
     Err.of(
-      DistinguishableLinks.from(
+      DistinguishingStyles.from(
         `The link is not distinguishable from the surrounding text because is in
       focus state`,
         element,
@@ -308,12 +309,12 @@ function hasDistinguishableFontWeight(
   };
 }
 
-class DistinguishableLinks extends Diagnostic {
+export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
     style: Iterable<[Property.Name, string]> = []
-  ): DistinguishableLinks {
-    return new DistinguishableLinks(message, Map.from(style));
+  ): DistinguishingStyles {
+    return new DistinguishingStyles(message, Map.from(style));
   }
 
   private readonly _style: Map<Property.Name, string>;
@@ -327,17 +328,21 @@ class DistinguishableLinks extends Diagnostic {
     return this._style;
   }
 
-  public equals(value: DistinguishableLinks): boolean;
+  public withMessage(message: string): DistinguishingStyles {
+    return new DistinguishingStyles(message, this._style);
+  }
+
+  public equals(value: DistinguishingStyles): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof DistinguishableLinks && value._style.equals(this._style)
+      value instanceof DistinguishingStyles && value._style.equals(this._style)
     );
   }
 
-  public toJSON(): DistinguishableLinks.JSON {
+  public toJSON(): DistinguishingStyles.JSON {
     return {
       ...super.toJSON(),
       style: this._style.toJSON(),
@@ -345,7 +350,7 @@ class DistinguishableLinks extends Diagnostic {
   }
 }
 
-namespace DistinguishableLinks {
+export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
     style: Map.JSON<Property.Name, string>;
   }
@@ -355,10 +360,10 @@ namespace DistinguishableLinks {
     element: Element,
     device: Device,
     context: Context = Context.empty()
-  ): DistinguishableLinks {
+  ): DistinguishingStyles {
     const style = Style.from(element, device, context);
 
-    return DistinguishableLinks.of(
+    return DistinguishingStyles.of(
       message,
       ([
         "background-color",
@@ -375,13 +380,12 @@ namespace DistinguishableLinks {
         "border-bottom-color",
         "border-left-color",
         "color",
-        "font-size",
+        "font-weight",
         "outline-width",
         "outline-style",
         "outline-color",
         "text-decoration-color",
         "text-decoration-line",
-        "visibility",
       ] as const).map((property) => [
         property,
         style.computed(property).toString(),
