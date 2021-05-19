@@ -30,7 +30,9 @@ export default Rule.Atomic.of<Page, Element>({
         return document
           .descendants({ composed: true, nested: true })
           .filter(isElement)
-          .filter(and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole()))
+          .filter(
+            and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole(device))
+          )
           .filter(not(isIgnored(device)));
       },
 

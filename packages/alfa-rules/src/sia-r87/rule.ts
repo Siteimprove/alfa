@@ -20,7 +20,7 @@ import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
 
 const { hasName, isElement } = Element;
-const { not, fold } = Predicate;
+const { fold } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document, Question>({
@@ -67,7 +67,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
         // there can be more than one element with a role of main, going to any of these is OK.
         const mains = document
           .inclusiveDescendants({ flattened: true })
-          .filter(and(isElement, hasRole("main")));
+          .filter(and(isElement, hasRole(device, "main")));
 
         const askIsMain = Question.of(
           "first-tabbable-reference-is-main",
@@ -96,12 +96,12 @@ export default Rule.Atomic.of<Page, Document, Question>({
             () => Outcomes.HasNoTabbable,
             () =>
               expectation(
-                element.none(hasRole((role) => role.is("link"))),
-                () => Outcomes.FirstTabbableIsNotLink,
+                element.some(isIgnored(device)),
+                () => Outcomes.FirstTabbableIsIgnored,
                 () =>
                   expectation(
-                    element.some(isIgnored(device)),
-                    () => Outcomes.FirstTabbableIsIgnored,
+                    element.none(hasRole(device, (role) => role.is("link"))),
+                    () => Outcomes.FirstTabbableIsNotLink,
                     () =>
                       expectation(
                         element.none(isKeyboardActionable(device)),
@@ -133,7 +133,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
                                       expectation(
                                         reference
                                           .filter(isElement)
-                                          .some(hasRole("main")),
+                                          .some(hasRole(device, "main")),
                                         () =>
                                           Outcomes.FirstTabbableIsLinkToContent,
                                         () =>

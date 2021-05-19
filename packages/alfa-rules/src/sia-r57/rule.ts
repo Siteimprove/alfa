@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Text>({
         if (
           descendants
             .filter(isElement)
-            .some(hasRole((role) => role.isLandmark()))
+            .some(hasRole(device, (role) => role.isLandmark()))
         ) {
           yield* descendants
             .filter(isText)

@@ -28,7 +28,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(isElement)
           .filter(
             and(
-              hasRole("paragraph"),
+              hasRole(device, "paragraph"),
               (element) =>
                 Style.from(element, device)
                   .cascaded("font-size")
