@@ -19,7 +19,7 @@ test(`evaluate() passes a button with aria-pressed state`, async (t) => {
   ]);
 });
 
-test(`evaluate() passes a div element with button role, whose has aria-pressed state`, async (t) => {
+test(`evaluate() passes a div element with button role, and an aria-pressed state`, async (t) => {
   const target = (
     <div role="button" aria-pressed="false">
       My button
@@ -47,7 +47,7 @@ test(`evaluate() passes a div element with aria busy state`, async (t) => {
   ]);
 });
 
-test(`evaluate() passes a div element with button role, whose has aria-label state`, async (t) => {
+test(`evaluate() passes a div element with button role, and an aria-label attribute`, async (t) => {
   const target = (
     <div role="button" aria-label="OK">
       ✓
@@ -63,7 +63,7 @@ test(`evaluate() passes a div element with button role, whose has aria-label sta
   ]);
 });
 
-test(`evaluate() passes a div element with checkbox role, whose has aria-checked state`, async (t) => {
+test(`evaluate() passes a div element with checkbox role, and an aria-checked state`, async (t) => {
   const target = (
     <div role="checkbox" aria-checked="false">
       My checkbox
@@ -79,7 +79,7 @@ test(`evaluate() passes a div element with checkbox role, whose has aria-checked
   ]);
 });
 
-test(`evaluate() passes a div element with checkbox role, whose has aria-controls state`, async (t) => {
+test(`evaluate() passes a div element with checkbox role, and an aria-controls state`, async (t) => {
   const target = (
     <div role="combobox" aria-controls="id1" aria-expanded="false">
       My combobox
@@ -98,7 +98,8 @@ test(`evaluate() passes a div element with checkbox role, whose has aria-control
   ]);
 });
 
-test(`evaluate() passes a div element with checkbox role, whose has aria-controls and aria-expanded state`, async (t) => {
+test(`evaluate() passes a div element with checkbox role, and both
+     aria-controls and aria-expanded states`, async (t) => {
   const target = (
     <div role="combobox" aria-controls="id1" aria-expanded="false">
       My combobox
@@ -117,7 +118,8 @@ test(`evaluate() passes a div element with checkbox role, whose has aria-control
   ]);
 });
 
-test(`evaluate() passes a div element with checkbox role, whose has aria-expanded and aria-controls (empty) state`, async (t) => {
+test(`evaluate() passes a div element with checkbox role, with both
+     aria-expanded and empty aria-controls state`, async (t) => {
   const target = (
     <div role="combobox" aria-expanded="false" aria-controls="">
       My combobox
@@ -136,7 +138,7 @@ test(`evaluate() passes a div element with checkbox role, whose has aria-expande
   ]);
 });
 
-test(`evaluate() passes a button element with none role and aria pressed`, async (t) => {
+test(`evaluate() passes a button element with none role and aria-pressed`, async (t) => {
   const target = (
     <button role="none" aria-pressed="false">
       ACT rules are cool!
@@ -152,7 +154,7 @@ test(`evaluate() passes a button element with none role and aria pressed`, async
   ]);
 });
 
-test(`evaluate() fails a button with aria-sort state, but it doesn't have any property`, async (t) => {
+test(`evaluate() fails a button with aria-sort state, and no property`, async (t) => {
   const target = <button aria-sort="">Sort by year</button>;
 
   const document = Document.of([target]);
@@ -164,7 +166,7 @@ test(`evaluate() fails a button with aria-sort state, but it doesn't have any pr
   ]);
 });
 
-test(`evaluate() is inapplicable for a div element with no aria state / property`, async (t) => {
+test(`evaluate() is inapplicable for a div element with no aria attribute`, async (t) => {
   const target = <div role="region">A region of content</div>;
 
   const document = Document.of([target]);

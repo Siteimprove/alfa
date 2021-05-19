@@ -37,7 +37,8 @@ test(`evaluate() passes an element which content is hidden`, async (t) => {
   ]);
 });
 
-test(`evaluate() passes an element whose content is taken out of sequential focus order using tabindex`, async (t) => {
+test(`evaluate() passes an element whose content is taken out of sequential
+     focus order using tabindex`, async (t) => {
   const target = (
     <div aria-hidden="true">
       <button tabindex="-1">Some button</button>

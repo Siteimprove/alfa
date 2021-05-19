@@ -19,7 +19,8 @@ test(`evaluate() passes a lang attribute with valid primary tag`, async (t) => {
   ]);
 });
 
-test(`evaluate() passes a lang attribute with valid primary tag and invalid region subtag`, async (t) => {
+test(`evaluate() passes a lang attribute with valid primary tag and
+           invalid region subtag`, async (t) => {
   const html = <html lang="en-US-GB"></html>;
 
   const document = Document.of([html]);
