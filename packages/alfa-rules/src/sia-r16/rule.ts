@@ -180,9 +180,11 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     return {
       ...super.toJSON(),
       role: this._role,
-      requiredAttributes: Array.copy(this._requiredAttributes),
-      missingAttributes: Array.copy(this._missingAttributes),
-      foundAttributes: Array.copy(this._foundAttributes),
+      attributes: {
+        required: Array.copy(this._requiredAttributes),
+        missing: Array.copy(this._missingAttributes),
+        found: Array.copy(this._foundAttributes),
+      },
     };
   }
 }
@@ -190,9 +192,11 @@ export class RoleAndRequiredAttributes extends Diagnostic {
 namespace RoleAndRequiredAttributes {
   export interface JSON extends Diagnostic.JSON {
     role: string;
-    requiredAttributes: Array<aria.Attribute.Name>;
-    missingAttributes: Array<aria.Attribute.Name>;
-    foundAttributes: Array<aria.Attribute.Name>;
+    attributes: {
+      required: Array<aria.Attribute.Name>;
+      missing: Array<aria.Attribute.Name>;
+      found: Array<aria.Attribute.Name>;
+    };
   }
 }
 
