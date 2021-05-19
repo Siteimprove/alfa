@@ -84,50 +84,39 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const container = containers.get(target).get();
 
+        const defaultStyle = DistinguishingStyles.from(target, device);
+        const hoverStyle = DistinguishingStyles.from(
+          target,
+          device,
+          Context.hover(target)
+        );
+        const focusStyle = DistinguishingStyles.from(
+          target,
+          device,
+          Context.focus(target)
+        );
+
         return {
           1: expectation(
             test(isDistinguishable(container, device), target),
-            () =>
-              Outcomes.IsDistinguishableDefault(
-                DistinguishingStyles.from("", target, device)
-              ),
-            () => Outcomes.IsNotDistinguishable(target, device)
+            () => Outcomes.IsDistinguishableDefault(defaultStyle),
+            () => Outcomes.IsNotDistinguishableDefault(defaultStyle)
           ),
           2: expectation(
             test(
               isDistinguishable(container, device, Context.hover(target)),
               target
             ),
-            () =>
-              Outcomes.IsDistinguishableHover(
-                target,
-                device,
-                Context.hover(target)
-              ),
-            () =>
-              Outcomes.IsNotDistinguishableHover(
-                target,
-                device,
-                Context.hover(target)
-              )
+            () => Outcomes.IsDistinguishableHover(hoverStyle),
+            () => Outcomes.IsNotDistinguishableHover(hoverStyle)
           ),
           3: expectation(
             test(
               isDistinguishable(container, device, Context.focus(target)),
               target
             ),
-            () =>
-              Outcomes.IsDistinguishableFocus(
-                target,
-                device,
-                Context.focus(target)
-              ),
-            () =>
-              Outcomes.IsNotDistinguishableFocus(
-                target,
-                device,
-                Context.focus(target)
-              )
+            () => Outcomes.IsDistinguishableFocus(focusStyle),
+            () => Outcomes.IsNotDistinguishableFocus(focusStyle)
           ),
         };
       },
@@ -142,68 +131,37 @@ export namespace Outcomes {
         `The link is distinguishable from the surrounding text`
       )
     );
-  export const IsDistinguishableHover = (
-    element: Element,
-    device: Device,
-    context: Context
-  ) =>
+  export const IsDistinguishableHover = (styles: DistinguishingStyles) =>
     Ok.of(
-      DistinguishingStyles.from(
-        `The link is hoverable from the surrounding text`,
-        element,
-        device,
-        context
+      styles.withMessage(
+        `The link is distinguishable from the surrounding text when hovered`
       )
     );
-  export const IsDistinguishableFocus = (
-    element: Element,
-    device: Device,
-    context: Context
-  ) =>
+  export const IsDistinguishableFocus = (styles: DistinguishingStyles) =>
     Ok.of(
-      DistinguishingStyles.from(
-        `The link is focused from the surrounding text`,
-        element,
-        device,
-        context
+      styles.withMessage(
+        `The link is distinguishable from the surrounding text when focused`
       )
     );
 
-  export const IsNotDistinguishable = (element: Element, device: Device) =>
+  export const IsNotDistinguishableDefault = (styles: DistinguishingStyles) =>
     Err.of(
-      DistinguishingStyles.from(
-        `The link is not distinguishable from the surrounding text because is in
-      default state`,
-        element,
-        device
+      styles.withMessage(
+        `The link is not distinguishable from the surrounding text`
       )
     );
-  export const IsNotDistinguishableHover = (
-    element: Element,
-    device: Device,
-    context: Context
-  ) =>
+  export const IsNotDistinguishableHover = (styles: DistinguishingStyles) =>
     Err.of(
-      DistinguishingStyles.from(
-        `The link is not distinguishable from the surrounding text because is in
-      hover state`,
-        element,
-        device,
-        context
+      styles.withMessage(
+        `The link is not distinguishable from the surrounding text when
+      hovered`
       )
     );
-  export const IsNotDistinguishableFocus = (
-    element: Element,
-    device: Device,
-    context: Context
-  ) =>
+  export const IsNotDistinguishableFocus = (styles: DistinguishingStyles) =>
     Err.of(
-      DistinguishingStyles.from(
-        `The link is not distinguishable from the surrounding text because is in
-      focus state`,
-        element,
-        device,
-        context
+      styles.withMessage(
+        `The link is not distinguishable from the surrounding text when
+      focused`
       )
     );
 }
@@ -356,7 +314,6 @@ export namespace DistinguishingStyles {
   }
 
   export function from(
-    message: string,
     element: Element,
     device: Device,
     context: Context = Context.empty()
@@ -364,7 +321,7 @@ export namespace DistinguishingStyles {
     const style = Style.from(element, device, context);
 
     return DistinguishingStyles.of(
-      message,
+      "Correct message is added by Outcomes.*",
       ([
         "background-color",
         "border-top-width",
