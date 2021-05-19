@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
             isElement,
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
-              hasRole((role) => role.hasPresentationalChildren())
+              hasRole(device, (role) => role.hasPresentationalChildren())
             )
           )
         );

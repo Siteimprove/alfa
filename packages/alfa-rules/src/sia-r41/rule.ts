@@ -37,7 +37,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             .filter(
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole((role) => role.is("link")),
+                hasRole(device, (role) => role.is("link")),
                 not(isIgnored(device)),
                 hasNonEmptyAccessibleName(device)
               )

@@ -34,7 +34,7 @@ test(`evaluate() is inapplicable when there is no link`, async (t) => {
 
 test(`evaluate() passes an image link with name given by the alt text`, async (t) => {
   const target = (
-    <a href="#" tabindex="-1">
+    <a href="#">
       <img src="foo.jpg" alt="Foo" />
     </a>
   );

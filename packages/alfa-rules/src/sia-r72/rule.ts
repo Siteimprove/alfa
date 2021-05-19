@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
             nested: true,
           })
           .filter(isElement)
-          .filter(and(hasRole("paragraph"), isVisible(device)));
+          .filter(and(hasRole(device, "paragraph"), isVisible(device)));
       },
 
       expectations(target) {

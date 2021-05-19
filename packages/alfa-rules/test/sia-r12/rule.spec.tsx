@@ -7,7 +7,7 @@ import R12, { Outcomes } from "../../src/sia-r12/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test(`evaluates() passes a <button> with accessible name `, async (t) => {
+test(`evaluates() passes a <button> with accessible name given by content`, async (t) => {
   const target = <button>My button</button>;
 
   const document = Document.of([target]);
@@ -19,7 +19,8 @@ test(`evaluates() passes a <button> with accessible name `, async (t) => {
   ]);
 });
 
-test(`evaluates() passes a submit button element with an accessible name given by the value attribute `, async (t) => {
+test(`evaluates() passes a submit button element with an accessible name given
+     by the value attribute `, async (t) => {
   const input = <input type="submit" value="Submit" />;
 
   const document = Document.of([input]);
@@ -31,7 +32,8 @@ test(`evaluates() passes a submit button element with an accessible name given b
   ]);
 });
 
-test(`evaluates() passes a <button> with a name given by the \`aria-label\` attribute`, async (t) => {
+test(`evaluates() passes a <button> with a name given by the \`aria-label\`
+     attribute`, async (t) => {
   const target = <button aria-label="My button"></button>;
 
   const document = Document.of([target]);
@@ -75,7 +77,7 @@ test(`evaluate() is inapplicable to image buttons`, async (t) => {
   t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
 });
 
-test(`evaluate() is inapplicabile to element with no button role`, async (t) => {
+test(`evaluate() is inapplicable to element with no button role`, async (t) => {
   const target = <div>Press Here</div>;
 
   const document = Document.of([target]);
@@ -83,7 +85,7 @@ test(`evaluate() is inapplicabile to element with no button role`, async (t) => 
   t.deepEqual(await evaluate(R12, { document }), [inapplicable(R12)]);
 });
 
-test(`evaluate() is inapplicabile to button element with none role`, async (t) => {
+test(`evaluate() is inapplicable to button element with none role`, async (t) => {
   const target = <button role="none" disabled></button>;
 
   const document = Document.of([target]);
