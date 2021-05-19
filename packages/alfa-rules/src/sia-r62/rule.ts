@@ -7,11 +7,9 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+import { Property, Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
-
-import color from "@siteimprove/alfa-style/src/property/color";
 
 import { expectation } from "../common/expectation";
 
@@ -88,13 +86,13 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            test(and(isDistinguishable(container, device)), target),
+            test(isDistinguishable(container, device), target),
             () => Outcomes.IsDistinguishable(target, device),
             () => Outcomes.IsNotDistinguishable(target, device)
           ),
           2: expectation(
             test(
-              and(isDistinguishable(container, device, Context.hover(target))),
+              isDistinguishable(container, device, Context.hover(target)),
               target
             ),
             () =>
@@ -112,7 +110,7 @@ export default Rule.Atomic.of<Page, Element>({
           ),
           3: expectation(
             test(
-              and(isDistinguishable(container, device, Context.focus(target))),
+              isDistinguishable(container, device, Context.focus(target)),
               target
             ),
             () =>
@@ -313,259 +311,43 @@ function hasDistinguishableFontWeight(
 class DistinguishableLinks extends Diagnostic {
   public static of(
     message: string,
-    color: string = "",
-    borderTopWidth: string = "",
-    borderRightWidth: string = "",
-    borderBottomWidth: string = "",
-    borderLeftWidth: string = "",
-    borderTopStyle: string = "",
-    borderRightStyle: string = "",
-    borderBottomStyle: string = "",
-    borderLeftStyle: string = "",
-    borderTopColor: string = "",
-    borderRightColor: string = "",
-    borderBottomColor: string = "",
-    borderLeftColor: string = "",
-    outlineWidth: string = "",
-    outlineStyle: string = "",
-    outlineColor: string = "",
-    textDecorationColor: string = "",
-    textDecorationLine: string = "",
-    visibility: string = "",
-    fontSize: string = ""
+    style: Iterable<[Property.Name, string]> = []
   ): DistinguishableLinks {
-    return new DistinguishableLinks(
-      message,
-      color,
-      borderTopWidth,
-      borderRightWidth,
-      borderBottomWidth,
-      borderLeftWidth,
-      borderTopStyle,
-      borderRightStyle,
-      borderBottomStyle,
-      borderLeftStyle,
-      borderTopColor,
-      borderRightColor,
-      borderBottomColor,
-      borderLeftColor,
-      outlineWidth,
-      outlineStyle,
-      outlineColor,
-      textDecorationColor,
-      textDecorationLine,
-      visibility,
-      fontSize
-    );
+    return new DistinguishableLinks(message, Map.from(style));
   }
 
-  private readonly _color: string;
-  private readonly _borderTopWidth: string;
-  private readonly _borderRightWidth: string;
-  private readonly _borderBottomWidth: string;
-  private readonly _borderLeftWidth: string;
-  private readonly _borderTopStyle: string;
-  private readonly _borderRightStyle: string;
-  private readonly _borderBottomStyle: string;
-  private readonly _borderLeftStyle: string;
-  private readonly _borderTopColor: string;
-  private readonly _borderRightColor: string;
-  private readonly _borderBottomColor: string;
-  private readonly _borderLeftColor: string;
-  private readonly _outlineWidth: string;
-  private readonly _outlineStyle: string;
-  private readonly _outlineColor: string;
-  private readonly _textDecorationColor: string;
-  private readonly _textDecorationLine: string;
-  private readonly _visibility: string;
-  private readonly _fontSize: string;
+  private readonly _style: Map<Property.Name, string>;
 
-  private constructor(
-    message: string,
-    color: string,
-    borderTopWidth: string,
-    borderRightWidth: string,
-    borderBottomWidth: string,
-    borderLeftWidth: string,
-    borderTopStyle: string,
-    borderRightStyle: string,
-    borderBottomStyle: string,
-    borderLeftStyle: string,
-    borderTopColor: string,
-    borderRightColor: string,
-    borderBottomColor: string,
-    borderLeftColor: string,
-    outlineWidth: string,
-    outlineStyle: string,
-    outlineColor: string,
-    textDecorationColor: string,
-    textDecorationLine: string,
-    visibility: string,
-    fontSize: string
-  ) {
+  private constructor(message: string, style: Map<Property.Name, string>) {
     super(message);
-    this._color = color;
-    (this._borderTopWidth = borderTopWidth),
-      (this._borderRightWidth = borderRightWidth),
-      (this._borderBottomWidth = borderBottomWidth),
-      (this._borderLeftWidth = borderLeftWidth),
-      (this._borderTopStyle = borderTopStyle),
-      (this._borderRightStyle = borderRightStyle),
-      (this._borderBottomStyle = borderBottomStyle),
-      (this._borderLeftStyle = borderLeftStyle),
-      (this._borderTopColor = borderTopColor),
-      (this._borderRightColor = borderRightColor),
-      (this._borderBottomColor = borderBottomColor),
-      (this._borderLeftColor = borderLeftColor),
-      (this._outlineWidth = outlineWidth);
-    this._outlineStyle = outlineStyle;
-    this._outlineColor = outlineColor;
-    this._textDecorationColor = textDecorationColor;
-    this._textDecorationLine = textDecorationLine;
-    this._visibility = visibility;
-    this._fontSize = fontSize;
+    this._style = style;
   }
 
-  public get color(): string {
-    return this._color;
+  public get style(): Map<Property.Name, string> {
+    return this._style;
   }
 
-  public get borderTopWidth(): string {
-    return this._borderTopWidth;
-  }
+  public equals(value: DistinguishableLinks): boolean;
 
-  public get borderRightWidth(): string {
-    return this._borderRightWidth;
-  }
+  public equals(value: unknown): value is this;
 
-  public get borderBottomWidth(): string {
-    return this._borderBottomWidth;
-  }
-
-  public get borderLeftWidth(): string {
-    return this._borderLeftWidth;
-  }
-
-  public get borderTopStyle(): string {
-    return this._borderTopStyle;
-  }
-
-  public get borderRightStyle(): string {
-    return this._borderRightStyle;
-  }
-
-  public get borderBottomStyle(): string {
-    return this._borderBottomStyle;
-  }
-
-  public get borderLeftStyle(): string {
-    return this._borderLeftStyle;
-  }
-  public get borderTopColor(): string {
-    return this._borderTopColor;
-  }
-
-  public get borderRightColor(): string {
-    return this._borderRightColor;
-  }
-
-  public get borderBottomColor(): string {
-    return this._borderBottomColor;
-  }
-
-  public get borderLeftColor(): string {
-    return this._borderLeftColor;
-  }
-
-  public get outlineWidth(): string {
-    return this._outlineWidth;
-  }
-
-  public get outlineStyle(): string {
-    return this._outlineStyle;
-  }
-
-  public get outlineColor(): string {
-    return this._outlineColor;
-  }
-
-  public get textDecorationColor(): string {
-    return this._textDecorationColor;
-  }
-
-  public get textDecorationLine(): string {
-    return this._textDecorationLine;
-  }
-
-  public get visibility(): string {
-    return this._visibility;
-  }
-
-  public get fontSize(): string {
-    return this._fontSize;
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof DistinguishableLinks && value._style.equals(this._style)
+    );
   }
 
   public toJSON(): DistinguishableLinks.JSON {
     return {
       ...super.toJSON(),
-      color: this._color,
-
-      borderTopWidth: this._borderTopWidth,
-      borderRightWidth: this._borderRightWidth,
-      borderBottomWidth: this._borderBottomWidth,
-      borderLeftWidth: this._borderLeftWidth,
-
-      borderTopStyle: this._borderTopStyle,
-      borderRightStyle: this._borderRightStyle,
-      borderBottomStyle: this._borderBottomStyle,
-      borderLeftStyle: this._borderLeftStyle,
-
-      borderTopColor: this._borderTopColor,
-      borderRightColor: this._borderRightColor,
-      borderBottomColor: this._borderBottomColor,
-      borderLeftColor: this._borderLeftColor,
-
-      outlineWidth: this._outlineWidth,
-      outlineStyle: this._outlineStyle,
-      outlineColor: this._outlineColor,
-
-      textDecorationColor: this._textDecorationColor,
-      textDecorationLine: this._textDecorationLine,
-
-      visibility: this._visibility,
-      fontSize: this._fontSize,
+      style: this._style.toJSON(),
     };
   }
 }
 
 namespace DistinguishableLinks {
   export interface JSON extends Diagnostic.JSON {
-    color: string;
-
-    borderTopWidth: string;
-    borderRightWidth: string;
-    borderBottomWidth: string;
-    borderLeftWidth: string;
-
-    borderTopStyle: string;
-    borderRightStyle: string;
-    borderBottomStyle: string;
-    borderLeftStyle: string;
-
-    borderTopColor: string;
-    borderRightColor: string;
-    borderBottomColor: string;
-    borderLeftColor: string;
-
-    outlineWidth: string;
-    outlineStyle: string;
-    outlineColor: string;
-
-    textDecorationColor: string;
-    textDecorationLine: string;
-
-    visibility: string;
-    fontSize: string;
+    style: Map.JSON<Property.Name, string>;
   }
 
   export function from(
@@ -578,7 +360,7 @@ namespace DistinguishableLinks {
 
     return DistinguishableLinks.of(
       message,
-      ...([
+      ([
         "color",
         "border-top-width",
         "border-right-width",
@@ -599,7 +381,10 @@ namespace DistinguishableLinks {
         "text-decoration-line",
         "visibility",
         "font-size",
-      ] as const).map((property) => style.computed(property).toString())
+      ] as const).map((property) => [
+        property,
+        style.computed(property).toString(),
+      ])
     );
   }
 }
