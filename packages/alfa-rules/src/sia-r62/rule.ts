@@ -361,7 +361,7 @@ namespace DistinguishableLinks {
     return DistinguishableLinks.of(
       message,
       ([
-        "color",
+        "background-color",
         "border-top-width",
         "border-right-width",
         "border-bottom-width",
@@ -374,13 +374,14 @@ namespace DistinguishableLinks {
         "border-right-color",
         "border-bottom-color",
         "border-left-color",
+        "color",
+        "font-size",
         "outline-width",
         "outline-style",
         "outline-color",
         "text-decoration-color",
         "text-decoration-line",
         "visibility",
-        "font-size",
       ] as const).map((property) => [
         property,
         style.computed(property).toString(),
