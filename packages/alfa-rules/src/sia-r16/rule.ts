@@ -78,6 +78,8 @@ function hasRequiredValues(
 
     for (const attribute of role.attributes) {
       if (role.isAttributeRequired(attribute)) {
+        required.push(attribute);
+
         if (node.attribute(attribute).every(property("value", isEmpty))) {
           missing.push(attribute);
           result = false;
