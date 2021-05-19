@@ -2,13 +2,16 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
-import color from "@siteimprove/alfa-style/src/property/color";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+
+import color from "@siteimprove/alfa-style/src/property/color";
 
 import { expectation } from "../common/expectation";
 
@@ -20,21 +23,24 @@ import {
   isVisible,
 } from "../common/predicate";
 
-import { Question } from "../common/question";
-
 const { isElement } = Element;
 const { isText } = Text;
 const { and, or, not, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
   evaluate({ device, document }) {
+    let containers: Map<Element, Element> = Map.empty();
+
     return {
       applicability() {
-        return visit(document, false);
+        return visit(document, None);
 
-        function* visit(node: Node, collect: boolean): Iterable<Element> {
+        function* visit(
+          node: Node,
+          container: Option<Element>
+        ): Iterable<Element> {
           if (isElement(node)) {
             // If the element is a semantic link, it might be applicable.
             if (
@@ -44,11 +50,12 @@ export default Rule.Atomic.of<Page, Element, Question>({
               )
             ) {
               if (
-                collect &&
+                container.isSome() &&
                 node
                   .descendants({ flattened: true })
                   .some(and(isText, isVisible(device)))
               ) {
+                containers = containers.set(node, container.get());
                 return yield node;
               }
             }
@@ -61,7 +68,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 node
               )
             ) {
-              collect = true;
+              container = Option.of(node);
             }
           }
 
@@ -71,19 +78,13 @@ export default Rule.Atomic.of<Page, Element, Question>({
           });
 
           for (const child of children) {
-            yield* visit(child, collect);
+            yield* visit(child, container);
           }
         }
       },
 
       expectations(target) {
-        const container = target
-          .ancestors({
-            flattened: true,
-          })
-          .filter(isElement)
-          .find(hasRole(device, "paragraph"))
-          .get();
+        const container = containers.get(target).get();
 
         return {
           1: expectation(
