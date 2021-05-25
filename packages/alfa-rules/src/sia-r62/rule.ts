@@ -2,14 +2,18 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/expectation";
 
@@ -84,39 +88,33 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const container = containers.get(target).get();
 
-        const defaultStyle = DistinguishingStyles.from(target, device);
-        const hoverStyle = DistinguishingStyles.from(
+        const defaultStyle = ComputedStyles.from(target, device);
+        const hoverStyle = ComputedStyles.from(
           target,
           device,
           Context.hover(target)
         );
-        const focusStyle = DistinguishingStyles.from(
+        const focusStyle = ComputedStyles.from(
           target,
           device,
           Context.focus(target)
         );
 
+        const defaultFoo = test(isDistinguishable(container, device), target)
+          ? Ok.of(defaultStyle)
+          : Err.of(defaultStyle);
+        const hoverFoo = test(isDistinguishable(container, device), target)
+          ? Ok.of(hoverStyle)
+          : Err.of(hoverStyle);
+        const focusFoo = test(isDistinguishable(container, device), target)
+          ? Ok.of(focusStyle)
+          : Err.of(focusStyle);
+
         return {
           1: expectation(
-            test(isDistinguishable(container, device), target),
-            () => Outcomes.IsDistinguishableDefault(defaultStyle),
-            () => Outcomes.IsNotDistinguishableDefault(defaultStyle)
-          ),
-          2: expectation(
-            test(
-              isDistinguishable(container, device, Context.hover(target)),
-              target
-            ),
-            () => Outcomes.IsDistinguishableHover(hoverStyle),
-            () => Outcomes.IsNotDistinguishableHover(hoverStyle)
-          ),
-          3: expectation(
-            test(
-              isDistinguishable(container, device, Context.focus(target)),
-              target
-            ),
-            () => Outcomes.IsDistinguishableFocus(focusStyle),
-            () => Outcomes.IsNotDistinguishableFocus(focusStyle)
+            defaultFoo.isOk() && hoverFoo.isOk() && focusFoo.isOk(),
+            () => Outcomes.IsDistinguishable(defaultFoo, hoverFoo, focusFoo),
+            () => Outcomes.IsNotDistinguishable(defaultFoo, hoverFoo, focusFoo)
           ),
         };
       },
@@ -125,43 +123,35 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsDistinguishableDefault = (styles: DistinguishingStyles) =>
+  // We could tweak typing to ensure that isDistinguishable only accepts OK and
+  // that isNotDistinguishable has at least one Err.
+  // This would requires changing the expectation since it does not refine
+  // and is thus probably not worth the effort.
+  export const IsDistinguishable = (
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
+  ) =>
     Ok.of(
-      styles.withMessage(
-        `The link is distinguishable from the surrounding text`
-      )
-    );
-  export const IsDistinguishableHover = (styles: DistinguishingStyles) =>
-    Ok.of(
-      styles.withMessage(
-        `The link is distinguishable from the surrounding text when hovered`
-      )
-    );
-  export const IsDistinguishableFocus = (styles: DistinguishingStyles) =>
-    Ok.of(
-      styles.withMessage(
-        `The link is distinguishable from the surrounding text when focused`
+      DistinguishingStyles.of(
+        `The link is distinguishable from the surrounding text`,
+        defaultStyle,
+        hoverStyle,
+        focusStyle
       )
     );
 
-  export const IsNotDistinguishableDefault = (styles: DistinguishingStyles) =>
+  export const IsNotDistinguishable = (
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
+  ) =>
     Err.of(
-      styles.withMessage(
-        `The link is not distinguishable from the surrounding text`
-      )
-    );
-  export const IsNotDistinguishableHover = (styles: DistinguishingStyles) =>
-    Err.of(
-      styles.withMessage(
-        `The link is not distinguishable from the surrounding text when
-      hovered`
-      )
-    );
-  export const IsNotDistinguishableFocus = (styles: DistinguishingStyles) =>
-    Err.of(
-      styles.withMessage(
-        `The link is not distinguishable from the surrounding text when
-      focused`
+      DistinguishingStyles.of(
+        `The link is distinguishable from the surrounding text`,
+        defaultStyle,
+        hoverStyle,
+        focusStyle
       )
     );
 }
@@ -267,18 +257,16 @@ function hasDistinguishableFontWeight(
   };
 }
 
-export class DistinguishingStyles extends Diagnostic {
+export class ComputedStyles implements Equatable, Serializable {
   public static of(
-    message: string,
     style: Iterable<[Property.Name, string]> = []
-  ): DistinguishingStyles {
-    return new DistinguishingStyles(message, Map.from(style));
+  ): ComputedStyles {
+    return new ComputedStyles(Map.from(style));
   }
 
   private readonly _style: Map<Property.Name, string>;
 
-  private constructor(message: string, style: Map<Property.Name, string>) {
-    super(message);
+  private constructor(style: Map<Property.Name, string>) {
     this._style = style;
   }
 
@@ -286,30 +274,24 @@ export class DistinguishingStyles extends Diagnostic {
     return this._style;
   }
 
-  public withMessage(message: string): DistinguishingStyles {
-    return new DistinguishingStyles(message, this._style);
-  }
-
-  public equals(value: DistinguishingStyles): boolean;
+  public equals(value: ComputedStyles): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return (
-      value instanceof DistinguishingStyles && value._style.equals(this._style)
-    );
+    return value instanceof ComputedStyles && value._style.equals(this._style);
   }
 
-  public toJSON(): DistinguishingStyles.JSON {
+  public toJSON(): ComputedStyles.JSON {
     return {
-      ...super.toJSON(),
       style: this._style.toJSON(),
     };
   }
 }
 
-export namespace DistinguishingStyles {
-  export interface JSON extends Diagnostic.JSON {
+export namespace ComputedStyles {
+  export interface JSON {
+    [key: string]: json.JSON;
     style: Map.JSON<Property.Name, string>;
   }
 
@@ -317,11 +299,10 @@ export namespace DistinguishingStyles {
     element: Element,
     device: Device,
     context: Context = Context.empty()
-  ): DistinguishingStyles {
+  ): ComputedStyles {
     const style = Style.from(element, device, context);
 
-    return DistinguishingStyles.of(
-      "Correct message is added by Outcomes.*",
+    return ComputedStyles.of(
       ([
         "background-color",
         "border-top-width",
@@ -348,5 +329,88 @@ export namespace DistinguishingStyles {
         style.computed(property).toString(),
       ])
     );
+  }
+}
+
+export class DistinguishingStyles extends Diagnostic {
+  public static of(
+    message: string,
+    defaultStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([])),
+    hoverStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([])),
+    focusStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([]))
+  ): DistinguishingStyles {
+    return new DistinguishingStyles(
+      message,
+      defaultStyle,
+      hoverStyle,
+      focusStyle
+    );
+  }
+
+  private readonly _defaultStyle: Result<ComputedStyles>;
+  private readonly _hoverStyle: Result<ComputedStyles>;
+  private readonly _focusStyle: Result<ComputedStyles>;
+
+  private constructor(
+    message: string,
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
+  ) {
+    super(message);
+    this._defaultStyle = defaultStyle;
+    this._hoverStyle = hoverStyle;
+    this._focusStyle = focusStyle;
+  }
+
+  public get defaultStyle(): Result<ComputedStyles> {
+    return this._defaultStyle;
+  }
+
+  public get hoverStyle(): Result<ComputedStyles> {
+    return this._hoverStyle;
+  }
+
+  public get focusStyle(): Result<ComputedStyles> {
+    return this._focusStyle;
+  }
+
+  public withMessage(message: string): DistinguishingStyles {
+    return new DistinguishingStyles(
+      message,
+      this._defaultStyle,
+      this._hoverStyle,
+      this._focusStyle
+    );
+  }
+
+  public equals(value: DistinguishingStyles): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof DistinguishingStyles &&
+      value._defaultStyle.equals(this._defaultStyle) &&
+      value._hoverStyle.equals(this._hoverStyle) &&
+      value._focusStyle.equals(this._focusStyle)
+    );
+  }
+
+  public toJSON(): DistinguishingStyles.JSON {
+    return {
+      ...super.toJSON(),
+      defaultStyle: this._defaultStyle.toJSON(),
+      hoverStyle: this._hoverStyle.toJSON(),
+      focusStyle: this._focusStyle.toJSON(),
+    };
+  }
+}
+
+export namespace DistinguishingStyles {
+  export interface JSON extends Diagnostic.JSON {
+    defaultStyle: Result.JSON<ComputedStyles>;
+    hoverStyle: Result.JSON<ComputedStyles>;
+    focusStyle: Result.JSON<ComputedStyles>;
   }
 }
