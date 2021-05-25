@@ -88,39 +88,31 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const container = containers.get(target).get();
 
-        const defaultStyle = ComputedStyles.from(target, device);
-        const hoverStyle = ComputedStyles.from(
+        const defaultStyle = isDistinguishable(target, container, device);
+        const hoverStyle = isDistinguishable(
           target,
+          container,
           device,
           Context.hover(target)
         );
-        const focusStyle = ComputedStyles.from(
+        const focusStyle = isDistinguishable(
           target,
+          container,
           device,
           Context.focus(target)
         );
 
-        const defaultFoo = test(isDistinguishable(container, device), target)
-          ? Ok.of(defaultStyle)
-          : Err.of(defaultStyle);
-        const hoverFoo = test(
-          isDistinguishable(container, device, Context.hover(target)),
-          target
-        )
-          ? Ok.of(hoverStyle)
-          : Err.of(hoverStyle);
-        const focusFoo = test(
-          isDistinguishable(container, device, Context.focus(target)),
-          target
-        )
-          ? Ok.of(focusStyle)
-          : Err.of(focusStyle);
-
         return {
           1: expectation(
-            defaultFoo.isOk() && hoverFoo.isOk() && focusFoo.isOk(),
-            () => Outcomes.IsDistinguishable(defaultFoo, hoverFoo, focusFoo),
-            () => Outcomes.IsNotDistinguishable(defaultFoo, hoverFoo, focusFoo)
+            defaultStyle.isOk() && hoverStyle.isOk() && focusStyle.isOk(),
+            () =>
+              Outcomes.IsDistinguishable(defaultStyle, hoverStyle, focusStyle),
+            () =>
+              Outcomes.IsNotDistinguishable(
+                defaultStyle,
+                hoverStyle,
+                focusStyle
+              )
           ),
         };
       },
@@ -180,27 +172,35 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 }
 
 function isDistinguishable(
+  target: Element,
   container: Element,
   device: Device,
-  context?: Context
-): Predicate<Element> {
-  return or(
-    // Things like text decoration and backgrounds risk blending with the
-    // container element. We therefore need to check if these can be distinguished
-    // from what the container element might itself set.
-    hasDistinguishableTextDecoration(container, device, context),
-    hasDistinguishableBackground(container, device, context),
+  context: Context = Context.empty()
+): Result<ComputedStyles> {
+  const style = ComputedStyles.from(target, device, context);
 
-    hasDistinguishableFontWeight(container, device, context),
+  return test(
+    or(
+      // Things like text decoration and backgrounds risk blending with the
+      // container element. We therefore need to check if these can be distinguished
+      // from what the container element might itself set.
+      hasDistinguishableTextDecoration(container, device, context),
+      hasDistinguishableBackground(container, device, context),
 
-    // We consider the mere presence of borders or outlines on the element as
-    // distinguishable features. There's of course a risk of these blending with
-    // other features of the container element, such as its background, but this
-    // should hopefully not happen (too often) in practice. When it does, we
-    // risk false negatives.
-    hasOutline(device, context),
-    hasBorder(device, context)
-  );
+      hasDistinguishableFontWeight(container, device, context),
+
+      // We consider the mere presence of borders or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      hasOutline(device, context),
+      hasBorder(device, context)
+    ),
+    target
+  )
+    ? Ok.of(style)
+    : Err.of(style);
 }
 
 function hasDistinguishableTextDecoration(
