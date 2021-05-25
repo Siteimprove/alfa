@@ -14,10 +14,10 @@ const { and, not } = Predicate;
 export function isTabbable(device: Device): Predicate<Element> {
   return and(
     hasTabIndex((tabIndex) => tabIndex >= 0),
-    and(
-      not(redirectsFocus),
-      and(not(isDisabled), not(isInert(device)), isRendered(device))
-    )
+    not(redirectsFocus),
+    not(isDisabled),
+    not(isInert(device)),
+    isRendered(device)
   );
 }
 
