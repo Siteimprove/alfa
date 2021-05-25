@@ -103,10 +103,16 @@ export default Rule.Atomic.of<Page, Element>({
         const defaultFoo = test(isDistinguishable(container, device), target)
           ? Ok.of(defaultStyle)
           : Err.of(defaultStyle);
-        const hoverFoo = test(isDistinguishable(container, device), target)
+        const hoverFoo = test(
+          isDistinguishable(container, device, Context.hover(target)),
+          target
+        )
           ? Ok.of(hoverStyle)
           : Err.of(hoverStyle);
-        const focusFoo = test(isDistinguishable(container, device), target)
+        const focusFoo = test(
+          isDistinguishable(container, device, Context.focus(target)),
+          target
+        )
           ? Ok.of(focusStyle)
           : Err.of(focusStyle);
 
@@ -148,7 +154,7 @@ export namespace Outcomes {
   ) =>
     Err.of(
       DistinguishingStyles.of(
-        `The link is distinguishable from the surrounding text`,
+        `The link is not distinguishable from the surrounding text`,
         defaultStyle,
         hoverStyle,
         focusStyle
