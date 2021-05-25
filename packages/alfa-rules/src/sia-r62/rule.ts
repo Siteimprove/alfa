@@ -121,7 +121,7 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  // We could tweak typing to ensure that isDistinguishable only accepts OK and
+  // We could tweak typing to ensure that isDistinguishable only accepts Ok and
   // that isNotDistinguishable has at least one Err.
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
