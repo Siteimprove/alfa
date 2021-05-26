@@ -11,30 +11,42 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
 // default styling of links
-const properties: Array<[Property.Name | Property.Shorthand.Name, string]> = [
+// The initial value of border-top is medium, resolving as 3px. However, when
+// computing and border-style is none, this is computed as 0px.
+// As a consequence, even without changing `border` at all, the computed value
+// of border-top is not equal to its initial value and needs to expressed here!
+//
+// Confused? Wait, same joke happens for outline-width except that now on focus
+// outline-style is not none, so the computed value of outline-width is its
+// initial value. As a consequence, we cannot just override properties since
+// in this case we need to actually *remove* outline-width from the diagnostic!
+const defaultProperties: Array<
+  [Property.Name | Property.Shorthand.Name, string]
+> = [
   ["border-width", "0px"],
-  ["background-color", "rgb(0% 0% 0% / 0%)"],
   ["color", "rgb(0% 0% 93.33333%)"],
-  ["font-weight", "400"],
   ["outline-width", "0px"],
-  ["outline-style", "none"],
-  ["outline-color", "invert"],
-  ["text-decoration-color", "currentcolor"],
   ["text-decoration-line", "underline"],
 ];
+const focusProperties: Array<
+  [Property.Name | Property.Shorthand.Name, string]
+> = [
+  ["border-width", "0px"],
+  ["color", "rgb(0% 0% 93.33333%)"],
+  ["outline-style", "auto"],
+  ["text-decoration-line", "underline"],
+];
+const noDistinguishingProperties: Array<
+  [Property.Name | Property.Shorthand.Name, string]
+> = [
+  ["border-width", "0px"],
+  ["color", "rgb(0% 0% 93.33333%)"],
+  ["outline-width", "0px"],
+];
 
-const style = (
-  overwrite: Array<[Property.Name | Property.Shorthand.Name, string]>
-) => ComputedStyles.of([...properties, ...overwrite]);
-
-const defaultStyle = Ok.of(style([]));
-const focusStyle = Ok.of(
-  style([
-    ["outline-style", "auto"],
-    ["outline-width", "3px"],
-  ])
-);
-const noStyle = Err.of(style([["text-decoration-line", "none"]]));
+const defaultStyle = Ok.of(ComputedStyles.of(defaultProperties));
+const focusStyle = Ok.of(ComputedStyles.of(focusProperties));
+const noStyle = Err.of(ComputedStyles.of(noDistinguishingProperties));
 
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
@@ -208,11 +220,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable(
-        noStyle,
-        noStyle,
-        Ok.of(style([["outline-style", "none"]]))
-      ),
+      1: Outcomes.IsNotDistinguishable(noStyle, noStyle, defaultStyle),
     }),
   ]);
 });
@@ -261,10 +269,10 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   );
 
   const styles = Ok.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
       ["outline-style", "auto"],
-      ["outline-width", "3px"],
     ])
   );
 
@@ -292,11 +300,12 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   );
 
   const styles = Ok.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline-width", "0px"],
     ])
   );
 
@@ -306,13 +315,12 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         styles,
         styles,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["color", "rgb(0% 0% 93.33333%)"],
+            ["outline-style", "auto"],
             ["border-width", "0px 0px 1px"],
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-            ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),
@@ -337,8 +345,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   );
 
   const styles = Err.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline-width", "0px"],
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
@@ -351,13 +360,12 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         styles,
         styles,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["color", "rgb(0% 0% 93.33333%)"],
             ["border-width", "0px 0px 1px"],
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
             ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),
@@ -382,8 +390,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   );
 
   const styles = Err.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline-width", "0px"],
       ["border-width", "0px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
@@ -396,13 +405,12 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         styles,
         styles,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["color", "rgb(0% 0% 93.33333%)"],
+            ["outline-style", "auto"],
             ["border-width", "0px"],
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-            ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),
@@ -427,8 +435,10 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   );
 
   const styles = Ok.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline-width", "0px"],
       ["background-color", "rgb(100% 0% 0%)"],
     ])
   );
@@ -439,11 +449,11 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         styles,
         styles,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["border-width", "0px"],
+            ["color", "rgb(0% 0% 93.33333%)"],
             ["background-color", "rgb(100% 0% 0%)"],
             ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),
@@ -476,10 +486,10 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
         noStyle,
         noStyle,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["border-width", "0px"],
+            ["color", "rgb(0% 0% 93.33333%)"],
             ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),
@@ -508,8 +518,10 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   );
 
   const styles = Err.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline-width", "0px"],
       ["background-color", "rgb(100% 0% 0%)"],
     ])
   );
@@ -520,11 +532,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         styles,
         styles,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["border-width", "0px"],
+            ["color", "rgb(0% 0% 93.33333%)"],
             ["background-color", "rgb(100% 0% 0%)"],
             ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),
@@ -616,8 +628,10 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
   );
 
   const styles = Ok.of(
-    style([
-      ["text-decoration-line", "none"],
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline-width", "0px"],
       ["font-weight", "700"],
     ])
   );
@@ -628,11 +642,11 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
         styles,
         styles,
         Ok.of(
-          style([
-            ["text-decoration-line", "none"],
+          ComputedStyles.of([
+            ["border-width", "0px"],
+            ["color", "rgb(0% 0% 93.33333%)"],
             ["font-weight", "700"],
             ["outline-style", "auto"],
-            ["outline-width", "3px"],
           ])
         )
       ),

@@ -310,6 +310,9 @@ export namespace ComputedStyles {
   ): ComputedStyles {
     const style = Style.from(element, device, context);
 
+    // Trying to reduce the footprint of the result by exporting shorthands
+    // rather than longhands, and avoiding to export values that are the same
+    // as the initial value of the property.
     function fourValuesShorthand(
       postfix: "color" | "style" | "width"
     ): readonly [Name, string] {
@@ -347,6 +350,12 @@ export namespace ComputedStyles {
       .map((postfix) => fourValuesShorthand(postfix))
       .filter(([name, value]) => value !== "");
 
+    function longhand(name: Property.Name): string {
+      const property = style.computed(name).toString();
+
+      return property === Property.get(name).initial.toString() ? "" : property;
+    }
+
     const longhands = ([
       "background-color",
       "color",
@@ -356,9 +365,9 @@ export namespace ComputedStyles {
       "outline-color",
       "text-decoration-color",
       "text-decoration-line",
-    ] as const).map(
-      (property) => [property, style.computed(property).toString()] as const
-    );
+    ] as const)
+      .map((property) => [property, longhand(property)] as const)
+      .filter(([name, value]) => value !== "");
 
     return ComputedStyles.of([...shorthands, ...longhands]);
   }
