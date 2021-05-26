@@ -2,12 +2,18 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+import { Property, Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/expectation";
 
@@ -19,21 +25,24 @@ import {
   isVisible,
 } from "../common/predicate";
 
-import { Question } from "../common/question";
-
 const { isElement } = Element;
 const { isText } = Text;
 const { and, or, not, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
   evaluate({ device, document }) {
+    let containers: Map<Element, Element> = Map.empty();
+
     return {
       applicability() {
-        return visit(document, false);
+        return visit(document, None);
 
-        function* visit(node: Node, collect: boolean): Iterable<Element> {
+        function* visit(
+          node: Node,
+          container: Option<Element>
+        ): Iterable<Element> {
           if (isElement(node)) {
             // If the element is a semantic link, it might be applicable.
             if (
@@ -43,11 +52,12 @@ export default Rule.Atomic.of<Page, Element, Question>({
               )
             ) {
               if (
-                collect &&
+                container.isSome() &&
                 node
                   .descendants({ flattened: true })
                   .some(and(isText, isVisible(device)))
               ) {
+                containers = containers.set(node, container.get());
                 return yield node;
               }
             }
@@ -60,7 +70,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 node
               )
             ) {
-              collect = true;
+              container = Option.of(node);
             }
           }
 
@@ -70,32 +80,39 @@ export default Rule.Atomic.of<Page, Element, Question>({
           });
 
           for (const child of children) {
-            yield* visit(child, collect);
+            yield* visit(child, container);
           }
         }
       },
 
       expectations(target) {
-        const container = target
-          .ancestors({
-            flattened: true,
-          })
-          .filter(isElement)
-          .find(hasRole(device, "paragraph"))
-          .get();
+        const container = containers.get(target).get();
+
+        const defaultStyle = isDistinguishable(target, container, device);
+        const hoverStyle = isDistinguishable(
+          target,
+          container,
+          device,
+          Context.hover(target)
+        );
+        const focusStyle = isDistinguishable(
+          target,
+          container,
+          device,
+          Context.focus(target)
+        );
 
         return {
           1: expectation(
-            test(
-              and(
-                isDistinguishable(container, device),
-                isDistinguishable(container, device, Context.hover(target)),
-                isDistinguishable(container, device, Context.focus(target))
-              ),
-              target
-            ),
-            () => Outcomes.IsDistinguishable,
-            () => Outcomes.IsNotDistinguishable
+            defaultStyle.isOk() && hoverStyle.isOk() && focusStyle.isOk(),
+            () =>
+              Outcomes.IsDistinguishable(defaultStyle, hoverStyle, focusStyle),
+            () =>
+              Outcomes.IsNotDistinguishable(
+                defaultStyle,
+                hoverStyle,
+                focusStyle
+              )
           ),
         };
       },
@@ -104,16 +121,37 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const IsDistinguishable = Ok.of(
-    Diagnostic.of(`The link is distinguishable from the surrounding text`)
-  );
+  // We could tweak typing to ensure that isDistinguishable only accepts Ok and
+  // that isNotDistinguishable has at least one Err.
+  // This would requires changing the expectation since it does not refine
+  // and is thus probably not worth the effort.
+  export const IsDistinguishable = (
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
+  ) =>
+    Ok.of(
+      DistinguishingStyles.of(
+        `The link is distinguishable from the surrounding text`,
+        defaultStyle,
+        hoverStyle,
+        focusStyle
+      )
+    );
 
-  export const IsNotDistinguishable = Err.of(
-    Diagnostic.of(
-      `The link is not distinguishable from the surrounding text, either in its
-      default state, or on hover and focus`
-    )
-  );
+  export const IsNotDistinguishable = (
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
+  ) =>
+    Err.of(
+      DistinguishingStyles.of(
+        `The link is not distinguishable from the surrounding text`,
+        defaultStyle,
+        hoverStyle,
+        focusStyle
+      )
+    );
 }
 
 function hasNonLinkText(device: Device): Predicate<Element> {
@@ -134,27 +172,35 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 }
 
 function isDistinguishable(
+  target: Element,
   container: Element,
   device: Device,
-  context?: Context
-): Predicate<Element> {
-  return or(
-    // Things like text decoration and backgrounds risk blending with the
-    // container element. We therefore need to check if these can be distinguished
-    // from what the container element might itself set.
-    hasDistinguishableTextDecoration(container, device, context),
-    hasDistinguishableBackground(container, device, context),
+  context: Context = Context.empty()
+): Result<ComputedStyles> {
+  const style = ComputedStyles.from(target, device, context);
 
-    hasDistinguishableFontWeight(container, device, context),
+  return test(
+    or(
+      // Things like text decoration and backgrounds risk blending with the
+      // container element. We therefore need to check if these can be distinguished
+      // from what the container element might itself set.
+      hasDistinguishableTextDecoration(container, device, context),
+      hasDistinguishableBackground(container, device, context),
 
-    // We consider the mere presence of borders or outlines on the element as
-    // distinguishable features. There's of course a risk of these blending with
-    // other features of the container element, such as its background, but this
-    // should hopefully not happen (too often) in practice. When it does, we
-    // risk false negatives.
-    hasOutline(device, context),
-    hasBorder(device, context)
-  );
+      hasDistinguishableFontWeight(container, device, context),
+
+      // We consider the mere presence of borders or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      hasOutline(device, context),
+      hasBorder(device, context)
+    ),
+    target
+  )
+    ? Ok.of(style)
+    : Err.of(style);
 }
 
 function hasDistinguishableTextDecoration(
@@ -215,4 +261,153 @@ function hasDistinguishableFontWeight(
       .computed("font-weight")
       .none((weight) => weight.equals(reference));
   };
+}
+
+export class ComputedStyles implements Equatable, Serializable {
+  public static of(
+    style: Iterable<[Property.Name, string]> = []
+  ): ComputedStyles {
+    return new ComputedStyles(Map.from(style));
+  }
+
+  private readonly _style: Map<Property.Name, string>;
+
+  private constructor(style: Map<Property.Name, string>) {
+    this._style = style;
+  }
+
+  public get style(): Map<Property.Name, string> {
+    return this._style;
+  }
+
+  public equals(value: ComputedStyles): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return value instanceof ComputedStyles && value._style.equals(this._style);
+  }
+
+  public toJSON(): ComputedStyles.JSON {
+    return {
+      style: this._style.toJSON(),
+    };
+  }
+}
+
+export namespace ComputedStyles {
+  export interface JSON {
+    [key: string]: json.JSON;
+    style: Map.JSON<Property.Name, string>;
+  }
+
+  export function from(
+    element: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): ComputedStyles {
+    const style = Style.from(element, device, context);
+
+    return ComputedStyles.of(
+      ([
+        "background-color",
+        "border-top-width",
+        "border-right-width",
+        "border-bottom-width",
+        "border-left-width",
+        "border-top-style",
+        "border-right-style",
+        "border-bottom-style",
+        "border-left-style",
+        "border-top-color",
+        "border-right-color",
+        "border-bottom-color",
+        "border-left-color",
+        "color",
+        "font-weight",
+        "outline-width",
+        "outline-style",
+        "outline-color",
+        "text-decoration-color",
+        "text-decoration-line",
+      ] as const).map((property) => [
+        property,
+        style.computed(property).toString(),
+      ])
+    );
+  }
+}
+
+export class DistinguishingStyles extends Diagnostic {
+  public static of(
+    message: string,
+    defaultStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([])),
+    hoverStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([])),
+    focusStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([]))
+  ): DistinguishingStyles {
+    return new DistinguishingStyles(
+      message,
+      defaultStyle,
+      hoverStyle,
+      focusStyle
+    );
+  }
+
+  private readonly _defaultStyle: Result<ComputedStyles>;
+  private readonly _hoverStyle: Result<ComputedStyles>;
+  private readonly _focusStyle: Result<ComputedStyles>;
+
+  private constructor(
+    message: string,
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
+  ) {
+    super(message);
+    this._defaultStyle = defaultStyle;
+    this._hoverStyle = hoverStyle;
+    this._focusStyle = focusStyle;
+  }
+
+  public get defaultStyle(): Result<ComputedStyles> {
+    return this._defaultStyle;
+  }
+
+  public get hoverStyle(): Result<ComputedStyles> {
+    return this._hoverStyle;
+  }
+
+  public get focusStyle(): Result<ComputedStyles> {
+    return this._focusStyle;
+  }
+
+  public equals(value: DistinguishingStyles): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof DistinguishingStyles &&
+      value._defaultStyle.equals(this._defaultStyle) &&
+      value._hoverStyle.equals(this._hoverStyle) &&
+      value._focusStyle.equals(this._focusStyle)
+    );
+  }
+
+  public toJSON(): DistinguishingStyles.JSON {
+    return {
+      ...super.toJSON(),
+      defaultStyle: this._defaultStyle.toJSON(),
+      hoverStyle: this._hoverStyle.toJSON(),
+      focusStyle: this._focusStyle.toJSON(),
+    };
+  }
+}
+
+export namespace DistinguishingStyles {
+  export interface JSON extends Diagnostic.JSON {
+    defaultStyle: Result.JSON<ComputedStyles>;
+    hoverStyle: Result.JSON<ComputedStyles>;
+    focusStyle: Result.JSON<ComputedStyles>;
+  }
 }
