@@ -319,7 +319,7 @@ export namespace ComputedStyles {
         return style.computed(`border-${side}-${postfix}` as const).toString();
       }
 
-      const top = getLongHand("top");
+      let top = getLongHand("top");
       let right = getLongHand("right");
       let bottom = getLongHand("bottom");
       let left = getLongHand("left");
@@ -330,6 +330,12 @@ export namespace ComputedStyles {
           bottom = "";
           if (right === top) {
             right = "";
+            if (
+              top ===
+              Property.get(`border-top-${postfix}` as const).initial.toString()
+            ) {
+              top = "";
+            }
           }
         }
       }
@@ -337,9 +343,9 @@ export namespace ComputedStyles {
       return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
     }
 
-    const shorthands = (["color", "style", "width"] as const).map((postfix) =>
-      fourValuesShorthand(postfix)
-    );
+    const shorthands = (["color", "style", "width"] as const)
+      .map((postfix) => fourValuesShorthand(postfix))
+      .filter(([name, value]) => value !== "");
 
     const longhands = ([
       "background-color",

@@ -12,8 +12,6 @@ import { passed, failed, inapplicable } from "../common/outcome";
 
 // default styling of links
 const properties: Array<[Property.Name | Property.Shorthand.Name, string]> = [
-  ["border-color", "currentcolor"],
-  ["border-style", "none"],
   ["border-width", "0px"],
   ["background-color", "rgb(0% 0% 0% / 0%)"],
   ["color", "rgb(0% 0% 93.33333%)"],
