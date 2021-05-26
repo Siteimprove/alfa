@@ -381,15 +381,6 @@ export class DistinguishingStyles extends Diagnostic {
     return this._focusStyle;
   }
 
-  public withMessage(message: string): DistinguishingStyles {
-    return new DistinguishingStyles(
-      message,
-      this._defaultStyle,
-      this._hoverStyle,
-      this._focusStyle
-    );
-  }
-
   public equals(value: DistinguishingStyles): boolean;
 
   public equals(value: unknown): value is this;
