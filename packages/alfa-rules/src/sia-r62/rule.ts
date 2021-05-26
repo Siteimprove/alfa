@@ -263,20 +263,22 @@ function hasDistinguishableFontWeight(
   };
 }
 
+type Name = Property.Name | Property.Shorthand.Name;
+
 export class ComputedStyles implements Equatable, Serializable {
   public static of(
-    style: Iterable<[Property.Name, string]> = []
+    style: Iterable<readonly [Name, string]> = []
   ): ComputedStyles {
     return new ComputedStyles(Map.from(style));
   }
 
-  private readonly _style: Map<Property.Name, string>;
+  private readonly _style: Map<Name, string>;
 
-  private constructor(style: Map<Property.Name, string>) {
+  private constructor(style: Map<Name, string>) {
     this._style = style;
   }
 
-  public get style(): Map<Property.Name, string> {
+  public get style(): Map<Name, string> {
     return this._style;
   }
 
@@ -298,7 +300,7 @@ export class ComputedStyles implements Equatable, Serializable {
 export namespace ComputedStyles {
   export interface JSON {
     [key: string]: json.JSON;
-    style: Map.JSON<Property.Name, string>;
+    style: Map.JSON<Name, string>;
   }
 
   export function from(
@@ -308,33 +310,51 @@ export namespace ComputedStyles {
   ): ComputedStyles {
     const style = Style.from(element, device, context);
 
-    return ComputedStyles.of(
-      ([
-        "background-color",
-        "border-top-width",
-        "border-right-width",
-        "border-bottom-width",
-        "border-left-width",
-        "border-top-style",
-        "border-right-style",
-        "border-bottom-style",
-        "border-left-style",
-        "border-top-color",
-        "border-right-color",
-        "border-bottom-color",
-        "border-left-color",
-        "color",
-        "font-weight",
-        "outline-width",
-        "outline-style",
-        "outline-color",
-        "text-decoration-color",
-        "text-decoration-line",
-      ] as const).map((property) => [
-        property,
-        style.computed(property).toString(),
-      ])
+    function fourValuesShorthand(
+      postfix: "color" | "style" | "width"
+    ): readonly [Name, string] {
+      const shorthand = `border-${postfix}` as const;
+
+      function getLongHand(side: "top" | "right" | "bottom" | "left"): string {
+        return style.computed(`border-${side}-${postfix}` as const).toString();
+      }
+
+      const top = getLongHand("top");
+      let right = getLongHand("right");
+      let bottom = getLongHand("bottom");
+      let left = getLongHand("left");
+
+      if (left === right) {
+        left = "";
+        if (bottom === top) {
+          bottom = "";
+          if (right === top) {
+            right = "";
+          }
+        }
+      }
+
+      return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
+    }
+
+    const shorthands = (["color", "style", "width"] as const).map((postfix) =>
+      fourValuesShorthand(postfix)
     );
+
+    const longhands = ([
+      "background-color",
+      "color",
+      "font-weight",
+      "outline-width",
+      "outline-style",
+      "outline-color",
+      "text-decoration-color",
+      "text-decoration-line",
+    ] as const).map(
+      (property) => [property, style.computed(property).toString()] as const
+    );
+
+    return ComputedStyles.of([...shorthands, ...longhands]);
   }
 }
 

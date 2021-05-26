@@ -11,20 +11,11 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
 // default styling of links
-const properties: Array<[Property.Name, string]> = [
+const properties: Array<[Property.Name | Property.Shorthand.Name, string]> = [
+  ["border-color", "currentcolor"],
+  ["border-style", "none"],
+  ["border-width", "0px"],
   ["background-color", "rgb(0% 0% 0% / 0%)"],
-  ["border-top-width", "0px"],
-  ["border-right-width", "0px"],
-  ["border-bottom-width", "0px"],
-  ["border-left-width", "0px"],
-  ["border-top-style", "none"],
-  ["border-right-style", "none"],
-  ["border-bottom-style", "none"],
-  ["border-left-style", "none"],
-  ["border-top-color", "currentcolor"],
-  ["border-right-color", "currentcolor"],
-  ["border-bottom-color", "currentcolor"],
-  ["border-left-color", "currentcolor"],
   ["color", "rgb(0% 0% 93.33333%)"],
   ["font-weight", "400"],
   ["outline-width", "0px"],
@@ -34,8 +25,9 @@ const properties: Array<[Property.Name, string]> = [
   ["text-decoration-line", "underline"],
 ];
 
-const style = (overwrite: Array<[Property.Name, string]>) =>
-  ComputedStyles.of([...properties, ...overwrite]);
+const style = (
+  overwrite: Array<[Property.Name | Property.Shorthand.Name, string]>
+) => ComputedStyles.of([...properties, ...overwrite]);
 
 const defaultStyle = Ok.of(style([]));
 const focusStyle = Ok.of(
@@ -304,9 +296,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   const styles = Ok.of(
     style([
       ["text-decoration-line", "none"],
-      ["border-bottom-width", "1px"],
-      ["border-bottom-style", "solid"],
-      ["border-bottom-color", "rgb(0% 0% 0%)"],
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
     ])
   );
 
@@ -318,9 +310,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         Ok.of(
           style([
             ["text-decoration-line", "none"],
-            ["border-bottom-width", "1px"],
-            ["border-bottom-style", "solid"],
-            ["border-bottom-color", "rgb(0% 0% 0%)"],
+            ["border-width", "0px 0px 1px"],
+            ["border-style", "none none solid"],
+            ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
             ["outline-style", "auto"],
             ["outline-width", "3px"],
           ])
@@ -349,9 +341,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   const styles = Err.of(
     style([
       ["text-decoration-line", "none"],
-      ["border-bottom-width", "1px"],
-      ["border-bottom-style", "solid"],
-      ["border-bottom-color", "rgb(0% 0% 0% / 0%)"],
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
     ])
   );
 
@@ -363,9 +355,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         Ok.of(
           style([
             ["text-decoration-line", "none"],
-            ["border-bottom-width", "1px"],
-            ["border-bottom-style", "solid"],
-            ["border-bottom-color", "rgb(0% 0% 0% / 0%)"],
+            ["border-width", "0px 0px 1px"],
+            ["border-style", "none none solid"],
+            ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
             ["outline-style", "auto"],
             ["outline-width", "3px"],
           ])
@@ -394,9 +386,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   const styles = Err.of(
     style([
       ["text-decoration-line", "none"],
-      ["border-bottom-width", "0px"],
-      ["border-bottom-style", "solid"],
-      ["border-bottom-color", "rgb(0% 0% 0%)"],
+      ["border-width", "0px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
     ])
   );
 
@@ -408,9 +400,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         Ok.of(
           style([
             ["text-decoration-line", "none"],
-            ["border-bottom-width", "0px"],
-            ["border-bottom-style", "solid"],
-            ["border-bottom-color", "rgb(0% 0% 0%)"],
+            ["border-width", "0px"],
+            ["border-style", "none none solid"],
+            ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
             ["outline-style", "auto"],
             ["outline-width", "3px"],
           ])
