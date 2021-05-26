@@ -346,9 +346,9 @@ export namespace ComputedStyles {
       return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
     }
 
-    const shorthands = (["color", "style", "width"] as const).map((postfix) =>
-      fourValuesShorthand(postfix)
-    );
+    const shorthands = (["color", "style", "width"] as const)
+      .map((postfix) => fourValuesShorthand(postfix))
+      .filter(([name, value]) => value !== "");
 
     function longhand(name: Property.Name): string {
       const property = style.computed(name).toString();
