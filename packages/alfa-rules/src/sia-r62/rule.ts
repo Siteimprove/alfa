@@ -369,6 +369,12 @@ export namespace ComputedStyles {
       "text-decoration-thickness"
     )}`.trim();
 
+    // While text-decoration-style is not important for deciding if there is one,
+    // it is important for rendering the link with the correct styling.
+    const textDecoration = `${longhand("text-decoration-line")} ${longhand(
+      "text-decoration-color"
+    )} ${longhand("text-decoration-style")}`.trim();
+
     const longhands = ([
       "background-color",
       "color",
