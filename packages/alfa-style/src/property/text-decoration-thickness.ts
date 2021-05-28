@@ -4,7 +4,6 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-import { Value } from "../value";
 
 const { either } = Parser;
 

@@ -2,7 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
