@@ -360,18 +360,25 @@ export namespace ComputedStyles {
       "outline-style"
     )} ${longhand("outline-style")}`.trim();
 
+    // While text-decoration-style is not important for deciding if there is one,
+    // it is important for rendering the link with the correct styling.
+    const textDecoration = `${longhand("text-decoration-line")} ${longhand(
+      "text-decoration-color"
+    )} ${longhand("text-decoration-style")}`.trim();
+
     const longhands = ([
       "background-color",
       "color",
       "font-weight",
-      "text-decoration-color",
-      "text-decoration-line",
     ] as const).map((property) => [property, longhand(property)] as const);
 
     return ComputedStyles.of(
-      [...shorthands, ...longhands, ["outline", outline] as const].filter(
-        ([name, value]) => value !== ""
-      )
+      [
+        ...shorthands,
+        ...longhands,
+        ["outline", outline] as const,
+        ["text-decoration", textDecoration] as const,
+      ].filter(([_, value]) => value !== "")
     );
   }
 }

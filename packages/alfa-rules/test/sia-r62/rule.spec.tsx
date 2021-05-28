@@ -25,7 +25,7 @@ const defaultProperties: Array<
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
-  ["text-decoration-line", "underline"],
+  ["text-decoration", "underline"],
 ];
 const focusProperties: Array<
   [Property.Name | Property.Shorthand.Name, string]
@@ -33,7 +33,7 @@ const focusProperties: Array<
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
   ["outline", "auto auto"],
-  ["text-decoration-line", "underline"],
+  ["text-decoration", "underline"],
 ];
 const noDistinguishingProperties: Array<
   [Property.Name | Property.Shorthand.Name, string]
