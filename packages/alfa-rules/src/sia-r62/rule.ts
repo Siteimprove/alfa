@@ -346,9 +346,9 @@ export namespace ComputedStyles {
       return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
     }
 
-    const shorthands = (["color", "style", "width"] as const)
-      .map((postfix) => fourValuesShorthand(postfix))
-      .filter(([name, value]) => value !== "");
+    const shorthands = (["color", "style", "width"] as const).map((postfix) =>
+      fourValuesShorthand(postfix)
+    );
 
     function longhand(name: Property.Name): string {
       const property = style.computed(name).toString();
@@ -356,20 +356,23 @@ export namespace ComputedStyles {
       return property === Property.get(name).initial.toString() ? "" : property;
     }
 
+    const outline = `${longhand("outline-color")} ${longhand(
+      "outline-style"
+    )} ${longhand("outline-style")}`.trim();
+
     const longhands = ([
       "background-color",
       "color",
       "font-weight",
-      "outline-width",
-      "outline-style",
-      "outline-color",
       "text-decoration-color",
       "text-decoration-line",
-    ] as const)
-      .map((property) => [property, longhand(property)] as const)
-      .filter(([name, value]) => value !== "");
+    ] as const).map((property) => [property, longhand(property)] as const);
 
-    return ComputedStyles.of([...shorthands, ...longhands]);
+    return ComputedStyles.of(
+      [...shorthands, ...longhands, ["outline", outline] as const].filter(
+        ([name, value]) => value !== ""
+      )
+    );
   }
 }
 

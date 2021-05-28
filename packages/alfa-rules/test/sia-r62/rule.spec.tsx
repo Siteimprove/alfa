@@ -25,7 +25,6 @@ const defaultProperties: Array<
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
-  ["outline-width", "0px"],
   ["text-decoration-line", "underline"],
 ];
 const focusProperties: Array<
@@ -33,7 +32,7 @@ const focusProperties: Array<
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
-  ["outline-style", "auto"],
+  ["outline", "auto auto"],
   ["text-decoration-line", "underline"],
 ];
 const noDistinguishingProperties: Array<
@@ -41,7 +40,6 @@ const noDistinguishingProperties: Array<
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
-  ["outline-width", "0px"],
 ];
 
 const defaultStyle = Ok.of(ComputedStyles.of(defaultProperties));
@@ -272,7 +270,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-style", "auto"],
+      ["outline", "auto auto"],
     ])
   );
 
@@ -305,7 +303,6 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-width", "0px"],
     ])
   );
 
@@ -317,7 +314,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         Ok.of(
           ComputedStyles.of([
             ["color", "rgb(0% 0% 93.33333%)"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
             ["border-width", "0px 0px 1px"],
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
@@ -347,7 +344,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   const styles = Err.of(
     ComputedStyles.of([
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-width", "0px"],
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
@@ -365,7 +361,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ["border-width", "0px 0px 1px"],
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
           ])
         )
       ),
@@ -392,7 +388,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   const styles = Err.of(
     ComputedStyles.of([
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-width", "0px"],
       ["border-width", "0px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
@@ -407,7 +402,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         Ok.of(
           ComputedStyles.of([
             ["color", "rgb(0% 0% 93.33333%)"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
             ["border-width", "0px"],
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
@@ -438,7 +433,6 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-width", "0px"],
       ["background-color", "rgb(100% 0% 0%)"],
     ])
   );
@@ -453,7 +447,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["background-color", "rgb(100% 0% 0%)"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
           ])
         )
       ),
@@ -489,7 +483,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
           ComputedStyles.of([
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
           ])
         )
       ),
@@ -521,7 +515,6 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-width", "0px"],
       ["background-color", "rgb(100% 0% 0%)"],
     ])
   );
@@ -536,7 +529,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["background-color", "rgb(100% 0% 0%)"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
           ])
         )
       ),
@@ -631,7 +624,6 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline-width", "0px"],
       ["font-weight", "700"],
     ])
   );
@@ -646,7 +638,7 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["font-weight", "700"],
-            ["outline-style", "auto"],
+            ["outline", "auto auto"],
           ])
         )
       ),
