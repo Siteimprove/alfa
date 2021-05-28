@@ -115,6 +115,7 @@ import "./property/text-decoration";
 import "./property/text-decoration-color";
 import "./property/text-decoration-line";
 import "./property/text-decoration-style";
+import "./property/text-decoration-thickness";
 import "./property/text-indent";
 import "./property/text-overflow";
 import "./property/text-transform";
