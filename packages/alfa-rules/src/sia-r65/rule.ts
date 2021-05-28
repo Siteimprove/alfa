@@ -187,7 +187,7 @@ function hasDifferentBorder(
 
         // We avoid keyword resolution for color,
         // but we need it for style. The none=hidden conflict has been solved
-        // by hasBorder so any difference in style is enough
+        // by hasBorder so any difference in style is enough.
         if (
           !(
             (effect === "color" &&
