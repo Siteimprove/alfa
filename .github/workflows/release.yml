@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
-      - uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.6
         with:
           path: .yarn/cache
           key: yarn-${{ hashFiles('yarn.lock') }}
@@ -28,7 +28,7 @@ jobs:
           --no-private
           --topological
           npm publish --tolerate-republish
-      - uses: actions/create-release@v1
+      - uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
