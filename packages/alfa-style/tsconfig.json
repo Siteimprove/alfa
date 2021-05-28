@@ -120,6 +120,7 @@
     "src/property/text-decoration-color.ts",
     "src/property/text-decoration-line.ts",
     "src/property/text-decoration-style.ts",
+    "src/property/text-decoration-thickness.ts",
     "src/property/text-indent.ts",
     "src/property/text-overflow.ts",
     "src/property/text-transform.ts",
