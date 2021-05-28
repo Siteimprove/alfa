@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { Array } from "@siteimprove/alfa-array";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";

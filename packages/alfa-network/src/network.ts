@@ -36,12 +36,23 @@ export class Network<N, E>
     return this._nodes.size;
   }
 
+  public isEmpty(): this is Network<N, never> {
+    return this._nodes.isEmpty();
+  }
+
   public nodes(): Iterable<N> {
     return this._nodes.keys();
   }
 
   public neighbors(node: N): Iterable<[N, Iterable<E>]> {
     return this._nodes.get(node).getOr([]);
+  }
+
+  public edges(from: N, to: N): Iterable<E> {
+    return this._nodes
+      .get(from)
+      .flatMap((neighbors) => neighbors.get(to))
+      .getOr([]);
   }
 
   public has(node: N): boolean {
@@ -68,9 +79,11 @@ export class Network<N, E>
     );
   }
 
-  public connect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
-
   public connect(from: N, to: N, ...edges: Array<E>): Network<N, E> {
+    if (edges.length === 0) {
+      return this;
+    }
+
     let nodes = this._nodes;
 
     if (!nodes.has(from)) {
@@ -101,10 +114,6 @@ export class Network<N, E>
       )
     );
   }
-
-  public disconnect(from: N, to: N): Network<N, E>;
-
-  public disconnect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
 
   public disconnect(from: N, to: N, ...edges: Array<E>): Network<N, E> {
     if (!this.has(from) || !this.has(to)) {
@@ -146,8 +155,32 @@ export class Network<N, E>
   public traverse(
     root: N,
     traversal: Network.Traversal = Network.DepthFirst
-  ): Sequence<N> {
+  ): Sequence<[node: N, edges: Iterable<E>, parent: N]> {
     return Sequence.from(traversal(this, root));
+  }
+
+  public path(
+    from: N,
+    to: N,
+    traversal: Network.Traversal = Network.BreadthFirst
+  ): Sequence<[node: N, edges: Iterable<E>]> {
+    const parents = Map.from(
+      Iterable.map(traversal(this, from), ([node, edges, parent]) => [
+        node,
+        [edges, parent] as const,
+      ])
+    );
+
+    const path: Array<[N, Iterable<E>]> = [];
+
+    while (parents.has(to)) {
+      const [edges, parent] = parents.get(to).get();
+
+      path.unshift([to, edges]);
+      to = parent;
+    }
+
+    return Sequence.from(path);
   }
 
   public hasPath(from: N, to: N): boolean {
@@ -155,7 +188,46 @@ export class Network<N, E>
       return false;
     }
 
-    return this.traverse(from).includes(to);
+    return this.traverse(from)
+      .map(([node]) => node)
+      .includes(to);
+  }
+
+  public reverse(): Network<N, E> {
+    let reversed = Network.empty<N, E>();
+
+    for (const [node, neighbors] of this._nodes) {
+      reversed = reversed.add(node);
+
+      for (const [neighbor, edges] of neighbors) {
+        reversed = reversed.connect(neighbor, node, ...edges);
+      }
+    }
+
+    return reversed;
+  }
+
+  public *sort(): Iterable<N> {
+    let incoming = this.reverse();
+
+    const queue = incoming
+      .toArray()
+      .filter(([, edges]) => edges.length === 0)
+      .map(([node]) => node);
+
+    while (queue.length > 0) {
+      const next = queue.shift()!;
+
+      yield next;
+
+      for (const [neighbor] of this.neighbors(next)) {
+        incoming = incoming.disconnect(neighbor, next);
+
+        if (Iterable.isEmpty(incoming.neighbors(neighbor))) {
+          queue.push(neighbor);
+        }
+      }
+    }
   }
 
   public equals<N, E>(value: Network<N, E>): boolean;
@@ -270,7 +342,9 @@ export namespace Network {
   }
 
   export interface Traversal {
-    <N, E>(network: Network<N, E>, root: N): Iterable<N>;
+    <N, E>(network: Network<N, E>, root: N): Iterable<
+      [node: N, edges: Iterable<E>, parent: N]
+    >;
   }
 
   /**
@@ -280,23 +354,25 @@ export namespace Network {
     graph: Network<N, E>,
     root: N
   ) {
-    const stack = [root];
+    const stack: Array<[node: N, edges: Iterable<E>, parent: N]> = [
+      ...graph.neighbors(root),
+    ].map((node) => [...node, root]);
 
-    let seen = Set.empty<N>();
+    let seen = Set.of(root);
 
     while (stack.length > 0) {
       const next = stack.pop()!;
 
-      if (seen.has(next)) {
+      if (seen.has(next[0])) {
         continue;
       }
 
       yield next;
 
-      seen = seen.add(next);
+      seen = seen.add(next[0]);
 
-      for (const [neighbor] of graph.neighbors(next)) {
-        stack.push(neighbor);
+      for (const neighbor of graph.neighbors(next[0])) {
+        stack.push([...neighbor, next[0]]);
       }
     }
   };
@@ -308,22 +384,27 @@ export namespace Network {
     graph: Network<N, E>,
     root: N
   ) {
-    const queue = [root];
+    const queue: Array<[node: N, edges: Iterable<E>, parent: N]> = [
+      ...graph.neighbors(root),
+    ].map((node) => [...node, root]);
 
-    let seen = Set.of(root);
+    let seen = Set.of(
+      root,
+      ...[...graph.neighbors(root)].map(([node]) => node)
+    );
 
     while (queue.length > 0) {
       const next = queue.shift()!;
 
       yield next;
 
-      for (const [neighbor] of graph.neighbors(next)) {
-        if (seen.has(neighbor)) {
+      for (const neighbor of graph.neighbors(next[0])) {
+        if (seen.has(neighbor[0])) {
           continue;
         }
 
-        seen = seen.add(neighbor);
-        queue.push(neighbor);
+        seen = seen.add(neighbor[0]);
+        queue.push([...neighbor, next[0]]);
       }
     }
   };

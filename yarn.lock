@@ -1052,7 +1052,7 @@ __metadata:
     "@siteimprove/alfa-json": "workspace:^0.17.0"
     "@siteimprove/alfa-test": "workspace:^0.17.0"
     "@types/browserslist": ^4.4.0
-    browserslist: ^4.16.3
+    browserslist: ^4.16.6
   languageName: unknown
   linkType: soft
 
@@ -1366,8 +1366,6 @@ __metadata:
   resolution: "@siteimprove/alfa-highlight@workspace:packages/alfa-highlight"
   dependencies:
     chalk: ^4.1.0
-    emphasize: ^4.2.0
-    highlight.js: ^10.7.2
   languageName: unknown
   linkType: soft
 
@@ -1480,10 +1478,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-json-ld@workspace:packages/alfa-json-ld"
   dependencies:
-    "@siteimprove/alfa-option": "workspace:^0.17.0"
-    "@siteimprove/alfa-result": "workspace:^0.17.0"
+    "@siteimprove/alfa-json": "workspace:^0.17.0"
     "@siteimprove/alfa-test": "workspace:^0.17.0"
-    "@siteimprove/alfa-url": "workspace:^0.17.0"
   languageName: unknown
   linkType: soft
 
@@ -3282,18 +3278,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.16.3":
-  version: 4.16.3
-  resolution: "browserslist@npm:4.16.3"
+"browserslist@npm:^4.16.6":
+  version: 4.16.6
+  resolution: "browserslist@npm:4.16.6"
   dependencies:
-    caniuse-lite: ^1.0.30001181
-    colorette: ^1.2.1
-    electron-to-chromium: ^1.3.649
+    caniuse-lite: ^1.0.30001219
+    colorette: ^1.2.2
+    electron-to-chromium: ^1.3.723
     escalade: ^3.1.1
-    node-releases: ^1.1.70
+    node-releases: ^1.1.71
   bin:
     browserslist: cli.js
-  checksum: 8016901f6d13b9600487167068031745db4a13aaefff2fdc3db1a413e67f17ff73ce7db3f2217676e68e6a476844e5a30c82e2b22e7bfe342aaa8894a92aa146
+  checksum: 3dffc86892d2dcfcfc66b52519b7e5698ae070b4fc92ab047e760efc4cae0474e9e70bbe10d769c8d3491b655ef3a2a885b88e7196c83cc5dc0a46dfdba8b70c
   languageName: node
   linkType: hard
 
@@ -3441,10 +3437,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001181":
-  version: 1.0.30001208
-  resolution: "caniuse-lite@npm:1.0.30001208"
-  checksum: 720c5d7582f08f21a983ccc12a8a32f1d5d08251258862c152ff2c3fa50ef9be5bc5cd34e1bfe35dae1dcaf72248fef75d868b8c3c22ee72a118eef17fae167f
+"caniuse-lite@npm:^1.0.30001219":
+  version: 1.0.30001230
+  resolution: "caniuse-lite@npm:1.0.30001230"
+  checksum: 7ad6bf592c272dc62e59eb05b7e8581f6e8e0b0f6cef8e687c82c8306d77dccacdbba86286a4d1e3defebdd358ddc0a236208f08ea8e7b899d7b519c1223399a
   languageName: node
   linkType: hard
 
@@ -3760,7 +3756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colorette@npm:^1.2.1":
+"colorette@npm:^1.2.2":
   version: 1.2.2
   resolution: "colorette@npm:1.2.2"
   checksum: 69fec14ddaedd0f5b00e4bae40dc4bc61f7050ebdc82983a595d6fd64e650b9dc3c033fff378775683138e992e0ddd8717ac7c7cec4d089679dcfbe3cd921b04
@@ -4438,10 +4434,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.3.649":
-  version: 1.3.711
-  resolution: "electron-to-chromium@npm:1.3.711"
-  checksum: e1e8e30cfda180a1dbe4e8c0596f36de025e6c9475c76bc504eae6cfb40e0e9f3e3d9ec5e5358cf4f7479b442c79375ce9e8b461fa1a134a8f4a926af200d96b
+"electron-to-chromium@npm:^1.3.723":
+  version: 1.3.741
+  resolution: "electron-to-chromium@npm:1.3.741"
+  checksum: e00f58043fb3019c746d19502fbbfd7c0c12c232ccf48ede196eee50ffe585ac75245459f48abf766f870148f651677a3085e3a1122cc2ea4a840514b5d3bddd
   languageName: node
   linkType: hard
 
@@ -4463,17 +4459,6 @@ __metadata:
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
   checksum: d4c5c39d5a9868b5fa152f00cada8a936868fd3367f33f71be515ecee4c803132d11b31a6222b2571b1e5f7e13890156a94880345594d0ce7e3c9895f560f192
-  languageName: node
-  linkType: hard
-
-"emphasize@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "emphasize@npm:4.2.0"
-  dependencies:
-    chalk: ^4.0.0
-    highlight.js: ~10.4.0
-    lowlight: ~1.17.0
-  checksum: 5016b995dbae408e1cee9ae4cc8aab95c1f50a0c20be82dfea56c9153a6c36407eca43f8a74e5e2b61f728fe45dc089176a8325f92f5a7cd08a9b7ff2703c13b
   languageName: node
   linkType: hard
 
@@ -4926,15 +4911,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fault@npm:^1.0.0":
-  version: 1.0.4
-  resolution: "fault@npm:1.0.4"
-  dependencies:
-    format: ^0.2.0
-  checksum: 5ac610d8b09424e0f2fa8cf913064372f2ee7140a203a79957f73ed557c0e79b1a3d096064d7f40bde8132a69204c1fe25ec23634c05c6da2da2039cff26c4e7
-  languageName: node
-  linkType: hard
-
 "fb-watchman@npm:^2.0.0":
   version: 2.0.1
   resolution: "fb-watchman@npm:2.0.1"
@@ -5035,13 +5011,6 @@ __metadata:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 10c1780fa13dbe1ff3100114c2ce1f9307f8be10b14bf16e103815356ff567b6be39d70fc4a40f8990b9660012dc24b0f5e1dde1b6426166eb23a445ba068ca3
-  languageName: node
-  linkType: hard
-
-"format@npm:^0.2.0":
-  version: 0.2.2
-  resolution: "format@npm:0.2.2"
-  checksum: 646a60e1336250d802509cf24fb801e43bd4a70a07510c816fa133aa42cdbc9c21e66e9cc0801bb183c5b031c9d68be62e7fbb6877756e52357850f92aa28799
   languageName: node
   linkType: hard
 
@@ -5458,20 +5427,6 @@ fsevents@^2.1.2:
   bin:
     he: bin/he
   checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
-  languageName: node
-  linkType: hard
-
-"highlight.js@npm:^10.7.2":
-  version: 10.7.2
-  resolution: "highlight.js@npm:10.7.2"
-  checksum: af09b434070c81ed154b4c990bee61a8c1295887554abc7884eb2544c48bff208e237e7ce1b324ebe94abe0f942e15e2c11dff1b1ed22a79a3c4a0d8a900a921
-  languageName: node
-  linkType: hard
-
-"highlight.js@npm:~10.4.0":
-  version: 10.4.1
-  resolution: "highlight.js@npm:10.4.1"
-  checksum: b6b5f6c4ab6f5d2289fa2d2c321759cd0af081daf8586b1c51185a59914804b3062bb66969e38ac0609782cca775ef3060a4f0c38a04c12c668a884117b67531
   languageName: node
   linkType: hard
 
@@ -7201,16 +7156,6 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"lowlight@npm:~1.17.0":
-  version: 1.17.0
-  resolution: "lowlight@npm:1.17.0"
-  dependencies:
-    fault: ^1.0.0
-    highlight.js: ~10.4.0
-  checksum: 8e6e30ae64cb7a48b53d279d388bade6569154024ef9b6ac46ddda99e627afe9642455cf8de893c71eb952f673840042e26d9fca7fa0f9da9aa52708f6cb4234
-  languageName: node
-  linkType: hard
-
 "lru-cache@npm:^4.1.5":
   version: 4.1.5
   resolution: "lru-cache@npm:4.1.5"
@@ -7651,10 +7596,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"node-releases@npm:^1.1.70":
-  version: 1.1.71
-  resolution: "node-releases@npm:1.1.71"
-  checksum: a6ab18069e43d70b811fa7f12b397619f2003f78ac2ed0affa30876880ca3036a191d33679d93baac166afa12a7b1b1716e13f3c82c0f0fa09e2c83db3f91faf
+"node-releases@npm:^1.1.71":
+  version: 1.1.72
+  resolution: "node-releases@npm:1.1.72"
+  checksum: 84dacd44e6595c76e3097b69051b24bf5c3bdb374efc9bef343200ffa183fce10a31ba1c763af51d897ba0f6d00cd1e10eb34a03146688ce4cb051f1d80c402b
   languageName: node
   linkType: hard
 
