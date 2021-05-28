@@ -18,9 +18,6 @@ export function hasBorder(
       (side) =>
         style.computed(`border-${side}-width` as const).none(Length.isZero) &&
         style
-          .computed(`border-${side}-style` as const)
-          .none((style) => style.value === "none") &&
-        style
           .computed(`border-${side}-color` as const)
           .none((color) => color.type === "color" && Color.isTransparent(color))
     );
