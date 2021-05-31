@@ -1,6 +1,7 @@
 import {Rule, Diagnostic} from "@siteimprove/alfa-act";
 import {Node} from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import {None, Option} from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -28,7 +29,7 @@ export default Rule.Inventory.of<Page, Element>({
       },
 
       expectations(target) {
-        const name = Node.from(target, device).name.map(name => name.value).getOr("")
+        const name = Node.from(target, device).name.map(name => name.value)
 
         return ImageName.of("", name)
       },
@@ -39,19 +40,19 @@ export default Rule.Inventory.of<Page, Element>({
 class ImageName extends Diagnostic {
   public static of(
     message: string,
-    name: string = ""
+    name: Option<string> = None
   ): ImageName {
     return new ImageName(message, name);
   }
 
-  private readonly _name: string;
+  private readonly _name: Option<string>;
 
-  private constructor(message: string, name: string) {
+  private constructor(message: string, name: Option<string>) {
     super(message);
     this._name = name;
   }
 
-  public get name(): string {
+  public get name(): Option<string> {
     return this._name;
   }
 
@@ -63,20 +64,20 @@ class ImageName extends Diagnostic {
     return (
       value instanceof ImageName &&
       value._message === this._message &&
-      value._name === this._name
+      value._name.equals(this._name)
     );
   }
 
   public toJSON(): ImageName.JSON {
     return {
       ...super.toJSON(),
-      name: this._name,
+      name: this._name.toJSON(),
     };
   }
 }
 
 namespace ImageName {
   export interface JSON extends Diagnostic.JSON {
-    name: string;
+    name: Option.JSON<string>;
   }
 }

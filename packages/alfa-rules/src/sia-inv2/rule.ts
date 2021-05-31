@@ -3,6 +3,7 @@ import {Node} from "@siteimprove/alfa-aria";
 import {Document, Element, Namespace} from "@siteimprove/alfa-dom";
 import {Equatable} from "@siteimprove/alfa-equatable";
 import {Serializable} from "@siteimprove/alfa-json";
+import {Option} from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -35,23 +36,31 @@ export default Rule.Inventory.of<Page, Document>({
             )
           ));
 
-        return ImagesNames.of("", images.map(image => ImageName.of(image, Node.from(image, device).name.map(name => name.value).getOr(""))))
+        return ImagesNames.of("", images.map(image => ImageName.of(image, Node.from(image, device).name.map(name => name.value))))
       },
     };
   },
 });
 
 class ImageName implements Equatable, Serializable {
-  public static of(image: Element, name: string): ImageName {
+  public static of(image: Element, name: Option<string>): ImageName {
     return new ImageName(image, name)
   }
 
   private readonly _image: Element;
-  private readonly _name: string;
+  private readonly _name: Option<string>;
 
-  private constructor(image: Element, name: string) {
+  private constructor(image: Element, name: Option<string>) {
     this._image = image;
     this._name = name
+  }
+
+  public get image(): Element {
+    return this._image;
+  }
+
+  public get name(): Option<string> {
+    return this._name;
   }
 
   public equals(value: ImageName): boolean;
@@ -60,14 +69,14 @@ class ImageName implements Equatable, Serializable {
 
   public equals(value: unknown): boolean {
     return value instanceof ImageName &&
-      value._name === this._name &&
+      value._name.equals(this._name) &&
       value._image.equals(this._image)
   }
 
   public toJSON(): ImageName.JSON {
     return {
       image: this._image.toJSON(),
-      name: this._name
+      name: this._name.toJSON()
     }
   }
 }
@@ -76,7 +85,7 @@ namespace ImageName {
   export interface JSON {
     [key: string]: json.JSON;
     image: Element.JSON;
-    name: string;
+    name: Option.JSON<string>;
   }
 }
 
