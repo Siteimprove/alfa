@@ -64,6 +64,7 @@
     "src/common/question.ts",
     "src/index.ts",
     "src/rules.ts",
+    "src/sia-inv1/rule.ts",
     "src/sia-r1/rule.ts",
     "src/sia-r10/rule.ts",
     "src/sia-r11/rule.ts",
