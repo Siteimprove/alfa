@@ -19,13 +19,7 @@ test(`evaluate() passes a <div> element with a role of checkbox and an
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of(
-          "",
-          "checkbox",
-          ["aria-checked"],
-          [],
-          ["aria-checked"]
-        )
+        RoleAndRequiredAttributes.of("", "checkbox", ["aria-checked"], [])
       ),
     }),
   ]);
@@ -39,13 +33,7 @@ test(`evaluate() passes an <input> element with a type of checkbox`, async (t) =
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of(
-          "",
-          "checkbox",
-          ["aria-checked"],
-          [],
-          ["aria-checked"]
-        )
+        RoleAndRequiredAttributes.of("", "checkbox", ["aria-checked"], [])
       ),
     }),
   ]);
@@ -59,7 +47,7 @@ test(`evaluate() passes an <hr> element`, async (t) => {
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of("", "separator", [], [], [])
+        RoleAndRequiredAttributes.of("", "separator", [], [])
       ),
     }),
   ]);
@@ -73,7 +61,7 @@ test(`evaluate() passes a non-focusable <div> element with a role of separator`,
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of("", "separator", [], [], [])
+        RoleAndRequiredAttributes.of("", "separator", [], [])
       ),
     }),
   ]);
@@ -88,13 +76,7 @@ test(`evaluate() passes a focusable <div> element with a role of separator and
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of(
-          "",
-          "separator",
-          ["aria-valuenow"],
-          [],
-          ["aria-valuenow"]
-        )
+        RoleAndRequiredAttributes.of("", "separator", ["aria-valuenow"], [])
       ),
     }),
   ]);
@@ -113,8 +95,7 @@ test(`evaluate() fails a <div> element with a role of checkbox and no
           "",
           "checkbox",
           ["aria-checked"],
-          ["aria-checked"],
-          []
+          ["aria-checked"]
         )
       ),
     }),
@@ -134,8 +115,7 @@ test(`evaluate() fails a focusable <div> element with a role of separator and no
           "",
           "separator",
           ["aria-valuenow"],
-          ["aria-valuenow"],
-          []
+          ["aria-valuenow"]
         )
       ),
     }),
