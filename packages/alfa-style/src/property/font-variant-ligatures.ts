@@ -106,6 +106,7 @@ const parseLigature: Parser<Slice<Token>, List<Specified.Item>, string> = (
         continue;
       }
     }
+
     if (historical === undefined) {
       const result = parseHistorical(input);
 
@@ -114,6 +115,7 @@ const parseLigature: Parser<Slice<Token>, List<Specified.Item>, string> = (
         continue;
       }
     }
+
     if (contextual === undefined) {
       const result = parseContextual(input);
 
@@ -122,6 +124,7 @@ const parseLigature: Parser<Slice<Token>, List<Specified.Item>, string> = (
         continue;
       }
     }
+
     break;
   }
 
