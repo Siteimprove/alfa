@@ -89,6 +89,7 @@ import "./property/font-stretch";
 import "./property/font-style";
 import "./property/font-weight";
 import "./property/font-variant-ligatures";
+import "./property/font-variant-position";
 import "./property/height";
 import "./property/inset";
 import "./property/inset-block";

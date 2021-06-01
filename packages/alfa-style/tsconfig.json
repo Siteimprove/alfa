@@ -94,6 +94,7 @@
     "src/property/font-style.ts",
     "src/property/font-weight.ts",
     "src/property/font-variant-ligatures.ts",
+    "src/property/font-variant-position.ts",
     "src/property/height.ts",
     "src/property/inset.ts",
     "src/property/inset-block.ts",
