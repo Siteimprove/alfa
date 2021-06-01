@@ -53,6 +53,7 @@ export default Property.register(
   Property.of<Specified, Computed>(
     Keyword.of("normal"),
     parse,
-    (borderStyle) => borderStyle
+    (ligatures) => ligatures,
+    { inherits: true }
   )
 );
