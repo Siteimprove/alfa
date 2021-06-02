@@ -17,7 +17,7 @@ jobs:
 #    env:
 #      NODE_OPTIONS: "--max-old-space-size=2048"
     steps:
-      - run: node -e "console.log(`node heap limit = ${require('v8').getHeapStatistics().heap_size_limit / (1024 * 1024)} Mb`)"
+      - run: node -e "console.log(require('v8').getHeapStatistics().heap_size_limit / (1024 * 1024))"
 #      - uses: actions/checkout@v2.3.4
 #      - uses: actions/setup-node@v2.1.5
 #        with:
