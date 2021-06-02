@@ -95,6 +95,7 @@
     "src/property/font-weight.ts",
     "src/property/font-variant-caps.ts",
     "src/property/font-variant-ligatures.ts",
+    "src/property/font-variant-numeric.ts",
     "src/property/font-variant-position.ts",
     "src/property/height.ts",
     "src/property/inset.ts",
