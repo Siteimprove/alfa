@@ -14,8 +14,8 @@ jobs:
         os: [ubuntu-latest]
         node: [12, 14]
     runs-on: ${{ matrix.os }}
-#    env:
-#      NODE_OPTIONS: "--max-old-space-size=2048"
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - run: node -e "console.log(require('v8').getHeapStatistics().heap_size_limit / (1024 * 1024))"
 #      - uses: actions/checkout@v2.3.4
