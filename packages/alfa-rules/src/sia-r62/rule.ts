@@ -358,7 +358,7 @@ export namespace ComputedStyles {
 
     const outline = `${longhand("outline-color")} ${longhand(
       "outline-style"
-    )} ${longhand("outline-style")}`.trim();
+    )} ${longhand("outline-width")}`.trim();
 
     // While text-decoration-style and text-decoration-thickness are not
     // important for deciding if there is one, but they are important for
