@@ -46,17 +46,20 @@ export type Computed = Specified;
 /**
  * @internal
  */
-const parseFigure = Keyword.parse("lining-nums", "oldstyle-nums");
+export const parseFigure = Keyword.parse("lining-nums", "oldstyle-nums");
 
 /**
  * @internal
  */
-const parseSpacing = Keyword.parse("proportional-nums", "tabular-nums");
+export const parseSpacing = Keyword.parse("proportional-nums", "tabular-nums");
 
 /**
  * @internal
  */
-const parseFraction = Keyword.parse("diagonal-fractions", "stacked-fractions");
+export const parseFraction = Keyword.parse(
+  "diagonal-fractions",
+  "stacked-fractions"
+);
 
 /**
  * @internal

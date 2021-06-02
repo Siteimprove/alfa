@@ -50,12 +50,15 @@ export type Computed = Specified;
 /**
  * @internal
  */
-const parseCommon = Keyword.parse("common-ligatures", "no-common-ligatures");
+export const parseCommon = Keyword.parse(
+  "common-ligatures",
+  "no-common-ligatures"
+);
 
 /**
  * @internal
  */
-const parseDiscretionary = Keyword.parse(
+export const parseDiscretionary = Keyword.parse(
   "discretionary-ligatures",
   "no-discretionary-ligatures"
 );
@@ -63,7 +66,7 @@ const parseDiscretionary = Keyword.parse(
 /**
  * @internal
  */
-const parseHistorical = Keyword.parse(
+export const parseHistorical = Keyword.parse(
   "historical-ligatures",
   "no-historical-ligatures"
 );
@@ -71,7 +74,7 @@ const parseHistorical = Keyword.parse(
 /**
  * @internal
  */
-const parseContextual = Keyword.parse("contextual", "no-contextual");
+export const parseContextual = Keyword.parse("contextual", "no-contextual");
 
 /**
  * @internal

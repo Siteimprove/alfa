@@ -88,6 +88,7 @@ import "./property/font-size";
 import "./property/font-stretch";
 import "./property/font-style";
 import "./property/font-weight";
+import "./property/font-variant";
 import "./property/font-variant-caps";
 import "./property/font-variant-east-asian";
 import "./property/font-variant-ligatures";

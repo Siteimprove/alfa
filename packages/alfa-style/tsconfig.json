@@ -93,6 +93,7 @@
     "src/property/font-stretch.ts",
     "src/property/font-style.ts",
     "src/property/font-weight.ts",
+    "src/property/font-variant.ts",
     "src/property/font-variant-caps.ts",
     "src/property/font-variant-east-asian.ts",
     "src/property/font-variant-ligatures.ts",

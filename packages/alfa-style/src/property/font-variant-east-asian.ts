@@ -43,7 +43,7 @@ export type Computed = Specified;
 /**
  * @internal
  */
-const parseVariant = Keyword.parse(
+export const parseVariant = Keyword.parse(
   "jis78",
   "jis83",
   "jis90",
@@ -55,7 +55,7 @@ const parseVariant = Keyword.parse(
 /**
  * @internal
  */
-const parseWidth = Keyword.parse("proportional-width", "full-width");
+export const parseWidth = Keyword.parse("proportional-width", "full-width");
 
 /**
  * @internal
