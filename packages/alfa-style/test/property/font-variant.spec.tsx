@@ -6,13 +6,13 @@ import { Style } from "../../src/style";
 
 const device = Device.standard();
 
-test(`#cascaded() parses \`font-variant: oldstyle-nums sub ruby
+test(`#cascaded() parses \`font-variant: oldstyle-nums ruby
      historical-ligatures diagonal-fractions ordinal contextual slashed-zero\``, (t) => {
   const element = (
     <div
       style={{
         "font-variant":
-          "oldstyle-nums sub ruby historical-ligatures diagonal-fractions ordinal contextual slashed-zero",
+          "oldstyle-nums ruby historical-ligatures diagonal-fractions ordinal contextual slashed-zero",
       }}
     />
   );
@@ -48,10 +48,5 @@ test(`#cascaded() parses \`font-variant: oldstyle-nums sub ruby
       { type: "keyword", value: "slashed-zero" },
     ],
     separator: " ",
-  });
-
-  t.deepEqual(style.cascaded("font-variant-position").get().value.toJSON(), {
-    type: "keyword",
-    value: "sub",
   });
 });

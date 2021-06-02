@@ -9,7 +9,7 @@ import * as Caps from "./font-variant-caps";
 import * as EastAsian from "./font-variant-east-asian";
 import * as Ligatures from "./font-variant-ligatures";
 import * as Numeric from "./font-variant-numeric";
-import * as Position from "./font-variant-position";
+
 import { List } from "./value/list";
 
 declare module "../property" {
@@ -19,7 +19,6 @@ declare module "../property" {
       | "font-variant-east-asian"
       | "font-variant-ligatures"
       | "font-variant-numeric"
-      | "font-variant-position"
     >;
   }
 }
@@ -33,8 +32,7 @@ export const parse: Parser<
     ["font-variant-caps", Caps.Specified | Keyword<"initial">],
     ["font-variant-east-asian", EastAsian.Specified | Keyword<"initial">],
     ["font-variant-ligatures", Ligatures.Specified | Keyword<"initial">],
-    ["font-variant-numeric", Numeric.Specified | Keyword<"initial">],
-    ["font-variant-position", Position.Specified | Keyword<"initial">]
+    ["font-variant-numeric", Numeric.Specified | Keyword<"initial">]
   ],
   string
 > = (input) => {
@@ -58,8 +56,6 @@ export const parse: Parser<
   let fraction: Numeric.Specified.Fraction | undefined;
   let ordinal: Keyword<"ordinal"> | undefined;
   let slashed: Keyword<"slashed-zero"> | undefined;
-
-  let position: Position.Specified | undefined;
 
   while (true) {
     for (const [remainder] of Token.parseWhitespace(input)) {
@@ -187,16 +183,6 @@ export const parse: Parser<
       }
     }
 
-    // -------------------------    Position
-    if (position === undefined) {
-      const result = Position.parse(input);
-
-      if (result.isOk()) {
-        [input, position] = result.get();
-        continue;
-      }
-    }
-
     break;
   }
 
@@ -213,8 +199,7 @@ export const parse: Parser<
     spacing === undefined &&
     fraction === undefined &&
     ordinal === undefined &&
-    slashed === undefined &&
-    position === undefined
+    slashed === undefined
   ) {
     return Err.of("At least one Font variant value must be provided");
   }
@@ -255,7 +240,6 @@ export const parse: Parser<
           slashed
         ),
       ],
-      ["font-variant-position", position ?? Keyword.of("initial")],
     ],
   ]);
 };
@@ -272,7 +256,6 @@ export default Property.registerShorthand(
       "font-variant-east-asian",
       "font-variant-ligatures",
       "font-variant-numeric",
-      "font-variant-position",
     ],
     parse
   )
