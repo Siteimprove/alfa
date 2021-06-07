@@ -14,6 +14,8 @@ import * as Weight from "./font-weight";
 
 const { map, option, pair, right, delimited } = Parser;
 
+// font may only set font-variant-caps to small-caps, but setting font
+// does reset all font-variant-* longhand to initial value (this is good!)
 declare module "../property" {
   interface Shorthands {
     font: Property.Shorthand<
@@ -21,6 +23,11 @@ declare module "../property" {
       | "font-size"
       | "font-stretch"
       | "font-style"
+      | "font-variant-caps"
+      | "font-variant-east-asian"
+      | "font-variant-ligatures"
+      | "font-variant-numeric"
+      | "font-variant-position"
       | "font-weight"
       | "line-height"
     >;
@@ -35,6 +42,11 @@ export const parsePrelude: Parser<
   [
     ["font-stretch", Stretch.Specified | Keyword<"initial">],
     ["font-style", Style.Specified | Keyword<"initial">],
+    // only "normal" and "small-caps" are accepted in font…
+    [
+      "font-variant-caps",
+      Keyword<"normal"> | Keyword<"small-caps"> | Keyword<"initial">
+    ],
     ["font-weight", Weight.Specified | Keyword<"initial">]
   ],
   string
@@ -93,6 +105,7 @@ export const parsePrelude: Parser<
     [
       ["font-stretch", stretch ?? Keyword.of("initial")],
       ["font-style", style ?? Keyword.of("initial")],
+      ["font-variant-caps", variant ?? Keyword.of("initial")],
       ["font-weight", weight ?? Keyword.of("initial")],
     ],
   ]);
@@ -129,6 +142,11 @@ export default Property.registerShorthand(
       "font-size",
       "font-stretch",
       "font-style",
+      "font-variant-caps",
+      "font-variant-east-asian",
+      "font-variant-ligatures",
+      "font-variant-numeric",
+      "font-variant-position",
       "font-weight",
       "line-height",
     ],

@@ -62,7 +62,6 @@ function hasRequiredValues(
   let roleName: string = "";
   let required: Array<aria.Attribute.Name> = [];
   let missing: Array<aria.Attribute.Name> = [];
-  let found: Array<aria.Attribute.Name> = [];
 
   for (const role of node.role) {
     roleName = role.name;
@@ -72,7 +71,7 @@ function hasRequiredValues(
     // role has no required attributes.
     if (role.is("separator") && !isFocusable(device)(element)) {
       return Ok.of(
-        RoleAndRequiredAttributes.of("", roleName, required, missing, found)
+        RoleAndRequiredAttributes.of("", roleName, required, missing)
       );
     }
 
@@ -83,20 +82,14 @@ function hasRequiredValues(
         if (node.attribute(attribute).every(property("value", isEmpty))) {
           missing.push(attribute);
           result = false;
-        } else {
-          found.push(attribute);
         }
       }
     }
   }
 
   return result
-    ? Ok.of(
-        RoleAndRequiredAttributes.of("", roleName, required, missing, found)
-      )
-    : Err.of(
-        RoleAndRequiredAttributes.of("", roleName, required, missing, found)
-      );
+    ? Ok.of(RoleAndRequiredAttributes.of("", roleName, required, missing))
+    : Err.of(RoleAndRequiredAttributes.of("", roleName, required, missing));
 }
 
 export class RoleAndRequiredAttributes extends Diagnostic {
@@ -104,35 +97,30 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     message: string,
     role: string = "",
     requiredAttributes: ReadonlyArray<aria.Attribute.Name> = [],
-    missingAttributes: ReadonlyArray<aria.Attribute.Name> = [],
-    foundAttributes: ReadonlyArray<aria.Attribute.Name> = []
+    missingAttributes: ReadonlyArray<aria.Attribute.Name> = []
   ): RoleAndRequiredAttributes {
     return new RoleAndRequiredAttributes(
       message,
       role,
       requiredAttributes,
-      missingAttributes,
-      foundAttributes
+      missingAttributes
     );
   }
 
   private readonly _role: string;
   private readonly _requiredAttributes: ReadonlyArray<aria.Attribute.Name>;
   private readonly _missingAttributes: ReadonlyArray<aria.Attribute.Name>;
-  private readonly _foundAttributes: ReadonlyArray<aria.Attribute.Name>;
 
   private constructor(
     message: string,
     role: string,
     requiredAttributes: ReadonlyArray<aria.Attribute.Name>,
-    missingAttributes: ReadonlyArray<aria.Attribute.Name>,
-    foundAttributes: ReadonlyArray<aria.Attribute.Name>
+    missingAttributes: ReadonlyArray<aria.Attribute.Name>
   ) {
     super(message);
     this._role = role;
     this._requiredAttributes = requiredAttributes;
     this._missingAttributes = missingAttributes;
-    this._foundAttributes = foundAttributes;
   }
 
   public get role(): string {
@@ -147,17 +135,12 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     return this._missingAttributes;
   }
 
-  public get foundAttributes(): ReadonlyArray<aria.Attribute.Name> {
-    return this._foundAttributes;
-  }
-
   public withMessage(message: string): RoleAndRequiredAttributes {
     return new RoleAndRequiredAttributes(
       message,
       this._role,
       this._requiredAttributes,
-      this._missingAttributes,
-      this._foundAttributes
+      this._missingAttributes
     );
   }
 
@@ -171,8 +154,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
       value._message === this._message &&
       value._role === this._role &&
       Array.equals(value._requiredAttributes, this._requiredAttributes) &&
-      Array.equals(value._missingAttributes, this._missingAttributes) &&
-      Array.equals(value._foundAttributes, this._foundAttributes)
+      Array.equals(value._missingAttributes, this._missingAttributes)
     );
   }
 
@@ -183,7 +165,6 @@ export class RoleAndRequiredAttributes extends Diagnostic {
       attributes: {
         required: Array.copy(this._requiredAttributes),
         missing: Array.copy(this._missingAttributes),
-        found: Array.copy(this._foundAttributes),
       },
     };
   }
@@ -195,7 +176,6 @@ namespace RoleAndRequiredAttributes {
     attributes: {
       required: Array<aria.Attribute.Name>;
       missing: Array<aria.Attribute.Name>;
-      found: Array<aria.Attribute.Name>;
     };
   }
 }
