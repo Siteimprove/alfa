@@ -61,6 +61,37 @@ test(`isVisible() returns false when an element is hidden by reducing its size
   t.equal(isVisible(element), false);
 });
 
+test(`isVisible() returns false when an element is hidden by reducing its size
+      to 1x1 pixels and clipping overflow`, (t) => {
+  const element = (
+    <div style={{ width: "0px", height: "0px", overflow: "hidden" }}>
+      Hello World
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false when an element is scroll and its size is 0x0 px`, (t) => {
+  const element = (
+    <div style={{ width: "0px", height: "0px", overflow: "scroll" }}>
+      Hello World
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false when an element is auto and its size is 0x0 px`, (t) => {
+  const element = (
+    <div style={{ width: "0px", height: "0px", overflow: "auto" }}>
+      Hello World
+    </div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
 test("isVisible() returns false on empty elements", (t) => {
   const element = <div />;
 
@@ -380,5 +411,15 @@ test(`isVisible() returns false for a text node with a parent element with
   const element = <div style={{ opacity: "0" }}>{text}</div>;
 
   t.equal(isVisible(text), false);
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false when an element is scroll and its size is 0x0 px`, (t) => {
+  const element = (
+    <div style={{ width: "0px", height: "0px", overflow: "scroll" }}>
+      Hello World
+    </div>
+  );
+
   t.equal(isVisible(element), false);
 });

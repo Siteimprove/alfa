@@ -64,6 +64,52 @@ function isClippedBySize(
           }
         }
       }
+
+      if (x.value === "auto" || y.value === "auto") {
+        const { value: height } = style.computed("height");
+        const { value: width } = style.computed("width");
+
+        for (const dimension of [height, width]) {
+          switch (dimension.type) {
+            case "percentage":
+              if (dimension.value <= 0) {
+                return true;
+              } else {
+                break;
+              }
+
+            case "length":
+              if (dimension.value <= 1) {
+                return true;
+              } else {
+                break;
+              }
+          }
+        }
+      }
+
+      if (x.value === "scroll" || y.value === "scroll") {
+        const { value: height } = style.computed("height");
+        const { value: width } = style.computed("width");
+
+        for (const dimension of [height, width]) {
+          switch (dimension.type) {
+            case "percentage":
+              if (dimension.value <= 0) {
+                return true;
+              } else {
+                break;
+              }
+
+            case "length":
+              if (dimension.value <= 1) {
+                return true;
+              } else {
+                break;
+              }
+          }
+        }
+      }
     }
 
     for (const parent of node.parent({ flattened: true })) {
