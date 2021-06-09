@@ -18,9 +18,9 @@ export class Group<T>
     return new Group(Array.from(members));
   }
 
-  private readonly _members: Array<T>;
+  private readonly _members: ReadonlyArray<T>;
 
-  private constructor(members: Array<T>) {
+  private constructor(members: ReadonlyArray<T>) {
     this._members = members;
   }
 

@@ -15,8 +15,9 @@ import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-acc
 import { isIgnored } from "../common/predicate/is-ignored";
 import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
-import { Question } from "../common/question";
 import { Group } from "../common/group";
+import { normalize } from "../common/normalize";
+import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -106,8 +107,4 @@ export namespace Outcomes {
       `The \`<iframe>\` elements do not embed the same or equivalent resources`
     )
   );
-}
-
-function normalize(input: string): string {
-  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }
