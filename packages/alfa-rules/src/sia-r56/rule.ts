@@ -2,6 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
@@ -34,7 +35,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
             )
           )
           .reduce((groups, landmark) => {
-            // since we already have filtered by hasLandmarkRole, we can
+            // since we already have filtered by having a landmark role, we can
             // safely get the role.
             const role = Node.from(landmark, device).role.get()!;
 
@@ -54,6 +55,13 @@ export default Rule.Atomic.of<Page, Group<Element>>({
       },
 
       expectations(target) {
+        // empty groups have been filtered out already, so we can safely get the
+        // first element
+        const role = Node.from(
+          Iterable.first(target).get()!,
+          device
+        ).role.get()!.name;
+
         const byNames = [...target]
           .reduce((groups, landmark) => {
             const name = Node.from(landmark, device).name.map((name) =>
@@ -74,8 +82,8 @@ export default Rule.Atomic.of<Page, Group<Element>>({
         return {
           1: expectation(
             byNames.size === 0,
-            () => Outcomes.differentNames,
-            () => Outcomes.sameNames(byNames.values())
+            () => Outcomes.differentNames(role),
+            () => Outcomes.sameNames(role, byNames.values())
           ),
         };
       },
@@ -84,29 +92,40 @@ export default Rule.Atomic.of<Page, Group<Element>>({
 });
 
 export namespace Outcomes {
-  export const differentNames = Ok.of(
-    Diagnostic.of("No two same landmarks have the same name.")
-  );
+  export const differentNames = (role: Role.Name) =>
+    Ok.of(Diagnostic.of(`No two \`${role}\` have the same name.`));
 
-  export const sameNames = (errors: Iterable<Iterable<Element>>) =>
-    Err.of(
-      SameNames.of("Some identical landmarks have the same name.", errors)
-    );
+  export const sameNames = (
+    role: Role.Name,
+    errors: Iterable<Iterable<Element>>
+  ) =>
+    Err.of(SameNames.of(`Some \`${role}\` have the same name.`, role, errors));
 }
 
 class SameNames extends Diagnostic implements Iterable<List<Element>> {
   public static of(
     message: string,
+    role: Role.Name = "none",
     errors: Iterable<Iterable<Element>> = []
   ): SameNames {
-    return new SameNames(message, Array.from(errors).map(List.from));
+    return new SameNames(message, role, Array.from(errors).map(List.from));
   }
 
+  private readonly _role: Role.Name;
   private readonly _errors: ReadonlyArray<List<Element>>;
 
-  private constructor(message: string, errors: ReadonlyArray<List<Element>>) {
+  private constructor(
+    message: string,
+    role: Role.Name,
+    errors: ReadonlyArray<List<Element>>
+  ) {
     super(message);
+    this._role = role;
     this._errors = errors;
+  }
+
+  public get role(): Role.Name {
+    return this._role;
   }
 
   public *[Symbol.iterator](): Iterator<List<Element>> {
@@ -121,17 +140,23 @@ class SameNames extends Diagnostic implements Iterable<List<Element>> {
     return (
       value instanceof SameNames &&
       value._message === this._message &&
+      value._role === this._role &&
       value._errors.every((list, idx) => list.equals(this._errors[idx]))
     );
   }
 
   public toJSON(): SameNames.JSON {
-    return { ...super.toJSON(), errors: Array.toJSON(this._errors) };
+    return {
+      ...super.toJSON(),
+      role: this._role,
+      errors: Array.toJSON(this._errors),
+    };
   }
 }
 
 namespace SameNames {
   export interface JSON extends Diagnostic.JSON {
+    role: string;
     errors: Array<List.JSON<Element>>;
   }
 
