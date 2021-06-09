@@ -1,35 +1,38 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
-import { Converter, Convertible } from "./converter";
+import { Converter } from "./converter";
 import { Unit } from "./unit";
-import { Numeric } from "./numeric";
+import { Dimension } from "./dimension";
 
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#angles
+ * {@link https://drafts.csswg.org/css-values/#angles}
+ *
+ * @public
  */
-export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric
-  implements Convertible<Unit.Angle> {
+export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
+  "angle",
+  Unit.Angle,
+  U
+> {
   public static of<U extends Unit.Angle>(value: number, unit: U): Angle<U> {
     return new Angle(value, unit);
   }
 
-  private readonly _unit: U;
-
   private constructor(value: number, unit: U) {
-    super(value);
-    this._unit = unit;
+    super(value, unit);
   }
 
   public get type(): "angle" {
     return "angle";
   }
 
-  public get unit(): U {
-    return this._unit;
+  public get canonicalUnit(): "deg" {
+    return "deg";
   }
 
   public hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U> {
@@ -54,7 +57,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric
 
   public hash(hash: Hash): void {
     super.hash(hash);
-    Hash.writeString(hash, this._unit);
+    hash.writeString(this._unit);
   }
 
   public toJSON(): Angle.JSON {
@@ -70,17 +73,19 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric
   }
 }
 
+/**
+ * @public
+ */
 export namespace Angle {
-  export interface JSON extends Numeric.JSON {
-    type: "angle";
-    unit: string;
+  export interface JSON extends Dimension.JSON<"angle"> {
+    unit: Unit.Angle;
   }
 
   export function isAngle(value: unknown): value is Angle {
     return value instanceof Angle;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Angle, string> = map(
     Token.parseDimension((dimension) => Unit.isAngle(dimension.unit)),
     (dimension) => Angle.of(dimension.value, dimension.unit as Unit.Angle)
   );

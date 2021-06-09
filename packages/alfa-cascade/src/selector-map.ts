@@ -1,25 +1,42 @@
+import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Declaration,
   Element,
-  Rule,
-  StyleRule,
-  Sheet,
+  ImportRule,
   MediaRule,
+  Rule,
+  Sheet,
+  StyleRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Media } from "@siteimprove/alfa-media";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Selector } from "@siteimprove/alfa-selector";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Context, Selector } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { UserAgent } from "./user-agent";
 import { AncestorFilter } from "./ancestor-filter";
 
-const { and, equals, property } = Predicate;
+const { equals, property } = Predicate;
+const { and } = Refinement;
+const {
+  isAttribute,
+  isClass,
+  isComplex,
+  isCompound,
+  isId,
+  isType,
+  isPseudoClass,
+  isPseudoElement,
+} = Selector;
 
 const isDescendantSelector = and(
-  Selector.isComplex,
+  isComplex,
   property(
     "combinator",
     equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
@@ -30,18 +47,18 @@ const isDescendantSelector = and(
  * Cascading origins defined in ascending order; origins defined first have
  * lower precedence than origins defined later.
  *
- * @see https://www.w3.org/TR/css-cascade/#cascading-origins
+ * {@link https://www.w3.org/TR/css-cascade/#cascading-origins}
  *
  * @internal
  */
 export enum Origin {
   /**
-   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-ua
+   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-ua}
    */
   UserAgent = 1,
 
   /**
-   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
+   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-author}
    */
   Author = 2,
 }
@@ -67,98 +84,57 @@ export enum Origin {
  * potentially matching selectors, plus the list of remaining selectors, in
  * order to determine the final set of matches.
  *
- * @see http://doc.servo.org/style/selector_map/struct.SelectorMap.html
+ * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
+ *
  * @internal
  */
-export class SelectorMap {
-  public static of(sheets: Iterable<Sheet>, device: Device): SelectorMap {
-    return new SelectorMap(sheets, device);
+export class SelectorMap implements Serializable {
+  public static of(
+    ids: SelectorMap.Bucket,
+    classes: SelectorMap.Bucket,
+    types: SelectorMap.Bucket,
+    other: Array<SelectorMap.Node>
+  ): SelectorMap {
+    return new SelectorMap(ids, classes, types, other);
   }
 
-  private readonly _ids = Bucket.empty();
-  private readonly _classes = Bucket.empty();
-  private readonly _types = Bucket.empty();
-  private readonly _other: Array<SelectorMap.Node> = [];
+  private readonly _ids: SelectorMap.Bucket;
+  private readonly _classes: SelectorMap.Bucket;
+  private readonly _types: SelectorMap.Bucket;
+  private readonly _other: Array<SelectorMap.Node>;
 
-  private constructor(sheets: Iterable<Sheet>, device: Device) {
-    // Every rule encountered in style sheets is assigned an increasing number
-    // that denotes declaration order. While rules are stored in buckets in the
-    // order in which they were declared, information related to ordering will
-    // otherwise no longer be available once rules from different buckets are
-    // combined.
-    let order = 0;
-
-    const visit = (rule: Rule) => {
-      if (MediaRule.isMedia(rule)) {
-        const query = Media.parse(rule.condition);
-
-        if (query.isNone() || !query.get().matches(device)) {
-          return;
-        }
-      }
-
-      if (StyleRule.isStyle(rule)) {
-        const selector = Selector.parse(rule.selector);
-
-        if (selector.isNone() || Iterable.isEmpty(rule.style)) {
-          return;
-        }
-
-        const origin =
-          rule.owner === UserAgent ? Origin.UserAgent : Origin.Author;
-
-        order++;
-
-        for (const part of selector.get()) {
-          this._add(rule, part, rule.style, origin, order);
-        }
-      }
-
-      for (const child of rule.children()) {
-        visit(child);
-      }
-    };
-
-    for (const sheet of sheets) {
-      if (sheet.disabled) {
-        continue;
-      }
-
-      if (sheet.condition.isSome()) {
-        const query = Media.parse(sheet.condition.get());
-
-        if (query.isNone() || !query.get().matches(device)) {
-          continue;
-        }
-      }
-
-      for (const rule of sheet.children()) {
-        visit(rule);
-      }
-    }
+  private constructor(
+    ids: SelectorMap.Bucket,
+    classes: SelectorMap.Bucket,
+    types: SelectorMap.Bucket,
+    other: Array<SelectorMap.Node>
+  ) {
+    this._ids = ids;
+    this._classes = classes;
+    this._types = types;
+    this._other = other;
   }
 
   public get(
     element: Element,
-    filter?: AncestorFilter
+    context: Context,
+    filter: Option<AncestorFilter>
   ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
 
     const collect = (candidates: Iterable<SelectorMap.Node>) => {
       for (const node of candidates) {
         if (
-          filter !== undefined &&
-          Iterable.every(
-            node.selector,
-            and(isDescendantSelector, (selector) =>
-              canReject(selector.left, filter)
+          filter.none((filter) =>
+            Iterable.every(
+              node.selector,
+              and(isDescendantSelector, (selector) =>
+                canReject(selector.left, filter)
+              )
             )
-          )
+          ) &&
+          node.selector.matches(element, context)
         ) {
-          continue;
-        }
-
-        if (node.selector.matches(element)) {
           nodes.push(node);
         }
       }
@@ -179,40 +155,13 @@ export class SelectorMap {
     return nodes;
   }
 
-  private _add(
-    rule: Rule,
-    selector: Selector,
-    declarations: Iterable<Declaration>,
-    origin: Origin,
-    order: number
-  ): void {
-    const keySelector = getKeySelector(selector);
-
-    const node = SelectorMap.Node.of(
-      rule,
-      selector,
-      declarations,
-      origin,
-      order
-    );
-
-    for (const selector of keySelector) {
-      if (selector instanceof Selector.Id) {
-        this._ids.add(selector.name, node);
-      }
-
-      if (selector instanceof Selector.Class) {
-        this._classes.add(selector.name, node);
-      }
-
-      if (selector instanceof Selector.Type) {
-        this._types.add(selector.name, node);
-      }
-
-      return;
-    }
-
-    this._other.push(node);
+  public toJSON(): SelectorMap.JSON {
+    return {
+      ids: this._ids.toJSON(),
+      classes: this._classes.toJSON(),
+      types: this._types.toJSON(),
+      other: this._other.map((node) => node.toJSON()),
+    };
   }
 }
 
@@ -220,7 +169,129 @@ export class SelectorMap {
  * @internal
  */
 export namespace SelectorMap {
-  export class Node {
+  export interface JSON {
+    [key: string]: json.JSON;
+    ids: Bucket.JSON;
+    classes: Bucket.JSON;
+    types: Bucket.JSON;
+    other: Array<Node.JSON>;
+  }
+
+  export function from(sheets: Iterable<Sheet>, device: Device): SelectorMap {
+    // Every rule encountered in style sheets is assigned an increasing number
+    // that denotes declaration order. While rules are stored in buckets in the
+    // order in which they were declared, information related to ordering will
+    // otherwise no longer be available once rules from different buckets are
+    // combined.
+    let order = 0;
+
+    const ids = Bucket.empty();
+    const classes = Bucket.empty();
+    const types = Bucket.empty();
+    const other: Array<Node> = [];
+
+    const add = (
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      origin: Origin,
+      order: number
+    ): void => {
+      const node = Node.of(rule, selector, declarations, origin, order);
+
+      const keySelector = getKeySelector(selector);
+
+      if (keySelector === null) {
+        other.push(node);
+      } else if (isId(keySelector)) {
+        ids.add(keySelector.name, node);
+      } else if (isClass(keySelector)) {
+        classes.add(keySelector.name, node);
+      } else {
+        types.add(keySelector.name, node);
+      }
+    };
+
+    const visit = (rule: Rule) => {
+      if (StyleRule.isStyleRule(rule)) {
+        // Style rules with empty style blocks aren't relevant and so can be
+        // skipped entirely.
+        if (rule.style.isEmpty()) {
+          return;
+        }
+
+        for (const [, selector] of Selector.parse(Lexer.lex(rule.selector))) {
+          const origin = rule.owner.includes(UserAgent)
+            ? Origin.UserAgent
+            : Origin.Author;
+
+          order++;
+
+          for (const part of selector) {
+            add(rule, part, rule.style, origin, order);
+          }
+        }
+      }
+
+      // For media rules, we recurse into the child rules if and only if the
+      // media condition matches the device.
+      else if (MediaRule.isMediaRule(rule)) {
+        const query = Media.parse(Lexer.lex(rule.condition));
+
+        if (query.none(([, query]) => query.matches(device))) {
+          return;
+        }
+
+        for (const child of rule.children()) {
+          visit(child);
+        }
+      }
+
+      // For import rules, we recurse into the imported style sheet if and only
+      // if the import condition matches the device.
+      else if (ImportRule.isImportRule(rule)) {
+        const query = Media.parse(Lexer.lex(rule.condition));
+
+        if (query.none(([, query]) => query.matches(device))) {
+          return;
+        }
+
+        for (const child of rule.sheet.children()) {
+          visit(child);
+        }
+      }
+
+      // Otherwise, we recurse into whichever child rules are declared by the
+      // current rule.
+      else {
+        for (const child of rule.children()) {
+          visit(child);
+        }
+      }
+    };
+
+    for (const sheet of sheets) {
+      if (sheet.disabled) {
+        continue;
+      }
+
+      if (sheet.condition.isSome()) {
+        const query = Media.parse(Lexer.lex(sheet.condition.get()));
+
+        if (query.every(([, query]) => !query.matches(device))) {
+          continue;
+        }
+      }
+
+      for (const rule of sheet.children()) {
+        visit(rule);
+      }
+    }
+
+    return SelectorMap.of(ids, classes, types, other);
+  }
+
+  export class Node implements Serializable {
     public static of(
       rule: Rule,
       selector: Selector,
@@ -250,7 +321,17 @@ export namespace SelectorMap {
       this._declarations = declarations;
       this._origin = origin;
       this._order = order;
-      this._specificity = getSpecificity(selector);
+
+      // For style rules that are presentational hints, the specificity will
+      // always be 0 regardless of the selector.
+      if (StyleRule.isStyleRule(rule) && rule.hint) {
+        this._specificity = 0;
+      }
+
+      // Otherwise, determine the specificity of the selector.
+      else {
+        this._specificity = getSpecificity(selector);
+      }
     }
 
     public get rule(): Rule {
@@ -276,38 +357,74 @@ export namespace SelectorMap {
     public get specificity(): number {
       return this._specificity;
     }
-  }
-}
 
-class Bucket {
-  public static empty(): Bucket {
-    return new Bucket(new Map());
-  }
-
-  private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
-
-  private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
-    this._nodes = nodes;
-  }
-
-  public add(key: string, node: SelectorMap.Node): void {
-    const nodes = this._nodes.get(key);
-
-    if (nodes === undefined) {
-      this._nodes.set(key, [node]);
-    } else {
-      nodes.push(node);
+    public toJSON(): Node.JSON {
+      return {
+        rule: this._rule.toJSON(),
+        selector: this._selector.toJSON(),
+        declarations: [...this._declarations].map((declaration) =>
+          declaration.toJSON()
+        ),
+        origin: this._origin,
+        order: this._order,
+        specificity: this._specificity,
+      };
     }
   }
 
-  public get(key: string): Array<SelectorMap.Node> {
-    const nodes = this._nodes.get(key);
+  export namespace Node {
+    export interface JSON {
+      [key: string]: json.JSON;
+      rule: Rule.JSON;
+      selector: Selector.JSON;
+      declarations: Array<Declaration.JSON>;
+      origin: Origin;
+      order: number;
+      specificity: number;
+    }
+  }
 
-    if (nodes === undefined) {
-      return [];
+  export class Bucket implements Serializable {
+    public static empty(): Bucket {
+      return new Bucket(new Map());
     }
 
-    return nodes;
+    private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
+
+    private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
+      this._nodes = nodes;
+    }
+
+    public add(key: string, node: SelectorMap.Node): void {
+      const nodes = this._nodes.get(key);
+
+      if (nodes === undefined) {
+        this._nodes.set(key, [node]);
+      } else {
+        nodes.push(node);
+      }
+    }
+
+    public get(key: string): Array<SelectorMap.Node> {
+      const nodes = this._nodes.get(key);
+
+      if (nodes === undefined) {
+        return [];
+      }
+
+      return nodes;
+    }
+
+    public toJSON(): Bucket.JSON {
+      return [...this._nodes].map(([key, nodes]) => [
+        key,
+        nodes.map((node) => node.toJSON()),
+      ]);
+    }
+  }
+
+  export namespace Bucket {
+    export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
   }
 }
 
@@ -318,26 +435,20 @@ class Bucket {
  */
 function getKeySelector(
   selector: Selector
-): Option<Selector.Id | Selector.Class | Selector.Type> {
-  if (
-    selector instanceof Selector.Id ||
-    selector instanceof Selector.Class ||
-    selector instanceof Selector.Type
-  ) {
-    return Option.of(selector);
+): Selector.Id | Selector.Class | Selector.Type | null {
+  if (isId(selector) || isClass(selector) || isType(selector)) {
+    return selector;
   }
 
-  if (selector instanceof Selector.Compound) {
-    return getKeySelector(selector.left).orElse(() =>
-      getKeySelector(selector.right)
-    );
+  if (isCompound(selector)) {
+    return getKeySelector(selector.left) ?? getKeySelector(selector.right);
   }
 
-  if (selector instanceof Selector.Complex) {
+  if (isComplex(selector)) {
     return getKeySelector(selector.right);
   }
 
-  return None;
+  return null;
 }
 
 type Specificity = number;
@@ -353,7 +464,7 @@ const componentBits = 10;
 const componentMax = (1 << componentBits) - 1;
 
 /**
- * @see https://www.w3.org/TR/selectors/#specificity
+ * {@link https://www.w3.org/TR/selectors/#specificity}
  */
 function getSpecificity(selector: Selector): Specificity {
   let a = 0;
@@ -369,23 +480,17 @@ function getSpecificity(selector: Selector): Specificity {
       break;
     }
 
-    if (selector instanceof Selector.Id) {
+    if (isId(selector)) {
       a++;
     } else if (
-      selector instanceof Selector.Class ||
-      selector instanceof Selector.Attribute ||
-      selector instanceof Selector.Pseudo.Class
+      isClass(selector) ||
+      isAttribute(selector) ||
+      isPseudoClass(selector)
     ) {
       b++;
-    } else if (
-      selector instanceof Selector.Type ||
-      selector instanceof Selector.Pseudo.Element
-    ) {
+    } else if (isType(selector) || isPseudoElement(selector)) {
       c++;
-    } else if (
-      selector instanceof Selector.Compound ||
-      selector instanceof Selector.Complex
-    ) {
+    } else if (isCompound(selector) || isComplex(selector)) {
       queue.push(selector.left, selector.right);
     }
   }
@@ -404,15 +509,11 @@ function getSpecificity(selector: Selector): Specificity {
  * Check if a selector can be rejected based on an ancestor filter.
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  if (
-    selector instanceof Selector.Id ||
-    selector instanceof Selector.Class ||
-    selector instanceof Selector.Type
-  ) {
+  if (isId(selector) || isClass(selector) || isType(selector)) {
     return !filter.matches(selector);
   }
 
-  if (selector instanceof Selector.Compound) {
+  if (isCompound(selector)) {
     // Compound selectors are right-leaning, so recurse to the left first as it
     // is likely the shortest branch.
     return (
@@ -420,7 +521,7 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
     );
   }
 
-  if (selector instanceof Selector.Complex) {
+  if (isComplex(selector)) {
     const { combinator } = selector;
 
     if (

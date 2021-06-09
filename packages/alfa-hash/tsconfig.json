@@ -12,7 +12,13 @@
       "path": "../alfa-encoding"
     },
     {
-      "path": "../alfa-predicate"
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"

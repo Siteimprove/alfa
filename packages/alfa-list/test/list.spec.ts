@@ -25,6 +25,10 @@ test("#flatMap() applies a function to every value of a list and flattens the re
   );
 });
 
+test("#distinct() removes duplicate values from a list", (t) => {
+  t.deepEqual([...List.of(1, 1, 1, 2, 3, 3, 3, 4, 4).distinct()], [1, 2, 3, 4]);
+});
+
 test("#get() looks up the value at an index if it exists", (t) => {
   t.deepEqual(list.get(2).get(), 3);
 });
@@ -103,7 +107,7 @@ test("#skipLast() removes the last value of a singleton list", (t) => {
 test("#skipLast() behaves for large lists", (t) => {
   let list = List.from(array(100000));
 
-  for (let i = 100000; i-- >= 0; i) {
+  for (let i = 100000; i >= 0; i--) {
     list = list.skipLast();
     t(list.get(i).isNone());
   }

@@ -1,31 +1,24 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
-import { Condition } from "./condition";
+import { ConditionRule } from "./condition";
 
-export class Import extends Condition {
+export class ImportRule extends ConditionRule {
   public static of(
     href: string,
     sheet: Sheet,
-    condition: Option<string>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Import {
-    return new Import(href, sheet, condition, owner, parent);
+    condition: Option<string> = None
+  ): ImportRule {
+    return new ImportRule(href, sheet, condition);
   }
 
   private readonly _href: string;
   private readonly _sheet: Sheet;
 
-  private constructor(
-    href: string,
-    sheet: Sheet,
-    condition: Option<string>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(condition.getOr("all"), () => [], owner, parent);
+  private constructor(href: string, sheet: Sheet, condition: Option<string>) {
+    super(condition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
@@ -43,7 +36,7 @@ export class Import extends Condition {
     return this._sheet;
   }
 
-  public toJSON(): Import.JSON {
+  public toJSON(): ImportRule.JSON {
     return {
       type: "import",
       rules: [...this._sheet.rules].map((rule) => rule.toJSON()),
@@ -57,29 +50,22 @@ export class Import extends Condition {
   }
 }
 
-export namespace Import {
-  export interface JSON extends Condition.JSON {
+export namespace ImportRule {
+  export interface JSON extends ConditionRule.JSON {
     type: "import";
     href: string;
   }
 
-  export function isImport(value: unknown): value is Import {
-    return value instanceof Import;
+  export function isImportRule(value: unknown): value is ImportRule {
+    return value instanceof ImportRule;
   }
 
-  export function fromImport(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Import {
-    return Import.of(
-      json.href,
-      Sheet.of((owner) => {
-        return json.rules.map((rule) => Rule.fromRule(rule, owner));
-      }),
-      Option.of(json.condition),
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromImportRule(json: JSON): Trampoline<ImportRule> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      ImportRule.of(json.href, Sheet.of(rules), Option.of(json.condition))
     );
   }
 }

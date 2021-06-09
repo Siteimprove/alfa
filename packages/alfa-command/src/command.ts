@@ -2,7 +2,7 @@ import { Marker } from "@siteimprove/alfa-highlight";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
-import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -12,11 +12,14 @@ import { Text } from "./text";
 
 const { values, entries } = Object;
 
+/**
+ * @public
+ */
 export class Command<
   F extends Command.Flags = {},
   A extends Command.Arguments = {},
   S extends Command.Subcommands = {}
-> implements Serializable {
+> implements Serializable<Command.JSON> {
   public static withArguments<
     F extends Command.Flags,
     A extends Command.Arguments
@@ -91,7 +94,7 @@ export class Command<
     this._arguments = args;
     this._subcommands = subcommands((this as unknown) as Command);
     this._parent = parent;
-    this._run = run?.(this) ?? (async () => Ok.of(this._help()));
+    this._run = run?.(this) ?? (async () => Result.of(this._help()));
   }
 
   public get name(): string {
@@ -138,9 +141,9 @@ export class Command<
         if (Option.isOption(value) && value.isSome()) {
           switch (value.get()) {
             case Flag.Help:
-              return Ok.of(this._help());
+              return Result.of(this._help());
             case Flag.Version:
-              return Ok.of(this._version);
+              return Result.of(this._version);
           }
         }
       }
@@ -187,7 +190,7 @@ export class Command<
 
   private _parseFlags(
     argv: Array<string>
-  ): Result<readonly [Array<string>, Command.Flags.Values<F>], string> {
+  ): Result<[Array<string>, Command.Flags.Values<F>], string> {
     const flags = entries(this._flags);
 
     const sets: Record<string, Flag.Set<unknown>> = {};
@@ -236,12 +239,12 @@ export class Command<
       }
     }
 
-    return Ok.of([argv, values as Command.Flags.Values<F>] as const);
+    return Result.of([argv, values as Command.Flags.Values<F>]);
   }
 
   private _parseArguments(
     argv: Array<string>
-  ): Result<readonly [Array<string>, Command.Arguments.Values<A>], string> {
+  ): Result<[Array<string>, Command.Arguments.Values<A>], string> {
     const values: Record<string, unknown> = {};
 
     for (const [name, argument] of entries(this._arguments)) {
@@ -254,7 +257,7 @@ export class Command<
       }
     }
 
-    return Ok.of([argv, values as Command.Arguments.Values<A>] as const);
+    return Result.of([argv, values as Command.Arguments.Values<A>]);
   }
 
   private _invocation(): string {
@@ -281,6 +284,7 @@ export class Command<
   private _helpUsage(): string {
     return `
 ${Marker.bold("Usage:")}
+
   ${Marker.bold("$")} ${this._invocation()} [flags] ${[
       ...values(this._arguments),
     ]
@@ -296,6 +300,7 @@ ${Marker.bold("Usage:")}
   private _helpVersion(): string {
     return `
 ${Marker.bold("Version:")}
+
   ${this._version}
     `.trim();
   }
@@ -310,6 +315,7 @@ ${Marker.bold("Version:")}
     return Option.of(
       `
 ${Marker.bold("Arguments:")}
+
 ${args
   .map((argument) => {
     const { options } = argument;
@@ -346,6 +352,7 @@ ${args
     return Option.of(
       `
 ${Marker.bold("Commands:")}
+
 ${[...values(this._subcommands)]
   .map(
     (command) =>
@@ -369,6 +376,7 @@ ${[...values(this._subcommands)]
     return Option.of(
       `
 ${Marker.bold("Flags:")}
+
 ${[...values(this._flags)]
   .map((flag) => {
     const { options } = flag;
@@ -409,6 +417,9 @@ ${[...values(this._flags)]
   }
 }
 
+/**
+ * @public
+ */
 export namespace Command {
   export interface JSON {
     [key: string]: json.JSON;

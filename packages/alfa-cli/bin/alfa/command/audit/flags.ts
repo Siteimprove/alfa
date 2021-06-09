@@ -3,19 +3,9 @@ import { Flag } from "@siteimprove/alfa-command";
 import * as scrape from "../scrape/flags";
 
 export const Flags = {
+  ...scrape.Flags,
+
   help: Flag.help("Display the help information."),
-
-  interactive: Flag.boolean(
-    "interactive",
-    "Whether or not to run an interactive audit."
-  )
-    .alias("i")
-    .default(false),
-
-  format: Flag.string("format", "The reporting format to use.")
-    .type("format or package")
-    .alias("f")
-    .default("earl"),
 
   output: Flag.string(
     "output",
@@ -25,6 +15,20 @@ export const Flags = {
     .type("path")
     .alias("o")
     .optional(),
+
+  interviewer: Flag.string(
+    "interviewer",
+    `The interviewer to use for answering questions during the audit. If not
+    provided, questions will be left unanswered.`
+  )
+    .type("name or package")
+    .alias("i")
+    .optional(),
+
+  format: Flag.string("format", "The reporting format to use.")
+    .type("name or package")
+    .alias("f")
+    .default("earl"),
 
   outcomes: Flag.string(
     "outcome",
@@ -36,5 +40,19 @@ export const Flags = {
     .repeatable()
     .optional(),
 
-  ...scrape.Flags,
+  cpuProfile: Flag.string(
+    "cpu-profile",
+    `The path to write a CPU profile of the audit to. If no path is provided,
+    no CPU profile is made.`
+  )
+    .type("path")
+    .optional(),
+
+  heapProfile: Flag.string(
+    "heap-profile",
+    `The path to write a heap profile of the audit to. If no path is provided,
+    no heap profile is made.`
+  )
+    .type("path")
+    .optional(),
 };

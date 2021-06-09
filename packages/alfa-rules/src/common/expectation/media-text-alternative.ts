@@ -13,8 +13,8 @@ import { Question } from "../question";
 import { Diagnostic } from "@siteimprove/alfa-act";
 
 function mediaTextAlternative(
-  alt: act.Question<"node", Option<Node>, Element>,
-  label: act.Question<"node", Option<Node>, Element>,
+  alt: act.Question<"node", Element, Option<Node>>,
+  label: act.Question<"node", Element, Option<Node>>,
   device: Device,
   kind: "<audio>" | "<video>"
 ) {

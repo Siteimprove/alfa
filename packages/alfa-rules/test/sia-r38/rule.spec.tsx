@@ -1,9 +1,7 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Document } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 
 import R38, { Outcomes } from "../../src/sia-r38/rule";
 
@@ -11,26 +9,15 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, cantTell } from "../common/outcome";
 
-const { isElement, hasName } = Element;
-const { and } = Predicate;
-
 test("evaluate() passes when some atomic rules are passing", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div>
-        <video controls>
-          <source src="foo.mp4" type="video/mp4" />
-          <track kind="descriptions" src="foo.vtt" />
-        </video>
-      </div>,
-      Option.of(self)
-    ),
-  ]);
+  const target = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <track kind="descriptions" src="foo.vtt" />
+    </video>
+  );
 
-  const video = document
-    .descendants()
-    .find(and(isElement, hasName("video")))
-    .get();
+  const document = Document.of([target]);
 
   t.deepEqual(
     await evaluate(
@@ -48,7 +35,7 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
       })
     ),
     [
-      passed(R38, video, {
+      passed(R38, target, {
         1: Outcomes.HasAlternative,
       }),
     ]
@@ -56,22 +43,14 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
 });
 
 test("evaluate() can't tell when there are not enough answers to expectation", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <div>
-        <video controls>
-          <source src="foo.mp4" type="video/mp4" />
-          <track kind="descriptions" src="foo.vtt" />
-        </video>
-      </div>,
-      Option.of(self)
-    ),
-  ]);
+  const target = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <track kind="descriptions" src="foo.vtt" />
+    </video>
+  );
 
-  const video = document
-    .descendants()
-    .find(and(isElement, hasName("video")))
-    .get();
+  const document = Document.of([target]);
 
   t.deepEqual(
     await evaluate(
@@ -82,6 +61,6 @@ test("evaluate() can't tell when there are not enough answers to expectation", a
         "has-audio": true,
       })
     ),
-    [cantTell(R38, video)]
+    [cantTell(R38, target)]
   );
 });

@@ -1,38 +1,31 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
-export class FontFace extends Rule {
-  public static of(
-    declarations: Mapper<FontFace, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): FontFace {
-    return new FontFace(declarations, owner, parent);
+export class FontFaceRule extends Rule {
+  public static of(declarations: Iterable<Declaration>): FontFaceRule {
+    return new FontFaceRule(Array.from(declarations));
   }
 
   private readonly _style: Block;
 
-  private constructor(
-    declarations: Mapper<FontFace, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(declarations: Array<Declaration>) {
+    super();
 
-    this._style = Block.of(declarations(this));
+    this._style = Block.of(
+      declarations.filter((declaration) => declaration._attachParent(this))
+    );
   }
 
   public get style(): Block {
     return this._style;
   }
 
-  public toJSON(): FontFace.JSON {
+  public toJSON(): FontFaceRule.JSON {
     return {
       type: "font-face",
       style: this._style.toJSON(),
@@ -46,32 +39,22 @@ export class FontFace extends Rule {
   }
 }
 
-export namespace FontFace {
+export namespace FontFaceRule {
   export interface JSON {
     [key: string]: json.JSON;
     type: "font-face";
     style: Block.JSON;
   }
 
-  export function isFontFace(value: unknown): value is FontFace {
-    return value instanceof FontFace;
+  export function isFontFaceRule(value: unknown): value is FontFaceRule {
+    return value instanceof FontFaceRule;
   }
 
-  export function fromFontFace(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): FontFace {
-    return FontFace.of(
-      (self) => {
-        const parent = Option.of(self);
-        return json.style.map((declaration) =>
-          Declaration.fromDeclaration(declaration, parent)
-        );
-      },
-      owner,
-      parent
-    );
+  /**
+   * @internal
+   */
+  export function fromFontFaceRule(json: JSON): Trampoline<FontFaceRule> {
+    return Trampoline.done(FontFaceRule.of(json.style.map(Declaration.from)));
   }
 }
 

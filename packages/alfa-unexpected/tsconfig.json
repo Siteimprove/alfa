@@ -1,16 +1,19 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["plugin.ts", "src/index.ts", "src/unexpected.ts"],
+  "files": ["src/index.ts", "src/unexpected.ts"],
   "references": [
+    {
+      "path": "../alfa-act"
+    },
     {
       "path": "../alfa-assert"
     },
     {
-      "path": "../alfa-mapper"
+      "path": "../alfa-future"
     },
     {
-      "path": "../alfa-predicate"
+      "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-test"

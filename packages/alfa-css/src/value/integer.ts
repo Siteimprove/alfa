@@ -1,42 +1,37 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
+
+import { Numeric } from "./numeric";
 
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#integers
+ * {@link https://drafts.csswg.org/css-values/#integers}
+ *
+ * @public
  */
-export class Integer implements Equatable, Hashable, Serializable {
+export class Integer extends Numeric<"integer"> {
   public static of(value: number): Integer {
-    return new Integer(value);
+    return new Integer(value | 0);
   }
 
-  private readonly _value: number;
-
   private constructor(value: number) {
-    this._value = value | 0;
+    super(value);
   }
 
   public get type(): "integer" {
     return "integer";
   }
 
-  public get value(): number {
-    return this._value;
-  }
-
   public equals(value: unknown): value is this {
-    return value instanceof Integer && value._value === this._value;
+    return value instanceof Integer && super.equals(value);
   }
 
   public hash(hash: Hash): void {
-    Hash.writeInt32(hash, this._value);
+    hash.writeInt32(this._value);
   }
 
   public toJSON(): Integer.JSON {
@@ -45,16 +40,13 @@ export class Integer implements Equatable, Hashable, Serializable {
       value: this._value,
     };
   }
-
-  public toString(): string {
-    return `${this._value}`;
-  }
 }
 
+/**
+ * @public
+ */
 export namespace Integer {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "integer";
+  export interface JSON extends Numeric.JSON<"integer"> {
     value: number;
   }
 
@@ -62,7 +54,7 @@ export namespace Integer {
     return value instanceof Integer;
   }
 
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Integer, string> = map(
     Token.parseNumber((number) => number.isInteger),
     (integer) => Integer.of(integer.value)
   );

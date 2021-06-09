@@ -19,6 +19,9 @@ import { Item, Type, Value } from "./types";
 import { walk } from "./walk";
 import { Parser } from "./syntax/parser";
 
+/**
+ * @public
+ */
 export function* evaluate(
   scope: Node,
   expression: string | Expression | Builder,
@@ -56,6 +59,9 @@ export function* evaluate(
   }
 }
 
+/**
+ * @public
+ */
 export namespace evaluate {
   export interface Options extends Node.Traversal {}
 }
@@ -159,7 +165,7 @@ function* evaluateAxisExpression<T extends Item.Value>(
 
   let position = 1;
 
-  loop: for (const node of walk(focus.value, expression.axis)) {
+  loop: for (const node of walk(focus.value, expression.axis, options)) {
     if (expression.test.isSome()) {
       const test = expression.test.get();
 

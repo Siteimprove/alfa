@@ -1,34 +1,27 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
-export class Keyframe extends Rule {
+export class KeyframeRule extends Rule {
   public static of(
     key: string,
-    declarations: Mapper<Keyframe, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframe {
-    return new Keyframe(key, declarations, owner, parent);
+    declarations: Iterable<Declaration>
+  ): KeyframeRule {
+    return new KeyframeRule(key, Array.from(declarations));
   }
 
   private readonly _key: string;
   private readonly _style: Block;
 
-  private constructor(
-    key: string,
-    declarations: Mapper<Keyframe, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(key: string, declarations: Array<Declaration>) {
+    super();
 
     this._key = key;
-    this._style = Block.of(declarations(this));
+    this._style = Block.of(
+      declarations.filter((declaration) => declaration._attachParent(this))
+    );
   }
 
   public get key(): string {
@@ -39,7 +32,7 @@ export class Keyframe extends Rule {
     return this._style;
   }
 
-  public toJSON(): Keyframe.JSON {
+  public toJSON(): KeyframeRule.JSON {
     return {
       type: "keyframe",
       key: this._key,
@@ -56,32 +49,23 @@ export class Keyframe extends Rule {
   }
 }
 
-export namespace Keyframe {
+export namespace KeyframeRule {
   export interface JSON extends Rule.JSON {
     type: "keyframe";
     key: string;
     style: Block.JSON;
   }
 
-  export function isKeyframe(value: unknown): value is Keyframe {
-    return value instanceof Keyframe;
+  export function isKeyframeRule(value: unknown): value is KeyframeRule {
+    return value instanceof KeyframeRule;
   }
 
-  export function fromKeyframe(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframe {
-    return Keyframe.of(
-      json.key,
-      (self) => {
-        const parent = Option.of(self);
-        return json.style.map((declaration) =>
-          Declaration.fromDeclaration(declaration, parent)
-        );
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromKeyframeRule(json: JSON): Trampoline<KeyframeRule> {
+    return Trampoline.done(
+      KeyframeRule.of(json.key, json.style.map(Declaration.from))
     );
   }
 }

@@ -5,10 +5,20 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option, None } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Value<T = unknown>
-  implements Monad<T>, Functor<T>, Iterable<T>, Equatable, Serializable {
+  implements
+    Functor<T>,
+    Monad<T>,
+    Iterable<T>,
+    Equatable,
+    Serializable<Value.JSON<T>> {
   public static of<T>(value: T, source: Option<Declaration> = None): Value<T> {
     return new Value(value, source);
   }
@@ -37,6 +47,18 @@ export class Value<T = unknown>
     return mapper(this._value);
   }
 
+  public includes(value: T): boolean {
+    return Equatable.equals(this._value, value);
+  }
+
+  public some(predicate: Predicate<T, [Option<Declaration>]>): boolean {
+    return predicate(this._value, this._source);
+  }
+
+  public none(predicate: Predicate<T, [Option<Declaration>]>): boolean {
+    return !predicate(this._value, this._source);
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Value &&
@@ -49,7 +71,7 @@ export class Value<T = unknown>
     yield this._value;
   }
 
-  public toJSON(): Value.JSON {
+  public toJSON(): Value.JSON<T> {
     return {
       value: Serializable.toJSON(this._value),
       source: this._source.map((source) => source.toJSON()).getOr(null),
@@ -61,10 +83,13 @@ export class Value<T = unknown>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Value {
-  export interface JSON {
+  export interface JSON<T = unknown> {
     [key: string]: json.JSON;
-    value: json.JSON;
+    value: Serializable.ToJSON<T>;
     source: Declaration.JSON | null;
   }
 }

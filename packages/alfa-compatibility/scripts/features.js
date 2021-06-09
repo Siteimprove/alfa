@@ -1,6 +1,7 @@
 const fs = require("fs");
+const path = require("path");
 const prettier = require("prettier");
-const data = require("mdn-browser-compat-data");
+const data = require("@mdn/browser-compat-data");
 
 // This contains the list of features to generate definitions for from the MDN
 // browser compatibility data. To add more features, add an entry to the JSON
@@ -11,6 +12,7 @@ const include = [
   "css.properties.border-radius",
   "css.properties.color",
   "css.properties.font-weight",
+  "css.types.color",
 ];
 
 const { isArray } = Array;
@@ -156,9 +158,15 @@ let code = `
 // changes, do so in \`scripts/features.js\` and run \`yarn generate\` to rebuild this
 // file.
 
-export type Data = typeof Data;
+/**
+ * @internal
+ */
+export type Features = typeof Features;
 
-export const Data = {
+/**
+ * @internal
+ */
+export const Features = {
   ${features
     .map(
       (feature) => `
@@ -190,4 +198,4 @@ code = prettier.format(code, {
   parser: "typescript",
 });
 
-fs.writeFileSync("src/feature/data.ts", code);
+fs.writeFileSync(path.join(__dirname, "..", "src", "feature", "data.ts"), code);

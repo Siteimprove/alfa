@@ -6,17 +6,18 @@
     "src/credentials.ts",
     "src/index.ts",
     "src/scraper.ts",
-    "src/screenshot.ts"
+    "src/screenshot.ts",
+    "test/scraper.spec.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-array"
+    },
     {
       "path": "../alfa-device"
     },
     {
       "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-encoding"
     },
     {
       "path": "../alfa-equatable"
@@ -25,7 +26,16 @@
       "path": "../alfa-http"
     },
     {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-promise"
     },
     {
       "path": "../alfa-puppeteer"
@@ -38,6 +48,9 @@
     },
     {
       "path": "../alfa-time"
+    },
+    {
+      "path": "../alfa-url"
     },
     {
       "path": "../alfa-web"

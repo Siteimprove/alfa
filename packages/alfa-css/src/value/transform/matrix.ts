@@ -1,15 +1,18 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Number } from "../number";
 
 const { map, left, right, pair, either, take, delimited, option } = Parser;
 
-export class Matrix implements Equatable, Serializable {
+/**
+ * @public
+ */
+export class Matrix extends Value<"transform"> {
   public static of(...values: Matrix.Values<Number>): Matrix {
     return new Matrix(values);
   }
@@ -17,10 +20,15 @@ export class Matrix implements Equatable, Serializable {
   private readonly _values: Matrix.Values<Number>;
 
   private constructor(values: Matrix.Values<Number>) {
+    super();
     this._values = values;
   }
 
-  public get type(): "matrix" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "matrix" {
     return "matrix";
   }
 
@@ -37,9 +45,18 @@ export class Matrix implements Equatable, Serializable {
     );
   }
 
+  public hash(hash: Hash): void {
+    for (const row of this._values) {
+      for (const number of row) {
+        hash.writeHashable(number);
+      }
+    }
+  }
+
   public toJSON(): Matrix.JSON {
     return {
-      type: "matrix",
+      type: "transform",
+      kind: "matrix",
       values: this._values.map((row) =>
         row.map((value) => value.toJSON())
       ) as Matrix.Values<Number.JSON>,
@@ -75,10 +92,12 @@ export class Matrix implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Matrix {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "matrix";
+  export interface JSON extends Value.JSON<"transform"> {
+    kind: "matrix";
     values: Values<Number.JSON>;
   }
 
@@ -94,7 +113,7 @@ export namespace Matrix {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-matrix
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-matrix}
    */
   const parseMatrix = map(
     right(
@@ -132,7 +151,7 @@ export namespace Matrix {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-matrix3d
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-matrix3d}
    */
   const parseMatrix3d = map(
     right(
@@ -169,5 +188,8 @@ export namespace Matrix {
     }
   );
 
-  export const parse = either(parseMatrix, parseMatrix3d);
+  export const parse: Parser<Slice<Token>, Matrix, string> = either(
+    parseMatrix,
+    parseMatrix3d
+  );
 }

@@ -1,9 +1,9 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
-import * as json from "@siteimprove/alfa-json";
+import { Token } from "../syntax/token";
+import { Value } from "../value";
 
 import { URL } from "./url";
 import { Gradient } from "./gradient";
@@ -11,10 +11,13 @@ import { Gradient } from "./gradient";
 const { map, either } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#images
+ * {@link https://drafts.csswg.org/css-values/#images}
+ *
+ * @public
  */
-export class Image<I extends URL | Gradient = URL | Gradient>
-  implements Equatable, Hashable, Serializable {
+export class Image<
+  I extends URL | Gradient = URL | Gradient
+> extends Value<"image"> {
   public static of<I extends URL | Gradient>(image: I): Image<I> {
     return new Image(image);
   }
@@ -22,6 +25,7 @@ export class Image<I extends URL | Gradient = URL | Gradient>
   private readonly _image: I;
 
   private constructor(image: I) {
+    super();
     this._image = image;
   }
 
@@ -38,7 +42,7 @@ export class Image<I extends URL | Gradient = URL | Gradient>
   }
 
   public hash(hash: Hash): void {
-    this._image.hash(hash);
+    hash.writeHashable(this._image);
   }
 
   public toJSON(): Image.JSON {
@@ -53,10 +57,11 @@ export class Image<I extends URL | Gradient = URL | Gradient>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Image {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "image";
+  export interface JSON extends Value.JSON<"image"> {
     image: URL.JSON | Gradient.JSON;
   }
 
@@ -67,9 +72,10 @@ export namespace Image {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-image
+   * {@link https://drafts.csswg.org/css-images/#typedef-image}
    */
-  export const parse = map(either(URL.parse, Gradient.parse), (image) =>
-    Image.of(image)
+  export const parse: Parser<Slice<Token>, Image, string> = map(
+    either(URL.parse, Gradient.parse),
+    (image) => Image.of(image)
   );
 }

@@ -19,10 +19,10 @@
       "path": "../alfa-result"
     },
     {
-      "path": "../alfa-test"
+      "path": "../alfa-refinement"
     },
     {
-      "path": "../alfa-thunk"
+      "path": "../alfa-test"
     }
   ]
 }

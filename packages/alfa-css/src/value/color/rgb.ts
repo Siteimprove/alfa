@@ -1,20 +1,22 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Number } from "../number";
 import { Percentage } from "../percentage";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
+/**
+ * @public
+ */
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
-> implements Equatable, Hashable, Serializable {
+> extends Value<"color"> {
   public static of<
     C extends Number | Percentage,
     A extends Number | Percentage
@@ -28,6 +30,7 @@ export class RGB<
   private readonly _alpha: A;
 
   private constructor(red: C, green: C, blue: C, alpha: A) {
+    super();
     this._red = red;
     this._green = green;
     this._blue = blue;
@@ -69,10 +72,11 @@ export class RGB<
   }
 
   public hash(hash: Hash): void {
-    this._red.hash(hash);
-    this._green.hash(hash);
-    this._blue.hash(hash);
-    this._alpha.hash(hash);
+    hash
+      .writeHashable(this._red)
+      .writeHashable(this._green)
+      .writeHashable(this._blue)
+      .writeHashable(this._alpha);
   }
 
   public toJSON(): RGB.JSON {
@@ -93,10 +97,11 @@ export class RGB<
   }
 }
 
+/**
+ * @public
+ */
 export namespace RGB {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "color";
+  export interface JSON extends Value.JSON<"color"> {
     format: "rgb";
     red: Number.JSON | Percentage.JSON;
     green: Number.JSON | Percentage.JSON;
@@ -112,14 +117,14 @@ export namespace RGB {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-alpha-value
+   * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
   const parseAlpha = either(Number.parse, Percentage.parse);
 
   /**
-   * @see https://drafts.csswg.org/css-color/#funcdef-rgb
+   * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, RGB, string> = map(
     right(
       Token.parseFunction((fn) => fn.value === "rgb" || fn.value === "rgba"),
       left(

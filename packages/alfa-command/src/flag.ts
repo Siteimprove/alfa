@@ -5,12 +5,16 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
 
-export class Flag<T = unknown> implements Functor<T>, Serializable {
+/**
+ * @public
+ */
+export class Flag<T = unknown> implements Functor<T>, Serializable<Flag.JSON> {
   public static of<T>(
     name: string,
     description: string,
@@ -89,10 +93,17 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U>,
+    refinement: Refinement<T, U>,
+    ifError?: Thunk<string>
+  ): Flag<U>;
+
+  public filter(predicate: Predicate<T>, ifError?: Thunk<string>): Flag<T>;
+
+  public filter(
+    predicate: Predicate<T>,
     ifError: Thunk<string> = () => "Incorrect value"
-  ): Flag<U> {
-    const filter = (previous: Flag.Set<U>): Flag.Parser<U> => (argv) =>
+  ): Flag<T> {
+    const filter = (previous: Flag.Set<T>): Flag.Parser<T> => (argv) =>
       previous
         .parse(argv)
         .flatMap(([argv, set]) =>
@@ -104,14 +115,12 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
             : Err.of(ifError())
         );
 
-    const parse: Flag.Parser<U, [Predicate<string>]> = (argv, matches) =>
+    const parse: Flag.Parser<T, [Predicate<string>]> = (argv, matches) =>
       this._parse(argv, matches).flatMap(([argv, set]) =>
         predicate(set.value)
           ? Result.of([
               argv,
-              Flag.Set.of(set.value, (argv) =>
-                filter(set as Flag.Set<U>)(argv)
-              ),
+              Flag.Set.of(set.value, (argv) => filter(set)(argv)),
             ])
           : Err.of(ifError())
       );
@@ -242,7 +251,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
     return new Flag(this._name, this._description, options, parse);
   }
 
-  public repeatable(): Flag<Iterable<T>> {
+  public repeatable(): Flag<Array<T>> {
     const options = { ...this._options, repeatable: true };
 
     const repeat = (previous: Flag.Set<Array<T>>): Flag.Parser<Array<T>> => (
@@ -314,7 +323,7 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
 
   public choices<U extends T>(...choices: Array<U>): Flag<U> {
     return this.filter(
-      Predicate.equals(...choices),
+      Refinement.equals(...choices),
       () =>
         `Incorrect value, expected one of ${choices
           .map((choice) => `"${choice}"`)
@@ -335,6 +344,9 @@ export class Flag<T = unknown> implements Functor<T>, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Flag {
   export interface JSON {
     [key: string]: json.JSON;
@@ -487,15 +499,11 @@ export namespace Flag {
         return Err.of("Missing flag");
       }
 
-      if (value === undefined) {
+      if (value === undefined || (value !== "true" && value !== "false")) {
         return Result.of([
           argv.slice(1),
           Flag.Set.of(true, (argv) => parse(argv, matches)),
         ]);
-      }
-
-      if (value !== "true" && value !== "false") {
-        return Err.of(`Incorrect value, expected one of "true", "false"`);
       }
 
       return Result.of([

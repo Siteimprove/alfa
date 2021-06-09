@@ -1,32 +1,16 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Document } from "@siteimprove/alfa-dom";
 
 import R85, { Outcomes } from "../../src/sia-r85/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-const { and } = Predicate;
-const { isElement, hasName } = Element;
-
 test("evaluate() passes a paragraph whose text is not italic", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
-  ]);
+  const target = <p>Hello world</p>;
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasName("p")))
-    .get();
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R85, { document }), [
     passed(R85, target, {
@@ -36,19 +20,9 @@ test("evaluate() passes a paragraph whose text is not italic", async (t) => {
 });
 
 test("evaluate() fails a paragraph whose text is italic", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p style={{ fontStyle: "italic" }}>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
-  ]);
+  const target = <p style={{ fontStyle: "italic" }}>Hello world</p>;
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasName("p")))
-    .get();
+  const document = Document.of([target]);
 
   t.deepEqual(await evaluate(R85, { document }), [
     failed(R85, target, {
@@ -58,23 +32,43 @@ test("evaluate() fails a paragraph whose text is italic", async (t) => {
 });
 
 test("evaluate() fails a paragraph whose text is italic by inheritance", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html style={{ fontStyle: "italic" }}>
-        <p>Hello world</p>
-      </html>,
-      Option.of(self)
-    ),
-  ]);
+  const target = <p>Hello world</p>;
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasName("p")))
-    .get();
+  const document = Document.of([
+    <div style={{ fontStyle: "italic" }}>{target}</div>,
+  ]);
 
   t.deepEqual(await evaluate(R85, { document }), [
     failed(R85, target, {
       1: Outcomes.IsItalic,
     }),
   ]);
+});
+
+test("evaluate() fails an ARIA paragraph whose text is italic", async (t) => {
+  const target = (
+    <div role="paragraph" style={{ fontStyle: "italic" }}>
+      Hello world
+    </div>
+  );
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R85, { document }), [
+    failed(R85, target, {
+      1: Outcomes.IsItalic,
+    }),
+  ]);
+});
+
+test("evaluate() ignores a <p> element whose role was changed", async (t) => {
+  const target = (
+    <p role="generic" style={{ fontStyle: "italic" }}>
+      Hello world
+    </p>
+  );
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R85, { document }), [inapplicable(R85)]);
 });

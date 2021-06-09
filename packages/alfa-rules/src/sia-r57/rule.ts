@@ -1,52 +1,56 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
-import { Text } from "@siteimprove/alfa-dom";
+import { Node } from "@siteimprove/alfa-aria";
+import { Text, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as aria from "@siteimprove/alfa-aria";
-
 import { expectation } from "../common/expectation";
 
+import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
-const { hasName } = Role;
+const { isText } = Text;
+const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Text>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r57",
   evaluate({ document, device }) {
     return {
-      applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(
-            and(
-              Text.isText,
+      *applicability() {
+        const descendants = document.descendants({
+          flattened: true,
+          nested: true,
+        });
+
+        if (
+          descendants
+            .filter(isElement)
+            .some(hasRole(device, (role) => role.isLandmark()))
+        ) {
+          yield* descendants
+            .filter(isText)
+            .filter(
               and(
                 property("data", nor(isEmpty, isWhitespace)),
                 not(isIgnored(device))
               )
-            )
-          );
+            );
+        }
       },
 
       expectations(target) {
         return {
           1: expectation(
-            aria.Node.from(target, device).every((node) =>
-              node
-                .ancestors()
-                .some((ancestor) =>
-                  ancestor
-                    .role()
-                    .some((role) => role.inheritsFrom(hasName("landmark")))
-                )
-            ),
+            Node.from(target, device)
+              .ancestors()
+              .some((ancestor) =>
+                ancestor.role.some((role) => role.isLandmark())
+              ),
             () => Outcomes.IsIncludedInLandmark,
             () => Outcomes.IsNotIncludedInLandmark
           ),

@@ -6,28 +6,39 @@ import { Property } from "../property";
 
 const { either } = Parser;
 
-export type Opacity = Opacity.Specified | Opacity.Computed;
-
-export namespace Opacity {
-  export type Specified = Number | Percentage;
-
-  export type Computed = Number;
+declare module "../property" {
+  interface Longhands {
+    opacity: Property<Specified, Computed>;
+  }
 }
 
 /**
- * @see https://drafts.csswg.org/css-color/#propdef-opacity
+ * @internal
  */
-export const Opacity: Property<
-  Opacity.Specified,
-  Opacity.Computed
-> = Property.of(
-  Number.of(1),
-  either(Number.parse, Percentage.parse),
-  (style) =>
-    style
-      .specified("opacity")
-      .map((opacity) => Number.of(Real.clamp(opacity.value, 0, 1))),
-  {
-    inherits: true,
-  }
+export type Specified = Number | Percentage;
+
+/**
+ * @internal
+ */
+export type Computed = Number;
+
+/**
+ * @internal
+ */
+export const parse = either(Number.parse, Percentage.parse);
+
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/opacity}
+ */
+export default Property.register(
+  "opacity",
+  Property.of<Specified, Computed>(
+    Number.of(1),
+    parse,
+    (value) =>
+      value.map((opacity) => Number.of(Real.clamp(opacity.value, 0, 1))),
+    {
+      inherits: true,
+    }
+  )
 );

@@ -4,6 +4,7 @@ import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -15,19 +16,20 @@ const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove/github.io/sanshikan/rules/sia-r6.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r6",
+  requirements: [Criterion.of("3.1.1")],
   evaluate({ document }) {
     return {
       applicability() {
-        return document.children().filter(
-          and(
-            isDocumentElement,
+        return document
+          .children()
+          .filter(isDocumentElement)
+          .filter(
             and(
-              hasAttribute("lang", (value) => Language.parse(value).isSome()),
+              hasAttribute("lang", (value) => Language.parse(value).isOk()),
               hasAttribute("xml:lang", not(isEmpty))
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
@@ -38,10 +40,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            xmlLang.isNone() ||
-              xmlLang
-                .filter((xmlLang) => xmlLang.primary === lang.primary)
-                .isSome(),
+            xmlLang.every((xmlLang) => xmlLang.primary.equals(lang.primary)),
             () => Outcomes.HasMatchingLanguages,
             () => Outcomes.HasNonMatchingLanguages
           ),

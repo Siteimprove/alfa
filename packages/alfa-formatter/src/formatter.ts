@@ -1,11 +1,18 @@
-import { Outcome } from "@siteimprove/alfa-act";
+import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Result, Err } from "@siteimprove/alfa-result";
 
-export type Formatter<I, T = unknown, Q = never> = (
+/**
+ * @public
+ */
+export type Formatter<I = unknown, T = unknown, Q = never> = (
   input: I,
+  rules: Iterable<Rule<I, T, Q>>,
   outcomes: Iterable<Outcome<I, T, Q>>
 ) => string;
 
+/**
+ * @public
+ */
 export namespace Formatter {
   export async function load<I, T = unknown, Q = never>(
     name: string,

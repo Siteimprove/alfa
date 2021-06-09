@@ -7,6 +7,7 @@ import * as url from "url";
 import type { Command } from "@siteimprove/alfa-command";
 import { Device, Display, Scripting, Viewport } from "@siteimprove/alfa-device";
 import { Header, Cookie } from "@siteimprove/alfa-http";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import {
   Awaiter,
@@ -15,6 +16,7 @@ import {
   Screenshot,
 } from "@siteimprove/alfa-scraper";
 import { Timeout } from "@siteimprove/alfa-time";
+import { URL } from "@siteimprove/alfa-url";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
@@ -23,34 +25,27 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const scraper = await Scraper.of();
+  const awaitState = Awaiter[flags.awaitState]();
 
-  let awaiter: Awaiter | undefined;
-
-  for (const state of flags.awaitState) {
-    switch (state) {
-      case "ready":
-        awaiter = Awaiter.ready();
-        break;
-      case "loaded":
-        awaiter = Awaiter.loaded();
-        break;
-      case "idle":
-        awaiter = Awaiter.idle();
-    }
-  }
+  const awaiters = [awaitState];
 
   for (const duration of flags.awaitDuration) {
-    awaiter = Awaiter.duration(duration);
+    awaiters.push(Awaiter.duration(duration, awaitState));
   }
 
-  for (const selector of flags.awaitSelector) {
-    awaiter = Awaiter.selector(selector);
+  for (const selector of Iterable.flatten(flags.awaitSelector)) {
+    awaiters.push(Awaiter.selector(selector));
   }
 
-  for (const xpath of flags.awaitXPath) {
-    awaiter = Awaiter.xpath(xpath);
+  for (const xpath of Iterable.flatten(flags.awaitXPath)) {
+    awaiters.push(Awaiter.xpath(xpath));
   }
+
+  if (flags.awaitAnimations) {
+    awaiters.push(Awaiter.animations(awaitState));
+  }
+
+  const awaiter = Awaiter.all(awaiters);
 
   const orientation =
     flags.orientation === "portrait"
@@ -136,18 +131,19 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     }
   }
 
-  const timeout = Timeout.of(flags.timeout);
+  const scraper = await Scraper.of();
 
   const result = await scraper.scrape(
-    new URL(target, url.pathToFileURL(process.cwd() + path.sep)),
+    URL.parse(target, url.pathToFileURL(process.cwd() + path.sep).href).get(),
     {
-      timeout,
+      timeout: Timeout.of(flags.timeout),
       awaiter,
       device,
       credentials,
       screenshot,
       headers,
       cookies,
+      fit: flags.fit,
     }
   );
 
@@ -162,7 +158,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   if (flags.output.isNone()) {
     return Ok.of(output);
   } else {
-    fs.writeFileSync(flags.output.get() + "\n", output);
+    fs.writeFileSync(flags.output.get(), output + "\n");
     return Ok.of("");
   }
 };

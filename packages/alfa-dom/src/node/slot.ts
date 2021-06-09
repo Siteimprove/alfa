@@ -6,7 +6,7 @@ export interface Slot extends Element {
   /**
    * Get the slotables assigned to this slot.
    *
-   * @see https://html.spec.whatwg.org/#dom-slot-assignednodes
+   * {@link https://html.spec.whatwg.org/#dom-slot-assignednodes}
    */
   assignedNodes(): Iterable<Slotable>;
 }
@@ -21,7 +21,7 @@ export namespace Slot {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#slot-name
+   * {@link https://dom.spec.whatwg.org/#slot-name}
    */
   export function name(slot: Slot): string {
     return slot
@@ -31,15 +31,20 @@ export namespace Slot {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#find-slotables
+   * {@link https://dom.spec.whatwg.org/#find-slotables}
    */
   export function* findSlotables(slot: Slot): Iterable<Slotable> {
     const root = slot.root();
 
     if (Shadow.isShadow(root)) {
-      for (const child of root.host.children()) {
-        if (Slotable.isSlotable(child) && child.assignedSlot().includes(slot)) {
-          yield child;
+      for (const host of root.host) {
+        for (const child of host.children()) {
+          if (
+            Slotable.isSlotable(child) &&
+            child.assignedSlot().includes(slot)
+          ) {
+            yield child;
+          }
         }
       }
     }

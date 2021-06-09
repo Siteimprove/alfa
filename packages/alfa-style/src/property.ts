@@ -1,34 +1,81 @@
 import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Record } from "@siteimprove/alfa-record";
 import { Slice } from "@siteimprove/alfa-slice";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import * as parser from "@siteimprove/alfa-parser";
 
 import { Style } from "./style";
 import { Value } from "./value";
 
+const { left, either, end } = Parser;
+
+const parseDefaults = Keyword.parse("initial", "inherit", "unset");
+
+/**
+ * @internal
+ */
 export class Property<T = unknown, U = T> {
   public static of<T, U>(
     initial: U,
     parse: Property.Parser<T>,
-    compute: Mapper<Style, Value<U>>,
+    compute: Mapper<Value<T>, Value<U>, [style: Style]>,
     options: Property.Options = {
       inherits: false,
     }
   ): Property<T, U> {
-    return new Property(initial, parse, compute, options);
+    return new Property(
+      initial,
+      left(
+        either(parseDefaults, parse),
+        end(() => "Expected end of input")
+      ),
+      compute,
+      options
+    );
+  }
+
+  public static extend<T, U>(
+    property: Property<T, U>,
+    overrides: {
+      initial?: U;
+      parse?: Property.Parser<T>;
+      compute?: Mapper<Value<T>, Value<U>, [style: Style]>;
+      options?: Property.Options;
+    } = {}
+  ): Property<T, U> {
+    const {
+      initial = property._initial,
+      parse,
+      compute = property._compute,
+      options = {},
+    } = overrides;
+
+    return new Property(
+      initial,
+      parse === undefined
+        ? property._parse
+        : left(
+            either(parseDefaults, parse),
+            end(() => "Expected end of input")
+          ),
+      compute,
+      {
+        ...property._options,
+        ...options,
+      }
+    );
   }
 
   private readonly _initial: U;
   private readonly _parse: Property.Parser<T>;
-  private readonly _compute: Mapper<Style, Value<U>>;
+  private readonly _compute: Mapper<Value<T>, Value<U>, [style: Style]>;
   private readonly _options: Property.Options;
 
   private constructor(
     initial: U,
     parse: Property.Parser<T>,
-    compute: Mapper<Style, Value<U>>,
+    compute: Mapper<Value<T>, Value<U>, [style: Style]>,
     options: Property.Options
   ) {
     this._initial = initial;
@@ -45,7 +92,7 @@ export class Property<T = unknown, U = T> {
     return this._parse;
   }
 
-  get compute(): Mapper<Style, Value<U>> {
+  get compute(): Mapper<Value<T>, Value<U>, [style: Style]> {
     return this._compute;
   }
 
@@ -54,58 +101,126 @@ export class Property<T = unknown, U = T> {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Property {
   export interface Options {
     readonly inherits: boolean;
   }
 
-  export type Parser<T> = parser.Parser<Slice<Token>, T, string>;
+  export type Parser<T = Value.Parsed> = parser.Parser<
+    Slice<Token>,
+    Value.Default | T,
+    string
+  >;
 
   export namespace Value {
-    export type Parsed<N extends Name> = WithName<N> extends Property<
+    /**
+     * The default keywords recognised by all properties.
+     */
+    export type Default =
+      | Keyword<"initial">
+      | Keyword<"inherit">
+      | Keyword<"unset">;
+
+    /**
+     * Extract the parsed type of a named property.
+     *
+     * @remarks
+     * The parsed type differs from the declared type in that the parsed type
+     * must not include the defaulting keywords as these are handled globally
+     * rather than individually.
+     */
+    export type Parsed<N extends Name = Name> = WithName<N> extends Property<
       infer T,
       infer U
     >
       ? T
       : never;
 
-    export type Initial<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? U
-      : never;
+    /**
+     * Extract the declared type of a named property.
+     *
+     * {@link https://drafts.csswg.org/css-cascade/#declared}
+     *
+     * @remarks
+     * The declared type includes the parsed type in addition to the defaulting
+     * keywords recognised by all properties.
+     */
+    export type Declared<N extends Name> = Parsed<N> | Default;
 
-    export type Cascaded<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? T | Keyword<"initial" | "inherit">
-      : never;
+    /**
+     * Extract the cascaded type of a named property.
+     *
+     * {@link https://drafts.csswg.org/css-cascade/#cascaded}
+     */
+    export type Cascaded<N extends Name> = Declared<N>;
 
-    export type Specified<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
-    >
-      ? T | U
-      : never;
+    /**
+     * Extract the specified type of a named property.
+     *
+     * {@link https://drafts.csswg.org/css-cascade/#specified}
+     */
+    export type Specified<N extends Name> = Parsed<N> | Computed<N>;
 
+    /**
+     * Extract the computed type a named property.
+     *
+     * {@link https://drafts.csswg.org/css-cascade/#computed}
+     */
     export type Computed<N extends Name> = WithName<N> extends Property<
       infer T,
       infer U
     >
       ? U
       : never;
-  }
-}
 
-export namespace Property {
+    /**
+     * Extract the initial type of a named property.
+     */
+    export type Initial<N extends Name> = Computed<N>;
+
+    /**
+     * Extract the inherited type of a named property.
+     */
+    export type Inherited<N extends Name> = Computed<N>;
+  }
+
+  export type Name = keyof Longhands;
+
+  export type WithName<N extends Name> = Longhands[N];
+
+  export const longhands = new Map<Name, Property>();
+
+  export function register<N extends Name>(
+    name: N,
+    property: WithName<N>
+  ): WithName<N> {
+    longhands.set(name, property as Property);
+    return property;
+  }
+
+  export function isName(name: string): name is Name {
+    return longhands.has(name as Name);
+  }
+
+  export function get<N extends Name>(name: N): WithName<N> {
+    return longhands.get(name) as WithName<N>;
+  }
+
   export class Shorthand<N extends Name = never> {
     public static of<N extends Name>(
       properties: Array<N>,
       parse: Shorthand.Parser<N>
     ) {
-      return new Shorthand(properties, parse);
+      return new Shorthand(
+        properties,
+        left(
+          either(parseDefaults, parse),
+          end(() => "Expected end of input")
+        )
+      );
     }
 
     private readonly _properties: Array<N>;
@@ -126,88 +241,45 @@ export namespace Property {
   }
 
   export namespace Shorthand {
-    export type Parser<N extends Property.Name> = parser.Parser<
+    export type Parser<N extends Property.Name = Property.Name> = parser.Parser<
       Slice<Token>,
-      Record<
-        {
-          [M in N]: Property.Value.Parsed<M>;
-        }
-      >,
+      | Property.Value.Default
+      | Iterable<{ [M in N]: readonly [M, Property.Value.Declared<M>] }[N]>,
       string
     >;
-  }
-}
 
-import { Background } from "./property/background";
-import { Color } from "./property/color";
-import { Display } from "./property/display";
-import { Font } from "./property/font";
-import { Height } from "./property/height";
-import { Line } from "./property/line";
-import { Opacity } from "./property/opacity";
-import { Overflow } from "./property/overflow";
-import { Text } from "./property/text";
-import { Transform } from "./property/transform";
-import { Visibility } from "./property/visibility";
-import { Whitespace } from "./property/whitespace";
-import { Width } from "./property/width";
+    export type Name = keyof Shorthands;
 
-export namespace Property {
-  export type Name = keyof Registered;
+    export type WithName<N extends Name> = Shorthands[N];
 
-  export type WithName<N extends Name> = Registered[N];
+    const shorthands = new Map<Name, Shorthand>();
 
-  type Registered = typeof Registered;
-  const Registered = {
-    "background-color": Background.Color,
-    "background-image": Background.Image,
-    color: Color,
-    display: Display,
-    "font-family": Font.Family,
-    "font-size": Font.Size,
-    "font-style": Font.Style,
-    "font-weight": Font.Weight,
-    height: Height,
-    "line-height": Line.Height,
-    opacity: Opacity,
-    "overflow-x": Overflow.X,
-    "overflow-y": Overflow.Y,
-    "text-align": Text.Align,
-    "text-transform": Text.Transform,
-    "text-overflow": Text.Overflow,
-    transform: Transform,
-    visibility: Visibility,
-    "white-space": Whitespace,
-    width: Width,
-  };
-
-  export function isName(name: string): name is Name {
-    return name in Registered;
-  }
-
-  export function get<N extends Name>(name: N): WithName<N> {
-    return Registered[name];
-  }
-}
-
-export namespace Property {
-  export namespace Shorthand {
-    export type Name = keyof Registered;
-
-    export type WithName<N extends Name> = Registered[N];
-
-    type Registered = typeof Registered;
-    const Registered = {
-      background: Background.Shorthand,
-      overflow: Overflow.Shorthand,
-    };
+    export function register<N extends Name>(
+      name: N,
+      property: WithName<N>
+    ): WithName<N> {
+      shorthands.set(name, property as Shorthand);
+      return property;
+    }
 
     export function isName(name: string): name is Name {
-      return name in Registered;
+      return shorthands.has(name as Name);
     }
 
     export function get<N extends Name>(name: N): WithName<N> {
-      return Registered[name];
+      return shorthands.get(name) as WithName<N>;
     }
   }
+
+  export const { of: shorthand, register: registerShorthand } = Shorthand;
 }
+
+/**
+ * @internal
+ */
+export interface Longhands {}
+
+/**
+ * @internal
+ */
+export interface Shorthands {}

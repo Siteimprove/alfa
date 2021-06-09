@@ -1,21 +1,34 @@
-import browserslist = require("browserslist");
+import * as browserslist from "browserslist";
 
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import * as data from "./browser/data";
+import { Browsers } from "./browser/data";
 
+/**
+ * @public
+ */
 export type Browser<
   N extends Browser.Name = Browser.Name,
   V extends Browser.Version<N> = Browser.Version<N>
 > = Browser.Release<N, V>;
 
+/**
+ * @public
+ */
 export namespace Browser {
-  export type Name = Data.Name;
+  export type Name = keyof Browsers & string;
 
-  export type Version<N extends Name> = Data.Version<N>;
+  /**
+   * @remarks
+   * This type distributes the versions over the given browser names rather than
+   * narrow to a common subset of versions.
+   */
+  export type Version<N extends Name> = N extends Name
+    ? keyof Browsers[N]["releases"]
+    : never;
 
   export class Release<N extends Name = Name, V extends Version<N> = Version<N>>
     implements Serializable {
@@ -30,29 +43,40 @@ export namespace Browser {
       return new Release(browser, version, date);
     }
 
-    public readonly browser: N;
-    public readonly version: V;
+    private readonly _browser: N;
+    private readonly _version: V;
+    private readonly _date: number;
+
+    private constructor(browser: N, version: V, date: number) {
+      this._browser = browser;
+      this._version = version;
+      this._date = date;
+    }
+
+    public get browser(): N {
+      return this._browser;
+    }
+
+    public get version(): V {
+      return this._version;
+    }
 
     /**
      * @internal
      */
-    public readonly date: number;
-
-    private constructor(browser: N, version: V, date: number) {
-      this.browser = browser;
-      this.version = version;
-      this.date = date;
+    public get date(): number {
+      return this._date;
     }
 
     public toJSON(): Release.JSON {
       return {
-        browser: this.browser,
-        version: this.version,
+        browser: this._browser,
+        version: this._version,
       };
     }
 
     public toString(): string {
-      return `Release { ${this.browser} ${this.version} }`;
+      return `Release { ${this._browser} ${this._version} }`;
     }
   }
 
@@ -67,11 +91,11 @@ export namespace Browser {
   export type Scope<N extends Name = Name> = Iterable<Release<N>>;
 
   export function isBrowser(browser: string): browser is Name {
-    return browser in data.Data;
+    return browser in Browsers;
   }
 
   function* getBrowsers(): Iterable<Name> {
-    for (const browser in data.Data) {
+    for (const browser in Browsers) {
       if (isBrowser(browser)) {
         yield browser;
       }
@@ -82,11 +106,11 @@ export namespace Browser {
     browser: N,
     version: string
   ): version is Version<N> {
-    return version in data.Data[browser].releases;
+    return version in Browsers[browser].releases;
   }
 
   function* getVersions<N extends Name>(browser: N): Iterable<Version<N>> {
-    for (const version in data.Data[browser].releases) {
+    for (const version in Browsers[browser].releases) {
       if (isVersion(browser, version)) {
         yield version;
       }
@@ -99,13 +123,13 @@ export namespace Browser {
 
   const releases = [...getBrowsers()].reduce(
     <N extends Name>(support: Releases, browser: N) => {
-      const releases = data.Data[browser].releases as Data.Releases<N>;
+      const releases = Browsers[browser].releases;
 
       return {
         ...support,
         [browser]: [...getVersions(browser)].reduce(
           <V extends Version<N>>(support: Versions<N>, version: V) => {
-            const { date } = releases[version] as Data.Release<N, V>;
+            const { date } = releases[version as keyof typeof releases];
 
             return {
               ...support,
@@ -232,23 +256,4 @@ export namespace Browser {
   export function getDefaultScope(): Scope {
     return defaultScope;
   }
-}
-
-namespace Data {
-  type Keys<T, E extends string | number | symbol = string> = T extends {}
-    ? Extract<keyof T, E>
-    : never;
-
-  export type Name = Keys<data.Data>;
-
-  export type Browser<N extends Name> = data.Data[N];
-
-  export type Releases<N extends Name> = Browser<N>["releases"];
-
-  export type Version<N extends Name> = Keys<Releases<N>>;
-
-  export type Release<N extends Name, V extends Version<N>> = Extract<
-    Releases<N>[V],
-    { date: number }
-  >;
 }

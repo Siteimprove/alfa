@@ -1,13 +1,22 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Err } from "./err";
 import { Result } from "./result";
 
+const { not, test } = Predicate;
+
+/**
+ * @public
+ */
 export class Ok<T> implements Result<T, never> {
   public static of<T>(value: T): Ok<T> {
     return new Ok(value);
@@ -45,6 +54,42 @@ export class Ok<T> implements Result<T, never> {
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
     return reducer(accumulator, this._value);
+  }
+
+  public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
+    return mapper.map((mapper) => mapper(this._value));
+  }
+
+  public includes(value: T): boolean {
+    return Equatable.equals(this._value, value);
+  }
+
+  public includesErr(): boolean {
+    return false;
+  }
+
+  public some(predicate: Predicate<T>): boolean {
+    return test(predicate, this._value);
+  }
+
+  public someErr(): boolean {
+    return false;
+  }
+
+  public none(predicate: Predicate<T>): boolean {
+    return test(not(predicate), this._value);
+  }
+
+  public noneErr(): boolean {
+    return true;
+  }
+
+  public every(predicate: Predicate<T>): boolean {
+    return test(predicate, this._value);
+  }
+
+  public everyErr(): boolean {
+    return true;
   }
 
   public and<U, F>(result: Result<U, F>): Result<U, F> {
@@ -87,15 +132,28 @@ export class Ok<T> implements Result<T, never> {
     return None;
   }
 
+  public tee(callback: Callback<T>): Ok<T> {
+    callback(this._value);
+    return this;
+  }
+
+  public teeErr(): Ok<T> {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Ok && Equatable.equals(value._value, this._value);
+  }
+
+  public hash(hash: Hash): void {
+    hash.writeBoolean(true).writeUnknown(this._value);
   }
 
   public *[Symbol.iterator]() {
     yield this._value;
   }
 
-  public toJSON(): Ok.JSON {
+  public toJSON(): Ok.JSON<T> {
     return {
       type: "ok",
       value: Serializable.toJSON(this._value),
@@ -107,11 +165,14 @@ export class Ok<T> implements Result<T, never> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Ok {
-  export interface JSON {
+  export interface JSON<T> {
     [key: string]: json.JSON;
     type: "ok";
-    value: json.JSON;
+    value: Serializable.ToJSON<T>;
   }
 
   export function isOk<T>(value: unknown): value is Ok<T> {

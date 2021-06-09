@@ -1,32 +1,17 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
-import { Grouping } from "./grouping";
+import { GroupingRule } from "./grouping";
 
-const { map, join } = Iterable;
-
-export class Keyframes extends Grouping {
-  public static of(
-    name: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframes {
-    return new Keyframes(name, rules, owner, parent);
+export class KeyframesRule extends GroupingRule {
+  public static of(name: string, rules: Iterable<Rule>): KeyframesRule {
+    return new KeyframesRule(name, Array.from(rules));
   }
 
   private readonly _name: string;
 
-  private constructor(
-    name: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(rules, owner, parent);
+  private constructor(name: string, rules: Array<Rule>) {
+    super(rules);
 
     this._name = name;
   }
@@ -35,7 +20,7 @@ export class Keyframes extends Grouping {
     return this._name;
   }
 
-  public toJSON(): Keyframes.JSON {
+  public toJSON(): KeyframesRule.JSON {
     return {
       type: "keyframes",
       rules: [...this.rules].map((rule) => rule.toJSON()),
@@ -44,38 +29,30 @@ export class Keyframes extends Grouping {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this.rules, (rule) => indent(rule.toString())),
-      "\n\n"
-    );
+    const rules = this._rules
+      .map((rule) => indent(rule.toString()))
+      .join("\n\n");
 
     return `@keyframes ${this._name} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
 }
 
-export namespace Keyframes {
-  export interface JSON extends Grouping.JSON {
+export namespace KeyframesRule {
+  export interface JSON extends GroupingRule.JSON {
     type: "keyframes";
     name: string;
   }
 
-  export function isKeyframes(value: unknown): value is Keyframes {
-    return value instanceof Keyframes;
+  export function isKeyframesRule(value: unknown): value is KeyframesRule {
+    return value instanceof KeyframesRule;
   }
 
-  export function fromKeyframes(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Keyframes {
-    return Keyframes.of(
-      json.name,
-      (self) => {
-        const parent = Option.of(self);
-        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromKeyframesRule(json: JSON): Trampoline<KeyframesRule> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      KeyframesRule.of(json.name, rules)
     );
   }
 }

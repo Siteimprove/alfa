@@ -4,13 +4,18 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Result, Err } from "@siteimprove/alfa-result";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 import * as parser from "@siteimprove/alfa-parser";
 
-export class Argument<T = unknown> implements Functor<T>, Serializable {
+/**
+ * @public
+ */
+export class Argument<T = unknown>
+  implements Functor<T>, Serializable<Argument.JSON> {
   public static of<T>(
     name: string,
     description: string,
@@ -73,9 +78,16 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
   }
 
   public filter<U extends T>(
-    predicate: Predicate<T, U>,
+    refinement: Refinement<T, U>,
+    ifError?: Thunk<string>
+  ): Argument<U>;
+
+  public filter(predicate: Predicate<T>, ifError?: Thunk<string>): Argument<T>;
+
+  public filter(
+    predicate: Predicate<T>,
     ifError: Thunk<string> = () => "Incorrect value"
-  ): Argument<U> {
+  ): Argument<T> {
     return new Argument(
       this._name,
       this._description,
@@ -124,7 +136,7 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
   }
 
   public choices<U extends T>(...choices: Array<U>): Argument<U> {
-    return this.filter(Predicate.equals(...choices));
+    return this.filter(Refinement.equals(...choices));
   }
 
   public toJSON(): Argument.JSON {
@@ -133,12 +145,15 @@ export class Argument<T = unknown> implements Functor<T>, Serializable {
       description: this._description,
       options: {
         ...this._options,
-        default: this._options.default.map(Serializable.toJSON).getOr(null),
+        default: this._options.default.getOr(null),
       },
     };
   }
 }
 
+/**
+ * @public
+ */
 export namespace Argument {
   export interface JSON {
     [key: string]: json.JSON;
@@ -148,7 +163,7 @@ export namespace Argument {
       [key: string]: json.JSON;
       optional: boolean;
       repeatable: boolean;
-      default: json.JSON | null;
+      default: string | null;
     };
   }
 
@@ -168,7 +183,7 @@ export namespace Argument {
         return Err.of("Missing value");
       }
 
-      return Ok.of([argv.slice(1), value] as const);
+      return Result.of([argv.slice(1), value]);
     });
   }
 
@@ -186,7 +201,7 @@ export namespace Argument {
         return Err.of(`${value} is not a number`);
       }
 
-      return Ok.of([argv.slice(1), number] as const);
+      return Result.of([argv.slice(1), number]);
     });
   }
 
@@ -204,7 +219,7 @@ export namespace Argument {
         return Err.of(`${value} is not an integer`);
       }
 
-      return Ok.of([argv.slice(1), number] as const);
+      return Result.of([argv.slice(1), number]);
     });
   }
 
@@ -223,7 +238,7 @@ export namespace Argument {
         return Err.of(`Incorrect value, expected one of "true", "false"`);
       }
 
-      return Ok.of([argv.slice(1), value === "true"] as const);
+      return Result.of([argv.slice(1), value === "true"]);
     });
   }
 }

@@ -1,21 +1,31 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Sheet } from "./sheet";
 
+import {
+  FontFaceRule,
+  ImportRule,
+  KeyframeRule,
+  KeyframesRule,
+  MediaRule,
+  NamespaceRule,
+  PageRule,
+  StyleRule,
+  SupportsRule,
+} from "..";
+
 export abstract class Rule implements Equatable, Serializable {
-  protected readonly _owner: Sheet;
-  protected readonly _parent: Option<Rule>;
+  protected _owner: Option<Sheet> = None;
+  protected _parent: Option<Rule> = None;
 
-  protected constructor(owner: Sheet, parent: Option<Rule>) {
-    this._owner = owner;
-    this._parent = parent;
-  }
+  protected constructor() {}
 
-  public get owner(): Sheet {
+  public get owner(): Option<Sheet> {
     return this._owner;
   }
 
@@ -44,31 +54,33 @@ export abstract class Rule implements Equatable, Serializable {
   }
 
   public abstract toJSON(): Rule.JSON;
+
+  /**
+   * @internal
+   */
+  public _attachOwner(owner: Sheet): boolean {
+    if (this._owner.isSome()) {
+      return false;
+    }
+
+    this._owner = Option.of(owner);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachParent(parent: Rule): boolean {
+    if (this._parent.isSome()) {
+      return false;
+    }
+
+    this._parent = Option.of(parent);
+
+    return true;
+  }
 }
-
-import { FontFace } from "./rule/font-face";
-import { Import } from "./rule/import";
-import { Keyframe } from "./rule/keyframe";
-import { Keyframes } from "./rule/keyframes";
-import { Media } from "./rule/media";
-import { Namespace } from "./rule/namespace";
-import { Page } from "./rule/page";
-import { Style } from "./rule/style";
-import { Supports } from "./rule/supports";
-
-// Export CSSOM rules with a `Rule` postfix to avoid clashes with DOM nodes such
-// as `Namespace`.
-export {
-  FontFace as FontFaceRule,
-  Import as ImportRule,
-  Keyframe as KeyframeRule,
-  Keyframes as KeyframesRule,
-  Media as MediaRule,
-  Namespace as NamespaceRule,
-  Page as PageRule,
-  Style as StyleRule,
-  Supports as SupportsRule,
-};
 
 export namespace Rule {
   export interface JSON {
@@ -76,41 +88,64 @@ export namespace Rule {
     type: string;
   }
 
-  export function fromRule(
-    rule: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Rule {
-    switch (rule.type) {
+  export function from(json: StyleRule.JSON): StyleRule;
+
+  export function from(json: ImportRule.JSON): ImportRule;
+
+  export function from(json: MediaRule.JSON): MediaRule;
+
+  export function from(json: FontFaceRule.JSON): FontFaceRule;
+
+  export function from(json: PageRule.JSON): PageRule;
+
+  export function from(json: KeyframeRule.JSON): KeyframeRule;
+
+  export function from(json: KeyframesRule.JSON): KeyframesRule;
+
+  export function from(json: NamespaceRule.JSON): NamespaceRule;
+
+  export function from(json: SupportsRule.JSON): SupportsRule;
+
+  export function from(json: JSON): Rule;
+
+  export function from(json: JSON): Rule {
+    return fromRule(json).run();
+  }
+
+  /**
+   * @internal
+   */
+  export function fromRule(json: JSON): Trampoline<Rule> {
+    switch (json.type) {
       case "style":
-        return Style.fromStyle(rule as Style.JSON, owner, parent);
+        return StyleRule.fromStyleRule(json as StyleRule.JSON);
 
       case "import":
-        return Import.fromImport(rule as Import.JSON, owner, parent);
+        return ImportRule.fromImportRule(json as ImportRule.JSON);
 
       case "media":
-        return Media.fromMedia(rule as Media.JSON, owner, parent);
+        return MediaRule.fromMediaRule(json as MediaRule.JSON);
 
       case "font-face":
-        return FontFace.fromFontFace(rule as FontFace.JSON, owner, parent);
+        return FontFaceRule.fromFontFaceRule(json as FontFaceRule.JSON);
 
       case "page":
-        return Page.fromPage(rule as Page.JSON, owner, parent);
-
-      case "keyframes":
-        return Keyframes.fromKeyframes(rule as Keyframes.JSON, owner, parent);
+        return PageRule.fromPageRule(json as PageRule.JSON);
 
       case "keyframe":
-        return Keyframe.fromKeyframe(rule as Keyframe.JSON, owner, parent);
+        return KeyframeRule.fromKeyframeRule(json as KeyframeRule.JSON);
+
+      case "keyframes":
+        return KeyframesRule.fromKeyframesRule(json as KeyframesRule.JSON);
 
       case "namespace":
-        return Namespace.fromNamespace(rule as Namespace.JSON, owner, parent);
+        return NamespaceRule.fromNamespaceRule(json as NamespaceRule.JSON);
 
       case "supports":
-        return Supports.fromSupports(rule as Supports.JSON, owner, parent);
+        return SupportsRule.fromSupportsRule(json as SupportsRule.JSON);
 
       default:
-        throw new Error(`Unexpected rule of type: ${rule.type}`);
+        throw new Error(`Unexpected rule of type: ${json.type}`);
     }
   }
 }

@@ -1,15 +1,14 @@
 import { h } from "./h";
 
-import { Node } from "./node";
-import { Element } from "./node/element";
+import { Node, Element } from ".";
 
 const { entries } = Object;
 
 export function jsx(
   name: string,
-  properties: jsx.JSX.IntrinsicProps | null = null,
-  ...children: Array<Node.JSON | string>
-): Element.JSON {
+  properties: jsx.Properties | null = null,
+  ...children: Array<jsx.Child>
+): Element {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
 
@@ -37,16 +36,34 @@ export function jsx(
 }
 
 export namespace jsx {
-  export namespace JSX {
-    export type Element = import("./node/element").Element.JSON;
+  export type Child = Node | string;
 
-    export interface IntrinsicProps {
-      [attribute: string]: unknown;
-      style?: Record<string, string>;
-    }
+  export interface Properties {
+    [name: string]: unknown;
+
+    /**
+     * An optional record of CSS property names and their associated values.
+     * This works similarly to the `style` property in React.
+     *
+     * {@link https://reactjs.org/docs/dom-elements.html#style}
+     */
+    style?: Record<string, string>;
+  }
+
+  /**
+   * {@link https://www.typescriptlang.org/docs/handbook/jsx.html}
+   *
+   * @remarks
+   * This namespace is currently needed to let the TypeScript compiler know the
+   * shape of elements returned by `jsx()` and the properties that tags allow.
+   * We should keep an eye on https://github.com/microsoft/TypeScript/issues/14729
+   * as it might provide an opportunity to get rid of this namespace entirely.
+   */
+  export namespace JSX {
+    export type Element = import("./node/element").Element;
 
     export interface IntrinsicElements {
-      [tag: string]: IntrinsicProps;
+      [tag: string]: Properties;
     }
   }
 }

@@ -39,7 +39,8 @@ import { Selector } from "@siteimprove/alfa-selector";
  * only ever be added and removed once, and an element must not be removed
  * before being added.
  *
- * @see http://doc.servo.org/style/bloom/struct.StyleBloom.html
+ * {@link http://doc.servo.org/style/bloom/struct.StyleBloom.html}
+ *
  * @internal
  */
 export class AncestorFilter {

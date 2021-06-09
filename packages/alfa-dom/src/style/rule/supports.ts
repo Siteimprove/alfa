@@ -1,34 +1,18 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
-import { Condition } from "./condition";
-import { Grouping } from "./grouping";
+import { ConditionRule } from "./condition";
 
-const { map, join } = Iterable;
-
-export class Supports extends Condition {
-  public static of(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Supports {
-    return new Supports(condition, rules, owner, parent);
+export class SupportsRule extends ConditionRule {
+  public static of(condition: string, rules: Iterable<Rule>): SupportsRule {
+    return new SupportsRule(condition, Array.from(rules));
   }
 
-  private constructor(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(condition, rules, owner, parent);
+  private constructor(condition: string, rules: Array<Rule>) {
+    super(condition, rules);
   }
 
-  public toJSON(): Supports.JSON {
+  public toJSON(): SupportsRule.JSON {
     return {
       type: "supports",
       rules: [...this._rules].map((rule) => rule.toJSON()),
@@ -37,10 +21,9 @@ export class Supports extends Condition {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this._rules, (rule) => indent(rule.toString())),
-      "\n\n"
-    );
+    const rules = this._rules
+      .map((rule) => indent(rule.toString()))
+      .join("\n\n");
 
     return `@supports ${this._condition} {${
       rules === "" ? "" : `\n${rules}\n`
@@ -48,28 +31,21 @@ export class Supports extends Condition {
   }
 }
 
-export namespace Supports {
-  export interface JSON extends Condition.JSON {
+export namespace SupportsRule {
+  export interface JSON extends ConditionRule.JSON {
     type: "supports";
   }
 
-  export function isSupports(value: unknown): value is Supports {
-    return value instanceof Supports;
+  export function isSupportsRue(value: unknown): value is SupportsRule {
+    return value instanceof SupportsRule;
   }
 
-  export function fromSupports(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Supports {
-    return Supports.of(
-      json.condition,
-      (self) => {
-        const parent = Option.of(self);
-        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromSupportsRule(json: JSON): Trampoline<SupportsRule> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      SupportsRule.of(json.condition, rules)
     );
   }
 }

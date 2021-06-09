@@ -1,28 +1,18 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
-export class Namespace extends Rule {
-  public static of(
-    namespace: string,
-    prefix: Option<string>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Namespace {
-    return new Namespace(namespace, prefix, owner, parent);
+export class NamespaceRule extends Rule {
+  public static of(namespace: string, prefix: Option<string>): NamespaceRule {
+    return new NamespaceRule(namespace, prefix);
   }
 
   private readonly _namespace: string;
   private readonly _prefix: Option<string>;
 
-  private constructor(
-    namespace: string,
-    prefix: Option<string>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(namespace: string, prefix: Option<string>) {
+    super();
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -36,7 +26,7 @@ export class Namespace extends Rule {
     return this._prefix;
   }
 
-  public toJSON(): Namespace.JSON {
+  public toJSON(): NamespaceRule.JSON {
     return {
       type: "namespace",
       namespace: this._namespace,
@@ -51,27 +41,23 @@ export class Namespace extends Rule {
   }
 }
 
-export namespace Namespace {
+export namespace NamespaceRule {
   export interface JSON extends Rule.JSON {
     type: "namespace";
     namespace: string;
     prefix: string | null;
   }
 
-  export function isNamespace(value: unknown): value is Namespace {
-    return value instanceof Namespace;
+  export function isNamespaceRule(value: unknown): value is NamespaceRule {
+    return value instanceof NamespaceRule;
   }
 
-  export function fromNamespace(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Namespace {
-    return Namespace.of(
-      json.namespace,
-      Option.from(json.prefix),
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromNamespaceRule(json: JSON): Trampoline<NamespaceRule> {
+    return Trampoline.done(
+      NamespaceRule.of(json.namespace, Option.from(json.prefix))
     );
   }
 }

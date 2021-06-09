@@ -2,8 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Ok } from "@siteimprove/alfa-result";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -11,27 +10,40 @@ import { Component } from "./component";
 import { Token } from "./token";
 
 /**
- * @see https://drafts.csswg.org/css-syntax/#simple-block
+ * {@link https://drafts.csswg.org/css-syntax/#simple-block}
+ *
+ * @public
  */
-export class Block implements Equatable, Serializable {
-  public static of(token: Token, value: Array<Token>): Block {
-    return new Block(token, value);
+export class Block implements Iterable<Token>, Equatable, Serializable {
+  public static of(token: Block.Open, value: Iterable<Token>): Block {
+    return new Block(token, Array.from(value));
   }
 
-  private readonly _token: Token;
+  private readonly _token: Block.Open;
   private readonly _value: Array<Token>;
 
-  private constructor(token: Token, value: Array<Token>) {
+  private constructor(token: Block.Open, value: Array<Token>) {
     this._token = token;
     this._value = value;
   }
 
-  public get token(): Token {
+  public get token(): Block.Open {
     return this._token;
   }
 
   public get value(): Array<Token> {
     return this._value;
+  }
+
+  public *[Symbol.iterator](): Iterator<Token> {
+    // <open>
+    yield this._token;
+
+    // <value>
+    yield* this._value;
+
+    // <close>
+    yield this._token.mirror;
   }
 
   public equals(value: unknown): value is this {
@@ -51,24 +63,17 @@ export class Block implements Equatable, Serializable {
   }
 
   public toString(): string {
-    let string = this._token.toString() + this._value.join("");
-
-    if (Token.isOpenParenthesis(this._token)) {
-      string += ")";
-    }
-
-    if (Token.isOpenSquareBracket(this._token)) {
-      string += "]";
-    }
-
-    if (Token.isOpenCurlyBracket(this._token)) {
-      string += "}";
-    }
-
-    return string;
+    return (
+      this._token.toString() +
+      this._value.join("") +
+      this._token.mirror.toString()
+    );
   }
 }
 
+/**
+ * @public
+ */
 export namespace Block {
   export interface JSON {
     [key: string]: json.JSON;
@@ -77,33 +82,37 @@ export namespace Block {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-syntax/#consume-a-simple-block
+   * The tokens that are allowed to open a block.
+   */
+  export type Open =
+    | Token.OpenParenthesis
+    | Token.OpenSquareBracket
+    | Token.OpenCurlyBracket;
+
+  /**
+   * The tokens that are allowed to close a block.
+   */
+  export type Close =
+    | Token.CloseParenthesis
+    | Token.CloseSquareBracket
+    | Token.CloseCurlyBracket;
+
+  /**
+   * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
   export const consume: Parser<Slice<Token>, Block> = (input) => {
-    const token = input.get(0).get();
+    const token = input.array[input.offset] as Open;
+
     const value: Array<Token> = [];
-
-    let isEndingToken: Predicate<Token>;
-
-    if (Token.isOpenParenthesis(token)) {
-      isEndingToken = Token.isCloseParenthesis;
-    }
-
-    if (Token.isOpenSquareBracket(token)) {
-      isEndingToken = Token.isOpenSquareBracket;
-    }
-
-    if (Token.isOpenCurlyBracket(token)) {
-      isEndingToken = Token.isCloseCurlyBracket;
-    }
 
     input = input.slice(1);
 
-    while (true) {
-      const next = input.get(0);
+    while (input.length > 0) {
+      const next = input.array[input.offset];
 
-      if (next.isNone() || isEndingToken!(next.get())) {
-        return Ok.of([input.slice(1), Block.of(token, value)] as const);
+      if (next.type === token.mirror.type) {
+        input = input.slice(1);
+        break;
       }
 
       const [remainder, component] = Component.consume(input).get();
@@ -111,5 +120,7 @@ export namespace Block {
       input = remainder;
       value.push(...component);
     }
+
+    return Result.of([input, Block.of(token, value)]);
   };
 }

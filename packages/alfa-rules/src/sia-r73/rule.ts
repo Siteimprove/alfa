@@ -1,20 +1,20 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { hasRole, isVisible } from "../common/predicate";
 
-import { isVisible } from "../common/predicate/is-visible";
-
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r73.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r73",
+  requirements: [Criterion.of("1.4.8")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -23,12 +23,8 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
-          .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-            )
-          );
+          .filter(isElement)
+          .filter(and(hasRole(device, "paragraph"), isVisible(device)));
       },
 
       expectations(target) {
@@ -66,16 +62,16 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    Diagnostic.of(`The line height of the \`<p>\` element is at least 1.5`)
+    Diagnostic.of(`The line height of the paragraph is at least 1.5`)
   );
 
   export const IsInsufficient = Err.of(
-    Diagnostic.of(`The line height of the \`<p>\` element is less than 1.5`)
+    Diagnostic.of(`The line height of the paragraph is less than 1.5`)
   );
 
   export const IsNormal = Err.of(
     Diagnostic.of(
-      `The line height of the \`<p>\` element is \`normal\` which will result in
+      `The line height of the paragraph is \`normal\` which will result in
       a line height of less than 1.5`
     )
   );

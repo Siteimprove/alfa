@@ -8,10 +8,8 @@ export function hasHeadingLevel(
   predicate: Predicate<number> = (n) => !isNaN(n)
 ): Predicate<Element> {
   return (element) =>
-    Node.from(element, device).every((accNode) =>
-      accNode
-        .attribute("aria-level")
-        .map((level) => Number(level))
-        .some(predicate)
-    );
+    Node.from(element, device)
+      .attribute("aria-level")
+      .map((level) => Number(level.value))
+      .some(predicate);
 }

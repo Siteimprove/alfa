@@ -1,18 +1,20 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Unit } from "../unit";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Rotate<A extends Angle = Angle>
-  implements Equatable, Serializable {
+/**
+ * @public
+ */
+export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
   public static of<A extends Angle>(
     x: Number,
     y: Number,
@@ -28,13 +30,18 @@ export class Rotate<A extends Angle = Angle>
   private readonly _angle: A;
 
   private constructor(x: Number, y: Number, z: Number, angle: A) {
+    super();
     this._x = x;
     this._y = y;
     this._z = z;
     this._angle = angle;
   }
 
-  public get type(): "rotate" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "rotate" {
     return "rotate";
   }
 
@@ -64,9 +71,18 @@ export class Rotate<A extends Angle = Angle>
     );
   }
 
+  public hash(hash: Hash): void {
+    hash
+      .writeHashable(this._x)
+      .writeHashable(this._y)
+      .writeHashable(this._z)
+      .writeHashable(this._angle);
+  }
+
   public toJSON(): Rotate.JSON {
     return {
-      type: "rotate",
+      type: "transform",
+      kind: "rotate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
       z: this._z.toJSON(),
@@ -83,10 +99,12 @@ export class Rotate<A extends Angle = Angle>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Rotate {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "rotate";
+  export interface JSON extends Value.JSON<"transform"> {
+    kind: "rotate";
     x: Number.JSON;
     y: Number.JSON;
     z: Number.JSON;
@@ -110,7 +128,7 @@ export namespace Rotate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate}
    */
   const parseRotate = map(
     right(
@@ -124,7 +142,7 @@ export namespace Rotate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex}
    */
   const parseRotateX = map(
     right(
@@ -138,7 +156,7 @@ export namespace Rotate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
   const parseRotateY = map(
     right(
@@ -152,7 +170,7 @@ export namespace Rotate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
   const parseRotateZ = map(
     right(
@@ -166,7 +184,7 @@ export namespace Rotate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotate3d
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotate3d}
    */
   const parseRotate3d = map(
     right(
@@ -198,11 +216,11 @@ export namespace Rotate {
     }
   );
 
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Rotate, string> = either(
     parseRotate,
-    either(
-      either(parseRotateX, parseRotateY),
-      either(parseRotateZ, parseRotate3d)
-    )
+    parseRotateX,
+    parseRotateY,
+    parseRotateZ,
+    parseRotate3d
   );
 }

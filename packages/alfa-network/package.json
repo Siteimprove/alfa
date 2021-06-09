@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-network",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.17.0",
+  "license": "MIT",
+  "description": "An implementation of an immutable, directed graph that allows for multiple, unique edges",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-network"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-equatable": "workspace:^0.17.0",
+    "@siteimprove/alfa-graph": "workspace:^0.17.0",
+    "@siteimprove/alfa-hash": "workspace:^0.17.0",
+    "@siteimprove/alfa-iterable": "workspace:^0.17.0",
+    "@siteimprove/alfa-json": "workspace:^0.17.0",
+    "@siteimprove/alfa-map": "workspace:^0.17.0",
+    "@siteimprove/alfa-sequence": "workspace:^0.17.0",
+    "@siteimprove/alfa-set": "workspace:^0.17.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^0.17.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}

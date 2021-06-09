@@ -1,18 +1,23 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Unit } from "../unit";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
-  implements Equatable, Serializable {
+/**
+ * @public
+ */
+export class Skew<
+  X extends Angle = Angle,
+  Y extends Angle = Angle
+> extends Value<"transform"> {
   public static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y> {
     return new Skew(x, y);
   }
@@ -21,11 +26,16 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
   private readonly _y: Y;
 
   private constructor(x: X, y: Y) {
+    super();
     this._x = x;
     this._y = y;
   }
 
-  public get type(): "skew" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "skew" {
     return "skew";
   }
 
@@ -45,9 +55,14 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
     );
   }
 
+  public hash(hash: Hash): void {
+    hash.writeHashable(this._x).writeHashable(this._y);
+  }
+
   public toJSON(): Skew.JSON {
     return {
-      type: "skew",
+      type: "transform",
+      kind: "skew",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
     };
@@ -66,10 +81,12 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Skew {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "skew";
+  export interface JSON extends Value.JSON<"transform"> {
+    kind: "skew";
     x: Angle.JSON;
     y: Angle.JSON;
   }
@@ -86,7 +103,7 @@ export namespace Skew {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-skew
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skew}
    */
   const parseSkew = map(
     right(
@@ -118,7 +135,7 @@ export namespace Skew {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-skewx
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewx}
    */
   const parseSkewX = map(
     right(
@@ -132,7 +149,7 @@ export namespace Skew {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-skewy
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewy}
    */
   const parseSkewY = map(
     right(
@@ -145,5 +162,9 @@ export namespace Skew {
     (y) => Skew.of<Angle, Angle>(Angle.of(0, "deg"), y)
   );
 
-  export const parse = either(parseSkew, either(parseSkewX, parseSkewY));
+  export const parse: Parser<Slice<Token>, Skew, string> = either(
+    parseSkew,
+    parseSkewX,
+    parseSkewY
+  );
 }

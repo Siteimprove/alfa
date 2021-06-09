@@ -1,4 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
+
+import { Token } from "../syntax/token";
 
 import { Angle } from "./angle";
 import { Number } from "./number";
@@ -14,8 +17,14 @@ import { System } from "./color/system";
 
 const { either } = Parser;
 
+/**
+ * @public
+ */
 export type Color = Hex | Named | HSL | RGB | Current | System;
 
+/**
+ * @public
+ */
 export namespace Color {
   export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
 
@@ -50,13 +59,23 @@ export namespace Color {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-color/#typedef-color
+   * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Color, string> = either(
     Hex.parse,
     either(
       Named.parse,
       either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
     )
   );
+
+  export function isTransparent(color: Color): boolean {
+    switch (color.type) {
+      case "keyword":
+        return false;
+
+      case "color":
+        return color.alpha.value === 0;
+    }
+  }
 }

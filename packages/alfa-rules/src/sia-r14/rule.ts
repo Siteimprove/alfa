@@ -1,78 +1,70 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasCategory } from "../common/predicate/has-category";
+import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasDescendant } from "../common/predicate/has-descendant";
-import { hasNameFrom } from "../common/predicate/has-name-from";
 import { hasRole } from "../common/predicate/has-role";
+import { isFocusable } from "../common/predicate/is-focusable";
 import { isPerceivable } from "../common/predicate/is-perceivable";
-import { isVisible } from "../common/predicate/is-visible";
-
-import { Question } from "../common/question";
 
 const { isElement, hasNamespace } = Element;
-const { and, equals, test } = Predicate;
+const { isText } = Text;
+const { and, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://alfa.siteimprove.com/rules/sia-r14",
+  requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ flattened: true, nested: true }).filter(
-          and(
-            isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasAttribute(
+                (attribute) =>
+                  attribute.name === "aria-label" ||
+                  attribute.name === "aria-labelledby"
+              ),
+              isFocusable(device),
               hasRole(
-                and(
-                  hasCategory(equals(Role.Category.Widget)),
-                  hasNameFrom(equals("content"))
-                )
+                device,
+                (role) => role.isWidget() && role.isNamedBy("contents")
               ),
               hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
-              }),
-              hasAccessibleName(device)
+              })
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
-        const textContent = getVisibleTextContent(target, device);
+        const textContent = getPerceivableTextContent(target, device);
+        let name = "";
 
         const accessibleNameIncludesTextContent = test(
-          hasAccessibleName(device, (accessibleName) =>
-            normalize(accessibleName).includes(textContent)
-          ),
+          hasAccessibleName(device, (accessibleName) => {
+            name = normalize(accessibleName.value);
+            return name.includes(textContent);
+          }),
           target
         );
 
         return {
           1: expectation(
             accessibleNameIncludesTextContent,
-            () => Outcomes.VisibleIsInName,
-            () =>
-              Question.of(
-                "is-human-language",
-                "boolean",
-                target,
-                "Does the accessible name of the element express anything in human language?"
-              ).map((isHumanLanguage) =>
-                expectation(
-                  !isHumanLanguage,
-                  () => Outcomes.NameIsNotLanguage,
-                  () => Outcomes.VisibleIsNotInName
-                )
-              )
+            () => Outcomes.VisibleIsInName(textContent, name),
+            () => Outcomes.VisibleIsNotInName(textContent, name)
           ),
         };
       },
@@ -84,32 +76,88 @@ function normalize(input: string): string {
   return input.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
-function getVisibleTextContent(element: Element, device: Device): string {
+function getPerceivableTextContent(element: Element, device: Device): string {
   return normalize(
     element
       .descendants({ flattened: true })
-      .filter(and(Text.isText, isVisible(device)))
+      .filter(isText)
+      .filter(isPerceivable(device))
       .map((text) => text.data)
       .join("")
   );
 }
 
 export namespace Outcomes {
-  export const VisibleIsInName = Ok.of(
-    Diagnostic.of(
-      `The visible text content of the element is included within its accessible name`
-    )
-  );
+  export const VisibleIsInName = (textContent: string, name: string) =>
+    Ok.of(
+      LabelAndName.of(
+        `The visible text content of the element is included within its accessible name`,
+        textContent,
+        name
+      )
+    );
 
-  export const NameIsNotLanguage = Ok.of(
-    Diagnostic.of(
-      `The accessible name of the element does not express anything in human language`
-    )
-  );
+  export const VisibleIsNotInName = (textContent: string, name: string) =>
+    Err.of(
+      LabelAndName.of(
+        `The visible text content of the element is not included within its accessible name`,
+        textContent,
+        name
+      )
+    );
+}
 
-  export const VisibleIsNotInName = Err.of(
-    Diagnostic.of(
-      `The visible text content of the element is not included within its accessible name`
-    )
-  );
+class LabelAndName extends Diagnostic {
+  public static of(
+    message: string,
+    textContent: string = "",
+    name: string = ""
+  ): LabelAndName {
+    return new LabelAndName(message, textContent, name);
+  }
+
+  private readonly _textContent: string;
+  private readonly _name: string;
+
+  private constructor(message: string, textContent: string, name: string) {
+    super(message);
+    this._textContent = textContent;
+    this._name = name;
+  }
+
+  public get textContent(): string {
+    return this._textContent;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public equals(value: LabelAndName): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof LabelAndName &&
+      value._message === this._message &&
+      value._textContent === this._textContent &&
+      value._name === this._name
+    );
+  }
+
+  public toJSON(): LabelAndName.JSON {
+    return {
+      ...super.toJSON(),
+      textContent: this._textContent,
+      name: this._name,
+    };
+  }
+}
+
+namespace LabelAndName {
+  export interface JSON extends Diagnostic.JSON {
+    textContent: string;
+    name: string;
+  }
 }

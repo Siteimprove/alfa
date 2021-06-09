@@ -8,14 +8,16 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
+const { isElement } = Element;
+
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r20.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r20",
   evaluate({ document }) {
     return {
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(Element.isElement)
+          .filter(isElement)
           .flatMap((element) =>
             Sequence.from(element.attributes).filter((attribute) =>
               attribute.name.startsWith("aria-")
@@ -24,7 +26,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       },
 
       expectations(target) {
-        const exists = aria.Attribute.lookup(target.name).isSome();
+        const exists = aria.Attribute.isName(target.name);
 
         return {
           1: expectation(

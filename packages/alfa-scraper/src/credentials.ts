@@ -3,6 +3,9 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export class Credentials implements Equatable, Serializable {
   public static of(username: string, password: string): Credentials {
     return new Credentials(username, password);
@@ -44,6 +47,9 @@ export class Credentials implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Credentials {
   export interface JSON {
     [key: string]: json.JSON;

@@ -1,20 +1,17 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "alwaysStrict": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,
     "incremental": true,
-    "jsx": "react",
-    "jsxFactory": "jsx",
-    "lib": ["es2017"],
+    "lib": ["es2018"],
     "module": "commonjs",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
+    "target": "es2018",
     "types": []
   },
   "files": [],
-  "references": [{ "path": "docs" }, { "path": "packages" }]
+  "references": [{ "path": "packages" }]
 }

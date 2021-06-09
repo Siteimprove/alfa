@@ -1,21 +1,23 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
+
 import { Length } from "../length";
 import { Percentage } from "../percentage";
-import { Transform } from "../transform";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
+/**
+ * @public
+ */
 export class Translate<
   X extends Length | Percentage = Length | Percentage,
   Y extends Length | Percentage = Length | Percentage,
   Z extends Length = Length
-> implements Equatable, Serializable {
+> extends Value<"transform"> {
   public static of<
     X extends Length | Percentage,
     Y extends Length | Percentage,
@@ -29,12 +31,17 @@ export class Translate<
   private readonly _z: Z;
 
   private constructor(x: X, y: Y, z: Z) {
+    super();
     this._x = x;
     this._y = y;
     this._z = z;
   }
 
-  public get type(): "translate" {
+  public get type(): "transform" {
+    return "transform";
+  }
+
+  public get kind(): "translate" {
     return "translate";
   }
 
@@ -59,9 +66,14 @@ export class Translate<
     );
   }
 
+  public hash(hash: Hash): void {
+    hash.writeHashable(this._x).writeHashable(this._y).writeHashable(this._z);
+  }
+
   public toJSON(): Translate.JSON {
     return {
-      type: "translate",
+      type: "transform",
+      kind: "translate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
       z: this._z.toJSON(),
@@ -79,10 +91,12 @@ export class Translate<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Translate {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "translate";
+  export interface JSON extends Value.JSON<"transform"> {
+    kind: "translate";
     x: Length.JSON | Percentage.JSON;
     y: Length.JSON | Percentage.JSON;
     z: Length.JSON;
@@ -97,7 +111,7 @@ export namespace Translate {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translate
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translate}
    */
   const parseTranslate = map(
     right(
@@ -130,7 +144,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex}
    */
   const parseTranslateX = map(
     right(
@@ -152,7 +166,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey
+   * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey}
    */
   const parseTranslateY = map(
     right(
@@ -174,7 +188,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translatez
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translatez}
    */
   const parseTranslateZ = map(
     right(
@@ -193,7 +207,7 @@ export namespace Translate {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d}
    */
   const parseTranslate3d = map(
     right(
@@ -225,11 +239,11 @@ export namespace Translate {
     }
   );
 
-  export const parse = either(
+  export const parse: Parser<Slice<Token>, Translate, string> = either(
     parseTranslate,
-    either(
-      either(parseTranslateX, parseTranslateY),
-      either(parseTranslateZ, parseTranslate3d)
-    )
+    parseTranslateX,
+    parseTranslateY,
+    parseTranslateZ,
+    parseTranslate3d
   );
 }

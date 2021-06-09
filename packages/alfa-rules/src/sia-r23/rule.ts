@@ -16,7 +16,7 @@ import { Question } from "../common/question";
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r23.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r23",
   evaluate({ document, device }) {
     return {
       applicability() {

@@ -1,16 +1,30 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Browser } from "./browser";
-import * as data from "./feature/data";
 
+import { Browser } from "./browser";
+import { Features } from "./feature/data";
+
+/**
+ * @public
+ */
 export type Feature<
   N extends Feature.Name = Feature.Name,
   I extends Feature.Implementer<N> = Feature.Implementer<N>
 > = Feature.Implementation<N, I>;
 
+/**
+ * @public
+ */
 export namespace Feature {
-  export type Name = Data.Name;
+  export type Name = keyof Features;
 
-  export type Implementer<N extends Name> = Data.Implementer<N>;
+  /**
+   * @remarks
+   * This type distributes the implementers over the given feature names rather
+   * than narrow to a common subset of implementers.
+   */
+  export type Implementer<N extends Name> = N extends Name
+    ? keyof Features[N]["support"]
+    : never;
 
   export interface Implementation<
     N extends Name = Name,
@@ -25,24 +39,23 @@ export namespace Feature {
   };
 
   export function isFeature(feature: string): feature is Name {
-    return feature in data.Data;
+    return feature in Features;
   }
 
   export function isImplementer<N extends Name>(
     feature: N,
     browser: Browser.Name
   ): browser is Implementer<N> {
-    return browser in data.Data[feature];
+    return browser in Features[feature];
   }
 
   function* getImplementers<N extends Name>(
     feature: N
   ): Iterable<Implementer<N>> {
-    for (const implementer in data.Data[feature]) {
-      if (
-        Browser.isBrowser(implementer) &&
-        isImplementer(feature, implementer)
-      ) {
+    for (const browser in Features[feature].support) {
+      const implementer = browser as Browser.Name;
+
+      if (isImplementer(feature, implementer)) {
         yield implementer;
       }
     }
@@ -52,56 +65,21 @@ export namespace Feature {
     feature: N,
     scope: Browser.Scope = Browser.getDefaultScope()
   ): Browser.Scope<Implementer<N>> {
-    const support = data.Data[feature].support as Data.Support<N>;
+    const support = Features[feature].support;
 
     return Iterable.flatMap(
       getImplementers(feature),
       <I extends Implementer<N>>(browser: I) => {
-        const { added, removed } = support[browser] as Data.Implementation<
-          N,
-          I
-        >;
+        const { added } = support[browser as keyof typeof support];
 
-        let query: Browser.Query<I>;
-
-        if (added === true) {
-          query = [browser];
-        } else if (removed === undefined) {
-          query = [browser, ">=", added];
-        } else {
-          query = [browser, added, removed];
-        }
+        const query: Browser.Query<I> = [
+          browser,
+          ">=",
+          added as Browser.Version<I>,
+        ];
 
         return Browser.query(query, scope);
       }
     );
   }
-}
-
-namespace Data {
-  type Keys<T, E extends string | number | symbol = string> = T extends {}
-    ? Extract<keyof T, E>
-    : never;
-
-  export type Name = Keys<data.Data>;
-
-  export type Feature<N extends Name> = data.Data[N];
-
-  export type Support<N extends Name> = Feature<N>["support"];
-
-  export type Implementer<N extends Name> = Extract<
-    Keys<Support<N>>,
-    Browser.Name
-  >;
-
-  export type Implementation<
-    N extends Name,
-    I extends Implementer<N>
-  > = Extract<
-    Support<N>[I],
-    {
-      added: true | Browser.Version<I>;
-      removed?: Browser.Version<I>;
-    }
-  >;
 }

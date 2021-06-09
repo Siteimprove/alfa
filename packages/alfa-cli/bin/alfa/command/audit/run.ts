@@ -4,32 +4,40 @@ import * as fs from "fs";
 
 import { Audit, Outcome } from "@siteimprove/alfa-act";
 import { Command } from "@siteimprove/alfa-command";
-import { Node } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
+import { Interviewer } from "@siteimprove/alfa-interviewer";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None } from "@siteimprove/alfa-option";
-import { Ok } from "@siteimprove/alfa-result";
-import { Rules, Question } from "@siteimprove/alfa-rules";
+import { Option, None } from "@siteimprove/alfa-option";
+import { Result, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { Oracle } from "../../oracle";
+import rules from "@siteimprove/alfa-rules";
+
+import { Profiler } from "../../profiler";
 
 import type { Arguments } from "./arguments";
 import type { Flags } from "./flags";
 
 import * as scrape from "../scrape/run";
 
-type Input = Page;
-type Target = Node | Iterable<Node>;
-
 export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const formatter = await Formatter.load<Input, Target, Question>(flags.format);
+  const formatter = await Formatter.load<any, any, any>(flags.format);
 
   if (formatter.isErr()) {
     return formatter;
+  }
+
+  const interviewer = Option.from(
+    await flags.interviewer
+      .map((interviewer) => Interviewer.load<any, any, any>(interviewer))
+      .getOr(undefined)
+  );
+
+  if (interviewer.some((interviewer) => interviewer.isErr())) {
+    return interviewer.get() as Err<string>;
   }
 
   let json: string;
@@ -56,15 +64,29 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   const page = Page.from(JSON.parse(json));
 
-  const audit = Rules.reduce(
-    (audit, rule) => audit.add(rule),
-    Audit.of<Input, Target, Question>(
-      page,
-      flags.interactive ? Oracle(page) : undefined
-    )
-  );
+  const oracle = interviewer
+    .map((interviewer) => interviewer.get()(page, rules))
+    .getOr(undefined);
+
+  const audit = Audit.of(page, rules, oracle);
+
+  for (const _ of flags.cpuProfile) {
+    await Profiler.CPU.start();
+  }
+
+  for (const _ of flags.heapProfile) {
+    await Profiler.Heap.start();
+  }
 
   let outcomes = await audit.evaluate();
+
+  for (const path of flags.cpuProfile) {
+    fs.writeFileSync(path, JSON.stringify(await Profiler.CPU.stop()) + "\n");
+  }
+
+  for (const path of flags.heapProfile) {
+    fs.writeFileSync(path, JSON.stringify(await Profiler.Heap.stop()) + "\n");
+  }
 
   if (flags.outcomes.isSome()) {
     const filter = new Set(flags.outcomes.get());
@@ -86,12 +108,12 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     });
   }
 
-  const output = formatter.get()(page, outcomes);
+  const output = formatter.get()(page, rules, outcomes);
 
   if (flags.output.isNone()) {
-    return Ok.of(output);
+    return Result.of(output);
   } else {
-    fs.writeFileSync(flags.output.get() + "\n", output);
-    return Ok.of("");
+    fs.writeFileSync(flags.output.get(), output + "\n");
+    return Result.of("");
   }
 };

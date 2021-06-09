@@ -1,11 +1,12 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -13,12 +14,14 @@ import { expectation } from "../common/expectation";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { and, or, not, equals, test } = Predicate;
+const { or, not, equals } = Predicate;
+const { and, test } = Refinement;
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r83.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r83",
+  requirements: [Criterion.of("1.4.4")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -81,22 +84,50 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device);
 
+    // Case 1: Words never wrap and will continue to expand along the x-axis.
+    // In this case, text might clip if overflow of the x-axis is hidden.
     if (
-      style.computed("width").value.type === "keyword" &&
-      style.computed("height").value.type === "keyword" &&
-      style.computed("white-space").value.value !== "nowrap"
+      style
+        .computed("white-space")
+        .some((whiteSpace) => whiteSpace.value === "nowrap")
     ) {
-      return false;
+      return style
+        .computed("overflow-x")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
+        );
     }
 
-    for (const property of ["overflow-x", "overflow-y"] as const) {
-      const { value: overflow } = style.computed(property);
-
-      switch (overflow.value) {
-        case "hidden":
-        case "clip":
-          return true;
-      }
+    // Case 2: The height of the element has been restricted using an non-font
+    // relative length not set via the `style` attribute. In this case,
+    // text might clip if overflow of the y-axis is hidden.
+    //
+    // For font relative heights we assume that care has already been taken to
+    // ensure that the layout scales with the content.
+    //
+    // For heights set via the `style` attribute we assume that its value is
+    // controlled by JavaScript and is adjusted as the content scales.
+    if (
+      style
+        // Use the cascaded value to avoid lengths being resolved to pixels.
+        // Otherwise, we won't be able to tell if a font relative length was
+        // used.
+        .cascaded("height")
+        .some((height) =>
+          height.some(
+            (height, source) =>
+              height.type === "length" &&
+              height.value > 0 &&
+              !height.isFontRelative() &&
+              source.some((declaration) => declaration.parent.isSome())
+          )
+        )
+    ) {
+      return style
+        .computed("overflow-y")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
+        );
     }
 
     return false;
@@ -106,38 +137,26 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
 function wrapsText(device: Device): Predicate<Text> {
   return (text) =>
     text
-      .parent()
+      .ancestors({
+        flattened: true,
+      })
       .filter(isElement)
+      .find(isPossiblyClipped(device))
       .some((element) => {
         const style = Style.from(element, device);
 
         const { value: whitespace } = style.computed("white-space");
 
+        // If whitespace does not cause wrapping, we need to check if a text
+        // overflow could cause the text to clip.
         if (whitespace.value === "nowrap") {
           const { value: overflow } = style.computed("text-overflow");
 
+          // We assume that the text won't clip if the text overflow is handled
+          // any other way than clip.
           return overflow.value !== "clip";
         }
 
-        let { value: lineHeight } = style.computed("line-height");
-
-        if (lineHeight.type === "number") {
-          lineHeight = Length.of(
-            lineHeight.value * style.computed("font-size").value.value,
-            "px"
-          );
-        }
-
-        if (lineHeight.type !== "length") {
-          return false;
-        }
-
-        const { value: height } = style.computed("height");
-
-        if (height.type !== "length") {
-          return false;
-        }
-
-        return lineHeight.value === height.value;
+        return false;
       });
 }

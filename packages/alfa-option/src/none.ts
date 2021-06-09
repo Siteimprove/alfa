@@ -1,11 +1,20 @@
+import { Comparison } from "@siteimprove/alfa-comparable";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Option } from "./option";
 import { Some } from "./some";
 
+/**
+ * @public
+ */
 export interface None extends Option<never> {}
 
+/**
+ * @public
+ */
 export const None: None = new (class None {
   public isSome(): this is Some<never> {
     return false;
@@ -35,12 +44,20 @@ export const None: None = new (class None {
     return this;
   }
 
+  public reject(): None {
+    return this;
+  }
+
   public includes(): boolean {
     return false;
   }
 
   public some(): boolean {
     return false;
+  }
+
+  public none(): boolean {
+    return true;
   }
 
   public every(): boolean {
@@ -75,11 +92,17 @@ export const None: None = new (class None {
     return value();
   }
 
+  public compareWith<T>(option: Option<T>): Comparison {
+    return option.isNone() ? Comparison.Equal : Comparison.Less;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof None;
   }
 
-  public hash(): void {}
+  public hash(hash: Hash): void {
+    hash.writeBoolean(false);
+  }
 
   public *[Symbol.iterator](): Iterator<never> {}
 
@@ -98,6 +121,9 @@ export const None: None = new (class None {
   }
 })();
 
+/**
+ * @public
+ */
 export namespace None {
   export interface JSON {
     [key: string]: json.JSON;

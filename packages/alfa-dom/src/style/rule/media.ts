@@ -1,34 +1,21 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
-import { Condition } from "./condition";
-import { Grouping } from "./grouping";
+import { ConditionRule } from "./condition";
 
 const { map, join } = Iterable;
 
-export class Media extends Condition {
-  public static of(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Media {
-    return new Media(condition, rules, owner, parent);
+export class MediaRule extends ConditionRule {
+  public static of(condition: string, rules: Iterable<Rule>): MediaRule {
+    return new MediaRule(condition, Array.from(rules));
   }
 
-  private constructor(
-    condition: string,
-    rules: Mapper<Grouping, Iterable<Rule>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(condition, rules, owner, parent);
+  private constructor(condition: string, rules: Array<Rule>) {
+    super(condition, rules);
   }
 
-  public toJSON(): Media.JSON {
+  public toJSON(): MediaRule.JSON {
     return {
       type: "media",
       rules: [...this._rules].map((rule) => rule.toJSON()),
@@ -46,28 +33,21 @@ export class Media extends Condition {
   }
 }
 
-export namespace Media {
-  export interface JSON extends Condition.JSON {
+export namespace MediaRule {
+  export interface JSON extends ConditionRule.JSON {
     type: "media";
   }
 
-  export function isMedia(value: unknown): value is Media {
-    return value instanceof Media;
+  export function isMediaRule(value: unknown): value is MediaRule {
+    return value instanceof MediaRule;
   }
 
-  export function fromMedia(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Media {
-    return Media.of(
-      json.condition,
-      (self) => {
-        const parent = Option.of(self);
-        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromMediaRule(json: JSON): Trampoline<MediaRule> {
+    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+      MediaRule.of(json.condition, rules)
     );
   }
 }

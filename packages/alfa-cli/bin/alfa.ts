@@ -3,7 +3,6 @@
 /// <reference types="node" />
 
 import * as path from "path";
-import * as process from "process";
 import * as tty from "tty";
 
 import { Command, Flag } from "@siteimprove/alfa-command";
@@ -16,7 +15,7 @@ import audit from "./alfa/command/audit";
 import scrape from "./alfa/command/scrape";
 
 const {
-  argv: [node, bin],
+  argv: [, bin],
   platform,
   arch,
   version,
@@ -40,7 +39,9 @@ const application = Command.withSubcommands(
 application
   .run(process.argv.slice(2))
   .catch((err: Error) => Err.of(`${err.stack ?? err.message}`))
-  .then((result) => {
+  .then(async (result) => {
+    process.exitCode = result.isOk() ? 0 : 1;
+
     let stream: tty.WriteStream;
     let output: string;
 
@@ -57,6 +58,4 @@ application
     if (output.length > 0) {
       stream.write(output + "\n");
     }
-
-    process.exit(result.isOk() ? 0 : 1);
   });

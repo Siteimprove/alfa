@@ -1,4 +1,6 @@
 import { Decoder, Encoder } from "@siteimprove/alfa-encoding";
+import { URL } from "@siteimprove/alfa-url";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
@@ -6,11 +8,17 @@ import { Body } from "./body";
 import { Headers } from "./headers";
 
 /**
- * @see https://fetch.spec.whatwg.org/#response-class
+ * {@link https://fetch.spec.whatwg.org/#response-class}
+ *
+ * @public
  */
-export class Response implements Body, json.Serializable, earl.Serializable {
+export class Response
+  implements
+    Body,
+    json.Serializable<Response.JSON>,
+    earl.Serializable<Response.EARL> {
   public static of(
-    url: string,
+    url: URL,
     status: number,
     headers: Headers = Headers.empty(),
     body: ArrayBuffer = new ArrayBuffer(0)
@@ -18,17 +26,19 @@ export class Response implements Body, json.Serializable, earl.Serializable {
     return new Response(url, status, headers, body);
   }
 
+  private static _empty = Response.of(URL.parse("about:blank").get(), 200);
+
   public static empty(): Response {
-    return Response.of("about:blank", 200);
+    return this._empty;
   }
 
-  private readonly _url: string;
+  private readonly _url: URL;
   private readonly _status: number;
   private readonly _headers: Headers;
   private readonly _body: ArrayBuffer;
 
   private constructor(
-    url: string,
+    url: URL,
     status: number,
     headers: Headers,
     body: ArrayBuffer
@@ -40,28 +50,28 @@ export class Response implements Body, json.Serializable, earl.Serializable {
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-url
+   * {@link https://fetch.spec.whatwg.org/#dom-response-url}
    */
-  public get url(): string {
+  public get url(): URL {
     return this._url;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-status
+   * {@link https://fetch.spec.whatwg.org/#dom-response-status}
    */
   public get status(): number {
     return this._status;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-headers
+   * {@link https://fetch.spec.whatwg.org/#dom-response-headers}
    */
   public get headers(): Headers {
     return this._headers;
   }
 
   /**
-   * @see https://fetch.spec.whatwg.org/#dom-body-body
+   * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
   public get body(): ArrayBuffer {
     return this._body;
@@ -69,7 +79,7 @@ export class Response implements Body, json.Serializable, earl.Serializable {
 
   public toJSON(): Response.JSON {
     return {
-      url: this._url,
+      url: this._url.toString(),
       status: this._status,
       headers: this._headers.toJSON(),
       body: Decoder.decode(new Uint8Array(this._body)),
@@ -106,6 +116,9 @@ export class Response implements Body, json.Serializable, earl.Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Response {
   export interface JSON {
     [key: string]: json.JSON;
@@ -127,7 +140,7 @@ export namespace Response {
 
   export function from(json: JSON): Response {
     return Response.of(
-      json.url,
+      URL.parse(json.url).get(),
       json.status,
       Headers.from(json.headers),
       Encoder.encode(json.body)

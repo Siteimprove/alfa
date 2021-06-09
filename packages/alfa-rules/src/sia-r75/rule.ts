@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Unit } from "@siteimprove/alfa-css";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -11,11 +10,11 @@ import { expectation } from "../common/expectation";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r75.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r75",
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -24,15 +23,24 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                and(hasNamespace(Namespace.HTML), (element) =>
-                  Style.from(element, device).cascaded("font-size").isSome()
-                ),
-                and(hasTextContent(), isVisible(device))
-              )
+              and(hasNamespace(Namespace.HTML), (element) =>
+                Style.from(element, device)
+                  .cascaded("font-size")
+                  .some(({ value: fontSize }) => {
+                    switch (fontSize.type) {
+                      case "length":
+                      case "percentage":
+                        return fontSize.value > 0;
+
+                      default:
+                        return true;
+                    }
+                  })
+              ),
+              and(hasTextContent(), isVisible(device))
             )
           );
       },

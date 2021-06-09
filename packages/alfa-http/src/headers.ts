@@ -7,8 +7,14 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header";
 
+/**
+ * @public
+ */
 export class Headers
-  implements Iterable<Header>, json.Serializable, earl.Serializable {
+  implements
+    Iterable<Header>,
+    json.Serializable<Headers.JSON>,
+    earl.Serializable<Headers.EARL> {
   /**
    * @remarks
    * If the iterable contains headers with duplicate names, the last header with
@@ -76,6 +82,9 @@ export class Headers
   }
 }
 
+/**
+ * @public
+ */
 export namespace Headers {
   export interface JSON extends Array<Header.JSON> {}
 

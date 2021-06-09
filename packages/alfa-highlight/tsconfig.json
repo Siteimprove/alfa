@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/marker.ts", "src/syntax.ts"],
+  "files": ["src/index.ts", "src/marker.ts"],
   "references": []
 }

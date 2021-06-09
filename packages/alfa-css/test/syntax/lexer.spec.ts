@@ -5,7 +5,9 @@ import { Token } from "../../src/syntax/token";
 
 function lex(t: Assertions, input: string, expected: Array<Token.JSON>) {
   t.deepEqual(
-    Lexer.lex(input).map((token) => token.toJSON()),
+    Lexer.lex(input)
+      .map((token) => token.toJSON())
+      .toArray(),
     expected,
     input
   );
@@ -617,6 +619,36 @@ test(".lex() lexes a hash delimiter", (t) => {
     {
       type: "delim",
       value: 0x23,
+    },
+  ]);
+});
+
+test(".lex() lexes an important declaration", (t) => {
+  lex(t, "display: none !important", [
+    {
+      type: "ident",
+      value: "display",
+    },
+    {
+      type: "colon",
+    },
+    {
+      type: "whitespace",
+    },
+    {
+      type: "ident",
+      value: "none",
+    },
+    {
+      type: "whitespace",
+    },
+    {
+      type: "delim",
+      value: 0x21,
+    },
+    {
+      type: "ident",
+      value: "important",
     },
   ]);
 });

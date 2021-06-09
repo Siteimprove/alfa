@@ -1,74 +1,76 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
 import { Question } from "../common/question";
+import { Group } from "../common/group";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { map, flatMap, isEmpty } = Iterable;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
-  evaluate({ device, document }) {
+export default Rule.Atomic.of<Page, Group<Element>, Question>({
+  uri: "https://alfa.siteimprove.com/rules/sia-r15",
+  requirements: [Criterion.of("4.1.2")],
+  evaluate({ device, document, response }) {
     return {
       applicability() {
-        const iframes = document
+        return document
           .descendants({ flattened: true, nested: true })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                hasName("iframe"),
-                hasNamespace(Namespace.HTML),
-                not(isIgnored(device)),
-                hasAccessibleName(device, not(isEmpty))
-              )
+              hasName("iframe"),
+              hasNamespace(Namespace.HTML),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
             )
-          );
+          )
+          .reduce((groups, iframe) => {
+            const name = Node.from(iframe, device).name.map((name) =>
+              normalize(name.value)
+            );
 
-        const roots = iframes.groupBy((iframe) => iframe.root());
+            groups = groups.set(
+              name,
+              groups
+                .get(name)
+                .getOrElse(() => List.empty<Element>())
+                .append(iframe)
+            );
 
-        return flatMap(roots.values(), (iframes) =>
-          iframes
-            .reduce((groups, iframe) => {
-              for (const [node] of Node.from(iframe, device)) {
-                groups = groups.set(
-                  node.name(),
-                  groups
-                    .get(node.name())
-                    .getOrElse(() => List.empty<Element>())
-                    .append(iframe)
-                );
-              }
-
-              return groups;
-            }, Map.empty<Option<string>, List<Element>>())
-            .values()
-        );
+            return groups;
+          }, Map.empty<Option<string>, List<Element>>())
+          .filter((elements) => elements.size > 1)
+          .map(Group.of)
+          .values();
       },
 
       expectations(target) {
-        const sources = Set.from(
-          map(target, (iframe) => iframe.attribute("src"))
+        const embedSameResource = [...target].every(
+          (element, i, elements) =>
+            // This is either the first element...
+            i === 0 ||
+            // ...or an element that embeds the same resource as the element
+            // before it.
+            referenceSameResource(response.url)(element, elements[i - 1])
         );
 
         return {
           1: expectation(
-            sources.size === 1,
+            embedSameResource,
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
@@ -104,4 +106,8 @@ export namespace Outcomes {
       `The \`<iframe>\` elements do not embed the same or equivalent resources`
     )
   );
+}
+
+function normalize(input: string): string {
+  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }

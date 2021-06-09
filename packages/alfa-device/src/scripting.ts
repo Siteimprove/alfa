@@ -5,13 +5,15 @@ import { Serializable } from "@siteimprove/alfa-json";
 import * as json from "@siteimprove/alfa-json";
 
 /**
- * @see https://drafts.csswg.org/mediaqueries-5/#mf-scripting
+ * {@link https://drafts.csswg.org/mediaqueries-5/#mf-scripting}
  *
  * @remarks
  * As noted in Media Queries Level 5, a future level of CSS may extend the
  * scripting feature to allow fine-grained detection of which script is allowed
  * to run. While the `Scripting` class therefore currently seems very sparse, we
  * foresee a need to extend it in the future.
+ *
+ * @public
  */
 export class Scripting implements Equatable, Hashable, Serializable {
   public static of(enabled: boolean): Scripting {
@@ -33,7 +35,7 @@ export class Scripting implements Equatable, Hashable, Serializable {
   }
 
   public hash(hash: Hash): void {
-    Hash.writeBoolean(hash, this._enabled);
+    hash.writeBoolean(this._enabled);
   }
 
   public toJSON(): Scripting.JSON {
@@ -43,6 +45,9 @@ export class Scripting implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Scripting {
   export interface JSON {
     [key: string]: json.JSON;

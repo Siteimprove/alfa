@@ -1,21 +1,22 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Unit } from "@siteimprove/alfa-css";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasTextContent } from "../common/predicate/has-text-content";
-import { isVisible } from "../common/predicate/is-visible";
+import { hasRole, hasTextContent, isVisible } from "../common/predicate";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r74.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r74",
+  requirements: [Criterion.of("1.4.8")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -24,15 +25,25 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
+          .filter(isElement)
           .filter(
             and(
-              isElement,
-              and(
-                and(hasNamespace(Namespace.HTML), (element) =>
-                  Style.from(element, device).cascaded("font-size").isSome()
-                ),
-                and(hasTextContent(), isVisible(device))
-              )
+              hasRole(device, "paragraph"),
+              (element) =>
+                Style.from(element, device)
+                  .cascaded("font-size")
+                  .some(({ value: fontSize }) => {
+                    switch (fontSize.type) {
+                      case "length":
+                      case "percentage":
+                        return fontSize.value > 0;
+
+                      default:
+                        return true;
+                    }
+                  }),
+              hasTextContent(),
+              isVisible(device)
             )
           );
       },

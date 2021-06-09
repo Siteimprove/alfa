@@ -2,39 +2,43 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
+import { Value } from "../../value";
 
 import { Angle } from "../angle";
 import { Gradient } from "../gradient";
-import { Position } from "../position";
 
 const { map, either, pair, option, left, right, delimited } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-images/#linear-gradients
+ * {@link https://drafts.csswg.org/css-images/#linear-gradients}
+ *
+ * @public
  */
 export class Linear<
   I extends Gradient.Item = Gradient.Item,
   D extends Linear.Direction = Linear.Direction
-> implements Equatable, Hashable, Serializable {
+> extends Value<"gradient"> {
   public static of<I extends Gradient.Item, D extends Linear.Direction>(
     direction: D,
     items: Iterable<I>,
     repeats: boolean
   ): Linear<I, D> {
-    return new Linear(direction, items, repeats);
+    return new Linear(direction, Array.from(items), repeats);
   }
 
   private readonly _direction: D;
   private readonly _items: Array<I>;
   private readonly _repeats: boolean;
 
-  private constructor(direction: D, items: Iterable<I>, repeats: boolean) {
+  private constructor(direction: D, items: Array<I>, repeats: boolean) {
+    super();
     this._direction = direction;
-    this._items = [...items];
+    this._items = items;
     this._repeats = repeats;
   }
 
@@ -58,24 +62,28 @@ export class Linear<
     return this._repeats;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Linear): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
     return (
       value instanceof Linear &&
       value._direction.equals(this._direction) &&
       value._items.length === this._items.length &&
-      value._items.every((item, i) => item.equals(this._items[i]))
+      value._items.every((item, i) => item.equals(this._items[i])) &&
+      value._repeats === this._repeats
     );
   }
 
   public hash(hash: Hash): void {
-    this._direction.hash(hash);
+    hash.writeHashable(this._direction);
 
     for (const item of this._items) {
-      item.hash(hash);
+      hash.writeHashable(item);
     }
 
-    Hash.writeUint32(hash, this._items.length);
-    Hash.writeUint8(hash, +this._repeats);
+    hash.writeUint32(this._items.length).writeBoolean(this._repeats);
   }
 
   public toJSON(): Linear.JSON {
@@ -95,10 +103,11 @@ export class Linear<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Linear {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "gradient";
+  export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
     direction: Direction.JSON;
     items: Array<Gradient.Item.JSON>;
@@ -109,6 +118,30 @@ export namespace Linear {
 
   export namespace Direction {
     export type JSON = Angle.JSON | Side.JSON | Corner.JSON;
+  }
+
+  export type Position = Position.Vertical | Position.Horizontal;
+
+  export namespace Position {
+    export type Vertical = "top" | "bottom";
+
+    export type Horizontal = "left" | "right";
+
+    export const parseVertical = map(
+      Token.parseIdent(
+        (ident) => ident.value === "top" || ident.value === "bottom"
+      ),
+      (ident) => ident.value as Vertical
+    );
+
+    export const parseHorizontal = map(
+      Token.parseIdent(
+        (ident) => ident.value === "left" || ident.value === "right"
+      ),
+      (ident) => ident.value as Horizontal
+    );
+
+    export const parse = either(parseVertical, parseHorizontal);
   }
 
   export class Side implements Equatable, Hashable, Serializable {
@@ -135,7 +168,7 @@ export namespace Linear {
     }
 
     public hash(hash: Hash): void {
-      Hash.writeString(hash, this._side);
+      hash.writeString(this._side);
     }
 
     public toJSON(): Side.JSON {
@@ -198,8 +231,7 @@ export namespace Linear {
     }
 
     public hash(hash: Hash): void {
-      Hash.writeString(hash, this._vertical);
-      Hash.writeString(hash, this._horizontal);
+      hash.writeString(this._vertical).writeString(this._horizontal);
     }
 
     public toJSON(): Corner.JSON {
@@ -225,21 +257,18 @@ export namespace Linear {
   }
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-side-or-corner
+   * {@link https://drafts.csswg.org/css-images/#typedef-side-or-corner}
    */
   const parseSide = map(
     right(
       Token.parseIdent("to"),
-      right(
-        Token.parseWhitespace,
-        either(Position.parseVertical, Position.parseHorizontal)
-      )
+      right(option(Token.parseWhitespace), Position.parse)
     ),
     (side) => Side.of(side)
   );
 
   /**
-   * @see https://drafts.csswg.org/css-images/#typedef-side-or-corner
+   * {@link https://drafts.csswg.org/css-images/#typedef-side-or-corner}
    */
   const parseCorner = right(
     Token.parseIdent("to"),
@@ -249,14 +278,14 @@ export namespace Linear {
         map(
           pair(
             Position.parseVertical,
-            right(Token.parseWhitespace, Position.parseHorizontal)
+            right(option(Token.parseWhitespace), Position.parseHorizontal)
           ),
           ([vertical, horizontal]) => Corner.of(vertical, horizontal)
         ),
         map(
           pair(
             Position.parseHorizontal,
-            right(Token.parseWhitespace, Position.parseVertical)
+            right(option(Token.parseWhitespace), Position.parseVertical)
           ),
           ([horizontal, vertical]) => Corner.of(vertical, horizontal)
         )
@@ -264,7 +293,7 @@ export namespace Linear {
     )
   );
 
-  export const parseDirection = either(
+  const parseDirection = either(
     Angle.parse,
     // Corners must be parsed before sides as sides are also valid prefixes of
     // corners.
@@ -272,9 +301,9 @@ export namespace Linear {
   );
 
   /**
-   * @see https://drafts.csswg.org/css-images/#funcdef-linear-gradient
+   * {@link https://drafts.csswg.org/css-images/#funcdef-linear-gradient}
    */
-  export const parse = map(
+  export const parse: Parser<Slice<Token>, Linear, string> = map(
     pair(
       Token.parseFunction(
         (fn) =>

@@ -1,8 +1,8 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -16,40 +16,34 @@ import { Slotable } from "./slotable";
 import * as predicate from "./element/predicate";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>> = () => [],
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    style: Option<Block> = None,
-    parent: Option<Node> = None,
-    shadow: Option<Mapper<Element, Shadow>> = None,
-    content: Option<Mapper<Element, Document>> = None
+    attributes: Iterable<Attribute> = [],
+    children: Iterable<Node> = [],
+    style: Option<Block> = None
   ): Element {
     return new Element(
       namespace,
       prefix,
       name,
-      attributes,
-      children,
-      style,
-      parent,
-      shadow,
-      content
+      Array.from(attributes),
+      Array.from(children),
+      style
     );
   }
 
   private readonly _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
   private readonly _name: string;
-  private readonly _attributes: Array<Attribute>;
+  private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
-  private readonly _shadow: Option<Shadow>;
-  private readonly _content: Option<Document>;
+  private _shadow: Option<Shadow> = None;
+  private _content: Option<Document> = None;
   private readonly _id: Option<string>;
   private readonly _classes: Array<string>;
 
@@ -57,24 +51,21 @@ export class Element extends Node implements Slot, Slotable {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>>,
-    children: Mapper<Node, Iterable<Node>>,
-    style: Option<Block>,
-    parent: Option<Node>,
-    shadow: Option<Mapper<Element, Shadow>>,
-    content: Option<Mapper<Element, Document>>
+    attributes: Array<Attribute>,
+    children: Array<Node>,
+    style: Option<Block>
   ) {
-    super(children, parent);
-
-    const self = Option.of(this);
+    super(children);
 
     this._namespace = namespace;
     this._prefix = prefix;
     this._name = name;
-    this._attributes = Array.from(attributes(this));
+    this._attributes = new Map(
+      attributes
+        .filter((attribute) => attribute._attachOwner(this))
+        .map((attribute) => [attribute.qualifiedName, attribute])
+    );
     this._style = style;
-    this._shadow = self.apply(shadow);
-    this._content = self.apply(content);
 
     this._id = this.attribute("id").map((attr) => attr.value);
 
@@ -95,8 +86,15 @@ export class Element extends Node implements Slot, Slotable {
     return this._name;
   }
 
+  public get qualifiedName(): string {
+    return this._prefix.reduce(
+      (name, prefix) => `${prefix}:${name}`,
+      this._name
+    );
+  }
+
   public get attributes(): Iterable<Attribute> {
-    return this._attributes;
+    return this._attributes.values();
   }
 
   public get style(): Option<Block> {
@@ -112,14 +110,14 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-id
+   * {@link https://dom.spec.whatwg.org/#concept-id}
    */
   public get id(): Option<string> {
     return this._id;
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#concept-class
+   * {@link https://dom.spec.whatwg.org/#concept-class}
    */
   public get classes(): Iterable<string> {
     return this._classes;
@@ -129,7 +127,7 @@ export class Element extends Node implements Slot, Slotable {
     if (options.flattened === true) {
       return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
-          return Option.of(parent.host);
+          return parent.host;
         }
 
         if (Element.isElement(parent) && parent.shadow.isSome()) {
@@ -180,16 +178,15 @@ export class Element extends Node implements Slot, Slotable {
   public attribute(
     predicate: string | Predicate<Attribute>
   ): Option<Attribute> {
-    return Iterable.find(
-      this._attributes,
-      typeof predicate === "string"
-        ? (attribute) => attribute.hasName(predicate)
-        : predicate
-    );
+    if (typeof predicate === "string") {
+      return Option.from(this._attributes.get(predicate));
+    } else {
+      return Iterable.find(this._attributes.values(), predicate);
+    }
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#void-elements
+   * {@link https://html.spec.whatwg.org/#void-elements}
    */
   public isVoid(): boolean {
     switch (this._name) {
@@ -217,7 +214,7 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#dom-tabindex
+   * {@link https://html.spec.whatwg.org/#dom-tabindex}
    */
   public tabIndex(): Option<number> {
     for (const tabIndex of this.attribute("tabindex")) {
@@ -228,7 +225,7 @@ export class Element extends Node implements Slot, Slotable {
       }
     }
 
-    if (isSuggestedFocusableElement(this)) {
+    if (Element.isSuggestedFocusable(this)) {
       return Some.of(0);
     }
 
@@ -236,14 +233,14 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   /**
-   * @see https://dom.spec.whatwg.org/#dom-slotable-assignedslot
+   * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
   }
 
   /**
-   * @see https://html.spec.whatwg.org/#dom-slot-assignednodes
+   * {@link https://html.spec.whatwg.org/#dom-slot-assignednodes}
    */
   public assignedNodes(): Iterable<Slotable> {
     return Slot.findSlotables(this);
@@ -257,9 +254,9 @@ export class Element extends Node implements Slot, Slotable {
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding(options).count(
-      and(Element.isElement, (element) => element._name === this._name)
-    );
+    const index = this.preceding(options)
+      .filter(Element.isElement)
+      .count((element) => element._name === this._name);
 
     path += `[${index + 1}]`;
 
@@ -272,7 +269,9 @@ export class Element extends Node implements Slot, Slotable {
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
-      attributes: this._attributes.map((attribute) => attribute.toJSON()),
+      attributes: [...this._attributes.values()].map((attribute) =>
+        attribute.toJSON()
+      ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
       children: this._children.map((child) => child.toJSON()),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
@@ -281,12 +280,9 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   public toString(): string {
-    const name = this._prefix.reduce(
-      (name, prefix) => `${prefix}:${name}`,
-      this._name
-    );
+    const name = this.qualifiedName;
 
-    const attributes = this._attributes
+    const attributes = [...this._attributes.values()]
       .map((attribute) => ` ${attribute.toString()}`)
       .join("");
 
@@ -303,6 +299,36 @@ export class Element extends Node implements Slot, Slotable {
     return `<${name}${attributes}>${
       children === "" ? "" : `\n${children}\n`
     }</${name}>`;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachShadow(shadow: Shadow): boolean {
+    if (this._frozen || this._shadow.isSome() || !shadow._attachHost(this)) {
+      return false;
+    }
+
+    this._shadow = Option.of(shadow);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachContent(document: Document): boolean {
+    if (
+      this._frozen ||
+      this._content.isSome() ||
+      !document._attachFrame(this)
+    ) {
+      return false;
+    }
+
+    this._content = Option.of(document);
+
+    return true;
   }
 }
 
@@ -323,98 +349,48 @@ export namespace Element {
     return value instanceof Element;
   }
 
-  export function fromElement(
-    element: JSON,
-    parent: Option<Node> = None
-  ): Element {
-    return Element.of(
-      Option.from(element.namespace as Namespace | null),
-      Option.from(element.prefix),
-      element.name,
-      (self) => {
-        const owner = Option.of(self);
-        return element.attributes.map((attribute) =>
-          Attribute.fromAttribute(attribute, owner)
-        );
-      },
-      (self) => {
-        const parent = Option.of(self);
-        return element.children.map((child) => Node.fromNode(child, parent));
-      },
-      Option.from(element.style).map((style) => Block.fromBlock(style)),
-      parent,
-      Option.from(element.shadow).map((shadow) => (self) =>
-        Shadow.fromShadow(shadow, self)
-      ),
-      Option.from(element.content).map((content) => (self) =>
-        Document.fromDocument(content, Option.of(self))
-      )
-    );
+  /**
+   * @internal
+   */
+  export function fromElement(json: JSON): Trampoline<Element> {
+    return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
+      const element = Element.of(
+        Option.from(json.namespace as Namespace | null),
+        Option.from(json.prefix),
+        json.name,
+        json.attributes.map((attribute) =>
+          Attribute.fromAttribute(attribute).run()
+        ),
+        children,
+        Option.from(json.style).map(Block.from)
+      );
+
+      if (json.shadow !== null) {
+        element._attachShadow(Shadow.fromShadow(json.shadow).run());
+      }
+
+      if (json.content !== null) {
+        element._attachContent(Document.fromDocument(json.content).run());
+      }
+
+      return element;
+    });
   }
 
-  export const hasName = predicate.hasName;
-
-  export const hasNamespace = predicate.hasNamespace;
-
-  export const hasId = predicate.hasId;
+  export const {
+    hasId,
+    hasInputType,
+    hasName,
+    hasNamespace,
+    hasTabIndex,
+    isBrowsingContextContainer,
+    isDisabled,
+    isDraggable,
+    isEditingHost,
+    isSuggestedFocusable,
+  } = predicate;
 }
 
 function indent(input: string): string {
   return input.replace(/^/gm, "  ");
-}
-
-function isSuggestedFocusableElement(element: Element): boolean {
-  switch (element.name) {
-    case "a":
-    case "link":
-      return element.attribute("href").isSome();
-
-    case "input":
-      return element.attribute("type").every((attr) => attr.value !== "hidden");
-
-    case "audio":
-    case "video":
-      return element.attribute("controls").isSome();
-
-    case "button":
-    case "select":
-    case "textarea":
-      return true;
-
-    case "summary":
-      return element
-        .parent()
-        .filter(Element.isElement)
-        .some((parent) => {
-          if (parent.name === "details") {
-            for (const child of parent.children()) {
-              if (Element.isElement(child) && child.name === "summary") {
-                return child === element;
-              }
-            }
-          }
-
-          return false;
-        });
-  }
-
-  return (
-    element.attribute("draggable").isSome() ||
-    isEditingHost(element) ||
-    isBrowsingContextContainer(element)
-  );
-}
-
-/**
- * @see https://html.spec.whatwg.org/#editing-host
- */
-function isEditingHost(element: Element): boolean {
-  return element.attribute("contenteditable").isSome();
-}
-
-/**
- * @see https://html.spec.whatwg.org/#browsing-context-container
- */
-function isBrowsingContextContainer(element: Element): boolean {
-  return element.name === "iframe";
 }

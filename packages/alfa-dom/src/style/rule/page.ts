@@ -1,34 +1,27 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
-import { Sheet } from "../sheet";
 
-export class Page extends Rule {
+export class PageRule extends Rule {
   public static of(
     selector: string,
-    declarations: Mapper<Page, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Page {
-    return new Page(selector, declarations, owner, parent);
+    declarations: Iterable<Declaration>
+  ): PageRule {
+    return new PageRule(selector, Array.from(declarations));
   }
 
   private readonly _selector: string;
   private readonly _style: Block;
 
-  private constructor(
-    selector: string,
-    declarations: Mapper<Page, Iterable<Declaration>>,
-    owner: Sheet,
-    parent: Option<Rule>
-  ) {
-    super(owner, parent);
+  private constructor(selector: string, declarations: Array<Declaration>) {
+    super();
 
     this._selector = selector;
-    this._style = Block.of(declarations(this));
+    this._style = Block.of(
+      declarations.filter((declaration) => declaration._attachParent(this))
+    );
   }
 
   public get selector(): string {
@@ -39,7 +32,7 @@ export class Page extends Rule {
     return this._style;
   }
 
-  public toJSON(): Page.JSON {
+  public toJSON(): PageRule.JSON {
     return {
       type: "page",
       selector: this._selector,
@@ -56,32 +49,23 @@ export class Page extends Rule {
   }
 }
 
-export namespace Page {
+export namespace PageRule {
   export interface JSON extends Rule.JSON {
     type: "page";
     selector: string;
     style: Block.JSON;
   }
 
-  export function isPage(value: unknown): value is Page {
-    return value instanceof Page;
+  export function isPageRule(value: unknown): value is PageRule {
+    return value instanceof PageRule;
   }
 
-  export function fromPage(
-    json: JSON,
-    owner: Sheet,
-    parent: Option<Rule> = None
-  ): Page {
-    return Page.of(
-      json.selector,
-      (self) => {
-        const parent = Option.of(self);
-        return json.style.map((declaration) =>
-          Declaration.fromDeclaration(declaration, parent)
-        );
-      },
-      owner,
-      parent
+  /**
+   * @internal
+   */
+  export function fromPageRule(json: JSON): Trampoline<PageRule> {
+    return Trampoline.done(
+      PageRule.of(json.selector, json.style.map(Declaration.from))
     );
   }
 }

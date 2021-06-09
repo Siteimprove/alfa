@@ -1,19 +1,21 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { isVisible } from "../common/predicate/is-visible";
+import { hasRole, isVisible } from "../common/predicate";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r71.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r71",
+  requirements: [Criterion.of("1.4.8")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -22,12 +24,8 @@ export default Rule.Atomic.of<Page, Element>({
             flattened: true,
             nested: true,
           })
-          .filter(
-            and(
-              isElement,
-              and(hasNamespace(Namespace.HTML), hasName("p"), isVisible(device))
-            )
-          );
+          .filter(isElement)
+          .filter(and(hasRole(device, "paragraph"), isVisible(device)));
       },
 
       expectations(target) {
@@ -49,10 +47,10 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsNotJustified = Ok.of(
-    Diagnostic.of(`The text of the \`<p>\` element is not justified`)
+    Diagnostic.of(`The text of the paragraph is not justified`)
   );
 
   export const IsJustified = Err.of(
-    Diagnostic.of(`The text of the \`<p>\` element is justified`)
+    Diagnostic.of(`The text of the paragraph is justified`)
   );
 }

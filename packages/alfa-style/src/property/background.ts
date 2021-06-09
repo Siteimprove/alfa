@@ -1,165 +1,279 @@
-import {
-  Angle,
-  Current,
-  Gradient,
-  Image,
-  Keyword,
-  Length,
-  Linear,
-  List,
-  Percentage,
-  RGB,
-  System,
-  Token,
-  URL,
-} from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Keyword, Percentage, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Record } from "@siteimprove/alfa-record";
-
-import * as css from "@siteimprove/alfa-css";
+import { Result, Err } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
-import { Resolver } from "../resolver";
-import { Style } from "../style";
 
-const { map, either, delimited, option, separatedList } = Parser;
+import { List } from "./value/list";
+import { Tuple } from "./value/tuple";
 
-export namespace Background {
-  export type Color = Color.Specified | Color.Computed;
+import * as Attachment from "./background-attachment";
+import * as Clip from "./background-clip";
+import * as Color from "./background-color";
+import * as Image from "./background-image";
+import * as Origin from "./background-origin";
+import * as Position from "./background-position";
+import * as PositionX from "./background-position-x";
+import * as PositionY from "./background-position-y";
+import * as Repeat from "./background-repeat";
+import * as RepeatX from "./background-repeat-x";
+import * as RepeatY from "./background-repeat-y";
+import * as Size from "./background-size";
 
-  export namespace Color {
-    export type Specified = css.Color;
+const { map, filter, delimited, option, right, separatedList } = Parser;
 
-    export type Computed = RGB<Percentage, Percentage> | Current | System;
-  }
-
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#background-color
-   */
-  export const Color: Property<
-    Color.Specified,
-    Color.Computed
-  > = Property.of(
-    css.Color.rgb(
-      Percentage.of(0),
-      Percentage.of(0),
-      Percentage.of(0),
-      Percentage.of(0)
-    ),
-    css.Color.parse,
-    (style) =>
-      style.specified("background-color").map((color) => Resolver.color(color))
-  );
-
-  export namespace Image {
-    export type None = Keyword<"none">;
-
-    export type Specified = List<None | css.Image>;
-
-    export type Computed = List<
-      | None
-      | css.Image<
-          | URL
-          | Linear<
-              | Gradient.Stop<Color.Computed, Length<"px"> | Percentage>
-              | Gradient.Hint<Length<"px"> | Percentage>,
-              Angle<"deg"> | Linear.Side | Linear.Corner
-            >
-        >
+declare module "../property" {
+  interface Shorthands {
+    background: Property.Shorthand<
+      | "background-color"
+      | "background-image"
+      | "background-position-x"
+      | "background-position-y"
+      | "background-size"
+      | "background-repeat-x"
+      | "background-repeat-y"
+      | "background-attachment"
+      | "background-origin"
+      | "background-clip"
     >;
   }
+}
 
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#background-image
-   */
-  export const Image: Property<Image.Specified, Image.Computed> = Property.of(
-    List.of([Keyword.of("none")], ", "),
-    map(
-      separatedList(
-        either(Keyword.parse("none"), css.Image.parse),
-        delimited(option(Token.parseWhitespace), Token.parseComma)
-      ),
-      (images) => List.of(images, ", ")
+/**
+ * @internal
+ */
+export const parse: Parser<
+  Slice<Token>,
+  [
+    Color.Specified?,
+    Image.Specified.Item?,
+    PositionX.Specified.Item?,
+    PositionY.Specified.Item?,
+    Size.Specified.Item?,
+    RepeatX.Specified.Item?,
+    RepeatY.Specified.Item?,
+    Attachment.Specified.Item?,
+    Origin.Specified.Item?,
+    Clip.Specified.Item?
+  ],
+  string
+> = (input) => {
+  let color: Color.Specified | undefined;
+  let image: Image.Specified.Item | undefined;
+  let positionX: PositionX.Specified.Item | undefined;
+  let positionY: PositionY.Specified.Item | undefined;
+  let size: Size.Specified.Item | undefined;
+  let repeatX: RepeatX.Specified.Item | undefined;
+  let repeatY: RepeatY.Specified.Item | undefined;
+  let attachment: Attachment.Specified.Item | undefined;
+  let origin: Origin.Specified.Item | undefined;
+  let clip: Clip.Specified.Item | undefined;
+
+  while (true) {
+    for (const [remainder] of Token.parseWhitespace(input)) {
+      input = remainder;
+    }
+
+    // <color>
+    if (color === undefined) {
+      const result = Color.parse(input);
+
+      if (result.isOk()) {
+        [input, color] = result.get();
+        continue;
+      }
+    }
+
+    // <image>
+    if (image === undefined) {
+      const result = Image.parse(input);
+
+      if (result.isOk()) {
+        [input, image] = result.get();
+        continue;
+      }
+    }
+
+    // <position> [ / <size> ]?
+    if (positionX === undefined || positionY === undefined) {
+      const result = Position.parse(input);
+
+      if (result.isOk()) {
+        [input, { horizontal: positionX, vertical: positionY }] = result.get();
+
+        // [ / <size> ]?
+        {
+          const result = delimited(
+            option(Token.parseWhitespace),
+            right(
+              delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+              Size.parse
+            )
+          )(input);
+
+          if (result.isOk()) {
+            [input, size] = result.get();
+          }
+        }
+
+        continue;
+      }
+    }
+
+    // <repeat>
+    if (repeatX === undefined || repeatY === undefined) {
+      const result = Repeat.parse(input);
+
+      if (result.isOk()) {
+        [input, [repeatX, repeatY]] = result.get();
+        continue;
+      }
+    }
+
+    // <attachment>
+    if (attachment === undefined) {
+      const result = Attachment.parse(input);
+
+      if (result.isOk()) {
+        [input, attachment] = result.get();
+        continue;
+      }
+    }
+
+    // <origin> <clip>?
+    if (origin === undefined) {
+      const result = Origin.parse(input);
+
+      if (result.isOk()) {
+        [input, origin] = result.get();
+
+        // <clip>?
+        {
+          const result = delimited(
+            option(Token.parseWhitespace),
+            Clip.parse
+          )(input);
+
+          if (result.isOk()) {
+            [input, clip] = result.get();
+          }
+        }
+
+        continue;
+      }
+    }
+
+    break;
+  }
+
+  if (
+    [
+      color,
+      image,
+      positionX,
+      positionY,
+      repeatX,
+      repeatY,
+      attachment,
+      origin,
+      clip,
+    ].every((property) => property === undefined)
+  ) {
+    return Err.of(
+      `Expected one of color, image, position, repeat, attachment, origin, or clip`
+    );
+  }
+
+  return Result.of([
+    input,
+    [
+      color,
+      image,
+      positionX,
+      positionY,
+      size,
+      repeatX,
+      repeatY,
+      attachment,
+      origin,
+      clip ?? origin,
+    ],
+  ]);
+};
+
+/**
+ * @internal
+ */
+export const parseList = map(
+  filter(
+    separatedList(
+      parse,
+      delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
-    (style) =>
-      style.specified("background-image").map((images) =>
-        List.of(
-          Iterable.map(images, (image) => {
-            switch (image.type) {
-              case "keyword":
-                return image;
+    (layers) =>
+      [...layers].slice(0, -1).every(([color]) => color === undefined),
+    () => "Only the last layer may contain a color"
+  ),
+  (layers) => List.of(layers, ", ")
+);
 
-              case "image":
-                return resolveImage(image, style);
-            }
-          }),
-          ", "
-        )
-      )
-  );
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background}
+ * @internal
+ */
+export default Property.registerShorthand(
+  "background",
+  Property.shorthand(
+    [
+      "background-color",
+      "background-image",
+      "background-position-x",
+      "background-position-y",
+      "background-size",
+      "background-repeat-x",
+      "background-repeat-y",
+      "background-attachment",
+      "background-origin",
+      "background-clip",
+    ],
+    map(parseList, (layers) => {
+      let color: Color.Specified | undefined;
+      let image: Array<Image.Specified.Item> = [];
+      let positionX: Array<PositionX.Specified.Item> = [];
+      let positionY: Array<PositionY.Specified.Item> = [];
+      let size: Array<Size.Specified.Item> = [];
+      let repeatX: Array<RepeatX.Specified.Item> = [];
+      let repeatY: Array<RepeatY.Specified.Item> = [];
+      let attachment: Array<Attachment.Specified.Item> = [];
+      let origin: Array<Origin.Specified.Item> = [];
+      let clip: Array<Clip.Specified.Item> = [];
 
-  /**
-   * @see https://drafts.csswg.org/css-backgrounds/#background
-   */
-  export const Shorthand = Property.Shorthand.of(
-    ["background-image", "background-color"],
-    map(Color.parse, (color) => {
-      return Record.of({
-        "background-color": color,
-        "background-image": Image.initial as Image.Specified,
-      });
+      for (const layer of layers) {
+        color = layer[0];
+        image.push(layer[1] ?? Keyword.of("none"));
+        positionX.push(layer[2] ?? Percentage.of(0));
+        positionY.push(layer[3] ?? Percentage.of(0));
+        size.push(layer[4] ?? Tuple.of(Keyword.of("auto"), Keyword.of("auto")));
+        repeatX.push(layer[5] ?? Keyword.of("repeat"));
+        repeatY.push(layer[6] ?? Keyword.of("repeat"));
+        attachment.push(layer[7] ?? Keyword.of("scroll"));
+        origin.push(layer[8] ?? Keyword.of("padding-box"));
+        clip.push(layer[9] ?? Keyword.of("border-box"));
+      }
+
+      return [
+        ["background-color", color ?? Keyword.of("initial")],
+        ["background-image", List.of(image, ", ")],
+        ["background-position-x", List.of(positionX, ", ")],
+        ["background-position-y", List.of(positionY, ", ")],
+        ["background-size", List.of(size, ", ")],
+        ["background-repeat-x", List.of(repeatX, ", ")],
+        ["background-repeat-y", List.of(repeatY, ", ")],
+        ["background-attachment", List.of(attachment, ", ")],
+        ["background-origin", List.of(origin, ", ")],
+        ["background-clip", List.of(clip, ", ")],
+      ];
     })
-  );
-}
-
-function resolveImage(image: Image, style: Style) {
-  switch (image.image.type) {
-    case "url":
-      return css.Image.of(image.image);
-
-    case "gradient":
-      return resolveGradient(image.image, style);
-  }
-}
-
-function resolveGradient(gradient: Gradient, style: Style) {
-  switch (gradient.kind) {
-    case "linear": {
-      const { direction, items, repeats } = gradient;
-
-      return css.Image.of(
-        Linear.of(
-          direction.type === "angle" ? direction.withUnit("deg") : direction,
-          Iterable.map(items, (item) => resolveGradientItem(item, style)),
-          repeats
-        )
-      );
-    }
-  }
-}
-
-function resolveGradientItem(item: Gradient.Item, style: Style) {
-  switch (item.type) {
-    case "stop": {
-      const { color, position } = item;
-
-      return Gradient.Stop.of(
-        Resolver.color(color),
-        position.map((position) =>
-          position.type === "length"
-            ? Resolver.length(position, style)
-            : position
-        )
-      );
-    }
-
-    case "hint": {
-      const { position } = item;
-
-      return Gradient.Hint.of(
-        position.type === "length" ? Resolver.length(position, style) : position
-      );
-    }
-  }
-}
+  )
+);
