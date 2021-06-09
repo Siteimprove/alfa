@@ -1,7 +1,6 @@
-/// <reference lib="dom" />
-
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
+import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -76,7 +75,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
           1: expectation(
             byNames.size === 0,
             () => Outcomes.differentNames,
-            () => Outcomes.sameNames
+            () => Outcomes.sameNames(byNames.values())
           ),
         };
       },
@@ -89,7 +88,54 @@ export namespace Outcomes {
     Diagnostic.of("No two same landmarks have the same name.")
   );
 
-  export const sameNames = Err.of(
-    Diagnostic.of("Some identical landmarks have the same name.")
-  );
+  export const sameNames = (errors: Iterable<Iterable<Element>>) =>
+    Err.of(
+      SameNames.of("Some identical landmarks have the same name.", errors)
+    );
+}
+
+class SameNames extends Diagnostic implements Iterable<List<Element>> {
+  public static of(
+    message: string,
+    errors: Iterable<Iterable<Element>> = []
+  ): SameNames {
+    return new SameNames(message, Array.from(errors).map(List.from));
+  }
+
+  private readonly _errors: ReadonlyArray<List<Element>>;
+
+  private constructor(message: string, errors: ReadonlyArray<List<Element>>) {
+    super(message);
+    this._errors = errors;
+  }
+
+  public *[Symbol.iterator](): Iterator<List<Element>> {
+    yield* this._errors;
+  }
+
+  public equals(value: SameNames): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof SameNames &&
+      value._message === this._message &&
+      value._errors.every((list, idx) => list.equals(this._errors[idx]))
+    );
+  }
+
+  public toJSON(): SameNames.JSON {
+    return { ...super.toJSON(), errors: Array.toJSON(this._errors) };
+  }
+}
+
+namespace SameNames {
+  export interface JSON extends Diagnostic.JSON {
+    errors: Array<List.JSON<Element>>;
+  }
+
+  export function isSameNames(value: unknown): value is SameNames {
+    return value instanceof SameNames;
+  }
 }

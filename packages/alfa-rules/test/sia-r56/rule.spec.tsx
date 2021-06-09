@@ -29,7 +29,7 @@ test("evaluate() fails when same landmarks have same names", async (t) => {
   const target = Group.of([aside1, aside2]);
 
   t.deepEqual(await evaluate(R56, { document }), [
-    failed(R56, target, { 1: Outcomes.sameNames }),
+    failed(R56, target, { 1: Outcomes.sameNames([target]) }),
   ]);
 });
 
@@ -41,7 +41,7 @@ test("evaluate() fails when same landmarks have no names", async (t) => {
   const target = Group.of([aside1, aside2]);
 
   t.deepEqual(await evaluate(R56, { document }), [
-    failed(R56, target, { 1: Outcomes.sameNames }),
+    failed(R56, target, { 1: Outcomes.sameNames([target]) }),
   ]);
 });
 
