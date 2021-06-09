@@ -42,10 +42,10 @@ function isClippedBySize(
       const { value: x } = style.computed("overflow-x");
       const { value: y } = style.computed("overflow-y");
 
+      const { value: height } = style.computed("height");
+      const { value: width } = style.computed("width");
+
       if (x.value === "hidden" || y.value === "hidden") {
-        const { value: height } = style.computed("height");
-        const { value: width } = style.computed("width");
-
         for (const dimension of [height, width]) {
           switch (dimension.type) {
             case "percentage":
@@ -65,10 +65,12 @@ function isClippedBySize(
         }
       }
 
-      if (x.value === "auto" || y.value === "auto") {
-        const { value: height } = style.computed("height");
-        const { value: width } = style.computed("width");
-
+      if (
+        x.value === "auto" ||
+        x.value === "scroll" ||
+        y.value === "auto" ||
+        y.value === "scroll"
+      ) {
         for (const dimension of [height, width]) {
           switch (dimension.type) {
             case "percentage":
@@ -79,30 +81,7 @@ function isClippedBySize(
               }
 
             case "length":
-              if (dimension.value <= 1) {
-                return true;
-              } else {
-                break;
-              }
-          }
-        }
-      }
-
-      if (x.value === "scroll" || y.value === "scroll") {
-        const { value: height } = style.computed("height");
-        const { value: width } = style.computed("width");
-
-        for (const dimension of [height, width]) {
-          switch (dimension.type) {
-            case "percentage":
               if (dimension.value <= 0) {
-                return true;
-              } else {
-                break;
-              }
-
-            case "length":
-              if (dimension.value <= 1) {
                 return true;
               } else {
                 break;
