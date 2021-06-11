@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.18.0](../../compare/v0.17.0...v0.18.0) (2021-06-11)
+
 ### Breaking
 
 - [@siteimprove/alfa-graph](packages/alfa-graph), [@siteimprove/alfa-network](packages/alfa-network): Several breaking changes have been made to the `Graph` and `Network` types. Please see the associated pull request for more details. ([#765](../../pull/765))
