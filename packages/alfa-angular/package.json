@@ -24,7 +24,7 @@
     "@siteimprove/alfa-http": "workspace:^0.17.0",
     "@siteimprove/alfa-option": "workspace:^0.17.0",
     "@siteimprove/alfa-web": "workspace:^0.17.0",
-    "rxjs": "^6.6.7",
+    "rxjs": "^7.1.0",
     "zone.js": "^0.11.4"
   },
   "devDependencies": {

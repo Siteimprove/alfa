@@ -18,11 +18,9 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-cheerio": "workspace:^0.17.0",
-    "@siteimprove/alfa-dom": "workspace:^0.17.0",
     "@siteimprove/alfa-react": "workspace:^0.17.0",
     "@siteimprove/alfa-web": "workspace:^0.17.0",
-    "@types/enzyme": "^3.1.18",
+    "@types/enzyme": "^3.10.8",
     "enzyme": "^3.11.0"
   },
   "devDependencies": {
