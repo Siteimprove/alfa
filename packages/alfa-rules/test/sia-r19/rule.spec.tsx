@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R19, { Outcomes } from "../../src/sia-r19/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test(`evaluate() passes an aria-required attribute with a valid true value`, async (t) => {
   const target = <div role="textbox" aria-required="true"></div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-required").get(), {
@@ -26,7 +25,7 @@ test("evaluate() passes an aria-expanded attribute with a valid undefined value"
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-expanded").get(), {
@@ -42,7 +41,7 @@ test("evaluate() passes an aria-pressed attribute with a valid tristate value", 
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-pressed").get(), {
@@ -54,7 +53,7 @@ test("evaluate() passes an aria-pressed attribute with a valid tristate value", 
 test("evaluate() passes an aria-errormessage attribute with a valid ID reference value", async (t) => {
   const target = <div role="textbox" aria-errormessage="my-error"></div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-errormessage").get(), {
@@ -70,7 +69,7 @@ test("evaluate() passes an aria-rowindex attribute with a valid integer value", 
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-rowindex").get(), {
@@ -90,7 +89,7 @@ test(`evaluate() passes aria-valuemin, aria-valuemax and aria-valuenow
     ></div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-valuemin").get(), {
@@ -112,7 +111,7 @@ test("evaluate() passes an aria-placeholder attribute with a valid string value"
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-placeholder").get(), {
@@ -124,7 +123,7 @@ test("evaluate() passes an aria-placeholder attribute with a valid string value"
 test("evaluate() passes an aria-dropeffect property with a valid token list value", async (t) => {
   const target = <div role="dialog" aria-dropeffect="copy move"></div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-dropeffect").get(), {
@@ -140,7 +139,7 @@ test("evaluate() fails an aria-expanded state with an invalid true/false/undefin
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-expanded").get(), {
@@ -156,7 +155,7 @@ test("evaluate() fails an aria-pressed state with an invalid tristate value", as
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-pressed").get(), {
@@ -172,7 +171,7 @@ test("evaluate() fails an aria-rowindex property with an invalid integer value",
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-rowindex").get(), {
@@ -184,7 +183,7 @@ test("evaluate() fails an aria-rowindex property with an invalid integer value",
 test("evaluate() fails an aria-live property with an invalid token value", async (t) => {
   const target = <div role="main" aria-live="nope"></div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-live").get(), {
@@ -203,7 +202,7 @@ test("evaluate() fails an aria-rowindex property with an invalid integer value",
     ></div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-valuemin").get(), {
@@ -221,7 +220,7 @@ test("evaluate() fails an aria-rowindex property with an invalid integer value",
 test("evaluate() fails an aria-errormessage property with an invalid ID reference value", async (t) => {
   const target = <div role="textbox" aria-errormessage="error1 error2"></div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-errormessage").get(), {
@@ -231,13 +230,13 @@ test("evaluate() fails an aria-errormessage property with an invalid ID referenc
 });
 
 test("evaluate() is inapplicable when an element does not have any ARIA attribute", async (t) => {
-  const document = Document.of([<div>Some Content</div>]);
+  const document = h.document([<div>Some Content</div>]);
 
   t.deepEqual(await evaluate(R19, { document }), [inapplicable(R19)]);
 });
 
 test("evaluate() is inapplicable when aria-checked state has an empty value", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <div role="checkbox" aria-checked>
       Accept terms and conditions
     </div>,

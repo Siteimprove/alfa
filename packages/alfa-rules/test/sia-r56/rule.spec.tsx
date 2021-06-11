@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R56, { Outcomes } from "../../src/sia-r56/rule";
 
@@ -13,7 +12,7 @@ test("evaluate() passes when same landmarks have different names", async (t) => 
   const author = <aside aria-label="About the author" id="author" />;
   const book = <aside aria-label="About the book" id="book" />;
 
-  const document = Document.of([author, book]);
+  const document = h.document([author, book]);
   const target = Group.of([author, book]);
 
   t.deepEqual(await evaluate(R56, { document }), [
@@ -25,7 +24,7 @@ test("evaluate() fails when same landmarks have same names", async (t) => {
   const aside1 = <aside aria-label="More information" id="author" />;
   const aside2 = <aside aria-label="More information" id="book" />;
 
-  const document = Document.of([aside1, aside2]);
+  const document = h.document([aside1, aside2]);
   const target = Group.of([aside1, aside2]);
 
   t.deepEqual(await evaluate(R56, { document }), [
@@ -37,7 +36,7 @@ test("evaluate() fails when same landmarks have no names", async (t) => {
   const aside1 = <aside id="author" />;
   const aside2 = <aside id="book" />;
 
-  const document = Document.of([aside1, aside2]);
+  const document = h.document([aside1, aside2]);
   const target = Group.of([aside1, aside2]);
 
   t.deepEqual(await evaluate(R56, { document }), [
@@ -49,7 +48,7 @@ test("evaluate() is inapplicable when only different landmarks exist", async (t)
   const aside = <aside />;
   const nav = <nav />;
 
-  const document = Document.of([aside, nav]);
+  const document = h.document([aside, nav]);
 
   t.deepEqual(await evaluate(R56, { document }), [inapplicable(R56)]);
 });

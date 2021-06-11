@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R8, { Outcomes } from "../../src/sia-r8/rule";
 
@@ -17,7 +16,7 @@ test("evaluate() passes an input element with implicit label", async (t) => {
     </label>
   );
 
-  const document = Document.of([label]);
+  const document = h.document([label]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -29,7 +28,7 @@ test("evaluate() passes an input element with implicit label", async (t) => {
 test("evaluate() passes an input element with aria-label", async (t) => {
   const target = <input aria-label="last name" disabled />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -50,7 +49,7 @@ test("evaluate() passes a select element with explicit label", async (t) => {
 
   const label = <label for="country">Country</label>;
 
-  const document = Document.of([label, target]);
+  const document = h.document([label, target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -64,7 +63,7 @@ test("evaluate() passes a textarea element with aria-labelledby", async (t) => {
 
   const label = <div id="country">Country</div>;
 
-  const document = Document.of([label, target]);
+  const document = h.document([label, target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -78,7 +77,7 @@ test("evaluate() passes a input element with placeholder attribute", async (t) =
 
   const label = <button type="submit">search</button>;
 
-  const document = Document.of([label, target]);
+  const document = h.document([label, target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -95,7 +94,7 @@ test(`evaluate() passes a div element with explicit combobox role and an
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
@@ -107,7 +106,7 @@ test(`evaluate() passes a div element with explicit combobox role and an
 test("evaluate() fails a input element without accessible name", async (t) => {
   const target = <input />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
@@ -119,7 +118,7 @@ test("evaluate() fails a input element without accessible name", async (t) => {
 test("evaluate() fails a input element with empty aria-label", async (t) => {
   const target = <input aria-label=" " />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
@@ -138,7 +137,7 @@ test(`evaluate() fails a select element with aria-labelledby pointing to an
 
   const label = <div id="country"></div>;
 
-  const document = Document.of([label, target]);
+  const document = h.document([label, target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
@@ -156,7 +155,7 @@ test("evaluate() fails a textbox with no accessible name", async (t) => {
       {target}
     </label>
   );
-  const document = Document.of([label, target]);
+  const document = h.document([label, target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
@@ -168,7 +167,7 @@ test("evaluate() fails a textbox with no accessible name", async (t) => {
 test("evaluate() is inapplicable for an element with aria-hidden", async (t) => {
   const target = <input disabled aria-hidden="true" aria-label="firstname" />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });
@@ -182,7 +181,7 @@ test("evaluate() is inapplicable for a disabled element", async (t) => {
     </select>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });
@@ -190,7 +189,7 @@ test("evaluate() is inapplicable for a disabled element", async (t) => {
 test("evaluate() is inapplicable for an element which is not displayed", async (t) => {
   const target = <input aria-label="firstname" style={{ display: "none" }} />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });

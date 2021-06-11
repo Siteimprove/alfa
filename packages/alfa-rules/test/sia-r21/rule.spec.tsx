@@ -1,7 +1,5 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R21, { Outcomes } from "../../src/sia-r21/rule";
 
@@ -11,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluates() passes an element with a single valid role", async (t) => {
   const target = h.attribute("role", "button");
 
-  const document = Document.of([h("button", [target])]);
+  const document = h.document([h("button", [target])]);
 
   t.deepEqual(await evaluate(R21, { document }), [
     passed(R21, target, {
@@ -23,7 +21,7 @@ test("evaluates() passes an element with a single valid role", async (t) => {
 test("evaluates() passes an element with multiple valid roles", async (t) => {
   const target = h.attribute("role", "button link");
 
-  const document = Document.of([h("button", [target])]);
+  const document = h.document([h("button", [target])]);
 
   t.deepEqual(await evaluate(R21, { document }), [
     passed(R21, target, {
@@ -35,7 +33,7 @@ test("evaluates() passes an element with multiple valid roles", async (t) => {
 test("evaluates() fails an element with an invalid role", async (t) => {
   const target = h.attribute("role", "btn");
 
-  const document = Document.of([h("button", [target])]);
+  const document = h.document([h("button", [target])]);
 
   t.deepEqual(await evaluate(R21, { document }), [
     failed(R21, target, {
@@ -47,7 +45,7 @@ test("evaluates() fails an element with an invalid role", async (t) => {
 test("evaluates() fails an element with both a valid and an invalid role", async (t) => {
   const target = h.attribute("role", "btn link");
 
-  const document = Document.of([h("button", [target])]);
+  const document = h.document([h("button", [target])]);
 
   t.deepEqual(await evaluate(R21, { document }), [
     failed(R21, target, {
@@ -57,13 +55,13 @@ test("evaluates() fails an element with both a valid and an invalid role", async
 });
 
 test("evaluate() is inapplicable when there is no role attribute", async (t) => {
-  const document = Document.of([<button />]);
+  const document = h.document([<button />]);
 
   t.deepEqual(await evaluate(R21, { document }), [inapplicable(R21)]);
 });
 
 test("evaluate() is inapplicable when a role attribute is only whitespace", async (t) => {
-  const document = Document.of([<button role=" " />]);
+  const document = h.document([<button role=" " />]);
 
   t.deepEqual(await evaluate(R21, { document }), [inapplicable(R21)]);
 });

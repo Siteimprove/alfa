@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R75, { Outcomes } from "../../src/sia-r75/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed } from "../common/outcome";
 test("evaluate() passes an element with a font size not smaller than 9 pixels", async (t) => {
   const target = <html style={{ fontSize: "medium" }}>Hello world</html>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R75, { document }), [
     passed(R75, target, {
@@ -22,7 +21,7 @@ test("evaluate() passes an element with a font size not smaller than 9 pixels", 
 test("evaluate() fails an element with a font size smaller than 9 pixels", async (t) => {
   const target = <div style={{ fontSize: "8px" }}>Hello world</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R75, { document }), [
     failed(R75, target, {
@@ -36,7 +35,7 @@ test(`evaluate() fails an element with an accumulated font size smaller than 9
   const target1 = <p style={{ fontSize: "smaller" }}>Hello world</p>;
   const target2 = <div style={{ fontSize: "10px" }}>{target1}</div>;
 
-  const document = Document.of([target2]);
+  const document = h.document([target2]);
 
   t.deepEqual(await evaluate(R75, { document }), [
     passed(R75, target2, {

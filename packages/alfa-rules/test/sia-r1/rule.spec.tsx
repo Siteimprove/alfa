@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R1, { Outcomes } from "../../src/sia-r1/rule";
 
@@ -8,7 +7,7 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes a document that that a non-empty <title> element", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <head>
         <title>Hello world</title>
@@ -25,7 +24,7 @@ test("evaluate() passes a document that that a non-empty <title> element", async
 });
 
 test("evaluate() fails a document that has no <title> element", async (t) => {
-  const document = Document.of([<html />]);
+  const document = h.document([<html />]);
 
   t.deepEqual(await evaluate(R1, { document }), [
     failed(R1, document, { 1: Outcomes.HasNoTitle, 2: Outcomes.HasEmptyTitle }),
@@ -33,7 +32,7 @@ test("evaluate() fails a document that has no <title> element", async (t) => {
 });
 
 test("evaluate() fails a document that has an empty <title> element", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <head>
         <title />
@@ -47,7 +46,7 @@ test("evaluate() fails a document that has an empty <title> element", async (t) 
 });
 
 test("evaluate() is inapplicable to a document that is not an HTML document", async (t) => {
-  const document = Document.empty();
+  const document = h.document([]);
 
   t.deepEqual(await evaluate(R1, { document }), [inapplicable(R1)]);
 });

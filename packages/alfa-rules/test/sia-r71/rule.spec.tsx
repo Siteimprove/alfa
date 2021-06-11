@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R71, { Outcomes } from "../../src/sia-r71/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a paragraph whose text is not justified", async (t) => {
   const target = <p>Hello world</p>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R71, { document }), [
     passed(R71, target, {
@@ -22,7 +21,7 @@ test("evaluate() passes a paragraph whose text is not justified", async (t) => {
 test("evaluate() fails a paragraph whose text is justified", async (t) => {
   const target = <p style={{ textAlign: "justify" }}>Hello world</p>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R71, { document }), [
     failed(R71, target, {
@@ -34,7 +33,7 @@ test("evaluate() fails a paragraph whose text is justified", async (t) => {
 test("evaluate() fails a paragraph whose text is justified by inheritance", async (t) => {
   const target = <p>Hello world</p>;
 
-  const document = Document.of([
+  const document = h.document([
     <div style={{ textAlign: "justify" }}>{target}</div>,
   ]);
 
@@ -52,7 +51,7 @@ test("evaluate() fails an ARIA paragraph whose text is justified", async (t) => 
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R71, { document }), [
     failed(R71, target, {
@@ -68,7 +67,7 @@ test("evaluate() ignores a <p> element whose role is changed", async (t) => {
     </p>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R71, { document }), [inapplicable(R71)]);
 });

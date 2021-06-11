@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R18, { Outcomes } from "../../src/sia-r18/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test(`evaluate() passes a button with aria-pressed state`, async (t) => {
   const target = <button aria-pressed="false">My button</button>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-pressed").get(), {
@@ -26,7 +25,7 @@ test(`evaluate() passes a div element with button role, and an aria-pressed stat
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-pressed").get(), {
@@ -38,7 +37,7 @@ test(`evaluate() passes a div element with button role, and an aria-pressed stat
 test(`evaluate() passes a div element with aria busy state`, async (t) => {
   const target = <div aria-busy="true">My busy div</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-busy").get(), {
@@ -54,7 +53,7 @@ test(`evaluate() passes a div element with button role, and an aria-label attrib
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-label").get(), {
@@ -70,7 +69,7 @@ test(`evaluate() passes a div element with checkbox role, and an aria-checked st
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-checked").get(), {
@@ -86,7 +85,7 @@ test(`evaluate() passes a div element with checkbox role, and an aria-controls s
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-controls").get(), {
@@ -106,7 +105,7 @@ test(`evaluate() passes a div element with checkbox role, and both
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-controls").get(), {
@@ -126,7 +125,7 @@ test(`evaluate() passes a div element with checkbox role, with both
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-expanded").get(), {
@@ -145,7 +144,7 @@ test(`evaluate() passes a button element with none role and aria-pressed`, async
     </button>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-pressed").get(), {
@@ -157,7 +156,7 @@ test(`evaluate() passes a button element with none role and aria-pressed`, async
 test(`evaluate() fails a button with aria-sort state, and no property`, async (t) => {
   const target = <button aria-sort="">Sort by year</button>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [
     failed(R18, target.attribute("aria-sort").get(), {
@@ -169,7 +168,7 @@ test(`evaluate() fails a button with aria-sort state, and no property`, async (t
 test(`evaluate() is inapplicable for a div element with no aria attribute`, async (t) => {
   const target = <div role="region">A region of content</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R18, { document }), [inapplicable(R18)]);
 });

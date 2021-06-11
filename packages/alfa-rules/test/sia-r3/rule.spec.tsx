@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R3, { Outcomes } from "../../src/sia-r3/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a single id attribute.", async (t) => {
   const target = <div id="my-div">This is my first element</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R3, { document }), [
     passed(R3, target, {
@@ -24,7 +23,7 @@ test("evaluate() passes multiple unique id attributes", async (t) => {
   const target2 = <div id="my-div2">This is my second element</div>;
   const target3 = <svg id="my-div3">This is my third element</svg>;
 
-  const document = Document.of([target1, target2, target3]);
+  const document = h.document([target1, target2, target3]);
 
   t.deepEqual(await evaluate(R3, { document }), [
     passed(R3, target1, {
@@ -43,7 +42,7 @@ test("evaluate() fails duplicated id attributes", async (t) => {
   const target1 = <div id="label">Name</div>;
   const target2 = <div id="label">City</div>;
 
-  const document = Document.of([target1, target2]);
+  const document = h.document([target1, target2]);
 
   t.deepEqual(await evaluate(R3, { document }), [
     failed(R3, target1, {
@@ -65,7 +64,7 @@ test("evaluate() fails duplicated id attributes on SVG element", async (t) => {
     </svg>
   );
 
-  const document = Document.of([target1, target2]);
+  const document = h.document([target1, target2]);
 
   t.deepEqual(await evaluate(R3, { document }), [
     failed(R3, target1, {
@@ -80,7 +79,7 @@ test("evaluate() fails duplicated id attributes on SVG element", async (t) => {
 test("evaluate() is inapplicable to a document without id attribute", async (t) => {
   const target1 = <div>This is my first element</div>;
 
-  const document = Document.of([target1]);
+  const document = h.document([target1]);
 
   t.deepEqual(await evaluate(R3, { document }), [inapplicable(R3)]);
 });

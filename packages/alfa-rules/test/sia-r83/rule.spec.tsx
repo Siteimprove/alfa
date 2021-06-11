@@ -1,7 +1,5 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R83, { Outcomes } from "../../src/sia-r83/rule";
 
@@ -11,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of(
+  const document = h.document(
     [<div>{target}</div>],
     [
       h.sheet([
@@ -35,7 +33,7 @@ test(`evaluate() passes a child text node of an element whose parent truncates
       overflow using ellipsis`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of(
+  const document = h.document(
     [
       <div>
         <span>{target}</span>
@@ -63,7 +61,7 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`white-space\` property`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of(
+  const document = h.document(
     [<div>{target}</div>],
     [
       h.sheet([
@@ -86,7 +84,7 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
       using the px unit`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of(
+  const document = h.document(
     [<div>{target}</div>],
     [
       h.sheet([
@@ -109,7 +107,7 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
       using the vh unit`, async (t) => {
   const target = h.text("Hello world");
 
-  const document = Document.of(
+  const document = h.document(
     [<div>{target}</div>],
     [
       h.sheet([
@@ -129,7 +127,7 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
 });
 
 test("evaluate() is inapplicable to a text node that is not visible", async (t) => {
-  const document = Document.of(
+  const document = h.document(
     [<div hidden>Hello world</div>],
     [
       h.sheet([
@@ -146,7 +144,7 @@ test("evaluate() is inapplicable to a text node that is not visible", async (t) 
 
 test(`evaluate() is inapplicable to a text node that is excluded from the
       accessibility tree using the \`aria-hidden\` attribute`, async (t) => {
-  const document = Document.of(
+  const document = h.document(
     [<div aria-hidden="true">Hello world</div>],
     [
       h.sheet([
@@ -163,7 +161,7 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
 
 test(`evaluate() is inapplicable to a text node with a fixed absolute height set
       via the style attribute`, async (t) => {
-  const document = Document.of(
+  const document = h.document(
     [
       <div
         style={{
@@ -186,7 +184,7 @@ test(`evaluate() is inapplicable to a text node with a fixed absolute height set
 });
 
 test(`evaluate() is inapplicable to a text node with a fixed relative height`, async (t) => {
-  const document = Document.of(
+  const document = h.document(
     [<div>Hello world</div>],
     [
       h.sheet([
