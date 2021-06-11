@@ -21,6 +21,20 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.18.0](../../compare/v0.17.0...v0.18.0) (2021-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-graph](packages/alfa-graph), [@siteimprove/alfa-network](packages/alfa-network): Several breaking changes have been made to the `Graph` and `Network` types. Please see the associated pull request for more details. ([#765](../../pull/765))
+
+- [@siteimprove/alfa-highlight](packages/alfa-highlight): The `syntax()` function has been removed. ([#764](../../pull/764))
+
+- [@siteimprove/alfa-json-ld](packages/alfa-json-ld): Several unused APIs have been removed. Please see the associated pull request for more details. ([#766](../../pull/766))
+
+### Added
+
+- [@siteimprove/alfa-graph](packages/alfa-graph), [@siteimprove/alfa-network](packages/alfa-network): `Graph#isEmpty()`, `Network#isEmpty()`, `Graph#path()`, `Network#path()`, `Graph#reverse()`, `Network#reverse()`, `Graph#sort()`, and `Network#sort()` are now available. ([#765](../../pull/765))
+
 ## [0.17.0](../../compare/v0.16.2...v0.17.0) (2021-04-13)
 
 ### Breaking
