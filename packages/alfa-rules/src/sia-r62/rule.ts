@@ -245,7 +245,7 @@ function hasDistinguishableBackground(
  * Check if an element has a different font weight than its container.
  *
  * This is brittle and imperfect but removes a strong pain point until we find
- * a better solution…
+ * a better solution.
  */
 function hasDistinguishableFontWeight(
   container: Element,

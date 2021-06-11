@@ -35,9 +35,9 @@ export default Rule.Atomic.of<Page, Group<Element>>({
             )
           )
           .reduce((groups, landmark) => {
-            // since we already have filtered by having a landmark role, we can
+            // Since we already have filtered by having a landmark role, we can
             // safely get the role.
-            const role = Node.from(landmark, device).role.get()!;
+            const role = Node.from(landmark, device).role.get();
 
             groups = groups.set(
               role,
@@ -55,12 +55,12 @@ export default Rule.Atomic.of<Page, Group<Element>>({
       },
 
       expectations(target) {
-        // empty groups have been filtered out already, so we can safely get the
+        // Empty groups have been filtered out already, so we can safely get the
         // first element
         const role = Node.from(
           Iterable.first(target).get()!,
           device
-        ).role.get()!.name;
+        ).role.get().name;
 
         const byNames = [...target]
           .reduce((groups, landmark) => {
