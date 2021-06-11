@@ -12,7 +12,7 @@ import { JSHandle } from "puppeteer";
  * @public
  */
 export namespace Puppeteer {
-  export type Type = JSHandle;
+  export type Type = JSHandle<globalThis.Node>;
 
   export async function toNode(value: Type): Promise<Node> {
     return Node.from(await value.evaluate(dom.Native.fromNode));
@@ -22,7 +22,7 @@ export namespace Puppeteer {
     const nodeJSON = await value.evaluate(dom.Native.fromNode);
 
     const deviceJSON = await value
-      .evaluateHandle(() => window)
+      .evaluateHandle<JSHandle<globalThis.Window>>(() => window)
       .then((handle) => handle.evaluate(device.Native.fromWindow));
 
     return Page.of(
