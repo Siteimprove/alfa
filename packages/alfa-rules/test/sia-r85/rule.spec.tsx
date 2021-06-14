@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R85, { Outcomes } from "../../src/sia-r85/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a paragraph whose text is not italic", async (t) => {
   const target = <p>Hello world</p>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R85, { document }), [
     passed(R85, target, {
@@ -22,7 +21,7 @@ test("evaluate() passes a paragraph whose text is not italic", async (t) => {
 test("evaluate() fails a paragraph whose text is italic", async (t) => {
   const target = <p style={{ fontStyle: "italic" }}>Hello world</p>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R85, { document }), [
     failed(R85, target, {
@@ -34,7 +33,7 @@ test("evaluate() fails a paragraph whose text is italic", async (t) => {
 test("evaluate() fails a paragraph whose text is italic by inheritance", async (t) => {
   const target = <p>Hello world</p>;
 
-  const document = Document.of([
+  const document = h.document([
     <div style={{ fontStyle: "italic" }}>{target}</div>,
   ]);
 
@@ -52,7 +51,7 @@ test("evaluate() fails an ARIA paragraph whose text is italic", async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R85, { document }), [
     failed(R85, target, {
@@ -68,7 +67,7 @@ test("evaluate() ignores a <p> element whose role was changed", async (t) => {
     </p>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R85, { document }), [inapplicable(R85)]);
 });

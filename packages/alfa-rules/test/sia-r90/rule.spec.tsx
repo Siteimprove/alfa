@@ -1,4 +1,4 @@
-import { Document } from "@siteimprove/alfa-dom";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import R90, { Outcomes } from "../../src/sia-r90/rule";
@@ -9,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a button with only text node children", async (t) => {
   const target = <button>Foo</button>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R90, { document }), [
     passed(R90, target, { 1: Outcomes.HasNoTabbableDescendants }),
@@ -23,7 +23,7 @@ test("evaluate() passes a button with a span child", async (t) => {
     </button>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R90, { document }), [
     passed(R90, target, { 1: Outcomes.HasNoTabbableDescendants }),
@@ -37,7 +37,7 @@ test("evaluate() fails a button with a link child", async (t) => {
     </button>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R90, { document }), [
     failed(R90, target, { 1: Outcomes.HasTabbableDescendants }),
@@ -51,7 +51,7 @@ test("evaluate() fails an ARIA button with a link child", async (t) => {
     </span>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R90, { document }), [
     failed(R90, target, { 1: Outcomes.HasTabbableDescendants }),
@@ -59,7 +59,7 @@ test("evaluate() fails an ARIA button with a link child", async (t) => {
 });
 
 test("evaluate() is inapplicable if there is no role with presentational children", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <div>
       <span>Foo</span>
     </div>,

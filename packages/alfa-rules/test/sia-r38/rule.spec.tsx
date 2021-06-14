@@ -1,6 +1,6 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 
 import R38, { Outcomes } from "../../src/sia-r38/rule";
@@ -17,7 +17,7 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
     </video>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(
     await evaluate(
@@ -50,7 +50,7 @@ test("evaluate() can't tell when there are not enough answers to expectation", a
     </video>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(
     await evaluate(

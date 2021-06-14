@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R53, { Outcomes } from "../../src/sia-r53/rule";
 
@@ -11,7 +10,7 @@ test("evaluate() passes when the document headings are structured", async (t) =>
   const target1 = <h2>Chapter one</h2>;
   const target2 = <h3>Section one</h3>;
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h1>Part one</h1>
       {target1}
@@ -34,7 +33,7 @@ test("evaluate() fails when the document headings are not properly structured", 
   const target2 = <h2>Part two</h2>;
   const target3 = <h6>Chapter one</h6>;
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h1>Part one</h1>
       {target1}
@@ -57,7 +56,7 @@ test("evaluate() fails when the document headings are not properly structured", 
 });
 
 test("evaluate() is inapplicable when the document has only one heading", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h1>Lone heading</h1>
     </html>,
@@ -70,7 +69,7 @@ test("evaluate() ignore headings that are not exposed", async (t) => {
   const target1 = <h2>Chapter one</h2>;
   const target2 = <h2>Chapter two</h2>;
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h1>Part one</h1>
       <h3 hidden>I'm not here</h3>

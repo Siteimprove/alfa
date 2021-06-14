@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R20, { Outcomes } from "../../src/sia-r20/rule";
 
@@ -14,7 +13,7 @@ test(`evaluate() passes an article with a valid aria-atomic attribute`, async (t
     </article>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
     passed(R20, target.attribute("aria-atomic").get(), {
@@ -26,7 +25,7 @@ test(`evaluate() passes an article with a valid aria-atomic attribute`, async (t
 test(`evaluate() passes a div element with a valid aria-modal attribute`, async (t) => {
   const target = <div aria-modal="true">Contains modal content...</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
     passed(R20, target.attribute("aria-modal").get(), {
@@ -45,7 +44,7 @@ test(`evaluate() passes a div element with different valid aria-* attributes`, a
     ></div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
     passed(R20, target.attribute("aria-multiline").get(), {
@@ -63,7 +62,7 @@ test(`evaluate() passes a div element with different valid aria-* attributes`, a
 test(`evaluate() fails a div element which has a non official aria attribute`, async (t) => {
   const target = <div aria-not-checked="true">List Item</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
     failed(R20, target.attribute("aria-not-checked").get(), {
@@ -75,7 +74,7 @@ test(`evaluate() fails a div element which has a non official aria attribute`, a
 test(`evaluate() is not applicable to a canvas element with no aria-* attribute`, async (t) => {
   const target = <canvas> </canvas>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [inapplicable(R20)]);
 });

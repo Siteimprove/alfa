@@ -1,9 +1,7 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Property } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R62, { ComputedStyles, Outcomes } from "../../src/sia-r62/rule";
 
@@ -52,7 +50,7 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([<p>Hello {target}</p>]);
+  const document = h.document([<p>Hello {target}</p>]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
@@ -65,7 +63,7 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content in a <span> child element`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([
+  const document = h.document([
     <p>
       <span>Hello</span> {target}
     </p>,
@@ -82,7 +80,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
       without replacing it with another distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -105,7 +103,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
       on hover without replacing it with another distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -128,7 +126,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
       distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -152,7 +150,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
       distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -175,7 +173,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
       hover`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -202,7 +200,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
       focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -229,7 +227,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
       hover and focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -256,7 +254,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       decoration and instead applies an outline`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -287,7 +285,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       decoration and instead applies a bottom border`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -332,7 +330,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       has a transparent bottom border`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -377,7 +375,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       has a 0px bottom border`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -422,7 +420,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       decoration and instead applies a background color`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -465,7 +463,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
       part of a paragraph with a background color`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -501,7 +499,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       has a background color equal to that of the paragraph`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
@@ -551,7 +549,7 @@ test(`evaluate() is inapplicable to an <a> element with no visible text content`
     </a>
   );
 
-  const document = Document.of([<p>Hello {target}</p>]);
+  const document = h.document([<p>Hello {target}</p>]);
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
@@ -560,7 +558,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
       no non-link text content`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([<p>{target}</p>]);
+  const document = h.document([<p>{target}</p>]);
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
@@ -569,7 +567,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
       no visible non-link text content`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([
+  const document = h.document([
     <p>
       <span hidden>Hello</span> {target}
     </p>,
@@ -582,7 +580,7 @@ test(`evaluate() passes an <a> element with a <div role="paragraph"> parent elem
       with non-link text content in a <span> child element`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([
+  const document = h.document([
     <div role="paragraph">
       <span>Hello</span> {target}
     </div>,
@@ -599,7 +597,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
       whose role has been changed`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([
+  const document = h.document([
     <p role="generic">
       <span>Hello</span> {target}
     </p>,
@@ -611,7 +609,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [
       <p>
         <span>Hello</span> {target}
