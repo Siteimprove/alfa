@@ -31,7 +31,7 @@ test("evaluate() fails an <img> element because it's missing an aria-atomic attr
   ]);
 });
 
-test("evaluate() fails an <img> element because it's has an incorrect aria-atomic attribute", async (t) => {
+test("evaluate() fails an <img> element because it has an incorrect aria-atomic attribute", async (t) => {
   const target = <img aria-live="assertive" aria-atomic="wrong" />;
 
   const document = Document.of([target]);
@@ -45,15 +45,7 @@ test("evaluate() fails an <img> element because it's has an incorrect aria-atomi
 
 //how to fail the condition on the accessibility tree?
 
-test("evaluate() is inapplicable an <img> element without an accessible name", async (t) => {
-  const target = <img />;
-
-  const document = Document.of([target]);
-
-  t.deepEqual(await evaluate(R54, { document }), [inapplicable(R54)]);
-});
-
-test("evaluate() inapplicable an <img> element because it's has an incorrect aria-live attribute", async (t) => {
+test("evaluate() inapplicable to an <img> element because it's has an incorrect aria-live attribute", async (t) => {
   const target = <img aria-live="wrong" aria-atomic="true" />;
 
   const document = Document.of([target]);
@@ -63,6 +55,14 @@ test("evaluate() inapplicable an <img> element because it's has an incorrect ari
 
 test("evaluate() is inapplicable to an <img> element with an empty aria-live attribute ", async (t) => {
   const target = <img aria-live="" />;
+
+  const document = Document.of([target]);
+
+  t.deepEqual(await evaluate(R54, { document }), [inapplicable(R54)]);
+});
+
+test("evaluate() is inapplicable to an <img> element without an accessible name", async (t) => {
+  const target = <img />;
 
   const document = Document.of([target]);
 
