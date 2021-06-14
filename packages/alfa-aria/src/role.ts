@@ -241,6 +241,7 @@ export class Role<N extends Role.Name = Role.Name>
 
     return false;
   }
+
   /**
    * Get the implicit value of the specified attribute, if any.
    */
