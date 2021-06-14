@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R10, { Outcomes } from "../../src/sia-r10/rule";
 
@@ -11,7 +10,7 @@ test("evaluate() passes a valid simple autocomplete attribute on an <input> elem
   const element = <input autocomplete="username" />;
   const target = element.attribute("autocomplete").get()!;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
     passed(R10, target, {
@@ -26,7 +25,7 @@ test("evaluate() passes a valid complex autocomplete attribute on an <input> ele
   );
   const target = element.attribute("autocomplete").get()!;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
     passed(R10, target, {
@@ -39,7 +38,7 @@ test("evaluate() fails an autocomplete attribute with a non-existing term", asyn
   const element = <input autocomplete="invalid" />;
   const target = element.attribute("autocomplete").get()!;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
     failed(R10, target, {
@@ -52,7 +51,7 @@ test("evaluate() fails an autocomplete attribute with terms in wrong order", asy
   const element = <input autocomplete="work shipping email" />;
   const target = element.attribute("autocomplete").get()!;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
     failed(R10, target, {
@@ -65,7 +64,7 @@ test("evaluate() fails an autocomplete attribute with an inappropriate term", as
   const element = <input type="number" autocomplete="email" />;
   const target = element.attribute("autocomplete").get()!;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
     failed(R10, target, {
@@ -78,7 +77,7 @@ test("evaluate() fails an autocomplete attribute with a comma-separated list of 
   const element = <input autocomplete="work,email" />;
   const target = element.attribute("autocomplete").get()!;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
     failed(R10, target, {
@@ -90,7 +89,7 @@ test("evaluate() fails an autocomplete attribute with a comma-separated list of 
 test("evaluates() is inapplicable when there is no autocomplete attribute", async (t) => {
   const element = <input />;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
@@ -98,7 +97,7 @@ test("evaluates() is inapplicable when there is no autocomplete attribute", asyn
 test("evaluates() is inapplicable on empty autocomplete attribute", async (t) => {
   const element = <input autocomplete=" " />;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
@@ -106,7 +105,7 @@ test("evaluates() is inapplicable on empty autocomplete attribute", async (t) =>
 test("evaluates() is inapplicable on input type who don't support autocomplete", async (t) => {
   const element = <input type="button" autocomplete="username" />;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
@@ -114,7 +113,7 @@ test("evaluates() is inapplicable on input type who don't support autocomplete",
 test("evaluates() is inapplicable on invisible elements", async (t) => {
   const element = <input style={{ display: "none" }} autocomplete="email" />;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
@@ -122,7 +121,7 @@ test("evaluates() is inapplicable on invisible elements", async (t) => {
 test("evaluates() is inapplicable on aria-disabled elements", async (t) => {
   const element = <input aria-disabled="true" autocomplete="email" />;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });
@@ -130,7 +129,7 @@ test("evaluates() is inapplicable on aria-disabled elements", async (t) => {
 test("evaluates() is inapplicable on disabled elements", async (t) => {
   const element = <input disabled autocomplete="email" />;
 
-  const document = Document.of([element]);
+  const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
 });

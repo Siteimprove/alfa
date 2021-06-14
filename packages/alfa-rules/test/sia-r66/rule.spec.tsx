@@ -1,7 +1,7 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage } from "@siteimprove/alfa-css";
-import { Document, Text } from "@siteimprove/alfa-dom";
 
 import R66 from "../../src/sia-r66/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
@@ -21,9 +21,9 @@ const rgb = (r: number, g: number, b: number, a: number = 1) =>
   );
 
 test("evaluate() passes a text node that has sufficient contrast", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ backgroundColor: "black", color: "white" }}>{target}</html>,
   ]);
 
@@ -37,10 +37,10 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
 });
 
 test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
-  const target1 = Text.of("Sufficient contrast");
-  const target2 = Text.of("Insufficient contrast");
+  const target1 = h.text("Sufficient contrast");
+  const target2 = h.text("Insufficient contrast");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ backgroundColor: "black", color: "white" }}>
       <div style={{ backgroundColor: "rgb(100%, 100%, 100%, 15%)" }}>
         {target1}
@@ -66,10 +66,10 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
 });
 
 test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
-  const target1 = Text.of("Sufficient contrast");
-  const target2 = Text.of("Insufficient contrast");
+  const target1 = h.text("Sufficient contrast");
+  const target2 = h.text("Insufficient contrast");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ backgroundColor: "black" }}>
       <div style={{ color: "rgb(100%, 100%, 100%, 85%)" }}>{target1}</div>
       <div style={{ color: "rgb(100%, 100%, 100%, 50%)" }}>{target2}</div>
@@ -91,9 +91,9 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
 });
 
 test("evaluate() passes an 18pt text node with sufficient contrast", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html
       style={{ backgroundColor: "black", color: "#808080", fontSize: "18pt" }}
     >
@@ -115,9 +115,9 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
 });
 
 test("evaluate() passes an 14pt, bold text node with sufficient contrast", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html
       style={{
         backgroundColor: "black",
@@ -144,9 +144,9 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
 });
 
 test("evaluate() passes a text node using the user agent default styles", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([<html>{target}</html>]);
+  const document = h.document([<html>{target}</html>]);
 
   t.deepEqual(await evaluate(R66, { document }), [
     passed(R66, target, {
@@ -158,9 +158,9 @@ test("evaluate() passes a text node using the user agent default styles", async 
 });
 
 test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ backgroundColor: "currentcolor", color: "white" }}>
       {target}
     </html>,
@@ -176,9 +176,9 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
 });
 
 test("evaluate() correctly resolves the `currentcolor` keyword to the user agent default", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ backgroundColor: "currentcolor" }}>{target}</html>,
   ]);
 
@@ -192,9 +192,9 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
 });
 
 test("evaluate() correctly handles circular `currentcolor` references", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ color: "currentcolor" }}>{target}</html>,
   ]);
 
@@ -202,7 +202,7 @@ test("evaluate() correctly handles circular `currentcolor` references", async (t
 });
 
 test("evaluate() is inapplicable to text nodes in widgets", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <button>Hello world</button>
     </html>,
@@ -212,7 +212,7 @@ test("evaluate() is inapplicable to text nodes in widgets", async (t) => {
 });
 
 test("evaluate() is inapplicable to text nodes in disabled groups", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <fieldset disabled>
         <button>Hello world</button>
@@ -224,9 +224,9 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
 });
 
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ color: "#000", backgroundImage: "url('foo.png')" }}>
       {target}
     </html>,
@@ -251,9 +251,9 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
 });
 
 test("evaluate() fails when a background color with insufficient contrast is input", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html style={{ color: "#000", backgroundImage: "url('foo.png')" }}>
       {target}
     </html>,
@@ -278,9 +278,9 @@ test("evaluate() fails when a background color with insufficient contrast is inp
 });
 
 test("evaluate() passes when a linear gradient has sufficient contrast in the best case", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html
       style={{
         color: "#000",
@@ -303,9 +303,9 @@ test("evaluate() passes when a linear gradient has sufficient contrast in the be
 });
 
 test("evaluate() fails when a linear gradient has insufficient contrast in the best case", async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <html
       style={{
         color: "#000",
@@ -329,9 +329,9 @@ test("evaluate() fails when a linear gradient has insufficient contrast in the b
 
 test(`evaluate() correctly merges semi-transparent background layers against a
       white backdrop`, async (t) => {
-  const target = Text.of("Hello world");
+  const target = h.text("Hello world");
 
-  const document = Document.of([
+  const document = h.document([
     <div
       style={{
         color: "#fff",

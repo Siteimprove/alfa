@@ -742,7 +742,7 @@ export namespace Name {
         )
       );
 
-    const name = flatten(names.map((name) => name.value).join(" "));
+    const name = flatten(names.map((name) => name.value).join(" ")).trim();
 
     if (name === "") {
       return None;

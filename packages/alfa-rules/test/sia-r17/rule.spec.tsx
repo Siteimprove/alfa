@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R17, { Outcomes } from "../../src/sia-r17/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test(`evaluate() passes an element which is not focusable by default`, async (t) => {
   const target = <p aria-hidden="true">Some text</p>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     passed(R17, target, {
@@ -28,7 +27,7 @@ test(`evaluate() passes an element which content is hidden`, async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     passed(R17, target, {
@@ -45,7 +44,7 @@ test(`evaluate() passes an element whose content is taken out of sequential
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     passed(R17, target, {
@@ -57,7 +56,7 @@ test(`evaluate() passes an element whose content is taken out of sequential
 test(`evaluate() passes an element which is disabled`, async (t) => {
   const target = <input disabled aria-hidden="true" />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     passed(R17, target, {
@@ -73,7 +72,7 @@ test(`evaluate() fails an element with focusable content`, async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
@@ -91,7 +90,7 @@ test(`evaluate() fails an element with an \`aria-hidden\` ancestor`, async (t) =
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
@@ -107,7 +106,7 @@ test(`evaluate() fails an element with focusable content through tabindex`, asyn
     </p>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
@@ -124,7 +123,7 @@ test(`evaluate() fails a focusable summary element`, async (t) => {
     </details>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
@@ -140,7 +139,7 @@ test(`evaluate() is inapplicable when aria-hidden has incorrect value`, async (t
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [inapplicable(R17)]);
 });

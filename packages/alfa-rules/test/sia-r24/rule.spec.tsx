@@ -1,6 +1,6 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
 
 import R24, { Outcomes } from "../../src/sia-r24/rule";
@@ -20,7 +20,7 @@ test(`evaluate() passes when non-streaming video elements have all audio and
 
   const transcript = <span id="transcript">Transcript</span>;
 
-  const document = Document.of([target, transcript]);
+  const document = h.document([target, transcript]);
 
   t.deepEqual(
     await evaluate(
@@ -49,7 +49,7 @@ test(`evaluate() fails when non-streaming video elements have no audio and
     </video>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(
     await evaluate(
@@ -78,7 +78,7 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
     </video>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(
     await evaluate(
@@ -95,13 +95,13 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
 });
 
 test("evaluate() is inapplicable to a document without <video> elements", async (t) => {
-  const document = Document.of([<img src="foo.mp4" />]);
+  const document = h.document([<img src="foo.mp4" />]);
 
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);
 });
 
 test("evaluate() is inapplicable when applicability questions are unanswered", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <video controls>
       <source src="foo.mp4" type="video/mp4" />
       <source src="foo.webm" type="video/webm" />

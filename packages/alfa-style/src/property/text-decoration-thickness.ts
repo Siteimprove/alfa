@@ -37,7 +37,7 @@ export const parse = either<Slice<Token>, Specified, string>(
 );
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness}
  * @internal
  */
 export default Property.register(

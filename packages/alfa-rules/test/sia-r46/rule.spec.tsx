@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R46, { Outcomes } from "../../src/sia-r46/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes on explicit header", async (t) => {
   const target = <th>Time</th>;
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <tr>{target}</tr>
       <tr>
@@ -30,7 +29,7 @@ test("evaluate() passes on implicit headers", async (t) => {
   const target1 = <th id="col1">Column 1</th>;
   const target2 = <th id="col2">Column 2</th>;
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <tr>
         {target1}
@@ -59,7 +58,7 @@ test("evaluate() fails on headers with no data cell", async (t) => {
   const target1 = <th>Column 1</th>;
   const target2 = <th>Column 2</th>;
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <tr>
         {target1}
@@ -83,7 +82,7 @@ test("evaluate() fails on headers with no data cell", async (t) => {
 });
 
 test("evaluate() is inapplicable if there is no header cell", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <table>
       <tr>
         <th role="cell">Column A</th>
@@ -98,7 +97,7 @@ test("evaluate() is inapplicable if there is no header cell", async (t) => {
 });
 
 test("evaluate() is inapplicable if the table element is ignored", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <table role="presentation">
       <tr>
         <th>Column A</th>
@@ -117,7 +116,7 @@ test("evaluate() passes headers assigned only to other headers", async (t) => {
   const target2 = <th>Column header</th>;
   const target3 = <th>Row header</th>;
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <tr>
         {target1}

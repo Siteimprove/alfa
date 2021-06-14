@@ -361,6 +361,27 @@ test(`.from() determines the name of an <a> element with a <img> child element
   });
 });
 
+test(`.from() rejects whitespace only content and defaults to next step`, (t) => {
+  const a = (
+    <a href="#" title="Hello world">
+      <span> </span>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "label",
+          attribute: "/a[1]/@title",
+        },
+      ],
+    },
+  });
+});
+
 test(`.from() determines the name of an <a> element with a <figure> child element
       with a <img> child element with an alt attribute`, (t) => {
   const a = (
