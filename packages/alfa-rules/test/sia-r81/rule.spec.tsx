@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R81, { Outcomes } from "../../src/sia-r81/rule";
 
@@ -16,7 +15,7 @@ test(`evaluate() passes two links that have the same name and reference the same
       resource in the same context`, async (t) => {
   const target = [<a href="foo.html">Foo</a>, <a href="foo.html">Foo</a>];
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <p>
         {target[0]}
@@ -36,7 +35,7 @@ test(`evaluate() fails two links that have the same name, but reference
       different resources in the same context`, async (t) => {
   const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <p>
         {target[0]}
@@ -65,7 +64,7 @@ test(`evaluate() passes two links that have the same name and reference
       equivalent resources in the same context`, async (t) => {
   const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <p>
         {target[0]}
@@ -92,7 +91,7 @@ test(`evaluate() passes two links that have the same name and reference
 
 test(`evaluate() is inapplicable to two links that have the same name and
       reference the same resource, but have different contexts`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <p>
         <a href="foo.html">Foo</a>
@@ -116,7 +115,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     <a href="../to/foo.html">Foo</a>,
   ];
 
-  const document = Document.of([
+  const document = h.document([
     <p>
       {target[0]}
       {target[1]}

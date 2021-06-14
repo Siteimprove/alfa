@@ -148,6 +148,18 @@ As new code is pulled from the repository, changes to dependencies and code may 
 $ yarn build
 ```
 
+If you want to run tests and make sure everything is working, use:
+
+```console
+$ yarn test
+```
+
+When working on a specific package, you can run only these tests:
+
+```console
+$ yarn test packages/alfa-<package-name>
+```
+
 If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](docs/contributing.md). If you have any questions, you are also welcome to [open an issue][].
 
 ## Architecture

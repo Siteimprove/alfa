@@ -1,7 +1,5 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R65, { Outcomes } from "../../src/sia-r65/rule";
 
@@ -12,7 +10,7 @@ import { oracle } from "../common/oracle";
 test(`evaluate() passes an <a> element that uses the default focus outline`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of([target, <button />]);
+  const document = h.document([target, <button />]);
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
@@ -27,7 +25,7 @@ test(`evaluate() passes an <a> element that uses the default focus outline`, asy
 test(`evaluate() passes an <a> element that uses a non-default focus outline`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -52,7 +50,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
       is determined to have no other focus indicator`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -86,7 +84,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and is determined to have some other focus indicator`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -120,7 +118,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and applies an underline on focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -150,7 +148,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and whose parent applies an outline when focus is within the parent`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [<div>{target}</div>, <button />],
     [
       h.sheet([
@@ -183,7 +181,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     </a>
   );
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -212,7 +210,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and applies an outline only when focus should be visible`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -242,7 +240,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline
       indicator`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -276,7 +274,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and applies a different color on focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -308,7 +306,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and applies a different background color on focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -340,7 +338,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       and applies a box shadow on focus`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = Document.of(
+  const document = h.document(
     [target, <button />],
     [
       h.sheet([
@@ -351,6 +349,61 @@ test(`evaluate() passes an <a> element that removes the default focus outline
         h.rule.style("a:focus", {
           outline: "none",
           "box-shadow": "10px 5px 5px red",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [
+    passed(R65, target, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+    passed(R65, <button />, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element that removes the default focus outline
+      and applies a border on focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a:focus", {
+          outline: "none",
+          border: "solid 1px",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [
+    passed(R65, target, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+    passed(R65, <button />, {
+      1: Outcomes.HasFocusIndicator,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element that removes the default focus outline
+      and changes border color on focus`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [target, <button />],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          border: "solid 1px black",
+        }),
+        h.rule.style("a:focus", {
+          outline: "none",
+          border: "solid 1px red",
         }),
       ]),
     ]

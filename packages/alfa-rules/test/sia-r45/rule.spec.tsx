@@ -1,7 +1,5 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R45, { Outcomes } from "../../src/sia-r45/rule";
 
@@ -12,7 +10,7 @@ test(`evaluate() passes when tokens in headers list refer to cells in the same
       table`, async (t) => {
   const target = h.attribute("headers", "header1 header2");
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <thead>
         <tr>
@@ -38,7 +36,7 @@ test(`evaluate() fails when some tokens in headers list do not refer to cells in
       the same table`, async (t) => {
   const target = h.attribute("headers", "header1 header2");
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <thead>
         <tr>
@@ -64,7 +62,7 @@ test(`evaluate() fails when some token in the headers list refer to the cell
       itself`, async (t) => {
   const target = h.attribute("headers", "header cell");
 
-  const document = Document.of([
+  const document = h.document([
     <table>
       <thead>
         <tr>
@@ -93,7 +91,7 @@ test(`evaluate() fails when some token in the headers list refer to the cell
 });
 
 test("evaluate() is inapplicable to a table without headers attributes", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <table>
       <thead>
         <tr>
@@ -113,7 +111,7 @@ test("evaluate() is inapplicable to a table without headers attributes", async (
 });
 
 test("evaluate() is inapplicable to a table which is not included in the accessiblity tree", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <table aria-hidden="true">
       <td headers="foo">Bar</td>
     </table>,
@@ -123,7 +121,7 @@ test("evaluate() is inapplicable to a table which is not included in the accessi
 });
 
 test("evaluate() is inapplicable to a table with a presentational role", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <table role="presentation">
       <td headers="foo">Bar</td>
     </table>,

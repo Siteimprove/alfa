@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Document>({
     const firstHeading = document
       .descendants({ flattened: true })
       .filter(and(isElement, not(isIgnored(device))))
-      .find(hasRole("heading"));
+      .find(hasRole(device, "heading"));
 
     return {
       applicability() {

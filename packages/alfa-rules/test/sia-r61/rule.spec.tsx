@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R61, { Outcomes } from "../../src/sia-r61/rule";
 
@@ -8,7 +7,7 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes when the document starts with an explicit level 1 heading", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <div role="heading" aria-level="1">
         Prefer using heading elements!
@@ -24,7 +23,7 @@ test("evaluate() passes when the document starts with an explicit level 1 headin
 });
 
 test("evaluate() passes when the document starts with an implicit level 1 heading", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h1>Semantic HTML is good</h1>
     </html>,
@@ -38,7 +37,7 @@ test("evaluate() passes when the document starts with an implicit level 1 headin
 });
 
 test("evaluate() fails when the document starts with a level 4 heading", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h4>Semantic HTML is good</h4>
     </html>,
@@ -52,7 +51,7 @@ test("evaluate() fails when the document starts with a level 4 heading", async (
 });
 
 test("evaluate() is inapplicable when there is no heading", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <p>Hello World!</p>
     </html>,
@@ -62,7 +61,7 @@ test("evaluate() is inapplicable when there is no heading", async (t) => {
 });
 
 test("evaluate() skips headings that are not exposed to assistive technologies", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <h2 aria-hidden="true">Now you can't see me</h2>
       <h1>Now you can.</h1>

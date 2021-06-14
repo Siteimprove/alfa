@@ -12,13 +12,16 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import {
+  hasNonEmptyAccessibleName,
+  hasRole,
+  isIgnored,
+  referenceSameResource,
+} from "../common/predicate";
 
-import { Question } from "../common/question";
 import { Group } from "../common/group";
-import { referenceSameResource } from "../common/predicate/reference-same-resource";
+import { normalize } from "../common/normalize";
+import { Question } from "../common/question";
 
 const { isElement, hasNamespace } = Element;
 const { flatten } = Iterable;
@@ -37,7 +40,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             .filter(
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole((role) => role.is("link")),
+                hasRole(device, (role) => role.is("link")),
                 not(isIgnored(device)),
                 hasNonEmptyAccessibleName(device)
               )
@@ -117,8 +120,4 @@ export namespace Outcomes {
       `The links do not resolve to the same or equivalent resources`
     )
   );
-}
-
-function normalize(input: string): string {
-  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }

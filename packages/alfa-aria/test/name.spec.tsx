@@ -361,6 +361,27 @@ test(`.from() determines the name of an <a> element with a <img> child element
   });
 });
 
+test(`.from() rejects whitespace only content and defaults to next step`, (t) => {
+  const a = (
+    <a href="#" title="Hello world">
+      <span> </span>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "label",
+          attribute: "/a[1]/@title",
+        },
+      ],
+    },
+  });
+});
+
 test(`.from() determines the name of an <a> element with a <figure> child element
       with a <img> child element with an alt attribute`, (t) => {
   const a = (
@@ -438,6 +459,86 @@ test(`.from() determines the name of an <a> element with text in its subtree,
   const a = (
     <a href="#" title="Content">
       <span>Hello world</span>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/span[1]",
+                name: {
+                  value: "Hello world",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/span[1]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
+test(`.from() determines the name of an <a> element with text in its subtree,
+      when the source is nested and doesn't itself allow naming`, (t) => {
+  const a = (
+    <a href="#" title="Content">
+      <p>Hello world</p>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/p[1]",
+                name: {
+                  value: "Hello world",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/p[1]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
+test(`.from() determines the name of an <a> element with text in its subtree,
+      when the source is nested and presentational`, (t) => {
+  const a = (
+    <a href="#" title="Content">
+      <span role="none">Hello world</span>
     </a>
   );
 

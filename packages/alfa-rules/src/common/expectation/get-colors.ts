@@ -134,6 +134,17 @@ function getLayers(
       return None;
     }
 
+    // If there is a background-size, we currently have no way of guessing
+    // whether it is large enough to go under the text or not.
+    // So we simply bail out.
+    if (
+      !style
+        .computed("background-size")
+        .value.equals(style.initial("background-size").value)
+    ) {
+      return None;
+    }
+
     // For each gradient, we extract all color stops into a background layer of
     // their own. As gradients need a start and an end point, there will always
     // be at least two color stops.

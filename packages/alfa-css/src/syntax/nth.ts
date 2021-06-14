@@ -92,6 +92,12 @@ export class Nth implements Iterable<Token>, Equatable, Serializable {
       offset: this._offset,
     };
   }
+
+  public toString(): string {
+    return this._step === 0
+      ? `${this._offset}`
+      : `${this._step}n+${this._offset};`;
+  }
 }
 
 /**

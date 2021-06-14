@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
               not(isIgnored(device)),
-              hasRole((role) => role.hasRequiredParent())
+              hasRole(device, (role) => role.hasRequiredParent())
             )
           );
       },
