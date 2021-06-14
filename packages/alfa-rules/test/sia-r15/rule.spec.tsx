@@ -1,7 +1,6 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document } from "@siteimprove/alfa-dom";
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
 
@@ -19,7 +18,7 @@ test("evaluate() passes when two iframes embed the exact same resource", async (
     <iframe aria-label="Foo" src="https://somewhere.com/foo.html" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
@@ -34,7 +33,7 @@ test("evaluate() passes when two iframes embed the exact same resource via srcdo
     <iframe aria-label="Foo" srcdoc="<span>foo</span>" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
@@ -49,7 +48,7 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
     <iframe aria-label="Foo" src="https://somewhere.com/foo2.html" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(
     await evaluate(
@@ -71,7 +70,7 @@ test("evaluate() passes when toplevel and nested iframe embed the same resource"
     <iframe aria-label="Foo" src="https://somewhere.com/foo.html" />,
   ];
 
-  const document = Document.of([
+  const document = h.document([
     target[0],
     <iframe title="Container">{h.document([target[1]])}</iframe>,
   ]);
@@ -89,7 +88,7 @@ test("evaluate() fails when two iframes embed different resources", async (t) =>
     <iframe aria-label="Foobar" src="https://somewhere.com/bar.html" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(
     await evaluate(
@@ -106,7 +105,7 @@ test("evaluate() fails when two iframes embed different resources", async (t) =>
 });
 
 test("evaluate() is inapplicable when there is no two iframe with the same name", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <iframe title="Foo" src="https://somewhere.com/foo.html" />,
     <iframe aria-label="Bar" src="https://somewhere.com/bar.html" />,
   ]);
@@ -120,7 +119,7 @@ test("evaluate() can't tell if URLs are identical but invalid", async (t) => {
     <iframe aria-label="Foo" src="https:////////@@@" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     cantTell(R15, Group.of(target)),
@@ -130,7 +129,7 @@ test("evaluate() can't tell if URLs are identical but invalid", async (t) => {
 test("evaluate() can't tell if there is no source", async (t) => {
   const target = [<iframe title="Foo" />, <iframe aria-label="Foo" />];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     cantTell(R15, Group.of(target)),
@@ -143,7 +142,7 @@ test("evaluate() passes when two iframes embed the same resource up to trailing 
     <iframe aria-label="Foo" src="https://somewhere.com" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
@@ -162,7 +161,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     <iframe title="Foo" src="../to/foo.html" />,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(
     await evaluate(R15, {

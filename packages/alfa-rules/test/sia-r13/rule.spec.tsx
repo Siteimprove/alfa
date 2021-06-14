@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R13, { Outcomes } from "../../src/sia-r13/rule";
 
@@ -11,7 +10,7 @@ test(`evaluates() passes an <iframe> element with an accessible name given by
       the title attribute`, async (t) => {
   const target = <iframe title="iframe" srcdoc="Hello World!" />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R13, { document }), [
     passed(R13, target, {
@@ -24,7 +23,7 @@ test(`evaluates() passes an <iframe> element with an accessible name given by
       the aria-label attribute`, async (t) => {
   const target = <iframe aria-label="iframe" srcdoc="Hello World!" />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R13, { document }), [
     passed(R13, target, {
@@ -37,7 +36,7 @@ test(`evaluates() passes an <iframe> element with an accessible name given by
       the aria-labelledby attribute`, async (t) => {
   const target = <iframe aria-labelledby="label" srcdoc="Hello World!" />;
 
-  const document = Document.of([<span id="label">iframe</span>, target]);
+  const document = h.document([<span id="label">iframe</span>, target]);
 
   t.deepEqual(await evaluate(R13, { document }), [
     passed(R13, target, {
@@ -49,7 +48,7 @@ test(`evaluates() passes an <iframe> element with an accessible name given by
 test("evaluates() fails an <iframe> element without an accessible name", async (t) => {
   const target = <iframe srcdoc="Hello World!" />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R13, { document }), [
     failed(R13, target, {
@@ -59,7 +58,7 @@ test("evaluates() fails an <iframe> element without an accessible name", async (
 });
 
 test("evaluate() is inapplicable to a document without <iframe> elements", async (t) => {
-  const document = Document.empty();
+  const document = h.document([]);
 
   t.deepEqual(await evaluate(R13, { document }), [inapplicable(R13)]);
 });

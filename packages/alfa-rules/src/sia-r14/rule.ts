@@ -8,12 +8,16 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasDescendant } from "../common/predicate/has-descendant";
-import { hasRole } from "../common/predicate/has-role";
-import { isFocusable } from "../common/predicate/is-focusable";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import { normalize } from "../common/normalize";
+
+import {
+  hasAccessibleName,
+  hasAttribute,
+  hasDescendant,
+  hasRole,
+  isFocusable,
+  isPerceivable,
+} from "../common/predicate";
 
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
@@ -71,10 +75,6 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
-
-function normalize(input: string): string {
-  return input.trim().toLowerCase().replace(/\s+/g, " ");
-}
 
 function getPerceivableTextContent(element: Element, device: Device): string {
   return normalize(

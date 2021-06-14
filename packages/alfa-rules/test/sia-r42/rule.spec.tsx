@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R42, { Outcomes } from "../../src/sia-r42/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test(`evaluates() passes an implicit listitem inside a list`, async (t) => {
   const target = <li>Foo</li>;
 
-  const document = Document.of([<ul>{target}</ul>]);
+  const document = h.document([<ul>{target}</ul>]);
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, target, {
@@ -22,7 +21,7 @@ test(`evaluates() passes an implicit listitem inside a list`, async (t) => {
 test(`evaluates() passes an explicit listitem inside a list`, async (t) => {
   const target = <div role="listitem">Foo</div>;
 
-  const document = Document.of([<div role="list">{target}</div>]);
+  const document = h.document([<div role="list">{target}</div>]);
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, target, {
@@ -34,7 +33,7 @@ test(`evaluates() passes an explicit listitem inside a list`, async (t) => {
 test(`evaluates() fails an orphaned listitem`, async (t) => {
   const target = <div role="listitem">Foo</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R42, { document }), [
     failed(R42, target, {
@@ -46,7 +45,7 @@ test(`evaluates() fails an orphaned listitem`, async (t) => {
 test(`evaluates() skips through container nodes`, async (t) => {
   const target = <div role="listitem">Foo</div>;
 
-  const document = Document.of([
+  const document = h.document([
     <div role="list">
       <div>{target}</div>
     </div>,
@@ -62,7 +61,7 @@ test(`evaluates() skips through container nodes`, async (t) => {
 test(`evaluates() fails listitem in intermediate non-container nodes`, async (t) => {
   const target = <div role="listitem">Foo</div>;
 
-  const document = Document.of([
+  const document = h.document([
     <div role="list">
       <div role="menu">{target}</div>
     </div>,
@@ -82,7 +81,7 @@ test(`evaluates() follows \`aria-owns\``, async (t) => {
     </div>
   );
 
-  const document = Document.of([
+  const document = h.document([
     <div role="list" aria-owns="target"></div>,
     target,
   ]);
@@ -99,7 +98,7 @@ test(`evaluates() passes a \`row\` inside a \`rowgroup\` inside a \`table\``, as
   const row = <tr>{cell}</tr>;
   const rowGroup = <tbody>{row}</tbody>;
 
-  const document = Document.of([<table>{rowGroup}</table>]);
+  const document = h.document([<table>{rowGroup}</table>]);
 
   t.deepEqual(await evaluate(R42, { document }), [
     passed(R42, rowGroup, {
@@ -118,7 +117,7 @@ test(`evaluates() fails a \`row\` inside an orphaned \`rowgroup\``, async (t) =>
   const row = <div role="row">Foo</div>;
   const rowGroup = <div role="rowgroup">{row}</div>;
 
-  const document = Document.of([rowGroup]);
+  const document = h.document([rowGroup]);
 
   t.deepEqual(await evaluate(R42, { document }), [
     failed(R42, rowGroup, {
@@ -131,13 +130,13 @@ test(`evaluates() fails a \`row\` inside an orphaned \`rowgroup\``, async (t) =>
 });
 
 test(`evaluates() is inapplicable when on element whose role has no required parents`, async (t) => {
-  const document = Document.of([<h1>Header</h1>]);
+  const document = h.document([<h1>Header</h1>]);
 
   t.deepEqual(await evaluate(R42, { document }), [inapplicable(R42)]);
 });
 
 test(`evaluates() is inapplicable on element that is not in the accessiblity tree`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <div role="listitem" style={{ display: "none" }}></div>,
   ]);
 
