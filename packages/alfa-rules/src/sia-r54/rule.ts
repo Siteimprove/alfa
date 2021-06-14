@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             Node.from(target, device)
               .attribute("aria-atomic")
-              .some((attribute_atomic) => attribute_atomic.value === "true"),
+              .some((attribute) => attribute.value === "true"),
             () => Outcomes.IsAssertive,
             () => Outcomes.IsNotAssertive
           ),
