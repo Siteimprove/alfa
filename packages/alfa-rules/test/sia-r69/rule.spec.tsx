@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage } from "@siteimprove/alfa-css";

@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R84, { Outcomes } from "../../src/sia-r84/rule";
 
@@ -14,7 +13,7 @@ test("evaluate() passes a scrollable element that is focusable", async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [
     passed(R84, target, {
@@ -30,7 +29,7 @@ test("evaluate() passes a scrollable element that has a focusable child", async 
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [
     passed(R84, target, {
@@ -48,7 +47,7 @@ test("evaluate() passes a scrollable element that has a focusable descendant", a
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [
     passed(R84, target, {
@@ -63,7 +62,7 @@ test(`evaluate() fails a scrollable element that is neither focusable nor has
     <div style={{ height: "1.5em", overflow: "scroll" }}>Hello world</div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [
     failed(R84, target, {
@@ -80,7 +79,7 @@ test(`evaluate() fails an element that restricts its width while making overflow
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [
     failed(R84, target, {
@@ -95,7 +94,7 @@ test(`evaluate() is inapplicable to an element that restricts its width while
     <div style={{ width: "200px", overflowX: "hidden" }}>Hello world</div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [inapplicable(R84)]);
 });
@@ -106,7 +105,7 @@ test(`evaluate() is inapplicable to an element that restricts its height while
     <div style={{ height: "200px", overflowY: "hidden" }}>Hello world</div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [inapplicable(R84)]);
 });
@@ -117,7 +116,7 @@ test(`evaluate() is inapplicable to an element that restricts its width while
     <div style={{ width: "200px", overflow: "scroll" }}>Hello world</div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R84, { document }), [inapplicable(R84)]);
 });

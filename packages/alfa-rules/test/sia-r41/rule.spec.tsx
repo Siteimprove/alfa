@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R41, { Outcomes } from "../../src/sia-r41/rule";
 
@@ -16,7 +15,7 @@ test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {
   const target = [<a href="foo.html">Foo</a>, <a href="foo.html">Foo</a>];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(await evaluate(R41, { document }), [
     passed(R41, Group.of(target), {
@@ -29,7 +28,7 @@ test(`evaluate() fails two links that have the same name, but reference
       different resources`, async (t) => {
   const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(
     await evaluate(
@@ -51,7 +50,7 @@ test(`evaluate() passes two links that have the same name and reference
       equivalent resources`, async (t) => {
   const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(
     await evaluate(
@@ -70,7 +69,7 @@ test(`evaluate() passes two links that have the same name and reference
 });
 
 test(`evaluate() is inapplicable to two links that have different names`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <a href="foo.html">Foo</a>,
     <a href="bar.html">Bar</a>,
   ]);
@@ -88,7 +87,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     <a href="../to/foo.html">Foo</a>,
   ];
 
-  const document = Document.of(target);
+  const document = h.document(target);
 
   t.deepEqual(
     await evaluate(R41, {

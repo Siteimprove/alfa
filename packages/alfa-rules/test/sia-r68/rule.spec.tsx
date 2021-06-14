@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R68, { Outcomes } from "../../src/sia-r68/rule";
 
@@ -15,7 +14,7 @@ test("evaluate() passes a list with two list items", async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     passed(R68, target, {
@@ -46,7 +45,7 @@ test("evaluate() passes a table with a row and a row group", async (t) => {
     </div>
   );
 
-  const document = Document.of([target4]);
+  const document = h.document([target4]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     passed(R68, target4, {
@@ -78,7 +77,7 @@ test("evaluate() passes a table with a caption and a row", async (t) => {
     </div>
   );
 
-  const document = Document.of([target2]);
+  const document = h.document([target2]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     passed(R68, target2, {
@@ -111,7 +110,7 @@ test("evaluate() passes a table with a caption and two rows", async (t) => {
     </div>
   );
 
-  const document = Document.of([target3]);
+  const document = h.document([target3]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     passed(R68, target3, {
@@ -134,7 +133,7 @@ test("evaluate() passes a radiogroup with a radio and a label", async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     passed(R68, target, {
@@ -151,7 +150,7 @@ test("evaluate() ignores non-element children when determining ownership", async
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     passed(R68, target, {
@@ -167,7 +166,7 @@ test("evaluate() fails a list with only a non-list item", async (t) => {
     </div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R68, { document }), [
     failed(R68, target, {
@@ -183,6 +182,6 @@ test("evaluate() is inapplicable to aria-busy elements", async (t) => {
     </ul>
   );
 
-  const document = Document.of([menu]);
+  const document = h.document([menu]);
   t.deepEqual(await evaluate(R68, { document }), [inapplicable(R68)]);
 });
