@@ -62,7 +62,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
           .name;
 
         const sameResource = Question.of(
-          "reference-equivalent-resource",
+          "reference-equivalent-resources",
           "boolean",
           target,
           `Do these ${role} landmarks have the same or equivalent content?`
@@ -72,8 +72,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
           1: sameResource.map((same) =>
             expectation(
               same,
-              () => Outcomes.differentNames(role),
-              () => Outcomes.sameNames(role)
+              () => Outcomes.SameResource(role),
+              () => Outcomes.DifferentResources(role)
             )
           ),
         };
@@ -83,14 +83,14 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
 });
 
 export namespace Outcomes {
-  export const differentNames = (role: Role.Name) =>
+  export const SameResource = (role: Role.Name) =>
     Ok.of(
       Diagnostic.of(
         `No two \`${role}\` have the same name and different content.`
       )
     );
 
-  export const sameNames = (role: Role.Name) =>
+  export const DifferentResources = (role: Role.Name) =>
     Err.of(
       Diagnostic.of(
         `Some \`${role}\` have the same name and different content.`
