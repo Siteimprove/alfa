@@ -3,9 +3,6 @@ import { Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
@@ -54,21 +51,11 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             )
             .map((elements) =>
               elements
-                .reduce((groups, element) => {
-                  const name = Node.from(element, device).name.map((name) =>
+                .groupBy((element) =>
+                  Node.from(element, device).name.map((name) =>
                     normalize(name.value)
-                  );
-
-                  groups = groups.set(
-                    name,
-                    groups
-                      .get(name)
-                      .getOrElse(() => List.empty<Element>())
-                      .append(element)
-                  );
-
-                  return groups;
-                }, Map.empty<Option<string>, List<Element>>())
+                  )
+                )
                 .filter((elements) => elements.size > 1)
                 .map(Group.of)
                 .values()
