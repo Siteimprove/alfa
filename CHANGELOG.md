@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.19.0](../../compare/v0.18.0...v0.19.0) (2021-06-15)
+
 ### Breaking
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): The second expectation of SIA-R62 has been removed due to poor accuracy. ([#772](../../pull/772))
