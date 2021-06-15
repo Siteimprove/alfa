@@ -41,7 +41,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
       expectations(target) {
         // Empty groups have been filtered out already, so we can safely get the
         // first element
-        const role = Node.from(Iterable.first(target).get()!, device).role.get()
+        const role = Node.from(Iterable.first(target).get(), device).role.get()
           .name;
 
         const byNames = List.from(target)
