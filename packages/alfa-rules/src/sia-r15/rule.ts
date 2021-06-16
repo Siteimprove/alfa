@@ -1,9 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { List } from "@siteimprove/alfa-list";
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -39,21 +36,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
               hasNonEmptyAccessibleName(device)
             )
           )
-          .reduce((groups, iframe) => {
-            const name = Node.from(iframe, device).name.map((name) =>
-              normalize(name.value)
-            );
-
-            groups = groups.set(
-              name,
-              groups
-                .get(name)
-                .getOrElse(() => List.empty<Element>())
-                .append(iframe)
-            );
-
-            return groups;
-          }, Map.empty<Option<string>, List<Element>>())
+          .groupBy((iframe) =>
+            Node.from(iframe, device).name.map((name) => normalize(name.value))
+          )
           .filter((elements) => elements.size > 1)
           .map(Group.of)
           .values();
