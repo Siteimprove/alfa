@@ -21,6 +21,38 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.19.0](../../compare/v0.18.0...v0.19.0) (2021-06-15)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The second expectation of SIA-R62 has been removed due to poor accuracy. ([#772](../../pull/772))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `background-size` property is now specified as and computes to a `Tuple` instance rather than a plain array tuple. ([#788](../../pull/788))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-thickness` and `font-variant-*` CSS properties. ([#817](../../pull/817), [#821](../../pull/821))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R56 is now available. ([#829](../../pull/829))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts differences in font weight as a valid distinguishing feature for links. ([#779](../../pull/779))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now accepts differences in borders as a valid focus indicator. ([#819](../../pull/819))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now return a `CantTell` outcome for targets for which a `background-size` is found. ([#789](../../pull/789))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `hasRole()` now uses the role assigned to an element in the accessibility tree rather than just using `Role.from()`. ([#805](../../pull/805))
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css): Functional pseudo-classes and -elements now correctly implement `#equals()` and `#toString()`. ([#773](../../pull/773))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The first step of `Name.from()` is now correctly skipped when descending into child nodes. Additionally, descendant names that only consist of whitespace are no longer included. ([#778](../../pull/778), [#831](../../pull/831))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `background-size` property is now parsed correctly according to specification. ([#788](../../pull/788))
+
 ## [0.18.0](../../compare/v0.17.0...v0.18.0) (2021-06-11)
 
 ### Breaking
