@@ -30,7 +30,7 @@ test("evaluate() passes when same landmarks have same names and content", async 
     await evaluate(
       R55,
       { document },
-      oracle({ "reference-equivalent-resources": true })
+      oracle({ "is-content-equivalent": true })
     ),
     [passed(R55, target, { 1: Outcomes.SameResource("complementary") })]
   );
@@ -47,7 +47,7 @@ test("evaluate() fails when same landmarks have same names but different content
     await evaluate(
       R55,
       { document },
-      oracle({ "reference-equivalent-resources": false })
+      oracle({ "is-content-equivalent": false })
     ),
     [failed(R55, target, { 1: Outcomes.DifferentResources("complementary") })]
   );

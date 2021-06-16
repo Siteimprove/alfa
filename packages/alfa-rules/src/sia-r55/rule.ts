@@ -62,7 +62,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
           .name;
 
         const sameResource = Question.of(
-          "reference-equivalent-resources",
+          "is-content-equivalent",
           "boolean",
           target,
           `Do these ${role} landmarks have the same or equivalent content?`
