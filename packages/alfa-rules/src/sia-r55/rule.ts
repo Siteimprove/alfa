@@ -1,12 +1,9 @@
-import { Diagnostic, Interview, Rule } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
-import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
