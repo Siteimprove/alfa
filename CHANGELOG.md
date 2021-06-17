@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The contrast ratios output in messages from SIA-R66 and SIA-R69 are now correctly listed as `<bright>:<dark>` rather than `<dark>:<bright>`.
+
 ## [0.19.0](../../compare/v0.18.0...v0.19.0) (2021-06-15)
 
 ### Breaking
