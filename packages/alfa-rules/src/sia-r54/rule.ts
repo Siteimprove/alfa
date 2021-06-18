@@ -1,4 +1,4 @@
-import { Rule, Diagnostic, Outcome } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -7,7 +7,6 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { expectation } from "../common/expectation";
 import { Node } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
 
 const { and, not } = Predicate;
 const { isElement } = Element;
