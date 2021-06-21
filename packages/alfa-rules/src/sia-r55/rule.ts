@@ -1,7 +1,9 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
+import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -82,15 +84,63 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
 export namespace Outcomes {
   export const SameResource = (role: Role.Name) =>
     Ok.of(
-      Diagnostic.of(
-        `No two \`${role}\` have the same name and different content.`
+      WithRole.of(
+        `No two \`${role}\` have the same name and different content.`,
+        role
       )
     );
 
   export const DifferentResources = (role: Role.Name) =>
     Err.of(
-      Diagnostic.of(
-        `Some \`${role}\` have the same name and different content.`
+      WithRole.of(
+        `Some \`${role}\` have the same name and different content.`,
+        role
       )
     );
+}
+
+class WithRole extends Diagnostic {
+  public static of(message: string, role: Role.Name = "none"): WithRole {
+    return new WithRole(message, role);
+  }
+
+  private readonly _role: Role.Name;
+
+  private constructor(message: string, role: Role.Name) {
+    super(message);
+    this._role = role;
+  }
+
+  public get role(): Role.Name {
+    return this._role;
+  }
+
+  public equals(value: WithRole): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof WithRole &&
+      value._message === this._message &&
+      value._role === this._role
+    );
+  }
+
+  public toJSON(): WithRole.JSON {
+    return {
+      ...super.toJSON(),
+      role: this._role,
+    };
+  }
+}
+
+namespace WithRole {
+  export interface JSON extends Diagnostic.JSON {
+    role: string;
+  }
+
+  export function isWithRole(value: unknown): value is WithRole {
+    return value instanceof WithRole;
+  }
 }
