@@ -83,7 +83,7 @@ test("evaluate() is inapplicable to an <img> element with an empty aria-live att
   t.deepEqual(await evaluate(R54, { document }), [inapplicable(R54)]);
 });
 
-test("evaluate() is inapplicable to an <img> element without an accessible name", async (t) => {
+test("evaluate() is inapplicable to an element which is not assertive", async (t) => {
   const target = <div></div>;
 
   const document = Document.of([target]);
