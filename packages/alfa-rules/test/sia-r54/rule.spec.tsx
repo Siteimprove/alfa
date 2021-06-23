@@ -63,7 +63,7 @@ test("evaluate() is inapplicable to elements that are not in the accessibility t
   t.deepEqual(await evaluate(R54, { document }), [inapplicable(R54)]);
 });
 
-test("evaluate() inapplicable to a <div> element because it has an incorrect aria-live attribute", async (t) => {
+test("evaluate() inapplicable to an element which is not assertive", async (t) => {
   const target = (
     <div aria-live="wrong" aria-atomic="true">
       Some words
