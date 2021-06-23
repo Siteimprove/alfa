@@ -51,7 +51,7 @@ test("evaluate() fails an assertive element with an incorrect aria-atomic attrib
   ]);
 });
 
-test("evaluate() fails an <div> element because it has not an accessible tree", async (t) => {
+test("evaluate() is inapplicable to elements that are not in the accessibility tree", async (t) => {
   const target = (
     <div hidden aria-live="assertive" aria-atomic="true">
       Some words
