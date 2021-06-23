@@ -1,10 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -24,7 +20,6 @@ import { normalize } from "../common/normalize";
 import { Question } from "../common/question";
 
 const { isElement, hasNamespace } = Element;
-const { flatten } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
@@ -33,42 +28,28 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return flatten(
-          document
-            .descendants({ flattened: true, nested: true })
-            .filter(isElement)
-            .filter(
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole(device, (role) => role.is("link")),
-                not(isIgnored(device)),
-                hasNonEmptyAccessibleName(device)
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
+            and(
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole(device, (role) => role.is("link")),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
+            )
+          )
+          .groupBy((element) => element.root())
+          .flatMap((elements) =>
+            elements.groupBy((element) =>
+              Node.from(element, device).name.map((name) =>
+                normalize(name.value)
               )
             )
-            .groupBy((element) => element.root())
-            .map((elements) =>
-              elements
-                .reduce((groups, element) => {
-                  const name = Node.from(element, device).name.map((name) =>
-                    normalize(name.value)
-                  );
-
-                  groups = groups.set(
-                    name,
-                    groups
-                      .get(name)
-                      .getOrElse(() => List.empty<Element>())
-                      .append(element)
-                  );
-
-                  return groups;
-                }, Map.empty<Option<string>, List<Element>>())
-                .filter((elements) => elements.size > 1)
-                .map(Group.of)
-                .values()
-            )
-            .values()
-        );
+          )
+          .filter((elements) => elements.size > 1)
+          .map(Group.of)
+          .values();
       },
 
       expectations(target) {

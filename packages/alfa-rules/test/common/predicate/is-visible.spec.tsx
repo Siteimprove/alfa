@@ -61,6 +61,42 @@ test(`isVisible() returns false when an element is hidden by reducing its size
   t.equal(isVisible(element), false);
 });
 
+test(`isVisible() returns false when an element scrolls its overflow and its size is reduced to 0 pixel, thus hidding the scrollbar`, (t) => {
+  for (const element of [
+    <div style={{ width: "0", overflowX: "scroll" }}>Hello World</div>,
+
+    <div style={{ width: "0", overflowY: "scroll" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowX: "scroll" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowY: "scroll" }}>Hello World</div>,
+
+    <div style={{ width: "0", height: "0", overflow: "scroll" }}>
+      Hello World
+    </div>,
+  ]) {
+    t.equal(isVisible(element), false);
+  }
+});
+
+test(`isVisible() returns false when an element has its overflow set to auto and its size is reduced to 0 pixel, thus hidding the scrollbar`, (t) => {
+  for (const element of [
+    <div style={{ width: "0", overflowX: "auto" }}>Hello World</div>,
+
+    <div style={{ width: "0", overflowY: "auto" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowX: "auto" }}>Hello World</div>,
+
+    <div style={{ height: "0", overflowY: "auto" }}>Hello World</div>,
+
+    <div style={{ width: "0", height: "0", overflow: "auto" }}>
+      Hello World
+    </div>,
+  ]) {
+    t.equal(isVisible(element), false);
+  }
+});
+
 test("isVisible() returns false on empty elements", (t) => {
   const element = <div />;
 
