@@ -35,7 +35,7 @@ test("evaluate() fails an <div> element because it's missing an aria-atomic attr
   ]);
 });
 
-test("evaluate() fails an <div> element because it has an incorrect aria-atomic attribute", async (t) => {
+test("evaluate() fails an assertive element with an incorrect aria-atomic attribute", async (t) => {
   const target = (
     <div aria-live="assertive" aria-atomic="wrong">
       Some words
