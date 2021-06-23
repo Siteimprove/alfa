@@ -12,7 +12,7 @@ import { expectation } from "../common/expectation";
 import { isIgnored, hasChild } from "../common/predicate";
 import { Group } from "../common/group";
 
-import { isVisible } from "../common/predicate/is-visible";
+import { isRendered } from "../common/predicate/is-rendered";
 
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
@@ -63,8 +63,8 @@ export default Rule.Atomic.of<Page, Document, Group<Element>>({
             and(
               hasNamespace(Namespace.HTML),
               hasName("acronym", ...deprecated),
-              not(isIgnored(device))
-              //or(isVisible(device), not(isIgnored(device)))
+              not(isIgnored(device)),
+              or(isRendered(device))
             )
           );
 
