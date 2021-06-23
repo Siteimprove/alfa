@@ -63,8 +63,7 @@ export default Rule.Atomic.of<Page, Document, Group<Element>>({
             and(
               hasNamespace(Namespace.HTML),
               hasName("acronym", ...deprecated),
-              not(isIgnored(device)),
-              or(isRendered(device))
+              isRendered(device)
             )
           );
 
