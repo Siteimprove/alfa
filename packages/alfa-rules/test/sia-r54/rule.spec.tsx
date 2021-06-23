@@ -23,7 +23,7 @@ test("evaluate() passes an assertive and atomic element", async (t) => {
   ]);
 });
 
-test("evaluate() fails an <div> element because it's missing an aria-atomic attribute", async (t) => {
+test("evaluate() fails an element which is assertive but not atomic", async (t) => {
   const target = <div aria-live="assertive"> Some words </div>;
 
   const document = Document.of([target]);
