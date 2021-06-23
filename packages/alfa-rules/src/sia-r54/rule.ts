@@ -46,5 +46,5 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const IsAssertive = Ok.of(Diagnostic.of("The assertive region is atomic"));
 
-  export const IsNotAssertive = Err.of(Diagnostic.of("Is not assertive"));
+  export const IsNotAssertive = Err.of(Diagnostic.of("The assertive region is not atomic"));
 }
