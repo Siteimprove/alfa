@@ -160,3 +160,50 @@ function wrapsText(device: Device): Predicate<Text> {
         return false;
       });
 }
+
+function offsetParent(): boolean {
+  return true;
+}
+
+function staticallyPositioned(device: Device): Predicate<Element> {
+  return (element) =>
+    Style.from(element, device).computed("position").value.value === "static";
+}
+
+let array: Array<Element> = [];
+let lookingForClip = true;
+for (const ancestor of array) {
+  if (lookingForClip) {
+    if (staticallyPositioned(device)(ancestor)) {
+            .find(isPossiblyClipped(device))
+      .some((element) => {
+        const style = Style.from(element, device);
+
+        const { value: whitespace } = style.computed("white-space");
+
+        // If whitespace does not cause wrapping, we need to check if a text
+        // overflow could cause the text to clip.
+        if (whitespace.value === "nowrap") {
+          const { value: overflow } = style.computed("text-overflow");
+
+          // We assume that the text won't clip if the text overflow is handled
+          // any other way than clip.
+          return overflow.value !== "clip";
+        }
+
+        return false;
+      });
+    } else {
+      lookingForClip = false;
+    }
+  } else {
+    if (offsetParent()) {
+      lookingForClip = true;
+    } else {
+      lookingForClip = false;
+    }
+  }
+}
+
+//when is the return true happening?
+// is the "tree" condition correctly implemented?
