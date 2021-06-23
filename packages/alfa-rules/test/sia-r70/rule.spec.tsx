@@ -5,7 +5,7 @@ import R70, { Outcomes } from "../../src/sia-r70/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-/*
+
 test("evaluate() passes a page with no deprecated / obsolete elements ", async (t) => {
   const target = (
     <html>
@@ -40,7 +40,7 @@ test("evaluate() passes a page with deprecated non visible element not into acce
   ]);
 });
 
-test("evaluate() passes a page with deprecated visible element in accessibility tree", async (t) => {
+test("evaluate() fails a page with deprecated visible element in accessibility tree", async (t) => {
   const blink = <blink>not</blink>;
   const target = (
     <html>
@@ -57,7 +57,7 @@ test("evaluate() passes a page with deprecated visible element in accessibility 
   ]);
 });
 
-test("evaluate() passes a page with deprecated visible element", async (t) => {
+test("evaluate() fails a page with deprecated visible element", async (t) => {
   const blink = <blink aria-hidden="true">not</blink>;
   const target = (
     <html>
@@ -73,9 +73,8 @@ test("evaluate() passes a page with deprecated visible element", async (t) => {
     }),
   ]);
 });
-*/
 
-test("evaluate() passes a page with two deprecated elements in the accessibility tree", async (t) => {
+test("evaluate() fails a page with two deprecated elements in the accessibility tree", async (t) => {
   const menuitem1 = <menuitem role="menuitem">Foo</menuitem>;
   const menuitem2 = <menuitem role="menuitem">Bar</menuitem>;
   const target = (
