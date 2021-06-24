@@ -66,7 +66,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
 
 export namespace Outcomes {
   export const differentNames = (role: Role.Name) =>
-    Ok.of(Diagnostic.of(`No two \`${role}\` have the same name.`));
+    Ok.of(SameNames.of(`No two \`${role}\` have the same name.`, role, []));
 
   export const sameNames = (
     role: Role.Name,
