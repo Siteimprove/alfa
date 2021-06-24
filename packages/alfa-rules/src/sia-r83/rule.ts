@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -16,7 +17,7 @@ import { isVisible } from "../common/predicate/is-visible";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
@@ -135,34 +136,41 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
 }
 
 function wrapsText(device: Device): Predicate<Text> {
-  return (text) =>
-    text
+  return (text) => {
+    const array = text
       .ancestors({
         flattened: true,
       })
-      .filter(isElement)
-      .find(isPossiblyClipped(device))
-      .some((element) => {
-        const style = Style.from(element, device);
+      .filter(isElement);
 
-        const { value: whitespace } = style.computed("white-space");
-
-        // If whitespace does not cause wrapping, we need to check if a text
-        // overflow could cause the text to clip.
-        if (whitespace.value === "nowrap") {
-          const { value: overflow } = style.computed("text-overflow");
-
-          // We assume that the text won't clip if the text overflow is handled
-          // any other way than clip.
-          return overflow.value !== "clip";
+    for (const ancestor of array) {
+      if (staticallyPositioned(device)(ancestor)) {
+        if (isPossiblyClipped(device)(ancestor)) {
+          return isActuallyClipping(ancestor, device);
         }
+      }
+    }
 
-        return false;
-      });
+    return true;
+  };
 }
 
-function offsetParent(): boolean {
-  return true;
+function foo(element: Element, device: Device): boolean {
+  if (isPossiblyClipped(device)(element)) {
+    return isActuallyClipping(element, device);
+  }
+
+  let relevantParent: Option<Node> = None;
+  if (staticallyPositioned(device)(element)) {
+    relevantParent = element.parent();
+  } else {
+    relevantParent = offsetParent(element, device);
+  }
+  if (relevantParent.isSome()) {
+    return foo(relevantParent.get(), device);
+  } else {
+    return true;
+  }
 }
 
 function staticallyPositioned(device: Device): Predicate<Element> {
@@ -170,40 +178,42 @@ function staticallyPositioned(device: Device): Predicate<Element> {
     Style.from(element, device).computed("position").value.value === "static";
 }
 
-let array: Array<Element> = [];
-let lookingForClip = true;
-for (const ancestor of array) {
-  if (lookingForClip) {
-    if (staticallyPositioned(device)(ancestor)) {
-            .find(isPossiblyClipped(device))
-      .some((element) => {
-        const style = Style.from(element, device);
-
-        const { value: whitespace } = style.computed("white-space");
-
-        // If whitespace does not cause wrapping, we need to check if a text
-        // overflow could cause the text to clip.
-        if (whitespace.value === "nowrap") {
-          const { value: overflow } = style.computed("text-overflow");
-
-          // We assume that the text won't clip if the text overflow is handled
-          // any other way than clip.
-          return overflow.value !== "clip";
-        }
-
-        return false;
-      });
-    } else {
-      lookingForClip = false;
-    }
-  } else {
-    if (offsetParent()) {
-      lookingForClip = true;
-    } else {
-      lookingForClip = false;
-    }
-  }
+function fixedPositioned(device: Device): Predicate<Element> {
+  return (element) =>
+    Style.from(element, device).computed("position").value.value === "fixed";
 }
 
-//when is the return true happening?
-// is the "tree" condition correctly implemented?
+    }
+const isActuallyClipping = (element: Element, device: Device) => {
+  const style = Style.from(element, device);
+
+  const { value: whitespace } = style.computed("white-space");
+
+  // If whitespace does not cause wrapping, we need to check if a text
+  // overflow could cause the text to clip.
+  if (whitespace.value === "nowrap") {
+    const { value: overflow } = style.computed("text-overflow");
+
+    // We assume that the text won't clip if the text overflow is handled
+    // any other way than clip.
+    return overflow.value !== "clip";
+  }
+
+  return false;
+};
+
+function offsetParent(element: Element, device: Device): Option<Element> {
+  if (or(hasName("body", "html"), fixedPositioned(device))(element)) {
+    return None;
+  }
+
+  const ancestors = element
+    .ancestors({
+      flattened: true,
+    })
+    .filter(isElement);
+
+  return ancestors
+    .find(not(staticallyPositioned(device)))
+    .orElse(() => ancestors.find(hasName("td", "th", "table")));
+}
