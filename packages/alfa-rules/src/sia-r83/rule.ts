@@ -166,8 +166,9 @@ function foo(element: Element, device: Device): boolean {
   } else {
     relevantParent = offsetParent(element, device);
   }
+  // foo is not called with the correct type -> check that
   if (relevantParent.isSome()) {
-    return foo(relevantParent.get(), device);
+    return foo(relevantParent, device);
   } else {
     return true;
   }
@@ -183,7 +184,6 @@ function fixedPositioned(device: Device): Predicate<Element> {
     Style.from(element, device).computed("position").value.value === "fixed";
 }
 
-    }
 const isActuallyClipping = (element: Element, device: Device) => {
   const style = Style.from(element, device);
 
