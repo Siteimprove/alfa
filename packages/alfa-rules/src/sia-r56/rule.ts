@@ -4,8 +4,6 @@ import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -34,21 +32,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
               hasRole(device, (role) => role.is("landmark"))
             )
           )
-          .reduce((groups, landmark) => {
-            // Since we already have filtered by having a landmark role, we can
-            // safely get the role.
-            const role = Node.from(landmark, device).role.get();
-
-            groups = groups.set(
-              role,
-              groups
-                .get(role)
-                .getOrElse(() => List.empty<Element>())
-                .append(landmark)
-            );
-
-            return groups;
-          }, Map.empty<Role, List<Element>>())
+          .groupBy((landmark) => Node.from(landmark, device).role.get())
           .filter((elements) => elements.size > 1)
           .map(Group.of)
           .values();
@@ -57,26 +41,15 @@ export default Rule.Atomic.of<Page, Group<Element>>({
       expectations(target) {
         // Empty groups have been filtered out already, so we can safely get the
         // first element
-        const role = Node.from(
-          Iterable.first(target).get()!,
-          device
-        ).role.get().name;
+        const role = Node.from(Iterable.first(target).get(), device).role.get()
+          .name;
 
-        const byNames = [...target]
-          .reduce((groups, landmark) => {
-            const name = Node.from(landmark, device).name.map((name) =>
+        const byNames = List.from(target)
+          .groupBy((landmark) =>
+            Node.from(landmark, device).name.map((name) =>
               normalize(name.value)
-            );
-            groups = groups.set(
-              name,
-              groups
-                .get(name)
-                .getOrElse(() => List.empty<Element>())
-                .append(landmark)
-            );
-
-            return groups;
-          }, Map.empty<Option<string>, List<Element>>())
+            )
+          )
           .filter((landmarks) => landmarks.size > 1);
 
         return {
@@ -93,7 +66,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
 
 export namespace Outcomes {
   export const differentNames = (role: Role.Name) =>
-    Ok.of(Diagnostic.of(`No two \`${role}\` have the same name.`));
+    Ok.of(SameNames.of(`No two \`${role}\` have the same name.`, role, []));
 
   export const sameNames = (
     role: Role.Name,
