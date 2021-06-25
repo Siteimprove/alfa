@@ -3,10 +3,10 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { isIgnored } from "../common/predicate/is-ignored";
-
-import { expectation } from "../common/expectation";
 import { Node } from "@siteimprove/alfa-aria";
+
+import { isIgnored } from "../common/predicate";
+import { expectation } from "../common/expectation";
 
 const { and, not } = Predicate;
 const { isElement } = Element;
