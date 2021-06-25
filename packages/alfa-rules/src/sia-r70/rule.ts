@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,15 +7,12 @@ import { List } from "@siteimprove/alfa-list";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { expectation } from "../common/expectation";
-import { isIgnored, hasChild } from "../common/predicate";
+import { hasChild, isRendered, isDocumentElement } from "../common/predicate";
 import { Group } from "../common/group";
 
-import { isRendered } from "../common/predicate/is-rendered";
-
-import { isDocumentElement } from "../common/predicate/is-document-element";
-
 const { isElement, hasName, hasNamespace } = Element;
-const { and, or, test, not } = Predicate;
+const { and, test } = Predicate;
+
 const deprecated = [
   "applet",
   "basefont",
@@ -47,7 +42,8 @@ const deprecated = [
   "tt",
   "xmp",
 ];
-export default Rule.Atomic.of<Page, Document, Group<Element>>({
+
+export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r70",
   evaluate({ device, document }) {
     return {
@@ -66,8 +62,6 @@ export default Rule.Atomic.of<Page, Document, Group<Element>>({
               isRendered(device)
             )
           );
-
-        //console.dir(deprecatedElements.toJSON(), { depth: null });
 
         return {
           1: expectation(
@@ -98,7 +92,7 @@ export namespace Outcomes {
 class DeprecatedElements extends Diagnostic implements Iterable<Element> {
   public static of(
     message: string,
-    errors: Iterable<Element> = []
+    errors: Iterable<Element> = List.empty()
   ): DeprecatedElements {
     return new DeprecatedElements(message, List.from(errors));
   }

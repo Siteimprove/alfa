@@ -22,7 +22,7 @@ test("evaluate() passes a page with no deprecated / obsolete elements ", async (
   ]);
 });
 
-test("evaluate() passes a page with deprecated non visible element not into accessibility tree", async (t) => {
+test("evaluate() passes a page with a deprecated but not rendered element", async (t) => {
   const target = (
     <html>
       <p>
@@ -40,7 +40,7 @@ test("evaluate() passes a page with deprecated non visible element not into acce
   ]);
 });
 
-test("evaluate() fails a page with deprecated visible element in accessibility tree", async (t) => {
+test("evaluate() fails a page with deprecated and rendered element", async (t) => {
   const blink = <blink>not</blink>;
   const target = (
     <html>
@@ -95,7 +95,7 @@ test("evaluate() fails a page with two deprecated elements in the accessibility 
   ]);
 });
 
-test("evaluate() is inapplicable to text nodes in disabled groups", async (t) => {
+test("evaluate() is inapplicable to non-HTML documents", async (t) => {
   const document = h.document([
     <svg xmlns="http://www.w3.org/2000/svg">
       <title>This is a circle</title>
