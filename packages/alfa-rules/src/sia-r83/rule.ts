@@ -160,15 +160,15 @@ function foo(element: Element, device: Device): boolean {
     return isActuallyClipping(element, device);
   }
 
-  let relevantParent: Option<Node> = None;
+  let relevantParent: Option<Element> = None;
   if (staticallyPositioned(device)(element)) {
-    relevantParent = element.parent();
+    relevantParent = element.parent().filter(isElement);
   } else {
     relevantParent = offsetParent(element, device);
   }
   // foo is not called with the correct type -> check that
   if (relevantParent.isSome()) {
-    return foo(relevantParent, device);
+    return foo(relevantParent.get(), device);
   } else {
     return true;
   }
