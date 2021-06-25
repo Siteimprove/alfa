@@ -61,11 +61,13 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
+        const parent = target.parent();
+
         return {
           1: expectation(
-            wrapsText(device)(target),
-            () => Outcomes.WrapsText,
-            () => Outcomes.ClipsText
+            parent.every(and(isElement, not(wrapsText(device)))),
+            () => Outcomes.ClipsText,
+            () => Outcomes.WrapsText
           ),
         };
       },
@@ -135,43 +137,53 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
   };
 }
 
-function wrapsText(device: Device): Predicate<Text> {
-  return (text) => {
-    const array = text
-      .ancestors({
-        flattened: true,
-      })
-      .filter(isElement);
+// function wrapsText(device: Device): Predicate<Text> {
+//   return (text) => {
+//     const array = text
+//       .ancestors({
+//         flattened: true,
+//       })
+//       .filter(isElement);
 
-    for (const ancestor of array) {
-      if (staticallyPositioned(device)(ancestor)) {
-        if (isPossiblyClipped(device)(ancestor)) {
-          return isActuallyClipping(ancestor, device);
-        }
-      }
+//     for (const ancestor of array) {
+//       if (staticallyPositioned(device)(ancestor)) {
+//         if (isPossiblyClipped(device)(ancestor)) {
+//           return isActuallyClipping(ancestor, device);
+//         }
+//       }
+//     }
+
+//     return true;
+//   };
+// }
+
+function wrapsText(device: Device): Predicate<Element> {
+  return (element) => {
+    if (isPossiblyClipped(device)(element)) {
+      return isActuallyClipping(element, device);
     }
 
-    return true;
+    let relevantParent: Option<Element> = None;
+    if (staticallyPositioned(device)(element)) {
+      relevantParent = element.parent().filter(isElement);
+    } else {
+      relevantParent = offsetParent(element, device);
+    }
+
+    // return staticallyPositioned(device)(element)
+    //   ? element.parent().filter(isElement)
+    //   : offsetParent(element, device);
+
+    // if (relevantParent.isSome()) {
+    //   return wrapsText(device)(relevantParent.get());
+    // } else {
+    //   return true;
+    // }
+
+    return relevantParent.isSome()
+      ? wrapsText(device)(relevantParent.get())
+      : true;
   };
-}
-
-function foo(element: Element, device: Device): boolean {
-  if (isPossiblyClipped(device)(element)) {
-    return isActuallyClipping(element, device);
-  }
-
-  let relevantParent: Option<Element> = None;
-  if (staticallyPositioned(device)(element)) {
-    relevantParent = element.parent().filter(isElement);
-  } else {
-    relevantParent = offsetParent(element, device);
-  }
-  // foo is not called with the correct type -> check that
-  if (relevantParent.isSome()) {
-    return foo(relevantParent.get(), device);
-  } else {
-    return true;
-  }
 }
 
 function staticallyPositioned(device: Device): Predicate<Element> {

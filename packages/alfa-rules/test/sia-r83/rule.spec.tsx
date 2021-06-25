@@ -198,3 +198,62 @@ test(`evaluate() is inapplicable to a text node with a fixed relative height`, a
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
+
+test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
+  const target = h.text("Hello world");
+
+  const document = h.document(
+    [
+      <div class="clipping">
+        <div class="absolute">{target}</div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".clipping", {
+          overflow: "hidden",
+          height: "28px",
+        }),
+        h.rule.style(".absolute", {
+          position: "absolute",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, {
+      1: Outcomes.WrapsText,
+    }),
+  ]);
+});
+
+test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
+  const target = h.text("Hello world");
+
+  const document = h.document(
+    [
+      <div class="clipping">
+        <div class="absolute">{target}</div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".clipping", {
+          overflow: "hidden",
+          position: "relative",
+          height: "28px",
+        }),
+        h.rule.style(".absolute", {
+          position: "absolute",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText,
+    }),
+  ]);
+});
