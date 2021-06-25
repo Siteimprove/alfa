@@ -137,63 +137,23 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
   };
 }
 
-// function wrapsText(device: Device): Predicate<Text> {
-//   return (text) => {
-//     const array = text
-//       .ancestors({
-//         flattened: true,
-//       })
-//       .filter(isElement);
-
-//     for (const ancestor of array) {
-//       if (staticallyPositioned(device)(ancestor)) {
-//         if (isPossiblyClipped(device)(ancestor)) {
-//           return isActuallyClipping(ancestor, device);
-//         }
-//       }
-//     }
-
-//     return true;
-//   };
-// }
-
 function wrapsText(device: Device): Predicate<Element> {
   return (element) => {
     if (isPossiblyClipped(device)(element)) {
       return isActuallyClipping(element, device);
     }
 
-    let relevantParent: Option<Element> = None;
-    if (staticallyPositioned(device)(element)) {
-      relevantParent = element.parent().filter(isElement);
-    } else {
-      relevantParent = offsetParent(element, device);
-    }
+    const relevantParent = isPositioned(device, "static")(element)
+      ? element.parent().filter(isElement)
+      : offsetParent(element, device);
 
-    // return staticallyPositioned(device)(element)
-    //   ? element.parent().filter(isElement)
-    //   : offsetParent(element, device);
-
-    // if (relevantParent.isSome()) {
-    //   return wrapsText(device)(relevantParent.get());
-    // } else {
-    //   return true;
-    // }
-
-    return relevantParent.isSome()
-      ? wrapsText(device)(relevantParent.get())
-      : true;
+    return relevantParent.every(wrapsText(device));
   };
 }
 
-function staticallyPositioned(device: Device): Predicate<Element> {
+function isPositioned(device: Device, position: string): Predicate<Element> {
   return (element) =>
-    Style.from(element, device).computed("position").value.value === "static";
-}
-
-function fixedPositioned(device: Device): Predicate<Element> {
-  return (element) =>
-    Style.from(element, device).computed("position").value.value === "fixed";
+    Style.from(element, device).computed("position").value.value === position;
 }
 
 const isActuallyClipping = (element: Element, device: Device) => {
@@ -215,7 +175,7 @@ const isActuallyClipping = (element: Element, device: Device) => {
 };
 
 function offsetParent(element: Element, device: Device): Option<Element> {
-  if (or(hasName("body", "html"), fixedPositioned(device))(element)) {
+  if (or(hasName("body", "html"), isPositioned(device, "fixed"))(element)) {
     return None;
   }
 
@@ -226,6 +186,6 @@ function offsetParent(element: Element, device: Device): Option<Element> {
     .filter(isElement);
 
   return ancestors
-    .find(not(staticallyPositioned(device)))
+    .find(not(isPositioned(device, "static")))
     .orElse(() => ancestors.find(hasName("td", "th", "table")));
 }
