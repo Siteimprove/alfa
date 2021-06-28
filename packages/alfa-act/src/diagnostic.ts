@@ -1,12 +1,9 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-
-import * as json from "@siteimprove/alfa-json";
+import { Diagnostic as Base } from "@siteimprove/alfa-act-base";
 
 /**
  * @public
  */
-export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
+export class Diagnostic extends Base {
   public static of(message: string): Diagnostic {
     return new Diagnostic(normalize(message));
   }
@@ -14,6 +11,7 @@ export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
   protected readonly _message: string;
 
   protected constructor(message: string) {
+    super();
     this._message = message;
   }
 
@@ -40,8 +38,7 @@ export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
  * @public
  */
 export namespace Diagnostic {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Base.JSON {
     message: string;
   }
 

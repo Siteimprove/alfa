@@ -9,6 +9,8 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
+import * as base from "@siteimprove/alfa-act-base";
+
 import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
 
@@ -16,30 +18,15 @@ import { Rule } from "./rule";
  * @public
  */
 export abstract class Outcome<I, T, Q = never>
+  extends base.Outcome<I, T, Q>
   implements
     Equatable,
     json.Serializable<Outcome.JSON>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result> {
-  protected readonly _rule: Rule<I, T, Q>;
-
   protected constructor(rule: Rule<I, T, Q>) {
-    this._rule = rule;
+    super(rule);
   }
-
-  public get rule(): Rule<I, T, Q> {
-    return this._rule;
-  }
-
-  public get target(): T | undefined {
-    return undefined;
-  }
-
-  public abstract equals<I, T, Q>(value: Outcome<I, T, Q>): boolean;
-
-  public abstract equals(value: unknown): value is this;
-
-  public abstract toJSON(): Outcome.JSON;
 
   public toEARL(): Outcome.EARL {
     return {
@@ -60,11 +47,8 @@ export abstract class Outcome<I, T, Q = never>
  * @public
  */
 export namespace Outcome {
-  export interface JSON {
-    [key: string]: json.JSON;
-    outcome: string;
-    rule: Rule.JSON;
-  }
+  export interface JSON<O extends string = string>
+    extends base.Outcome.JSON<O> {}
 
   export interface EARL extends earl.EARL {
     "@type": "earl:Assertion";
@@ -190,9 +174,7 @@ export namespace Outcome {
   }
 
   export namespace Passed {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "passed";
+    export interface JSON<T> extends Outcome.JSON<"passed"> {
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
@@ -343,9 +325,7 @@ export namespace Outcome {
   }
 
   export namespace Failed {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "failed";
+    export interface JSON<T> extends Outcome.JSON<"failed"> {
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
@@ -458,9 +438,7 @@ export namespace Outcome {
   }
 
   export namespace CantTell {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "cantTell";
+    export interface JSON<T> extends Outcome.JSON<"cantTell"> {
       target: json.Serializable.ToJSON<T>;
     }
 
@@ -566,10 +544,7 @@ export namespace Outcome {
   }
 
   export namespace Inapplicable {
-    export interface JSON extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "inapplicable";
-    }
+    export interface JSON extends Outcome.JSON<"inapplicable"> {}
 
     export interface EARL extends Outcome.EARL {
       "earl:result": {
@@ -596,6 +571,130 @@ export namespace Outcome {
   }
 
   export const { of: inapplicable, isInapplicable } = Inapplicable;
+
+  export class Inventory<I, T, Q = never> extends Outcome<I, T, Q> {
+    public static of<I, T, Q>(
+      rule: Rule<I, T, Q>,
+      target: T,
+      inventory: base.Diagnostic
+    ): Inventory<I, T, Q> {
+      return new Inventory(rule, target, inventory);
+    }
+
+    private readonly _target: T;
+    private readonly _inventory: base.Diagnostic;
+
+    private constructor(
+      rule: Rule<I, T, Q>,
+      target: T,
+      inventory: base.Diagnostic
+    ) {
+      super(rule);
+
+      this._target = target;
+      this._inventory = inventory;
+    }
+
+    public get target(): T {
+      return this._target;
+    }
+
+    public get inventory(): base.Diagnostic {
+      return this._inventory;
+    }
+
+    public equals<I, T, Q>(value: Inventory<I, T, Q>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        value instanceof Inventory &&
+        value._rule.equals(this._rule) &&
+        Equatable.equals(value._target, this._target) &&
+        value._inventory.equals(this._inventory)
+      );
+    }
+
+    public toJSON(): Inventory.JSON<T> {
+      return {
+        outcome: "inventory",
+        rule: this._rule.toJSON(),
+        target: json.Serializable.toJSON(this._target),
+        inventory: this._inventory.toJSON(),
+      };
+    }
+
+    public toEARL(): Inventory.EARL {
+      const outcome: Inventory.EARL = {
+        ...super.toEARL(),
+        "earl:result": {
+          "@type": "earl:TestResult",
+          "earl:outcome": {
+            "@id": "earl:inventory",
+          },
+        },
+      };
+
+      for (const pointer of earl.Serializable.toEARL(this._target)) {
+        outcome["earl:result"]["earl:pointer"] = pointer;
+      }
+
+      return outcome;
+    }
+
+    public toSARIF(): sarif.Result {
+      const locations: Array<sarif.Location> = [];
+
+      for (const location of sarif.Serializable.toSARIF(this._target)) {
+        locations.push(location as sarif.Location);
+      }
+
+      return {
+        ruleId: this._rule.uri,
+        kind: "informational",
+        level: "none",
+        message: {
+          text: "inventory",
+          markdown: "inventory",
+        },
+        locations,
+      };
+    }
+  }
+
+  export namespace Inventory {
+    export interface JSON<T> extends Outcome.JSON<"inventory"> {
+      target: json.Serializable.ToJSON<T>;
+      inventory: base.Diagnostic.JSON;
+    }
+
+    export interface EARL extends Outcome.EARL {
+      "earl:result": {
+        "@type": "earl:TestResult";
+        "earl:outcome": {
+          "@id": "earl:inventory";
+        };
+        "earl:pointer"?: earl.EARL;
+      };
+    }
+
+    export function isInventory<I, T, Q>(
+      value: Outcome<I, T, Q>
+    ): value is Inventory<I, T, Q>;
+
+    export function isInventory<I, T, Q>(
+      value: unknown
+    ): value is Inventory<I, T, Q>;
+
+    export function isInventory<I, T, Q>(
+      value: unknown
+    ): value is Inventory<I, T, Q> {
+      return value instanceof Inventory;
+    }
+  }
+
+  export const { of: inventory, isInventory } = Inventory;
 
   export function from<I, T, Q>(
     rule: Rule<I, T, Q>,

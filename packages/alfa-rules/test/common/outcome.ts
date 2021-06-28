@@ -1,3 +1,4 @@
+import { Diagnostic as Inventory } from "@siteimprove/alfa-inventory";
 import { Diagnostic, Rule, Outcome } from "@siteimprove/alfa-act";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
@@ -38,4 +39,12 @@ export function cantTell<T, Q>(
   target: T
 ): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target).toJSON();
+}
+
+export function inventory<T, Q>(
+  rule: Rule<Page, T, Q>,
+  target: T,
+  inventory: Inventory
+): Outcome.Inventory.JSON<T> {
+  return Outcome.Inventory.of(rule, target, inventory).toJSON();
 }
