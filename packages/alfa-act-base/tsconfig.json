@@ -2,7 +2,15 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
+    "src/diagnostic.ts",
+    "src/index.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-json"
+    }
   ]
 }

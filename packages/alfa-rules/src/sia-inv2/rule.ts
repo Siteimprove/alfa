@@ -1,4 +1,5 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Node } from "@siteimprove/alfa-aria";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -38,7 +39,6 @@ export default Rule.Inventory.of<Page, Document>({
         );
 
         return ImagesNames.of(
-          "",
           images.map((image) =>
             ImageName.of(
               image,
@@ -101,17 +101,14 @@ namespace ImageName {
 }
 
 class ImagesNames extends Diagnostic {
-  public static of(
-    message: string,
-    images: ReadonlyArray<ImageName> = []
-  ): ImagesNames {
-    return new ImagesNames(message, images);
+  public static of(images: ReadonlyArray<ImageName> = []): ImagesNames {
+    return new ImagesNames(images);
   }
 
   private readonly _images: ReadonlyArray<ImageName>;
 
-  private constructor(message: string, images: ReadonlyArray<ImageName>) {
-    super(message);
+  private constructor(images: ReadonlyArray<ImageName>) {
+    super();
     this._images = images;
   }
 
@@ -132,7 +129,6 @@ class ImagesNames extends Diagnostic {
 
   public toJSON(): ImagesNames.JSON {
     return {
-      ...super.toJSON(),
       images: this._images.map((image) => image.toJSON()),
     };
   }

@@ -1,4 +1,5 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -31,21 +32,21 @@ export default Rule.Inventory.of<Page, Element>({
       expectations(target) {
         const name = Node.from(target, device).name.map((name) => name.value);
 
-        return ImageName.of("", name);
+        return ImageName.of(name);
       },
     };
   },
 });
 
 export class ImageName extends Diagnostic {
-  public static of(message: string, name: Option<string> = None): ImageName {
-    return new ImageName(message, name);
+  public static of(name: Option<string> = None): ImageName {
+    return new ImageName(name);
   }
 
   private readonly _name: Option<string>;
 
-  private constructor(message: string, name: Option<string>) {
-    super(message);
+  private constructor(name: Option<string>) {
+    super();
     this._name = name;
   }
 
@@ -58,16 +59,11 @@ export class ImageName extends Diagnostic {
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return (
-      value instanceof ImageName &&
-      value._message === this._message &&
-      value._name.equals(this._name)
-    );
+    return value instanceof ImageName && value._name.equals(this._name);
   }
 
   public toJSON(): ImageName.JSON {
     return {
-      ...super.toJSON(),
       name: this._name.toJSON(),
     };
   }

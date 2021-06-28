@@ -1,3 +1,4 @@
+import { Diagnostic as Base } from "@siteimprove/alfa-act-base";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
@@ -598,14 +599,18 @@ export namespace Outcome {
   export const { of: inapplicable, isInapplicable } = Inapplicable;
 
   export class Inventory<I, T, Q = never> extends Outcome<I, T, Q> {
-    public static of<I, T, Q>(rule: Rule<I, T, Q>, target: T, inventory: Diagnostic): Inventory<I, T, Q> {
-      return new Inventory(rule, target, inventory)
+    public static of<I, T, Q>(
+      rule: Rule<I, T, Q>,
+      target: T,
+      inventory: Base
+    ): Inventory<I, T, Q> {
+      return new Inventory(rule, target, inventory);
     }
 
     private readonly _target: T;
-    private readonly _inventory: Diagnostic;
+    private readonly _inventory: Base;
 
-    private constructor(rule: Rule<I, T, Q>, target: T, inventory: Diagnostic) {
+    private constructor(rule: Rule<I, T, Q>, target: T, inventory: Base) {
       super(rule);
 
       this._target = target;
@@ -613,24 +618,24 @@ export namespace Outcome {
     }
 
     public get target(): T {
-      return this._target
+      return this._target;
     }
 
-    public get inventory(): Diagnostic {
+    public get inventory(): Base {
       return this._inventory;
     }
 
-    public equals<I, T, Q>(value: Inventory<I, T, Q>): boolean
+    public equals<I, T, Q>(value: Inventory<I, T, Q>): boolean;
 
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
       return (
         value instanceof Inventory &&
-          value._rule.equals(this._rule) &&
-          Equatable.equals(value._target, this._target) &&
-          value._inventory.equals(this._inventory)
-      )
+        value._rule.equals(this._rule) &&
+        Equatable.equals(value._target, this._target) &&
+        value._inventory.equals(this._inventory)
+      );
     }
 
     public toJSON(): Inventory.JSON<T> {
@@ -638,8 +643,8 @@ export namespace Outcome {
         outcome: "inventory",
         rule: this._rule.toJSON(),
         target: json.Serializable.toJSON(this._target),
-        inventory: this._inventory.toJSON()
-      }
+        inventory: this._inventory.toJSON(),
+      };
     }
 
     public toEARL(): Inventory.EARL {
@@ -648,10 +653,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:inventory"
+            "@id": "earl:inventory",
           },
-          "earl:info": this._inventory.message
-        }
+        },
       };
 
       for (const pointer of earl.Serializable.toEARL(this._target)) {
@@ -673,11 +677,11 @@ export namespace Outcome {
         kind: "informational",
         level: "none",
         message: {
-          text: this._inventory.message,
-          markdown: this._inventory.message,
+          text: "inventory",
+          markdown: "inventory",
         },
-        locations
-      }
+        locations,
+      };
     }
   }
 
@@ -686,7 +690,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "inventory";
       target: json.Serializable.ToJSON<T>;
-      inventory: Diagnostic.JSON
+      inventory: Base.JSON;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -695,9 +699,8 @@ export namespace Outcome {
         "earl:outcome": {
           "@id": "earl:inventory";
         };
-        "earl:info": string;
         "earl:pointer"?: earl.EARL;
-      }
+      };
     }
 
     export function isInventory<I, T, Q>(

@@ -1,3 +1,4 @@
+import { Diagnostic as Base } from "@siteimprove/alfa-act-base";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -379,12 +380,12 @@ export namespace Rule {
 
     private constructor(uri: string, evaluate: Inventory.Evaluate<I, T>) {
       super(uri, [], [], (input) => {
-          const { applicability, expectations } = evaluate(input);
+        const { applicability, expectations } = evaluate(input);
 
-          return Future.traverse(applicability(), target =>
-            Future.now(Outcome.inventory(this, target, expectations(target))))
-            }
-      );
+        return Future.traverse(applicability(), (target) =>
+          Future.now(Outcome.inventory(this, target, expectations(target)))
+        );
+      });
     }
 
     public toJSON(): Inventory.JSON {
@@ -393,9 +394,8 @@ export namespace Rule {
         uri: this._uri,
         requirements: [],
         tags: [],
-      }
+      };
     }
-
   }
 
   export namespace Inventory {
@@ -404,10 +404,10 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T> {
-      (input: Readonly<I>):  {
+      (input: Readonly<I>): {
         applicability(): Iterable<T>;
-        expectations(target: T): Diagnostic
-      }
+        expectations(target: T): Base;
+      };
     }
   }
 }

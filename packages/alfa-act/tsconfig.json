@@ -16,6 +16,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-act-base"
+    },
+    {
       "path": "../alfa-earl"
     },
     {

@@ -13,7 +13,7 @@ test("evaluate() gets the name of an image", async (t) => {
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(INV1, { document }), [
-    inventory(INV1, target, Inventory.of("", Option.of("Hello world"))),
+    inventory(INV1, target, Inventory.of(Option.of("Hello world"))),
   ]);
 });
 
