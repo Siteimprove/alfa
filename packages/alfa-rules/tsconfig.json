@@ -270,6 +270,9 @@
       "path": "../alfa-iana"
     },
     {
+      "path": "../alfa-inventory"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {

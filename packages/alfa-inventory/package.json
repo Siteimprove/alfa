@@ -17,6 +17,9 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-act-base": "workspace:^0.19.0"
+  },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.19.0"
   },
