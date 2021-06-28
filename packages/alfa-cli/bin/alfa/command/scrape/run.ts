@@ -10,6 +10,7 @@ import { Header, Cookie } from "@siteimprove/alfa-http";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import {
+  Archive,
   Awaiter,
   Credentials,
   Scraper,
@@ -83,6 +84,15 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     }
   }
 
+  let archive: Archive | undefined;
+
+  for (const path of flags.archive) {
+    switch (flags.archiveFormat) {
+      case "mhtml":
+        archive = Archive.of(path, Archive.Format.MHTML);
+    }
+  }
+
   const headers = [...flags.headers].map((header) => {
     const index = header.indexOf(":");
 
@@ -141,6 +151,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
       device,
       credentials,
       screenshot,
+      archive,
       headers,
       cookies,
       fit: flags.fit,

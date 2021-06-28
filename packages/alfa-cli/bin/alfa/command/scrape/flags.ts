@@ -144,14 +144,14 @@ export const Flags = {
 
   screenshot: Flag.string(
     "screenshot",
-    "The path to write a screenshot to. If not provided, no screenshot is taken."
+    "The path to write a screenshot to. If not provided, no screenshot is captured."
   )
     .type("path")
     .optional(),
 
   screenshotType: Flag.string(
     "screenshot-type",
-    "The file type of the screenshot"
+    "The file type of the screenshot."
   )
     .choices("png", "jpeg")
     .default("png"),
@@ -169,4 +169,18 @@ export const Flags = {
     .type("0-100")
     .filter((value) => value >= 0 && value <= 100)
     .default(100),
+
+  archive: Flag.string(
+    "archive",
+    "The path to write an archive to. If not provided, no archive is captured."
+  )
+    .type("path")
+    .optional(),
+
+  archiveFormat: Flag.string(
+    "archive-format",
+    "The format of the captured archive."
+  )
+    .choices("mhtml")
+    .default("mhtml"),
 };
