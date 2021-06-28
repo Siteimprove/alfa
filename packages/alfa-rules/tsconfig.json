@@ -158,6 +158,7 @@
     "test/common/predicate/is-visible.spec.tsx",
     "test/common/predicate/has-role.spec.tsx",
     "test/common/expectation/get-colors.spec.tsx",
+    "test/sia-inv1/rule.spec.tsx",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
     "test/sia-r3/rule.spec.tsx",

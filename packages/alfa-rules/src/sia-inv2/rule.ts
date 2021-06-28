@@ -1,9 +1,9 @@
-import {Rule, Diagnostic} from "@siteimprove/alfa-act";
-import {Node} from "@siteimprove/alfa-aria";
-import {Document, Element, Namespace} from "@siteimprove/alfa-dom";
-import {Equatable} from "@siteimprove/alfa-equatable";
-import {Serializable} from "@siteimprove/alfa-json";
-import {Option} from "@siteimprove/alfa-option";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -20,23 +20,32 @@ export default Rule.Inventory.of<Page, Document>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return [document]
-
+        return [document];
       },
 
       expectations(target) {
-        const images = Array.from(target
-          .descendants({ flattened: true, nested: true })
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasRole(device, "img"),
-              not(isIgnored(device))
+        const images = Array.from(
+          target
+            .descendants({ flattened: true, nested: true })
+            .filter(isElement)
+            .filter(
+              and(
+                hasNamespace(Namespace.HTML),
+                hasRole(device, "img"),
+                not(isIgnored(device))
+              )
             )
-          ));
+        );
 
-        return ImagesNames.of("", images.map(image => ImageName.of(image, Node.from(image, device).name.map(name => name.value))))
+        return ImagesNames.of(
+          "",
+          images.map((image) =>
+            ImageName.of(
+              image,
+              Node.from(image, device).name.map((name) => name.value)
+            )
+          )
+        );
       },
     };
   },
@@ -44,7 +53,7 @@ export default Rule.Inventory.of<Page, Document>({
 
 class ImageName implements Equatable, Serializable {
   public static of(image: Element, name: Option<string>): ImageName {
-    return new ImageName(image, name)
+    return new ImageName(image, name);
   }
 
   private readonly _image: Element;
@@ -52,7 +61,7 @@ class ImageName implements Equatable, Serializable {
 
   private constructor(image: Element, name: Option<string>) {
     this._image = image;
-    this._name = name
+    this._name = name;
   }
 
   public get image(): Element {
@@ -68,16 +77,18 @@ class ImageName implements Equatable, Serializable {
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof ImageName &&
+    return (
+      value instanceof ImageName &&
       value._name.equals(this._name) &&
       value._image.equals(this._image)
+    );
   }
 
   public toJSON(): ImageName.JSON {
     return {
       image: this._image.toJSON(),
-      name: this._name.toJSON()
-    }
+      name: this._name.toJSON(),
+    };
   }
 }
 
@@ -115,20 +126,20 @@ class ImagesNames extends Diagnostic {
   public equals(value: unknown): boolean {
     return (
       value instanceof ImagesNames &&
-      value._images.every((image, idx) => image.equals(this._images[idx])
-    ));
+      value._images.every((image, idx) => image.equals(this._images[idx]))
+    );
   }
 
   public toJSON(): ImagesNames.JSON {
     return {
       ...super.toJSON(),
-      images: this._images.map(image => image.toJSON())
+      images: this._images.map((image) => image.toJSON()),
     };
   }
 }
 
 namespace ImagesNames {
   export interface JSON extends Diagnostic.JSON {
-    images: Array<ImageName.JSON>
+    images: Array<ImageName.JSON>;
   }
 }

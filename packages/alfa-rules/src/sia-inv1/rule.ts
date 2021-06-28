@@ -1,7 +1,7 @@
-import {Rule, Diagnostic} from "@siteimprove/alfa-act";
-import {Node} from "@siteimprove/alfa-aria";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import {None, Option} from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -29,19 +29,16 @@ export default Rule.Inventory.of<Page, Element>({
       },
 
       expectations(target) {
-        const name = Node.from(target, device).name.map(name => name.value)
+        const name = Node.from(target, device).name.map((name) => name.value);
 
-        return ImageName.of("", name)
+        return ImageName.of("", name);
       },
     };
   },
 });
 
-class ImageName extends Diagnostic {
-  public static of(
-    message: string,
-    name: Option<string> = None
-  ): ImageName {
+export class ImageName extends Diagnostic {
+  public static of(message: string, name: Option<string> = None): ImageName {
     return new ImageName(message, name);
   }
 

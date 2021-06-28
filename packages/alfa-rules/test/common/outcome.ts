@@ -39,3 +39,11 @@ export function cantTell<T, Q>(
 ): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target).toJSON();
 }
+
+export function inventory<T, Q>(
+  rule: Rule<Page, T, Q>,
+  target: T,
+  inventory: Diagnostic
+): Outcome.Inventory.JSON<T> {
+  return Outcome.Inventory.of(rule, target, inventory).toJSON();
+}
