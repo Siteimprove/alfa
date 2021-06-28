@@ -2,7 +2,7 @@ import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
-import * as act from "@siteimprove/alfa-act";
+import * as act from "@siteimprove/alfa-act-base";
 
 export interface Question {
   boolean: boolean;

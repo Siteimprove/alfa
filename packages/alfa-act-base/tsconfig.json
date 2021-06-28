@@ -3,14 +3,27 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/diagnostic.ts",
-    "src/index.ts"
+    "src/index.ts",
+    "src/oracle.ts",
+    "src/outcome.ts",
+    "src/question.ts",
+    "src/rule.ts"
   ],
   "references": [
     {
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-functor"
+    },
+    {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
     }
   ]
 }

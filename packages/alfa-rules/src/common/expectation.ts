@@ -1,4 +1,5 @@
-import { Diagnostic, Interview, Question } from "@siteimprove/alfa-act";
+import { Diagnostic, Interview } from "@siteimprove/alfa-act";
+import { Question } from "@siteimprove/alfa-act-base";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";

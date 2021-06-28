@@ -11,7 +11,6 @@ export * from "./diagnostic";
 export * from "./interview";
 export * from "./oracle";
 export * from "./outcome";
-export * from "./question";
 export * from "./requirement";
 export * from "./rule";
 export * from "./tag";

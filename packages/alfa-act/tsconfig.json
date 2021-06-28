@@ -9,7 +9,6 @@
     "src/interview.ts",
     "src/oracle.ts",
     "src/outcome.ts",
-    "src/question.ts",
     "src/requirement.ts",
     "src/rule.ts",
     "src/tag.ts"
