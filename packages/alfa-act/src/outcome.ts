@@ -1,4 +1,3 @@
-import { Diagnostic as Base } from "@siteimprove/alfa-act-base";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
@@ -10,6 +9,8 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
+import * as base from "@siteimprove/alfa-act-base";
+
 import { Diagnostic } from "./diagnostic";
 import { Rule } from "./rule";
 
@@ -17,30 +18,15 @@ import { Rule } from "./rule";
  * @public
  */
 export abstract class Outcome<I, T, Q = never>
+  extends base.Outcome<I, T, Q>
   implements
     Equatable,
     json.Serializable<Outcome.JSON>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result> {
-  protected readonly _rule: Rule<I, T, Q>;
-
   protected constructor(rule: Rule<I, T, Q>) {
-    this._rule = rule;
+    super(rule);
   }
-
-  public get rule(): Rule<I, T, Q> {
-    return this._rule;
-  }
-
-  public get target(): T | undefined {
-    return undefined;
-  }
-
-  public abstract equals<I, T, Q>(value: Outcome<I, T, Q>): boolean;
-
-  public abstract equals(value: unknown): value is this;
-
-  public abstract toJSON(): Outcome.JSON;
 
   public toEARL(): Outcome.EARL {
     return {
@@ -61,11 +47,8 @@ export abstract class Outcome<I, T, Q = never>
  * @public
  */
 export namespace Outcome {
-  export interface JSON {
-    [key: string]: json.JSON;
-    outcome: string;
-    rule: Rule.JSON;
-  }
+  export interface JSON<O extends string = string>
+    extends base.Outcome.JSON<O> {}
 
   export interface EARL extends earl.EARL {
     "@type": "earl:Assertion";
@@ -191,9 +174,7 @@ export namespace Outcome {
   }
 
   export namespace Passed {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "passed";
+    export interface JSON<T> extends Outcome.JSON<"passed"> {
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
@@ -344,9 +325,7 @@ export namespace Outcome {
   }
 
   export namespace Failed {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "failed";
+    export interface JSON<T> extends Outcome.JSON<"failed"> {
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
@@ -459,9 +438,7 @@ export namespace Outcome {
   }
 
   export namespace CantTell {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "cantTell";
+    export interface JSON<T> extends Outcome.JSON<"cantTell"> {
       target: json.Serializable.ToJSON<T>;
     }
 
@@ -567,10 +544,7 @@ export namespace Outcome {
   }
 
   export namespace Inapplicable {
-    export interface JSON extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "inapplicable";
-    }
+    export interface JSON extends Outcome.JSON<"inapplicable"> {}
 
     export interface EARL extends Outcome.EARL {
       "earl:result": {
@@ -602,15 +576,19 @@ export namespace Outcome {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      inventory: Base
+      inventory: base.Diagnostic
     ): Inventory<I, T, Q> {
       return new Inventory(rule, target, inventory);
     }
 
     private readonly _target: T;
-    private readonly _inventory: Base;
+    private readonly _inventory: base.Diagnostic;
 
-    private constructor(rule: Rule<I, T, Q>, target: T, inventory: Base) {
+    private constructor(
+      rule: Rule<I, T, Q>,
+      target: T,
+      inventory: base.Diagnostic
+    ) {
       super(rule);
 
       this._target = target;
@@ -621,7 +599,7 @@ export namespace Outcome {
       return this._target;
     }
 
-    public get inventory(): Base {
+    public get inventory(): base.Diagnostic {
       return this._inventory;
     }
 
@@ -686,11 +664,9 @@ export namespace Outcome {
   }
 
   export namespace Inventory {
-    export interface JSON<T> extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "inventory";
+    export interface JSON<T> extends Outcome.JSON<"inventory"> {
       target: json.Serializable.ToJSON<T>;
-      inventory: Base.JSON;
+      inventory: base.Diagnostic.JSON;
     }
 
     export interface EARL extends Outcome.EARL {

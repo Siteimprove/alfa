@@ -2,19 +2,29 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
+    "src/cache.ts",
     "src/diagnostic.ts",
     "src/index.ts",
+    "src/interview.ts",
     "src/oracle.ts",
     "src/outcome.ts",
     "src/question.ts",
-    "src/rule.ts"
+    "src/requirement.ts",
+    "src/rule.ts",
+    "src/tag.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-earl"
+    },
     {
       "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-future"
     },
     {
       "path": "../alfa-json"
@@ -24,6 +34,12 @@
     },
     {
       "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-sarif"
     }
   ]
 }

@@ -1,4 +1,11 @@
-import { Diagnostic as Base } from "@siteimprove/alfa-act-base";
+import {
+  // Cache,
+  Interview,
+  Oracle,
+  // Outcome,
+  Requirement,
+  Tag,
+} from "@siteimprove/alfa-act-base";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -12,13 +19,10 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Cache } from "./cache";
+import * as base from "@siteimprove/alfa-act-base";
+
 import { Diagnostic } from "./diagnostic";
-import { Interview } from "./interview";
-import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
-import { Requirement } from "./requirement";
-import { Tag } from "./tag";
 
 const { flatMap, flatten, reduce } = Iterable;
 
@@ -26,57 +30,20 @@ const { flatMap, flatten, reduce } = Iterable;
  * @public
  */
 export abstract class Rule<I = unknown, T = unknown, Q = never>
+  extends base.Rule<I, T, Q>
   implements
     Equatable,
-    json.Serializable<Rule.JSON>,
+    json.Serializable<base.Rule.JSON>,
     earl.Serializable<Rule.EARL>,
     sarif.Serializable<sarif.ReportingDescriptor> {
-  protected readonly _uri: string;
-  protected readonly _requirements: Array<Requirement>;
-  protected readonly _tags: Array<Tag>;
-  protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
-
   protected constructor(
     uri: string,
     requirements: Array<Requirement>,
     tags: Array<Tag>,
-    evaluator: Rule.Evaluate<I, T, Q>
+    evaluator: base.Rule.Evaluate<I, T, Q>
   ) {
-    this._uri = uri;
-    this._requirements = requirements;
-    this._tags = tags;
-    this._evaluate = evaluator;
+    super(uri, requirements, tags, evaluator);
   }
-
-  public get uri(): string {
-    return this._uri;
-  }
-
-  public get requirements(): ReadonlyArray<Requirement> {
-    return this._requirements;
-  }
-
-  public get tags(): ReadonlyArray<Tag> {
-    return this._tags;
-  }
-
-  public evaluate(
-    input: Readonly<I>,
-    oracle: Oracle<I, T, Q> = () => Future.now(None),
-    outcomes: Cache = Cache.empty()
-  ): Future<Iterable<Outcome<I, T, Q>>> {
-    return this._evaluate(input, oracle, outcomes);
-  }
-
-  public equals<I, T, Q>(value: Rule<I, T, Q>): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return value instanceof Rule && value._uri === this._uri;
-  }
-
-  public abstract toJSON(): Rule.JSON;
 
   public toEARL(): Rule.EARL {
     return {
@@ -104,12 +71,12 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
  * @public
  */
 export namespace Rule {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: string;
-    uri: string;
-    requirements: Array<Requirement.JSON>;
-    tags: Array<Tag.JSON>;
+  export interface JSON<T extends string = string> extends base.Rule.JSON<T> {
+    //   [key: string]: json.JSON;
+    //   type: string;
+    //   uri: string;
+    //   requirements: Array<Requirement.JSON>;
+    //   tags: Array<Tag.JSON>;
   }
 
   export interface EARL extends earl.EARL {
@@ -124,15 +91,15 @@ export namespace Rule {
     };
   }
 
-  export type Input<R> = R extends Rule<infer I, any, any> ? I : never;
-
-  export type Target<R> = R extends Rule<any, infer T, any> ? T : never;
-
-  export type Question<R> = R extends Rule<any, any, infer Q> ? Q : never;
-
-  export function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q> {
-    return value instanceof Rule;
-  }
+  // export type Input<R> = R extends Rule<infer I, any, any> ? I : never;
+  //
+  // export type Target<R> = R extends Rule<any, infer T, any> ? T : never;
+  //
+  // export type Question<R> = R extends Rule<any, any, infer Q> ? Q : never;
+  //
+  // export function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q> {
+  //   return value instanceof Rule;
+  // }
 
   /**
    * @remarks
@@ -156,11 +123,11 @@ export namespace Rule {
    * approach in combination with memoization to avoid the risk of repeating
    * rule evaluation procedures.
    */
-  export interface Evaluate<I, T, Q> {
-    (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache): Future<
-      Iterable<Outcome<I, T, Q>>
-    >;
-  }
+  // export interface Evaluate<I, T, Q> {
+  //   (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache): Future<
+  //     Iterable<Outcome<I, T, Q>>
+  //   >;
+  // }
 
   export class Atomic<I = unknown, T = unknown, Q = never> extends Rule<
     I,
@@ -225,9 +192,7 @@ export namespace Rule {
   }
 
   export namespace Atomic {
-    export interface JSON extends Rule.JSON {
-      type: "atomic";
-    }
+    export interface JSON extends Rule.JSON<"atomic"> {}
 
     export interface Evaluate<I, T, Q> {
       (input: Readonly<I>): {
@@ -290,7 +255,7 @@ export namespace Rule {
               Sequence.from(
                 flatMap(outcomes, function* (outcomes) {
                   for (const outcome of outcomes) {
-                    if (Outcome.isApplicable(outcome)) {
+                    if (Outcome.isApplicable<I, T, Q>(outcome)) {
                       yield outcome;
                     }
                   }
@@ -339,9 +304,7 @@ export namespace Rule {
   }
 
   export namespace Composite {
-    export interface JSON extends Rule.JSON {
-      type: "composite";
-      uri: string;
+    export interface JSON extends Rule.JSON<"composite"> {
       composes: Array<Rule.JSON>;
     }
 
@@ -399,14 +362,12 @@ export namespace Rule {
   }
 
   export namespace Inventory {
-    export interface JSON extends Rule.JSON {
-      type: "inventory";
-    }
+    export interface JSON extends Rule.JSON<"inventory"> {}
 
     export interface Evaluate<I, T> {
       (input: Readonly<I>): {
         applicability(): Iterable<T>;
-        expectations(target: T): Base;
+        expectations(target: T): base.Diagnostic;
       };
     }
   }
