@@ -6,12 +6,14 @@ import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
+import and = Refinement.and;
 
 const { hasInputType, hasName, isElement } = Element;
 const { or, test } = Predicate;
@@ -483,20 +485,34 @@ const Features: Features = {
       }
     ),
 
-    li: html((element) =>
-      element
-        .parent()
-        .filter(Element.isElement)
-        .flatMap((parent) => {
-          switch (parent.name) {
-            case "ol":
-            case "ul":
-            case "menu":
-              return Option.of(Role.of("listitem"));
-          }
+    li: html(
+      (element) =>
+        element
+          .parent()
+          .filter(Element.isElement)
+          .flatMap((parent) => {
+            switch (parent.name) {
+              case "ol":
+              case "ul":
+              case "menu":
+                return Option.of(Role.of("listitem"));
+            }
 
-          return None;
-        })
+            return None;
+          }),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#el-li
+        const siblings = element
+          .inclusiveSiblings()
+          .filter(and(Element.isElement, Element.hasName("li")));
+
+        yield Attribute.of("aria-setsize", `${siblings.size}`);
+
+        yield Attribute.of(
+          "aria-posinset",
+          `${siblings.takeUntil((sibling) => sibling.equals(element)).size}`
+        );
+      }
     ),
 
     main: html(() => Option.of(Role.of("main"))),

@@ -448,7 +448,10 @@ test(`.from() doesn't inherit presentational roles into explicitly required
         node: "/ul[1]/li[1]",
         role: "listitem",
         name: null,
-        attributes: [],
+        attributes: [
+          { name: "aria-setsize", value: "1" },
+          { name: "aria-posinset", value: "0" },
+        ],
         children: [],
       },
     ],
@@ -513,4 +516,30 @@ test(`.from() doesn't expose children of elements with roles that designate
       },
     ],
   });
+});
+
+test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
+  const first = <li>First</li>;
+  const second = <li>Second</li>;
+  const third = <li>Third</li>;
+  const fourth = <li>Fourth</li>;
+
+  const _ = (
+    <ul>
+      {first}
+      {second}
+      {third}
+      {fourth}
+    </ul>
+  );
+
+  const items = [first, second, third, fourth];
+
+  for (let i = 0; i < items.length; i++) {
+    const node = Node.from(items[i], device);
+
+    t.deepEqual(node.attribute("aria-setsize").get().value, `${items.length}`);
+
+    t.deepEqual(node.attribute("aria-posinset").get().value, `${i}`);
+  }
 });
