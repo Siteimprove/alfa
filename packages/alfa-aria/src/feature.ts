@@ -516,7 +516,9 @@ const Features: Features = {
           Attribute.of("aria-setsize", `${siblings.size}`),
           Attribute.of(
             "aria-posinset",
-            `${siblings.takeUntil((sibling) => sibling.equals(element)).size}`
+            `${
+              siblings.takeUntil((sibling) => sibling.equals(element)).size + 1
+            }`
           ),
         ];
       }

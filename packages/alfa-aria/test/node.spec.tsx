@@ -450,7 +450,7 @@ test(`.from() doesn't inherit presentational roles into explicitly required
         name: null,
         attributes: [
           { name: "aria-setsize", value: "1" },
-          { name: "aria-posinset", value: "0" },
+          { name: "aria-posinset", value: "1" },
         ],
         children: [],
       },
@@ -540,6 +540,6 @@ test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
 
     t.deepEqual(node.attribute("aria-setsize").get().value, `${items.length}`);
 
-    t.deepEqual(node.attribute("aria-posinset").get().value, `${i}`);
+    t.deepEqual(node.attribute("aria-posinset").get().value, `${i + 1}`);
   }
 });
