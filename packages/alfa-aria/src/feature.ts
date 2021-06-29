@@ -245,6 +245,9 @@ const Features: Features = {
       }
     ),
 
+    // <datalist> only has a role if it is correctly mapped to an <input>
+    // via the list attribute. We should probably check that.
+    // Additionally, it seems to never be rendered, hence always ignored.
     datalist: html(() => Option.of(Role.of("listbox"))),
 
     dd: html(() => Option.of(Role.of("definition"))),
@@ -614,6 +617,9 @@ const Features: Features = {
     textarea: html(
       () => Option.of(Role.of("textbox")),
       function* (element) {
+        // https://w3c.github.io/html-aam/#el-textarea
+        yield Attribute.of("aria-multiline", "true");
+
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
           yield Attribute.of("aria-disabled", "true");
