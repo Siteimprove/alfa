@@ -13,10 +13,10 @@ import { Cell, Table } from "@siteimprove/alfa-table";
 import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
-import and = Refinement.and;
 
 const { hasInputType, hasName, isElement } = Element;
 const { or, test } = Predicate;
+const { and } = Refinement;
 
 /**
  * @internal
@@ -247,6 +247,7 @@ const Features: Features = {
       }
     ),
 
+    // https://w3c.github.io/html-aam/#el-datalist
     // <datalist> only has a role if it is correctly mapped to an <input>
     // via the list attribute. We should probably check that.
     // Additionally, it seems to never be rendered, hence always ignored.
@@ -402,6 +403,11 @@ const Features: Features = {
         return None;
       },
       function* (element) {
+        // https://w3c.github.io/html-aam/#el-input-checkbox
+        // aria-checked should be "mixed" if the indeterminate IDL attribute is
+        // true
+        // aria-checked should otherwise mimic the checkedness, i.e. the
+        // checked *IDL* attribute, not the DOM one.
         // https://w3c.github.io/html-aam/#att-checked
         yield Attribute.of(
           "aria-checked",
@@ -500,18 +506,19 @@ const Features: Features = {
 
             return None;
           }),
-      function* (element) {
+      (element) => {
         // https://w3c.github.io/html-aam/#el-li
         const siblings = element
           .inclusiveSiblings()
           .filter(and(Element.isElement, Element.hasName("li")));
 
-        yield Attribute.of("aria-setsize", `${siblings.size}`);
-
-        yield Attribute.of(
-          "aria-posinset",
-          `${siblings.takeUntil((sibling) => sibling.equals(element)).size}`
-        );
+        return [
+          Attribute.of("aria-setsize", `${siblings.size}`),
+          Attribute.of(
+            "aria-posinset",
+            `${siblings.takeUntil((sibling) => sibling.equals(element)).size}`
+          ),
+        ];
       }
     ),
 
