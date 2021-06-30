@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R96 from "../../src/sia-r96/rule";
 import { RefreshDelay as Outcomes } from "../../src/common/outcome/refresh-delay";
@@ -13,7 +12,7 @@ test("evaluates() passes when there is an immediate refresh", async (t) => {
     <meta http-equiv="refresh" content="0; URL='https://w3c.org'" />
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R96, { document }), [
     passed(R96, target, { 1: Outcomes.HasImmediateRefresh }),
@@ -25,7 +24,7 @@ test("evaluates() fails when there is a delayed refresh", async (t) => {
     <meta http-equiv="refresh" content="30; URL='https://w3c.org'" />
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R96, { document }), [
     failed(R96, target, { 1: Outcomes.HasDelayedRefresh }),
@@ -37,7 +36,7 @@ test("evaluates() fails when there is a refresh after 20h", async (t) => {
     <meta http-equiv="refresh" content="72001; URL='https://w3c.org'" />
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R96, { document }), [
     failed(R96, target, { 1: Outcomes.HasDelayedRefresh }),
@@ -52,7 +51,7 @@ test("evaluates() only considers the first <meta> element", async (t) => {
     <meta http-equiv="refresh" content="30; URL='https://w3c.org'" />
   );
 
-  const document = Document.of([target, ignored]);
+  const document = h.document([target, ignored]);
 
   t.deepEqual(await evaluate(R96, { document }), [
     passed(R96, target, { 1: Outcomes.HasImmediateRefresh }),
@@ -60,20 +59,20 @@ test("evaluates() only considers the first <meta> element", async (t) => {
 });
 
 test("evaluate() is inapplicable when there is no <meta> element", async (t) => {
-  const document = Document.of([<div>Foo</div>]);
+  const document = h.document([<div>Foo</div>]);
 
   t.deepEqual(await evaluate(R96, { document }), [inapplicable(R96)]);
 });
 
 test("evaluate() is inapplicable when there is no <meta refresh> element", async (t) => {
-  const document = Document.of([<meta content="30" />]);
+  const document = h.document([<meta content="30" />]);
 
   t.deepEqual(await evaluate(R96, { document }), [inapplicable(R96)]);
 });
 
 test("evaluate() is inapplicable when the content attribute is invalid", async (t) => {
   // ':' instead of ';'
-  const document = Document.of([
+  const document = h.document([
     <meta http-equiv="refresh" content="0: URL='https://w3c.org'" />,
   ]);
 

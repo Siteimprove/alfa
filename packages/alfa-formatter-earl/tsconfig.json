@@ -1,7 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/earl.ts"],
+  "compilerOptions": {
+    "resolveJsonModule": true
+  },
+  "files": ["package.json", "src/index.ts", "src/earl.ts"],
   "references": [
     {
       "path": "../alfa-earl"

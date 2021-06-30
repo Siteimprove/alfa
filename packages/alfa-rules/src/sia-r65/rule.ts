@@ -12,6 +12,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import {
+  hasBorder,
   hasBoxShadow,
   hasOutline,
   hasTextDecoration,
@@ -22,7 +23,7 @@ import { Question } from "../common/question";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
-const { or, xor } = Predicate;
+const { or, test, xor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",
@@ -99,7 +100,9 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
           xor(hasBoxShadow(device), hasBoxShadow(device, withFocus)),
           // These properties are essentially always set, so any difference in the color is good enough.
           hasDifferentColors(device, withFocus),
-          hasDifferentBackgroundColors(device, withFocus)
+          hasDifferentBackgroundColors(device, withFocus),
+          // Any difference in border is accepted
+          hasDifferentBorder(device, withFocus)
         )
       );
   };
@@ -146,5 +149,57 @@ function hasDifferentBackgroundColors(
     // Technically, different solid backgrounds could render as the same color if one is fully transparent
     // and the parent happens to have the same color… We Assume that this won't happen often…
     return !color1.equals(color2);
+  };
+}
+
+function hasDifferentBorder(
+  device: Device,
+  context1: Context = Context.empty(),
+  context2: Context = Context.empty()
+): Predicate<Element> {
+  return function hasDifferentBorder(element: Element): boolean {
+    const style1 = Style.from(element, device, context1);
+    const style2 = Style.from(element, device, context2);
+
+    // If 0 or 1 has border, the answer is easy.
+    const hasBorder1 = test(hasBorder(device, context1), element);
+    const hasBorder2 = test(hasBorder(device, context2), element);
+
+    if (hasBorder1 !== hasBorder2) {
+      // only one has border
+      return true;
+    }
+
+    if (!hasBorder1 && !hasBorder2) {
+      // none has border
+      return false;
+    }
+
+    // They both have border, we need to dig the values
+
+    // We consider any difference in any of the border-* longhand as enough
+    for (const side of ["top", "right", "bottom", "left"] as const) {
+      for (const effect of ["color", "style", "width"] as const) {
+        const longhand = `border-${side}-${effect}` as const;
+
+        const border1 = style1.computed(longhand);
+        const border2 = style2.computed(longhand);
+
+        // We avoid keyword resolution for color,
+        // but we need it for style. The none=hidden conflict has been solved
+        // by hasBorder so any difference in style is enough.
+        if (
+          !(
+            (effect === "color" &&
+              (isKeyword(border1) || isKeyword(border2))) ||
+            border1.equals(border2)
+          )
+        ) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   };
 }

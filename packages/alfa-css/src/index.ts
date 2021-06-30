@@ -14,6 +14,7 @@ export * from "./value/converter";
 export * from "./value/dimension";
 export * from "./value/gradient";
 export * from "./value/gradient/linear";
+export * from "./value/gradient/radial";
 export * from "./value/image";
 export * from "./value/integer";
 export * from "./value/keyword";

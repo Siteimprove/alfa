@@ -53,7 +53,10 @@ test("#delete() removes a node from a graph", (t) => {
 });
 
 test("#traverse() traverses the subgraph rooted at a node", (t) => {
-  t.deepEqual([...graph.traverse("baz")].sort(), ["baz", "foo", "bar"].sort());
+  t.deepEqual(graph.traverse("baz").toJSON(), [
+    ["foo", "baz"],
+    ["bar", "foo"],
+  ]);
 });
 
 test("#traverse() traverses the subgraph rooted at a node depth-first", (t) => {
@@ -61,27 +64,27 @@ test("#traverse() traverses the subgraph rooted at a node depth-first", (t) => {
   // |- 2
   //    |- 3
   //    |- 4
+  //       |- 2 (cycle)
   // |- 5
   //    |- 6
   //    |- 7
+  //       |- 1 (cycle)
   const graph = Graph.from([
     [1, [2, 5]],
     [2, [3, 4]],
+    [4, [2]],
     [5, [6, 7]],
+    [7, [1]],
   ]);
 
-  t.deepEqual(
-    [...graph.traverse(1, Graph.DepthFirst)],
-    [
-      1, // 1
-      5, // |- 5
-      7, //    |- 7
-      6, //    |- 6
-      2, // |- 2
-      3, //    |- 3
-      4, //    |- 4
-    ]
-  );
+  t.deepEqual(graph.traverse(1, Graph.DepthFirst).toJSON(), [
+    [5, 1], // |- 5
+    [7, 5], //    |- 7
+    [6, 5], //    |- 6
+    [2, 1], // |- 2
+    [3, 2], //    |- 3
+    [4, 2], //    |- 4
+  ]);
 });
 
 test("#traverse() traverses the subgraph rooted at a node breadth-first", (t) => {
@@ -89,27 +92,38 @@ test("#traverse() traverses the subgraph rooted at a node breadth-first", (t) =>
   // |- 2
   //    |- 3
   //    |- 4
+  //       |- 2 (cycle)
   // |- 5
   //    |- 6
   //    |- 7
+  //       |- 1 (cycle)
   const graph = Graph.from([
     [1, [2, 5]],
     [2, [3, 4]],
+    [4, [2]],
     [5, [6, 7]],
+    [7, [1]],
   ]);
 
-  t.deepEqual(
-    [...graph.traverse(1, Graph.BreadthFirst)],
-    [
-      1, // 1
-      2, // |- 2
-      5, // |- 5
-      4, //    |- 4
-      3, //    |- 3
-      6, //    |- 6
-      7, //    |- 7
-    ]
-  );
+  t.deepEqual(graph.traverse(1, Graph.BreadthFirst).toJSON(), [
+    [2, 1], // |- 2
+    [5, 1], // |- 5
+    [4, 2], //    |- 4
+    [3, 2], //    |- 3
+    [6, 5], //    |- 6
+    [7, 5], //    |- 7
+  ]);
+});
+
+test("#path() returns the path from one node to another", (t) => {
+  // foo -> bar
+  t.deepEqual(graph.path("foo", "bar").toJSON(), ["bar"]);
+
+  // baz -> foo -> bar
+  t.deepEqual(graph.path("baz", "bar").toJSON(), ["foo", "bar"]);
+
+  // bar has no neighbors
+  t.deepEqual(graph.path("bar", "baz").toJSON(), []);
 });
 
 test("#hasPath() checks if there's a path from one node to another", (t) => {
@@ -121,9 +135,37 @@ test("#hasPath() checks if there's a path from one node to another", (t) => {
 
   // bar has no neighbors
   t.equal(graph.hasPath("bar", "baz"), false);
+});
 
-  // A node always has a path to itself
-  for (const node of ["foo", "bar", "baz"]) {
-    t.equal(graph.hasPath(node, node), true);
-  }
+test("#sort() topologically sorts an acyclic graph", (t) => {
+  // 1
+  // |- 2
+  //    |- 3
+  //    |- 4
+  //       |- 3
+  // 5
+  // |- 4
+  const graph = Graph.from([
+    [1, [2]],
+    [2, [3, 4]],
+    [4, [3]],
+    [5, [4]],
+  ]);
+
+  t.deepEqual([...graph.sort()], [1, 5, 2, 4, 3]);
+});
+
+test("#sort() yields nothing for a cyclic graph", (t) => {
+  // 1
+  // |- 2
+  //    |- 3
+  //    |- 4
+  //       |- 1
+  const graph = Graph.from([
+    [1, [2]],
+    [2, [3, 4]],
+    [4, [1]],
+  ]);
+
+  t.deepEqual([...graph.sort()], []);
 });

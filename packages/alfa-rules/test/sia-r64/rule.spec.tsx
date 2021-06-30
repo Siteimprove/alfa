@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R64, { Outcomes } from "../../src/sia-r64/rule";
 
@@ -10,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes a heading that has an accessible name", async (t) => {
   const target = <h1>Hello world</h1>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R64, { document }), [
     passed(R64, target, {
@@ -22,7 +21,7 @@ test("evaluate() passes a heading that has an accessible name", async (t) => {
 test("evaluate() fails a heading that has no accessible name", async (t) => {
   const target = <h1 />;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R64, { document }), [
     failed(R64, target, {
@@ -32,7 +31,7 @@ test("evaluate() fails a heading that has no accessible name", async (t) => {
 });
 
 test("evaluate() is not applicable when a document has no headings", async (t) => {
-  const document = Document.of([<p>Hello world</p>]);
+  const document = h.document([<p>Hello world</p>]);
 
   t.deepEqual(await evaluate(R64, { document }), [inapplicable(R64)]);
 });
@@ -44,7 +43,7 @@ test("evaluate() fails a heading whose content is aria-hidden", async (t) => {
     </h1>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R64, { document }), [
     failed(R64, target, {

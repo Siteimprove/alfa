@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Cheerio } from "@siteimprove/alfa-cheerio";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Node } from "@siteimprove/alfa-dom";

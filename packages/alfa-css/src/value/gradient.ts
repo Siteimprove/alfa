@@ -13,7 +13,7 @@ import { Color } from "./color";
 import { Length } from "./length";
 import { Percentage } from "./percentage";
 
-import { Linear } from "..";
+import { Linear, Radial } from "..";
 
 const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
 
@@ -22,13 +22,13 @@ const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
  *
  * @public
  */
-export type Gradient = Linear;
+export type Gradient = Linear | Radial;
 
 /**
  * @public
  */
 export namespace Gradient {
-  export type JSON = Linear.JSON;
+  export type JSON = Linear.JSON | Radial.JSON;
 
   /**
    * {@link https://drafts.csswg.org/css-images/#color-stop}
@@ -234,6 +234,6 @@ export namespace Gradient {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
-  export const parse: Parser<Slice<Token>, Linear, string> = (input) =>
-    Linear.parse(input);
+  export const parse: Parser<Slice<Token>, Gradient, string> = (input) =>
+    either(Linear.parse, Radial.parse)(input);
 }

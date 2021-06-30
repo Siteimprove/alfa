@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -10,11 +12,8 @@ import {
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as cheerio from "cheerio";
 import * as dom from "domhandler";
-
-// Cheerio has to be imported as a CommonJS module to ensure compatibility with
-// the `esModuleInterop` TypeScript option.
-import cheerio = require("cheerio");
 
 const { keys } = Object;
 
@@ -22,11 +21,7 @@ const { keys } = Object;
  * @public
  */
 export namespace Cheerio {
-  // The Cheerio typings are somewhat unfortunately written as they don't expose
-  // the "Cheerio" type as an export. We can however extract it from the top-
-  // level "cheerio" export as it's a selector function that returns objects of
-  // type "Cheerio".
-  export type Type = ReturnType<typeof cheerio>;
+  export type Type = cheerio.Cheerio<dom.Node>;
 
   export function toPage(value: Type): Page {
     return Page.of(

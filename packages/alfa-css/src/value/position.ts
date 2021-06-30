@@ -1,5 +1,5 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { Option, None, Some } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
@@ -88,11 +88,11 @@ export namespace Position {
 
   export const parseCenter = Keyword.parse("center");
 
-  export type Vertical = Keyword<"top" | "bottom">;
+  export type Vertical = Keyword<"top"> | Keyword<"bottom">;
 
   export const parseVertical = Keyword.parse("top", "bottom");
 
-  export type Horizontal = Keyword<"left" | "right">;
+  export type Horizontal = Keyword<"left"> | Keyword<"right">;
 
   export const parseHorizontal = Keyword.parse("left", "right");
 
@@ -193,7 +193,7 @@ export namespace Position {
           parseHorizontal,
           right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
         ),
-        ([keyword, value]) => Side.of(keyword, Some.of(value))
+        ([keyword, value]) => Side.of(keyword, Option.of(value))
       );
 
       export const parse = either<Slice<Token>, Component<Horizontal>, string>(
@@ -214,7 +214,7 @@ export namespace Position {
           parseVertical,
           right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
         ),
-        ([keyword, value]) => Side.of(keyword, Some.of(value))
+        ([keyword, value]) => Side.of(keyword, Option.of(value))
       );
 
       export const parse = either<Slice<Token>, Component<Vertical>, string>(

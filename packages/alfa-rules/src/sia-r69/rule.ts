@@ -46,8 +46,8 @@ export default Rule.Atomic.of<Page, Text, Question>({
                 isElement,
                 or(
                   not(Element.hasNamespace(Namespace.HTML)),
-                  hasRole((role) => role.isWidget()),
-                  and(hasRole("group"), isSemanticallyDisabled)
+                  hasRole(device, (role) => role.isWidget()),
+                  and(hasRole(device, "group"), isSemanticallyDisabled)
                 )
               ),
               node

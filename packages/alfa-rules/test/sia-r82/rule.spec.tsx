@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R82, { Outcomes } from "../../src/sia-r82/rule";
 
@@ -16,7 +15,7 @@ const invisibleError = <span hidden>Invisible error</span>;
 
 const ignoredError = <span aria-hidden="true">Ignored error</span>;
 
-const document = Document.of([
+const document = h.document([
   <form>
     <label>
       Input

@@ -1,6 +1,5 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R7, { Outcomes } from "../../src/sia-r7/rule";
 
@@ -11,7 +10,7 @@ test("evaluate() passes an element with a lang attribute within <body> with a va
   const element = <span lang="en">Hello World</span>;
   const target = element.attribute("lang").get();
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [
     passed(R7, target, {
@@ -28,7 +27,7 @@ test("evaluate() passes an element with a lang attribute within <body> that is n
   );
   const target = element.attribute("lang").get();
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [
     passed(R7, target, {
@@ -45,7 +44,7 @@ test("evaluate() passes an element with a lang attribute within <body> that is n
   );
   const target = element.attribute("lang").get();
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [
     passed(R7, target, {
@@ -62,7 +61,7 @@ test("evaluate() passes an element with a lang attribute within <body> when the 
   );
   const target = element.attribute("lang").get();
 
-  const document = Document.of([
+  const document = h.document([
     <body>
       <div lang="invalid">{element}</div>
     </body>,
@@ -79,7 +78,7 @@ test("evaluate() fails an element with a lang attribute within <body> with an in
   const element = <span lang="invalid">Hello World</span>;
   const target = element.attribute("lang").get()!;
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [
     failed(R7, target, {
@@ -95,7 +94,7 @@ test("evaluate() correctly handles nested elements with valid/invalid lang attri
   const target1 = element1.attribute("lang").get();
   const target2 = element2.attribute("lang").get();
 
-  const document = Document.of([<body>{element2}</body>]);
+  const document = h.document([<body>{element2}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [
     failed(R7, target2, {
@@ -110,7 +109,7 @@ test("evaluate() correctly handles nested elements with valid/invalid lang attri
 test("evaluate() is inapplicable for an element that is not visible or included in the accessibility tree", async (t) => {
   const element = <span lang="invalid" hidden />;
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [inapplicable(R7)]);
 });
@@ -118,7 +117,7 @@ test("evaluate() is inapplicable for an element that is not visible or included 
 test("evaluate() is inapplicable for an element with empty lang attribute", async (t) => {
   const element = <span lang="" />;
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [inapplicable(R7)]);
 });
@@ -126,7 +125,7 @@ test("evaluate() is inapplicable for an element with empty lang attribute", asyn
 test("evaluate() is inapplicable for an element with only whitespace lang attribute", async (t) => {
   const element = <span lang="  " />;
 
-  const document = Document.of([<body>{element}</body>]);
+  const document = h.document([<body>{element}</body>]);
 
   t.deepEqual(await evaluate(R7, { document }), [inapplicable(R7)]);
 });

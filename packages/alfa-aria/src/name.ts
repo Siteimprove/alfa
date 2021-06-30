@@ -610,7 +610,13 @@ export namespace Name {
     // https://w3c.github.io/accname/#step1
     // Step 1 is skipped when referencing due to step 2B.ii.b
     // https://w3c.github.io/accname/#step2B.ii.b
-    if (!state.isReferencing && role.some((role) => role.isNameProhibited())) {
+    // Step 1 is skipped when descending due to step 2F.iii.b
+    // https://w3c.github.io/accname/#step2B.iii.b
+    if (
+      !state.isReferencing &&
+      !state.isDescending &&
+      role.some((role) => role.isNameProhibited())
+    ) {
       return None;
     }
 
@@ -736,7 +742,7 @@ export namespace Name {
         )
       );
 
-    const name = flatten(names.map((name) => name.value).join(" "));
+    const name = flatten(names.map((name) => name.value).join(" ")).trim();
 
     if (name === "") {
       return None;
@@ -839,7 +845,9 @@ function isRendered(node: Node, device: Device): boolean {
   if (Element.isElement(node)) {
     const display = Style.from(node, device).computed("display").value;
 
-    const [outside] = display;
+    const {
+      values: [outside],
+    } = display;
 
     if (outside.value === "none") {
       return false;

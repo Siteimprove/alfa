@@ -21,6 +21,82 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The contrast ratios output in messages from SIA-R66 and SIA-R69 are now correctly listed as `<bright>:<dark>` rather than `<dark>:<bright>`.
+
+## [0.19.0](../../compare/v0.18.0...v0.19.0) (2021-06-15)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The second expectation of SIA-R62 has been removed due to poor accuracy. ([#772](../../pull/772))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `background-size` property is now specified as and computes to a `Tuple` instance rather than a plain array tuple. ([#788](../../pull/788))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-decoration-thickness` and `font-variant-*` CSS properties. ([#817](../../pull/817), [#821](../../pull/821))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R56 is now available. ([#829](../../pull/829))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts differences in font weight as a valid distinguishing feature for links. ([#779](../../pull/779))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now accepts differences in borders as a valid focus indicator. ([#819](../../pull/819))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now return a `CantTell` outcome for targets for which a `background-size` is found. ([#789](../../pull/789))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `hasRole()` now uses the role assigned to an element in the accessibility tree rather than just using `Role.from()`. ([#805](../../pull/805))
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css): Functional pseudo-classes and -elements now correctly implement `#equals()` and `#toString()`. ([#773](../../pull/773))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The first step of `Name.from()` is now correctly skipped when descending into child nodes. Additionally, descendant names that only consist of whitespace are no longer included. ([#778](../../pull/778), [#831](../../pull/831))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `background-size` property is now parsed correctly according to specification. ([#788](../../pull/788))
+
+## [0.18.0](../../compare/v0.17.0...v0.18.0) (2021-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-graph](packages/alfa-graph), [@siteimprove/alfa-network](packages/alfa-network): Several breaking changes have been made to the `Graph` and `Network` types. Please see the associated pull request for more details. ([#765](../../pull/765))
+
+- [@siteimprove/alfa-highlight](packages/alfa-highlight): The `syntax()` function has been removed. ([#764](../../pull/764))
+
+- [@siteimprove/alfa-json-ld](packages/alfa-json-ld): Several unused APIs have been removed. Please see the associated pull request for more details. ([#766](../../pull/766))
+
+### Added
+
+- [@siteimprove/alfa-graph](packages/alfa-graph), [@siteimprove/alfa-network](packages/alfa-network): `Graph#isEmpty()`, `Network#isEmpty()`, `Graph#path()`, `Network#path()`, `Graph#reverse()`, `Network#reverse()`, `Graph#sort()`, and `Network#sort()` are now available. ([#765](../../pull/765))
+
+## [0.17.0](../../compare/v0.16.2...v0.17.0) (2021-04-13)
+
+### Breaking
+
+- [@siteimprove/afa-style](packages/alfa-style): The type of the `display` has changed from a plain tuple to the `Tuple` class. ([#763](../../pull/763))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `border-*` shorthand CSS properties. Full support for the new logical CSS properties, such as `border-block-*`, is still an area of investigation. ([#754](../../pull/754))
+
+- [@siteimprove/alfa-thenable](packages/alfa-thenable): A new package is now available with types for modelling values that can be used in `await` expressions.
+
+- [@siteimprove/alfa-css](packages/alfa-css): Radial gradients are now available as a type of `Gradient`. ([#438](../../pull/438))
+
+### Changed
+
+- [@siteimprove/alfa-formatter-earl](packages/alfa-formatter-earl), [@siteimprove/alfa-formatter-sarif](packages/alfa-formatter-sarif): The EARL and SARIF formatters now output additional vendor data. ([#753](../../pull/753))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 is now a fully automated rule and will therefore no longer pose questions during an audit. ([#760](../../pull/760))
+
+### Fixed
+
+- [@siteimprove/alfa-scraper](packages/alfa-scraper): Some previously uncaught exceptions during page navigation are now caught and handled, resolving an issue where the scraper wouldn't terminate in rare cases.
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `display` property now supports the full grammar as specified by CSS. ([#763](../../pull/763))
+
 ## [0.16.2](../../compare/v0.16.1...v0.16.2) (2021-03-31)
 
 This release contains only internal API changes.

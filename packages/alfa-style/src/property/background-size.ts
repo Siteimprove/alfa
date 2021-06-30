@@ -1,13 +1,15 @@
 import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
+import { Tuple } from "./value/tuple";
 
-const { map, either, delimited, option, pair, separatedList } = Parser;
+const { map, either, delimited, option, pair, right, separatedList } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -24,11 +26,10 @@ export type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
+  export type Dimension = Length | Percentage | Keyword<"auto">;
+
   export type Item =
-    | [
-        Length | Percentage | Keyword<"auto">,
-        Length | Percentage | Keyword<"auto">
-      ]
+    | Tuple<[Dimension, Dimension]>
     | Keyword<"cover">
     | Keyword<"contain">;
 }
@@ -42,11 +43,10 @@ export type Computed = List<Computed.Item>;
  * @internal
  */
 export namespace Computed {
+  export type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
+
   export type Item =
-    | [
-        Length<"px"> | Percentage | Keyword<"auto">,
-        Length<"px"> | Percentage | Keyword<"auto">
-      ]
+    | Tuple<[Dimension, Dimension]>
     | Keyword<"cover">
     | Keyword<"contain">;
 }
@@ -54,12 +54,24 @@ export namespace Computed {
 /**
  * @internal
  */
+const parseDimension = either<Slice<Token>, Specified.Dimension, string>(
+  Length.parse,
+  Percentage.parse,
+  Keyword.parse("auto")
+);
+
+/**
+ * @internal
+ */
 export const parse = either(
-  pair(
-    either(Length.parse, Keyword.parse("auto")),
-    map(option(either(Length.parse, Keyword.parse("auto"))), (y) =>
-      y.getOrElse(() => Keyword.of("auto"))
-    )
+  map(
+    pair(
+      parseDimension,
+      map(option(right(Token.parseWhitespace, parseDimension)), (y) =>
+        y.getOrElse(() => Keyword.of("auto"))
+      )
+    ),
+    ([x, y]) => Tuple.of(x, y)
   ),
   Keyword.parse("contain", "cover")
 );
@@ -82,7 +94,7 @@ export const parseList = map(
 export default Property.register(
   "background-size",
   Property.of<Specified, Computed>(
-    List.of([[Keyword.of("auto"), Keyword.of("auto")]], ", "),
+    List.of([Tuple.of(Keyword.of("auto"), Keyword.of("auto"))], ", "),
     parseList,
     (value, style) =>
       value.map((sizes) =>
@@ -92,12 +104,12 @@ export default Property.register(
               return size;
             }
 
-            const [x, y] = size;
+            const [x, y] = size.values;
 
-            return [
+            return Tuple.of(
               x.type === "length" ? Resolver.length(x, style) : x,
-              y.type === "length" ? Resolver.length(y, style) : y,
-            ];
+              y.type === "length" ? Resolver.length(y, style) : y
+            );
           }),
           ", "
         )

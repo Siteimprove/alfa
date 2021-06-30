@@ -1,26 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "src/expand.ts",
-    "src/guards.ts",
-    "src/index.ts",
-    "src/types.ts",
-    "test/expand.spec.ts",
-    "test/helpers/person.ts"
-  ],
+  "files": ["src/index.ts", "src/json-ld.ts"],
   "references": [
     {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-result"
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-url"
     }
   ]
 }

@@ -9,8 +9,8 @@ export namespace Contrast {
   ) =>
     Ok.of(
       Diagnostic.of(
-        `The highest possible contrast of the text is 1:${highest} which is
-        above the required contrast of 1:${threshold}`,
+        `The highest possible contrast of the text is ${highest}:1 which is
+        above the required contrast of ${threshold}:1`,
         threshold,
         pairings
       )
@@ -23,8 +23,8 @@ export namespace Contrast {
   ) =>
     Err.of(
       Diagnostic.of(
-        `The highest possible contrast of the text is 1:${highest} which is
-        below the required contrast of 1:${threshold}`,
+        `The highest possible contrast of the text is ${highest}:1 which is
+        below the required contrast of ${threshold}:1`,
         threshold,
         pairings
       )

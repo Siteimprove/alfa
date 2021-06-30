@@ -1,9 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { List } from "@siteimprove/alfa-list";
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -15,8 +12,9 @@ import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-acc
 import { isIgnored } from "../common/predicate/is-ignored";
 import { referenceSameResource } from "../common/predicate/reference-same-resource";
 
-import { Question } from "../common/question";
 import { Group } from "../common/group";
+import { normalize } from "../common/normalize";
+import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -38,21 +36,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
               hasNonEmptyAccessibleName(device)
             )
           )
-          .reduce((groups, iframe) => {
-            const name = Node.from(iframe, device).name.map((name) =>
-              normalize(name.value)
-            );
-
-            groups = groups.set(
-              name,
-              groups
-                .get(name)
-                .getOrElse(() => List.empty<Element>())
-                .append(iframe)
-            );
-
-            return groups;
-          }, Map.empty<Option<string>, List<Element>>())
+          .groupBy((iframe) =>
+            Node.from(iframe, device).name.map((name) => normalize(name.value))
+          )
           .filter((elements) => elements.size > 1)
           .map(Group.of)
           .values();
@@ -106,8 +92,4 @@ export namespace Outcomes {
       `The \`<iframe>\` elements do not embed the same or equivalent resources`
     )
   );
-}
-
-function normalize(input: string): string {
-  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }

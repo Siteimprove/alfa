@@ -1,10 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { List } from "@siteimprove/alfa-list";
-import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
@@ -15,16 +12,18 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import {
+  hasNonEmptyAccessibleName,
+  hasRole,
+  isIgnored,
+  referenceSameResource,
+} from "../common/predicate";
 
-import { Question } from "../common/question";
 import { Group } from "../common/group";
-import { referenceSameResource } from "../common/predicate/reference-same-resource";
+import { normalize } from "../common/normalize";
+import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace, hasId } = Element;
-const { flatten } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
@@ -33,42 +32,30 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return flatten(
-          document
-            .descendants({ flattened: true, nested: true })
-            .filter(isElement)
-            .filter(
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole((role) => role.is("link")),
-                not(isIgnored(device)),
-                hasNonEmptyAccessibleName(device)
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(isElement)
+          .filter(
+            and(
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole(device, (role) => role.is("link")),
+              not(isIgnored(device)),
+              hasNonEmptyAccessibleName(device)
+            )
+          )
+          .groupBy((element) =>
+            linkContext(element, device).add(element.root())
+          )
+          .flatMap((elements) =>
+            elements.groupBy((element) =>
+              Node.from(element, device).name.map((name) =>
+                normalize(name.value)
               )
             )
-            .groupBy((element) => linkContext(element).add(element.root()))
-            .map((elements) =>
-              elements
-                .reduce((groups, element) => {
-                  const name = Node.from(element, device).name.map((name) =>
-                    normalize(name.value)
-                  );
-
-                  groups = groups.set(
-                    name,
-                    groups
-                      .get(name)
-                      .getOrElse(() => List.empty<Element>())
-                      .append(element)
-                  );
-
-                  return groups;
-                }, Map.empty<Option<string>, List<Element>>())
-                .filter((elements) => elements.size > 1)
-                .map(Group.of)
-                .values()
-            )
-            .values()
-        );
+          )
+          .filter((elements) => elements.size > 1)
+          .map(Group.of)
+          .values();
       },
 
       expectations(target) {
@@ -121,22 +108,18 @@ export namespace Outcomes {
   );
 }
 
-function normalize(input: string): string {
-  return input.trim().toLowerCase().replace(/\s+/g, " ");
-}
-
 /**
  * @todo For links in table cells, account for the text in the associated table
  *       header cell.
  *
  * {@link https://www.w3.org/TR/WCAG/#dfn-programmatically-determined-link-context}
  */
-function linkContext(element: Element): Set<dom.Node> {
+function linkContext(element: Element, device: Device): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
   const ancestors = element.ancestors({ flattened: true }).filter(isElement);
 
-  for (const listitem of ancestors.filter(hasRole("listitem"))) {
+  for (const listitem of ancestors.filter(hasRole(device, "listitem"))) {
     context = context.add(listitem);
   }
 
@@ -144,7 +127,7 @@ function linkContext(element: Element): Set<dom.Node> {
     context = context.add(paragraph);
   }
 
-  for (const cell of ancestors.find(hasRole("cell", "gridcell"))) {
+  for (const cell of ancestors.find(hasRole(device, "cell", "gridcell"))) {
     context = context.add(cell);
   }
 

@@ -14,6 +14,7 @@ export function hasOutline(
 
     return (
       style.computed("outline-width").none(Length.isZero) &&
+      style.computed("outline-style").none((style) => style.value === "none") &&
       style
         .computed("outline-color")
         .none((color) => color.type === "color" && Color.isTransparent(color))

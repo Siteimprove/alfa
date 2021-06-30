@@ -1,3 +1,7 @@
+/// <reference lib="dom" />
+
+import * as fs from "fs";
+
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import {
@@ -17,6 +21,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as puppeteer from "puppeteer";
 
+import { Archive } from "./archive";
 import { Awaiter } from "./awaiter";
 import { Credentials } from "./credentials";
 import { Screenshot } from "./screenshot";
@@ -86,6 +91,7 @@ export class Scraper {
       device = Device.standard(),
       credentials = null,
       screenshot = null,
+      archive = null,
       headers = [],
       cookies = [],
       fit = true,
@@ -193,9 +199,11 @@ export class Scraper {
 
           const load = awaiter(page, timeout);
 
-          await response;
-          await request;
-          await resize;
+          // Await both the response, request, and resize promise at the same
+          // time to avoid any exceptions being dropped on the floor. At the
+          // very least, we need all of these settled before we parse the
+          // document.
+          await Promise.all([response, request, resize]);
 
           for (const error of await load) {
             return Err.of(error);
@@ -204,7 +212,11 @@ export class Scraper {
           const document = await parseDocument(page);
 
           if (screenshot !== null) {
-            await takeScreenshot(page, screenshot);
+            await captureScreenshot(page, screenshot);
+          }
+
+          if (archive !== null) {
+            await captureArchive(client, archive);
           }
 
           return Result.of(
@@ -215,8 +227,18 @@ export class Scraper {
               device
             )
           );
-        } catch {
-          origin = page.url();
+        } catch (err) {
+          // If the timeout was exceeded while navigating to the page, bail out
+          // with an error.
+          if (err instanceof Error && err.name === "TimeoutError") {
+            return Err.of(`Timeout exceeded while navigating to the page`);
+          }
+
+          // Otherwise, attempt to navigate to the page again, changing its
+          // origin in case a redirect was performed.
+          else {
+            origin = page.url();
+          }
         }
       }
     } finally {
@@ -245,6 +267,7 @@ export namespace Scraper {
       readonly device?: Device;
       readonly credentials?: Credentials;
       readonly screenshot?: Screenshot;
+      readonly archive?: Archive;
       readonly headers?: Iterable<Header>;
       readonly cookies?: Iterable<Cookie>;
       readonly fit?: boolean;
@@ -283,27 +306,47 @@ async function parseDocument(page: puppeteer.Page): Promise<Document> {
   return document;
 }
 
-async function takeScreenshot(
+async function captureScreenshot(
   page: puppeteer.Page,
   screenshot: Screenshot
-): Promise<Buffer> {
+): Promise<void> {
   switch (screenshot.type.type) {
     case "png":
-      return page.screenshot({
+      await page.screenshot({
         path: screenshot.path,
         type: "png",
         omitBackground: !screenshot.type.background,
         fullPage: true,
         encoding: "binary",
-      }) as Promise<Buffer>;
+      });
+      break;
 
     case "jpeg":
-      return page.screenshot({
+      await page.screenshot({
         path: screenshot.path,
         type: "jpeg",
         quality: screenshot.type.quality,
         fullPage: true,
         encoding: "binary",
-      }) as Promise<Buffer>;
+      });
+  }
+}
+
+async function captureArchive(
+  client: puppeteer.CDPSession,
+  archive: Archive
+): Promise<void> {
+  switch (archive.format) {
+    case Archive.Format.MHTML: {
+      const { data } = await client.send("Page.captureSnapshot", {
+        format: "mhtml",
+      });
+
+      await new Promise<void>((resolve, reject) =>
+        fs.writeFile(archive.path, data, "utf-8", (err) =>
+          err ? reject(err) : resolve()
+        )
+      );
+    }
   }
 }

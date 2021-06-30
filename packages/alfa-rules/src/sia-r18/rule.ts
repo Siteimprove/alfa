@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             global.has(target.name as aria.Attribute.Name) ||
               test(
-                hasRole((role) =>
+                hasRole(device, (role) =>
                   role.isAttributeSupported(target.name as aria.Attribute.Name)
                 ),
                 target.owner.get()

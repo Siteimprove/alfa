@@ -1,7 +1,6 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
 import R87, { Outcomes } from "../../src/sia-r87/rule";
@@ -12,7 +11,7 @@ import { oracle } from "../common/oracle";
 
 test(`evaluate() passes a document whose first tabbable link references an
       element with a role of main`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#main">Skip to content</a>
       <main id="main">Content</main>
@@ -30,7 +29,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       element with a role of main`, async (t) => {
   const main = <main>Content</main>;
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <div tabindex="0" role="link">
         Skip to content
@@ -58,7 +57,7 @@ test(`evaluate() passes a document whose first tabbable link references an
 
 test(`evaluate() passes a document whose first tabbable link references an
       element that is determined to be the main content`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#main">Skip to content</a>
       <div id="main">Content</div>
@@ -85,7 +84,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       element that is determined to be the main content`, async (t) => {
   const main = <div>Content</div>;
 
-  const document = Document.of([
+  const document = h.document([
     <html>
       <div tabindex="0" role="link">
         Skip to content
@@ -113,7 +112,7 @@ test(`evaluate() passes a document whose first tabbable link references an
 });
 
 test(`evaluate() fails a document without tabbable elements`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <main id="main">Content</main>
     </html>,
@@ -128,7 +127,7 @@ test(`evaluate() fails a document without tabbable elements`, async (t) => {
 
 test(`evaluate() fails a document with a link that would be tabbable if not
       hidden`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#main" hidden>
         Skip to content
@@ -146,7 +145,7 @@ test(`evaluate() fails a document with a link that would be tabbable if not
 
 test(`evaluate() fails a document whose first tabbable element is not a
       link`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <button />
       <a href="#main">Skip to content</a>
@@ -163,7 +162,7 @@ test(`evaluate() fails a document whose first tabbable element is not a
 
 test(`evaluate() fails a document whose first tabbable element is not a
       semantic link`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#main" role="button">
         Skip to content
@@ -181,7 +180,7 @@ test(`evaluate() fails a document whose first tabbable element is not a
 
 test(`evaluate() fails a document whose first tabbable link is not included in
       the accessibility tree`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#main" aria-hidden="true">
         Skip to content
@@ -198,7 +197,7 @@ test(`evaluate() fails a document whose first tabbable link is not included in
 });
 
 test(`evaluate() fails a document whose first tabbable link is not visible`, async (t) => {
-  const document = Document.of(
+  const document = h.document(
     [
       <html>
         <a href="#main">Skip to content</a>
@@ -223,7 +222,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
 
 test(`evaluate() passes a document whose first tabbable link is visible when
       focused`, async (t) => {
-  const document = Document.of(
+  const document = h.document(
     [
       <html>
         <a href="#main">Skip to content</a>
@@ -252,7 +251,7 @@ test(`evaluate() passes a document whose first tabbable link is visible when
 
 test(`evaluates() passe a document whose first tabbable link references a
       container child at the start of main`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#content">Skip to content</a>
 
@@ -273,7 +272,7 @@ test(`evaluates() passe a document whose first tabbable link references a
 
 test(`evaluates() passe a document whose first tabbable link references an
       empty child at the start of main`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#content">Skip to content</a>
 
@@ -293,7 +292,7 @@ test(`evaluates() passe a document whose first tabbable link references an
 
 test(`evaluates() passe a document whose first tabbable link references a
       container around main`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#content">Skip to content</a>
 
@@ -314,7 +313,7 @@ test(`evaluates() passe a document whose first tabbable link references a
 
 test(`evaluates() passe a document whose first tabbable link references an
       empty element before main`, async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <html>
       <a href="#content">Skip to content</a>
 

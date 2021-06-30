@@ -1,7 +1,5 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document } from "@siteimprove/alfa-dom";
 
 import R91, { Outcomes } from "../../src/sia-r91/rule";
 
@@ -11,7 +9,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes on non important style", async (t) => {
   const target = <div style={{ letterSpacing: "0.1em" }}>Hello World</div>;
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R91, { document }), [
     passed(R91, target, {
@@ -25,7 +23,7 @@ test("evaluate() passes on large enough value", async (t) => {
     <div style={{ letterSpacing: "0.12em !important" }}>Hello World</div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R91, { document }), [
     passed(R91, target, {
@@ -37,7 +35,7 @@ test("evaluate() passes on large enough value", async (t) => {
 test("evaluate() passes on important cascaded styles", async (t) => {
   const target = <div style={{ letterSpacing: "0.15em" }}>Hello World</div>;
 
-  const document = Document.of(
+  const document = h.document(
     [target],
     [h.sheet([h.rule.style("div", { letterSpacing: "0.1em !important" })])]
   );
@@ -54,7 +52,7 @@ test("evaluate() fails on important small values", async (t) => {
     <div style={{ letterSpacing: "0.1em !important" }}>Hello World</div>
   );
 
-  const document = Document.of([target]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R91, { document }), [
     failed(R91, target, {
@@ -64,7 +62,7 @@ test("evaluate() fails on important small values", async (t) => {
 });
 
 test("evaluate() is inapplicable if letter-spacing is not declared in the style", async (t) => {
-  const document = Document.of([
+  const document = h.document([
     <div style={{ color: "red" }}>Hello World</div>,
   ]);
 
