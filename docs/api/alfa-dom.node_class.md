@@ -48,7 +48,7 @@ export declare abstract class Node implements Iterable<Node>, Equatable, json.Se
 |  [index(options)](./alfa-dom.node_class.index_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-index](https://dom.spec.whatwg.org/#concept-tree-index) |
 |  [last(options)](./alfa-dom.node_class.last_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-last-child](https://dom.spec.whatwg.org/#concept-tree-last-child) |
 |  [next(options)](./alfa-dom.node_class.next_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-next-sibling](https://dom.spec.whatwg.org/#concept-tree-next-sibling) |
-|  [parent(\_)](./alfa-dom.node_class.parent_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-parent](https://dom.spec.whatwg.org/#concept-tree-parent) |
+|  [parent(options)](./alfa-dom.node_class.parent_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-parent](https://dom.spec.whatwg.org/#concept-tree-parent) |
 |  [path(options)](./alfa-dom.node_class.path_1_method.md) |  | Get an XPath that uniquely identifies the node across descendants of its root. |
 |  [preceding(options)](./alfa-dom.node_class.preceding_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-preceding](https://dom.spec.whatwg.org/#concept-tree-preceding) |
 |  [previous(options)](./alfa-dom.node_class.previous_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-previous-sibling](https://dom.spec.whatwg.org/#concept-tree-previous-sibling) |

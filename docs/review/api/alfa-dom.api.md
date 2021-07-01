@@ -752,7 +752,7 @@ export abstract class Node implements Iterable<Node>, Equatable, json.Serializab
     // (undocumented)
     next(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    parent(_?: Node.Traversal): Option<Node>;
+    parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     protected _parent: Option<Node>;
     path(options?: Node.Traversal): string;

@@ -9,14 +9,14 @@
 <b>Signature:</b>
 
 ```typescript
-parent(_?: Node.Traversal): Option<Node>;
+parent(options?: Node.Traversal): Option<Node>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_ | [Node.Traversal](./alfa-dom.node_namespace.traversal_interface.md) |  |
+|  options | [Node.Traversal](./alfa-dom.node_namespace.traversal_interface.md) |  |
 
 <b>Returns:</b>
 
