@@ -1,5 +1,8 @@
 import { Rule } from "../rule";
 
+/**
+ * @public
+ */
 export abstract class GroupingRule extends Rule {
   protected readonly _rules: Array<Rule>;
 
@@ -20,6 +23,9 @@ export abstract class GroupingRule extends Rule {
   public abstract toJSON(): GroupingRule.JSON;
 }
 
+/**
+ * @public
+ */
 export namespace GroupingRule {
   export interface JSON extends Rule.JSON {
     rules: Array<Rule.JSON>;

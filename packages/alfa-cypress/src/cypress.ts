@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /// <reference types="cypress" />
 
 // While it may be tempting to pull in @siteimprove/alfa-chai for this module as

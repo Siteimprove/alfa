@@ -6,6 +6,8 @@ const { equals } = Predicate;
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-fe-disabled}
+ *
+ * @public
  */
 export function isDisabled(element: Element): boolean {
   switch (element.name) {

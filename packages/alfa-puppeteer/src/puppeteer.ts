@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Node } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";

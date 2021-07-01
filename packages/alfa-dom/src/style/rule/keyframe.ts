@@ -4,6 +4,9 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
+/**
+ * @public
+ */
 export class KeyframeRule extends Rule {
   public static of(
     key: string,
@@ -49,6 +52,9 @@ export class KeyframeRule extends Rule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace KeyframeRule {
   export interface JSON extends Rule.JSON {
     type: "keyframe";

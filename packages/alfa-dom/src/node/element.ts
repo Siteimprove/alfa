@@ -18,6 +18,9 @@ import * as predicate from "./element/predicate";
 const { isEmpty } = Iterable;
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export class Element extends Node implements Slot, Slotable {
   public static of(
     namespace: Option<Namespace>,
@@ -332,6 +335,9 @@ export class Element extends Node implements Slot, Slotable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Element {
   export interface JSON extends Node.JSON {
     type: "element";

@@ -5,6 +5,9 @@ import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 import { ConditionRule } from "./condition";
 
+/**
+ * @public
+ */
 export class ImportRule extends ConditionRule {
   public static of(
     href: string,
@@ -50,6 +53,9 @@ export class ImportRule extends ConditionRule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace ImportRule {
   export interface JSON extends ConditionRule.JSON {
     type: "import";

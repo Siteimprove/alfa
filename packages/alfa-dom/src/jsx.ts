@@ -2,8 +2,13 @@ import { h } from "./h";
 
 import { Node, Element } from ".";
 
+import * as dom from ".";
+
 const { entries } = Object;
 
+/**
+ * @public
+ */
 export function jsx(
   name: string,
   properties: jsx.Properties | null = null,
@@ -35,6 +40,9 @@ export function jsx(
   return h(name, attributes, children, style);
 }
 
+/**
+ * @public
+ */
 export namespace jsx {
   export type Child = Node | string;
 
@@ -60,7 +68,7 @@ export namespace jsx {
    * as it might provide an opportunity to get rid of this namespace entirely.
    */
   export namespace JSX {
-    export type Element = import("./node/element").Element;
+    export type Element = dom.Element;
 
     export interface IntrinsicElements {
       [tag: string]: Properties;

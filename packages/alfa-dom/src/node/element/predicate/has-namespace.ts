@@ -5,10 +5,16 @@ import { Element } from "../../element";
 
 const { equals } = Predicate;
 
+/**
+ * @public
+ */
 export function hasNamespace(
   predicate: Predicate<Namespace>
 ): Predicate<Element>;
 
+/**
+ * @public
+ */
 export function hasNamespace(
   namespace: Namespace,
   ...rest: Array<Namespace>
