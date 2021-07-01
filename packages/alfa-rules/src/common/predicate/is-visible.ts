@@ -27,11 +27,6 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
 }
 
 function isInvisible(device: Device, context?: Context): Predicate<Node> {
-  const hasStyle = <N extends Property.Name>(
-    name: N,
-    predicate: Predicate<Style.Computed<N>>
-  ) => hasComputedStyle(device, context)(name, predicate);
-
   return or(
     not(isRendered(device, context)),
     isTransparent(device, context),
@@ -42,12 +37,17 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
     // Text of size 0
     and(
       isText,
-      hasStyle("font-size", (size) => size.value === 0)
+      hasComputedStyle("font-size", (size) => size.value === 0, device, context)
     ),
     // Element with visibility != "visible"
     and(
       isElement,
-      hasStyle("visibility", (visibility) => visibility.value !== "visible")
+      hasComputedStyle(
+        "visibility",
+        (visibility) => visibility.value !== "visible",
+        device,
+        context
+      )
     ),
     // Most non-replaced elements with no visible children are not visible while
     // replaced elements are assumed to be replaced by something visible. Some
