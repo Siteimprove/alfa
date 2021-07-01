@@ -51,7 +51,6 @@ export function isClipped(
 }
 
 /**
- * @internal
  * Checks if an element's size is reduced to 0 or 1 pixel, and overflow is
  * somehow hidden.
  */
@@ -84,7 +83,7 @@ function isClippedBySize(
               break;
             }
 
-          // technically, 1×1 elements are (possibly) visible since they
+          // Technically, 1×1 elements are (possibly) visible since they
           // show one pixel of background. We assume this is used to hide
           // elements and that the background is the same as the surrounding
           // one.
@@ -103,7 +102,6 @@ function isClippedBySize(
 }
 
 /**
- * @internal
  * Checks if an element is fully indented out of its box.
  */
 function isClippedByIndent(

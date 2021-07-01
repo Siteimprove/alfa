@@ -26,9 +26,6 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
   return not(isInvisible(device, context));
 }
 
-/**
- * @internal
- */
 function isInvisible(device: Device, context?: Context): Predicate<Node> {
   const hasStyle = <N extends Property.Name>(
     name: N,
@@ -47,7 +44,7 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
       isText,
       hasStyle("font-size", (size) => size.value === 0)
     ),
-    // Element with visibility ≠ "visible"
+    // Element with visibility != "visible"
     and(
       isElement,
       hasStyle("visibility", (visibility) => visibility.value !== "visible")
