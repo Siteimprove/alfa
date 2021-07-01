@@ -70,7 +70,7 @@ export abstract class Node
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
-  public parent(_: Node.Traversal = {}): Option<Node> {
+  public parent(options: Node.Traversal = {}): Option<Node> {
     return this._parent;
   }
 
