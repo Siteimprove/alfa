@@ -6,6 +6,9 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
+/**
+ * @public
+ */
 export class FontFaceRule extends Rule {
   public static of(declarations: Iterable<Declaration>): FontFaceRule {
     return new FontFaceRule(Array.from(declarations));
@@ -39,6 +42,9 @@ export class FontFaceRule extends Rule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace FontFaceRule {
   export interface JSON {
     [key: string]: json.JSON;

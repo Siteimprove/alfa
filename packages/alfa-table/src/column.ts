@@ -10,6 +10,8 @@ import { Slot } from "./slot";
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-column}
+ *
+ * @public
  */
 export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
   public static of(x: number): Column {
@@ -49,6 +51,9 @@ export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Column {
   export interface JSON {
     [key: string]: json.JSON;

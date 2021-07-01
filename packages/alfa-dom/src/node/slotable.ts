@@ -5,6 +5,9 @@ import { Element } from "./element";
 import { Slot } from "./slot";
 import { Text } from "./text";
 
+/**
+ * @public
+ */
 export interface Slotable extends Node {
   /**
    * Get the slot that this slotable is assigned to.
@@ -14,6 +17,9 @@ export interface Slotable extends Node {
   assignedSlot(): Option<Slot>;
 }
 
+/**
+ * @public
+ */
 export namespace Slotable {
   export function isSlotable(value: unknown): value is Slotable {
     return Element.isElement(value) || Text.isText(value);

@@ -7,6 +7,9 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
+/**
+ * @public
+ */
 export class Text extends Node implements Slotable {
   public static of(data: string): Text {
     return new Text(data);
@@ -77,6 +80,9 @@ export class Text extends Node implements Slotable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Text {
   export interface JSON extends Node.JSON {
     type: "text";

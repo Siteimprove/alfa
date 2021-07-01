@@ -3,6 +3,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Type extends Node {
   public static of(
     name: string,
@@ -58,6 +61,9 @@ export class Type extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Type {
   export interface JSON extends Node.JSON {
     type: "type";

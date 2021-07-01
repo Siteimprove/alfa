@@ -24,6 +24,8 @@ const { hasName, isElement } = Element;
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-table}
+ *
+ * @public
  */
 export class Table implements Equatable, Serializable<Table.JSON> {
   public static of(
@@ -93,6 +95,9 @@ export class Table implements Equatable, Serializable<Table.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Table {
   export interface JSON {
     [key: string]: json.JSON;

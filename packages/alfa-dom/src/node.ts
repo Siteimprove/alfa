@@ -23,13 +23,17 @@ import {
 
 const { equals } = Predicate;
 
+/**
+ * @public
+ */
 export abstract class Node
   implements
     Iterable<Node>,
     Equatable,
     json.Serializable<Node.JSON>,
     earl.Serializable<Node.EARL>,
-    sarif.Serializable<sarif.Location> {
+    sarif.Serializable<sarif.Location>
+{
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
 
@@ -66,7 +70,7 @@ export abstract class Node
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
-  public parent(_: Node.Traversal = {}): Option<Node> {
+  public parent(options: Node.Traversal = {}): Option<Node> {
     return this._parent;
   }
 
@@ -384,6 +388,9 @@ export abstract class Node
   }
 }
 
+/**
+ * @public
+ */
 export namespace Node {
   export interface JSON {
     [key: string]: json.JSON;
