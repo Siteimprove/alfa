@@ -6,6 +6,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
@@ -15,6 +16,7 @@ import { Role } from "./role";
 
 const { hasInputType, hasName, isElement } = Element;
 const { or, test } = Predicate;
+const { and } = Refinement;
 
 /**
  * @internal
@@ -245,6 +247,10 @@ const Features: Features = {
       }
     ),
 
+    // https://w3c.github.io/html-aam/#el-datalist
+    // <datalist> only has a role if it is correctly mapped to an <input>
+    // via the list attribute. We should probably check that.
+    // Additionally, it seems to never be rendered, hence always ignored.
     datalist: html(() => Option.of(Role.of("listbox"))),
 
     dd: html(() => Option.of(Role.of("definition"))),
@@ -397,6 +403,11 @@ const Features: Features = {
         return None;
       },
       function* (element) {
+        // https://w3c.github.io/html-aam/#el-input-checkbox
+        // aria-checked should be "mixed" if the indeterminate IDL attribute is
+        // true
+        // aria-checked should otherwise mimic the checkedness, i.e. the
+        // checked *IDL* attribute, not the DOM one.
         // https://w3c.github.io/html-aam/#att-checked
         yield Attribute.of(
           "aria-checked",
@@ -480,20 +491,37 @@ const Features: Features = {
       }
     ),
 
-    li: html((element) =>
-      element
-        .parent()
-        .filter(Element.isElement)
-        .flatMap((parent) => {
-          switch (parent.name) {
-            case "ol":
-            case "ul":
-            case "menu":
-              return Option.of(Role.of("listitem"));
-          }
+    li: html(
+      (element) =>
+        element
+          .parent()
+          .filter(Element.isElement)
+          .flatMap((parent) => {
+            switch (parent.name) {
+              case "ol":
+              case "ul":
+              case "menu":
+                return Option.of(Role.of("listitem"));
+            }
 
-          return None;
-        })
+            return None;
+          }),
+      (element) => {
+        // https://w3c.github.io/html-aam/#el-li
+        const siblings = element
+          .inclusiveSiblings()
+          .filter(and(Element.isElement, Element.hasName("li")));
+
+        return [
+          Attribute.of("aria-setsize", `${siblings.size}`),
+          Attribute.of(
+            "aria-posinset",
+            `${
+              siblings.takeUntil((sibling) => sibling.equals(element)).size + 1
+            }`
+          ),
+        ];
+      }
     ),
 
     main: html(() => Option.of(Role.of("main"))),
@@ -614,6 +642,9 @@ const Features: Features = {
     textarea: html(
       () => Option.of(Role.of("textbox")),
       function* (element) {
+        // https://w3c.github.io/html-aam/#el-textarea
+        yield Attribute.of("aria-multiline", "true");
+
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
           yield Attribute.of("aria-disabled", "true");
