@@ -3,6 +3,7 @@ import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
+import { Property, Style } from "@siteimprove/alfa-style";
 
 import {
   hasComputedStyle,
@@ -25,34 +26,31 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
   return not(isInvisible(device, context));
 }
 
+/**
+ * @internal
+ */
 function isInvisible(device: Device, context?: Context): Predicate<Node> {
+  const hasStyle = <N extends Property.Name>(
+    name: N,
+    predicate: Predicate<Style.Computed<N>>
+  ) => hasComputedStyle(device, context)(name, predicate);
+
   return or(
     not(isRendered(device, context)),
     isTransparent(device, context),
     isClipped(device, context),
     isOffscreen(device, context),
+    // Empty text
     and(isText, (text) => text.data.trim() === ""),
-    and(isText, (text) =>
-      text
-        .parent({ flattened: true })
-        .filter(isElement)
-        .some(
-          hasComputedStyle(
-            "font-size",
-            (size) => size.value === 0,
-            device,
-            context
-          )
-        )
+    // Text of size 0
+    and(
+      isText,
+      hasStyle("font-size", (size) => size.value === 0)
     ),
+    // Element with visibility ≠ "visible"
     and(
       isElement,
-      hasComputedStyle(
-        "visibility",
-        (visibility) => visibility.value !== "visible",
-        device,
-        context
-      )
+      hasStyle("visibility", (visibility) => visibility.value !== "visible")
     ),
     // Most non-replaced elements with no visible children are not visible while
     // replaced elements are assumed to be replaced by something visible. Some

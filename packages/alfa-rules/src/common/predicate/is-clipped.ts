@@ -13,6 +13,9 @@ const { and } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
+/**
+ * Checks if a node (or one of its ancestor) is fully clipped
+ */
 export function isClipped(
   device: Device,
   context: Context = Context.empty()
@@ -24,6 +27,7 @@ export function isClipped(
       .get(node, () =>
         test(
           or(
+            // Either it a clipped element
             and(
               isElement,
               or(
@@ -32,6 +36,7 @@ export function isClipped(
                 isClippedByMasking(device, context)
               )
             ),
+            // Or its parent is clipped
             (node: Node) =>
               node
                 .parent({
@@ -46,6 +51,7 @@ export function isClipped(
 }
 
 /**
+ * @internal
  * Checks if an element's size is reduced to 0 or 1 pixel, and overflow is
  * somehow hidden.
  */
@@ -97,7 +103,8 @@ function isClippedBySize(
 }
 
 /**
- * Checks if an element is fully indented out of screen.
+ * @internal
+ * Checks if an element is fully indented out of its box.
  */
 function isClippedByIndent(
   device: Device,
