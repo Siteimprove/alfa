@@ -18,13 +18,10 @@ jobs:
       NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v2.2.0
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/cache@v2.1.6
-        with:
-          path: .yarn/cache
-          key: yarn-${{ hashFiles('yarn.lock') }}
+          cache: yarn
       - run: yarn install --immutable
       - run: yarn dedupe --check
       - run: yarn build

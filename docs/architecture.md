@@ -1,10 +1,10 @@
-# Architecture Documentation
+# Architecture
 
 ## Architecture Decision Reports (ADR)
 
 > For a more thorough introduction to ADRs, see [Documenting architecture decisions] by Michael Nygard which most of the section below is taken from.
 
-An architecture decision report lives in the [`docs/architecture/decisions`](decisions) directory, is written in Markdown, and has a file name of `adr-nnn.md` where `nnn` is a monotonically increasing number. The report must include the following sections, with the heading level of each section noted in superscript:
+An architecture decision report lives in the [`docs/architecture/decisions`](architecture/decisions) directory, is written in Markdown, and has a file name of `adr-nnn.md` where `nnn` is a monotonically increasing number. The report must include the following sections, with the heading level of each section noted in superscript:
 
 - **Title** <sup>#</sup>  
   Architecture decision reports have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration"
