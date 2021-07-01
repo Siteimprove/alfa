@@ -5,6 +5,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Declaration } from "./declaration";
 
+/**
+ * @public
+ */
 export class Block implements Iterable<Declaration>, Equatable, Serializable {
   public static of(declarations: Iterable<Declaration>): Block {
     return new Block(Array.from(declarations));
@@ -63,6 +66,9 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Block {
   export type JSON = Array<Declaration.JSON>;
 

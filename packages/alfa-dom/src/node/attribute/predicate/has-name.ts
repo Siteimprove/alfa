@@ -2,8 +2,14 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Attribute } from "../../attribute";
 
+/**
+ * @public
+ */
 export function hasName(predicate: Predicate<string>): Predicate<Attribute>;
 
+/**
+ * @public
+ */
 export function hasName(
   name: string,
   ...rest: Array<string>

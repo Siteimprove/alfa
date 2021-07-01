@@ -204,6 +204,9 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Node {
   export interface JSON {
     [key: string]: json.JSON;
