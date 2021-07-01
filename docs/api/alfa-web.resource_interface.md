@@ -16,6 +16,6 @@ export interface Resource
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [request](./alfa-web.resource_interface.request_propertysignature.md) | Request |  |
-|  [response](./alfa-web.resource_interface.response_propertysignature.md) | Response |  |
+|  [request](./alfa-web.resource_interface.request_propertysignature.md) | [Request](./alfa-http.request_class.md) |  |
+|  [response](./alfa-web.resource_interface.response_propertysignature.md) | [Response](./alfa-http.response_class.md) |  |
 

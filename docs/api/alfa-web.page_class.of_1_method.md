@@ -14,9 +14,9 @@ static of(request: Request, response: Response, document: Document, device: Devi
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  request | Request |  |
-|  response | Response |  |
-|  document | Document |  |
+|  request | [Request](./alfa-http.request_class.md) |  |
+|  response | [Response](./alfa-http.response_class.md) |  |
+|  document | [Document](./alfa-dom.document_class.md) |  |
 |  device | [Device](./alfa-device.device_class.md) |  |
 
 <b>Returns:</b>

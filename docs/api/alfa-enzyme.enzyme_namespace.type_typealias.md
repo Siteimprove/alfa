@@ -7,7 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-type Type = ReactWrapper | ShallowWrapper | Cheerio.Type;
+type Type = CommonWrapper;
 ```
-<b>References:</b> [Cheerio.Type](./alfa-cheerio.cheerio_namespace.type_typealias.md)
-

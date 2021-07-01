@@ -16,7 +16,7 @@ evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q>, outcomes?: Cache): Future
 |  --- | --- | --- |
 |  input | Readonly&lt;I&gt; |  |
 |  oracle | [Oracle](./alfa-act.oracle_typealias.md)<!-- -->&lt;I, T, Q&gt; |  |
-|  outcomes | Cache |  |
+|  outcomes | [Cache](./alfa-act.cache_class.md) |  |
 
 <b>Returns:</b>
 

@@ -28,6 +28,7 @@ export declare class Linear<I extends Gradient.Item = Gradient.Item, D extends L
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [equals(value)](./alfa-css.linear_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-css.linear_class.equals_2_method.md) |  |  |
 |  [hash(hash)](./alfa-css.linear_class.hash_1_method.md) |  |  |
 |  [of(direction, items, repeats)](./alfa-css.linear_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-css.linear_class.tojson_1_method.md) |  |  |

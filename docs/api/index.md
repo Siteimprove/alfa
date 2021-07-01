@@ -12,6 +12,7 @@
 |  [@siteimprove/alfa-affine](./alfa-affine.md) | This package provides functionality for working with [affine transformations](https://en.wikipedia.org/wiki/Affine_transformation)<!-- -->. |
 |  [@siteimprove/alfa-angular](./alfa-angular.md) | This package provides integrations and utilities for the [Angular](https://angular.io/) application framework. |
 |  [@siteimprove/alfa-applicative](./alfa-applicative.md) | This package provides types for modelling [applicative functors](https://en.wikipedia.org/wiki/Applicative_functor)<!-- -->. |
+|  [@siteimprove/alfa-aria](./alfa-aria.md) | This package provides functionality for working with [ARIA](https://www.w3.org/TR/wai-aria/) and the accessibility tree. |
 |  [@siteimprove/alfa-array](./alfa-array.md) | This package provides functionality for working with arrays. |
 |  [@siteimprove/alfa-assert](./alfa-assert.md) |  |
 |  [@siteimprove/alfa-bits](./alfa-bits.md) |  |
@@ -31,6 +32,7 @@
 |  [@siteimprove/alfa-css](./alfa-css.md) |  |
 |  [@siteimprove/alfa-cypress](./alfa-cypress.md) |  |
 |  [@siteimprove/alfa-device](./alfa-device.md) |  |
+|  [@siteimprove/alfa-dom](./alfa-dom.md) |  |
 |  [@siteimprove/alfa-earl](./alfa-earl.md) |  |
 |  [@siteimprove/alfa-either](./alfa-either.md) |  |
 |  [@siteimprove/alfa-emitter](./alfa-emitter.md) |  |
@@ -85,7 +87,7 @@
 |  [@siteimprove/alfa-sequence](./alfa-sequence.md) |  |
 |  [@siteimprove/alfa-set](./alfa-set.md) |  |
 |  [@siteimprove/alfa-slice](./alfa-slice.md) |  |
-|  [@siteimprove/alfa-style](./alfa-style.md) |  |
+|  [@siteimprove/alfa-table](./alfa-table.md) |  |
 |  [@siteimprove/alfa-test](./alfa-test.md) |  |
 |  [@siteimprove/alfa-thunk](./alfa-thunk.md) |  |
 |  [@siteimprove/alfa-time](./alfa-time.md) |  |

@@ -18,6 +18,6 @@ interface EARL extends earl.EARL
 |  ["@context"](./alfa-web.page_namespace.earl_interface.__context__propertysignature.md) | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
 |  ["@id"](./alfa-web.page_namespace.earl_interface.__id__propertysignature.md) | string |  |
 |  ["@type"](./alfa-web.page_namespace.earl_interface.__type__propertysignature.md) | \["earl:TestSubject"\] |  |
-|  ["dct:hasPart"](./alfa-web.page_namespace.earl_interface._dct_haspart__propertysignature.md) | \[Request.EARL, Response.EARL\] |  |
+|  ["dct:hasPart"](./alfa-web.page_namespace.earl_interface._dct_haspart__propertysignature.md) | \[[Request.EARL](./alfa-http.request_namespace.earl_interface.md)<!-- -->, [Response.EARL](./alfa-http.response_namespace.earl_interface.md)<!-- -->\] |  |
 |  ["dct:source"](./alfa-web.page_namespace.earl_interface._dct_source__propertysignature.md) | string |  |
 

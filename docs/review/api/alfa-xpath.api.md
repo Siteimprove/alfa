@@ -7,8 +7,8 @@
 import * as dom from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import * as json from '@siteimprove/alfa-json';
-import { Node as Node_2 } from '@siteimprove/alfa-dom';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Node } from '@siteimprove/alfa-dom';
+import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -225,12 +225,12 @@ export interface Environment<T extends Item.Value> {
 }
 
 // @public (undocumented)
-export function evaluate(scope: Node_2, expression: string | Expression | Builder, options?: evaluate.Options): Iterable<Node_2>;
+export function evaluate(scope: Node, expression: string | Expression | Builder, options?: evaluate.Options): Iterable<Node>;
 
 // @public (undocumented)
 export namespace evaluate {
     // (undocumented)
-    export interface Options extends Node_2.Traversal {
+    export interface Options extends Node.Traversal {
     }
 }
 
@@ -246,11 +246,11 @@ export namespace Expression {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(axis: Axis.Type, test?: Option_2<Test>, predicates?: Array<Expression>): Axis;
+        static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>): Axis;
         // (undocumented)
         get predicates(): Iterable<Expression>;
         // (undocumented)
-        get test(): Option_2<Test>;
+        get test(): Option<Test>;
         // (undocumented)
         toJSON(): Axis.JSON;
         // (undocumented)
@@ -391,11 +391,11 @@ export namespace Expression {
         // (undocumented)
         get name(): string;
         // (undocumented)
-        static of(prefix: Option_2<string>, name: string, arity: number, parameters: Array<Expression>): FunctionCall;
+        static of(prefix: Option<string>, name: string, arity: number, parameters: Array<Expression>): FunctionCall;
         // (undocumented)
         get parameters(): Iterable<Expression>;
         // (undocumented)
-        get prefix(): Option_2<string>;
+        get prefix(): Option<string>;
         // (undocumented)
         toJSON(): FunctionCall.JSON;
         // (undocumented)
@@ -547,9 +547,9 @@ export namespace Expression {
             // (undocumented)
             get kind(): "attribute";
             // (undocumented)
-            get name(): Option_2<string>;
+            get name(): Option<string>;
             // (undocumented)
-            static of(name: Option_2<string>): Attribute;
+            static of(name: Option<string>): Attribute;
             // (undocumented)
             toJSON(): Attribute.JSON;
             // (undocumented)
@@ -632,9 +632,9 @@ export namespace Expression {
             // (undocumented)
             get kind(): "element";
             // (undocumented)
-            get name(): Option_2<string>;
+            get name(): Option<string>;
             // (undocumented)
-            static of(name: Option_2<string>): Element;
+            static of(name: Option<string>): Element;
             // (undocumented)
             toJSON(): Element.JSON;
             // (undocumented)
@@ -672,9 +672,9 @@ export namespace Expression {
             // (undocumented)
             get name(): string;
             // (undocumented)
-            static of(prefix: Option_2<string>, name: string): Name;
+            static of(prefix: Option<string>, name: string): Name;
             // (undocumented)
-            get prefix(): Option_2<string>;
+            get prefix(): Option<string>;
             // (undocumented)
             toJSON(): Name.JSON;
             // (undocumented)
@@ -869,7 +869,7 @@ export function optional<D extends Descriptor>(descriptor: D): Descriptors.Optio
 // @public (undocumented)
 export namespace Parser {
     // (undocumented)
-    export function parse(input: string): Option_2<Expression>;
+    export function parse(input: string): Option<Expression>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "registerFunction" should be prefixed with an underscore because the declaration is marked as @internal
@@ -1063,9 +1063,9 @@ export namespace Token {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(prefix: Option_2<string>, value: string): Name;
+        static of(prefix: Option<string>, value: string): Name;
         // (undocumented)
-        get prefix(): Option_2<string>;
+        get prefix(): Option<string>;
         // (undocumented)
         toJSON(): Name.JSON;
         // (undocumented)
@@ -1138,7 +1138,7 @@ export type Value<T extends Type = Type> = Descriptor.Value<T>;
 // Warning: (ae-internal-missing-underscore) The name "walk" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export function walk(node: Node_2, axis: Expression.Axis.Type, options: Node_2.Traversal): Iterable<Node_2>;
+export function walk(node: Node, axis: Expression.Axis.Type, options: Node.Traversal): Iterable<Node>;
 
 // Warning: (ae-internal-missing-underscore) The name "withFocus" should be prefixed with an underscore because the declaration is marked as @internal
 //

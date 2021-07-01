@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-type Type = ReturnType<typeof cheerio>;
+type Type = cheerio.Cheerio<dom.Node>;
 ```

@@ -9,5 +9,5 @@
 ```typescript
 interface Options extends Node.Traversal 
 ```
-<b>Extends:</b> Node.Traversal
+<b>Extends:</b> [Node.Traversal](./alfa-dom.node_namespace.traversal_interface.md)
 

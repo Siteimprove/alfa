@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Vertical = Keyword<"top" | "bottom">;
+type Vertical = Keyword<"top"> | Keyword<"bottom">;
 ```
 <b>References:</b> [Keyword](./alfa-css.keyword_class.md)
 

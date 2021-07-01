@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-disconnect(from: N, to: N): Network<N, E>;
+disconnect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
 ```
 
 ## Parameters
@@ -16,6 +16,7 @@ disconnect(from: N, to: N): Network<N, E>;
 |  --- | --- | --- |
 |  from | N |  |
 |  to | N |  |
+|  edges | Array&lt;E&gt; |  |
 
 <b>Returns:</b>
 

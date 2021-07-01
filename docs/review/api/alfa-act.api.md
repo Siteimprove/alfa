@@ -12,8 +12,8 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
-import { Performance as Performance_2 } from '@siteimprove/alfa-performance';
+import { Option } from '@siteimprove/alfa-option';
+import { Performance } from '@siteimprove/alfa-performance';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
@@ -24,7 +24,7 @@ import { Thunk } from '@siteimprove/alfa-thunk';
 // @public (undocumented)
 export class Audit<I, T = unknown, Q = never> {
     // (undocumented)
-    evaluate(performance?: Performance_2<Audit.Event<I, T, Q>>): Future<Iterable_2<Outcome<I, T, Q>>>;
+    evaluate(performance?: Performance<Audit.Event<I, T, Q>>): Future<Iterable_2<Outcome<I, T, Q>>>;
     // (undocumented)
     static of<I, T = unknown, Q = never>(input: I, rules: Iterable_2<Rule<I, T, Q>>, oracle?: Oracle<I, T, Q>): Audit<I, T, Q>;
     }
@@ -67,14 +67,12 @@ export namespace Audit {
 }
 
 // @public (undocumented)
-class Cache_2 {
+export class Cache {
     // (undocumented)
-    static empty(): Cache_2;
+    static empty(): Cache;
     // (undocumented)
     get<I, T, Q>(rule: Rule<I, T, Q>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q>>>>): Future<Iterable<Outcome<I, T, Q>>>;
     }
-
-export { Cache_2 as Cache }
 
 // @public (undocumented)
 export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
@@ -116,13 +114,13 @@ export type Interview<Q, S, T, D extends number = 3> = T | {
 // @public (undocumented)
 export namespace Interview {
     // (undocumented)
-    export function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<I, T, Q>): Future<Option_2<A>>;
+    export function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<I, T, Q>): Future<Option<A>>;
 }
 
 // @public (undocumented)
 export type Oracle<I, T, Q> = <A>(rule: Rule<I, T, Q>, question: {
     [K in keyof Q]: Question<K, T, Q[K], A>;
-}[keyof Q]) => Future<Option_2<A>>;
+}[keyof Q]) => Future<Option<A>>;
 
 // @public (undocumented)
 export abstract class Outcome<I, T, Q = never> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
@@ -270,7 +268,7 @@ export namespace Outcome {
     }
     // (undocumented)
     export function from<I, T, Q>(rule: Rule<I, T, Q>, target: T, expectations: Record_2<{
-        [key: string]: Option_2<Result<Diagnostic>>;
+        [key: string]: Option<Result<Diagnostic>>;
     }>): Outcome.Applicable<I, T, Q>;
     const // (undocumented)
     cantTell: typeof CantTell.of, // (undocumented)
@@ -472,7 +470,7 @@ export abstract class Rule<I = unknown, T = unknown, Q = never> implements Equat
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q>, outcomes?: Cache_2): Future<Iterable_2<Outcome<I, T, Q>>>;
+    evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q>, outcomes?: Cache): Future<Iterable_2<Outcome<I, T, Q>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
     // (undocumented)
@@ -515,9 +513,9 @@ export namespace Rule {
         export interface Evaluate<I, T, Q> {
             // (undocumented)
             (input: Readonly<I>): {
-                applicability(): Iterable_2<Interview<Q, T, Option_2.Maybe<T>>>;
+                applicability(): Iterable_2<Interview<Q, T, Option.Maybe<T>>>;
                 expectations(target: T): {
-                    [key: string]: Interview<Q, T, Option_2.Maybe<Result<Diagnostic>>>;
+                    [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
                 };
             };
         }
@@ -549,7 +547,7 @@ export namespace Rule {
             // (undocumented)
             (input: Readonly<I>): {
                 expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q>>): {
-                    [key: string]: Interview<Q, T, Option_2.Maybe<Result<Diagnostic>>>;
+                    [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
                 };
             };
         }
@@ -582,7 +580,7 @@ export namespace Rule {
     // (undocumented)
     export interface Evaluate<I, T, Q> {
         // (undocumented)
-        (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache_2): Future<Iterable_2<Outcome<I, T, Q>>>;
+        (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache): Future<Iterable_2<Outcome<I, T, Q>>>;
     }
     // (undocumented)
     export type Input<R> = R extends Rule<infer I, any, any> ? I : never;

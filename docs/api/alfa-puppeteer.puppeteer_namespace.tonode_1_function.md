@@ -18,5 +18,5 @@ function toNode(value: Type): Promise<Node>;
 
 <b>Returns:</b>
 
-Promise&lt;Node&gt;
+Promise&lt;[Node](./alfa-dom.node_class.md)<!-- -->&gt;
 

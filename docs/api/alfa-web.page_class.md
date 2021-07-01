@@ -18,9 +18,9 @@ export declare class Page implements Resource, json.Serializable<Page.JSON>, ear
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [device](./alfa-web.page_class.device_property.md) |  | [Device](./alfa-device.device_class.md) |  |
-|  [document](./alfa-web.page_class.document_property.md) |  | Document |  |
-|  [request](./alfa-web.page_class.request_property.md) |  | Request |  |
-|  [response](./alfa-web.page_class.response_property.md) |  | Response |  |
+|  [document](./alfa-web.page_class.document_property.md) |  | [Document](./alfa-dom.document_class.md) |  |
+|  [request](./alfa-web.page_class.request_property.md) |  | [Request](./alfa-http.request_class.md) |  |
+|  [response](./alfa-web.page_class.response_property.md) |  | [Response](./alfa-http.response_class.md) |  |
 
 ## Methods
 

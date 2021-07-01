@@ -14,7 +14,7 @@ matches(element: dom.Element, context?: Context): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | dom.Element |  |
+|  element | dom.[Element](./alfa-dom.element_class.md) |  |
 |  context | [Context](./alfa-selector.context_class.md) |  |
 
 <b>Returns:</b>

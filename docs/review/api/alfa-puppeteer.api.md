@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference lib="dom" />
+
 import { JSHandle } from 'puppeteer';
 import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Page } from '@siteimprove/alfa-web';
@@ -15,7 +17,7 @@ export namespace Puppeteer {
     // (undocumented)
     export function toPage(value: Type): Promise<Page>;
     // (undocumented)
-    export type Type = JSHandle;
+    export type Type = JSHandle<globalThis.Node>;
 }
 
 

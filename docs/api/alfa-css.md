@@ -34,6 +34,7 @@
 |  [Perspective](./alfa-css.perspective_class.md) |  |
 |  [Polygon](./alfa-css.polygon_class.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-polygon](https://drafts.csswg.org/css-shapes/#funcdef-polygon) |
 |  [Position](./alfa-css.position_class.md) | [https://drafts.csswg.org/css-values/\#position](https://drafts.csswg.org/css-values/#position) |
+|  [Radial](./alfa-css.radial_class.md) | [https://drafts.csswg.org/css-images/\#radial-gradients](https://drafts.csswg.org/css-images/#radial-gradients) |
 |  [Radius](./alfa-css.radius_class.md) | [https://drafts.csswg.org/css-shapes/\#typedef-shape-radius](https://drafts.csswg.org/css-shapes/#typedef-shape-radius) |
 |  [Rectangle](./alfa-css.rectangle_class.md) | [https://drafts.fxtf.org/css-masking/\#funcdef-clip-rect](https://drafts.fxtf.org/css-masking/#funcdef-clip-rect) |
 |  [RGB](./alfa-css.rgb_class.md) |  |
@@ -89,6 +90,7 @@
 |  [Perspective](./alfa-css.perspective_namespace.md) |  |
 |  [Polygon](./alfa-css.polygon_namespace.md) |  |
 |  [Position](./alfa-css.position_namespace.md) |  |
+|  [Radial](./alfa-css.radial_namespace.md) |  |
 |  [Radius](./alfa-css.radius_namespace.md) |  |
 |  [Rectangle](./alfa-css.rectangle_namespace.md) |  |
 |  [RGB](./alfa-css.rgb_namespace.md) |  |

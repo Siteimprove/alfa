@@ -7,11 +7,11 @@
 import { Context } from '@siteimprove/alfa-selector';
 import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
-import { Document as Document_2 } from '@siteimprove/alfa-dom';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Document } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Rule } from '@siteimprove/alfa-dom';
 import { Selector } from '@siteimprove/alfa-selector';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -24,9 +24,9 @@ export class Cascade implements Serializable {
     // Warning: (ae-forgotten-export) The symbol "RuleTree" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    get(element: Element_2, context?: Context, filter?: Option_2<AncestorFilter>): Option_2<RuleTree.Node>;
+    get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
     // (undocumented)
-    static of(node: Document_2 | Shadow, device: Device): Cascade;
+    static of(node: Document | Shadow, device: Device): Cascade;
     // (undocumented)
     toJSON(): Cascade.JSON;
 }
@@ -40,7 +40,7 @@ export namespace Cascade {
         // (undocumented)
         device: Device.JSON;
         // (undocumented)
-        root: Document_2.JSON | Shadow.JSON;
+        root: Document.JSON | Shadow.JSON;
         // (undocumented)
         rules: RuleTree.JSON;
         // Warning: (ae-forgotten-export) The symbol "SelectorMap" needs to be exported by the entry point index.d.ts

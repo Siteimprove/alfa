@@ -4,34 +4,22 @@
 
 ## alfa-json-ld package
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [expand(element)](./alfa-json-ld.expand_1_function.md) | [https://www.w3.org/TR/json-ld-api/\#expansion-algorithm](https://www.w3.org/TR/json-ld-api/#expansion-algorithm) |
-|  [isDictionary(element)](./alfa-json-ld.isdictionary_1_function.md) |  |
-|  [isKeyword(key)](./alfa-json-ld.iskeyword_1_function.md) |  |
-|  [isList(element)](./alfa-json-ld.islist_1_function.md) |  |
-|  [isListObject(element)](./alfa-json-ld.islistobject_1_function.md) |  |
-|  [isScalar(element)](./alfa-json-ld.isscalar_1_function.md) |  |
-|  [isValueObject(element)](./alfa-json-ld.isvalueobject_1_function.md) |  |
-
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Context](./alfa-json-ld.context_interface.md) |  |
-|  [Definition](./alfa-json-ld.definition_interface.md) |  |
-|  [Dictionary](./alfa-json-ld.dictionary_interface.md) |  |
-|  [Document\_2](./alfa-json-ld.document_2_interface.md) |  |
-|  [ListObject](./alfa-json-ld.listobject_interface.md) |  |
-|  [ValueObject](./alfa-json-ld.valueobject_interface.md) |  |
+|  [Context](./alfa-json-ld.context_interface.md) | [https://www.w3.org/TR/json-ld/\#dfn-context-definition](https://www.w3.org/TR/json-ld/#dfn-context-definition) |
+|  [Document](./alfa-json-ld.document_interface.md) | [https://www.w3.org/TR/json-ld/\#dfn-json-ld-document](https://www.w3.org/TR/json-ld/#dfn-json-ld-document) |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Keyword](./alfa-json-ld.keyword_namespace.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Keyword](./alfa-json-ld.keyword_typealias.md) | [https://www.w3.org/TR/json-ld/\#syntax-tokens-and-keywords](https://www.w3.org/TR/json-ld/#syntax-tokens-and-keywords) |
-|  [List](./alfa-json-ld.list_typealias.md) |  |
-|  [Scalar](./alfa-json-ld.scalar_typealias.md) |  |
+|  [Keyword](./alfa-json-ld.keyword_typealias.md) | [https://www.w3.org/TR/json-ld/\#dfn-keyword](https://www.w3.org/TR/json-ld/#dfn-keyword) |
 

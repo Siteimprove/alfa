@@ -15,7 +15,7 @@ interface JSON
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [device](./alfa-web.page_namespace.json_interface.device_propertysignature.md) | [Device.JSON](./alfa-device.device_namespace.json_interface.md) |  |
-|  [document](./alfa-web.page_namespace.json_interface.document_propertysignature.md) | Document.JSON |  |
-|  [request](./alfa-web.page_namespace.json_interface.request_propertysignature.md) | Request.JSON |  |
-|  [response](./alfa-web.page_namespace.json_interface.response_propertysignature.md) | Response.JSON |  |
+|  [document](./alfa-web.page_namespace.json_interface.document_propertysignature.md) | [Document.JSON](./alfa-dom.document_namespace.json_interface.md) |  |
+|  [request](./alfa-web.page_namespace.json_interface.request_propertysignature.md) | [Request.JSON](./alfa-http.request_namespace.json_interface.md) |  |
+|  [response](./alfa-web.page_namespace.json_interface.response_propertysignature.md) | [Response.JSON](./alfa-http.response_namespace.json_interface.md) |  |
 

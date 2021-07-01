@@ -15,11 +15,11 @@ export declare function evaluate(scope: Node, expression: string | Expression | 
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  scope | Node |  |
+|  scope | [Node](./alfa-dom.node_class.md) |  |
 |  expression | string \| [Expression](./alfa-xpath.expression_typealias.md) \| [Builder](./alfa-xpath.builder_class.md) |  |
 |  options | [evaluate.Options](./alfa-xpath.evaluate_namespace.options_interface.md) |  |
 
 <b>Returns:</b>
 
-Iterable&lt;Node&gt;
+Iterable&lt;[Node](./alfa-dom.node_class.md)<!-- -->&gt;
 

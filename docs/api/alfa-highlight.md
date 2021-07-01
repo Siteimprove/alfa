@@ -4,12 +4,6 @@
 
 ## alfa-highlight package
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [syntax(language, value)](./alfa-highlight.syntax_1_function.md) |  |
-
 ## Interfaces
 
 |  Interface | Description |
@@ -21,7 +15,6 @@
 |  Namespace | Description |
 |  --- | --- |
 |  [Marker](./alfa-highlight.marker_namespace.md) |  |
-|  [syntax](./alfa-highlight.syntax_namespace.md) |  |
 
 ## Variables
 

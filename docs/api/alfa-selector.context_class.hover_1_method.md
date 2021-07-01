@@ -14,7 +14,7 @@ static hover(element: Element): Context;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | Element |  |
+|  element | [Element](./alfa-dom.element_class.md) |  |
 
 <b>Returns:</b>
 

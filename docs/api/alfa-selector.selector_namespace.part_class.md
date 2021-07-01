@@ -27,4 +27,5 @@ export class Part extends Pseudo.Element<"part">
 |  [equals(value)](./alfa-selector.selector_namespace.part_class.equals_2_method.md) |  |  |
 |  [of(idents)](./alfa-selector.selector_namespace.part_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.part_class.tojson_1_method.md) |  |  |
+|  [toString()](./alfa-selector.selector_namespace.part_class.tostring_1_method.md) |  |  |
 

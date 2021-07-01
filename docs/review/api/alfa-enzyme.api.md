@@ -4,17 +4,15 @@
 
 ```ts
 
-import { Cheerio } from '@siteimprove/alfa-cheerio';
+import { CommonWrapper } from 'enzyme';
 import { Page } from '@siteimprove/alfa-web';
-import { ReactWrapper } from 'enzyme';
-import { ShallowWrapper } from 'enzyme';
 
 // @public (undocumented)
 export namespace Enzyme {
     // (undocumented)
     export function toPage(value: Type): Page;
     // (undocumented)
-    export type Type = ReactWrapper | ShallowWrapper | Cheerio.Type;
+    export type Type = CommonWrapper;
 }
 
 

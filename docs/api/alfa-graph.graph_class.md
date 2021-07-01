@@ -33,10 +33,14 @@ export declare class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable, 
 |  [has(node)](./alfa-graph.graph_class.has_1_method.md) |  |  |
 |  [hash(hash)](./alfa-graph.graph_class.hash_1_method.md) |  |  |
 |  [hasPath(from, to)](./alfa-graph.graph_class.haspath_1_method.md) |  |  |
+|  [isEmpty()](./alfa-graph.graph_class.isempty_1_method.md) |  |  |
 |  [iterator()](./alfa-graph.graph_class.iterator_1_method.md) |  |  |
 |  [neighbors(node)](./alfa-graph.graph_class.neighbors_1_method.md) |  |  |
 |  [nodes()](./alfa-graph.graph_class.nodes_1_method.md) |  |  |
 |  [of(nodes)](./alfa-graph.graph_class.of_1_method.md) | <code>static</code> |  |
+|  [path(from, to, traversal)](./alfa-graph.graph_class.path_1_method.md) |  |  |
+|  [reverse()](./alfa-graph.graph_class.reverse_1_method.md) |  |  |
+|  [sort()](./alfa-graph.graph_class.sort_1_method.md) |  |  |
 |  [toArray()](./alfa-graph.graph_class.toarray_1_method.md) |  |  |
 |  [toJSON()](./alfa-graph.graph_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-graph.graph_class.tostring_1_method.md) |  |  |

@@ -14,6 +14,7 @@ interface Options
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [archive?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.archive_propertysignature.md) | [Archive](./alfa-scraper.archive_class.md) | <i>(Optional)</i> |
 |  [awaiter?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.awaiter_propertysignature.md) | [Awaiter](./alfa-scraper.awaiter_typealias.md) | <i>(Optional)</i> |
 |  [cookies?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.cookies_propertysignature.md) | Iterable&lt;[Cookie](./alfa-http.cookie_class.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  [credentials?](./alfa-scraper.scraper_namespace.scrape_namespace.options_interface.credentials_propertysignature.md) | [Credentials](./alfa-scraper.credentials_class.md) | <i>(Optional)</i> |

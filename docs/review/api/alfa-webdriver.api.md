@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="webdriverio/async" />
+
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)

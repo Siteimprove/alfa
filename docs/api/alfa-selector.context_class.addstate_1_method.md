@@ -14,7 +14,7 @@ addState(element: Element, state: Context.State): Context;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | Element |  |
+|  element | [Element](./alfa-dom.element_class.md) |  |
 |  state | [Context.State](./alfa-selector.context_namespace.state_enum.md) |  |
 
 <b>Returns:</b>

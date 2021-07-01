@@ -85,15 +85,6 @@ export namespace Marker {
     gray: Marker;
 }
 
-// @public (undocumented)
-export function syntax(language: string, value: string): Promise<string>;
-
-// @public (undocumented)
-export namespace syntax {
-    // (undocumented)
-    export function register(language: string): Promise<void>;
-}
-
 
 // (No @packageDocumentation comment for this package)
 

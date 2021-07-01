@@ -4,6 +4,9 @@
 
 ```ts
 
+/// <reference types="jquery" />
+/// <reference lib="dom" />
+
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)

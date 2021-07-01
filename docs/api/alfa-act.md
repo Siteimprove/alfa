@@ -11,7 +11,7 @@ This package provides functionality for implementing rules specified in the [ACT
 |  Class | Description |
 |  --- | --- |
 |  [Audit](./alfa-act.audit_class.md) |  |
-|  [Cache\_2](./alfa-act.cache_2_class.md) |  |
+|  [Cache](./alfa-act.cache_class.md) |  |
 |  [Diagnostic](./alfa-act.diagnostic_class.md) |  |
 |  [Outcome](./alfa-act.outcome_class.md) |  |
 |  [Question](./alfa-act.question_class.md) |  |

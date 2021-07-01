@@ -626,7 +626,7 @@ namespace Function_2 {
 export { Function_2 as Function }
 
 // @public (undocumented)
-export type Gradient = Linear;
+export type Gradient = Linear | Radial;
 
 // @public (undocumented)
 export namespace Gradient {
@@ -669,7 +669,7 @@ export namespace Gradient {
         export type JSON = Stop.JSON | Hint.JSON;
     }
     // (undocumented)
-    export type JSON = Linear.JSON;
+    export type JSON = Linear.JSON | Radial.JSON;
     const // (undocumented)
     parseHint: Parser<Slice<Token>, Hint, string>;
     // (undocumented)
@@ -710,7 +710,7 @@ export namespace Gradient {
     const // (undocumented)
     parseItemList: Parser<Slice<Token>, Array<Item>, string>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Linear, string>;
+    parse: Parser<Slice<Token>, Gradient, string>;
 }
 
 // @public (undocumented)
@@ -1017,6 +1017,8 @@ export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Di
     // (undocumented)
     get direction(): D;
     // (undocumented)
+    equals(value: Linear): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
@@ -1265,6 +1267,8 @@ export class Nth implements Iterable<Token>, Equatable, Serializable {
     get step(): number;
     // (undocumented)
     toJSON(): Nth.JSON;
+    // (undocumented)
+    toString(): string;
 }
 
 // @public (undocumented)
@@ -1505,7 +1509,7 @@ export namespace Position {
     const // (undocumented)
     parseVertical: Parser<Slice<Token>, Keyword<"top"> | Keyword<"bottom">, string, []>;
     // (undocumented)
-    export type Horizontal = Keyword<"left" | "right">;
+    export type Horizontal = Keyword<"left"> | Keyword<"right">;
     const // (undocumented)
     parseHorizontal: Parser<Slice<Token>, Keyword<"left"> | Keyword<"right">, string, []>;
     // (undocumented)
@@ -1551,7 +1555,180 @@ export namespace Position {
         }
     }
     // (undocumented)
-    export type Vertical = Keyword<"top" | "bottom">;
+    export type Vertical = Keyword<"top"> | Keyword<"bottom">;
+}
+
+// @public (undocumented)
+export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position> extends Value<"gradient"> {
+    // (undocumented)
+    equals(value: Radial): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get items(): Iterable<I>;
+    // (undocumented)
+    get kind(): "radial";
+    // (undocumented)
+    static of<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position>(shape: S, position: P, items: Iterable<I>, repeats: boolean): Radial<I, S, P>;
+    // (undocumented)
+    get position(): P;
+    // (undocumented)
+    get repeats(): boolean;
+    // (undocumented)
+    get shape(): S;
+    // (undocumented)
+    toJSON(): Radial.JSON;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get type(): "gradient";
+}
+
+// @public (undocumented)
+export namespace Radial {
+    // (undocumented)
+    export class Circle<R extends Length = Length> implements Equatable, Hashable, Serializable<Circle.JSON> {
+        // (undocumented)
+        equals(value: Circle): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        static of<R extends Length>(radius: R): Circle<R>;
+        // (undocumented)
+        get radius(): R;
+        // (undocumented)
+        toJSON(): Circle.JSON;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get type(): "circle";
+    }
+    // (undocumented)
+    export namespace Circle {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            radius: Length.JSON;
+            // (undocumented)
+            type: "circle";
+        }
+    }
+    // (undocumented)
+    export class Ellipse<R extends Length | Percentage = Length | Percentage> implements Equatable, Hashable, Serializable<Ellipse.JSON> {
+        // (undocumented)
+        equals(value: Ellipse): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        get horizontal(): R;
+        // (undocumented)
+        static of<R extends Length | Percentage>(horizontal: R, vertical: R): Ellipse<R>;
+        // (undocumented)
+        toJSON(): Ellipse.JSON;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get type(): "ellipse";
+        // (undocumented)
+        get vertical(): R;
+        }
+    // (undocumented)
+    export namespace Ellipse {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            horizontal: Length.JSON | Percentage.JSON;
+            // (undocumented)
+            type: "ellipse";
+            // (undocumented)
+            vertical: Length.JSON | Percentage.JSON;
+        }
+    }
+    // (undocumented)
+    export class Extent implements Equatable, Hashable, Serializable<Extent.JSON> {
+        // (undocumented)
+        equals(value: Extent): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        static of(shape?: Extent.Shape, size?: Extent.Size): Extent;
+        // (undocumented)
+        get shape(): Extent.Shape;
+        // (undocumented)
+        get size(): Extent.Size;
+        // (undocumented)
+        toJSON(): Extent.JSON;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get type(): "extent";
+    }
+    // (undocumented)
+    export namespace Extent {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            shape: `${Shape}`;
+            // (undocumented)
+            size: `${Size}`;
+            // (undocumented)
+            type: "extent";
+        }
+        // (undocumented)
+        export enum Shape {
+            // (undocumented)
+            Circle = "circle",
+            // (undocumented)
+            Ellipse = "ellipse"
+        }
+        // (undocumented)
+        export enum Size {
+            // (undocumented)
+            ClosestCorner = "closest-corner",
+            // (undocumented)
+            ClosestSide = "closest-side",
+            // (undocumented)
+            FarthestCorner = "farthest-corner",
+            // (undocumented)
+            FarthestSide = "farthest-side"
+        }
+    }
+    // (undocumented)
+    export interface JSON extends Value.JSON<"gradient"> {
+        // (undocumented)
+        items: Array<Gradient.Item.JSON>;
+        // (undocumented)
+        kind: "radial";
+        // (undocumented)
+        position: Position.JSON;
+        // (undocumented)
+        repeats: boolean;
+        // (undocumented)
+        shape: Shape.JSON;
+    }
+    // (undocumented)
+    export type Shape = Circle | Ellipse | Extent;
+    // (undocumented)
+    export namespace Shape {
+        // (undocumented)
+        export type JSON = Circle.JSON | Ellipse.JSON | Extent.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Slice<Token>, Radial, string>;
 }
 
 // @public (undocumented)

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-traverse(root: T, traversal?: Graph.Traversal): Sequence<T>;
+traverse(root: T, traversal?: Graph.Traversal): Sequence<[node: T, parent: T]>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ traverse(root: T, traversal?: Graph.Traversal): Sequence<T>;
 
 <b>Returns:</b>
 
-[Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;T&gt;
+[Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;\[node: T, parent: T\]&gt;
 

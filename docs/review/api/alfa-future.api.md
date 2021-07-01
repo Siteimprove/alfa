@@ -11,10 +11,11 @@ import { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
+import { Thenable } from '@siteimprove/alfa-thenable';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, AsyncIterable<T> {
+export abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, Thenable<T>, AsyncIterable<T> {
     // (undocumented)
     [Symbol.asyncIterator](): AsyncIterator<T>;
     // (undocumented)

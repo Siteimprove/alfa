@@ -27,4 +27,5 @@ export class Slotted extends Pseudo.Element<"slotted">
 |  [equals(value)](./alfa-selector.selector_namespace.slotted_class.equals_2_method.md) |  |  |
 |  [of(selectors)](./alfa-selector.selector_namespace.slotted_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.slotted_class.tojson_1_method.md) |  |  |
+|  [toString()](./alfa-selector.selector_namespace.slotted_class.tostring_1_method.md) |  |  |
 

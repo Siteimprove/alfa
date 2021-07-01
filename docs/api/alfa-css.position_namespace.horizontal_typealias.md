@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Horizontal = Keyword<"left" | "right">;
+type Horizontal = Keyword<"left"> | Keyword<"right">;
 ```
 <b>References:</b> [Keyword](./alfa-css.keyword_class.md)
 

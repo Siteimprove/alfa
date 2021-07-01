@@ -8,20 +8,20 @@ import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Serializable } from '@siteimprove/alfa-json';
-import { URL as URL_2 } from '@siteimprove/alfa-url';
+import { URL } from '@siteimprove/alfa-url';
 
 // @public (undocumented)
-interface Body_2 {
+export interface Body {
     // (undocumented)
     readonly body: ArrayBuffer;
 }
 
 // @public (undocumented)
-namespace Body_2 {
+export namespace Body {
     // (undocumented)
-    interface EARL extends earl.EARL {
+    export interface EARL extends earl.EARL {
         // (undocumented)
         "@context": {
             cnt: "http://www.w3.org/2011/content#";
@@ -34,10 +34,8 @@ namespace Body_2 {
         "cnt:chars": string;
     }
     // (undocumented)
-    function isBody(value: unknown): value is Body_2;
+    export function isBody(value: unknown): value is Body;
 }
-
-export { Body_2 as Body }
 
 // @public (undocumented)
 export class Cookie implements Equatable, Serializable<Cookie.JSON> {
@@ -85,7 +83,7 @@ export class Cookies implements Iterable_2<Cookie>, Serializable<Cookies.JSON> {
     // (undocumented)
     static empty(): Cookies;
     // (undocumented)
-    get(name: string): Option_2<Cookie>;
+    get(name: string): Option<Cookie>;
     // (undocumented)
     has(name: string): boolean;
     // (undocumented)
@@ -160,35 +158,35 @@ export namespace Header {
 }
 
 // @public (undocumented)
-class Headers_2 implements Iterable_2<Header>, json.Serializable<Headers_2.JSON>, earl.Serializable<Headers_2.EARL> {
+export class Headers implements Iterable_2<Header>, json.Serializable<Headers.JSON>, earl.Serializable<Headers.EARL> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Header>;
     // (undocumented)
-    add(header: Header): Headers_2;
+    add(header: Header): Headers;
     // (undocumented)
-    delete(name: string): Headers_2;
+    delete(name: string): Headers;
     // (undocumented)
-    static empty(): Headers_2;
+    static empty(): Headers;
     // (undocumented)
-    get(name: string): Option_2<Header>;
+    get(name: string): Option<Header>;
     // (undocumented)
     has(name: string): boolean;
     // (undocumented)
-    static of(headers: Iterable_2<Header>): Headers_2;
+    static of(headers: Iterable_2<Header>): Headers;
     // (undocumented)
     toArray(): Array<Header>;
     // (undocumented)
-    toEARL(): Headers_2.EARL;
+    toEARL(): Headers.EARL;
     // (undocumented)
-    toJSON(): Headers_2.JSON;
+    toJSON(): Headers.JSON;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
-namespace Headers_2 {
+export namespace Headers {
     // (undocumented)
-    interface EARL extends earl.EARL {
+    export interface EARL extends earl.EARL {
         // (undocumented)
         "@context": {
             http: "http://www.w3.org/2011/http#";
@@ -197,42 +195,40 @@ namespace Headers_2 {
         "@list": Array<Header.EARL>;
     }
     // (undocumented)
-    function from(json: JSON): Headers_2;
+    export function from(json: JSON): Headers;
     // (undocumented)
-    function isHeaders(value: unknown): value is Headers_2;
+    export function isHeaders(value: unknown): value is Headers;
     // (undocumented)
-    interface JSON extends Array<Header.JSON> {
+    export interface JSON extends Array<Header.JSON> {
     }
 }
 
-export { Headers_2 as Headers }
-
 // @public (undocumented)
-class Request_2 implements Body_2, json.Serializable<Request_2.JSON>, earl.Serializable<Request_2.EARL> {
+export class Request implements Body, json.Serializable<Request.JSON>, earl.Serializable<Request.EARL> {
     // (undocumented)
     get body(): ArrayBuffer;
     // (undocumented)
-    static empty(): Request_2;
+    static empty(): Request;
     // (undocumented)
-    get headers(): Headers_2;
+    get headers(): Headers;
     // (undocumented)
     get method(): string;
     // (undocumented)
-    static of(method: string, url: URL_2, headers?: Headers_2, body?: ArrayBuffer): Request_2;
+    static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Request;
     // (undocumented)
-    toEARL(): Request_2.EARL;
+    toEARL(): Request.EARL;
     // (undocumented)
-    toJSON(): Request_2.JSON;
+    toJSON(): Request.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get url(): URL_2;
+    get url(): URL;
     }
 
 // @public (undocumented)
-namespace Request_2 {
+export namespace Request {
     // (undocumented)
-    interface EARL extends earl.EARL {
+    export interface EARL extends earl.EARL {
         // (undocumented)
         "@context": {
             http: "http://www.w3.org/2011/http#";
@@ -240,26 +236,26 @@ namespace Request_2 {
         // (undocumented)
         "@type": ["http:Message", "http:Request"];
         // (undocumented)
-        "http:body": Body_2.EARL;
+        "http:body": Body.EARL;
         // (undocumented)
-        "http:headers": Headers_2.EARL;
+        "http:headers": Headers.EARL;
         // (undocumented)
         "http:methodName": string;
         // (undocumented)
         "http:requestURI": string;
     }
     // (undocumented)
-    function from(json: JSON): Request_2;
+    export function from(json: JSON): Request;
     // (undocumented)
-    function isRequest(value: unknown): value is Request_2;
+    export function isRequest(value: unknown): value is Request;
     // (undocumented)
-    interface JSON {
+    export interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         body: string;
         // (undocumented)
-        headers: Headers_2.JSON;
+        headers: Headers.JSON;
         // (undocumented)
         method: string;
         // (undocumented)
@@ -267,34 +263,32 @@ namespace Request_2 {
     }
 }
 
-export { Request_2 as Request }
-
 // @public (undocumented)
-class Response_2 implements Body_2, json.Serializable<Response_2.JSON>, earl.Serializable<Response_2.EARL> {
+export class Response implements Body, json.Serializable<Response.JSON>, earl.Serializable<Response.EARL> {
     // (undocumented)
     get body(): ArrayBuffer;
     // (undocumented)
-    static empty(): Response_2;
+    static empty(): Response;
     // (undocumented)
-    get headers(): Headers_2;
+    get headers(): Headers;
     // (undocumented)
-    static of(url: URL_2, status: number, headers?: Headers_2, body?: ArrayBuffer): Response_2;
+    static of(url: URL, status: number, headers?: Headers, body?: ArrayBuffer): Response;
     // (undocumented)
     get status(): number;
     // (undocumented)
-    toEARL(): Response_2.EARL;
+    toEARL(): Response.EARL;
     // (undocumented)
-    toJSON(): Response_2.JSON;
+    toJSON(): Response.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get url(): URL_2;
+    get url(): URL;
     }
 
 // @public (undocumented)
-namespace Response_2 {
+export namespace Response {
     // (undocumented)
-    interface EARL extends earl.EARL {
+    export interface EARL extends earl.EARL {
         // (undocumented)
         "@context": {
             http: "http://www.w3.org/2011/http#";
@@ -302,32 +296,30 @@ namespace Response_2 {
         // (undocumented)
         "@type": ["http:Message", "http:Response"];
         // (undocumented)
-        "http:body": Body_2.EARL;
+        "http:body": Body.EARL;
         // (undocumented)
-        "http:headers": Headers_2.EARL;
+        "http:headers": Headers.EARL;
         // (undocumented)
         "http:statusCodeValue": number;
     }
     // (undocumented)
-    function from(json: JSON): Response_2;
+    export function from(json: JSON): Response;
     // (undocumented)
-    function isResponse(value: unknown): value is Response_2;
+    export function isResponse(value: unknown): value is Response;
     // (undocumented)
-    interface JSON {
+    export interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         body: string;
         // (undocumented)
-        headers: Headers_2.JSON;
+        headers: Headers.JSON;
         // (undocumented)
         status: number;
         // (undocumented)
         url: string;
     }
 }
-
-export { Response_2 as Response }
 
 
 // (No @packageDocumentation comment for this package)

@@ -6,12 +6,12 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as dom from '@siteimprove/alfa-dom';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Nth } from '@siteimprove/alfa-css';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
@@ -20,41 +20,41 @@ import { Token } from '@siteimprove/alfa-css';
 // @public (undocumented)
 export class Context {
     // (undocumented)
-    active(element: Element_2): Context;
+    active(element: Element): Context;
     // (undocumented)
-    static active(element: Element_2): Context;
+    static active(element: Element): Context;
     // (undocumented)
-    addState(element: Element_2, state: Context.State): Context;
+    addState(element: Element, state: Context.State): Context;
     // (undocumented)
     static empty(): Context;
     // (undocumented)
-    focus(element: Element_2): Context;
+    focus(element: Element): Context;
     // (undocumented)
-    static focus(element: Element_2): Context;
+    static focus(element: Element): Context;
     // (undocumented)
-    getState(element: Element_2): Context.State;
+    getState(element: Element): Context.State;
     // (undocumented)
-    hasState(element: Element_2, state: Context.State): boolean;
+    hasState(element: Element, state: Context.State): boolean;
     // (undocumented)
-    hover(element: Element_2): Context;
+    hover(element: Element): Context;
     // (undocumented)
-    static hover(element: Element_2): Context;
+    static hover(element: Element): Context;
     // (undocumented)
-    isActive(element: Element_2): boolean;
+    isActive(element: Element): boolean;
     // (undocumented)
-    isFocused(element: Element_2): boolean;
+    isFocused(element: Element): boolean;
     // (undocumented)
-    isHovered(element: Element_2): boolean;
+    isHovered(element: Element): boolean;
     // (undocumented)
-    isVisited(element: Element_2): boolean;
+    isVisited(element: Element): boolean;
     // (undocumented)
-    static of(state: Iterable<[Element_2, Context.State]>): Context;
+    static of(state: Iterable<[Element, Context.State]>): Context;
     // (undocumented)
-    setState(element: Element_2, state: Context.State): Context;
+    setState(element: Element, state: Context.State): Context;
     // (undocumented)
-    visit(element: Element_2): Context;
+    visit(element: Element): Context;
     // (undocumented)
-    static visit(element: Element_2): Context;
+    static visit(element: Element): Context;
 }
 
 // @public (undocumented)
@@ -82,7 +82,7 @@ export namespace Selector {
     // (undocumented)
     export class Active extends Pseudo.Class<"active"> {
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): Active;
     }
@@ -100,17 +100,17 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        get matcher(): Option_2<Attribute.Matcher>;
+        get matcher(): Option<Attribute.Matcher>;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
-        get modifier(): Option_2<Attribute.Modifier>;
+        get modifier(): Option<Attribute.Modifier>;
         // (undocumented)
         get name(): string;
         // (undocumented)
-        get namespace(): Option_2<string>;
+        get namespace(): Option<string>;
         // (undocumented)
-        static of(namespace: Option_2<string>, name: string, value?: Option_2<string>, matcher?: Option_2<Attribute.Matcher>, modifier?: Option_2<Attribute.Modifier>): Attribute;
+        static of(namespace: Option<string>, name: string, value?: Option<string>, matcher?: Option<Attribute.Matcher>, modifier?: Option<Attribute.Modifier>): Attribute;
         // (undocumented)
         toJSON(): Attribute.JSON;
         // (undocumented)
@@ -118,7 +118,7 @@ export namespace Selector {
         // (undocumented)
         get type(): "attribute";
         // (undocumented)
-        get value(): Option_2<string>;
+        get value(): Option<string>;
         }
     // (undocumented)
     export namespace Attribute {
@@ -177,7 +177,7 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         get name(): string;
         // (undocumented)
@@ -221,7 +221,7 @@ export namespace Selector {
         // (undocumented)
         get left(): Simple | Compound | Complex;
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
         // (undocumented)
@@ -256,7 +256,7 @@ export namespace Selector {
         // (undocumented)
         get left(): Simple;
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(left: Simple, right: Simple | Compound): Compound;
         // (undocumented)
@@ -283,7 +283,7 @@ export namespace Selector {
         // (undocumented)
         export interface JSON extends Pseudo.Element.JSON<"cue"> {
             // (undocumented)
-            selector: Option_2.JSON<Selector>;
+            selector: Option.JSON<Selector>;
         }
     }
     // (undocumented)
@@ -291,13 +291,13 @@ export namespace Selector {
         // (undocumented)
         export interface JSON extends Pseudo.Element.JSON<"cue-region"> {
             // (undocumented)
-            selector: Option_2.JSON<Selector>;
+            selector: Option.JSON<Selector>;
         }
     }
     // (undocumented)
     export class Empty extends Pseudo.Class<"empty"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): Empty;
     }
@@ -309,7 +309,7 @@ export namespace Selector {
     // (undocumented)
     export class FirstChild extends Pseudo.Class<"first-child"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): FirstChild;
     }
@@ -329,14 +329,14 @@ export namespace Selector {
     // (undocumented)
     export class FirstOfType extends Pseudo.Class<"first-of-type"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): FirstOfType;
     }
     // (undocumented)
     export class Focus extends Pseudo.Class<"focus"> {
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): Focus;
     }
@@ -350,7 +350,7 @@ export namespace Selector {
     // (undocumented)
     export class FocusWithin extends Pseudo.Class<"focus-within"> {
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): FocusWithin;
     }
@@ -385,7 +385,7 @@ export namespace Selector {
     // (undocumented)
     export class Hover extends Pseudo.Class<"hover"> {
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): Hover;
     }
@@ -398,7 +398,7 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         get name(): string;
         // (undocumented)
@@ -425,7 +425,7 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(selector: Simple | Compound | Complex | List<Simple | Compound | Complex>): Is;
         // (undocumented)
@@ -469,21 +469,21 @@ export namespace Selector {
     // (undocumented)
     export class LastChild extends Pseudo.Class<"last-child"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): LastChild;
     }
     // (undocumented)
     export class LastOfType extends Pseudo.Class<"last-of-type"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): LastOfType;
     }
     // (undocumented)
     export class Link extends Pseudo.Class<"link"> {
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): Link;
     }
@@ -498,7 +498,7 @@ export namespace Selector {
         // (undocumented)
         get left(): T;
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of<T extends Simple | Compound | Complex | Relative>(left: T, right: T | List<T>): List<T>;
         // (undocumented)
@@ -532,7 +532,7 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(selector: Simple | Compound | Complex | List<Simple | Compound | Complex>): Not;
         // (undocumented)
@@ -553,11 +553,17 @@ export namespace Selector {
     // (undocumented)
     export class NthChild extends Pseudo.Class<"nth-child"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        equals(value: NthChild): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        matches(element: Element): boolean;
         // (undocumented)
         static of(index: Nth): NthChild;
         // (undocumented)
         toJSON(): NthChild.JSON;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
     export namespace NthChild {
@@ -570,11 +576,17 @@ export namespace Selector {
     // (undocumented)
     export class NthLastChild extends Pseudo.Class<"nth-last-child"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        equals(value: NthLastChild): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        matches(element: Element): boolean;
         // (undocumented)
         static of(index: Nth): NthLastChild;
         // (undocumented)
         toJSON(): NthLastChild.JSON;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
     export namespace NthLastChild {
@@ -587,11 +599,17 @@ export namespace Selector {
     // (undocumented)
     export class NthLastOfType extends Pseudo.Class<"nth-last-of-type"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        equals(value: NthLastOfType): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        matches(element: Element): boolean;
         // (undocumented)
         static of(index: Nth): NthLastOfType;
         // (undocumented)
         toJSON(): NthLastOfType.JSON;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
     export namespace NthLastOfType {
@@ -604,11 +622,17 @@ export namespace Selector {
     // (undocumented)
     export class NthOfType extends Pseudo.Class<"nth-of-type"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        equals(value: NthOfType): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        matches(element: Element): boolean;
         // (undocumented)
         static of(index: Nth): NthOfType;
         // (undocumented)
         toJSON(): NthOfType.JSON;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
     export namespace NthOfType {
@@ -621,14 +645,14 @@ export namespace Selector {
     // (undocumented)
     export class OnlyChild extends Pseudo.Class<"only-child"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): OnlyChild;
     }
     // (undocumented)
     export class OnlyOfType extends Pseudo.Class<"only-of-type"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): OnlyOfType;
     }
@@ -644,6 +668,8 @@ export namespace Selector {
         static of(idents: Iterable_2<Token.Ident>): Part;
         // (undocumented)
         toJSON(): Part.JSON;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
     export namespace Part {
@@ -765,7 +791,7 @@ export namespace Selector {
     // (undocumented)
     export class Root extends Pseudo.Class<"root"> {
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         static of(): Root;
     }
@@ -783,7 +809,7 @@ export namespace Selector {
         // (undocumented)
         abstract equals(value: unknown): value is this;
         // (undocumented)
-        abstract matches(element: Element_2, context?: Context): boolean;
+        abstract matches(element: Element, context?: Context): boolean;
         // (undocumented)
         abstract toJSON(): JSON;
         // (undocumented)
@@ -808,6 +834,8 @@ export namespace Selector {
         get selectors(): Iterable_2<Simple | Compound>;
         // (undocumented)
         toJSON(): Slotted.JSON;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
     export namespace Slotted {
@@ -836,13 +864,13 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
         get name(): string;
         // (undocumented)
-        get namespace(): Option_2<string>;
+        get namespace(): Option<string>;
         // (undocumented)
-        static of(namespace: Option_2<string>, name: string): Type;
+        static of(namespace: Option<string>, name: string): Type;
         // (undocumented)
         toJSON(): Type.JSON;
         // (undocumented)
@@ -871,11 +899,11 @@ export namespace Selector {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        matches(element: Element_2): boolean;
+        matches(element: Element): boolean;
         // (undocumented)
-        get namespace(): Option_2<string>;
+        get namespace(): Option<string>;
         // (undocumented)
-        static of(namespace: Option_2<string>): Universal;
+        static of(namespace: Option<string>): Universal;
         // (undocumented)
         toJSON(): Universal.JSON;
         // (undocumented)
@@ -894,7 +922,7 @@ export namespace Selector {
     // (undocumented)
     export class Visited extends Pseudo.Class<"visited"> {
         // (undocumented)
-        matches(element: Element_2, context?: Context): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): Visited;
     }

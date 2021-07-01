@@ -14,7 +14,7 @@ static of(node: Document | Shadow, device: Device): Cascade;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  node | Document \| Shadow |  |
+|  node | [Document](./alfa-dom.document_class.md) \| [Shadow](./alfa-dom.shadow_class.md) |  |
 |  device | [Device](./alfa-device.device_class.md) |  |
 
 <b>Returns:</b>

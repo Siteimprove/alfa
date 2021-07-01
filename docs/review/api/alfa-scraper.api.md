@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference lib="dom" />
+
 import { Cookie } from '@siteimprove/alfa-http';
 import { Device } from '@siteimprove/alfa-device';
 import { Equatable } from '@siteimprove/alfa-equatable';
@@ -20,6 +22,40 @@ import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Timeout } from '@siteimprove/alfa-time';
 import { URL as URL_2 } from '@siteimprove/alfa-url';
+
+// @public (undocumented)
+export class Archive implements Equatable, Serializable {
+    // (undocumented)
+    equals(value: Archive): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get format(): Archive.Format;
+    // (undocumented)
+    static of(path: string, format?: Archive.Format): Archive;
+    // (undocumented)
+    get path(): string;
+    // (undocumented)
+    toJSON(): Archive.JSON;
+}
+
+// @public (undocumented)
+export namespace Archive {
+    // (undocumented)
+    export enum Format {
+        // (undocumented)
+        MHTML = "mhtml"
+    }
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        format: `${Format}`;
+        // (undocumented)
+        path: string;
+    }
+}
 
 // @public (undocumented)
 export type Awaiter = (page: Page, timeout: Timeout) => Promise_2<Option_2<string>>;
@@ -82,6 +118,8 @@ export namespace Scraper {
     export namespace scrape {
         // (undocumented)
         export interface Options {
+            // (undocumented)
+            readonly archive?: Archive;
             // (undocumented)
             readonly awaiter?: Awaiter;
             // (undocumented)

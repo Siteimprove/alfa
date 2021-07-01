@@ -14,7 +14,7 @@ get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Optio
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | Element |  |
+|  element | [Element](./alfa-dom.element_class.md) |  |
 |  context | [Context](./alfa-selector.context_class.md) |  |
 |  filter | [Option](./alfa-option.option_interface.md)<!-- -->&lt;AncestorFilter&gt; |  |
 

@@ -8,6 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
+|  [Archive](./alfa-scraper.archive_class.md) |  |
 |  [Credentials](./alfa-scraper.credentials_class.md) |  |
 |  [Scraper](./alfa-scraper.scraper_class.md) |  |
 |  [Screenshot](./alfa-scraper.screenshot_class.md) |  |
@@ -16,6 +17,7 @@
 
 |  Namespace | Description |
 |  --- | --- |
+|  [Archive](./alfa-scraper.archive_namespace.md) |  |
 |  [Awaiter](./alfa-scraper.awaiter_namespace.md) |  |
 |  [Credentials](./alfa-scraper.credentials_namespace.md) |  |
 |  [Scraper](./alfa-scraper.scraper_namespace.md) |  |

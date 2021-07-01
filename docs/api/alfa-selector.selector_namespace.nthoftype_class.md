@@ -17,7 +17,10 @@ export class NthOfType extends Pseudo.Class<"nth-of-type">
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [equals(value)](./alfa-selector.selector_namespace.nthoftype_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.nthoftype_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.nthoftype_class.matches_1_method.md) |  |  |
 |  [of(index)](./alfa-selector.selector_namespace.nthoftype_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.nthoftype_class.tojson_1_method.md) |  |  |
+|  [toString()](./alfa-selector.selector_namespace.nthoftype_class.tostring_1_method.md) |  |  |
 

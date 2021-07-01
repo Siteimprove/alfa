@@ -4,13 +4,14 @@
 
 ## Context interface
 
+[https://www.w3.org/TR/json-ld/\#dfn-context-definition](https://www.w3.org/TR/json-ld/#dfn-context-definition)
 
 <b>Signature:</b>
 
 ```typescript
-export interface Context extends Dictionary 
+export interface Context extends JSON.Object 
 ```
-<b>Extends:</b> [Dictionary](./alfa-json-ld.dictionary_interface.md)
+<b>Extends:</b> JSON.Object
 
 ## Properties
 

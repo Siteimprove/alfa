@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="chai" />
+
 import { Asserter } from '@siteimprove/alfa-assert';
 import { Future } from '@siteimprove/alfa-future';
 import { Handler } from '@siteimprove/alfa-assert';

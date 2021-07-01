@@ -14,7 +14,7 @@ static of(state: Iterable<[Element, Context.State]>): Context;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  state | Iterable&lt;\[Element, [Context.State](./alfa-selector.context_namespace.state_enum.md)<!-- -->\]&gt; |  |
+|  state | Iterable&lt;\[[Element](./alfa-dom.element_class.md)<!-- -->, [Context.State](./alfa-selector.context_namespace.state_enum.md)<!-- -->\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -17,7 +17,10 @@ export class NthChild extends Pseudo.Class<"nth-child">
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [equals(value)](./alfa-selector.selector_namespace.nthchild_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.nthchild_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.nthchild_class.matches_1_method.md) |  |  |
 |  [of(index)](./alfa-selector.selector_namespace.nthchild_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.nthchild_class.tojson_1_method.md) |  |  |
+|  [toString()](./alfa-selector.selector_namespace.nthchild_class.tostring_1_method.md) |  |  |
 

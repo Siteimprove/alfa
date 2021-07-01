@@ -31,4 +31,5 @@ export declare class Nth implements Iterable<Token>, Equatable, Serializable
 |  [matches(index)](./alfa-css.nth_class.matches_1_method.md) |  | Check if the given index matches the indices produced by this nth. |
 |  [of(step, offset)](./alfa-css.nth_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-css.nth_class.tojson_1_method.md) |  |  |
+|  [toString()](./alfa-css.nth_class.tostring_1_method.md) |  |  |
 

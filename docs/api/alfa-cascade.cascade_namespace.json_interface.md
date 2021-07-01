@@ -15,7 +15,7 @@ interface JSON
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [device](./alfa-cascade.cascade_namespace.json_interface.device_propertysignature.md) | [Device.JSON](./alfa-device.device_namespace.json_interface.md) |  |
-|  [root](./alfa-cascade.cascade_namespace.json_interface.root_propertysignature.md) | Document.JSON \| Shadow.JSON |  |
+|  [root](./alfa-cascade.cascade_namespace.json_interface.root_propertysignature.md) | [Document.JSON](./alfa-dom.document_namespace.json_interface.md) \| [Shadow.JSON](./alfa-dom.shadow_namespace.json_interface.md) |  |
 |  [rules](./alfa-cascade.cascade_namespace.json_interface.rules_propertysignature.md) | RuleTree.JSON |  |
 |  [selectors](./alfa-cascade.cascade_namespace.json_interface.selectors_propertysignature.md) | SelectorMap.JSON |  |
 

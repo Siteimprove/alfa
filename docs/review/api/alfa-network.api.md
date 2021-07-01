@@ -21,13 +21,13 @@ export class Network<N, E> implements Iterable_2<[N, Iterable_2<[N, Iterable_2<E
     // (undocumented)
     add(node: N): Network<N, E>;
     // (undocumented)
-    connect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
+    connect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
     // (undocumented)
     delete(node: N): Network<N, E>;
     // (undocumented)
-    disconnect(from: N, to: N): Network<N, E>;
+    disconnect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
     // (undocumented)
-    disconnect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
+    edges(from: N, to: N): Iterable_2<E>;
     // (undocumented)
     static empty<N, E>(): Network<N, E>;
     // (undocumented)
@@ -41,6 +41,8 @@ export class Network<N, E> implements Iterable_2<[N, Iterable_2<[N, Iterable_2<E
     // (undocumented)
     hasPath(from: N, to: N): boolean;
     // (undocumented)
+    isEmpty(): this is Network<N, never>;
+    // (undocumented)
     iterator(): Iterator<[N, Iterable_2<[N, Iterable_2<E>]>]>;
     // (undocumented)
     neighbors(node: N): Iterable_2<[N, Iterable_2<E>]>;
@@ -49,7 +51,13 @@ export class Network<N, E> implements Iterable_2<[N, Iterable_2<[N, Iterable_2<E
     // (undocumented)
     static of<N, E>(nodes: Map_2<N, Map_2<N, Set_2<E>>>): Network<N, E>;
     // (undocumented)
+    path(from: N, to: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iterable_2<E>]>;
+    // (undocumented)
+    reverse(): Network<N, E>;
+    // (undocumented)
     get size(): number;
+    // (undocumented)
+    sort(): Iterable_2<N>;
     // (undocumented)
     toArray(): Array<[N, Array<[N, Array<E>]>]>;
     // (undocumented)
@@ -59,7 +67,7 @@ export class Network<N, E> implements Iterable_2<[N, Iterable_2<[N, Iterable_2<E
     // (undocumented)
     toString(): string;
     // (undocumented)
-    traverse(root: N, traversal?: Network.Traversal): Sequence<N>;
+    traverse(root: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iterable_2<E>, parent: N]>;
 }
 
 // @public (undocumented)
@@ -78,7 +86,11 @@ export namespace Network {
     // (undocumented)
     export interface Traversal {
         // (undocumented)
-        <N, E>(network: Network<N, E>, root: N): Iterable_2<N>;
+        <N, E>(network: Network<N, E>, root: N): Iterable_2<[
+            node: N,
+            edges: Iterable_2<E>,
+            parent: N
+        ]>;
     }
     const // (undocumented)
     DepthFirst: Traversal;

@@ -4,7 +4,8 @@
 
 ```ts
 
-import cheerio = require('cheerio');
+import * as cheerio from 'cheerio';
+import * as dom from 'domhandler';
 import { Page } from '@siteimprove/alfa-web';
 
 // @public (undocumented)
@@ -12,7 +13,7 @@ export namespace Cheerio {
     // (undocumented)
     export function toPage(value: Type): Page;
     // (undocumented)
-    export type Type = ReturnType<typeof cheerio>;
+    export type Type = cheerio.Cheerio<dom.Node>;
 }
 
 

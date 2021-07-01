@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-connect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
+connect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
 ```
 
 ## Parameters
@@ -16,8 +16,7 @@ connect(from: N, to: N, edge: E, ...rest: Array<E>): Network<N, E>;
 |  --- | --- | --- |
 |  from | N |  |
 |  to | N |  |
-|  edge | E |  |
-|  rest | Array&lt;E&gt; |  |
+|  edges | Array&lt;E&gt; |  |
 
 <b>Returns:</b>
 

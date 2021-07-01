@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-traverse(root: N, traversal?: Network.Traversal): Sequence<N>;
+traverse(root: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iterable<E>, parent: N]>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ traverse(root: N, traversal?: Network.Traversal): Sequence<N>;
 
 <b>Returns:</b>
 
-[Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;N&gt;
+[Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;\[node: N, edges: Iterable&lt;E&gt;, parent: N\]&gt;
 

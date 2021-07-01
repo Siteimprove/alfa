@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-equals(value: unknown): value is this;
+equals(value: Linear): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Linear](./alfa-css.linear_class.md) |  |
 
 <b>Returns:</b>
 
-value is this
+boolean
 

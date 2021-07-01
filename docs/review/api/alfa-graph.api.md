@@ -38,6 +38,8 @@ export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hash
     // (undocumented)
     hasPath(from: T, to: T): boolean;
     // (undocumented)
+    isEmpty(): this is Graph<never>;
+    // (undocumented)
     iterator(): Iterator<[T, Iterable_2<T>]>;
     // (undocumented)
     neighbors(node: T): Iterable_2<T>;
@@ -46,7 +48,13 @@ export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hash
     // (undocumented)
     static of<T>(nodes: Map_2<T, Set_2<T>>): Graph<T>;
     // (undocumented)
+    path(from: T, to: T, traversal?: Graph.Traversal): Sequence<T>;
+    // (undocumented)
+    reverse(): Graph<T>;
+    // (undocumented)
     get size(): number;
+    // (undocumented)
+    sort(): Iterable_2<T>;
     // (undocumented)
     toArray(): Array<[T, Array<T>]>;
     // (undocumented)
@@ -54,7 +62,7 @@ export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hash
     // (undocumented)
     toString(): string;
     // (undocumented)
-    traverse(root: T, traversal?: Graph.Traversal): Sequence<T>;
+    traverse(root: T, traversal?: Graph.Traversal): Sequence<[node: T, parent: T]>;
 }
 
 // @public (undocumented)
@@ -73,7 +81,7 @@ export namespace Graph {
     // (undocumented)
     export interface Traversal {
         // (undocumented)
-        <T>(graph: Graph<T>, root: T): Iterable_2<T>;
+        <T>(graph: Graph<T>, root: T): Iterable_2<[node: T, parent: T]>;
     }
     const // (undocumented)
     DepthFirst: Traversal;

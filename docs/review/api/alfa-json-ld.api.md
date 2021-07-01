@@ -4,10 +4,10 @@
 
 ```ts
 
-import { Result } from '@siteimprove/alfa-result';
+import { JSON as JSON_2 } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export interface Context extends Dictionary {
+export interface Context extends JSON_2.Object {
     // (undocumented)
     "@base"?: string;
     // (undocumented)
@@ -15,73 +15,18 @@ export interface Context extends Dictionary {
 }
 
 // @public (undocumented)
-export interface Definition extends Dictionary {
-    // (undocumented)
-    "@container"?: string;
-    // (undocumented)
-    "@id": string;
-    // (undocumented)
-    "@language"?: string;
-    // (undocumented)
-    "@reverse": boolean;
-    // (undocumented)
-    "@type"?: string;
-}
-
-// @public (undocumented)
-export interface Dictionary {
-    // (undocumented)
-    [key: string]: Scalar | List | Dictionary | null | undefined;
-}
-
-// @public (undocumented)
-interface Document_2 extends Dictionary {
+export interface Document extends JSON_2.Object {
     // (undocumented)
     "@context"?: Context;
 }
 
-export { Document_2 as Document }
+// @public (undocumented)
+export type Keyword = "@base" | "@container" | "@context" | "@direction" | "@graph" | "@id" | "@import" | "@included" | "@index" | "@json" | "@language" | "@list" | "@nest" | "@none" | "@prefix" | "@propagate" | "@protected" | "@reverse" | "@set" | "@type" | "@value" | "@version" | "@vocab";
 
 // @public (undocumented)
-export function expand(element: Scalar | List | Dictionary): Result<List, string>;
-
-// @public (undocumented)
-export function isDictionary(element: Scalar | List | Dictionary | null): element is Dictionary;
-
-// @public (undocumented)
-export function isKeyword(key: string): key is Keyword;
-
-// @public (undocumented)
-export function isList(element: Scalar | List | Dictionary | null): element is List;
-
-// @public (undocumented)
-export function isListObject(element: Scalar | List | Dictionary | null): element is ListObject;
-
-// @public (undocumented)
-export function isScalar(element: Scalar | List | Dictionary | null): element is Scalar;
-
-// @public (undocumented)
-export function isValueObject(element: Scalar | List | Dictionary | null): element is ValueObject;
-
-// @public (undocumented)
-export type Keyword = "@context" | "@id" | "@value" | "@language" | "@type" | "@container" | "@list" | "@set" | "@reverse" | "@index" | "@base" | "@vocab" | "@graph";
-
-// @public (undocumented)
-export type List = Array<Scalar | Dictionary | null>;
-
-// @public (undocumented)
-export interface ListObject extends Dictionary {
+export namespace Keyword {
     // (undocumented)
-    "@list"?: List;
-}
-
-// @public (undocumented)
-export type Scalar = string | number | boolean;
-
-// @public (undocumented)
-export interface ValueObject extends Dictionary {
-    // (undocumented)
-    "@value"?: Scalar;
+    export function isKeyword(key: string): key is Keyword;
 }
 
 

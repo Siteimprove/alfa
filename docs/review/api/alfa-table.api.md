@@ -4,513 +4,412 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
-import { Result } from '@siteimprove/alfa-result';
+import { Predicate } from '@siteimprove/alfa-predicate';
+import { Refinement } from '@siteimprove/alfa-refinement';
+import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 
-// @public
-export class Cell implements Comparable<Cell>, Equatable, Serializable {
+// Warning: (ae-internal-missing-underscore) The name "Anchored" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface Anchored extends Comparable<Anchored> {
     // (undocumented)
-    get anchor(): {
-        x: number;
-        y: number;
-    };
-    compare(that: Cell): Comparison;
-    // (undocumented)
-    get element(): Element_2;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get headers(): Iterable_2<Element_2>;
-    // (undocumented)
-    get height(): number;
-    // (undocumented)
-    isCovering(x: number, y: number): boolean;
-    // (undocumented)
-    get kind(): Cell.Kind;
-    // (undocumented)
-    static of(kind: Cell.Kind, x: number, y: number, width: number, height: number, element: Element_2, scope?: Option_2<Scope.Resolved>, headers?: Iterable_2<Element_2>): Cell;
-    // (undocumented)
-    get scope(): Option_2<Scope.Resolved>;
-    // (undocumented)
-    toJSON(): Cell.JSON;
-    // (undocumented)
-    get width(): number;
-    }
+    readonly anchor: Slot;
+}
 
+// @internal (undocumented)
+export namespace Anchored {
+    // (undocumented)
+    export function compare(a: Anchored, b: Anchored): Comparison;
+    // (undocumented)
+    export function equals(a: Anchored, b: Anchored): boolean;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "Cell" is marked as @public, but its signature references "Anchored" which is marked as @internal
+//
 // @public (undocumented)
-export namespace Cell {
+export abstract class Cell implements Anchored, Equatable, Serializable<Cell.JSON> {
+    protected constructor(element: Element, anchor: Slot, width: number, height: number, headers: Array_2<Slot>);
     // (undocumented)
-    export class Builder implements Comparable<Builder>, Equatable, Serializable {
-        // (undocumented)
-        addHeaderVariant(dataInColumns: boolean, // Is there a data cell in the columns covered by this?
-        dataInRows: boolean): Builder;
-        // (undocumented)
-        get anchor(): {
-            x: number;
-            y: number;
-        };
-        // (undocumented)
-        anchorAt(x: number, y: number): Builder;
-        assignHeaders(table: Element_2, cover: (x: number, y: number) => Option_2<Builder>, getAboveLeftRowGroupHeaders: (principalCell: Builder) => Iterable_2<Builder>, getAboveLeftColumnGroupHeaders: (principalCell: Builder) => Iterable_2<Builder>): Cell.Builder;
-        // (undocumented)
-        get cell(): Cell;
-        // (undocumented)
-        compare(cell: Builder): Comparison;
-        // (undocumented)
-        get downwardGrowing(): boolean;
-        // (undocumented)
-        get element(): Element_2;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        get explicitHeaders(): Iterable_2<Element_2>;
-        growDownward(yCurrent: number): Builder;
-        // (undocumented)
-        get height(): number;
-        // (undocumented)
-        get implicitHeaders(): Iterable_2<Element_2>;
-        // (undocumented)
-        isCovering(x: number, y: number): boolean;
-        // (undocumented)
-        get kind(): Cell.Kind;
-        // (undocumented)
-        static of(kind: Cell.Kind, x: number, y: number, width: number, height: number, element: Element_2, variant?: Option_2<Scope.Resolved>, downwardGrowing?: boolean, scope?: Option_2<Scope>, explicitHeaders?: Iterable_2<Element_2>, implicitHeaders?: Iterable_2<Element_2>): Builder;
-        // (undocumented)
-        get scope(): Option_2<Scope>;
-        // (undocumented)
-        toJSON(): Cell.Builder.JSON;
-        // (undocumented)
-        get variant(): Option_2<Scope.Resolved>;
-        // (undocumented)
-        get width(): number;
-    }
+    get anchor(): Slot;
     // (undocumented)
-    export namespace Builder {
-        export function from(cell: Element_2, x?: number, y?: number): Result<Builder, string>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            cell: Cell.JSON;
-            // (undocumented)
-            explicitHeaders: Element_2.JSON[];
-            // (undocumented)
-            implicitHeaders: Element_2.JSON[];
-            // (undocumented)
-            state: Option_2.JSON;
-        }
-    }
+    protected readonly _anchor: Slot;
     // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        anchor: {
-            x: number;
-            y: number;
-        };
-        // (undocumented)
-        element: Element_2.JSON;
-        // (undocumented)
-        headers: Element_2.JSON[];
-        // (undocumented)
-        height: number;
-        // (undocumented)
-        kind: Kind;
-        // (undocumented)
-        scope: Scope.Resolved | null;
-        // (undocumented)
-        width: number;
-    }
+    compare(anchored: Anchored): Comparison;
     // (undocumented)
-    export enum Kind {
-        // (undocumented)
-        Data = "data",
-        // (undocumented)
-        Header = "header"
-    }
-}
-
-// @public
-export class ColumnGroup implements Comparable<ColumnGroup>, Equatable, Serializable {
+    get element(): Element;
     // (undocumented)
-    get anchor(): {
-        x: number;
-    };
-    compare(that: ColumnGroup): Comparison;
+    protected readonly _element: Element;
     // (undocumented)
-    get element(): Element_2;
+    equals(cell: Cell): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    isCovering(x: number): boolean;
+    get headers(): Sequence<Slot>;
     // (undocumented)
-    static of(x: number, width: number, element: Element_2): ColumnGroup;
-    // (undocumented)
-    toJSON(): ColumnGroup.JSON;
-    // (undocumented)
-    get width(): number;
-    }
-
-// @public (undocumented)
-export namespace ColumnGroup {
-    // (undocumented)
-    export class Builder implements Equatable, Serializable {
-        // (undocumented)
-        get anchor(): {
-            x: number;
-        };
-        // (undocumented)
-        anchorAt(x: number): Builder;
-        // (undocumented)
-        get columnGroup(): ColumnGroup;
-        // (undocumented)
-        get element(): Element_2;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        static of(x: number, width: number, element: Element_2): Builder;
-        // (undocumented)
-        toJSON(): Builder.JSON;
-        // (undocumented)
-        get width(): number;
-    }
-    // (undocumented)
-    export namespace Builder {
-        export function from(colgroup: Element_2, x?: number): Result<Builder, string>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            columnGroup: ColumnGroup.JSON;
-        }
-    }
-    // (undocumented)
-    export function from(element: Element_2): Result<ColumnGroup, string>;
-    // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        anchor: {
-            x: number;
-        };
-        // (undocumented)
-        element: Element_2.JSON;
-        // (undocumented)
-        width: number;
-    }
-}
-
-// @public
-export namespace Row {
-    // (undocumented)
-    export class Builder implements Equatable, Serializable {
-        // (undocumented)
-        addCellFromElement(currentCell: Element_2, yCurrent: number): Result<Builder, string>;
-        // (undocumented)
-        adjustHeight(height: number): Builder;
-        // (undocumented)
-        adjustWidth(width: number): Builder;
-        // (undocumented)
-        get anchor(): {
-            y: number;
-        };
-        // (undocumented)
-        get cells(): Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get downwardGrowingCells(): Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get element(): Element_2;
-        // (undocumented)
-        enlargeIfNeeded(): Builder;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        growCells(y: number): Builder;
-        // (undocumented)
-        get height(): number;
-        // (undocumented)
-        static of(y: number, width: number, height: number, element: Element_2, cells?: Iterable_2<Cell.Builder>, growing?: Iterable_2<Cell.Builder>, xCurrent?: number, slots?: Array<Array<Option_2<Cell.Builder>>>): Builder;
-        skipIfCovered(yCurrent: number, externalCover: (x: number, y: number) => Option_2<Cell.Builder>): Builder;
-        // (undocumented)
-        slot(x: number, y: number): Option_2<Cell.Builder>;
-        // (undocumented)
-        sort(): Builder;
-        // (undocumented)
-        toJSON(): Builder.JSON;
-        // (undocumented)
-        get width(): number;
-        }
-    // (undocumented)
-    export namespace Builder {
-        export function from(tr: Element_2, growingCells?: Iterable_2<Cell.Builder>, yCurrent?: number, w?: number, externalCover?: (x: number, y: number) => Option_2<Cell.Builder>): Result<Builder, string>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            anchor: {
-                y: number;
-            };
-            // (undocumented)
-            cells: Cell.JSON[];
-            // (undocumented)
-            downwardGrowingCells: Cell.JSON[];
-            // (undocumented)
-            element: Element_2.JSON;
-            // (undocumented)
-            height: number;
-            // (undocumented)
-            width: number;
-        }
-    }
-}
-
-// @public
-export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
-    protected constructor(y: number, h: number, element: Element_2);
-    // (undocumented)
-    get anchor(): {
-        y: number;
-    };
-    compare(that: RowGroup): Comparison;
-    // (undocumented)
-    get element(): Element_2;
-    // (undocumented)
-    protected readonly _element: Element_2;
-    // (undocumented)
-    equals(value: unknown): value is this;
+    protected readonly _headers: Array_2<Slot>;
     // (undocumented)
     get height(): number;
     // (undocumented)
     protected readonly _height: number;
     // (undocumented)
-    isCovering(y: number): boolean;
+    abstract isData(): this is Cell.Data;
     // (undocumented)
-    static of(y: number, h: number, element: Element_2): RowGroup;
+    isEmpty(): boolean;
     // (undocumented)
-    toJSON(): RowGroup.JSON;
+    abstract isHeader(): this is Cell.Header;
     // (undocumented)
-    protected readonly _y: number;
+    abstract toJSON(): Cell.JSON;
+    // (undocumented)
+    get width(): number;
+    // (undocumented)
+    protected readonly _width: number;
+    // (undocumented)
+    get x(): number;
+    // (undocumented)
+    get y(): number;
 }
 
 // @public (undocumented)
-export namespace RowGroup {
-    export class Builder implements Equatable, Serializable {
-        constructor(y: number, height: number, element: Element_2, width: number, cells: Iterable_2<Cell.Builder>, downwardGrowingCells: Iterable_2<Cell.Builder>, slots: Array<Array<Option_2<Cell.Builder>>>);
-        addCells({ cells, downwardGrowingCells, }: {
-            cells?: Iterable_2<Cell.Builder>;
-            downwardGrowingCells?: Iterable_2<Cell.Builder>;
-        }): Builder;
+export namespace Cell {
+    // (undocumented)
+    export class Data extends Cell {
         // (undocumented)
-        get anchor(): {
-            y: number;
-        };
-        // (undocumented)
-        anchorAt(y: number): Builder;
-        // (undocumented)
-        get cells(): Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get downwardGrowingCells(): Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get element(): Element_2;
+        equals(cell: Data): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        get height(): number;
+        isData(): boolean;
         // (undocumented)
-        static of(y: number, height: number, element: Element_2, width?: number, cells?: Iterable_2<Cell.Builder>, downwardGrowingCells?: Iterable_2<Cell.Builder>, slots?: Array<Array<Option_2<Cell.Builder>>>): Builder;
+        isHeader(): boolean;
         // (undocumented)
-        get rowgroup(): RowGroup;
+        static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>): Data;
         // (undocumented)
-        slot(x: number, y: number): Option_2<Cell.Builder>;
-        // (undocumented)
-        toJSON(): Builder.JSON;
-        update(update: {
-            y?: number;
-            width?: number;
-            height?: number;
-            element?: Element_2;
-        }): Builder;
-        updateCells({ cells, downwardGrowingCells, }: {
-            cells?: Iterable_2<Cell.Builder>;
-            downwardGrowingCells?: Iterable_2<Cell.Builder>;
-        }): Builder;
-        // (undocumented)
-        get width(): number;
-        }
-    // (undocumented)
-    export namespace Builder {
-        export function from(group: Element_2): Result<Builder, string>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            cells: Cell.JSON[];
-            // (undocumented)
-            rowGroup: RowGroup.JSON;
-            // (undocumented)
-            width: number;
-        }
+        toJSON(): Data.JSON;
     }
     // (undocumented)
-    export function from(element: Element_2): Result<RowGroup, string>;
+    export namespace Data {
+        // (undocumented)
+        export function isData(value: unknown): value is Data;
+        // (undocumented)
+        export interface JSON extends Cell.JSON {
+            // (undocumented)
+            type: "data";
+        }
+    }
+    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    hasElement: typeof predicate.hasElement;
+    // (undocumented)
+    export class Header extends Cell {
+        // (undocumented)
+        equals(cell: Header): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        isData(): boolean;
+        // (undocumented)
+        isHeader(): boolean;
+        // (undocumented)
+        static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>, scope?: Scope): Header;
+        // (undocumented)
+        get scope(): Scope;
+        // (undocumented)
+        toJSON(): Header.JSON;
+    }
+    // (undocumented)
+    export namespace Header {
+        // (undocumented)
+        export function isHeader(value: unknown): value is Header;
+        // (undocumented)
+        export interface JSON extends Cell.JSON {
+            // (undocumented)
+            scope: Scope;
+            // (undocumented)
+            type: "header";
+        }
+    }
+    const // (undocumented)
+    data: typeof Data.of, // (undocumented)
+    isData: typeof Data.isData;
+    // (undocumented)
+    export function isCell(value: unknown): value is Cell;
     // (undocumented)
     export interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        anchor: {
-            y: number;
-        };
+        anchor: Slot.JSON;
         // (undocumented)
-        element: Element_2.JSON;
+        element: string;
+        // (undocumented)
+        headers: Array_2<Slot.JSON>;
         // (undocumented)
         height: number;
+        // (undocumented)
+        width: number;
     }
+    const // (undocumented)
+    header: typeof Header.of, // (undocumented)
+    isHeader: typeof Header.isHeader;
 }
 
-// @public
-export enum Scope {
+// Warning: (ae-incompatible-release-tags) The symbol "Column" is marked as @public, but its signature references "Anchored" which is marked as @internal
+//
+// @public (undocumented)
+export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
     // (undocumented)
-    Auto = "auto",
+    get anchor(): Slot;
     // (undocumented)
-    Column = "column",
+    compare(anchored: Anchored): Comparison;
     // (undocumented)
-    ColumnGroup = "column-group",
+    equals(column: Column): boolean;
     // (undocumented)
-    Row = "row",
+    equals(value: unknown): value is this;
     // (undocumented)
-    RowGroup = "row-group"
+    static of(x: number): Column;
+    // (undocumented)
+    toJSON(): Column.JSON;
+    // (undocumented)
+    get x(): number;
+    }
+
+// @public (undocumented)
+export namespace Column {
+    // Warning: (ae-incompatible-release-tags) The symbol "Group" is marked as @public, but its signature references "Anchored" which is marked as @internal
+    //
+    // (undocumented)
+    export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
+        // (undocumented)
+        get anchor(): Slot;
+        // (undocumented)
+        compare(anchored: Anchored): Comparison;
+        // (undocumented)
+        get element(): Element;
+        // (undocumented)
+        equals(group: Group): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(element: Element, x: number, width: number): Group;
+        // (undocumented)
+        toJSON(): Group.JSON;
+        // (undocumented)
+        get width(): number;
+        // (undocumented)
+        get x(): number;
+        }
+    // (undocumented)
+    export namespace Group {
+        // (undocumented)
+        export function isGroup(value: unknown): value is Group;
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            element: string;
+            // (undocumented)
+            width: number;
+            // (undocumented)
+            x: number;
+        }
+    }
+    // (undocumented)
+    export function isColumn(value: unknown): value is Column;
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        x: number;
+    }
+    const // (undocumented)
+    group: typeof Group.of, // (undocumented)
+    isGroup: typeof Group.isGroup;
 }
+
+// @public (undocumented)
+export type Group = Column.Group | Row.Group;
+
+// @public (undocumented)
+export namespace Group {
+    // (undocumented)
+    export type JSON = Column.Group.JSON | Row.Group.JSON;
+    const // (undocumented)
+    isColumn: typeof Column.Group.isGroup;
+    const // (undocumented)
+    isRow: typeof Row.Group.isGroup;
+    const // (undocumented)
+    isGroup: Refinement<unknown, Column.Group | Row.Group, []>;
+}
+
+// @public (undocumented)
+function hasElement(predicate: Predicate<Element>): Predicate<Cell>;
+
+// @public (undocumented)
+function hasElement(element: Element): Predicate<Cell>;
+
+// Warning: (ae-incompatible-release-tags) The symbol "Row" is marked as @public, but its signature references "Anchored" which is marked as @internal
+//
+// @public (undocumented)
+export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
+    // (undocumented)
+    get anchor(): Slot;
+    // (undocumented)
+    compare(anchored: Anchored): Comparison;
+    // (undocumented)
+    equals(row: Row): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    static of(y: number): Row;
+    // (undocumented)
+    toJSON(): Row.JSON;
+    // (undocumented)
+    get y(): number;
+    }
+
+// @public (undocumented)
+export namespace Row {
+    // Warning: (ae-incompatible-release-tags) The symbol "Group" is marked as @public, but its signature references "Anchored" which is marked as @internal
+    //
+    // (undocumented)
+    export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
+        // (undocumented)
+        get anchor(): Slot;
+        // (undocumented)
+        compare(anchored: Anchored): Comparison;
+        // (undocumented)
+        get element(): Element;
+        // (undocumented)
+        equals(group: this): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get height(): number;
+        // (undocumented)
+        static of(element: Element, y: number, height: number): Group;
+        // (undocumented)
+        toJSON(): Group.JSON;
+        // (undocumented)
+        get y(): number;
+        }
+    // (undocumented)
+    export namespace Group {
+        // (undocumented)
+        export function isGroup(value: unknown): value is Group;
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            element: string;
+            // (undocumented)
+            height: number;
+            // (undocumented)
+            y: number;
+        }
+    }
+    // (undocumented)
+    export function isRow(value: unknown): value is Row;
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        y: number;
+    }
+    const // (undocumented)
+    group: typeof Group.of, // (undocumented)
+    isGroup: typeof Group.isGroup;
+}
+
+// @public (undocumented)
+export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
 
 // @public (undocumented)
 export namespace Scope {
     // (undocumented)
-    export type Resolved = Exclude<Scope, Scope.Auto>;
+    export function from(element: Element): Scope;
 }
 
-// @public
-export class Table implements Equatable, Serializable {
+// @public (undocumented)
+export class Slot implements Comparable<Slot>, Equatable, Serializable<Slot.JSON> {
     // (undocumented)
-    get cells(): Iterable_2<Cell>;
+    compare(slot: Slot): Comparison;
     // (undocumented)
-    get columnGroups(): Iterable_2<ColumnGroup>;
-    // (undocumented)
-    get element(): Element_2;
+    equals(slot: Slot): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get height(): number;
+    static of(x: number, y: number): Slot;
     // (undocumented)
-    static of(element: Element_2, width?: number, height?: number, cells?: Iterable_2<Cell>, rowGroups?: Iterable_2<RowGroup>, columnGroups?: Iterable_2<ColumnGroup>): Table;
+    toJSON(): Slot.JSON;
     // (undocumented)
-    get rowGroups(): Iterable_2<RowGroup>;
+    get x(): number;
     // (undocumented)
-    toJSON(): Table.JSON;
-    // (undocumented)
-    get width(): number;
+    get y(): number;
     }
 
 // @public (undocumented)
-export namespace Table {
+export namespace Slot {
     // (undocumented)
-    export class Builder implements Equatable, Serializable {
-        addCells({ cells, downwardGrowingCells, }: {
-            cells?: Iterable_2<Cell.Builder>;
-            downwardGrowingCells?: Iterable_2<Cell.Builder>;
-        }): Builder;
-        // (undocumented)
-        addHeadersVariants(): Builder;
-        // (undocumented)
-        addRowGroupFromElement(rowgroup: Element_2, yCurrent: number): Result<Builder, string>;
-        // (undocumented)
-        assignHeaders(): Builder;
-        // (undocumented)
-        get cells(): Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get colGroups(): Iterable_2<ColumnGroup>;
-        // (undocumented)
-        get downwardGrowingCells(): Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get element(): Element_2;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        findGroupHeaders(): Builder;
-        getAboveLeftGroupHeaders(kind: "row" | "column"): (principalCell: Cell.Builder) => Iterable_2<Cell.Builder>;
-        // (undocumented)
-        get height(): number;
-        // (undocumented)
-        static of(element: Element_2, width?: number, height?: number, cells?: Iterable_2<Cell.Builder>, downwardGrowingCells?: Iterable_2<Cell.Builder>, slots?: Array<Array<Option_2<Cell.Builder>>>, rowGroups?: Iterable_2<RowGroup>, colGroups?: Iterable_2<ColumnGroup>, rowGroupHeaders?: Iterable_2<Cell.Builder>, columnGroupHeaders?: Iterable_2<Cell.Builder>): Builder;
-        // (undocumented)
-        get rowGroups(): Iterable_2<RowGroup>;
-        // (undocumented)
-        slot(x: number, y: number): Option_2<Cell.Builder>;
-        // (undocumented)
-        get table(): Table;
-        // (undocumented)
-        toJSON(): Builder.JSON;
-        update(update: {
-            element?: Element_2;
-            width?: number;
-            height?: number;
-            slots?: Array<Array<Option_2<Cell.Builder>>>;
-            rowGroups?: Iterable_2<RowGroup>;
-            colGroups?: Iterable_2<ColumnGroup>;
-            rowGroupHeaders?: Iterable_2<Cell.Builder>;
-            columnGroupHeaders?: Iterable_2<Cell.Builder>;
-        }): Builder;
-        updateCells({ cells, downwardGrowingCells, }: {
-            cells?: Iterable_2<Cell.Builder>;
-            downwardGrowingCells?: Iterable_2<Cell.Builder>;
-        }): Builder;
-        // (undocumented)
-        get width(): number;
-    }
-    // (undocumented)
-    export namespace Builder {
-        // (undocumented)
-        export function from(element: Element_2): Result<Builder, string>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            cells: Cell.Builder.JSON[];
-            // (undocumented)
-            table: Table.JSON;
-        }
-    }
-    // (undocumented)
-    export function from(element: Element_2): Result<Table, string>;
+    export function isSlot(value: unknown): value is Slot;
     // (undocumented)
     export interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        cells: Cell.JSON[];
+        x: number;
         // (undocumented)
-        colGroups: ColumnGroup.JSON[];
+        y: number;
+    }
+}
+
+// @public (undocumented)
+export class Table implements Equatable, Serializable<Table.JSON> {
+    // (undocumented)
+    get cells(): Sequence<Cell>;
+    // (undocumented)
+    get element(): Element;
+    // (undocumented)
+    static empty(element: Element): Table;
+    // (undocumented)
+    equals(table: Table): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get groups(): Sequence<Group>;
+    // (undocumented)
+    isEmpty(): boolean;
+    // (undocumented)
+    static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Table;
+    // (undocumented)
+    toJSON(): Table.JSON;
+}
+
+// @public (undocumented)
+export namespace Table {
+    // (undocumented)
+    export function from(element: Element): Table;
+    // (undocumented)
+    export interface JSON {
         // (undocumented)
-        element: Element_2.JSON;
+        [key: string]: json.JSON;
         // (undocumented)
-        height: number;
+        cells: Array_2<Cell.JSON>;
         // (undocumented)
-        rowGroups: RowGroup.JSON[];
+        element: string;
         // (undocumented)
-        width: number;
+        groups: Array_2<Group.JSON>;
     }
 }
 

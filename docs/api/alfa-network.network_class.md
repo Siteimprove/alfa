@@ -24,20 +24,24 @@ export declare class Network<N, E> implements Iterable<[N, Iterable<[N, Iterable
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-network.network_class._symbol.iterator__1_method.md) |  |  |
 |  [add(node)](./alfa-network.network_class.add_1_method.md) |  |  |
-|  [connect(from, to, edge, rest)](./alfa-network.network_class.connect_1_method.md) |  |  |
+|  [connect(from, to, edges)](./alfa-network.network_class.connect_1_method.md) |  |  |
 |  [delete(node)](./alfa-network.network_class.delete_1_method.md) |  |  |
-|  [disconnect(from, to)](./alfa-network.network_class.disconnect_1_method.md) |  |  |
-|  [disconnect(from, to, edge, rest)](./alfa-network.network_class.disconnect_2_method.md) |  |  |
+|  [disconnect(from, to, edges)](./alfa-network.network_class.disconnect_1_method.md) |  |  |
+|  [edges(from, to)](./alfa-network.network_class.edges_1_method.md) |  |  |
 |  [empty()](./alfa-network.network_class.empty_1_method.md) | <code>static</code> |  |
 |  [equals(value)](./alfa-network.network_class.equals_1_method.md) |  |  |
 |  [equals(value)](./alfa-network.network_class.equals_2_method.md) |  |  |
 |  [has(node)](./alfa-network.network_class.has_1_method.md) |  |  |
 |  [hash(hash)](./alfa-network.network_class.hash_1_method.md) |  |  |
 |  [hasPath(from, to)](./alfa-network.network_class.haspath_1_method.md) |  |  |
+|  [isEmpty()](./alfa-network.network_class.isempty_1_method.md) |  |  |
 |  [iterator()](./alfa-network.network_class.iterator_1_method.md) |  |  |
 |  [neighbors(node)](./alfa-network.network_class.neighbors_1_method.md) |  |  |
 |  [nodes()](./alfa-network.network_class.nodes_1_method.md) |  |  |
 |  [of(nodes)](./alfa-network.network_class.of_1_method.md) | <code>static</code> |  |
+|  [path(from, to, traversal)](./alfa-network.network_class.path_1_method.md) |  |  |
+|  [reverse()](./alfa-network.network_class.reverse_1_method.md) |  |  |
+|  [sort()](./alfa-network.network_class.sort_1_method.md) |  |  |
 |  [toArray()](./alfa-network.network_class.toarray_1_method.md) |  |  |
 |  [toGraph()](./alfa-network.network_class.tograph_1_method.md) |  |  |
 |  [toJSON()](./alfa-network.network_class.tojson_1_method.md) |  |  |

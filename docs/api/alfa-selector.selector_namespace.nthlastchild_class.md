@@ -17,7 +17,10 @@ export class NthLastChild extends Pseudo.Class<"nth-last-child">
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [equals(value)](./alfa-selector.selector_namespace.nthlastchild_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-selector.selector_namespace.nthlastchild_class.equals_2_method.md) |  |  |
 |  [matches(element)](./alfa-selector.selector_namespace.nthlastchild_class.matches_1_method.md) |  |  |
 |  [of(index)](./alfa-selector.selector_namespace.nthlastchild_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-selector.selector_namespace.nthlastchild_class.tojson_1_method.md) |  |  |
+|  [toString()](./alfa-selector.selector_namespace.nthlastchild_class.tostring_1_method.md) |  |  |
 

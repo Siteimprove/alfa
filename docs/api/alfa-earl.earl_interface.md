@@ -10,11 +10,11 @@
 ```typescript
 export interface EARL extends Document 
 ```
-<b>Extends:</b> Document
+<b>Extends:</b> [Document](./alfa-json-ld.document_interface.md)
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  ["@context"?](./alfa-earl.earl_interface.__context__propertysignature.md) | { earl?: "http://www.w3.org/ns/earl\#"; cnt?: "http://www.w3.org/2011/content\#"; dct?: "http://purl.org/dc/terms/"; http?: "http://www.w3.org/2011/http\#"; ptr?: "http://www.w3.org/2009/pointers\#"; } | <i>(Optional)</i> |
+|  ["@context"?](./alfa-earl.earl_interface.__context__propertysignature.md) | { earl?: "http://www.w3.org/ns/earl\#"; cnt?: "http://www.w3.org/2011/content\#"; dct?: "http://purl.org/dc/terms/"; doap?: "http://usefulinc.com/ns/doap\#"; foaf?: "http://xmlns.com/foaf/spec/\#"; http?: "http://www.w3.org/2011/http\#"; ptr?: "http://www.w3.org/2009/pointers\#"; } | <i>(Optional)</i> |
 

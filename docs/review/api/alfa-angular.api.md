@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference lib="dom" />
+
 import { ComponentFixture } from '@angular/core/testing';
 import { Page } from '@siteimprove/alfa-web';
 

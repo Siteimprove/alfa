@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference lib="dom" />
+
 import { Cheerio } from '@siteimprove/alfa-cheerio';
 import { Page } from '@siteimprove/alfa-web';
 import V from 'vue';

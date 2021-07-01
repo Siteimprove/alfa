@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, AsyncIterable<T> 
+export declare abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, Thenable<T>, AsyncIterable<T> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, AsyncIterable&lt;T&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, Thenable&lt;T&gt;, AsyncIterable&lt;T&gt;
 
 ## Methods
 

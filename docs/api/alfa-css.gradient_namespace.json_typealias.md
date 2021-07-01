@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type JSON = Linear.JSON;
+type JSON = Linear.JSON | Radial.JSON;
 ```
-<b>References:</b> [Linear.JSON](./alfa-css.linear_namespace.json_interface.md)
+<b>References:</b> [Linear.JSON](./alfa-css.linear_namespace.json_interface.md)<!-- -->, [Radial.JSON](./alfa-css.radial_namespace.json_interface.md)
 

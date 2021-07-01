@@ -4,17 +4,19 @@
 
 ```ts
 
-import { Document as Document_2 } from '@siteimprove/alfa-json-ld';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Document } from '@siteimprove/alfa-json-ld';
+import { Option } from '@siteimprove/alfa-option';
 import { Some } from '@siteimprove/alfa-option';
 
 // @public (undocumented)
-export interface EARL extends Document_2 {
+export interface EARL extends Document {
     // (undocumented)
     "@context"?: {
         earl?: "http://www.w3.org/ns/earl#";
         cnt?: "http://www.w3.org/2011/content#";
         dct?: "http://purl.org/dc/terms/";
+        doap?: "http://usefulinc.com/ns/doap#";
+        foaf?: "http://xmlns.com/foaf/spec/#";
         http?: "http://www.w3.org/2011/http#";
         ptr?: "http://www.w3.org/2009/pointers#";
     };
@@ -33,7 +35,7 @@ export namespace Serializable {
     // (undocumented)
     export function toEARL<T extends EARL>(value: Serializable<T>): Some<T>;
     // (undocumented)
-    export function toEARL(value: unknown): Option_2<EARL>;
+    export function toEARL(value: unknown): Option<EARL>;
 }
 
 
