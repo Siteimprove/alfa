@@ -10,6 +10,8 @@ import { Slot } from "./slot";
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-row}
+ *
+ * @public
  */
 export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
   public static of(y: number): Row {
@@ -49,6 +51,9 @@ export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Row {
   export interface JSON {
     [key: string]: json.JSON;

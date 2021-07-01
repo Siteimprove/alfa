@@ -5,8 +5,14 @@ import { Row } from "./row";
 
 const { or } = Refinement;
 
+/**
+ * @public
+ */
 export type Group = Column.Group | Row.Group;
 
+/**
+ * @public
+ */
 export namespace Group {
   export type JSON = Column.Group.JSON | Row.Group.JSON;
 
