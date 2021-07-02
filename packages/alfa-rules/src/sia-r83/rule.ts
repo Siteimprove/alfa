@@ -65,7 +65,7 @@ export default Rule.Atomic.of<Page, Text>({
 
         return {
           1: expectation(
-            parent.every(and(isElement, not(wrapsText(device)))),
+            parent.some(and(isElement, not(wrapsText(device)))),
             () => Outcomes.ClipsText,
             () => Outcomes.WrapsText
           ),
@@ -140,7 +140,7 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
 function wrapsText(device: Device): Predicate<Element> {
   return (element) => {
     if (isPossiblyClipped(device)(element)) {
-      return isActuallyClipping(element, device);
+      return !isActuallyClipping(element, device);
     }
 
     const relevantParent = isPositioned(device, "static")(element)
@@ -168,10 +168,10 @@ const isActuallyClipping = (element: Element, device: Device) => {
 
     // We assume that the text won't clip if the text overflow is handled
     // any other way than clip.
-    return overflow.value !== "clip";
+    return overflow.value === "clip";
   }
 
-  return false;
+  return true;
 };
 
 function offsetParent(element: Element, device: Device): Option<Element> {
