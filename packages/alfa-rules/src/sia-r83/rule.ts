@@ -65,7 +65,7 @@ export default Rule.Atomic.of<Page, Text>({
 
         return {
           1: expectation(
-            parent.every(and(isElement, not(wrapsText(device)))),
+            target.parent({ flattened: true, nested: true }).every(and(isElement, not(wrapsText(device)))),
             () => Outcomes.ClipsText,
             () => Outcomes.WrapsText
           ),
