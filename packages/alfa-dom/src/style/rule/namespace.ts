@@ -3,6 +3,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 
+/**
+ * @public
+ */
 export class NamespaceRule extends Rule {
   public static of(namespace: string, prefix: Option<string>): NamespaceRule {
     return new NamespaceRule(namespace, prefix);
@@ -41,6 +44,9 @@ export class NamespaceRule extends Rule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace NamespaceRule {
   export interface JSON extends Rule.JSON {
     type: "namespace";

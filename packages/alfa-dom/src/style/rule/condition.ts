@@ -1,6 +1,9 @@
 import { Rule } from "../rule";
 import { GroupingRule } from "./grouping";
 
+/**
+ * @public
+ */
 export abstract class ConditionRule extends GroupingRule {
   protected readonly _condition: string;
 
@@ -17,6 +20,9 @@ export abstract class ConditionRule extends GroupingRule {
   public abstract toJSON(): ConditionRule.JSON;
 }
 
+/**
+ * @public
+ */
 export namespace ConditionRule {
   export interface JSON extends GroupingRule.JSON {
     condition: string;

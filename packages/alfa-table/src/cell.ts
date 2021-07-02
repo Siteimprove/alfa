@@ -20,9 +20,12 @@ const { isText } = Text;
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-cell}
+ *
+ * @public
  */
 export abstract class Cell
-  implements Anchored, Equatable, Serializable<Cell.JSON> {
+  implements Anchored, Equatable, Serializable<Cell.JSON>
+{
   protected readonly _element: Element;
   protected readonly _anchor: Slot;
   protected readonly _width: number;
@@ -109,6 +112,9 @@ export abstract class Cell
   public abstract toJSON(): Cell.JSON;
 }
 
+/**
+ * @public
+ */
 export namespace Cell {
   export interface JSON {
     [key: string]: json.JSON;

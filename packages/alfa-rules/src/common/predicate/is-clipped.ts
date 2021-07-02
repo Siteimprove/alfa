@@ -1,17 +1,21 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Node } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 const { abs } = Math;
 const { isElement } = Element;
 const { or, test } = Predicate;
-const { isText } = Text;
+const { and } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
+/**
+ * Checks if a node (or one of its ancestor) is fully clipped
+ */
 export function isClipped(
   device: Device,
   context: Context = Context.empty()
@@ -23,132 +27,139 @@ export function isClipped(
       .get(node, () =>
         test(
           or(
-            isClippedBySize(device, context),
-            isClippedByMasking(device, context)
+            // Either it a clipped element
+            and(
+              isElement,
+              or(
+                isClippedBySize(device, context),
+                isClippedByIndent(device, context),
+                isClippedByMasking(device, context)
+              )
+            ),
+            // Or its parent is clipped
+            (node: Node) =>
+              node
+                .parent({
+                  flattened: true,
+                  nested: true,
+                })
+                .some(isClipped(device, context))
           ),
           node
         )
       );
 }
 
+/**
+ * Checks if an element's size is reduced to 0 or 1 pixel, and overflow is
+ * somehow hidden.
+ */
 function isClippedBySize(
   device: Device,
   context: Context = Context.empty()
-): Predicate<Node> {
-  return function isClipped(node): boolean {
-    if (isElement(node)) {
-      const style = Style.from(node, device, context);
+): Predicate<Element> {
+  return function isClipped(element: Element): boolean {
+    const style = Style.from(element, device, context);
 
-      const { value: x } = style.computed("overflow-x");
-      const { value: y } = style.computed("overflow-y");
+    const {
+      value: { value: x },
+    } = style.computed("overflow-x");
+    const {
+      value: { value: y },
+    } = style.computed("overflow-y");
 
-      const { value: height } = style.computed("height");
-      const { value: width } = style.computed("width");
+    const { value: height } = style.computed("height");
+    const { value: width } = style.computed("width");
 
-      if (x.value === "hidden" || y.value === "hidden") {
-        for (const dimension of [height, width]) {
-          switch (dimension.type) {
-            case "percentage":
-              if (dimension.value <= 0) {
-                return true;
-              } else {
-                break;
-              }
+    const hasNoScrollBar = x === "hidden" || y === "hidden";
 
-            case "length":
-              if (dimension.value <= 1) {
-                return true;
-              } else {
-                break;
-              }
-          }
-        }
-      }
-
-      if (
-        x.value === "auto" ||
-        x.value === "scroll" ||
-        y.value === "auto" ||
-        y.value === "scroll"
-      ) {
-        for (const dimension of [height, width]) {
-          switch (dimension.type) {
-            case "percentage":
-              if (dimension.value <= 0) {
-                return true;
-              } else {
-                break;
-              }
-
-            case "length":
-              if (dimension.value <= 0) {
-                return true;
-              } else {
-                break;
-              }
-          }
-        }
-      }
-    }
-
-    for (const parent of node.parent({ flattened: true })) {
-      if (isText(node) && isElement(parent)) {
-        const style = Style.from(parent, device, context);
-
-        const { value: x } = style.computed("overflow-x");
-
-        if (x.value === "hidden") {
-          const { value: indent } = style.computed("text-indent");
-          const { value: whitespace } = style.computed("white-space");
-
-          if (indent.value < 0 || whitespace.value === "nowrap") {
-            switch (indent.type) {
-              case "percentage":
-                if (abs(indent.value) >= 1) {
-                  return true;
-                }
-
-              case "length":
-                if (abs(indent.value) >= 999) {
-                  return true;
-                }
+    if (x !== "visible" || y !== "visible") {
+      for (const dimension of [height, width]) {
+        switch (dimension.type) {
+          case "percentage":
+            if (dimension.value <= 0) {
+              return true;
+            } else {
+              break;
             }
-          }
+
+          // Technically, 1×1 elements are (possibly) visible since they
+          // show one pixel of background. We assume this is used to hide
+          // elements and that the background is the same as the surrounding
+          // one.
+          case "length":
+            if (dimension.value <= (hasNoScrollBar ? 1 : 0)) {
+              return true;
+            } else {
+              break;
+            }
         }
       }
-
-      return isClipped(parent);
     }
 
     return false;
   };
 }
 
-function isClippedByMasking(device: Device, context: Context): Predicate<Node> {
-  return function isClipped(node: Node): boolean {
-    if (isElement(node)) {
-      const style = Style.from(node, device, context);
+/**
+ * Checks if an element is fully indented out of its box.
+ */
+function isClippedByIndent(
+  device: Device,
+  context: Context
+): Predicate<Element> {
+  return function isClipped(element: Element): boolean {
+    const style = Style.from(element, device, context);
 
-      const { value: clip } = style.computed("clip");
-      const { value: position } = style.computed("position");
+    const { value: x } = style.computed("overflow-x");
 
-      if (
-        (position.value === "absolute" || position.value === "fixed") &&
-        clip.type === "shape" &&
-        ((clip.shape.top.type === "length" &&
-          clip.shape.top.equals(clip.shape.bottom)) ||
-          (clip.shape.left.type === "length" &&
-            clip.shape.top.equals(clip.shape.right)))
-      ) {
-        return true;
+    if (x.value === "hidden") {
+      const { value: indent } = style.computed("text-indent");
+      const { value: whitespace } = style.computed("white-space");
+
+      if (indent.value < 0 || whitespace.value === "nowrap") {
+        switch (indent.type) {
+          case "percentage":
+            if (abs(indent.value) >= 1) {
+              return true;
+            } else {
+              break;
+            }
+
+          case "length":
+            if (abs(indent.value) >= 999) {
+              return true;
+            } else {
+              break;
+            }
+        }
       }
     }
 
-    return node
-      .parent({
-        flattened: true,
-        nested: true,
-      })
-      .some(isClipped);
+    return false;
+  };
+}
+
+/**
+ * Checks if an element is fully masked by a clipping shape.
+ */
+function isClippedByMasking(
+  device: Device,
+  context: Context
+): Predicate<Element> {
+  return function isClipped(element: Element): boolean {
+    const style = Style.from(element, device, context);
+
+    const { value: clip } = style.computed("clip");
+    const { value: position } = style.computed("position");
+
+    return (
+      (position.value === "absolute" || position.value === "fixed") &&
+      clip.type === "shape" &&
+      ((clip.shape.top.type === "length" &&
+        clip.shape.top.equals(clip.shape.bottom)) ||
+        (clip.shape.left.type === "length" &&
+          clip.shape.top.equals(clip.shape.right)))
+    );
   };
 }

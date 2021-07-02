@@ -19,6 +19,9 @@ import {
   SupportsRule,
 } from "..";
 
+/**
+ * @public
+ */
 export abstract class Rule implements Equatable, Serializable {
   protected _owner: Option<Sheet> = None;
   protected _parent: Option<Rule> = None;
@@ -82,6 +85,9 @@ export abstract class Rule implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Rule {
   export interface JSON {
     [key: string]: json.JSON;

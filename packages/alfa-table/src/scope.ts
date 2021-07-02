@@ -1,7 +1,13 @@
 import { Element } from "@siteimprove/alfa-dom";
 
+/**
+ * @public
+ */
 export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
 
+/**
+ * @public
+ */
 export namespace Scope {
   /**
    * {@link https://html.spec.whatwg.org/#attr-th-scope}

@@ -6,6 +6,9 @@ import { ConditionRule } from "./condition";
 
 const { map, join } = Iterable;
 
+/**
+ * @public
+ */
 export class MediaRule extends ConditionRule {
   public static of(condition: string, rules: Iterable<Rule>): MediaRule {
     return new MediaRule(condition, Array.from(rules));
@@ -33,6 +36,9 @@ export class MediaRule extends ConditionRule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace MediaRule {
   export interface JSON extends ConditionRule.JSON {
     type: "media";
