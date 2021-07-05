@@ -6,7 +6,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import {
   isAtTheStart,
   lowestCommonAncestor,
-} from "../../../src/common/predicate/is-at-the-start";
+} from "../../../src/common/predicate";
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {
   const node1 = <span>Hello</span>;
