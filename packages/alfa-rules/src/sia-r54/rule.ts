@@ -1,9 +1,9 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { Node } from "@siteimprove/alfa-aria";
 
 import { isIgnored } from "../common/predicate";
 import { expectation } from "../common/expectation";
@@ -34,8 +34,8 @@ export default Rule.Atomic.of<Page, Element>({
             Node.from(target, device)
               .attribute("aria-atomic")
               .some((attribute) => attribute.value === "true"),
-            () => Outcomes.IsAssertive,
-            () => Outcomes.IsNotAssertive
+            () => Outcomes.IsAtomic,
+            () => Outcomes.IsNotAtomic
           ),
         };
       },
@@ -44,11 +44,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsAssertive = Ok.of(
+  export const IsAtomic = Ok.of(
     Diagnostic.of("The assertive region is atomic")
   );
 
-  export const IsNotAssertive = Err.of(
+  export const IsNotAtomic = Err.of(
     Diagnostic.of("The assertive region is not atomic")
   );
 }

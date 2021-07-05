@@ -18,7 +18,7 @@ test("evaluate() passes an assertive and atomic element", async (t) => {
 
   t.deepEqual(await evaluate(R54, { document }), [
     passed(R54, target, {
-      1: Outcomes.IsAssertive,
+      1: Outcomes.IsAtomic,
     }),
   ]);
 });
@@ -30,7 +30,7 @@ test("evaluate() fails an element which is assertive but not atomic", async (t) 
 
   t.deepEqual(await evaluate(R54, { document }), [
     failed(R54, target, {
-      1: Outcomes.IsNotAssertive,
+      1: Outcomes.IsNotAtomic,
     }),
   ]);
 });
@@ -46,7 +46,7 @@ test("evaluate() fails an assertive element with an incorrect aria-atomic attrib
 
   t.deepEqual(await evaluate(R54, { document }), [
     failed(R54, target, {
-      1: Outcomes.IsNotAssertive,
+      1: Outcomes.IsNotAtomic,
     }),
   ]);
 });
