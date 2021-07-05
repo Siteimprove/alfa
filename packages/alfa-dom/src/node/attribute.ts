@@ -13,6 +13,9 @@ import * as predicate from "./attribute/predicate";
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;
 
+/**
+ * @public
+ */
 export class Attribute extends Node {
   public static of(
     namespace: Option<Namespace>,
@@ -168,6 +171,9 @@ export class Attribute extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Attribute {
   export interface JSON extends Node.JSON {
     type: "attribute";

@@ -5,6 +5,9 @@ import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
 
+/**
+ * @public
+ */
 export class Shadow extends Node {
   public static of(
     children: Iterable<Node>,
@@ -109,6 +112,9 @@ export class Shadow extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Shadow {
   export enum Mode {
     Open = "open",

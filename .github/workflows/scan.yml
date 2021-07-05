@@ -14,13 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v2.2.0
         with:
           node-version: 16
-      - uses: actions/cache@v2.1.6
-        with:
-          path: .yarn/cache
-          key: yarn-${{ hashFiles('yarn.lock') }}
+          cache: yarn
       - run: yarn install --immutable
       - run: yarn build
       - uses: github/codeql-action/init@v1

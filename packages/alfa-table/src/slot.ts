@@ -6,9 +6,12 @@ import * as json from "@siteimprove/alfa-json";
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-slots}
+ *
+ * @public
  */
 export class Slot
-  implements Comparable<Slot>, Equatable, Serializable<Slot.JSON> {
+  implements Comparable<Slot>, Equatable, Serializable<Slot.JSON>
+{
   public static of(x: number, y: number): Slot {
     return new Slot(x, y);
   }
@@ -70,6 +73,9 @@ export class Slot
   }
 }
 
+/**
+ * @public
+ */
 export namespace Slot {
   export interface JSON {
     [key: string]: json.JSON;

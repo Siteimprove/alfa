@@ -2,6 +2,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Fragment extends Node {
   public static of(children: Iterable<Node>): Fragment {
     return new Fragment(Array.from(children));
@@ -42,6 +45,9 @@ export class Fragment extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Fragment {
   export interface JSON extends Node.JSON {
     type: "fragment";

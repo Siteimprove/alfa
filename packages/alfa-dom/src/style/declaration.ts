@@ -6,6 +6,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export class Declaration implements Equatable, Serializable {
   public static of(
     name: string,
@@ -86,6 +89,9 @@ export class Declaration implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Declaration {
   export interface JSON {
     [key: string]: json.JSON;
