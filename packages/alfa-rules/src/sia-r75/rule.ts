@@ -12,7 +12,7 @@ import { isVisible } from "../common/predicate/is-visible";
 
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
-const { and } = Predicate;
+const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
@@ -57,8 +57,17 @@ export default Rule.Atomic.of<Page, Element>({
           .filter((option) => option.isSome())
           .map((option) => option.get())
           .every(
-            (element) =>
-              Style.from(element, device).computed("font-size").value.value >= 9
+            or(
+              not((parent) =>
+                Style.from(parent, device).specified("font-size").source.equals(
+                  // Applicability guarantees there is a cascaded value
+                  Style.from(target, device).cascaded("font-size").get().source
+                )
+              ),
+              (parent) =>
+                Style.from(parent, device).computed("font-size").value.value >=
+                9
+            )
           );
 
         return {
@@ -75,7 +84,7 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    Diagnostic.of(`The font size is not smaller than 9 pixels`)
+    Diagnostic.of(`The font size is greater than 9 pixels`)
   );
 
   export const IsInsufficient = Err.of(
