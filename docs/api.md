@@ -26,7 +26,7 @@ map.get("foo");
 // ?
 ```
 
-The call to `doSomethingWithMap()` is free to modify `Map<K, V>` as it wishes and so even though we used a `const` binding for `Map<K, V>`, we're not guaranteed that `map.get("foo")` will return `42`. We were also free to modify `Map<K, V>` with the side effecting call `map.set("foo", 42)`.
+The call to `doSomethingWithMap()` is free to modify `map` as it wishes and so even though we used a `const` binding for `map`, we're not guaranteed that `map.get("foo")` will return `42`. We were also free to modify `map` with the side effecting call `map.set("foo", 42)`.
 
 Let's take a look at the equivalent code using the `@siteimprove/alfa-map` package:
 
@@ -44,9 +44,9 @@ map.get("foo");
 // 42
 ```
 
-As the `Map<K, V>` class from `@siteimprove/alfa-map` is immutable, we can be sure that `doSomethingWithMap()` has no way of modifying `Map<K, V>`. The call to `map.get("foo")` is therefore guaranteed to always return `42`. This quality is called [referential transparency][] and means that we can substitute any expression with its value without changing the behaviour of the code.
+As the `Map<K, V>` class from `@siteimprove/alfa-map` is immutable, we can be sure that `doSomethingWithMap()` has no way of modifying `map`. The call to `map.get("foo")` is therefore guaranteed to always return `42`. This quality is called [referential transparency][] and means that we can substitute any expression with its value without changing the behaviour of the code.
 
-As a result of this quality, it becomes easier to reason about the behaviour of a given piece of code as all modifications of state are made explicit. If, for example, `doSomethingWithMap()` _was_ supposed to modify `Map<K, V>`, we'd have to explicitly change the binding:
+As a result of this quality, it becomes easier to reason about the behaviour of a given piece of code as all modifications of state are made explicit. If, for example, `doSomethingWithMap()` _was_ supposed to modify `map`, we'd have to explicitly change the binding:
 
 ```ts
 import { Map } from "@siteimprove/alfa-map";
