@@ -294,7 +294,7 @@ map.get(new Foo(42));
 // 42
 ```
 
-It's worth pointing out that if we _don't_ implement `Equatable` and `Hashable` for our type, `Map<K, V>` will use reference equivalence and a unique hash value will be assigned to every object, ensuring that the aforementioned property holds.
+It's worth pointing out that if we _don't_ implement `Equatable` and `Hashable` for our type, `Map<K, V>` will use referential equivalence and a unique hash value will be assigned to every object, ensuring that the aforementioned property holds.
 
 The observant reader may have noticed that the `Hash` class deviates from the API design outlined previously. The reason for this is rather simple and boils down to performance. Hashes are meant to encode large amounts of data in constant space, and having to allocate a new object for every little piece of data we want to add serves counter to that purpose.
 
