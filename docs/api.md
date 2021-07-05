@@ -18,7 +18,7 @@ To get a quick taste of the benefits of this approach, consider the following co
 const map = new Map<string, number>();
 
 map.set("foo", 42);
-// This call modifies `Map<K, V>`
+// This call modifies `map`
 
 doSomethingWithMap(map);
 
@@ -36,7 +36,7 @@ import { Map } from "@siteimprove/alfa-map";
 const map = Map.empty<string, number>().set("foo", 42);
 
 map.set("foo", 24);
-// This call has no effect on `Map<K, V>`
+// This call has no effect on `map`
 
 doSomethingWithMap(map);
 
