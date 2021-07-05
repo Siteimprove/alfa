@@ -17,7 +17,7 @@ test("evaluate() passes a page with no deprecated / obsolete elements ", async (
 
   t.deepEqual(await evaluate(R70, { document }), [
     passed(R70, document, {
-      1: Outcomes.IsNotDeprecated,
+      1: Outcomes.HasNoDeprecatedElement,
     }),
   ]);
 });
@@ -35,7 +35,7 @@ test("evaluate() passes a page with a deprecated but not rendered element", asyn
 
   t.deepEqual(await evaluate(R70, { document }), [
     passed(R70, document, {
-      1: Outcomes.IsNotDeprecated,
+      1: Outcomes.HasNoDeprecatedElement,
     }),
   ]);
 });
@@ -52,7 +52,7 @@ test("evaluate() fails a page with deprecated and rendered element", async (t) =
 
   t.deepEqual(await evaluate(R70, { document }), [
     failed(R70, document, {
-      1: Outcomes.IsDeprecated([blink]),
+      1: Outcomes.HasDeprecatedElements([blink]),
     }),
   ]);
 });
@@ -69,7 +69,7 @@ test("evaluate() fails a page with deprecated visible element", async (t) => {
 
   t.deepEqual(await evaluate(R70, { document }), [
     failed(R70, document, {
-      1: Outcomes.IsDeprecated([blink]),
+      1: Outcomes.HasDeprecatedElements([blink]),
     }),
   ]);
 });
@@ -90,7 +90,7 @@ test("evaluate() fails a page with two deprecated elements in the accessibility 
 
   t.deepEqual(await evaluate(R70, { document }), [
     failed(R70, document, {
-      1: Outcomes.IsDeprecated([menuitem1, menuitem2]),
+      1: Outcomes.HasDeprecatedElements([menuitem1, menuitem2]),
     }),
   ]);
 });

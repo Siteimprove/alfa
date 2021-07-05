@@ -8,7 +8,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { expectation } from "../common/expectation";
 import { hasChild, isRendered, isDocumentElement } from "../common/predicate";
-import { Group } from "../common/group";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, test } = Predicate;
@@ -66,8 +65,8 @@ export default Rule.Atomic.of<Page, Document>({
         return {
           1: expectation(
             deprecatedElements.isEmpty(),
-            () => Outcomes.IsNotDeprecated,
-            () => Outcomes.IsDeprecated(deprecatedElements)
+            () => Outcomes.HasNoDeprecatedElement,
+            () => Outcomes.HasDeprecatedElements(deprecatedElements)
           ),
         };
       },
@@ -76,11 +75,11 @@ export default Rule.Atomic.of<Page, Document>({
 });
 
 export namespace Outcomes {
-  export const IsNotDeprecated = Ok.of(
-    Diagnostic.of(`The document doesn't contain deprecated elements`)
+  export const HasNoDeprecatedElement = Ok.of(
+    Diagnostic.of(`The document doesn't contain any deprecated element`)
   );
 
-  export const IsDeprecated = (errors: Iterable<Element>) =>
+  export const HasDeprecatedElements = (errors: Iterable<Element>) =>
     Err.of(
       DeprecatedElements.of(
         `The document contains deprecated elements: `,
@@ -133,7 +132,7 @@ namespace DeprecatedElements {
     errors: List.JSON<Element>;
   }
 
-  export function areDeprecatedElements(
+  export function isDeprecatedElements(
     value: unknown
   ): value is DeprecatedElements {
     return value instanceof DeprecatedElements;
