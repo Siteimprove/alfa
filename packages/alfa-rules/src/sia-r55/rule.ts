@@ -17,7 +17,7 @@ const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r55.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r55",
   evaluate({ device, document }) {
     return {
       applicability() {
