@@ -15,6 +15,9 @@ const { and } = Refinement;
  * order of the nodes is unknown. Options let it choose whether the first
  * or second node (in tree order) should be included. By default, exclude both.
  *
+ * When the first node is not included, all its subtree is skipped, that is we
+ * start looking after the closing tag, not after the opening one.
+ *
  * Returns false in the corner case where both nodes are the same and at least
  * one is excluded (i.e. considers that [X,X[ and ]X,X] are empty).
  *
@@ -52,30 +55,39 @@ export function hasPerceivableContentBetween(
   }
 
   // Get descendants of the LCA, and skip everything before both nodes.
+  // Due to first test, descendants contains at least two nodes: node1 and node2
   let descendants = context
     .get()
     .inclusiveDescendants(treeOptions)
-    .skipUntil(isFrontier);
+    .skipUntil(isFrontier)
+    .skipLastUntil(isFrontier);
 
-  // node1 and node2 cannot be equal due to first test.
-  // Only check the first node if it should be included.
-  if (
-    includeOptions.includeFirst &&
-    test(isPerceivableContent, descendants.first().get())
-  ) {
-    return true;
+  const first = descendants.first().get();
+
+  // If the first node should be included, check it and start from it;
+  // otherwise, we need to skip its subtree.
+  if (includeOptions.includeFirst) {
+    if (test(isPerceivableContent, first)) {
+      return true;
+    }
+    descendants = descendants.rest();
+  } else {
+    descendants = descendants
+      .rest()
+      .skipWhile((node) => node.ancestors(treeOptions).includes(first));
   }
 
   // Go through descendants until we reach perceivable content,
   // or the second of the nodes
-  descendants = descendants
-    .rest()
-    .skipUntil(or(isPerceivableContent, isFrontier));
+  descendants = descendants.skipUntil(or(isPerceivableContent, isFrontier));
 
   // If we didn't hit the second node, for sure there is perceivable content
   // between them. Otherwise, depends on include options and check.
-  // descendant cannot be empty because it contained at least
-  // node1 and node2 which are different.
+  // descendants can be empty if node2 was the text node of node1 and
+  // includeFirst is false
+  if (descendants.isEmpty()) {
+    return false;
+  }
   const end = descendants.first().get();
   if (test(isFrontier, end)) {
     // We've hit the second node

@@ -43,9 +43,11 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const currentLevel = Number(
-          Node.from(target, device).attribute("aria-level")
-        );
+        const currentLevel = Node.from(target, device)
+          .attribute("aria-level")
+          .map((level) => Number(level.value))
+          .getOr(0);
+
         let end = false;
 
         const next = headings
@@ -60,12 +62,12 @@ export default Rule.Atomic.of<Page, Element>({
             return (
               document
                 .descendants({ flattened: true, nested: true })
-                .filter(isElement)
                 .last()
                 // The document contains at least the target.
                 .get()
             );
           });
+
         return {
           1: expectation(
             hasPerceivableContentBetween(target, next, device, {
