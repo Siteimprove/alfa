@@ -2,7 +2,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasContentBetween } from "../expectation/content-between";
+import { getContentBetween } from "../expectation/content-between";
 import { isContent } from "./is-content";
 import { isPerceivable } from "./is-perceivable";
 
@@ -38,14 +38,10 @@ export function isAtTheStart(
   device: Device = Device.standard()
 ): Predicate<Node> {
   return (node1) =>
-    !hasContentBetween(
-      node1,
-      node2,
-      and(isPerceivable(device), isContent({ flattened: true, nested: true })),
-      device,
-      {
-        includeFirst: true,
-        includeSecond: false,
-      }
+    !getContentBetween(node1, node2, device, {
+      includeFirst: true,
+      includeSecond: false,
+    }).some(
+      and(isPerceivable(device), isContent({ flattened: true, nested: true }))
     );
 }

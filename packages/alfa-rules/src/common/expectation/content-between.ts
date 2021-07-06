@@ -66,21 +66,6 @@ export function getContentBetween(
   }
 }
 
-/**
- * Checks if there is content between two nodes.
- */
-export function hasContentBetween(
-  node1: Node,
-  node2: Node,
-  predicate: Predicate<Node>,
-  device: Device = Device.standard(),
-  includeOptions: Options = { includeFirst: false, includeSecond: false }
-): boolean {
-  const between = getContentBetween(node1, node2, device, includeOptions);
-
-  return between.find(predicate).isSome();
-}
-
 type Options = {
   includeFirst: boolean;
   includeSecond: boolean;
