@@ -5,9 +5,9 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { isPerceivable, isReplaced } from "../predicate";
+import { isContent, isPerceivable } from "../predicate";
 
-const { equals, or, test } = Predicate;
+const { equals, or } = Predicate;
 const { and } = Refinement;
 
 /**
@@ -67,36 +67,18 @@ export function getContentBetween(
 }
 
 /**
- * Checks if there is perceivable content between two nodes. The relative
- * order of the nodes is unknown. Options let it choose whether the first
- * or second node (in tree order) should be included. By default, exclude both.
- *
- * When the first node is not included, all its subtree is skipped, that is we
- * start looking after the closing tag, not after the opening one.
- *
- * Returns false in the corner case where both nodes are the same and at least
- * one is excluded (i.e. considers that [X,X[ and ]X,X] are empty).
- *
- * Perceivable containers (e.g. <div><span>Hello</span></div>) are not
- * considered as perceivable content here, only perceivable actual content is.
- *
- * Complexity: the size of the subtree anchored at the lowest common ancestor.
+ * Checks if there is content between two nodes.
  */
 export function hasContentBetween(
   node1: Node,
   node2: Node,
+  predicate: Predicate<Node>,
   device: Device = Device.standard(),
   includeOptions: Options = { includeFirst: false, includeSecond: false }
 ): boolean {
-  const treeOptions = { flattened: true, nested: true };
-  const isPerceivableContent = and(
-    isPerceivable(device),
-    isContent(treeOptions)
-  );
-
   const between = getContentBetween(node1, node2, device, includeOptions);
 
-  return between.find(isPerceivableContent).isSome();
+  return between.find(predicate).isSome();
 }
 
 type Options = {
@@ -110,6 +92,7 @@ type Options = {
  * Find the lowest common ancestor of two nodes:
  * * get the ancestors chain of both
  * * go down the chain, from root to nodes, as long as it is the same node
+ *
  * Complexity: linear in the depth of the nodes.
  */
 export function lowestCommonAncestor(
@@ -126,15 +109,4 @@ export function lowestCommonAncestor(
       (_, [node]) => Option.of(node),
       None
     );
-}
-
-/**
- * A node is actual content (not just a container) if it has no children,
- * or if it is a replaced element (assumed to be replaced by actual content).
- */
-function isContent(options: Node.Traversal = {}): Predicate<Node> {
-  return or(
-    (node) => node.children(options).isEmpty(),
-    and(Element.isElement, isReplaced)
-  );
 }

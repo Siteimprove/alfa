@@ -3,6 +3,10 @@ import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { hasContentBetween } from "../expectation/content-between";
+import { isContent } from "./is-content";
+import { isPerceivable } from "./is-perceivable";
+
+const { and } = Predicate;
 
 /**
  * {@link https://act-rules.github.io/glossary/#just-before}
@@ -34,8 +38,14 @@ export function isAtTheStart(
   device: Device = Device.standard()
 ): Predicate<Node> {
   return (node1) =>
-    !hasContentBetween(node1, node2, device, {
-      includeFirst: true,
-      includeSecond: false,
-    });
+    !hasContentBetween(
+      node1,
+      node2,
+      and(isPerceivable(device), isContent({ flattened: true, nested: true })),
+      device,
+      {
+        includeFirst: true,
+        includeSecond: false,
+      }
+    );
 }

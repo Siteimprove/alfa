@@ -9,7 +9,13 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasContentBetween } from "../common/expectation/content-between";
-import { hasHeadingLevel, hasRole, isIgnored } from "../common/predicate";
+import {
+  hasHeadingLevel,
+  hasRole,
+  isContent,
+  isIgnored,
+  isPerceivable,
+} from "../common/predicate";
 
 const { hasNamespace, isElement } = Element;
 const { not } = Predicate;
@@ -66,13 +72,22 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            hasContentBetween(target, next, device, {
-              includeFirst: false,
-              // If this is the last heading (of this level or less), then the
-              // last node of the document is acceptable content; otherwise, the
-              // next heading (of this level or less) is not acceptable content.
-              includeSecond: end,
-            }),
+            hasContentBetween(
+              target,
+              next,
+              and(
+                isPerceivable(device),
+                isContent({ flattened: true, nested: true })
+              ),
+              device,
+              {
+                includeFirst: false,
+                // If this is the last heading (of this level or less), then the
+                // last node of the document is acceptable content; otherwise, the
+                // next heading (of this level or less) is not acceptable content.
+                includeSecond: end,
+              }
+            ),
             () => Outcomes.hasContent,
             () => Outcomes.hasNoContent
           ),
