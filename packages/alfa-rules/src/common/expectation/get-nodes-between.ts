@@ -1,10 +1,12 @@
 import { Node } from "@siteimprove/alfa-dom";
-import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Option, None } from "@siteimprove/alfa-option";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
+import { lowestCommonAncestor } from "./lowest-common-ancestor";
+
 const { equals, or } = Predicate;
+
+const treeOptions = { flattened: true, nested: true };
 
 /**
  * Get content between two nodes. The relative order of the nodes is unknown.
@@ -22,78 +24,51 @@ const { equals, or } = Predicate;
 export function getNodesBetween(
   node1: Node,
   node2: Node,
-  device: Device = Device.standard(),
   includeOptions: Options = { includeFirst: false, includeSecond: false }
 ): Sequence<Node> {
-  const treeOptions = { flattened: true, nested: true };
+  let between = getNodesInclusivelyBetween(node1, node2);
 
-  if (node2.equals(node1)) {
-    return includeOptions.includeFirst && includeOptions.includeSecond
-      ? Sequence.from([node1])
-      : Sequence.empty();
+  // If somehow there is nothing between them, escape now
+  if (between.isEmpty()) {
+    return between;
   }
 
-  const isFrontier = or(equals(node1), equals(node2));
-  const context = lowestCommonAncestor(node1, node2, treeOptions);
+  const first = between.first().get();
 
-  if (context.isNone()) {
-    // the nodes are not even in the same tree…
-    return Sequence.empty();
-  }
-
-  // Get descendants of the LCA, and skip everything before and after both nodes.
-  // Due to first test, descendants contains at least two nodes: node1 and node2
-  let descendants = context
-    .get()
-    .inclusiveDescendants(treeOptions)
-    .skipUntil(isFrontier)
-    .skipLastUntil(isFrontier);
-
-  const first = descendants.first().get();
-
-  // If the first node should be included, we're done;
-  // otherwise, we need to skip its subtree.
-  descendants = includeOptions.includeFirst
-    ? descendants
-    : descendants
+  // Do we keep the first node or skip its subtree?
+  between = includeOptions.includeFirst
+    ? between
+    : between
         .rest()
         .skipWhile((node) => node.ancestors(treeOptions).includes(first));
 
-  // If the last not shouldn't be included, remove it.
-  descendants =
-    includeOptions.includeSecond || descendants.isEmpty()
-      ? descendants
-      : descendants.skipLast(1);
+  // Do we keep the second node or remove it?
+  between =
+    includeOptions.includeSecond || between.isEmpty()
+      ? between
+      : between.skipLast(1);
 
-  return descendants;
+  return between;
+}
+
+/**
+ * Get all nodes between node1 and node2, included.
+ */
+function getNodesInclusivelyBetween(node1: Node, node2: Node): Sequence<Node> {
+  const isFrontier = or(equals(node1), equals(node2));
+
+  // Get descendants of the LCA, and skip everything before and after both nodes.
+  return lowestCommonAncestor(node1, node2, treeOptions)
+    .map((context) =>
+      context
+        .inclusiveDescendants(treeOptions)
+        .skipUntil(isFrontier)
+        .skipLastUntil(isFrontier)
+    )
+    .getOrElse(Sequence.empty);
 }
 
 type Options = {
   includeFirst: boolean;
   includeSecond: boolean;
 };
-
-/**
- * @internal
- *
- * Find the lowest common ancestor of two nodes:
- * * get the ancestors chain of both
- * * go down the chain, from root to nodes, as long as it is the same node
- *
- * Complexity: linear in the depth of the nodes.
- */
-export function lowestCommonAncestor(
-  node1: Node,
-  node2: Node,
-  options: Node.Traversal = {}
-): Option<Node> {
-  return node1
-    .inclusiveAncestors(options)
-    .reverse()
-    .zip(node2.inclusiveAncestors(options).reverse())
-    .reduceWhile<Option<Node>>(
-      ([first1, first2]) => first1.equals(first2),
-      (_, [node]) => Option.of(node),
-      None
-    );
-}

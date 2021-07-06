@@ -38,7 +38,7 @@ export function isAtTheStart(
   device: Device = Device.standard()
 ): Predicate<Node> {
   return (node1) =>
-    !getNodesBetween(node1, node2, device, {
+    !getNodesBetween(node1, node2, {
       includeFirst: true,
       includeSecond: false,
     }).some(

@@ -72,7 +72,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            getNodesBetween(target, next, device, {
+            getNodesBetween(target, next, {
               includeFirst: false,
               // If this is the last heading (of this level or less), then the
               // last node of the document is acceptable content; otherwise, the
