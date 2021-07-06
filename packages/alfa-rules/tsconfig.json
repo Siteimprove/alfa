@@ -10,7 +10,7 @@
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
     "src/common/expectation.ts",
-    "src/common/expectation/content-between.ts",
+    "src/common/expectation/get-nodes-between.ts",
     "src/common/expectation/contrast.ts",
     "src/common/expectation/get-colors.ts",
     "src/common/expectation/get-refresh-time.ts",

@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
-import { getContentBetween } from "../common/expectation/content-between";
+import { getNodesBetween } from "../common/expectation/get-nodes-between";
 import {
   hasHeadingLevel,
   hasRole,
@@ -72,7 +72,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            getContentBetween(target, next, device, {
+            getNodesBetween(target, next, device, {
               includeFirst: false,
               // If this is the last heading (of this level or less), then the
               // last node of the document is acceptable content; otherwise, the

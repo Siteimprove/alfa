@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { lowestCommonAncestor } from "../../../src/common/expectation/content-between";
+import { lowestCommonAncestor } from "../../../src/common/expectation/get-nodes-between";
 import { isAtTheStart } from "../../../src/common/predicate";
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {

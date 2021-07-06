@@ -1,14 +1,10 @@
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option, None } from "@siteimprove/alfa-option";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { isContent, isPerceivable } from "../predicate";
-
 const { equals, or } = Predicate;
-const { and } = Refinement;
 
 /**
  * Get content between two nodes. The relative order of the nodes is unknown.
@@ -23,7 +19,7 @@ const { and } = Refinement;
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
  */
-export function getContentBetween(
+export function getNodesBetween(
   node1: Node,
   node2: Node,
   device: Device = Device.standard(),
@@ -57,13 +53,19 @@ export function getContentBetween(
 
   // If the first node should be included, we're done;
   // otherwise, we need to skip its subtree.
-  if (includeOptions.includeFirst) {
-    return descendants;
-  } else {
-    return descendants
-      .rest()
-      .skipWhile((node) => node.ancestors(treeOptions).includes(first));
-  }
+  descendants = includeOptions.includeFirst
+    ? descendants
+    : descendants
+        .rest()
+        .skipWhile((node) => node.ancestors(treeOptions).includes(first));
+
+  // If the last not shouldn't be included, remove it.
+  descendants =
+    includeOptions.includeSecond || descendants.isEmpty()
+      ? descendants
+      : descendants.skipLast(1);
+
+  return descendants;
 }
 
 type Options = {
