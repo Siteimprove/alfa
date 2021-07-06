@@ -2,7 +2,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { contentBetween } from "../expectation/content-between";
+import { hasContentBetween } from "../expectation/content-between";
 
 /**
  * {@link https://act-rules.github.io/glossary/#just-before}
@@ -34,7 +34,7 @@ export function isAtTheStart(
   device: Device = Device.standard()
 ): Predicate<Node> {
   return (node1) =>
-    !contentBetween(node1, node2, device, {
+    !hasContentBetween(node1, node2, device, {
       includeFirst: true,
       includeSecond: false,
     });

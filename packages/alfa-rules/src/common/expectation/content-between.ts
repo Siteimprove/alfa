@@ -3,12 +3,68 @@ import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { isPerceivable } from "../predicate/is-perceivable";
-import { isReplaced } from "../predicate/is-replaced";
+import { isPerceivable, isReplaced } from "../predicate";
 
 const { equals, or, test } = Predicate;
 const { and } = Refinement;
+
+/**
+ * Get content between two nodes. The relative order of the nodes is unknown.
+ * Options let it choose whether the first or second node (in tree order)
+ * should be included. By default, exclude both.
+ *
+ * When the first node is not included, all its subtree is skipped, that is we
+ * start looking after the closing tag, not after the opening one.
+ *
+ * Returns empty sequence in the corner case where both nodes are the same and
+ * at least one is excluded (i.e. considers that [X,X[ and ]X,X] are empty).
+ *
+ * Complexity: the size of the subtree anchored at the lowest common ancestor.
+ */
+export function getContentBetween(
+  node1: Node,
+  node2: Node,
+  device: Device = Device.standard(),
+  includeOptions: Options = { includeFirst: false, includeSecond: false }
+): Sequence<Node> {
+  const treeOptions = { flattened: true, nested: true };
+
+  if (node2.equals(node1)) {
+    return includeOptions.includeFirst && includeOptions.includeSecond
+      ? Sequence.from([node1])
+      : Sequence.empty();
+  }
+
+  const isFrontier = or(equals(node1), equals(node2));
+  const context = lowestCommonAncestor(node1, node2, treeOptions);
+
+  if (context.isNone()) {
+    // the nodes are not even in the same tree…
+    return Sequence.empty();
+  }
+
+  // Get descendants of the LCA, and skip everything before and after both nodes.
+  // Due to first test, descendants contains at least two nodes: node1 and node2
+  let descendants = context
+    .get()
+    .inclusiveDescendants(treeOptions)
+    .skipUntil(isFrontier)
+    .skipLastUntil(isFrontier);
+
+  const first = descendants.first().get();
+
+  // If the first node should be included, we're done;
+  // otherwise, we need to skip its subtree.
+  if (includeOptions.includeFirst) {
+    return descendants;
+  } else {
+    return descendants
+      .rest()
+      .skipWhile((node) => node.ancestors(treeOptions).includes(first));
+  }
+}
 
 /**
  * Checks if there is perceivable content between two nodes. The relative
@@ -26,7 +82,7 @@ const { and } = Refinement;
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
  */
-export function contentBetween(
+export function hasContentBetween(
   node1: Node,
   node2: Node,
   device: Device = Device.standard(),
@@ -38,64 +94,9 @@ export function contentBetween(
     isContent(treeOptions)
   );
 
-  if (node2.equals(node1)) {
-    return (
-      includeOptions.includeFirst &&
-      includeOptions.includeSecond &&
-      isPerceivableContent(node1)
-    );
-  }
+  const between = getContentBetween(node1, node2, device, includeOptions);
 
-  const isFrontier = or(equals(node1), equals(node2));
-  const context = lowestCommonAncestor(node1, node2, treeOptions);
-
-  if (context.isNone()) {
-    // the nodes are not even in the same tree…
-    return false;
-  }
-
-  // Get descendants of the LCA, and skip everything before both nodes.
-  // Due to first test, descendants contains at least two nodes: node1 and node2
-  let descendants = context
-    .get()
-    .inclusiveDescendants(treeOptions)
-    .skipUntil(isFrontier)
-    .skipLastUntil(isFrontier);
-
-  const first = descendants.first().get();
-
-  // If the first node should be included, check it and start from it;
-  // otherwise, we need to skip its subtree.
-  if (includeOptions.includeFirst) {
-    if (test(isPerceivableContent, first)) {
-      return true;
-    }
-    descendants = descendants.rest();
-  } else {
-    descendants = descendants
-      .rest()
-      .skipWhile((node) => node.ancestors(treeOptions).includes(first));
-  }
-
-  // Go through descendants until we reach perceivable content,
-  // or the second of the nodes
-  descendants = descendants.skipUntil(or(isPerceivableContent, isFrontier));
-
-  // If we didn't hit the second node, for sure there is perceivable content
-  // between them. Otherwise, depends on include options and check.
-  // descendants can be empty if node2 was the text node of node1 and
-  // includeFirst is false
-  if (descendants.isEmpty()) {
-    return false;
-  }
-  const end = descendants.first().get();
-  if (test(isFrontier, end)) {
-    // We've hit the second node
-    return includeOptions.includeSecond && test(isPerceivableContent, end);
-  } else {
-    // We found perceivable content strictly before the second node
-    return true;
-  }
+  return between.find(isPerceivableContent).isSome();
 }
 
 type Options = {

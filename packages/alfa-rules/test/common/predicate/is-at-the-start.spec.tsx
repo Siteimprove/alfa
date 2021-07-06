@@ -3,10 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { None, Option } from "@siteimprove/alfa-option";
 
-import {
-  isAtTheStart,
-  lowestCommonAncestor,
-} from "../../../src/common/predicate";
+import { lowestCommonAncestor } from "../../../src/common/expectation/content-between";
+import { isAtTheStart } from "../../../src/common/predicate";
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {
   const node1 = <span>Hello</span>;
