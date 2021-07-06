@@ -1,3 +1,4 @@
+import { Name } from "@siteimprove/alfa-aria";
 import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -33,14 +34,22 @@ export function getNodesBetween(
     return between;
   }
 
-  const first = between.first().get();
-
   // Do we keep the first node or skip its subtree?
-  between = includeOptions.includeFirst
-    ? between
-    : between
-        .rest()
-        .skipWhile((node) => node.ancestors(treeOptions).includes(first));
+  if (!includeOptions.includeFirst) {
+    const first = between.first().get();
+
+    // The 'first node after the subtree rooted at first' is the next sibling
+    // of the closest ancestor having one.
+    between = first
+      // Closest ancestor with a next sibling.
+      .closest((ancestor) => ancestor.next(treeOptions).isSome())
+      // Get that sibling.
+      .flatMap((node) => node.next(treeOptions))
+      // Skip everything until next.
+      .map((next) => between.skipUntil((node) => node.equals(next)))
+      // If nothing after the subtree at first, just escape.
+      .getOrElse(Sequence.empty);
+  }
 
   // Do we keep the second node or remove it?
   between =

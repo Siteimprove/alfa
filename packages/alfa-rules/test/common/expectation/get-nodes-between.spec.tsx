@@ -94,3 +94,38 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
     []
   );
 });
+
+test(`getNodesBetween() return an empty sequence when node2 is a descendant of
+      node1 and starting point is excluded`, (t) => {
+  t.deepEqual(
+    getNodesBetween(divHello, hello, {
+      includeFirst: true,
+      includeSecond: true,
+    }).toJSON(),
+    [divHello.toJSON(), spanHello.toJSON(), hello.toJSON()]
+  );
+
+  t.deepEqual(
+    getNodesBetween(divHello, hello, {
+      includeFirst: false,
+      includeSecond: true,
+    }).toJSON(),
+    []
+  );
+
+  t.deepEqual(
+    getNodesBetween(divHello, hello, {
+      includeFirst: true,
+      includeSecond: false,
+    }).toJSON(),
+    [divHello.toJSON(), spanHello.toJSON()]
+  );
+
+  t.deepEqual(
+    getNodesBetween(divHello, hello, {
+      includeFirst: false,
+      includeSecond: false,
+    }).toJSON(),
+    []
+  );
+});
