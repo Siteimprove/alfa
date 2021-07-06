@@ -15,9 +15,7 @@ exports.documenter = {
     for (const project of projects) {
       let file;
       try {
-        file = require.resolve(
-          path.resolve(project, "config", "api-extractor.json")
-        );
+        file = require.resolve(path.resolve(project, "config", "api.json"));
       } catch {
         continue;
       }
