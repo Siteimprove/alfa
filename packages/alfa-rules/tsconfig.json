@@ -158,6 +158,7 @@
     "test/common/oracle.ts",
     "test/common/outcome.ts",
     "test/common/expectation/get-colors.spec.tsx",
+    "test/common/expectation/get-nodes-between.spec.tsx",
     "test/common/expectation/lowest-common-ancestor.spec.tsx",
     "test/common/predicate/is-at-the-start.spec.tsx",
     "test/common/predicate/is-visible.spec.tsx",
