@@ -4,8 +4,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { isPerceivable } from "./is-perceivable";
-import { isReplaced } from "./is-replaced";
+import { isPerceivable } from "../predicate/is-perceivable";
+import { isReplaced } from "../predicate/is-replaced";
 
 const { equals, or, test } = Predicate;
 const { and } = Refinement;
@@ -26,7 +26,7 @@ const { and } = Refinement;
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
  */
-export function hasPerceivableContentBetween(
+export function contentBetween(
   node1: Node,
   node2: Node,
   device: Device = Device.standard(),

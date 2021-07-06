@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 
 import {
   hasHeadingLevel,
-  hasPerceivableContentBetween,
+  contentBetween,
   hasRole,
   isIgnored,
 } from "../common/predicate";
@@ -70,7 +70,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            hasPerceivableContentBetween(target, next, device, {
+            contentBetween(target, next, device, {
               includeFirst: false,
               // If this is the last heading (of this level or less), then the
               // last node of the document is acceptable content; otherwise, the
