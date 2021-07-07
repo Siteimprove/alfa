@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+In addition to the changes listed below, this release adjusts the compile target from `es2018` to `es2020`.
+
 ### Fixed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): The contrast ratios output in messages from SIA-R66 and SIA-R69 are now correctly listed as `<bright>:<dark>` rather than `<dark>:<bright>`.
