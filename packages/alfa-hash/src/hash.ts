@@ -40,6 +40,13 @@ export abstract class Hash implements Equatable, Hashable {
 
   protected constructor() {}
 
+  /**
+   * Get the current hash value as a 32-bit integer.
+   *
+   * @remarks
+   * The method is limited to 32-bit integers as this is the limit of bitwise
+   * operations in JavaScript.
+   */
   public abstract finish(): number;
 
   public abstract write(data: Uint8Array): this;
@@ -275,90 +282,5 @@ export abstract class Hash implements Equatable, Hashable {
     Hash._nextHash = (Hash._nextHash + 1) >>> 0;
 
     return nextHash;
-  }
-}
-
-/**
- * @public
- */
-export namespace Hash {
-  export function writeString(hash: Hash, data: string): Hash {
-    return hash.writeString(data);
-  }
-
-  export function writeNumber(hash: Hash, data: number): Hash {
-    return hash.writeNumber(data);
-  }
-
-  export function writeInt8(hash: Hash, data: number): Hash {
-    return hash.writeInt8(data);
-  }
-
-  export function writeUint8(hash: Hash, data: number): Hash {
-    return hash.writeUint8(data);
-  }
-
-  export function writeInt16(hash: Hash, data: number): Hash {
-    return hash.writeInt16(data);
-  }
-
-  export function writeUint16(hash: Hash, data: number): Hash {
-    return hash.writeUint16(data);
-  }
-
-  export function writeInt32(hash: Hash, data: number): Hash {
-    return hash.writeInt32(data);
-  }
-
-  export function writeUint32(hash: Hash, data: number): Hash {
-    return hash.writeUint32(data);
-  }
-
-  export function writeBigInt64(hash: Hash, data: bigint): Hash {
-    return hash.writeBigInt64(data);
-  }
-
-  export function writeBigUint64(hash: Hash, data: bigint): Hash {
-    return hash.writeBigUint64(data);
-  }
-
-  export function writeFloat32(hash: Hash, data: number): Hash {
-    return hash.writeFloat32(data);
-  }
-
-  export function writeFloat64(hash: Hash, data: number): Hash {
-    return hash.writeFloat64(data);
-  }
-
-  export function writeBoolean(hash: Hash, data: boolean): Hash {
-    return hash.writeBoolean(data);
-  }
-
-  export function writeUndefined(hash: Hash): Hash {
-    return hash.writeUndefined();
-  }
-
-  export function writeNull(hash: Hash): Hash {
-    return hash.writeNull();
-  }
-
-  export function writeObject(hash: Hash, data: object): Hash {
-    return hash.writeObject(data);
-  }
-
-  export function writeSymbol(hash: Hash, data: symbol): Hash {
-    return hash.writeSymbol(data);
-  }
-
-  export function writeHashable(hash: Hash, data: Hashable): Hash {
-    return hash.writeHashable(data);
-  }
-
-  export function writeUnknown(hash: Hash, data: unknown): Hash {
-    return hash.writeUnknown(data);
-  }
-
-  export function writeJSON(hash: Hash, data: JSON): Hash {
-    return hash.writeJSON(data);
   }
 }
