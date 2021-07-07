@@ -24,9 +24,12 @@ export declare abstract class Hash implements Equatable, Hashable
 |  --- | --- | --- |
 |  [equals(value)](./alfa-hash.hash_class.equals_1_method.md) |  |  |
 |  [equals(value)](./alfa-hash.hash_class.equals_2_method.md) |  |  |
-|  [finish()](./alfa-hash.hash_class.finish_1_method.md) |  |  |
+|  [finish()](./alfa-hash.hash_class.finish_1_method.md) |  | Get the current hash value as a 32-bit integer. |
 |  [hash(hash)](./alfa-hash.hash_class.hash_1_method.md) |  |  |
 |  [write(data)](./alfa-hash.hash_class.write_1_method.md) |  |  |
+|  [writeBigInt(data, size, signed)](./alfa-hash.hash_class.writebigint_1_method.md) |  |  |
+|  [writeBigInt64(data)](./alfa-hash.hash_class.writebigint64_1_method.md) |  |  |
+|  [writeBigUint64(data)](./alfa-hash.hash_class.writebiguint64_1_method.md) |  |  |
 |  [writeBoolean(data)](./alfa-hash.hash_class.writeboolean_1_method.md) |  |  |
 |  [writeFloat(data, size)](./alfa-hash.hash_class.writefloat_1_method.md) |  |  |
 |  [writeFloat32(data)](./alfa-hash.hash_class.writefloat32_1_method.md) |  |  |
@@ -37,10 +40,14 @@ export declare abstract class Hash implements Equatable, Hashable
 |  [writeInt32(data)](./alfa-hash.hash_class.writeint32_1_method.md) |  |  |
 |  [writeInt8(data)](./alfa-hash.hash_class.writeint8_1_method.md) |  |  |
 |  [writeJSON(data)](./alfa-hash.hash_class.writejson_1_method.md) |  |  |
+|  [writeNull()](./alfa-hash.hash_class.writenull_1_method.md) |  |  |
 |  [writeNumber(data)](./alfa-hash.hash_class.writenumber_1_method.md) |  |  |
+|  [writeObject(data)](./alfa-hash.hash_class.writeobject_1_method.md) |  |  |
 |  [writeString(data)](./alfa-hash.hash_class.writestring_1_method.md) |  |  |
+|  [writeSymbol(data)](./alfa-hash.hash_class.writesymbol_1_method.md) |  |  |
 |  [writeUint16(data)](./alfa-hash.hash_class.writeuint16_1_method.md) |  |  |
 |  [writeUint32(data)](./alfa-hash.hash_class.writeuint32_1_method.md) |  |  |
 |  [writeUint8(data)](./alfa-hash.hash_class.writeuint8_1_method.md) |  |  |
+|  [writeUndefined()](./alfa-hash.hash_class.writeundefined_1_method.md) |  |  |
 |  [writeUnknown(data)](./alfa-hash.hash_class.writeunknown_1_method.md) |  |  |
 

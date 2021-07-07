@@ -4,6 +4,8 @@
 
 ## Equatable.equals() method
 
+Check if a value of the same type as this are equal.
+
 <b>Signature:</b>
 
 ```typescript
@@ -19,4 +21,8 @@ equals(value: this): boolean;
 <b>Returns:</b>
 
 boolean
+
+## Remarks
+
+This function does not further refine the type of the given value.
 

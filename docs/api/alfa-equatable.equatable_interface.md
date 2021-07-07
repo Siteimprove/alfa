@@ -15,6 +15,6 @@ export interface Equatable
 
 |  Method | Description |
 |  --- | --- |
-|  [equals(value)](./alfa-equatable.equatable_interface.equals_1_methodsignature.md) |  |
-|  [equals(value)](./alfa-equatable.equatable_interface.equals_2_methodsignature.md) |  |
+|  [equals(value)](./alfa-equatable.equatable_interface.equals_1_methodsignature.md) | Check if a value of the same type as this are equal. |
+|  [equals(value)](./alfa-equatable.equatable_interface.equals_2_methodsignature.md) | Check if a value of an unknown type is equal to this. |
 

@@ -7,11 +7,6 @@
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { JSON as JSON_2 } from '@siteimprove/alfa-json';
 
-// Warning: (ae-internal-missing-underscore) The name "BuiltinOffset" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const BuiltinOffset = 2216757312;
-
 // @public (undocumented)
 export abstract class Hash implements Equatable, Hashable {
     protected constructor();
@@ -19,16 +14,21 @@ export abstract class Hash implements Equatable, Hashable {
     equals(value: Hash): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
-    // (undocumented)
     abstract finish(): number;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
     abstract write(data: Uint8Array): this;
     // (undocumented)
+    writeBigInt(data: bigint, size?: 64, signed?: boolean): this;
+    // (undocumented)
+    writeBigInt64(data: bigint): this;
+    // (undocumented)
+    writeBigUint64(data: bigint): this;
+    // (undocumented)
     writeBoolean(data: boolean): this;
     // (undocumented)
-    writeFloat(data: number, size?: number): this;
+    writeFloat(data: number, size?: 32 | 64): this;
     // (undocumented)
     writeFloat32(data: number): this;
     // (undocumented)
@@ -36,7 +36,7 @@ export abstract class Hash implements Equatable, Hashable {
     // (undocumented)
     writeHashable(data: Hashable): this;
     // (undocumented)
-    writeInt(data: number, size?: number, signed?: boolean): this;
+    writeInt(data: number, size?: 8 | 16 | 32, signed?: boolean): this;
     // (undocumented)
     writeInt16(data: number): this;
     // (undocumented)
@@ -46,9 +46,15 @@ export abstract class Hash implements Equatable, Hashable {
     // (undocumented)
     writeJSON(data: JSON_2): this;
     // (undocumented)
+    writeNull(): this;
+    // (undocumented)
     writeNumber(data: number): this;
     // (undocumented)
+    writeObject(data: object): this;
+    // (undocumented)
     writeString(data: string): this;
+    // (undocumented)
+    writeSymbol(data: symbol): this;
     // (undocumented)
     writeUint16(data: number): this;
     // (undocumented)
@@ -56,39 +62,9 @@ export abstract class Hash implements Equatable, Hashable {
     // (undocumented)
     writeUint8(data: number): this;
     // (undocumented)
+    writeUndefined(): this;
+    // (undocumented)
     writeUnknown(data: unknown): this;
-}
-
-// @public (undocumented)
-export namespace Hash {
-    // (undocumented)
-    export function writeBoolean(hash: Hash, data: boolean): Hash;
-    // (undocumented)
-    export function writeFloat32(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeFloat64(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeHashable(hash: Hash, data: Hashable): Hash;
-    // (undocumented)
-    export function writeInt16(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeInt32(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeInt8(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeJSON(hash: Hash, data: JSON_2): Hash;
-    // (undocumented)
-    export function writeNumber(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeString(hash: Hash, data: string): Hash;
-    // (undocumented)
-    export function writeUint16(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeUint32(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeUint8(hash: Hash, data: number): Hash;
-    // (undocumented)
-    export function writeUnknown(hash: Hash, data: unknown): Hash;
 }
 
 // @public (undocumented)
@@ -102,11 +78,6 @@ export namespace Hashable {
     // (undocumented)
     export function isHashable(value: unknown): value is Hashable;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "IntegerOverflow" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const IntegerOverflow = 2147483648;
 
 
 // (No @packageDocumentation comment for this package)

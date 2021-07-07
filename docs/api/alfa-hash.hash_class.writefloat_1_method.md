@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-writeFloat(data: number, size?: number): this;
+writeFloat(data: number, size?: 32 | 64): this;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ writeFloat(data: number, size?: number): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
-|  size | number |  |
+|  size | 32 \| 64 |  |
 
 <b>Returns:</b>
 

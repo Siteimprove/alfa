@@ -4,6 +4,8 @@
 
 ## Equatable.isEquatable() function
 
+Check if an unknown value implements the [Equatable](./alfa-equatable.equatable_interface.md) interface.
+
 <b>Signature:</b>
 
 ```typescript

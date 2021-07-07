@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-writeInt(data: number, size?: number, signed?: boolean): this;
+writeInt(data: number, size?: 8 | 16 | 32, signed?: boolean): this;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ writeInt(data: number, size?: number, signed?: boolean): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
-|  size | number |  |
+|  size | 8 \| 16 \| 32 |  |
 |  signed | boolean |  |
 
 <b>Returns:</b>

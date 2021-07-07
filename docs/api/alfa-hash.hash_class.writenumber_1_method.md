@@ -20,3 +20,9 @@ writeNumber(data: number): this;
 
 this
 
+## Remarks
+
+As JavaScript represents numbers in double-precision floating-point format, numbers in general will be written as such.
+
+[https://en.wikipedia.org/wiki/Double-precision\_floating-point\_format](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
+

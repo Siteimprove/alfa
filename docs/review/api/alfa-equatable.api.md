@@ -6,17 +6,13 @@
 
 // @public (undocumented)
 export interface Equatable {
-    // (undocumented)
     equals(value: this): boolean;
-    // (undocumented)
     equals(value: unknown): value is this;
 }
 
 // @public (undocumented)
 export namespace Equatable {
-    // (undocumented)
     export function equals(a: unknown, b: unknown): boolean;
-    // (undocumented)
     export function isEquatable(value: unknown): value is Equatable;
 }
 

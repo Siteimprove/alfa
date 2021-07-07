@@ -4,6 +4,8 @@
 
 ## Equatable.equals() function
 
+Check if two unknown values are equal.
+
 <b>Signature:</b>
 
 ```typescript
@@ -20,4 +22,8 @@ function equals(a: unknown, b: unknown): boolean;
 <b>Returns:</b>
 
 boolean
+
+## Remarks
+
+If either of the given values implement the [Equatable](./alfa-equatable.equatable_interface.md) interface, the equivalence constraints of the value will be used. If not, strict equality will be used with the additional constraint that `NaN` is equal to itself.
 

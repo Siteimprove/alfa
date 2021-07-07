@@ -4,6 +4,8 @@
 
 ## Equatable.equals() method
 
+Check if a value of an unknown type is equal to this.
+
 <b>Signature:</b>
 
 ```typescript
@@ -19,4 +21,8 @@ equals(value: unknown): value is this;
 <b>Returns:</b>
 
 value is this
+
+## Remarks
+
+This function refines the type of the given value.
 

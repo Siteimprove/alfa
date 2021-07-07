@@ -4,6 +4,8 @@
 
 ## Hash.finish() method
 
+Get the current hash value as a 32-bit integer.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,4 +14,8 @@ abstract finish(): number;
 <b>Returns:</b>
 
 number
+
+## Remarks
+
+The method is limited to 32-bit integers as this is the limit of bitwise operations in JavaScript.
 

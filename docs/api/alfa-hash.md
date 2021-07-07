@@ -20,6 +20,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Hash](./alfa-hash.hash_namespace.md) |  |
 |  [Hashable](./alfa-hash.hashable_namespace.md) |  |
 
