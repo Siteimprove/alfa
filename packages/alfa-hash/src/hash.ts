@@ -9,9 +9,8 @@ const { keys } = Object;
 /**
  * A special offset used for the builtin types `true`, `false`, `undefined`, and
  * `null`. The offset is designed to minimize the chance of collisions for data
- * structures that rely on 5-bit partitions in which other types will encode
- * their hashes. We use the first 30 bits for 6 of these partitions, leaving us
- * 2 bits to encode the 4 builtin types.
+ * structures that rely on 5-bit partitioning. We use the first 30 bits for 6 of
+ * these partitions, leaving us 2 bits to encode the 4 builtin types.
  */
 const builtinOffset = 0b10000_10000_10000_10000_10000_10000_00;
 
@@ -49,6 +48,13 @@ export abstract class Hash implements Equatable, Hashable {
     return this.write(Encoder.encode(data));
   }
 
+  /**
+   * @remarks
+   * As JavaScript represents numbers in double-precision floating-point format,
+   * numbers in general will be written as such.
+   *
+   * {@link https://en.wikipedia.org/wiki/Double-precision_floating-point_format}
+   */
   public writeNumber(data: number): this {
     return this.writeFloat64(data);
   }
