@@ -20,8 +20,8 @@ jobs:
           cache: yarn
       - run: yarn install --immutable
       - run: yarn build
-      - uses: github/codeql-action/init@v1
+      - uses: github/codeql-action/init@v1.0.4
         with:
           languages: javascript
           config-file: .github/codeql/config.yml
-      - uses: github/codeql-action/analyze@v1
+      - uses: github/codeql-action/analyze@v1.0.4
