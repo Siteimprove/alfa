@@ -3,20 +3,50 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { JSON } from "@siteimprove/alfa-json";
 
 import { Hashable } from "./hashable";
-import { BuiltinOffset, IntegerOverflow } from "./constants";
 
 const { keys } = Object;
 
-const hashes = new WeakMap<object, number>();
-
-let uid = 1;
+/**
+ * A special offset used for the builtin types `true`, `false`, `undefined`, and
+ * `null`. The offset is designed to minimize the chance of collisions for data
+ * structures that rely on 5-bit partitioning. We use the first 30 bits for 6 of
+ * these partitions, leaving us 2 bits to encode the 4 builtin types.
+ */
+const builtinOffset = 0b10000_10000_10000_10000_10000_10000_00;
 
 /**
  * @public
  */
 export abstract class Hash implements Equatable, Hashable {
+  /**
+   * A map from objects to their hash values. Objects are weakly referenced as
+   * to not prevent them from being garbage collected.
+   */
+  private static _objectHashes = new WeakMap<object, number>();
+
+  /**
+   * A map from symbols to their hash values. As there's not currently a way to
+   * weakly reference symbols, we have to instead use strong references.
+   *
+   * {@link https://github.com/tc39/proposal-symbols-as-weakmap-keys}
+   */
+  private static _symbolHashes = new Map<symbol, number>();
+
+  /**
+   * The next available hash value. This is used for symbols and objects that
+   * don't implement the {@link (Hashable:interface)} interface.
+   */
+  private static _nextHash = 0;
+
   protected constructor() {}
 
+  /**
+   * Get the current hash value as a 32-bit integer.
+   *
+   * @remarks
+   * The method is limited to 32-bit integers as this is the limit of bitwise
+   * operations in JavaScript.
+   */
   public abstract finish(): number;
 
   public abstract write(data: Uint8Array): this;
@@ -25,15 +55,18 @@ export abstract class Hash implements Equatable, Hashable {
     return this.write(Encoder.encode(data));
   }
 
+  /**
+   * @remarks
+   * As JavaScript represents numbers in double-precision floating-point format,
+   * numbers in general will be written as such.
+   *
+   * {@link https://en.wikipedia.org/wiki/Double-precision_floating-point_format}
+   */
   public writeNumber(data: number): this {
-    if (Number.isInteger(data) && data < IntegerOverflow) {
-      return this.writeInt32(data);
-    } else {
-      return this.writeFloat64(data);
-    }
+    return this.writeFloat64(data);
   }
 
-  public writeInt(data: number, size = 32, signed = true): this {
+  public writeInt(data: number, size: 8 | 16 | 32 = 32, signed = true): this {
     const buffer = new ArrayBuffer(size / 8);
     const view = new DataView(buffer);
 
@@ -45,7 +78,6 @@ export abstract class Hash implements Equatable, Hashable {
         signed ? view.setInt16(0, data) : view.setUint16(0, data);
         break;
       case 32:
-      default:
         signed ? view.setInt32(0, data) : view.setUint32(0, data);
     }
 
@@ -76,7 +108,27 @@ export abstract class Hash implements Equatable, Hashable {
     return this.writeInt(data, 32, false);
   }
 
-  public writeFloat(data: number, size = 32): this {
+  public writeBigInt(data: bigint, size: 64 = 64, signed = true): this {
+    const buffer = new ArrayBuffer(size / 8);
+    const view = new DataView(buffer);
+
+    switch (size) {
+      case 64:
+        signed ? view.setBigInt64(0, data) : view.setBigUint64(0, data);
+    }
+
+    return this.write(new Uint8Array(buffer));
+  }
+
+  public writeBigInt64(data: bigint): this {
+    return this.writeBigInt(data, 64, true);
+  }
+
+  public writeBigUint64(data: bigint): this {
+    return this.writeBigInt(data, 64, false);
+  }
+
+  public writeFloat(data: number, size: 32 | 64 = 32): this {
     const buffer = new ArrayBuffer(size / 8);
     const view = new DataView(buffer);
 
@@ -85,7 +137,6 @@ export abstract class Hash implements Equatable, Hashable {
         view.setFloat32(0, data);
         break;
       case 64:
-      default:
         view.setFloat64(0, data);
     }
 
@@ -101,7 +152,37 @@ export abstract class Hash implements Equatable, Hashable {
   }
 
   public writeBoolean(data: boolean): this {
-    return this.writeUint8(data ? 1 : 0);
+    return this.writeUint8(builtinOffset + (data ? 1 : 0));
+  }
+
+  public writeUndefined(): this {
+    return this.writeUint32(builtinOffset + 2);
+  }
+
+  public writeNull(): this {
+    return this.writeUint32(builtinOffset + 3);
+  }
+
+  public writeObject(data: object): this {
+    let hash = Hash._objectHashes.get(data);
+
+    if (hash === undefined) {
+      hash = Hash._getNextHash();
+      Hash._objectHashes.set(data, hash);
+    }
+
+    return this.writeUint32(hash);
+  }
+
+  public writeSymbol(data: symbol): this {
+    let hash = Hash._symbolHashes.get(data);
+
+    if (hash === undefined) {
+      hash = Hash._getNextHash();
+      Hash._symbolHashes.set(data, hash);
+    }
+
+    return this.writeUint32(hash);
   }
 
   public writeHashable(data: Hashable): this {
@@ -118,40 +199,30 @@ export abstract class Hash implements Equatable, Hashable {
         return this.writeNumber(data);
 
       case "bigint":
-        return this;
+        return this.writeBigInt(data);
 
       case "boolean":
-        return this.writeUint8(BuiltinOffset + (data ? 1 : 0));
+        return this.writeBoolean(data);
 
       case "symbol":
-        return this;
+        return this.writeSymbol(data);
 
       case "undefined":
-        return this.writeUint32(BuiltinOffset + 2);
+        return this.writeUndefined();
 
       case "object":
-      case "function":
         if (data === null) {
-          return this.writeUint32(BuiltinOffset + 3);
+          return this.writeNull();
         }
 
         if (Hashable.isHashable(data)) {
           return this.writeHashable(data);
         }
 
-        let id = hashes.get(data);
+        return this.writeObject(data);
 
-        if (id === undefined) {
-          id = uid++;
-
-          if (uid === IntegerOverflow) {
-            uid = 0;
-          }
-
-          hashes.set(data, id);
-        }
-
-        return this.writeUint32(id);
+      case "function":
+        return this.writeObject(data);
     }
   }
 
@@ -183,6 +254,7 @@ export abstract class Hash implements Equatable, Hashable {
               this.writeJSON(value);
             }
 
+            // Write a null byte as a separator between key/value pairs.
             this.writeUint8(0);
           }
         }
@@ -202,65 +274,13 @@ export abstract class Hash implements Equatable, Hashable {
   public hash(hash: Hash): void {
     hash.writeUint32(this.finish());
   }
-}
 
-/**
- * @public
- */
-export namespace Hash {
-  export function writeString(hash: Hash, data: string): Hash {
-    return hash.writeString(data);
-  }
+  private static _getNextHash(): number {
+    const nextHash = Hash._nextHash;
 
-  export function writeNumber(hash: Hash, data: number): Hash {
-    return hash.writeNumber(data);
-  }
+    // Increase the hash, wrapping around when it reaches the limit of 32 bits.
+    Hash._nextHash = (Hash._nextHash + 1) >>> 0;
 
-  export function writeInt8(hash: Hash, data: number): Hash {
-    return hash.writeInt8(data);
-  }
-
-  export function writeUint8(hash: Hash, data: number): Hash {
-    return hash.writeUint8(data);
-  }
-
-  export function writeInt16(hash: Hash, data: number): Hash {
-    return hash.writeInt16(data);
-  }
-
-  export function writeUint16(hash: Hash, data: number): Hash {
-    return hash.writeUint16(data);
-  }
-
-  export function writeInt32(hash: Hash, data: number): Hash {
-    return hash.writeInt32(data);
-  }
-
-  export function writeUint32(hash: Hash, data: number): Hash {
-    return hash.writeUint32(data);
-  }
-
-  export function writeFloat32(hash: Hash, data: number): Hash {
-    return hash.writeFloat32(data);
-  }
-
-  export function writeFloat64(hash: Hash, data: number): Hash {
-    return hash.writeFloat64(data);
-  }
-
-  export function writeBoolean(hash: Hash, data: boolean): Hash {
-    return hash.writeBoolean(data);
-  }
-
-  export function writeHashable(hash: Hash, data: Hashable): Hash {
-    return hash.writeHashable(data);
-  }
-
-  export function writeUnknown(hash: Hash, data: unknown): Hash {
-    return hash.writeUnknown(data);
-  }
-
-  export function writeJSON(hash: Hash, data: JSON): Hash {
-    return hash.writeJSON(data);
+    return nextHash;
   }
 }

@@ -20,10 +20,9 @@ const network = Network.from<string, number>([
 ]);
 
 test(".from() excludes connections with no edges", (t) => {
-  t.deepEqual(
-    Network.from<string, void>([["foo", [["bar", []]]]]).toArray(),
-    [["foo", []]]
-  );
+  t.deepEqual(Network.from<string, void>([["foo", [["bar", []]]]]).toArray(), [
+    ["foo", []],
+  ]);
 });
 
 test("#connect() connects two nodes in a network", (t) => {
@@ -58,7 +57,7 @@ test("#connect() connects two nodes in a network", (t) => {
     [
       "foo",
       [
-        ["baz", [4, 2]],
+        ["baz", [2, 4]],
         ["bar", [1]],
       ],
     ],
@@ -170,11 +169,11 @@ test("#traverse() traverses the subnetwork rooted at a node depth-first", (t) =>
 
   t.deepEqual(network.traverse(1, Network.DepthFirst).toJSON(), [
     [5, [true], 1], // |- 5
-    [7, [true], 5], //    |- 7
     [6, [true], 5], //    |- 6
+    [7, [true], 5], //    |- 7
     [2, [true], 1], // |- 2
-    [3, [true], 2], //    |- 3
     [4, [true], 2], //    |- 4
+    [3, [true], 2], //    |- 3
   ]);
 });
 
@@ -217,10 +216,10 @@ test("#traverse() traverses the subnetwork rooted at a node breadth-first", (t) 
   t.deepEqual(network.traverse(1, Network.BreadthFirst).toJSON(), [
     [2, [true], 1], // |- 2
     [5, [true], 1], // |- 5
-    [4, [true], 2], //    |- 4
     [3, [true], 2], //    |- 3
-    [6, [true], 5], //    |- 6
+    [4, [true], 2], //    |- 4
     [7, [true], 5], //    |- 7
+    [6, [true], 5], //    |- 6
   ]);
 });
 
@@ -270,7 +269,7 @@ test("#sort() topologically sorts an acyclic network", (t) => {
     [5, [[4, [true]]]],
   ]);
 
-  t.deepEqual([...network.sort()], [1, 5, 2, 4, 3]);
+  t.deepEqual([...network.sort()], [5, 1, 2, 4, 3]);
 });
 
 test("#sort() yields nothing for a cyclic network", (t) => {
