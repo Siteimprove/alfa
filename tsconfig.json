@@ -13,5 +13,12 @@
     "types": []
   },
   "files": [],
-  "references": [{ "path": "packages" }]
+  "references": [
+    {
+      "path": "packages"
+    },
+    {
+      "path": "scratches"
+    }
+  ]
 }

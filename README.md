@@ -12,6 +12,7 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 - [Examples](#examples)
 - [Requirements](#requirements)
 - [Building](#building)
+- [Experimenting](#experimenting)
 - [Architecture](#architecture)
 - [Funding](#funding)
 - [License](#license)
@@ -124,11 +125,11 @@ For examples of how to use Alfa in various contexts, such as unit testing, end-t
 
 ## Requirements
 
-Alfa will run in any [ECMAScript 2020](https://262.ecma-international.org/11.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
+Alfa will run in any [ECMAScript 2020](https://262.ecma-international.org/11.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js][], [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
 
 ## Building
 
-In order to build Alfa, a recent version (>= 12) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 12) of [Node.js][] is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install
@@ -162,6 +163,28 @@ $ yarn test packages/alfa-<package-name>
 
 If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](docs/contributing.md). If you have any questions, you are also welcome to [open an issue][].
 
+## Experimenting
+
+The special [`scratches`](scratches) directory is reserved for _scratch files_, which are useful for quickly running small code examples or even larger experiments. The directory is primed with a TypeScript configuration that sets up the needed project references and compiler options. All files within the directory, with the exception of the TypeScript configuration, are ignored by version control and so any files may be added without risk of them being checked into version control.
+
+To create a new scratch file, add a new TypeScript file anywhere in the [`scratches`](scratches) directory, such as `scratches/foo.ts`, and do:
+
+```console
+$ yarn build scratches
+```
+
+You can then run the built output of your scratch file in any supported JavaScript runtime, such as [Node.js][]:
+
+```console
+$ node scratches/foo.js
+```
+
+The scratch files are built with the rest of Alfa as per the previous section. When switching between branches, you may experience one or the other scratch file not compiling. To build _just_ the Alfa packages and not the scratch files, you can do:
+
+```console
+$ yarn build packages
+```
+
 ## Architecture
 
 At its core, Alfa is built around a tree structure that mirrors a subset of the [Document Object Model (DOM)](https://dom.spec.whatwg.org/) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would typically provide, such as querying elements or computing styles, Alfa implements according to the corresponding specifications.
@@ -181,3 +204,4 @@ Alfa is part of a project that has received funding from the European Union's [H
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
 [open an issue]: ../../issues/new/choose "Open a new issue"
+[node.js]: https://nodejs.org/en/
