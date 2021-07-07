@@ -1,4 +1,3 @@
-import { Name } from "@siteimprove/alfa-aria";
 import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";

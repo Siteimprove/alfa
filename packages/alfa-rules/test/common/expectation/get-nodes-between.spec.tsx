@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { test } from "@siteimprove/alfa-test";
 import { getNodesBetween } from "../../../src/common/expectation/get-nodes-between";
 
@@ -21,39 +20,32 @@ test("getNodesBetween() returns the nodes between two nodes", (t) => {
     getNodesBetween(divHello, divWorld, {
       includeFirst: true,
       includeSecond: true,
-    }).toJSON(),
-    Sequence.from([
-      divHello,
-      spanHello,
-      hello,
-      divEmpty,
-      spanEmpty,
-      divWorld,
-    ]).toJSON()
+    }).toArray(),
+    [divHello, spanHello, hello, divEmpty, spanEmpty, divWorld]
   );
 
   t.deepEqual(
     getNodesBetween(divHello, divWorld, {
       includeFirst: true,
       includeSecond: false,
-    }).toJSON(),
-    Sequence.from([divHello, spanHello, hello, divEmpty, spanEmpty]).toJSON()
+    }).toArray(),
+    [divHello, spanHello, hello, divEmpty, spanEmpty]
   );
 
   t.deepEqual(
     getNodesBetween(divHello, divWorld, {
       includeFirst: false,
       includeSecond: true,
-    }).toJSON(),
-    Sequence.from([divEmpty, spanEmpty, divWorld]).toJSON()
+    }).toArray(),
+    [divEmpty, spanEmpty, divWorld]
   );
 
   t.deepEqual(
     getNodesBetween(divHello, divWorld, {
       includeFirst: false,
       includeSecond: false,
-    }).toJSON(),
-    Sequence.from([divEmpty, spanEmpty]).toJSON()
+    }).toArray(),
+    [divEmpty, spanEmpty]
   );
 });
 
@@ -63,8 +55,8 @@ test(`getNodesBetween() return a single node when both arguments are the same
     getNodesBetween(divHello, divHello, {
       includeFirst: true,
       includeSecond: true,
-    }).toJSON(),
-    [divHello.toJSON()]
+    }).toArray(),
+    [divHello]
   );
 });
 
@@ -74,7 +66,7 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
     getNodesBetween(divHello, divHello, {
       includeFirst: true,
       includeSecond: false,
-    }).toJSON(),
+    }).toArray(),
     []
   );
 
@@ -82,7 +74,7 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
     getNodesBetween(divHello, divHello, {
       includeFirst: false,
       includeSecond: true,
-    }).toJSON(),
+    }).toArray(),
     []
   );
 
@@ -90,7 +82,7 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
     getNodesBetween(divHello, divHello, {
       includeFirst: false,
       includeSecond: false,
-    }).toJSON(),
+    }).toArray(),
     []
   );
 });
@@ -101,15 +93,15 @@ test(`getNodesBetween() return an empty sequence when node2 is a descendant of
     getNodesBetween(divHello, hello, {
       includeFirst: true,
       includeSecond: true,
-    }).toJSON(),
-    [divHello.toJSON(), spanHello.toJSON(), hello.toJSON()]
+    }).toArray(),
+    [divHello, spanHello, hello]
   );
 
   t.deepEqual(
     getNodesBetween(divHello, hello, {
       includeFirst: false,
       includeSecond: true,
-    }).toJSON(),
+    }).toArray(),
     []
   );
 
@@ -117,15 +109,15 @@ test(`getNodesBetween() return an empty sequence when node2 is a descendant of
     getNodesBetween(divHello, hello, {
       includeFirst: true,
       includeSecond: false,
-    }).toJSON(),
-    [divHello.toJSON(), spanHello.toJSON()]
+    }).toArray(),
+    [divHello, spanHello]
   );
 
   t.deepEqual(
     getNodesBetween(divHello, hello, {
       includeFirst: false,
       includeSecond: false,
-    }).toJSON(),
+    }).toArray(),
     []
   );
 });
