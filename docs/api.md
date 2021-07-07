@@ -175,7 +175,7 @@ Similar to the `==` and `===` operators used for testing equivalence, JavaScript
 To work with objects that can be compared, the `@siteimprove/alfa-comparable` package defines a `Comparable` interface with a single method, `#compare()`, that determines if the implementing class is less than, equal to, or greater than a given value:
 
 ```ts
-import { Comparable } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 class Foo implements Comparable<Foo> {
   readonly value: number;
