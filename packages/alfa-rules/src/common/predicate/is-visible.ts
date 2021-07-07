@@ -3,7 +3,6 @@ import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { Property, Style } from "@siteimprove/alfa-style";
 
 import {
   hasComputedStyle,
