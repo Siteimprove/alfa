@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-attribute<N extends Attribute.Name>(predicate: N): Option<Attribute<N>>;
+attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | N |  |
+|  name | N |  |
 
 <b>Returns:</b>
 

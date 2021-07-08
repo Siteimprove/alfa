@@ -46,7 +46,7 @@ export class Attribute<N extends Attribute.Name = Attribute.Name> implements Equ
     get type(): Attribute.Type<N>;
     // (undocumented)
     get value(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Attribute {
@@ -150,7 +150,7 @@ export class Feature {
     static of(role?: Feature.RoleAspect, attributes?: Feature.AttributesAspect, name?: Feature.NameAspect): Feature;
     // (undocumented)
     get role(): Feature.RoleAspect;
-    }
+}
 
 // @internal (undocumented)
 export namespace Feature {
@@ -232,7 +232,7 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     toString(): string;
     // (undocumented)
     get value(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Name {
@@ -442,7 +442,7 @@ export namespace Name {
         // (undocumented)
         visit(element: Element_2): State;
         get visited(): Iterable_2<Element_2>;
-        }
+    }
     // (undocumented)
     export namespace State {
         // (undocumented)
@@ -477,7 +477,7 @@ export abstract class Node implements Serializable<Node.JSON> {
     // (undocumented)
     attribute(predicate: Predicate<Attribute>): Option<Attribute>;
     // (undocumented)
-    attribute<N extends Attribute.Name>(predicate: N): Option<Attribute<N>>;
+    attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
     // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
@@ -640,6 +640,5 @@ export namespace Text {
         type: "text";
     }
 }
-
 
 ```

@@ -39,7 +39,7 @@ export declare abstract class Node implements Serializable<Node.JSON>
 |  [ancestors(options)](./alfa-aria.node_class.ancestors_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-ancestor](https://dom.spec.whatwg.org/#concept-tree-ancestor) |
 |  [attribute(refinement)](./alfa-aria.node_class.attribute_1_method.md) |  |  |
 |  [attribute(predicate)](./alfa-aria.node_class.attribute_2_method.md) |  |  |
-|  [attribute(predicate)](./alfa-aria.node_class.attribute_3_method.md) |  |  |
+|  [attribute(name)](./alfa-aria.node_class.attribute_3_method.md) |  |  |
 |  [children(options)](./alfa-aria.node_class.children_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-child](https://dom.spec.whatwg.org/#concept-tree-child) |
 |  [clone(parent)](./alfa-aria.node_class.clone_1_method.md) |  |  |
 |  [descendants(options)](./alfa-aria.node_class.descendants_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-descendant](https://dom.spec.whatwg.org/#concept-tree-descendant) |

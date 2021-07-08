@@ -4,29 +4,36 @@
 
 ```ts
 
+import { Angle } from '@siteimprove/alfa-css';
 import { Color } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
 import { Current } from '@siteimprove/alfa-css';
 import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
+import { Gradient } from '@siteimprove/alfa-css';
+import { Image } from '@siteimprove/alfa-css';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
+import { Linear } from '@siteimprove/alfa-css';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
+import { Position } from '@siteimprove/alfa-css';
 import { Predicate } from '@siteimprove/alfa-predicate';
+import { Radial } from '@siteimprove/alfa-css';
 import { RGB } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import { System } from '@siteimprove/alfa-css';
 import { Token } from '@siteimprove/alfa-css';
+import { URL } from '@siteimprove/alfa-css';
 
 // Warning: (ae-internal-missing-underscore) The name "Longhands" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -55,7 +62,7 @@ export class Property<T = unknown, U = T> {
     get options(): Property.Options;
     // (undocumented)
     get parse(): Property.Parser<T>;
-    }
+}
 
 // @internal (undocumented)
 export namespace Property {
@@ -84,7 +91,7 @@ export namespace Property {
         get parse(): Shorthand.Parser<N>;
         // (undocumented)
         get properties(): Iterable<N>;
-        }
+    }
     // (undocumented)
     export namespace Shorthand {
         // (undocumented)
@@ -126,7 +133,13 @@ export namespace Property {
 export namespace Resolver {
     // (undocumented)
     export function color(color: Color): Current | System | RGB<Percentage, Percentage>;
+    // (undocumented)
+    export function image(image: Image, style: Style): Image<URL> | Image<Linear<Gradient.Hint<Percentage | Length<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length<"px">>, Angle<"deg"> | Linear.Side | Linear.Corner>> | Image<Radial<Gradient.Hint<Percentage | Length<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length<"px">>, Radial.Circle<Length<"px">> | Radial.Ellipse<Percentage | Length<"px">> | Radial.Extent, Position<Percentage | Position.Center | Length<"px"> | Position.Side<Position.Horizontal, Percentage | Length<"px">>, Percentage | Position.Center | Length<"px"> | Position.Side<Position.Vertical, Percentage | Length<"px">>>>>;
     export function length(length: Length, style: Style): Length<"px">;
+    // (undocumented)
+    export function position(position: Position, style: Style): Position<Percentage | Position.Center | Length<"px"> | Position.Side<Position.Horizontal, Percentage | Length<"px">>, Percentage | Position.Center | Length<"px"> | Position.Side<Position.Vertical, Percentage | Length<"px">>>;
+    // (undocumented)
+    export function positionComponent<S extends Position.Horizontal | Position.Vertical>(position: Position.Component<S>, style: Style): Percentage | Position.Center | Length<"px"> | Position.Side<S, Percentage | Length<"px">>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Shorthands" should be prefixed with an underscore because the declaration is marked as @internal
@@ -140,7 +153,7 @@ export class Style implements Serializable<Style.JSON> {
     // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    cascaded<N extends Name>(name: N): Option_2<Value<Style.Cascaded<N>>>;
+    cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
     // (undocumented)
     computed<N extends Name>(name: N): Value<Style.Computed<N>>;
     // (undocumented)
@@ -150,9 +163,9 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
-    initial<N extends Name>(name: N, source?: Option_2<Declaration>): Value<Style.Initial<N>>;
+    initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
     // (undocumented)
-    static of(declarations: Iterable_2<Declaration>, device: Device, parent?: Option_2<Style>): Style;
+    static of(declarations: Iterable_2<Declaration>, device: Device, parent?: Option<Style>): Style;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
@@ -165,7 +178,7 @@ export class Style implements Serializable<Style.JSON> {
     toJSON(): Style.JSON;
     // (undocumented)
     get variables(): ReadonlyMap<string, Value<Slice<Token>>>;
-    }
+}
 
 // @public (undocumented)
 export namespace Style {
@@ -182,7 +195,7 @@ export namespace Style {
     // (undocumented)
     export type Declared<N extends Name> = Property.Value.Declared<N>;
     // (undocumented)
-    export function from(element: Element_2, device: Device, context?: Context): Style;
+    export function from(element: Element, device: Device, context?: Context): Style;
     // Warning: (ae-incompatible-release-tags) The symbol "Inherited" is marked as @public, but its signature references "Property" which is marked as @internal
     //
     // (undocumented)
@@ -221,20 +234,20 @@ export class Value<T = unknown> implements Functor<T>, Monad<T>, Iterable<T>, Eq
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Value<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [Option_2<Declaration>]>): boolean;
+    none(predicate: Predicate<T, [Option<Declaration>]>): boolean;
     // (undocumented)
-    static of<T>(value: T, source?: Option_2<Declaration>): Value<T>;
+    static of<T>(value: T, source?: Option<Declaration>): Value<T>;
     // (undocumented)
-    some(predicate: Predicate<T, [Option_2<Declaration>]>): boolean;
+    some(predicate: Predicate<T, [Option<Declaration>]>): boolean;
     // (undocumented)
-    get source(): Option_2<Declaration>;
+    get source(): Option<Declaration>;
     // (undocumented)
     toJSON(): Value.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)
     get value(): T;
-    }
+}
 
 // @public (undocumented)
 export namespace Value {
@@ -248,7 +261,6 @@ export namespace Value {
         value: Serializable.ToJSON<T>;
     }
 }
-
 
 // (No @packageDocumentation comment for this package)
 
