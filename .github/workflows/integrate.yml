@@ -26,4 +26,5 @@ jobs:
       - run: yarn dedupe --check
       - run: yarn build
       - run: yarn test
-      - run: yarn document
+      - run: CI=false yarn document
+      - run: git diff
