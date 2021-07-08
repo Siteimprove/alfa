@@ -1,4 +1,5 @@
 import {
+  Angle,
   Color,
   Converter,
   Current,
@@ -11,6 +12,7 @@ import {
   Radial,
   RGB,
   System,
+  URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
@@ -87,18 +89,17 @@ export namespace Resolver {
   ): Current | System | RGB<Percentage, Percentage> {
     switch (color.type) {
       case "color": {
-        const [red, green, blue] = [
-          color.red,
-          color.green,
-          color.blue,
-        ].map((channel) =>
-          Percentage.of(
-            Real.clamp(
-              channel.type === "number" ? channel.value / 0xff : channel.value,
-              0,
-              1
+        const [red, green, blue] = [color.red, color.green, color.blue].map(
+          (channel) =>
+            Percentage.of(
+              Real.clamp(
+                channel.type === "number"
+                  ? channel.value / 0xff
+                  : channel.value,
+                0,
+                1
+              )
             )
-          )
         );
 
         return RGB.of(
@@ -114,7 +115,40 @@ export namespace Resolver {
     }
   }
 
-  export function image(image: Image, style: Style) {
+  export function image(
+    image: Image,
+    style: Style
+  ): Image<
+    | URL
+    | Linear<
+        | Gradient.Hint<Percentage | Length<"px">>
+        | Gradient.Stop<
+            Current | System | RGB<Percentage, Percentage>,
+            Percentage | Length<"px">
+          >,
+        Angle<"deg"> | Linear.Side | Linear.Corner
+      >
+    | Radial<
+        | Gradient.Hint<Percentage | Length<"px">>
+        | Gradient.Stop<
+            Current | System | RGB<Percentage, Percentage>,
+            Percentage | Length<"px">
+          >,
+        | Radial.Circle<Length<"px">>
+        | Radial.Ellipse<Percentage | Length<"px">>
+        | Radial.Extent,
+        Position<
+          | Percentage
+          | Position.Center
+          | Length<"px">
+          | Position.Side<Position.Horizontal, Percentage | Length<"px">>,
+          | Percentage
+          | Position.Center
+          | Length<"px">
+          | Position.Side<Position.Vertical, Percentage | Length<"px">>
+        >
+      >
+  > {
     switch (image.image.type) {
       case "url":
         return Image.of(image.image);
@@ -189,7 +223,19 @@ export namespace Resolver {
     }
   }
 
-  export function position(position: Position, style: Style) {
+  export function position(
+    position: Position,
+    style: Style
+  ): Position<
+    | Percentage
+    | Position.Center
+    | Length<"px">
+    | Position.Side<Position.Horizontal, Percentage | Length<"px">>,
+    | Percentage
+    | Position.Center
+    | Length<"px">
+    | Position.Side<Position.Vertical, Percentage | Length<"px">>
+  > {
     return Position.of(
       positionComponent(position.horizontal, style),
       positionComponent(position.vertical, style)
@@ -198,7 +244,14 @@ export namespace Resolver {
 
   export function positionComponent<
     S extends Position.Horizontal | Position.Vertical
-  >(position: Position.Component<S>, style: Style) {
+  >(
+    position: Position.Component<S>,
+    style: Style
+  ):
+    | Percentage
+    | Position.Center
+    | Length<"px">
+    | Position.Side<S, Percentage | Length<"px">> {
     switch (position.type) {
       case "keyword":
       case "percentage":
