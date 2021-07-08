@@ -5,6 +5,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 import { List } from "@siteimprove/alfa-list";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Array } from "@siteimprove/alfa-array";
 
 import { expectation } from "../common/expectation";
 import { hasChild, isRendered, isDocumentElement } from "../common/predicate";
@@ -12,7 +13,8 @@ import { hasChild, isRendered, isDocumentElement } from "../common/predicate";
 const { isElement, hasName, hasNamespace } = Element;
 const { and, test } = Predicate;
 
-const deprecated = [
+const isDeprecated = hasName(
+  "acronym",
   "applet",
   "basefont",
   "bgsound",
@@ -39,8 +41,8 @@ const deprecated = [
   "spacer",
   "strike",
   "tt",
-  "xmp",
-];
+  "xmp"
+);
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r70",
@@ -55,11 +57,7 @@ export default Rule.Atomic.of<Page, Document>({
           .descendants({ flattened: true, nested: true })
           .filter(isElement)
           .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("acronym", ...deprecated),
-              isRendered(device)
-            )
+            and(hasNamespace(Namespace.HTML), isDeprecated, isRendered(device))
           );
 
         return {
@@ -91,14 +89,12 @@ export namespace Outcomes {
 class DeprecatedElements extends Diagnostic implements Iterable<Element> {
   public static of(
     message: string,
-    errors: Iterable<Element> = List.empty()
+    errors: Iterable<Element> = []
   ): DeprecatedElements {
-    return new DeprecatedElements(message, List.from(errors));
+    return new DeprecatedElements(message, Array.from(errors));
   }
 
-  private readonly _errors: List<Element>;
-
-  private constructor(message: string, errors: List<Element>) {
+  private constructor(message: string, errors: Array<Element>) {
     super(message);
     this._errors = errors;
   }
@@ -107,23 +103,25 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
     yield* this._errors;
   }
 
-  public equals(value: DeprecatedElements): boolean;
+  private _errors: ReadonlyArray<Element>;
 
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
+  public equalsError(value: unknown, errors: ReadonlyArray<Element>): boolean {
     return (
       value instanceof DeprecatedElements &&
       value._message === this._message &&
-      value._errors.equals(this._errors)
+      Array.equals(value._errors, this._errors)
     );
   }
 
   public toJSON(): DeprecatedElements.JSON {
     return {
       ...super.toJSON(),
-      errors: this._errors.toJSON(),
+      errors: Array.toJSON(this._errors),
     };
+  }
+
+  public get errors(): ReadonlyArray<Element> {
+    return this._errors;
   }
 }
 
