@@ -778,16 +778,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:^7.17.0":
-  version: 7.17.0
-  resolution: "@microsoft/api-extractor@npm:7.17.0"
+"@microsoft/api-extractor@npm:^7.18.0":
+  version: 7.18.0
+  resolution: "@microsoft/api-extractor@npm:7.18.0"
   dependencies:
     "@microsoft/api-extractor-model": 7.13.3
     "@microsoft/tsdoc": 0.13.2
     "@microsoft/tsdoc-config": ~0.15.2
     "@rushstack/node-core-library": 3.39.0
     "@rushstack/rig-package": 0.2.12
-    "@rushstack/ts-command-line": 4.7.10
+    "@rushstack/ts-command-line": 4.8.0
     colors: ~1.2.1
     lodash: ~4.17.15
     resolve: ~1.17.0
@@ -796,7 +796,7 @@ __metadata:
     typescript: ~4.3.2
   bin:
     api-extractor: bin/api-extractor
-  checksum: 222f9c09bff2f88e2148369f9752f87da05ac4004b2cc0267f938843b08a7967f9a946da7bb35343242013e875db528d2c5ec4e9b01cfbd1405f1e839b1b612f
+  checksum: 8bf9e5e10b772b1e44263557e95f4ae6bb0331f1a535b5af25e7ec48048bf7298fde04fabb9e46f196622cde461893056dce04d7e50fbbc50a89cddfe74fbccd
   languageName: node
   linkType: hard
 
@@ -880,18 +880,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:4.7.10":
-  version: 4.7.10
-  resolution: "@rushstack/ts-command-line@npm:4.7.10"
-  dependencies:
-    "@types/argparse": 1.0.38
-    argparse: ~1.0.9
-    colors: ~1.2.1
-    string-argv: ~0.3.1
-  checksum: c8ff9dca8ce3e756164c55aa2e0a821b16a31d9ddc4a345541ac5304a39f98df4583ff46b7fbb06bdee7f679333d9f6cefe3bec335d29d5b7ab95e69b8bd9f5c
-  languageName: node
-  linkType: hard
-
 "@rushstack/ts-command-line@npm:4.7.8":
   version: 4.7.8
   resolution: "@rushstack/ts-command-line@npm:4.7.8"
@@ -901,6 +889,18 @@ __metadata:
     colors: ~1.2.1
     string-argv: ~0.3.1
   checksum: 3ecfb5be47ce300d187ef4cf73810fbc1e5b48fc966bd37f56f1d54048b7b3c67af8cab3387b845af6e93d94972c07d30fb4cc0a4cca99a25ff8a129b8c5677c
+  languageName: node
+  linkType: hard
+
+"@rushstack/ts-command-line@npm:4.8.0":
+  version: 4.8.0
+  resolution: "@rushstack/ts-command-line@npm:4.8.0"
+  dependencies:
+    "@types/argparse": 1.0.38
+    argparse: ~1.0.9
+    colors: ~1.2.1
+    string-argv: ~0.3.1
+  checksum: 9bb90e6c224eb3a5bc8c6460f1efa62a51ef83f1153cb5db272fd1dea9eccbe51da53e2041e4e2f7e4afc3c573521d19110245988af5a9942a3534ab90cc7f0e
   languageName: node
   linkType: hard
 
@@ -2396,8 +2396,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@microsoft/api-documenter": ^7.13.27
-    "@microsoft/api-extractor": ^7.17.0
+    "@microsoft/api-documenter": ^7.13.29
+    "@microsoft/api-extractor": ^7.18.0
     "@types/async": ^3.2.5
     "@types/node": ^14.14.31
     async: ^3.2.0
