@@ -72,7 +72,9 @@
 |  [@siteimprove/alfa-option](./alfa-option.md) |  |
 |  [@siteimprove/alfa-parser](./alfa-parser.md) |  |
 |  [@siteimprove/alfa-performance](./alfa-performance.md) |  |
+|  [@siteimprove/alfa-playwright](./alfa-playwright.md) |  |
 |  [@siteimprove/alfa-predicate](./alfa-predicate.md) |  |
+|  [@siteimprove/alfa-promise](./alfa-promise.md) | This package provides functionality for working with promises. |
 |  [@siteimprove/alfa-protractor](./alfa-protractor.md) |  |
 |  [@siteimprove/alfa-puppeteer](./alfa-puppeteer.md) |  |
 |  [@siteimprove/alfa-react](./alfa-react.md) |  |
@@ -91,6 +93,7 @@
 |  [@siteimprove/alfa-style](./alfa-style.md) |  |
 |  [@siteimprove/alfa-table](./alfa-table.md) |  |
 |  [@siteimprove/alfa-test](./alfa-test.md) |  |
+|  [@siteimprove/alfa-thenable](./alfa-thenable.md) |  |
 |  [@siteimprove/alfa-thunk](./alfa-thunk.md) |  |
 |  [@siteimprove/alfa-time](./alfa-time.md) |  |
 |  [@siteimprove/alfa-trampoline](./alfa-trampoline.md) |  |
