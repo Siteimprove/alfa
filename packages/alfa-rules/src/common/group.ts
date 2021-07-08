@@ -5,13 +5,17 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
+/**
+ * @public
+ */
 export class Group<T>
   implements
     Iterable<T>,
     Equatable,
     json.Serializable<Group.JSON<T>>,
     earl.Serializable<Group.EARL>,
-    sarif.Serializable<sarif.Location> {
+    sarif.Serializable<sarif.Location>
+{
   public static of<T extends earl.Serializable>(
     members: Iterable<T>
   ): Group<T> {
@@ -73,6 +77,9 @@ export class Group<T>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Group {
   export type JSON<T> = Array<json.Serializable.ToJSON<T>>;
 
