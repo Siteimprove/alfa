@@ -8,6 +8,8 @@ type Rules = Record.Value<typeof rules>;
 /**
  * An immutable record of individual rules. The type of each individual rule is
  * preserved in the record.
+ *
+ * @public
  */
 export const Rules = Record.of(rules);
 
