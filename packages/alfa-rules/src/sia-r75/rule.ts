@@ -53,9 +53,7 @@ export default Rule.Atomic.of<Page, Element>({
             nested: true,
           })
           .filter(isText)
-          .map((text) => text.parent().filter(isElement))
-          .filter((option) => option.isSome())
-          .map((option) => option.get())
+          .collect((text) => text.parent().filter(isElement))
           .every(
             or(
               not((parent) =>
