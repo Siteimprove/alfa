@@ -431,7 +431,7 @@ The `Sequence<T>` class provides an implementation of a [persistent][] [lazy][] 
 
 - You're often modifying the sequence which for each modification, with the exception of prepends, is done in time proportional to the number of values yielded by the sequence.
 
-#### `Slice<T>`
+##### `Slice<T>`
 
 The `Slice<T>` class provides an implementation of a [persistent][] [copy-on-write][] array for storing values of type `T`. It provides constant time `#get()`, `#has()`, and `#slice()`.
 
