@@ -18,7 +18,7 @@ const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r56.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r56",
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -66,7 +66,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
 
 export namespace Outcomes {
   export const differentNames = (role: Role.Name) =>
-    Ok.of(Diagnostic.of(`No two \`${role}\` have the same name.`));
+    Ok.of(SameNames.of(`No two \`${role}\` have the same name.`, role, []));
 
   export const sameNames = (
     role: Role.Name,

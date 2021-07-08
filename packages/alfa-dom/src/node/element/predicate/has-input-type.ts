@@ -31,10 +31,16 @@ type InputType =
   | "button"
   | "text";
 
+/**
+ * @public
+ */
 export function hasInputType(
   predicate: Predicate<InputType>
 ): Predicate<Element>;
 
+/**
+ * @public
+ */
 export function hasInputType(
   inputType: InputType,
   ...rest: Array<InputType>

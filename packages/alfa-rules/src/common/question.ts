@@ -4,6 +4,9 @@ import { Option } from "@siteimprove/alfa-option";
 
 import * as act from "@siteimprove/alfa-act";
 
+/**
+ * @public
+ */
 export interface Question {
   boolean: boolean;
   node: Option<Node>;
@@ -12,6 +15,9 @@ export interface Question {
   "color[]": Iterable<RGB>;
 }
 
+/**
+ * @public
+ */
 export namespace Question {
   export function of<Q extends keyof Question, S>(
     uri: string,

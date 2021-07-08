@@ -2,6 +2,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
 
+/**
+ * @public
+ */
 export class Comment extends Node {
   public static of(data: string): Comment {
     return new Comment(data);
@@ -50,6 +53,9 @@ export class Comment extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Comment {
   export interface JSON extends Node.JSON {
     type: "comment";

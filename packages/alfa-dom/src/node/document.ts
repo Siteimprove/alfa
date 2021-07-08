@@ -5,6 +5,9 @@ import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
 
+/**
+ * @public
+ */
 export class Document extends Node {
   public static of(
     children: Iterable<Node>,
@@ -86,6 +89,9 @@ export class Document extends Node {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Document {
   export interface JSON extends Node.JSON {
     type: "document";

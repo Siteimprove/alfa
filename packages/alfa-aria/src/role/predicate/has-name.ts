@@ -5,12 +5,21 @@ import { Role } from "../../role";
 
 const { equals } = Predicate;
 
+/**
+ * @public
+ */
 export function hasName<N extends Role.Name>(
   refinement: Refinement<Role.Name, N>
 ): Refinement<Role, Role<N>>;
 
+/**
+ * @public
+ */
 export function hasName(predicate: Predicate<Role.Name>): Predicate<Role>;
 
+/**
+ * @public
+ */
 export function hasName<N extends Role.Name>(
   name: N,
   ...rest: Array<N>

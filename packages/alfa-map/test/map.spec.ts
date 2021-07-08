@@ -159,9 +159,9 @@ test("#set() behaves when adding a key to an already colliding map", (t) => {
   t.deepEqual(
     [...map.set(baz, 3)],
     [
-      [baz, 3],
       [foo, 1],
       [bar, 2],
+      [baz, 3],
     ]
   );
 });
@@ -306,8 +306,8 @@ test("#delete() behaves when deleting a key in a sparse map with collisions", (t
   t.deepEqual(
     [...map.delete(foo)],
     [
-      [baz, 3],
       [bar, 2],
+      [baz, 3],
     ]
   );
 });

@@ -3,6 +3,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Rule } from "../rule";
 import { ConditionRule } from "./condition";
 
+/**
+ * @public
+ */
 export class SupportsRule extends ConditionRule {
   public static of(condition: string, rules: Iterable<Rule>): SupportsRule {
     return new SupportsRule(condition, Array.from(rules));
@@ -31,6 +34,9 @@ export class SupportsRule extends ConditionRule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace SupportsRule {
   export interface JSON extends ConditionRule.JSON {
     type: "supports";

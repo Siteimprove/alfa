@@ -1,5 +1,7 @@
 /// <reference lib="dom" />
 
+import * as fs from "fs";
+
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import {
@@ -19,6 +21,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as puppeteer from "puppeteer";
 
+import { Archive } from "./archive";
 import { Awaiter } from "./awaiter";
 import { Credentials } from "./credentials";
 import { Screenshot } from "./screenshot";
@@ -88,6 +91,7 @@ export class Scraper {
       device = Device.standard(),
       credentials = null,
       screenshot = null,
+      archive = null,
       headers = [],
       cookies = [],
       fit = true,
@@ -208,7 +212,11 @@ export class Scraper {
           const document = await parseDocument(page);
 
           if (screenshot !== null) {
-            await takeScreenshot(page, screenshot);
+            await captureScreenshot(page, screenshot);
+          }
+
+          if (archive !== null) {
+            await captureArchive(client, archive);
           }
 
           return Result.of(
@@ -259,6 +267,7 @@ export namespace Scraper {
       readonly device?: Device;
       readonly credentials?: Credentials;
       readonly screenshot?: Screenshot;
+      readonly archive?: Archive;
       readonly headers?: Iterable<Header>;
       readonly cookies?: Iterable<Cookie>;
       readonly fit?: boolean;
@@ -297,27 +306,47 @@ async function parseDocument(page: puppeteer.Page): Promise<Document> {
   return document;
 }
 
-async function takeScreenshot(
+async function captureScreenshot(
   page: puppeteer.Page,
   screenshot: Screenshot
-): Promise<Buffer> {
+): Promise<void> {
   switch (screenshot.type.type) {
     case "png":
-      return page.screenshot({
+      await page.screenshot({
         path: screenshot.path,
         type: "png",
         omitBackground: !screenshot.type.background,
         fullPage: true,
         encoding: "binary",
-      }) as Promise<Buffer>;
+      });
+      break;
 
     case "jpeg":
-      return page.screenshot({
+      await page.screenshot({
         path: screenshot.path,
         type: "jpeg",
         quality: screenshot.type.quality,
         fullPage: true,
         encoding: "binary",
-      }) as Promise<Buffer>;
+      });
+  }
+}
+
+async function captureArchive(
+  client: puppeteer.CDPSession,
+  archive: Archive
+): Promise<void> {
+  switch (archive.format) {
+    case Archive.Format.MHTML: {
+      const { data } = await client.send("Page.captureSnapshot", {
+        format: "mhtml",
+      });
+
+      await new Promise<void>((resolve, reject) =>
+        fs.writeFile(archive.path, data, "utf-8", (err) =>
+          err ? reject(err) : resolve()
+        )
+      );
+    }
   }
 }

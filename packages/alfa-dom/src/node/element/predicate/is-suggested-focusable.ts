@@ -8,6 +8,8 @@ import { Element } from "../../element";
  * a pointer device are also suggested focusable. However, we're not aware of
  * any such cases and therefore don't suggest making draggable elements
  * focusable.
+ *
+ * @public
  */
 export function isSuggestedFocusable(element: Element): boolean {
   switch (element.name) {
