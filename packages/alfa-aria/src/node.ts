@@ -86,9 +86,7 @@ export abstract class Node implements Serializable<Node.JSON> {
 
   public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
 
-  public attribute<N extends Attribute.Name>(
-    predicate: N
-  ): Option<Attribute<N>>;
+  public attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
 
   public attribute(
     predicate: Attribute.Name | Predicate<Attribute>
