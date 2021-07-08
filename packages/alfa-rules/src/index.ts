@@ -25,4 +25,5 @@ const flattened: Iterable<
 
 export default flattened;
 
+export * from "./common/group";
 export * from "./common/question";
