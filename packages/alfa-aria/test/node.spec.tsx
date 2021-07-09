@@ -543,3 +543,54 @@ test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
     t.deepEqual(node.attribute("aria-posinset").get().value, `${i + 1}`);
   }
 });
+
+test(`.from() behaves when encountering an element with global properties where
+      the element should not be named by its subtree`, (t) => {
+  const div = (
+    <div aria-hidden="false">
+      <label>
+        Foo <input />
+      </label>
+    </div>
+  );
+
+  t.deepEqual(Node.from(div, device).toJSON(), {
+    type: "element",
+    node: "/div[1]",
+    role: null,
+    name: null,
+    attributes: [
+      {
+        name: "aria-hidden",
+        value: "false",
+      },
+    ],
+    children: [
+      {
+        type: "container",
+        node: "/div[1]/label[1]",
+        children: [
+          {
+            type: "text",
+            node: "/div[1]/label[1]/text()[1]",
+            name: "Foo ",
+            children: [],
+          },
+          {
+            type: "element",
+            node: "/div[1]/label[1]/input[1]",
+            role: "textbox",
+            name: "Foo",
+            attributes: [
+              {
+                name: "aria-checked",
+                value: "false",
+              },
+            ],
+            children: [],
+          },
+        ],
+      },
+    ],
+  });
+});
