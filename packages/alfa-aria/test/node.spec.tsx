@@ -519,27 +519,71 @@ test(`.from() doesn't expose children of elements with roles that designate
 });
 
 test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
-  const first = <li>First</li>;
-  const second = <li>Second</li>;
-  const third = <li>Third</li>;
-  const fourth = <li>Fourth</li>;
+  const items = [
+    <li>First</li>,
+    <li>Second</li>,
+    <li>Third</li>,
+    <li>Fourth</li>,
+  ];
 
-  const _ = (
-    <ul>
-      {first}
-      {second}
-      {third}
-      {fourth}
-    </ul>
-  );
-
-  const items = [first, second, third, fourth];
+  <ul>{items}</ul>;
 
   for (let i = 0; i < items.length; i++) {
     const node = Node.from(items[i], device);
 
-    t.deepEqual(node.attribute("aria-setsize").get().value, `${items.length}`);
+    t.equal(node.attribute("aria-setsize").get().value, `${items.length}`);
 
-    t.deepEqual(node.attribute("aria-posinset").get().value, `${i + 1}`);
+    t.equal(node.attribute("aria-posinset").get().value, `${i + 1}`);
   }
+});
+
+test(`.from() behaves when encountering an element with global properties where
+      the element should not be named by its subtree`, (t) => {
+  const div = (
+    <div aria-hidden="false">
+      <label>
+        Foo <input />
+      </label>
+    </div>
+  );
+
+  t.deepEqual(Node.from(div, device).toJSON(), {
+    type: "element",
+    node: "/div[1]",
+    role: null,
+    name: null,
+    attributes: [
+      {
+        name: "aria-hidden",
+        value: "false",
+      },
+    ],
+    children: [
+      {
+        type: "container",
+        node: "/div[1]/label[1]",
+        children: [
+          {
+            type: "text",
+            node: "/div[1]/label[1]/text()[1]",
+            name: "Foo ",
+            children: [],
+          },
+          {
+            type: "element",
+            node: "/div[1]/label[1]/input[1]",
+            role: "textbox",
+            name: "Foo",
+            attributes: [
+              {
+                name: "aria-checked",
+                value: "false",
+              },
+            ],
+            children: [],
+          },
+        ],
+      },
+    ],
+  });
 });

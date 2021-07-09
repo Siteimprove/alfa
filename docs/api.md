@@ -395,7 +395,9 @@ In Alfa, JSON serialization is often used as a means of asserting the structure 
 
 We've already seen quite a bit about the `@siteimprove/alfa-map` package and its `Map<K, V>` class. The `Map<K, V>` class is, however, just one out of several collections used throughout Alfa. In this section, we'll provide an overview of the most common collections and their intended use. As with any data structures, they each have their own strengths and weaknesses to be mindful of when choosing a collection for a given task.
 
-#### `List<T>`
+#### `Collection.Indexed<T>`
+
+##### `List<T>`
 
 The `List<T>` class provides an implementation of a [persistent][] [vector trie][] for storing a list of values of type `T`. It provides effectively constant time `#append()`, `#set()`, and `#get()`.
 
@@ -413,37 +415,7 @@ For values, `List<T>` uses an implementation of `Equatable`, when available. Tha
 
 - You're only interested in a few values of the list, which might be better served by the `Sequence<T>` class.
 
-#### `Map<K, V>`
-
-The `Map<K, V>` class provides an implementation of a [persistent][] [hash trie][] for associating unique keys of type `K` with values of type `V`. It provides effectively constant time `#set()`, `#has()`, `#get()`, and `#delete()`.
-
-For keys, `Map<K, V>` uses implementations of `Equatable` and `Hashable`, when available. That is, two keys `a` and `b` are considered the same key if `a.hash().equals(b.hash())` and `a.equals(b)`.
-
-For values, `Map<K, V>` uses an implementation of `Equatable`, when available. That is, no modifications are made when updating the value of a key with the current value `a` and the new value `b` if `a.equals(b)`.
-
-**Do use when:**
-
-- Your keys have custom equivalence and hashing constraints.
-
-**Don't use when:**
-
-- You're working with performance critical code, which may be better served by the builtin `Map<K, V>` or `WeakMap<K, V>` class.
-
-#### `Set<T>`
-
-The `Set<T>` class provides an implementation of a [persistent][] [hash trie][] for storing a set of unique values of type `K`. It provides effectively constant time `#add()`, `#has()`, and `#delete()`.
-
-For values, `Set<T>` uses implementations of `Equatable` and `Hashable`, when available. That is, two values `a` and `b` are considered the same value if `a.hash().equals(b.hash())` and `a.equals(b)`.
-
-**Do use when:**
-
-- Your values have custom equivalence and hashing constraints.
-
-**Don't use when:**
-
-- You're working with performance critical code, which may be better served by the builtin `Set<T>` or `WeakSet<T>` class.
-
-#### `Sequence<T>`
+##### `Sequence<T>`
 
 The `Sequence<T>` class provides an implementation of a [persistent][] [lazy][] list for storing a possibly infinite sequence of values of type `T`. By virtue of being lazy, it provides mostly constant time operations as no computations are actually performed until the corresponding values are requested.
 
@@ -459,7 +431,7 @@ The `Sequence<T>` class provides an implementation of a [persistent][] [lazy][] 
 
 - You're often modifying the sequence which for each modification, with the exception of prepends, is done in time proportional to the number of values yielded by the sequence.
 
-#### `Slice<T>`
+##### `Slice<T>`
 
 The `Slice<T>` class provides an implementation of a [persistent][] [copy-on-write][] array for storing values of type `T`. It provides constant time `#get()`, `#has()`, and `#slice()`.
 
@@ -470,6 +442,40 @@ The `Slice<T>` class provides an implementation of a [persistent][] [copy-on-wri
 **Don't use when:**
 
 - You're working with performance critical code, which may be better served by manually tracking a pointer into the backing array.
+
+#### `Collection.Keyed<K, V>`
+
+##### `Map<K, V>`
+
+The `Map<K, V>` class provides an implementation of a [persistent][] [hash trie][] for associating unique keys of type `K` with values of type `V`. It provides effectively constant time `#set()`, `#has()`, `#get()`, and `#delete()`.
+
+For keys, `Map<K, V>` uses implementations of `Equatable` and `Hashable`, when available. That is, two keys `a` and `b` are considered the same key if `a.hash().equals(b.hash())` and `a.equals(b)`.
+
+For values, `Map<K, V>` uses an implementation of `Equatable`, when available. That is, no modifications are made when updating the value of a key with the current value `a` and the new value `b` if `a.equals(b)`.
+
+**Do use when:**
+
+- Your keys have custom equivalence and hashing constraints.
+
+**Don't use when:**
+
+- You're working with performance critical code, which may be better served by the builtin `Map<K, V>` or `WeakMap<K, V>` class.
+
+#### `Collection.Unkeyed<T>`
+
+##### `Set<T>`
+
+The `Set<T>` class provides an implementation of a [persistent][] [hash trie][] for storing a set of unique values of type `K`. It provides effectively constant time `#add()`, `#has()`, and `#delete()`.
+
+For values, `Set<T>` uses implementations of `Equatable` and `Hashable`, when available. That is, two values `a` and `b` are considered the same value if `a.hash().equals(b.hash())` and `a.equals(b)`.
+
+**Do use when:**
+
+- Your values have custom equivalence and hashing constraints.
+
+**Don't use when:**
+
+- You're working with performance critical code, which may be better served by the builtin `Set<T>` or `WeakSet<T>` class.
 
 [abstract relational comparison]: https://tc39.es/ecma262/#sec-abstract-relational-comparison
 [copy-on-write]: https://en.wikipedia.org/wiki/Copy-on-write
