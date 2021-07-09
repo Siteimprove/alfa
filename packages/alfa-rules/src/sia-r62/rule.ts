@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
@@ -154,20 +155,24 @@ export namespace Outcomes {
     );
 }
 
+const hasNonLinkTextCache = Cache.empty<Element, boolean>();
+
 function hasNonLinkText(device: Device): Predicate<Element> {
   return function hasNonLinkText(element) {
-    const children = element.children({
-      flattened: true,
+    return hasNonLinkTextCache.get(element, () => {
+      const children = element.children({
+        flattened: true,
+      });
+
+      if (children.some(and(isText, isVisible(device)))) {
+        return true;
+      }
+
+      return children
+        .filter(isElement)
+        .reject(hasRole(device, (role) => role.is("link")))
+        .some(hasNonLinkText);
     });
-
-    if (children.some(and(isText, isVisible(device)))) {
-      return true;
-    }
-
-    return children
-      .filter(isElement)
-      .reject(hasRole(device, (role) => role.is("link")))
-      .some(hasNonLinkText);
   };
 }
 
@@ -369,11 +374,9 @@ export namespace ComputedStyles {
       "text-decoration-thickness"
     )}`.trim();
 
-    const longhands = ([
-      "background-color",
-      "color",
-      "font-weight",
-    ] as const).map((property) => [property, longhand(property)] as const);
+    const longhands = (
+      ["background-color", "color", "font-weight"] as const
+    ).map((property) => [property, longhand(property)] as const);
 
     return ComputedStyles.of(
       [
