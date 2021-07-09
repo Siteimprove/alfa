@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom";
-import { Err, Ok } from "@siteimprove/alfa-result";
 import { Property } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 
@@ -653,6 +652,133 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
             ["outline", "auto"],
           ]),
         ]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluates() doesn't break when link text is nested`, async (t) => {
+  // Since text-decoration and focus outline is not inherited, the <span> has
+  // effectively no style other than color.
+  const target = (
+    <a href="#">
+      <span>Link</span>
+    </a>
+  );
+
+  const document = h.document([<p>Hello {target}</p>]);
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle, noStyle],
+        [defaultStyle, noStyle],
+        [focusStyle, noStyle]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluates() accepts decoration on children of links`, async (t) => {
+  // Since text-decoration and focus outline is not inherited, the <span> has
+  // effectively no style other than color.
+  const target = (
+    <a href="#">
+      <span>Link</span>
+    </a>
+  );
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+        h.rule.style("a:focus", {
+          textDecoration: "none",
+          outline: "none",
+        }),
+        h.rule.style("span", { fontWeight: "bold" }),
+      ]),
+    ]
+  );
+
+  const styles = ComputedStyles.of([
+    ["border-width", "0px"],
+    ["color", "rgb(0% 0% 93.33333%)"],
+    ["font-weight", "700"],
+    ["outline", "0px"],
+  ]);
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [noStyle, styles],
+        [noStyle, styles],
+        [noStyle, styles]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluates() accepts decoration on parents of links`, async (t) => {
+  // Since text-decoration and focus outline is not inherited, the <span> has
+  // effectively no style other than color.
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        Hello <span>{target}</span>
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+        h.rule.style("a:focus", {
+          textDecoration: "none",
+          outline: "none",
+        }),
+        h.rule.style("span", { fontWeight: "bold" }),
+      ]),
+    ]
+  );
+
+  const linkStyles = ComputedStyles.of([
+    ["border-width", "0px"],
+    ["color", "rgb(0% 0% 93.33333%)"],
+    ["font-weight", "700"],
+    ["outline", "0px"],
+  ]);
+  const spanStyles = ComputedStyles.of([
+    ["border-width", "0px"],
+    ["font-weight", "700"],
+    ["outline", "0px"],
+  ]);
+
+  const actual = await evaluate(R62, { document });
+
+  // console.log("--- actual ---");
+  // console.dir(actual, { depth: null });
+  // console.log("--- expected ---");
+  // console.dir(
+  //   Outcomes.IsDistinguishable(
+  //     [noStyle, styles],
+  //     [noStyle, styles],
+  //     [noStyle, styles]
+  //   ).toJSON(),
+  //   { depth: null }
+  // );
+  //
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [linkStyles, spanStyles],
+        [linkStyles, spanStyles],
+        [linkStyles, spanStyles]
       ),
     }),
   ]);
