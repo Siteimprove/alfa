@@ -2405,7 +2405,7 @@ __metadata:
     execa: ^5.1.1
     minimist: ^1.2.5
     prettier: ^2.3.1
-    typescript: ^4.3.2
+    typescript: ^4.3.5
   languageName: unknown
   linkType: soft
 
@@ -9039,23 +9039,23 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-"typescript@^4.3.2, typescript@~4.3.2":
-  version: 4.3.4
-  resolution: "typescript@npm:4.3.4"
+"typescript@^4.3.5, typescript@~4.3.2":
+  version: 4.3.5
+  resolution: "typescript@npm:4.3.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 75e1f2769c7ff38c718523d05eaf1c2611dbf92c0ab0f85f603ead9bb23416af2009a5dac46e76ef6a207a8508fa53f51b43a41f2a91b1241b53cd744c16128c
+  checksum: bab033b5e2b0790dd35b77fd005df976ef80b8d84fd2c6e63cc31808151875beae9216e5a315fe7068e8499905c3c354248fe83272cdfc13b7705635f0c66c97
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.3.2#~builtin<compat/typescript>, typescript@patch:typescript@~4.3.2#~builtin<compat/typescript>":
-  version: 4.3.4
-  resolution: "typescript@patch:typescript@npm%3A4.3.4#~builtin<compat/typescript>::version=4.3.4&hash=34ad7d"
+"typescript@patch:typescript@^4.3.5#~builtin<compat/typescript>, typescript@patch:typescript@~4.3.2#~builtin<compat/typescript>":
+  version: 4.3.5
+  resolution: "typescript@patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=34ad7d"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3b9d89d6d34162316668a4c1eff51451d5387447d33e9608d526fbd3eb1b8bcf370a134a3546a6e4b429e76855cbf61374d17245612643dd74e7ae0cf29ca299
+  checksum: 94acb9409712c7073eaecb328cf9be872e4882c62d991cc3d9b53d59f4844d72afbf75818471e086bfb26c444e3a411667a9517f2be2518f8be95bab9fa50ae9
   languageName: node
   linkType: hard
 
