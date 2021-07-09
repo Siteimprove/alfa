@@ -519,27 +519,20 @@ test(`.from() doesn't expose children of elements with roles that designate
 });
 
 test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
-  const first = <li>First</li>;
-  const second = <li>Second</li>;
-  const third = <li>Third</li>;
-  const fourth = <li>Fourth</li>;
+  const items = [
+    <li>First</li>,
+    <li>Second</li>,
+    <li>Third</li>,
+    <li>Fourth</li>,
+  ];
 
-  const _ = (
-    <ul>
-      {first}
-      {second}
-      {third}
-      {fourth}
-    </ul>
-  );
-
-  const items = [first, second, third, fourth];
+  <ul>{items}</ul>;
 
   for (let i = 0; i < items.length; i++) {
     const node = Node.from(items[i], device);
 
-    t.deepEqual(node.attribute("aria-setsize").get().value, `${items.length}`);
+    t.equal(node.attribute("aria-setsize").get().value, `${items.length}`);
 
-    t.deepEqual(node.attribute("aria-posinset").get().value, `${i + 1}`);
+    t.equal(node.attribute("aria-posinset").get().value, `${i + 1}`);
   }
 });

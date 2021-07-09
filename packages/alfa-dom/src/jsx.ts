@@ -12,7 +12,7 @@ const { entries } = Object;
 export function jsx(
   name: string,
   properties: jsx.Properties | null = null,
-  ...children: Array<jsx.Child>
+  ...children: jsx.Children
 ): Element {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
@@ -37,7 +37,7 @@ export function jsx(
     }
   }
 
-  return h(name, attributes, children, style);
+  return h(name, attributes, children.flat(undefined), style);
 }
 
 /**
@@ -45,6 +45,8 @@ export function jsx(
  */
 export namespace jsx {
   export type Child = Node | string;
+
+  export type Children = Array<Child | Children>;
 
   export interface Properties {
     [name: string]: unknown;
