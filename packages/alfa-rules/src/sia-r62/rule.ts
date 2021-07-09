@@ -9,7 +9,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Property, Style } from "@siteimprove/alfa-style";
@@ -127,22 +127,29 @@ export default Rule.Atomic.of<Page, Element>({
           );
 
         const isDefaultDistinguishable = hasDistinguishingStyle();
-        const defaultStyle = linkElements.map((link) =>
-          ComputedStyles.from(link, device)
+        const defaultStyle = makeResult(
+          isDefaultDistinguishable,
+          linkElements.map((link) => ComputedStyles.from(link, device))
         );
 
         const isHoverDistinguishable = hasDistinguishingStyle(
           Context.hover(target)
         );
-        const hoverStyle = linkElements.map((link) =>
-          ComputedStyles.from(link, device, Context.hover(target))
+        const hoverStyle = makeResult(
+          isHoverDistinguishable,
+          linkElements.map((link) =>
+            ComputedStyles.from(link, device, Context.hover(target))
+          )
         );
 
         const isFocusDistinguishable = hasDistinguishingStyle(
           Context.focus(target)
         );
-        const focusStyle = linkElements.map((link) =>
-          ComputedStyles.from(link, device, Context.focus(target))
+        const focusStyle = makeResult(
+          isFocusDistinguishable,
+          linkElements.map((link) =>
+            ComputedStyles.from(link, device, Context.focus(target))
+          )
         );
 
         return {
@@ -174,9 +181,9 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    defaultStyles: Iterable<ComputedStyles>,
-    hoverStyles: Iterable<ComputedStyles>,
-    focusStyles: Iterable<ComputedStyles>
+    defaultStyles: Result<Iterable<ComputedStyles>>,
+    hoverStyles: Result<Iterable<ComputedStyles>>,
+    focusStyles: Result<Iterable<ComputedStyles>>
   ) =>
     Ok.of(
       DistinguishingStyles.of(
@@ -188,9 +195,9 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
-    defaultStyles: Iterable<ComputedStyles>,
-    hoverStyles: Iterable<ComputedStyles>,
-    focusStyles: Iterable<ComputedStyles>
+    defaultStyles: Result<Iterable<ComputedStyles>>,
+    hoverStyles: Result<Iterable<ComputedStyles>>,
+    focusStyles: Result<Iterable<ComputedStyles>>
   ) =>
     Err.of(
       DistinguishingStyles.of(
@@ -325,6 +332,14 @@ function hasDistinguishableFontWeight(
   };
 }
 
+function makeResult<T>(isOk: boolean, value: T): Result<T> {
+  if (isOk) {
+    return Ok.of(value);
+  } else {
+    return Err.of(value);
+  }
+}
+
 type Name = Property.Name | Property.Shorthand.Name;
 
 export class ComputedStyles implements Equatable, Serializable {
@@ -449,27 +464,29 @@ export namespace ComputedStyles {
 export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
-    defaultStyles: Iterable<ComputedStyles> = Sequence.empty(),
-    hoverStyles: Iterable<ComputedStyles> = Sequence.empty(),
-    focusStyles: Iterable<ComputedStyles> = Sequence.empty()
+    defaultStyles: Result<Iterable<ComputedStyles>> = Err.of(Sequence.empty()),
+    hoverStyles: Result<Iterable<ComputedStyles>> = Err.of(Sequence.empty()),
+    focusStyles: Result<Iterable<ComputedStyles>> = Err.of(Sequence.empty())
   ): DistinguishingStyles {
+    const mapper = (styles: Iterable<ComputedStyles>) => Sequence.from(styles);
+
     return new DistinguishingStyles(
       message,
-      Sequence.from(defaultStyles),
-      Sequence.from(hoverStyles),
-      Sequence.from(focusStyles)
+      defaultStyles.map(mapper).mapErr(mapper),
+      hoverStyles.map(mapper).mapErr(mapper),
+      focusStyles.map(mapper).mapErr(mapper)
     );
   }
 
-  private readonly _defaultStyles: Sequence<ComputedStyles>;
-  private readonly _hoverStyles: Sequence<ComputedStyles>;
-  private readonly _focusStyles: Sequence<ComputedStyles>;
+  private readonly _defaultStyles: Result<Sequence<ComputedStyles>>;
+  private readonly _hoverStyles: Result<Sequence<ComputedStyles>>;
+  private readonly _focusStyles: Result<Sequence<ComputedStyles>>;
 
   private constructor(
     message: string,
-    defaultStyles: Sequence<ComputedStyles>,
-    hoverStyles: Sequence<ComputedStyles>,
-    focusStyles: Sequence<ComputedStyles>
+    defaultStyles: Result<Sequence<ComputedStyles>>,
+    hoverStyles: Result<Sequence<ComputedStyles>>,
+    focusStyles: Result<Sequence<ComputedStyles>>
   ) {
     super(message);
     this._defaultStyles = defaultStyles;
@@ -477,15 +494,15 @@ export class DistinguishingStyles extends Diagnostic {
     this._focusStyles = focusStyles;
   }
 
-  public get defaultStyles(): Sequence<ComputedStyles> {
+  public get defaultStyles(): Result<Iterable<ComputedStyles>> {
     return this._defaultStyles;
   }
 
-  public get hoverStyles(): Sequence<ComputedStyles> {
+  public get hoverStyles(): Result<Iterable<ComputedStyles>> {
     return this._hoverStyles;
   }
 
-  public get focusStyles(): Sequence<ComputedStyles> {
+  public get focusStyles(): Result<Iterable<ComputedStyles>> {
     return this._focusStyles;
   }
 
@@ -514,8 +531,8 @@ export class DistinguishingStyles extends Diagnostic {
 
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
-    defaultStyle: Sequence.JSON<ComputedStyles>;
-    hoverStyle: Sequence.JSON<ComputedStyles>;
-    focusStyle: Sequence.JSON<ComputedStyles>;
+    defaultStyle: Result.JSON<Sequence<ComputedStyles>>;
+    hoverStyle: Result.JSON<Sequence<ComputedStyles>>;
+    focusStyle: Result.JSON<Sequence<ComputedStyles>>;
   }
 }

@@ -1,4 +1,5 @@
 import { h } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Property } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 
@@ -41,9 +42,9 @@ const noDistinguishingProperties: Array<
   ["outline", "0px"],
 ];
 
-const defaultStyle = ComputedStyles.of(defaultProperties);
-const focusStyle = ComputedStyles.of(focusProperties);
-const noStyle = ComputedStyles.of(noDistinguishingProperties);
+const defaultStyle = Ok.of([ComputedStyles.of(defaultProperties)]);
+const focusStyle = Ok.of([ComputedStyles.of(focusProperties)]);
+const noStyle = Err.of([ComputedStyles.of(noDistinguishingProperties)]);
 
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
@@ -53,11 +54,7 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [defaultStyle],
-        [defaultStyle],
-        [focusStyle]
-      ),
+      1: Outcomes.IsDistinguishable(defaultStyle, defaultStyle, focusStyle),
     }),
   ]);
 });
@@ -74,11 +71,7 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [defaultStyle],
-        [defaultStyle],
-        [focusStyle]
-      ),
+      1: Outcomes.IsDistinguishable(defaultStyle, defaultStyle, focusStyle),
     }),
   ]);
 });
@@ -101,7 +94,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+      1: Outcomes.IsNotDistinguishable(noStyle, noStyle, noStyle),
     }),
   ]);
 });
@@ -123,7 +116,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [focusStyle]),
+      1: Outcomes.IsNotDistinguishable(defaultStyle, noStyle, focusStyle),
     }),
   ]);
 });
@@ -147,11 +140,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable(
-        [defaultStyle],
-        [defaultStyle],
-        [noStyle]
-      ),
+      1: Outcomes.IsNotDistinguishable(defaultStyle, defaultStyle, noStyle),
     }),
   ]);
 });
@@ -175,7 +164,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [noStyle]),
+      1: Outcomes.IsNotDistinguishable(defaultStyle, noStyle, noStyle),
     }),
   ]);
 });
@@ -202,7 +191,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [defaultStyle], [noStyle]),
+      1: Outcomes.IsNotDistinguishable(noStyle, defaultStyle, noStyle),
     }),
   ]);
 });
@@ -229,7 +218,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [defaultStyle]),
+      1: Outcomes.IsNotDistinguishable(noStyle, noStyle, defaultStyle),
     }),
   ]);
 });
@@ -256,11 +245,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable(
-        [noStyle],
-        [defaultStyle],
-        [defaultStyle]
-      ),
+      1: Outcomes.IsNotDistinguishable(noStyle, defaultStyle, defaultStyle),
     }),
   ]);
 });
@@ -281,15 +266,17 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["outline", "auto"],
+  const styles = Ok.of([
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "auto"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable([styles], [styles], [styles]),
+      1: Outcomes.IsDistinguishable(styles, styles, styles),
     }),
   ]);
 });
@@ -310,20 +297,22 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["border-width", "0px 0px 1px"],
-    ["border-style", "none none solid"],
-    ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["outline", "0px"],
+  const styles = Ok.of([
+    ComputedStyles.of([
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [styles],
-        [styles],
-        [
+        styles,
+        styles,
+        Ok.of([
           ComputedStyles.of([
             ["color", "rgb(0% 0% 93.33333%)"],
             ["outline", "auto"],
@@ -331,7 +320,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -353,20 +342,22 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["border-width", "0px 0px 1px"],
-    ["border-style", "none none solid"],
-    ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
-    ["outline", "0px"],
+  const styles = Err.of([
+    ComputedStyles.of([
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
+      ["outline", "0px"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
-        [styles],
-        [styles],
-        [
+        styles,
+        styles,
+        Ok.of([
           ComputedStyles.of([
             ["color", "rgb(0% 0% 93.33333%)"],
             ["border-width", "0px 0px 1px"],
@@ -374,7 +365,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
             ["outline", "auto"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -396,20 +387,22 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["border-width", "0px"],
-    ["border-style", "none none solid"],
-    ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-    ["outline", "0px"],
+  const styles = Err.of([
+    ComputedStyles.of([
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["border-width", "0px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["outline", "0px"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
-        [styles],
-        [styles],
-        [
+        styles,
+        styles,
+        Ok.of([
           ComputedStyles.of([
             ["color", "rgb(0% 0% 93.33333%)"],
             ["outline", "auto"],
@@ -417,7 +410,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ["border-style", "none none solid"],
             ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -439,26 +432,28 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["background-color", "rgb(100% 0% 0%)"],
-    ["outline", "0px"],
+  const styles = Ok.of([
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["background-color", "rgb(100% 0% 0%)"],
+      ["outline", "0px"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [styles],
-        [styles],
-        [
+        styles,
+        styles,
+        Ok.of([
           ComputedStyles.of([
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["background-color", "rgb(100% 0% 0%)"],
             ["outline", "auto"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -486,15 +481,15 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
-        [noStyle],
-        [noStyle],
-        [
+        noStyle,
+        noStyle,
+        Ok.of([
           ComputedStyles.of([
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["outline", "auto"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -520,26 +515,28 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["background-color", "rgb(100% 0% 0%)"],
-    ["outline", "0px"],
+  const styles = Err.of([
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["background-color", "rgb(100% 0% 0%)"],
+      ["outline", "0px"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
-        [styles],
-        [styles],
-        [
+        styles,
+        styles,
+        Ok.of([
           ComputedStyles.of([
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["background-color", "rgb(100% 0% 0%)"],
             ["outline", "auto"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -591,11 +588,7 @@ test(`evaluate() passes an <a> element with a <div role="paragraph"> parent elem
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [defaultStyle],
-        [defaultStyle],
-        [focusStyle]
-      ),
+      1: Outcomes.IsDistinguishable(defaultStyle, defaultStyle, focusStyle),
     }),
   ]);
 });
@@ -632,26 +625,28 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     ]
   );
 
-  const styles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["font-weight", "700"],
-    ["outline", "0px"],
+  const styles = Ok.of([
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["font-weight", "700"],
+      ["outline", "0px"],
+    ]),
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [styles],
-        [styles],
-        [
+        styles,
+        styles,
+        Ok.of([
           ComputedStyles.of([
             ["border-width", "0px"],
             ["color", "rgb(0% 0% 93.33333%)"],
             ["font-weight", "700"],
             ["outline", "auto"],
           ]),
-        ]
+        ])
       ),
     }),
   ]);
@@ -671,9 +666,9 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [defaultStyle, noStyle],
-        [defaultStyle, noStyle],
-        [focusStyle, noStyle]
+        Ok.of([defaultStyle.get()[0], noStyle.getErr()[0]]),
+        Ok.of([defaultStyle.get()[0], noStyle.getErr()[0]]),
+        Ok.of([focusStyle.get()[0], noStyle.getErr()[0]])
       ),
     }),
   ]);
@@ -714,9 +709,9 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [noStyle, styles],
-        [noStyle, styles],
-        [noStyle, styles]
+        Ok.of([noStyle.getErr()[0], styles]),
+        Ok.of([noStyle.getErr()[0], styles]),
+        Ok.of([noStyle.getErr()[0], styles])
       ),
     }),
   ]);
@@ -759,26 +754,12 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
     ["outline", "0px"],
   ]);
 
-  const actual = await evaluate(R62, { document });
-
-  // console.log("--- actual ---");
-  // console.dir(actual, { depth: null });
-  // console.log("--- expected ---");
-  // console.dir(
-  //   Outcomes.IsDistinguishable(
-  //     [noStyle, styles],
-  //     [noStyle, styles],
-  //     [noStyle, styles]
-  //   ).toJSON(),
-  //   { depth: null }
-  // );
-  //
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [linkStyles, spanStyles],
-        [linkStyles, spanStyles],
-        [linkStyles, spanStyles]
+        Ok.of([linkStyles, spanStyles]),
+        Ok.of([linkStyles, spanStyles]),
+        Ok.of([linkStyles, spanStyles])
       ),
     }),
   ]);
