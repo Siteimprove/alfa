@@ -124,19 +124,18 @@ const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
   return None;
 };
 
-const nameFromChild = (predicate: Predicate<Element>) => (
-  element: Element,
-  device: Device,
-  state: Name.State
-) => {
-  for (const child of element.children().filter(isElement).find(predicate)) {
-    return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-      Name.of(name.value, [Name.Source.descendant(element, name)])
-    );
-  }
-
-  return None;
-};
+const nameFromChild =
+  (predicate: Predicate<Element>) =>
+  (element: Element, device: Device, state: Name.State) =>
+    element
+      .children()
+      .filter(isElement)
+      .find(predicate)
+      .flatMap((child) =>
+        Name.fromDescendants(child, device, state.visit(child)).map((name) =>
+          Name.of(name.value, [Name.Source.descendant(element, name)])
+        )
+      );
 
 const ids = Cache.empty<Node, Map<string, Element>>();
 
@@ -183,7 +182,7 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     Name.fromNode(
       element,
       device,
-      state.reference(None).recurse(true).descend(false)
+      state.reference(Option.of(element)).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
   );
 
