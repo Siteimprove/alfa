@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.20.0](../../compare/v0.19.0...v0.20.0) (2021-07-09)
+
 In addition to the changes listed below, this release adjusts the compile target from `es2018` to `es2020`.
 
 ### Added
