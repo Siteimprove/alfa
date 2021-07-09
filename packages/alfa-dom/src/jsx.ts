@@ -37,7 +37,12 @@ export function jsx(
     }
   }
 
-  return h(name, attributes, children.flat(Infinity), style);
+  return h(
+    name,
+    attributes,
+    (children as Array<jsx.Child>).flat(Infinity),
+    style
+  );
 }
 
 /**
@@ -46,7 +51,12 @@ export function jsx(
 export namespace jsx {
   export type Child = Node | string;
 
-  export type Children = Array<Child | Children>;
+  /**
+   * @remarks
+   * This type is declared using the short array syntax (`[]`) to avoid issues
+   * with circular generic references.
+   */
+  export type Children = (Child | Children)[];
 
   export interface Properties {
     [name: string]: unknown;

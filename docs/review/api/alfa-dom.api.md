@@ -555,7 +555,7 @@ export namespace jsx {
     // (undocumented)
     export type Child = Node | string;
     // (undocumented)
-    export type Children = Array<Child | Children>;
+    export type Children = (Child | Children)[];
     // (undocumented)
     export namespace JSX {
         // Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
