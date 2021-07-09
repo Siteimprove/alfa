@@ -37,7 +37,7 @@ export function jsx(
     }
   }
 
-  return h(name, attributes, children.flat(undefined), style);
+  return h(name, attributes, children.flat(Infinity), style);
 }
 
 /**
