@@ -182,9 +182,15 @@ export namespace Collection {
     first(): Option<T>;
     last(): Option<T>;
     take(count: number): Indexed<T>;
+    takeWhile<U extends T>(
+      refinement: Refinement<T, U, [index: number]>
+    ): Indexed<U>;
     takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLast(count: number): Indexed<T>;
+    takeLastWhile<U extends T>(
+      refinement: Refinement<T, U, [index: number]>
+    ): Indexed<U>;
     takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     skip(count: number): Indexed<T>;

@@ -264,6 +264,12 @@ export class Slice<T> implements Collection.Indexed<T> {
     return this.slice(0, count);
   }
 
+  public takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Slice<U>;
+
+  public takeWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
+
   public takeWhile(predicate: Predicate<T, [index: number]>): Slice<T> {
     let count = 0;
 
@@ -285,6 +291,12 @@ export class Slice<T> implements Collection.Indexed<T> {
   public takeLast(count: number): Slice<T> {
     return this.slice(this._length - count);
   }
+
+  public takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Slice<U>;
+
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): Slice<T> {
     let count = 0;

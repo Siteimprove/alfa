@@ -3,6 +3,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lazy } from "@siteimprove/alfa-lazy";
+import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
@@ -66,9 +67,15 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
+  takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
   takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLast(count: number): Sequence<T>;
+  takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
   takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skip(count: number): Sequence<T>;

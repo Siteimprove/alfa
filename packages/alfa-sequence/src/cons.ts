@@ -7,6 +7,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
+import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -502,6 +503,12 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+
+  public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+
   public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.takeUntil(not(predicate));
   }
@@ -537,6 +544,12 @@ export class Cons<T> implements Sequence<T> {
   public takeLast(count: number): Sequence<T> {
     return this.skip(this.size - count);
   }
+
+  public takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.reverse().takeWhile(predicate).reverse();
