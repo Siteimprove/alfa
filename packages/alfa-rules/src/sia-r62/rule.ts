@@ -4,6 +4,7 @@ import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
@@ -12,6 +13,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -126,11 +128,17 @@ export default Rule.Atomic.of<Page, Element>({
           pairings.some(([link, container]) =>
             test(isDistinguishable(container, device, context), link)
           );
+        const gatherStyles = (context?: Context) =>
+          Set.from(
+            linkElements.map((link) =>
+              ComputedStyles.from(link, device, context)
+            )
+          );
 
         const isDefaultDistinguishable = hasDistinguishingStyle();
         const defaultStyle = makeResult(
           isDefaultDistinguishable,
-          linkElements.map((link) => ComputedStyles.from(link, device))
+          gatherStyles()
         );
 
         const isHoverDistinguishable = hasDistinguishingStyle(
@@ -138,9 +146,7 @@ export default Rule.Atomic.of<Page, Element>({
         );
         const hoverStyle = makeResult(
           isHoverDistinguishable,
-          linkElements.map((link) =>
-            ComputedStyles.from(link, device, Context.hover(target))
-          )
+          gatherStyles(Context.hover(target))
         );
 
         const isFocusDistinguishable = hasDistinguishingStyle(
@@ -148,9 +154,7 @@ export default Rule.Atomic.of<Page, Element>({
         );
         const focusStyle = makeResult(
           isFocusDistinguishable,
-          linkElements.map((link) =>
-            ComputedStyles.from(link, device, Context.focus(target))
-          )
+          gatherStyles(Context.focus(target))
         );
 
         return {
@@ -343,7 +347,7 @@ function makeResult<T>(isOk: boolean, value: T): Result<T> {
 
 type Name = Property.Name | Property.Shorthand.Name;
 
-export class ComputedStyles implements Equatable, Serializable {
+export class ComputedStyles implements Equatable, Hashable, Serializable {
   public static of(
     style: Iterable<readonly [Name, string]> = []
   ): ComputedStyles {
@@ -366,6 +370,10 @@ export class ComputedStyles implements Equatable, Serializable {
 
   public equals(value: unknown): boolean {
     return value instanceof ComputedStyles && value._style.equals(this._style);
+  }
+
+  public hash(hash: Hash): void {
+    this._style.hash(hash);
   }
 
   public toJSON(): ComputedStyles.JSON {

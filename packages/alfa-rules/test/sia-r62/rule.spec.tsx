@@ -666,9 +666,9 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        Ok.of([defaultStyle.get()[0], noStyle.getErr()[0]]),
-        Ok.of([defaultStyle.get()[0], noStyle.getErr()[0]]),
-        Ok.of([focusStyle.get()[0], noStyle.getErr()[0]])
+        Ok.of([noStyle.getErr()[0], defaultStyle.get()[0]]),
+        Ok.of([noStyle.getErr()[0], defaultStyle.get()[0]]),
+        Ok.of([noStyle.getErr()[0], focusStyle.get()[0]])
       ),
     }),
   ]);
@@ -709,9 +709,9 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        Ok.of([noStyle.getErr()[0], styles]),
-        Ok.of([noStyle.getErr()[0], styles]),
-        Ok.of([noStyle.getErr()[0], styles])
+        Ok.of([styles, noStyle.getErr()[0]]),
+        Ok.of([styles, noStyle.getErr()[0]]),
+        Ok.of([styles, noStyle.getErr()[0]])
       ),
     }),
   ]);
