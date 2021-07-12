@@ -764,3 +764,25 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
+  // Since text-decoration and focus outline is not inherited, the <span> has
+  // effectively no style other than color.
+  const target = (
+    <a href="#">
+      <span>click</span> <span>here</span>
+    </a>
+  );
+
+  const document = h.document([<p>Hello {target}</p>]);
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        Ok.of([noStyle.getErr()[0], defaultStyle.get()[0]]),
+        Ok.of([noStyle.getErr()[0], defaultStyle.get()[0]]),
+        Ok.of([noStyle.getErr()[0], focusStyle.get()[0]])
+      ),
+    }),
+  ]);
+});
