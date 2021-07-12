@@ -3,7 +3,6 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";

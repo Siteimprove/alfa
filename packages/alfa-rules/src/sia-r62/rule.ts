@@ -120,22 +120,22 @@ export default Rule.Atomic.of<Page, Element>({
           );
 
         const hasDistinguishingStyle = (context?: Context) =>
-          Array.from(
-            Set.from(
-              linkElements.map((link) =>
-                // If the link element is distinguishable from at least one
-                // non-link element, this is good enough.
-                // Note that ACT rules draft requires the link-element to be
-                // distinguishable from *all* non-link elements in order to be good.
-                nonLinkElements.some((container) =>
-                  isDistinguishable(container, device, context)(link)
-                )
-                  ? Ok.of(ComputedStyles.from(link, device, context))
-                  : Err.of(ComputedStyles.from(link, device, context))
+          Set.from(
+            linkElements.map((link) =>
+              // If the link element is distinguishable from at least one
+              // non-link element, this is good enough.
+              // Note that ACT rules draft requires the link-element to be
+              // distinguishable from *all* non-link elements in order to be good.
+              nonLinkElements.some((container) =>
+                isDistinguishable(container, device, context)(link)
               )
+                ? Ok.of(ComputedStyles.from(link, device, context))
+                : Err.of(ComputedStyles.from(link, device, context))
             )
+          )
+            .toArray()
             // sort the Ok before the Err, relative order doesn't matter.
-          ).sort((a, b) => (b.isOk() ? 1 : -1));
+            .sort((a, b) => (b.isOk() ? 1 : -1));
 
         // The context needs to be set on the *target*, not on its ancestors
         // or descendants
