@@ -130,6 +130,7 @@
     "src/property/text-indent.ts",
     "src/property/text-overflow.ts",
     "src/property/text-transform.ts",
+    "src/property/text-shadow.ts",
     "src/property/top.ts",
     "src/property/transform.ts",
     "src/property/value/list.ts",
