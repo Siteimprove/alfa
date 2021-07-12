@@ -90,8 +90,9 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const container = containers.get(target).get();
-        const nonLinkElements = container
+        const nonLinkElements = containers
+          .get(target)
+          .get()
           .inclusiveDescendants({
             flattened: true,
             nested: true,
