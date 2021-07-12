@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
