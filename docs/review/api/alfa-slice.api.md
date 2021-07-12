@@ -139,9 +139,13 @@ export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     takeLastUntil(predicate: Predicate<T, [index: number]>): Slice<T>;
     // (undocumented)
+    takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Slice<U>;
+    // (undocumented)
     takeLastWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
     // (undocumented)
     takeUntil(predicate: Predicate<T, [index: number]>): Slice<T>;
+    // (undocumented)
+    takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Slice<U>;
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
     // (undocumented)
@@ -171,7 +175,6 @@ export namespace Slice {
     // (undocumented)
     export type JSON<T> = Array_2<Serializable.ToJSON<T>>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
