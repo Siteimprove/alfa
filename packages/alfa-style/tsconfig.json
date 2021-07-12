@@ -176,6 +176,7 @@
     "test/property/inset-block.spec.tsx",
     "test/property/text-decoration.spec.tsx",
     "test/property/text-indent.spec.tsx",
+    "test/property/text-shadow.spec.tsx",
     "test/style.spec.tsx"
   ],
   "references": [
