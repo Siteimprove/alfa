@@ -119,22 +119,26 @@ export default Rule.Atomic.of<Page, Element>({
               .takeWhile(and(isElement, not(hasNonLinkText(device))))
           );
 
-        const pairings = linkElements.flatMap((link) =>
-          nonLinkElements.map((container) => [link, container] as const)
-        );
-
-        // The context needs to be set on the *target*, not on its ancestors
-        // or descendants
         const hasDistinguishingStyle = (context?: Context) =>
           Array.from(
             Set.from(
-              pairings.map(([link, container]) =>
-                isDistinguishable(container, link, device, context)
+              linkElements.map((link) =>
+                // If the link element is distinguishable from at least one
+                // non-link element, this is good enough.
+                // Note that ACT rules draft requires the link-element to be
+                // distinguishable from *all* non-link elements in order to be good.
+                nonLinkElements.some((container) =>
+                  isDistinguishable(container, device, context)(link)
+                )
+                  ? Ok.of(ComputedStyles.from(link, device, context))
+                  : Err.of(ComputedStyles.from(link, device, context))
               )
             )
             // sort the Ok before the Err, relative order doesn't matter.
           ).sort((a, b) => (b.isOk() ? 1 : -1));
 
+        // The context needs to be set on the *target*, not on its ancestors
+        // or descendants
         const isDefaultDistinguishable = hasDistinguishingStyle();
 
         const isHoverDistinguishable = hasDistinguishingStyle(
@@ -147,9 +151,8 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            // We currently accept a single distinguishing pairing as good.
-            // ACT rules draft requires one distinguishing pairing for each
-            // nonLinkElement, which is stricter.
+            // If at least one link element is good, this is enough. The sorting
+            // guarantees it is first in the array.
             isDefaultDistinguishable[0].isOk() &&
               isHoverDistinguishable[0].isOk() &&
               isFocusDistinguishable[0].isOk(),
@@ -247,32 +250,26 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 
 function isDistinguishable(
   container: Element,
-  element: Element,
   device: Device,
   context: Context = Context.empty()
-): Result<ComputedStyles, ComputedStyles> {
-  return test(
-    or(
-      // Things like text decoration and backgrounds risk blending with the
-      // container element. We therefore need to check if these can be distinguished
-      // from what the container element might itself set.
-      hasDistinguishableTextDecoration(container, device, context),
-      hasDistinguishableBackground(container, device, context),
+): Predicate<Element> {
+  return or(
+    // Things like text decoration and backgrounds risk blending with the
+    // container element. We therefore need to check if these can be distinguished
+    // from what the container element might itself set.
+    hasDistinguishableTextDecoration(container, device, context),
+    hasDistinguishableBackground(container, device, context),
 
-      hasDistinguishableFontWeight(container, device, context),
+    hasDistinguishableFontWeight(container, device, context),
 
-      // We consider the mere presence of borders or outlines on the element as
-      // distinguishable features. There's of course a risk of these blending with
-      // other features of the container element, such as its background, but this
-      // should hopefully not happen (too often) in practice. When it does, we
-      // risk false negatives.
-      hasOutline(device, context),
-      hasBorder(device, context)
-    ),
-    element
-  )
-    ? Ok.of(ComputedStyles.from(element, device, context))
-    : Err.of(ComputedStyles.from(element, device, context));
+    // We consider the mere presence of borders or outlines on the element as
+    // distinguishable features. There's of course a risk of these blending with
+    // other features of the container element, such as its background, but this
+    // should hopefully not happen (too often) in practice. When it does, we
+    // risk false negatives.
+    hasOutline(device, context),
+    hasBorder(device, context)
+  );
 }
 
 function hasDistinguishableTextDecoration(
