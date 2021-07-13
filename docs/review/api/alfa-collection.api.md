@@ -171,9 +171,13 @@ export namespace Collection {
         // (undocumented)
         takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
+        takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
+        // (undocumented)
         takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
         takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
+        // (undocumented)
+        takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
         // (undocumented)
         takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
@@ -251,8 +255,8 @@ export namespace Collection {
     export namespace Keyed {
         // (undocumented)
         export type JSON<K, V> = Array<[
-            Serializable.ToJSON<K>,
-            Serializable.ToJSON<V>
+        Serializable.ToJSON<K>,
+        Serializable.ToJSON<V>
         ]>;
     }
     // (undocumented)
@@ -320,7 +324,6 @@ export namespace Collection {
         export type JSON<T> = Array<Serializable.ToJSON<T>>;
     }
 }
-
 
 // (No @packageDocumentation comment for this package)
 

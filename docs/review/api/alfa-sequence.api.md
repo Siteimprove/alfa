@@ -144,11 +144,15 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
+    takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
+    // (undocumented)
     takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // @internal (undocumented)
     takeUntil(predicate: Predicate<T, [index: number]>, index: number): Sequence<T>;
+    // (undocumented)
+    takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
@@ -291,9 +295,13 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
+    takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
+    // (undocumented)
     takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
@@ -345,7 +353,6 @@ export namespace Sequence {
     // (undocumented)
     export function sort<T extends Comparable<T>>(sequence: Sequence<T>): Sequence<T>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

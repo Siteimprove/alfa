@@ -66,9 +66,15 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
+  takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
   takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLast(count: number): Sequence<T>;
+  takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
   takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skip(count: number): Sequence<T>;

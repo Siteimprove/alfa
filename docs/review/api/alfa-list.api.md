@@ -82,7 +82,7 @@ export class Leaf<T> implements Node<T> {
     set(index: number, value: T): Leaf<T>;
     // (undocumented)
     get values(): Array<T>;
-    }
+}
 
 // @public (undocumented)
 export class List<T> implements Collection.Indexed<T> {
@@ -199,9 +199,13 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     takeLastUntil(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
+    takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
+    // (undocumented)
     takeLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
     takeUntil(predicate: Predicate<T, [index: number]>): List<T>;
+    // (undocumented)
+    takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
@@ -269,7 +273,6 @@ export namespace Node {
     // (undocumented)
     export function underflow(shift: number): number;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
