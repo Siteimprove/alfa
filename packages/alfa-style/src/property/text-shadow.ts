@@ -20,7 +20,7 @@ import { Resolver } from "../resolver";
 import { Tuple } from "./value/tuple";
 
 const { isKeyword } = Keyword;
-const { either, map, option, separated } = Parser;
+const { either, left, map, option, pair, right, separated } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -45,10 +45,9 @@ const parseOffset = map(
   ([x, y]) => Tuple.of(x, y)
 );
 
-const parseLengths = separated(
+const parseLengths = pair(
   parseOffset,
-  Token.parseWhitespace,
-  option(Length.parse)
+  option(right(Token.parseWhitespace, Length.parse))
 );
 
 /**
@@ -57,12 +56,12 @@ const parseLengths = separated(
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("none"),
   map(
-    separated(parseLengths, Token.parseWhitespace, option(Color.parse)),
+    pair(parseLengths, option(right(Token.parseWhitespace, Color.parse))),
     ([[offset, blur], color]) =>
       TextShadow.of(color, offset, blur.getOr(Length.of(0, "px")))
   ),
   map(
-    separated(option(Color.parse), Token.parseWhitespace, parseLengths),
+    pair(option(left(Color.parse, Token.parseWhitespace)), parseLengths),
     ([color, [offset, blur]]) =>
       TextShadow.of(color, offset, blur.getOr(Length.of(0, "px")))
   )
@@ -74,20 +73,24 @@ export const parse = either<Slice<Token>, Specified, string>(
  */
 export default Property.register(
   "text-shadow",
-  Property.of<Specified, Computed>(Keyword.of("none"), parse, (shadow, style) =>
-    shadow.map((shadow) => {
-      if (isKeyword(shadow)) {
-        return shadow;
-      }
+  Property.of<Specified, Computed>(
+    Keyword.of("none"),
+    parse,
+    (shadow, style) =>
+      shadow.map((shadow) => {
+        if (isKeyword(shadow)) {
+          return shadow;
+        }
 
-      const [x, y] = shadow.offset.values;
+        const [x, y] = shadow.offset.values;
 
-      return TextShadow.of(
-        shadow.color.map(Resolver.color),
-        Tuple.of(Resolver.length(x, style), Resolver.length(y, style)),
-        Resolver.length(shadow.blur, style)
-      );
-    })
+        return TextShadow.of(
+          shadow.color.map(Resolver.color),
+          Tuple.of(Resolver.length(x, style), Resolver.length(y, style)),
+          Resolver.length(shadow.blur, style)
+        );
+      }),
+    { inherits: true }
   )
 );
 
