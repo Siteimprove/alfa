@@ -13,19 +13,13 @@ test(`.cascaded() parses \`text-shadow: 1px 1px 2px black;\``, (t) => {
   const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
-    type: "text-shadow",
-    color: {
-      type: "some",
-      value: { type: "color", format: "named", color: "black" },
-    },
-    offset: {
-      type: "tuple",
-      values: [
-        { type: "length", value: 1, unit: "px" },
-        { type: "length", value: 1, unit: "px" },
-      ],
-    },
+    type: "shadow",
+    vertical: { type: "length", value: 1, unit: "px" },
+    horizontal: { type: "length", value: 1, unit: "px" },
     blur: { type: "length", value: 2, unit: "px" },
+    spread: { type: "length", value: 0, unit: "px" },
+    color: { type: "color", format: "named", color: "black" },
+    isInset: false,
   });
 });
 
@@ -37,16 +31,13 @@ test(`.cascaded() parses \`text-shadow: 1px 1px 2px;\``, (t) => {
   const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
-    type: "text-shadow",
-    color: { type: "none" },
-    offset: {
-      type: "tuple",
-      values: [
-        { type: "length", value: 1, unit: "px" },
-        { type: "length", value: 1, unit: "px" },
-      ],
-    },
+    type: "shadow",
+    vertical: { type: "length", value: 1, unit: "px" },
+    horizontal: { type: "length", value: 1, unit: "px" },
     blur: { type: "length", value: 2, unit: "px" },
+    spread: { type: "length", value: 0, unit: "px" },
+    color: { type: "keyword", value: "currentcolor" },
+    isInset: false,
   });
 });
 
@@ -58,19 +49,13 @@ test(`.cascaded() parses \`text-shadow: 1px 1px black;\``, (t) => {
   const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
-    type: "text-shadow",
-    color: {
-      type: "some",
-      value: { type: "color", format: "named", color: "black" },
-    },
-    offset: {
-      type: "tuple",
-      values: [
-        { type: "length", value: 1, unit: "px" },
-        { type: "length", value: 1, unit: "px" },
-      ],
-    },
+    type: "shadow",
+    vertical: { type: "length", value: 1, unit: "px" },
+    horizontal: { type: "length", value: 1, unit: "px" },
     blur: { type: "length", value: 0, unit: "px" },
+    spread: { type: "length", value: 0, unit: "px" },
+    color: { type: "color", format: "named", color: "black" },
+    isInset: false,
   });
 });
 
@@ -82,18 +67,12 @@ test(`.cascaded() parses \`text-shadow: black 1px 1px;\``, (t) => {
   const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
-    type: "text-shadow",
-    color: {
-      type: "some",
-      value: { type: "color", format: "named", color: "black" },
-    },
-    offset: {
-      type: "tuple",
-      values: [
-        { type: "length", value: 1, unit: "px" },
-        { type: "length", value: 1, unit: "px" },
-      ],
-    },
+    type: "shadow",
+    vertical: { type: "length", value: 1, unit: "px" },
+    horizontal: { type: "length", value: 1, unit: "px" },
     blur: { type: "length", value: 0, unit: "px" },
+    spread: { type: "length", value: 0, unit: "px" },
+    color: { type: "color", format: "named", color: "black" },
+    isInset: false,
   });
 });
