@@ -1,4 +1,4 @@
-import { Comparison, Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -13,6 +13,7 @@ import { Option } from "./option";
 import { None } from "./none";
 
 const { not, test } = Predicate;
+const { compareComparable } = Comparable;
 
 /**
  * @public
@@ -40,16 +41,20 @@ export class Some<T> implements Option<T> {
     return new Some(mapper(this._value));
   }
 
+  public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
+    return mapper.map((mapper) => mapper(this._value));
+  }
+
   public flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U> {
     return mapper(this._value);
   }
 
-  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reducer(accumulator, this._value);
+  public flatten<T>(this: Some<Option<T>>): Option<T> {
+    return this._value;
   }
 
-  public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
-    return mapper.map((mapper) => mapper(this._value));
+  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+    return reducer(accumulator, this._value);
   }
 
   public filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
@@ -114,7 +119,14 @@ export class Some<T> implements Option<T> {
     return this._value;
   }
 
-  public compareWith(option: Option<T>, comparer: Comparer<T>): Comparison {
+  public compare(this: Option<Comparable<T>>, option: Option<T>): Comparison {
+    return this.compareWith(option, compareComparable);
+  }
+
+  public compareWith<U = T>(
+    option: Option<U>,
+    comparer: Comparer<T, U>
+  ): Comparison {
     return option.isSome()
       ? comparer(this._value, option._value)
       : Comparison.Greater;

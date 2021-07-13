@@ -373,7 +373,10 @@ export namespace Array {
     index: number,
     value: T
   ): Array<T> {
-    array.splice(index, 0, value);
+    if (index <= array.length) {
+      array.splice(index, 0, value);
+    }
+
     return array;
   }
 
@@ -447,17 +450,17 @@ export namespace Array {
     return array.sort(comparer);
   }
 
-  export function compare<T extends Comparable<T>>(
+  export function compare<T extends Comparable<U>, U = T>(
     a: ReadonlyArray<T>,
-    b: Iterable<T>
+    b: Iterable<U>
   ): Comparison {
     return compareWith(a, b, compareComparable);
   }
 
-  export function compareWith<T>(
+  export function compareWith<T, U = T>(
     a: ReadonlyArray<T>,
-    b: Iterable<T>,
-    comparer: Comparer<T>
+    b: Iterable<U>,
+    comparer: Comparer<T, U, [index: number]>
   ): Comparison {
     return Iterable.compareWith(a, b, comparer);
   }

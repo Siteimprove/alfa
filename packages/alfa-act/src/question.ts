@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -9,7 +10,12 @@ import * as json from "@siteimprove/alfa-json";
  * @public
  */
 export class Question<Q, S, A, T = A>
-  implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
+  implements
+    Functor<T>,
+    Applicative<T>,
+    Monad<T>,
+    Serializable<Question.JSON<Q, S>>
+{
   public static of<Q, A, S>(
     uri: string,
     type: Q,
@@ -63,6 +69,12 @@ export class Question<Q, S, A, T = A>
       this._message,
       (answer) => mapper(this._quester(answer))
     );
+  }
+
+  public apply<U>(
+    mapper: Question<Q, S, A, Mapper<T, U>>
+  ): Question<Q, S, A, U> {
+    return mapper.flatMap((mapper) => this.map(mapper));
   }
 
   public flatMap<U>(

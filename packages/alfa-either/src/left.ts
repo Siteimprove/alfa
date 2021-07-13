@@ -3,7 +3,6 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Reducer } from "@siteimprove/alfa-reducer";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -32,16 +31,20 @@ export class Left<L> implements Either<L, never> {
     return false;
   }
 
-  public map<T>(mapper: Mapper<L, T>): Either<T, T> {
-    return new Left(mapper(this._value));
+  public map(): Left<L> {
+    return this;
   }
 
-  public flatMap<T>(mapper: Mapper<L, Either<T, T>>): Either<T, T> {
-    return mapper(this._value);
+  public apply(): Left<L> {
+    return this;
   }
 
-  public reduce<T>(reducer: Reducer<L, T>, accumulator: T): T {
-    return reducer(accumulator, this._value);
+  public flatMap(): Left<L> {
+    return this;
+  }
+
+  public reduce<T>(reducer: unknown, accumulator: T): T {
+    return accumulator;
   }
 
   public either<T>(left: Mapper<L, T>): T {

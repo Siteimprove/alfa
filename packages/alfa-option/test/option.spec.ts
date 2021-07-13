@@ -48,3 +48,7 @@ test("#flatMap() satisfies associativity", (t) => {
     option.flatMap((n) => f(n).flatMap(g))
   );
 });
+
+test("#flatten() unwraps a nested option", (t) => {
+  t.deepEqual(Option.of(Option.of(1)).flatten(), Some.of(1));
+});

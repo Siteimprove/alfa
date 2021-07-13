@@ -1,4 +1,4 @@
-import { Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -6,6 +6,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Option } from "./option";
 import { Some } from "./some";
+
+const { compareComparable } = Comparable;
 
 /**
  * @public
@@ -28,16 +30,20 @@ export const None: None = new (class None {
     return this;
   }
 
+  public apply(): None {
+    return this;
+  }
+
   public flatMap(): None {
+    return this;
+  }
+
+  public flatten(): None {
     return this;
   }
 
   public reduce<U>(reducer: unknown, accumulator: U): U {
     return accumulator;
-  }
-
-  public apply(): None {
-    return this;
   }
 
   public filter(): None {
@@ -90,6 +96,13 @@ export const None: None = new (class None {
 
   public getOrElse<U>(value: Thunk<U>): U {
     return value();
+  }
+
+  public compare<T>(
+    this: Option<Comparable<T>>,
+    option: Option<T>
+  ): Comparison {
+    return this.compareWith(option, compareComparable);
   }
 
   public compareWith<T>(option: Option<T>): Comparison {

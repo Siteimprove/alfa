@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -16,11 +17,13 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 export class Selective<S, T = never>
   implements
     Functor<T>,
+    Applicative<T>,
     Monad<T>,
     Iterable<S | T>,
     Equatable,
     Hashable,
-    Serializable<Selective.JSON<S, T>> {
+    Serializable<Selective.JSON<S, T>>
+{
   public static of<T>(value: T): Selective<T> {
     return new Selective(Left.of(value));
   }
@@ -32,7 +35,13 @@ export class Selective<S, T = never>
   }
 
   public map<U>(mapper: Mapper<T, U>): Selective<S, U> {
-    return this.flatMap((value) => new Selective(Right.of(mapper(value))));
+    return this.flatMap(
+      (value) => new Selective<S, U>(Right.of(mapper(value)))
+    );
+  }
+
+  public apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U> {
+    return mapper.flatMap((mapper) => this.map(mapper));
   }
 
   public flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U> {
@@ -58,7 +67,7 @@ export class Selective<S, T = never>
   ): Selective<S, T | U> {
     return this._value.either(
       (value) =>
-        predicate(value) ? new Selective(Right.of(mapper(value))) : this,
+        predicate(value) ? new Selective<S, U>(Right.of(mapper(value))) : this,
       () => this
     );
   }

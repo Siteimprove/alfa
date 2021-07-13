@@ -90,6 +90,10 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public flatten<T>(this: List<List<T>>): List<T> {
+    return this.flatMap((list) => list);
+  }
+
   public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
     return Iterable.reduce(this, reducer, accumulator);
   }
@@ -395,11 +399,22 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.join(this, separator);
   }
 
+  public sort<T extends Comparable<T>>(this: List<T>): List<T> {
+    return this.sortWith(compareComparable);
+  }
+
   public sortWith(comparer: Comparer<T>): List<T> {
     return List.from(Iterable.sortWith(this, comparer));
   }
 
-  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+  public compare(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison {
+    return this.compareWith(iterable, compareComparable);
+  }
+
+  public compareWith<U = T>(
+    iterable: Iterable<U>,
+    comparer: Comparer<T, U, [index: number]>
+  ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
@@ -686,16 +701,5 @@ export namespace List {
       (list, value) => list.append(value),
       List.empty()
     );
-  }
-
-  export function sort<T extends Comparable<T>>(list: List<T>): List<T> {
-    return list.sortWith(compareComparable);
-  }
-
-  export function compare<T extends Comparable<T>>(
-    a: List<T>,
-    b: Iterable<T>
-  ): Comparison {
-    return a.compareWith(b, compareComparable);
   }
 }

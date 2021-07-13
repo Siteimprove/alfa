@@ -52,6 +52,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
     );
   }
 
+  public apply<U>(mapper: Set<Mapper<T, U>>): Set<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
   public flatMap<U>(mapper: Mapper<T, Set<U>>): Set<U> {
     return this.reduce(
       (set, value) => set.concat(mapper(value)),
@@ -59,12 +63,12 @@ export class Set<T> implements Collection.Unkeyed<T> {
     );
   }
 
-  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return Iterable.reduce(this, reducer, accumulator);
+  public flatten<T>(this: Set<Set<T>>): Set<T> {
+    return this.flatMap((set) => set);
   }
 
-  public apply<U>(mapper: Set<Mapper<T, U>>): Set<U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+    return Iterable.reduce(this, reducer, accumulator);
   }
 
   public filter<U extends T>(refinement: Refinement<T, U>): Set<U>;

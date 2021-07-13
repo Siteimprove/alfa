@@ -477,7 +477,7 @@ const substitutionLimit = 1024;
 
 /**
  * Substitute `var()` functions in an array of tokens. If any syntactically
- * invalid `var()` functions are encountered, `null` is returned.
+ * invalid `var()` functions are encountered, `None` is returned.
  *
  * {@link https://drafts.csswg.org/css-variables/#substitute-a-var}
  *
