@@ -144,9 +144,13 @@ namespace Iterable_2 {
     // (undocumented)
     function takeLastUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
+    function takeLastWhile<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [index: number]>): Iterable_2<U>;
+    // (undocumented)
     function takeLastWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
     function takeUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
+    // (undocumented)
+    function takeWhile<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [index: number]>): Iterable_2<U>;
     // (undocumented)
     function takeWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
@@ -160,9 +164,7 @@ namespace Iterable_2 {
     // (undocumented)
     function zip<T, U = T>(a: Iterable_2<T>, b: Iterable_2<U>): Iterable_2<[T, U]>;
 }
-
 export { Iterable_2 as Iterable }
-
 
 // (No @packageDocumentation comment for this package)
 

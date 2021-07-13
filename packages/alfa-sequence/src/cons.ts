@@ -502,6 +502,12 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+
+  public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+
   public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.takeUntil(not(predicate));
   }
@@ -537,6 +543,12 @@ export class Cons<T> implements Sequence<T> {
   public takeLast(count: number): Sequence<T> {
     return this.skip(this.size - count);
   }
+
+  public takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.reverse().takeWhile(predicate).reverse();

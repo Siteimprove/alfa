@@ -305,6 +305,12 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.take(this, count));
   }
 
+  public takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): List<U>;
+
+  public takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
+
   public takeWhile(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.takeWhile(this, predicate));
   }
@@ -316,6 +322,12 @@ export class List<T> implements Collection.Indexed<T> {
   public takeLast(count: number = 1): List<T> {
     return List.from(Iterable.takeLast(this, count));
   }
+
+  public takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): List<U>;
+
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.takeLastWhile(this, predicate));

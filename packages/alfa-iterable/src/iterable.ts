@@ -471,6 +471,16 @@ export namespace Iterable {
     }
   }
 
+  export function takeWhile<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [index: number]>
+  ): Iterable<U>;
+
+  export function takeWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [index: number]>
+  ): Iterable<T>;
+
   export function* takeWhile<T>(
     iterable: Iterable<T>,
     predicate: Predicate<T, [index: number]>
@@ -513,6 +523,16 @@ export namespace Iterable {
 
     yield* last;
   }
+
+  export function takeLastWhile<T, U extends T>(
+    iterable: Iterable<T>,
+    refinement: Refinement<T, U, [index: number]>
+  ): Iterable<U>;
+
+  export function takeLastWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, [index: number]>
+  ): Iterable<T>;
 
   export function* takeLastWhile<T>(
     iterable: Iterable<T>,
