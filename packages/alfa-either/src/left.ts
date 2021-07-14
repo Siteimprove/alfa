@@ -43,8 +43,8 @@ export class Left<L> implements Either<L, never> {
     return this;
   }
 
-  public flatten<L>(this: Either<L, never>): Left<L> {
-    return this as Left<L>;
+  public flatten<L, R>(this: Either<L, never>): Either<L, R> {
+    return this;
   }
 
   public reduce<T>(reducer: unknown, accumulator: T): T {

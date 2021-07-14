@@ -56,7 +56,7 @@ export class Err<E> implements Result<never, E> {
     return this;
   }
 
-  public flatten<E>(this: Err<E>): Err<E> {
+  public flatten<T, E>(this: Result<never, E>): Result<T, E> {
     return this;
   }
 
