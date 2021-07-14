@@ -27,6 +27,8 @@ export interface Either<L, R = L> extends Functor<R>, Applicative<R>, Monad<R>, 
     // (undocumented)
     flatMap<T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
     // (undocumented)
+    flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
+    // (undocumented)
     get(): L | R;
     // (undocumented)
     isLeft(): this is Left<L>;
@@ -72,6 +74,8 @@ export class Left<L> implements Either<L, never> {
     equals(value: unknown): value is this;
     // (undocumented)
     flatMap(): Left<L>;
+    // (undocumented)
+    flatten<L, R>(this: Either<L, never>): Either<L, R>;
     // (undocumented)
     get(): L;
     // (undocumented)
@@ -127,6 +131,8 @@ export class Right<R> implements Either<never, R> {
     equals(value: unknown): value is this;
     // (undocumented)
     flatMap<L, T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
+    // (undocumented)
+    flatten<L, R>(this: Right<Either<L, R>>): Either<L, R>;
     // (undocumented)
     get(): R;
     // (undocumented)

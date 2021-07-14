@@ -233,6 +233,8 @@ export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>,
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Value<U>>): Value<U>;
     // (undocumented)
+    flatten<T>(this: Value<Value<T>>): Value<T>;
+    // (undocumented)
     includes(value: T): boolean;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Value<U>;

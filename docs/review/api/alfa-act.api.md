@@ -392,6 +392,8 @@ export class Question<Q, S, A, T = A> implements Functor<T>, Applicative<T>, Mon
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Question<Q, S, A, U>>): Question<Q, S, A, U>;
     // (undocumented)
+    flatten<Q, S, A, T>(this: Question<Q, S, A, Question<Q, S, A, T>>): Question<Q, S, A, T>;
+    // (undocumented)
     map<U>(mapper: Mapper<T, U>): Question<Q, S, A, U>;
     // (undocumented)
     get message(): string;

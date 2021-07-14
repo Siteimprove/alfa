@@ -11,6 +11,8 @@ import { Mapper } from '@siteimprove/alfa-mapper';
 export interface Applicative<T> extends Functor<T> {
     // (undocumented)
     apply<U>(mapper: Applicative<Mapper<T, U>>): Applicative<U>;
+    // (undocumented)
+    map<U>(mapper: Mapper<T, U>): Applicative<U>;
 }
 
 ```

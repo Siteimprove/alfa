@@ -42,7 +42,7 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     flatMap(): Err<E>;
     // (undocumented)
-    flatten<T, E>(this: Err<E>): Result<T, E>;
+    flatten<T, E>(this: Result<never, E>): Result<T, E>;
     // (undocumented)
     get(): never;
     // (undocumented)

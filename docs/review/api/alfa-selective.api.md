@@ -31,6 +31,8 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U>;
     // (undocumented)
+    flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T>;
+    // (undocumented)
     get(): S | T;
     // (undocumented)
     hash(hash: Hash): void;
