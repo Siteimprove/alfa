@@ -36,9 +36,9 @@ namespace Array_2 {
     // (undocumented)
     function collectFirst<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    function compare<T extends Comparable<T>>(a: ReadonlyArray<T>, b: Iterable_2<T>): Comparison;
+    function compare<T extends Comparable<U>, U = T>(a: ReadonlyArray<T>, b: Iterable_2<U>): Comparison;
     // (undocumented)
-    function compareWith<T>(a: ReadonlyArray<T>, b: Iterable_2<T>, comparer: Comparer<T>): Comparison;
+    function compareWith<T, U = T>(a: ReadonlyArray<T>, b: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
     function concat<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;
     // (undocumented)
@@ -134,8 +134,6 @@ namespace Array_2 {
     // (undocumented)
     function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable_2<U>): Array_2<[T, U]>;
 }
-
 export { Array_2 as Array }
-
 
 ```

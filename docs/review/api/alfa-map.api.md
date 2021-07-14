@@ -78,7 +78,7 @@ export class Leaf<K, V> implements Node<K, V> {
     set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
     // (undocumented)
     get value(): V;
-    }
+}
 
 // @public (undocumented)
 class Map_2<K, V> implements Collection.Keyed<K, V> {
@@ -87,13 +87,13 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     apply<U>(mapper: Map_2<K, Mapper<V, U>>): Map_2<K, U>;
     // (undocumented)
-    collect<U>(mapper: Mapper<V, Option<U>, [K]>): Map_2<K, U>;
+    collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Map_2<K, U>;
     // (undocumented)
-    collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U>;
+    collectFirst<U>(mapper: Mapper<V, Option<U>, [key: K]>): Option<U>;
     // (undocumented)
     concat(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
-    count(predicate: Predicate<V, [K]>): number;
+    count(predicate: Predicate<V, [key: K]>): number;
     // (undocumented)
     delete(key: K): Map_2<K, V>;
     // (undocumented)
@@ -105,19 +105,21 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    every(predicate: Predicate<V, [K]>): boolean;
+    every(predicate: Predicate<V, [key: K]>): boolean;
     // (undocumented)
-    filter<U extends V>(refinement: Refinement<V, U, [K]>): Map_2<K, U>;
+    filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Map_2<K, U>;
     // (undocumented)
-    filter(predicate: Predicate<V, [K]>): Map_2<K, V>;
+    filter(predicate: Predicate<V, [key: K]>): Map_2<K, V>;
     // (undocumented)
-    find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+    find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
     // (undocumented)
-    find(predicate: Predicate<V, [K]>): Option<V>;
+    find(predicate: Predicate<V, [key: K]>): Option<V>;
     // (undocumented)
-    flatMap<L, U>(mapper: Mapper<V, Map_2<L, U>, [K]>): Map_2<L, U>;
+    flatMap<L, U>(mapper: Mapper<V, Map_2<L, U>, [key: K]>): Map_2<L, U>;
     // (undocumented)
-    forEach(callback: Callback<V, void, [K]>): void;
+    flatten<K, V>(this: Map_2<K, Map_2<K, V>>): Map_2<K, V>;
+    // (undocumented)
+    forEach(callback: Callback<V, void, [key: K]>): void;
     // (undocumented)
     get(key: K): Option<V>;
     // (undocumented)
@@ -135,23 +137,23 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     keys(): Iterable_2<K>;
     // (undocumented)
-    map<U>(mapper: Mapper<V, U, [K]>): Map_2<K, U>;
+    map<U>(mapper: Mapper<V, U, [key: K]>): Map_2<K, U>;
     // (undocumented)
-    none(predicate: Predicate<V, [K]>): boolean;
+    none(predicate: Predicate<V, [key: K]>): boolean;
     // (undocumented)
     static of<K, V>(...entries: Array_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
-    reduce<R>(reducer: Reducer<V, R, [K]>, accumulator: R): R;
+    reduce<R>(reducer: Reducer<V, R, [key: K]>, accumulator: R): R;
     // (undocumented)
-    reject<U extends V>(refinement: Refinement<V, U, [K]>): Map_2<K, Exclude<V, U>>;
+    reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Map_2<K, Exclude<V, U>>;
     // (undocumented)
-    reject(predicate: Predicate<V, [K]>): Map_2<K, V>;
+    reject(predicate: Predicate<V, [key: K]>): Map_2<K, V>;
     // (undocumented)
     set(key: K, value: V): Map_2<K, V>;
     // (undocumented)
     get size(): number;
     // (undocumented)
-    some(predicate: Predicate<V, [K]>): boolean;
+    some(predicate: Predicate<V, [key: K]>): boolean;
     // (undocumented)
     subtract(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
@@ -179,7 +181,6 @@ namespace Map_2 {
     // (undocumented)
     type JSON<K, V> = Collection.Keyed.JSON<K, V>;
 }
-
 export { Map_2 as Map }
 
 // Warning: (ae-internal-missing-underscore) The name "Node" should be prefixed with an underscore because the declaration is marked as @internal
@@ -233,7 +234,6 @@ export class Sparse<K, V> implements Node<K, V> {
     // (undocumented)
     set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

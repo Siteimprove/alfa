@@ -26,11 +26,11 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     [Symbol.iterator](): Generator<never, void, unknown>;
     // (undocumented)
-    and(): this;
+    and(): Err<E>;
     // (undocumented)
-    andThen(): this;
+    andThen(): Err<E>;
     // (undocumented)
-    apply(): this;
+    apply(): Err<E>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -40,7 +40,9 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     everyErr(predicate: Predicate<E>): boolean;
     // (undocumented)
-    flatMap(): this;
+    flatMap(): Err<E>;
+    // (undocumented)
+    flatten<T, E>(this: Err<E>): Result<T, E>;
     // (undocumented)
     get(): never;
     // (undocumented)
@@ -60,11 +62,11 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     isOk(): this is Ok<never>;
     // (undocumented)
-    map(): this;
+    map(): Err<E>;
     // (undocumented)
     mapErr<F>(mapper: Mapper<E, F>): Err<F>;
     // (undocumented)
-    mapOrElse<T, U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
+    mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
     // (undocumented)
     none(): boolean;
     // (undocumented)
@@ -129,6 +131,8 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F>;
     // (undocumented)
+    flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E>;
+    // (undocumented)
     get(): T;
     // (undocumented)
     getErr(): never;
@@ -149,9 +153,9 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Ok<U>;
     // (undocumented)
-    mapErr(): this;
+    mapErr(): Ok<T>;
     // (undocumented)
-    mapOrElse<E, U>(ok: Mapper<T, U>): U;
+    mapOrElse<U>(ok: Mapper<T, U>): U;
     // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
@@ -161,9 +165,9 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     ok(): Option<T>;
     // (undocumented)
-    or(): this;
+    or(): Ok<T>;
     // (undocumented)
-    orElse(): this;
+    orElse(): Ok<T>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
@@ -178,7 +182,7 @@ export class Ok<T> implements Result<T, never> {
     toJSON(): Ok.JSON<T>;
     // (undocumented)
     toString(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Ok {
@@ -196,7 +200,7 @@ export namespace Ok {
 }
 
 // @public (undocumented)
-export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
+export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
     // (undocumented)
     and<U>(result: Result<U, E>): Result<U, E>;
     // (undocumented)
@@ -211,6 +215,8 @@ export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, App
     everyErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
+    // (undocumented)
+    flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
     // (undocumented)
     get(): T;
     // (undocumented)
@@ -270,7 +276,6 @@ export namespace Result {
     // (undocumented)
     export function of<T, E>(value: T): Result<T, E>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

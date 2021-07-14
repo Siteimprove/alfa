@@ -4,14 +4,14 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
-export interface Monad<T> {
+export interface Monad<T> extends Applicative<T> {
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Monad<U>>): Monad<U>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

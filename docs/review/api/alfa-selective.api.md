@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -16,9 +17,11 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export class Selective<S, T = never> implements Functor<T>, Monad<T>, Iterable<S | T>, Equatable, Hashable, Serializable<Selective.JSON<S, T>> {
+export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<S | T>, Equatable, Hashable, Serializable<Selective.JSON<S, T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<S | T>;
+    // (undocumented)
+    apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
     // (undocumented)
     else<U>(mapper: Mapper<S, U>): Selective<never, T | U>;
     // (undocumented)
@@ -45,7 +48,7 @@ export class Selective<S, T = never> implements Functor<T>, Monad<T>, Iterable<S
     toJSON(): Selective.JSON<S, T>;
     // (undocumented)
     toString(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Selective {
@@ -53,7 +56,6 @@ export namespace Selective {
     // (undocumented)
     export type JSON<S, T = never> = Either.JSON<S, T>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
