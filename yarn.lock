@@ -933,6 +933,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-act@workspace:packages/alfa-act"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0"
     "@siteimprove/alfa-earl": "workspace:^0.20.0"
     "@siteimprove/alfa-equatable": "workspace:^0.20.0"
     "@siteimprove/alfa-functor": "workspace:^0.20.0"
@@ -986,6 +987,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-applicative@workspace:packages/alfa-applicative"
   dependencies:
+    "@siteimprove/alfa-functor": "workspace:^0.20.0"
     "@siteimprove/alfa-mapper": "workspace:^0.20.0"
     "@siteimprove/alfa-test": "workspace:^0.20.0"
   languageName: unknown
@@ -1369,6 +1371,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-either@workspace:packages/alfa-either"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0"
     "@siteimprove/alfa-equatable": "workspace:^0.20.0"
     "@siteimprove/alfa-foldable": "workspace:^0.20.0"
     "@siteimprove/alfa-functor": "workspace:^0.20.0"
@@ -1692,6 +1695,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-lazy@workspace:packages/alfa-lazy"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0"
     "@siteimprove/alfa-equatable": "workspace:^0.20.0"
     "@siteimprove/alfa-functor": "workspace:^0.20.0"
     "@siteimprove/alfa-json": "workspace:^0.20.0"
@@ -1789,6 +1793,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-monad@workspace:packages/alfa-monad"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0"
     "@siteimprove/alfa-mapper": "workspace:^0.20.0"
     "@siteimprove/alfa-test": "workspace:^0.20.0"
   languageName: unknown
@@ -2077,6 +2082,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-selective@workspace:packages/alfa-selective"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0"
     "@siteimprove/alfa-either": "workspace:^0.20.0"
     "@siteimprove/alfa-equatable": "workspace:^0.20.0"
     "@siteimprove/alfa-functor": "workspace:^0.20.0"
@@ -2179,6 +2185,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-style@workspace:packages/alfa-style"
   dependencies:
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0"
     "@siteimprove/alfa-cache": "workspace:^0.20.0"
     "@siteimprove/alfa-cascade": "workspace:^0.20.0"
     "@siteimprove/alfa-css": "workspace:^0.20.0"
