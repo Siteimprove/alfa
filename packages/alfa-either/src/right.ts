@@ -44,6 +44,10 @@ export class Right<R> implements Either<never, R> {
     return mapper(this._value);
   }
 
+  public flatten<L, R>(this: Right<Either<L, R>>): Either<L, R> {
+    return this._value;
+  }
+
   public reduce<T>(reducer: Reducer<R, T>, accumulator: T): T {
     return reducer(accumulator, this._value);
   }

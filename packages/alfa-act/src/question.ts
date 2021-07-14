@@ -89,6 +89,12 @@ export class Question<Q, S, A, T = A>
     );
   }
 
+  public flatten<Q, S, A, T>(
+    this: Question<Q, S, A, Question<Q, S, A, T>>
+  ): Question<Q, S, A, T> {
+    return this.flatMap((question) => question);
+  }
+
   public answer(answer: A): T {
     return this._quester(answer);
   }

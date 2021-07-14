@@ -51,6 +51,10 @@ export class Selective<S, T = never>
     );
   }
 
+  public flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T> {
+    return this.flatMap((selective) => selective);
+  }
+
   public if<P extends S, U>(
     refinement: Refinement<S, P>,
     mapper: Mapper<P, U>

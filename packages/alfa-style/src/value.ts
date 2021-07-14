@@ -54,6 +54,10 @@ export class Value<T = unknown>
     return mapper(this._value);
   }
 
+  public flatten<T>(this: Value<Value<T>>): Value<T> {
+    return this._value;
+  }
+
   public includes(value: T): boolean {
     return Equatable.equals(this._value, value);
   }

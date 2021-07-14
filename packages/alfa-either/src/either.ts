@@ -29,6 +29,7 @@ export interface Either<L, R = L>
   map<T>(mapper: Mapper<R, T>): Either<L, T>;
   apply<T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
   flatMap<T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
+  flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
   reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
   either<T>(left: Mapper<L, T>, right: Mapper<R, T>): T;
   get(): L | R;
