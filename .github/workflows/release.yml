@@ -23,7 +23,7 @@ jobs:
       - run: >
           yarn workspaces foreach
           --no-private
-          --topological
+          --topological-dev
           npm publish --tolerate-republish
       - uses: actions/create-release@v1.1.4
         env:
