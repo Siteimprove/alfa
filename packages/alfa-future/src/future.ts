@@ -63,7 +63,7 @@ export abstract class Future<T>
   }
 
   public apply<U>(mapper: Future<Mapper<T, U>>): Future<U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+    return mapper.flatMap((mapper) => this.map(mapper));
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
