@@ -28,7 +28,7 @@ namespace Array_2 {
     // (undocumented)
     function append<T>(array: Array_2<T>, value: T): Array_2<T>;
     // (undocumented)
-    function apply<T, U>(iterable: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array_2<U>;
+    function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array_2<U>;
     // (undocumented)
     function clone<T extends Clone<T>>(array: ReadonlyArray<T>): Array_2<T>;
     // (undocumented)

@@ -28,6 +28,7 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
     equals<S, T>(value: Selective<S, T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    exhaust<T>(this: Selective<never, T>): T;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U>;
     // (undocumented)
@@ -54,7 +55,6 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
 
 // @public (undocumented)
 export namespace Selective {
-    export function exhaust<T>(selective: Selective<never, T>): T;
     // (undocumented)
     export type JSON<S, T = never> = Either.JSON<S, T>;
 }

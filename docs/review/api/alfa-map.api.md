@@ -84,7 +84,6 @@ export class Leaf<K, V> implements Node<K, V> {
 class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
-    // (undocumented)
     apply<U>(mapper: Map_2<K, Mapper<V, U>>): Map_2<K, U>;
     // (undocumented)
     collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Map_2<K, U>;
