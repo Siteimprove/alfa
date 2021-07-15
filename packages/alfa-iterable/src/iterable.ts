@@ -137,7 +137,7 @@ export namespace Iterable {
     iterable: Iterable<T>,
     mapper: Iterable<Mapper<T, U>>
   ): Iterable<U> {
-    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
+    return flatMap(mapper, (mapper) => map(iterable, mapper));
   }
 
   export function filter<T, U extends T>(
