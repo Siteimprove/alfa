@@ -83,6 +83,10 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
+    return mapper.flatMap((mapper) => this.map(mapper));
+  }
+
   public flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U> {
     return this.reduce(
       (list, value, index) => list.concat(mapper(value, index)),
@@ -112,10 +116,6 @@ export class List<T> implements Collection.Indexed<T> {
     accumulator: U
   ): U {
     return Iterable.reduceUntil(this, predicate, reducer, accumulator);
-  }
-
-  public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public filter<U extends T>(
