@@ -56,10 +56,32 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return new Map(this._root.map(mapper), this._size);
   }
 
+  /**
+   * Apply a map of functions to each corresponding value of this map.
+   *
+   * @remarks
+   * Keys without a corresponding function or value are dropped from the
+   * resulting map.
+   *
+   * @example
+   * ```ts
+   * Map.of(["a", 1], ["b", 2])
+   *   .apply(Map.of(["a", (x) => x + 1], ["b", (x) => x * 2]))
+   *   .toArray();
+   * // => [["a", 2], ["b", 4]]
+   * ```
+   */
   public apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U> {
-    return mapper.flatMap((mapper) => this.map(mapper));
+    return this.collect((value, key) =>
+      mapper.get(key).map((mapper) => mapper(value))
+    );
   }
 
+  /**
+   * @remarks
+   * As the order of maps is undefined, it is also undefined which keys are
+   * kept when duplicate keys are encountered.
+   */
   public flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [key: K]>): Map<L, U> {
     return this.reduce(
       (map, value, key) => map.concat(mapper(value, key)),
@@ -67,6 +89,11 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
+  /**
+   * @remarks
+   * As the order of maps is undefined, it is also undefined which keys are
+   * kept when duplicate keys are encountered.
+   */
   public flatten<K, V>(this: Map<K, Map<K, V>>): Map<K, V> {
     return this.flatMap((map) => map);
   }
@@ -145,7 +172,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   /**
    * @remarks
    * As the order of maps is undefined, it is also undefined which keys are
-   * deleted when duplicate values are encountered.
+   * kept when duplicate values are encountered.
    */
   public distinct(): Map<K, V> {
     let seen = Map.empty<V, V>();
