@@ -35,9 +35,7 @@ export class Selective<S, T = never>
   }
 
   public map<U>(mapper: Mapper<T, U>): Selective<S, U> {
-    return this.flatMap(
-      (value) => new Selective<S, U>(Right.of(mapper(value)))
-    );
+    return new Selective(this._value.map(mapper));
   }
 
   public apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U> {
@@ -45,10 +43,7 @@ export class Selective<S, T = never>
   }
 
   public flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U> {
-    return this._value.either(
-      (value) => new Selective(Left.of(value)),
-      (value) => mapper(value)
-    );
+    return new Selective(this._value.flatMap((value) => mapper(value)._value));
   }
 
   public flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T> {
@@ -91,6 +86,18 @@ export class Selective<S, T = never>
     return this._value.get();
   }
 
+  /**
+   * Ensure that this {@link (Selective:class)} is exhaustively matched, returning
+   * its resulting value.
+   *
+   * @remarks
+   * This method should only be used for cases where {@link (Selective:class).get}
+   * is insufficient. If in doubt, assume that it isn't.
+   */
+  public exhaust<T>(this: Selective<never, T>): T {
+    return this.get();
+  }
+
   public equals<S, T>(value: Selective<S, T>): boolean;
 
   public equals(value: unknown): value is this;
@@ -125,16 +132,4 @@ export class Selective<S, T = never>
  */
 export namespace Selective {
   export type JSON<S, T = never> = Either.JSON<S, T>;
-
-  /**
-   * Ensure that a {@link (Selective:class)} is exhaustively matched, returning its
-   * resulting value.
-   *
-   * @remarks
-   * This function should only be used for cases where {@link (Selective:class).get}
-   * is insufficient. If in doubt, assume that it isn't.
-   */
-  export function exhaust<T>(selective: Selective<never, T>): T {
-    return selective.get();
-  }
 }
