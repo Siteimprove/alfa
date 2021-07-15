@@ -58,6 +58,13 @@ test("#map() does not force the tail of a sequence", (t) => {
   ).map((n) => n + 1);
 });
 
+test("#apply() applies a sequence of functions to each value of a sequence", (t) => {
+  t.deepEqual(
+    [...seq.apply(Sequence.from([(n) => n + 1, (n) => n * 2]))],
+    [2, 3, 4, 5, 2, 4, 6, 8]
+  );
+});
+
 test("#flatMap() applies a function to each value of a sequence and flattens the result", (t) => {
   t.deepEqual(
     [...seq.flatMap((n) => Sequence.from([n, n]))],
