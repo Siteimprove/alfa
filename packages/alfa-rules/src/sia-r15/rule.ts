@@ -19,7 +19,7 @@ import { Question } from "../common/question";
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question, Group<Element>>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
   evaluate({ device, document, response }) {
@@ -62,6 +62,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
               Question.of(
                 "reference-equivalent-resources",
                 "boolean",
+                target,
                 target,
                 "Do the <iframe> elements embed equivalent resources?"
               ).map((embedEquivalentResources) =>

@@ -12,6 +12,7 @@ export function videoDescriptionTrackAccurate(target: Element) {
       "track-describes-video",
       "boolean",
       target,
+      target,
       `Does at least 1 track describe the visual information of the \`<video>\`
       element, either in the language of the \`<video>\` element or the language
       of the page?`

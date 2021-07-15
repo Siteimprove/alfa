@@ -4,11 +4,11 @@ import { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-type Path<Q, S> = Interview<Q, S, Option.Maybe<Result<Diagnostic>>>;
+type Path<Q, S, C> = Interview<Q, S, C, Option.Maybe<Result<Diagnostic>>>;
 
-function toExpectation<Q, S>(
-  path: Path<Q, S>
-): Interview<Q, S, Option<Result<Diagnostic>>> {
+function toExpectation<Q, S, C>(
+  path: Path<Q, S, C>
+): Interview<Q, S, C, Option<Result<Diagnostic>>> {
   if (path instanceof Question) {
     return path.map(toExpectation);
   }
@@ -20,12 +20,12 @@ function toExpectation<Q, S>(
   return Some.of(path);
 }
 
-export function expectation<Q, S>(
+export function expectation<Q, S, C>(
   test: Trilean,
-  ifTrue: Thunk<Path<Q, S>>,
-  ifFalse: Thunk<Path<Q, S>>,
-  ifUnknown: Thunk<Path<Q, S>> = Thunk.of(None)
-): Interview<Q, S, Option<Result<Diagnostic>>> {
+  ifTrue: Thunk<Path<Q, S, C>>,
+  ifFalse: Thunk<Path<Q, S, C>>,
+  ifUnknown: Thunk<Path<Q, S, C>> = Thunk.of(None)
+): Interview<Q, S, C, Option<Result<Diagnostic>>> {
   switch (test) {
     case true:
       return toExpectation(ifTrue());

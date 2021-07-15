@@ -31,7 +31,7 @@ const { max } = Math;
 const { isElement } = Element;
 const { isText } = Text;
 
-export default Rule.Atomic.of<Page, Text, Question>({
+export default Rule.Atomic.of<Page, Text, Question, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r69",
   requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
   evaluate({ device, document }) {
@@ -73,12 +73,14 @@ export default Rule.Atomic.of<Page, Text, Question>({
           "foreground-colors",
           "color[]",
           target,
+          target,
           "What are the foreground colors of the text node?"
         );
 
         const backgrounds = Question.of(
           "background-colors",
           "color[]",
+          target,
           target,
           "What are the background colors of the text node?"
         );

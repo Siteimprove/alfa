@@ -6,19 +6,19 @@ import { Result, Err } from "@siteimprove/alfa-result";
 /**
  * @public
  */
-export type Interviewer<I = unknown, T = unknown, Q = never> = (
+export type Interviewer<I = unknown, T = unknown, Q = never, S = never> = (
   input: I,
-  rules: Iterable<Rule<I, T, Q>>
-) => Oracle<I, T, Q>;
+  rules: Iterable<Rule<I, T, Q, S>>
+) => Oracle<I, T, Q, S>;
 
 /**
  * @public
  */
 export namespace Interviewer {
-  export async function load<I, T = unknown, Q = never>(
+  export async function load<I, T = unknown, Q = never, S = never>(
     name: string,
     defaultScope: string = "@siteimprove"
-  ): Promise<Result<Interviewer<I, T, Q>, string>> {
+  ): Promise<Result<Interviewer<I, T, Q, S>, string>> {
     let scope: string | undefined;
 
     if (name.startsWith("@")) {

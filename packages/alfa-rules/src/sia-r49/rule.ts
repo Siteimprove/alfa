@@ -20,7 +20,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { or, nor } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
   requirements: [Technique.of("G170")],
   evaluate({ document, device }) {
@@ -46,6 +46,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
               "is-above-duration-threshold",
               "boolean",
               element,
+              element,
               `Does the \`<${element.name}>\` element have a duration of more
               than 3 seconds?`
             ).map((isAboveDurationThreshold) =>
@@ -59,6 +60,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 "has-audio",
                 "boolean",
                 element,
+                element,
                 `Does the \`<${element.name}>\` element contain audio?`
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
@@ -70,6 +72,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
           1: Question.of(
             "audio-control-mechanism",
             "node",
+            target,
             target,
             `Where is the mechanism that can pause or stop the audio of the
             \`<${target.name}>\` element?`

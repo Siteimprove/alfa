@@ -9,7 +9,7 @@ import { videoDescriptionTrackAccurate } from "../common/expectation/video-descr
 
 import { Question } from "../common/question";
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r36",
   requirements: [Technique.of("G78"), Technique.of("H96")],
   evaluate({ device, document }) {
