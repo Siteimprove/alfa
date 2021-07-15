@@ -53,7 +53,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
   }
 
   public apply<U>(mapper: Set<Mapper<T, U>>): Set<U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+    return mapper.flatMap((mapper) => this.map(mapper));
   }
 
   public flatMap<U>(mapper: Mapper<T, Set<U>>): Set<U> {
