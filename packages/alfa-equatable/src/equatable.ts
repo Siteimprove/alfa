@@ -1,4 +1,26 @@
 /**
+ * This interface describes structures that define an
+ * {@link https://en.wikipedia.org/wiki/Equivalence_relation | equivalence relation}.
+ *
+ * @example
+ * ```ts
+ * class Foo implements Equatable {
+ *   readonly value: number;
+ *
+ *   constructor(value: number) {
+ *     this.value = value;
+ *   }
+ *
+ *   equals(value: Foo): boolean;
+ *
+ *   equals(value: unknown): value is this;
+ *
+ *   equals(value: unknown): boolean {
+ *     return value instanceof Foo && value.value === this.value;
+ *   }
+ * }
+ * ```
+ *
  * @public
  */
 export interface Equatable {
@@ -20,6 +42,9 @@ export interface Equatable {
 }
 
 /**
+ * This namespace provides additional types and functions for the
+ * {@link (Equatable:interface)} interface.
+ *
  * @public
  */
 export namespace Equatable {

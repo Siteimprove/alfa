@@ -4,18 +4,17 @@
 
 ```ts
 
-// @public (undocumented)
+// @public
 export interface Equatable {
     equals(value: this): boolean;
     equals(value: unknown): value is this;
 }
 
-// @public (undocumented)
+// @public
 export namespace Equatable {
     export function equals(a: unknown, b: unknown): boolean;
     export function isEquatable(value: unknown): value is Equatable;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

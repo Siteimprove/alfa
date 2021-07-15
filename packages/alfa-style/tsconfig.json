@@ -181,6 +181,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-applicative"
+    },
+    {
       "path": "../alfa-cache"
     },
     {

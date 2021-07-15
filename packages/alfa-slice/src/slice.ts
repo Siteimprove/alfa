@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
-import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -13,6 +13,7 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
+const { compareComparable } = Comparable;
 
 /**
  * @public
@@ -78,10 +79,20 @@ export class Slice<T> implements Collection.Indexed<T> {
     return new Slice(result, 0, result.length);
   }
 
+  public apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U> {
+    const array = [...Iterable.apply(this, mapper)];
+
+    return new Slice(array, 0, array.length);
+  }
+
   public flatMap<U>(mapper: Mapper<T, Slice<U>, [index: number]>): Slice<U> {
     const array = [...Iterable.flatMap(this, mapper)];
 
     return new Slice(array, 0, array.length);
+  }
+
+  public flatten<T>(this: Slice<Slice<T>>): Slice<T> {
+    return this.flatMap((slice) => slice);
   }
 
   public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
@@ -102,12 +113,6 @@ export class Slice<T> implements Collection.Indexed<T> {
     accumulator: U
   ): U {
     return Iterable.reduceUntil(this, predicate, reducer, accumulator);
-  }
-
-  public apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U> {
-    const array = [...Iterable.apply(this, mapper)];
-
-    return new Slice(array, 0, array.length);
   }
 
   public filter<U extends T>(
@@ -396,13 +401,27 @@ export class Slice<T> implements Collection.Indexed<T> {
     return Iterable.join(this, separator);
   }
 
+  public sort<T extends Comparable<T>>(this: Slice<T>): Slice<T> {
+    return this.sortWith(compareComparable);
+  }
+
   public sortWith(comparer: Comparer<T>): Slice<T> {
     const array = Array.sortWith(this.toArray(), comparer);
 
     return new Slice(array, 0, array.length);
   }
 
-  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+  public compare(
+    this: Slice<Comparable<T>>,
+    iterable: Iterable<T>
+  ): Comparison {
+    return this.compareWith(iterable, compareComparable);
+  }
+
+  public compareWith<U = T>(
+    iterable: Iterable<U>,
+    comparer: Comparer<T, U, [index: number]>
+  ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
 

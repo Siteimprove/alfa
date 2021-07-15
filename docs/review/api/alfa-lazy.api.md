@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Mapper } from '@siteimprove/alfa-mapper';
@@ -12,15 +13,19 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Lazy<T> implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> {
+export class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    // (undocumented)
+    apply<U>(mapper: Lazy<Mapper<T, U>>): Lazy<U>;
     // (undocumented)
     equals<T>(value: Lazy<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Lazy<U>>): Lazy<U>;
+    // (undocumented)
+    flatten<T>(this: Lazy<Lazy<T>>): Lazy<T>;
     // (undocumented)
     static force<T>(value: T): Lazy<T>;
     // (undocumented)
@@ -37,14 +42,13 @@ export class Lazy<T> implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Se
     toString(): string;
     // (undocumented)
     toThunk(): Thunk<T>;
-    }
+}
 
 // @public (undocumented)
 export namespace Lazy {
     // (undocumented)
     export type JSON<T> = Serializable.ToJSON<T>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

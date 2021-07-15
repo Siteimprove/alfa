@@ -7,6 +7,7 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Callback } from '@siteimprove/alfa-callback';
 import { Collection } from '@siteimprove/alfa-collection';
+import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
 import { Hash } from '@siteimprove/alfa-hash';
@@ -33,7 +34,9 @@ export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
+    compare(this: Slice<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
+    // (undocumented)
+    compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
     concat(iterable: Iterable_2<T>): Slice<T>;
     // (undocumented)
@@ -60,6 +63,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     first(): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Slice<U>, [index: number]>): Slice<U>;
+    // (undocumented)
+    flatten<T>(this: Slice<Slice<T>>): Slice<T>;
     // (undocumented)
     forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
@@ -128,6 +133,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     slice(start: number, end?: number): Slice<T>;
     // (undocumented)
     some(predicate: Predicate<T, [index: number]>): boolean;
+    // (undocumented)
+    sort<T extends Comparable<T>>(this: Slice<T>): Slice<T>;
     // (undocumented)
     sortWith(comparer: Comparer<T>): Slice<T>;
     // (undocumented)

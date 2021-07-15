@@ -32,6 +32,58 @@ test("#size returns the size of a map", (t) => {
   t.equal(map.size, 4);
 });
 
+test("#map() applies a function to each value of a map", (t) => {
+  t.deepEqual(
+    [...map.map((x) => x * 2)],
+    [
+      ["baz", 6],
+      ["qux", 8],
+      ["foo", 2],
+      ["bar", 4],
+    ]
+  );
+});
+
+test("#apply() applies a map of functions to each corresponding value of a map", (t) => {
+  t.deepEqual(
+    [
+      ...map.apply(
+        Map.of(
+          ["foo", (x) => x + 1],
+          ["bar", (x) => x * 2],
+          ["baz", (x) => x - 3],
+          ["qux", (x) => x / 4]
+        )
+      ),
+    ],
+    [
+      ["baz", 0],
+      ["qux", 1],
+      ["foo", 2],
+      ["bar", 4],
+    ]
+  );
+});
+
+test("#apply() drops keys with no corresponding function or value", (t) => {
+  t.deepEqual(
+    [...map.apply(Map.of(["foo", (x) => x + 1], ["fez", (x) => x * 2]))],
+    [["foo", 2]]
+  );
+});
+
+test("#flatMap() applies a function to each value of a map and flattens the result", (t) => {
+  t.deepEqual(
+    [...map.flatMap((x) => Map.of([x.toString(), x]))],
+    [
+      ["3", 3],
+      ["4", 4],
+      ["2", 2],
+      ["1", 1],
+    ]
+  );
+});
+
 test("#distinct() removes duplicate values from a map", (t) => {
   t.deepEqual(
     [

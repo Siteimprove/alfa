@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -27,7 +28,7 @@ export class Audit<I, T = unknown, Q = never> {
     evaluate(performance?: Performance<Audit.Event<I, T, Q>>): Future<Iterable_2<Outcome<I, T, Q>>>;
     // (undocumented)
     static of<I, T = unknown, Q = never>(input: I, rules: Iterable_2<Rule<I, T, Q>>, oracle?: Oracle<I, T, Q>): Audit<I, T, Q>;
-    }
+}
 
 // @public (undocumented)
 export namespace Audit {
@@ -72,7 +73,7 @@ export class Cache {
     static empty(): Cache;
     // (undocumented)
     get<I, T, Q>(rule: Rule<I, T, Q>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q>>>>): Future<Iterable<Outcome<I, T, Q>>>;
-    }
+}
 
 // @public (undocumented)
 export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
@@ -382,12 +383,16 @@ export namespace Outcome {
 }
 
 // @public (undocumented)
-export class Question<Q, S, A, T = A> implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
+export class Question<Q, S, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S>> {
     protected constructor(uri: string, type: Q, subject: S, message: string, quester: Mapper<A, T>);
     // (undocumented)
     answer(answer: A): T;
     // (undocumented)
+    apply<U>(mapper: Question<Q, S, A, Mapper<T, U>>): Question<Q, S, A, U>;
+    // (undocumented)
     flatMap<U>(mapper: Mapper<T, Question<Q, S, A, U>>): Question<Q, S, A, U>;
+    // (undocumented)
+    flatten<Q, S, A, T>(this: Question<Q, S, A, Question<Q, S, A, T>>): Question<Q, S, A, T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Question<Q, S, A, U>;
     // (undocumented)
@@ -402,7 +407,7 @@ export class Question<Q, S, A, T = A> implements Functor<T>, Monad<T>, Serializa
     get type(): Q;
     // (undocumented)
     get uri(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Question {
@@ -638,6 +643,5 @@ export namespace Tag {
         type: string;
     }
 }
-
 
 ```

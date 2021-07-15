@@ -36,7 +36,9 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
+    compare(this: Sequence<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
+    // (undocumented)
+    compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
     concat(iterable: Iterable_2<T>): Cons<T>;
     // (undocumented)
@@ -65,6 +67,8 @@ export class Cons<T> implements Sequence<T> {
     flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
     // @internal (undocumented)
     flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>, index: number): Sequence<U>;
+    // (undocumented)
+    flatten<T>(this: Sequence<Sequence<T>>): Sequence<T>;
     // (undocumented)
     forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
@@ -133,6 +137,8 @@ export class Cons<T> implements Sequence<T> {
     slice(start: number, end?: number): Sequence<T>;
     // (undocumented)
     some(predicate: Predicate<T, [index: number]>): boolean;
+    // (undocumented)
+    sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
     // (undocumented)
     sortWith(comparer: Comparer<T>): Sequence<T>;
     // (undocumented)
@@ -205,7 +211,9 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
+    compare(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
+    // (undocumented)
+    compareWith<U = T>(iterable: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
     concat(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)
@@ -226,6 +234,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     first(): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
+    // (undocumented)
+    flatten<T>(this: Sequence<Sequence<T>>): Sequence<T>;
     // (undocumented)
     forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
@@ -285,6 +295,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     some(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
+    sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
+    // (undocumented)
     sortWith(comparer: Comparer<T>): Sequence<T>;
     // (undocumented)
     subtract(iterable: Iterable<T>): Sequence<T>;
@@ -321,11 +333,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
 // @public (undocumented)
 export namespace Sequence {
     // (undocumented)
-    export function compare<T extends Comparable<T>>(a: Sequence<T>, b: Iterable<T>): Comparison;
-    // (undocumented)
     export function empty<T = never>(): Sequence<T>;
-    // (undocumented)
-    export function flatten<T>(sequence: Sequence<Sequence<T>>): Sequence<T>;
     // (undocumented)
     export function from<T>(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)
@@ -350,8 +358,6 @@ export namespace Sequence {
     export type JSON<T> = Cons.JSON<T> | Nil.JSON;
     // (undocumented)
     export function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T>;
-    // (undocumented)
-    export function sort<T extends Comparable<T>>(sequence: Sequence<T>): Sequence<T>;
 }
 
 // (No @packageDocumentation comment for this package)

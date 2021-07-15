@@ -30,9 +30,9 @@ namespace Iterable_2 {
     // (undocumented)
     function collectFirst<T, U>(iterable: Iterable_2<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    function compare<T extends Comparable<T>>(a: Iterable_2<T>, b: Iterable_2<T>): Comparison;
+    function compare<T extends Comparable<U>, U = T>(a: Iterable_2<T>, b: Iterable_2<U>): Comparison;
     // (undocumented)
-    function compareWith<T>(a: Iterable_2<T>, b: Iterable_2<T>, comparer: Comparer<T>): Comparison;
+    function compareWith<T, U = T>(a: Iterable_2<T>, b: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
     function concat<T>(iterable: Iterable_2<T>, ...iterables: Array<Iterable_2<T>>): Iterable_2<T>;
     // (undocumented)

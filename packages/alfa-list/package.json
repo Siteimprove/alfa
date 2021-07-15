@@ -4,7 +4,7 @@
   "homepage": "https://alfa.siteimprove.com",
   "version": "0.20.0",
   "license": "MIT",
-  "description": "An implementation of an immutable list structure, based on a persistent vector trie",
+  "description": "An implementation of an immutable list structure, based on a bit-partitioned vector trie",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",

@@ -4,14 +4,8 @@ import { JSON } from "./json";
 
 const { keys } = Object;
 const { isArray } = Array;
-const {
-  isFunction,
-  isObject,
-  isString,
-  isNumber,
-  isBoolean,
-  isNull,
-} = Refinement;
+const { isFunction, isObject, isString, isNumber, isBoolean, isNull } =
+  Refinement;
 
 /**
  * @public

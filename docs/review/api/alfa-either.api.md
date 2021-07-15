@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Applicative } from '@siteimprove/alfa-applicative';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -18,11 +19,15 @@ import { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export interface Either<L, R = L> extends Functor<L | R>, Monad<L | R>, Foldable<L | R>, Iterable<L | R>, Equatable, Hashable, Serializable<Either.JSON<L, R>> {
+export interface Either<L, R = L> extends Functor<R>, Applicative<R>, Monad<R>, Foldable<R>, Iterable<L | R>, Equatable, Hashable, Serializable<Either.JSON<L, R>> {
+    // (undocumented)
+    apply<T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
     // (undocumented)
     either<T>(left: Mapper<L, T>, right: Mapper<R, T>): T;
     // (undocumented)
-    flatMap<T>(mapper: Mapper<L | R, Either<T, T>>): Either<T, T>;
+    flatMap<T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
+    // (undocumented)
+    flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
     // (undocumented)
     get(): L | R;
     // (undocumented)
@@ -32,9 +37,9 @@ export interface Either<L, R = L> extends Functor<L | R>, Monad<L | R>, Foldable
     // (undocumented)
     left(): Option<L>;
     // (undocumented)
-    map<T>(mapper: Mapper<L | R, T>): Either<T, T>;
+    map<T>(mapper: Mapper<R, T>): Either<L, T>;
     // (undocumented)
-    reduce<T>(reducer: Reducer<L | R, T>, accumulator: T): T;
+    reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
     // (undocumented)
     right(): Option<R>;
     // (undocumented)
@@ -60,13 +65,17 @@ export class Left<L> implements Either<L, never> {
     // (undocumented)
     [Symbol.iterator](): Iterator<L>;
     // (undocumented)
+    apply(): Left<L>;
+    // (undocumented)
     either<T>(left: Mapper<L, T>): T;
     // (undocumented)
     equals<L>(value: Left<L>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    flatMap<T>(mapper: Mapper<L, Either<T, T>>): Either<T, T>;
+    flatMap(): Left<L>;
+    // (undocumented)
+    flatten<L, R>(this: Either<L, never>): Either<L, R>;
     // (undocumented)
     get(): L;
     // (undocumented)
@@ -78,18 +87,18 @@ export class Left<L> implements Either<L, never> {
     // (undocumented)
     left(): Option<L>;
     // (undocumented)
-    map<T>(mapper: Mapper<L, T>): Either<T, T>;
+    map(): Left<L>;
     // (undocumented)
     static of<L>(value: L): Left<L>;
     // (undocumented)
-    reduce<T>(reducer: Reducer<L, T>, accumulator: T): T;
+    reduce<T>(reducer: unknown, accumulator: T): T;
     // (undocumented)
     right(): None;
     // (undocumented)
     toJSON(): Left.JSON<L>;
     // (undocumented)
     toString(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Left {
@@ -113,13 +122,17 @@ export class Right<R> implements Either<never, R> {
     // (undocumented)
     [Symbol.iterator](): Iterator<R>;
     // (undocumented)
+    apply<L, T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
+    // (undocumented)
     either<T>(left: unknown, right: Mapper<R, T>): T;
     // (undocumented)
     equals<R>(value: Right<R>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    flatMap<T>(mapper: Mapper<R, Either<T, T>>): Either<T, T>;
+    flatMap<L, T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
+    // (undocumented)
+    flatten<L, R>(this: Right<Either<L, R>>): Either<L, R>;
     // (undocumented)
     get(): R;
     // (undocumented)
@@ -131,7 +144,7 @@ export class Right<R> implements Either<never, R> {
     // (undocumented)
     left(): None;
     // (undocumented)
-    map<T>(mapper: Mapper<R, T>): Either<T, T>;
+    map<T>(mapper: Mapper<R, T>): Right<T>;
     // (undocumented)
     static of<R>(value: R): Right<R>;
     // (undocumented)
@@ -142,7 +155,7 @@ export class Right<R> implements Either<never, R> {
     toJSON(): Right.JSON<R>;
     // (undocumented)
     toString(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Right {
@@ -160,7 +173,6 @@ export namespace Right {
         value: Serializable.ToJSON<R>;
     }
 }
-
 
 // (No @packageDocumentation comment for this package)
 

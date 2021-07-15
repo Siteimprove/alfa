@@ -4,6 +4,9 @@
   "files": ["src/index.ts", "src/selective.ts", "test/selective.spec.ts"],
   "references": [
     {
+      "path": "../alfa-applicative"
+    },
+    {
       "path": "../alfa-either"
     },
     {

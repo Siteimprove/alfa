@@ -15,7 +15,7 @@ import { Thenable } from '@siteimprove/alfa-thenable';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, Thenable<T>, AsyncIterable<T> {
+export abstract class Future<T> implements Functor<T>, Applicative<T>, Monad<T>, Thenable<T>, AsyncIterable<T> {
     // (undocumented)
     [Symbol.asyncIterator](): AsyncIterator<T>;
     // (undocumented)
@@ -24,6 +24,8 @@ export abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>,
     asyncIterator(): AsyncIterator<T>;
     // (undocumented)
     abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
+    // (undocumented)
+    flatten<T>(this: Future<Future<T>>): Future<T>;
     // (undocumented)
     get(): T;
     // (undocumented)
@@ -69,7 +71,6 @@ export namespace Future {
     // (undocumented)
     export function traverse<T, U>(values: Iterable_2<T>, mapper: Mapper<T, Future<U>, [index: number]>): Future<Iterable_2<U>>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

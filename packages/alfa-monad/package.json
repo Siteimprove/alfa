@@ -18,6 +18,8 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-applicative": "workspace:^0.20.0",
+    "@siteimprove/alfa-functor": "workspace:^0.20.0",
     "@siteimprove/alfa-mapper": "workspace:^0.20.0"
   },
   "devDependencies": {
