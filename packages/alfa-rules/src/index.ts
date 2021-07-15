@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Record } from "@siteimprove/alfa-record";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as rules from "./rules";
 
@@ -19,11 +20,16 @@ export const Rules = Record.of(rules);
  *
  * @public
  */
-const flattened: Iterable<
-  Rule<Rule.Input<Rules>, Rule.Target<Rules>, Rule.Question<Rules>>
-> = [...Rules.values()];
+const Flattened: Sequence<
+  Rule<
+    Rule.Input<Rules>,
+    Rule.Target<Rules>,
+    Rule.Question<Rules>,
+    Rule.Subject<Rules>
+  >
+> = Sequence.from(Rules.values());
 
-export default flattened;
+export default Flattened;
 
 export * from "./common/group";
 export * from "./common/question";

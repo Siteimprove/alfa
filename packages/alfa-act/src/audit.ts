@@ -15,23 +15,23 @@ import { Rule } from "./rule";
 /**
  * @public
  */
-export class Audit<I, T = unknown, Q = never> {
-  public static of<I, T = unknown, Q = never>(
+export class Audit<I, T = unknown, Q = never, S = never> {
+  public static of<I, T = unknown, Q = never, S = never>(
     input: I,
-    rules: Iterable<Rule<I, T, Q>>,
-    oracle: Oracle<I, T, Q> = () => Future.now(None)
-  ): Audit<I, T, Q> {
+    rules: Iterable<Rule<I, T, Q, S>>,
+    oracle: Oracle<I, T, Q, S> = () => Future.now(None)
+  ): Audit<I, T, Q, S> {
     return new Audit(input, List.from(rules), oracle);
   }
 
   private readonly _input: I;
-  private readonly _rules: List<Rule<I, T, Q>>;
-  private readonly _oracle: Oracle<I, T, Q>;
+  private readonly _rules: List<Rule<I, T, Q, S>>;
+  private readonly _oracle: Oracle<I, T, Q, S>;
 
   private constructor(
     input: I,
-    rules: List<Rule<I, T, Q>>,
-    oracle: Oracle<I, T, Q>
+    rules: List<Rule<I, T, Q, S>>,
+    oracle: Oracle<I, T, Q, S>
   ) {
     this._input = input;
     this._rules = rules;
@@ -39,8 +39,8 @@ export class Audit<I, T = unknown, Q = never> {
   }
 
   public evaluate(
-    performance?: Performance<Audit.Event<I, T, Q>>
-  ): Future<Iterable<Outcome<I, T, Q>>> {
+    performance?: Performance<Audit.Event<I, T, Q, S>>
+  ): Future<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 
     return Future.traverse(this._rules, (rule) => {
@@ -62,26 +62,26 @@ export class Audit<I, T = unknown, Q = never> {
  * @public
  */
 export namespace Audit {
-  export class Event<I, T, Q> implements Serializable<Event.JSON> {
-    public static of<I, T, Q>(
+  export class Event<I, T, Q, S> implements Serializable<Event.JSON> {
+    public static of<I, T, Q, S>(
       name: Event.Name,
-      rule: Rule<I, T, Q>
-    ): Event<I, T, Q> {
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S> {
       return new Event(name, rule);
     }
 
-    public static start<I, T, Q>(rule: Rule<I, T, Q>): Event<I, T, Q> {
+    public static start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S> {
       return new Event("start", rule);
     }
 
-    public static end<I, T, Q>(rule: Rule<I, T, Q>): Event<I, T, Q> {
+    public static end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S> {
       return new Event("end", rule);
     }
 
     private readonly _name: Event.Name;
-    private readonly _rule: Rule<I, T, Q>;
+    private readonly _rule: Rule<I, T, Q, S>;
 
-    private constructor(event: Event.Name, rule: Rule<I, T, Q>) {
+    private constructor(event: Event.Name, rule: Rule<I, T, Q, S>) {
       this._name = event;
       this._rule = rule;
     }
@@ -90,7 +90,7 @@ export namespace Audit {
       return this._name;
     }
 
-    public get rule(): Rule<I, T, Q> {
+    public get rule(): Rule<I, T, Q, S> {
       return this._rule;
     }
 

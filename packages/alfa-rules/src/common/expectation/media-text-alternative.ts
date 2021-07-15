@@ -13,8 +13,8 @@ import { Question } from "../question";
 import { Diagnostic } from "@siteimprove/alfa-act";
 
 function mediaTextAlternative(
-  alt: act.Question<"node", Element, Option<Node>>,
-  label: act.Question<"node", Element, Option<Node>>,
+  alt: act.Question<"node", Element, Element, Option<Node>>,
+  label: act.Question<"node", Element, Element, Option<Node>>,
   device: Device,
   kind: "<audio>" | "<video>"
 ) {
@@ -52,12 +52,14 @@ export function audioTextAlternative(target: Element, device: Device) {
     "text-alternative",
     "node",
     target,
+    target,
     `Where is the text alternative of the \`<audio>\` element?`
   );
 
   const label = Question.of(
     "label",
     "node",
+    target,
     target,
     `Where is the text that labels the \`<audio>\` element as a video alternative?`
   );
@@ -70,12 +72,14 @@ export function videoTextAlternative(target: Element, device: Device) {
     "text-alternative",
     "node",
     target,
+    target,
     `Where is the text alternative of the \`<video>\` element?`
   );
 
   const label = Question.of(
     "label",
     "node",
+    target,
     target,
     `Where is the text that labels the \`<video>\` element as a video alternative?`
   );

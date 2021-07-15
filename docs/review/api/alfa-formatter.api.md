@@ -9,14 +9,13 @@ import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
-export type Formatter<I = unknown, T = unknown, Q = never> = (input: I, rules: Iterable<Rule<I, T, Q>>, outcomes: Iterable<Outcome<I, T, Q>>) => string;
+export type Formatter<I = unknown, T = unknown, Q = never, S = never> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => string;
 
 // @public (undocumented)
 export namespace Formatter {
     // (undocumented)
-    export function load<I, T = unknown, Q = never>(name: string, defaultScope?: string): Promise<Result<Formatter<I, T, Q>, string>>;
+    export function load<I, T = unknown, Q = never, S = never>(name: string, defaultScope?: string): Promise<Result<Formatter<I, T, Q, S>, string>>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

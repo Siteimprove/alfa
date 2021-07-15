@@ -23,7 +23,7 @@ const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Document, Question>({
+export default Rule.Atomic.of<Page, Document, Question, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
   evaluate({ device, document, response }) {
@@ -73,6 +73,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
           "first-tabbable-reference-is-main",
           "boolean",
           target,
+          target,
           `Does the first tabbable element of the document point to the main content?`
         );
 
@@ -80,13 +81,15 @@ export default Rule.Atomic.of<Page, Document, Question>({
           "first-tabbable-is-internal-link",
           "boolean",
           target,
+          target,
           `Is the first tabbable element of the document an internal link?`
         );
 
         const askReference = Question.of(
           "first-tabbable-reference",
           "node",
-          document,
+          target,
+          target,
           `Where in the document does the first tabbable element point?`
         );
 

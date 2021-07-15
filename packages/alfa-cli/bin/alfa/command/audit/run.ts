@@ -24,7 +24,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   flags,
   args: { url: target },
 }) => {
-  const formatter = await Formatter.load<any, any, any>(flags.format);
+  const formatter = await Formatter.load<any, any, any, any>(flags.format);
 
   if (formatter.isErr()) {
     return formatter;
@@ -32,7 +32,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   const interviewer = Option.from(
     await flags.interviewer
-      .map((interviewer) => Interviewer.load<any, any, any>(interviewer))
+      .map((interviewer) => Interviewer.load<any, any, any, any>(interviewer))
       .getOr(undefined)
   );
 

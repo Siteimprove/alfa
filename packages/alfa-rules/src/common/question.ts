@@ -19,12 +19,13 @@ export interface Question {
  * @public
  */
 export namespace Question {
-  export function of<Q extends keyof Question, S>(
+  export function of<Q extends keyof Question, S, C>(
     uri: string,
     type: Q,
     subject: S,
+    context: C,
     message: string
-  ): act.Question<Q, S, Question[Q]> {
-    return act.Question.of(uri, type, subject, message);
+  ): act.Question<Q, S, C, Question[Q]> {
+    return act.Question.of(uri, type, subject, context, message);
   }
 }

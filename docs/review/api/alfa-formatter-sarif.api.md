@@ -7,10 +7,8 @@
 import { Formatter } from '@siteimprove/alfa-formatter';
 
 // @public (undocumented)
-function <I, T, Q>(): Formatter<I, T, Q>;
-
+function <I, T, Q, S>(): Formatter<I, T, Q, S>;
 export default default_2;
-
 
 // (No @packageDocumentation comment for this package)
 

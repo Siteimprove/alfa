@@ -3,8 +3,8 @@ import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-export function passed<T, Q>(
-  rule: Rule<Page, T, Q>,
+export function passed<T, Q, S>(
+  rule: Rule<Page, T, Q, S>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> }
 ): Outcome.Passed.JSON<T> {
@@ -15,8 +15,8 @@ export function passed<T, Q>(
   ).toJSON();
 }
 
-export function failed<T, Q>(
-  rule: Rule<Page, T, Q>,
+export function failed<T, Q, S>(
+  rule: Rule<Page, T, Q, S>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> }
 ): Outcome.Failed.JSON<T> {
@@ -27,14 +27,14 @@ export function failed<T, Q>(
   ).toJSON();
 }
 
-export function inapplicable<T, Q>(
-  rule: Rule<Page, T, Q>
+export function inapplicable<T, Q, S>(
+  rule: Rule<Page, T, Q, S>
 ): Outcome.Inapplicable.JSON {
   return Outcome.Inapplicable.of(rule).toJSON();
 }
 
-export function cantTell<T, Q>(
-  rule: Rule<Page, T, Q>,
+export function cantTell<T, Q, S>(
+  rule: Rule<Page, T, Q, S>,
   target: T
 ): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target).toJSON();

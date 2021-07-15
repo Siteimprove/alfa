@@ -8,7 +8,7 @@ const { stringify } = JSON;
 /**
  * @public
  */
-export default function <I, T, Q>(): Formatter<I, T, Q> {
+export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
   return function SARIF(input, rules, outcomes) {
     const log: Log = {
       $schema: "https://json.schemastore.org/sarif-2.1.0.json",
@@ -21,8 +21,7 @@ export default function <I, T, Q>(): Formatter<I, T, Q> {
               informationUri: "https://alfa.siteimprove.com/",
               version,
               shortDescription: {
-                text:
-                  "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+                text: "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
               },
               downloadUri: "https://github.com/siteimprove/alfa",
               organization: "Siteimprove A/S",

@@ -16,7 +16,7 @@ import { Question } from "../common/question";
 const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question, Group<Element>>({
   uri: "https://alfa.siteimprove.com/rules/sia-r55",
   evaluate({ device, document }) {
     return {
@@ -61,6 +61,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
         const sameResource = Question.of(
           "is-content-equivalent",
           "boolean",
+          target,
           target,
           `Do these ${role} landmarks have the same or equivalent content?`
         );

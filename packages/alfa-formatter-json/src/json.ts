@@ -6,7 +6,7 @@ const { stringify } = JSON;
 /**
  * @public
  */
-export default function <I, T, Q>(): Formatter<I, T, Q> {
+export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
   return function JSON(input, rules, outcomes) {
     return stringify(
       {

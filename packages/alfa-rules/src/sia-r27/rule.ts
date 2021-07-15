@@ -13,7 +13,7 @@ import { Question } from "../common/question";
 import R22 from "../sia-r22/rule";
 import R31 from "../sia-r31/rule";
 
-export default Rule.Composite.of<Page, Element, Question>({
+export default Rule.Composite.of<Page, Element, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r27",
   requirements: [
     Criterion.of("1.2.2"),
