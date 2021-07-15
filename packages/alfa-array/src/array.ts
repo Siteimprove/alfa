@@ -158,10 +158,10 @@ export namespace Array {
   }
 
   export function apply<T, U>(
-    iterable: ReadonlyArray<T>,
+    array: ReadonlyArray<T>,
     mapper: ReadonlyArray<Mapper<T, U>>
   ): Array<U> {
-    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
+    return flatMap(mapper, (mapper) => map(array, mapper));
   }
 
   export function filter<T, U extends T>(
