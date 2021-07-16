@@ -16,6 +16,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-applicative"
+    },
+    {
       "path": "../alfa-earl"
     },
     {

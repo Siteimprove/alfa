@@ -48,22 +48,57 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return this._size === 0;
   }
 
-  public forEach(callback: Callback<V, void, [K]>): void {
+  public forEach(callback: Callback<V, void, [key: K]>): void {
     Iterable.forEach(this, ([key, value]) => callback(value, key));
   }
 
-  public map<U>(mapper: Mapper<V, U, [K]>): Map<K, U> {
+  public map<U>(mapper: Mapper<V, U, [key: K]>): Map<K, U> {
     return new Map(this._root.map(mapper), this._size);
   }
 
-  public flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [K]>): Map<L, U> {
+  /**
+   * Apply a map of functions to each corresponding value of this map.
+   *
+   * @remarks
+   * Keys without a corresponding function or value are dropped from the
+   * resulting map.
+   *
+   * @example
+   * ```ts
+   * Map.of(["a", 1], ["b", 2])
+   *   .apply(Map.of(["a", (x) => x + 1], ["b", (x) => x * 2]))
+   *   .toArray();
+   * // => [["a", 2], ["b", 4]]
+   * ```
+   */
+  public apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U> {
+    return this.collect((value, key) =>
+      mapper.get(key).map((mapper) => mapper(value))
+    );
+  }
+
+  /**
+   * @remarks
+   * As the order of maps is undefined, it is also undefined which keys are
+   * kept when duplicate keys are encountered.
+   */
+  public flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [key: K]>): Map<L, U> {
     return this.reduce(
       (map, value, key) => map.concat(mapper(value, key)),
       Map.empty<L, U>()
     );
   }
 
-  public reduce<R>(reducer: Reducer<V, R, [K]>, accumulator: R): R {
+  /**
+   * @remarks
+   * As the order of maps is undefined, it is also undefined which keys are
+   * kept when duplicate keys are encountered.
+   */
+  public flatten<K, V>(this: Map<K, Map<K, V>>): Map<K, V> {
+    return this.flatMap((map) => map);
+  }
+
+  public reduce<R>(reducer: Reducer<V, R, [key: K]>, accumulator: R): R {
     return Iterable.reduce(
       this,
       (accumulator, [key, value]) => reducer(accumulator, value, key),
@@ -71,15 +106,11 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  public apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
-  }
+  public filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Map<K, U>;
 
-  public filter<U extends V>(refinement: Refinement<V, U, [K]>): Map<K, U>;
+  public filter(predicate: Predicate<V, [key: K]>): Map<K, V>;
 
-  public filter(predicate: Predicate<V, [K]>): Map<K, V>;
-
-  public filter(predicate: Predicate<V, [K]>): Map<K, V> {
+  public filter(predicate: Predicate<V, [key: K]>): Map<K, V> {
     return this.reduce(
       (map, value, key) => (predicate(value, key) ? map.set(key, value) : map),
       Map.empty()
@@ -87,20 +118,20 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   }
 
   public reject<U extends V>(
-    refinement: Refinement<V, U, [K]>
+    refinement: Refinement<V, U, [key: K]>
   ): Map<K, Exclude<V, U>>;
 
-  public reject(predicate: Predicate<V, [K]>): Map<K, V>;
+  public reject(predicate: Predicate<V, [key: K]>): Map<K, V>;
 
-  public reject(predicate: Predicate<V, [K]>): Map<K, V> {
+  public reject(predicate: Predicate<V, [key: K]>): Map<K, V> {
     return this.filter(not(predicate));
   }
 
-  public find<U extends V>(refinement: Refinement<V, U, [K]>): Option<U>;
+  public find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
 
-  public find(predicate: Predicate<V, [K]>): Option<V>;
+  public find(predicate: Predicate<V, [key: K]>): Option<V>;
 
-  public find(predicate: Predicate<V, [K]>): Option<V> {
+  public find(predicate: Predicate<V, [key: K]>): Option<V> {
     return Iterable.find(this, ([key, value]) => predicate(value, key)).map(
       ([, value]) => value
     );
@@ -110,7 +141,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.includes(this.values(), value);
   }
 
-  public collect<U>(mapper: Mapper<V, Option<U>, [K]>): Map<K, U> {
+  public collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Map<K, U> {
     return Map.from(
       Iterable.collect(this, ([key, value]) =>
         mapper(value, key).map((value) => [key, value])
@@ -118,30 +149,30 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  public collectFirst<U>(mapper: Mapper<V, Option<U>, [K]>): Option<U> {
+  public collectFirst<U>(mapper: Mapper<V, Option<U>, [key: K]>): Option<U> {
     return Iterable.collectFirst(this, ([key, value]) => mapper(value, key));
   }
 
-  public some(predicate: Predicate<V, [K]>): boolean {
+  public some(predicate: Predicate<V, [key: K]>): boolean {
     return Iterable.some(this, ([key, value]) => predicate(value, key));
   }
 
-  public none(predicate: Predicate<V, [K]>): boolean {
+  public none(predicate: Predicate<V, [key: K]>): boolean {
     return Iterable.none(this, ([key, value]) => predicate(value, key));
   }
 
-  public every(predicate: Predicate<V, [K]>): boolean {
+  public every(predicate: Predicate<V, [key: K]>): boolean {
     return Iterable.every(this, ([key, value]) => predicate(value, key));
   }
 
-  public count(predicate: Predicate<V, [K]>): number {
+  public count(predicate: Predicate<V, [key: K]>): number {
     return Iterable.count(this, ([key, value]) => predicate(value, key));
   }
 
   /**
    * @remarks
    * As the order of maps is undefined, it is also undefined which keys are
-   * deleted when duplicate values are encountered.
+   * kept when duplicate values are encountered.
    */
   public distinct(): Map<K, V> {
     let seen = Map.empty<V, V>();

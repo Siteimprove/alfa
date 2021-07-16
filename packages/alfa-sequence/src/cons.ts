@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
-import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -19,6 +19,7 @@ import { Sequence } from "./sequence";
 import { Nil } from "./nil";
 
 const { not, equals } = Predicate;
+const { compareComparable } = Comparable;
 
 /**
  * @public
@@ -67,6 +68,10 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U> {
+    return mapper.flatMap((mapper) => this.map(mapper));
+  }
+
   public flatMap<U>(
     mapper: Mapper<T, Sequence<U>, [index: number]>
   ): Sequence<U>;
@@ -109,6 +114,10 @@ export class Cons<T> implements Sequence<T> {
         return Nil;
       }
     }
+  }
+
+  public flatten<T>(this: Sequence<Sequence<T>>): Sequence<T> {
+    return this.flatMap((sequence) => sequence);
   }
 
   public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
@@ -159,10 +168,6 @@ export class Cons<T> implements Sequence<T> {
     accumulator: U
   ): U {
     return this.reduceWhile(not(predicate), reducer, accumulator);
-  }
-
-  public apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public filter<U extends T>(
@@ -400,6 +405,10 @@ export class Cons<T> implements Sequence<T> {
     }
 
     if (index === 0) {
+      if (Equatable.equals(value, this._head)) {
+        return this;
+      }
+
       return new Cons(value, this._tail);
     }
 
@@ -502,6 +511,12 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+
+  public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+
   public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.takeUntil(not(predicate));
   }
@@ -537,6 +552,12 @@ export class Cons<T> implements Sequence<T> {
   public takeLast(count: number): Sequence<T> {
     return this.skip(this.size - count);
   }
+
+  public takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): Sequence<U>;
+
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T> {
     return this.reverse().takeWhile(predicate).reverse();
@@ -645,11 +666,25 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
+  public sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T> {
+    return this.sortWith(compareComparable);
+  }
+
   public sortWith(comparer: Comparer<T>): Sequence<T> {
     return Sequence.fromArray(Array.sortWith(this.toArray(), comparer));
   }
 
-  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+  public compare(
+    this: Sequence<Comparable<T>>,
+    iterable: Iterable<T>
+  ): Comparison {
+    return this.compareWith(iterable, Comparable.compare);
+  }
+
+  public compareWith<U = T>(
+    iterable: Iterable<U>,
+    comparer: Comparer<T, U, [index: number]>
+  ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
 

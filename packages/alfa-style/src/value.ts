@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Declaration } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -15,10 +16,12 @@ import * as json from "@siteimprove/alfa-json";
 export class Value<T = unknown>
   implements
     Functor<T>,
+    Applicative<T>,
     Monad<T>,
     Iterable<T>,
     Equatable,
-    Serializable<Value.JSON<T>> {
+    Serializable<Value.JSON<T>>
+{
   public static of<T>(value: T, source: Option<Declaration> = None): Value<T> {
     return new Value(value, source);
   }
@@ -43,8 +46,16 @@ export class Value<T = unknown>
     return new Value(mapper(this._value), this._source);
   }
 
+  public apply<U>(mapper: Value<Mapper<T, U>>): Value<U> {
+    return mapper.map((mapper) => mapper(this._value));
+  }
+
   public flatMap<U>(mapper: Mapper<T, Value<U>>): Value<U> {
     return mapper(this._value);
+  }
+
+  public flatten<T>(this: Value<Value<T>>): Value<T> {
+    return this._value;
   }
 
   public includes(value: T): boolean {

@@ -83,11 +83,19 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
+    return mapper.flatMap((mapper) => this.map(mapper));
+  }
+
   public flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U> {
     return this.reduce(
       (list, value, index) => list.concat(mapper(value, index)),
       List.empty<U>()
     );
+  }
+
+  public flatten<T>(this: List<List<T>>): List<T> {
+    return this.flatMap((list) => list);
   }
 
   public reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U {
@@ -108,10 +116,6 @@ export class List<T> implements Collection.Indexed<T> {
     accumulator: U
   ): U {
     return Iterable.reduceUntil(this, predicate, reducer, accumulator);
-  }
-
-  public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
-    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public filter<U extends T>(
@@ -305,6 +309,12 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.take(this, count));
   }
 
+  public takeWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): List<U>;
+
+  public takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
+
   public takeWhile(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.takeWhile(this, predicate));
   }
@@ -316,6 +326,12 @@ export class List<T> implements Collection.Indexed<T> {
   public takeLast(count: number = 1): List<T> {
     return List.from(Iterable.takeLast(this, count));
   }
+
+  public takeLastWhile<U extends T>(
+    refinement: Refinement<T, U, [index: number]>
+  ): List<U>;
+
+  public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T> {
     return List.from(Iterable.takeLastWhile(this, predicate));
@@ -383,11 +399,22 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.join(this, separator);
   }
 
+  public sort<T extends Comparable<T>>(this: List<T>): List<T> {
+    return this.sortWith(compareComparable);
+  }
+
   public sortWith(comparer: Comparer<T>): List<T> {
     return List.from(Iterable.sortWith(this, comparer));
   }
 
-  public compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison {
+  public compare(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison {
+    return this.compareWith(iterable, compareComparable);
+  }
+
+  public compareWith<U = T>(
+    iterable: Iterable<U>,
+    comparer: Comparer<T, U, [index: number]>
+  ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
@@ -674,16 +701,5 @@ export namespace List {
       (list, value) => list.append(value),
       List.empty()
     );
-  }
-
-  export function sort<T extends Comparable<T>>(list: List<T>): List<T> {
-    return list.sortWith(compareComparable);
-  }
-
-  export function compare<T extends Comparable<T>>(
-    a: List<T>,
-    b: Iterable<T>
-  ): Comparison {
-    return a.compareWith(b, compareComparable);
   }
 }

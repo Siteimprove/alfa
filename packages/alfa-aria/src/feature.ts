@@ -124,19 +124,18 @@ const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
   return None;
 };
 
-const nameFromChild = (predicate: Predicate<Element>) => (
-  element: Element,
-  device: Device,
-  state: Name.State
-) => {
-  for (const child of element.children().filter(isElement).find(predicate)) {
-    return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-      Name.of(name.value, [Name.Source.descendant(element, name)])
-    );
-  }
-
-  return None;
-};
+const nameFromChild =
+  (predicate: Predicate<Element>) =>
+  (element: Element, device: Device, state: Name.State) =>
+    element
+      .children()
+      .filter(isElement)
+      .find(predicate)
+      .flatMap((child) =>
+        Name.fromDescendants(child, device, state.visit(child)).map((name) =>
+          Name.of(name.value, [Name.Source.descendant(element, name)])
+        )
+      );
 
 const ids = Cache.empty<Node, Map<string, Element>>();
 
@@ -147,8 +146,8 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
 
   const elements = root.inclusiveDescendants().filter(isElement);
 
-  for (const id of element.id) {
-    const target = ids
+  const isFirstReference = element.id.some((id) =>
+    ids
       .get(root, () =>
         Map.from(
           elements
@@ -158,21 +157,19 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
             .reverse()
         )
       )
-      .get(id);
-
-    if (target.includes(element)) {
-      continue;
-    } else {
-      return None;
-    }
-  }
+      .get(id)
+      .includes(element)
+  );
 
   const references = labels
     .get(root, () => elements.filter(hasName("label")))
     .filter(
       or(
-        (label) => label.descendants().includes(element),
         (label) =>
+          label.attribute("for").isNone() &&
+          label.descendants().includes(element),
+        (label) =>
+          isFirstReference &&
           label
             .attribute("for")
             .some((attribute) => element.id.includes(attribute.value))
@@ -183,7 +180,7 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     Name.fromNode(
       element,
       device,
-      state.reference(None).recurse(true).descend(false)
+      state.reference(Option.of(element)).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
   );
 

@@ -40,24 +40,28 @@ export class Ok<T> implements Result<T, never> {
     return new Ok(mapper(this._value));
   }
 
-  public mapErr(): this {
+  public mapErr(): Ok<T> {
     return this;
   }
 
-  public mapOrElse<E, U>(ok: Mapper<T, U>): U {
+  public mapOrElse<U>(ok: Mapper<T, U>): U {
     return ok(this._value);
+  }
+
+  public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
+    return mapper.map((mapper) => mapper(this._value));
   }
 
   public flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F> {
     return mapper(this._value);
   }
 
-  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reducer(accumulator, this._value);
+  public flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E> {
+    return this._value;
   }
 
-  public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
-    return mapper.map((mapper) => mapper(this._value));
+  public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
+    return reducer(accumulator, this._value);
   }
 
   public includes(value: T): boolean {
@@ -100,11 +104,11 @@ export class Ok<T> implements Result<T, never> {
     return result(this._value);
   }
 
-  public or(): this {
+  public or(): Ok<T> {
     return this;
   }
 
-  public orElse(): this {
+  public orElse(): Ok<T> {
     return this;
   }
 

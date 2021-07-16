@@ -12,7 +12,7 @@ const { entries } = Object;
 export function jsx(
   name: string,
   properties: jsx.Properties | null = null,
-  ...children: Array<jsx.Child>
+  ...children: jsx.Children
 ): Element {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
@@ -37,7 +37,12 @@ export function jsx(
     }
   }
 
-  return h(name, attributes, children, style);
+  return h(
+    name,
+    attributes,
+    (children as Array<jsx.Child>).flat(Infinity),
+    style
+  );
 }
 
 /**
@@ -45,6 +50,13 @@ export function jsx(
  */
 export namespace jsx {
   export type Child = Node | string;
+
+  /**
+   * @remarks
+   * This type is declared using the short array syntax (`[]`) to avoid issues
+   * with circular generic references.
+   */
+  export type Children = (Child | Children)[];
 
   export interface Properties {
     [name: string]: unknown;

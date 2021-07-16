@@ -79,11 +79,11 @@ test("#traverse() traverses the subgraph rooted at a node depth-first", (t) => {
 
   t.deepEqual(graph.traverse(1, Graph.DepthFirst).toJSON(), [
     [5, 1], // |- 5
-    [7, 5], //    |- 7
     [6, 5], //    |- 6
+    [7, 5], //    |- 7
     [2, 1], // |- 2
-    [3, 2], //    |- 3
     [4, 2], //    |- 4
+    [3, 2], //    |- 3
   ]);
 });
 
@@ -108,10 +108,10 @@ test("#traverse() traverses the subgraph rooted at a node breadth-first", (t) =>
   t.deepEqual(graph.traverse(1, Graph.BreadthFirst).toJSON(), [
     [2, 1], // |- 2
     [5, 1], // |- 5
-    [4, 2], //    |- 4
     [3, 2], //    |- 3
-    [6, 5], //    |- 6
+    [4, 2], //    |- 4
     [7, 5], //    |- 7
+    [6, 5], //    |- 6
   ]);
 });
 
@@ -152,7 +152,7 @@ test("#sort() topologically sorts an acyclic graph", (t) => {
     [5, [4]],
   ]);
 
-  t.deepEqual([...graph.sort()], [1, 5, 2, 4, 3]);
+  t.deepEqual([...graph.sort()], [5, 1, 2, 4, 3]);
 });
 
 test("#sort() yields nothing for a cyclic graph", (t) => {
