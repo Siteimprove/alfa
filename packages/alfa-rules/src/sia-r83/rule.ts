@@ -12,8 +12,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isVisible } from "../common/predicate/is-visible";
+import { hasAttribute, hasComputedStyle, isVisible } from "../common/predicate";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -61,8 +60,6 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        const parent = target.parent();
-
         return {
           1: expectation(
             target
@@ -154,8 +151,11 @@ function wrapsText(device: Device): Predicate<Element> {
 }
 
 function isPositioned(device: Device, position: string): Predicate<Element> {
-  return (element) =>
-    Style.from(element, device).computed("position").value.value === position;
+  return hasComputedStyle(
+    "position",
+    (value) => value.value === position,
+    device
+  );
 }
 
 const isActuallyClipping = (element: Element, device: Device) => {

@@ -49,7 +49,7 @@ test(`evaluate() passes a child text node of an element whose parent truncates
       ]),
     ]
   );
-  test("evaluate() passes a text node that is absolutely positioned with a clipping ancestor", async (t) => {
+  test("evaluate() passes a text node that is non-statically positioned with a clipping ancestor which is not the offset parent", async (t) => {
     const target = h.text("Hello world");
 
     const document = h.document(
@@ -153,7 +153,7 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
   ]);
 });
 
-test("evaluate() fails a text node thet is relatively positioned with a clipping absolutely positioned ancestor ", async (t) => {
+test("evaluate() fails a text node that is non-statically positioned with a clipping offset parent", async (t) => {
   const target = h.text("Hello world");
 
   const document = h.document(
