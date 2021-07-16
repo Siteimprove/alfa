@@ -15,15 +15,13 @@ import { Reducer } from '@siteimprove/alfa-reducer';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export abstract class Trampoline<T> implements Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable_2<T> {
+export abstract class Trampoline<T> implements Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable_2<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
     apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U>;
     // (undocumented)
     abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
-    // (undocumented)
-    flatten<T>(this: Trampoline<Trampoline<T>>): Trampoline<T>;
     // (undocumented)
     abstract isDone(): boolean;
     // (undocumented)
@@ -61,6 +59,7 @@ export namespace Trampoline {
     // (undocumented)
     export function traverse<T, U>(values: Iterable_2<T>, mapper: Mapper<T, Trampoline<U>, [index: number]>): Trampoline<Iterable_2<U>>;
 }
+
 
 // (No @packageDocumentation comment for this package)
 

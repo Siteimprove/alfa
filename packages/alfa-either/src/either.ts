@@ -1,4 +1,3 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -16,21 +15,18 @@ import { Right } from "./right";
  * @public
  */
 export interface Either<L, R = L>
-  extends Functor<R>,
-    Applicative<R>,
-    Monad<R>,
-    Foldable<R>,
+  extends Functor<L | R>,
+    Monad<L | R>,
+    Foldable<L | R>,
     Iterable<L | R>,
     Equatable,
     Hashable,
     Serializable<Either.JSON<L, R>> {
   isLeft(): this is Left<L>;
   isRight(): this is Right<R>;
-  map<T>(mapper: Mapper<R, T>): Either<L, T>;
-  apply<T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
-  flatMap<T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
-  flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
-  reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
+  map<T>(mapper: Mapper<L | R, T>): Either<T, T>;
+  flatMap<T>(mapper: Mapper<L | R, Either<T, T>>): Either<T, T>;
+  reduce<T>(reducer: Reducer<L | R, T>, accumulator: T): T;
   either<T>(left: Mapper<L, T>, right: Mapper<R, T>): T;
   get(): L | R;
   left(): Option<L>;

@@ -15,8 +15,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
  * @public
  */
 export abstract class Trampoline<T>
-  implements Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>
-{
+  implements Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T> {
   protected abstract step(): Trampoline<T>;
 
   public run(): T {
@@ -41,18 +40,14 @@ export abstract class Trampoline<T>
     return this.flatMap((value) => Done.of(mapper(value)));
   }
 
-  public apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U> {
-    return mapper.flatMap((mapper) => this.map(mapper));
-  }
-
   public abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
-
-  public flatten<T>(this: Trampoline<Trampoline<T>>): Trampoline<T> {
-    return this.flatMap((trampoline) => trampoline);
-  }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
     return reducer(accumulator, this.run());
+  }
+
+  public apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public tee(callback: Callback<T>): Trampoline<T> {

@@ -7,7 +7,7 @@ Alfa uses the currently experimental [Yarn release workflow](https://yarnpkg.com
 ```console
 $ yarn workspaces foreach \
     --no-private \
-    --topological-dev \
+    --topological \
     version --deferred <patch | minor | major>
 ```
 

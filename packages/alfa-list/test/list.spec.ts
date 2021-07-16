@@ -18,13 +18,6 @@ test("#map() does not overflow for large lists", (t) => {
   t.deepEqual([...list.map((n) => n * 2)], [2, 4, 6, 8]);
 });
 
-test("#apply() applies a list of functions to each value of a list", (t) => {
-  t.deepEqual(
-    [...list.apply(List.from([(n) => n + 1, (n) => n * 2]))],
-    [2, 3, 4, 5, 2, 4, 6, 8]
-  );
-});
-
 test("#flatMap() applies a function to every value of a list and flattens the result", (t) => {
   t.deepEqual(
     [...list.flatMap((n) => List.of(n, n))],

@@ -4,38 +4,48 @@
 
 ```ts
 
-// @public
+// @public (undocumented)
 export interface Comparable<T> {
+    // (undocumented)
     compare(value: T): Comparison;
 }
 
-// @public
+// @public (undocumented)
 export namespace Comparable {
+    // (undocumented)
     export function compare(a: string, b: string): Comparison;
+    // (undocumented)
     export function compare(a: number, b: number): Comparison;
+    // (undocumented)
     export function compare(a: bigint, b: bigint): Comparison;
+    // (undocumented)
     export function compare(a: boolean, b: boolean): Comparison;
-    export function compare<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
+    // (undocumented)
+    export function compare<T>(a: Comparable<T>, b: T): Comparison;
     // (undocumented)
     export function compareBigInt(a: bigint, b: bigint): Comparison;
     // (undocumented)
     export function compareBoolean(a: boolean, b: boolean): Comparison;
     // (undocumented)
-    export function compareComparable<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
+    export function compareComparable<T>(a: Comparable<T>, b: T): Comparison;
     // (undocumented)
     export function compareNumber(a: number, b: number): Comparison;
     // (undocumented)
     export function compareString(a: string, b: string): Comparison;
+    // (undocumented)
     export function isComparable<T>(value: unknown): value is Comparable<T>;
-    export function isEqual<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
     export function isGreaterThan<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
     export function isGreaterThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
     export function isLessThan<T>(a: Comparable<T>, b: T): boolean;
+    // (undocumented)
     export function isLessThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
 }
 
 // @public (undocumented)
-export type Comparer<T, U = T, A extends Array<unknown> = []> = (a: T, b: U, ...args: A) => Comparison;
+export type Comparer<T, A extends Array<unknown> = []> = (a: T, b: T, ...args: A) => Comparison;
 
 // @public (undocumented)
 export enum Comparison {
@@ -46,6 +56,7 @@ export enum Comparison {
     // (undocumented)
     Less = -1
 }
+
 
 // (No @packageDocumentation comment for this package)
 

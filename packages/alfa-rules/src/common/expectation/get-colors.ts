@@ -74,14 +74,6 @@ export function getBackground(
   device: Device = Device.standard(),
   fakeLastOpacity?: number
 ): Option<Array<RGB<Percentage, Percentage>>> {
-  // If the element has a text-shadow, we don't try to guess how it looks and
-  // ask the user for help.
-  if (
-    Style.from(element, device).computed("text-shadow").value.type !== "keyword"
-  ) {
-    return None;
-  }
-
   return getLayers(element, device, fakeLastOpacity).map((layers) =>
     layers.reduce<Array<RGB<Percentage, Percentage>>>(
       (backdrops, layer) =>

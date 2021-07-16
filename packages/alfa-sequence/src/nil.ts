@@ -1,5 +1,5 @@
 import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
@@ -31,15 +31,7 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
-  public apply(): Nil {
-    return this;
-  }
-
   public flatMap(): Nil {
-    return this;
-  }
-
-  public flatten(): Nil {
     return this;
   }
 
@@ -61,6 +53,10 @@ export const Nil: Nil = new (class Nil {
     accumulator: U
   ): U {
     return accumulator;
+  }
+
+  public apply(): Nil {
+    return this;
   }
 
   public filter(): Nil {
@@ -235,24 +231,13 @@ export const Nil: Nil = new (class Nil {
     return "";
   }
 
-  public sort(): Nil {
-    return this;
-  }
-
   public sortWith(): Nil {
     return this;
   }
 
-  public compare<T>(
-    this: Sequence<Comparable<T>>,
-    iterable: Iterable<T>
-  ): Comparison {
-    return this.compareWith(iterable, Comparable.compare);
-  }
-
-  public compareWith<T, U = T>(
-    iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+  public compareWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }

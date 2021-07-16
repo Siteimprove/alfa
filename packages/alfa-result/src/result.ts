@@ -20,9 +20,9 @@ import { Ok } from "./ok";
  */
 export interface Result<T, E = T>
   extends Functor<T>,
-    Applicative<T>,
     Monad<T>,
     Foldable<T>,
+    Applicative<T>,
     Iterable<T>,
     Equatable,
     Hashable,
@@ -32,10 +32,9 @@ export interface Result<T, E = T>
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
   mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
-  apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
-  flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+  apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
   includes(value: T): boolean;
   includesErr(error: E): boolean;
   some(predicate: Predicate<T>): boolean;

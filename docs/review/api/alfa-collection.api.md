@@ -23,7 +23,7 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export interface Collection<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Equatable, Hashable {
+export interface Collection<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Equatable, Hashable {
     // (undocumented)
     apply<U>(mapper: Collection<Mapper<T, U>>): Collection<U>;
     // (undocumented)
@@ -46,8 +46,6 @@ export interface Collection<T> extends Functor<T>, Applicative<T>, Monad<T>, Fol
     find(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
-    // (undocumented)
-    flatten<T>(this: Collection<Collection<T>>): Collection<T>;
     // (undocumented)
     forEach(callback: Callback<T>): void;
     // (undocumented)
@@ -73,7 +71,9 @@ export interface Collection<T> extends Functor<T>, Applicative<T>, Monad<T>, Fol
 // @public (undocumented)
 export namespace Collection {
     // (undocumented)
-    export interface Indexed<T> extends Collection<T>, Iterable_2<T>, Comparable<Iterable_2<T>>, Serializable<Indexed.JSON<T>> {
+    export function compare<T extends Comparable<T>>(a: Indexed<T>, b: Iterable_2<T>): Comparison;
+    // (undocumented)
+    export interface Indexed<T> extends Collection<T>, Iterable_2<T>, Serializable<Indexed.JSON<T>> {
         // (undocumented)
         append(value: T): Indexed<T>;
         // (undocumented)
@@ -83,9 +83,7 @@ export namespace Collection {
         // (undocumented)
         collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
         // (undocumented)
-        compare(this: Indexed<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
-        // (undocumented)
-        compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
+        compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
         // (undocumented)
         concat(iterable: Iterable_2<T>): Indexed<T>;
         // (undocumented)
@@ -106,8 +104,6 @@ export namespace Collection {
         first(): Option<T>;
         // (undocumented)
         flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
-        // (undocumented)
-        flatten<T>(this: Indexed<Indexed<T>>): Indexed<T>;
         // (undocumented)
         forEach(callback: Callback<T, void, [index: number]>): void;
         // (undocumented)
@@ -165,8 +161,6 @@ export namespace Collection {
         // (undocumented)
         some(predicate: Predicate<T, [index: number]>): boolean;
         // (undocumented)
-        sort<T extends Comparable<T>>(this: Indexed<T>): Indexed<T>;
-        // (undocumented)
         sortWith(comparer: Comparer<T>): Indexed<T>;
         // (undocumented)
         subtract(iterable: Iterable_2<T>): Indexed<T>;
@@ -177,13 +171,9 @@ export namespace Collection {
         // (undocumented)
         takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
-        takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
-        // (undocumented)
         takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
         takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
-        // (undocumented)
-        takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
         // (undocumented)
         takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
@@ -229,8 +219,6 @@ export namespace Collection {
         // (undocumented)
         flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
         // (undocumented)
-        flatten<K, V>(this: Keyed<K, Keyed<K, V>>): Keyed<K, V>;
-        // (undocumented)
         forEach(callback: Callback<V, void, [key: K]>): void;
         // (undocumented)
         get(key: K): Option<V>;
@@ -263,10 +251,12 @@ export namespace Collection {
     export namespace Keyed {
         // (undocumented)
         export type JSON<K, V> = Array<[
-        Serializable.ToJSON<K>,
-        Serializable.ToJSON<V>
+            Serializable.ToJSON<K>,
+            Serializable.ToJSON<V>
         ]>;
     }
+    // (undocumented)
+    export function sort<T extends Comparable<T>>(collection: Indexed<T>): Indexed<T>;
     // (undocumented)
     export interface Unkeyed<T> extends Collection<T>, Iterable_2<T>, Serializable<Unkeyed.JSON<T>> {
         // (undocumented)
@@ -297,8 +287,6 @@ export namespace Collection {
         find(predicate: Predicate<T>): Option<T>;
         // (undocumented)
         flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
-        // (undocumented)
-        flatten<T>(this: Unkeyed<Unkeyed<T>>): Unkeyed<T>;
         // (undocumented)
         forEach(callback: Callback<T>): void;
         // (undocumented)
@@ -332,6 +320,7 @@ export namespace Collection {
         export type JSON<T> = Array<Serializable.ToJSON<T>>;
     }
 }
+
 
 // (No @packageDocumentation comment for this package)
 

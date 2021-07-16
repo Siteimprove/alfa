@@ -32,20 +32,12 @@ export class Right<R> implements Either<never, R> {
     return true;
   }
 
-  public map<T>(mapper: Mapper<R, T>): Right<T> {
+  public map<T>(mapper: Mapper<R, T>): Either<T, T> {
     return new Right(mapper(this._value));
   }
 
-  public apply<L, T>(mapper: Either<L, Mapper<R, T>>): Either<L, T> {
-    return mapper.map((mapper) => mapper(this._value));
-  }
-
-  public flatMap<L, T>(mapper: Mapper<R, Either<L, T>>): Either<L, T> {
+  public flatMap<T>(mapper: Mapper<R, Either<T, T>>): Either<T, T> {
     return mapper(this._value);
-  }
-
-  public flatten<L, R>(this: Right<Either<L, R>>): Either<L, R> {
-    return this._value;
   }
 
   public reduce<T>(reducer: Reducer<R, T>, accumulator: T): T {

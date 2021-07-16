@@ -4,7 +4,6 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
 import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -17,22 +16,17 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<S | T>, Equatable, Hashable, Serializable<Selective.JSON<S, T>> {
+export class Selective<S, T = never> implements Functor<T>, Monad<T>, Iterable<S | T>, Equatable, Hashable, Serializable<Selective.JSON<S, T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<S | T>;
-    // (undocumented)
-    apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
     // (undocumented)
     else<U>(mapper: Mapper<S, U>): Selective<never, T | U>;
     // (undocumented)
     equals<S, T>(value: Selective<S, T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
-    exhaust<T>(this: Selective<never, T>): T;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U>;
-    // (undocumented)
-    flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T>;
     // (undocumented)
     get(): S | T;
     // (undocumented)
@@ -51,13 +45,15 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
     toJSON(): Selective.JSON<S, T>;
     // (undocumented)
     toString(): string;
-}
+    }
 
 // @public (undocumented)
 export namespace Selective {
+    export function exhaust<T>(selective: Selective<never, T>): T;
     // (undocumented)
     export type JSON<S, T = never> = Either.JSON<S, T>;
 }
+
 
 // (No @packageDocumentation comment for this package)
 

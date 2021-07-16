@@ -125,7 +125,6 @@ import "./property/text-decoration-thickness";
 import "./property/text-indent";
 import "./property/text-overflow";
 import "./property/text-transform";
-import "./property/text-shadow";
 import "./property/top";
 import "./property/transform";
 import "./property/visibility";

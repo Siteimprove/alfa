@@ -1,19 +1,14 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Sequence } from "@siteimprove/alfa-sequence";
-import { Set } from "@siteimprove/alfa-set";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -32,8 +27,7 @@ import {
 
 const { isElement } = Element;
 const { isText } = Text;
-const { or, not, test } = Predicate;
-const { and } = Refinement;
+const { and, or, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
@@ -92,80 +86,32 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const nonLinkElements = containers
-          .get(target)
-          .get()
-          .inclusiveDescendants({
-            flattened: true,
-            nested: true,
-          })
-          .filter(and(isElement, hasNonLinkText(device)));
+        const container = containers.get(target).get();
 
-        const linkElements = target
-          // All descendants of the link.
-          .inclusiveDescendants({
-            flattened: true,
-            nested: true,
-          })
-          .filter(isElement)
-          // Plus those ancestors who don't include non-link text.
-          .concat(
-            target
-              .ancestors({
-                flattened: true,
-                nested: true,
-              })
-              .takeWhile(and(isElement, not(hasNonLinkText(device))))
-          );
-
-        const hasDistinguishingStyle = (context?: Context) =>
-          Set.from(
-            linkElements.map((link) =>
-              // If the link element is distinguishable from at least one
-              // non-link element, this is good enough.
-              // Note that ACT rules draft requires the link-element to be
-              // distinguishable from *all* non-link elements in order to be good.
-              nonLinkElements.some((container) =>
-                isDistinguishable(container, device, context)(link)
-              )
-                ? Ok.of(ComputedStyles.from(link, device, context))
-                : Err.of(ComputedStyles.from(link, device, context))
-            )
-          )
-            .toArray()
-            // sort the Ok before the Err, relative order doesn't matter.
-            .sort((a, b) => (b.isOk() ? 1 : -1));
-
-        // The context needs to be set on the *target*, not on its ancestors
-        // or descendants
-        const isDefaultDistinguishable = hasDistinguishingStyle();
-
-        const isHoverDistinguishable = hasDistinguishingStyle(
+        const defaultStyle = isDistinguishable(target, container, device);
+        const hoverStyle = isDistinguishable(
+          target,
+          container,
+          device,
           Context.hover(target)
         );
-
-        const isFocusDistinguishable = hasDistinguishingStyle(
+        const focusStyle = isDistinguishable(
+          target,
+          container,
+          device,
           Context.focus(target)
         );
 
         return {
           1: expectation(
-            // If at least one link element is good, this is enough. The sorting
-            // guarantees it is first in the array.
-            isDefaultDistinguishable[0].isOk() &&
-              isHoverDistinguishable[0].isOk() &&
-              isFocusDistinguishable[0].isOk(),
+            defaultStyle.isOk() && hoverStyle.isOk() && focusStyle.isOk(),
             () =>
-              Outcomes.IsDistinguishable(
-                isDefaultDistinguishable,
-                isHoverDistinguishable,
-                isFocusDistinguishable
-              ),
+              Outcomes.IsDistinguishable(defaultStyle, hoverStyle, focusStyle),
             () =>
               Outcomes.IsNotDistinguishable(
-                isDefaultDistinguishable,
-                isHoverDistinguishable,
-                isFocusDistinguishable
+                defaultStyle,
+                hoverStyle,
+                focusStyle
               )
           ),
         };
@@ -180,95 +126,81 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
   ) =>
     Ok.of(
       DistinguishingStyles.of(
         `The link is distinguishable from the surrounding text`,
-        defaultStyles,
-        hoverStyles,
-        focusStyles
+        defaultStyle,
+        hoverStyle,
+        focusStyle
       )
     );
 
   export const IsNotDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
   ) =>
     Err.of(
       DistinguishingStyles.of(
         `The link is not distinguishable from the surrounding text`,
-        defaultStyles,
-        hoverStyles,
-        focusStyles
+        defaultStyle,
+        hoverStyle,
+        focusStyle
       )
     );
 }
 
-const hasNonLinkTextCache = Cache.empty<Element, boolean>();
-
 function hasNonLinkText(device: Device): Predicate<Element> {
   return function hasNonLinkText(element) {
-    return hasNonLinkTextCache.get(element, () => {
-      //  If we are already below a link, escape.
-      if (
-        element
-          .inclusiveAncestors({
-            flattened: true,
-          })
-          .some(
-            and(
-              isElement,
-              hasRole(device, (role) => role.is("link"))
-            )
-          )
-      ) {
-        return false;
-      }
-
-      const children = element.children({
-        flattened: true,
-      });
-
-      // If we've found text, we're done.
-      if (children.some(and(isText, isVisible(device)))) {
-        return true;
-      }
-
-      // Otherwise, go down.
-      return children
-        .filter(isElement)
-        .reject(hasRole(device, (role) => role.is("link")))
-        .some(hasNonLinkText);
+    const children = element.children({
+      flattened: true,
     });
+
+    if (children.some(and(isText, isVisible(device)))) {
+      return true;
+    }
+
+    return children
+      .filter(isElement)
+      .reject(hasRole(device, (role) => role.is("link")))
+      .some(hasNonLinkText);
   };
 }
 
 function isDistinguishable(
+  target: Element,
   container: Element,
   device: Device,
   context: Context = Context.empty()
-): Predicate<Element> {
-  return or(
-    // Things like text decoration and backgrounds risk blending with the
-    // container element. We therefore need to check if these can be distinguished
-    // from what the container element might itself set.
-    hasDistinguishableTextDecoration(container, device, context),
-    hasDistinguishableBackground(container, device, context),
+): Result<ComputedStyles> {
+  const style = ComputedStyles.from(target, device, context);
 
-    hasDistinguishableFontWeight(container, device, context),
+  return test(
+    or(
+      // Things like text decoration and backgrounds risk blending with the
+      // container element. We therefore need to check if these can be distinguished
+      // from what the container element might itself set.
+      hasDistinguishableTextDecoration(container, device, context),
+      hasDistinguishableBackground(container, device, context),
 
-    // We consider the mere presence of borders or outlines on the element as
-    // distinguishable features. There's of course a risk of these blending with
-    // other features of the container element, such as its background, but this
-    // should hopefully not happen (too often) in practice. When it does, we
-    // risk false negatives.
-    hasOutline(device, context),
-    hasBorder(device, context)
-  );
+      hasDistinguishableFontWeight(container, device, context),
+
+      // We consider the mere presence of borders or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      hasOutline(device, context),
+      hasBorder(device, context)
+    ),
+    target
+  )
+    ? Ok.of(style)
+    : Err.of(style);
 }
 
 function hasDistinguishableTextDecoration(
@@ -333,7 +265,7 @@ function hasDistinguishableFontWeight(
 
 type Name = Property.Name | Property.Shorthand.Name;
 
-export class ComputedStyles implements Equatable, Hashable, Serializable {
+export class ComputedStyles implements Equatable, Serializable {
   public static of(
     style: Iterable<readonly [Name, string]> = []
   ): ComputedStyles {
@@ -356,10 +288,6 @@ export class ComputedStyles implements Equatable, Hashable, Serializable {
 
   public equals(value: unknown): boolean {
     return value instanceof ComputedStyles && value._style.equals(this._style);
-  }
-
-  public hash(hash: Hash): void {
-    this._style.hash(hash);
   }
 
   public toJSON(): ComputedStyles.JSON {
@@ -441,9 +369,11 @@ export namespace ComputedStyles {
       "text-decoration-thickness"
     )}`.trim();
 
-    const longhands = (
-      ["background-color", "color", "font-weight"] as const
-    ).map((property) => [property, longhand(property)] as const);
+    const longhands = ([
+      "background-color",
+      "color",
+      "font-weight",
+    ] as const).map((property) => [property, longhand(property)] as const);
 
     return ComputedStyles.of(
       [
@@ -459,44 +389,44 @@ export namespace ComputedStyles {
 export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
-    defaultStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    hoverStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    focusStyles: Iterable<Result<ComputedStyles>> = Sequence.empty()
+    defaultStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([])),
+    hoverStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([])),
+    focusStyle: Result<ComputedStyles> = Err.of(ComputedStyles.of([]))
   ): DistinguishingStyles {
     return new DistinguishingStyles(
       message,
-      Sequence.from(defaultStyles),
-      Sequence.from(hoverStyles),
-      Sequence.from(focusStyles)
+      defaultStyle,
+      hoverStyle,
+      focusStyle
     );
   }
 
-  private readonly _defaultStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _hoverStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _focusStyles: Sequence<Result<ComputedStyles>>;
+  private readonly _defaultStyle: Result<ComputedStyles>;
+  private readonly _hoverStyle: Result<ComputedStyles>;
+  private readonly _focusStyle: Result<ComputedStyles>;
 
   private constructor(
     message: string,
-    defaultStyles: Sequence<Result<ComputedStyles>>,
-    hoverStyles: Sequence<Result<ComputedStyles>>,
-    focusStyles: Sequence<Result<ComputedStyles>>
+    defaultStyle: Result<ComputedStyles>,
+    hoverStyle: Result<ComputedStyles>,
+    focusStyle: Result<ComputedStyles>
   ) {
     super(message);
-    this._defaultStyles = defaultStyles;
-    this._hoverStyles = hoverStyles;
-    this._focusStyles = focusStyles;
+    this._defaultStyle = defaultStyle;
+    this._hoverStyle = hoverStyle;
+    this._focusStyle = focusStyle;
   }
 
-  public get defaultStyles(): Iterable<Result<ComputedStyles>> {
-    return this._defaultStyles;
+  public get defaultStyle(): Result<ComputedStyles> {
+    return this._defaultStyle;
   }
 
-  public get hoverStyles(): Iterable<Result<ComputedStyles>> {
-    return this._hoverStyles;
+  public get hoverStyle(): Result<ComputedStyles> {
+    return this._hoverStyle;
   }
 
-  public get focusStyles(): Iterable<Result<ComputedStyles>> {
-    return this._focusStyles;
+  public get focusStyle(): Result<ComputedStyles> {
+    return this._focusStyle;
   }
 
   public equals(value: DistinguishingStyles): boolean;
@@ -506,26 +436,26 @@ export class DistinguishingStyles extends Diagnostic {
   public equals(value: unknown): boolean {
     return (
       value instanceof DistinguishingStyles &&
-      value._defaultStyles.equals(this._defaultStyles) &&
-      value._hoverStyles.equals(this._hoverStyles) &&
-      value._focusStyles.equals(this._focusStyles)
+      value._defaultStyle.equals(this._defaultStyle) &&
+      value._hoverStyle.equals(this._hoverStyle) &&
+      value._focusStyle.equals(this._focusStyle)
     );
   }
 
   public toJSON(): DistinguishingStyles.JSON {
     return {
       ...super.toJSON(),
-      defaultStyle: this._defaultStyles.toJSON(),
-      hoverStyle: this._hoverStyles.toJSON(),
-      focusStyle: this._focusStyles.toJSON(),
+      defaultStyle: this._defaultStyle.toJSON(),
+      hoverStyle: this._hoverStyle.toJSON(),
+      focusStyle: this._focusStyle.toJSON(),
     };
   }
 }
 
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
-    defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
-    hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
-    focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+    defaultStyle: Result.JSON<ComputedStyles>;
+    hoverStyle: Result.JSON<ComputedStyles>;
+    focusStyle: Result.JSON<ComputedStyles>;
   }
 }

@@ -39,7 +39,9 @@ export namespace Status {
     }
   }
 
-  export const { of: created } = Created;
+  export function created<T>(result: T): Created<T> {
+    return Created.of(result);
+  }
 
   export class Updated<T> extends Status<T> {
     public static of<T>(result: T): Updated<T> {
@@ -55,7 +57,9 @@ export namespace Status {
     }
   }
 
-  export const { of: updated } = Updated;
+  export function updated<T>(result: T): Updated<T> {
+    return Updated.of(result);
+  }
 
   export class Deleted<T> extends Status<T> {
     public static of<T>(result: T): Deleted<T> {
@@ -71,7 +75,9 @@ export namespace Status {
     }
   }
 
-  export const { of: deleted } = Deleted;
+  export function deleted<T>(result: T): Deleted<T> {
+    return Deleted.of(result);
+  }
 
   export class Unchanged<T> extends Status<T> {
     public static of<T>(result: T): Unchanged<T> {
@@ -87,5 +93,7 @@ export namespace Status {
     }
   }
 
-  export const { of: unchanged } = Unchanged;
+  export function unchanged<T>(result: T): Unchanged<T> {
+    return Unchanged.of(result);
+  }
 }

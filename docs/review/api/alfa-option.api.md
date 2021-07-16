@@ -41,7 +41,7 @@ export namespace None {
 }
 
 // @public (undocumented)
-export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> {
+export interface Option<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> {
     // (undocumented)
     and<U>(option: Option<U>): Option<U>;
     // (undocumented)
@@ -49,9 +49,7 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
     // (undocumented)
-    compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
-    // (undocumented)
-    compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
+    compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
@@ -60,8 +58,6 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     filter(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
-    // (undocumented)
-    flatten<T>(this: Option<Option<T>>): Option<T>;
     // (undocumented)
     get(): T;
     // (undocumented)
@@ -99,7 +95,11 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
 // @public (undocumented)
 export namespace Option {
     // (undocumented)
+    export function compare<T extends Comparable<T>>(a: Option<T>, b: Option<T>): Comparison;
+    // (undocumented)
     export function empty<T>(): Option<T>;
+    // (undocumented)
+    export function flatten<T>(option: Option<Option<T>>): Option<T>;
     // (undocumented)
     export function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
     // (undocumented)
@@ -133,9 +133,7 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
     // (undocumented)
-    compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
-    // (undocumented)
-    compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
+    compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -146,8 +144,6 @@ export class Some<T> implements Option<T> {
     filter(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
-    // (undocumented)
-    flatten<T>(this: Some<Option<T>>): Option<T>;
     // (undocumented)
     get(): T;
     // (undocumented)
@@ -186,7 +182,7 @@ export class Some<T> implements Option<T> {
     toJSON(): Some.JSON<T>;
     // (undocumented)
     toString(): string;
-}
+    }
 
 // @public (undocumented)
 export namespace Some {
@@ -204,6 +200,7 @@ export namespace Some {
         value: Serializable.ToJSON<T>;
     }
 }
+
 
 // (No @packageDocumentation comment for this package)
 

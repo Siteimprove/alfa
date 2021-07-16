@@ -25,7 +25,7 @@ export function jsx(
  */
 export function jsxs(
   name: string,
-  properties: _jsx.Properties & { children?: _jsx.Children }
+  properties: _jsx.Properties & { children?: Array<_jsx.Child> }
 ): Element {
   const { children, ...rest } = properties;
 
@@ -41,7 +41,7 @@ export function jsxs(
  */
 export function jsxDEV(
   name: string,
-  properties: _jsx.Properties & { children?: _jsx.Child | _jsx.Children }
+  properties: _jsx.Properties & { children?: _jsx.Child | Array<_jsx.Child> }
 ): Element {
   const { children, ...rest } = properties;
 

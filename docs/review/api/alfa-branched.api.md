@@ -48,8 +48,6 @@ export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Ite
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Branched<U, B>, [Iterable_2<B>]>): Branched<U, B>;
     // (undocumented)
-    flatten<T, B>(this: Branched<Branched<T, B>, B>): Branched<T, B>;
-    // (undocumented)
     forEach(callback: Callback<T, void, [Iterable_2<B>]>): void;
     // (undocumented)
     hash(hash: Hash): void;
@@ -77,7 +75,7 @@ export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Ite
     toArray(): Array<[T, Array<B>]>;
     // (undocumented)
     toJSON(): Branched.JSON<T, B>;
-}
+    }
 
 // @public (undocumented)
 export namespace Branched {
@@ -87,14 +85,15 @@ export namespace Branched {
     export function isBranched<T, B = never>(value: unknown): value is Branched<T, B>;
     // (undocumented)
     export type JSON<T, B = never> = Array<[
-    Serializable.ToJSON<T>,
-    Array<Serializable.ToJSON<B>>
+        Serializable.ToJSON<T>,
+        Array<Serializable.ToJSON<B>>
     ]>;
     // (undocumented)
     export function sequence<T, B>(values: Iterable_2<Branched<T, B>>): Branched<Iterable_2<T>, B>;
     // (undocumented)
     export function traverse<T, U, B>(values: Iterable_2<T>, mapper: Mapper<T, Branched<U, B>, [index: number]>): Branched<Iterable_2<U>, B>;
 }
+
 
 // (No @packageDocumentation comment for this package)
 

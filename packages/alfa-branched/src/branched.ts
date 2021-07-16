@@ -17,8 +17,7 @@ const { not } = Predicate;
  * @public
  */
 export class Branched<T, B = never>
-  implements Collection<T>, Iterable<[T, Iterable<B>]>
-{
+  implements Collection<T>, Iterable<[T, Iterable<B>]> {
   public static of<T, B = never>(
     value: T,
     ...branches: Array<B>
@@ -73,10 +72,6 @@ export class Branched<T, B = never>
     );
   }
 
-  public apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B> {
-    return mapper.flatMap((mapper) => this.map(mapper));
-  }
-
   public flatMap<U>(
     mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>
   ): Branched<U, B> {
@@ -100,10 +95,6 @@ export class Branched<T, B = never>
     );
   }
 
-  public flatten<T, B>(this: Branched<Branched<T, B>, B>): Branched<T, B> {
-    return this.flatMap((branched) => branched);
-  }
-
   public reduce<U>(reducer: Reducer<T, U, [Iterable<B>]>, accumulator: U): U {
     return this._values.reduce(
       (accumulator, value) =>
@@ -114,6 +105,10 @@ export class Branched<T, B = never>
         ),
       accumulator
     );
+  }
+
+  public apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public filter<U extends T>(

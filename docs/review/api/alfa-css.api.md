@@ -72,7 +72,7 @@ export class Block implements Iterable<Token>, Equatable, Serializable {
     toString(): string;
     // (undocumented)
     get value(): Array<Token>;
-}
+    }
 
 // @public (undocumented)
 export namespace Block {
@@ -333,7 +333,7 @@ export namespace Calculation {
         get type(): "value";
         // (undocumented)
         get value(): Numeric;
-    }
+        }
     // (undocumented)
     export namespace Value {
         // (undocumented)
@@ -428,7 +428,7 @@ export class Component implements Iterable<Token>, Equatable, Serializable {
     toString(): string;
     // (undocumented)
     get value(): Array<Token>;
-}
+    }
 
 // @public (undocumented)
 export namespace Component {
@@ -488,7 +488,7 @@ export class Declaration implements Iterable<Token>, Equatable, Serializable {
     toString(): string;
     // (undocumented)
     get value(): Array<Token>;
-}
+    }
 
 // @public (undocumented)
 export namespace Declaration {
@@ -604,7 +604,7 @@ class Function_2 implements Iterable<Token>, Equatable, Serializable {
     toString(): string;
     // (undocumented)
     get value(): Array<Token>;
-}
+    }
 
 // @public (undocumented)
 namespace Function_2 {
@@ -622,6 +622,7 @@ namespace Function_2 {
     const // (undocumented)
     parse: <T>(name?: string | undefined, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
 }
+
 export { Function_2 as Function }
 
 // @public (undocumented)
@@ -738,7 +739,7 @@ export class Hex extends Value<"color"> {
     get type(): "color";
     // (undocumented)
     get value(): number;
-}
+    }
 
 // @public (undocumented)
 export namespace Hex {
@@ -943,7 +944,7 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
     get type(): "keyword";
     // (undocumented)
     get value(): T;
-}
+    }
 
 // @public (undocumented)
 export namespace Keyword {
@@ -981,7 +982,7 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
     // (undocumented)
     static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
     // (undocumented)
-    toJSON(): Length.JSON<U>;
+    toJSON(): Length.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -999,9 +1000,9 @@ export namespace Length {
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
     // (undocumented)
-    export interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length"> {
+    export interface JSON extends Dimension.JSON<"length"> {
         // (undocumented)
-        unit: U;
+        unit: Unit.Length;
     }
 }
 
@@ -1057,7 +1058,7 @@ export namespace Linear {
         get type(): "corner";
         // (undocumented)
         get vertical(): Position.Vertical;
-    }
+        }
     // (undocumented)
     export namespace Corner {
         // (undocumented)
@@ -1156,7 +1157,7 @@ export class Matrix extends Value<"transform"> {
     get type(): "transform";
     // (undocumented)
     get values(): Matrix.Values<Number_2>;
-}
+    }
 
 // @public (undocumented)
 export namespace Matrix {
@@ -1171,30 +1172,30 @@ export namespace Matrix {
     }
     // (undocumented)
     export type Values<T> = [
-    [
-    T,
-    T,
-    T,
-    T
-    ],
-    [
-    T,
-    T,
-    T,
-    T
-    ],
-    [
-    T,
-    T,
-    T,
-    T
-    ],
-    [
-    T,
-    T,
-    T,
-    T
-    ]
+        [
+            T,
+            T,
+            T,
+            T
+        ],
+        [
+            T,
+            T,
+            T,
+            T
+        ],
+        [
+            T,
+            T,
+            T,
+            T
+        ],
+        [
+            T,
+            T,
+            T,
+            T
+        ]
     ];
     const // (undocumented)
     parse: Parser<Slice<Token>, Matrix, string>;
@@ -1311,6 +1312,7 @@ namespace Number_2 {
     const // (undocumented)
     parse: Parser<Slice<Token>, Number_2, string>;
 }
+
 export { Number_2 as Number }
 
 // @public (undocumented)
@@ -1430,7 +1432,7 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length | P
     get type(): "basic-shape";
     // (undocumented)
     get vertices(): ReadonlyArray<Polygon.Vertex<V>>;
-}
+    }
 
 // @public (undocumented)
 export namespace Polygon {
@@ -1469,7 +1471,7 @@ export class Position<H extends Position.Component<Position.Horizontal> = Positi
     get type(): "position";
     // (undocumented)
     get vertical(): V;
-}
+    }
 
 // @public (undocumented)
 export namespace Position {
@@ -1637,7 +1639,7 @@ export namespace Radial {
         get type(): "ellipse";
         // (undocumented)
         get vertical(): R;
-    }
+        }
     // (undocumented)
     export namespace Ellipse {
         // (undocumented)
@@ -1749,7 +1751,7 @@ export class Radius<R extends Length | Percentage | Radius.Side = Length | Perce
     get type(): "basic-shape";
     // (undocumented)
     get value(): R;
-}
+    }
 
 // @public (undocumented)
 export namespace Radius {
@@ -1905,7 +1907,7 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
     get y(): Number_2;
     // (undocumented)
     get z(): Number_2;
-}
+    }
 
 // @public (undocumented)
 export namespace Rotate {
@@ -1948,7 +1950,7 @@ export class Scale extends Value<"transform"> {
     get x(): Number_2;
     // (undocumented)
     get y(): Number_2;
-}
+    }
 
 // @public (undocumented)
 export namespace Scale {
@@ -1993,7 +1995,7 @@ export class Shadow<V extends Length = Length, H extends Length = V, B extends L
     get type(): "shadow";
     // (undocumented)
     get vertical(): V;
-}
+    }
 
 // @public (undocumented)
 export namespace Shadow {
@@ -2071,7 +2073,7 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle> extends Valu
     get x(): X;
     // (undocumented)
     get y(): Y;
-}
+    }
 
 // @public (undocumented)
 export namespace Skew {
@@ -2106,7 +2108,7 @@ class String_2 extends Value<"string"> {
     get type(): "string";
     // (undocumented)
     get value(): string;
-}
+    }
 
 // @public (undocumented)
 namespace String_2 {
@@ -2120,6 +2122,7 @@ namespace String_2 {
     const // (undocumented)
     parse: Parser<Slice<Token>, String_2, string>;
 }
+
 export { String_2 as String }
 
 // @public (undocumented)
@@ -2152,7 +2155,7 @@ export namespace Token {
         get type(): "at-keyword";
         // (undocumented)
         get value(): string;
-    }
+        }
     // (undocumented)
     export namespace AtKeyword {
         // (undocumented)
@@ -2372,7 +2375,7 @@ export namespace Token {
         get type(): "delim";
         // (undocumented)
         get value(): number;
-    }
+        }
     const // (undocumented)
     url: typeof URL.of, // (undocumented)
     isURL: typeof URL.isURL;
@@ -2410,7 +2413,7 @@ export namespace Token {
         get unit(): string;
         // (undocumented)
         get value(): number;
-    }
+        }
     // (undocumented)
     export namespace Dimension {
         // (undocumented)
@@ -2449,7 +2452,7 @@ export namespace Token {
         get type(): "function";
         // (undocumented)
         get value(): string;
-    }
+        }
     // (undocumented)
     export namespace Function {
         // (undocumented)
@@ -2483,7 +2486,7 @@ export namespace Token {
         get type(): "hash";
         // (undocumented)
         get value(): string;
-    }
+        }
     // (undocumented)
     export namespace Hash {
         // (undocumented)
@@ -2514,7 +2517,7 @@ export namespace Token {
         get type(): "ident";
         // (undocumented)
         get value(): string;
-    }
+        }
     const // (undocumented)
     number: typeof Number.of, // (undocumented)
     isNumber: typeof Number.isNumber;
@@ -2552,7 +2555,7 @@ export namespace Token {
         get type(): "number";
         // (undocumented)
         get value(): number;
-    }
+        }
     const // (undocumented)
     percentage: typeof Percentage.of, // (undocumented)
     isPercentage: typeof Percentage.isPercentage;
@@ -2752,7 +2755,7 @@ export namespace Token {
         get type(): "percentage";
         // (undocumented)
         get value(): number;
-    }
+        }
     // (undocumented)
     export namespace Percentage {
         // (undocumented)
@@ -2818,7 +2821,7 @@ export namespace Token {
         get type(): "string";
         // (undocumented)
         get value(): string;
-    }
+        }
     // (undocumented)
     export namespace String {
         // (undocumented)
@@ -2852,7 +2855,7 @@ export namespace Token {
         get type(): "url";
         // (undocumented)
         get value(): string;
-    }
+        }
     // (undocumented)
     export namespace URL {
         // (undocumented)
@@ -2949,7 +2952,7 @@ export class Translate<X extends Length | Percentage = Length | Percentage, Y ex
     get y(): Y;
     // (undocumented)
     get z(): Z;
-}
+    }
 
 // @public (undocumented)
 export namespace Translate {
@@ -3040,7 +3043,7 @@ export class URL extends Value<"url"> {
     get type(): "url";
     // (undocumented)
     get url(): string;
-}
+    }
 
 // @public (undocumented)
 export namespace URL {
@@ -3082,6 +3085,7 @@ export namespace Value {
         type: T;
     }
 }
+
 
 // (No @packageDocumentation comment for this package)
 

@@ -2,5 +2,5 @@ set -e
 
 yarn workspaces foreach \
   --no-private \
-  --topological-dev \
+  --topological \
   npm publish

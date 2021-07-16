@@ -21,29 +21,11 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
-## [0.20.0](../../compare/v0.19.0...v0.20.0) (2021-07-09)
-
 In addition to the changes listed below, this release adjusts the compile target from `es2018` to `es2020`.
-
-### Added
-
-- [@siteimprove/alfa-rules](packages/alfa-rules): Implementations of SIA-R54, SIA-R55, and SIA-R78 are now available. ([#834](../../pull/834), [#835](../../pull/835), [#854](../../pull/854))
-
-- [@siteimprove/alfa-scraper](packages/alfa-scraper): The `Scraper#scrape()` methods now accepts an `archive` option for storing an archive of the page scraped. ([#840](../../pull/840))
-
-- [@siteimprove/alfa-cli](packages/alfa-cli): Two new flags, `--archive` and `--archive-format`, are now available in the `alfa scrape` command for storing an archive of the page scraped. ([#840](../../pull/840))
-
-- [@siteimprove/alfa-hash](packages/alfa-hash): `Hash#writeBigInt()`, `Hash#writeBigInt64()`, `Hash#writeBigUint64()`, `Hash#writeUndefined()`, `Hash#writeNull()`,`Hash#writeObject()`, and `Hash#writeSymbol()` are now available. ([#853](../../pull/853))
 
 ### Fixed
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): A bug in how names were computed for subtrees and implicitly referenced `<label>` elements has been fixed. ([#808](../../issues/808), [#859](../../pull/859))
-
 - [@siteimprove/alfa-rules](packages/alfa-rules): The contrast ratios output in messages from SIA-R66 and SIA-R69 are now correctly listed as `<bright>:<dark>` rather than `<dark>:<bright>`.
-
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R56 is now correctly exported and available for audits. ([#850](../../pull/850))
-
-- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped()` now considers elements with a height or width of 0 as clipping if overflow causes scrolling. It now also checks if the ancestors of an element might cause it to clip. ([#731](../../issues/731), [#774](../../issues/774), [#827](../../pull/827), [#848](../../pull/848))
 
 ## [0.19.0](../../compare/v0.18.0...v0.19.0) (2021-06-15)
 

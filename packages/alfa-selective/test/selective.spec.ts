@@ -56,38 +56,3 @@ test(`#map() applies a function to a matched selective value`, (t) => {
     "WAS FOO"
   );
 });
-
-test(`#apply() applies a selective function to a selective value`, (t) => {
-  t.equal(
-    Selective.of("foo")
-      .if(isFoo, () => 2)
-      .apply(Selective.of("bar").if(isBar, () => (n) => n * 2))
-      .get(),
-    4
-  );
-});
-
-test(`#flatMap() applies a function to a matched selective value and flattens
-      the result`, (t) => {
-  t.equal(
-    Selective.of("foo")
-      .if(isFoo, () => "was foo")
-      .flatMap((wasFoo) =>
-        Selective.of("bar")
-          .if(isBar, () => "was bar")
-          .map((wasBar) => `${wasFoo} and ${wasBar}`)
-      )
-      .get(),
-    "was foo and was bar"
-  );
-});
-
-test(`#flatten() unwraps a nested selective value`, (t) => {
-  t.equal(
-    Selective.of("foo")
-      .else(() => Selective.of("bar"))
-      .flatten()
-      .get(),
-    "bar"
-  );
-});

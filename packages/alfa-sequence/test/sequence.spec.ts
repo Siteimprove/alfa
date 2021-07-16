@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Comparable } from "@siteimprove/alfa-comparable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Lazy } from "@siteimprove/alfa-lazy";
 
@@ -58,13 +57,6 @@ test("#map() does not force the tail of a sequence", (t) => {
   ).map((n) => n + 1);
 });
 
-test("#apply() applies a sequence of functions to each value of a sequence", (t) => {
-  t.deepEqual(
-    [...seq.apply(Sequence.from([(n) => n + 1, (n) => n * 2]))],
-    [2, 3, 4, 5, 2, 4, 6, 8]
-  );
-});
-
 test("#flatMap() applies a function to each value of a sequence and flattens the result", (t) => {
   t.deepEqual(
     [...seq.flatMap((n) => Sequence.from([n, n]))],
@@ -83,12 +75,6 @@ test("#flatMap() behaves when a singleton sequence maps to an empty sequence", (
   const seq = Sequence.from([1]).flatMap(() => Sequence.empty());
 
   t.deepEqual([...seq], []);
-});
-
-test("#flatten() unwraps a nested sequence", (t) => {
-  const seq = Sequence.from([Sequence.from([1, 2]), Sequence.from([3, 4])]);
-
-  t.deepEqual(seq.flatten().toArray(), [1, 2, 3, 4]);
 });
 
 test("#reduce() reduces a sequence of values to a single value", (t) => {
@@ -235,24 +221,6 @@ test("#join() joins the values of a sequence to a string", (t) => {
   const seq = Sequence.from(["foo", "bar", "baz"]);
 
   t.equal(seq.join("-"), "foo-bar-baz");
-});
-
-test("#sort() sorts a sequence of comparable values", (t) => {
-  class Foo implements Comparable<Foo> {
-    value: number;
-
-    constructor(value: number) {
-      this.value = value;
-    }
-
-    compare(other: Foo) {
-      return Comparable.compare(this.value, other.value);
-    }
-  }
-
-  const seq = Sequence.from([new Foo(5), new Foo(3), new Foo(1)]);
-
-  t.deepEqual(seq.sort().toArray(), [new Foo(1), new Foo(3), new Foo(5)]);
 });
 
 test("#sortWith() sorts a sequence according to a comparer", (t) => {

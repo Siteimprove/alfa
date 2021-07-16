@@ -4,9 +4,6 @@
   "files": ["src/applicative.ts", "src/index.ts"],
   "references": [
     {
-      "path": "../alfa-functor"
-    },
-    {
       "path": "../alfa-mapper"
     },
     {

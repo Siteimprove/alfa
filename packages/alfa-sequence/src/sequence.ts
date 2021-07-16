@@ -13,6 +13,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Cons } from "./cons";
 import { Nil } from "./nil";
 
+const { compareComparable } = Comparable;
+
 /**
  * @public
  */
@@ -20,9 +22,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   isEmpty(): this is Sequence<never>;
   forEach(callback: Callback<T, void, [index: number]>): void;
   map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
-  apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
   flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
-  flatten<T>(this: Sequence<Sequence<T>>): Sequence<T>;
   reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
   reduceWhile<U>(
     predicate: Predicate<T, [index: number]>,
@@ -34,6 +34,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     reducer: Reducer<T, U, [index: number]>,
     accumulator: U
   ): U;
+  apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
   filter<U extends T>(
     refinement: Refinement<T, U, [index: number]>
   ): Sequence<U>;
@@ -65,15 +66,9 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
-  takeWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
-  ): Sequence<U>;
   takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLast(count: number): Sequence<T>;
-  takeLastWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
-  ): Sequence<U>;
   takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   skip(count: number): Sequence<T>;
@@ -89,13 +84,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;
   join(separator: string): string;
-  sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
   sortWith(comparer: Comparer<T>): Sequence<T>;
-  compare(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
-  compareWith<U = T>(
-    iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
-  ): Comparison;
+  compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
   toJSON(): Sequence.JSON<T>;
@@ -137,6 +127,10 @@ export namespace Sequence {
 
   export function empty<T = never>(): Sequence<T> {
     return Nil;
+  }
+
+  export function flatten<T>(sequence: Sequence<Sequence<T>>): Sequence<T> {
+    return sequence.flatMap((sequence) => sequence);
   }
 
   export function from<T>(iterable: Iterable<T>): Sequence<T> {
@@ -181,5 +175,18 @@ export namespace Sequence {
     };
 
     return tail();
+  }
+
+  export function sort<T extends Comparable<T>>(
+    sequence: Sequence<T>
+  ): Sequence<T> {
+    return sequence.sortWith(compareComparable);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Sequence<T>,
+    b: Iterable<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

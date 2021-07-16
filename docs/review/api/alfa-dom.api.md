@@ -50,7 +50,7 @@ export class Attribute extends Node {
     toString(): string;
     // (undocumented)
     get value(): string;
-}
+    }
 
 // @public (undocumented)
 export namespace Attribute {
@@ -184,7 +184,7 @@ export class Declaration implements Equatable, Serializable {
     toString(): string;
     // (undocumented)
     get value(): string;
-}
+    }
 
 // @public (undocumented)
 export namespace Declaration {
@@ -548,14 +548,12 @@ function isEditingHost(element: Element): boolean;
 function isSuggestedFocusable(element: Element): boolean;
 
 // @public (undocumented)
-export function jsx(name: string, properties?: jsx.Properties | null, ...children: jsx.Children): Element;
+export function jsx(name: string, properties?: jsx.Properties | null, ...children: Array<jsx.Child>): Element;
 
 // @public (undocumented)
 export namespace jsx {
     // (undocumented)
     export type Child = Node | string;
-    // (undocumented)
-    export type Children = (Child | Children)[];
     // (undocumented)
     export namespace JSX {
         // Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
@@ -787,10 +785,10 @@ export namespace Node {
         };
         // (undocumented)
         "@type": [
-        "ptr:Pointer",
-        "ptr:SinglePointer",
-        "ptr:ExpressionPointer",
-        "ptr:XPathPointer"
+            "ptr:Pointer",
+            "ptr:SinglePointer",
+            "ptr:ExpressionPointer",
+            "ptr:XPathPointer"
         ];
         // (undocumented)
         "ptr:expression": string;
@@ -1177,6 +1175,7 @@ export namespace Type {
         type: "type";
     }
 }
+
 
 // (No @packageDocumentation comment for this package)
 

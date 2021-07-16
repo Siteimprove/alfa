@@ -22,9 +22,9 @@ const { compareComparable } = Comparable;
  */
 export interface Option<T>
   extends Functor<T>,
-    Applicative<T>,
     Monad<T>,
     Foldable<T>,
+    Applicative<T>,
     Iterable<T>,
     Equatable,
     Hashable,
@@ -32,10 +32,9 @@ export interface Option<T>
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
-  apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
-  flatten<T>(this: Option<Option<T>>): Option<T>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+  apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
   filter(predicate: Predicate<T>): Option<T>;
   reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
@@ -51,8 +50,7 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
-  compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
-  compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
+  compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
   toArray(): Array<T>;
   toJSON(): Option.JSON<T>;
 }
@@ -97,7 +95,18 @@ export namespace Option {
     return None;
   }
 
+  export function flatten<T>(option: Option<Option<T>>): Option<T> {
+    return option.flatMap((option) => option);
+  }
+
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
+  }
+
+  export function compare<T extends Comparable<T>>(
+    a: Option<T>,
+    b: Option<T>
+  ): Comparison {
+    return a.compareWith(b, compareComparable);
   }
 }

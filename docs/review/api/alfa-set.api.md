@@ -54,8 +54,6 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Set_2<U>>): Set_2<U>;
     // (undocumented)
-    flatten<T>(this: Set_2<Set_2<T>>): Set_2<T>;
-    // (undocumented)
     forEach(callback: Callback<T>): void;
     // (undocumented)
     get(value: T): Option<T>;
@@ -95,7 +93,7 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     toJSON(): Set_2.JSON<T>;
     // (undocumented)
     toString(): string;
-}
+    }
 
 // @public (undocumented)
 namespace Set_2 {
@@ -112,7 +110,9 @@ namespace Set_2 {
     // (undocumented)
     type JSON<T> = Collection.Unkeyed.JSON<T>;
 }
+
 export { Set_2 as Set }
+
 
 // (No @packageDocumentation comment for this package)
 

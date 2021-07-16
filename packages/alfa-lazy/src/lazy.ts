@@ -1,4 +1,3 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -13,12 +12,10 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 export class Lazy<T>
   implements
     Functor<T>,
-    Applicative<T>,
     Monad<T>,
     Iterable<T>,
     Equatable,
-    Serializable<Lazy.JSON<T>>
-{
+    Serializable<Lazy.JSON<T>> {
   public static of<T>(thunk: Thunk<T>): Lazy<T> {
     return new Lazy(Trampoline.delay(thunk));
   }
@@ -53,10 +50,6 @@ export class Lazy<T>
     );
   }
 
-  public apply<U>(mapper: Lazy<Mapper<T, U>>): Lazy<U> {
-    return mapper.map((mapper) => mapper(this.force()));
-  }
-
   public flatMap<U>(mapper: Mapper<T, Lazy<U>>): Lazy<U> {
     return new Lazy(
       this._value.flatMap((value) => {
@@ -67,10 +60,6 @@ export class Lazy<T>
         return mapper(value)._value;
       })
     );
-  }
-
-  public flatten<T>(this: Lazy<Lazy<T>>): Lazy<T> {
-    return this.flatMap((lazy) => lazy);
   }
 
   public equals<T>(value: Lazy<T>): boolean;

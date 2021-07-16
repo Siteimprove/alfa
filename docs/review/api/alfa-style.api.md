@@ -5,7 +5,6 @@
 ```ts
 
 import { Angle } from '@siteimprove/alfa-css';
-import { Applicative } from '@siteimprove/alfa-applicative';
 import { Color } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
 import { Current } from '@siteimprove/alfa-css';
@@ -223,17 +222,13 @@ export namespace Style {
 }
 
 // @public (undocumented)
-export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Value.JSON<T>> {
+export class Value<T = unknown> implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Value.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
-    // (undocumented)
-    apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Value<U>>): Value<U>;
-    // (undocumented)
-    flatten<T>(this: Value<Value<T>>): Value<T>;
     // (undocumented)
     includes(value: T): boolean;
     // (undocumented)

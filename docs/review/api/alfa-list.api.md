@@ -82,7 +82,7 @@ export class Leaf<T> implements Node<T> {
     set(index: number, value: T): Leaf<T>;
     // (undocumented)
     get values(): Array<T>;
-}
+    }
 
 // @public (undocumented)
 export class List<T> implements Collection.Indexed<T> {
@@ -97,9 +97,7 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compare(this: List<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
-    // (undocumented)
-    compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
+    compareWith(iterable: Iterable_2<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     concat(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
@@ -126,8 +124,6 @@ export class List<T> implements Collection.Indexed<T> {
     first(): Option<T>;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U>;
-    // (undocumented)
-    flatten<T>(this: List<List<T>>): List<T>;
     // (undocumented)
     forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
@@ -193,8 +189,6 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     some(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
-    sort<T extends Comparable<T>>(this: List<T>): List<T>;
-    // (undocumented)
     sortWith(comparer: Comparer<T>): List<T>;
     // (undocumented)
     subtract(iterable: Iterable_2<T>): List<T>;
@@ -205,13 +199,9 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     takeLastUntil(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
-    takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
-    // (undocumented)
     takeLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
     takeUntil(predicate: Predicate<T, [index: number]>): List<T>;
-    // (undocumented)
-    takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
     // (undocumented)
@@ -233,6 +223,8 @@ export class List<T> implements Collection.Indexed<T> {
 // @public (undocumented)
 export namespace List {
     // (undocumented)
+    export function compare<T extends Comparable<T>>(a: List<T>, b: Iterable_2<T>): Comparison;
+    // (undocumented)
     export function from<T>(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
     export function fromArray<T>(array: Array_2<T>): List<T>;
@@ -244,6 +236,8 @@ export namespace List {
     export function isList<T>(value: unknown): value is List<T>;
     // (undocumented)
     export type JSON<T> = Collection.Indexed.JSON<T>;
+    // (undocumented)
+    export function sort<T extends Comparable<T>>(list: List<T>): List<T>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Node" should be prefixed with an underscore because the declaration is marked as @internal
@@ -275,6 +269,7 @@ export namespace Node {
     // (undocumented)
     export function underflow(shift: number): number;
 }
+
 
 // (No @packageDocumentation comment for this package)
 

@@ -17,11 +17,10 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 export abstract class Future<T>
   implements
     Functor<T>,
-    Applicative<T>,
     Monad<T>,
+    Applicative<T>,
     Thenable<T>,
-    AsyncIterable<T>
-{
+    AsyncIterable<T> {
   protected abstract step(): Future<T>;
 
   public then(callback: Callback<T>): void {
@@ -62,14 +61,10 @@ export abstract class Future<T>
     return this.flatMap((value) => Now.of(mapper(value)));
   }
 
-  public apply<U>(mapper: Future<Mapper<T, U>>): Future<U> {
-    return mapper.flatMap((mapper) => this.map(mapper));
-  }
-
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 
-  public flatten<T>(this: Future<Future<T>>): Future<T> {
-    return this.flatMap((future) => future);
+  public apply<U>(mapper: Future<Mapper<T, U>>): Future<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public tee(callback: Callback<T>): Future<T> {

@@ -158,10 +158,10 @@ export namespace Array {
   }
 
   export function apply<T, U>(
-    array: ReadonlyArray<T>,
+    iterable: ReadonlyArray<T>,
     mapper: ReadonlyArray<Mapper<T, U>>
   ): Array<U> {
-    return flatMap(mapper, (mapper) => map(array, mapper));
+    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
   }
 
   export function filter<T, U extends T>(
@@ -373,10 +373,7 @@ export namespace Array {
     index: number,
     value: T
   ): Array<T> {
-    if (index <= array.length) {
-      array.splice(index, 0, value);
-    }
-
+    array.splice(index, 0, value);
     return array;
   }
 
@@ -450,17 +447,17 @@ export namespace Array {
     return array.sort(comparer);
   }
 
-  export function compare<T extends Comparable<U>, U = T>(
+  export function compare<T extends Comparable<T>>(
     a: ReadonlyArray<T>,
-    b: Iterable<U>
+    b: Iterable<T>
   ): Comparison {
     return compareWith(a, b, compareComparable);
   }
 
-  export function compareWith<T, U = T>(
+  export function compareWith<T>(
     a: ReadonlyArray<T>,
-    b: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    b: Iterable<T>,
+    comparer: Comparer<T>
   ): Comparison {
     return Iterable.compareWith(a, b, comparer);
   }

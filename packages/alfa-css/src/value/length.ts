@@ -17,8 +17,7 @@ const { map, either } = Parser;
  */
 export class Length<U extends Unit.Length = Unit.Length>
   extends Dimension<"length", Unit.Length, U>
-  implements Convertible<Unit.Length.Absolute>
-{
+  implements Convertible<Unit.Length.Absolute> {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
     return new Length(value, unit);
   }
@@ -76,7 +75,7 @@ export class Length<U extends Unit.Length = Unit.Length>
     hash.writeString(this._unit);
   }
 
-  public toJSON(): Length.JSON<U> {
+  public toJSON(): Length.JSON {
     return {
       type: "length",
       value: this._value,
@@ -93,9 +92,8 @@ export class Length<U extends Unit.Length = Unit.Length>
  * @public
  */
 export namespace Length {
-  export interface JSON<U extends Unit.Length = Unit.Length>
-    extends Dimension.JSON<"length"> {
-    unit: U;
+  export interface JSON extends Dimension.JSON<"length"> {
+    unit: Unit.Length;
   }
 
   export function isLength(value: unknown): value is Length {

@@ -30,9 +30,9 @@ namespace Iterable_2 {
     // (undocumented)
     function collectFirst<T, U>(iterable: Iterable_2<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    function compare<T extends Comparable<U>, U = T>(a: Iterable_2<T>, b: Iterable_2<U>): Comparison;
+    function compare<T extends Comparable<T>>(a: Iterable_2<T>, b: Iterable_2<T>): Comparison;
     // (undocumented)
-    function compareWith<T, U = T>(a: Iterable_2<T>, b: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
+    function compareWith<T>(a: Iterable_2<T>, b: Iterable_2<T>, comparer: Comparer<T>): Comparison;
     // (undocumented)
     function concat<T>(iterable: Iterable_2<T>, ...iterables: Array<Iterable_2<T>>): Iterable_2<T>;
     // (undocumented)
@@ -144,13 +144,9 @@ namespace Iterable_2 {
     // (undocumented)
     function takeLastUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
-    function takeLastWhile<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [index: number]>): Iterable_2<U>;
-    // (undocumented)
     function takeLastWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
     function takeUntil<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
-    // (undocumented)
-    function takeWhile<T, U extends T>(iterable: Iterable_2<T>, refinement: Refinement<T, U, [index: number]>): Iterable_2<U>;
     // (undocumented)
     function takeWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
@@ -164,7 +160,9 @@ namespace Iterable_2 {
     // (undocumented)
     function zip<T, U = T>(a: Iterable_2<T>, b: Iterable_2<U>): Iterable_2<[T, U]>;
 }
+
 export { Iterable_2 as Iterable }
+
 
 // (No @packageDocumentation comment for this package)
 

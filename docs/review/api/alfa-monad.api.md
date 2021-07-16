@@ -4,21 +4,14 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
-import { Functor } from '@siteimprove/alfa-functor';
 import { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
-export interface Monad<T> extends Functor<T>, Applicative<T> {
-    // (undocumented)
-    apply<U>(mapper: Monad<Mapper<T, U>>): Monad<U>;
+export interface Monad<T> {
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Monad<U>>): Monad<U>;
-    // (undocumented)
-    flatten<T>(this: Monad<Monad<T>>): Monad<T>;
-    // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Monad<U>;
 }
+
 
 // (No @packageDocumentation comment for this package)
 

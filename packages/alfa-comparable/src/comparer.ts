@@ -3,8 +3,8 @@ import { Comparison } from "./comparison";
 /**
  * @public
  */
-export type Comparer<T, U = T, A extends Array<unknown> = []> = (
+export type Comparer<T, A extends Array<unknown> = []> = (
   a: T,
-  b: U,
+  b: T,
   ...args: A
 ) => Comparison;

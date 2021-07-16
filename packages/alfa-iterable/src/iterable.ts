@@ -137,7 +137,7 @@ export namespace Iterable {
     iterable: Iterable<T>,
     mapper: Iterable<Mapper<T, U>>
   ): Iterable<U> {
-    return flatMap(mapper, (mapper) => map(iterable, mapper));
+    return flatMap(iterable, (value) => map(mapper, (mapper) => mapper(value)));
   }
 
   export function filter<T, U extends T>(
@@ -471,16 +471,6 @@ export namespace Iterable {
     }
   }
 
-  export function takeWhile<T, U extends T>(
-    iterable: Iterable<T>,
-    refinement: Refinement<T, U, [index: number]>
-  ): Iterable<U>;
-
-  export function takeWhile<T>(
-    iterable: Iterable<T>,
-    predicate: Predicate<T, [index: number]>
-  ): Iterable<T>;
-
   export function* takeWhile<T>(
     iterable: Iterable<T>,
     predicate: Predicate<T, [index: number]>
@@ -523,16 +513,6 @@ export namespace Iterable {
 
     yield* last;
   }
-
-  export function takeLastWhile<T, U extends T>(
-    iterable: Iterable<T>,
-    refinement: Refinement<T, U, [index: number]>
-  ): Iterable<U>;
-
-  export function takeLastWhile<T>(
-    iterable: Iterable<T>,
-    predicate: Predicate<T, [index: number]>
-  ): Iterable<T>;
 
   export function* takeLastWhile<T>(
     iterable: Iterable<T>,
@@ -747,22 +727,20 @@ export namespace Iterable {
     yield* [...iterable].sort(comparer);
   }
 
-  export function compare<T extends Comparable<U>, U = T>(
+  export function compare<T extends Comparable<T>>(
     a: Iterable<T>,
-    b: Iterable<U>
+    b: Iterable<T>
   ): Comparison {
     return compareWith(a, b, compareComparable);
   }
 
-  export function compareWith<T, U = T>(
+  export function compareWith<T>(
     a: Iterable<T>,
-    b: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    b: Iterable<T>,
+    comparer: Comparer<T>
   ): Comparison {
     const itA = iterator(a);
     const itB = iterator(b);
-
-    let index = 0;
 
     while (true) {
       const a = itA.next();
@@ -776,7 +754,7 @@ export namespace Iterable {
         return Comparison.Greater;
       }
 
-      const result = comparer(a.value, b.value, index++);
+      const result = comparer(a.value, b.value);
 
       if (result !== 0) {
         return result;
