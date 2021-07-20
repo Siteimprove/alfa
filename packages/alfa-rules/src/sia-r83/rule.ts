@@ -139,7 +139,7 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
 function wrapsText(device: Device): Predicate<Element> {
   return (element) => {
     if (isPossiblyClipped(device)(element)) {
-      return !isActuallyClipping(element, device);
+      return isActuallyClipping(element, device);
     }
 
     const relevantParent = isPositioned(device, "static")(element)
@@ -158,7 +158,7 @@ function isPositioned(device: Device, position: string): Predicate<Element> {
   );
 }
 
-const isActuallyClipping = (element: Element, device: Device) => {
+function isActuallyClipping(element: Element, device: Device): boolean {
   const style = Style.from(element, device);
 
   const { value: whitespace } = style.computed("white-space");
@@ -170,11 +170,11 @@ const isActuallyClipping = (element: Element, device: Device) => {
 
     // We assume that the text won't clip if the text overflow is handled
     // any other way than clip.
-    return overflow.value === "clip";
+    return overflow.value !== "clip";
   }
 
-  return true;
-};
+  return false;
+}
 
 function offsetParent(element: Element, device: Device): Option<Element> {
   if (or(hasName("body", "html"), isPositioned(device, "fixed"))(element)) {
