@@ -3,10 +3,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
-import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
-
-import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
@@ -46,7 +43,7 @@ export default Rule.Atomic.of<Page, Element>({
                   })
                   .filter(isElement)
                   .some((element) =>
-                    aria.Node.from(element, device)
+                    element
                       .attribute("aria-hidden")
                       .some((attribute) => attribute.value === "true")
                   ),
@@ -61,7 +58,8 @@ export default Rule.Atomic.of<Page, Element>({
                 nested: true,
               })
               .filter(isElement)
-              .some(hasName("figure")) || hasTextInsideAllowedElements(device)(target),
+              .some(hasName("figure")) ||
+              hasTextInsideAllowedElements(device)(target),
             () => Outcomes.IsDescendant,
             () => Outcomes.IsNotDescendant
           ),

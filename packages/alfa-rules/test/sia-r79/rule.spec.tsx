@@ -15,8 +15,23 @@ test(`evaluate() passes a visible <pre> element which is part of a <figure>`, as
 
   t.deepEqual(await evaluate(R79, { document }), [
     passed(R79, target, {
+      1: Outcomes.IsVisible,
+      2: Outcomes.IsDescendant,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an aria-hidden <pre> element that is part of a <figure>`, async (t) => {
+  const target = (
+    <pre style={{ position: "absolute", left: "-9999px" }}>¯\_(ツ)_/¯</pre>
+  );
+
+  const document = h.document([<figure aria-hidden="true">{target}</figure>]);
+
+  t.deepEqual(await evaluate(R79, { document }), [
+    passed(R79, target, {
       1: Outcomes.IsHidden,
-      2: Outcomes.IsDescedant,
+      2: Outcomes.IsDescendant,
     }),
   ]);
 });
@@ -33,7 +48,7 @@ test(`evaluate() passes a visible <pre> element that has all its descendant text
   t.deepEqual(await evaluate(R79, { document }), [
     passed(R79, target, {
       1: Outcomes.IsVisible,
-      2: Outcomes.IsDescedant,
+      2: Outcomes.IsDescendant,
     }),
   ]);
 });
@@ -52,7 +67,7 @@ test(`evaluate() passes a visible <pre> element that has all its descendant text
   t.deepEqual(await evaluate(R79, { document }), [
     passed(R79, target, {
       1: Outcomes.IsVisible,
-      2: Outcomes.IsDescedant,
+      2: Outcomes.IsDescendant,
     }),
   ]);
 });
@@ -66,8 +81,8 @@ test(`evaluate() fails <pre> element that is only exposed to assistive technolog
 
   t.deepEqual(await evaluate(R79, { document }), [
     failed(R79, target, {
-      1: Outcomes.IsNotVisibleAndNoHidden,
-      2: Outcomes.IsDescedant,
+      1: Outcomes.IsNotVisibleAndNotHidden,
+      2: Outcomes.IsDescendant,
     }),
   ]);
 });
@@ -80,7 +95,7 @@ test(`evaluate() fails a <pre> element which neither is the descendant of a <fig
   t.deepEqual(await evaluate(R79, { document }), [
     failed(R79, target, {
       1: Outcomes.IsVisible,
-      2: Outcomes.IsNotDescedant,
+      2: Outcomes.IsNotDescendant,
     }),
   ]);
 });
