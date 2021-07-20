@@ -94,18 +94,18 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
     return new DeprecatedElements(message, Array.from(errors));
   }
 
+  private _errors: ReadonlyArray<Element>;
   private constructor(message: string, errors: Array<Element>) {
     super(message);
     this._errors = errors;
   }
 
-  public *[Symbol.iterator](): Iterator<Element> {
-    yield* this._errors;
+  public get errors(): ReadonlyArray<Element> {
+    return this._errors;
   }
-
-  private _errors: ReadonlyArray<Element>;
-
-  public equalsError(value: unknown, errors: ReadonlyArray<Element>): boolean {
+  public equals(value: DeprecatedElements): boolean;
+  public equals(value: unknown): value is this;
+  public equals(value: unknown): boolean {
     return (
       value instanceof DeprecatedElements &&
       value._message === this._message &&
@@ -113,21 +113,20 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
     );
   }
 
+  public *[Symbol.iterator](): Iterator<Element> {
+    yield* this._errors;
+  }
   public toJSON(): DeprecatedElements.JSON {
     return {
       ...super.toJSON(),
-      errors: Array.toJSON(this._errors),
+      errors: this._errors.map((element) => element.path()),
     };
-  }
-
-  public get errors(): ReadonlyArray<Element> {
-    return this._errors;
   }
 }
 
 namespace DeprecatedElements {
   export interface JSON extends Diagnostic.JSON {
-    errors: List.JSON<Element>;
+    errors: Array<string>;
   }
 
   export function isDeprecatedElements(
