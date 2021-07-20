@@ -18,8 +18,7 @@ const { isText } = Text;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r80",
-  requirements: [Criterion.of("1.4.8")],
+  uri: "https://alfa.siteimprove.com/rules/sia-r79",
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -52,7 +51,7 @@ export default Rule.Atomic.of<Page, Element>({
                       .some((attribute) => attribute.value === "true")
                   ),
                 () => Outcomes.IsHidden,
-                () => Outcomes.IsNotVisibleAndNoHidden
+                () => Outcomes.IsNotVisibleAndNotHidden
               )
           ),
           2: expectation(
@@ -62,9 +61,9 @@ export default Rule.Atomic.of<Page, Element>({
                 nested: true,
               })
               .filter(isElement)
-              .some(hasName("figure")) || isGood(device)(target),
-            () => Outcomes.IsDescedant,
-            () => Outcomes.IsNotDescedant
+              .some(hasName("figure")) || hasTextInsideAllowedElements(device)(target),
+            () => Outcomes.IsDescendant,
+            () => Outcomes.IsNotDescendant
           ),
         };
       },
@@ -72,7 +71,7 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-function isGood(device: Device): Predicate<Node> {
+function hasTextInsideAllowedElements(device: Device): Predicate<Node> {
   return function isGood(node: Node): boolean {
     if (and(isText, isVisible(device))(node)) {
       return false;
@@ -100,21 +99,21 @@ export namespace Outcomes {
     )
   );
 
-  export const IsDescedant = Ok.of(
+  export const IsDescendant = Ok.of(
     Diagnostic.of(
-      `The target element is a figure descedant, or every visible text node descedants are descedant themselves of the target element and are a <code>, <kbd> or <samp> element.`
+      `The target element either has a <figure> ancestor, or all its text is inside <code>, <kbd> or <samp> elements.`
     )
   );
 
-  export const IsNotVisibleAndNoHidden = Err.of(
+  export const IsNotVisibleAndNotHidden = Err.of(
     Diagnostic.of(
       `The element is not visible and there isn't an inclusive ancestor with "aria-hidden" state.`
     )
   );
 
-  export const IsNotDescedant = Err.of(
+  export const IsNotDescendant = Err.of(
     Diagnostic.of(
-      `The element is not a figure descedant and there aren't visible text node descendant which are descedant themselves of the target element and are a <code>, <kbd> or <samp> element. `
+      `The element has no <figure> ancestor and has text which not inside a <code>, <kbd> or <samp> element. `
     )
   );
 }
