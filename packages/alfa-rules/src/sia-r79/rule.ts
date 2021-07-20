@@ -37,7 +37,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             isVisible(device)(target),
-            () => Outcomes.IsOk,
+            () => Outcomes.IsVisible,
             () =>
               expectation(
                 target
@@ -51,8 +51,8 @@ export default Rule.Atomic.of<Page, Element>({
                       .attribute("aria-hidden")
                       .some((attribute) => attribute.value === "true")
                   ),
-                () => Outcomes.IsOk,
-                () => Outcomes.IsNotOk
+                () => Outcomes.IsHidden,
+                () => Outcomes.IsNotVisibleAndNoHidden
               )
           ),
           2: expectation(
@@ -63,8 +63,8 @@ export default Rule.Atomic.of<Page, Element>({
               })
               .filter(isElement)
               .some(hasName("figure")) || isGood(device)(target),
-            () => Outcomes.IsOk,
-            () => Outcomes.IsNotOk
+            () => Outcomes.IsDescedant,
+            () => Outcomes.IsNotDescedant
           ),
         };
       },
@@ -92,7 +92,29 @@ function isGood(device: Device): Predicate<Node> {
 }
 
 export namespace Outcomes {
-  export const IsOk = Ok.of(Diagnostic.of(`Ok`));
+  export const IsVisible = Ok.of(Diagnostic.of(`The element is visible.`));
 
-  export const IsNotOk = Err.of(Diagnostic.of("Err"));
+  export const IsHidden = Ok.of(
+    Diagnostic.of(
+      `One inclusive ancestor of the element has "aria-hidden = true."`
+    )
+  );
+
+  export const IsDescedant = Ok.of(
+    Diagnostic.of(
+      `The target element is a figure descedant, or every visible text node descedants are descedant themselves of the target element and are a <code>, <kbd> or <samp> element.`
+    )
+  );
+
+  export const IsNotVisibleAndNoHidden = Err.of(
+    Diagnostic.of(
+      `The element is not visible and there isn't an inclusive ancestor with "aria-hidden" state.`
+    )
+  );
+
+  export const IsNotDescedant = Err.of(
+    Diagnostic.of(
+      `The element is not a figure descedant and there aren't visible text node descendant which are descedant themselves of the target element and are a <code>, <kbd> or <samp> element. `
+    )
+  );
 }
