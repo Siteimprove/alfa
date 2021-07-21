@@ -24,6 +24,7 @@ import { expectation } from "../common/expectation";
 
 import {
   hasBorder,
+  hasComputedStyle,
   hasOutline,
   hasRole,
   hasTextDecoration,
@@ -302,11 +303,12 @@ function hasDistinguishableBackground(
     "background-color"
   ).value;
 
-  return (element) => {
-    return Style.from(element, device, context)
-      .computed("background-color")
-      .none((color) => Color.isTransparent(color) || color.equals(reference));
-  };
+  return hasComputedStyle(
+    "background-color",
+    not((color) => Color.isTransparent(color) || color.equals(reference)),
+    device,
+    context
+  );
 }
 
 /**
@@ -324,11 +326,12 @@ function hasDistinguishableFontWeight(
     "font-weight"
   ).value;
 
-  return (element) => {
-    return Style.from(element, device, context)
-      .computed("font-weight")
-      .none((weight) => weight.equals(reference));
-  };
+  return hasComputedStyle(
+    "font-weight",
+    not((weight) => weight.equals(reference)),
+    device,
+    context
+  );
 }
 
 type Name = Property.Name | Property.Shorthand.Name;
