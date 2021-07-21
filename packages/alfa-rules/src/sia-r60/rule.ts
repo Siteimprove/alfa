@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { hasName } from "@siteimprove/alfa-dom/src/node/attribute/predicate";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -8,10 +9,25 @@ import { expectation } from "../common/expectation";
 
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasRole } from "../common/predicate/has-role";
-//import { isExposed } from "../common/predicate";
+
+import { isIgnored } from "../common/predicate";
 
 const { isElement, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
+
+const isRole = hasName(
+  "checkbox",
+  "combobox",
+  "listbox",
+  "menuitemcheckbox",
+  "menuitemradio",
+  "radio",
+  "searchbox",
+  "slider",
+  "spinbutton",
+  "switch",
+  "textbox"
+);
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r60",
@@ -24,10 +40,11 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               hasNamespace(Namespace.HTML),
-              hasRole(device, (role) => role.is("group"))
+              hasRole(device, (role) => role.is("group")),
+              (group) =>
+                group.descendants().count(and(isElement, isIgnored)) >= 2
             )
-          )
-          .count(and(,hasRole()));
+          );
       },
 
       expectations(target) {
