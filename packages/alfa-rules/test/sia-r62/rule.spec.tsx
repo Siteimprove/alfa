@@ -826,3 +826,27 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluates() passes on link with a different background-image than text`, async (t) => {
+  const target = <a href="#">Foo</a>;
+
+  const document = h.document(
+    [<p>Hello world {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          backgroundImage:
+            "linear-gradient(to right, #046B99 50%, transparent 50%)",
+        }),
+        h.rule.style("a:focus", { outline: "none" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
