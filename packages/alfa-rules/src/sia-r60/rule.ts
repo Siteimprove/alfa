@@ -1,7 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { hasName } from "@siteimprove/alfa-dom/src/node/attribute/predicate";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -13,7 +13,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate";
 
 const { isElement, hasNamespace } = Element;
-const { and } = Predicate;
+const { and } = Refinement;
 
 const isRole = hasName(
   "checkbox",
