@@ -63,6 +63,7 @@ export { default as R66 } from "./sia-r66/rule";
 export { default as R67 } from "./sia-r67/rule";
 export { default as R68 } from "./sia-r68/rule";
 export { default as R69 } from "./sia-r69/rule";
+export { default as R70 } from "./sia-r70/rule";
 export { default as R71 } from "./sia-r71/rule";
 export { default as R72 } from "./sia-r72/rule";
 export { default as R73 } from "./sia-r73/rule";
