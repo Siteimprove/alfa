@@ -1,33 +1,19 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { hasName } from "@siteimprove/alfa-dom/src/node/attribute/predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import { Device } from "@siteimprove/alfa-device";
 
 import { expectation } from "../common/expectation";
-
 import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
 import { hasRole } from "../common/predicate/has-role";
-
 import { isIgnored } from "../common/predicate";
 
 const { isElement, hasNamespace } = Element;
+const { not } = Predicate;
 const { and } = Refinement;
-
-const isRole = hasName(
-  "checkbox",
-  "combobox",
-  "listbox",
-  "menuitemcheckbox",
-  "menuitemradio",
-  "radio",
-  "searchbox",
-  "slider",
-  "spinbutton",
-  "switch",
-  "textbox"
-);
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r60",
@@ -42,7 +28,24 @@ export default Rule.Atomic.of<Page, Element>({
               hasNamespace(Namespace.HTML),
               hasRole(device, (role) => role.is("group")),
               (group) =>
-                group.descendants().count(and(isElement, isIgnored)) >= 2
+                group.descendants({ flattened: true, nested: true }).count(
+                  and(
+                    isElement,
+                    not(isIgnored(device)),
+                    isRole(device),
+                    (ancestorRole) =>
+                      ancestorRole
+                        .closest(
+                          and(
+                            isElement,
+                            hasRole(device, (role) => role.is("group"))
+                          ),
+                          { flattened: true }
+                        )
+                        .get()
+                        .equals(group)
+                  )
+                ) >= 2
             )
           );
       },
@@ -62,10 +65,27 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasAccessibleName = Ok.of(
-    Diagnostic.of(`The image has an accessible name`)
+    Diagnostic.of(`The grouping elements have an accessible name`)
   );
 
   export const HasNoAccessibleName = Err.of(
-    Diagnostic.of(`The image does not have an accessible name`)
+    Diagnostic.of(`The grouping elements have an accessible name`)
+  );
+}
+
+function isRole(device: Device): Predicate<Element> {
+  return hasRole(
+    device,
+    "checkbox",
+    "combobox",
+    "listbox",
+    "menuitemcheckbox",
+    "menuitemradio",
+    "radio",
+    "searchbox",
+    "slider",
+    "spinbutton",
+    "switch",
+    "textbox"
   );
 }
