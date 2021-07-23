@@ -287,12 +287,22 @@ function hasDistinguishableTextDecoration(
  * element.
  *
  * @remarks
- * This predicate currently only considers `background-color` as a possibly
- * distinguishable background. Other `background-*` properties, such as
- * `background-image`, should ideally also be considered, but `background-color`
- * is the only property that contains just a single layer while something like
- * `background-image` can contain multiple layers. It's therefore not trivial
- * to handle.
+ * This predicate currently only considers `background-color` and
+ * `background-image` as a possibly distinguishable background. Other
+ * `background-*` properties should ideally also be considered.
+ *
+ * Additionally, this predicate do not handle transparency in the topmost layer.
+ * The exact same (partly transparent) `background-color` or `background-image`
+ * could be on top of a different (opaque) background and thus creates a
+ * difference. However, in these cases the (lower layer) distinguishing
+ * background would be on an ancestor of the link but of no non-link text (in
+ * order to be distinguishing), so should be found when looking at the ancestors
+ * of the link.
+ *
+ * Lastly, this does not account for absolutely positioned backgrounds from
+ * random nodes in the DOM. Using these to push an image below links in
+ * paragraph sounds so crazy (from a sheer code maintenance point of view) that
+ * this hopefully won't be a problem.
  */
 function hasDistinguishableBackground(
   container: Element,
@@ -311,11 +321,18 @@ function hasDistinguishableBackground(
     hasComputedStyle(
       "background-color",
       not(
+        // If the background is fully transparent, we assume it will end up
+        // being the same as the container. Intermediate backgrounds may change
+        // that, but these would need to be set on ancestor of the link and of
+        // no non-link text, so will be catch in one of the other comparisons.
         (color) => Color.isTransparent(color) || color.equals(colorReference)
       ),
       device,
       context
     ),
+    // Any difference in `background-image` is considered enough. If different
+    // `background-image` ultimately yield the same background (e.g. the same
+    // image at two different URLs), this creates false negatives.
     hasComputedStyle(
       "background-image",
       not((image) => image.equals(imageReference)),
