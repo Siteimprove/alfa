@@ -409,80 +409,94 @@ export namespace ComputedStyles {
     style: Map.JSON<Name, string>;
   }
 
+  // Trying to reduce the footprint of the result by exporting shorthands
+  // rather than longhands, and avoiding to export values that are the same
+  // as the initial value of the property.
+  function fourValuesShorthand(
+    style: Style,
+    postfix: "color" | "style" | "width"
+  ): readonly [Name, string] {
+    const shorthand = `border-${postfix}` as const;
+
+    function getLongHand(side: "top" | "right" | "bottom" | "left"): string {
+      return style.computed(`border-${side}-${postfix}` as const).toString();
+    }
+
+    let top = getLongHand("top");
+    let right = getLongHand("right");
+    let bottom = getLongHand("bottom");
+    let left = getLongHand("left");
+
+    if (left === right) {
+      left = "";
+      if (bottom === top) {
+        bottom = "";
+        if (right === top) {
+          right = "";
+          if (
+            top ===
+            Property.get(`border-top-${postfix}` as const).initial.toString()
+          ) {
+            top = "";
+          }
+        }
+      }
+    }
+
+    return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
+  }
+
+  function getLonghand(style: Style): (name: Property.Name) => string {
+    return (name) => {
+      const property = style.computed(name).toString();
+
+      return property === Property.get(name).initial.toString() ? "" : property;
+    };
+  }
+
+  // Only background-color and background-image are used for deciding if the
+  // link is distinguishable, but all longhands are needed for rendering it
+  // with the correct style.
+  function background(style: Style): string {
+    return getLonghand(style)("background-color");
+  }
+
   export function from(
     element: Element,
     device: Device,
     context: Context = Context.empty()
   ): ComputedStyles {
     const style = Style.from(element, device, context);
-
-    // Trying to reduce the footprint of the result by exporting shorthands
-    // rather than longhands, and avoiding to export values that are the same
-    // as the initial value of the property.
-    function fourValuesShorthand(
-      postfix: "color" | "style" | "width"
-    ): readonly [Name, string] {
-      const shorthand = `border-${postfix}` as const;
-
-      function getLongHand(side: "top" | "right" | "bottom" | "left"): string {
-        return style.computed(`border-${side}-${postfix}` as const).toString();
-      }
-
-      let top = getLongHand("top");
-      let right = getLongHand("right");
-      let bottom = getLongHand("bottom");
-      let left = getLongHand("left");
-
-      if (left === right) {
-        left = "";
-        if (bottom === top) {
-          bottom = "";
-          if (right === top) {
-            right = "";
-            if (
-              top ===
-              Property.get(`border-top-${postfix}` as const).initial.toString()
-            ) {
-              top = "";
-            }
-          }
-        }
-      }
-
-      return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
-    }
+    const longhand = getLonghand(style);
 
     const shorthands = (["color", "style", "width"] as const).map((postfix) =>
-      fourValuesShorthand(postfix)
+      fourValuesShorthand(style, postfix)
     );
 
-    function longhand(name: Property.Name): string {
-      const property = style.computed(name).toString();
-
-      return property === Property.get(name).initial.toString() ? "" : property;
-    }
+    const backgroundColor = background(style);
 
     const outline = `${longhand("outline-color")} ${longhand(
       "outline-style"
     )} ${longhand("outline-width")}`.trim();
 
     // While text-decoration-style and text-decoration-thickness are not
-    // important for deciding if there is one, but they are important for
-    // rendering the link with the correct styling.
+    // important for deciding if there is a text-decoration, they are important
+    // for rendering the link with the correct styling.
     const textDecoration = `${longhand("text-decoration-line")} ${longhand(
       "text-decoration-color"
     )} ${longhand("text-decoration-style")} ${longhand(
       "text-decoration-thickness"
     )}`.trim();
 
-    const longhands = (
-      ["background-color", "color", "font-weight"] as const
-    ).map((property) => [property, longhand(property)] as const);
+    const longhands = (["color", "font-weight"] as const).map(
+      (property) => [property, longhand(property)] as const
+    );
 
     return ComputedStyles.of(
       [
         ...shorthands,
         ...longhands,
+        ["background-color", backgroundColor] as const,
         ["outline", outline] as const,
         ["text-decoration", textDecoration] as const,
       ].filter(([_, value]) => value !== "")
