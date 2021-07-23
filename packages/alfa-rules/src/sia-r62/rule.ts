@@ -324,7 +324,7 @@ function hasDistinguishableBackground(
         // If the background is fully transparent, we assume it will end up
         // being the same as the container. Intermediate backgrounds may change
         // that, but these would need to be set on ancestor of the link and of
-        // no non-link text, so will be catch in one of the other comparisons.
+        // no non-link text, so will be caught in one of the other comparisons.
         (color) => Color.isTransparent(color) || color.equals(colorReference)
       ),
       device,
