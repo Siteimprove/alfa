@@ -6,7 +6,7 @@ import R60, { Outcomes } from "../../src/sia-r60/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test("evaluate() passes a <div> group with individual fields", async (t) => {
+test("evaluate() passes a <div> with a role of group and a name", async (t) => {
   const target = (
     <div role="group" aria-labelledby="ssn">
       <span id="ssn">Social Security Number</span>
@@ -25,7 +25,7 @@ test("evaluate() passes a <div> group with individual fields", async (t) => {
   ]);
 });
 
-test("evaluate() passes a <div> group with various options", async (t) => {
+test("evaluate() passes a <div> with a role of radiogroup and a name", async (t) => {
   const target = (
     <div role="radiogroup" aria-labelledby="question-label">
       <div id="question-label">
@@ -67,7 +67,7 @@ test("evaluate() passes a <div> group with various options", async (t) => {
     }),
   ]);
 });
-/*
+
 test("evaluate() passes a <tr> element with an inherited group role and individual group fields", async (t) => {
   const target = (
     <tr aria-labelledby="ssn">
@@ -99,7 +99,7 @@ test("evaluate() passes a <tr> element with an inherited group role and individu
     </tr>
   );
 
-  const document = h.document([<table>target </table>]);
+  const document = h.document([<table>{target}</table>]);
 
   t.deepEqual(await evaluate(R60, { document }), [
     passed(R60, target, {
@@ -107,9 +107,8 @@ test("evaluate() passes a <tr> element with an inherited group role and individu
     }),
   ]);
 });
-*/
 
-test("evaluate() passes two <div> groups, but the outermost is not applicable. Both <div> have accessible names", async (t) => {
+test("evaluate() passes innermost groups, and ignores the outermost", async (t) => {
   const target1 = (
     <div role="radiogroup" aria-labelledby="question1-label">
       <div id="question1-label">
@@ -172,10 +171,10 @@ test("evaluate() passes two <div> groups, but the outermost is not applicable. B
   ]);
 
   t.deepEqual(await evaluate(R60, { document }), [
-    passed(R60, target1, {
+    passed(R60, target2, {
       1: Outcomes.HasAccessibleName,
     }),
-    passed(R60, target2, {
+    passed(R60, target1, {
       1: Outcomes.HasAccessibleName,
     }),
   ]);
@@ -212,7 +211,7 @@ test("evaluate() is inapplicable to a group of elements with no nested form cont
   t.deepEqual(await evaluate(R60, { document }), [inapplicable(R60)]);
 });
 
-test("evaluate() is inapplicable because there is only one descedant in the accessibility tree", async (t) => {
+test("evaluate() is inapplicable to groups with only one descendant in the accessibility tree", async (t) => {
   const target = (
     <div role="group" aria-labelledby="ssn">
       <span id="ssn">Social Security Number</span>

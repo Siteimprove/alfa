@@ -1,15 +1,19 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import { Device } from "@siteimprove/alfa-device";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { Device } from "@siteimprove/alfa-device";
+import { Option, None } from "@siteimprove/alfa-option";
+import { Map } from "@siteimprove/alfa-map";
 
 import { expectation } from "../common/expectation";
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate";
+import {
+  hasNonEmptyAccessibleName,
+  hasRole,
+  isIgnored,
+} from "../common/predicate";
 
 const { isElement, hasNamespace } = Element;
 const { not } = Predicate;
@@ -20,34 +24,45 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasRole(device, (role) => role.is("group")),
-              (group) =>
-                group.descendants({ flattened: true, nested: true }).count(
-                  and(
-                    isElement,
-                    not(isIgnored(device)),
-                    isRole(device),
-                    (ancestorRole) =>
-                      ancestorRole
-                        .closest(
-                          and(
-                            isElement,
-                            hasRole(device, (role) => role.is("group"))
-                          ),
-                          { flattened: true }
-                        )
-                        .get()
-                        .equals(group)
-                  )
-                ) >= 2
-            )
-          );
+        let groups: Map<Element, number> = Map.empty();
+
+        function visit(node: Node, group: Option<Element>): void {
+          //If the element is a node, then its applicability is checked
+          if (isElement(node)) {
+            // If the group is an input field, then its value has a +1
+            if (
+              group.isSome() &&
+              and(not(isIgnored(device)), isFormInput(device))(node)
+            ) {
+              groups = groups.set(
+                group.get(),
+                groups.get(group.get()).getOr(0) + 1
+              );
+            }
+
+            if (
+              and(
+                hasNamespace(Namespace.HTML),
+                hasRole(device, (role) => role.is("group"))
+              )(node)
+            ) {
+              group = Option.of(node);
+            }
+          }
+          // If the group has children, then iterate on all children of the group
+          const children = node.children({
+            flattened: true,
+            nested: true,
+          });
+
+          for (const child of children) {
+            visit(child, group);
+          }
+        }
+
+        visit(document, None);
+
+        return groups.filter((n) => n >= 2).keys();
       },
 
       expectations(target) {
@@ -73,7 +88,7 @@ export namespace Outcomes {
   );
 }
 
-function isRole(device: Device): Predicate<Element> {
+function isFormInput(device: Device): Predicate<Element> {
   return hasRole(
     device,
     "checkbox",
