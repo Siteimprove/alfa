@@ -299,15 +299,29 @@ function hasDistinguishableBackground(
   device: Device,
   context?: Context
 ): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
+  const colorReference = Style.from(container, device, context).computed(
     "background-color"
   ).value;
 
-  return hasComputedStyle(
-    "background-color",
-    not((color) => Color.isTransparent(color) || color.equals(reference)),
-    device,
-    context
+  const imageReference = Style.from(container, device, context).computed(
+    "background-image"
+  ).value;
+
+  return or(
+    hasComputedStyle(
+      "background-color",
+      not(
+        (color) => Color.isTransparent(color) || color.equals(colorReference)
+      ),
+      device,
+      context
+    ),
+    hasComputedStyle(
+      "background-image",
+      not((image) => image.equals(imageReference)),
+      device,
+      context
+    )
   );
 }
 

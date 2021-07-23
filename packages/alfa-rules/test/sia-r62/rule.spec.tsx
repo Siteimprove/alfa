@@ -806,7 +806,7 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
 });
 
 test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
-  // Since text-decoration and focus outline is not inherited, the <span> has
+  // Since text-decoration and focus outline is not inherited, the <span> have
   // effectively no style other than color.
   const target = (
     <a href="#">
@@ -844,9 +844,11 @@ test(`evaluates() passes on link with a different background-image than text`, a
     ]
   );
 
+  const style = Ok.of(ComputedStyles.of(noDistinguishingProperties));
+
   t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
 });
