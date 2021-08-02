@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-mapOrElse<T, U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
+mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ok | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, U&gt; |  |
+|  ok | unknown |  |
 |  err | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;E, U&gt; |  |
 
 <b>Returns:</b>

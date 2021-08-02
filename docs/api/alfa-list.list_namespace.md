@@ -15,13 +15,11 @@ export declare namespace List
 
 |  Function | Description |
 |  --- | --- |
-|  [compare(a, b)](./alfa-list.list_namespace.compare_1_function.md) |  |
 |  [from(iterable)](./alfa-list.list_namespace.from_1_function.md) |  |
 |  [fromArray(array)](./alfa-list.list_namespace.fromarray_1_function.md) |  |
 |  [fromIterable(iterable)](./alfa-list.list_namespace.fromiterable_1_function.md) |  |
 |  [isList(value)](./alfa-list.list_namespace.islist_1_function.md) |  |
 |  [isList(value)](./alfa-list.list_namespace.islist_2_function.md) |  |
-|  [sort(list)](./alfa-list.list_namespace.sort_1_function.md) |  |
 
 ## Type Aliases
 

@@ -8,16 +8,18 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Either<L, R = L> extends Functor<L | R>, Monad<L | R>, Foldable<L | R>, Iterable<L | R>, Equatable, Hashable, Serializable<Either.JSON<L, R>> 
+export interface Either<L, R = L> extends Functor<R>, Applicative<R>, Monad<R>, Foldable<R>, Iterable<L | R>, Equatable, Hashable, Serializable<Either.JSON<L, R>> 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;L \| R&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;L \| R&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;L \| R&gt;, Iterable&lt;L \| R&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Either.JSON](./alfa-either.either_namespace.json_typealias.md)<!-- -->&lt;L, R&gt;&gt;
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;R&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;R&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;R&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;R&gt;, Iterable&lt;L \| R&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Either.JSON](./alfa-either.either_namespace.json_typealias.md)<!-- -->&lt;L, R&gt;&gt;
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
+|  [apply(mapper)](./alfa-either.either_interface.apply_1_methodsignature.md) |  |
 |  [either(left, right)](./alfa-either.either_interface.either_1_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-either.either_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-either.either_interface.flatten_1_methodsignature.md) |  |
 |  [get()](./alfa-either.either_interface.get_1_methodsignature.md) |  |
 |  [isLeft()](./alfa-either.either_interface.isleft_1_methodsignature.md) |  |
 |  [isRight()](./alfa-either.either_interface.isright_1_methodsignature.md) |  |

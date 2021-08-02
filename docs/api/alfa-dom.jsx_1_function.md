@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function jsx(name: string, properties?: jsx.Properties | null, ...children: Array<jsx.Child>): Element;
+export declare function jsx(name: string, properties?: jsx.Properties | null, ...children: jsx.Children): Element;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ export declare function jsx(name: string, properties?: jsx.Properties | null, ..
 |  --- | --- | --- |
 |  name | string |  |
 |  properties | [jsx.Properties](./alfa-dom.jsx_namespace.properties_interface.md) \| null |  |
-|  children | Array&lt;[jsx.Child](./alfa-dom.jsx_namespace.child_typealias.md)<!-- -->&gt; |  |
+|  children | [jsx.Children](./alfa-dom.jsx_namespace.children_typealias.md) |  |
 
 <b>Returns:</b>
 

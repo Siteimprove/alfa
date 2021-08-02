@@ -4,6 +4,8 @@
 
 ## Comparable.isComparable() function
 
+Check if an unknown value implements the [Comparable](./alfa-comparable.comparable_interface.md) interface.
+
 <b>Signature:</b>
 
 ```typescript

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-unit: Unit.Length;
+unit: U;
 ```

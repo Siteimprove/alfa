@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap(): this;
+flatMap(): Err<E>;
 ```
 <b>Returns:</b>
 
-this
+[Err](./alfa-result.err_class.md)<!-- -->&lt;E&gt;
 

@@ -11,13 +11,6 @@
 export declare namespace Collection 
 ```
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [compare(a, b)](./alfa-collection.collection_namespace.compare_1_function.md) |  |
-|  [sort(collection)](./alfa-collection.collection_namespace.sort_1_function.md) |  |
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,6 +4,7 @@
 
 ## Comparable interface
 
+This interface describes strcutures that define a [total order](https://en.wikipedia.org/wiki/Total_order)<!-- -->.
 
 <b>Signature:</b>
 
@@ -11,9 +12,35 @@
 export interface Comparable<T> 
 ```
 
+## Example
+
+
+```ts
+class Foo implements Comparable<Foo> {
+  readonly value: number;
+
+ constructor(value: number) {
+   this.value = value;
+ }
+
+ compare(value: Foo): Comparison {
+   if (this.value < value.value) {
+     return Comparison.Less;
+   }
+
+   if (this.value > value.value) {
+     return Comparison.Greater;
+   }
+
+   return Comparison.Equal;
+ }
+}
+
+```
+
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [compare(value)](./alfa-comparable.comparable_interface.compare_1_methodsignature.md) |  |
+|  [compare(value)](./alfa-comparable.comparable_interface.compare_1_methodsignature.md) | Compare a value to this. |
 

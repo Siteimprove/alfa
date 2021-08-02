@@ -23,7 +23,7 @@ export declare class Map<K, V> implements Collection.Keyed<K, V>
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-map.map_2_class._symbol.iterator__1_method.md) |  |  |
-|  [apply(mapper)](./alfa-map.map_2_class.apply_1_method.md) |  |  |
+|  [apply(mapper)](./alfa-map.map_2_class.apply_1_method.md) |  | Apply a map of functions to each corresponding value of this map. |
 |  [collect(mapper)](./alfa-map.map_2_class.collect_1_method.md) |  |  |
 |  [collectFirst(mapper)](./alfa-map.map_2_class.collectfirst_1_method.md) |  |  |
 |  [concat(iterable)](./alfa-map.map_2_class.concat_1_method.md) |  |  |
@@ -39,6 +39,7 @@ export declare class Map<K, V> implements Collection.Keyed<K, V>
 |  [find(refinement)](./alfa-map.map_2_class.find_1_method.md) |  |  |
 |  [find(predicate)](./alfa-map.map_2_class.find_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-map.map_2_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-map.map_2_class.flatten_1_method.md) |  |  |
 |  [forEach(callback)](./alfa-map.map_2_class.foreach_1_method.md) |  |  |
 |  [get(key)](./alfa-map.map_2_class.get_1_method.md) |  |  |
 |  [has(key)](./alfa-map.map_2_class.has_1_method.md) |  |  |
