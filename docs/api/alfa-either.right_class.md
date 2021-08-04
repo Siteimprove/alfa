@@ -17,10 +17,12 @@ export declare class Right<R> implements Either<never, R>
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-either.right_class._symbol.iterator__1_method.md) |  |  |
+|  [apply(mapper)](./alfa-either.right_class.apply_1_method.md) |  |  |
 |  [either(left, right)](./alfa-either.right_class.either_1_method.md) |  |  |
 |  [equals(value)](./alfa-either.right_class.equals_1_method.md) |  |  |
 |  [equals(value)](./alfa-either.right_class.equals_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-either.right_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-either.right_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-either.right_class.get_1_method.md) |  |  |
 |  [hash(hash)](./alfa-either.right_class.hash_1_method.md) |  |  |
 |  [isLeft()](./alfa-either.right_class.isleft_1_method.md) |  |  |

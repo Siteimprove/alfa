@@ -15,9 +15,7 @@ export declare namespace Option
 
 |  Function | Description |
 |  --- | --- |
-|  [compare(a, b)](./alfa-option.option_namespace.compare_1_function.md) |  |
 |  [empty()](./alfa-option.option_namespace.empty_1_function.md) |  |
-|  [flatten(option)](./alfa-option.option_namespace.flatten_1_function.md) |  |
 |  [from(value)](./alfa-option.option_namespace.from_1_function.md) |  |
 |  [isNone(value)](./alfa-option.option_namespace.isnone_1_function.md) |  |
 |  [isNone(value)](./alfa-option.option_namespace.isnone_2_function.md) |  |

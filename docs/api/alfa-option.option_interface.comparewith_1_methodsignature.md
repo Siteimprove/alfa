@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-compareWith(option: Option<T>, comparer: Comparer<T>): Comparison;
+compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  option | [Option](./alfa-option.option_interface.md)<!-- -->&lt;T&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer_typealias.md)<!-- -->&lt;T&gt; |  |
+|  option | [Option](./alfa-option.option_interface.md)<!-- -->&lt;U&gt; |  |
+|  comparer | [Comparer](./alfa-comparable.comparer_typealias.md)<!-- -->&lt;T, U&gt; |  |
 
 <b>Returns:</b>
 

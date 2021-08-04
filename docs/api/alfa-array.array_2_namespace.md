@@ -17,7 +17,7 @@ export declare namespace Array
 |  --- | --- |
 |  [allocate(capacity)](./alfa-array.array_2_namespace.allocate_1_function.md) |  |
 |  [append(array, value)](./alfa-array.array_2_namespace.append_1_function.md) |  |
-|  [apply(iterable, mapper)](./alfa-array.array_2_namespace.apply_1_function.md) |  |
+|  [apply(array, mapper)](./alfa-array.array_2_namespace.apply_1_function.md) |  |
 |  [clone(array)](./alfa-array.array_2_namespace.clone_1_function.md) |  |
 |  [collect(array, mapper)](./alfa-array.array_2_namespace.collect_1_function.md) |  |
 |  [collectFirst(array, mapper)](./alfa-array.array_2_namespace.collectfirst_1_function.md) |  |

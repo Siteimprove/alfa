@@ -7,16 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<T>(mapper: Mapper<L, Either<T, T>>): Either<T, T>;
+flatMap(): Left<L>;
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;L, [Either](./alfa-either.either_interface.md)<!-- -->&lt;T, T&gt;&gt; |  |
-
 <b>Returns:</b>
 
-[Either](./alfa-either.either_interface.md)<!-- -->&lt;T, T&gt;
+[Left](./alfa-either.left_class.md)<!-- -->&lt;L&gt;
 

@@ -30,6 +30,7 @@ export declare class Slice<T> implements Collection.Indexed<T>
 |  [apply(mapper)](./alfa-slice.slice_class.apply_1_method.md) |  |  |
 |  [collect(mapper)](./alfa-slice.slice_class.collect_1_method.md) |  |  |
 |  [collectFirst(mapper)](./alfa-slice.slice_class.collectfirst_1_method.md) |  |  |
+|  [compare(this, iterable)](./alfa-slice.slice_class.compare_1_method.md) |  |  |
 |  [compareWith(iterable, comparer)](./alfa-slice.slice_class.comparewith_1_method.md) |  |  |
 |  [concat(iterable)](./alfa-slice.slice_class.concat_1_method.md) |  |  |
 |  [count(predicate)](./alfa-slice.slice_class.count_1_method.md) |  |  |
@@ -44,6 +45,7 @@ export declare class Slice<T> implements Collection.Indexed<T>
 |  [find(predicate)](./alfa-slice.slice_class.find_2_method.md) |  |  |
 |  [first()](./alfa-slice.slice_class.first_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-slice.slice_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-slice.slice_class.flatten_1_method.md) |  |  |
 |  [forEach(callback)](./alfa-slice.slice_class.foreach_1_method.md) |  |  |
 |  [get(index)](./alfa-slice.slice_class.get_1_method.md) |  |  |
 |  [has(index)](./alfa-slice.slice_class.has_1_method.md) |  |  |
@@ -75,14 +77,17 @@ export declare class Slice<T> implements Collection.Indexed<T>
 |  [skipWhile(predicate)](./alfa-slice.slice_class.skipwhile_1_method.md) |  |  |
 |  [slice(start, end)](./alfa-slice.slice_class.slice_1_method.md) |  |  |
 |  [some(predicate)](./alfa-slice.slice_class.some_1_method.md) |  |  |
+|  [sort(this)](./alfa-slice.slice_class.sort_1_method.md) |  |  |
 |  [sortWith(comparer)](./alfa-slice.slice_class.sortwith_1_method.md) |  |  |
 |  [subtract(iterable)](./alfa-slice.slice_class.subtract_1_method.md) |  |  |
 |  [take(count)](./alfa-slice.slice_class.take_1_method.md) |  |  |
 |  [takeLast(count)](./alfa-slice.slice_class.takelast_1_method.md) |  |  |
 |  [takeLastUntil(predicate)](./alfa-slice.slice_class.takelastuntil_1_method.md) |  |  |
-|  [takeLastWhile(predicate)](./alfa-slice.slice_class.takelastwhile_1_method.md) |  |  |
+|  [takeLastWhile(refinement)](./alfa-slice.slice_class.takelastwhile_1_method.md) |  |  |
+|  [takeLastWhile(predicate)](./alfa-slice.slice_class.takelastwhile_2_method.md) |  |  |
 |  [takeUntil(predicate)](./alfa-slice.slice_class.takeuntil_1_method.md) |  |  |
-|  [takeWhile(predicate)](./alfa-slice.slice_class.takewhile_1_method.md) |  |  |
+|  [takeWhile(refinement)](./alfa-slice.slice_class.takewhile_1_method.md) |  |  |
+|  [takeWhile(predicate)](./alfa-slice.slice_class.takewhile_2_method.md) |  |  |
 |  [toArray()](./alfa-slice.slice_class.toarray_1_method.md) |  |  |
 |  [toJSON()](./alfa-slice.slice_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-slice.slice_class.tostring_1_method.md) |  |  |

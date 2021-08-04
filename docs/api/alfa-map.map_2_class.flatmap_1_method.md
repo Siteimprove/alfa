@@ -7,16 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [K]>): Map<L, U>;
+flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [key: K]>): Map<L, U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;V, Map&lt;L, U&gt;, \[K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;V, Map&lt;L, U&gt;, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 
 Map&lt;L, U&gt;
+
+## Remarks
+
+As the order of maps is undefined, it is also undefined which keys are kept when duplicate keys are encountered.
 

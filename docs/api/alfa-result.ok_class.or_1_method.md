@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-or(): this;
+or(): Ok<T>;
 ```
 <b>Returns:</b>
 
-this
+[Ok](./alfa-result.ok_class.md)<!-- -->&lt;T&gt;
 

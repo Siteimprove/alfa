@@ -27,6 +27,7 @@ export declare class List<T> implements Collection.Indexed<T>
 |  [apply(mapper)](./alfa-list.list_class.apply_1_method.md) |  |  |
 |  [collect(mapper)](./alfa-list.list_class.collect_1_method.md) |  |  |
 |  [collectFirst(mapper)](./alfa-list.list_class.collectfirst_1_method.md) |  |  |
+|  [compare(this, iterable)](./alfa-list.list_class.compare_1_method.md) |  |  |
 |  [compareWith(iterable, comparer)](./alfa-list.list_class.comparewith_1_method.md) |  |  |
 |  [concat(iterable)](./alfa-list.list_class.concat_1_method.md) |  |  |
 |  [count(predicate)](./alfa-list.list_class.count_1_method.md) |  |  |
@@ -41,6 +42,7 @@ export declare class List<T> implements Collection.Indexed<T>
 |  [find(predicate)](./alfa-list.list_class.find_2_method.md) |  |  |
 |  [first()](./alfa-list.list_class.first_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-list.list_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-list.list_class.flatten_1_method.md) |  |  |
 |  [forEach(callback)](./alfa-list.list_class.foreach_1_method.md) |  |  |
 |  [get(index)](./alfa-list.list_class.get_1_method.md) |  |  |
 |  [groupBy(grouper)](./alfa-list.list_class.groupby_1_method.md) |  |  |
@@ -72,14 +74,17 @@ export declare class List<T> implements Collection.Indexed<T>
 |  [skipWhile(predicate)](./alfa-list.list_class.skipwhile_1_method.md) |  |  |
 |  [slice(start, end)](./alfa-list.list_class.slice_1_method.md) |  |  |
 |  [some(predicate)](./alfa-list.list_class.some_1_method.md) |  |  |
+|  [sort(this)](./alfa-list.list_class.sort_1_method.md) |  |  |
 |  [sortWith(comparer)](./alfa-list.list_class.sortwith_1_method.md) |  |  |
 |  [subtract(iterable)](./alfa-list.list_class.subtract_1_method.md) |  |  |
 |  [take(count)](./alfa-list.list_class.take_1_method.md) |  |  |
 |  [takeLast(count)](./alfa-list.list_class.takelast_1_method.md) |  |  |
 |  [takeLastUntil(predicate)](./alfa-list.list_class.takelastuntil_1_method.md) |  |  |
-|  [takeLastWhile(predicate)](./alfa-list.list_class.takelastwhile_1_method.md) |  |  |
+|  [takeLastWhile(refinement)](./alfa-list.list_class.takelastwhile_1_method.md) |  |  |
+|  [takeLastWhile(predicate)](./alfa-list.list_class.takelastwhile_2_method.md) |  |  |
 |  [takeUntil(predicate)](./alfa-list.list_class.takeuntil_1_method.md) |  |  |
-|  [takeWhile(predicate)](./alfa-list.list_class.takewhile_1_method.md) |  |  |
+|  [takeWhile(refinement)](./alfa-list.list_class.takewhile_1_method.md) |  |  |
+|  [takeWhile(predicate)](./alfa-list.list_class.takewhile_2_method.md) |  |  |
 |  [toArray()](./alfa-list.list_class.toarray_1_method.md) |  |  |
 |  [toJSON()](./alfa-list.list_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-list.list_class.tostring_1_method.md) |  |  |

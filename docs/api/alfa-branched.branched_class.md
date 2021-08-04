@@ -37,6 +37,7 @@ export declare class Branched<T, B = never> implements Collection<T>, Iterable<[
 |  [find(refinement)](./alfa-branched.branched_class.find_1_method.md) |  |  |
 |  [find(predicate)](./alfa-branched.branched_class.find_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-branched.branched_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-branched.branched_class.flatten_1_method.md) |  |  |
 |  [forEach(callback)](./alfa-branched.branched_class.foreach_1_method.md) |  |  |
 |  [hash(hash)](./alfa-branched.branched_class.hash_1_method.md) |  |  |
 |  [includes(value)](./alfa-branched.branched_class.includes_1_method.md) |  |  |

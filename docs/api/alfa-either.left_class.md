@@ -17,16 +17,18 @@ export declare class Left<L> implements Either<L, never>
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-either.left_class._symbol.iterator__1_method.md) |  |  |
+|  [apply()](./alfa-either.left_class.apply_1_method.md) |  |  |
 |  [either(left)](./alfa-either.left_class.either_1_method.md) |  |  |
 |  [equals(value)](./alfa-either.left_class.equals_1_method.md) |  |  |
 |  [equals(value)](./alfa-either.left_class.equals_2_method.md) |  |  |
-|  [flatMap(mapper)](./alfa-either.left_class.flatmap_1_method.md) |  |  |
+|  [flatMap()](./alfa-either.left_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-either.left_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-either.left_class.get_1_method.md) |  |  |
 |  [hash(hash)](./alfa-either.left_class.hash_1_method.md) |  |  |
 |  [isLeft()](./alfa-either.left_class.isleft_1_method.md) |  |  |
 |  [isRight()](./alfa-either.left_class.isright_1_method.md) |  |  |
 |  [left()](./alfa-either.left_class.left_1_method.md) |  |  |
-|  [map(mapper)](./alfa-either.left_class.map_1_method.md) |  |  |
+|  [map()](./alfa-either.left_class.map_1_method.md) |  |  |
 |  [of(value)](./alfa-either.left_class.of_1_method.md) | <code>static</code> |  |
 |  [reduce(reducer, accumulator)](./alfa-either.left_class.reduce_1_method.md) |  |  |
 |  [right()](./alfa-either.left_class.right_1_method.md) |  |  |

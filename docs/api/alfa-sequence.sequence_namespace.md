@@ -15,9 +15,7 @@ export declare namespace Sequence
 
 |  Function | Description |
 |  --- | --- |
-|  [compare(a, b)](./alfa-sequence.sequence_namespace.compare_1_function.md) |  |
 |  [empty()](./alfa-sequence.sequence_namespace.empty_1_function.md) |  |
-|  [flatten(sequence)](./alfa-sequence.sequence_namespace.flatten_1_function.md) |  |
 |  [from(iterable)](./alfa-sequence.sequence_namespace.from_1_function.md) |  |
 |  [fromArray(array)](./alfa-sequence.sequence_namespace.fromarray_1_function.md) |  |
 |  [fromIterable(iterable)](./alfa-sequence.sequence_namespace.fromiterable_1_function.md) |  |
@@ -29,7 +27,6 @@ export declare namespace Sequence
 |  [isSequence(value)](./alfa-sequence.sequence_namespace.issequence_1_function.md) |  |
 |  [isSequence(value)](./alfa-sequence.sequence_namespace.issequence_2_function.md) |  |
 |  [of(head, tail)](./alfa-sequence.sequence_namespace.of_1_function.md) |  |
-|  [sort(sequence)](./alfa-sequence.sequence_namespace.sort_1_function.md) |  |
 
 ## Type Aliases
 

@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Value<T = unknown> implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Value.JSON<T>> 
+export declare class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Value.JSON<T>> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Value.JSON](./alfa-style.value_namespace.json_interface.md)<!-- -->&lt;T&gt;&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Value.JSON](./alfa-style.value_namespace.json_interface.md)<!-- -->&lt;T&gt;&gt;
 
 ## Properties
 
@@ -24,8 +24,10 @@ export declare class Value<T = unknown> implements Functor<T>, Monad<T>, Iterabl
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-style.value_class._symbol.iterator__1_method.md) |  |  |
+|  [apply(mapper)](./alfa-style.value_class.apply_1_method.md) |  |  |
 |  [equals(value)](./alfa-style.value_class.equals_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-style.value_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-style.value_class.flatten_1_method.md) |  |  |
 |  [includes(value)](./alfa-style.value_class.includes_1_method.md) |  |  |
 |  [map(mapper)](./alfa-style.value_class.map_1_method.md) |  |  |
 |  [none(predicate)](./alfa-style.value_class.none_1_method.md) |  |  |

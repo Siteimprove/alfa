@@ -4,6 +4,8 @@
 
 ## Comparable.compare() function
 
+Compare two big integers.
+
 <b>Signature:</b>
 
 ```typescript
