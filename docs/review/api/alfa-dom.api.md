@@ -720,7 +720,7 @@ export abstract class Node implements Iterable<Node>, Equatable, json.Serializab
     // @internal (undocumented)
     _attachParent(parent: Node): boolean;
     // (undocumented)
-    children(_?: Node.Traversal): Sequence<Node>;
+    children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     protected readonly _children: Array<Node>;
     // (undocumented)
@@ -749,6 +749,24 @@ export abstract class Node implements Iterable<Node>, Equatable, json.Serializab
     inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     index(options?: Node.Traversal): number;
+    // (undocumented)
+    isAncestorOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isChildOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isDescendantOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isParentOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isRootOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isSiblingOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
     last(options?: Node.Traversal): Option<Node>;
     // (undocumented)
