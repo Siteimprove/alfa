@@ -11,8 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isVisible } from "../common/predicate/is-visible";
+import { hasAttribute, hasChild, isVisible } from "../common/predicate";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -88,14 +87,29 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
     // In this case, text might clip if overflow of the x-axis is hidden.
     if (
       style
-        .computed("white-space")
-        .some((whiteSpace) => whiteSpace.value === "nowrap")
-    ) {
-      return style
         .computed("overflow-x")
         .some(
           (overflow) => overflow.value === "hidden" || overflow.value === "clip"
-        );
+        ) &&
+      element
+        .inclusiveDescendants({
+          flattened: true,
+        })
+        .filter(
+          and(
+            isElement,
+            hasChild(isText, {
+              flattened: true,
+            })
+          )
+        )
+        .some((element) =>
+          Style.from(element, device)
+            .computed("white-space")
+            .some((whiteSpace) => whiteSpace.value === "nowrap")
+        )
+    ) {
+      return true;
     }
 
     // Case 2: The height of the element has been restricted using an non-font
@@ -108,6 +122,11 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
     // For heights set via the `style` attribute we assume that its value is
     // controlled by JavaScript and is adjusted as the content scales.
     if (
+      style
+        .computed("overflow-y")
+        .some(
+          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
+        ) &&
       style
         // Use the cascaded value to avoid lengths being resolved to pixels.
         // Otherwise, we won't be able to tell if a font relative length was
@@ -123,11 +142,7 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
           )
         )
     ) {
-      return style
-        .computed("overflow-y")
-        .some(
-          (overflow) => overflow.value === "hidden" || overflow.value === "clip"
-        );
+      return true;
     }
 
     return false;
