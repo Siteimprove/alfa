@@ -4,6 +4,7 @@
 
 ## Comparable namespace
 
+This namespace provides additional functions for the [Comparable](./alfa-comparable.comparable_interface.md) interface.
 
 <b>Signature:</b>
 
@@ -15,19 +16,20 @@ export declare namespace Comparable
 
 |  Function | Description |
 |  --- | --- |
-|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_1_function.md) |  |
-|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_2_function.md) |  |
-|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_3_function.md) |  |
-|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_4_function.md) |  |
-|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_5_function.md) |  |
+|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_1_function.md) | Compare two strings. |
+|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_2_function.md) | Compare two numbers. |
+|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_3_function.md) | Compare two big integers. |
+|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_4_function.md) | Compare two booleans. |
+|  [compare(a, b)](./alfa-comparable.comparable_namespace.compare_5_function.md) | Compare two comparable values. |
 |  [compareBigInt(a, b)](./alfa-comparable.comparable_namespace.comparebigint_1_function.md) |  |
 |  [compareBoolean(a, b)](./alfa-comparable.comparable_namespace.compareboolean_1_function.md) |  |
 |  [compareComparable(a, b)](./alfa-comparable.comparable_namespace.comparecomparable_1_function.md) |  |
 |  [compareNumber(a, b)](./alfa-comparable.comparable_namespace.comparenumber_1_function.md) |  |
 |  [compareString(a, b)](./alfa-comparable.comparable_namespace.comparestring_1_function.md) |  |
-|  [isComparable(value)](./alfa-comparable.comparable_namespace.iscomparable_1_function.md) |  |
-|  [isGreaterThan(a, b)](./alfa-comparable.comparable_namespace.isgreaterthan_1_function.md) |  |
-|  [isGreaterThanOrEqual(a, b)](./alfa-comparable.comparable_namespace.isgreaterthanorequal_1_function.md) |  |
-|  [isLessThan(a, b)](./alfa-comparable.comparable_namespace.islessthan_1_function.md) |  |
-|  [isLessThanOrEqual(a, b)](./alfa-comparable.comparable_namespace.islessthanorequal_1_function.md) |  |
+|  [isComparable(value)](./alfa-comparable.comparable_namespace.iscomparable_1_function.md) | Check if an unknown value implements the [Comparable](./alfa-comparable.comparable_interface.md) interface. |
+|  [isEqual(a, b)](./alfa-comparable.comparable_namespace.isequal_1_function.md) | Check if one value is equal to another |
+|  [isGreaterThan(a, b)](./alfa-comparable.comparable_namespace.isgreaterthan_1_function.md) | Check if one value is greater than another. |
+|  [isGreaterThanOrEqual(a, b)](./alfa-comparable.comparable_namespace.isgreaterthanorequal_1_function.md) | Check if one value is greater than or equal to another. |
+|  [isLessThan(a, b)](./alfa-comparable.comparable_namespace.islessthan_1_function.md) | Check if one value is less than another. |
+|  [isLessThanOrEqual(a, b)](./alfa-comparable.comparable_namespace.islessthanorequal_1_function.md) | Check if one value is less than or equal to another. |
 

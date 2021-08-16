@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-find(predicate: Predicate<V, [K]>): Option<V>;
+find(predicate: Predicate<V, [key: K]>): Option<V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;V, \[K\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

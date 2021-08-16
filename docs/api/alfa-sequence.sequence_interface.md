@@ -20,6 +20,7 @@ export interface Sequence<T> extends Collection.Indexed<T>
 |  [apply(mapper)](./alfa-sequence.sequence_interface.apply_1_methodsignature.md) |  |
 |  [collect(mapper)](./alfa-sequence.sequence_interface.collect_1_methodsignature.md) |  |
 |  [collectFirst(mapper)](./alfa-sequence.sequence_interface.collectfirst_1_methodsignature.md) |  |
+|  [compare(this, iterable)](./alfa-sequence.sequence_interface.compare_1_methodsignature.md) |  |
 |  [compareWith(iterable, comparer)](./alfa-sequence.sequence_interface.comparewith_1_methodsignature.md) |  |
 |  [concat(iterable)](./alfa-sequence.sequence_interface.concat_1_methodsignature.md) |  |
 |  [count(predicate)](./alfa-sequence.sequence_interface.count_1_methodsignature.md) |  |
@@ -31,6 +32,7 @@ export interface Sequence<T> extends Collection.Indexed<T>
 |  [find(predicate)](./alfa-sequence.sequence_interface.find_2_methodsignature.md) |  |
 |  [first()](./alfa-sequence.sequence_interface.first_1_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-sequence.sequence_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-sequence.sequence_interface.flatten_1_methodsignature.md) |  |
 |  [forEach(callback)](./alfa-sequence.sequence_interface.foreach_1_methodsignature.md) |  |
 |  [get(index)](./alfa-sequence.sequence_interface.get_1_methodsignature.md) |  |
 |  [groupBy(grouper)](./alfa-sequence.sequence_interface.groupby_1_methodsignature.md) |  |
@@ -60,14 +62,17 @@ export interface Sequence<T> extends Collection.Indexed<T>
 |  [skipWhile(predicate)](./alfa-sequence.sequence_interface.skipwhile_1_methodsignature.md) |  |
 |  [slice(start, end)](./alfa-sequence.sequence_interface.slice_1_methodsignature.md) |  |
 |  [some(predicate)](./alfa-sequence.sequence_interface.some_1_methodsignature.md) |  |
+|  [sort(this)](./alfa-sequence.sequence_interface.sort_1_methodsignature.md) |  |
 |  [sortWith(comparer)](./alfa-sequence.sequence_interface.sortwith_1_methodsignature.md) |  |
 |  [subtract(iterable)](./alfa-sequence.sequence_interface.subtract_1_methodsignature.md) |  |
 |  [take(count)](./alfa-sequence.sequence_interface.take_1_methodsignature.md) |  |
 |  [takeLast(count)](./alfa-sequence.sequence_interface.takelast_1_methodsignature.md) |  |
 |  [takeLastUntil(predicate)](./alfa-sequence.sequence_interface.takelastuntil_1_methodsignature.md) |  |
-|  [takeLastWhile(predicate)](./alfa-sequence.sequence_interface.takelastwhile_1_methodsignature.md) |  |
+|  [takeLastWhile(refinement)](./alfa-sequence.sequence_interface.takelastwhile_1_methodsignature.md) |  |
+|  [takeLastWhile(predicate)](./alfa-sequence.sequence_interface.takelastwhile_2_methodsignature.md) |  |
 |  [takeUntil(predicate)](./alfa-sequence.sequence_interface.takeuntil_1_methodsignature.md) |  |
-|  [takeWhile(predicate)](./alfa-sequence.sequence_interface.takewhile_1_methodsignature.md) |  |
+|  [takeWhile(refinement)](./alfa-sequence.sequence_interface.takewhile_1_methodsignature.md) |  |
+|  [takeWhile(predicate)](./alfa-sequence.sequence_interface.takewhile_2_methodsignature.md) |  |
 |  [toArray()](./alfa-sequence.sequence_interface.toarray_1_methodsignature.md) |  |
 |  [toJSON()](./alfa-sequence.sequence_interface.tojson_1_methodsignature.md) |  |
 |  [trim(predicate)](./alfa-sequence.sequence_interface.trim_1_methodsignature.md) |  |

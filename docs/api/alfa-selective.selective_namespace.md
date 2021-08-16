@@ -11,12 +11,6 @@
 export declare namespace Selective 
 ```
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [exhaust(selective)](./alfa-selective.selective_namespace.exhaust_1_function.md) | Ensure that a [Selective](./alfa-selective.selective_class.md) is exhaustively matched, returning its resulting value. |
-
 ## Type Aliases
 
 |  Type Alias | Description |

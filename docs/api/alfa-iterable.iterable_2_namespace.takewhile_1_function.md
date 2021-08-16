@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function takeWhile<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): Iterable<T>;
+function takeWhile<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<T, U, [index: number]>): Iterable<U>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function takeWhile<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: num
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-Iterable&lt;T&gt;
+Iterable&lt;U&gt;
 

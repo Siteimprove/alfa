@@ -4,6 +4,8 @@
 
 ## Comparable.compare() method
 
+Compare a value to this.
+
 <b>Signature:</b>
 
 ```typescript

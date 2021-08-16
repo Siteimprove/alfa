@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function apply<T, U>(iterable: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array<U>;
+function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | ReadonlyArray&lt;T&gt; |  |
+|  array | ReadonlyArray&lt;T&gt; |  |
 |  mapper | ReadonlyArray&lt;[Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
 <b>Returns:</b>

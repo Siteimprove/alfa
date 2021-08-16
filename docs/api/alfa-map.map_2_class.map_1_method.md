@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-map<U>(mapper: Mapper<V, U, [K]>): Map<K, U>;
+map<U>(mapper: Mapper<V, U, [key: K]>): Map<K, U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;V, U, \[K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

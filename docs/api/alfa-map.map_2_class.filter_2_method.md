@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-filter(predicate: Predicate<V, [K]>): Map<K, V>;
+filter(predicate: Predicate<V, [key: K]>): Map<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;V, \[K\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 
