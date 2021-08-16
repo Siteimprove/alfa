@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Option<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> 
+export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Option.JSON](./alfa-option.option_namespace.json_typealias.md)<!-- -->&lt;T&gt;&gt;
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Option.JSON](./alfa-option.option_namespace.json_typealias.md)<!-- -->&lt;T&gt;&gt;
 
 ## Methods
 
@@ -19,11 +19,13 @@ export interface Option<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicativ
 |  [and(option)](./alfa-option.option_interface.and_1_methodsignature.md) |  |
 |  [andThen(option)](./alfa-option.option_interface.andthen_1_methodsignature.md) |  |
 |  [apply(mapper)](./alfa-option.option_interface.apply_1_methodsignature.md) |  |
+|  [compare(this, option)](./alfa-option.option_interface.compare_1_methodsignature.md) |  |
 |  [compareWith(option, comparer)](./alfa-option.option_interface.comparewith_1_methodsignature.md) |  |
 |  [every(predicate)](./alfa-option.option_interface.every_1_methodsignature.md) |  |
 |  [filter(refinement)](./alfa-option.option_interface.filter_1_methodsignature.md) |  |
 |  [filter(predicate)](./alfa-option.option_interface.filter_2_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-option.option_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-option.option_interface.flatten_1_methodsignature.md) |  |
 |  [get()](./alfa-option.option_interface.get_1_methodsignature.md) |  |
 |  [getOr(value)](./alfa-option.option_interface.getor_1_methodsignature.md) |  |
 |  [getOrElse(value)](./alfa-option.option_interface.getorelse_1_methodsignature.md) |  |

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
+takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-[List](./alfa-list.list_class.md)<!-- -->&lt;T&gt;
+[List](./alfa-list.list_class.md)<!-- -->&lt;U&gt;
 

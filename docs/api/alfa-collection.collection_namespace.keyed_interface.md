@@ -28,6 +28,7 @@ interface Keyed<K, V> extends Collection<V>, Iterable<[K, V]>, Serializable<Keye
 |  [find(refinement)](./alfa-collection.collection_namespace.keyed_interface.find_1_methodsignature.md) |  |
 |  [find(predicate)](./alfa-collection.collection_namespace.keyed_interface.find_2_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-collection.collection_namespace.keyed_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-collection.collection_namespace.keyed_interface.flatten_1_methodsignature.md) |  |
 |  [forEach(callback)](./alfa-collection.collection_namespace.keyed_interface.foreach_1_methodsignature.md) |  |
 |  [get(key)](./alfa-collection.collection_namespace.keyed_interface.get_1_methodsignature.md) |  |
 |  [has(key)](./alfa-collection.collection_namespace.keyed_interface.has_1_methodsignature.md) |  |

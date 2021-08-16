@@ -76,9 +76,11 @@ export declare namespace Iterable
 |  [take(iterable, count)](./alfa-iterable.iterable_2_namespace.take_1_function.md) |  |
 |  [takeLast(iterable, count)](./alfa-iterable.iterable_2_namespace.takelast_1_function.md) |  |
 |  [takeLastUntil(iterable, predicate)](./alfa-iterable.iterable_2_namespace.takelastuntil_1_function.md) |  |
-|  [takeLastWhile(iterable, predicate)](./alfa-iterable.iterable_2_namespace.takelastwhile_1_function.md) |  |
+|  [takeLastWhile(iterable, refinement)](./alfa-iterable.iterable_2_namespace.takelastwhile_1_function.md) |  |
+|  [takeLastWhile(iterable, predicate)](./alfa-iterable.iterable_2_namespace.takelastwhile_2_function.md) |  |
 |  [takeUntil(iterable, predicate)](./alfa-iterable.iterable_2_namespace.takeuntil_1_function.md) |  |
-|  [takeWhile(iterable, predicate)](./alfa-iterable.iterable_2_namespace.takewhile_1_function.md) |  |
+|  [takeWhile(iterable, refinement)](./alfa-iterable.iterable_2_namespace.takewhile_1_function.md) |  |
+|  [takeWhile(iterable, predicate)](./alfa-iterable.iterable_2_namespace.takewhile_2_function.md) |  |
 |  [toJSON(iterable)](./alfa-iterable.iterable_2_namespace.tojson_1_function.md) |  |
 |  [trim(iterable, predicate)](./alfa-iterable.iterable_2_namespace.trim_1_function.md) |  |
 |  [trimLeading(iterable, predicate)](./alfa-iterable.iterable_2_namespace.trimleading_1_function.md) |  |

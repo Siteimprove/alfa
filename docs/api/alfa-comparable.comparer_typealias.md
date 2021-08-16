@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Comparer<T, A extends Array<unknown> = []> = (a: T, b: T, ...args: A) => Comparison;
+export declare type Comparer<T, U = T, A extends Array<unknown> = []> = (a: T, b: U, ...args: A) => Comparison;
 ```
 <b>References:</b> [Comparison](./alfa-comparable.comparison_enum.md)
 

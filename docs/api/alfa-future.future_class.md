@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class Future<T> implements Functor<T>, Monad<T>, Applicative<T>, Thenable<T>, AsyncIterable<T> 
+export declare abstract class Future<T> implements Functor<T>, Applicative<T>, Monad<T>, Thenable<T>, AsyncIterable<T> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Thenable](./alfa-thenable.thenable_interface.md)<!-- -->&lt;T&gt;, AsyncIterable&lt;T&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Thenable](./alfa-thenable.thenable_interface.md)<!-- -->&lt;T&gt;, AsyncIterable&lt;T&gt;
 
 ## Methods
 
@@ -21,6 +21,7 @@ export declare abstract class Future<T> implements Functor<T>, Monad<T>, Applica
 |  [apply(mapper)](./alfa-future.future_class.apply_1_method.md) |  |  |
 |  [asyncIterator()](./alfa-future.future_class.asynciterator_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-future.future_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-future.future_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-future.future_class.get_1_method.md) |  |  |
 |  [isDeferred()](./alfa-future.future_class.isdeferred_1_method.md) |  |  |
 |  [isNow()](./alfa-future.future_class.isnow_1_method.md) |  |  |

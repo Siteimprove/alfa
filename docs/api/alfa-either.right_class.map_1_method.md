@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-map<T>(mapper: Mapper<R, T>): Either<T, T>;
+map<T>(mapper: Mapper<R, T>): Right<T>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ map<T>(mapper: Mapper<R, T>): Either<T, T>;
 
 <b>Returns:</b>
 
-[Either](./alfa-either.either_interface.md)<!-- -->&lt;T, T&gt;
+[Right](./alfa-either.right_class.md)<!-- -->&lt;T&gt;
 

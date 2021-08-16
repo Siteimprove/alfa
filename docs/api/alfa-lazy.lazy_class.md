@@ -8,18 +8,20 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Lazy<T> implements Functor<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> 
+export declare class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Lazy.JSON](./alfa-lazy.lazy_namespace.json_typealias.md)<!-- -->&lt;T&gt;&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Lazy.JSON](./alfa-lazy.lazy_namespace.json_typealias.md)<!-- -->&lt;T&gt;&gt;
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-lazy.lazy_class._symbol.iterator__1_method.md) |  |  |
+|  [apply(mapper)](./alfa-lazy.lazy_class.apply_1_method.md) |  |  |
 |  [equals(value)](./alfa-lazy.lazy_class.equals_1_method.md) |  |  |
 |  [equals(value)](./alfa-lazy.lazy_class.equals_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-lazy.lazy_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-lazy.lazy_class.flatten_1_method.md) |  |  |
 |  [force()](./alfa-lazy.lazy_class.force_1_method.md) |  |  |
 |  [force(value)](./alfa-lazy.lazy_class.force_1_method.md) | <code>static</code> |  |
 |  [iterator()](./alfa-lazy.lazy_class.iterator_1_method.md) |  |  |

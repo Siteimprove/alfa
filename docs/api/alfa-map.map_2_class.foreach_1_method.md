@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-forEach(callback: Callback<V, void, [K]>): void;
+forEach(callback: Callback<V, void, [key: K]>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback_typealias.md)<!-- -->&lt;V, void, \[K\]&gt; |  |
+|  callback | [Callback](./alfa-callback.callback_typealias.md)<!-- -->&lt;V, void, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

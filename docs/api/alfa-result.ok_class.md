@@ -25,6 +25,7 @@ export declare class Ok<T> implements Result<T, never>
 |  [every(predicate)](./alfa-result.ok_class.every_1_method.md) |  |  |
 |  [everyErr()](./alfa-result.ok_class.everyerr_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-result.ok_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-result.ok_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-result.ok_class.get_1_method.md) |  |  |
 |  [getErr()](./alfa-result.ok_class.geterr_1_method.md) |  |  |
 |  [getOr()](./alfa-result.ok_class.getor_1_method.md) |  |  |

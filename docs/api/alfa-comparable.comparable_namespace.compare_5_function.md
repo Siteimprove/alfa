@@ -4,18 +4,20 @@
 
 ## Comparable.compare() function
 
+Compare two comparable values.
+
 <b>Signature:</b>
 
 ```typescript
-function compare<T>(a: Comparable<T>, b: T): Comparison;
+function compare<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | [Comparable](./alfa-comparable.comparable_interface.md)<!-- -->&lt;T&gt; |  |
-|  b | T |  |
+|  a | T |  |
+|  b | U |  |
 
 <b>Returns:</b>
 

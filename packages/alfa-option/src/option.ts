@@ -15,8 +15,6 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { None } from "./none";
 import { Some } from "./some";
 
-const { compareComparable } = Comparable;
-
 /**
  * @public
  */

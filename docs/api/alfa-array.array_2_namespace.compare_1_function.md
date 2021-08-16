@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function compare<T extends Comparable<T>>(a: ReadonlyArray<T>, b: Iterable<T>): Comparison;
+function compare<T extends Comparable<U>, U = T>(a: ReadonlyArray<T>, b: Iterable<U>): Comparison;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function compare<T extends Comparable<T>>(a: ReadonlyArray<T>, b: Iterable<T>): 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | ReadonlyArray&lt;T&gt; |  |
-|  b | Iterable&lt;T&gt; |  |
+|  b | Iterable&lt;U&gt; |  |
 
 <b>Returns:</b>
 

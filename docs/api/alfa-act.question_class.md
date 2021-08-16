@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Question<Q, S, A, T = A> implements Functor<T>, Monad<T>, Serializable<Question.JSON<Q, S>> 
+export declare class Question<Q, S, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S>> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S&gt;&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S&gt;&gt;
 
 ## Constructors
 
@@ -32,7 +32,9 @@ export declare class Question<Q, S, A, T = A> implements Functor<T>, Monad<T>, S
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [answer(answer)](./alfa-act.question_class.answer_1_method.md) |  |  |
+|  [apply(mapper)](./alfa-act.question_class.apply_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-act.question_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-act.question_class.flatten_1_method.md) |  |  |
 |  [map(mapper)](./alfa-act.question_class.map_1_method.md) |  |  |
 |  [of(uri, type, subject, message)](./alfa-act.question_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-act.question_class.tojson_1_method.md) |  |  |

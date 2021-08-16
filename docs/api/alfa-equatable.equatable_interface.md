@@ -4,11 +4,34 @@
 
 ## Equatable interface
 
+This interface describes structures that define an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_relation)<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
 export interface Equatable 
+```
+
+## Example
+
+
+```ts
+class Foo implements Equatable {
+  readonly value: number;
+
+  constructor(value: number) {
+    this.value = value;
+  }
+
+  equals(value: Foo): boolean;
+
+  equals(value: unknown): value is this;
+
+  equals(value: unknown): boolean {
+    return value instanceof Foo && value.value === this.value;
+  }
+}
+
 ```
 
 ## Methods

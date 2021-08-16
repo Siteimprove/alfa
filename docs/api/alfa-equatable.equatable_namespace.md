@@ -4,6 +4,7 @@
 
 ## Equatable namespace
 
+This namespace provides additional types and functions for the [Equatable](./alfa-equatable.equatable_interface.md) interface.
 
 <b>Signature:</b>
 

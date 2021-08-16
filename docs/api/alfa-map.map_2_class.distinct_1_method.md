@@ -15,5 +15,5 @@ Map&lt;K, V&gt;
 
 ## Remarks
 
-As the order of maps is undefined, it is also undefined which keys are deleted when duplicate values are encountered.
+As the order of maps is undefined, it is also undefined which keys are kept when duplicate values are encountered.
 

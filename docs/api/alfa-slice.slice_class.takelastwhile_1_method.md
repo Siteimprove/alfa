@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-takeLastWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
+takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Slice<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-[Slice](./alfa-slice.slice_class.md)<!-- -->&lt;T&gt;
+[Slice](./alfa-slice.slice_class.md)<!-- -->&lt;U&gt;
 
