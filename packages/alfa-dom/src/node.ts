@@ -75,6 +75,13 @@ export abstract class Node
   }
 
   /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
+   */
+  public isParentOf(node: Node, options: Node.Traversal = {}): boolean {
+    return node.parent(options).includes(this);
+  }
+
+  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-root}
    */
   public root(options: Node.Traversal = {}): Node {
@@ -86,10 +93,24 @@ export abstract class Node
   }
 
   /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-root}
+   */
+  public isRootOf(node: Node, options: Node.Traversal = {}): boolean {
+    return node.root(options) === this;
+  }
+
+  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
-  public children(_: Node.Traversal = {}): Sequence<Node> {
+  public children(options: Node.Traversal = {}): Sequence<Node> {
     return Sequence.from(this._children);
+  }
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-child}
+   */
+  public isChildOf(node: Node, options: Node.Traversal = {}): boolean {
+    return node.children(options).includes(this);
   }
 
   /**
@@ -105,6 +126,13 @@ export abstract class Node
   }
 
   /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
+   */
+  public isDescendantOf(node: Node, options: Node.Traversal = {}): boolean {
+    return node.descendants(options).includes(this);
+  }
+
+  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */
   public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
@@ -112,6 +140,16 @@ export abstract class Node
       this,
       Lazy.of(() => this.descendants(options))
     );
+  }
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
+   */
+  public isInclusiveDescendantsOf(
+    node: Node,
+    options: Node.Traversal = {}
+  ): boolean {
+    return node.inclusiveDescendants(options).includes(this);
   }
 
   /**
@@ -129,6 +167,13 @@ export abstract class Node
   }
 
   /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
+   */
+  public isAncestorOf(node: Node, options: Node.Traversal = {}): boolean {
+    return node.ancestors(options).includes(this);
+  }
+
+  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
    */
   public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
@@ -139,10 +184,27 @@ export abstract class Node
   }
 
   /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
+   */
+  public isInclusiveAncestorOf(
+    node: Node,
+    options: Node.Traversal = {}
+  ): boolean {
+    return node.inclusiveAncestors(options).includes(this);
+  }
+
+  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
    */
   public siblings(options: Node.Traversal = {}): Sequence<Node> {
     return this.inclusiveSiblings(options).reject(equals(this));
+  }
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
+   */
+  public isSiblingOf(node: Node, options: Node.Traversal = {}): boolean {
+    return node.siblings(options).includes(this);
   }
 
   /**
@@ -154,6 +216,16 @@ export abstract class Node
     }
 
     return Sequence.empty();
+  }
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
+   */
+  public isInclusiveSiblingOf(
+    node: Node,
+    options: Node.Traversal = {}
+  ): boolean {
+    return node.inclusiveSiblings(options).includes(this);
   }
 
   /**
