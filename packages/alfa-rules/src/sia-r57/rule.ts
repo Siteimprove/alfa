@@ -8,9 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isWhitespace } from "../common/predicate/is-whitespace";
+import {
+  hasRole,
+  isIgnored,
+  isTabbable,
+  isWhitespace,
+} from "../common/predicate";
 
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
@@ -20,6 +23,11 @@ const { isElement } = Element;
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r57",
   evaluate({ document, device }) {
+    const firstTabbable = document
+      .tabOrder()
+      .filter(isTabbable(device))
+      .first();
+
     return {
       *applicability() {
         const descendants = document.descendants({
@@ -52,7 +60,16 @@ export default Rule.Atomic.of<Page, Text>({
                 ancestor.role.some((role) => role.isLandmark())
               ),
             () => Outcomes.IsIncludedInLandmark,
-            () => Outcomes.IsNotIncludedInLandmark
+            () =>
+              expectation(
+                firstTabbable.some((element) =>
+                  element.isParentOf(target, {
+                    flattened: true,
+                  })
+                ),
+                () => Outcomes.IsIncludedInFirstFocusableElement,
+                () => Outcomes.IsNotIncludedInLandmark
+              )
           ),
         };
       },
@@ -63,6 +80,10 @@ export default Rule.Atomic.of<Page, Text>({
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
     Diagnostic.of(`The text is included in a landmark region`)
+  );
+
+  export const IsIncludedInFirstFocusableElement = Ok.of(
+    Diagnostic.of(`The text is included in the first focusable element`)
   );
 
   export const IsNotIncludedInLandmark = Err.of(

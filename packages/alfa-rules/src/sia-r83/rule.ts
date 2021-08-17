@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -11,12 +12,11 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isVisible } from "../common/predicate/is-visible";
+import { hasAttribute, hasComputedStyle, isVisible } from "../common/predicate";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
@@ -62,9 +62,11 @@ export default Rule.Atomic.of<Page, Text>({
       expectations(target) {
         return {
           1: expectation(
-            wrapsText(device)(target),
-            () => Outcomes.WrapsText,
-            () => Outcomes.ClipsText
+            target
+              .parent({ flattened: true, nested: true })
+              .every(and(isElement, not(wrapsText(device)))),
+            () => Outcomes.ClipsText,
+            () => Outcomes.WrapsText
           ),
         };
       },
@@ -134,29 +136,58 @@ function isPossiblyClipped(device: Device): Predicate<Element> {
   };
 }
 
-function wrapsText(device: Device): Predicate<Text> {
-  return (text) =>
-    text
-      .ancestors({
-        flattened: true,
-      })
-      .filter(isElement)
-      .find(isPossiblyClipped(device))
-      .some((element) => {
-        const style = Style.from(element, device);
+function wrapsText(device: Device): Predicate<Element> {
+  return (element) => {
+    if (isPossiblyClipped(device)(element)) {
+      return isActuallyClipping(element, device);
+    }
 
-        const { value: whitespace } = style.computed("white-space");
+    const relevantParent = isPositioned(device, "static")(element)
+      ? element.parent().filter(isElement)
+      : offsetParent(element, device);
 
-        // If whitespace does not cause wrapping, we need to check if a text
-        // overflow could cause the text to clip.
-        if (whitespace.value === "nowrap") {
-          const { value: overflow } = style.computed("text-overflow");
+    return relevantParent.every(wrapsText(device));
+  };
+}
 
-          // We assume that the text won't clip if the text overflow is handled
-          // any other way than clip.
-          return overflow.value !== "clip";
-        }
+function isPositioned(device: Device, position: string): Predicate<Element> {
+  return hasComputedStyle(
+    "position",
+    (value) => value.value === position,
+    device
+  );
+}
 
-        return false;
-      });
+function isActuallyClipping(element: Element, device: Device): boolean {
+  const style = Style.from(element, device);
+
+  const { value: whitespace } = style.computed("white-space");
+
+  // If whitespace does not cause wrapping, we need to check if a text
+  // overflow could cause the text to clip.
+  if (whitespace.value === "nowrap") {
+    const { value: overflow } = style.computed("text-overflow");
+
+    // We assume that the text won't clip if the text overflow is handled
+    // any other way than clip.
+    return overflow.value !== "clip";
+  }
+
+  return false;
+}
+
+function offsetParent(element: Element, device: Device): Option<Element> {
+  if (or(hasName("body", "html"), isPositioned(device, "fixed"))(element)) {
+    return None;
+  }
+
+  const ancestors = element
+    .ancestors({
+      flattened: true,
+    })
+    .filter(isElement);
+
+  return ancestors
+    .find(not(isPositioned(device, "static")))
+    .orElse(() => ancestors.find(hasName("td", "th", "table")));
 }
