@@ -507,6 +507,7 @@ export namespace ComputedStyles {
     }
 
     function getRepeat(n: number): string {
+      // Due to the one value syntax, we can't easily fallback on initial value.
       const value = getValue(repeatX, n) + " " + getValue(repeatY, n);
 
       switch (value) {
@@ -541,6 +542,7 @@ export namespace ComputedStyles {
     function getLayer(n: number): string {
       const imageValue = getValue(image, n);
       // If there is no image the rest doesn't matter (color is handled later).
+
       return imageValue === "none"
         ? ""
         : `${imageValue} ${getPosition(n)} ${getRepeat(n)} ${getValue(
