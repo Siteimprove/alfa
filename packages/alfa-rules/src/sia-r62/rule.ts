@@ -21,6 +21,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/expectation";
+import { normalize } from "../common/normalize";
 
 import {
   hasBorder,
@@ -458,7 +459,107 @@ export namespace ComputedStyles {
   // link is distinguishable, but all longhands are needed for rendering it
   // with the correct style.
   function background(style: Style): string {
-    return getLonghand(style)("background-color");
+    // This does not try to shorten the result by removing unneeded (=initial)
+    // value, or using single keyword values for `background-repeat`.
+
+    // Most properties are layered and need special handling.
+    const attachment = style.computed("background-attachment").value.values;
+    const clip = style.computed("background-clip").value.values;
+    const image = style.computed("background-image").value.values;
+    const origin = style.computed("background-origin").value.values;
+    const positionX = style.computed("background-position-x").value.values;
+    const positionY = style.computed("background-position-y").value.values;
+    const repeatX = style.computed("background-repeat-x").value.values;
+    const repeatY = style.computed("background-repeat-y").value.values;
+    const size = style.computed("background-size").value.values;
+
+    function getValue<T>(
+      array: ReadonlyArray<T>,
+      n: number,
+      // This should rather grab the initial value from the property itself.
+      initial?: string
+    ): string {
+      // Longhands with missing layers use the same value as their first layer
+      const value = `${array?.[n] ?? array[0]}`;
+      return value === initial ? "" : value;
+    }
+
+    function getSize(n: number): string {
+      const value = getValue(size, n, "auto auto");
+
+      return value === "" ? "" : " / " + value;
+    }
+
+    function getPosition(n: number): string {
+      const posX = getValue(positionX, n, "0px");
+      const posY = getValue(positionY, n, "0px");
+
+      // If there is a posY, we need to keep posX anyway
+      const value = (
+        (posX === "" && posY !== "" ? "0px" : posX) +
+        " " +
+        posY
+      ).trim();
+
+      // If there is a size, we need to keep a position anyway
+      const size = getSize(n);
+      return size === "" ? value : value + size;
+    }
+
+    function getRepeat(n: number): string {
+      const value = getValue(repeatX, n) + " " + getValue(repeatY, n);
+
+      switch (value) {
+        case "repeat no-repeat":
+          return "repeat-x";
+        case "no-repeat repeat":
+          return "repeat-y";
+        case "repeat repeat":
+          return ""; // initial value
+        case "space space":
+          return "space";
+        case "round round":
+          return "round";
+        case "no-repeat no-repeat":
+          return "no-repeat";
+        default:
+          return value;
+      }
+    }
+
+    function getBoxes(n: number): string {
+      const originBox = getValue(origin, n);
+      const clipBox = getValue(clip, n, "border-box");
+
+      return originBox === clipBox || clipBox === ""
+        ? originBox === "padding-box"
+          ? ""
+          : originBox
+        : originBox + " " + clipBox;
+    }
+
+    function getLayer(n: number): string {
+      const imageValue = getValue(image, n);
+      // If there is no image the rest doesn't matter (color is handled later).
+      return imageValue === "none"
+        ? ""
+        : `${imageValue} ${getPosition(n)} ${getRepeat(n)} ${getValue(
+            attachment,
+            n,
+            "scroll"
+          )} ${getBoxes(n)}`;
+    }
+
+    const layers = image.map((_, i) => getLayer(i));
+
+    // `background-color` is added to the last layer
+    layers[layers.length - 1] =
+      getLonghand(style)("background-color") + " " + layers[layers.length - 1];
+
+    return layers
+      .map(normalize)
+      .filter((layer) => layer !== "")
+      .join(", ");
   }
 
   export function from(
@@ -472,8 +573,6 @@ export namespace ComputedStyles {
     const shorthands = (["color", "style", "width"] as const).map((postfix) =>
       fourValuesShorthand(style, postfix)
     );
-
-    const backgroundColor = background(style);
 
     const outline = `${longhand("outline-color")} ${longhand(
       "outline-style"
@@ -496,7 +595,7 @@ export namespace ComputedStyles {
       [
         ...shorthands,
         ...longhands,
-        ["background-color", backgroundColor] as const,
+        ["background", background(style)] as const,
         ["outline", outline] as const,
         ["text-decoration", textDecoration] as const,
       ].filter(([_, value]) => value !== "")

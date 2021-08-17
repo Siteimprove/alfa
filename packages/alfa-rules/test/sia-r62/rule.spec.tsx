@@ -458,7 +458,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["background-color", "rgb(100% 0% 0%)"],
+      ["background", "rgb(100% 0% 0%)"],
       ["outline", "0px"],
     ])
   );
@@ -473,7 +473,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
-              ["background-color", "rgb(100% 0% 0%)"],
+              ["background", "rgb(100% 0% 0%)"],
               ["outline", "auto"],
             ])
           ),
@@ -545,7 +545,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["background-color", "rgb(100% 0% 0%)"],
+      ["background", "rgb(100% 0% 0%)"],
       ["outline", "0px"],
     ])
   );
@@ -560,7 +560,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
-              ["background-color", "rgb(100% 0% 0%)"],
+              ["background", "rgb(100% 0% 0%)"],
               ["outline", "auto"],
             ])
           ),
@@ -844,7 +844,15 @@ test(`evaluates() passes on link with a different background-image than text`, a
     ]
   );
 
-  const style = Ok.of(ComputedStyles.of(noDistinguishingProperties));
+  const style = Ok.of(
+    ComputedStyles.of([
+      [
+        "background",
+        "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+      ],
+      ...noDistinguishingProperties,
+    ])
+  );
 
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
