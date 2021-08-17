@@ -459,9 +459,6 @@ export namespace ComputedStyles {
   // link is distinguishable, but all longhands are needed for rendering it
   // with the correct style.
   function background(style: Style): string {
-    // This does not try to shorten the result by removing unneeded (=initial)
-    // value, or using single keyword values for `background-repeat`.
-
     // Most properties are layered and need special handling.
     const attachment = style.computed("background-attachment").value.values;
     const clip = style.computed("background-clip").value.values;
@@ -477,22 +474,25 @@ export namespace ComputedStyles {
       array: ReadonlyArray<T>,
       n: number,
       // This should rather grab the initial value from the property itself.
-      initial?: string
+      property?: Property.Name
     ): string {
       // Longhands with missing layers use the same value as their first layer
       const value = `${array?.[n] ?? array[0]}`;
-      return value === initial ? "" : value;
+      return property !== undefined &&
+        value === Property.get(property).initial.toString()
+        ? ""
+        : value;
     }
 
     function getSize(n: number): string {
-      const value = getValue(size, n, "auto auto");
+      const value = getValue(size, n, "background-size");
 
       return value === "" ? "" : " / " + value;
     }
 
     function getPosition(n: number): string {
-      const posX = getValue(positionX, n, "0px");
-      const posY = getValue(positionY, n, "0px");
+      const posX = getValue(positionX, n, "background-position-x");
+      const posY = getValue(positionY, n, "background-position-y");
 
       // If there is a posY, we need to keep posX anyway
       const value = (
@@ -529,10 +529,10 @@ export namespace ComputedStyles {
 
     function getBoxes(n: number): string {
       const originBox = getValue(origin, n);
-      const clipBox = getValue(clip, n, "border-box");
+      const clipBox = getValue(clip, n, "background-clip");
 
       return originBox === clipBox || clipBox === ""
-        ? originBox === "padding-box"
+        ? originBox === Property.get("background-origin").initial.toString()
           ? ""
           : originBox
         : originBox + " " + clipBox;
@@ -546,7 +546,7 @@ export namespace ComputedStyles {
         : `${imageValue} ${getPosition(n)} ${getRepeat(n)} ${getValue(
             attachment,
             n,
-            "scroll"
+            "background-attachment"
           )} ${getBoxes(n)}`;
     }
 
