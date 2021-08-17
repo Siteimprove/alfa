@@ -4,7 +4,7 @@ import { Result, Err } from "@siteimprove/alfa-result";
 /**
  * @public
  */
-export type Formatter<I = unknown, T = unknown, Q = never, S = never> = (
+export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (
   input: I,
   rules: Iterable<Rule<I, T, Q, S>>,
   outcomes: Iterable<Outcome<I, T, Q, S>>
@@ -14,7 +14,7 @@ export type Formatter<I = unknown, T = unknown, Q = never, S = never> = (
  * @public
  */
 export namespace Formatter {
-  export async function load<I, T = unknown, Q = never, S = never>(
+  export async function load<I, T = unknown, Q = never, S = T>(
     name: string,
     defaultScope: string = "@siteimprove"
   ): Promise<Result<Formatter<I, T, Q, S>, string>> {

@@ -24,7 +24,7 @@ const { flatMap, flatten, reduce } = Iterable;
 /**
  * @public
  */
-export abstract class Rule<I = unknown, T = unknown, Q = never, S = never>
+export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   implements
     Equatable,
     json.Serializable<Rule.JSON>,
