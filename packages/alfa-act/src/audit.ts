@@ -15,8 +15,8 @@ import { Rule } from "./rule";
 /**
  * @public
  */
-export class Audit<I, T = unknown, Q = never, S = never> {
-  public static of<I, T = unknown, Q = never, S = never>(
+export class Audit<I, T = unknown, Q = never, S = T> {
+  public static of<I, T = unknown, Q = never, S = T>(
     input: I,
     rules: Iterable<Rule<I, T, Q, S>>,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None)

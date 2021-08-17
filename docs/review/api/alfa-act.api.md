@@ -23,11 +23,11 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Audit<I, T = unknown, Q = never, S = never> {
+export class Audit<I, T = unknown, Q = never, S = T> {
     // (undocumented)
     evaluate(performance?: Performance<Audit.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
-    static of<I, T = unknown, Q = never, S = never>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
+    static of<I, T = unknown, Q = never, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 }
 
 // @public (undocumented)
@@ -124,7 +124,7 @@ export type Oracle<I, T, Q, S> = <A>(rule: Rule<I, T, Q, S>, question: {
 }[keyof Q]) => Future<Option<A>>;
 
 // @public (undocumented)
-export abstract class Outcome<I, T, Q = never, S = never> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
+export abstract class Outcome<I, T, Q = never, S = T> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
     protected constructor(rule: Rule<I, T, Q, S>);
     // (undocumented)
     abstract equals<I, T, Q, S>(value: Outcome<I, T, Q, S>): boolean;
@@ -147,7 +147,7 @@ export abstract class Outcome<I, T, Q = never, S = never> implements Equatable, 
 // @public (undocumented)
 export namespace Outcome {
     // (undocumented)
-    export type Applicable<I, T, Q = unknown, S = never> = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
+    export type Applicable<I, T, Q = unknown, S = T> = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
     // (undocumented)
     export namespace Applicable {
         // (undocumented)
@@ -156,7 +156,7 @@ export namespace Outcome {
         export function isApplicable<I, T, Q, S>(value: unknown): value is Applicable<I, T, Q, S>;
     }
     // (undocumented)
-    export class CantTell<I, T, Q = never, S = never> extends Outcome<I, T, Q, S> {
+    export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
         // (undocumented)
         equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
         // (undocumented)
@@ -212,7 +212,7 @@ export namespace Outcome {
         };
     }
     // (undocumented)
-    export class Failed<I, T, Q = never, S = never> extends Outcome<I, T, Q, S> {
+    export class Failed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
         // (undocumented)
         equals<I, T, Q, S>(value: Failed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -275,7 +275,7 @@ export namespace Outcome {
     cantTell: typeof CantTell.of, // (undocumented)
     isCantTell: typeof CantTell.isCantTell;
     // (undocumented)
-    export class Inapplicable<I, T, Q = unknown, S = never> extends Outcome<I, T, Q, S> {
+    export class Inapplicable<I, T, Q = unknown, S = T> extends Outcome<I, T, Q, S> {
         // (undocumented)
         equals<I, T, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
         // (undocumented)
@@ -325,7 +325,7 @@ export namespace Outcome {
         rule: Rule.JSON;
     }
     // (undocumented)
-    export class Passed<I, T, Q = never, S = never> extends Outcome<I, T, Q, S> {
+    export class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
         // (undocumented)
         equals<I, T, Q, S>(value: Passed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -384,7 +384,7 @@ export namespace Outcome {
 
 // @public (undocumented)
 export class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> {
-    protected constructor(uri: string, type: Q, subject: S, context: C, message: string, quester: Mapper<A, T>);
+    protected constructor(type: Q, uri: string, message: string, subject: S, context: C, quester: Mapper<A, T>);
     // (undocumented)
     answer(answer: A): T;
     // (undocumented)
@@ -400,7 +400,7 @@ export class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, 
     // (undocumented)
     get message(): string;
     // (undocumented)
-    static of<Q, S, C, A>(uri: string, type: Q, subject: S, context: C, message: string): Question<Q, S, C, A>;
+    static of<Q, S, C, A>(type: Q, uri: string, message: string, subject: S, context: C): Question<Q, S, C, A>;
     // (undocumented)
     get subject(): S;
     // (undocumented)
@@ -472,14 +472,14 @@ export namespace Requirement {
 }
 
 // @public (undocumented)
-export abstract class Rule<I = unknown, T = unknown, Q = never, S = never> implements Equatable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
+export abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implements Equatable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
     protected constructor(uri: string, requirements: Array<Requirement>, tags: Array<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
     // (undocumented)
     equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable_2<Outcome<I, T, Q>>>;
+    evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
     // (undocumented)
@@ -505,9 +505,9 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = never> imple
 // @public (undocumented)
 export namespace Rule {
     // (undocumented)
-    export class Atomic<I = unknown, T = unknown, Q = never, S = never> extends Rule<I, T, Q, S> {
+    export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<I, T, Q, S> {
         // (undocumented)
-        static of<I, T = unknown, Q = never, S = never>(properties: {
+        static of<I, T = unknown, Q = never, S = T>(properties: {
             uri: string;
             requirements?: Iterable_2<Requirement>;
             tags?: Iterable_2<Tag>;
@@ -535,11 +535,11 @@ export namespace Rule {
         }
     }
     // (undocumented)
-    export class Composite<I = unknown, T = unknown, Q = never, S = never> extends Rule<I, T, Q, S> {
+    export class Composite<I = unknown, T = unknown, Q = never, S = T> extends Rule<I, T, Q, S> {
         // (undocumented)
         get composes(): ReadonlyArray<Rule<I, T, Q, S>>;
         // (undocumented)
-        static of<I, T = unknown, Q = never, S = never>(properties: {
+        static of<I, T = unknown, Q = never, S = T>(properties: {
             uri: string;
             requirements?: Iterable_2<Requirement>;
             tags?: Iterable_2<Tag>;
@@ -555,7 +555,7 @@ export namespace Rule {
         export interface Evaluate<I, T, Q, S> {
             // (undocumented)
             (input: Readonly<I>): {
-                expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q>>): {
+                expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
                     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
                 };
             };

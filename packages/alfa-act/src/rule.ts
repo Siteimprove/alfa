@@ -64,7 +64,7 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     input: Readonly<I>,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty()
-  ): Future<Iterable<Outcome<I, T, Q>>> {
+  ): Future<Iterable<Outcome<I, T, Q, S>>> {
     return this._evaluate(input, oracle, outcomes);
   }
 
@@ -355,7 +355,7 @@ export namespace Rule {
 
     export interface Evaluate<I, T, Q, S> {
       (input: Readonly<I>): {
-        expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q>>): {
+        expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
       };

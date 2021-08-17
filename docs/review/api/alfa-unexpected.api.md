@@ -14,9 +14,8 @@ import * as unexpected from 'unexpected';
 // @public (undocumented)
 export namespace Unexpected {
     // (undocumented)
-    export function createPlugin<I, J, T = unknown, Q = never>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q>>, handlers?: Iterable<Handler<J, T, Q>>, options?: Asserter.Options): unexpected.PluginDefinition;
+    export function createPlugin<I, J, T = unknown, Q = never, S = T>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q, S>>, handlers?: Iterable<Handler<J, T, Q, S>>, options?: Asserter.Options<J, T, Q, S>): unexpected.PluginDefinition;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

@@ -15,7 +15,7 @@ import { Rule } from "./rule";
 /**
  * @public
  */
-export abstract class Outcome<I, T, Q = never, S = never>
+export abstract class Outcome<I, T, Q = never, S = T>
   implements
     Equatable,
     json.Serializable<Outcome.JSON>,
@@ -74,7 +74,7 @@ export namespace Outcome {
     };
   }
 
-  export class Passed<I, T, Q = never, S = never> extends Outcome<I, T, Q, S> {
+  export class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -226,7 +226,7 @@ export namespace Outcome {
 
   export const { of: passed, isPassed } = Passed;
 
-  export class Failed<I, T, Q = never, S = never> extends Outcome<I, T, Q, S> {
+  export class Failed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -381,12 +381,7 @@ export namespace Outcome {
 
   export const { of: failed, isFailed } = Failed;
 
-  export class CantTell<I, T, Q = never, S = never> extends Outcome<
-    I,
-    T,
-    Q,
-    S
-  > {
+  export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T
@@ -501,7 +496,7 @@ export namespace Outcome {
 
   export const { of: cantTell, isCantTell } = CantTell;
 
-  export type Applicable<I, T, Q = unknown, S = never> =
+  export type Applicable<I, T, Q = unknown, S = T> =
     | Passed<I, T, Q, S>
     | Failed<I, T, Q, S>
     | CantTell<I, T, Q, S>;
@@ -524,7 +519,7 @@ export namespace Outcome {
 
   export const { isApplicable } = Applicable;
 
-  export class Inapplicable<I, T, Q = unknown, S = never> extends Outcome<
+  export class Inapplicable<I, T, Q = unknown, S = T> extends Outcome<
     I,
     T,
     Q,
