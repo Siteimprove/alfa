@@ -18,7 +18,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { or, nor } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r48",
   requirements: [Technique.of("G60")],
   evaluate({ document }) {
@@ -41,12 +41,11 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
           )
           .map((element) => {
             const isAboveDurationThreshold = Question.of(
-              "is-above-duration-threshold",
               "boolean",
-              element,
-              element,
+              "is-above-duration-threshold",
               `Does the \`<${element.name}>\` element have a duration of more
-              than 3 seconds?`
+              than 3 seconds?`,
+              element
             ).map((isAboveDurationThreshold) =>
               isAboveDurationThreshold ? Option.of(element) : None
             );
@@ -55,11 +54,10 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
               return isAboveDurationThreshold;
             } else {
               return Question.of(
-                "has-audio",
                 "boolean",
-                element,
-                element,
-                `Does the \`<${element.name}>\` element contain audio?`
+                "has-audio",
+                `Does the \`<${element.name}>\` element contain audio?`,
+                element
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -68,12 +66,11 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "is-below-audio-duration-threshold",
             "boolean",
-            target,
-            target,
+            "is-below-audio-duration-threshold",
             `Does the \`<${target.name}>\` element have a total audio duration
-            of less than 3 seconds?`
+            of less than 3 seconds?`,
+            target
           ).map((isBelowAudioDurationThreshold) =>
             expectation(
               isBelowAudioDurationThreshold,

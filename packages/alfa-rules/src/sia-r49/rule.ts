@@ -20,7 +20,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { or, nor } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
   requirements: [Technique.of("G170")],
   evaluate({ document, device }) {
@@ -43,12 +43,11 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
           )
           .map((element) => {
             const isAboveDurationThreshold = Question.of(
-              "is-above-duration-threshold",
               "boolean",
-              element,
-              element,
+              "is-above-duration-threshold",
               `Does the \`<${element.name}>\` element have a duration of more
-              than 3 seconds?`
+              than 3 seconds?`,
+              element
             ).map((isAboveDurationThreshold) =>
               isAboveDurationThreshold ? Option.of(element) : None
             );
@@ -57,11 +56,10 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
               return isAboveDurationThreshold;
             } else {
               return Question.of(
-                "has-audio",
                 "boolean",
-                element,
-                element,
-                `Does the \`<${element.name}>\` element contain audio?`
+                "has-audio",
+                `Does the \`<${element.name}>\` element contain audio?`,
+                element
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -70,12 +68,11 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "audio-control-mechanism",
             "node",
-            target,
-            target,
+            "audio-control-mechanism",
             `Where is the mechanism that can pause or stop the audio of the
-            \`<${target.name}>\` element?`
+            \`<${target.name}>\` element?`,
+            target
           ).map((mechanism) =>
             expectation(
               mechanism.isSome(),

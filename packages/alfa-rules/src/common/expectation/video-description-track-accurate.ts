@@ -9,13 +9,12 @@ import { expectation } from "../expectation";
 export function videoDescriptionTrackAccurate(target: Element) {
   return {
     1: Question.of(
-      "track-describes-video",
       "boolean",
-      target,
-      target,
+      "track-describes-video",
       `Does at least 1 track describe the visual information of the \`<video>\`
       element, either in the language of the \`<video>\` element or the language
-      of the page?`
+      of the page?`,
+      target
     ).map((trackDescribesVideo) =>
       expectation(
         trackDescribesVideo,

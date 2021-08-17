@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 
 import { Question } from "../common/question";
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r32",
   requirements: [Technique.of("G166")],
   evaluate({ device, document }) {
@@ -22,12 +22,11 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "has-audio-track",
             "boolean",
-            target,
-            target,
+            "has-audio-track",
             `Does the \`<video>\` element have an audio track that describes its
-            visual information?`
+            visual information?`,
+            target
           ).map((hasAudioTrack) =>
             expectation(
               hasAudioTrack,

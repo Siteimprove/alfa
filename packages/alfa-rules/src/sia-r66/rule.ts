@@ -31,7 +31,7 @@ const { max } = Math;
 const { isElement } = Element;
 const { isText } = Text;
 
-export default Rule.Atomic.of<Page, Text, Question, Text>({
+export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r66",
   requirements: [Criterion.of("1.4.6")],
   evaluate({ device, document }) {
@@ -70,19 +70,17 @@ export default Rule.Atomic.of<Page, Text, Question, Text>({
 
       expectations(target) {
         const foregrounds = Question.of(
-          "foreground-colors",
           "color[]",
-          target,
-          target,
-          "What are the foreground colors of the text node?"
+          "foreground-colors",
+          "What are the foreground colors of the text node?",
+          target
         );
 
         const backgrounds = Question.of(
-          "background-colors",
           "color[]",
-          target,
-          target,
-          "What are the background colors of the text node?"
+          "background-colors",
+          "What are the background colors of the text node?",
+          target
         );
 
         const result = foregrounds.map((foregrounds) =>

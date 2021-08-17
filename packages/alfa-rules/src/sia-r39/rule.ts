@@ -15,7 +15,7 @@ import { Question } from "../common/question";
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r39",
   requirements: [
     Criterion.of("1.1.1"),
@@ -53,12 +53,11 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "name-describes-purpose",
             "boolean",
-            target,
-            target,
+            "name-describes-purpose",
             `Does the accessible name of the \`<${target.name}>\` element
-            describe its purpose?`
+            describe its purpose?`,
+            target
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,

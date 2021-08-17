@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 
 import { Question } from "../common/question";
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r33",
   requirements: [Technique.of("G159")],
   evaluate: ({ device, document }) => {
@@ -22,22 +22,20 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "transcript",
             "node",
-            target,
-            target,
-            `Where is the transcript of the \`<video>\` element?`
+            "transcript",
+            `Where is the transcript of the \`<video>\` element?`,
+            target
           ).map((transcript) =>
             expectation(
               transcript.isSome(),
               () => Outcomes.HasTranscript,
               () =>
                 Question.of(
-                  "transcript-link",
                   "node",
-                  target,
-                  target,
-                  `Where is the link pointing to the transcript of the \`<video>\` element?`
+                  "transcript-link",
+                  `Where is the link pointing to the transcript of the \`<video>\` element?`,
+                  target
                 ).map((transcriptLink) =>
                   expectation(
                     transcriptLink.isSome(),

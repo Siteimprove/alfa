@@ -22,7 +22,7 @@ import { Question } from "../common/question";
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question, Group<Element>>({
+export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r41",
   requirements: [Criterion.of("2.4.9")],
   evaluate({ device, document, response }) {
@@ -69,11 +69,10 @@ export default Rule.Atomic.of<Page, Group<Element>, Question, Group<Element>>({
             () => Outcomes.ResolveSameResource,
             () =>
               Question.of(
-                "reference-equivalent-resources",
                 "boolean",
-                target,
-                target,
-                `Do the links resolve to equivalent resources?`
+                "reference-equivalent-resources",
+                `Do the links resolve to equivalent resources?`,
+                target
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

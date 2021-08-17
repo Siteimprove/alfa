@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 
 import { Question } from "../common/question";
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r22",
   requirements: [Technique.of("G87"), Technique.of("G93"), Technique.of("H95")],
   evaluate({ device, document }) {
@@ -22,11 +22,10 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "has-captions",
             "boolean",
-            target,
-            target,
-            `Does the \`<video>\` element have captions?`
+            "has-captions",
+            `Does the \`<video>\` element have captions?`,
+            target
           ).map((hasCaptions) =>
             expectation(
               hasCaptions,

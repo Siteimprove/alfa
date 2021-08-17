@@ -8,7 +8,7 @@ import { audioTextAlternative } from "../common/expectation/media-text-alternati
 
 import { Question } from "../common/question";
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r29",
   evaluate({ device, document }) {
     return {

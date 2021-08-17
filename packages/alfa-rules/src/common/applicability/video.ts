@@ -58,11 +58,10 @@ export function video(
     )
     .map((element) =>
       Question.of(
-        "is-video-streaming",
         "boolean",
-        element,
-        element,
-        `Is the \`<video>\` element streaming?`
+        "is-video-streaming",
+        `Is the \`<video>\` element streaming?`,
+        element
       ).map((isStreaming) => {
         if (isStreaming) {
           return None;
@@ -70,11 +69,10 @@ export function video(
 
         if (audio !== undefined) {
           return Question.of(
-            "has-audio",
             "boolean",
-            element,
-            element,
-            `Does the \`<video>\` element have audio?`
+            "has-audio",
+            `Does the \`<video>\` element have audio?`,
+            element
           ).map((hasAudio) =>
             audio.has === hasAudio ? Option.of(element) : None
           );

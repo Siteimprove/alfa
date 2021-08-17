@@ -166,13 +166,13 @@ export namespace Rule {
     >;
   }
 
-  export class Atomic<
-    I = unknown,
-    T = unknown,
-    Q = never,
-    S = never
-  > extends Rule<I, T, Q, S> {
-    public static of<I, T = unknown, Q = never, S = never>(properties: {
+  export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
+    I,
+    T,
+    Q,
+    S
+  > {
+    public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
@@ -262,9 +262,9 @@ export namespace Rule {
     I = unknown,
     T = unknown,
     Q = never,
-    S = never
+    S = T
   > extends Rule<I, T, Q, S> {
-    public static of<I, T = unknown, Q = never, S = never>(properties: {
+    public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;

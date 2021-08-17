@@ -48,11 +48,10 @@ export default Rule.Atomic.of<Page, Element, Question, Node>({
 
       expectations(target) {
         const indicators = Question.of(
-          "error-indicators",
           "node[]",
-          target,
-          target,
-          `Where are the error indicators, if any, for the form field?`
+          "error-indicators",
+          `Where are the error indicators, if any, for the form field?`,
+          target
         ).map((indicators) => [...indicators]);
 
         return {
@@ -146,11 +145,11 @@ function identifiesTarget(
   }
 
   return Question.of(
-    "error-indicator-identifies-form-field",
     "boolean",
+    "error-indicator-identifies-form-field",
+    "Does the error indicator identify, in text, the form field it relates to?",
     indicator,
-    target,
-    "Does the error indicator identify, in text, the form field it relates to?"
+    target
   ).map((isIdentified) => {
     if (isIdentified) {
       if (test(isPerceivable(device), indicator)) {
@@ -177,12 +176,12 @@ function describesResolution(
   }
 
   return Question.of(
-    "error-indicator-describes-resolution",
     "boolean",
-    indicator,
-    target,
+    "error-indicator-describes-resolution",
     `Does the error indicator describe, in text, the cause of the error or how
-    to resolve it?`
+    to resolve it?`,
+    indicator,
+    target
   ).map((isDescribed) => {
     if (isDescribed) {
       if (test(isPerceivable(device), indicator)) {

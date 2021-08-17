@@ -15,7 +15,7 @@ import { Question } from "../common/question";
 
 const { and } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question, Element>({
+export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r23",
   evaluate({ document, device }) {
     return {
@@ -26,20 +26,18 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
       expectations(target) {
         return {
           1: Question.of(
-            "transcript",
             "node",
-            target,
-            target,
-            `Where is the transcript of the \`<audio>\` element?`
+            "transcript",
+            `Where is the transcript of the \`<audio>\` element?`,
+            target
           ).map((transcript) => {
             if (transcript.isNone()) {
               return Question.of(
-                "transcript-link",
                 "node",
-                target,
-                target,
+                "transcript-link",
                 `Where is the link pointing to the transcript of the \`<audio>\`
-                element?`
+                element?`,
+                target
               ).map((transcriptLink) => {
                 if (transcriptLink.isNone()) {
                   return Option.of(Outcomes.HasNoTranscript);
@@ -54,11 +52,10 @@ export default Rule.Atomic.of<Page, Element, Question, Element>({
                 }
 
                 return Question.of(
-                  "transcript-perceivable",
                   "boolean",
-                  target,
-                  target,
-                  `Is the transcript of the \`<audio>\` element perceivable?`
+                  "transcript-perceivable",
+                  `Is the transcript of the \`<audio>\` element perceivable?`,
+                  target
                 ).map((isPerceivable) =>
                   expectation(
                     isPerceivable,
