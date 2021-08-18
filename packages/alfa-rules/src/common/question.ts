@@ -20,11 +20,27 @@ export interface Question {
  */
 export namespace Question {
   export function of<Q extends keyof Question, S>(
-    uri: string,
     type: Q,
+    uri: string,
+    message: string,
+    subject: S
+  ): act.Question<Q, S, S, Question[Q]>;
+
+  export function of<Q extends keyof Question, S, C>(
+    type: Q,
+    uri: string,
+    message: string,
     subject: S,
-    message: string
-  ): act.Question<Q, S, Question[Q]> {
-    return act.Question.of(uri, type, subject, message);
+    context: C
+  ): act.Question<Q, S, C, Question[Q]>;
+
+  export function of<Q extends keyof Question, S>(
+    type: Q,
+    uri: string,
+    message: string,
+    subject: S,
+    context: S = subject
+  ): act.Question<Q, S, S, Question[Q]> {
+    return act.Question.of(type, uri, message, subject, context);
   }
 }

@@ -13,8 +13,8 @@ import { Question } from "../question";
 import { Diagnostic } from "@siteimprove/alfa-act";
 
 function mediaTextAlternative(
-  alt: act.Question<"node", Element, Option<Node>>,
-  label: act.Question<"node", Element, Option<Node>>,
+  alt: act.Question<"node", Element, Element, Option<Node>>,
+  label: act.Question<"node", Element, Element, Option<Node>>,
   device: Device,
   kind: "<audio>" | "<video>"
 ) {
@@ -49,17 +49,17 @@ function mediaTextAlternative(
 // keeping the next two functions separate because question should be split in two at some point.
 export function audioTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
-    "text-alternative",
     "node",
-    target,
-    `Where is the text alternative of the \`<audio>\` element?`
+    "text-alternative",
+    `Where is the text alternative of the \`<audio>\` element?`,
+    target
   );
 
   const label = Question.of(
-    "label",
     "node",
-    target,
-    `Where is the text that labels the \`<audio>\` element as a video alternative?`
+    "label",
+    `Where is the text that labels the \`<audio>\` element as a video alternative?`,
+    target
   );
 
   return mediaTextAlternative(alt, label, device, "<video>");
@@ -67,17 +67,17 @@ export function audioTextAlternative(target: Element, device: Device) {
 
 export function videoTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
-    "text-alternative",
     "node",
-    target,
-    `Where is the text alternative of the \`<video>\` element?`
+    "text-alternative",
+    `Where is the text alternative of the \`<video>\` element?`,
+    target
   );
 
   const label = Question.of(
-    "label",
     "node",
-    target,
-    `Where is the text that labels the \`<video>\` element as a video alternative?`
+    "label",
+    `Where is the text that labels the \`<video>\` element as a video alternative?`,
+    target
   );
 
   return mediaTextAlternative(alt, label, device, "<video>");

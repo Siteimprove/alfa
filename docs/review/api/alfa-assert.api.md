@@ -5,34 +5,34 @@
 ```ts
 
 import { Future } from '@siteimprove/alfa-future';
-import { Mapper } from '@siteimprove/alfa-mapper';
 import { Outcome } from '@siteimprove/alfa-act';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
-export class Asserter<I, T, Q> {
+export class Asserter<I, T, Q, S> {
     // (undocumented)
-    get expect(): Mapper<I, Assertion<I, T, Q>>;
+    readonly expect: (input: I, options?: Assertion.Options<I, T, Q, S>) => Assertion<I, T, Q, S>;
     // (undocumented)
-    static of<I, T, Q>(rules: Iterable<Rule<I, T, Q>>, handlers?: Iterable<Handler<I, T, Q>>, options?: Asserter.Options): Asserter<I, T, Q>;
-    }
+    static of<I, T, Q, S>(rules: Iterable<Rule<I, T, Q, S>>, handlers?: Iterable<Handler<I, T, Q, S>>, options?: Asserter.Options<I, T, Q, S>): Asserter<I, T, Q, S>;
+}
 
 // @public (undocumented)
 export namespace Asserter {
     // (undocumented)
-    export interface Options extends Assertion.Options {
+    export interface Options<I, T, Q, S> extends Assertion.Options<I, T, Q, S> {
     }
 }
 
 // @public (undocumented)
-export class Assertion<I, T, Q> {
+export class Assertion<I, T, Q, S> {
     // (undocumented)
     accessible(): Future<Result<string>>;
     // (undocumented)
     get be(): this;
     // (undocumented)
-    static of<I, T, Q>(input: I, rules: Iterable<Rule<I, T, Q>>, handlers?: Iterable<Handler<I, T, Q>>, options?: Assertion.Options): Assertion<I, T, Q>;
+    static of<I, T, Q, S>(input: I, rules: Iterable<Rule<I, T, Q, S>>, handlers?: Iterable<Handler<I, T, Q, S>>, options?: Assertion.Options<I, T, Q, S>): Assertion<I, T, Q, S>;
     // (undocumented)
     get to(): this;
 }
@@ -40,16 +40,16 @@ export class Assertion<I, T, Q> {
 // @public (undocumented)
 export namespace Assertion {
     // (undocumented)
-    export interface Options {
+    export interface Options<I, T, Q, S> {
+        readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
     }
 }
 
 // @public (undocumented)
-export interface Handler<I, T, Q> {
+export interface Handler<I, T, Q, S> {
     // (undocumented)
-    (input: I, rules: Iterable<Rule<I, T, Q>>, outcomes: Iterable<Outcome<I, T, Q>>, message: string): Future.Maybe<string>;
+    (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>, message: string): Future.Maybe<string>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
