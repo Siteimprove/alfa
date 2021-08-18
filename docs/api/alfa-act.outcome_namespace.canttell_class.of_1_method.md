@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T, Q>(rule: Rule<I, T, Q>, target: T): CantTell<I, T, Q>;
+static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T): CantTell<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  target | T |  |
 
 <b>Returns:</b>
 
-[CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q&gt;
+[CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q>;
+function isRule<I, T, Q, S>(value: unknown): value is Rule<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q>;
 
 <b>Returns:</b>
 
-value is [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

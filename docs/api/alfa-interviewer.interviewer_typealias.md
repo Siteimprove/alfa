@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Interviewer<I = unknown, T = unknown, Q = never> = (input: I, rules: Iterable<Rule<I, T, Q>>) => Oracle<I, T, Q>;
+export declare type Interviewer<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>) => Oracle<I, T, Q, S>;
 ```
 <b>References:</b> [Rule](./alfa-act.rule_class.md)<!-- -->, [Oracle](./alfa-act.oracle_typealias.md)
 

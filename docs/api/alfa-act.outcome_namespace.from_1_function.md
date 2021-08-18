@@ -7,20 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-function from<I, T, Q>(rule: Rule<I, T, Q>, target: T, expectations: Record<{
+function from<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
         [key: string]: Option<Result<Diagnostic>>;
-    }>): Outcome.Applicable<I, T, Q>;
+    }>): Outcome.Applicable<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  target | T |  |
 |  expectations | Record&lt;{ \[key: string\]: [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic_class.md)<!-- -->&gt;&gt;; }&gt; |  |
 
 <b>Returns:</b>
 
-[Outcome.Applicable](./alfa-act.outcome_namespace.applicable_typealias.md)<!-- -->&lt;I, T, Q&gt;
+[Outcome.Applicable](./alfa-act.outcome_namespace.applicable_typealias.md)<!-- -->&lt;I, T, Q, S&gt;
 

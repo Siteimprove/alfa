@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-flatten<Q, S, A, T>(this: Question<Q, S, A, Question<Q, S, A, T>>): Question<Q, S, A, T>;
+flatten<Q, S, C, A, T>(this: Question<Q, S, C, A, Question<Q, S, C, A, T>>): Question<Q, S, C, A, T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, A, [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, A, T&gt;&gt; |  |
+|  this | [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, T&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, A, T&gt;
+[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, T&gt;
 

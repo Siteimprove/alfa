@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q>;
+function isAtomic<I, T, Q, S>(value: unknown): value is Atomic<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q>;
 
 <b>Returns:</b>
 
-value is [Atomic](./alfa-act.rule_namespace.atomic_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Atomic](./alfa-act.rule_namespace.atomic_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

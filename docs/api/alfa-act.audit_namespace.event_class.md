@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-class Event<I, T, Q> implements Serializable<Event.JSON> 
+class Event<I, T, Q, S> implements Serializable<Event.JSON> 
 ```
 <b>Implements:</b> [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Event.JSON](./alfa-act.audit_namespace.event_namespace.json_interface.md)<!-- -->&gt;
 
@@ -16,7 +16,7 @@ class Event<I, T, Q> implements Serializable<Event.JSON>
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [name](./alfa-act.audit_namespace.event_class.name_property.md) |  | [Event.Name](./alfa-act.audit_namespace.event_namespace.name_typealias.md) |  |
-|  [rule](./alfa-act.audit_namespace.event_class.rule_property.md) |  | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  [rule](./alfa-act.audit_namespace.event_class.rule_property.md) |  | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 ## Methods
 

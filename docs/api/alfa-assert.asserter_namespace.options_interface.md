@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface Options extends Assertion.Options 
+interface Options<I, T, Q, S> extends Assertion.Options<I, T, Q, S> 
 ```
-<b>Extends:</b> [Assertion.Options](./alfa-assert.assertion_namespace.options_interface.md)
+<b>Extends:</b> [Assertion.Options](./alfa-assert.assertion_namespace.options_interface.md)<!-- -->&lt;I, T, Q, S&gt;
 

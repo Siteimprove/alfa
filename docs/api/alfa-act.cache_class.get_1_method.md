@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-get<I, T, Q>(rule: Rule<I, T, Q>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q>>>>): Future<Iterable<Outcome<I, T, Q>>>;
+get<I, T, Q, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
-|  ifMissing | [Thunk](./alfa-thunk.thunk_typealias.md)<!-- -->&lt;[Future](./alfa-future.future_class.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt;&gt;&gt;&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  ifMissing | [Thunk](./alfa-thunk.thunk_typealias.md)<!-- -->&lt;[Future](./alfa-future.future_class.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt;&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Future](./alfa-future.future_class.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt;&gt;&gt;
+[Future](./alfa-future.future_class.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt;&gt;
 

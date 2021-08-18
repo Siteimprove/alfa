@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class Rule<I = unknown, T = unknown, Q = never> implements Equatable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> 
+export declare abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implements Equatable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> 
 ```
 <b>Implements:</b> [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, json.[Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Rule.JSON](./alfa-act.rule_namespace.json_interface.md)<!-- -->&gt;, earl.[Serializable](./alfa-earl.serializable_interface.md)<!-- -->&lt;[Rule.EARL](./alfa-act.rule_namespace.earl_interface.md)<!-- -->&gt;, sarif.[Serializable](./alfa-sarif.serializable_interface.md)<!-- -->&lt;sarif.ReportingDescriptor&gt;
 
@@ -22,7 +22,7 @@ export declare abstract class Rule<I = unknown, T = unknown, Q = never> implemen
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [\_evaluate](./alfa-act.rule_class._evaluate_property.md) |  | [Rule.Evaluate](./alfa-act.rule_namespace.evaluate_interface.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  [\_evaluate](./alfa-act.rule_class._evaluate_property.md) |  | [Rule.Evaluate](./alfa-act.rule_namespace.evaluate_interface.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  [\_requirements](./alfa-act.rule_class._requirements_property.md) |  | Array&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt; |  |
 |  [\_tags](./alfa-act.rule_class._tags_property.md) |  | Array&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt; |  |
 |  [\_uri](./alfa-act.rule_class._uri_property.md) |  | string |  |

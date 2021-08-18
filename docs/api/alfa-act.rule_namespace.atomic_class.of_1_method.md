@@ -7,21 +7,21 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T = unknown, Q = never>(properties: {
+static of<I, T = unknown, Q = never, S = T>(properties: {
             uri: string;
             requirements?: Iterable<Requirement>;
             tags?: Iterable<Tag>;
-            evaluate: Atomic.Evaluate<I, T, Q>;
-        }): Atomic<I, T, Q>;
+            evaluate: Atomic.Evaluate<I, T, Q, S>;
+        }): Atomic<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt;; evaluate: [Atomic.Evaluate](./alfa-act.rule_namespace.atomic_namespace.evaluate_interface.md)<!-- -->&lt;I, T, Q&gt;; } |  |
+|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt;; evaluate: [Atomic.Evaluate](./alfa-act.rule_namespace.atomic_namespace.evaluate_interface.md)<!-- -->&lt;I, T, Q, S&gt;; } |  |
 
 <b>Returns:</b>
 
-[Atomic](./alfa-act.rule_namespace.atomic_class.md)<!-- -->&lt;I, T, Q&gt;
+[Atomic](./alfa-act.rule_namespace.atomic_class.md)<!-- -->&lt;I, T, Q, S&gt;
 
