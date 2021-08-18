@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function createPlugin<I, J, T = unknown, Q = never>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q>>, handlers?: Iterable<Handler<J, T, Q>>, options?: Asserter.Options): globalThis.Chai.ChaiPlugin;
+function createPlugin<I, J, T = unknown, Q = never, S = T>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q, S>>, handlers?: Iterable<Handler<J, T, Q, S>>, options?: Asserter.Options<J, T, Q, S>): globalThis.Chai.ChaiPlugin;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ function createPlugin<I, J, T = unknown, Q = never>(transform: Mapper<I, Future.
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  transform | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;I, [Future.Maybe](./alfa-future.future_namespace.maybe_typealias.md)<!-- -->&lt;J&gt;&gt; |  |
-|  rules | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;J, T, Q&gt;&gt; |  |
-|  handlers | Iterable&lt;[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;J, T, Q&gt;&gt; |  |
-|  options | [Asserter.Options](./alfa-assert.asserter_namespace.options_interface.md) |  |
+|  rules | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;J, T, Q, S&gt;&gt; |  |
+|  handlers | Iterable&lt;[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;J, T, Q, S&gt;&gt; |  |
+|  options | [Asserter.Options](./alfa-assert.asserter_namespace.options_interface.md)<!-- -->&lt;J, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

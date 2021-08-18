@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get rule(): Rule<I, T, Q>;
+get rule(): Rule<I, T, Q, S>;
 ```

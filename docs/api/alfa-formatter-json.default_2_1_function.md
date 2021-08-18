@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export default function <I, T, Q>(): Formatter<I, T, Q>;
+export default function <I, T, Q, S>(): Formatter<I, T, Q, S>;
 ```
 <b>Returns:</b>
 
-[Formatter](./alfa-formatter.formatter_typealias.md)<!-- -->&lt;I, T, Q&gt;
+[Formatter](./alfa-formatter.formatter_typealias.md)<!-- -->&lt;I, T, Q, S&gt;
 

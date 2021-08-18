@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Handler<I, T, Q> 
+export interface Handler<I, T, Q, S> 
 ```

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isCantTell<I, T, Q>(value: Outcome<I, T, Q>): value is CantTell<I, T, Q>;
+function isCantTell<I, T, Q, S>(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-value is [CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

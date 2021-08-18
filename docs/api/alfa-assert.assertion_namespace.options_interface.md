@@ -7,5 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-interface Options 
+interface Options<I, T, Q, S> 
 ```
+
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [filter?](./alfa-assert.assertion_namespace.options_interface.filter_propertysignature.md) | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;[Outcome.Failed](./alfa-act.outcome_namespace.failed_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> Predicate for filtering out outcomes that should not count towards an assertion failure. |
+

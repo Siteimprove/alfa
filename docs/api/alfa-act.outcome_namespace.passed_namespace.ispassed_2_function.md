@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isPassed<I, T, Q>(value: unknown): value is Passed<I, T, Q>;
+function isPassed<I, T, Q, S>(value: unknown): value is Passed<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isPassed<I, T, Q>(value: unknown): value is Passed<I, T, Q>;
 
 <b>Returns:</b>
 
-value is [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

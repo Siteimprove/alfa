@@ -7,13 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON<Q, S> 
+interface JSON<Q, S, C> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [context](./alfa-act.question_namespace.json_interface.context_propertysignature.md) | [Serializable.ToJSON](./alfa-json.serializable_namespace.tojson_typealias.md)<!-- -->&lt;C&gt; |  |
 |  [message](./alfa-act.question_namespace.json_interface.message_propertysignature.md) | string |  |
 |  [subject](./alfa-act.question_namespace.json_interface.subject_propertysignature.md) | [Serializable.ToJSON](./alfa-json.serializable_namespace.tojson_typealias.md)<!-- -->&lt;S&gt; |  |
 |  [type](./alfa-act.question_namespace.json_interface.type_propertysignature.md) | [Serializable.ToJSON](./alfa-json.serializable_namespace.tojson_typealias.md)<!-- -->&lt;Q&gt; |  |

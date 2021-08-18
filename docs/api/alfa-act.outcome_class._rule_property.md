@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-protected readonly _rule: Rule<I, T, Q>;
+protected readonly _rule: Rule<I, T, Q, S>;
 ```

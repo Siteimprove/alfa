@@ -8,20 +8,21 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Question<Q, S, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S>> 
+export declare class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S&gt;&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S, C&gt;&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(uri, type, subject, message, quester)](./alfa-act.question_class._constructor__1_constructor.md) |  | Constructs a new instance of the <code>Question</code> class |
+|  [(constructor)(type, uri, message, subject, context, quester)](./alfa-act.question_class._constructor__1_constructor.md) |  | Constructs a new instance of the <code>Question</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [context](./alfa-act.question_class.context_property.md) |  | C |  |
 |  [message](./alfa-act.question_class.message_property.md) |  | string |  |
 |  [subject](./alfa-act.question_class.subject_property.md) |  | S |  |
 |  [type](./alfa-act.question_class.type_property.md) |  | Q |  |
@@ -36,6 +37,6 @@ export declare class Question<Q, S, A, T = A> implements Functor<T>, Applicative
 |  [flatMap(mapper)](./alfa-act.question_class.flatmap_1_method.md) |  |  |
 |  [flatten(this)](./alfa-act.question_class.flatten_1_method.md) |  |  |
 |  [map(mapper)](./alfa-act.question_class.map_1_method.md) |  |  |
-|  [of(uri, type, subject, message)](./alfa-act.question_class.of_1_method.md) | <code>static</code> |  |
+|  [of(type, uri, message, subject, context)](./alfa-act.question_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-act.question_class.tojson_1_method.md) |  |  |
 

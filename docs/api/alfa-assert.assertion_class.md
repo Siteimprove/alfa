@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Assertion<I, T, Q> 
+export declare class Assertion<I, T, Q, S> 
 ```
 
 ## Properties
