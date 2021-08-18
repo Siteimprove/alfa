@@ -114,8 +114,9 @@ export namespace Serialise {
 
       // If there is a size, we need to keep a position anyway
       // size does contain a leading space.
+      // value hasn't been trimmed and contains one space if empty.
       const size = getSize(n);
-      return size === "" ? value : (value === "" ? "0px 0px" : value) + size;
+      return size === "" ? value : (value === " " ? "0px 0px" : value) + size;
     }
 
     function getRepeat(n: number): string {
@@ -142,13 +143,19 @@ export namespace Serialise {
 
     function getBoxes(n: number): string {
       const originBox = getValue(origin, n);
-      const clipBox = getValue(clip, n, "background-clip");
+      const clipBox = getValue(clip, n);
 
-      return originBox === clipBox || clipBox === ""
-        ? originBox === Property.get("background-origin").initial.toString()
-          ? ""
-          : originBox
-        : originBox + " " + clipBox;
+      return originBox === clipBox
+        ? // Since they have different initial value, they can't be both at their
+          // initial value and therefore we need to output something
+          originBox
+        : originBox === Property.get("background-origin").initial.toString() &&
+          clipBox === Property.get("background-clip").initial.toString()
+        ? // They are both at their initial value and nothing is needed
+          ""
+        : // They are different and at least one is not initial, hence needed;
+          // we can't skip one without the remaining value leaking to both.
+          originBox + " " + clipBox;
     }
 
     function getLayer(n: number): string {
