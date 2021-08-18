@@ -21,14 +21,16 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/expectation";
-
 import {
   hasBorder,
+  hasComputedStyle,
   hasOutline,
   hasRole,
   hasTextDecoration,
   isVisible,
 } from "../common/predicate";
+
+import { Serialise } from "./serialise";
 
 const { isElement } = Element;
 const { isText } = Text;
@@ -286,27 +288,59 @@ function hasDistinguishableTextDecoration(
  * element.
  *
  * @remarks
- * This predicate currently only considers `background-color` as a possibly
- * distinguishable background. Other `background-*` properties, such as
- * `background-image`, should ideally also be considered, but `background-color`
- * is the only property that contains just a single layer while something like
- * `background-image` can contain multiple layers. It's therefore not trivial
- * to handle.
+ * This predicate currently only considers `background-color` and
+ * `background-image` as a possibly distinguishable background. Other
+ * `background-*` properties should ideally also be considered.
+ *
+ * Additionally, this predicate do not handle transparency in the topmost layer.
+ * The exact same (partly transparent) `background-color` or `background-image`
+ * could be on top of a different (opaque) background and thus creates a
+ * difference. However, in these cases the (lower layer) distinguishing
+ * background would be on an ancestor of the link but of no non-link text (in
+ * order to be distinguishing), so should be found when looking at the ancestors
+ * of the link.
+ *
+ * Lastly, this does not account for absolutely positioned backgrounds from
+ * random nodes in the DOM. Using these to push an image below links in
+ * paragraph sounds so crazy (from a sheer code maintenance point of view) that
+ * this hopefully won't be a problem.
  */
 function hasDistinguishableBackground(
   container: Element,
   device: Device,
   context?: Context
 ): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
+  const colorReference = Style.from(container, device, context).computed(
     "background-color"
   ).value;
 
-  return (element) => {
-    return Style.from(element, device, context)
-      .computed("background-color")
-      .none((color) => Color.isTransparent(color) || color.equals(reference));
-  };
+  const imageReference = Style.from(container, device, context).computed(
+    "background-image"
+  ).value;
+
+  return or(
+    hasComputedStyle(
+      "background-color",
+      not(
+        // If the background is fully transparent, we assume it will end up
+        // being the same as the container. Intermediate backgrounds may change
+        // that, but these would need to be set on ancestor of the link and of
+        // no non-link text, so will be caught in one of the other comparisons.
+        (color) => Color.isTransparent(color) || color.equals(colorReference)
+      ),
+      device,
+      context
+    ),
+    // Any difference in `background-image` is considered enough. If different
+    // `background-image` ultimately yield the same background (e.g. the same
+    // image at two different URLs), this creates false negatives.
+    hasComputedStyle(
+      "background-image",
+      not((image) => image.equals(imageReference)),
+      device,
+      context
+    )
+  );
 }
 
 /**
@@ -324,11 +358,12 @@ function hasDistinguishableFontWeight(
     "font-weight"
   ).value;
 
-  return (element) => {
-    return Style.from(element, device, context)
-      .computed("font-weight")
-      .none((weight) => weight.equals(reference));
-  };
+  return hasComputedStyle(
+    "font-weight",
+    not((weight) => weight.equals(reference)),
+    device,
+    context
+  );
 }
 
 type Name = Property.Name | Property.Shorthand.Name;
@@ -375,6 +410,10 @@ export namespace ComputedStyles {
     style: Map.JSON<Name, string>;
   }
 
+  export function isComputedStyles(value: unknown): value is ComputedStyles {
+    return value instanceof ComputedStyles;
+  }
+
   export function from(
     element: Element,
     device: Device,
@@ -382,75 +421,18 @@ export namespace ComputedStyles {
   ): ComputedStyles {
     const style = Style.from(element, device, context);
 
-    // Trying to reduce the footprint of the result by exporting shorthands
-    // rather than longhands, and avoiding to export values that are the same
-    // as the initial value of the property.
-    function fourValuesShorthand(
-      postfix: "color" | "style" | "width"
-    ): readonly [Name, string] {
-      const shorthand = `border-${postfix}` as const;
-
-      function getLongHand(side: "top" | "right" | "bottom" | "left"): string {
-        return style.computed(`border-${side}-${postfix}` as const).toString();
-      }
-
-      let top = getLongHand("top");
-      let right = getLongHand("right");
-      let bottom = getLongHand("bottom");
-      let left = getLongHand("left");
-
-      if (left === right) {
-        left = "";
-        if (bottom === top) {
-          bottom = "";
-          if (right === top) {
-            right = "";
-            if (
-              top ===
-              Property.get(`border-top-${postfix}` as const).initial.toString()
-            ) {
-              top = "";
-            }
-          }
-        }
-      }
-
-      return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
-    }
-
-    const shorthands = (["color", "style", "width"] as const).map((postfix) =>
-      fourValuesShorthand(postfix)
+    const border = (["color", "style", "width"] as const).map((property) =>
+      Serialise.borderShorthand(style, property)
     );
-
-    function longhand(name: Property.Name): string {
-      const property = style.computed(name).toString();
-
-      return property === Property.get(name).initial.toString() ? "" : property;
-    }
-
-    const outline = `${longhand("outline-color")} ${longhand(
-      "outline-style"
-    )} ${longhand("outline-width")}`.trim();
-
-    // While text-decoration-style and text-decoration-thickness are not
-    // important for deciding if there is one, but they are important for
-    // rendering the link with the correct styling.
-    const textDecoration = `${longhand("text-decoration-line")} ${longhand(
-      "text-decoration-color"
-    )} ${longhand("text-decoration-style")} ${longhand(
-      "text-decoration-thickness"
-    )}`.trim();
-
-    const longhands = (
-      ["background-color", "color", "font-weight"] as const
-    ).map((property) => [property, longhand(property)] as const);
 
     return ComputedStyles.of(
       [
-        ...shorthands,
-        ...longhands,
-        ["outline", outline] as const,
-        ["text-decoration", textDecoration] as const,
+        ...border,
+        ["color", Serialise.getLonghand(style, "color")] as const,
+        ["font-weight", Serialise.getLonghand(style, "font-weight")] as const,
+        ["background", Serialise.background(style)] as const,
+        ["outline", Serialise.outline(style)] as const,
+        ["text-decoration", Serialise.textDecoration(style)] as const,
       ].filter(([_, value]) => value !== "")
     );
   }
@@ -527,5 +509,11 @@ export namespace DistinguishingStyles {
     defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
     hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
     focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+  }
+
+  export function isDistinguishingStyles(
+    value: unknown
+  ): value is DistinguishingStyles {
+    return value instanceof DistinguishingStyles;
   }
 }
