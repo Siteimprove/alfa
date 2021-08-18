@@ -583,11 +583,13 @@ export namespace ComputedStyles {
     // While text-decoration-style and text-decoration-thickness are not
     // important for deciding if there is a text-decoration, they are important
     // for rendering the link with the correct styling.
-    const textDecoration = `${longhand("text-decoration-line")} ${longhand(
-      "text-decoration-color"
-    )} ${longhand("text-decoration-style")} ${longhand(
-      "text-decoration-thickness"
-    )}`.trim();
+    const textDecoration = normalize(
+      `${longhand("text-decoration-line")} ${longhand(
+        "text-decoration-color"
+      )} ${longhand("text-decoration-style")} ${longhand(
+        "text-decoration-thickness"
+      )}`
+    );
 
     const longhands = (["color", "font-weight"] as const).map(
       (property) => [property, longhand(property)] as const
