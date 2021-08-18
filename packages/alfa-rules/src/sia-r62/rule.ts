@@ -21,8 +21,6 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/expectation";
-import { normalize } from "../common/normalize";
-
 import {
   hasBorder,
   hasComputedStyle,
@@ -31,6 +29,8 @@ import {
   hasTextDecoration,
   isVisible,
 } from "../common/predicate";
+
+import { Serialise } from "./serialise";
 
 const { isElement } = Element;
 const { isText } = Text;
@@ -410,158 +410,8 @@ export namespace ComputedStyles {
     style: Map.JSON<Name, string>;
   }
 
-  // Trying to reduce the footprint of the result by exporting shorthands
-  // rather than longhands, and avoiding to export values that are the same
-  // as the initial value of the property.
-  function fourValuesShorthand(
-    style: Style,
-    postfix: "color" | "style" | "width"
-  ): readonly [Name, string] {
-    const shorthand = `border-${postfix}` as const;
-
-    function getLongHand(side: "top" | "right" | "bottom" | "left"): string {
-      return style.computed(`border-${side}-${postfix}` as const).toString();
-    }
-
-    let top = getLongHand("top");
-    let right = getLongHand("right");
-    let bottom = getLongHand("bottom");
-    let left = getLongHand("left");
-
-    if (left === right) {
-      left = "";
-      if (bottom === top) {
-        bottom = "";
-        if (right === top) {
-          right = "";
-          if (
-            top ===
-            Property.get(`border-top-${postfix}` as const).initial.toString()
-          ) {
-            top = "";
-          }
-        }
-      }
-    }
-
-    return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
-  }
-
-  function getLonghand(style: Style): (name: Property.Name) => string {
-    return (name) => {
-      const property = style.computed(name).toString();
-
-      return property === Property.get(name).initial.toString() ? "" : property;
-    };
-  }
-
-  // Only background-color and background-image are used for deciding if the
-  // link is distinguishable, but all longhands are needed for rendering it
-  // with the correct style.
-  function background(style: Style): string {
-    // Most properties are layered and need special handling.
-    const attachment = style.computed("background-attachment").value.values;
-    const clip = style.computed("background-clip").value.values;
-    const image = style.computed("background-image").value.values;
-    const origin = style.computed("background-origin").value.values;
-    const positionX = style.computed("background-position-x").value.values;
-    const positionY = style.computed("background-position-y").value.values;
-    const repeatX = style.computed("background-repeat-x").value.values;
-    const repeatY = style.computed("background-repeat-y").value.values;
-    const size = style.computed("background-size").value.values;
-
-    function getValue<T>(
-      array: ReadonlyArray<T>,
-      n: number,
-      // This should rather grab the initial value from the property itself.
-      property?: Property.Name
-    ): string {
-      // Longhands with missing layers use the same value as their first layer
-      const value = `${array?.[n] ?? array[0]}`;
-      return property !== undefined &&
-        value === Property.get(property).initial.toString()
-        ? ""
-        : value;
-    }
-
-    function getSize(n: number): string {
-      const value = getValue(size, n, "background-size");
-
-      return value === "" ? "" : " / " + value;
-    }
-
-    function getPosition(n: number): string {
-      const posX = getValue(positionX, n, "background-position-x");
-      const posY = getValue(positionY, n, "background-position-y");
-
-      // If there is a posY, we need to keep posX anyway
-      const value = (
-        (posX === "" && posY !== "" ? "0px" : posX) +
-        " " +
-        posY
-      ).trim();
-
-      // If there is a size, we need to keep a position anyway
-      const size = getSize(n);
-      return size === "" ? value : value + size;
-    }
-
-    function getRepeat(n: number): string {
-      // Due to the one value syntax, we can't easily fallback on initial value.
-      const value = getValue(repeatX, n) + " " + getValue(repeatY, n);
-
-      switch (value) {
-        case "repeat no-repeat":
-          return "repeat-x";
-        case "no-repeat repeat":
-          return "repeat-y";
-        case "repeat repeat":
-          return ""; // initial value
-        case "space space":
-          return "space";
-        case "round round":
-          return "round";
-        case "no-repeat no-repeat":
-          return "no-repeat";
-        default:
-          return value;
-      }
-    }
-
-    function getBoxes(n: number): string {
-      const originBox = getValue(origin, n);
-      const clipBox = getValue(clip, n, "background-clip");
-
-      return originBox === clipBox || clipBox === ""
-        ? originBox === Property.get("background-origin").initial.toString()
-          ? ""
-          : originBox
-        : originBox + " " + clipBox;
-    }
-
-    function getLayer(n: number): string {
-      const imageValue = getValue(image, n);
-      // If there is no image the rest doesn't matter (color is handled later).
-
-      return imageValue === "none"
-        ? ""
-        : `${imageValue} ${getPosition(n)} ${getRepeat(n)} ${getValue(
-            attachment,
-            n,
-            "background-attachment"
-          )} ${getBoxes(n)}`;
-    }
-
-    const layers = image.map((_, i) => getLayer(i));
-
-    // `background-color` is added to the last layer
-    layers[layers.length - 1] =
-      getLonghand(style)("background-color") + " " + layers[layers.length - 1];
-
-    return layers
-      .map(normalize)
-      .filter((layer) => layer !== "")
-      .join(", ");
+  export function isComputedStyles(value: unknown): value is ComputedStyles {
+    return value instanceof ComputedStyles;
   }
 
   export function from(
@@ -570,38 +420,19 @@ export namespace ComputedStyles {
     context: Context = Context.empty()
   ): ComputedStyles {
     const style = Style.from(element, device, context);
-    const longhand = getLonghand(style);
 
-    const shorthands = (["color", "style", "width"] as const).map((postfix) =>
-      fourValuesShorthand(style, postfix)
-    );
-
-    const outline = `${longhand("outline-color")} ${longhand(
-      "outline-style"
-    )} ${longhand("outline-width")}`.trim();
-
-    // While text-decoration-style and text-decoration-thickness are not
-    // important for deciding if there is a text-decoration, they are important
-    // for rendering the link with the correct styling.
-    const textDecoration = normalize(
-      `${longhand("text-decoration-line")} ${longhand(
-        "text-decoration-color"
-      )} ${longhand("text-decoration-style")} ${longhand(
-        "text-decoration-thickness"
-      )}`
-    );
-
-    const longhands = (["color", "font-weight"] as const).map(
-      (property) => [property, longhand(property)] as const
+    const border = (["color", "style", "width"] as const).map((property) =>
+      Serialise.borderShorthand(style, property)
     );
 
     return ComputedStyles.of(
       [
-        ...shorthands,
-        ...longhands,
-        ["background", background(style)] as const,
-        ["outline", outline] as const,
-        ["text-decoration", textDecoration] as const,
+        ...border,
+        ["color", Serialise.getLonghand(style, "color")] as const,
+        ["font-weight", Serialise.getLonghand(style, "font-weight")] as const,
+        ["background", Serialise.background(style)] as const,
+        ["outline", Serialise.outline(style)] as const,
+        ["text-decoration", Serialise.textDecoration(style)] as const,
       ].filter(([_, value]) => value !== "")
     );
   }
@@ -678,5 +509,11 @@ export namespace DistinguishingStyles {
     defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
     hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
     focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+  }
+
+  export function isDistinguishingStyles(
+    value: unknown
+  ): value is DistinguishingStyles {
+    return value instanceof DistinguishingStyles;
   }
 }

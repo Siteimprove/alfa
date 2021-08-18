@@ -124,6 +124,7 @@
     "src/sia-r6/rule.ts",
     "src/sia-r61/rule.ts",
     "src/sia-r62/rule.ts",
+    "src/sia-r62/serialise.ts",
     "src/sia-r63/rule.ts",
     "src/sia-r64/rule.ts",
     "src/sia-r65/rule.ts",
