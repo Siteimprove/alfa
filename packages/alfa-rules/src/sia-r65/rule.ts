@@ -50,10 +50,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
             () => Outcomes.HasFocusIndicator,
             () =>
               Question.of(
-                "has-focus-indicator",
                 "boolean",
-                target,
-                `Does the element have a visible focus indicator?`
+                "has-focus-indicator",
+                `Does the element have a visible focus indicator?`,
+                target
               ).map((hasFocusIndicator) =>
                 expectation(
                   hasFocusIndicator,

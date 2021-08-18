@@ -1,5 +1,6 @@
 import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
 
 import { Handler } from "./handler";
@@ -7,13 +8,13 @@ import { Handler } from "./handler";
 /**
  * @public
  */
-export class Assertion<I, T, Q> {
-  public static of<I, T, Q>(
+export class Assertion<I, T, Q, S> {
+  public static of<I, T, Q, S>(
     input: I,
-    rules: Iterable<Rule<I, T, Q>>,
-    handlers: Iterable<Handler<I, T, Q>> = [],
-    options: Assertion.Options = {}
-  ): Assertion<I, T, Q> {
+    rules: Iterable<Rule<I, T, Q, S>>,
+    handlers: Iterable<Handler<I, T, Q, S>> = [],
+    options: Assertion.Options<I, T, Q, S> = {}
+  ): Assertion<I, T, Q, S> {
     return new Assertion(
       input,
       Array.from(rules),
@@ -23,15 +24,15 @@ export class Assertion<I, T, Q> {
   }
 
   private readonly _input: I;
-  private readonly _rules: Array<Rule<I, T, Q>>;
-  private readonly _handlers: Array<Handler<I, T, Q>>;
-  private readonly _options: Assertion.Options;
+  private readonly _rules: Array<Rule<I, T, Q, S>>;
+  private readonly _handlers: Array<Handler<I, T, Q, S>>;
+  private readonly _options: Assertion.Options<I, T, Q, S>;
 
   private constructor(
     input: I,
-    rules: Array<Rule<I, T, Q>>,
-    handlers: Array<Handler<I, T, Q>>,
-    options: Assertion.Options
+    rules: Array<Rule<I, T, Q, S>>,
+    handlers: Array<Handler<I, T, Q, S>>,
+    options: Assertion.Options<I, T, Q, S>
   ) {
     this._input = input;
     this._rules = rules;
@@ -48,10 +49,14 @@ export class Assertion<I, T, Q> {
   }
 
   public accessible(): Future<Result<string>> {
-    return Audit.of<I, T, Q>(this._input, this._rules)
+    const { filter = () => true } = { ...this._options };
+
+    return Audit.of<I, T, Q, S>(this._input, this._rules)
       .evaluate()
       .flatMap((outcomes) => {
-        const failures = [...outcomes].filter(Outcome.isFailed);
+        const failures = [...outcomes].filter(
+          (outcome) => Outcome.isFailed(outcome) && filter(outcome)
+        );
 
         const count = failures.length;
 
@@ -91,5 +96,11 @@ export class Assertion<I, T, Q> {
  * @public
  */
 export namespace Assertion {
-  export interface Options {}
+  export interface Options<I, T, Q, S> {
+    /**
+     * Predicate for filtering out outcomes that should not count towards an
+     * assertion failure.
+     */
+    readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
+  }
 }
