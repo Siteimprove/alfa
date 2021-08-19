@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isApplicable<I, T, Q>(value: Outcome<I, T, Q>): value is Applicable<I, T, Q>;
+function isApplicable<I, T, Q, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-value is [Applicable](./alfa-act.outcome_namespace.applicable_typealias.md)<!-- -->&lt;I, T, Q&gt;
+value is [Applicable](./alfa-act.outcome_namespace.applicable_typealias.md)<!-- -->&lt;I, T, Q, S&gt;
 

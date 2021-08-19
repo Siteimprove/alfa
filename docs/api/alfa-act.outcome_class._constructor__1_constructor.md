@@ -9,12 +9,12 @@ Constructs a new instance of the `Outcome` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(rule: Rule<I, T, Q>);
+protected constructor(rule: Rule<I, T, Q, S>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 

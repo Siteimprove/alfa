@@ -16,12 +16,12 @@ export class Cache {
 
   private constructor() {}
 
-  public get<I, T, Q>(
-    rule: Rule<I, T, Q>,
-    ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q>>>>
-  ): Future<Iterable<Outcome<I, T, Q>>> {
+  public get<I, T, Q, S>(
+    rule: Rule<I, T, Q, S>,
+    ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>
+  ): Future<Iterable<Outcome<I, T, Q, S>>> {
     let outcomes = this._storage.get(rule) as
-      | Future<Iterable<Outcome<I, T, Q>>>
+      | Future<Iterable<Outcome<I, T, Q, S>>>
       | undefined;
 
     if (outcomes === undefined) {

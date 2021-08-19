@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-abstract equals<I, T, Q>(value: Outcome<I, T, Q>): boolean;
+abstract equals<I, T, Q, S>(value: Outcome<I, T, Q, S>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

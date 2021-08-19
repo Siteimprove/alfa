@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function load<I, T = unknown, Q = never>(name: string, defaultScope?: string): Promise<Result<Formatter<I, T, Q>, string>>;
+function load<I, T = unknown, Q = never, S = T>(name: string, defaultScope?: string): Promise<Result<Formatter<I, T, Q, S>, string>>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ function load<I, T = unknown, Q = never>(name: string, defaultScope?: string): P
 
 <b>Returns:</b>
 
-Promise&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;[Formatter](./alfa-formatter.formatter_typealias.md)<!-- -->&lt;I, T, Q&gt;, string&gt;&gt;
+Promise&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;[Formatter](./alfa-formatter.formatter_typealias.md)<!-- -->&lt;I, T, Q, S&gt;, string&gt;&gt;
 

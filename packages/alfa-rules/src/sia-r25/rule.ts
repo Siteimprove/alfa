@@ -22,11 +22,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
       expectations(target) {
         return {
           1: Question.of(
-            "has-description",
             "boolean",
-            target,
+            "has-description",
             `Is the visual information of the \`<video>\` available through its
-            audio or a separate audio description track?`
+            audio or a separate audio description track?`,
+            target
           ).map((hasAudio) =>
             expectation(
               hasAudio,

@@ -8,14 +8,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Asserter<I, T, Q> 
+export declare class Asserter<I, T, Q, S> 
 ```
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [expect](./alfa-assert.asserter_class.expect_property.md) |  | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;I, [Assertion](./alfa-assert.assertion_class.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
+|  [expect](./alfa-assert.asserter_class.expect_property.md) |  | (input: I, options?: [Assertion.Options](./alfa-assert.assertion_namespace.options_interface.md)<!-- -->&lt;I, T, Q, S&gt;) =&gt; [Assertion](./alfa-assert.assertion_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 ## Methods
 

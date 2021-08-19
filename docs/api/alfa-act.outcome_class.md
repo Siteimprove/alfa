@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class Outcome<I, T, Q = never> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> 
+export declare abstract class Outcome<I, T, Q = never, S = T> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> 
 ```
 <b>Implements:</b> [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, json.[Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Outcome.JSON](./alfa-act.outcome_namespace.json_interface.md)<!-- -->&gt;, earl.[Serializable](./alfa-earl.serializable_interface.md)<!-- -->&lt;[Outcome.EARL](./alfa-act.outcome_namespace.earl_interface.md)<!-- -->&gt;, sarif.[Serializable](./alfa-sarif.serializable_interface.md)<!-- -->&lt;sarif.Result&gt;
 
@@ -22,8 +22,8 @@ export declare abstract class Outcome<I, T, Q = never> implements Equatable, jso
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [\_rule](./alfa-act.outcome_class._rule_property.md) |  | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
-|  [rule](./alfa-act.outcome_class.rule_property.md) |  | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  [\_rule](./alfa-act.outcome_class._rule_property.md) |  | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  [rule](./alfa-act.outcome_class.rule_property.md) |  | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  [target](./alfa-act.outcome_class.target_property.md) |  | T \| undefined |  |
 
 ## Methods

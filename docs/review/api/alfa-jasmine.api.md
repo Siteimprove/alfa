@@ -12,9 +12,8 @@ import { Rule } from '@siteimprove/alfa-act';
 // @public (undocumented)
 export namespace Jasmine {
     // (undocumented)
-    export function createPlugin<I, J, T = unknown, Q = never>(transform: Mapper<I, Promise<J>>, rules: Iterable<Rule<J, T, Q>>, handlers?: Iterable<Handler<J, T, Q>>, options?: Asserter.Options): void;
+    export function createPlugin<I, J, T = unknown, Q = never, S = T>(transform: Mapper<I, Promise<J>>, rules: Iterable<Rule<J, T, Q, S>>, handlers?: Iterable<Handler<J, T, Q, S>>, options?: Asserter.Options<J, T, Q, S>): void;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

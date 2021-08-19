@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-class Atomic<I = unknown, T = unknown, Q = never> extends Rule<I, T, Q> 
+class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<I, T, Q, S> 
 ```
-<b>Extends:</b> [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;
+<b>Extends:</b> [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;
 
 ## Methods
 

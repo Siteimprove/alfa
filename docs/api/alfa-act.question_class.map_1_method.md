@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-map<U>(mapper: Mapper<T, U>): Question<Q, S, A, U>;
+map<U>(mapper: Mapper<T, U>): Question<Q, S, C, A, U>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ map<U>(mapper: Mapper<T, U>): Question<Q, S, A, U>;
 
 <b>Returns:</b>
 
-[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, A, U&gt;
+[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, U&gt;
 

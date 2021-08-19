@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isAtomic<I, T, Q>(value: Rule<I, T, Q>): value is Atomic<I, T, Q>;
+function isAtomic<I, T, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-value is [Atomic](./alfa-act.rule_namespace.atomic_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Atomic](./alfa-act.rule_namespace.atomic_class.md)<!-- -->&lt;I, T, Q, S&gt;
 
