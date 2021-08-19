@@ -7,18 +7,20 @@ import { Property, Style } from "@siteimprove/alfa-style";
 
 const { isElement } = Element;
 
-export function hasComputedStyle<N extends Property.Name>(
+export function hasCascadedStyle<N extends Property.Name>(
   name: N,
-  predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>,
+  predicate: Predicate<Style.Cascaded<N>, [source: Option<Declaration>]>,
   device: Device,
   context?: Context
 ): Predicate<Element | Text> {
-  return function hasComputedStyle(node): boolean {
+  return function hasCascadedStyle(node): boolean {
     return isElement(node)
-      ? Style.from(node, device, context).computed(name).some(predicate)
+      ? Style.from(node, device, context)
+          .cascaded(name)
+          .some((value) => value.some(predicate))
       : node
           .parent({ flattened: true })
           .filter(isElement)
-          .some(hasComputedStyle);
+          .some(hasCascadedStyle);
   };
 }

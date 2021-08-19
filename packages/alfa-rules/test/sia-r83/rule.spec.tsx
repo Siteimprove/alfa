@@ -258,25 +258,52 @@ test(`evaluate() is inapplicable to a text node with a fixed relative height`, a
 
 test(`evaluate() is inapplicable to a text node that resets the white-space
       property of its clipping ancestor`, async (t) => {
-  const document = h.document(
-    [
-      <p>
-        <span>Hello world</span>
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("p", {
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-        }),
+  {
+    const document = h.document(
+      [
+        <p>
+          <span>Hello world</span>
+        </p>,
+      ],
+      [
+        h.sheet([
+          h.rule.style("p", {
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }),
 
-        h.rule.style("span", {
-          whiteSpace: "normal",
-        }),
-      ]),
-    ]
-  );
+          h.rule.style("span", {
+            whiteSpace: "normal",
+          }),
+        ]),
+      ]
+    );
 
-  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+    t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+  }
+  {
+    const document = h.document(
+      [
+        <p>
+          <span>
+            <b>Hello world</b>
+          </span>
+        </p>,
+      ],
+      [
+        h.sheet([
+          h.rule.style("p", {
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }),
+
+          h.rule.style("span", {
+            whiteSpace: "normal",
+          }),
+        ]),
+      ]
+    );
+
+    t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+  }
 });
