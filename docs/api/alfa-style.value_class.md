@@ -26,6 +26,7 @@ export declare class Value<T = unknown> implements Functor<T>, Applicative<T>, M
 |  [\[Symbol.iterator\]()](./alfa-style.value_class._symbol.iterator__1_method.md) |  |  |
 |  [apply(mapper)](./alfa-style.value_class.apply_1_method.md) |  |  |
 |  [equals(value)](./alfa-style.value_class.equals_1_method.md) |  |  |
+|  [equals(value)](./alfa-style.value_class.equals_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-style.value_class.flatmap_1_method.md) |  |  |
 |  [flatten(this)](./alfa-style.value_class.flatten_1_method.md) |  |  |
 |  [includes(value)](./alfa-style.value_class.includes_1_method.md) |  |  |

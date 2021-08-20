@@ -102,7 +102,7 @@ namespace Set_2 {
     // (undocumented)
     function from<T>(iterable: Iterable_2<T>): Set_2<T>;
     // (undocumented)
-    function fromArray<T>(array: Array_2<T>): Set_2<T>;
+    function fromArray<T>(array: ReadonlyArray<T>): Set_2<T>;
     // (undocumented)
     function fromIterable<T>(iterable: Iterable_2<T>): Set_2<T>;
     // (undocumented)

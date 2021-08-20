@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function fromArray<T>(array: Array<T>): List<T>;
+function fromArray<T>(array: ReadonlyArray<T>): List<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | ReadonlyArray&lt;T&gt; |  |
 
 <b>Returns:</b>
 

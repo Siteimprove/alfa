@@ -235,7 +235,7 @@ export namespace List {
     // (undocumented)
     export function from<T>(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
-    export function fromArray<T>(array: Array_2<T>): List<T>;
+    export function fromArray<T>(array: ReadonlyArray<T>): List<T>;
     // (undocumented)
     export function fromIterable<T>(iterable: Iterable_2<T>): List<T>;
     // (undocumented)

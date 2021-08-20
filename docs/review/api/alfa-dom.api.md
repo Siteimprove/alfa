@@ -255,13 +255,15 @@ export class Element extends Node implements Slot, Slotable {
     // @internal (undocumented)
     _attachShadow(shadow: Shadow): boolean;
     // (undocumented)
-    attribute(predicate: string | Predicate<Attribute>): Option<Attribute>;
+    attribute(name: string): Option<Attribute>;
     // (undocumented)
-    get attributes(): Iterable_2<Attribute>;
+    attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+    // (undocumented)
+    get attributes(): Sequence<Attribute>;
     // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    get classes(): Iterable_2<string>;
+    get classes(): Sequence<string>;
     // (undocumented)
     get content(): Option<Document>;
     // (undocumented)

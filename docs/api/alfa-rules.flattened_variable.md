@@ -9,5 +9,5 @@ A list of all available rules joined under a single type. The type of each rule 
 <b>Signature:</b>
 
 ```typescript
-Flattened: Sequence<Rule<Rule.Input<Rules>, Rule.Target<Rules>, Rule.Question<Rules>, Rule.Subject<Rules>>>
+Flattened: Flattened
 ```

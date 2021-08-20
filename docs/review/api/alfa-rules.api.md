@@ -20,6 +20,7 @@ import { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
+import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
@@ -280,10 +281,13 @@ const _default_86: Rule.Atomic<Page, Element, never, Element>;
 // @public (undocumented)
 const _default_9: Rule.Atomic<Page, Element, never, Element>;
 
-// Warning: (ae-forgotten-export) The symbol "Rules" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Rule" needs to be exported by the entry point index.d.ts
 //
+// @public (undocumented)
+type Flattened = Sequence<act.Rule<act.Rule.Input<Rule_2>, act.Rule.Target<Rule_2>, act.Rule.Question<Rule_2>, act.Rule.Subject<Rule_2>>>;
+
 // @public
-const Flattened: Sequence<Rule<Rule.Input<Rules_2>, Rule.Target<Rules_2>, Rule.Question<Rules_2>, Rule.Subject<Rules_2>>>;
+const Flattened: Flattened;
 export default Flattened;
 
 // @public (undocumented)
@@ -347,10 +351,38 @@ export namespace Question {
     export function of<Q extends keyof Question, S, C>(type: Q, uri: string, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q]>;
 }
 
+// @public (undocumented)
+export type Rules = typeof Rules;
+
 // Warning: (ae-forgotten-export) The symbol "rules" needs to be exported by the entry point index.d.ts
 //
 // @public
 export const Rules: Record_2<typeof rules>;
+
+// @public (undocumented)
+export class Scope<S extends string = string> extends Tag<"scope"> {
+    // (undocumented)
+    equals(value: Scope): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    static of<S extends string>(scope: S): Scope<S>;
+    // (undocumented)
+    toJSON(): Scope.JSON<S>;
+    // (undocumented)
+    get type(): "scope";
+}
+
+// @public (undocumented)
+export namespace Scope {
+    // (undocumented)
+    export interface JSON<S extends string = string> extends Tag.JSON<"scope"> {
+        // (undocumented)
+        scope: S;
+    }
+    const Page: Scope<"page">;
+    const Component: Scope<"component">;
+}
 
 // (No @packageDocumentation comment for this package)
 

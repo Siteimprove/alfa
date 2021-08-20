@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get attributes(): Iterable<Attribute>;
+get attributes(): Sequence<Attribute>;
 ```

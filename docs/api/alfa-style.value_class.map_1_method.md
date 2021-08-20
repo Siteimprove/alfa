@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-map<U>(mapper: Mapper<T, U>): Value<U>;
+map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, U&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, U, \[source: [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration_class.md)<!-- -->&gt;\]&gt; |  |
 
 <b>Returns:</b>
 
