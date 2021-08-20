@@ -178,13 +178,17 @@ export class Element extends Node implements Slot, Slotable {
     return Sequence.from(children);
   }
 
+  public attribute(name: string): Option<Attribute>;
+
+  public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+
   public attribute(
-    predicate: string | Predicate<Attribute>
+    nameOrPredicate: string | Predicate<Attribute>
   ): Option<Attribute> {
-    if (typeof predicate === "string") {
-      return Option.from(this._attributes.get(predicate));
+    if (typeof nameOrPredicate === "string") {
+      return Option.from(this._attributes.get(nameOrPredicate));
     } else {
-      return Iterable.find(this._attributes.values(), predicate);
+      return Iterable.find(this._attributes.values(), nameOrPredicate);
     }
   }
 
