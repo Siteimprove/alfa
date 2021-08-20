@@ -161,7 +161,7 @@ export namespace Rule {
    * rule evaluation procedures.
    */
   export interface Evaluate<I, T, Q, S> {
-    (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
+    (input: I, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
       Iterable<Outcome<I, T, Q, S>>
     >;
   }
@@ -235,7 +235,7 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: Readonly<I>): {
+      (input: I): {
         applicability(): Iterable<Interview<Q, S, T, Option.Maybe<T>>>;
         expectations(target: T): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
@@ -354,7 +354,7 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: Readonly<I>): {
+      (input: I): {
         expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
