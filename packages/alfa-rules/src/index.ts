@@ -2,6 +2,8 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Record } from "@siteimprove/alfa-record";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
+export * from "./scope";
+
 import * as rules from "./rules";
 
 type Rules = Record.Value<typeof rules>;
