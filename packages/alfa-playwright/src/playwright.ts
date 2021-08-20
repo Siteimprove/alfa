@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /// <reference types="node" />
 
 import { Device } from "@siteimprove/alfa-device";

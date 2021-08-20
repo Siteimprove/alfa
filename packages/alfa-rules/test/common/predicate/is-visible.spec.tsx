@@ -418,3 +418,27 @@ test(`isVisible() returns false for a text node with a parent element with
   t.equal(isVisible(text), false);
   t.equal(isVisible(element), false);
 });
+
+test(`isVisible() returns false for an element with a fully clipped ancestor`, (t) => {
+  const spanSize = <span>Hello World</span>;
+  const spanIndent = <span>Hello World</span>;
+  const spanMask = <span>Hello World</span>;
+
+  h.document([
+    <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
+      {spanSize}
+    </div>,
+    <div
+      style={{ textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" }}
+    >
+      {spanIndent}
+    </div>,
+    <div style={{ clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" }}>
+      {spanMask}
+    </div>,
+  ]);
+
+  for (const target of [spanSize, spanIndent, spanMask]) {
+    t.equal(isVisible(target), false);
+  }
+});

@@ -36,7 +36,7 @@ export class Err<E> implements Result<never, E> {
     return true;
   }
 
-  public map(): this {
+  public map(): Err<E> {
     return this;
   }
 
@@ -44,20 +44,24 @@ export class Err<E> implements Result<never, E> {
     return new Err(mapper(this._error));
   }
 
-  public mapOrElse<T, U>(ok: Mapper<T, U>, err: Mapper<E, U>): U {
+  public mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U {
     return err(this._error);
   }
 
-  public flatMap(): this {
+  public apply(): Err<E> {
+    return this;
+  }
+
+  public flatMap(): Err<E> {
+    return this;
+  }
+
+  public flatten<T, E>(this: Result<never, E>): Result<T, E> {
     return this;
   }
 
   public reduce<U>(reducer: unknown, accumulator: U): U {
     return accumulator;
-  }
-
-  public apply(): this {
-    return this;
   }
 
   public includes(): boolean {
@@ -92,11 +96,11 @@ export class Err<E> implements Result<never, E> {
     return test(predicate, this._error);
   }
 
-  public and(): this {
+  public and(): Err<E> {
     return this;
   }
 
-  public andThen(): this {
+  public andThen(): Err<E> {
     return this;
   }
 

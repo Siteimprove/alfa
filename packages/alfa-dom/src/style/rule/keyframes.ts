@@ -3,6 +3,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Rule } from "../rule";
 import { GroupingRule } from "./grouping";
 
+/**
+ * @public
+ */
 export class KeyframesRule extends GroupingRule {
   public static of(name: string, rules: Iterable<Rule>): KeyframesRule {
     return new KeyframesRule(name, Array.from(rules));
@@ -37,6 +40,9 @@ export class KeyframesRule extends GroupingRule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace KeyframesRule {
   export interface JSON extends GroupingRule.JSON {
     type: "keyframes";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /// <reference types="node" />
 
 import { Cheerio } from "@siteimprove/alfa-cheerio";

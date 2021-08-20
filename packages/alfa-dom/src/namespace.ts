@@ -1,5 +1,7 @@
 /**
  * {@link https://infra.spec.whatwg.org/#namespaces}
+ *
+ * @public
  */
 export enum Namespace {
   /**
@@ -38,6 +40,9 @@ export enum Namespace {
   XMLNS = "http://www.w3.org/2000/xmlns/",
 }
 
+/**
+ * @public
+ */
 export namespace Namespace {
   export function isNamespace(value: string): value is Namespace {
     switch (value) {

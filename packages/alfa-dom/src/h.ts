@@ -29,6 +29,9 @@ import {
 const { entries } = Object;
 const { nor } = Predicate;
 
+/**
+ * @public
+ */
 export function h(
   name: string,
   attributes?: Array<Attribute> | Record<string, string | boolean>,
@@ -38,6 +41,9 @@ export function h(
   return h.element(name, attributes, children, style);
 }
 
+/**
+ * @public
+ */
 export namespace h {
   export function element(
     name: string,

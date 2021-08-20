@@ -5,8 +5,14 @@ import { Cell } from "../../cell";
 
 const { equals } = Predicate;
 
+/**
+ * @public
+ */
 export function hasElement(predicate: Predicate<Element>): Predicate<Cell>;
 
+/**
+ * @public
+ */
 export function hasElement(element: Element): Predicate<Cell>;
 
 export function hasElement(

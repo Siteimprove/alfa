@@ -1,12 +1,11 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
 
 import {
+  hasComputedStyle,
   isClipped,
   isOffscreen,
   isRendered,
@@ -14,70 +13,53 @@ import {
   isTransparent,
 } from "../predicate";
 
-const { every } = Iterable;
-const { not } = Predicate;
-const { and, or } = Refinement;
+const { nor, not, or } = Predicate;
+const { and } = Refinement;
 const { hasName, isElement } = Element;
 const { isText } = Text;
 
+/**
+ * Checks if a node is visible
+ */
 export function isVisible(device: Device, context?: Context): Predicate<Node> {
-  return and(
-    isRendered(device, context),
-    not(isTransparent(device, context)),
-    not(
-      and(
-        or(isElement, isText),
-        or(isClipped(device, context), isOffscreen(device, context))
+  return not(isInvisible(device, context));
+}
+
+function isInvisible(device: Device, context?: Context): Predicate<Node> {
+  return or(
+    not(isRendered(device, context)),
+    isTransparent(device, context),
+    isClipped(device, context),
+    isOffscreen(device, context),
+    // Empty text
+    and(isText, (text) => text.data.trim() === ""),
+    // Text of size 0
+    and(
+      isText,
+      hasComputedStyle("font-size", (size) => size.value === 0, device, context)
+    ),
+    // Element with visibility != "visible"
+    and(
+      isElement,
+      hasComputedStyle(
+        "visibility",
+        (visibility) => visibility.value !== "visible",
+        device,
+        context
       )
     ),
-    (node) => {
-      if (
-        isElement(node) &&
-        Style.from(node, device, context)
-          .computed("visibility")
-          .some((visibility) => visibility.value !== "visible")
-      ) {
-        return false;
-      }
-
-      if (isText(node)) {
-        if (node.data.trim() === "") {
-          return false;
-        }
-
-        if (
-          node
-            .parent({
-              flattened: true,
-            })
-            .filter(isElement)
-            .some((element) =>
-              Style.from(element, device, context)
-                .computed("font-size")
-                .some((size) => size.value === 0)
-            )
-        ) {
-          return false;
-        }
-      }
-
-      return true;
-    },
     // Most non-replaced elements with no visible children are not visible while
     // replaced elements are assumed to be replaced by something visible. Some
     // non-replaced elements are, however, visible even when empty.
-    not(
-      and(
-        isElement,
-        and(not(or(isReplaced, isVisibleWhenEmpty)), (element) =>
-          every(
-            element.children({
-              nested: true,
-              flattened: true,
-            }),
-            not(isVisible(device, context))
-          )
-        )
+    and(
+      isElement,
+      and(nor(isReplaced, isVisibleWhenEmpty), (element) =>
+        element
+          .children({
+            nested: true,
+            flattened: true,
+          })
+          .every(isInvisible(device, context))
       )
     )
   );

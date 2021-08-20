@@ -2,6 +2,8 @@ import { Element } from "../../element";
 
 /**
  * {@link https://html.spec.whatwg.org/#dom-draggable}
+ *
+ * @public
  */
 export function isDraggable(element: Element): boolean {
   return element

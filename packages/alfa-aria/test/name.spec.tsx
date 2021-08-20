@@ -578,6 +578,80 @@ test(`.from() determines the name of an <a> element with text in its subtree,
       when there are multiple nested sources`, (t) => {
   const a = (
     <a href="#" title="Content">
+      <span>Hello</span> <span>world</span>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "Hello",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/span[1]",
+                name: {
+                  value: "Hello",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/span[1]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: " ",
+            sources: [
+              {
+                type: "data",
+                text: "/a[1]/text()[1]",
+              },
+            ],
+          },
+        },
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/span[2]",
+                name: {
+                  value: "world",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/span[2]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
+test(`.from() joins descendant names without a space`, (t) => {
+  const a = (
+    <a href="#">
       <span>Hello</span>
       <span>world</span>
     </a>
@@ -586,7 +660,7 @@ test(`.from() determines the name of an <a> element with text in its subtree,
   t.deepEqual(Name.from(a, device).toJSON(), {
     type: "some",
     value: {
-      value: "Hello world",
+      value: "Helloworld",
       sources: [
         {
           type: "descendant",
@@ -1597,5 +1671,148 @@ test(`.from() behaves correctly when encountering a descendant that doesn't
         },
       ],
     },
+  });
+});
+
+test(`.from() does not use implicit <label> elements for naming <input> elements
+      if the <label> element has a non-matching for attribute`, (t) => {
+  const input = <input />;
+
+  <form>
+    <label for="bar">
+      {input}
+      Hello world
+    </label>
+  </form>;
+
+  t.deepEqual(Name.from(input, device).toJSON(), {
+    type: "none",
+  });
+});
+
+test(`.from() correctly assigns names to <input> elements with implicit <label>
+      elements even if IDs are duplicated`, (t) => {
+  const foo = <input id="foo" />;
+  const bar = <input id="foo" />;
+
+  <form>
+    <label>
+      Hello world
+      {foo}
+    </label>
+
+    <label>
+      Lorem ipsum
+      {bar}
+    </label>
+  </form>;
+
+  t.deepEqual(Name.from(foo, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "ancestor",
+          element: "/form[1]/label[1]",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/form[1]/label[1]",
+                name: {
+                  value: "Hello world",
+                  sources: [
+                    {
+                      text: "/form[1]/label[1]/text()[1]",
+                      type: "data",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+
+  t.deepEqual(Name.from(bar, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Lorem ipsum",
+      sources: [
+        {
+          type: "ancestor",
+          element: "/form[1]/label[2]",
+          name: {
+            value: "Lorem ipsum",
+            sources: [
+              {
+                type: "descendant",
+                element: "/form[1]/label[2]",
+                name: {
+                  value: "Lorem ipsum",
+                  sources: [
+                    {
+                      text: "/form[1]/label[2]/text()[1]",
+                      type: "data",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
+test(`.from() only associates <label> elements with for attributes with the
+      first matching element`, (t) => {
+  const foo = <input id="foo" />;
+  const bar = <input id="foo" />;
+
+  <form>
+    <label for="foo">Hello world</label>
+    {foo}
+    {bar}
+  </form>;
+
+  t.deepEqual(Name.from(foo, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "reference",
+          attribute: "/form[1]/label[1]/@for",
+          name: {
+            value: "Hello world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/form[1]/label[1]",
+                name: {
+                  value: "Hello world",
+                  sources: [
+                    {
+                      text: "/form[1]/label[1]/text()[1]",
+                      type: "data",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+
+  t.deepEqual(Name.from(bar, device).toJSON(), {
+    type: "none",
   });
 });

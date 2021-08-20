@@ -7,10 +7,10 @@ import { None } from "@siteimprove/alfa-option";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
-export function evaluate<T, Q>(
-  rule: Rule<Page, T, Q>,
+export function evaluate<T, Q, S>(
+  rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
-  oracle: Oracle<Page, T, Q> = () => Future.now(None)
+  oracle: Oracle<Page, T, Q, S> = () => Future.now(None)
 ): Future<Array<Outcome.JSON>> {
   const {
     request = Request.of("GET", URL.example()),

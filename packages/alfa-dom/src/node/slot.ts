@@ -2,6 +2,9 @@ import { Element } from "./element";
 import { Shadow } from "./shadow";
 import { Slotable } from "./slotable";
 
+/**
+ * @public
+ */
 export interface Slot extends Element {
   /**
    * Get the slotables assigned to this slot.
@@ -11,6 +14,9 @@ export interface Slot extends Element {
   assignedNodes(): Iterable<Slotable>;
 }
 
+/**
+ * @public
+ */
 export namespace Slot {
   export function isSlot(element: Element): boolean;
 

@@ -4,6 +4,9 @@ import { Element } from ".";
 
 export import JSX = _jsx.JSX;
 
+/**
+ * @public
+ */
 export function jsx(
   name: string,
   properties: _jsx.Properties & { children?: _jsx.Child }
@@ -17,9 +20,12 @@ export function jsx(
   }
 }
 
+/**
+ * @public
+ */
 export function jsxs(
   name: string,
-  properties: _jsx.Properties & { children?: Array<_jsx.Child> }
+  properties: _jsx.Properties & { children?: _jsx.Children }
 ): Element {
   const { children, ...rest } = properties;
 
@@ -30,9 +36,12 @@ export function jsxs(
   }
 }
 
+/**
+ * @public
+ */
 export function jsxDEV(
   name: string,
-  properties: _jsx.Properties & { children?: _jsx.Child | Array<_jsx.Child> }
+  properties: _jsx.Properties & { children?: _jsx.Child | _jsx.Children }
 ): Element {
   const { children, ...rest } = properties;
 
