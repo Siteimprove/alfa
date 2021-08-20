@@ -86,6 +86,7 @@
     "src/property/clip.ts",
     "src/property/clip-path.ts",
     "src/property/color.ts",
+    "src/property/cursor.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/font-family.ts",
