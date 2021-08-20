@@ -94,6 +94,7 @@
     { "path": "alfa-time" },
     { "path": "alfa-trampoline" },
     { "path": "alfa-trilean" },
+    { "path": "alfa-tuple" },
     { "path": "alfa-unexpected" },
     { "path": "alfa-url" },
     { "path": "alfa-vue" },

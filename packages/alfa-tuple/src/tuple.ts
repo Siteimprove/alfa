@@ -8,9 +8,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
+/**
+ * @public
+ */
 export type Tuple<T extends ReadonlyArray<unknown> = ReadonlyArray<unknown>> =
   T;
 
+/**
+ * @public
+ */
 export namespace Tuple {
   export type Item<T extends Tuple> = T[number];
 
