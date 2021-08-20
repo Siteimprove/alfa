@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.21.0](../../compare/v0.20.0...v0.21.0) (2021-08-20)
+
 ### Breaking
 
 - [@siteimprove/alfa-collection](packages/alfa-collection): Previous `Collection<T>` functions that depended on details of `T` are now implemented as methods with constrained `this` types. Please see the associated pull request for more details. ([#865](../../pull/865))
