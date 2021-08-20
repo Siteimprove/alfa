@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-tuple",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.18.0",
+  "version": "0.21.0",
   "license": "MIT",
   "description": "Functionality for working with heterogeneous arrays, also called tuples",
   "repository": {
