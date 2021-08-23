@@ -14,8 +14,8 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
-    "*.js",
-    "*.d.ts",
+    "native.js",
+    "native.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
