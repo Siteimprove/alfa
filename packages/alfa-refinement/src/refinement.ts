@@ -70,8 +70,7 @@ export namespace Refinement {
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Predicate<U, A>,
-      ...predicates: Array<Predicate<U, A>>
+      right: Predicate<U, A>
     ): Refinement<T, U, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
