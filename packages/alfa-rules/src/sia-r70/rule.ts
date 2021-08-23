@@ -1,11 +1,10 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { List } from "@siteimprove/alfa-list";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Array } from "@siteimprove/alfa-array";
 
 import { expectation } from "../common/expectation";
 import { hasChild, isRendered, isDocumentElement } from "../common/predicate";
@@ -74,7 +73,7 @@ export default Rule.Atomic.of<Page, Document>({
 
 export namespace Outcomes {
   export const HasNoDeprecatedElement = Ok.of(
-    Diagnostic.of(`The document doesn't contain any deprecated element`)
+    Diagnostic.of(`The document doesn't contain any deprecated elements`)
   );
 
   export const HasDeprecatedElements = (errors: Iterable<Element>) =>
@@ -95,6 +94,7 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
   }
 
   private _errors: ReadonlyArray<Element>;
+
   private constructor(message: string, errors: Array<Element>) {
     super(message);
     this._errors = errors;
@@ -103,8 +103,11 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
   public get errors(): ReadonlyArray<Element> {
     return this._errors;
   }
+
   public equals(value: DeprecatedElements): boolean;
+
   public equals(value: unknown): value is this;
+
   public equals(value: unknown): boolean {
     return (
       value instanceof DeprecatedElements &&
@@ -116,6 +119,7 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
   public *[Symbol.iterator](): Iterator<Element> {
     yield* this._errors;
   }
+
   public toJSON(): DeprecatedElements.JSON {
     return {
       ...super.toJSON(),
