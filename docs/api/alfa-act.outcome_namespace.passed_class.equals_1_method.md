@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-equals<I, T, Q>(value: Passed<I, T, Q>): boolean;
+equals<I, T, Q, S>(value: Passed<I, T, Q, S>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Tag.JSON;
+toJSON(): Tag.JSON<T>;
 ```
 <b>Returns:</b>
 
-[Tag.JSON](./alfa-act.tag_namespace.json_interface.md)
+[Tag.JSON](./alfa-act.tag_namespace.json_interface.md)<!-- -->&lt;T&gt;
 

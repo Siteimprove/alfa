@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function createPlugin<T = unknown, Q = never>(rules: Iterable<act.Rule<Page, T, Q>>, handlers?: Iterable<Handler<Page, T, Q>>, options?: Asserter.Options): globalThis.Chai.ChaiPlugin;
+function createPlugin<T = unknown, Q = never, S = T>(rules: Iterable<act.Rule<Page, T, Q, S>>, handlers?: Iterable<Handler<Page, T, Q, S>>, options?: Asserter.Options<Page, T, Q, S>): globalThis.Chai.ChaiPlugin;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rules | Iterable&lt;act.[Rule](./alfa-act.rule_class.md)<!-- -->&lt;[Page](./alfa-web.page_class.md)<!-- -->, T, Q&gt;&gt; |  |
-|  handlers | Iterable&lt;[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;[Page](./alfa-web.page_class.md)<!-- -->, T, Q&gt;&gt; |  |
-|  options | [Asserter.Options](./alfa-assert.asserter_namespace.options_interface.md) |  |
+|  rules | Iterable&lt;act.[Rule](./alfa-act.rule_class.md)<!-- -->&lt;[Page](./alfa-web.page_class.md)<!-- -->, T, Q, S&gt;&gt; |  |
+|  handlers | Iterable&lt;[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;[Page](./alfa-web.page_class.md)<!-- -->, T, Q, S&gt;&gt; |  |
+|  options | [Asserter.Options](./alfa-assert.asserter_namespace.options_interface.md)<!-- -->&lt;[Page](./alfa-web.page_class.md)<!-- -->, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

@@ -4,6 +4,8 @@
 
 ## Comparable.compare() function
 
+Compare two booleans.
+
 <b>Signature:</b>
 
 ```typescript

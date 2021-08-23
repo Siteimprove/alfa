@@ -46,3 +46,25 @@ test(`evaluate() fails an element with an accumulated font size smaller than 9
     }),
   ]);
 });
+
+test(`evaluate() passes an element with too small a font size when the font size
+      does not affect descendant text`, async (t) => {
+  const target1 = <p style={{ fontSize: "16px" }}>Hello world</p>;
+
+  const target2 = (
+    <div style={{ fontSize: "8px" }}>
+      {target1} {/* Significant whitespace */}
+    </div>
+  );
+
+  const document = h.document([target2]);
+
+  t.deepEqual(await evaluate(R75, { document }), [
+    passed(R75, target2, {
+      1: Outcomes.IsSufficient,
+    }),
+    passed(R75, target1, {
+      1: Outcomes.IsSufficient,
+    }),
+  ]);
+});

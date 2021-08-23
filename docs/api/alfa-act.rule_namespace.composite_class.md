@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-class Composite<I = unknown, T = unknown, Q = never> extends Rule<I, T, Q> 
+class Composite<I = unknown, T = unknown, Q = never, S = T> extends Rule<I, T, Q, S> 
 ```
-<b>Extends:</b> [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;
+<b>Extends:</b> [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [composes](./alfa-act.rule_namespace.composite_class.composes_property.md) |  | ReadonlyArray&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
+|  [composes](./alfa-act.rule_namespace.composite_class.composes_property.md) |  | ReadonlyArray&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
 
 ## Methods
 

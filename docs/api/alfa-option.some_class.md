@@ -20,12 +20,14 @@ export declare class Some<T> implements Option<T>
 |  [and(option)](./alfa-option.some_class.and_1_method.md) |  |  |
 |  [andThen(option)](./alfa-option.some_class.andthen_1_method.md) |  |  |
 |  [apply(mapper)](./alfa-option.some_class.apply_1_method.md) |  |  |
+|  [compare(this, option)](./alfa-option.some_class.compare_1_method.md) |  |  |
 |  [compareWith(option, comparer)](./alfa-option.some_class.comparewith_1_method.md) |  |  |
 |  [equals(value)](./alfa-option.some_class.equals_1_method.md) |  |  |
 |  [every(predicate)](./alfa-option.some_class.every_1_method.md) |  |  |
 |  [filter(refinement)](./alfa-option.some_class.filter_1_method.md) |  |  |
 |  [filter(predicate)](./alfa-option.some_class.filter_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-option.some_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-option.some_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-option.some_class.get_1_method.md) |  |  |
 |  [getOr()](./alfa-option.some_class.getor_1_method.md) |  |  |
 |  [getOrElse()](./alfa-option.some_class.getorelse_1_method.md) |  |  |

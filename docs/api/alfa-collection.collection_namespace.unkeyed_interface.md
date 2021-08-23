@@ -29,6 +29,7 @@ interface Unkeyed<T> extends Collection<T>, Iterable<T>, Serializable<Unkeyed.JS
 |  [find(refinement)](./alfa-collection.collection_namespace.unkeyed_interface.find_1_methodsignature.md) |  |
 |  [find(predicate)](./alfa-collection.collection_namespace.unkeyed_interface.find_2_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-collection.collection_namespace.unkeyed_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-collection.collection_namespace.unkeyed_interface.flatten_1_methodsignature.md) |  |
 |  [forEach(callback)](./alfa-collection.collection_namespace.unkeyed_interface.foreach_1_methodsignature.md) |  |
 |  [get(value)](./alfa-collection.collection_namespace.unkeyed_interface.get_1_methodsignature.md) |  |
 |  [has(value)](./alfa-collection.collection_namespace.unkeyed_interface.has_1_methodsignature.md) |  |

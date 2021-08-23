@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function compareWith<T>(a: ReadonlyArray<T>, b: Iterable<T>, comparer: Comparer<T>): Comparison;
+function compareWith<T, U = T>(a: ReadonlyArray<T>, b: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
 ```
 
 ## Parameters
@@ -15,8 +15,8 @@ function compareWith<T>(a: ReadonlyArray<T>, b: Iterable<T>, comparer: Comparer<
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | ReadonlyArray&lt;T&gt; |  |
-|  b | Iterable&lt;T&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer_typealias.md)<!-- -->&lt;T&gt; |  |
+|  b | Iterable&lt;U&gt; |  |
+|  comparer | [Comparer](./alfa-comparable.comparer_typealias.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

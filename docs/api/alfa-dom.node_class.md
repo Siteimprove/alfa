@@ -33,7 +33,7 @@ export declare abstract class Node implements Iterable<Node>, Equatable, json.Se
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./alfa-dom.node_class._symbol.iterator__1_method.md) |  |  |
 |  [ancestors(options)](./alfa-dom.node_class.ancestors_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-ancestor](https://dom.spec.whatwg.org/#concept-tree-ancestor) |
-|  [children(\_)](./alfa-dom.node_class.children_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-child](https://dom.spec.whatwg.org/#concept-tree-child) |
+|  [children(options)](./alfa-dom.node_class.children_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-child](https://dom.spec.whatwg.org/#concept-tree-child) |
 |  [closest(refinement, options)](./alfa-dom.node_class.closest_1_method.md) |  | [https://dom.spec.whatwg.org/\#dom-element-closest](https://dom.spec.whatwg.org/#dom-element-closest) |
 |  [closest(predicate, options)](./alfa-dom.node_class.closest_2_method.md) |  | [https://dom.spec.whatwg.org/\#dom-element-closest](https://dom.spec.whatwg.org/#dom-element-closest) |
 |  [descendants(options)](./alfa-dom.node_class.descendants_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-descendant](https://dom.spec.whatwg.org/#concept-tree-descendant) |
@@ -46,6 +46,15 @@ export declare abstract class Node implements Iterable<Node>, Equatable, json.Se
 |  [inclusiveDescendants(options)](./alfa-dom.node_class.inclusivedescendants_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-inclusive-descendant](https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant) |
 |  [inclusiveSiblings(options)](./alfa-dom.node_class.inclusivesiblings_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-inclusive-sibling](https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling) |
 |  [index(options)](./alfa-dom.node_class.index_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-index](https://dom.spec.whatwg.org/#concept-tree-index) |
+|  [isAncestorOf(node, options)](./alfa-dom.node_class.isancestorof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-ancestor](https://dom.spec.whatwg.org/#concept-tree-ancestor) |
+|  [isChildOf(node, options)](./alfa-dom.node_class.ischildof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-child](https://dom.spec.whatwg.org/#concept-tree-child) |
+|  [isDescendantOf(node, options)](./alfa-dom.node_class.isdescendantof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-descendant](https://dom.spec.whatwg.org/#concept-tree-descendant) |
+|  [isInclusiveAncestorOf(node, options)](./alfa-dom.node_class.isinclusiveancestorof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-inclusive-ancestor](https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor) |
+|  [isInclusiveDescendantsOf(node, options)](./alfa-dom.node_class.isinclusivedescendantsof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-inclusive-descendant](https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant) |
+|  [isInclusiveSiblingOf(node, options)](./alfa-dom.node_class.isinclusivesiblingof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-inclusive-sibling](https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling) |
+|  [isParentOf(node, options)](./alfa-dom.node_class.isparentof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-parent](https://dom.spec.whatwg.org/#concept-tree-parent) |
+|  [isRootOf(node, options)](./alfa-dom.node_class.isrootof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-root](https://dom.spec.whatwg.org/#concept-tree-root) |
+|  [isSiblingOf(node, options)](./alfa-dom.node_class.issiblingof_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-sibling](https://dom.spec.whatwg.org/#concept-tree-sibling) |
 |  [last(options)](./alfa-dom.node_class.last_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-last-child](https://dom.spec.whatwg.org/#concept-tree-last-child) |
 |  [next(options)](./alfa-dom.node_class.next_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-next-sibling](https://dom.spec.whatwg.org/#concept-tree-next-sibling) |
 |  [parent(options)](./alfa-dom.node_class.parent_1_method.md) |  | [https://dom.spec.whatwg.org/\#concept-tree-parent](https://dom.spec.whatwg.org/#concept-tree-parent) |

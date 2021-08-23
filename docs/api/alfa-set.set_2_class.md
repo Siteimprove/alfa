@@ -40,6 +40,7 @@ export declare class Set<T> implements Collection.Unkeyed<T>
 |  [find(refinement)](./alfa-set.set_2_class.find_1_method.md) |  |  |
 |  [find(predicate)](./alfa-set.set_2_class.find_2_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-set.set_2_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-set.set_2_class.flatten_1_method.md) |  |  |
 |  [forEach(callback)](./alfa-set.set_2_class.foreach_1_method.md) |  |  |
 |  [get(value)](./alfa-set.set_2_class.get_1_method.md) |  |  |
 |  [has(value)](./alfa-set.set_2_class.has_1_method.md) |  |  |

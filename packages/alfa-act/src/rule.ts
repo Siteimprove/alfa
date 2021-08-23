@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -24,22 +25,23 @@ const { flatMap, flatten, reduce } = Iterable;
 /**
  * @public
  */
-export abstract class Rule<I = unknown, T = unknown, Q = never>
+export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   implements
     Equatable,
     json.Serializable<Rule.JSON>,
     earl.Serializable<Rule.EARL>,
-    sarif.Serializable<sarif.ReportingDescriptor> {
+    sarif.Serializable<sarif.ReportingDescriptor>
+{
   protected readonly _uri: string;
   protected readonly _requirements: Array<Requirement>;
   protected readonly _tags: Array<Tag>;
-  protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
+  protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
 
   protected constructor(
     uri: string,
     requirements: Array<Requirement>,
     tags: Array<Tag>,
-    evaluator: Rule.Evaluate<I, T, Q>
+    evaluator: Rule.Evaluate<I, T, Q, S>
   ) {
     this._uri = uri;
     this._requirements = requirements;
@@ -59,15 +61,23 @@ export abstract class Rule<I = unknown, T = unknown, Q = never>
     return this._tags;
   }
 
+  public hasRequirement(requirement: Requirement): boolean {
+    return Array.includes(this._requirements, requirement);
+  }
+
+  public hasTag(tag: Tag): boolean {
+    return Array.includes(this._tags, tag);
+  }
+
   public evaluate(
-    input: Readonly<I>,
-    oracle: Oracle<I, T, Q> = () => Future.now(None),
+    input: I,
+    oracle: Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty()
-  ): Future<Iterable<Outcome<I, T, Q>>> {
+  ): Future<Iterable<Outcome<I, T, Q, S>>> {
     return this._evaluate(input, oracle, outcomes);
   }
 
-  public equals<I, T, Q>(value: Rule<I, T, Q>): boolean;
+  public equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
 
   public equals(value: unknown): value is this;
 
@@ -123,13 +133,17 @@ export namespace Rule {
     };
   }
 
-  export type Input<R> = R extends Rule<infer I, any, any> ? I : never;
+  export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
 
-  export type Target<R> = R extends Rule<any, infer T, any> ? T : never;
+  export type Target<R> = R extends Rule<any, infer T, any, any> ? T : never;
 
-  export type Question<R> = R extends Rule<any, any, infer Q> ? Q : never;
+  export type Question<R> = R extends Rule<any, any, infer Q, any> ? Q : never;
 
-  export function isRule<I, T, Q>(value: unknown): value is Rule<I, T, Q> {
+  export type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
+
+  export function isRule<I, T, Q, S>(
+    value: unknown
+  ): value is Rule<I, T, Q, S> {
     return value instanceof Rule;
   }
 
@@ -155,23 +169,24 @@ export namespace Rule {
    * approach in combination with memoization to avoid the risk of repeating
    * rule evaluation procedures.
    */
-  export interface Evaluate<I, T, Q> {
-    (input: Readonly<I>, oracle: Oracle<I, T, Q>, outcomes: Cache): Future<
-      Iterable<Outcome<I, T, Q>>
+  export interface Evaluate<I, T, Q, S> {
+    (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
+      Iterable<Outcome<I, T, Q, S>>
     >;
   }
 
-  export class Atomic<I = unknown, T = unknown, Q = never> extends Rule<
+  export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
     I,
     T,
-    Q
+    Q,
+    S
   > {
-    public static of<I, T = unknown, Q = never>(properties: {
+    public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
-      evaluate: Atomic.Evaluate<I, T, Q>;
-    }): Atomic<I, T, Q> {
+      evaluate: Atomic.Evaluate<I, T, Q, S>;
+    }): Atomic<I, T, Q, S> {
       return new Atomic(
         properties.uri,
         Array.from(properties.requirements ?? []),
@@ -184,7 +199,7 @@ export namespace Rule {
       uri: string,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
-      evaluate: Atomic.Evaluate<I, T, Q>
+      evaluate: Atomic.Evaluate<I, T, Q, S>
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes) =>
         outcomes.get(this, () => {
@@ -198,7 +213,7 @@ export namespace Rule {
             )
           )
             .map((targets) => Sequence.from(flatten<T>(targets)))
-            .flatMap<Iterable<Outcome<I, T, Q>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
@@ -228,40 +243,43 @@ export namespace Rule {
       type: "atomic";
     }
 
-    export interface Evaluate<I, T, Q> {
-      (input: Readonly<I>): {
-        applicability(): Iterable<Interview<Q, T, Option.Maybe<T>>>;
-        expectations(
-          target: T
-        ): {
-          [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+    export interface Evaluate<I, T, Q, S> {
+      (input: I): {
+        applicability(): Iterable<Interview<Q, S, T, Option.Maybe<T>>>;
+        expectations(target: T): {
+          [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
       };
     }
   }
 
-  export function isAtomic<I, T, Q>(
-    value: Rule<I, T, Q>
-  ): value is Atomic<I, T, Q>;
+  export function isAtomic<I, T, Q, S>(
+    value: Rule<I, T, Q, S>
+  ): value is Atomic<I, T, Q, S>;
 
-  export function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q>;
+  export function isAtomic<I, T, Q, S>(
+    value: unknown
+  ): value is Atomic<I, T, Q, S>;
 
-  export function isAtomic<I, T, Q>(value: unknown): value is Atomic<I, T, Q> {
+  export function isAtomic<I, T, Q, S>(
+    value: unknown
+  ): value is Atomic<I, T, Q, S> {
     return value instanceof Atomic;
   }
 
-  export class Composite<I = unknown, T = unknown, Q = never> extends Rule<
-    I,
-    T,
-    Q
-  > {
-    public static of<I, T = unknown, Q = never>(properties: {
+  export class Composite<
+    I = unknown,
+    T = unknown,
+    Q = never,
+    S = T
+  > extends Rule<I, T, Q, S> {
+    public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
-      composes: Iterable<Rule<I, T, Q>>;
-      evaluate: Composite.Evaluate<I, T, Q>;
-    }): Composite<I, T, Q> {
+      composes: Iterable<Rule<I, T, Q, S>>;
+      evaluate: Composite.Evaluate<I, T, Q, S>;
+    }): Composite<I, T, Q, S> {
       return new Composite(
         properties.uri,
         Array.from(properties.requirements ?? []),
@@ -271,14 +289,14 @@ export namespace Rule {
       );
     }
 
-    private readonly _composes: Array<Rule<I, T, Q>>;
+    private readonly _composes: Array<Rule<I, T, Q, S>>;
 
     private constructor(
       uri: string,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
-      composes: Array<Rule<I, T, Q>>,
-      evaluate: Composite.Evaluate<I, T, Q>
+      composes: Array<Rule<I, T, Q, S>>,
+      evaluate: Composite.Evaluate<I, T, Q, S>
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes) =>
         outcomes.get(this, () =>
@@ -296,7 +314,7 @@ export namespace Rule {
                 })
               )
             )
-            .flatMap<Iterable<Outcome<I, T, Q>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
@@ -320,7 +338,7 @@ export namespace Rule {
       this._composes = composes;
     }
 
-    public get composes(): ReadonlyArray<Rule<I, T, Q>> {
+    public get composes(): ReadonlyArray<Rule<I, T, Q, S>> {
       return this._composes;
     }
 
@@ -344,12 +362,10 @@ export namespace Rule {
       composes: Array<Rule.JSON>;
     }
 
-    export interface Evaluate<I, T, Q> {
-      (input: Readonly<I>): {
-        expectations(
-          outcomes: Sequence<Outcome.Applicable<I, T, Q>>
-        ): {
-          [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+    export interface Evaluate<I, T, Q, S> {
+      (input: I): {
+        expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
+          [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
       };
     }
@@ -370,14 +386,14 @@ export namespace Rule {
   }
 }
 
-function resolve<I, T, Q>(
+function resolve<I, T, Q, S>(
   target: T,
   expectations: Record<{
-    [key: string]: Interview<Q, T, Option.Maybe<Result<Diagnostic>>>;
+    [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
-  rule: Rule<I, T, Q>,
-  oracle: Oracle<I, T, Q>
-): Future<Outcome.Applicable<I, T, Q>> {
+  rule: Rule<I, T, Q, S>,
+  oracle: Oracle<I, T, Q, S>
+): Future<Outcome.Applicable<I, T, Q, S>> {
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(
       (expectation) => [id, expectation] as const

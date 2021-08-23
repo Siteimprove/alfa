@@ -8,12 +8,16 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Monad<T> 
+export interface Monad<T> extends Functor<T>, Applicative<T> 
 ```
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
+|  [apply(mapper)](./alfa-monad.monad_interface.apply_1_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-monad.monad_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-monad.monad_interface.flatten_1_methodsignature.md) |  |
+|  [map(mapper)](./alfa-monad.monad_interface.map_1_methodsignature.md) |  |
 

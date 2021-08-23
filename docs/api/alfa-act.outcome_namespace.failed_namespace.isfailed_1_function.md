@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isFailed<I, T, Q>(value: Outcome<I, T, Q>): value is Failed<I, T, Q>;
+function isFailed<I, T, Q, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-value is [Failed](./alfa-act.outcome_namespace.failed_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Failed](./alfa-act.outcome_namespace.failed_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

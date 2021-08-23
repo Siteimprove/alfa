@@ -53,7 +53,7 @@ export const parseList = map(
 export default Property.register(
   "background-origin",
   Property.of<Specified, Computed>(
-    List.of([Keyword.of("border-box")], ", "),
+    List.of([Keyword.of("padding-box")], ", "),
     parseList,
     (value) => value
   )

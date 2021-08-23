@@ -7,22 +7,22 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T = unknown, Q = never>(properties: {
+static of<I, T = unknown, Q = never, S = T>(properties: {
             uri: string;
             requirements?: Iterable<Requirement>;
             tags?: Iterable<Tag>;
-            composes: Iterable<Rule<I, T, Q>>;
-            evaluate: Composite.Evaluate<I, T, Q>;
-        }): Composite<I, T, Q>;
+            composes: Iterable<Rule<I, T, Q, S>>;
+            evaluate: Composite.Evaluate<I, T, Q, S>;
+        }): Composite<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule_namespace.composite_namespace.evaluate_interface.md)<!-- -->&lt;I, T, Q&gt;; } |  |
+|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement_class.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag_class.md)<!-- -->&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule_namespace.composite_namespace.evaluate_interface.md)<!-- -->&lt;I, T, Q, S&gt;; } |  |
 
 <b>Returns:</b>
 
-[Composite](./alfa-act.rule_namespace.composite_class.md)<!-- -->&lt;I, T, Q&gt;
+[Composite](./alfa-act.rule_namespace.composite_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

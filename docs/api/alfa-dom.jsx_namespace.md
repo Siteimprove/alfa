@@ -28,4 +28,5 @@ export declare namespace jsx
 |  Type Alias | Description |
 |  --- | --- |
 |  [Child](./alfa-dom.jsx_namespace.child_typealias.md) |  |
+|  [Children](./alfa-dom.jsx_namespace.children_typealias.md) |  |
 

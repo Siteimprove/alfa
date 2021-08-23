@@ -337,7 +337,7 @@ export namespace Sequence {
     // (undocumented)
     export function from<T>(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)
-    export function fromArray<T>(array: Array_2<T>): Sequence<T>;
+    export function fromArray<T>(array: ReadonlyArray<T>): Sequence<T>;
     // (undocumented)
     export function fromIterable<T>(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)

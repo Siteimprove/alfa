@@ -578,6 +578,80 @@ test(`.from() determines the name of an <a> element with text in its subtree,
       when there are multiple nested sources`, (t) => {
   const a = (
     <a href="#" title="Content">
+      <span>Hello</span> <span>world</span>
+    </a>
+  );
+
+  t.deepEqual(Name.from(a, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Hello world",
+      sources: [
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "Hello",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/span[1]",
+                name: {
+                  value: "Hello",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/span[1]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: " ",
+            sources: [
+              {
+                type: "data",
+                text: "/a[1]/text()[1]",
+              },
+            ],
+          },
+        },
+        {
+          type: "descendant",
+          element: "/a[1]",
+          name: {
+            value: "world",
+            sources: [
+              {
+                type: "descendant",
+                element: "/a[1]/span[2]",
+                name: {
+                  value: "world",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/a[1]/span[2]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
+test(`.from() joins descendant names without a space`, (t) => {
+  const a = (
+    <a href="#">
       <span>Hello</span>
       <span>world</span>
     </a>
@@ -586,7 +660,7 @@ test(`.from() determines the name of an <a> element with text in its subtree,
   t.deepEqual(Name.from(a, device).toJSON(), {
     type: "some",
     value: {
-      value: "Hello world",
+      value: "Helloworld",
       sources: [
         {
           type: "descendant",

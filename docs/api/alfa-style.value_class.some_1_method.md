@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-some(predicate: Predicate<T, [Option<Declaration>]>): boolean;
+some(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, \[[Option](./alfa-option.option_interface.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration_class.md)<!-- -->&gt;\]&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, \[source: [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration_class.md)<!-- -->&gt;\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
+compareWith<U = T>(iterable: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer_typealias.md)<!-- -->&lt;T&gt; |  |
+|  iterable | Iterable&lt;U&gt; |  |
+|  comparer | [Comparer](./alfa-comparable.comparer_typealias.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 

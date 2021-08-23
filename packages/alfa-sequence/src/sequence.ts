@@ -151,7 +151,7 @@ export namespace Sequence {
     return fromIterable(iterable);
   }
 
-  export function fromArray<T>(array: Array<T>): Sequence<T> {
+  export function fromArray<T>(array: ReadonlyArray<T>): Sequence<T> {
     let i = 0;
 
     const tail = (): Sequence<T> => {

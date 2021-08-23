@@ -70,17 +70,17 @@ export default Rule.Atomic.of<Page, Text, Question>({
 
       expectations(target) {
         const foregrounds = Question.of(
-          "foreground-colors",
           "color[]",
-          target,
-          "What are the foreground colors of the text node?"
+          "foreground-colors",
+          "What are the foreground colors of the text node?",
+          target
         );
 
         const backgrounds = Question.of(
-          "background-colors",
           "color[]",
-          target,
-          "What are the background colors of the text node?"
+          "background-colors",
+          "What are the background colors of the text node?",
+          target
         );
 
         const result = foregrounds.map((foregrounds) =>

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isInapplicable<I, T, Q>(value: unknown): value is Inapplicable<I, T, Q>;
+function isInapplicable<I, T, Q, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isInapplicable<I, T, Q>(value: unknown): value is Inapplicable<I, T, Q>
 
 <b>Returns:</b>
 
-value is [Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
 <b>Returns:</b>
 
-[Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;T&gt;
+[Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;U&gt;
 
