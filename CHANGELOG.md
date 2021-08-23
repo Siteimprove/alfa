@@ -29,6 +29,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-wcag](packages/alfa-wcag): The technique and criteria data has been updated based on the WCAG Working Draft of 21 May.
 
+### Fixed
+
+- [@siteimprove/alfa-act](packages/alfa-act): A variance regression in `Rule.Evaluate` has been fixed.
+
 ## [0.21.0](../../compare/v0.20.0...v0.21.0) (2021-08-20)
 
 ### Breaking
