@@ -78,10 +78,7 @@ export namespace Outcomes {
 
   export const HasDeprecatedElements = (errors: Iterable<Element>) =>
     Err.of(
-      DeprecatedElements.of(
-        `The document contains deprecated elements: `,
-        errors
-      )
+      DeprecatedElements.of(`The document contains deprecated elements`, errors)
     );
 }
 
