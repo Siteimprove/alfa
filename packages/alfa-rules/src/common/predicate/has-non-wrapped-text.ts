@@ -6,6 +6,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { hasChild } from "./has-child";
 import { hasComputedStyle } from "./has-computed-style";
+import { isVisible } from "./is-visible";
 
 const { and, or, test } = Refinement;
 const { isElement } = Element;
@@ -20,7 +21,7 @@ export function hasNonWrappedText(device: Device): Predicate<Element | Text> {
       () =>
         test(
           and(
-            hasChild(isText, {
+            hasChild(and(isText, isVisible(device)), {
               flattened: true,
             }),
             hasComputedStyle(
