@@ -21,6 +21,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 no longer fails invisible text nodes, such as whitespace, that it might deem not to wrap properly. ([#898](../../pull/898))
+
 ## [0.21.1](../../compare/v0.21.0...v0.21.1) (2021-08-23)
 
 ### Changed
