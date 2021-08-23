@@ -680,7 +680,7 @@ export namespace List {
     return fromIterable(iterable);
   }
 
-  export function fromArray<T>(array: Array<T>): List<T> {
+  export function fromArray<T>(array: ReadonlyArray<T>): List<T> {
     const size = array.length;
 
     // Fast path: The array fits within the tail.

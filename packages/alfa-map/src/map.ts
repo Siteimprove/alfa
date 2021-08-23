@@ -327,7 +327,9 @@ export namespace Map {
     return fromIterable(iterable);
   }
 
-  export function fromArray<K, V>(array: Array<readonly [K, V]>): Map<K, V> {
+  export function fromArray<K, V>(
+    array: ReadonlyArray<readonly [K, V]>
+  ): Map<K, V> {
     return Array.reduce(
       array,
       (map, [key, value]) => map.set(key, value),

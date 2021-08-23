@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-class Inapplicable<I, T, Q = unknown> extends Outcome<I, T, Q> 
+class Inapplicable<I, T, Q = unknown, S = T> extends Outcome<I, T, Q, S> 
 ```
-<b>Extends:</b> [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt;
+<b>Extends:</b> [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt;
 
 ## Methods
 

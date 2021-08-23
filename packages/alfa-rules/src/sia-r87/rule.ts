@@ -70,24 +70,24 @@ export default Rule.Atomic.of<Page, Document, Question>({
           .filter(and(isElement, hasRole(device, "main")));
 
         const askIsMain = Question.of(
-          "first-tabbable-reference-is-main",
           "boolean",
-          target,
-          `Does the first tabbable element of the document point to the main content?`
+          "first-tabbable-reference-is-main",
+          `Does the first tabbable element of the document point to the main content?`,
+          target
         );
 
         const askIsInteralLink = Question.of(
-          "first-tabbable-is-internal-link",
           "boolean",
-          target,
-          `Is the first tabbable element of the document an internal link?`
+          "first-tabbable-is-internal-link",
+          `Is the first tabbable element of the document an internal link?`,
+          target
         );
 
         const askReference = Question.of(
-          "first-tabbable-reference",
           "node",
-          document,
-          `Where in the document does the first tabbable element point?`
+          "first-tabbable-reference",
+          `Where in the document does the first tabbable element point?`,
+          target
         );
 
         return {

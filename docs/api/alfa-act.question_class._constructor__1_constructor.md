@@ -9,16 +9,17 @@ Constructs a new instance of the `Question` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(uri: string, type: Q, subject: S, message: string, quester: Mapper<A, T>);
+protected constructor(type: Q, uri: string, message: string, subject: S, context: C, quester: Mapper<A, T>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  uri | string |  |
 |  type | Q |  |
-|  subject | S |  |
+|  uri | string |  |
 |  message | string |  |
+|  subject | S |  |
+|  context | C |  |
 |  quester | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;A, T&gt; |  |
 

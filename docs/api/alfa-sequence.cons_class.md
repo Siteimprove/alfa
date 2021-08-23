@@ -27,6 +27,7 @@ export declare class Cons<T> implements Sequence<T>
 |  [apply(mapper)](./alfa-sequence.cons_class.apply_1_method.md) |  |  |
 |  [collect(mapper)](./alfa-sequence.cons_class.collect_1_method.md) |  |  |
 |  [collectFirst(mapper)](./alfa-sequence.cons_class.collectfirst_1_method.md) |  |  |
+|  [compare(this, iterable)](./alfa-sequence.cons_class.compare_1_method.md) |  |  |
 |  [compareWith(iterable, comparer)](./alfa-sequence.cons_class.comparewith_1_method.md) |  |  |
 |  [concat(iterable)](./alfa-sequence.cons_class.concat_1_method.md) |  |  |
 |  [count(predicate)](./alfa-sequence.cons_class.count_1_method.md) |  |  |
@@ -39,6 +40,7 @@ export declare class Cons<T> implements Sequence<T>
 |  [find(predicate)](./alfa-sequence.cons_class.find_2_method.md) |  |  |
 |  [first()](./alfa-sequence.cons_class.first_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-sequence.cons_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-sequence.cons_class.flatten_1_method.md) |  |  |
 |  [forEach(callback)](./alfa-sequence.cons_class.foreach_1_method.md) |  |  |
 |  [get(index)](./alfa-sequence.cons_class.get_1_method.md) |  |  |
 |  [groupBy(grouper)](./alfa-sequence.cons_class.groupby_1_method.md) |  |  |
@@ -71,14 +73,17 @@ export declare class Cons<T> implements Sequence<T>
 |  [skipWhile(predicate)](./alfa-sequence.cons_class.skipwhile_1_method.md) |  |  |
 |  [slice(start, end)](./alfa-sequence.cons_class.slice_1_method.md) |  |  |
 |  [some(predicate)](./alfa-sequence.cons_class.some_1_method.md) |  |  |
+|  [sort(this)](./alfa-sequence.cons_class.sort_1_method.md) |  |  |
 |  [sortWith(comparer)](./alfa-sequence.cons_class.sortwith_1_method.md) |  |  |
 |  [subtract(iterable)](./alfa-sequence.cons_class.subtract_1_method.md) |  |  |
 |  [take(count)](./alfa-sequence.cons_class.take_1_method.md) |  |  |
 |  [takeLast(count)](./alfa-sequence.cons_class.takelast_1_method.md) |  |  |
 |  [takeLastUntil(predicate)](./alfa-sequence.cons_class.takelastuntil_1_method.md) |  |  |
-|  [takeLastWhile(predicate)](./alfa-sequence.cons_class.takelastwhile_1_method.md) |  |  |
+|  [takeLastWhile(refinement)](./alfa-sequence.cons_class.takelastwhile_1_method.md) |  |  |
+|  [takeLastWhile(predicate)](./alfa-sequence.cons_class.takelastwhile_2_method.md) |  |  |
 |  [takeUntil(predicate)](./alfa-sequence.cons_class.takeuntil_1_method.md) |  |  |
-|  [takeWhile(predicate)](./alfa-sequence.cons_class.takewhile_1_method.md) |  |  |
+|  [takeWhile(refinement)](./alfa-sequence.cons_class.takewhile_1_method.md) |  |  |
+|  [takeWhile(predicate)](./alfa-sequence.cons_class.takewhile_2_method.md) |  |  |
 |  [toArray()](./alfa-sequence.cons_class.toarray_1_method.md) |  |  |
 |  [toJSON()](./alfa-sequence.cons_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-sequence.cons_class.tostring_1_method.md) |  |  |

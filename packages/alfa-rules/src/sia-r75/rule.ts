@@ -53,6 +53,7 @@ export default Rule.Atomic.of<Page, Element>({
             nested: true,
           })
           .filter(isText)
+          .reject((text) => text.data.trim() === "")
           .collect((text) => text.parent().filter(isElement))
           .every(
             or(

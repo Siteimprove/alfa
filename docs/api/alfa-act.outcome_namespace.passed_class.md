@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-class Passed<I, T, Q = never> extends Outcome<I, T, Q> 
+class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> 
 ```
-<b>Extends:</b> [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt;
+<b>Extends:</b> [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt;
 
 ## Properties
 

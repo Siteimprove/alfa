@@ -4,20 +4,20 @@ import { Result, Err } from "@siteimprove/alfa-result";
 /**
  * @public
  */
-export type Formatter<I = unknown, T = unknown, Q = never> = (
+export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (
   input: I,
-  rules: Iterable<Rule<I, T, Q>>,
-  outcomes: Iterable<Outcome<I, T, Q>>
+  rules: Iterable<Rule<I, T, Q, S>>,
+  outcomes: Iterable<Outcome<I, T, Q, S>>
 ) => string;
 
 /**
  * @public
  */
 export namespace Formatter {
-  export async function load<I, T = unknown, Q = never>(
+  export async function load<I, T = unknown, Q = never, S = T>(
     name: string,
     defaultScope: string = "@siteimprove"
-  ): Promise<Result<Formatter<I, T, Q>, string>> {
+  ): Promise<Result<Formatter<I, T, Q, S>, string>> {
     let scope: string | undefined;
 
     if (name.startsWith("@")) {

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isPassed<I, T, Q>(value: Outcome<I, T, Q>): value is Passed<I, T, Q>;
+function isPassed<I, T, Q, S>(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-value is [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

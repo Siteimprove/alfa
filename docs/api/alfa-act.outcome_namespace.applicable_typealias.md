@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Applicable<I, T, Q = unknown> = Passed<I, T, Q> | Failed<I, T, Q> | CantTell<I, T, Q>;
+type Applicable<I, T, Q = unknown, S = T> = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
 ```
 <b>References:</b> [Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->, [Failed](./alfa-act.outcome_namespace.failed_class.md)<!-- -->, [CantTell](./alfa-act.outcome_namespace.canttell_class.md)
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-mapOrElse<E, U>(ok: Mapper<T, U>): U;
+mapOrElse<U>(ok: Mapper<T, U>): U;
 ```
 
 ## Parameters

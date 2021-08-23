@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> 
+export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Result.JSON](./alfa-result.result_namespace.json_typealias.md)<!-- -->&lt;T, E&gt;&gt;
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)<!-- -->, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Result.JSON](./alfa-result.result_namespace.json_typealias.md)<!-- -->&lt;T, E&gt;&gt;
 
 ## Methods
 
@@ -23,6 +23,7 @@ export interface Result<T, E = T> extends Functor<T>, Monad<T>, Foldable<T>, App
 |  [every(predicate)](./alfa-result.result_interface.every_1_methodsignature.md) |  |
 |  [everyErr(predicate)](./alfa-result.result_interface.everyerr_1_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-result.result_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-result.result_interface.flatten_1_methodsignature.md) |  |
 |  [get()](./alfa-result.result_interface.get_1_methodsignature.md) |  |
 |  [getErr()](./alfa-result.result_interface.geterr_1_methodsignature.md) |  |
 |  [getOr(value)](./alfa-result.result_interface.getor_1_methodsignature.md) |  |

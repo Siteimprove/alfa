@@ -4,6 +4,8 @@
 
 ## Comparable.isLessThan() function
 
+Check if one value is less than another.
+
 <b>Signature:</b>
 
 ```typescript

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get expect(): Mapper<I, Assertion<I, T, Q>>;
+readonly expect: (input: I, options?: Assertion.Options<I, T, Q, S>) => Assertion<I, T, Q, S>;
 ```

@@ -7,20 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T, Q>(rule: Rule<I, T, Q>, target: T, expectations: Record<{
+static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
             [key: string]: Result<Diagnostic>;
-        }>): Passed<I, T, Q>;
+        }>): Passed<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  target | T |  |
 |  expectations | Record&lt;{ \[key: string\]: [Result](./alfa-result.result_interface.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic_class.md)<!-- -->&gt;; }&gt; |  |
 
 <b>Returns:</b>
 
-[Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q&gt;
+[Passed](./alfa-act.outcome_namespace.passed_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

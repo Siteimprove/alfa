@@ -57,6 +57,7 @@ export function hasInputType(
   } else {
     predicate = equals(inputTypeOrPredicate, ...inputTypes);
   }
+
   return (element) => {
     if (element.name !== "input") {
       return false;

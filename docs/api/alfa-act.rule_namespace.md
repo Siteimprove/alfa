@@ -49,5 +49,6 @@ export declare namespace Rule
 |  --- | --- |
 |  [Input](./alfa-act.rule_namespace.input_typealias.md) |  |
 |  [Question](./alfa-act.rule_namespace.question_typealias.md) |  |
+|  [Subject](./alfa-act.rule_namespace.subject_typealias.md) |  |
 |  [Target](./alfa-act.rule_namespace.target_typealias.md) |  |
 

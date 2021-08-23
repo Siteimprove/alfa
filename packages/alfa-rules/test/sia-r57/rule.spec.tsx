@@ -30,6 +30,21 @@ test("evaluate() fails a text node that is not included in a landmark", async (t
   ]);
 });
 
+test("evaluate() passes a text node that is part of the first focusable element", async (t) => {
+  const target = h.text("Skip to content");
+
+  const document = h.document([
+    <a href="#content">{target}</a>,
+    <main id="content" />,
+  ]);
+
+  t.deepEqual(await evaluate(R57, { document }), [
+    passed(R57, target, {
+      1: Outcomes.IsIncludedInFirstFocusableElement,
+    }),
+  ]);
+});
+
 test("evaluate() is not applicable to text nodes not in the accessibility tree", async (t) => {
   const document = h.document([
     <div hidden>This text is not in the accessibility tree</div>,

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isInapplicable<I, T, Q>(value: Outcome<I, T, Q>): value is Inapplicable<I, T, Q>;
+function isInapplicable<I, T, Q, S>(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Outcome](./alfa-act.outcome_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-value is [Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

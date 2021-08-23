@@ -18,8 +18,8 @@ export declare class Element extends Node implements Slot, Slotable
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attributes](./alfa-dom.element_class.attributes_property.md) |  | Iterable&lt;[Attribute](./alfa-dom.attribute_class.md)<!-- -->&gt; |  |
-|  [classes](./alfa-dom.element_class.classes_property.md) |  | Iterable&lt;string&gt; | [https://dom.spec.whatwg.org/\#concept-class](https://dom.spec.whatwg.org/#concept-class) |
+|  [attributes](./alfa-dom.element_class.attributes_property.md) |  | [Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute_class.md)<!-- -->&gt; |  |
+|  [classes](./alfa-dom.element_class.classes_property.md) |  | [Sequence](./alfa-sequence.sequence_interface.md)<!-- -->&lt;string&gt; | [https://dom.spec.whatwg.org/\#concept-class](https://dom.spec.whatwg.org/#concept-class) |
 |  [content](./alfa-dom.element_class.content_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Document](./alfa-dom.document_class.md)<!-- -->&gt; |  |
 |  [id](./alfa-dom.element_class.id_property.md) |  | [Option](./alfa-option.option_interface.md)<!-- -->&lt;string&gt; | [https://dom.spec.whatwg.org/\#concept-id](https://dom.spec.whatwg.org/#concept-id) |
 |  [name](./alfa-dom.element_class.name_property.md) |  | string |  |
@@ -35,7 +35,8 @@ export declare class Element extends Node implements Slot, Slotable
 |  --- | --- | --- |
 |  [assignedNodes()](./alfa-dom.element_class.assignednodes_1_method.md) |  | [https://html.spec.whatwg.org/\#dom-slot-assignednodes](https://html.spec.whatwg.org/#dom-slot-assignednodes) |
 |  [assignedSlot()](./alfa-dom.element_class.assignedslot_1_method.md) |  | [https://dom.spec.whatwg.org/\#dom-slotable-assignedslot](https://dom.spec.whatwg.org/#dom-slotable-assignedslot) |
-|  [attribute(predicate)](./alfa-dom.element_class.attribute_1_method.md) |  |  |
+|  [attribute(name)](./alfa-dom.element_class.attribute_1_method.md) |  |  |
+|  [attribute(predicate)](./alfa-dom.element_class.attribute_2_method.md) |  |  |
 |  [children(options)](./alfa-dom.element_class.children_1_method.md) |  |  |
 |  [isVoid()](./alfa-dom.element_class.isvoid_1_method.md) |  | [https://html.spec.whatwg.org/\#void-elements](https://html.spec.whatwg.org/#void-elements) |
 |  [of(namespace, prefix, name, attributes, children, style)](./alfa-dom.element_class.of_1_method.md) | <code>static</code> |  |

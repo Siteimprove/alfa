@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface Evaluate<I, T, Q> 
+interface Evaluate<I, T, Q, S> 
 ```
 
 ## Remarks

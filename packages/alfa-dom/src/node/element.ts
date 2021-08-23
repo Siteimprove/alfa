@@ -96,8 +96,8 @@ export class Element extends Node implements Slot, Slotable {
     );
   }
 
-  public get attributes(): Iterable<Attribute> {
-    return this._attributes.values();
+  public get attributes(): Sequence<Attribute> {
+    return Sequence.from(this._attributes.values());
   }
 
   public get style(): Option<Block> {
@@ -122,8 +122,8 @@ export class Element extends Node implements Slot, Slotable {
   /**
    * {@link https://dom.spec.whatwg.org/#concept-class}
    */
-  public get classes(): Iterable<string> {
-    return this._classes;
+  public get classes(): Sequence<string> {
+    return Sequence.from(this._classes);
   }
 
   public parent(options: Node.Traversal = {}): Option<Node> {
@@ -178,13 +178,17 @@ export class Element extends Node implements Slot, Slotable {
     return Sequence.from(children);
   }
 
+  public attribute(name: string): Option<Attribute>;
+
+  public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+
   public attribute(
-    predicate: string | Predicate<Attribute>
+    nameOrPredicate: string | Predicate<Attribute>
   ): Option<Attribute> {
-    if (typeof predicate === "string") {
-      return Option.from(this._attributes.get(predicate));
+    if (typeof nameOrPredicate === "string") {
+      return Option.from(this._attributes.get(nameOrPredicate));
     } else {
-      return Iterable.find(this._attributes.values(), predicate);
+      return Iterable.find(this._attributes.values(), nameOrPredicate);
     }
   }
 

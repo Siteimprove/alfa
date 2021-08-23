@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-static start<I, T, Q>(rule: Rule<I, T, Q>): Event<I, T, Q>;
+static start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-[Event](./alfa-act.audit_namespace.event_class.md)<!-- -->&lt;I, T, Q&gt;
+[Event](./alfa-act.audit_namespace.event_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

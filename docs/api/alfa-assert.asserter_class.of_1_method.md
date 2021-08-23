@@ -7,18 +7,18 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T, Q>(rules: Iterable<Rule<I, T, Q>>, handlers?: Iterable<Handler<I, T, Q>>, options?: Asserter.Options): Asserter<I, T, Q>;
+static of<I, T, Q, S>(rules: Iterable<Rule<I, T, Q, S>>, handlers?: Iterable<Handler<I, T, Q, S>>, options?: Asserter.Options<I, T, Q, S>): Asserter<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rules | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
-|  handlers | Iterable&lt;[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
-|  options | [Asserter.Options](./alfa-assert.asserter_namespace.options_interface.md) |  |
+|  rules | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
+|  handlers | Iterable&lt;[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
+|  options | [Asserter.Options](./alfa-assert.asserter_namespace.options_interface.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-[Asserter](./alfa-assert.asserter_class.md)<!-- -->&lt;I, T, Q&gt;
+[Asserter](./alfa-assert.asserter_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

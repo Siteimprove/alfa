@@ -15,5 +15,6 @@ export declare namespace Question
 
 |  Function | Description |
 |  --- | --- |
-|  [of(uri, type, subject, message)](./alfa-rules.question_namespace.of_1_function.md) |  |
+|  [of(type, uri, message, subject)](./alfa-rules.question_namespace.of_1_function.md) |  |
+|  [of(type, uri, message, subject, context)](./alfa-rules.question_namespace.of_2_function.md) |  |
 

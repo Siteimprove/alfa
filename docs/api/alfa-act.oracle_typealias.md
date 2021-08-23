@@ -8,8 +8,8 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Oracle<I, T, Q> = <A>(rule: Rule<I, T, Q>, question: {
-    [K in keyof Q]: Question<K, T, Q[K], A>;
+export declare type Oracle<I, T, Q, S> = <A>(rule: Rule<I, T, Q, S>, question: {
+    [K in keyof Q]: Question<K, S, T, Q[K], A>;
 }[keyof Q]) => Future<Option<A>>;
 ```
 <b>References:</b> [Rule](./alfa-act.rule_class.md)<!-- -->, [Question](./alfa-act.question_class.md)<!-- -->, [Future](./alfa-future.future_class.md)<!-- -->, [Option](./alfa-option.option_interface.md)

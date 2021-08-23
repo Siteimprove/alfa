@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Question.JSON<Q, S>;
+toJSON(): Question.JSON<Q, S, C>;
 ```
 <b>Returns:</b>
 
-[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S&gt;
+[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S, C&gt;
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-mapErr(): this;
+mapErr(): Ok<T>;
 ```
 <b>Returns:</b>
 
-this
+[Ok](./alfa-result.ok_class.md)<!-- -->&lt;T&gt;
 

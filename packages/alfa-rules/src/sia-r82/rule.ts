@@ -2,7 +2,6 @@ import { Rule, Interview, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Option } from "@siteimprove/alfa-option";
 import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -17,7 +16,7 @@ import { Question } from "../common/question";
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question, Node>({
   uri: "https://alfa.siteimprove.com/rules/sia-r82",
   requirements: [Criterion.of("3.3.1")],
   evaluate({ device, document }) {
@@ -49,40 +48,38 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
       expectations(target) {
         const indicators = Question.of(
-          "error-indicators",
           "node[]",
-          target,
-          `Where are the error indicators, if any, for the form field?`
+          "error-indicators",
+          `Where are the error indicators, if any, for the form field?`,
+          target
         ).map((indicators) => [...indicators]);
 
         return {
-          1: <Interview<Question, Element, Option<Result<Diagnostic>>>>(
-            indicators.map((indicators) =>
-              expectation(
-                indicators.length === 0,
-                () => Outcomes.HasNoErrorIndicator,
-                () =>
-                  identifiesTarget(
-                    indicators,
-                    Outcomes.NoErrorIndicatorIdentifiesTarget,
-                    device
-                  )
-              )
+          1: indicators.map((indicators) =>
+            expectation(
+              indicators.length === 0,
+              () => Outcomes.HasNoErrorIndicator,
+              () =>
+                identifiesTarget(
+                  target,
+                  indicators,
+                  Outcomes.NoErrorIndicatorIdentifiesTarget,
+                  device
+                )
             )
           ),
 
-          2: <Interview<Question, Element, Option<Result<Diagnostic>>>>(
-            indicators.map((indicators) =>
-              expectation(
-                indicators.length === 0,
-                () => Outcomes.HasNoErrorIndicator,
-                () =>
-                  describesResolution(
-                    indicators,
-                    Outcomes.NoErrorIndicatorDescribesResolution,
-                    device
-                  )
-              )
+          2: indicators.map((indicators) =>
+            expectation(
+              indicators.length === 0,
+              () => Outcomes.HasNoErrorIndicator,
+              () =>
+                describesResolution(
+                  target,
+                  indicators,
+                  Outcomes.NoErrorIndicatorDescribesResolution,
+                  device
+                )
             )
           ),
         };
@@ -136,10 +133,11 @@ export namespace Outcomes {
 }
 
 function identifiesTarget(
+  target: Element,
   indicators: Array<Node>,
   error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Result<Diagnostic>> {
+): Interview<Question, Node, Element, Result<Diagnostic>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {
@@ -147,10 +145,11 @@ function identifiesTarget(
   }
 
   return Question.of(
-    "error-indicator-identifies-form-field",
     "boolean",
+    "error-indicator-identifies-form-field",
+    "Does the error indicator identify, in text, the form field it relates to?",
     indicator,
-    "Does the error indicator identify, in text, the form field it relates to?"
+    target
   ).map((isIdentified) => {
     if (isIdentified) {
       if (test(isPerceivable(device), indicator)) {
@@ -160,15 +159,16 @@ function identifiesTarget(
       }
     }
 
-    return identifiesTarget(indicators.slice(1), error, device);
+    return identifiesTarget(target, indicators.slice(1), error, device);
   });
 }
 
 function describesResolution(
+  target: Element,
   indicators: Array<Node>,
   error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Result<Diagnostic>> {
+): Interview<Question, Node, Element, Result<Diagnostic>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {
@@ -176,11 +176,12 @@ function describesResolution(
   }
 
   return Question.of(
-    "error-indicator-describes-resolution",
     "boolean",
-    indicator,
+    "error-indicator-describes-resolution",
     `Does the error indicator describe, in text, the cause of the error or how
-    to resolve it?`
+    to resolve it?`,
+    indicator,
+    target
   ).map((isDescribed) => {
     if (isDescribed) {
       if (test(isPerceivable(device), indicator)) {
@@ -190,6 +191,6 @@ function describesResolution(
       }
     }
 
-    return describesResolution(indicators.slice(1), error, device);
+    return describesResolution(target, indicators.slice(1), error, device);
   });
 }

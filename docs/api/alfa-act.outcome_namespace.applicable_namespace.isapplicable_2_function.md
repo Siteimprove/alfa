@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isApplicable<I, T, Q>(value: unknown): value is Applicable<I, T, Q>;
+function isApplicable<I, T, Q, S>(value: unknown): value is Applicable<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isApplicable<I, T, Q>(value: unknown): value is Applicable<I, T, Q>;
 
 <b>Returns:</b>
 
-value is [Applicable](./alfa-act.outcome_namespace.applicable_typealias.md)<!-- -->&lt;I, T, Q&gt;
+value is [Applicable](./alfa-act.outcome_namespace.applicable_typealias.md)<!-- -->&lt;I, T, Q, S&gt;
 

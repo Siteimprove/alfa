@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): Length.JSON;
+toJSON(): Length.JSON<U>;
 ```
 <b>Returns:</b>
 
-[Length.JSON](./alfa-css.length_namespace.json_interface.md)
+[Length.JSON](./alfa-css.length_namespace.json_interface.md)<!-- -->&lt;U&gt;
 

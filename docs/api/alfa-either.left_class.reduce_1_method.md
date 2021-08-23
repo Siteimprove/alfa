@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-reduce<T>(reducer: Reducer<L, T>, accumulator: T): T;
+reduce<T>(reducer: unknown, accumulator: T): T;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  reducer | [Reducer](./alfa-reducer.reducer_typealias.md)<!-- -->&lt;L, T&gt; |  |
+|  reducer | unknown |  |
 |  accumulator | T |  |
 
 <b>Returns:</b>
