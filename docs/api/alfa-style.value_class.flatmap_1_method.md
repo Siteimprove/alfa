@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<U>(mapper: Mapper<T, Value<U>>): Value<U>;
+flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Value](./alfa-style.value_class.md)<!-- -->&lt;U&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Value](./alfa-style.value_class.md)<!-- -->&lt;U&gt;, \[source: [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration_class.md)<!-- -->&gt;\]&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface Indexed<T> extends Collection<T>, Iterable<T>, Serializable<Indexed.JSON<T>> 
+interface Indexed<T> extends Collection<T>, Iterable<T>, Comparable<Iterable<T>>, Serializable<Indexed.JSON<T>> 
 ```
-<b>Extends:</b> [Collection](./alfa-collection.collection_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Indexed.JSON](./alfa-collection.collection_namespace.indexed_namespace.json_typealias.md)<!-- -->&lt;T&gt;&gt;
+<b>Extends:</b> [Collection](./alfa-collection.collection_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;, [Comparable](./alfa-comparable.comparable_interface.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Indexed.JSON](./alfa-collection.collection_namespace.indexed_namespace.json_typealias.md)<!-- -->&lt;T&gt;&gt;
 
 ## Methods
 
@@ -19,6 +19,7 @@ interface Indexed<T> extends Collection<T>, Iterable<T>, Serializable<Indexed.JS
 |  [apply(mapper)](./alfa-collection.collection_namespace.indexed_interface.apply_1_methodsignature.md) |  |
 |  [collect(mapper)](./alfa-collection.collection_namespace.indexed_interface.collect_1_methodsignature.md) |  |
 |  [collectFirst(mapper)](./alfa-collection.collection_namespace.indexed_interface.collectfirst_1_methodsignature.md) |  |
+|  [compare(this, iterable)](./alfa-collection.collection_namespace.indexed_interface.compare_1_methodsignature.md) |  |
 |  [compareWith(iterable, comparer)](./alfa-collection.collection_namespace.indexed_interface.comparewith_1_methodsignature.md) |  |
 |  [concat(iterable)](./alfa-collection.collection_namespace.indexed_interface.concat_1_methodsignature.md) |  |
 |  [count(predicate)](./alfa-collection.collection_namespace.indexed_interface.count_1_methodsignature.md) |  |
@@ -30,6 +31,7 @@ interface Indexed<T> extends Collection<T>, Iterable<T>, Serializable<Indexed.JS
 |  [find(predicate)](./alfa-collection.collection_namespace.indexed_interface.find_2_methodsignature.md) |  |
 |  [first()](./alfa-collection.collection_namespace.indexed_interface.first_1_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-collection.collection_namespace.indexed_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-collection.collection_namespace.indexed_interface.flatten_1_methodsignature.md) |  |
 |  [forEach(callback)](./alfa-collection.collection_namespace.indexed_interface.foreach_1_methodsignature.md) |  |
 |  [get(index)](./alfa-collection.collection_namespace.indexed_interface.get_1_methodsignature.md) |  |
 |  [has(index)](./alfa-collection.collection_namespace.indexed_interface.has_1_methodsignature.md) |  |
@@ -58,14 +60,17 @@ interface Indexed<T> extends Collection<T>, Iterable<T>, Serializable<Indexed.JS
 |  [skipWhile(predicate)](./alfa-collection.collection_namespace.indexed_interface.skipwhile_1_methodsignature.md) |  |
 |  [slice(start, end)](./alfa-collection.collection_namespace.indexed_interface.slice_1_methodsignature.md) |  |
 |  [some(predicate)](./alfa-collection.collection_namespace.indexed_interface.some_1_methodsignature.md) |  |
+|  [sort(this)](./alfa-collection.collection_namespace.indexed_interface.sort_1_methodsignature.md) |  |
 |  [sortWith(comparer)](./alfa-collection.collection_namespace.indexed_interface.sortwith_1_methodsignature.md) |  |
 |  [subtract(iterable)](./alfa-collection.collection_namespace.indexed_interface.subtract_1_methodsignature.md) |  |
 |  [take(count)](./alfa-collection.collection_namespace.indexed_interface.take_1_methodsignature.md) |  |
 |  [takeLast(count)](./alfa-collection.collection_namespace.indexed_interface.takelast_1_methodsignature.md) |  |
 |  [takeLastUntil(predicate)](./alfa-collection.collection_namespace.indexed_interface.takelastuntil_1_methodsignature.md) |  |
-|  [takeLastWhile(predicate)](./alfa-collection.collection_namespace.indexed_interface.takelastwhile_1_methodsignature.md) |  |
+|  [takeLastWhile(refinement)](./alfa-collection.collection_namespace.indexed_interface.takelastwhile_1_methodsignature.md) |  |
+|  [takeLastWhile(predicate)](./alfa-collection.collection_namespace.indexed_interface.takelastwhile_2_methodsignature.md) |  |
 |  [takeUntil(predicate)](./alfa-collection.collection_namespace.indexed_interface.takeuntil_1_methodsignature.md) |  |
-|  [takeWhile(predicate)](./alfa-collection.collection_namespace.indexed_interface.takewhile_1_methodsignature.md) |  |
+|  [takeWhile(refinement)](./alfa-collection.collection_namespace.indexed_interface.takewhile_1_methodsignature.md) |  |
+|  [takeWhile(predicate)](./alfa-collection.collection_namespace.indexed_interface.takewhile_2_methodsignature.md) |  |
 |  [trim(predicate)](./alfa-collection.collection_namespace.indexed_interface.trim_1_methodsignature.md) |  |
 |  [trimLeading(predicate)](./alfa-collection.collection_namespace.indexed_interface.trimleading_1_methodsignature.md) |  |
 |  [trimTrailing(predicate)](./alfa-collection.collection_namespace.indexed_interface.trimtrailing_1_methodsignature.md) |  |

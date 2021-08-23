@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T, Q>(name: Event.Name, rule: Rule<I, T, Q>): Event<I, T, Q>;
+static of<I, T, Q, S>(name: Event.Name, rule: Rule<I, T, Q, S>): Event<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ static of<I, T, Q>(name: Event.Name, rule: Rule<I, T, Q>): Event<I, T, Q>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Event.Name](./alfa-act.audit_namespace.event_namespace.name_typealias.md) |  |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-[Event](./alfa-act.audit_namespace.event_class.md)<!-- -->&lt;I, T, Q&gt;
+[Event](./alfa-act.audit_namespace.event_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

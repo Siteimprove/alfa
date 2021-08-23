@@ -170,7 +170,7 @@ namespace Map_2 {
     // (undocumented)
     function from<K, V>(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
-    function fromArray<K, V>(array: Array_2<readonly [K, V]>): Map_2<K, V>;
+    function fromArray<K, V>(array: ReadonlyArray<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
     function fromIterable<K, V>(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)

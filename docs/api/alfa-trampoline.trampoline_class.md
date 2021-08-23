@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class Trampoline<T> implements Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Iterable<T> 
+export declare abstract class Trampoline<T> implements Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T> 
 ```
-<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;
+<b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, Iterable&lt;T&gt;
 
 ## Methods
 
@@ -20,6 +20,7 @@ export declare abstract class Trampoline<T> implements Functor<T>, Monad<T>, Fol
 |  [\[Symbol.iterator\]()](./alfa-trampoline.trampoline_class._symbol.iterator__1_method.md) |  |  |
 |  [apply(mapper)](./alfa-trampoline.trampoline_class.apply_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-trampoline.trampoline_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-trampoline.trampoline_class.flatten_1_method.md) |  |  |
 |  [isDone()](./alfa-trampoline.trampoline_class.isdone_1_method.md) |  |  |
 |  [isSuspended()](./alfa-trampoline.trampoline_class.issuspended_1_method.md) |  |  |
 |  [iterator()](./alfa-trampoline.trampoline_class.iterator_1_method.md) |  |  |

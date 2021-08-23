@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Dimension.JSON<"length"> 
+interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length"> 
 ```
 <b>Extends:</b> [Dimension.JSON](./alfa-css.dimension_namespace.json_interface.md)<!-- -->&lt;"length"&gt;
 
@@ -15,5 +15,5 @@ interface JSON extends Dimension.JSON<"length">
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [unit](./alfa-css.length_namespace.json_interface.unit_propertysignature.md) | [Unit.Length](./alfa-css.unit_namespace.length_typealias.md) |  |
+|  [unit](./alfa-css.length_namespace.json_interface.unit_propertysignature.md) | U |  |
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isCantTell<I, T, Q>(value: unknown): value is CantTell<I, T, Q>;
+function isCantTell<I, T, Q, S>(value: unknown): value is CantTell<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isCantTell<I, T, Q>(value: unknown): value is CantTell<I, T, Q>;
 
 <b>Returns:</b>
 
-value is [CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

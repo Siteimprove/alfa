@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Collection<T> extends Functor<T>, Monad<T>, Foldable<T>, Applicative<T>, Equatable, Hashable 
+export interface Collection<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Equatable, Hashable 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Foldable](./alfa-foldable.foldable_interface.md)<!-- -->&lt;T&gt;, [Equatable](./alfa-equatable.equatable_interface.md)<!-- -->, [Hashable](./alfa-hash.hashable_interface.md)
 
 ## Properties
 
@@ -33,6 +33,7 @@ export interface Collection<T> extends Functor<T>, Monad<T>, Foldable<T>, Applic
 |  [find(refinement)](./alfa-collection.collection_interface.find_1_methodsignature.md) |  |
 |  [find(predicate)](./alfa-collection.collection_interface.find_2_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-collection.collection_interface.flatmap_1_methodsignature.md) |  |
+|  [flatten(this)](./alfa-collection.collection_interface.flatten_1_methodsignature.md) |  |
 |  [forEach(callback)](./alfa-collection.collection_interface.foreach_1_methodsignature.md) |  |
 |  [includes(value)](./alfa-collection.collection_interface.includes_1_methodsignature.md) |  |
 |  [isEmpty()](./alfa-collection.collection_interface.isempty_1_methodsignature.md) |  |

@@ -22,10 +22,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
       expectations(target) {
         return {
           1: Question.of(
-            "has-captions",
             "boolean",
-            target,
-            `Does the \`<video>\` element have captions?`
+            "has-captions",
+            `Does the \`<video>\` element have captions?`,
+            target
           ).map((hasCaptions) =>
             expectation(
               hasCaptions,

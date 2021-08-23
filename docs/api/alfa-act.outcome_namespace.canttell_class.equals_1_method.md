@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-equals<I, T, Q>(value: CantTell<I, T, Q>): boolean;
+equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [CantTell](./alfa-act.outcome_namespace.canttell_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

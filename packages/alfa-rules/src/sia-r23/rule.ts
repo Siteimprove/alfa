@@ -1,8 +1,8 @@
-import { Rule, Diagnostic, Interview } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { audio } from "../common/applicability/audio";
@@ -25,55 +25,53 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
       expectations(target) {
         return {
-          1: <Interview<Question, Element, Option<Result<Diagnostic>>>>(
-            Question.of(
-              "transcript",
-              "node",
-              target,
-              `Where is the transcript of the \`<audio>\` element?`
-            ).map((transcript) => {
-              if (transcript.isNone()) {
+          1: Question.of(
+            "node",
+            "transcript",
+            `Where is the transcript of the \`<audio>\` element?`,
+            target
+          ).map((transcript) => {
+            if (transcript.isNone()) {
+              return Question.of(
+                "node",
+                "transcript-link",
+                `Where is the link pointing to the transcript of the \`<audio>\`
+                element?`,
+                target
+              ).map((transcriptLink) => {
+                if (transcriptLink.isNone()) {
+                  return Option.of(Outcomes.HasNoTranscript);
+                }
+
+                if (
+                  transcriptLink
+                    .filter(and(Element.isElement, isPerceivable(device)))
+                    .isNone()
+                ) {
+                  return Option.of(Outcomes.HasNonPerceivableTranscriptLink);
+                }
+
                 return Question.of(
-                  "transcript-link",
-                  "node",
-                  target,
-                  `Where is the link pointing to the transcript of the \`<audio>\`
-                element?`
-                ).map((transcriptLink) => {
-                  if (transcriptLink.isNone()) {
-                    return Option.of(Outcomes.HasNoTranscript);
-                  }
+                  "boolean",
+                  "transcript-perceivable",
+                  `Is the transcript of the \`<audio>\` element perceivable?`,
+                  target
+                ).map((isPerceivable) =>
+                  expectation(
+                    isPerceivable,
+                    () => Outcomes.HasPerceivableTranscript,
+                    () => Outcomes.HasNonPerceivableTranscript
+                  )
+                );
+              });
+            }
 
-                  if (
-                    transcriptLink
-                      .filter(and(Element.isElement, isPerceivable(device)))
-                      .isNone()
-                  ) {
-                    return Option.of(Outcomes.HasNonPerceivableTranscriptLink);
-                  }
-
-                  return Question.of(
-                    "transcript-perceivable",
-                    "boolean",
-                    target,
-                    `Is the transcript of the \`<audio>\` element perceivable?`
-                  ).map((isPerceivable) =>
-                    expectation(
-                      isPerceivable,
-                      () => Outcomes.HasPerceivableTranscript,
-                      () => Outcomes.HasNonPerceivableTranscript
-                    )
-                  );
-                });
-              }
-
-              return expectation(
-                transcript.some(and(Element.isElement, isPerceivable(device))),
-                () => Outcomes.HasPerceivableTranscript,
-                () => Outcomes.HasNonPerceivableTranscript
-              );
-            })
-          ),
+            return expectation(
+              transcript.some(and(Element.isElement, isPerceivable(device))),
+              () => Outcomes.HasPerceivableTranscript,
+              () => Outcomes.HasNonPerceivableTranscript
+            );
+          }),
         };
       },
     };

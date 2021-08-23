@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-reject<U extends V>(refinement: Refinement<V, U, [K]>): Map<K, Exclude<V, U>>;
+reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Map<K, Exclude<V, U>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;V, U, \[K\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
 
 <b>Returns:</b>
 

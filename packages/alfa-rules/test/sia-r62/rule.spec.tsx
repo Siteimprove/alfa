@@ -458,7 +458,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["background-color", "rgb(100% 0% 0%)"],
+      ["background", "rgb(100% 0% 0%)"],
       ["outline", "0px"],
     ])
   );
@@ -473,7 +473,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
-              ["background-color", "rgb(100% 0% 0%)"],
+              ["background", "rgb(100% 0% 0%)"],
               ["outline", "auto"],
             ])
           ),
@@ -545,7 +545,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["background-color", "rgb(100% 0% 0%)"],
+      ["background", "rgb(100% 0% 0%)"],
       ["outline", "0px"],
     ])
   );
@@ -560,7 +560,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
-              ["background-color", "rgb(100% 0% 0%)"],
+              ["background", "rgb(100% 0% 0%)"],
               ["outline", "auto"],
             ])
           ),
@@ -806,7 +806,7 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
 });
 
 test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
-  // Since text-decoration and focus outline is not inherited, the <span> has
+  // Since text-decoration and focus outline is not inherited, the <span> have
   // effectively no style other than color.
   const target = (
     <a href="#">
@@ -823,6 +823,40 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
         [defaultStyle, noStyle],
         [focusStyle, noStyle]
       ),
+    }),
+  ]);
+});
+
+test(`evaluates() passes on link with a different background-image than text`, async (t) => {
+  const target = <a href="#">Foo</a>;
+
+  const document = h.document(
+    [<p>Hello world {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          backgroundImage:
+            "linear-gradient(to right, #046B99 50%, transparent 50%)",
+        }),
+        h.rule.style("a:focus", { outline: "none" }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      [
+        "background",
+        "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+      ],
+      ...noDistinguishingProperties,
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
 });

@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Audit<I, T = unknown, Q = never> 
+export declare class Audit<I, T = unknown, Q = never, S = T> 
 ```
 
 ## Methods

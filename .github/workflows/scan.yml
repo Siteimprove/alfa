@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-node@v2.2.0
+      - uses: actions/setup-node@v2.4.0
         with:
           node-version: 16
           cache: yarn
       - run: yarn install --immutable
       - run: yarn build
-      - uses: github/codeql-action/init@v1.0.6
+      - uses: github/codeql-action/init@v1.0.12
         with:
           languages: javascript
           config-file: .github/codeql/config.yml
-      - uses: github/codeql-action/analyze@v1.0.6
+      - uses: github/codeql-action/analyze@v1.0.12

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T = unknown, Q = never>(input: I, rules: Iterable<Rule<I, T, Q>>, oracle?: Oracle<I, T, Q>): Audit<I, T, Q>;
+static of<I, T = unknown, Q = never, S = T>(input: I, rules: Iterable<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -15,10 +15,10 @@ static of<I, T = unknown, Q = never>(input: I, rules: Iterable<Rule<I, T, Q>>, o
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | I |  |
-|  rules | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt;&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle_typealias.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rules | Iterable&lt;[Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
+|  oracle | [Oracle](./alfa-act.oracle_typealias.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-[Audit](./alfa-act.audit_class.md)<!-- -->&lt;I, T, Q&gt;
+[Audit](./alfa-act.audit_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

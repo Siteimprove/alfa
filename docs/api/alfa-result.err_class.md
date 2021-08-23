@@ -25,6 +25,7 @@ export declare class Err<E> implements Result<never, E>
 |  [every()](./alfa-result.err_class.every_1_method.md) |  |  |
 |  [everyErr(predicate)](./alfa-result.err_class.everyerr_1_method.md) |  |  |
 |  [flatMap()](./alfa-result.err_class.flatmap_1_method.md) |  |  |
+|  [flatten(this)](./alfa-result.err_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-result.err_class.get_1_method.md) |  |  |
 |  [getErr()](./alfa-result.err_class.geterr_1_method.md) |  |  |
 |  [getOr(value)](./alfa-result.err_class.getor_1_method.md) |  |  |

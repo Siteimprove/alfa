@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isFailed<I, T, Q>(value: unknown): value is Failed<I, T, Q>;
+function isFailed<I, T, Q, S>(value: unknown): value is Failed<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isFailed<I, T, Q>(value: unknown): value is Failed<I, T, Q>;
 
 <b>Returns:</b>
 
-value is [Failed](./alfa-act.outcome_namespace.failed_class.md)<!-- -->&lt;I, T, Q&gt;
+value is [Failed](./alfa-act.outcome_namespace.failed_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

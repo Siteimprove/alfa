@@ -21,6 +21,52 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The role data has been updated based on the WAI-ARIA Editor's Draft of 3 August.
+
+- [@siteimprove/alfa-iana](packages/alfa-iana): The language data has been updated based on the latest version of the IANA language subtag registry.
+
+- [@siteimprove/alfa-wcag](packages/alfa-wcag): The technique and criteria data has been updated based on the WCAG Working Draft of 21 May.
+
+## [0.21.0](../../compare/v0.20.0...v0.21.0) (2021-08-20)
+
+### Breaking
+
+- [@siteimprove/alfa-collection](packages/alfa-collection): Previous `Collection<T>` functions that depended on details of `T` are now implemented as methods with constrained `this` types. Please see the associated pull request for more details. ([#865](../../pull/865))
+
+- [@siteimprove/alfa-act](packages/alfa-act): The `Question` class has changed in a backwards incompatible manner to account for the new `Question#context` property. Please see the associated pull request for more details. ([#867](../../pull/867))
+
+### Added
+
+- [@siteimprove/alfa-collection](packages/alfa-collection): `Indexed#takeLastWhile()` and `Indexed#takeWhile()` now accept a `Refinement` for narrowing the type of the taken items. ([#860](../../pull/860))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-shadow` CSS property. ([#862](../../pull/862))
+
+- [@siteimprove/alfa-act](packages/alfa-act): The `Question` class now includes a `Question#context` property for cases where a rule want to ask questions about a subject that is different from the associated test target. For these cases, the test target is expected to be passed as `Question#context`. ([#867](../../pull/867))
+
+- [@siteimprove/alfa-act](packages/alfa-act): `Rule#hasRequirement()` and `Rule#hasTag()` are now available in addition to the shared `Scope` tag.
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts distinguishing features on ancestors and descendants of the applicable link. ([#777](../../issues/777), [#860](../../pull/860))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 no longers fails elements whose font size does not affect text nodes. ([#810](../../issues/810), [#851](../../pull/851))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now yield a `CantTell` outcome when a `text-shadow` is encountered. ([#743](../../issues/743), [#862](../../pull/862))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` now correctly handles duplicate `id` and `for` attributes. ([#780](../../issues/780), [#781](../../issues/781), [#866](../../pull/866))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly accounts for offset parents when checking for text clipping. ([#824](../../issues/824), [#843](../../pull/843))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `Name.from()` no longer joins descendant names with a space. ([#889](../../pull/889))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 no longer fails text node descendants of the first focusable element in a document. ([#871](../../issues/871), [#880](../../pull/880))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts `background-image` as a distinguishing feature for links. ([#782](../../issues/782), [#875](../../pull/875))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly looks at the inherited `white-space` property of the parent element of text nodes. ([#747](../../issues/747), [#879](../../pull/879))
+
 ## [0.20.0](../../compare/v0.19.0...v0.20.0) (2021-07-09)
 
 In addition to the changes listed below, this release adjusts the compile target from `es2018` to `es2020`.

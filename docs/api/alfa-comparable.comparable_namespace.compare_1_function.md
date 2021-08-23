@@ -4,6 +4,8 @@
 
 ## Comparable.compare() function
 
+Compare two strings.
+
 <b>Signature:</b>
 
 ```typescript

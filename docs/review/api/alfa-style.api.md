@@ -229,21 +229,23 @@ export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>,
     // (undocumented)
     apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
     // (undocumented)
+    equals(value: Value): boolean;
+    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Value<U>>): Value<U>;
+    flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>;
     // (undocumented)
     flatten<T>(this: Value<Value<T>>): Value<T>;
     // (undocumented)
     includes(value: T): boolean;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Value<U>;
+    map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [Option<Declaration>]>): boolean;
+    none(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
     // (undocumented)
     static of<T>(value: T, source?: Option<Declaration>): Value<T>;
     // (undocumented)
-    some(predicate: Predicate<T, [Option<Declaration>]>): boolean;
+    some(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
     // (undocumented)
     get source(): Option<Declaration>;
     // (undocumented)

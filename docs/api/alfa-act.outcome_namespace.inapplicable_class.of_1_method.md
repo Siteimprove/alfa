@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T, Q>(rule: Rule<I, T, Q>): Inapplicable<I, T, Q>;
+static of<I, T, Q, S>(rule: Rule<I, T, Q, S>): Inapplicable<I, T, Q, S>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-[Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q&gt;
+[Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q, S&gt;
 

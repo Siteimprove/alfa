@@ -8,8 +8,8 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Interview<Q, S, T, D extends number = 3> = T | {
-    [K in keyof Q]: Question<K, S, Q[K], D extends -1 ? T : Interview<Q, S, T, Depths[D]>>;
+export declare type Interview<Q, S, C, A, D extends number = 3> = A | {
+    [K in keyof Q]: Question<K, S, C, Q[K], D extends -1 ? A : Interview<Q, S, C, A, Depths[D]>>;
 }[keyof Q];
 ```
 <b>References:</b> [Question](./alfa-act.question_class.md)<!-- -->, [Interview](./alfa-act.interview_typealias.md)

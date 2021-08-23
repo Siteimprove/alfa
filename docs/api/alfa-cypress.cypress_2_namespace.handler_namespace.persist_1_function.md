@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function persist<I, T, Q>(output: Mapper<I, string>, format?: Formatter<I, T, Q>): Handler<I, T, Q>;
+function persist<I, T, Q, S>(output: Mapper<I, string>, format?: Formatter<I, T, Q, S>): Handler<I, T, Q, S>;
 ```
 
 ## Parameters
@@ -15,11 +15,11 @@ function persist<I, T, Q>(output: Mapper<I, string>, format?: Formatter<I, T, Q>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  output | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;I, string&gt; |  |
-|  format | [Formatter](./alfa-formatter.formatter_typealias.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  format | [Formatter](./alfa-formatter.formatter_typealias.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 
-[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;I, T, Q&gt;
+[Handler](./alfa-assert.handler_interface.md)<!-- -->&lt;I, T, Q, S&gt;
 
 ## Remarks
 

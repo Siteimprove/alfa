@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function conduct<I, T, Q, A>(interview: Interview<Q, T, A>, rule: Rule<I, T, Q>, oracle: Oracle<I, T, Q>): Future<Option<A>>;
+function conduct<I, T, Q, S, A>(interview: Interview<Q, S, T, A>, rule: Rule<I, T, Q, S>, oracle: Oracle<I, T, Q, S>): Future<Option<A>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  interview | [Interview](./alfa-act.interview_typealias.md)<!-- -->&lt;Q, T, A&gt; |  |
-|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle_typealias.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  interview | [Interview](./alfa-act.interview_typealias.md)<!-- -->&lt;Q, S, T, A&gt; |  |
+|  rule | [Rule](./alfa-act.rule_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  oracle | [Oracle](./alfa-act.oracle_typealias.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

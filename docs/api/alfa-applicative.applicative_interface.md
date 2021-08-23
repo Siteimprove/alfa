@@ -8,12 +8,14 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Applicative<T> 
+export interface Applicative<T> extends Functor<T> 
 ```
+<b>Extends:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
 |  [apply(mapper)](./alfa-applicative.applicative_interface.apply_1_methodsignature.md) |  |
+|  [map(mapper)](./alfa-applicative.applicative_interface.map_1_methodsignature.md) |  |
 

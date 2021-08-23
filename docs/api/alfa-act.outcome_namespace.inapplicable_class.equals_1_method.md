@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-equals<I, T, Q>(value: Inapplicable<I, T, Q>): boolean;
+equals<I, T, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q&gt; |  |
+|  value | [Inapplicable](./alfa-act.outcome_namespace.inapplicable_class.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
 <b>Returns:</b>
 

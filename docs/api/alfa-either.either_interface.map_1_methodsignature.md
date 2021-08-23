@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-map<T>(mapper: Mapper<L | R, T>): Either<T, T>;
+map<T>(mapper: Mapper<R, T>): Either<L, T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;L \| R, T&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;R, T&gt; |  |
 
 <b>Returns:</b>
 
-[Either](./alfa-either.either_interface.md)<!-- -->&lt;T, T&gt;
+[Either](./alfa-either.either_interface.md)<!-- -->&lt;L, T&gt;
 

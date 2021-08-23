@@ -42,16 +42,18 @@ export class Value<T = unknown>
     return this._source;
   }
 
-  public map<U>(mapper: Mapper<T, U>): Value<U> {
-    return new Value(mapper(this._value), this._source);
+  public map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U> {
+    return new Value(mapper(this._value, this._source), this._source);
   }
 
   public apply<U>(mapper: Value<Mapper<T, U>>): Value<U> {
     return mapper.map((mapper) => mapper(this._value));
   }
 
-  public flatMap<U>(mapper: Mapper<T, Value<U>>): Value<U> {
-    return mapper(this._value);
+  public flatMap<U>(
+    mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>
+  ): Value<U> {
+    return mapper(this._value, this._source);
   }
 
   public flatten<T>(this: Value<Value<T>>): Value<T> {
@@ -62,13 +64,17 @@ export class Value<T = unknown>
     return Equatable.equals(this._value, value);
   }
 
-  public some(predicate: Predicate<T, [Option<Declaration>]>): boolean {
+  public some(predicate: Predicate<T, [source: Option<Declaration>]>): boolean {
     return predicate(this._value, this._source);
   }
 
-  public none(predicate: Predicate<T, [Option<Declaration>]>): boolean {
+  public none(predicate: Predicate<T, [source: Option<Declaration>]>): boolean {
     return !predicate(this._value, this._source);
   }
+
+  public equals(value: Value): boolean;
+
+  public equals(value: unknown): value is this;
 
   public equals(value: unknown): value is this {
     return (

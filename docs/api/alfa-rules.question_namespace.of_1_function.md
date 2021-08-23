@@ -7,19 +7,19 @@
 <b>Signature:</b>
 
 ```typescript
-function of<Q extends keyof Question, S>(uri: string, type: Q, subject: S, message: string): act.Question<Q, S, Question[Q]>;
+function of<Q extends keyof Question, S>(type: Q, uri: string, message: string, subject: S): act.Question<Q, S, S, Question[Q]>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  uri | string |  |
 |  type | Q |  |
-|  subject | S |  |
+|  uri | string |  |
 |  message | string |  |
+|  subject | S |  |
 
 <b>Returns:</b>
 
-act.[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, [Question](./alfa-rules.question_interface.md)<!-- -->\[Q\]&gt;
+act.[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, S, [Question](./alfa-rules.question_interface.md)<!-- -->\[Q\]&gt;
 

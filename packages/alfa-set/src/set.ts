@@ -252,7 +252,7 @@ export namespace Set {
     return fromIterable(iterable);
   }
 
-  export function fromArray<T>(array: Array<T>): Set<T> {
+  export function fromArray<T>(array: ReadonlyArray<T>): Set<T> {
     return Array.reduce(array, (set, value) => set.add(value), Set.empty());
   }
 
