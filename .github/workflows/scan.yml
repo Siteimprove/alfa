@@ -8,6 +8,9 @@ on:
       - main
   schedule:
     - cron: "0 21 * * 1"
+concurrency:
+  group: scan-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   analyze:
     name: Analyze

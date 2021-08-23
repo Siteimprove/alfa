@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.21.1](../../compare/v0.21.0...v0.21.1) (2021-08-23)
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): The role data has been updated based on the WAI-ARIA Editor's Draft of 3 August.
@@ -32,6 +34,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 ### Fixed
 
 - [@siteimprove/alfa-act](packages/alfa-act): A variance regression in `Rule.Evaluate` has been fixed.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 no longer counts empty text nodes as content affected by `font-size`. ([#896](../../pull/896))
 
 ## [0.21.0](../../compare/v0.20.0...v0.21.0) (2021-08-20)
 
