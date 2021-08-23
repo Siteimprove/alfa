@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.21.1](../../compare/v0.21.0...v0.21.1) (2021-08-23)
+
 ### Changed
 
 - [@siteimprove/alfa-aria](packages/alfa-aria): The role data has been updated based on the WAI-ARIA Editor's Draft of 3 August.
