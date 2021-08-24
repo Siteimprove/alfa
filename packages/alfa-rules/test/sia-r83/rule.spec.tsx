@@ -307,3 +307,20 @@ test(`evaluate() is inapplicable to a text node that resets the white-space
     t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
   }
 });
+
+test(`evaluate() is inapplicable to a text node that would clip if it was non-
+      empty`, async (t) => {
+  const document = h.document(
+    [<div> </div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+});
