@@ -5,10 +5,12 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+//import { Set } from "@siteimprove/alfa-set";
 
 import { expectation } from "../common/expectation";
-import { isRendered, isVisible } from "../common/predicate";
+import { isRendered, isVisible, hasAttribute } from "../common/predicate";
 
+const { or, not, equals, test } = Predicate;
 const { hasName, isElement } = Element;
 const { isText } = Text;
 const { and } = Refinement;
@@ -41,24 +43,13 @@ export default Rule.Atomic.of<Page, Element>({
                     nested: true,
                   })
                   .filter(isElement)
-                  .some((element) =>
-                    element
-                      .attribute("aria-hidden")
-                      .some((attribute) => attribute.value === "true")
-                  ),
+                  .some(hasAttribute("aria-hidden", equals("true"))),
                 () => Outcomes.IsHidden,
                 () => Outcomes.IsNotVisibleAndNotHidden
               )
           ),
           2: expectation(
-            target
-              .ancestors({
-                flattened: true,
-                nested: true,
-              })
-              .filter(isElement)
-              .some(hasName("figure")) ||
-              hasTextInsideAllowedElements(device)(target),
+            hasFigureAncestor(target) || hasOnlyAllowedText(device)(target),
             () => Outcomes.IsDescendant,
             () => Outcomes.IsNotDescendant
           ),
@@ -68,23 +59,56 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-function hasTextInsideAllowedElements(device: Device): Predicate<Node> {
-  return function isGood(node: Node): boolean {
-    if (and(isText, isVisible(device))(node)) {
-      return false;
-    }
+/*
+function hasOnlyAllowedText(device: Device): Predicate<Element> {
+  return (element) => {
+    const isVisibleText = and(isText, isVisible(device));
 
+    const allVisibleText = element.descendants().filter(isVisibleText);
+
+    const allowedElements = element
+      .descendants()
+      .filter(and(isElement, hasName("code", "kbd", "samp")));
+
+    const allowedText = allowedElements.flatMap((element) =>
+      element.descendants().filter(isVisibleText)
+    );
+
+    const disallowedText = Set.from(allVisibleText).subtract(allowedText);
+
+    return disallowedText.isEmpty();
+  };
+}
+*/
+
+function hasOnlyAllowedText(device: Device): Predicate<Node> {
+  return function isNodeAllowed(node: Node): boolean {
+    // checks if the node is an element and it has correct tags
     if (and(isElement, hasName("code", "kbd", "samp"))(node)) {
       return true;
     }
-
+    // checks if the node is text and is set as visible
+    if (and(isText, isVisible(device))(node)) {
+      return false;
+    }
+    // else the function goes deeper in the tree checking the children
     return node
       .children({
         flattened: true,
         nested: true,
       })
-      .every(isGood);
+      .every(isNodeAllowed);
   };
+}
+
+function hasFigureAncestor(target: Element): boolean {
+  return target
+    .ancestors({
+      flattened: true,
+      nested: true,
+    })
+    .filter(isElement)
+    .some(hasName("figure"));
 }
 
 export namespace Outcomes {
