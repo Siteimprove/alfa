@@ -5,7 +5,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-//import { Set } from "@siteimprove/alfa-set";
 
 import { expectation } from "../common/expectation";
 import { isRendered, isVisible, hasAttribute } from "../common/predicate";
@@ -59,45 +58,27 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-/*
-function hasOnlyAllowedText(device: Device): Predicate<Element> {
-  return (element) => {
-    const isVisibleText = and(isText, isVisible(device));
-
-    const allVisibleText = element.descendants().filter(isVisibleText);
-
-    const allowedElements = element
-      .descendants()
-      .filter(and(isElement, hasName("code", "kbd", "samp")));
-
-    const allowedText = allowedElements.flatMap((element) =>
-      element.descendants().filter(isVisibleText)
-    );
-
-    const disallowedText = Set.from(allVisibleText).subtract(allowedText);
-
-    return disallowedText.isEmpty();
-  };
-}
-*/
-
 function hasOnlyAllowedText(device: Device): Predicate<Node> {
-  return function isNodeAllowed(node: Node): boolean {
-    // checks if the node is an element and it has correct tags
+  return function hasOnlyAllowedText(node): boolean {
+    // Any text within these elements is allowed and so we can stop recursing
+    // when we encounter them.
     if (and(isElement, hasName("code", "kbd", "samp"))(node)) {
       return true;
     }
-    // checks if the node is text and is set as visible
+
+    // If we encounter a visible text node that isn't within one of the previous
+    // elements then the text is not allowed.
     if (and(isText, isVisible(device))(node)) {
       return false;
     }
-    // else the function goes deeper in the tree checking the children
+
+    // Otherwise, recursively check that the children only have allowed text.
     return node
       .children({
         flattened: true,
         nested: true,
       })
-      .every(isNodeAllowed);
+      .every(hasOnlyAllowedText);
   };
 }
 
