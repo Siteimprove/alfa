@@ -90,6 +90,13 @@ export default Rule.Atomic.of<Page, Document, Question>({
           target
         );
 
+        const askIsVisible = Question.of(
+          "node",
+          "first-tabbable-is-visible",
+          `Is the first tabbable element of the document visible if it's focused?`,
+          target
+        );
+
         return {
           1: expectation(
             element.isNone(),
@@ -104,6 +111,15 @@ export default Rule.Atomic.of<Page, Document, Question>({
                     () => Outcomes.FirstTabbableIsNotLink,
                     () =>
                       expectation(
+                        /* Think about this element.none if it's necessary
+                        element.none((element) => isVisible(device, Context.focus(element)(element))
+                          () => Outcomes.FirstTabbableIsNotVisible
+                          () =>
+                                element.some(isTabbable(device))
+                                () => Outocomes.isNotTabbable
+                                () => the rest of the code??
+
+                        */
                         element.none(isKeyboardActionable(device)),
                         () => Outcomes.FirstTabbableIsNotKeyboardActionable,
                         () =>
