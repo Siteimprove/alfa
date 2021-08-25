@@ -56,16 +56,16 @@ export default Rule.Atomic.of<Page, Document, Question>({
                   programmaticLanguage.primary.equals(naturalLanguage.primary),
                   () =>
                     Outcomes.HasCorrectLang(
-                      naturalLanguage,
-                      programmaticLanguage
+                      programmaticLanguage,
+                      naturalLanguage
                     ),
                   () =>
                     Outcomes.HasIncorrectLang(
-                      naturalLanguage,
-                      programmaticLanguage
+                      programmaticLanguage,
+                      naturalLanguage
                     )
                 ),
-              (_) => Option.of(Outcomes.HasNoLanguage)
+              (_) => Option.of(Outcomes.HasNoLanguage(programmaticLanguage))
             )
           ),
         };
@@ -75,21 +75,92 @@ export default Rule.Atomic.of<Page, Document, Question>({
 });
 
 export namespace Outcomes {
-  export const HasCorrectLang = (natural: Language, programmatic: Language) =>
+  export const HasCorrectLang = (programmatic: Language, natural: Language) =>
     Ok.of(
-      Diagnostic.of(
-        `The document's \`lang\` attribute (${programmatic}) matches its language (${natural})`
+      Languages.of(
+        `The document's \`lang\` attribute (${programmatic}) matches its language (${natural})`,
+        programmatic,
+        natural
       )
     );
 
-  export const HasIncorrectLang = (natural: Language, programmatic: Language) =>
+  export const HasIncorrectLang = (programmatic: Language, natural: Language) =>
     Err.of(
-      Diagnostic.of(
-        `The document's \`lang\` attribute (${programmatic}) does not match its language (${natural})`
+      Languages.of(
+        `The document's \`lang\` attribute (${programmatic}) does not match its language (${natural})`,
+        programmatic,
+        natural
       )
     );
 
-  export const HasNoLanguage = Err.of(
-    Diagnostic.of("The document has no identifiable natural language")
-  );
+  export const HasNoLanguage = (programmatic: Language) =>
+    Err.of(
+      Languages.of(
+        "The document has no identifiable natural language",
+        programmatic
+      )
+    );
+}
+
+class Languages extends Diagnostic {
+  public static of(
+    message: string,
+    programmatic: Language = Language.of(Language.Primary.of("en")),
+    natural?: Language
+  ) {
+    return new Languages(message, programmatic, Option.from(natural));
+  }
+
+  private readonly _programmatic: Language;
+  private readonly _natural: Option<Language>;
+
+  private constructor(
+    message: string,
+    programmatic: Language,
+    natural: Option<Language>
+  ) {
+    super(message);
+    this._programmatic = programmatic;
+    this._natural = natural;
+  }
+
+  public get programmatic(): Language {
+    return this._programmatic;
+  }
+
+  public get natural(): Option<Language> {
+    return this._natural;
+  }
+
+  public equals(value: Diagnostic): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof Languages &&
+      value._message === this._message &&
+      value._programmatic.equals(this._programmatic) &&
+      value._natural.equals(this._natural)
+    );
+  }
+
+  public toJSON(): Languages.JSON {
+    return {
+      ...super.toJSON(),
+      programmatic: this._programmatic.toJSON(),
+      natural: this._natural.toJSON(),
+    };
+  }
+}
+
+namespace Languages {
+  export interface JSON extends Diagnostic.JSON {
+    programmatic: Language.JSON;
+    natural: Option.JSON<Language>;
+  }
+
+  export function isLanguages(value: unknown): value is Languages {
+    return value instanceof Languages;
+  }
 }
