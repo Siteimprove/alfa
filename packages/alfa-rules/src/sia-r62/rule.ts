@@ -262,7 +262,7 @@ function isDistinguishable(
     hasDistinguishableBackground(container, device, context),
 
     hasDistinguishableFontWeight(container, device, context),
-
+    hasDistinguishableVerticalAlign(container, device, context),
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
     // other features of the container element, such as its background, but this
