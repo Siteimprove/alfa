@@ -29,9 +29,8 @@ export default Rule.Atomic.of<Page, Document, Question>({
               isDocumentElement,
               hasAttribute("lang", (lang) =>
                 Language.parse(lang)
-                  .map((lang) => {
+                  .tee((lang) => {
                     programmaticLanguage = lang;
-                    return lang;
                   })
                   .isOk()
               )
@@ -48,7 +47,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
           1: Question.of(
             "string",
             "document-language",
-            "What is the main language of the document (IANA code)",
+            "What is the main language of the document?",
             target
           ).map((language) =>
             Language.parse(language).mapOrElse(
@@ -56,17 +55,17 @@ export default Rule.Atomic.of<Page, Document, Question>({
                 expectation(
                   programmaticLanguage.primary.equals(naturalLanguage.primary),
                   () =>
-                    Outcomes.hasCorrectLang(
+                    Outcomes.HasCorrectLang(
                       naturalLanguage,
                       programmaticLanguage
                     ),
                   () =>
-                    Outcomes.hasIncorrectLang(
+                    Outcomes.HasIncorrectLang(
                       naturalLanguage,
                       programmaticLanguage
                     )
                 ),
-              (_) => Option.of(Outcomes.hasNoLanguage)
+              (_) => Option.of(Outcomes.HasNoLanguage)
             )
           ),
         };
@@ -76,21 +75,21 @@ export default Rule.Atomic.of<Page, Document, Question>({
 });
 
 export namespace Outcomes {
-  export const hasCorrectLang = (natural: Language, programmatic: Language) =>
+  export const HasCorrectLang = (natural: Language, programmatic: Language) =>
     Ok.of(
       Diagnostic.of(
-        `The document's \`lang\` attribute (${programmatic} matches its language (${natural}`
+        `The document's \`lang\` attribute (${programmatic}) matches its language (${natural})`
       )
     );
 
-  export const hasIncorrectLang = (natural: Language, programmatic: Language) =>
+  export const HasIncorrectLang = (natural: Language, programmatic: Language) =>
     Err.of(
       Diagnostic.of(
         `The document's \`lang\` attribute (${programmatic}) does not match its language (${natural})`
       )
     );
 
-  export const hasNoLanguage = Err.of(
+  export const HasNoLanguage = Err.of(
     Diagnostic.of("The document has no identifiable natural language")
   );
 }
