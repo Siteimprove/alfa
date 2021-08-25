@@ -213,7 +213,7 @@ const _default_65: Rule.Atomic<Page, Element, never, Element>;
 const _default_66: Rule.Atomic<Page, Text, Question, Text>;
 
 // @public (undocumented)
-const _default_67: Rule.Atomic<Page, Element, never, Element>;
+const _default_67: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
 const _default_68: Rule.Atomic<Page, Element, never, Element>;
