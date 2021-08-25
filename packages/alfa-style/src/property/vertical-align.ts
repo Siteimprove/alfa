@@ -63,8 +63,27 @@ export default Property.register(
         switch (verticalAlign.type) {
           case "keyword":
             return verticalAlign;
-          case "percentage":
-          //  return Resolver.(verticalAlign, style);
+          case "percentage": {
+            const lineHeight = style.computed("line-height").value;
+            switch (lineHeight.type) {
+              case "keyword": // "normal", used of 1.2
+                return Length.of(
+                  1.2 *
+                    style.computed("font-size").value.value *
+                    verticalAlign.value,
+                  "px"
+                );
+              case "length":
+                return Length.of(lineHeight.value * verticalAlign.value, "px");
+              case "number":
+                return Length.of(
+                  lineHeight.value *
+                    style.computed("font-size").value.value *
+                    verticalAlign.value,
+                  "px"
+                );
+            }
+          }
           case "length":
             return Resolver.length(verticalAlign, style);
         }
