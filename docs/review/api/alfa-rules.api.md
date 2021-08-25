@@ -237,16 +237,16 @@ const _default_72: Rule.Atomic<Page, Element, never, Element>;
 const _default_73: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_74: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
+const _default_74: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_75: Rule.Atomic<Page, Element, Question, Node>;
+const _default_75: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
 
 // @public (undocumented)
-const _default_76: Rule.Atomic<Page, Text, never, Text>;
+const _default_76: Rule.Atomic<Page, Element, Question, Node>;
 
 // @public (undocumented)
-const _default_77: Rule.Atomic<Page, Element, never, Element>;
+const _default_77: Rule.Atomic<Page, Text, never, Text>;
 
 // @public (undocumented)
 const _default_78: Rule.Atomic<Page, Element, never, Element>;
@@ -258,10 +258,10 @@ const _default_79: Rule.Atomic<Page, Element, never, Element>;
 const _default_8: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_80: Rule.Atomic<Page, Document, Question, Document>;
+const _default_80: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_81: Rule.Atomic<Page, Element, never, Element>;
+const _default_81: Rule.Atomic<Page, Document, Question, Document>;
 
 // @public (undocumented)
 const _default_82: Rule.Atomic<Page, Element, never, Element>;
@@ -280,6 +280,9 @@ const _default_86: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
 const _default_87: Rule.Atomic<Page, Element, never, Element>;
+
+// @public (undocumented)
+const _default_88: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
 const _default_9: Rule.Atomic<Page, Element, never, Element>;
