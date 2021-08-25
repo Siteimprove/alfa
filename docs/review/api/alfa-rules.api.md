@@ -285,6 +285,9 @@ const _default_87: Rule.Atomic<Page, Element, never, Element>;
 const _default_88: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
+const _default_89: Rule.Atomic<Page, Document, Question, Document>;
+
+// @public (undocumented)
 const _default_9: Rule.Atomic<Page, Element, never, Element>;
 
 // Warning: (ae-forgotten-export) The symbol "Rule" needs to be exported by the entry point index.d.ts
@@ -347,6 +350,8 @@ export interface Question {
     color: Option<RGB>;
     // (undocumented)
     node: Option<Node>;
+    // (undocumented)
+    string: string;
 }
 
 // @public (undocumented)
