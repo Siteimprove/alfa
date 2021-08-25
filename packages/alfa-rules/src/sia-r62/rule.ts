@@ -366,6 +366,23 @@ function hasDistinguishableFontWeight(
   );
 }
 
+function hasDistinguishableVerticalAlign(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const reference = Style.from(container, device, context).computed(
+    "vertical-align"
+  ).value;
+
+  return hasComputedStyle(
+    "vertical-align",
+    not((alignment) => alignment.equals(reference)),
+    device,
+    context
+  );
+}
+
 type Name = Property.Name | Property.Shorthand.Name;
 
 export class ComputedStyles implements Equatable, Hashable, Serializable {
