@@ -128,6 +128,7 @@ import "./property/text-transform";
 import "./property/text-shadow";
 import "./property/top";
 import "./property/transform";
+import "./property/vertical-align";
 import "./property/visibility";
 import "./property/white-space";
 import "./property/width";

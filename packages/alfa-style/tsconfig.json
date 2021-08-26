@@ -135,6 +135,7 @@
     "src/property/transform.ts",
     "src/property/value/list.ts",
     "src/property/value/tuple.ts",
+    "src/property/vertical-align.ts",
     "src/property/visibility.ts",
     "src/property/white-space.ts",
     "src/property/width.ts",
