@@ -6,7 +6,7 @@ import { Option } from "@siteimprove/alfa-option";
 import R87, { Outcomes } from "../../src/sia-r87/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed } from "../common/outcome";
+import { cantTell, passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 
 test(`evaluate() passes a document whose first tabbable link references an
@@ -215,7 +215,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
 
   t.deepEqual(await evaluate(R87, { document }), [
     failed(R87, document, {
-      1: Outcomes.FirstTabbableIsNotKeyboardActionable,
+      1: Outcomes.FirstTabbableIsNotVisible,
     }),
   ]);
 });

@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Context } from "@siteimprove/alfa-selector";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { URL } from "@siteimprove/alfa-url";
@@ -14,7 +15,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isTabbable } from "../common/predicate/is-tabbable";
 import { isIgnored } from "../common/predicate/is-ignored";
-import { isKeyboardActionable } from "../common/predicate/is-keyboard-actionable";
+import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
@@ -91,7 +92,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
         );
 
         const askIsVisible = Question.of(
-          "node",
+          "boolean",
           "first-tabbable-is-visible",
           `Is the first tabbable element of the document visible if it's focused?`,
           target
@@ -111,17 +112,10 @@ export default Rule.Atomic.of<Page, Document, Question>({
                     () => Outcomes.FirstTabbableIsNotLink,
                     () =>
                       expectation(
-                        /* Think about this element.none if it's necessary
-                        element.none((element) => isVisible(device, Context.focus(element)(element))
-                          () => Outcomes.FirstTabbableIsNotVisible
-                          () =>
-                                element.some(isTabbable(device))
-                                () => Outocomes.isNotTabbable
-                                () => the rest of the code??
-
-                        */
-                        element.none(isKeyboardActionable(device)),
-                        () => Outcomes.FirstTabbableIsNotKeyboardActionable,
+                        // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
+                        element.none((element) =>
+                          isVisible(device, Context.focus(element))(element)
+                        ),
                         () =>
                           reference.isSome()
                             ? expectation(
@@ -165,7 +159,62 @@ export default Rule.Atomic.of<Page, Document, Question>({
                                       )
                                     )
                                 )
-                              )
+                              ),
+                        () =>
+                          askIsVisible.map((isVisible) =>
+                            expectation(
+                              !isVisible,
+                              () => Outcomes.FirstTabbableIsNotVisible,
+                              () =>
+                                reference.isSome()
+                                  ? expectation(
+                                      mains.some((main) =>
+                                        reference.some(
+                                          isAtTheStart(main, device)
+                                        )
+                                      ),
+                                      () =>
+                                        Outcomes.FirstTabbableIsLinkToContent,
+                                      () =>
+                                        askIsMain.map((isMain) =>
+                                          expectation(
+                                            isMain,
+                                            () =>
+                                              Outcomes.FirstTabbableIsLinkToContent,
+                                            () =>
+                                              Outcomes.FirstTabbableIsNotLinkToContent
+                                          )
+                                        )
+                                    )
+                                  : askIsInteralLink.map((isInternalLink) =>
+                                      expectation(
+                                        !isInternalLink,
+                                        () =>
+                                          Outcomes.FirstTabbableIsNotInternalLink,
+                                        () =>
+                                          askReference.map((reference) =>
+                                            expectation(
+                                              reference
+                                                .filter(isElement)
+                                                .some(hasRole(device, "main")),
+                                              () =>
+                                                Outcomes.FirstTabbableIsLinkToContent,
+                                              () =>
+                                                askIsMain.map((isMain) =>
+                                                  expectation(
+                                                    isMain,
+                                                    () =>
+                                                      Outcomes.FirstTabbableIsLinkToContent,
+                                                    () =>
+                                                      Outcomes.FirstTabbableIsNotLinkToContent
+                                                  )
+                                                )
+                                            )
+                                          )
+                                      )
+                                    )
+                            )
+                          )
                       )
                   )
               )
@@ -200,9 +249,9 @@ export namespace Outcomes {
     )
   );
 
-  export const FirstTabbableIsNotKeyboardActionable = Err.of(
+  export const FirstTabbableIsNotVisible = Err.of(
     Diagnostic.of(
-      `The first tabbable element in the document is not keyboard actionable`
+      `The first tabbable element in the document is not visible when on focus`
     )
   );
 
