@@ -21,7 +21,7 @@ import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
 
 const { hasName, isElement } = Element;
-const { fold } = Predicate;
+const { fold, or } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document, Question>({
@@ -111,110 +111,63 @@ export default Rule.Atomic.of<Page, Document, Question>({
                     element.none(hasRole(device, (role) => role.is("link"))),
                     () => Outcomes.FirstTabbableIsNotLink,
                     () =>
-                      expectation(
-                        // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
-                        element.some((element) =>
-                          isVisible(device, Context.focus(element))(element)
-                        ),
-                        () =>
-                          reference.isSome()
-                            ? expectation(
-                                mains.some((main) =>
-                                  reference.some(isAtTheStart(main, device))
-                                ),
-                                () => Outcomes.FirstTabbableIsLinkToContent,
-                                () =>
-                                  askIsMain.map((isMain) =>
-                                    expectation(
-                                      isMain,
-                                      () =>
-                                        Outcomes.FirstTabbableIsLinkToContent,
-                                      () =>
-                                        Outcomes.FirstTabbableIsNotLinkToContent
-                                    )
-                                  )
-                              )
-                            : askIsInteralLink.map((isInternalLink) =>
-                                expectation(
-                                  !isInternalLink,
-                                  () => Outcomes.FirstTabbableIsNotInternalLink,
+                      askIsVisible.map((isVisibleWhenFocused) =>
+                        expectation(
+                          // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
+                          element.some(
+                            (element) =>
+                              isVisible(
+                                device,
+                                Context.focus(element)
+                              )(element) || isVisibleWhenFocused
+                          ),
+                          () =>
+                            reference.isSome()
+                              ? expectation(
+                                  mains.some((main) =>
+                                    reference.some(isAtTheStart(main, device))
+                                  ),
+                                  () => Outcomes.FirstTabbableIsLinkToContent,
                                   () =>
-                                    askReference.map((reference) =>
+                                    askIsMain.map((isMain) =>
                                       expectation(
-                                        reference
-                                          .filter(isElement)
-                                          .some(hasRole(device, "main")),
+                                        isMain,
                                         () =>
                                           Outcomes.FirstTabbableIsLinkToContent,
                                         () =>
-                                          askIsMain.map((isMain) =>
-                                            expectation(
-                                              isMain,
-                                              () =>
-                                                Outcomes.FirstTabbableIsLinkToContent,
-                                              () =>
-                                                Outcomes.FirstTabbableIsNotLinkToContent
-                                            )
-                                          )
+                                          Outcomes.FirstTabbableIsNotLinkToContent
                                       )
                                     )
                                 )
-                              ),
-                        () =>
-                          askIsVisible.map((isVisible) =>
-                            expectation(
-                              !isVisible,
-                              () => Outcomes.FirstTabbableIsNotVisible,
-                              () =>
-                                reference.isSome()
-                                  ? expectation(
-                                      mains.some((main) =>
-                                        reference.some(
-                                          isAtTheStart(main, device)
-                                        )
-                                      ),
-                                      () =>
-                                        Outcomes.FirstTabbableIsLinkToContent,
-                                      () =>
-                                        askIsMain.map((isMain) =>
-                                          expectation(
-                                            isMain,
-                                            () =>
-                                              Outcomes.FirstTabbableIsLinkToContent,
-                                            () =>
-                                              Outcomes.FirstTabbableIsNotLinkToContent
-                                          )
-                                        )
-                                    )
-                                  : askIsInteralLink.map((isInternalLink) =>
-                                      expectation(
-                                        !isInternalLink,
-                                        () =>
-                                          Outcomes.FirstTabbableIsNotInternalLink,
-                                        () =>
-                                          askReference.map((reference) =>
-                                            expectation(
-                                              reference
-                                                .filter(isElement)
-                                                .some(hasRole(device, "main")),
-                                              () =>
-                                                Outcomes.FirstTabbableIsLinkToContent,
-                                              () =>
-                                                askIsMain.map((isMain) =>
-                                                  expectation(
-                                                    isMain,
-                                                    () =>
-                                                      Outcomes.FirstTabbableIsLinkToContent,
-                                                    () =>
-                                                      Outcomes.FirstTabbableIsNotLinkToContent
-                                                  )
-                                                )
+                              : askIsInteralLink.map((isInternalLink) =>
+                                  expectation(
+                                    !isInternalLink,
+                                    () =>
+                                      Outcomes.FirstTabbableIsNotInternalLink,
+                                    () =>
+                                      askReference.map((reference) =>
+                                        expectation(
+                                          reference
+                                            .filter(isElement)
+                                            .some(hasRole(device, "main")),
+                                          () =>
+                                            Outcomes.FirstTabbableIsLinkToContent,
+                                          () =>
+                                            askIsMain.map((isMain) =>
+                                              expectation(
+                                                isMain,
+                                                () =>
+                                                  Outcomes.FirstTabbableIsLinkToContent,
+                                                () =>
+                                                  Outcomes.FirstTabbableIsNotLinkToContent
+                                              )
                                             )
-                                          )
+                                        )
                                       )
-                                    )
-                            )
-                          )
+                                  )
+                                ),
+                          () => Outcomes.FirstTabbableIsNotVisible
+                        )
                       )
                   )
               )
