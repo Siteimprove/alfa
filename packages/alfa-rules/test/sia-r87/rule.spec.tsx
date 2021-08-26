@@ -213,11 +213,73 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
     ]
   );
 
-  t.deepEqual(await evaluate(R87, { document }), [
-    failed(R87, document, {
-      1: Outcomes.FirstTabbableIsNotVisible,
-    }),
-  ]);
+  t.deepEqual(
+    await evaluate(
+      R87,
+      { document },
+      oracle({
+        "first-tabbable-is-visible": false,
+      })
+    ),
+    [
+      failed(R87, document, {
+        1: Outcomes.FirstTabbableIsNotVisible,
+      }),
+    ]
+  );
+});
+
+test(`evaluate() fails a document whose first tabbable link is not visible`, async (t) => {
+  const document = h.document(
+    [
+      <html>
+        <a href="#main">Skip to content</a>
+        <main id="main">Content</main>
+      </html>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          opacity: "0",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(
+    await evaluate(
+      R87,
+      { document },
+      oracle({
+        "first-tabbable-is-visible": true,
+      })
+    ),
+    [
+      passed(R87, document, {
+        1: Outcomes.FirstTabbableIsLinkToContent,
+      }),
+    ]
+  );
+});
+
+test(`evaluate() fails a document whose first tabbable link is not visible`, async (t) => {
+  const document = h.document(
+    [
+      <html>
+        <a href="#main">Skip to content</a>
+        <main id="main">Content</main>
+      </html>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          opacity: "0",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R87, { document }), [cantTell(R87, document)]);
 });
 
 test(`evaluate() passes a document whose first tabbable link is visible when

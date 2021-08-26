@@ -113,7 +113,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
                     () =>
                       expectation(
                         // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
-                        element.none((element) =>
+                        element.some((element) =>
                           isVisible(device, Context.focus(element))(element)
                         ),
                         () =>
