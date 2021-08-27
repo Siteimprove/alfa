@@ -311,7 +311,7 @@ test(`evaluate() passes a document whose first tabbable link is visible when
   ]);
 });
 
-test(`evaluates() passe a document whose first tabbable link references a
+test(`evaluates() passes a document whose first tabbable link references a
       container child at the start of main`, async (t) => {
   const document = h.document([
     <html>
