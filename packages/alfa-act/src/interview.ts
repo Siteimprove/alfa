@@ -40,7 +40,15 @@ export namespace Interview {
     oracle: Oracle<I, T, Q, S>
   ): Future<Option<A>> {
     if (interview instanceof Question) {
-      return oracle(rule, interview).flatMap((answer) =>
+      let answer: Future<Option<Interview<Q, S, T, A>>>;
+
+      if (interview.isRhetorical()) {
+        answer = Future.now(Option.of(interview.answer()));
+      } else {
+        answer = oracle(rule, interview);
+      }
+
+      return answer.flatMap((answer) =>
         answer
           .map((answer) => conduct(answer, rule, oracle))
           .getOrElse(() => Future.now(None))
