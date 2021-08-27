@@ -4,8 +4,12 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
+
+const { isBoolean, isFunction } = Refinement;
 
 /**
  * @public
@@ -87,22 +91,32 @@ export class Question<Q, S, C, A, T = A>
 
   public answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T>;
 
+  public answerIf(
+    predicate: Predicate<S, [context: C]>,
+    answer: A
+  ): Question<Q, S, C, A, T>;
+
   public answerIf(answer: Option<A>): Question<Q, S, C, A, T>;
 
   public answerIf(
-    conditionOrAnswer: boolean | Option<A>,
+    conditionOrPredicateOrAnswer:
+      | boolean
+      | Predicate<S, [context: C]>
+      | Option<A>,
     answer?: A
   ): Question<Q, S, C, A, T> {
     let condition: boolean;
 
-    if (Option.isOption(conditionOrAnswer)) {
-      condition = conditionOrAnswer.isSome();
+    if (isBoolean(conditionOrPredicateOrAnswer)) {
+      condition = conditionOrPredicateOrAnswer;
+    } else if (isFunction(conditionOrPredicateOrAnswer)) {
+      condition = conditionOrPredicateOrAnswer(this._subject, this._context);
+    } else {
+      condition = conditionOrPredicateOrAnswer.isSome();
 
       if (condition) {
-        answer = conditionOrAnswer.get();
+        answer = conditionOrPredicateOrAnswer.get();
       }
-    } else {
-      condition = conditionOrAnswer;
     }
 
     return condition
