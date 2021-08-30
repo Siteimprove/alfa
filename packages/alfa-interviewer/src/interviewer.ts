@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-import { Rule, Oracle } from "@siteimprove/alfa-act";
+import { Rule, Oracle } from "@siteimprove/alfa-act-base";
 import { Result, Err } from "@siteimprove/alfa-result";
 
 /**

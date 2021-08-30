@@ -18,8 +18,14 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-array": "workspace:^0.21.2",
+    "@siteimprove/alfa-earl": "workspace:^0.21.2",
     "@siteimprove/alfa-equatable": "workspace:^0.21.2",
-    "@siteimprove/alfa-json": "workspace:^0.21.2"
+    "@siteimprove/alfa-future": "workspace:^0.21.2",
+    "@siteimprove/alfa-iterable": "workspace:^0.21.2",
+    "@siteimprove/alfa-json": "workspace:^0.21.2",
+    "@siteimprove/alfa-option": "workspace:^0.21.2",
+    "@siteimprove/alfa-sarif": "workspace:^0.21.2"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.21.2"

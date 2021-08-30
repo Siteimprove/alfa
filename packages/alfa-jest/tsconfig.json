@@ -4,7 +4,7 @@
   "files": ["src/index.ts", "src/jest.ts"],
   "references": [
     {
-      "path": "../alfa-act"
+      "path": "../alfa-act-base"
     },
     {
       "path": "../alfa-assert"

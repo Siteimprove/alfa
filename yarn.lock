@@ -933,8 +933,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-act-base@workspace:packages/alfa-act-base"
   dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.21.2"
+    "@siteimprove/alfa-earl": "workspace:^0.21.2"
     "@siteimprove/alfa-equatable": "workspace:^0.21.2"
+    "@siteimprove/alfa-future": "workspace:^0.21.2"
+    "@siteimprove/alfa-iterable": "workspace:^0.21.2"
     "@siteimprove/alfa-json": "workspace:^0.21.2"
+    "@siteimprove/alfa-option": "workspace:^0.21.2"
+    "@siteimprove/alfa-sarif": "workspace:^0.21.2"
     "@siteimprove/alfa-test": "workspace:^0.21.2"
   languageName: unknown
   linkType: soft
@@ -1059,6 +1065,7 @@ __metadata:
   resolution: "@siteimprove/alfa-assert@workspace:packages/alfa-assert"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-future": "workspace:^0.21.2"
     "@siteimprove/alfa-mapper": "workspace:^0.21.2"
     "@siteimprove/alfa-result": "workspace:^0.21.2"
@@ -1138,7 +1145,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-chai@workspace:packages/alfa-chai"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-assert": "workspace:^0.21.2"
     "@siteimprove/alfa-future": "workspace:^0.21.2"
     "@siteimprove/alfa-mapper": "workspace:^0.21.2"
@@ -1320,7 +1327,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-cypress@workspace:packages/alfa-cypress"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-assert": "workspace:^0.21.2"
     "@siteimprove/alfa-device": "workspace:^0.21.2"
     "@siteimprove/alfa-dom": "workspace:^0.21.2"
@@ -1488,7 +1495,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-formatter@workspace:packages/alfa-formatter"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-result": "workspace:^0.21.2"
     "@siteimprove/alfa-test": "workspace:^0.21.2"
   languageName: unknown
@@ -1614,7 +1621,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-interviewer@workspace:packages/alfa-interviewer"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-result": "workspace:^0.21.2"
     "@siteimprove/alfa-test": "workspace:^0.21.2"
     "@types/node": ^14.14.31
@@ -1651,7 +1658,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-jasmine@workspace:packages/alfa-jasmine"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-assert": "workspace:^0.21.2"
     "@siteimprove/alfa-future": "workspace:^0.21.2"
     "@siteimprove/alfa-mapper": "workspace:^0.21.2"
@@ -1666,7 +1673,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-jest@workspace:packages/alfa-jest"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-assert": "workspace:^0.21.2"
     "@siteimprove/alfa-future": "workspace:^0.21.2"
     "@siteimprove/alfa-mapper": "workspace:^0.21.2"
@@ -2320,7 +2327,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-unexpected@workspace:packages/alfa-unexpected"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-assert": "workspace:^0.21.2"
     "@siteimprove/alfa-future": "workspace:^0.21.2"
     "@siteimprove/alfa-mapper": "workspace:^0.21.2"

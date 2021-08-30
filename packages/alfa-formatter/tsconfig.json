@@ -4,7 +4,7 @@
   "files": ["src/formatter.ts", "src/index.ts"],
   "references": [
     {
-      "path": "../alfa-act"
+      "path": "../alfa-act-base"
     },
     {
       "path": "../alfa-result"

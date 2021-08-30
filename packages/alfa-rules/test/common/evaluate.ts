@@ -1,4 +1,4 @@
-import { Rule, Outcome, Oracle } from "@siteimprove/alfa-act";
+import { Rule, Outcome, Oracle } from "@siteimprove/alfa-act-base";
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";

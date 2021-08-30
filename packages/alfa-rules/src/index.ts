@@ -1,7 +1,7 @@
 import { Record } from "@siteimprove/alfa-record";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as act from "@siteimprove/alfa-act";
+import * as act from "@siteimprove/alfa-act-base";
 
 export * from "./scope";
 

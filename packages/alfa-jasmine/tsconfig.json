@@ -8,7 +8,7 @@
   ],
   "references": [
     {
-      "path": "../alfa-act"
+      "path": "../alfa-act-base"
     },
     {
       "path": "../alfa-assert"

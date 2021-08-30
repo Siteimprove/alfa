@@ -6,11 +6,11 @@
  */
 
 export * from "./audit";
-export * from "./cache";
+export * from "../../alfa-act-base/src/cache";
 export * from "./interview";
-export * from "./oracle";
+export * from "@siteimprove/alfa-act-base/src/oracle";
 export * from "./outcome";
-export * from "./question";
-export * from "./requirement";
+export * from "@siteimprove/alfa-act-base/src/question";
+export * from "@siteimprove/alfa-act-base/src/requirement";
 export * from "./rule";
-export * from "./tag";
+export * from "@siteimprove/alfa-act-base/src/tag";

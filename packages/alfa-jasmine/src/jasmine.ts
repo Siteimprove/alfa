@@ -1,6 +1,6 @@
 /// <reference types="jasmine" />
 
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act-base";
 import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
