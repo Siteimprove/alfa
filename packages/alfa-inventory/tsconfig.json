@@ -1,8 +1,28 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-  ],
+  "files": ["src/index.ts", "src/outcome.ts", "src/rule.ts"],
   "references": [
+    {
+      "path": "../alfa-act-base"
+    },
+    {
+      "path": "../alfa-earl"
+    },
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-sarif"
+    }
   ]
 }

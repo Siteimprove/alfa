@@ -1,6 +1,6 @@
 import { Outcome } from "@siteimprove/alfa-act";
-import { Rule } from "@siteimprove/alfa-act-base";
-import { Diagnostic } from "@siteimprove/alfa-act-base";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act-base";
+import { Outcome as Inventory } from "@siteimprove/alfa-inventory";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -46,6 +46,6 @@ export function inventory<T, Q>(
   rule: Rule<Page, T, Q>,
   target: T,
   inventory: Diagnostic
-): Outcome.Inventory.JSON<T> {
-  return Outcome.Inventory.of(rule, target, inventory).toJSON();
+): Inventory.Inventory.JSON<T> {
+  return Inventory.Inventory.of(rule, target, inventory).toJSON();
 }

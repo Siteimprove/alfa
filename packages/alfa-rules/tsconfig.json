@@ -293,6 +293,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-inventory"
+    },
+    {
       "path": "../alfa-json"
     },
     {

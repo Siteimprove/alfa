@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-inventory";
 import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
