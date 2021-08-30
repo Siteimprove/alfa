@@ -1,18 +1,8 @@
-// import // Cache,
-// Interview,
-// Oracle,
-// Outcome,
-// Requirement,
-// Tag,
-// "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
-// import { List } from "@siteimprove/alfa-list";
-import { None, Option } from "@siteimprove/alfa-option";
-// import { Record } from "@siteimprove/alfa-record";
-// import { Result } from "@siteimprove/alfa-result";
+import { None } from "@siteimprove/alfa-option";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -24,6 +14,9 @@ import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
 
+/**
+ * @public
+ */
 export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   implements
     Equatable,

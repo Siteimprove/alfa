@@ -6,6 +6,9 @@ import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export abstract class Outcome<I, T, Q = never, S = T>
   implements
     Equatable,
