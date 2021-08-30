@@ -18,6 +18,7 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2",
     "@siteimprove/alfa-applicative": "workspace:^0.21.2",
     "@siteimprove/alfa-earl": "workspace:^0.21.2",
     "@siteimprove/alfa-equatable": "workspace:^0.21.2",

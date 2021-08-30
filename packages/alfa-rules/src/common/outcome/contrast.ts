@@ -1,5 +1,6 @@
-import { Contrast as Diagnostic } from "../diagnostic/contrast";
 import { Err, Ok } from "@siteimprove/alfa-result";
+
+import { Contrast as Diagnostic } from "../diagnostic/contrast";
 
 export namespace Contrast {
   export const HasSufficientContrast = (

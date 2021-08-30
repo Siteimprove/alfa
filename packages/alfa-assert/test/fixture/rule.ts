@@ -1,4 +1,5 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Result, Err } from "@siteimprove/alfa-result";
 
 export const Pass = Rule.Atomic.of<string, string>({

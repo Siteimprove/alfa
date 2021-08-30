@@ -929,10 +929,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@siteimprove/alfa-act-base@workspace:packages/alfa-act-base":
+"@siteimprove/alfa-act-base@workspace:^0.21.2, @siteimprove/alfa-act-base@workspace:packages/alfa-act-base":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-act-base@workspace:packages/alfa-act-base"
   dependencies:
+    "@siteimprove/alfa-equatable": "workspace:^0.21.2"
+    "@siteimprove/alfa-json": "workspace:^0.21.2"
     "@siteimprove/alfa-test": "workspace:^0.21.2"
   languageName: unknown
   linkType: soft
@@ -941,6 +943,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-act@workspace:packages/alfa-act"
   dependencies:
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-applicative": "workspace:^0.21.2"
     "@siteimprove/alfa-earl": "workspace:^0.21.2"
     "@siteimprove/alfa-equatable": "workspace:^0.21.2"
@@ -2021,6 +2024,7 @@ __metadata:
   resolution: "@siteimprove/alfa-rules@workspace:packages/alfa-rules"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.21.2"
+    "@siteimprove/alfa-act-base": "workspace:^0.21.2"
     "@siteimprove/alfa-affine": "workspace:^0.21.2"
     "@siteimprove/alfa-aria": "workspace:^0.21.2"
     "@siteimprove/alfa-array": "workspace:^0.21.2"

@@ -1,3 +1,4 @@
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -10,7 +11,6 @@ import { expectation } from "../expectation";
 import { isPerceivable } from "../predicate/is-perceivable";
 
 import { Question } from "../question";
-import { Diagnostic } from "@siteimprove/alfa-act";
 
 function mediaTextAlternative(
   alt: act.Question<"node", Element, Element, Option<Node>>,

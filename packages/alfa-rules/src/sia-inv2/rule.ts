@@ -1,4 +1,5 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Node } from "@siteimprove/alfa-aria";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";

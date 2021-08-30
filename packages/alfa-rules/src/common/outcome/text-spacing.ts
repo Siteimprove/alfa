@@ -1,5 +1,5 @@
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Diagnostic } from "@siteimprove/alfa-act";
 import { Property } from "@siteimprove/alfa-style";
 
 export function TextSpacing(name: Property.Name) {

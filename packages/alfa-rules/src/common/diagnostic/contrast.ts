@@ -1,4 +1,4 @@
-import { Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { RGB } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";

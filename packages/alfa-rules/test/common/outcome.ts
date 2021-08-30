@@ -1,4 +1,5 @@
-import { Diagnostic, Rule, Outcome } from "@siteimprove/alfa-act";
+import { Rule, Outcome } from "@siteimprove/alfa-act";
+import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";

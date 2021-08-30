@@ -4,7 +4,6 @@
   "files": [
     "src/audit.ts",
     "src/cache.ts",
-    "src/diagnostic.ts",
     "src/index.ts",
     "src/interview.ts",
     "src/oracle.ts",
@@ -15,6 +14,9 @@
     "src/tag.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-act-base"
+    },
     {
       "path": "../alfa-applicative"
     },
