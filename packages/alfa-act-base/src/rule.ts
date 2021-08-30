@@ -11,7 +11,6 @@ import * as sarif from "@siteimprove/alfa-sarif";
 import { Cache } from "./cache";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
-// import { Requirement } from "./requirement";
 import { Tag } from "./tag";
 
 /**
@@ -25,18 +24,15 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     sarif.Serializable<sarif.ReportingDescriptor>
 {
   protected readonly _uri: string;
-  // protected readonly _requirements: Array<Requirement>;
   protected readonly _tags: Array<Tag>;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
 
   protected constructor(
     uri: string,
-    // requirements: Array<Requirement>,
     tags: Array<Tag>,
     evaluator: Rule.Evaluate<I, T, Q, S>
   ) {
     this._uri = uri;
-    // this._requirements = requirements;
     this._tags = tags;
     this._evaluate = evaluator;
   }
@@ -45,17 +41,9 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     return this._uri;
   }
 
-  // public get requirements(): ReadonlyArray<Requirement> {
-  //   return this._requirements;
-  // }
-
   public get tags(): ReadonlyArray<Tag> {
     return this._tags;
   }
-
-  // public hasRequirement(requirement: Requirement): boolean {
-  //   return Array.includes(this._requirements, requirement);
-  // }
 
   public hasTag(tag: Tag): boolean {
     return Array.includes(this._tags, tag);
@@ -87,9 +75,6 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
       },
       "@type": ["earl:TestCriterion", "earl:TestCase"],
       "@id": this._uri,
-      // "dct:isPartOf": {
-      //   "@set": this._requirements.map((requirement) => requirement.toEARL()),
-      // },
     };
   }
 
@@ -109,7 +94,6 @@ export namespace Rule {
     [key: string]: json.JSON;
     type: string;
     uri: string;
-    // requirements: Array<Requirement.JSON>;
     tags: Array<Tag.JSON>;
   }
 
@@ -120,9 +104,6 @@ export namespace Rule {
     };
     "@type": ["earl:TestCriterion", "earl:TestCase"];
     "@id": string;
-    // "dct:isPartOf": {
-    //   "@set": Array<Requirement.EARL>;
-    // };
   }
 
   export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;

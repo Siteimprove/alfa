@@ -1,9 +1,4 @@
-import {
-  Diagnostic,
-  Oracle,
-  // Requirement,
-  Tag,
-} from "@siteimprove/alfa-act-base";
+import { Diagnostic, Oracle, Tag } from "@siteimprove/alfa-act-base";
 import { Array } from "@siteimprove/alfa-array";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
