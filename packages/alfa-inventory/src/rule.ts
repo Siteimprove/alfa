@@ -10,11 +10,7 @@ import { Outcome } from "./outcome";
  * @public
  */
 export namespace Rule {
-  export class Inventory<I = unknown, T = unknown> extends base.Rule<
-    I,
-    T,
-    never
-  > {
+  export class Inventory<I = unknown, T = unknown> extends base.Rule<I, T> {
     public static of<I, T = unknown>(properties: {
       uri: string;
       evaluate: Inventory.Evaluate<I, T>;
@@ -23,7 +19,7 @@ export namespace Rule {
     }
 
     private constructor(uri: string, evaluate: Inventory.Evaluate<I, T>) {
-      super(uri, [], [], (input) => {
+      super(uri, [], (input) => {
         const { applicability, expectations } = evaluate(input);
 
         return Future.traverse(applicability(), (target) =>
@@ -36,7 +32,6 @@ export namespace Rule {
       return {
         type: "inventory",
         uri: this._uri,
-        requirements: [],
         tags: [],
       };
     }

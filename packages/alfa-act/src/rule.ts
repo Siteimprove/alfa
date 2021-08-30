@@ -1,7 +1,7 @@
 import {
   Diagnostic,
   Oracle,
-  Requirement,
+  // Requirement,
   Tag,
 } from "@siteimprove/alfa-act-base";
 import { Array } from "@siteimprove/alfa-array";
@@ -17,19 +17,65 @@ import * as base from "@siteimprove/alfa-act-base";
 
 import { Interview } from "./interview";
 import { Outcome } from "./outcome";
+import { Requirement } from "./requirement";
 
 const { flatMap, flatten, reduce } = Iterable;
 
 /**
  * @public
  */
+export abstract class Rule<
+  I = unknown,
+  T = unknown,
+  Q = never,
+  S = T
+> extends base.Rule<I, T, Q, S> {
+  protected readonly _requirements: Array<Requirement>;
+
+  protected constructor(
+    uri: string,
+    requirements: Array<Requirement>,
+    tags: Array<Tag>,
+    evaluator: base.Rule.Evaluate<I, T, Q, S>
+  ) {
+    super(uri, tags, evaluator);
+    this._requirements = requirements;
+  }
+
+  public get requirements(): ReadonlyArray<Requirement> {
+    return this._requirements;
+  }
+
+  public hasRequirement(requirement: Requirement): boolean {
+    return Array.includes(this._requirements, requirement);
+  }
+
+  public toEARL(): Rule.EARL {
+    return {
+      ...super.toEARL(),
+      "dct:isPartOf": {
+        "@set": this._requirements.map((requirement) => requirement.toEARL()),
+      },
+    };
+  }
+}
+
+/**
+ * @public
+ */
 export namespace Rule {
-  export class Atomic<
-    I = unknown,
-    T = unknown,
-    Q = never,
-    S = T
-  > extends base.Rule<I, T, Q, S> {
+  export interface EARL extends base.Rule.EARL {
+    "dct:isPartOf": {
+      "@set": Array<Requirement.EARL>;
+    };
+  }
+
+  export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
+    I,
+    T,
+    Q,
+    S
+  > {
     public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
@@ -90,6 +136,7 @@ export namespace Rule {
   export namespace Atomic {
     export interface JSON extends base.Rule.JSON {
       type: "atomic";
+      requirements: Array<Requirement.JSON>;
     }
 
     export interface Evaluate<I, T, Q, S> {
@@ -121,7 +168,7 @@ export namespace Rule {
     T = unknown,
     Q = never,
     S = T
-  > extends base.Rule<I, T, Q, S> {
+  > extends Rule<I, T, Q, S> {
     public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
@@ -207,8 +254,9 @@ export namespace Rule {
   export namespace Composite {
     export interface JSON extends base.Rule.JSON {
       type: "composite";
-      uri: string;
+      // uri: string;
       composes: Array<base.Rule.JSON>;
+      requirements: Array<Requirement.JSON>;
     }
 
     export interface Evaluate<I, T, Q, S> {

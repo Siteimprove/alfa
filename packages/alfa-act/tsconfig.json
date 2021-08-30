@@ -6,6 +6,7 @@
     "src/index.ts",
     "src/interview.ts",
     "src/outcome.ts",
+    "src/requirement.ts",
     "src/rule.ts",
   ],
   "references": [

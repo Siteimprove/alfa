@@ -1,4 +1,4 @@
-import { Oracle } from "@siteimprove/alfa-act";
+import { Oracle } from "@siteimprove/alfa-act-base";
 import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";

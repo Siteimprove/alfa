@@ -4,7 +4,7 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-import * as act from "@siteimprove/alfa-act";
+import * as base from "@siteimprove/alfa-act-base";
 
 import { expectation } from "../expectation";
 
@@ -13,8 +13,8 @@ import { isPerceivable } from "../predicate/is-perceivable";
 import { Question } from "../question";
 
 function mediaTextAlternative(
-  alt: act.Question<"node", Element, Element, Option<Node>>,
-  label: act.Question<"node", Element, Element, Option<Node>>,
+  alt: base.Question<"node", Element, Element, Option<Node>>,
+  label: base.Question<"node", Element, Element, Option<Node>>,
   device: Device,
   kind: "<audio>" | "<video>"
 ) {

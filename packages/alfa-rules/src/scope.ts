@@ -1,4 +1,4 @@
-import { Tag } from "@siteimprove/alfa-act";
+import { Tag } from "@siteimprove/alfa-act-base";
 
 /**
  * @public
