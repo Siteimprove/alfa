@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-thunk",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.19.0",
+  "version": "0.21.2",
   "license": "MIT",
   "description": "Functionality for working with thunks, which are computations that are delayed until needed",
   "repository": {
@@ -18,11 +18,11 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-mapper": "workspace:^0.19.0",
-    "@siteimprove/alfa-reducer": "workspace:^0.19.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.21.2",
+    "@siteimprove/alfa-reducer": "workspace:^0.21.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.19.0"
+    "@siteimprove/alfa-test": "workspace:^0.21.2"
   },
   "publishConfig": {
     "access": "public",

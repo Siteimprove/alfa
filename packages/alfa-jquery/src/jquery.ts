@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /// <reference types="jquery" />
 
 import { Device } from "@siteimprove/alfa-device";

@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -11,7 +11,8 @@ import { hasTextContent } from "../common/predicate/has-text-content";
 import { isVisible } from "../common/predicate/is-visible";
 
 const { isElement, hasNamespace } = Element;
-const { and } = Predicate;
+const { isText } = Text;
+const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
@@ -46,13 +47,31 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const { value: fontSize } = Style.from(target, device).computed(
-          "font-size"
-        );
+        const texts = target
+          .descendants({
+            flattened: true,
+            nested: true,
+          })
+          .filter(isText)
+          .reject((text) => text.data.trim() === "")
+          .collect((text) => text.parent().filter(isElement))
+          .every(
+            or(
+              not((parent) =>
+                Style.from(parent, device).specified("font-size").source.equals(
+                  // Applicability guarantees there is a cascaded value
+                  Style.from(target, device).cascaded("font-size").get().source
+                )
+              ),
+              (parent) =>
+                Style.from(parent, device).computed("font-size").value.value >=
+                9
+            )
+          );
 
         return {
           1: expectation(
-            fontSize.value >= 9,
+            texts,
             () => Outcomes.IsSufficient,
             () => Outcomes.IsInsufficient
           ),
@@ -64,7 +83,7 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    Diagnostic.of(`The font size is not smaller than 9 pixels`)
+    Diagnostic.of(`The font size is greater than 9 pixels`)
   );
 
   export const IsInsufficient = Err.of(

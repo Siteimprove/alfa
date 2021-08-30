@@ -6,6 +6,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
@@ -15,6 +16,7 @@ import { Role } from "./role";
 
 const { hasInputType, hasName, isElement } = Element;
 const { or, test } = Predicate;
+const { and } = Refinement;
 
 /**
  * @internal
@@ -122,19 +124,18 @@ const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
   return None;
 };
 
-const nameFromChild = (predicate: Predicate<Element>) => (
-  element: Element,
-  device: Device,
-  state: Name.State
-) => {
-  for (const child of element.children().filter(isElement).find(predicate)) {
-    return Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-      Name.of(name.value, [Name.Source.descendant(element, name)])
-    );
-  }
-
-  return None;
-};
+const nameFromChild =
+  (predicate: Predicate<Element>) =>
+  (element: Element, device: Device, state: Name.State) =>
+    element
+      .children()
+      .filter(isElement)
+      .find(predicate)
+      .flatMap((child) =>
+        Name.fromDescendants(child, device, state.visit(child)).map((name) =>
+          Name.of(name.value, [Name.Source.descendant(element, name)])
+        )
+      );
 
 const ids = Cache.empty<Node, Map<string, Element>>();
 
@@ -145,8 +146,8 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
 
   const elements = root.inclusiveDescendants().filter(isElement);
 
-  for (const id of element.id) {
-    const target = ids
+  const isFirstReference = element.id.some((id) =>
+    ids
       .get(root, () =>
         Map.from(
           elements
@@ -156,21 +157,19 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
             .reverse()
         )
       )
-      .get(id);
-
-    if (target.includes(element)) {
-      continue;
-    } else {
-      return None;
-    }
-  }
+      .get(id)
+      .includes(element)
+  );
 
   const references = labels
     .get(root, () => elements.filter(hasName("label")))
     .filter(
       or(
-        (label) => label.descendants().includes(element),
         (label) =>
+          label.attribute("for").isNone() &&
+          label.descendants().includes(element),
+        (label) =>
+          isFirstReference &&
           label
             .attribute("for")
             .some((attribute) => element.id.includes(attribute.value))
@@ -181,7 +180,7 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     Name.fromNode(
       element,
       device,
-      state.reference(None).recurse(true).descend(false)
+      state.reference(Option.of(element)).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
   );
 
@@ -245,6 +244,10 @@ const Features: Features = {
       }
     ),
 
+    // https://w3c.github.io/html-aam/#el-datalist
+    // <datalist> only has a role if it is correctly mapped to an <input>
+    // via the list attribute. We should probably check that.
+    // Additionally, it seems to never be rendered, hence always ignored.
     datalist: html(() => Option.of(Role.of("listbox"))),
 
     dd: html(() => Option.of(Role.of("definition"))),
@@ -397,6 +400,11 @@ const Features: Features = {
         return None;
       },
       function* (element) {
+        // https://w3c.github.io/html-aam/#el-input-checkbox
+        // aria-checked should be "mixed" if the indeterminate IDL attribute is
+        // true
+        // aria-checked should otherwise mimic the checkedness, i.e. the
+        // checked *IDL* attribute, not the DOM one.
         // https://w3c.github.io/html-aam/#att-checked
         yield Attribute.of(
           "aria-checked",
@@ -480,20 +488,37 @@ const Features: Features = {
       }
     ),
 
-    li: html((element) =>
-      element
-        .parent()
-        .filter(Element.isElement)
-        .flatMap((parent) => {
-          switch (parent.name) {
-            case "ol":
-            case "ul":
-            case "menu":
-              return Option.of(Role.of("listitem"));
-          }
+    li: html(
+      (element) =>
+        element
+          .parent()
+          .filter(Element.isElement)
+          .flatMap((parent) => {
+            switch (parent.name) {
+              case "ol":
+              case "ul":
+              case "menu":
+                return Option.of(Role.of("listitem"));
+            }
 
-          return None;
-        })
+            return None;
+          }),
+      (element) => {
+        // https://w3c.github.io/html-aam/#el-li
+        const siblings = element
+          .inclusiveSiblings()
+          .filter(and(Element.isElement, Element.hasName("li")));
+
+        return [
+          Attribute.of("aria-setsize", `${siblings.size}`),
+          Attribute.of(
+            "aria-posinset",
+            `${
+              siblings.takeUntil((sibling) => sibling.equals(element)).size + 1
+            }`
+          ),
+        ];
+      }
     ),
 
     main: html(() => Option.of(Role.of("main"))),
@@ -614,6 +639,9 @@ const Features: Features = {
     textarea: html(
       () => Option.of(Role.of("textbox")),
       function* (element) {
+        // https://w3c.github.io/html-aam/#el-textarea
+        yield Attribute.of("aria-multiline", "true");
+
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
           yield Attribute.of("aria-disabled", "true");

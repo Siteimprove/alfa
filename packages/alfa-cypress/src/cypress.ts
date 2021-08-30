@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /// <reference types="cypress" />
 
 // While it may be tempting to pull in @siteimprove/alfa-chai for this module as
@@ -38,10 +39,10 @@ declare global {
  * @public
  */
 export namespace Cypress {
-  export function createPlugin<T = unknown, Q = never>(
-    rules: Iterable<act.Rule<Page, T, Q>>,
-    handlers: Iterable<Handler<Page, T, Q>> = [],
-    options: Asserter.Options = {}
+  export function createPlugin<T = unknown, Q = never, S = T>(
+    rules: Iterable<act.Rule<Page, T, Q, S>>,
+    handlers: Iterable<Handler<Page, T, Q, S>> = [],
+    options: Asserter.Options<Page, T, Q, S> = {}
   ): globalThis.Chai.ChaiPlugin {
     const asserter = Asserter.of(rules, handlers, options);
 
@@ -111,10 +112,10 @@ export namespace Cypress {
      * `after()` hook that will write any files collected during the test run
      * _after_ the tests are done.
      */
-    export function persist<I, T, Q>(
+    export function persist<I, T, Q, S>(
       output: Mapper<I, string>,
-      format: Formatter<I, T, Q> = earl()
-    ): Handler<I, T, Q> {
+      format: Formatter<I, T, Q, S> = earl()
+    ): Handler<I, T, Q, S> {
       const files = new Map<string, string>();
 
       after(() => {

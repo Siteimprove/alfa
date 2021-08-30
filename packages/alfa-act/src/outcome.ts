@@ -15,19 +15,20 @@ import { Rule } from "./rule";
 /**
  * @public
  */
-export abstract class Outcome<I, T, Q = never>
+export abstract class Outcome<I, T, Q = never, S = T>
   implements
     Equatable,
     json.Serializable<Outcome.JSON>,
     earl.Serializable<Outcome.EARL>,
-    sarif.Serializable<sarif.Result> {
-  protected readonly _rule: Rule<I, T, Q>;
+    sarif.Serializable<sarif.Result>
+{
+  protected readonly _rule: Rule<I, T, Q, S>;
 
-  protected constructor(rule: Rule<I, T, Q>) {
+  protected constructor(rule: Rule<I, T, Q, S>) {
     this._rule = rule;
   }
 
-  public get rule(): Rule<I, T, Q> {
+  public get rule(): Rule<I, T, Q, S> {
     return this._rule;
   }
 
@@ -35,7 +36,7 @@ export abstract class Outcome<I, T, Q = never>
     return undefined;
   }
 
-  public abstract equals<I, T, Q>(value: Outcome<I, T, Q>): boolean;
+  public abstract equals<I, T, Q, S>(value: Outcome<I, T, Q, S>): boolean;
 
   public abstract equals(value: unknown): value is this;
 
@@ -73,14 +74,14 @@ export namespace Outcome {
     };
   }
 
-  export class Passed<I, T, Q = never> extends Outcome<I, T, Q> {
-    public static of<I, T, Q>(
-      rule: Rule<I, T, Q>,
+  export class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    public static of<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
       }>
-    ): Passed<I, T, Q> {
+    ): Passed<I, T, Q, S> {
       return new Passed(rule, target, expectations);
     }
 
@@ -90,7 +91,7 @@ export namespace Outcome {
     }>;
 
     private constructor(
-      rule: Rule<I, T, Q>,
+      rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
@@ -112,7 +113,7 @@ export namespace Outcome {
       return this._expectations;
     }
 
-    public equals<I, T, Q>(value: Passed<I, T, Q>): boolean;
+    public equals<I, T, Q, S>(value: Passed<I, T, Q, S>): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -208,29 +209,31 @@ export namespace Outcome {
       };
     }
 
-    export function isPassed<I, T, Q>(
-      value: Outcome<I, T, Q>
-    ): value is Passed<I, T, Q>;
+    export function isPassed<I, T, Q, S>(
+      value: Outcome<I, T, Q, S>
+    ): value is Passed<I, T, Q, S>;
 
-    export function isPassed<I, T, Q>(value: unknown): value is Passed<I, T, Q>;
-
-    export function isPassed<I, T, Q>(
+    export function isPassed<I, T, Q, S>(
       value: unknown
-    ): value is Passed<I, T, Q> {
+    ): value is Passed<I, T, Q, S>;
+
+    export function isPassed<I, T, Q, S>(
+      value: unknown
+    ): value is Passed<I, T, Q, S> {
       return value instanceof Passed;
     }
   }
 
   export const { of: passed, isPassed } = Passed;
 
-  export class Failed<I, T, Q = never> extends Outcome<I, T, Q> {
-    public static of<I, T, Q>(
-      rule: Rule<I, T, Q>,
+  export class Failed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    public static of<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
       }>
-    ): Failed<I, T, Q> {
+    ): Failed<I, T, Q, S> {
       return new Failed(rule, target, expectations);
     }
 
@@ -240,7 +243,7 @@ export namespace Outcome {
     }>;
 
     private constructor(
-      rule: Rule<I, T, Q>,
+      rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
@@ -262,7 +265,7 @@ export namespace Outcome {
       return this._expectations;
     }
 
-    public equals<I, T, Q>(value: Failed<I, T, Q>): boolean;
+    public equals<I, T, Q, S>(value: Failed<I, T, Q, S>): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -361,32 +364,34 @@ export namespace Outcome {
       };
     }
 
-    export function isFailed<I, T, Q>(
-      value: Outcome<I, T, Q>
-    ): value is Failed<I, T, Q>;
+    export function isFailed<I, T, Q, S>(
+      value: Outcome<I, T, Q, S>
+    ): value is Failed<I, T, Q, S>;
 
-    export function isFailed<I, T, Q>(value: unknown): value is Failed<I, T, Q>;
-
-    export function isFailed<I, T, Q>(
+    export function isFailed<I, T, Q, S>(
       value: unknown
-    ): value is Failed<I, T, Q> {
+    ): value is Failed<I, T, Q, S>;
+
+    export function isFailed<I, T, Q, S>(
+      value: unknown
+    ): value is Failed<I, T, Q, S> {
       return value instanceof Failed;
     }
   }
 
   export const { of: failed, isFailed } = Failed;
 
-  export class CantTell<I, T, Q = never> extends Outcome<I, T, Q> {
-    public static of<I, T, Q>(
-      rule: Rule<I, T, Q>,
+  export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    public static of<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
       target: T
-    ): CantTell<I, T, Q> {
+    ): CantTell<I, T, Q, S> {
       return new CantTell(rule, target);
     }
 
     private readonly _target: T;
 
-    private constructor(rule: Rule<I, T, Q>, target: T) {
+    private constructor(rule: Rule<I, T, Q, S>, target: T) {
       super(rule);
 
       this._target = target;
@@ -396,7 +401,7 @@ export namespace Outcome {
       return this._target;
     }
 
-    public equals<I, T, Q>(value: CantTell<I, T, Q>): boolean;
+    public equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -474,56 +479,63 @@ export namespace Outcome {
       };
     }
 
-    export function isCantTell<I, T, Q>(
-      value: Outcome<I, T, Q>
-    ): value is CantTell<I, T, Q>;
+    export function isCantTell<I, T, Q, S>(
+      value: Outcome<I, T, Q, S>
+    ): value is CantTell<I, T, Q, S>;
 
-    export function isCantTell<I, T, Q>(
+    export function isCantTell<I, T, Q, S>(
       value: unknown
-    ): value is CantTell<I, T, Q>;
+    ): value is CantTell<I, T, Q, S>;
 
-    export function isCantTell<I, T, Q>(
+    export function isCantTell<I, T, Q, S>(
       value: unknown
-    ): value is CantTell<I, T, Q> {
+    ): value is CantTell<I, T, Q, S> {
       return value instanceof CantTell;
     }
   }
 
   export const { of: cantTell, isCantTell } = CantTell;
 
-  export type Applicable<I, T, Q = unknown> =
-    | Passed<I, T, Q>
-    | Failed<I, T, Q>
-    | CantTell<I, T, Q>;
+  export type Applicable<I, T, Q = unknown, S = T> =
+    | Passed<I, T, Q, S>
+    | Failed<I, T, Q, S>
+    | CantTell<I, T, Q, S>;
 
   export namespace Applicable {
-    export function isApplicable<I, T, Q>(
-      value: Outcome<I, T, Q>
-    ): value is Applicable<I, T, Q>;
+    export function isApplicable<I, T, Q, S>(
+      value: Outcome<I, T, Q, S>
+    ): value is Applicable<I, T, Q, S>;
 
-    export function isApplicable<I, T, Q>(
+    export function isApplicable<I, T, Q, S>(
       value: unknown
-    ): value is Applicable<I, T, Q>;
+    ): value is Applicable<I, T, Q, S>;
 
-    export function isApplicable<I, T, Q>(
+    export function isApplicable<I, T, Q, S>(
       value: unknown
-    ): value is Applicable<I, T, Q> {
+    ): value is Applicable<I, T, Q, S> {
       return isPassed(value) || isFailed(value) || isCantTell(value);
     }
   }
 
   export const { isApplicable } = Applicable;
 
-  export class Inapplicable<I, T, Q = unknown> extends Outcome<I, T, Q> {
-    public static of<I, T, Q>(rule: Rule<I, T, Q>): Inapplicable<I, T, Q> {
+  export class Inapplicable<I, T, Q = unknown, S = T> extends Outcome<
+    I,
+    T,
+    Q,
+    S
+  > {
+    public static of<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Inapplicable<I, T, Q, S> {
       return new Inapplicable(rule);
     }
 
-    private constructor(rule: Rule<I, T, Q>) {
+    private constructor(rule: Rule<I, T, Q, S>) {
       super(rule);
     }
 
-    public equals<I, T, Q>(value: Inapplicable<I, T, Q>): boolean;
+    public equals<I, T, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -580,32 +592,32 @@ export namespace Outcome {
       };
     }
 
-    export function isInapplicable<I, T, Q>(
-      value: Outcome<I, T, Q>
-    ): value is Inapplicable<I, T, Q>;
+    export function isInapplicable<I, T, Q, S>(
+      value: Outcome<I, T, Q, S>
+    ): value is Inapplicable<I, T, Q, S>;
 
-    export function isInapplicable<I, T, Q>(
+    export function isInapplicable<I, T, Q, S>(
       value: unknown
-    ): value is Inapplicable<I, T, Q>;
+    ): value is Inapplicable<I, T, Q, S>;
 
-    export function isInapplicable<I, T, Q>(
+    export function isInapplicable<I, T, Q, S>(
       value: unknown
-    ): value is Inapplicable<I, T, Q> {
+    ): value is Inapplicable<I, T, Q, S> {
       return value instanceof Inapplicable;
     }
   }
 
   export const { of: inapplicable, isInapplicable } = Inapplicable;
 
-  export class Inventory<I, T, Q = never> extends Outcome<I, T, Q> {
-    public static of<I, T, Q>(rule: Rule<I, T, Q>, target: T, inventory: Diagnostic): Inventory<I, T, Q> {
+  export class Inventory<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    public static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, inventory: Diagnostic): Inventory<I, T, Q, S> {
       return new Inventory(rule, target, inventory)
     }
 
     private readonly _target: T;
     private readonly _inventory: Diagnostic;
 
-    private constructor(rule: Rule<I, T, Q>, target: T, inventory: Diagnostic) {
+    private constructor(rule: Rule<I, T, Q, S>, target: T, inventory: Diagnostic) {
       super(rule);
 
       this._target = target;
@@ -620,16 +632,16 @@ export namespace Outcome {
       return this._inventory;
     }
 
-    public equals<I, T, Q>(value: Inventory<I, T, Q>): boolean
+    public equals<I, T, Q, S>(value: Inventory<I, T, Q, S>): boolean
 
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
       return (
         value instanceof Inventory &&
-          value._rule.equals(this._rule) &&
-          Equatable.equals(value._target, this._target) &&
-          value._inventory.equals(this._inventory)
+        value._rule.equals(this._rule) &&
+        Equatable.equals(value._target, this._target) &&
+        value._inventory.equals(this._inventory)
       )
     }
 
@@ -700,30 +712,30 @@ export namespace Outcome {
       }
     }
 
-    export function isInventory<I, T, Q>(
-      value: Outcome<I, T, Q>
-    ): value is Inventory<I, T, Q>;
+    export function isInventory<I, T, Q, S>(
+      value: Outcome<I, T, Q, S>
+    ): value is Inventory<I, T, Q, S>;
 
-    export function isInventory<I, T, Q>(
+    export function isInventory<I, T, Q, S>(
       value: unknown
-    ): value is Inventory<I, T, Q>;
+    ): value is Inventory<I, T, Q, S>;
 
-    export function isInventory<I, T, Q>(
+    export function isInventory<I, T, Q, S>(
       value: unknown
-    ): value is Inventory<I, T, Q> {
+    ): value is Inventory<I, T, Q, S> {
       return value instanceof Inventory;
     }
   }
 
   export const { of: inventory, isInventory } = Inventory;
 
-  export function from<I, T, Q>(
-    rule: Rule<I, T, Q>,
+  export function from<I, T, Q, S>(
+    rule: Rule<I, T, Q, S>,
     target: T,
     expectations: Record<{
       [key: string]: Option<Result<Diagnostic>>;
     }>
-  ): Outcome.Applicable<I, T, Q> {
+  ): Outcome.Applicable<I, T, Q, S> {
     return Trilean.fold(
       (expectations) =>
         Trilean.every(expectations, (expectation) =>

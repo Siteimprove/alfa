@@ -17,7 +17,7 @@ const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r55.html",
+  uri: "https://alfa.siteimprove.com/rules/sia-r55",
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -59,10 +59,10 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
           .name;
 
         const sameResource = Question.of(
-          "is-content-equivalent",
           "boolean",
-          target,
-          `Do these ${role} landmarks have the same or equivalent content?`
+          "is-content-equivalent",
+          `Do these ${role} landmarks have the same or equivalent content?`,
+          target
         );
 
         return {

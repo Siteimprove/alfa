@@ -49,7 +49,34 @@ test(`evaluate() passes a child text node of an element whose parent truncates
       ]),
     ]
   );
+  test("evaluate() passes a text node that is non-statically positioned with a clipping ancestor which is not the offset parent", async (t) => {
+    const target = h.text("Hello world");
 
+    const document = h.document(
+      [
+        <div class="clipping">
+          <div class="absolute">{target}</div>
+        </div>,
+      ],
+      [
+        h.sheet([
+          h.rule.style(".clipping", {
+            overflow: "hidden",
+            height: "28px",
+          }),
+          h.rule.style(".absolute", {
+            position: "absolute",
+          }),
+        ]),
+      ]
+    );
+
+    t.deepEqual(await evaluate(R83, { document }), [
+      passed(R83, target, {
+        1: Outcomes.WrapsText,
+      }),
+    ]);
+  });
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
       1: Outcomes.WrapsText,
@@ -114,6 +141,36 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
         h.rule.style("div", {
           overflow: "hidden",
           height: "1vh",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText,
+    }),
+  ]);
+});
+
+test("evaluate() fails a text node that is non-statically positioned with a clipping offset parent", async (t) => {
+  const target = h.text("Hello world");
+
+  const document = h.document(
+    [
+      <div class="clipping">
+        <div class="absolute">{target}</div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".clipping", {
+          overflow: "hidden",
+          position: "relative",
+          height: "28px",
+        }),
+        h.rule.style(".absolute", {
+          position: "absolute",
         }),
       ]),
     ]
@@ -191,6 +248,75 @@ test(`evaluate() is inapplicable to a text node with a fixed relative height`, a
         h.rule.style("div", {
           overflow: "hidden",
           height: "1.2em",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+});
+
+test(`evaluate() is inapplicable to a text node that resets the white-space
+      property of its clipping ancestor`, async (t) => {
+  {
+    const document = h.document(
+      [
+        <p>
+          <span>Hello world</span>
+        </p>,
+      ],
+      [
+        h.sheet([
+          h.rule.style("p", {
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }),
+
+          h.rule.style("span", {
+            whiteSpace: "normal",
+          }),
+        ]),
+      ]
+    );
+
+    t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+  }
+  {
+    const document = h.document(
+      [
+        <p>
+          <span>
+            <b>Hello world</b>
+          </span>
+        </p>,
+      ],
+      [
+        h.sheet([
+          h.rule.style("p", {
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }),
+
+          h.rule.style("span", {
+            whiteSpace: "normal",
+          }),
+        ]),
+      ]
+    );
+
+    t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+  }
+});
+
+test(`evaluate() is inapplicable to a text node that would clip if it was non-
+      empty`, async (t) => {
+  const document = h.document(
+    [<div> </div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          whiteSpace: "nowrap",
         }),
       ]),
     ]

@@ -31,10 +31,16 @@ type InputType =
   | "button"
   | "text";
 
+/**
+ * @public
+ */
 export function hasInputType(
   predicate: Predicate<InputType>
 ): Predicate<Element>;
 
+/**
+ * @public
+ */
 export function hasInputType(
   inputType: InputType,
   ...rest: Array<InputType>
@@ -51,6 +57,7 @@ export function hasInputType(
   } else {
     predicate = equals(inputTypeOrPredicate, ...inputTypes);
   }
+
   return (element) => {
     if (element.name !== "input") {
       return false;

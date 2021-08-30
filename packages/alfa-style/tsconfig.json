@@ -130,10 +130,12 @@
     "src/property/text-indent.ts",
     "src/property/text-overflow.ts",
     "src/property/text-transform.ts",
+    "src/property/text-shadow.ts",
     "src/property/top.ts",
     "src/property/transform.ts",
     "src/property/value/list.ts",
     "src/property/value/tuple.ts",
+    "src/property/vertical-align.ts",
     "src/property/visibility.ts",
     "src/property/white-space.ts",
     "src/property/width.ts",
@@ -175,9 +177,13 @@
     "test/property/inset-block.spec.tsx",
     "test/property/text-decoration.spec.tsx",
     "test/property/text-indent.spec.tsx",
+    "test/property/text-shadow.spec.tsx",
     "test/style.spec.tsx"
   ],
   "references": [
+    {
+      "path": "../alfa-applicative"
+    },
     {
       "path": "../alfa-cache"
     },

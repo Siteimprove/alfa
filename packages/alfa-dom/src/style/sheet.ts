@@ -6,6 +6,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
+/**
+ * @public
+ */
 export class Sheet implements Equatable, Serializable {
   public static of(
     rules: Iterable<Rule>,
@@ -79,6 +82,9 @@ export class Sheet implements Equatable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Sheet {
   export interface JSON {
     [key: string]: json.JSON;

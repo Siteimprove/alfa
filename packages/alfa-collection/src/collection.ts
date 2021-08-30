@@ -14,25 +14,24 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-const { compareComparable } = Comparable;
-
 /**
  * @public
  */
 export interface Collection<T>
   extends Functor<T>,
+    Applicative<T>,
     Monad<T>,
     Foldable<T>,
-    Applicative<T>,
     Equatable,
     Hashable {
   readonly size: number;
   isEmpty(): this is Collection<never>;
   forEach(callback: Callback<T>): void;
   map<U>(mapper: Mapper<T, U>): Collection<U>;
-  flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
-  reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   apply<U>(mapper: Collection<Mapper<T, U>>): Collection<U>;
+  flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
+  flatten<T>(this: Collection<Collection<T>>): Collection<T>;
+  reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   filter<U extends T>(refinement: Refinement<T, U>): Collection<U>;
   filter(predicate: Predicate<T>): Collection<T>;
   reject<U extends T>(refinement: Refinement<T, U>): Collection<Exclude<T, U>>;
@@ -60,9 +59,10 @@ export namespace Collection {
     isEmpty(): this is Keyed<K, never>;
     forEach(callback: Callback<V, void, [key: K]>): void;
     map<U>(mapper: Mapper<V, U, [key: K]>): Keyed<K, U>;
-    flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
-    reduce<U>(reducer: Reducer<V, U, [key: K]>, accumulator: U): U;
     apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
+    flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
+    flatten<K, V>(this: Keyed<K, Keyed<K, V>>): Keyed<K, V>;
+    reduce<U>(reducer: Reducer<V, U, [key: K]>, accumulator: U): U;
     filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, U>;
     filter(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
     reject<U extends V>(
@@ -101,9 +101,10 @@ export namespace Collection {
     isEmpty(): this is Unkeyed<never>;
     forEach(callback: Callback<T>): void;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
-    flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
-    reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     apply<U>(mapper: Unkeyed<Mapper<T, U>>): Unkeyed<U>;
+    flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
+    flatten<T>(this: Unkeyed<Unkeyed<T>>): Unkeyed<T>;
+    reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     filter<U extends T>(refinement: Refinement<T, U>): Unkeyed<U>;
     filter(predicate: Predicate<T>): Unkeyed<T>;
     reject<U extends T>(refinement: Refinement<T, U>): Unkeyed<Exclude<T, U>>;
@@ -134,11 +135,14 @@ export namespace Collection {
   export interface Indexed<T>
     extends Collection<T>,
       Iterable<T>,
+      Comparable<Iterable<T>>,
       Serializable<Indexed.JSON<T>> {
     isEmpty(): this is Indexed<never>;
     forEach(callback: Callback<T, void, [index: number]>): void;
     map<U>(mapper: Mapper<T, U, [index: number]>): Indexed<U>;
+    apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
     flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
+    flatten<T>(this: Indexed<Indexed<T>>): Indexed<T>;
     reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     reduceWhile<U>(
       predicate: Predicate<T, [index: number]>,
@@ -150,7 +154,6 @@ export namespace Collection {
       reducer: Reducer<T, U, [index: number]>,
       accumulator: U
     ): U;
-    apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
     filter<U extends T>(
       refinement: Refinement<T, U, [index: number]>
     ): Indexed<U>;
@@ -182,9 +185,15 @@ export namespace Collection {
     first(): Option<T>;
     last(): Option<T>;
     take(count: number): Indexed<T>;
+    takeWhile<U extends T>(
+      refinement: Refinement<T, U, [index: number]>
+    ): Indexed<U>;
     takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLast(count: number): Indexed<T>;
+    takeLastWhile<U extends T>(
+      refinement: Refinement<T, U, [index: number]>
+    ): Indexed<U>;
     takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     skip(count: number): Indexed<T>;
@@ -200,24 +209,16 @@ export namespace Collection {
     slice(start: number, end?: number): Indexed<T>;
     reverse(): Indexed<T>;
     join(separator: string): string;
+    sort<T extends Comparable<T>>(this: Indexed<T>): Indexed<T>;
     sortWith(comparer: Comparer<T>): Indexed<T>;
-    compareWith(iterable: Iterable<T>, comparer: Comparer<T>): Comparison;
+    compare(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
+    compareWith<U = T>(
+      iterable: Iterable<U>,
+      comparer: Comparer<T, U, [index: number]>
+    ): Comparison;
   }
 
   export namespace Indexed {
     export type JSON<T> = Array<Serializable.ToJSON<T>>;
-  }
-
-  export function sort<T extends Comparable<T>>(
-    collection: Indexed<T>
-  ): Indexed<T> {
-    return collection.sortWith(compareComparable);
-  }
-
-  export function compare<T extends Comparable<T>>(
-    a: Indexed<T>,
-    b: Iterable<T>
-  ): Comparison {
-    return a.compareWith(b, compareComparable);
   }
 }

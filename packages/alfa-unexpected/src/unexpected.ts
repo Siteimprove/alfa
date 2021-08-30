@@ -20,11 +20,11 @@ declare module "unexpected" {
  * @public
  */
 export namespace Unexpected {
-  export function createPlugin<I, J, T = unknown, Q = never>(
+  export function createPlugin<I, J, T = unknown, Q = never, S = T>(
     transform: Mapper<I, Future.Maybe<J>>,
-    rules: Iterable<Rule<J, T, Q>>,
-    handlers: Iterable<Handler<J, T, Q>> = [],
-    options: Asserter.Options = {}
+    rules: Iterable<Rule<J, T, Q, S>>,
+    handlers: Iterable<Handler<J, T, Q, S>> = [],
+    options: Asserter.Options<J, T, Q, S> = {}
   ): unexpected.PluginDefinition {
     const asserter = Asserter.of(rules, handlers, options);
 

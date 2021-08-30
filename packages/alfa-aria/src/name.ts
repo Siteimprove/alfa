@@ -142,7 +142,8 @@ export namespace Name {
     }
 
     export class Descendant
-      implements Equatable, Serializable<Descendant.JSON> {
+      implements Equatable, Serializable<Descendant.JSON>
+    {
       public static of(element: Element, name: Name): Descendant {
         return new Descendant(element, name);
       }
@@ -692,7 +693,7 @@ export namespace Name {
         // step produces an empty name.
         if (
           !state.isReferencing &&
-          !role.every((role) => role.isNamedBy("contents"))
+          !role.some((role) => role.isNamedBy("contents"))
         ) {
           return None;
         }
@@ -742,7 +743,7 @@ export namespace Name {
         )
       );
 
-    const name = flatten(names.map((name) => name.value).join(" ")).trim();
+    const name = flatten(names.map((name) => name.value).join("")).trim();
 
     if (name === "") {
       return None;

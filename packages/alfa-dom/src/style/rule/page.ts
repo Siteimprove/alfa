@@ -4,6 +4,9 @@ import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 
+/**
+ * @public
+ */
 export class PageRule extends Rule {
   public static of(
     selector: string,
@@ -49,6 +52,9 @@ export class PageRule extends Rule {
   }
 }
 
+/**
+ * @public
+ */
 export namespace PageRule {
   export interface JSON extends Rule.JSON {
     type: "page";

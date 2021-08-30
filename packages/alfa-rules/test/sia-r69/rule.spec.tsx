@@ -438,3 +438,12 @@ test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
 
   t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
 });
+
+test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
+  const target = h.text("Hello World");
+
+  const div = <div style={{ textShadow: "1px 1px" }}>{target}</div>;
+  const document = h.document([div]);
+
+  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+});
