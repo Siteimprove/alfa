@@ -19,9 +19,7 @@ import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
-import { Device } from "@siteimprove/alfa-device";
 import { Option } from "@siteimprove/alfa-option";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { hasName, isElement } = Element;
 const { fold } = Predicate;
@@ -100,51 +98,42 @@ export default Rule.Atomic.of<Page, Document, Question>({
           `Is the first tabbable element of the document visible if it's focused?`,
           target
         );
-
-        function newFunction1(): boolean {
-          return mains.some((main) =>
-            reference.some(isAtTheStart(main, device))
+        // check in/out of this function because tests are not passing
+        function isAtTheStartOfMain(
+          reference: Option<Node>
+        ): Interview<
+          Question,
+          Document,
+          Document,
+          Option.Maybe<Result<Diagnostic, Diagnostic>>
+        > {
+          return expectation(
+            mains.some((main) => reference.some(isAtTheStart(main, device))),
+            () => Outcomes.FirstTabbableIsLinkToContent,
+            () =>
+              askIsMain.map((isMain) =>
+                expectation(
+                  isMain,
+                  () => Outcomes.FirstTabbableIsLinkToContent,
+                  () => Outcomes.FirstTabbableIsNotLinkToContent
+                )
+              )
           );
         }
 
-        function newFunction(): Interview<
+        function isSkipLink(): Interview<
           Question,
           Document,
           Document,
           Option.Maybe<Result<Diagnostic>>
         > {
           return reference.isSome()
-            ? expectation(
-                newFunction1(),
-                () => Outcomes.FirstTabbableIsLinkToContent,
-                () =>
-                  askIsMain.map((isMain) =>
-                    expectation(
-                      isMain,
-                      () => Outcomes.FirstTabbableIsLinkToContent,
-                      () => Outcomes.FirstTabbableIsNotLinkToContent
-                    )
-                  )
-              )
+            ? isAtTheStartOfMain(reference)
             : askIsInteralLink.map((isInternalLink) =>
                 expectation(
                   !isInternalLink,
                   () => Outcomes.FirstTabbableIsNotInternalLink,
-                  () =>
-                    askReference.map((reference) =>
-                      expectation(
-                        newFunction1(),
-                        () => Outcomes.FirstTabbableIsLinkToContent,
-                        () =>
-                          askIsMain.map((isMain) =>
-                            expectation(
-                              isMain,
-                              () => Outcomes.FirstTabbableIsLinkToContent,
-                              () => Outcomes.FirstTabbableIsNotLinkToContent
-                            )
-                          )
-                      )
-                    )
+                  () => askReference.map(isAtTheStartOfMain)
                 )
               );
         }
@@ -167,13 +156,13 @@ export default Rule.Atomic.of<Page, Document, Question>({
                         element.some((element) =>
                           isVisible(device, Context.focus(element))(element)
                         ),
-                        newFunction,
+                        isSkipLink,
                         () =>
                           askIsVisible.map((isVisible) =>
                             expectation(
                               !isVisible,
                               () => Outcomes.FirstTabbableIsNotVisible,
-                              newFunction
+                              isSkipLink
                             )
                           )
                       )
