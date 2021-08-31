@@ -4,7 +4,7 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-import * as base from "@siteimprove/alfa-act-base";
+import * as base from "@siteimprove/alfa-act";
 
 import { expectation } from "../expectation";
 

@@ -1,8 +1,8 @@
-import { Question } from "@siteimprove/alfa-act-base";
 import { Future } from "@siteimprove/alfa-future";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Oracle } from "./oracle";
+import { Question } from "./question";
 import { Rule } from "./rule";
 
 /**

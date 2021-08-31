@@ -5,7 +5,6 @@
     "src/diagnostic.ts",
     "src/index.ts",
     "src/outcome.ts",
-    "src/question.ts",
     "src/rule.ts",
     "src/tag.ts"
   ],

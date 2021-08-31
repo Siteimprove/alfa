@@ -2,7 +2,7 @@ import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
-import * as base from "@siteimprove/alfa-act-base";
+import * as base from "@siteimprove/alfa-act";
 
 /**
  * @public
