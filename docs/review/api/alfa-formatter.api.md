@@ -4,9 +4,9 @@
 
 ```ts
 
-import { Outcome } from '@siteimprove/alfa-act';
+import { Outcome } from '@siteimprove/alfa-act-base';
 import { Result } from '@siteimprove/alfa-result';
-import { Rule } from '@siteimprove/alfa-act';
+import { Rule } from '@siteimprove/alfa-act-base';
 
 // @public (undocumented)
 export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => string;
