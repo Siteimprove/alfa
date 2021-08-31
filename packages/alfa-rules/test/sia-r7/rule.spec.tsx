@@ -74,6 +74,21 @@ test("evaluate() passes an element with a lang attribute within <body> when the 
   ]);
 });
 
+test(`evaluate() passes a span with a lang attribute within <body>  when the element's lang attribute overwrites an invalid lang attribute and ignores intertext whitespace`, async (t) => {
+  const span = <span lang="en">Hello World</span>;
+  const target = span.attribute("lang").get();
+
+  const document = h.document([
+    <body>
+      <div lang="invalid"> {span} </div>
+    </body>,
+  ]);
+
+  t.deepEqual(await evaluate(R7, { document }), [
+    passed(R7, target, { 1: Outcomes.HasValidLanguage }),
+  ]);
+});
+
 test("evaluate() fails an element with a lang attribute within <body> with an invalid value", async (t) => {
   const element = <span lang="invalid">Hello World</span>;
   const target = element.attribute("lang").get()!;
