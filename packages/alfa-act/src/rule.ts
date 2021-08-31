@@ -1,16 +1,19 @@
-import { Diagnostic, Oracle, Tag } from "@siteimprove/alfa-act-base";
+import { Diagnostic, Tag } from "@siteimprove/alfa-act-base";
 import { Array } from "@siteimprove/alfa-array";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as base from "@siteimprove/alfa-act-base";
+import * as earl from "@siteimprove/alfa-earl";
 
+import { Cache } from "./cache";
 import { Interview } from "./interview";
+import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 
@@ -19,22 +22,22 @@ const { flatMap, flatten, reduce } = Iterable;
 /**
  * @public
  */
-export abstract class Rule<
-  I = unknown,
-  T = unknown,
-  Q = never,
-  S = T
-> extends base.Rule<I, T, Q, S> {
+export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
+  extends base.Rule<I, T, Q, S>
+  implements earl.Serializable<Rule.EARL>
+{
   protected readonly _requirements: Array<Requirement>;
+  protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
 
   protected constructor(
     uri: string,
     requirements: Array<Requirement>,
     tags: Array<Tag>,
-    evaluator: base.Rule.Evaluate<I, T, Q, S>
+    evaluator: Rule.Evaluate<I, T, Q, S>
   ) {
     super(uri, tags, evaluator);
     this._requirements = requirements;
+    this._evaluate = evaluator;
   }
 
   public get requirements(): ReadonlyArray<Requirement> {
@@ -45,9 +48,22 @@ export abstract class Rule<
     return Array.includes(this._requirements, requirement);
   }
 
+  public evaluate(
+    input: I,
+    oracle: Oracle<I, T, Q, S> = () => Future.now(None),
+    outcomes: Cache = Cache.empty()
+  ): Future<Iterable<Outcome<I, T, Q, S>>> {
+    return this._evaluate(input, oracle, outcomes);
+  }
+
   public toEARL(): Rule.EARL {
     return {
-      ...super.toEARL(),
+      "@context": {
+        earl: "http://www.w3.org/ns/earl#",
+        dct: "http://purl.org/dc/terms/",
+      },
+      "@type": ["earl:TestCriterion", "earl:TestCase"],
+      "@id": this._uri,
       "dct:isPartOf": {
         "@set": this._requirements.map((requirement) => requirement.toEARL()),
       },
@@ -59,10 +75,46 @@ export abstract class Rule<
  * @public
  */
 export namespace Rule {
-  export interface EARL extends base.Rule.EARL {
+  export interface JSON extends base.Rule.JSON {}
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      earl: "http://www.w3.org/ns/earl#";
+      dct: "http://purl.org/dc/terms/";
+    };
+    "@type": ["earl:TestCriterion", "earl:TestCase"];
+    "@id": string;
     "dct:isPartOf": {
       "@set": Array<Requirement.EARL>;
     };
+  }
+
+  /**
+   * @remarks
+   * We use a short-lived cache during audits for rules to store their outcomes.
+   * It effectively acts as a memoization layer on top of each rule evaluation
+   * procedure, which comes in handy when dealing with composite rules that are
+   * dependant on the outcomes of other rules. There are several ways in which
+   * audits of such rules can be performed:
+   *
+   * 1. Put the onus on the caller to construct an audit with dependency-ordered
+   *    rules. This is just crazy.
+   *
+   * 2. Topologically sort rules based on their dependencies before performing
+   *    an audit. This requires graph operations.
+   *
+   * 3. Disregard order entirely and simply run rule evaluation procedures as
+   *    their outcomes are needed, thereby risking repeating some of these
+   *    procedures. This requires nothing.
+   *
+   * Given that 3. is the simpler, and non-crazy, approach, we can use this
+   * approach in combination with memoization to avoid the risk of repeating
+   * rule evaluation procedures.
+   */
+  export interface Evaluate<I, T, Q, S> {
+    (input: Readonly<I>, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<
+      Iterable<Outcome<I, T, Q, S>>
+    >;
   }
 
   export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
@@ -91,29 +143,33 @@ export namespace Rule {
       tags: Array<Tag>,
       evaluate: Atomic.Evaluate<I, T, Q, S>
     ) {
-      super(uri, requirements, tags, (input, oracle, outcomes) =>
-        outcomes.get(this, () => {
+      // function evaluator(input: Readonly<I>, oracle: Oracle<I, T, Q, S> = () => Future.now(None), outcomes: Cache = Cache.empty()):
+
+      super(uri, requirements, tags, (input, oracle, outcomes) => {
+        outcomes = outcomes ?? Cache.empty();
+        const myOracle = oracle ?? (() => Future.now(None));
+        return outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
 
           return Future.traverse(applicability(), (interview) =>
-            Interview.conduct(interview, this, oracle).map((target) =>
+            Interview.conduct(interview, this, myOracle).map((target) =>
               target.flatMap((target) =>
                 Option.isOption(target) ? target : Option.of(target)
               )
             )
           )
             .map((targets) => Sequence.from(flatten<T>(targets)))
-            .flatMap<Iterable<base.Outcome<I, T, Q, S>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
 
               return Future.traverse(targets, (target) =>
-                resolve(target, Record.of(expectations(target)), this, oracle)
+                resolve(target, Record.of(expectations(target)), this, myOracle)
               );
             });
-        })
-      );
+        });
+      });
     }
 
     public toJSON(): Atomic.JSON {
@@ -145,7 +201,7 @@ export namespace Rule {
   }
 
   export function isAtomic<I, T, Q, S>(
-    value: base.Rule<I, T, Q, S>
+    value: Rule<I, T, Q, S>
   ): value is Atomic<I, T, Q, S>;
 
   export function isAtomic<I, T, Q, S>(
@@ -168,7 +224,7 @@ export namespace Rule {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
-      composes: Iterable<base.Rule<I, T, Q, S>>;
+      composes: Iterable<Rule<I, T, Q, S>>;
       evaluate: Composite.Evaluate<I, T, Q, S>;
     }): Composite<I, T, Q, S> {
       return new Composite(
@@ -180,19 +236,21 @@ export namespace Rule {
       );
     }
 
-    private readonly _composes: Array<base.Rule<I, T, Q, S>>;
+    private readonly _composes: Array<Rule<I, T, Q, S>>;
 
     private constructor(
       uri: string,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
-      composes: Array<base.Rule<I, T, Q, S>>,
+      composes: Array<Rule<I, T, Q, S>>,
       evaluate: Composite.Evaluate<I, T, Q, S>
     ) {
-      super(uri, requirements, tags, (input, oracle, outcomes) =>
-        outcomes.get(this, () =>
+      super(uri, requirements, tags, (input, oracle, outcomes) => {
+        outcomes = outcomes ?? Cache.empty();
+        const myOracle = oracle ?? (() => Future.now(None));
+        return outcomes.get(this, () =>
           Future.traverse(this._composes, (rule) =>
-            rule.evaluate(input, oracle, outcomes)
+            rule.evaluate(input, myOracle, outcomes)
           )
             .map((outcomes) =>
               Sequence.from(
@@ -205,7 +263,7 @@ export namespace Rule {
                 })
               )
             )
-            .flatMap<Iterable<base.Outcome<I, T, Q, S>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
@@ -219,17 +277,17 @@ export namespace Rule {
                     target,
                     Record.of(expectations(outcomes)),
                     this,
-                    oracle
+                    myOracle
                   )
               );
             })
-        )
-      );
+        );
+      });
 
       this._composes = composes;
     }
 
-    public get composes(): ReadonlyArray<base.Rule<I, T, Q, S>> {
+    public get composes(): ReadonlyArray<Rule<I, T, Q, S>> {
       return this._composes;
     }
 
@@ -249,7 +307,6 @@ export namespace Rule {
   export namespace Composite {
     export interface JSON extends base.Rule.JSON {
       type: "composite";
-      // uri: string;
       composes: Array<base.Rule.JSON>;
       requirements: Array<Requirement.JSON>;
     }
@@ -264,7 +321,7 @@ export namespace Rule {
   }
 
   export function isComposite<I, T, Q>(
-    value: base.Rule<I, T, Q>
+    value: Rule<I, T, Q>
   ): value is Composite<I, T, Q>;
 
   export function isComposite<I, T, Q>(
@@ -283,7 +340,7 @@ function resolve<I, T, Q, S>(
   expectations: Record<{
     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
-  rule: base.Rule<I, T, Q, S>,
+  rule: Rule<I, T, Q, S>,
   oracle: Oracle<I, T, Q, S>
 ): Future<Outcome.Applicable<I, T, Q, S>> {
   return Future.traverse(expectations, ([id, interview]) =>

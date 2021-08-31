@@ -59,25 +59,6 @@ export namespace Outcome {
       };
     }
 
-    public toEARL(): Inventory.EARL {
-      const outcome: Inventory.EARL = {
-        ...super.toEARL(),
-        "earl:result": {
-          "@type": "earl:TestResult",
-          "earl:outcome": {
-            "@id": "earl:inventory",
-          },
-          "earl:info": this._inventory.message,
-        },
-      };
-
-      for (const pointer of earl.Serializable.toEARL(this._target)) {
-        outcome["earl:result"]["earl:pointer"] = pointer;
-      }
-
-      return outcome;
-    }
-
     public toSARIF(): sarif.Result {
       const locations: Array<sarif.Location> = [];
 
@@ -105,17 +86,6 @@ export namespace Outcome {
       outcome: "inventory";
       target: json.Serializable.ToJSON<T>;
       inventory: Diagnostic.JSON;
-    }
-
-    export interface EARL extends Base.EARL {
-      "earl:result": {
-        "@type": "earl:TestResult";
-        "earl:outcome": {
-          "@id": "earl:inventory";
-        };
-        "earl:info": string;
-        "earl:pointer"?: earl.EARL;
-      };
     }
 
     export function isInventory<I, T, Q, S>(

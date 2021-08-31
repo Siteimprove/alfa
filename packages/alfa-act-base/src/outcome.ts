@@ -1,6 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 
-import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
@@ -13,7 +12,6 @@ export abstract class Outcome<I, T, Q = never, S = T>
   implements
     Equatable,
     json.Serializable<Outcome.JSON>,
-    earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
 {
   protected readonly _rule: Rule<I, T, Q, S>;
@@ -36,18 +34,6 @@ export abstract class Outcome<I, T, Q = never, S = T>
 
   public abstract toJSON(): Outcome.JSON;
 
-  public toEARL(): Outcome.EARL {
-    return {
-      "@context": {
-        earl: "http://www.w3.org/ns/earl#",
-      },
-      "@type": "earl:Assertion",
-      "earl:test": {
-        "@id": this._rule.uri,
-      },
-    };
-  }
-
   public abstract toSARIF(): sarif.Result;
 }
 
@@ -60,12 +46,5 @@ export namespace Outcome {
 
     outcome: string;
     rule: Rule.JSON;
-  }
-
-  export interface EARL extends earl.EARL {
-    "@type": "earl:Assertion";
-    "earl:test": {
-      "@id": string;
-    };
   }
 }

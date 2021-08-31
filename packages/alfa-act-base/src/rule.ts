@@ -9,7 +9,7 @@ import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
-import { Oracle } from "./oracle";
+// import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Tag } from "./tag";
 
@@ -20,7 +20,6 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   implements
     Equatable,
     json.Serializable<Rule.JSON>,
-    earl.Serializable<Rule.EARL>,
     sarif.Serializable<sarif.ReportingDescriptor>
 {
   protected readonly _uri: string;
@@ -50,11 +49,11 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   }
 
   public evaluate(
-    input: I,
-    oracle: Oracle<I, T, Q, S> = () => Future.now(None),
-    outcomes: Cache = Cache.empty()
+    input: I
+    // oracle: Oracle<I, T, Q, S> = () => Future.now(None),
+    // outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
-    return this._evaluate(input, oracle, outcomes);
+    return this._evaluate(input); //, oracle, outcomes);
   }
 
   public equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
@@ -66,17 +65,6 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   }
 
   public abstract toJSON(): Rule.JSON;
-
-  public toEARL(): Rule.EARL {
-    return {
-      "@context": {
-        earl: "http://www.w3.org/ns/earl#",
-        dct: "http://purl.org/dc/terms/",
-      },
-      "@type": ["earl:TestCriterion", "earl:TestCase"],
-      "@id": this._uri,
-    };
-  }
 
   public toSARIF(): sarif.ReportingDescriptor {
     return {
@@ -97,15 +85,6 @@ export namespace Rule {
     tags: Array<Tag.JSON>;
   }
 
-  export interface EARL extends earl.EARL {
-    "@context": {
-      earl: "http://www.w3.org/ns/earl#";
-      dct: "http://purl.org/dc/terms/";
-    };
-    "@type": ["earl:TestCriterion", "earl:TestCase"];
-    "@id": string;
-  }
-
   export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
 
   export type Target<R> = R extends Rule<any, infer T, any, any> ? T : never;
@@ -120,31 +99,34 @@ export namespace Rule {
     return value instanceof Rule;
   }
 
-  /**
-   * @remarks
-   * We use a short-lived cache during audits for rules to store their outcomes.
-   * It effectively acts as a memoization layer on top of each rule evaluation
-   * procedure, which comes in handy when dealing with composite rules that are
-   * dependant on the outcomes of other rules. There are several ways in which
-   * audits of such rules can be performed:
-   *
-   * 1. Put the onus on the caller to construct an audit with dependency-ordered
-   *    rules. This is just crazy.
-   *
-   * 2. Topologically sort rules based on their dependencies before performing
-   *    an audit. This requires graph operations.
-   *
-   * 3. Disregard order entirely and simply run rule evaluation procedures as
-   *    their outcomes are needed, thereby risking repeating some of these
-   *    procedures. This requires nothing.
-   *
-   * Given that 3. is the simpler, and non-crazy, approach, we can use this
-   * approach in combination with memoization to avoid the risk of repeating
-   * rule evaluation procedures.
-   */
+  // /**
+  //  * @remarks
+  //  * We use a short-lived cache during audits for rules to store their outcomes.
+  //  * It effectively acts as a memoization layer on top of each rule evaluation
+  //  * procedure, which comes in handy when dealing with composite rules that are
+  //  * dependant on the outcomes of other rules. There are several ways in which
+  //  * audits of such rules can be performed:
+  //  *
+  //  * 1. Put the onus on the caller to construct an audit with dependency-ordered
+  //  *    rules. This is just crazy.
+  //  *
+  //  * 2. Topologically sort rules based on their dependencies before performing
+  //  *    an audit. This requires graph operations.
+  //  *
+  //  * 3. Disregard order entirely and simply run rule evaluation procedures as
+  //  *    their outcomes are needed, thereby risking repeating some of these
+  //  *    procedures. This requires nothing.
+  //  *
+  //  * Given that 3. is the simpler, and non-crazy, approach, we can use this
+  //  * approach in combination with memoization to avoid the risk of repeating
+  //  * rule evaluation procedures.
+  //  */
+  // export interface Evaluate<I, T, Q, S> {
+  //   (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
+  //     Iterable<Outcome<I, T, Q, S>>
+  //   >;
+  // }
   export interface Evaluate<I, T, Q, S> {
-    (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
-      Iterable<Outcome<I, T, Q, S>>
-    >;
+    (input: Readonly<I>): Future<Iterable<Outcome<I, T, Q, S>>>;
   }
 }

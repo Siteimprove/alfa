@@ -1,10 +1,12 @@
-import { Diagnostic, Rule, Outcome as Base } from "@siteimprove/alfa-act-base";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act-base";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
+
+import * as base from "@siteimprove/alfa-act-base";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -13,8 +15,37 @@ import * as sarif from "@siteimprove/alfa-sarif";
 /**
  * @public
  */
+export abstract class Outcome<I, T, Q = never, S = T>
+  extends base.Outcome<I, T, Q, S>
+  implements earl.Serializable<Outcome.EARL>
+{
+  public toEARL(): Outcome.EARL {
+    return {
+      "@context": {
+        earl: "http://www.w3.org/ns/earl#",
+      },
+      "@type": "earl:Assertion",
+      "earl:test": {
+        "@id": this._rule.uri,
+      },
+    };
+  }
+}
+
+/**
+ * @public
+ */
 export namespace Outcome {
-  export class Passed<I, T, Q = never, S = T> extends Base<I, T, Q, S> {
+  export interface JSON extends base.Outcome.JSON {}
+
+  export interface EARL extends earl.EARL {
+    "@type": "earl:Assertion";
+    "earl:test": {
+      "@id": string;
+    };
+  }
+
+  export class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -131,14 +162,14 @@ export namespace Outcome {
   }
 
   export namespace Passed {
-    export interface JSON<T> extends Base.JSON {
+    export interface JSON<T> extends base.Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
 
-    export interface EARL extends Base.EARL {
+    export interface EARL extends Outcome.EARL {
       "earl:result": {
         "@type": "earl:TestResult";
         "earl:outcome": {
@@ -150,7 +181,7 @@ export namespace Outcome {
     }
 
     export function isPassed<I, T, Q, S>(
-      value: Base<I, T, Q, S>
+      value: base.Outcome<I, T, Q, S>
     ): value is Passed<I, T, Q, S>;
 
     export function isPassed<I, T, Q, S>(
@@ -166,7 +197,7 @@ export namespace Outcome {
 
   export const { of: passed, isPassed } = Passed;
 
-  export class Failed<I, T, Q = never, S = T> extends Base<I, T, Q, S> {
+  export class Failed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -286,14 +317,14 @@ export namespace Outcome {
   }
 
   export namespace Failed {
-    export interface JSON<T> extends Base.JSON {
+    export interface JSON<T> extends base.Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
 
-    export interface EARL extends Base.EARL {
+    export interface EARL extends Outcome.EARL {
       "earl:result": {
         "@type": "earl:TestResult";
         "earl:outcome": {
@@ -305,7 +336,7 @@ export namespace Outcome {
     }
 
     export function isFailed<I, T, Q, S>(
-      value: Base<I, T, Q, S>
+      value: base.Outcome<I, T, Q, S>
     ): value is Failed<I, T, Q, S>;
 
     export function isFailed<I, T, Q, S>(
@@ -321,7 +352,7 @@ export namespace Outcome {
 
   export const { of: failed, isFailed } = Failed;
 
-  export class CantTell<I, T, Q = never, S = T> extends Base<I, T, Q, S> {
+  export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T
@@ -403,13 +434,13 @@ export namespace Outcome {
   }
 
   export namespace CantTell {
-    export interface JSON<T> extends Base.JSON {
+    export interface JSON<T> extends base.Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "cantTell";
       target: json.Serializable.ToJSON<T>;
     }
 
-    export interface EARL extends Base.EARL {
+    export interface EARL extends Outcome.EARL {
       "earl:result": {
         "@type": "earl:TestResult";
         "earl:outcome": {
@@ -420,7 +451,7 @@ export namespace Outcome {
     }
 
     export function isCantTell<I, T, Q, S>(
-      value: Base<I, T, Q, S>
+      value: Outcome<I, T, Q, S>
     ): value is CantTell<I, T, Q, S>;
 
     export function isCantTell<I, T, Q, S>(
@@ -443,7 +474,7 @@ export namespace Outcome {
 
   export namespace Applicable {
     export function isApplicable<I, T, Q, S>(
-      value: Base<I, T, Q, S>
+      value: Outcome<I, T, Q, S>
     ): value is Applicable<I, T, Q, S>;
 
     export function isApplicable<I, T, Q, S>(
@@ -459,7 +490,12 @@ export namespace Outcome {
 
   export const { isApplicable } = Applicable;
 
-  export class Inapplicable<I, T, Q = unknown, S = T> extends Base<I, T, Q, S> {
+  export class Inapplicable<I, T, Q = unknown, S = T> extends Outcome<
+    I,
+    T,
+    Q,
+    S
+  > {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>
     ): Inapplicable<I, T, Q, S> {
@@ -513,12 +549,12 @@ export namespace Outcome {
   }
 
   export namespace Inapplicable {
-    export interface JSON extends Base.JSON {
+    export interface JSON extends base.Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "inapplicable";
     }
 
-    export interface EARL extends Base.EARL {
+    export interface EARL extends Outcome.EARL {
       "earl:result": {
         "@type": "earl:TestResult";
         "earl:outcome": {
@@ -528,7 +564,7 @@ export namespace Outcome {
     }
 
     export function isInapplicable<I, T, Q, S>(
-      value: Base<I, T, Q, S>
+      value: Outcome<I, T, Q, S>
     ): value is Inapplicable<I, T, Q, S>;
 
     export function isInapplicable<I, T, Q, S>(

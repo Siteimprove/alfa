@@ -1,4 +1,3 @@
-import { Cache, Oracle, Outcome, Rule } from "@siteimprove/alfa-act-base";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -7,6 +6,11 @@ import { None } from "@siteimprove/alfa-option";
 import { Performance } from "@siteimprove/alfa-performance";
 
 import * as json from "@siteimprove/alfa-json";
+
+import { Cache } from "./cache";
+import { Oracle } from "./oracle";
+import { Outcome } from "./outcome";
+import { Rule } from "./rule";
 
 /**
  * @public
