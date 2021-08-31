@@ -34,7 +34,6 @@
     "@siteimprove/alfa-future": "workspace:^0.21.2",
     "@siteimprove/alfa-http": "workspace:^0.21.2",
     "@siteimprove/alfa-iana": "workspace:^0.21.2",
-    "@siteimprove/alfa-inventory": "workspace:^0.21.2",
     "@siteimprove/alfa-iterable": "workspace:^0.21.2",
     "@siteimprove/alfa-json": "workspace:^0.21.2",
     "@siteimprove/alfa-list": "workspace:^0.21.2",

@@ -4,7 +4,7 @@
   "files": ["src/chai.ts", "src/index.ts"],
   "references": [
     {
-      "path": "../alfa-act-base"
+      "path": "../alfa-act"
     },
     {
       "path": "../alfa-assert"

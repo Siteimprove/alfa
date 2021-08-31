@@ -1,6 +1,5 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { Diagnostic, Rule } from "@siteimprove/alfa-act-base";
-import { Outcome as Inventory } from "@siteimprove/alfa-inventory";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -40,12 +39,4 @@ export function cantTell<T, Q, S>(
   target: T
 ): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target).toJSON();
-}
-
-export function inventory<T, Q>(
-  rule: Rule<Page, T, Q>,
-  target: T,
-  inventory: Diagnostic
-): Inventory.Inventory.JSON<T> {
-  return Inventory.Inventory.of(rule, target, inventory).toJSON();
 }

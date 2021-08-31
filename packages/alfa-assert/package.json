@@ -19,7 +19,6 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.21.2",
-    "@siteimprove/alfa-act-base": "workspace:^0.21.2",
     "@siteimprove/alfa-future": "workspace:^0.21.2",
     "@siteimprove/alfa-mapper": "workspace:^0.21.2",
     "@siteimprove/alfa-result": "workspace:^0.21.2"

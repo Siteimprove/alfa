@@ -7,6 +7,9 @@
   "files": ["package.json", "src/index.ts", "src/earl.ts"],
   "references": [
     {
+      "path": "../alfa-act"
+    },
+    {
       "path": "../alfa-earl"
     },
     {

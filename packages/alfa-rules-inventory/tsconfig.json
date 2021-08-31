@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom"
+  },
+  "files": [
+    "src/index.ts",
+    "src/rules.ts",
+    "src/scope.ts",
+    "src/sia-inv1/rule.ts",
+    "src/sia-inv2/rule.ts",
+    "test/common/evaluate.ts",
+    "test/common/outcome.ts",
+    "test/sia-inv1/rule.spec.tsx"
+  ],
+  "references": [
+    {
+      "path": "../alfa-act-base"
+    },
+    {
+      "path": "../alfa-aria"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-inventory"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-url"
+    },
+    {
+      "path": "../alfa-web"
+    }
+  ]
+}

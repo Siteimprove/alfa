@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act-base";
+import { Rule } from "@siteimprove/alfa-act";
 
 import { Assertion } from "./assertion";
 import { Handler } from "./handler";

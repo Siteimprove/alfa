@@ -2,7 +2,7 @@
 
 import * as unexpected from "unexpected";
 
-import { Rule } from "@siteimprove/alfa-act-base";
+import { Rule } from "@siteimprove/alfa-act";
 import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Future } from "@siteimprove/alfa-future";
 import { Mapper } from "@siteimprove/alfa-mapper";

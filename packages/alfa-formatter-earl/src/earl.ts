@@ -1,3 +1,4 @@
+import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Serializable, EARL } from "@siteimprove/alfa-earl";
 import { Formatter } from "@siteimprove/alfa-formatter";
 
@@ -45,22 +46,26 @@ export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
       [
         assertor,
         ...subject,
-        ...[...rules].map((rule) => rule.toEARL()),
-        ...[...outcomes].map((outcome) => {
-          const earl = outcome.toEARL();
+        ...[...rules]
+          .filter<Rule<I, T, Q, S>>(Rule.isRule)
+          .map((rule) => rule.toEARL()),
+        ...[...outcomes]
+          .filter<Outcome<I, T, Q, S>>(Outcome.isOutcome)
+          .map((outcome) => {
+            const earl = outcome.toEARL();
 
-          for (const _ of subject) {
-            earl["earl:assertedBy"] = {
-              "@id": assertor["@id"],
-            };
+            for (const _ of subject) {
+              earl["earl:assertedBy"] = {
+                "@id": assertor["@id"],
+              };
 
-            earl["earl:subject"] = {
-              "@id": _["@id"],
-            };
-          }
+              earl["earl:subject"] = {
+                "@id": _["@id"],
+              };
+            }
 
-          return earl;
-        }),
+            return earl;
+          }),
       ],
       null,
       2

@@ -1,7 +1,6 @@
 import { Record } from "@siteimprove/alfa-record";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as act from "@siteimprove/alfa-act";
 import * as base from "@siteimprove/alfa-act-base";
 
 export * from "./scope";
@@ -27,7 +26,7 @@ export const Rules = Record.of(rules);
  * @public
  */
 type Flattened = Sequence<
-  act.Rule<
+  base.Rule<
     base.Rule.Input<Rule>,
     base.Rule.Target<Rule>,
     base.Rule.Question<Rule>,
@@ -44,6 +43,3 @@ type Flattened = Sequence<
 const Flattened: Flattened = Sequence.from(Rules.values()) as Flattened;
 
 export default Flattened;
-
-export * from "./common/group";
-export * from "./common/question";

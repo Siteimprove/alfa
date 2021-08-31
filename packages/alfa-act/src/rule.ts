@@ -117,6 +117,18 @@ export namespace Rule {
     >;
   }
 
+  export function isRule<I, T, Q, S>(
+    value: base.Rule<I, T, Q, S>
+  ): value is Rule<I, T, Q, S>;
+
+  export function isRule<I, T, Q, S>(value: unknown): value is Rule<I, T, Q, S>;
+
+  export function isRule<I, T, Q, S>(
+    value: unknown
+  ): value is Rule<I, T, Q, S> {
+    return value instanceof Rule;
+  }
+
   export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
     I,
     T,

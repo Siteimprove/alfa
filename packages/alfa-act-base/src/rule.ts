@@ -2,13 +2,13 @@ import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None } from "@siteimprove/alfa-option";
-
-import * as earl from "@siteimprove/alfa-earl";
+// import { None } from "@siteimprove/alfa-option";
+//
+// import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Cache } from "./cache";
+// import { Cache } from "./cache";
 // import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Tag } from "./tag";

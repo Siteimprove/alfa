@@ -1,5 +1,4 @@
-import { Audit, Outcome } from "@siteimprove/alfa-act";
-import { Rule } from "@siteimprove/alfa-act-base";
+import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";

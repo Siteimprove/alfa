@@ -1,8 +1,8 @@
-import { Rule } from "@siteimprove/alfa-inventory";
 import { Diagnostic } from "@siteimprove/alfa-act-base";
 import { Node } from "@siteimprove/alfa-aria";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Rule } from "@siteimprove/alfa-inventory";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,8 +10,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasRole } from "@siteimprove/alfa-rules/src/common/predicate/has-role";
+import { isIgnored } from "@siteimprove/alfa-rules/src/common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;

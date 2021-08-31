@@ -72,8 +72,6 @@
     "src/index.ts",
     "src/rules.ts",
     "src/scope.ts",
-    "src/sia-inv1/rule.ts",
-    "src/sia-inv2/rule.ts",
 //    "src/sia-r1/rule.ts",
 //    "src/sia-r10/rule.ts",
 //    "src/sia-r11/rule.ts",
@@ -173,7 +171,6 @@
     "test/common/predicate/is-at-the-start.spec.tsx",
     "test/common/predicate/is-visible.spec.tsx",
     "test/common/predicate/has-role.spec.tsx",
-    "test/sia-inv1/rule.spec.tsx",
 //    "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
 //    "test/sia-r3/rule.spec.tsx",
@@ -291,9 +288,6 @@
     },
     {
       "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-inventory"
     },
     {
       "path": "../alfa-json"

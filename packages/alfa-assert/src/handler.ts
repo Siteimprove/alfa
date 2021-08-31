@@ -1,4 +1,4 @@
-import { Rule, Outcome } from "@siteimprove/alfa-act-base";
+import { Rule, Outcome } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
 
 /**

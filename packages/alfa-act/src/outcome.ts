@@ -45,6 +45,20 @@ export namespace Outcome {
     };
   }
 
+  export function isOutcome<I, T, Q, S>(
+    value: base.Outcome<I, T, Q, S>
+  ): value is Outcome<I, T, Q, S>;
+
+  export function isOutcome<I, T, Q, S>(
+    value: unknown
+  ): value is Outcome<I, T, Q, S>;
+
+  export function isOutcome<I, T, Q, S>(
+    value: unknown
+  ): value is Outcome<I, T, Q, S> {
+    return value instanceof Outcome;
+  }
+
   export class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
@@ -162,7 +176,7 @@ export namespace Outcome {
   }
 
   export namespace Passed {
-    export interface JSON<T> extends base.Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.Serializable.ToJSON<T>;
@@ -181,7 +195,7 @@ export namespace Outcome {
     }
 
     export function isPassed<I, T, Q, S>(
-      value: base.Outcome<I, T, Q, S>
+      value: Outcome<I, T, Q, S>
     ): value is Passed<I, T, Q, S>;
 
     export function isPassed<I, T, Q, S>(
@@ -317,7 +331,7 @@ export namespace Outcome {
   }
 
   export namespace Failed {
-    export interface JSON<T> extends base.Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.Serializable.ToJSON<T>;
@@ -336,7 +350,7 @@ export namespace Outcome {
     }
 
     export function isFailed<I, T, Q, S>(
-      value: base.Outcome<I, T, Q, S>
+      value: Outcome<I, T, Q, S>
     ): value is Failed<I, T, Q, S>;
 
     export function isFailed<I, T, Q, S>(
@@ -434,7 +448,7 @@ export namespace Outcome {
   }
 
   export namespace CantTell {
-    export interface JSON<T> extends base.Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "cantTell";
       target: json.Serializable.ToJSON<T>;
@@ -549,7 +563,7 @@ export namespace Outcome {
   }
 
   export namespace Inapplicable {
-    export interface JSON extends base.Outcome.JSON {
+    export interface JSON extends Outcome.JSON {
       [key: string]: json.JSON;
       outcome: "inapplicable";
     }
