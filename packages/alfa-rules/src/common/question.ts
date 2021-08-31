@@ -13,6 +13,7 @@ export interface Question {
   "node[]": Iterable<Node>;
   color: Option<RGB>;
   "color[]": Iterable<RGB>;
+  string: string;
 }
 
 /**
