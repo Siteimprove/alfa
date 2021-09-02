@@ -594,7 +594,7 @@ export namespace Rule {
     // (undocumented)
     export interface Evaluate<I, T, Q, S> {
         // (undocumented)
-        (input: I, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+        (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     }
     // (undocumented)
     export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;

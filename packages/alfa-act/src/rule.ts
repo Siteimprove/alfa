@@ -170,7 +170,7 @@ export namespace Rule {
    * rule evaluation procedures.
    */
   export interface Evaluate<I, T, Q, S> {
-    (input: I, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
+    (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
       Iterable<Outcome<I, T, Q, S>>
     >;
   }

@@ -7,7 +7,7 @@ const { system } = require("./system");
 exports.tester = {
   test(root = "packages") {
     async.eachLimit(
-      system.readDirectory(root, [".spec.ts", ".spec.tsx"]),
+      system.readDirectory(root, [".spec.ts", ".spec.tsx"], ["node_modules"]),
       os.cpus().length,
       (fileName, done) => {
         exec
