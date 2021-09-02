@@ -234,8 +234,8 @@ export namespace Question {
 
     /**
      * @remarks
-     * Overriding {@link Question.map} ensures that the answer to a rhetorical
-     * question is not lost as the question is transformed.
+     * Overriding {@link (Question:class).map} ensures that the answer to a
+     * rhetorical question is not lost as the question is transformed.
      */
     public map<U>(mapper: Mapper<T, U>): Rhetorical<Q, S, C, A, U> {
       return new Rhetorical(
