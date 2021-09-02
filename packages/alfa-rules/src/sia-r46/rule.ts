@@ -8,9 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
