@@ -34,6 +34,7 @@ export * from "./predicate/is-large-text";
 export * from "./predicate/is-marked-decorative";
 export * from "./predicate/is-offscreen";
 export * from "./predicate/is-perceivable";
+export * from "./predicate/is-positioned";
 export * from "./predicate/is-rendered";
 export * from "./predicate/is-replaced";
 export * from "./predicate/is-semantically-disabled";

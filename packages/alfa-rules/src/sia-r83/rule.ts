@@ -17,8 +17,11 @@ import {
   hasCascadedStyle,
   hasComputedStyle,
   hasNonWrappedText,
+  isPositioned,
   isVisible,
 } from "../common/predicate";
+
+import { getOffsetParent } from "../common/expectation/get-offset-parent";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -147,18 +150,10 @@ function wrapsText(device: Device): Predicate<Element> {
 
     const relevantParent = isPositioned(device, "static")(element)
       ? element.parent().filter(isElement)
-      : offsetParent(element, device);
+      : getOffsetParent(element, device);
 
     return relevantParent.every(wrapsText(device));
   };
-}
-
-function isPositioned(device: Device, position: string): Predicate<Element> {
-  return hasComputedStyle(
-    "position",
-    (value) => value.value === position,
-    device
-  );
 }
 
 function isActuallyClipping(element: Element, device: Device): boolean {
@@ -177,20 +172,4 @@ function isActuallyClipping(element: Element, device: Device): boolean {
   }
 
   return false;
-}
-
-function offsetParent(element: Element, device: Device): Option<Element> {
-  if (or(hasName("body", "html"), isPositioned(device, "fixed"))(element)) {
-    return None;
-  }
-
-  const ancestors = element
-    .ancestors({
-      flattened: true,
-    })
-    .filter(isElement);
-
-  return ancestors
-    .find(not(isPositioned(device, "static")))
-    .orElse(() => ancestors.find(hasName("td", "th", "table")));
 }
