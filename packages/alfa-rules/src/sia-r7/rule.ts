@@ -17,7 +17,7 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isIgnored } from "../common/predicate";
+import { isIgnored, isWhitespace } from "../common/predicate";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isVisible } from "../common/predicate/is-visible";
@@ -44,7 +44,13 @@ export default Rule.Atomic.of<Page, Attribute>({
 
           if (
             test(
-              and(isText, or(isVisible(device), not(isIgnored(device)))),
+              and(
+                isText,
+                and(
+                  or(isVisible(device), not(isIgnored(device))),
+                  (text: Text) => !isWhitespace(text.data)
+                )
+              ),
               node
             )
           ) {
