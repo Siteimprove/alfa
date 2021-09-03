@@ -1,12 +1,15 @@
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 import {
   getBackground,
   getForeground,
 } from "../../../src/common/expectation/get-colors";
+
+const device = Device.standard();
 
 test("getBackground() handles opacity correctly", (t) => {
   const target = (
@@ -23,14 +26,17 @@ test("getBackground() handles opacity correctly", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(Iterable.first(getBackground(target).get()).get().toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.6 },
-    green: { type: "percentage", value: 0.7427451 },
-    blue: { type: "percentage", value: 0.8933333 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    Iterable.first(getBackground(target, device).get()).get().toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 0.6 },
+      green: { type: "percentage", value: 0.7427451 },
+      blue: { type: "percentage", value: 0.8933333 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
 });
 
 test("getBackground() handles mix of opacity and transparency", (t) => {
@@ -52,14 +58,17 @@ test("getBackground() handles mix of opacity and transparency", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(Iterable.first(getBackground(target).get()).get().toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.75 },
-    green: { type: "percentage", value: 0 },
-    blue: { type: "percentage", value: 0.25 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    Iterable.first(getBackground(target, device).get()).get().toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 0.75 },
+      green: { type: "percentage", value: 0 },
+      blue: { type: "percentage", value: 0.25 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
 });
 
 test("getForeground() handles opacity correctly", (t) => {
@@ -77,14 +86,17 @@ test("getForeground() handles opacity correctly", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(Iterable.first(getForeground(target).get()).get().toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 1 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    Iterable.first(getForeground(target, device).get()).get().toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 1 },
+      green: { type: "percentage", value: 1 },
+      blue: { type: "percentage", value: 1 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
 });
 
 test("getForeground() handles mix of opacity and transparency", (t) => {
@@ -106,12 +118,15 @@ test("getForeground() handles mix of opacity and transparency", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(Iterable.first(getForeground(target).get()).get().toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.75 },
-    green: { type: "percentage", value: 0.25 },
-    blue: { type: "percentage", value: 0.5 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    Iterable.first(getForeground(target, device).get()).get().toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 0.75 },
+      green: { type: "percentage", value: 0.25 },
+      blue: { type: "percentage", value: 0.5 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
 });

@@ -19,9 +19,9 @@ export namespace Predicate {
     // (undocumented)
     export function fold<T, A extends Array<unknown> = [], V = T, W = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, value: T, ...args: A): V | W;
     // (undocumented)
-    export function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+    export function nand<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
     // (undocumented)
-    export function nor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+    export function nor<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
     // (undocumented)
     export function not<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<T, A>;
     // (undocumented)
@@ -33,9 +33,8 @@ export namespace Predicate {
     // (undocumented)
     export function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): boolean;
     // (undocumented)
-    export function xor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+    export function xor<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
