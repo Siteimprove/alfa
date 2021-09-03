@@ -447,6 +447,10 @@ export namespace ComputedStyles {
         ...border,
         ["color", Serialise.getLonghand(style, "color")] as const,
         ["font-weight", Serialise.getLonghand(style, "font-weight")] as const,
+        [
+          "vertical-align",
+          Serialise.getLonghand(style, "vertical-align"),
+        ] as const,
         ["background", Serialise.background(style)] as const,
         ["outline", Serialise.outline(style)] as const,
         ["text-decoration", Serialise.textDecoration(style)] as const,
