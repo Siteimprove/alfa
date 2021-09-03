@@ -52,7 +52,13 @@
       "path": "../alfa-performance"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-record"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-result"

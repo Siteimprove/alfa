@@ -16,6 +16,7 @@ import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Option } from '@siteimprove/alfa-option';
 import { Performance } from '@siteimprove/alfa-performance';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
@@ -389,27 +390,47 @@ export class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, 
     // (undocumented)
     answer(answer: A): T;
     // (undocumented)
+    answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T>;
+    // (undocumented)
+    answerIf(predicate: Predicate<S, [context: C]>, answer: A): Question<Q, S, C, A, T>;
+    // (undocumented)
+    answerIf(answer: Option<A>): Question<Q, S, C, A, T>;
+    // (undocumented)
     apply<U>(mapper: Question<Q, S, C, A, Mapper<T, U>>): Question<Q, S, C, A, U>;
     // (undocumented)
     get context(): C;
+    // (undocumented)
+    protected readonly _context: C;
     // (undocumented)
     flatMap<U>(mapper: Mapper<T, Question<Q, S, C, A, U>>): Question<Q, S, C, A, U>;
     // (undocumented)
     flatten<Q, S, C, A, T>(this: Question<Q, S, C, A, Question<Q, S, C, A, T>>): Question<Q, S, C, A, T>;
     // (undocumented)
+    isRhetorical(): this is Question.Rhetorical<Q, S, C, A, T>;
+    // (undocumented)
     map<U>(mapper: Mapper<T, U>): Question<Q, S, C, A, U>;
     // (undocumented)
     get message(): string;
     // (undocumented)
+    protected readonly _message: string;
+    // (undocumented)
     static of<Q, S, C, A>(type: Q, uri: string, message: string, subject: S, context: C): Question<Q, S, C, A>;
     // (undocumented)
+    protected readonly _quester: Mapper<A, T>;
+    // (undocumented)
     get subject(): S;
+    // (undocumented)
+    protected readonly _subject: S;
     // (undocumented)
     toJSON(): Question.JSON<Q, S, C>;
     // (undocumented)
     get type(): Q;
     // (undocumented)
+    protected readonly _type: Q;
+    // (undocumented)
     get uri(): string;
+    // (undocumented)
+    protected readonly _uri: string;
 }
 
 // @public (undocumented)
@@ -430,6 +451,14 @@ export namespace Question {
         type: Serializable.ToJSON<Q>;
         // (undocumented)
         uri: string;
+    }
+    // @internal
+    export class Rhetorical<Q, S, C, A, T = A> extends Question<Q, S, C, A, T> {
+        constructor(type: Q, uri: string, message: string, subject: S, context: C, answer: T);
+        // (undocumented)
+        answer(): T;
+        // (undocumented)
+        map<U>(mapper: Mapper<T, U>): Rhetorical<Q, S, C, A, U>;
     }
 }
 
