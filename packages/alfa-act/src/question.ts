@@ -3,8 +3,13 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
+
+const { isBoolean, isFunction } = Refinement;
 
 /**
  * @public
@@ -33,12 +38,12 @@ export class Question<Q, S, C, A, T = A>
     );
   }
 
-  private readonly _type: Q;
-  private readonly _uri: string;
-  private readonly _message: string;
-  private readonly _subject: S;
-  private readonly _context: C;
-  private readonly _quester: Mapper<A, T>;
+  protected readonly _type: Q;
+  protected readonly _uri: string;
+  protected readonly _message: string;
+  protected readonly _subject: S;
+  protected readonly _context: C;
+  protected readonly _quester: Mapper<A, T>;
 
   protected constructor(
     type: Q,
@@ -76,6 +81,56 @@ export class Question<Q, S, C, A, T = A>
     return this._context;
   }
 
+  public isRhetorical(): this is Question.Rhetorical<Q, S, C, A, T> {
+    return this instanceof Question.Rhetorical;
+  }
+
+  public answer(answer: A): T {
+    return this._quester(answer);
+  }
+
+  public answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T>;
+
+  public answerIf(
+    predicate: Predicate<S, [context: C]>,
+    answer: A
+  ): Question<Q, S, C, A, T>;
+
+  public answerIf(answer: Option<A>): Question<Q, S, C, A, T>;
+
+  public answerIf(
+    conditionOrPredicateOrAnswer:
+      | boolean
+      | Predicate<S, [context: C]>
+      | Option<A>,
+    answer?: A
+  ): Question<Q, S, C, A, T> {
+    let condition: boolean;
+
+    if (isBoolean(conditionOrPredicateOrAnswer)) {
+      condition = conditionOrPredicateOrAnswer;
+    } else if (isFunction(conditionOrPredicateOrAnswer)) {
+      condition = conditionOrPredicateOrAnswer(this._subject, this._context);
+    } else {
+      condition = conditionOrPredicateOrAnswer.isSome();
+
+      if (condition) {
+        answer = conditionOrPredicateOrAnswer.get();
+      }
+    }
+
+    return condition
+      ? new Question.Rhetorical(
+          this._type,
+          this._uri,
+          this._message,
+          this._subject,
+          this._context,
+          this.answer(answer!)
+        )
+      : this;
+  }
+
   public map<U>(mapper: Mapper<T, U>): Question<Q, S, C, A, U> {
     return new Question(
       this._type,
@@ -109,11 +164,14 @@ export class Question<Q, S, C, A, T = A>
   public flatten<Q, S, C, A, T>(
     this: Question<Q, S, C, A, Question<Q, S, C, A, T>>
   ): Question<Q, S, C, A, T> {
-    return this.flatMap((question) => question);
-  }
-
-  public answer(answer: A): T {
-    return this._quester(answer);
+    return new Question(
+      this._type,
+      this._uri,
+      this._message,
+      this._subject,
+      this._context,
+      (answer) => this._quester(answer)._quester(answer)
+    );
   }
 
   public toJSON(): Question.JSON<Q, S, C> {
@@ -144,6 +202,51 @@ export namespace Question {
     value: unknown
   ): value is Question<Q, S, C, A, T> {
     return value instanceof Question;
+  }
+
+  /**
+   * A rhetorical question is a special type of question in which the answer is
+   * part of the question itself. This is useful for cases where the answer to
+   * a question may optionally be given by the entity asking the question. This
+   * means that a question can be conditionally answered while still retaining
+   * its monadic structure as the question isn't unwrapped to its answer.
+   *
+   * @internal
+   */
+  export class Rhetorical<Q, S, C, A, T = A> extends Question<Q, S, C, A, T> {
+    private readonly _answer: T;
+
+    public constructor(
+      type: Q,
+      uri: string,
+      message: string,
+      subject: S,
+      context: C,
+      answer: T
+    ) {
+      super(type, uri, message, subject, context, () => answer);
+      this._answer = answer;
+    }
+
+    public answer(): T {
+      return this._answer;
+    }
+
+    /**
+     * @remarks
+     * Overriding {@link (Question:class).map} ensures that the answer to a
+     * rhetorical question is not lost as the question is transformed.
+     */
+    public map<U>(mapper: Mapper<T, U>): Rhetorical<Q, S, C, A, U> {
+      return new Rhetorical(
+        this._type,
+        this._uri,
+        this._message,
+        this._subject,
+        this._context,
+        mapper(this._answer)
+      );
+    }
   }
 }
 
