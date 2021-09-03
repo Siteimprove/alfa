@@ -60,19 +60,6 @@ test("evaluate() fails an autocomplete attribute with terms in wrong order", asy
   ]);
 });
 
-test("evaluate() fails an autocomplete attribute with an inappropriate term", async (t) => {
-  const element = <input type="number" autocomplete="email" />;
-  const target = element.attribute("autocomplete").get()!;
-
-  const document = h.document([element]);
-
-  t.deepEqual(await evaluate(R10, { document }), [
-    failed(R10, target, {
-      1: Outcomes.HasNoValidValue,
-    }),
-  ]);
-});
-
 test("evaluate() fails an autocomplete attribute with a comma-separated list of terms", async (t) => {
   const element = <input autocomplete="work,email" />;
   const target = element.attribute("autocomplete").get()!;
