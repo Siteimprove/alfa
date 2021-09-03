@@ -196,13 +196,13 @@ function getLayers(
     return Err.of(Layer.Error.HasNonStaticPosition);
   }
 
-  // If the background layer does not have a lower layer that is fully opaque,
-  // we need to also locate the background layers sitting behind the current
-  // layer.
-
   if (hasInterposedDescendant(device)(element)) {
     return Err.of(Layer.Error.HasInterposedDescendant);
   }
+
+  // If the background layer does not have a lower layer that is fully opaque,
+  // we need to also locate the background layers sitting behind the current
+  // layer.
 
   // Only use the background layers from the parent if there is one. If there
   // isn't, this means we're at the root. In that case, we simply return the

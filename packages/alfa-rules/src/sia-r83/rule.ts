@@ -2,7 +2,6 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -25,7 +24,7 @@ import { getOffsetParent } from "../common/expectation/get-offset-parent";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasNamespace } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
