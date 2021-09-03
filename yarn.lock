@@ -945,7 +945,9 @@ __metadata:
     "@siteimprove/alfa-monad": "workspace:^0.21.2"
     "@siteimprove/alfa-option": "workspace:^0.21.2"
     "@siteimprove/alfa-performance": "workspace:^0.21.2"
+    "@siteimprove/alfa-predicate": "workspace:^0.21.2"
     "@siteimprove/alfa-record": "workspace:^0.21.2"
+    "@siteimprove/alfa-refinement": "workspace:^0.21.2"
     "@siteimprove/alfa-result": "workspace:^0.21.2"
     "@siteimprove/alfa-sarif": "workspace:^0.21.2"
     "@siteimprove/alfa-sequence": "workspace:^0.21.2"
@@ -8838,8 +8840,8 @@ resolve@~1.19.0:
   linkType: hard
 
 "tar@npm:^6.0.2, tar@npm:^6.1.0":
-  version: 6.1.6
-  resolution: "tar@npm:6.1.6"
+  version: 6.1.11
+  resolution: "tar@npm:6.1.11"
   dependencies:
     chownr: ^2.0.0
     fs-minipass: ^2.0.0
@@ -8847,7 +8849,7 @@ resolve@~1.19.0:
     minizlib: ^2.1.1
     mkdirp: ^1.0.3
     yallist: ^4.0.0
-  checksum: 583f1165281746b4c48adee4ff7bab4895e73999eeda3c8d59779e47c29dc1dc714d832608a491fead4fd794bf9e0bd51b3d4a4fbad87f487a8b360321d70e8c
+  checksum: a04c07bb9e2d8f46776517d4618f2406fb977a74d914ad98b264fc3db0fe8224da5bec11e5f8902c5b9bcb8ace22d95fbe3c7b36b8593b7dfc8391a25898f32f
   languageName: node
   linkType: hard
 
