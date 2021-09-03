@@ -67,24 +67,21 @@ export namespace Predicate {
   }
 
   export function xor<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
+    ...predicates: Array<Predicate<T, A>>
   ): Predicate<T, A> {
-    return and(or(left, right), not(and(left, right)));
+    return and(or(...predicates), not(and(...predicates)));
   }
 
   export function nor<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
+    ...predicates: Array<Predicate<T, A>>
   ): Predicate<T, A> {
-    return not(or(left, right));
+    return not(or(...predicates));
   }
 
   export function nand<T, A extends Array<unknown> = []>(
-    left: Predicate<T, A>,
-    right: Predicate<T, A>
+    ...predicates: Array<Predicate<T, A>>
   ): Predicate<T, A> {
-    return not(and(left, right));
+    return not(and(...predicates));
   }
 
   export function equals<T>(...values: Array<T>): Predicate<unknown> {

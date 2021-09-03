@@ -49,6 +49,8 @@ export namespace Real {
     export function divide(p: number, d: number): number;
     export function equals(a: number, b: number, e?: number): boolean;
     // (undocumented)
+    export function isReal(value: number): boolean;
+    // (undocumented)
     export function isReal(value: unknown): value is number;
     export function modulo(p: number, d: number): number;
     // (undocumented)
@@ -84,7 +86,6 @@ export namespace Vector {
     // (undocumented)
     export function subtract(v: Vector, u: Vector): Vector;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

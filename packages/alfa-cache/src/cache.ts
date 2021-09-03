@@ -1,6 +1,6 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import { Mapper } from "@siteimprove/alfa-mapper";
 
 /**
  * @public
@@ -16,9 +16,12 @@ export class Cache<K extends object, V> {
 
   public get(key: K): Option<V>;
 
-  public get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
+  public get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
 
-  public get<U extends V = V>(key: K, ifMissing?: Thunk<U>): V | Option<V> {
+  public get<U extends V = V>(
+    key: K,
+    ifMissing?: Mapper<this, U>
+  ): V | Option<V> {
     if (this._storage.has(key)) {
       const value = this._storage.get(key)!;
 
@@ -33,7 +36,7 @@ export class Cache<K extends object, V> {
       return None;
     }
 
-    const value = ifMissing();
+    const value = ifMissing(this);
 
     this._storage.set(key, value);
 
