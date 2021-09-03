@@ -442,8 +442,99 @@ test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
 test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   const target = h.text("Hello World");
 
-  const div = <div style={{ textShadow: "1px 1px" }}>{target}</div>;
-  const document = h.document([div]);
+  const document = h.document([
+    <div style={{ textShadow: "1px 1px" }}>{target}</div>,
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+});
+
+test(`evaluate() cannot tell when encountering an interposed parent before
+      encountering an opaque background`, async (t) => {
+  {
+    const target = h.text("Hello World");
+
+    const document = h.document([
+      <body>
+        <span
+          style={{
+            position: "absolute",
+            backgroundColor: "#000",
+            width: "100%",
+            height: "100%",
+          }}
+        />
+        {target}
+      </body>,
+    ]);
+
+    t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+  }
+  {
+    const target = h.text("Hello World");
+
+    const document = h.document([
+      <body>
+        <div
+          style={{
+            position: "relative",
+            backgroundColor: "#fff",
+          }}
+        >
+          <span
+            style={{
+              position: "absolute",
+              backgroundColor: "#000",
+              width: "100%",
+              height: "100%",
+            }}
+          />
+          {target}
+        </div>
+      </body>,
+    ]);
+
+    t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+  }
+});
+
+test(`evaluate() cannot tell when encountering an absolutely positioned parent
+      before encountering an opaque background`, async (t) => {
+  {
+    const target = h.text("Hello World");
+
+    const document = h.document([
+      <div
+        style={{
+          position: "absolute",
+        }}
+      >
+        {target}
+      </div>,
+    ]);
+
+    t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+  }
+  {
+    const target = h.text("Hello World");
+
+    const document = h.document([
+      <div
+        style={{
+          position: "absolute",
+          backgroundColor: "#fff",
+        }}
+      >
+        {target}
+      </div>,
+    ]);
+
+    t.deepEqual(await evaluate(R69, { document }), [
+      passed(R69, target, {
+        1: Outcomes.HasSufficientContrast(21, 4.5, [
+          Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
+        ]),
+      }),
+    ]);
+  }
 });

@@ -53,13 +53,15 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
     // non-replaced elements are, however, visible even when empty.
     and(
       isElement,
-      and(nor(isReplaced, isVisibleWhenEmpty), (element) =>
-        element
-          .children({
-            nested: true,
-            flattened: true,
-          })
-          .every(isInvisible(device, context))
+      and(
+        nor(isReplaced, isVisibleWhenEmpty, hasDimensions(device)),
+        (element) =>
+          element
+            .children({
+              nested: true,
+              flattened: true,
+            })
+            .every(isInvisible(device, context))
       )
     )
   );
@@ -70,3 +72,23 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
  * empty
  */
 const isVisibleWhenEmpty = hasName("textarea");
+
+function hasDimensions(device: Device): Predicate<Element> {
+  return and(
+    ...(["width", "height"] as const).map((dimension) =>
+      hasComputedStyle(
+        dimension,
+        (dimension) => {
+          switch (dimension.type) {
+            case "length":
+            case "percentage":
+              return dimension.value > 0;
+            default:
+              return false;
+          }
+        },
+        device
+      )
+    )
+  );
+}

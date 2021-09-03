@@ -262,7 +262,7 @@ function isDistinguishable(
     hasDistinguishableBackground(container, device, context),
 
     hasDistinguishableFontWeight(container, device, context),
-
+    hasDistinguishableVerticalAlign(container, device, context),
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
     // other features of the container element, such as its background, but this
@@ -366,6 +366,23 @@ function hasDistinguishableFontWeight(
   );
 }
 
+function hasDistinguishableVerticalAlign(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const reference = Style.from(container, device, context).computed(
+    "vertical-align"
+  ).value;
+
+  return hasComputedStyle(
+    "vertical-align",
+    not((alignment) => alignment.equals(reference)),
+    device,
+    context
+  );
+}
+
 type Name = Property.Name | Property.Shorthand.Name;
 
 export class ComputedStyles implements Equatable, Hashable, Serializable {
@@ -430,6 +447,10 @@ export namespace ComputedStyles {
         ...border,
         ["color", Serialise.getLonghand(style, "color")] as const,
         ["font-weight", Serialise.getLonghand(style, "font-weight")] as const,
+        [
+          "vertical-align",
+          Serialise.getLonghand(style, "vertical-align"),
+        ] as const,
         ["background", Serialise.background(style)] as const,
         ["outline", Serialise.outline(style)] as const,
         ["text-decoration", Serialise.textDecoration(style)] as const,
