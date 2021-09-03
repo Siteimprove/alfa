@@ -2298,6 +2298,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-tuple@workspace:packages/alfa-tuple":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-tuple@workspace:packages/alfa-tuple"
+  dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.21.2"
+    "@siteimprove/alfa-callback": "workspace:^0.21.2"
+    "@siteimprove/alfa-comparable": "workspace:^0.21.2"
+    "@siteimprove/alfa-hash": "workspace:^0.21.2"
+    "@siteimprove/alfa-mapper": "workspace:^0.21.2"
+    "@siteimprove/alfa-option": "workspace:^0.21.2"
+    "@siteimprove/alfa-predicate": "workspace:^0.21.2"
+    "@siteimprove/alfa-reducer": "workspace:^0.21.2"
+    "@siteimprove/alfa-refinement": "workspace:^0.21.2"
+    "@siteimprove/alfa-test": "workspace:^0.21.2"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-unexpected@workspace:packages/alfa-unexpected":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-unexpected@workspace:packages/alfa-unexpected"
