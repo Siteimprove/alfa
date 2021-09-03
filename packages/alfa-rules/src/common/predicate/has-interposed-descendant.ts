@@ -28,9 +28,11 @@ export function hasInterposedDescendant(device: Device): Predicate<Element> {
               .inclusiveDescendants({
                 flattened: true,
               })
-              .filter(isElement)
-              .filter(isPositioned(device, "absolute", "fixed"))
-              .filter(isVisible(device))
+              // Find all absolutely positioned elements.
+              .filter(and(isElement,
+                 and(isPositioned(device, "absolute", "fixed"),
+                        isVisible(device))))
+              // And store their offset parents.
               .collect((element) => getOffsetParent(element, device))
           )
       )
