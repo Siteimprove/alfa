@@ -19,10 +19,8 @@ test("evaluate() passes a valid simple autocomplete attribute on an <input> elem
   ]);
 });
 
-test("evaluate() passes a valid complex autocomplete attribute on an <input> element", async (t) => {
-  const element = (
-    <input type="text" autocomplete="section-primary shipping work email" />
-  );
+test("evaluate() passes a valid simple autocomplete attribute on an <input> element", async (t) => {
+  const element = <input autocomplete="username" />;
   const target = element.attribute("autocomplete").get()!;
 
   const document = h.document([element]);
@@ -115,6 +113,14 @@ test("evaluates() is inapplicable on aria-disabled elements", async (t) => {
 
 test("evaluates() is inapplicable on disabled elements", async (t) => {
   const element = <input disabled autocomplete="email" />;
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [inapplicable(R10)]);
+});
+
+test("evaluates() is inapplicable when there is an ´  OfF ´ autocomplete attribute", async (t) => {
+  const element = <input autocomplete="  OfF " />;
 
   const document = h.document([element]);
 
