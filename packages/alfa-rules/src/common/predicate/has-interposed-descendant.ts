@@ -2,7 +2,9 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
+const { and } = Refinement;
 const { isElement } = Element;
 
 import { getOffsetParent } from "../expectation/get-offset-parent";
@@ -29,9 +31,15 @@ export function hasInterposedDescendant(device: Device): Predicate<Element> {
                 flattened: true,
               })
               // Find all absolutely positioned elements.
-              .filter(and(isElement,
-                 and(isPositioned(device, "absolute", "fixed"),
-                        isVisible(device))))
+              .filter(
+                and(
+                  isElement,
+                  and(
+                    isPositioned(device, "absolute", "fixed"),
+                    isVisible(device)
+                  )
+                )
+              )
               // And store their offset parents.
               .collect((element) => getOffsetParent(element, device))
           )
