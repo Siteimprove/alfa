@@ -229,7 +229,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
   );
 });
 
-test(`evaluate() fails a document whose first tabbable link is not visible`, async (t) => {
+test(`evaluate() passes a document whose first tabbable link is not visible`, async (t) => {
   const document = h.document(
     [
       <html>
@@ -262,7 +262,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
   );
 });
 
-test(`evaluate() fails a document whose first tabbable link is not visible`, async (t) => {
+test(`evaluate() can´t tell if the first tabbable link of a document is not visible`, async (t) => {
   const document = h.document(
     [
       <html>
@@ -332,7 +332,7 @@ test(`evaluates() passes a document whose first tabbable link references a
   ]);
 });
 
-test(`evaluates() passe a document whose first tabbable link references an
+test(`evaluates() passes a document whose first tabbable link references an
       empty child at the start of main`, async (t) => {
   const document = h.document([
     <html>
@@ -352,7 +352,7 @@ test(`evaluates() passe a document whose first tabbable link references an
   ]);
 });
 
-test(`evaluates() passe a document whose first tabbable link references a
+test(`evaluates() passes a document whose first tabbable link references a
       container around main`, async (t) => {
   const document = h.document([
     <html>
@@ -373,7 +373,7 @@ test(`evaluates() passe a document whose first tabbable link references a
   ]);
 });
 
-test(`evaluates() passe a document whose first tabbable link references an
+test(`evaluates() passes a document whose first tabbable link references an
       empty element before main`, async (t) => {
   const document = h.document([
     <html>

@@ -1,9 +1,10 @@
 import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Context } from "@siteimprove/alfa-selector";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Context } from "@siteimprove/alfa-selector";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -19,7 +20,6 @@ import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
-import { Option } from "@siteimprove/alfa-option";
 
 const { hasName, isElement } = Element;
 const { fold } = Predicate;
