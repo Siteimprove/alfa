@@ -6,6 +6,10 @@ const { abs, min, max } = Math;
  * @public
  */
 export namespace Real {
+  export function isReal(value: number): boolean;
+
+  export function isReal(value: unknown): value is number;
+
   export function isReal(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value);
   }

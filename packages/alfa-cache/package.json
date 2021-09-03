@@ -19,8 +19,8 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-iterable": "workspace:^0.21.2",
-    "@siteimprove/alfa-option": "workspace:^0.21.2",
-    "@siteimprove/alfa-thunk": "workspace:^0.21.2"
+    "@siteimprove/alfa-mapper": "workspace:^0.21.2",
+    "@siteimprove/alfa-option": "workspace:^0.21.2"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.21.2"
