@@ -100,7 +100,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
           `Is the first tabbable element of the document visible if it's focused?`,
           target
         );
-        // check in/out of this function because tests are not passing
+
         function isAtTheStartOfMain(
           reference: Option<Node>
         ): Interview<
@@ -148,19 +148,20 @@ export default Rule.Atomic.of<Page, Document, Question>({
               expectation(
                 hasRole(device, (role) => role.is("link"))(element),
                 () =>
-                  expectation(
-                    // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
-                    isVisible(device, Context.focus(element))(element),
-                    isSkipLink,
-                    () =>
-                      askIsVisible.map((isVisible) =>
-                        expectation(
-                          isVisible,
-                          isSkipLink,
-                          () => Outcomes.FirstTabbableIsNotVisible
-                        )
+                  // No need to check if element is tabbable because this was
+                  // already checked at the very start of expectation.
+                  askIsVisible
+                    .answerIf(
+                      isVisible(device, Context.focus(element))(element),
+                      true
+                    )
+                    .map((isVisible) =>
+                      expectation(
+                        isVisible,
+                        isSkipLink,
+                        () => Outcomes.FirstTabbableIsNotVisible
                       )
-                  ),
+                    ),
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),
