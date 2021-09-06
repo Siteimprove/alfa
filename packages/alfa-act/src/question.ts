@@ -6,9 +6,11 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
+const { isOption } = Option;
 const { isBoolean, isFunction } = Refinement;
 
 /**
@@ -98,11 +100,14 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
 
   public answerIf(answer: Option<A>): Question<Q, S, C, A, T, U>;
 
+  public answerIf(answer: Result<A, unknown>): Question<Q, S, C, A, T, U>;
+
   public answerIf(
     conditionOrPredicateOrAnswer:
       | boolean
       | Predicate<S, [context: C]>
-      | Option<A>,
+      | Option<A>
+      | Result<A, unknown>,
     answer?: A
   ): Question<Q, S, C, A, T, U> {
     let condition: boolean;
@@ -111,8 +116,15 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
       condition = conditionOrPredicateOrAnswer;
     } else if (isFunction(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer(this._subject, this._context);
-    } else {
+    } else if (isOption(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer.isSome();
+
+      if (condition) {
+        answer = conditionOrPredicateOrAnswer.get();
+      }
+    } else {
+      // Result
+      condition = conditionOrPredicateOrAnswer.isOk();
 
       if (condition) {
         answer = conditionOrPredicateOrAnswer.get();
