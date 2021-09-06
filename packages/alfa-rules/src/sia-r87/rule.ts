@@ -1,6 +1,6 @@
 import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -40,29 +40,31 @@ export default Rule.Atomic.of<Page, Document, Question>({
       },
 
       expectations(target) {
-        const element = target.tabOrder().find(isTabbable(device));
+        const firstTabbable = target.tabOrder().find(isTabbable(device));
 
-        const url = element
-          .filter(hasName("a", "area"))
-          .flatMap((element) =>
-            element
+        if (firstTabbable.isNone()) {
+          return { 1: Outcomes.HasNoTabbable };
+        }
+
+        const element = firstTabbable.get();
+
+        const url = hasName("a", "area")(element)
+          ? element
               .attribute("href")
               .flatMap((attribute) =>
                 URL.parse(attribute.value, response.url).ok()
               )
-          );
+          : None;
 
         const reference = url
           .filter(isInternalURL(response.url))
           .flatMap((url) =>
             url.fragment.flatMap((fragment) =>
-              element.flatMap((element) =>
-                element
-                  .root()
-                  .inclusiveDescendants()
-                  .filter(isElement)
-                  .find((element) => element.id.includes(fragment))
-              )
+              element
+                .root()
+                .inclusiveDescendants()
+                .filter(isElement)
+                .find((element) => element.id.includes(fragment))
             )
           );
 
@@ -131,42 +133,35 @@ export default Rule.Atomic.of<Page, Document, Question>({
             ? isAtTheStartOfMain(reference)
             : askIsInteralLink.map((isInternalLink) =>
                 expectation(
-                  !isInternalLink,
-                  () => Outcomes.FirstTabbableIsNotInternalLink,
-                  () => askReference.map(isAtTheStartOfMain)
+                  isInternalLink,
+                  () => askReference.map(isAtTheStartOfMain),
+                  () => Outcomes.FirstTabbableIsNotInternalLink
                 )
               );
         }
 
         return {
           1: expectation(
-            element.isNone(),
-            () => Outcomes.HasNoTabbable,
+            isIgnored(device)(element),
+            () => Outcomes.FirstTabbableIsIgnored,
             () =>
               expectation(
-                element.some(isIgnored(device)),
-                () => Outcomes.FirstTabbableIsIgnored,
+                hasRole(device, (role) => role.is("link"))(element),
                 () =>
                   expectation(
-                    element.none(hasRole(device, (role) => role.is("link"))),
-                    () => Outcomes.FirstTabbableIsNotLink,
+                    // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
+                    isVisible(device, Context.focus(element))(element),
+                    isSkipLink,
                     () =>
-                      expectation(
-                        // No check is done here on the tabbability of the element because the element itself is asked to be tabbable
-                        element.some((element) =>
-                          isVisible(device, Context.focus(element))(element)
-                        ),
-                        isSkipLink,
-                        () =>
-                          askIsVisible.map((isVisible) =>
-                            expectation(
-                              !isVisible,
-                              () => Outcomes.FirstTabbableIsNotVisible,
-                              isSkipLink
-                            )
-                          )
+                      askIsVisible.map((isVisible) =>
+                        expectation(
+                          isVisible,
+                          isSkipLink,
+                          () => Outcomes.FirstTabbableIsNotVisible
+                        )
                       )
-                  )
+                  ),
+                () => Outcomes.FirstTabbableIsNotLink
               )
           ),
         };
