@@ -360,9 +360,9 @@ export interface Question {
 // @public (undocumented)
 export namespace Question {
     // (undocumented)
-    export function of<Q extends keyof Question, S>(type: Q, uri: string, message: string, subject: S): act.Question<Q, S, S, Question[Q]>;
+    export function of<Q extends keyof Question, S, U extends string = string>(type: Q, uri: U, message: string, subject: S): act.Question<Q, S, S, Question[Q], Question[Q], U>;
     // (undocumented)
-    export function of<Q extends keyof Question, S, C>(type: Q, uri: string, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q]>;
+    export function of<Q extends keyof Question, S, C, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q], Question[Q], U>;
 }
 
 // @public (undocumented)
