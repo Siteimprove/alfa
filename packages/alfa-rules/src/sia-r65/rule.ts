@@ -44,24 +44,23 @@ export default Rule.Atomic.of<Page, Element, Question>({
       },
 
       expectations(target) {
+        const askFocusIndicator = Question.of(
+          "boolean",
+          "has-focus-indicator",
+          `Does the element have a visible focus indicator?`,
+          target
+        );
+
         return {
-          1: expectation(
-            hasFocusIndicator(device)(target),
-            () => Outcomes.HasFocusIndicator,
-            () =>
-              Question.of(
-                "boolean",
-                "has-focus-indicator",
-                `Does the element have a visible focus indicator?`,
-                target
-              ).map((hasFocusIndicator) =>
-                expectation(
-                  hasFocusIndicator,
-                  () => Outcomes.HasFocusIndicator,
-                  () => Outcomes.HasNoFocusIndicator
-                )
+          1: askFocusIndicator
+            .answerIf(hasFocusIndicator(device)(target), true)
+            .map((hasFocusIndicator) =>
+              expectation(
+                hasFocusIndicator,
+                () => Outcomes.HasFocusIndicator,
+                () => Outcomes.HasNoFocusIndicator
               )
-          ),
+            ),
         };
       },
     };
