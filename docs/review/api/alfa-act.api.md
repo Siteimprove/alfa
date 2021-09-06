@@ -385,36 +385,38 @@ export namespace Outcome {
 }
 
 // @public (undocumented)
-export class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> {
-    protected constructor(type: Q, uri: string, message: string, subject: S, context: C, quester: Mapper<A, T>);
+export class Question<Q, S, C, A, T = A, U extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> {
+    protected constructor(type: Q, uri: U, message: string, subject: S, context: C, quester: Mapper<A, T>);
     // (undocumented)
     answer(answer: A): T;
     // (undocumented)
-    answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T>;
+    answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T, U>;
     // (undocumented)
-    answerIf(predicate: Predicate<S, [context: C]>, answer: A): Question<Q, S, C, A, T>;
+    answerIf(predicate: Predicate<S, [context: C]>, answer: A): Question<Q, S, C, A, T, U>;
     // (undocumented)
-    answerIf(answer: Option<A>): Question<Q, S, C, A, T>;
+    answerIf(answer: Option<A>): Question<Q, S, C, A, T, U>;
     // (undocumented)
-    apply<U>(mapper: Question<Q, S, C, A, Mapper<T, U>>): Question<Q, S, C, A, U>;
+    answerIf(answer: Result<A, unknown>): Question<Q, S, C, A, T, U>;
+    // (undocumented)
+    apply<V>(mapper: Question<Q, S, C, A, Mapper<T, V>, U>): Question<Q, S, C, A, V, U>;
     // (undocumented)
     get context(): C;
     // (undocumented)
     protected readonly _context: C;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Question<Q, S, C, A, U>>): Question<Q, S, C, A, U>;
+    flatMap<V>(mapper: Mapper<T, Question<Q, S, C, A, V, U>>): Question<Q, S, C, A, V, U>;
     // (undocumented)
     flatten<Q, S, C, A, T>(this: Question<Q, S, C, A, Question<Q, S, C, A, T>>): Question<Q, S, C, A, T>;
     // (undocumented)
     isRhetorical(): this is Question.Rhetorical<Q, S, C, A, T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Question<Q, S, C, A, U>;
+    map<V>(mapper: Mapper<T, V>): Question<Q, S, C, A, V, U>;
     // (undocumented)
     get message(): string;
     // (undocumented)
     protected readonly _message: string;
     // (undocumented)
-    static of<Q, S, C, A>(type: Q, uri: string, message: string, subject: S, context: C): Question<Q, S, C, A>;
+    static of<Q, S, C, A, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): Question<Q, S, C, A, A, U>;
     // (undocumented)
     protected readonly _quester: Mapper<A, T>;
     // (undocumented)
@@ -422,23 +424,23 @@ export class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, 
     // (undocumented)
     protected readonly _subject: S;
     // (undocumented)
-    toJSON(): Question.JSON<Q, S, C>;
+    toJSON(): Question.JSON<Q, S, C, U>;
     // (undocumented)
     get type(): Q;
     // (undocumented)
     protected readonly _type: Q;
     // (undocumented)
-    get uri(): string;
+    get uri(): U;
     // (undocumented)
-    protected readonly _uri: string;
+    protected readonly _uri: U;
 }
 
 // @public (undocumented)
 export namespace Question {
     // (undocumented)
-    export function isQuestion<Q, S, C, A, T = A>(value: unknown): value is Question<Q, S, C, A, T>;
+    export function isQuestion<Q, S, C, A, T = A, U extends string = string>(value: unknown): value is Question<Q, S, C, A, T, U>;
     // (undocumented)
-    export interface JSON<Q, S, C> {
+    export interface JSON<Q, S, C, U extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
@@ -450,15 +452,15 @@ export namespace Question {
         // (undocumented)
         type: Serializable.ToJSON<Q>;
         // (undocumented)
-        uri: string;
+        uri: U;
     }
     // @internal
-    export class Rhetorical<Q, S, C, A, T = A> extends Question<Q, S, C, A, T> {
-        constructor(type: Q, uri: string, message: string, subject: S, context: C, answer: T);
+    export class Rhetorical<Q, S, C, A, T = A, U extends string = string> extends Question<Q, S, C, A, T, U> {
+        constructor(type: Q, uri: U, message: string, subject: S, context: C, answer: T);
         // (undocumented)
         answer(): T;
         // (undocumented)
-        map<U>(mapper: Mapper<T, U>): Rhetorical<Q, S, C, A, U>;
+        map<V>(mapper: Mapper<T, V>): Rhetorical<Q, S, C, A, V, U>;
     }
 }
 

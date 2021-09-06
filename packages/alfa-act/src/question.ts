@@ -6,28 +6,30 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
+const { isOption } = Option;
 const { isBoolean, isFunction } = Refinement;
 
 /**
  * @public
  */
-export class Question<Q, S, C, A, T = A>
+export class Question<Q, S, C, A, T = A, U extends string = string>
   implements
     Functor<T>,
     Applicative<T>,
     Monad<T>,
     Serializable<Question.JSON<Q, S, C>>
 {
-  public static of<Q, S, C, A>(
+  public static of<Q, S, C, A, U extends string = string>(
     type: Q,
-    uri: string,
+    uri: U,
     message: string,
     subject: S,
     context: C
-  ): Question<Q, S, C, A> {
+  ): Question<Q, S, C, A, A, U> {
     return new Question(
       type,
       uri,
@@ -39,7 +41,7 @@ export class Question<Q, S, C, A, T = A>
   }
 
   protected readonly _type: Q;
-  protected readonly _uri: string;
+  protected readonly _uri: U;
   protected readonly _message: string;
   protected readonly _subject: S;
   protected readonly _context: C;
@@ -47,7 +49,7 @@ export class Question<Q, S, C, A, T = A>
 
   protected constructor(
     type: Q,
-    uri: string,
+    uri: U,
     message: string,
     subject: S,
     context: C,
@@ -65,7 +67,7 @@ export class Question<Q, S, C, A, T = A>
     return this._type;
   }
 
-  public get uri(): string {
+  public get uri(): U {
     return this._uri;
   }
 
@@ -89,30 +91,40 @@ export class Question<Q, S, C, A, T = A>
     return this._quester(answer);
   }
 
-  public answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T>;
+  public answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T, U>;
 
   public answerIf(
     predicate: Predicate<S, [context: C]>,
     answer: A
-  ): Question<Q, S, C, A, T>;
+  ): Question<Q, S, C, A, T, U>;
 
-  public answerIf(answer: Option<A>): Question<Q, S, C, A, T>;
+  public answerIf(answer: Option<A>): Question<Q, S, C, A, T, U>;
+
+  public answerIf(answer: Result<A, unknown>): Question<Q, S, C, A, T, U>;
 
   public answerIf(
     conditionOrPredicateOrAnswer:
       | boolean
       | Predicate<S, [context: C]>
-      | Option<A>,
+      | Option<A>
+      | Result<A, unknown>,
     answer?: A
-  ): Question<Q, S, C, A, T> {
+  ): Question<Q, S, C, A, T, U> {
     let condition: boolean;
 
     if (isBoolean(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer;
     } else if (isFunction(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer(this._subject, this._context);
-    } else {
+    } else if (isOption(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer.isSome();
+
+      if (condition) {
+        answer = conditionOrPredicateOrAnswer.get();
+      }
+    } else {
+      // Result
+      condition = conditionOrPredicateOrAnswer.isOk();
 
       if (condition) {
         answer = conditionOrPredicateOrAnswer.get();
@@ -131,7 +143,7 @@ export class Question<Q, S, C, A, T = A>
       : this;
   }
 
-  public map<U>(mapper: Mapper<T, U>): Question<Q, S, C, A, U> {
+  public map<V>(mapper: Mapper<T, V>): Question<Q, S, C, A, V, U> {
     return new Question(
       this._type,
       this._uri,
@@ -142,15 +154,15 @@ export class Question<Q, S, C, A, T = A>
     );
   }
 
-  public apply<U>(
-    mapper: Question<Q, S, C, A, Mapper<T, U>>
-  ): Question<Q, S, C, A, U> {
+  public apply<V>(
+    mapper: Question<Q, S, C, A, Mapper<T, V>, U>
+  ): Question<Q, S, C, A, V, U> {
     return mapper.flatMap((mapper) => this.map(mapper));
   }
 
-  public flatMap<U>(
-    mapper: Mapper<T, Question<Q, S, C, A, U>>
-  ): Question<Q, S, C, A, U> {
+  public flatMap<V>(
+    mapper: Mapper<T, Question<Q, S, C, A, V, U>>
+  ): Question<Q, S, C, A, V, U> {
     return new Question(
       this._type,
       this._uri,
@@ -174,7 +186,7 @@ export class Question<Q, S, C, A, T = A>
     );
   }
 
-  public toJSON(): Question.JSON<Q, S, C> {
+  public toJSON(): Question.JSON<Q, S, C, U> {
     return {
       type: Serializable.toJSON(this._type),
       uri: this._uri,
@@ -189,18 +201,18 @@ export class Question<Q, S, C, A, T = A>
  * @public
  */
 export namespace Question {
-  export interface JSON<Q, S, C> {
+  export interface JSON<Q, S, C, U extends string = string> {
     [key: string]: json.JSON;
     type: Serializable.ToJSON<Q>;
-    uri: string;
+    uri: U;
     message: string;
     subject: Serializable.ToJSON<S>;
     context: Serializable.ToJSON<C>;
   }
 
-  export function isQuestion<Q, S, C, A, T = A>(
+  export function isQuestion<Q, S, C, A, T = A, U extends string = string>(
     value: unknown
-  ): value is Question<Q, S, C, A, T> {
+  ): value is Question<Q, S, C, A, T, U> {
     return value instanceof Question;
   }
 
@@ -213,12 +225,19 @@ export namespace Question {
    *
    * @internal
    */
-  export class Rhetorical<Q, S, C, A, T = A> extends Question<Q, S, C, A, T> {
+  export class Rhetorical<
+    Q,
+    S,
+    C,
+    A,
+    T = A,
+    U extends string = string
+  > extends Question<Q, S, C, A, T, U> {
     private readonly _answer: T;
 
     public constructor(
       type: Q,
-      uri: string,
+      uri: U,
       message: string,
       subject: S,
       context: C,
@@ -237,7 +256,7 @@ export namespace Question {
      * Overriding {@link (Question:class).map} ensures that the answer to a
      * rhetorical question is not lost as the question is transformed.
      */
-    public map<U>(mapper: Mapper<T, U>): Rhetorical<Q, S, C, A, U> {
+    public map<V>(mapper: Mapper<T, V>): Rhetorical<Q, S, C, A, V, U> {
       return new Rhetorical(
         this._type,
         this._uri,

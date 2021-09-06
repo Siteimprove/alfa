@@ -1,7 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -117,16 +116,11 @@ export default Rule.Atomic.of<Page, Text, Question>({
         const parent = target.parent({ flattened: true }).get() as Element;
 
         return {
-          1: getForeground(parent, device)
-            .ok()
-            .map((foreground) => result.answer(foreground))
-            .flatMap((result) =>
-              getBackground(parent, device)
-                .ok()
-                .map((background) => result.answer(background))
-                .orElse(() => Option.of(result))
-            )
-            .getOr(result),
+          1: result
+            .answerIf(getForeground(parent, device))
+            .map((askBackground) =>
+              askBackground.answerIf(getBackground(parent, device))
+            ),
         };
       },
     };
