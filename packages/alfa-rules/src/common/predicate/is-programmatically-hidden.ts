@@ -11,8 +11,6 @@ const { isElement } = Element;
 const { or, test, equals } = Predicate;
 const { and } = Refinement;
 
-const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
-
 export function isProgrammaticallyHidden(
   device: Device,
   context: Context = Context.empty()
@@ -27,6 +25,8 @@ export function isProgrammaticallyHidden(
     hasHiddenAncestors(device, context)
   );
 }
+
+const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 function hasHiddenAncestors(
   device: Device,
