@@ -1,14 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
-import { Context } from "@siteimprove/alfa-selector";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Element, Node } from "@siteimprove/alfa-dom";
-import { Style } from "@siteimprove/alfa-style";
+import { Context } from "@siteimprove/alfa-selector";
 
-import { hasAttribute } from "../predicate";
-import { hasComputedStyle } from "./has-computed-style";
-import visibility from "@siteimprove/alfa-style/src/property/visibility";
+import { hasAttribute, hasComputedStyle } from "../predicate";
 
 const { isElement } = Element;
 const { or, test, equals } = Predicate;
