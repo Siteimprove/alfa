@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -11,14 +11,17 @@ import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/expectation";
 import {
-  hasCascadedValueDeclaredInInlineStyle,
+  hasCascadedStyle,
   hasComputedStyle,
   hasInlineStyleProperty,
   isVisible,
+  isWhitespace,
 } from "../common/predicate";
 
-const { and } = Predicate;
 const { isElement, hasNamespace } = Element;
+const { not, or, test } = Predicate;
+const { and } = Refinement;
+const { isText } = Text;
 
 const property = "letter-spacing";
 
@@ -31,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
         return document
           .descendants({ nested: true, flattened: true })
           .filter(
-            Refinement.and(
+            and(
               isElement,
               and(
                 hasNamespace(Namespace.HTML),
@@ -49,17 +52,30 @@ export default Rule.Atomic.of<Page, Element>({
             () => Outcomes.NotImportant,
             () =>
               expectation(
-                isWideEnough(device)(target),
-                () => Outcomes.AboveMinimum,
-                () =>
-                  expectation(
-                    hasCascadedValueDeclaredInInlineStyle(
-                      device,
-                      property
-                    )(target),
-                    () => Outcomes.Important,
-                    () => Outcomes.Cascaded
+                target
+                  .inclusiveDescendants({ flattened: true })
+                  .filter(
+                    and(isText, (text) => test(not(isWhitespace), text.data))
                   )
+                  .every((text) =>
+                    text
+                      .parent({ flattened: true })
+                      .filter(isElement)
+                      .some(
+                        or(
+                          isWideEnough(device),
+                          not(
+                            hasCascadedValueDeclaredInInlineStyleOf(
+                              target,
+                              device,
+                              property
+                            )
+                          )
+                        )
+                      )
+                  ),
+                () => Outcomes.GoodText,
+                () => Outcomes.Important
               )
           ),
         };
@@ -69,6 +85,17 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export const Outcomes = TextSpacing(property);
+
+function isImportant(
+  device: Device,
+  property: Property.Name
+): Predicate<Element> {
+  return hasComputedStyle(
+    property,
+    (_, source) => source.some((declaration) => declaration.important),
+    device
+  );
+}
 
 function isWideEnough(device: Device): Predicate<Element> {
   return (element) =>
@@ -84,13 +111,23 @@ function isWideEnough(device: Device): Predicate<Element> {
     )(element);
 }
 
-function isImportant(
+function hasCascadedValueDeclaredInInlineStyleOf(
+  context: Element,
   device: Device,
-  property: Property.Name
+  name: Property.Name
 ): Predicate<Element> {
-  return hasComputedStyle(
-    property,
-    (_, source) => source.some((declaration) => declaration.important),
+  return hasCascadedStyle(
+    name,
+    (_, source) =>
+      source.some((cascaded) =>
+        context.style.some((block) =>
+          block
+            // We need reference equality here, not .equals as we want to check if the cascaded
+            // value is exactly the declared one, not just a similar one.
+            .declaration((declared) => cascaded === declared)
+            .isSome()
+        )
+      ),
     device
   );
 }
