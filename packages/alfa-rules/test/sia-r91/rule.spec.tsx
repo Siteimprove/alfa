@@ -68,3 +68,49 @@ test("evaluate() is inapplicable if letter-spacing is not declared in the style"
 
   t.deepEqual(await evaluate(R91, { document }), [inapplicable(R91)]);
 });
+
+// test(`evaluate() passes elements with no text`, async (t) => {
+//   const target = (
+//     <div style={{ letterSpacing: "0px !important" }}>
+//       <img src="visible-div.png" />
+//     </div>
+//   );
+//
+//   const document = h.document([target]);
+//
+//   t.deepEqual(await evaluate(R91, { document }), [
+//     passed(R91, target, { 1: Outcomes.Cascaded }),
+//   ]);
+// });
+
+// test(`evaluate() passes elements whose \`font-size\` is overriden`, async (t) => {
+//   const target = (
+//     <div style={{ fontSize: "16px", letterSpacing: "1.5px !important" }}>
+//       <p style={{ fontSize: "10px" }}>Hello World</p>
+//     </div>
+//   );
+//
+//   const document = h.document([target]);
+//
+//   t.deepEqual(await evaluate(R91, { document }), [
+//     passed(R91, target, { 1: Outcomes.Cascaded }),
+//   ]);
+// });
+
+// test(`evaluate() passes elements whose \`letter-spacing\` is overriden`, async (t) => {
+//   const target1 = (
+//     <p style={{ letterSpacing: "2px !important" }}>Hello World</p>
+//   );
+//   const target2 = (
+//     <div style={{ fontSize: "16px", letterSpacing: "1.5px !important" }}>
+//       {target1}
+//     </div>
+//   );
+//
+//   const document = h.document([target2]);
+//
+//   t.deepEqual(await evaluate(R91, { document }), [
+//     passed(R91, target1, { 1: Outcomes.Cascaded }),
+//     passed(R91, target2, { 1: Outcomes.Cascaded }),
+//   ]);
+// });
