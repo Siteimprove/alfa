@@ -8,8 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasAttribute, isIgnored } from "../common/predicate";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -31,6 +30,7 @@ export default Rule.Atomic.of<Page, Attribute>({
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
               hasAttribute("role", (value) => value.trim().length > 0),
+              //isProgammaticallyHidden(device, context),
               not(isIgnored(device))
             )
           )
