@@ -8,14 +8,30 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { hasAttribute } from "../predicate";
 import { hasComputedStyle } from "./has-computed-style";
+import visibility from "@siteimprove/alfa-style/src/property/visibility";
 
-const { and } = Refinement;
 const { isElement } = Element;
 const { or, test, equals } = Predicate;
+const { and } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
-export function hasHiddenAncestors(
+export function isProgrammaticallyHidden(
+  device: Device,
+  context: Context = Context.empty()
+): Predicate<Element> {
+  return or(
+    hasComputedStyle(
+      "visibility",
+      (visibility) => visibility.value !== "visible",
+      device,
+      context
+    ),
+    hasHiddenAncestors(device, context)
+  );
+}
+
+function hasHiddenAncestors(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
