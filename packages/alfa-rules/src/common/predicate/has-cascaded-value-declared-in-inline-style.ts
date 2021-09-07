@@ -1,7 +1,9 @@
 import { Element } from "@siteimprove/alfa-dom";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Property } from "@siteimprove/alfa-style";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
+
+import { hasCascadedStyle } from "./has-cascaded-style";
 
 /**
  * Checks if the cascaded value of a property of an element is declared on that element
@@ -11,10 +13,10 @@ export function hasCascadedValueDeclaredInInlineStyle(
   name: Property.Name
 ): Predicate<Element> {
   return (element) =>
-    Style.from(element, device)
-      .cascaded(name)
-      .some((property) =>
-        property.source.some((cascaded) =>
+    hasCascadedStyle(
+      name,
+      (_, source) =>
+        source.some((cascaded) =>
           element.style.some((block) =>
             block
               // We need reference equality here, not .equals as we want to check if the cascaded
@@ -22,6 +24,7 @@ export function hasCascadedValueDeclaredInInlineStyle(
               .declaration((declared) => cascaded === declared)
               .isSome()
           )
-        )
-      );
+        ),
+      device
+    )(element);
 }

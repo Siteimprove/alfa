@@ -1,18 +1,21 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Style } from "@siteimprove/alfa-style";
+import { Property } from "@siteimprove/alfa-style";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/expectation";
-import { hasCascadedValueDeclaredInInlineStyle } from "../common/predicate/has-cascaded-value-declared-in-inline-style";
-
-import { hasInlineStyleProperty } from "../common/predicate/has-inline-style-property";
-import { isVisible } from "../common/predicate/is-visible";
+import {
+  hasCascadedValueDeclaredInInlineStyle,
+  hasComputedStyle,
+  hasInlineStyleProperty,
+  isVisible,
+} from "../common/predicate";
 
 const { and } = Predicate;
 const { isElement, hasNamespace } = Element;
@@ -40,31 +43,22 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const style = Style.from(target, device);
-        const letterSpacing = style.computed(property);
-
         return {
           1: expectation(
-            letterSpacing.source.none((declaration) => declaration.important),
+            !isImportant(device, property)(target),
             () => Outcomes.NotImportant,
             () =>
               expectation(
-                letterSpacing.some((letterSpacing) =>
-                  style
-                    .computed("font-size")
-                    .some(
-                      (fontSize) => letterSpacing.value >= 0.12 * fontSize.value
-                    )
-                ),
+                isWideEnough(device)(target),
                 () => Outcomes.AboveMinimum,
                 () =>
                   expectation(
-                    !hasCascadedValueDeclaredInInlineStyle(
+                    hasCascadedValueDeclaredInInlineStyle(
                       device,
                       property
                     )(target),
-                    () => Outcomes.Cascaded,
-                    () => Outcomes.Important
+                    () => Outcomes.Important,
+                    () => Outcomes.Cascaded
                   )
               )
           ),
@@ -75,3 +69,28 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export const Outcomes = TextSpacing(property);
+
+function isWideEnough(device: Device): Predicate<Element> {
+  return (element) =>
+    hasComputedStyle(
+      property,
+      (letterSpacing) =>
+        hasComputedStyle(
+          "font-size",
+          (fontSize) => letterSpacing.value >= 0.12 * fontSize.value,
+          device
+        )(element),
+      device
+    )(element);
+}
+
+function isImportant(
+  device: Device,
+  property: Property.Name
+): Predicate<Element> {
+  return hasComputedStyle(
+    property,
+    (_, source) => source.some((declaration) => declaration.important),
+    device
+  );
+}
