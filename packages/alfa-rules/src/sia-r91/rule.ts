@@ -5,7 +5,7 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Property } from "@siteimprove/alfa-style";
+import { Property, Style } from "@siteimprove/alfa-style";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
 
@@ -52,6 +52,19 @@ export default Rule.Atomic.of<Page, Element>({
             () => Outcomes.NotImportant,
             () =>
               expectation(
+                // We can't really cache that bit because the context of
+                // hasCascadedValueDeclaredInInlineStyleOf is the test target
+                // and therefore won't be shared between targets.
+                // We could try to cache something like
+                // element => {all elements whose cascaded `letter-spacing` is
+                // declared in the same place} but that is not transitive (e.g.
+                // div > p > div could have both <div> using the same source,
+                // but not the <p>.
+                // In the end, we assume that 1. !important properties in style
+                // attributes are not frequent (few test targets); and 2. this
+                // mostly happens close to the bottom of the tree (few
+                // descendants). So that we can hopefully afford to pay the
+                // price each time.
                 target
                   .inclusiveDescendants({ flattened: true })
                   .filter(
@@ -63,7 +76,12 @@ export default Rule.Atomic.of<Page, Element>({
                       .filter(isElement)
                       .some(
                         or(
-                          isWideEnough(device),
+                          isWideEnough(
+                            device,
+                            property,
+                            (letterSpacing) => (fontSize) =>
+                              letterSpacing.value >= 0.12 * fontSize.value
+                          ),
                           not(
                             hasCascadedValueDeclaredInInlineStyleOf(
                               target,
@@ -97,16 +115,18 @@ function isImportant(
   );
 }
 
-function isWideEnough(device: Device): Predicate<Element> {
+function isWideEnough<N extends Property.Name>(
+  device: Device,
+  property: N,
+  predicate: (
+    value: Style.Computed<N>
+  ) => Predicate<Style.Computed<"font-size">>
+): Predicate<Element> {
   return (element) =>
     hasComputedStyle(
       property,
-      (letterSpacing) =>
-        hasComputedStyle(
-          "font-size",
-          (fontSize) => letterSpacing.value >= 0.12 * fontSize.value,
-          device
-        )(element),
+      (value) =>
+        hasComputedStyle("font-size", predicate(value), device)(element),
       device
     )(element);
 }
