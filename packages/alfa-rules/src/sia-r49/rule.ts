@@ -17,7 +17,7 @@ import { isPerceivable } from "../common/predicate/is-perceivable";
 import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { or, nor } = Predicate;
+const { or, nor, equals } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -73,24 +73,35 @@ export default Rule.Atomic.of<Page, Element, Question>({
             `Where is the mechanism that can pause or stop the audio of the
             \`<${target.name}>\` element?`,
             target
-          ).map((mechanism) =>
-            expectation(
-              mechanism.isSome(),
-              () =>
-                expectation(
-                  and(
-                    isElement,
-                    and(
-                      isPerceivable(device),
-                      hasNonEmptyAccessibleName(device)
-                    )
-                  )(mechanism.get()),
-                  () => Outcomes.HasPerceivablePauseMechanism(target.name),
-                  () => Outcomes.HasNonPerceivablePauseMechanism(target.name)
-                ),
-              () => Outcomes.HasNoPauseMechanism(target.name)
-            )
-          ),
+          )
+            // If the applicable <video> or <audio> element uses native controls
+            // we assume that the mechanism is the element itself.
+            .answerIf(target.attribute("controls").isSome(), Option.of(target))
+            .map((mechanism) =>
+              expectation(
+                mechanism.isSome(),
+                () =>
+                  expectation(
+                    mechanism.some(
+                      and(
+                        isElement,
+                        and(
+                          isPerceivable(device),
+
+                          // The mechanism is either the applicable <video> or
+                          // <audio> element itself, in which case we assume the
+                          // native controls provide accessible names, or it has
+                          // a non-empty accessible name.
+                          or(equals(target), hasNonEmptyAccessibleName(device))
+                        )
+                      )
+                    ),
+                    () => Outcomes.HasPerceivablePauseMechanism(target.name),
+                    () => Outcomes.HasNonPerceivablePauseMechanism(target.name)
+                  ),
+                () => Outcomes.HasNoPauseMechanism(target.name)
+              )
+            ),
         };
       },
     };
