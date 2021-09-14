@@ -416,14 +416,14 @@ const Features: Features = {
           yield Attribute.of("aria-controls", value);
         }
 
-        // https://w3c.github.io/html-aam/#att-max-input
-        for (const { value } of element.attribute("max")) {
-          yield Attribute.of("aria-valuemax", value);
+        // https://w3c.github.io/html-aam/#att-disabled
+        for (const _ of element.attribute("disabled")) {
+          yield Attribute.of("aria-disabled", "true");
         }
 
-        // https://w3c.github.io/html-aam/#att-min-input
-        for (const { value } of element.attribute("min")) {
-          yield Attribute.of("aria-valuemin", value);
+        // https://w3c.github.io/html-aam/#att-placeholder
+        for (const { value } of element.attribute("placeholder")) {
+          yield Attribute.of("aria-placeholder", value);
         }
 
         // https://w3c.github.io/html-aam/#att-readonly
@@ -436,14 +436,20 @@ const Features: Features = {
           yield Attribute.of("aria-required", "true");
         }
 
-        // https://w3c.github.io/html-aam/#att-disabled
-        for (const _ of element.attribute("disabled")) {
-          yield Attribute.of("aria-disabled", "true");
+        // https://w3c.github.io/html-aam/#att-max-input
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
         }
 
-        // https://w3c.github.io/html-aam/#att-placeholder
-        for (const { value } of element.attribute("placeholder")) {
-          yield Attribute.of("aria-placeholder", value);
+        // https://w3c.github.io/html-aam/#att-min-input
+        for (const { value } of element.attribute("min")) {
+          yield Attribute.of("aria-valuemin", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-value-input
+        // but https://github.com/w3c/html-aam/issues/314
+        for (const { value } of element.attribute("value")) {
+          yield Attribute.of("aria-valuenow", value);
         }
       },
       (element, device, state) => {
