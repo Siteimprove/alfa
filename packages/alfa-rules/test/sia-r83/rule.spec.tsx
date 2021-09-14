@@ -49,34 +49,35 @@ test(`evaluate() passes a child text node of an element whose parent truncates
       ]),
     ]
   );
-  test("evaluate() passes a text node that is non-statically positioned with a clipping ancestor which is not the offset parent", async (t) => {
-    const target = h.text("Hello world");
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, {
+      1: Outcomes.WrapsText,
+    }),
+  ]);
+});
 
-    const document = h.document(
-      [
-        <div class="clipping">
-          <div class="absolute">{target}</div>
-        </div>,
-      ],
-      [
-        h.sheet([
-          h.rule.style(".clipping", {
-            overflow: "hidden",
-            height: "28px",
-          }),
-          h.rule.style(".absolute", {
-            position: "absolute",
-          }),
-        ]),
-      ]
-    );
+test("evaluate() passes a text node that is non-statically positioned with a clipping ancestor which is not the offset parent", async (t) => {
+  const target = h.text("Hello world");
 
-    t.deepEqual(await evaluate(R83, { document }), [
-      passed(R83, target, {
-        1: Outcomes.WrapsText,
-      }),
-    ]);
-  });
+  const document = h.document(
+    [
+      <div class="clipping">
+        <div class="absolute">{target}</div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".clipping", {
+          overflow: "hidden",
+          height: "28px",
+        }),
+        h.rule.style(".absolute", {
+          position: "absolute",
+        }),
+      ]),
+    ]
+  );
+
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
       1: Outcomes.WrapsText,

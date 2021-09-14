@@ -6,12 +6,12 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
-import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { normalize } from "../common/normalize";
 
 import {
   hasAttribute,
@@ -28,6 +28,8 @@ const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
+
+const show = (_: string) => {};
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
@@ -98,13 +100,29 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        console.log(`Horizontal: ${horizontallyClippable}`);
-        console.log(`Vertical: ${verticallyClippable}`);
+        show(`Horizontal: ${horizontallyClippable}`);
+        show(`Vertical: ${verticallyClippable}`);
+
+        const isHorizontallyClipped =
+          horizontallyClippable.find((text) => text.equals(target)) !==
+            undefined &&
+          target
+            .parent({ flattened: true, nested: true })
+            .every(and(isElement, isHorizontallyClipping(device)));
+
+        const isVerticallyClipped =
+          verticallyClippable.find((text) => text.equals(target)) !==
+            undefined &&
+          target
+            .parent({ flattened: true, nested: true })
+            .every(and(isElement, isVerticallyClipping(device)));
+
+        show(`Horizontal Clip: ${isHorizontallyClipped}`);
+        show(`Vertical Clip: ${isVerticallyClipped}`);
+
         return {
           1: expectation(
-            target
-              .parent({ flattened: true, nested: true })
-              .every(and(isElement, not(wrapsText(device)))),
+            isHorizontallyClipped || isVerticallyClipped,
             () => Outcomes.ClipsText,
             () => Outcomes.WrapsText
           ),
@@ -122,12 +140,12 @@ export namespace Outcomes {
   export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
 }
 
-function isPossiblyClipping(device: Device): Predicate<Element> {
-  return or(
-    isPossiblyClippingHorizontally(device),
-    isPossiblyClippingVertically(device)
-  );
-}
+// function isPossiblyClipping(device: Device): Predicate<Element> {
+//   return or(
+//     isPossiblyClippingHorizontally(device),
+//     isPossiblyClippingVertically(device)
+//   );
+// }
 
 function isPossiblyClippingHorizontally(device: Device): Predicate<Element> {
   // If the element hides overflow along the x-axis, text might clip if it does
@@ -173,21 +191,24 @@ function isPossiblyClippingVertically(device: Device): Predicate<Element> {
   );
 }
 
-function wrapsText(device: Device): Predicate<Element> {
-  return (element) => {
-    if (isPossiblyClipping(device)(element)) {
-      return isActuallyClipping(element, device);
-    }
+// function wrapsText(device: Device): Predicate<Element> {
+//   return (element) => {
+//     if (isPossiblyClipping(device)(element)) {
+//       return isActuallyClippingHorizontally(element, device);
+//     }
+//
+//     const relevantParent = isPositioned(device, "static")(element)
+//       ? element.parent().filter(isElement)
+//       : getOffsetParent(element, device);
+//
+//     return relevantParent.every(wrapsText(device));
+//   };
+// }
 
-    const relevantParent = isPositioned(device, "static")(element)
-      ? element.parent().filter(isElement)
-      : getOffsetParent(element, device);
-
-    return relevantParent.every(wrapsText(device));
-  };
-}
-
-function isActuallyClipping(element: Element, device: Device): boolean {
+function isActuallyClippingHorizontally(
+  element: Element,
+  device: Device
+): boolean {
   const style = Style.from(element, device);
 
   const { value: whitespace } = style.computed("white-space");
@@ -199,8 +220,49 @@ function isActuallyClipping(element: Element, device: Device): boolean {
 
     // We assume that the text won't clip if the text overflow is handled
     // any other way than clip.
-    return overflow.value !== "clip";
+    return overflow.value === "clip";
   }
 
+  // If whitespace does cause wrapping, the element doesn't clip.
   return false;
+}
+
+function isHorizontallyClipping(device: Device): Predicate<Element> {
+  return (element) => {
+    if (isPossiblyClippingHorizontally(device)(element)) {
+      show(
+        `${normalize(element.toString())} is possibly clipping horizontally`
+      );
+      const result = isActuallyClippingHorizontally(element, device);
+      show(`${normalize(element.toString())} is actually clipping? ${result}`);
+      return result;
+    }
+
+    const relevantParent = isPositioned(device, "static")(element)
+      ? element.parent().filter(isElement)
+      : getOffsetParent(element, device);
+
+    return relevantParent.every(isHorizontallyClipping(device));
+  };
+}
+
+function isVerticallyClipping(device: Device): Predicate<Element> {
+  return (element) => {
+    show(`Checking ${normalize(element.toString())}`);
+    show(
+      `overflow-y: ${Style.from(element, device).computed("overflow-y").value}`
+    );
+    if (isPossiblyClippingVertically(device)(element)) {
+      show(`${normalize(element.toString())} is possibly clipping vertically`);
+      return true;
+    }
+
+    const relevantParent = isPositioned(device, "static")(element)
+      ? element.parent().filter(isElement)
+      : getOffsetParent(element, device);
+
+    // If there is no relevant parent, we've reached the root without finding
+    // anything that clips, so nothing clips.
+    return relevantParent.some(isVerticallyClipping(device));
+  };
 }
