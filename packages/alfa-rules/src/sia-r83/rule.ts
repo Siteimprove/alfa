@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -5,6 +6,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -31,11 +33,18 @@ export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
   evaluate({ device, document }) {
+    const horizontallyClippable: Array<Text> = [];
+    const verticallyClippable: Array<Text> = [];
+
     return {
       applicability() {
         return visit(document);
 
-        function* visit(node: Node, collect = false): Iterable<Text> {
+        function* visit(
+          node: Node,
+          horizontal: boolean = false,
+          vertical: boolean = false
+        ): Iterable<Text> {
           if (
             test(
               and(
@@ -51,23 +60,46 @@ export default Rule.Atomic.of<Page, Text>({
             return;
           }
 
-          if (collect && test(and(isText, isVisible(device)), node)) {
+          if (
+            (horizontal || vertical) &&
+            test(and(isText, isVisible(device)), node)
+          ) {
+            if (horizontal) {
+              horizontallyClippable.push(node);
+            }
+
+            if (vertical) {
+              verticallyClippable.push(node);
+            }
+
             yield node;
           }
 
-          if (test(and(isElement, isPossiblyClipping(device)), node)) {
-            collect = true;
+          if (
+            !horizontal &&
+            test(and(isElement, isPossiblyClippingHorizontally(device)), node)
+          ) {
+            horizontal = true;
+          }
+
+          if (
+            !vertical &&
+            test(and(isElement, isPossiblyClippingVertically(device)), node)
+          ) {
+            vertical = true;
           }
 
           const children = node.children({ flattened: true, nested: true });
 
           for (const child of children) {
-            yield* visit(child, collect);
+            yield* visit(child, horizontal, vertical);
           }
         }
       },
 
       expectations(target) {
+        console.log(`Horizontal: ${horizontallyClippable}`);
+        console.log(`Vertical: ${verticallyClippable}`);
         return {
           1: expectation(
             target
