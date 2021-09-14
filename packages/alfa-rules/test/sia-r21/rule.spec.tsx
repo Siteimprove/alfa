@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -54,11 +55,11 @@ test("evaluates() fails an element with both a valid and an invalid role", async
   ]);
 });
 
-/*Is this test written correcly?
 test("evaluates() fails an element with both a valid and an invalid role", async (t) => {
-  const target = h.attribute("role", "btn link");
+  const span = <span role="invalid">Foo</span>;
+  const target = span.attribute("role").get();
 
-  const document = h.document([<span role="invalid">Foo</span>]);
+  const document = h.document([span]);
 
   t.deepEqual(await evaluate(R21, { document }), [
     failed(R21, target, {
@@ -66,7 +67,6 @@ test("evaluates() fails an element with both a valid and an invalid role", async
     }),
   ]);
 });
-*/
 
 test("evaluate() is inapplicable when there is no role attribute", async (t) => {
   const document = h.document([<button />]);
@@ -76,12 +76,6 @@ test("evaluate() is inapplicable when there is no role attribute", async (t) => 
 
 test("evaluate() is inapplicable when a role attribute is only whitespace", async (t) => {
   const document = h.document([<button role=" " />]);
-
-  t.deepEqual(await evaluate(R21, { document }), [inapplicable(R21)]);
-});
-
-test("evaluate() is inapplicable when a role attribute is invalid", async (t) => {
-  const document = h.document([<span role="invalid">Foo</span>]);
 
   t.deepEqual(await evaluate(R21, { document }), [inapplicable(R21)]);
 });
