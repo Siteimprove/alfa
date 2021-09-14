@@ -14,7 +14,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r46",
+  uri: "https://alfa.siteimprove.com/rules/sia-r77",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
   evaluate({ device, document }) {
     const data = new Map<Element, [cell: Cell, table: Table]>();
@@ -33,41 +33,41 @@ export default Rule.Atomic.of<Page, Element>({
           );
         for (const table of tables) {
           const model = Table.from(table);
-          const headers = table
+          if (model.cells.find((cell) => cell.isHeader()).isNone()) {
+            continue;
+          }
+
+          const dataCells = table
             .descendants()
             .filter(isElement)
             .filter(
               and(
                 hasNamespace(Namespace.HTML),
-                hasName("th"),
-                hasRole(device, "rowheader", "columnheader"),
+                hasName("td"),
+                hasRole(device, "cell", "gridcell"),
                 isPerceivable(device)
               )
             );
-          for (const header of headers) {
+          for (const dataCell of dataCells) {
             for (const cell of model.cells.find((cell) =>
-              cell.element.equals(header)
+              cell.element.equals(cell)
             )) {
-              data.set(header, [cell, model]);
+              data.set(dataCell, [cell, model]);
 
-              yield header;
+              yield dataCell;
             }
           }
         }
       },
 
       expectations(target) {
-        const [header, table] = data.get(target)!;
+        const [dataCell] = data.get(target)!;
 
         return {
           1: expectation(
-            table.cells.some(
-              (cell) =>
-                hasRole(device, (role) => role.is("cell"))(cell.element) &&
-                cell.headers.some((slot) => slot.equals(header.anchor))
-            ),
-            () => Outcomes.IsAssignedToDataCell,
-            () => Outcomes.IsNotAssignedToDataCell
+            dataCell.headers.isEmpty(),
+            () => Outcomes.IsNotAssignedToHeaderCell,
+            () => Outcomes.IsAssignedToHeaderCell
           ),
         };
       },
@@ -76,11 +76,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsAssignedToDataCell = Ok.of(
-    Diagnostic.of(`The header cell is assigned to a cell`)
+  export const IsAssignedToHeaderCell = Ok.of(
+    Diagnostic.of(`The cell is assigned to an header cell`)
   );
 
-  export const IsNotAssignedToDataCell = Err.of(
-    Diagnostic.of(`The header cell is not assigned to any cell`)
+  export const IsNotAssignedToHeaderCell = Err.of(
+    Diagnostic.of(`The cell is not assigned to any header cell`)
   );
 }
