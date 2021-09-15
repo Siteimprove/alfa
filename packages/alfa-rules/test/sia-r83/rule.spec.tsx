@@ -347,3 +347,26 @@ test(`evaluate() passes a text node with a scrolling ancestor inside a clipping 
     passed(R83, target, { 1: Outcomes.WrapsText }),
   ]);
 });
+
+test(`evaluate() fails a text node that is vertically clipped but horizontally wrapped`, async (t) => {
+  const target = h.text("Hello world");
+
+  const document = h.document(
+    [<div>{target}</div>],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          height: "20px",
+          whiteSpace: "normal",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText,
+    }),
+  ]);
+});
