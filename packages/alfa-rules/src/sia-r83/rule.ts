@@ -140,13 +140,6 @@ export namespace Outcomes {
   export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
 }
 
-// function isPossiblyClipping(device: Device): Predicate<Element> {
-//   return or(
-//     isPossiblyClippingHorizontally(device),
-//     isPossiblyClippingVertically(device)
-//   );
-// }
-
 function isPossiblyClippingHorizontally(device: Device): Predicate<Element> {
   // If the element hides overflow along the x-axis, text might clip if it does
   // not wrap but instead continues along the x-axis.
@@ -170,6 +163,15 @@ function isPossiblyClippingVertically(device: Device): Predicate<Element> {
   //
   // For heights set via the `style` attribute we assume that its value is
   // controlled by JavaScript and is adjusted as the content scales.
+  //
+  // Elements with `height: auto` may still have fixed length if their child has
+  // i.e. we do not catch
+  // <style>
+  //  .clipping { overflow-y: clip }
+  //  .fixed-height { height: 10px }
+  // </style>
+  // <div class="clipping"> <div class="fixed-height"></div> </div>
+  // as possibly clipping. This only creates false negatives.
   return and(
     hasComputedStyle(
       "overflow-y",
@@ -191,19 +193,24 @@ function isPossiblyClippingVertically(device: Device): Predicate<Element> {
   );
 }
 
-// function wrapsText(device: Device): Predicate<Element> {
-//   return (element) => {
-//     if (isPossiblyClipping(device)(element)) {
-//       return isActuallyClippingHorizontally(element, device);
-//     }
-//
-//     const relevantParent = isPositioned(device, "static")(element)
-//       ? element.parent().filter(isElement)
-//       : getOffsetParent(element, device);
-//
-//     return relevantParent.every(wrapsText(device));
-//   };
-// }
+function isHorizontallyClipping(device: Device): Predicate<Element> {
+  return (element) => {
+    if (isPossiblyClippingHorizontally(device)(element)) {
+      show(
+        `${normalize(element.toString())} is possibly clipping horizontally`
+      );
+      const result = isActuallyClippingHorizontally(element, device);
+      show(`${normalize(element.toString())} is actually clipping? ${result}`);
+      return result;
+    }
+
+    const relevantParent = isPositioned(device, "static")(element)
+      ? element.parent().filter(isElement)
+      : getOffsetParent(element, device);
+
+    return relevantParent.every(isHorizontallyClipping(device));
+  };
+}
 
 function isActuallyClippingHorizontally(
   element: Element,
@@ -227,25 +234,6 @@ function isActuallyClippingHorizontally(
   return false;
 }
 
-function isHorizontallyClipping(device: Device): Predicate<Element> {
-  return (element) => {
-    if (isPossiblyClippingHorizontally(device)(element)) {
-      show(
-        `${normalize(element.toString())} is possibly clipping horizontally`
-      );
-      const result = isActuallyClippingHorizontally(element, device);
-      show(`${normalize(element.toString())} is actually clipping? ${result}`);
-      return result;
-    }
-
-    const relevantParent = isPositioned(device, "static")(element)
-      ? element.parent().filter(isElement)
-      : getOffsetParent(element, device);
-
-    return relevantParent.every(isHorizontallyClipping(device));
-  };
-}
-
 function isVerticallyClipping(device: Device): Predicate<Element> {
   return (element) => {
     show(`Checking ${normalize(element.toString())}`);
@@ -257,6 +245,11 @@ function isVerticallyClipping(device: Device): Predicate<Element> {
       return true;
     }
 
+    if (isHandlingVerticalOverflow(device)(element)) {
+      show(`${normalize(element.toString())} is handling vertical clipping`);
+      return false;
+    }
+
     const relevantParent = isPositioned(device, "static")(element)
       ? element.parent().filter(isElement)
       : getOffsetParent(element, device);
@@ -265,4 +258,15 @@ function isVerticallyClipping(device: Device): Predicate<Element> {
     // anything that clips, so nothing clips.
     return relevantParent.some(isVerticallyClipping(device));
   };
+}
+
+function isHandlingVerticalOverflow(device: Device): Predicate<Element> {
+  // We assume that elements with a scrollbar correctly handle overflow.
+  // This is not fully correct in case the scrolling element has larger height
+  // than its clipping ancestor. This only creates false negative.
+  return hasComputedStyle(
+    "overflow-y",
+    ({ value: overflow }) => overflow === "scroll" || overflow === "auto",
+    device
+  );
 }

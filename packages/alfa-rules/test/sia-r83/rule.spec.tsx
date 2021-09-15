@@ -325,3 +325,25 @@ test(`evaluate() is inapplicable to a text node that would clip if it was non-
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
+
+test(`evaluate() passes a text node with a scrolling ancestor inside a clipping one`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <div class="clipping">
+        <div class="scrolling">{target}</div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".clipping", { overflowY: "hidden", height: "10px" }),
+        h.rule.style(".scrolling", { overflowY: "scroll", height: "10px" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
