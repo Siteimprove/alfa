@@ -3,9 +3,11 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -100,8 +102,9 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        show(`Horizontal: ${horizontallyClippable}`);
-        show(`Vertical: ${verticallyClippable}`);
+        // show(`Horizontal: ${horizontallyClippable}`);
+        // show(`Vertical: ${verticallyClippable}`);
+        show(`Checking expectation for ${normalize(target.toString())}`);
 
         const isHorizontallyClipped =
           horizontallyClippable.find((text) => text.equals(target)) !==
@@ -115,7 +118,10 @@ export default Rule.Atomic.of<Page, Text>({
             undefined &&
           target
             .parent({ flattened: true, nested: true })
-            .every(and(isElement, isVerticallyClipping(device)));
+            .every(and(isElement, verticalClip(device)));
+        // target
+        //   .parent({ flattened: true, nested: true })
+        //   .every(and(isElement, isVerticallyClipping(device)));
 
         show(`Horizontal Clip: ${isHorizontallyClipped}`);
         show(`Vertical Clip: ${isVerticallyClipped}`);
@@ -195,20 +201,49 @@ function isPossiblyClippingVertically(device: Device): Predicate<Element> {
 
 function isHorizontallyClipping(device: Device): Predicate<Element> {
   return (element) => {
+    show(`Checking horizontal clip of ${normalize(element.toString())}`);
+
     if (isPossiblyClippingHorizontally(device)(element)) {
       show(
-        `${normalize(element.toString())} is possibly clipping horizontally`
+        `  ${normalize(element.toString())} is possibly clipping horizontally`
       );
       const result = isActuallyClippingHorizontally(element, device);
-      show(`${normalize(element.toString())} is actually clipping? ${result}`);
+      show(
+        `  ${normalize(element.toString())} is actually clipping? ${result}`
+      );
       return result;
     }
+
+    show(`  It doesn't possibly clips`);
 
     const relevantParent = isPositioned(device, "static")(element)
       ? element.parent().filter(isElement)
       : getOffsetParent(element, device);
 
     return relevantParent.every(isHorizontallyClipping(device));
+  };
+}
+
+function hasHorizontalTextOverflow(device: Device): Predicate<Element> {
+  return (element) => {
+    const style = Style.from(element, device);
+
+    const { value: whitespace } = style.computed("white-space");
+
+    // If whitespace does not cause wrapping, we need to check if a text
+    // overflow occurs and could cause the text to clip.
+    if (whitespace.value === "nowrap" || whitespace.value === "pre") {
+      const { value: x } = style.computed("overflow-x");
+
+      const { value: overflow } = style.computed("text-overflow");
+
+      // We assume that the text won't clip if the text overflow is handled
+      // any other way than clip.
+      return overflow.value === "clip";
+    }
+
+    // If whitespace causes wrapping, the element doesn't overflow its text.
+    return false;
   };
 }
 
@@ -234,9 +269,13 @@ function isActuallyClippingHorizontally(
   return false;
 }
 
+// function isHandlingHorizontalOverflow(device: Device): Predicate<Element> {
+//   return (element) => {};
+// }
+
 function isVerticallyClipping(device: Device): Predicate<Element> {
   return (element) => {
-    show(`Checking ${normalize(element.toString())}`);
+    show(`Checking vertical clip of ${normalize(element.toString())}`);
     show(
       `overflow-y: ${Style.from(element, device).computed("overflow-y").value}`
     );
@@ -269,4 +308,75 @@ function isHandlingVerticalOverflow(device: Device): Predicate<Element> {
     ({ value: overflow }) => overflow === "scroll" || overflow === "auto",
     device
   );
+}
+
+function hasFixedHeight(device: Device): Predicate<Element> {
+  return hasCascadedStyle(
+    "height",
+    (height, source) =>
+      height.type === "length" &&
+      height.value > 0 &&
+      !height.isFontRelative() &&
+      source.some((declaration) => declaration.parent.isSome()),
+    device
+  );
+}
+
+enum Overflow {
+  Clip, // The element clips its overflow.
+  Handle, // The element definitely handles its overflow.
+  Overflow, // The element overflows into its parent.
+}
+
+function verticalOverflow(element: Element, device: Device): Overflow {
+  switch (Style.from(element, device).computed("overflow-y").value.value) {
+    case "clip":
+    case "hidden":
+      return Overflow.Clip;
+    case "scroll":
+    case "auto":
+      return Overflow.Handle;
+    case "visible":
+      return Overflow.Overflow;
+  }
+}
+
+function hasVerticallyClippedContent(device: Device): Predicate<Element> {
+  return (element) => {
+    switch (verticalOverflow(element, device)) {
+      case Overflow.Clip:
+        return true;
+      case Overflow.Handle:
+        return false;
+      case Overflow.Overflow:
+        return getOffsetParent(element, device).some(
+          and(isElement, hasVerticallyClippedContent(device))
+        );
+    }
+  };
+}
+
+function verticalClip(device: Device): Predicate<Element> {
+  return (element) =>
+    Sequence.of(
+      element,
+      Lazy.of(() => offsetAncestors(element, device))
+    )
+      .skipUntil(hasFixedHeight(device))
+      .skipWhile(
+        (element) => verticalOverflow(element, device) === Overflow.Overflow
+      )
+      .first()
+      .some((element) => verticalOverflow(element, device) === Overflow.Clip);
+}
+
+function offsetAncestors(element: Element, device: Device): Sequence<Element> {
+  for (const parent of getOffsetParent(element, device)) {
+    return Sequence.of(
+      parent,
+      Lazy.of(() => offsetAncestors(parent, device))
+    );
+  }
+
+  return Sequence.empty();
 }
