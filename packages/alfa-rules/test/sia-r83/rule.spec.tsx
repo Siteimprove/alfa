@@ -217,8 +217,10 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
-test(`evaluate() is inapplicable to a text node with a fixed absolute height set
+test(`evaluate() passes a text node with a fixed absolute height set
       via the style attribute`, async (t) => {
+  const target = h.text("Hello world");
+
   const document = h.document(
     [
       <div
@@ -226,7 +228,7 @@ test(`evaluate() is inapplicable to a text node with a fixed absolute height set
           height: "20px",
         }}
       >
-        Hello world
+        {target}
       </div>,
     ],
     [
@@ -238,12 +240,16 @@ test(`evaluate() is inapplicable to a text node with a fixed absolute height set
     ]
   );
 
-  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
 });
 
-test(`evaluate() is inapplicable to a text node with a fixed relative height`, async (t) => {
+test(`evaluate() passes a text node with a fixed relative height`, async (t) => {
+  const target = h.text("Hello world");
+
   const document = h.document(
-    [<div>Hello world</div>],
+    [<div>{target}</div>],
     [
       h.sheet([
         h.rule.style("div", {
@@ -254,7 +260,9 @@ test(`evaluate() is inapplicable to a text node with a fixed relative height`, a
     ]
   );
 
-  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
 });
 
 test(`evaluate() is inapplicable to a text node that resets the white-space
@@ -269,7 +277,7 @@ test(`evaluate() is inapplicable to a text node that resets the white-space
       [
         h.sheet([
           h.rule.style("p", {
-            overflow: "hidden",
+            overflowX: "hidden",
             whiteSpace: "nowrap",
           }),
 
@@ -294,7 +302,7 @@ test(`evaluate() is inapplicable to a text node that resets the white-space
       [
         h.sheet([
           h.rule.style("p", {
-            overflow: "hidden",
+            overflowX: "hidden",
             whiteSpace: "nowrap",
           }),
 
@@ -429,3 +437,24 @@ test(`evaluate() fails a text node that is vertically clipped but horizontally w
 //     failed(R83, target, { 1: Outcomes.ClipsText }),
 //   ]);
 // });
+
+test(`evaluate() fails text overflowing its fixed-height parent and clipped by its grand-parent`, async (t) => {
+  const target = h.text("Hello World!");
+
+  const parent = <div class="fixed-height">{target}</div>;
+  const grandparent = <div class="clipping">{parent}</div>;
+
+  const document = h.document(
+    [grandparent],
+    [
+      h.sheet([
+        h.rule.style(".fixed-height", { height: "10px" }),
+        h.rule.style(".clipping", { overflowY: "hidden" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, { 1: Outcomes.ClipsText }),
+  ]);
+});

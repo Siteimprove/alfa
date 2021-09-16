@@ -4,6 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Lazy } from "@siteimprove/alfa-lazy";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -88,7 +89,8 @@ export default Rule.Atomic.of<Page, Text>({
 
           if (
             !vertical &&
-            test(and(isElement, isPossiblyClippingVertically(device)), node)
+            isElement(node) &&
+            verticalOverflow(node, device) === Overflow.Clip
           ) {
             vertical = true;
           }
@@ -360,23 +362,44 @@ function verticalClip(device: Device): Predicate<Element> {
   return (element) =>
     Sequence.of(
       element,
-      Lazy.of(() => offsetAncestors(element, device))
+      Lazy.of(() => relevantAncestors(element, device))
     )
+      .map((elt) => {
+        show(`offset ancestor: ${normalize(elt.toString())}`);
+        return elt;
+      })
       .skipUntil(hasFixedHeight(device))
+      .map((elt) => {
+        show(`fixed height and later: ${normalize(elt.toString())}`);
+        return elt;
+      })
       .skipWhile(
         (element) => verticalOverflow(element, device) === Overflow.Overflow
       )
+      .map((elt) => {
+        show(`non overflowing and later: ${normalize(elt.toString())}`);
+        return elt;
+      })
       .first()
       .some((element) => verticalOverflow(element, device) === Overflow.Clip);
 }
 
-function offsetAncestors(element: Element, device: Device): Sequence<Element> {
-  for (const parent of getOffsetParent(element, device)) {
+function relevantAncestors(
+  element: Element,
+  device: Device
+): Sequence<Element> {
+  for (const parent of getRelevantParent(element, device)) {
     return Sequence.of(
       parent,
-      Lazy.of(() => offsetAncestors(parent, device))
+      Lazy.of(() => relevantAncestors(parent, device))
     );
   }
 
   return Sequence.empty();
+}
+
+function getRelevantParent(element: Element, device: Device): Option<Element> {
+  return isPositioned(device, "static")(element)
+    ? element.parent({ flattened: true }).filter(isElement)
+    : getOffsetParent(element, device);
 }
