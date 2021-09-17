@@ -411,7 +411,7 @@ export class Slice<T> implements Collection.Indexed<T> {
     return new Slice(array, 0, array.length);
   }
 
-  public compare(
+  public compare<T>(
     this: Slice<Comparable<T>>,
     iterable: Iterable<T>
   ): Comparison {

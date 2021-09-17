@@ -29,6 +29,7 @@
     "@siteimprove/alfa-monad": "workspace:^0.22.0",
     "@siteimprove/alfa-option": "workspace:^0.22.0",
     "@siteimprove/alfa-predicate": "workspace:^0.22.0",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.0",
     "@siteimprove/alfa-reducer": "workspace:^0.22.0",
     "@siteimprove/alfa-thunk": "workspace:^0.22.0"
   },

@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-applicative": "workspace:^0.22.0",
+    "@siteimprove/alfa-callback": "workspace:^0.22.0",
     "@siteimprove/alfa-comparable": "workspace:^0.22.0",
     "@siteimprove/alfa-equatable": "workspace:^0.22.0",
     "@siteimprove/alfa-foldable": "workspace:^0.22.0",

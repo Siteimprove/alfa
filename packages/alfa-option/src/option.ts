@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
@@ -38,18 +39,24 @@ export interface Option<T>
   filter(predicate: Predicate<T>): Option<T>;
   reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
   reject(predicate: Predicate<T>): Option<T>;
-  includes(value: T): boolean;
-  some(predicate: Predicate<T>): boolean;
+  includes(value: T): this is Some<T>;
+  some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+  some(predicate: Predicate<T>): this is Some<T>;
+  none<U extends T>(
+    refinement: Refinement<T, U>
+  ): this is Option<Exclude<T, U>>;
   none(predicate: Predicate<T>): boolean;
+  every<U extends T>(refinement: Refinement<T, U>): this is Option<U>;
   every(predicate: Predicate<T>): boolean;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
   or<U>(option: Option<U>): Option<T | U>;
   orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
-  get(): T;
+  get(message?: string): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
-  compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
+  tee(callback: Callback<T>): Option<T>;
+  compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
   compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
   toArray(): Array<T>;
   toJSON(): Option.JSON<T>;

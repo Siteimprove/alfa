@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -35,6 +36,8 @@ export interface Either<L, R = L>
   get(): L | R;
   left(): Option<L>;
   right(): Option<R>;
+  teeLeft(callback: Callback<L>): Either<L, R>;
+  teeRight(callback: Callback<R>): Either<L, R>;
   toJSON(): Either.JSON<L, R>;
 }
 
@@ -49,7 +52,23 @@ export namespace Either {
   export function isEither<L, R>(value: unknown): value is Either<L, R>;
 
   export function isEither<L, R>(value: unknown): value is Either<L, R> {
-    return Left.isLeft(value) || Right.isRight(value);
+    return isLeft(value) || isRight(value);
+  }
+
+  export function isLeft<L>(value: Iterable<L>): value is Left<L>;
+
+  export function isLeft<L>(value: unknown): value is Left<L>;
+
+  export function isLeft<L>(value: unknown): value is Left<L> {
+    return Left.isLeft(value);
+  }
+
+  export function isRight<R>(value: Iterable<R>): value is Right<R>;
+
+  export function isRight<R>(value: unknown): value is Right<R>;
+
+  export function isRight<R>(value: unknown): value is Right<R> {
+    return Right.isRight(value);
   }
 
   export function left<L, R = never>(value: L): Either<L, R> {

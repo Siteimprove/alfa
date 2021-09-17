@@ -407,7 +407,10 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.sortWith(this, comparer));
   }
 
-  public compare(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison {
+  public compare<T>(
+    this: List<Comparable<T>>,
+    iterable: Iterable<T>
+  ): Comparison {
     return this.compareWith(iterable, compareComparable);
   }
 
