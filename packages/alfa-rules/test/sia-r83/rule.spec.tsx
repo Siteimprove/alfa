@@ -29,8 +29,8 @@ test("evaluate() passes a text node that truncates overflow using ellipsis", asy
   ]);
 });
 
-test(`evaluate() passes a child text node of an element whose parent truncates
-      overflow using ellipsis`, async (t) => {
+test(`evaluate() fails a text node overflowing it parent as content and
+      being truncated by its grand-parent`, async (t) => {
   const target = h.text("Hello world");
 
   const document = h.document(
@@ -50,8 +50,8 @@ test(`evaluate() passes a child text node of an element whose parent truncates
     ]
   );
   t.deepEqual(await evaluate(R83, { document }), [
-    passed(R83, target, {
-      1: Outcomes.WrapsText,
+    failed(R83, target, {
+      1: Outcomes.ClipsText,
     }),
   ]);
 });

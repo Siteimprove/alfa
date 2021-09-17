@@ -90,7 +90,7 @@ export default Rule.Atomic.of<Page, Text>({
           if (
             !vertical &&
             isElement(node) &&
-            verticalOverflow(node, device) === Overflow.Clip
+            overflow(node, device, "y") === Overflow.Clip
           ) {
             vertical = true;
           }
@@ -113,7 +113,7 @@ export default Rule.Atomic.of<Page, Text>({
             undefined &&
           target
             .parent({ flattened: true, nested: true })
-            .every(and(isElement, isHorizontallyClipping(device)));
+            .every(and(isElement, horizontalClip(device)));
 
         const isVerticallyClipped =
           verticallyClippable.find((text) => text.equals(target)) !==
@@ -223,27 +223,31 @@ function isHorizontallyClipping(device: Device): Predicate<Element> {
   };
 }
 
-function hasHorizontalTextOverflow(device: Device): Predicate<Element> {
-  return (element) => {
-    const style = Style.from(element, device);
+function horizontalTextOverflow(element: Element, device: Device): Overflow {
+  const style = Style.from(element, device);
 
-    const { value: whitespace } = style.computed("white-space");
+  const { value: whitespace } = style.computed("white-space");
 
-    // If whitespace does not cause wrapping, we need to check if a text
-    // overflow occurs and could cause the text to clip.
-    if (whitespace.value === "nowrap" || whitespace.value === "pre") {
-      const { value: x } = style.computed("overflow-x");
-
+  if (whitespace.value !== "nowrap" && whitespace.value !== "pre") {
+    // Whitespace causes wrapping, the element doesn't overflow its text.
+    return Overflow.Handle;
+  }
+  // If whitespace does not cause wrapping, we need to check if a text
+  // overflow occurs and could cause the text to clip.
+  switch (overflow(element, device, "x")) {
+    case Overflow.Overflow:
+      // The text always overflow into the parent, parent needs to handle an
+      // horizontal context overflow
+      return Overflow.Overflow;
+    case Overflow.Handle:
+      // The element handles its text overflow with a scroll bar
+      return Overflow.Handle;
+    case Overflow.Clip:
+      // The element clip its overflow, but maybe `text-overflow` handles it.
       const { value: overflow } = style.computed("text-overflow");
-
-      // We assume that the text won't clip if the text overflow is handled
-      // any other way than clip.
-      return overflow.value === "clip";
-    }
-
-    // If whitespace causes wrapping, the element doesn't overflow its text.
-    return false;
-  };
+      // We assume that anything other than `clip` handles the overflow.
+      return overflow.value === "clip" ? Overflow.Clip : Overflow.Handle;
+  }
 }
 
 function isActuallyClippingHorizontally(
@@ -327,8 +331,14 @@ enum Overflow {
   Overflow, // The element overflows into its parent.
 }
 
-function verticalOverflow(element: Element, device: Device): Overflow {
-  switch (Style.from(element, device).computed("overflow-y").value.value) {
+function overflow(
+  element: Element,
+  device: Device,
+  dimension: "x" | "y"
+): Overflow {
+  switch (
+    Style.from(element, device).computed(`overflow-${dimension}`).value.value
+  ) {
     case "clip":
     case "hidden":
       return Overflow.Clip;
@@ -356,14 +366,14 @@ function verticalClip(device: Device): Predicate<Element> {
         return elt;
       })
       .skipWhile(
-        (element) => verticalOverflow(element, device) === Overflow.Overflow
+        (element) => overflow(element, device, "y") === Overflow.Overflow
       )
       .map((elt) => {
         show(`non overflowing and later: ${normalize(elt.toString())}`);
         return elt;
       })
       .first()
-      .some((element) => verticalOverflow(element, device) === Overflow.Clip);
+      .some((element) => overflow(element, device, "y") === Overflow.Clip);
 }
 
 function relevantAncestors(
@@ -384,4 +394,28 @@ function getRelevantParent(element: Element, device: Device): Option<Element> {
   return isPositioned(device, "static")(element)
     ? element.parent({ flattened: true }).filter(isElement)
     : getOffsetParent(element, device);
+}
+
+function horizontalClip(device: Device): Predicate<Element> {
+  // The element itself may handle text overflow, otherwise we need to look for
+  // a relevant ancestor that either handles or clips it.
+  return (element) => {
+    switch (horizontalTextOverflow(element, device)) {
+      case Overflow.Clip:
+        return true;
+      case Overflow.Handle:
+        return false;
+      case Overflow.Overflow:
+        return relevantAncestors(element, device)
+          .skipWhile(
+            (element) => overflow(element, device, "x") === Overflow.Overflow
+          )
+          .map((elt) => {
+            show(`non overflowing and later: ${normalize(elt.toString())}`);
+            return elt;
+          })
+          .first()
+          .some((element) => overflow(element, device, "x") === Overflow.Clip);
+    }
+  };
 }
