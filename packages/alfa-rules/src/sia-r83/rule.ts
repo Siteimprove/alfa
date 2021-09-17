@@ -200,8 +200,8 @@ function overflow(
 }
 
 /**
- * Checks how an element handle its text overflow (overflow of its direct
- * children text nodes).
+ * Checks how an element handle its text overflow (overflow of its children
+ * text nodes).
  */
 function horizontalTextOverflow(element: Element, device: Device): Overflow {
   const style = Style.from(element, device);
@@ -217,7 +217,7 @@ function horizontalTextOverflow(element: Element, device: Device): Overflow {
   switch (overflow(element, device, "x")) {
     case Overflow.Overflow:
       // The text always overflow into the parent, parent needs to handle an
-      // horizontal context overflow
+      // horizontal content overflow
       return Overflow.Overflow;
     case Overflow.Handle:
       // The element handles its text overflow with a scroll bar

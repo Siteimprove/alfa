@@ -5,7 +5,6 @@ import R83, { Outcomes } from "../../src/sia-r83/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-import WrapsText = Outcomes.WrapsText;
 
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");
@@ -294,7 +293,7 @@ test(`evaluate() passes a text node that resets the white-space
     );
 
     t.deepEqual(await evaluate(R83, { document }), [
-      passed(R83, target, { 1: WrapsText }),
+      passed(R83, target, { 1: Outcomes.WrapsText }),
     ]);
   }
 });
