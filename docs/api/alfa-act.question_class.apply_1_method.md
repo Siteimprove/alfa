@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-apply<U>(mapper: Question<Q, S, C, A, Mapper<T, U>>): Question<Q, S, C, A, U>;
+apply<V>(mapper: Question<Q, S, C, A, Mapper<T, V>, U>): Question<Q, S, C, A, V, U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, U&gt;&gt; |  |
+|  mapper | [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, V&gt;, U&gt; |  |
 
 <b>Returns:</b>
 
-[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, U&gt;
+[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, V, U&gt;
 

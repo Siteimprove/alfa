@@ -86,8 +86,8 @@ export const None: None = new (class None {
     return option();
   }
 
-  public get(): never {
-    throw new Error("Attempted to .get() from None");
+  public get(message = "Attempted to .get() from None"): never {
+    throw new Error(message);
   }
 
   public getOr<U>(value: U): U {
@@ -96,6 +96,10 @@ export const None: None = new (class None {
 
   public getOrElse<U>(value: Thunk<U>): U {
     return value();
+  }
+
+  public tee(): None {
+    return this;
   }
 
   public compare<T>(

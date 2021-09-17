@@ -20,4 +20,5 @@ export interface Question
 |  [boolean](./alfa-rules.question_interface.boolean_propertysignature.md) | boolean |  |
 |  [color](./alfa-rules.question_interface.color_propertysignature.md) | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[RGB](./alfa-css.rgb_class.md)<!-- -->&gt; |  |
 |  [node](./alfa-rules.question_interface.node_propertysignature.md) | [Option](./alfa-option.option_interface.md)<!-- -->&lt;[Node](./alfa-dom.node_class.md)<!-- -->&gt; |  |
+|  [string](./alfa-rules.question_interface.string_propertysignature.md) | string |  |
 

@@ -13,6 +13,9 @@
       "path": "../alfa-applicative"
     },
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-comparable"
     },
     {

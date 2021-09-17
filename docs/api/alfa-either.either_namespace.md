@@ -17,6 +17,10 @@ export declare namespace Either
 |  --- | --- |
 |  [isEither(value)](./alfa-either.either_namespace.iseither_1_function.md) |  |
 |  [isEither(value)](./alfa-either.either_namespace.iseither_2_function.md) |  |
+|  [isLeft(value)](./alfa-either.either_namespace.isleft_1_function.md) |  |
+|  [isLeft(value)](./alfa-either.either_namespace.isleft_2_function.md) |  |
+|  [isRight(value)](./alfa-either.either_namespace.isright_1_function.md) |  |
+|  [isRight(value)](./alfa-either.either_namespace.isright_2_function.md) |  |
 |  [left(value)](./alfa-either.either_namespace.left_1_function.md) |  |
 |  [right(value)](./alfa-either.either_namespace.right_1_function.md) |  |
 

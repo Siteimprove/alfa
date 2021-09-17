@@ -16,6 +16,7 @@ export declare namespace Err
 |  Function | Description |
 |  --- | --- |
 |  [isErr(value)](./alfa-result.err_namespace.iserr_1_function.md) |  |
+|  [isErr(value)](./alfa-result.err_namespace.iserr_2_function.md) |  |
 
 ## Interfaces
 

@@ -21,6 +21,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.22.1](../../compare/v0.22.0...v0.22.1) (2021-09-17)
+
+### Fixed
+
+- [@siteimprove/alfa-collection](packages/alfa-collection): The `Indexed#compare()` method is now correctly typed and no longer double wraps its `T` as `Comparable<Comparable<T>>`.
+
+- [@siteimprove/alfa-option](packages/alfa-option), [@siteimprove/alfa-result](packages/alfa-result): The exsistential methods on `Option<T>` and `Result<T, E>`, such as `#includes()`, `#some()`, and `#every()`, now correctly narrow types.
+
 ## [0.22.0](../../compare/v0.21.2...v0.22.0) (2021-09-13)
 
 ### Added

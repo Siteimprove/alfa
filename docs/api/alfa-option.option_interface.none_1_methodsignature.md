@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-none(predicate: Predicate<T>): boolean;
+none<U extends T>(refinement: Refinement<T, U>): this is Option<Exclude<T, U>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;T, U&gt; |  |
 
 <b>Returns:</b>
 
-boolean
+this is [Option](./alfa-option.option_interface.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

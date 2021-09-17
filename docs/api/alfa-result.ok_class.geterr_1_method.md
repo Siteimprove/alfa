@@ -7,8 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-getErr(): never;
+getErr(message?: string): never;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  message | string |  |
+
 <b>Returns:</b>
 
 never
