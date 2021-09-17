@@ -3,12 +3,10 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -33,9 +31,6 @@ export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
   evaluate({ device, document }) {
-    const horizontallyClippable: Array<Text> = [];
-    const verticallyClippable: Array<Text> = [];
-
     return {
       applicability() {
         return visit(document);
@@ -77,13 +72,13 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        const horizontalClip = target
+        const parent = target
           .parent({ flattened: true, nested: true })
-          .every(and(isElement, isHorizontallyClipping(device)));
+          .filter(isElement);
 
-        const verticalClip = target
-          .parent({ flattened: true, nested: true })
-          .every(and(isElement, isVerticallyClipping(device)));
+        const horizontalClip = parent.every(isHorizontallyClipping(device));
+
+        const verticalClip = parent.every(isVerticallyClipping(device));
 
         return {
           1: expectation(
