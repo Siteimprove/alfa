@@ -50,7 +50,7 @@ export default Rule.Atomic.of<Page, Element>({
             );
           for (const dataCell of dataCells) {
             for (const cell of model.cells.find((cell) =>
-              cell.element.equals(cell)
+              cell.element.equals(dataCell)
             )) {
               data.set(dataCell, [cell, model]);
 
