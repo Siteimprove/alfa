@@ -5,6 +5,7 @@ import R83, { Outcomes } from "../../src/sia-r83/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
+import WrapsText = Outcomes.WrapsText;
 
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");
@@ -267,13 +268,15 @@ test(`evaluate() passes a text node with a fixed relative height`, async (t) => 
   ]);
 });
 
-test(`evaluate() is inapplicable to a text node that resets the white-space
+test(`evaluate() passes a text node that resets the white-space
       property of its clipping ancestor`, async (t) => {
   {
+    const target = h.text("Hello world");
+
     const document = h.document(
       [
         <p>
-          <span>Hello world</span>
+          <span>{target}</span>
         </p>,
       ],
       [
@@ -290,32 +293,9 @@ test(`evaluate() is inapplicable to a text node that resets the white-space
       ]
     );
 
-    t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
-  }
-  {
-    const document = h.document(
-      [
-        <p>
-          <span>
-            <b>Hello world</b>
-          </span>
-        </p>,
-      ],
-      [
-        h.sheet([
-          h.rule.style("p", {
-            overflowX: "hidden",
-            whiteSpace: "nowrap",
-          }),
-
-          h.rule.style("span", {
-            whiteSpace: "normal",
-          }),
-        ]),
-      ]
-    );
-
-    t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+    t.deepEqual(await evaluate(R83, { document }), [
+      passed(R83, target, { 1: WrapsText }),
+    ]);
   }
 });
 

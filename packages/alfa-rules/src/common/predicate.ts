@@ -15,7 +15,6 @@ export * from "./predicate/has-inclusive-descendant";
 export * from "./predicate/has-inline-style-property";
 export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/has-non-empty-accessible-name";
-export * from "./predicate/has-non-wrapped-text";
 export * from "./predicate/has-outline";
 export * from "./predicate/has-role";
 export * from "./predicate/has-text-content";
