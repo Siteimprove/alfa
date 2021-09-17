@@ -17,7 +17,12 @@ export declare namespace Result
 |  --- | --- |
 |  [from(thunk)](./alfa-result.result_namespace.from_1_function.md) |  |
 |  [from(thunk)](./alfa-result.result_namespace.from_2_function.md) |  |
+|  [isErr(value)](./alfa-result.result_namespace.iserr_1_function.md) |  |
+|  [isErr(value)](./alfa-result.result_namespace.iserr_2_function.md) |  |
+|  [isOk(value)](./alfa-result.result_namespace.isok_1_function.md) |  |
+|  [isOk(value)](./alfa-result.result_namespace.isok_2_function.md) |  |
 |  [isResult(value)](./alfa-result.result_namespace.isresult_1_function.md) |  |
+|  [isResult(value)](./alfa-result.result_namespace.isresult_2_function.md) |  |
 |  [of(value)](./alfa-result.result_namespace.of_1_function.md) |  |
 
 ## Type Aliases

@@ -27,7 +27,7 @@ export declare class Ok<T> implements Result<T, never>
 |  [flatMap(mapper)](./alfa-result.ok_class.flatmap_1_method.md) |  |  |
 |  [flatten(this)](./alfa-result.ok_class.flatten_1_method.md) |  |  |
 |  [get()](./alfa-result.ok_class.get_1_method.md) |  |  |
-|  [getErr()](./alfa-result.ok_class.geterr_1_method.md) |  |  |
+|  [getErr(message)](./alfa-result.ok_class.geterr_1_method.md) |  |  |
 |  [getOr()](./alfa-result.ok_class.getor_1_method.md) |  |  |
 |  [getOrElse()](./alfa-result.ok_class.getorelse_1_method.md) |  |  |
 |  [hash(hash)](./alfa-result.ok_class.hash_1_method.md) |  |  |

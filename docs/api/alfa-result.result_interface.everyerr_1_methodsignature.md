@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-everyErr(predicate: Predicate<E>): boolean;
+everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, F>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;E&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement_typealias.md)<!-- -->&lt;E, F&gt; |  |
 
 <b>Returns:</b>
 
-boolean
+this is [Result](./alfa-result.result_interface.md)<!-- -->&lt;T, F&gt;
 

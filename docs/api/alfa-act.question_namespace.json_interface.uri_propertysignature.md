@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-uri: string;
+uri: U;
 ```

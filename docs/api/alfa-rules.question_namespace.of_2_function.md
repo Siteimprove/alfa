@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function of<Q extends keyof Question, S, C>(type: Q, uri: string, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q]>;
+function of<Q extends keyof Question, S, C, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q], Question[Q], U>;
 ```
 
 ## Parameters
@@ -15,12 +15,12 @@ function of<Q extends keyof Question, S, C>(type: Q, uri: string, message: strin
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  type | Q |  |
-|  uri | string |  |
+|  uri | U |  |
 |  message | string |  |
 |  subject | S |  |
 |  context | C |  |
 
 <b>Returns:</b>
 
-act.[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, [Question](./alfa-rules.question_interface.md)<!-- -->\[Q\]&gt;
+act.[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, [Question](./alfa-rules.question_interface.md)<!-- -->\[Q\], [Question](./alfa-rules.question_interface.md)<!-- -->\[Q\], U&gt;
 

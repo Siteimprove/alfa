@@ -16,6 +16,7 @@ export declare namespace Ok
 |  Function | Description |
 |  --- | --- |
 |  [isOk(value)](./alfa-result.ok_namespace.isok_1_function.md) |  |
+|  [isOk(value)](./alfa-result.ok_namespace.isok_2_function.md) |  |
 
 ## Interfaces
 
