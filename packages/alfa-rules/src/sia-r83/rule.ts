@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -104,6 +105,8 @@ export namespace Outcomes {
   export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
 }
 
+const heightCache = Cache.empty<Device, Cache<Element, Option<Element>>>();
+
 /**
  * Checks if an element ultimately clips its vertical overflow:
  * * as long as no offset ancestor has a fixed height, elements can grow and
@@ -114,10 +117,13 @@ export namespace Outcomes {
  */
 function isVerticallyClipping(device: Device): Predicate<Element> {
   function fixedHeightAncestor(element: Element): Option<Element> {
-    if (hasFixedHeight(device)(element)) {
-      return Option.of(element);
-    }
-    return getRelevantParent(element, device).flatMap(fixedHeightAncestor);
+    return heightCache
+      .get(device, Cache.empty)
+      .get(element, () =>
+        hasFixedHeight(device)(element)
+          ? Option.of(element)
+          : getRelevantParent(element, device).flatMap(fixedHeightAncestor)
+      );
   }
 
   return (element) =>
@@ -146,20 +152,30 @@ function isHorizontallyClipping(device: Device): Predicate<Element> {
   };
 }
 
+const clippingCache = Cache.empty<
+  Device,
+  Cache<{ dimension: string }, Cache<Element, boolean>>
+>();
+
 /**
  * Checks whether the first offset ancestor that doesn't overflow is
  * clipping.
  */
 function isClipping(device: Device, dimension: "x" | "y"): Predicate<Element> {
-  return function foo(element: Element): boolean {
-    switch (overflow(element, device, dimension)) {
-      case Overflow.Clip:
-        return true;
-      case Overflow.Handle:
-        return false;
-      case Overflow.Overflow:
-        return getRelevantParent(element, device).some(foo);
-    }
+  return function isClipping(element: Element): boolean {
+    return clippingCache
+      .get(device, Cache.empty)
+      .get({ dimension }, Cache.empty)
+      .get(element, () => {
+        switch (overflow(element, device, dimension)) {
+          case Overflow.Clip:
+            return true;
+          case Overflow.Handle:
+            return false;
+          case Overflow.Overflow:
+            return getRelevantParent(element, device).some(isClipping);
+        }
+      });
   };
 }
 
