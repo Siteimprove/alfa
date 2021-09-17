@@ -98,6 +98,7 @@
 |  [@siteimprove/alfa-time](./alfa-time.md) |  |
 |  [@siteimprove/alfa-trampoline](./alfa-trampoline.md) |  |
 |  [@siteimprove/alfa-trilean](./alfa-trilean.md) |  |
+|  [@siteimprove/alfa-tuple](./alfa-tuple.md) |  |
 |  [@siteimprove/alfa-unexpected](./alfa-unexpected.md) |  |
 |  [@siteimprove/alfa-url](./alfa-url.md) |  |
 |  [@siteimprove/alfa-vue](./alfa-vue.md) |  |

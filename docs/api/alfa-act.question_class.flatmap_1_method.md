@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-flatMap<U>(mapper: Mapper<T, Question<Q, S, C, A, U>>): Question<Q, S, C, A, U>;
+flatMap<V>(mapper: Mapper<T, Question<Q, S, C, A, V, U>>): Question<Q, S, C, A, V, U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, U&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, V, U&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, U&gt;
+[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, V, U&gt;
 

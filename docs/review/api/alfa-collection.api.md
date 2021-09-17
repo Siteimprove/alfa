@@ -83,7 +83,7 @@ export namespace Collection {
         // (undocumented)
         collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
         // (undocumented)
-        compare(this: Indexed<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
+        compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
         // (undocumented)
         compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
         // (undocumented)

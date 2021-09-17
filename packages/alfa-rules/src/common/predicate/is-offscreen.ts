@@ -14,7 +14,7 @@ export function isOffscreen(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
-  return function isOffscreen(node) {
+  return function isOffscreen(node): boolean {
     return cache
       .get(device, Cache.empty)
       .get(context, Cache.empty)

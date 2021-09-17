@@ -7,8 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-getErr(): E;
+getErr(message?: string): E;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  message | string |  |
+
 <b>Returns:</b>
 
 E

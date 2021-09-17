@@ -18,12 +18,12 @@ export declare namespace Predicate
 |  [and(predicates)](./alfa-predicate.predicate_namespace.and_1_function.md) |  |
 |  [equals(values)](./alfa-predicate.predicate_namespace.equals_1_function.md) |  |
 |  [fold(predicate, ifTrue, ifFalse, value, args)](./alfa-predicate.predicate_namespace.fold_1_function.md) |  |
-|  [nand(left, right)](./alfa-predicate.predicate_namespace.nand_1_function.md) |  |
-|  [nor(left, right)](./alfa-predicate.predicate_namespace.nor_1_function.md) |  |
+|  [nand(predicates)](./alfa-predicate.predicate_namespace.nand_1_function.md) |  |
+|  [nor(predicates)](./alfa-predicate.predicate_namespace.nor_1_function.md) |  |
 |  [not(predicate)](./alfa-predicate.predicate_namespace.not_1_function.md) |  |
 |  [or(predicates)](./alfa-predicate.predicate_namespace.or_1_function.md) |  |
 |  [property(property, predicate)](./alfa-predicate.predicate_namespace.property_1_function.md) |  |
 |  [tee(predicate, callback)](./alfa-predicate.predicate_namespace.tee_1_function.md) |  |
 |  [test(predicate, value, args)](./alfa-predicate.predicate_namespace.test_1_function.md) |  |
-|  [xor(left, right)](./alfa-predicate.predicate_namespace.xor_1_function.md) |  |
+|  [xor(predicates)](./alfa-predicate.predicate_namespace.xor_1_function.md) |  |
 

@@ -9,7 +9,7 @@ Constructs a new instance of the `Question` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(type: Q, uri: string, message: string, subject: S, context: C, quester: Mapper<A, T>);
+protected constructor(type: Q, uri: U, message: string, subject: S, context: C, quester: Mapper<A, T>);
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ protected constructor(type: Q, uri: string, message: string, subject: S, context
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  type | Q |  |
-|  uri | string |  |
+|  uri | U |  |
 |  message | string |  |
 |  subject | S |  |
 |  context | C |  |

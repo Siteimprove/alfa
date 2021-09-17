@@ -5,6 +5,7 @@
 ```ts
 
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Callback } from '@siteimprove/alfa-callback';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
@@ -49,9 +50,11 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
     // (undocumented)
-    compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
+    compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
     // (undocumented)
     compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
+    // (undocumented)
+    every<U extends T>(refinement: Refinement<T, U>): this is Option<U>;
     // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
@@ -63,19 +66,21 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     flatten<T>(this: Option<Option<T>>): Option<T>;
     // (undocumented)
-    get(): T;
+    get(message?: string): T;
     // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
     // (undocumented)
-    includes(value: T): boolean;
+    includes(value: T): this is Some<T>;
     // (undocumented)
     isNone(): this is None;
     // (undocumented)
     isSome(): this is Some<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Option<U>;
+    // (undocumented)
+    none<U extends T>(refinement: Refinement<T, U>): this is Option<Exclude<T, U>>;
     // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
@@ -89,7 +94,11 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     reject(predicate: Predicate<T>): Option<T>;
     // (undocumented)
-    some(predicate: Predicate<T>): boolean;
+    some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+    // (undocumented)
+    some(predicate: Predicate<T>): this is Some<T>;
+    // (undocumented)
+    tee(callback: Callback<T>): Option<T>;
     // (undocumented)
     toArray(): Array<T>;
     // (undocumented)
@@ -133,7 +142,7 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
     // (undocumented)
-    compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
+    compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
     // (undocumented)
     compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
     // (undocumented)
@@ -180,6 +189,8 @@ export class Some<T> implements Option<T> {
     reject(predicate: Predicate<T>): Option<T>;
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    tee(callback: Callback<T>): Option<T>;
     // (undocumented)
     toArray(): [T];
     // (undocumented)

@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
@@ -119,7 +120,15 @@ export class Some<T> implements Option<T> {
     return this._value;
   }
 
-  public compare(this: Option<Comparable<T>>, option: Option<T>): Comparison {
+  public tee(callback: Callback<T>): Option<T> {
+    callback(this._value);
+    return this;
+  }
+
+  public compare<T>(
+    this: Option<Comparable<T>>,
+    option: Option<T>
+  ): Comparison {
     return this.compareWith(option, compareComparable);
   }
 

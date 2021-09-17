@@ -5,6 +5,7 @@
 ```ts
 
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Callback } from '@siteimprove/alfa-callback';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -43,6 +44,10 @@ export interface Either<L, R = L> extends Functor<R>, Applicative<R>, Monad<R>, 
     // (undocumented)
     right(): Option<R>;
     // (undocumented)
+    teeLeft(callback: Callback<L>): Either<L, R>;
+    // (undocumented)
+    teeRight(callback: Callback<R>): Either<L, R>;
+    // (undocumented)
     toJSON(): Either.JSON<L, R>;
 }
 
@@ -52,6 +57,14 @@ export namespace Either {
     export function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
     // (undocumented)
     export function isEither<L, R>(value: unknown): value is Either<L, R>;
+    // (undocumented)
+    export function isLeft<L>(value: Iterable<L>): value is Left<L>;
+    // (undocumented)
+    export function isLeft<L>(value: unknown): value is Left<L>;
+    // (undocumented)
+    export function isRight<R>(value: Iterable<R>): value is Right<R>;
+    // (undocumented)
+    export function isRight<R>(value: unknown): value is Right<R>;
     // (undocumented)
     export type JSON<L, R = L> = Left.JSON<L> | Right.JSON<R>;
     // (undocumented)
@@ -94,6 +107,10 @@ export class Left<L> implements Either<L, never> {
     reduce<T>(reducer: unknown, accumulator: T): T;
     // (undocumented)
     right(): None;
+    // (undocumented)
+    teeLeft(callback: Callback<L>): Left<L>;
+    // (undocumented)
+    teeRight(): Left<L>;
     // (undocumented)
     toJSON(): Left.JSON<L>;
     // (undocumented)
@@ -151,6 +168,10 @@ export class Right<R> implements Either<never, R> {
     reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
     // (undocumented)
     right(): Option<R>;
+    // (undocumented)
+    teeLeft(): Right<R>;
+    // (undocumented)
+    teeRight(callback: Callback<R>): Right<R>;
     // (undocumented)
     toJSON(): Right.JSON<R>;
     // (undocumented)

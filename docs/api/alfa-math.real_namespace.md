@@ -21,6 +21,7 @@ export declare namespace Real
 |  [divide(p, d)](./alfa-math.real_namespace.divide_1_function.md) |  |
 |  [equals(a, b, e)](./alfa-math.real_namespace.equals_1_function.md) | Check if two reals are equal, accounting for floating-point precision errors according to a given epsilon. |
 |  [isReal(value)](./alfa-math.real_namespace.isreal_1_function.md) |  |
+|  [isReal(value)](./alfa-math.real_namespace.isreal_2_function.md) |  |
 |  [modulo(p, d)](./alfa-math.real_namespace.modulo_1_function.md) | Compute the modulus of a division of two reals.[https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation) |
 |  [multiply(p, q)](./alfa-math.real_namespace.multiply_1_function.md) |  |
 |  [round(p, n)](./alfa-math.real_namespace.round_1_function.md) | Round a real to a given number of decimals. |

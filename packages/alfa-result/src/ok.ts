@@ -116,8 +116,8 @@ export class Ok<T> implements Result<T, never> {
     return this._value;
   }
 
-  public getErr(): never {
-    throw new Error("Attempted to .getErr() from Ok");
+  public getErr(message = "Attempted to .getErr() from Ok"): never {
+    throw new Error(message);
   }
 
   public getOr(): T {
@@ -178,6 +178,10 @@ export namespace Ok {
     type: "ok";
     value: Serializable.ToJSON<T>;
   }
+
+  export function isOk<T>(value: Iterable<T>): value is Ok<T>;
+
+  export function isOk<T>(value: unknown): value is Ok<T>;
 
   export function isOk<T>(value: unknown): value is Ok<T> {
     return value instanceof Ok;
