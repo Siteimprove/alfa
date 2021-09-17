@@ -78,11 +78,11 @@ export default Rule.Atomic.of<Page, Text>({
       expectations(target) {
         const horizontalClip = target
           .parent({ flattened: true, nested: true })
-          .every(and(isElement, isHorizontallyClipped(device)));
+          .every(and(isElement, isHorizontallyClipping(device)));
 
         const verticalClip = target
           .parent({ flattened: true, nested: true })
-          .every(and(isElement, isVerticallyClipped(device)));
+          .every(and(isElement, isVerticallyClipping(device)));
 
         return {
           1: expectation(
@@ -102,6 +102,90 @@ export namespace Outcomes {
   );
 
   export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
+}
+
+/**
+ * Checks if an element ultimately clips its vertical overflow:
+ * * as long as no offset ancestor has a fixed height, elements can grow and
+ *   no overflow actually occurs;
+ * * once a fixed height ancestor is found, an overflow possibly occurs and we
+ *   switch to finding an ancestor that either handles it (scroll bar) or
+ *   clips it.
+ */
+function isVerticallyClipping(device: Device): Predicate<Element> {
+  function fixedHeightAncestor(element: Element): Option<Element> {
+    if (hasFixedHeight(device)(element)) {
+      return Option.of(element);
+    }
+    return getRelevantParent(element, device).flatMap(fixedHeightAncestor);
+  }
+
+  return (element) =>
+    fixedHeightAncestor(element).some(isClipping(device, "y"));
+}
+
+/**
+ * Checks if an element ultimately clips its horizontal overflow:
+ * * all elements are assumed to have fixed width because the page cannot extend
+ *   infinitely in the horizontal dimension;
+ * * first we look at the element itself and how it handles the text overflow of
+ *   its children text nodes;
+ * * if text overflows its parent, it does so as content, so we look for an
+ *   ancestor that either handles it (scroll bar) or clips it.
+ */
+function isHorizontallyClipping(device: Device): Predicate<Element> {
+  return (element) => {
+    switch (horizontalTextOverflow(element, device)) {
+      case Overflow.Clip:
+        return true;
+      case Overflow.Handle:
+        return false;
+      case Overflow.Overflow:
+        return getRelevantParent(element, device).some(isClipping(device, "x"));
+    }
+  };
+}
+
+/**
+ * Checks whether the first offset ancestor that doesn't overflow is
+ * clipping.
+ */
+function isClipping(device: Device, dimension: "x" | "y"): Predicate<Element> {
+  return function foo(element: Element): boolean {
+    switch (overflow(element, device, dimension)) {
+      case Overflow.Clip:
+        return true;
+      case Overflow.Handle:
+        return false;
+      case Overflow.Overflow:
+        return getRelevantParent(element, device).some(foo);
+    }
+  };
+}
+
+enum Overflow {
+  Clip, // The element clips its overflow.
+  Handle, // The element definitely handles its overflow.
+  Overflow, // The element overflows into its parent.
+}
+
+function overflow(
+  element: Element,
+  device: Device,
+  dimension: "x" | "y"
+): Overflow {
+  switch (
+    Style.from(element, device).computed(`overflow-${dimension}`).value.value
+  ) {
+    case "clip":
+    case "hidden":
+      return Overflow.Clip;
+    case "scroll":
+    case "auto":
+      return Overflow.Handle;
+    case "visible":
+      return Overflow.Overflow;
+  }
 }
 
 /**
@@ -147,106 +231,8 @@ function hasFixedHeight(device: Device): Predicate<Element> {
   );
 }
 
-/**
- * Checks if an element ultimately clips its vertical overflow:
- * * as long as no offset ancestor has a fixed height, elements can grow and
- *   no overflow actually occurs;
- * * once a fixed height ancestor is found, an overflow possibly occurs and we
- *   switch to finding an ancestor that either handles it (scroll bar) or
- *   clips it.
- */
-function isVerticallyClipped(device: Device): Predicate<Element> {
-  return (element) =>
-    isClipping(
-      Sequence.of(
-        element,
-        Lazy.of(() => relevantAncestors(element, device))
-      ).skipUntil(hasFixedHeight(device)),
-      device,
-      "y"
-    );
-}
-
-/**
- * Checks if an element ultimately clips its horizontal overflow:
- * * all elements are assumed to have fixed width because the page cannot extend
- *   infinitely in the horizontal dimension;
- * * first we look at the element itself and how it handles the text overflow of
- *   its children text nodes;
- * * if text overflows its parent, it does so as content, so we look for an
- *   ancestor that either handles it (scroll bar) or clips it.
- */
-function isHorizontallyClipped(device: Device): Predicate<Element> {
-  return (element) => {
-    switch (horizontalTextOverflow(element, device)) {
-      case Overflow.Clip:
-        return true;
-      case Overflow.Handle:
-        return false;
-      case Overflow.Overflow:
-        return isClipping(relevantAncestors(element, device), device, "x");
-    }
-  };
-}
-
-enum Overflow {
-  Clip, // The element clips its overflow.
-  Handle, // The element definitely handles its overflow.
-  Overflow, // The element overflows into its parent.
-}
-
-function overflow(
-  element: Element,
-  device: Device,
-  dimension: "x" | "y"
-): Overflow {
-  switch (
-    Style.from(element, device).computed(`overflow-${dimension}`).value.value
-  ) {
-    case "clip":
-    case "hidden":
-      return Overflow.Clip;
-    case "scroll":
-    case "auto":
-      return Overflow.Handle;
-    case "visible":
-      return Overflow.Overflow;
-  }
-}
-
-function relevantAncestors(
-  element: Element,
-  device: Device
-): Sequence<Element> {
-  for (const parent of getRelevantParent(element, device)) {
-    return Sequence.of(
-      parent,
-      Lazy.of(() => relevantAncestors(parent, device))
-    );
-  }
-
-  return Sequence.empty();
-}
-
 function getRelevantParent(element: Element, device: Device): Option<Element> {
   return isPositioned(device, "static")(element)
     ? element.parent({ flattened: true }).filter(isElement)
     : getOffsetParent(element, device);
-}
-
-/**
- * Checks whether the first element in the sequence that doesn't overflow is
- * clipping.
- */
-function isClipping(
-  sequence: Sequence<Element>,
-  device: Device,
-  dimension: "x" | "y"
-): boolean {
-  return sequence
-    .skipWhile(
-      (element) => overflow(element, device, dimension) === Overflow.Overflow
-    )
-    .first()
-    .some((element) => overflow(element, device, dimension) === Overflow.Clip);
 }
