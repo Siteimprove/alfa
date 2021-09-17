@@ -104,8 +104,8 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        // show(`Horizontal: ${horizontallyClippable}`);
-        // show(`Vertical: ${verticallyClippable}`);
+        show(`Horizontal: ${horizontallyClippable}`);
+        show(`Vertical: ${verticallyClippable}`);
         show(`Checking expectation for ${normalize(target.toString())}`);
 
         const isHorizontallyClipped =
@@ -121,9 +121,6 @@ export default Rule.Atomic.of<Page, Text>({
           target
             .parent({ flattened: true, nested: true })
             .every(and(isElement, verticalClip(device)));
-        // target
-        //   .parent({ flattened: true, nested: true })
-        //   .every(and(isElement, isVerticallyClipping(device)));
 
         show(`Horizontal Clip: ${isHorizontallyClipped}`);
         show(`Vertical Clip: ${isVerticallyClipped}`);
@@ -161,45 +158,45 @@ function isPossiblyClippingHorizontally(device: Device): Predicate<Element> {
   );
 }
 
-function isPossiblyClippingVertically(device: Device): Predicate<Element> {
-  // The height of the element has been restricted using an non-font relative
-  // length not set via the `style` attribute. In this case, text might clip
-  // if overflow of the y-axis is hidden.
-  //
-  // For font relative heights we assume that care has already been taken to
-  // ensure that the layout scales with the content.
-  //
-  // For heights set via the `style` attribute we assume that its value is
-  // controlled by JavaScript and is adjusted as the content scales.
-  //
-  // Elements with `height: auto` may still have fixed length if their child has
-  // i.e. we do not catch
-  // <style>
-  //  .clipping { overflow-y: clip }
-  //  .fixed-height { height: 10px }
-  // </style>
-  // <div class="clipping"> <div class="fixed-height"></div> </div>
-  // as possibly clipping. This only creates false negatives.
-  return and(
-    hasComputedStyle(
-      "overflow-y",
-      (overflow) => overflow.value === "hidden" || overflow.value === "clip",
-      device
-    ),
-    // Use the cascaded value to avoid lengths being resolved to pixels.
-    // Otherwise, we won't be able to tell if a font relative length was
-    // used.
-    hasCascadedStyle(
-      "height",
-      (height, source) =>
-        height.type === "length" &&
-        height.value > 0 &&
-        !height.isFontRelative() &&
-        source.some((declaration) => declaration.parent.isSome()),
-      device
-    )
-  );
-}
+// function isPossiblyClippingVertically(device: Device): Predicate<Element> {
+//   // The height of the element has been restricted using an non-font relative
+//   // length not set via the `style` attribute. In this case, text might clip
+//   // if overflow of the y-axis is hidden.
+//   //
+//   // For font relative heights we assume that care has already been taken to
+//   // ensure that the layout scales with the content.
+//   //
+//   // For heights set via the `style` attribute we assume that its value is
+//   // controlled by JavaScript and is adjusted as the content scales.
+//   //
+//   // Elements with `height: auto` may still have fixed length if their child has
+//   // i.e. we do not catch
+//   // <style>
+//   //  .clipping { overflow-y: clip }
+//   //  .fixed-height { height: 10px }
+//   // </style>
+//   // <div class="clipping"> <div class="fixed-height"></div> </div>
+//   // as possibly clipping. This only creates false negatives.
+//   return and(
+//     hasComputedStyle(
+//       "overflow-y",
+//       (overflow) => overflow.value === "hidden" || overflow.value === "clip",
+//       device
+//     ),
+//     // Use the cascaded value to avoid lengths being resolved to pixels.
+//     // Otherwise, we won't be able to tell if a font relative length was
+//     // used.
+//     hasCascadedStyle(
+//       "height",
+//       (height, source) =>
+//         height.type === "length" &&
+//         height.value > 0 &&
+//         !height.isFontRelative() &&
+//         source.some((declaration) => declaration.parent.isSome()),
+//       device
+//     )
+//   );
+// }
 
 function isHorizontallyClipping(device: Device): Predicate<Element> {
   return (element) => {
@@ -275,42 +272,42 @@ function isActuallyClippingHorizontally(
 //   return (element) => {};
 // }
 
-function isVerticallyClipping(device: Device): Predicate<Element> {
-  return (element) => {
-    show(`Checking vertical clip of ${normalize(element.toString())}`);
-    show(
-      `overflow-y: ${Style.from(element, device).computed("overflow-y").value}`
-    );
-    if (isPossiblyClippingVertically(device)(element)) {
-      show(`${normalize(element.toString())} is possibly clipping vertically`);
-      return true;
-    }
+// function isVerticallyClipping(device: Device): Predicate<Element> {
+//   return (element) => {
+//     show(`Checking vertical clip of ${normalize(element.toString())}`);
+//     show(
+//       `overflow-y: ${Style.from(element, device).computed("overflow-y").value}`
+//     );
+//     if (isPossiblyClippingVertically(device)(element)) {
+//       show(`${normalize(element.toString())} is possibly clipping vertically`);
+//       return true;
+//     }
+//
+//     if (isHandlingVerticalOverflow(device)(element)) {
+//       show(`${normalize(element.toString())} is handling vertical clipping`);
+//       return false;
+//     }
+//
+//     const relevantParent = isPositioned(device, "static")(element)
+//       ? element.parent().filter(isElement)
+//       : getOffsetParent(element, device);
+//
+//     // If there is no relevant parent, we've reached the root without finding
+//     // anything that clips, so nothing clips.
+//     return relevantParent.some(isVerticallyClipping(device));
+//   };
+// }
 
-    if (isHandlingVerticalOverflow(device)(element)) {
-      show(`${normalize(element.toString())} is handling vertical clipping`);
-      return false;
-    }
-
-    const relevantParent = isPositioned(device, "static")(element)
-      ? element.parent().filter(isElement)
-      : getOffsetParent(element, device);
-
-    // If there is no relevant parent, we've reached the root without finding
-    // anything that clips, so nothing clips.
-    return relevantParent.some(isVerticallyClipping(device));
-  };
-}
-
-function isHandlingVerticalOverflow(device: Device): Predicate<Element> {
-  // We assume that elements with a scrollbar correctly handle overflow.
-  // This is not fully correct in case the scrolling element has larger height
-  // than its clipping ancestor. This only creates false negative.
-  return hasComputedStyle(
-    "overflow-y",
-    ({ value: overflow }) => overflow === "scroll" || overflow === "auto",
-    device
-  );
-}
+// function isHandlingVerticalOverflow(device: Device): Predicate<Element> {
+//   // We assume that elements with a scrollbar correctly handle overflow.
+//   // This is not fully correct in case the scrolling element has larger height
+//   // than its clipping ancestor. This only creates false negative.
+//   return hasComputedStyle(
+//     "overflow-y",
+//     ({ value: overflow }) => overflow === "scroll" || overflow === "auto",
+//     device
+//   );
+// }
 
 function hasFixedHeight(device: Device): Predicate<Element> {
   return hasCascadedStyle(
@@ -341,21 +338,6 @@ function verticalOverflow(element: Element, device: Device): Overflow {
     case "visible":
       return Overflow.Overflow;
   }
-}
-
-function hasVerticallyClippedContent(device: Device): Predicate<Element> {
-  return (element) => {
-    switch (verticalOverflow(element, device)) {
-      case Overflow.Clip:
-        return true;
-      case Overflow.Handle:
-        return false;
-      case Overflow.Overflow:
-        return getOffsetParent(element, device).some(
-          and(isElement, hasVerticallyClippedContent(device))
-        );
-    }
-  };
 }
 
 function verticalClip(device: Device): Predicate<Element> {

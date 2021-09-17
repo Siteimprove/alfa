@@ -458,3 +458,24 @@ test(`evaluate() fails text overflowing its fixed-height parent and clipped by i
     failed(R83, target, { 1: Outcomes.ClipsText }),
   ]);
 });
+
+test(`evaluate() passes text expanding its clipping parent and overflowing its fixed-height grand-parent`, async (t) => {
+  const target = h.text("Hello World!");
+
+  const parent = <div class="clipping">{target}</div>;
+  const grandparent = <div class="fixed-height">{parent}</div>;
+
+  const document = h.document(
+    [grandparent],
+    [
+      h.sheet([
+        h.rule.style(".clipping", { overflowY: "hidden" }),
+        h.rule.style(".fixed-height", { height: "10px" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
