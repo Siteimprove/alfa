@@ -29,8 +29,8 @@ test("evaluate() passes a text node that truncates overflow using ellipsis", asy
   ]);
 });
 
-test(`evaluate() fails a text node overflowing it parent as content and
-      being truncated by its grand-parent`, async (t) => {
+test(`evaluates() fails a text node overflowing its parent as text and clipped
+      by its grand-parent as content`, async (t) => {
   const target = h.text("Hello world");
 
   const document = h.document(
@@ -56,7 +56,8 @@ test(`evaluate() fails a text node overflowing it parent as content and
   ]);
 });
 
-test("evaluate() passes a text node that is non-statically positioned with a clipping ancestor which is not the offset parent", async (t) => {
+test(`evaluate() passes a text node that is non-statically positioned with a
+      clipping ancestor which is not the offset parent`, async (t) => {
   const target = h.text("Hello world");
 
   const document = h.document(
@@ -154,7 +155,8 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
   ]);
 });
 
-test("evaluate() fails a text node that is non-statically positioned with a clipping offset parent", async (t) => {
+test(`evaluate() fails a text node that is non-statically positioned with a
+      clipping offset parent`, async (t) => {
   const target = h.text("Hello world");
 
   const document = h.document(
@@ -379,66 +381,40 @@ test(`evaluate() fails a text node that is vertically clipped but horizontally w
   ]);
 });
 
-// test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
-//   const target1 = h.text("I have non-wrapped text and I clip");
-//   const target2 = h.text("I do not clip because I wrap");
-//
-//   const div1 = <div class="nowrap">{target1}</div>;
-//   const div2 = <div class="wrap">{target2}</div>;
-//
-//   const document = h.document(
-//     [
-//       <div class="possibly-clipping">
-//         {div1}
-//         {div2}
-//       </div>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style(".possibly-clipping", { overflowX: "hidden" }),
-//         h.rule.style(".nowrap", {
-//           whiteSpace: "nowrap",
-//           textOverflow: "clip",
-//         }),
-//         h.rule.style(".wrap", { whiteSpace: "normal" }),
-//       ]),
-//     ]
-//   );
-//
-//   t.deepEqual(await evaluate(R83, { document }), [
-//     failed(R83, target1, { 1: Outcomes.ClipsText }),
-//     passed(R83, target2, { 1: Outcomes.WrapsText }),
-//   ]);
-// });
+test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
+  const target1 = h.text("I have non-wrapped text and I clip");
+  const target2 = h.text("I do not clip because I wrap");
 
-// test(`evaluates() fails a text node overflowing its parent as text and clipped
-//      by its grand-parent as content`, async (t) => {
-//   const target = h.text("I have non-wrapped text and I clip");
-//
-//   const div = <div class="nowrap">{target}</div>;
-//
-//   const document = h.document(
-//     [<div class="possibly-clipping">{div}</div>],
-//     [
-//       h.sheet([
-//         h.rule.style(".possibly-clipping", {
-//           overflowX: "hidden",
-//           whiteSpace: "normal",
-//         }),
-//         h.rule.style(".nowrap", {
-//           whiteSpace: "nowrap",
-//           textOverflow: "clip",
-//         }),
-//       ]),
-//     ]
-//   );
-//
-//   t.deepEqual(await evaluate(R83, { document }), [
-//     failed(R83, target, { 1: Outcomes.ClipsText }),
-//   ]);
-// });
+  const div1 = <div class="nowrap">{target1}</div>;
+  const div2 = <div class="wrap">{target2}</div>;
 
-test(`evaluate() fails text overflowing its fixed-height parent and clipped by its grand-parent`, async (t) => {
+  const document = h.document(
+    [
+      <div class="possibly-clipping">
+        {div1}
+        {div2}
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".possibly-clipping", { overflowX: "hidden" }),
+        h.rule.style(".nowrap", {
+          whiteSpace: "nowrap",
+          textOverflow: "clip",
+        }),
+        h.rule.style(".wrap", { whiteSpace: "normal" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target1, { 1: Outcomes.ClipsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test(`evaluate() fails text overflowing its fixed-height parent and clipped by
+      its grand-parent`, async (t) => {
   const target = h.text("Hello World!");
 
   const parent = <div class="fixed-height">{target}</div>;
@@ -459,7 +435,8 @@ test(`evaluate() fails text overflowing its fixed-height parent and clipped by i
   ]);
 });
 
-test(`evaluate() passes text expanding its clipping parent and overflowing its fixed-height grand-parent`, async (t) => {
+test(`evaluate() passes text expanding its clipping parent and overflowing its
+      fixed-height grand-parent`, async (t) => {
   const target = h.text("Hello World!");
 
   const parent = <div class="clipping">{target}</div>;
