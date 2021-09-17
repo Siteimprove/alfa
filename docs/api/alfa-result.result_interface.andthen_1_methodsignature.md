@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-andThen<U>(result: Mapper<T, Result<U, E>>): Result<U, E>;
+andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  result | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Result](./alfa-result.result_interface.md)<!-- -->&lt;U, E&gt;&gt; |  |
+|  result | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;T, [Result](./alfa-result.result_interface.md)<!-- -->&lt;U, F&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result_interface.md)<!-- -->&lt;U, E&gt;
+[Result](./alfa-result.result_interface.md)<!-- -->&lt;U, E \| F&gt;
 

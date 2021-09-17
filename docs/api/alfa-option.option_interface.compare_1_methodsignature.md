@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-compare(this: Option<Comparable<T>>, option: Option<T>): Comparison;
+compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
 ```
 
 ## Parameters

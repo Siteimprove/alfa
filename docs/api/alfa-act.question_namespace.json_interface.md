@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON<Q, S, C> 
+interface JSON<Q, S, C, U extends string = string> 
 ```
 
 ## Properties
@@ -18,5 +18,5 @@ interface JSON<Q, S, C>
 |  [message](./alfa-act.question_namespace.json_interface.message_propertysignature.md) | string |  |
 |  [subject](./alfa-act.question_namespace.json_interface.subject_propertysignature.md) | [Serializable.ToJSON](./alfa-json.serializable_namespace.tojson_typealias.md)<!-- -->&lt;S&gt; |  |
 |  [type](./alfa-act.question_namespace.json_interface.type_propertysignature.md) | [Serializable.ToJSON](./alfa-json.serializable_namespace.tojson_typealias.md)<!-- -->&lt;Q&gt; |  |
-|  [uri](./alfa-act.question_namespace.json_interface.uri_propertysignature.md) | string |  |
+|  [uri](./alfa-act.question_namespace.json_interface.uri_propertysignature.md) | U |  |
 

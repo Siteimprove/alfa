@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function from<T>(thunk: Thunk<Promise<T>>): Promise<Result<T, unknown>>;
+function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function from<T>(thunk: Thunk<Promise<T>>): Promise<Result<T, unknown>>;
 
 <b>Returns:</b>
 
-Promise&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;T, unknown&gt;&gt;
+Promise&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;T, E&gt;&gt;
 

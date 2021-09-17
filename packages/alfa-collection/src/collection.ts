@@ -211,7 +211,7 @@ export namespace Collection {
     join(separator: string): string;
     sort<T extends Comparable<T>>(this: Indexed<T>): Indexed<T>;
     sortWith(comparer: Comparer<T>): Indexed<T>;
-    compare(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
+    compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
     compareWith<U = T>(
       iterable: Iterable<U>,
       comparer: Comparer<T, U, [index: number]>

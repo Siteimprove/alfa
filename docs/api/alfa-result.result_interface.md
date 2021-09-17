@@ -20,12 +20,14 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
 |  [andThen(result)](./alfa-result.result_interface.andthen_1_methodsignature.md) |  |
 |  [apply(mapper)](./alfa-result.result_interface.apply_1_methodsignature.md) |  |
 |  [err()](./alfa-result.result_interface.err_1_methodsignature.md) |  |
-|  [every(predicate)](./alfa-result.result_interface.every_1_methodsignature.md) |  |
-|  [everyErr(predicate)](./alfa-result.result_interface.everyerr_1_methodsignature.md) |  |
+|  [every(refinement)](./alfa-result.result_interface.every_1_methodsignature.md) |  |
+|  [every(predicate)](./alfa-result.result_interface.every_2_methodsignature.md) |  |
+|  [everyErr(refinement)](./alfa-result.result_interface.everyerr_1_methodsignature.md) |  |
+|  [everyErr(predicate)](./alfa-result.result_interface.everyerr_2_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-result.result_interface.flatmap_1_methodsignature.md) |  |
 |  [flatten(this)](./alfa-result.result_interface.flatten_1_methodsignature.md) |  |
-|  [get()](./alfa-result.result_interface.get_1_methodsignature.md) |  |
-|  [getErr()](./alfa-result.result_interface.geterr_1_methodsignature.md) |  |
+|  [get(message)](./alfa-result.result_interface.get_1_methodsignature.md) |  |
+|  [getErr(message)](./alfa-result.result_interface.geterr_1_methodsignature.md) |  |
 |  [getOr(value)](./alfa-result.result_interface.getor_1_methodsignature.md) |  |
 |  [getOrElse(value)](./alfa-result.result_interface.getorelse_1_methodsignature.md) |  |
 |  [includes(value)](./alfa-result.result_interface.includes_1_methodsignature.md) |  |
@@ -35,14 +37,18 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
 |  [map(mapper)](./alfa-result.result_interface.map_1_methodsignature.md) |  |
 |  [mapErr(mapper)](./alfa-result.result_interface.maperr_1_methodsignature.md) |  |
 |  [mapOrElse(ok, err)](./alfa-result.result_interface.maporelse_1_methodsignature.md) |  |
-|  [none(predicate)](./alfa-result.result_interface.none_1_methodsignature.md) |  |
-|  [noneErr(predicate)](./alfa-result.result_interface.noneerr_1_methodsignature.md) |  |
+|  [none(refinement)](./alfa-result.result_interface.none_1_methodsignature.md) |  |
+|  [none(predicate)](./alfa-result.result_interface.none_2_methodsignature.md) |  |
+|  [noneErr(refinement)](./alfa-result.result_interface.noneerr_1_methodsignature.md) |  |
+|  [noneErr(predicate)](./alfa-result.result_interface.noneerr_2_methodsignature.md) |  |
 |  [ok()](./alfa-result.result_interface.ok_1_methodsignature.md) |  |
 |  [or(result)](./alfa-result.result_interface.or_1_methodsignature.md) |  |
 |  [orElse(result)](./alfa-result.result_interface.orelse_1_methodsignature.md) |  |
 |  [reduce(reducer, accumulator)](./alfa-result.result_interface.reduce_1_methodsignature.md) |  |
-|  [some(predicate)](./alfa-result.result_interface.some_1_methodsignature.md) |  |
-|  [someErr(predicate)](./alfa-result.result_interface.someerr_1_methodsignature.md) |  |
+|  [some(refinement)](./alfa-result.result_interface.some_1_methodsignature.md) |  |
+|  [some(predicate)](./alfa-result.result_interface.some_2_methodsignature.md) |  |
+|  [someErr(refinement)](./alfa-result.result_interface.someerr_1_methodsignature.md) |  |
+|  [someErr(predicate)](./alfa-result.result_interface.someerr_2_methodsignature.md) |  |
 |  [tee(callback)](./alfa-result.result_interface.tee_1_methodsignature.md) |  |
 |  [teeErr(callback)](./alfa-result.result_interface.teeerr_1_methodsignature.md) |  |
 |  [toJSON()](./alfa-result.result_interface.tojson_1_methodsignature.md) |  |

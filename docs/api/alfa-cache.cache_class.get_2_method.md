@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
+get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
-|  ifMissing | [Thunk](./alfa-thunk.thunk_typealias.md)<!-- -->&lt;U&gt; |  |
+|  ifMissing | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;this, U&gt; |  |
 
 <b>Returns:</b>
 

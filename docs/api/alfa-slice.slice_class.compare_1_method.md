@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-compare(this: Slice<Comparable<T>>, iterable: Iterable<T>): Comparison;
+compare<T>(this: Slice<Comparable<T>>, iterable: Iterable<T>): Comparison;
 ```
 
 ## Parameters
