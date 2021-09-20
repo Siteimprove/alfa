@@ -25,9 +25,15 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly separate detection of horizontal and vertical overflows, correctly considers interposed elements that handle overflow, and correctly restrict text overflow to text nodes parent. ([#908](../issues/908), [#921](../issues/921), [#922](../issues/922), [#924](../pull/924))   
+
+## [0.22.1](../../compare/v0.22.0...v0.22.1) (2021-09-17)
+
+### Fixed
+
 - [@siteimprove/alfa-collection](packages/alfa-collection): The `Indexed#compare()` method is now correctly typed and no longer double wraps its `T` as `Comparable<Comparable<T>>`.
 
-- [@siteimprove/alfa-option](packages/alfa-option), [@siteimprove/alfa-result](packages/alfa-result): The exsistential methods on `Option<T>` and `Result<T, E>`, such as `#includes()`, `#some()`, and `#every()`, now correctly narrow types.
+- [@siteimprove/alfa-option](packages/alfa-option), [@siteimprove/alfa-result](packages/alfa-result): The existential methods on `Option<T>` and `Result<T, E>`, such as `#includes()`, `#some()`, and `#every()`, now correctly narrow types.
 
 ## [0.22.0](../../compare/v0.21.2...v0.22.0) (2021-09-13)
 
