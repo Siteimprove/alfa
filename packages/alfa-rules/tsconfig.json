@@ -42,7 +42,6 @@
     "src/common/predicate/has-inline-style-property.ts",
     "src/common/predicate/has-interposed-descendant.ts",
     "src/common/predicate/has-non-empty-accessible-name.ts",
-    "src/common/predicate/has-non-wrapped-text.ts",
     "src/common/predicate/has-outline.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-text-content.ts",
