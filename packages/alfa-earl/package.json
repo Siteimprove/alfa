@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-earl",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.2",
+  "version": "0.22.3",
   "license": "MIT",
   "description": "Types for modelling EARL serializable structures",
   "repository": {
@@ -18,12 +18,12 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-json-ld": "workspace:^0.22.2",
-    "@siteimprove/alfa-option": "workspace:^0.22.2",
-    "@siteimprove/alfa-refinement": "workspace:^0.22.2"
+    "@siteimprove/alfa-json-ld": "workspace:^0.22.3",
+    "@siteimprove/alfa-option": "workspace:^0.22.3",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.3"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.2"
+    "@siteimprove/alfa-test": "workspace:^0.22.3"
   },
   "publishConfig": {
     "access": "public",
