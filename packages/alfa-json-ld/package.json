@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-json-ld",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.1",
+  "version": "0.22.3",
   "license": "MIT",
   "description": "Functionality for working with JSON-LD documents",
   "repository": {
@@ -18,10 +18,10 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-json": "workspace:^0.22.1"
+    "@siteimprove/alfa-json": "workspace:^0.22.3"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.1"
+    "@siteimprove/alfa-test": "workspace:^0.22.3"
   },
   "publishConfig": {
     "access": "public",
