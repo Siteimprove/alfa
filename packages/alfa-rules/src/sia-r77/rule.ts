@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Table, Cell } from "@siteimprove/alfa-table";
@@ -15,9 +16,9 @@ const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r77",
-  requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
+  requirements: [Criterion.of("1.3.1")],
   evaluate({ device, document }) {
-    const data = new Map<Element, [cell: Cell, table: Table]>();
+    let data = Map.empty<Element, Cell>();
 
     return {
       *applicability() {
@@ -31,8 +32,10 @@ export default Rule.Atomic.of<Page, Element>({
               not(isIgnored(device))
             )
           );
+          
         for (const table of tables) {
           const model = Table.from(table);
+          
           if (model.cells.find((cell) => cell.isHeader()).isNone()) {
             continue;
           }
@@ -48,11 +51,12 @@ export default Rule.Atomic.of<Page, Element>({
                 isPerceivable(device)
               )
             );
+            
           for (const dataCell of dataCells) {
             for (const cell of model.cells.find((cell) =>
               cell.element.equals(dataCell)
             )) {
-              data.set(dataCell, [cell, model]);
+              data = data.set(dataCell, cell);
 
               yield dataCell;
             }

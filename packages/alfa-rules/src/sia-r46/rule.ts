@@ -31,8 +31,10 @@ export default Rule.Atomic.of<Page, Element>({
               not(isIgnored(device))
             )
           );
+
         for (const table of tables) {
           const model = Table.from(table);
+
           const headers = table
             .descendants()
             .filter(isElement)
@@ -44,6 +46,7 @@ export default Rule.Atomic.of<Page, Element>({
                 isPerceivable(device)
               )
             );
+
           for (const header of headers) {
             for (const cell of model.cells.find((cell) =>
               cell.element.equals(header)
@@ -63,6 +66,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             table.cells.some(
               (cell) =>
+                // Does there exists a cell with the target as one of its headers?
                 hasRole(device, (role) => role.is("cell"))(cell.element) &&
                 cell.headers.some((slot) => slot.equals(header.anchor))
             ),
