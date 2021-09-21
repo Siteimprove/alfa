@@ -24,7 +24,7 @@
     "@siteimprove/alfa-iterable": "workspace:^0.22.3",
     "@siteimprove/alfa-json": "workspace:^0.22.3",
     "@types/browserslist": "^4.4.0",
-    "browserslist": "^4.16.6"
+    "browserslist": "^4.17.0"
   },
   "devDependencies": {
     "@mdn/browser-compat-data": "^3.1.3",
