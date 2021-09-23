@@ -21,6 +21,8 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.22.5](../../compare/v0.22.4...v0.22.5) (2021-09-23)
+
 ## [0.22.4](../../compare/v0.22.3...v0.22.4) (2021-09-23)
 
 ### Fixed

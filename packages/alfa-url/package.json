@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-url",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.4",
+  "version": "0.22.5",
   "license": "MIT",
   "description": "Functionality for working with immutable URLs",
   "repository": {
@@ -18,16 +18,16 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.22.4",
-    "@siteimprove/alfa-hash": "workspace:^0.22.4",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.4",
-    "@siteimprove/alfa-json": "workspace:^0.22.4",
-    "@siteimprove/alfa-option": "workspace:^0.22.4",
-    "@siteimprove/alfa-result": "workspace:^0.22.4",
-    "@siteimprove/alfa-sequence": "workspace:^0.22.4"
+    "@siteimprove/alfa-equatable": "workspace:^0.22.5",
+    "@siteimprove/alfa-hash": "workspace:^0.22.5",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.5",
+    "@siteimprove/alfa-json": "workspace:^0.22.5",
+    "@siteimprove/alfa-option": "workspace:^0.22.5",
+    "@siteimprove/alfa-result": "workspace:^0.22.5",
+    "@siteimprove/alfa-sequence": "workspace:^0.22.5"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.4"
+    "@siteimprove/alfa-test": "workspace:^0.22.5"
   },
   "publishConfig": {
     "access": "public",
