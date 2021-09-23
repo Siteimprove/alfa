@@ -23,6 +23,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [0.22.3](../../compare/v0.22.2...v0.22.3) (2021-09-20)
 
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now does not consider that fixed height element can be clipped by an ancestor. ([#928](../pull/928))
+
+## [0.22.3](../../compare/v0.22.2...v0.22.3) (2021-09-20)
+
 ## [0.22.2](../../compare/v0.22.1...v0.22.2) (2021-09-20)
 
 ### Fixed

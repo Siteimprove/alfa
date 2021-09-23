@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-iterable",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "license": "MIT",
   "description": "Functionality for working with structures that support iteration",
   "repository": {
@@ -18,19 +18,19 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-callback": "workspace:^0.22.3",
-    "@siteimprove/alfa-comparable": "workspace:^0.22.3",
-    "@siteimprove/alfa-equatable": "workspace:^0.22.3",
-    "@siteimprove/alfa-hash": "workspace:^0.22.3",
-    "@siteimprove/alfa-json": "workspace:^0.22.3",
-    "@siteimprove/alfa-mapper": "workspace:^0.22.3",
-    "@siteimprove/alfa-option": "workspace:^0.22.3",
-    "@siteimprove/alfa-predicate": "workspace:^0.22.3",
-    "@siteimprove/alfa-reducer": "workspace:^0.22.3",
-    "@siteimprove/alfa-refinement": "workspace:^0.22.3"
+    "@siteimprove/alfa-callback": "workspace:^0.22.4",
+    "@siteimprove/alfa-comparable": "workspace:^0.22.4",
+    "@siteimprove/alfa-equatable": "workspace:^0.22.4",
+    "@siteimprove/alfa-hash": "workspace:^0.22.4",
+    "@siteimprove/alfa-json": "workspace:^0.22.4",
+    "@siteimprove/alfa-mapper": "workspace:^0.22.4",
+    "@siteimprove/alfa-option": "workspace:^0.22.4",
+    "@siteimprove/alfa-predicate": "workspace:^0.22.4",
+    "@siteimprove/alfa-reducer": "workspace:^0.22.4",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.4"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.3"
+    "@siteimprove/alfa-test": "workspace:^0.22.4"
   },
   "publishConfig": {
     "access": "public",

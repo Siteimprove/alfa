@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-webdriver",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "license": "MIT",
   "description": "Integrations and utilities for the WebdriverIO browser automation library",
   "repository": {
@@ -18,14 +18,14 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-device": "workspace:^0.22.3",
-    "@siteimprove/alfa-dom": "workspace:^0.22.3",
-    "@siteimprove/alfa-http": "workspace:^0.22.3",
-    "@siteimprove/alfa-web": "workspace:^0.22.3",
+    "@siteimprove/alfa-device": "workspace:^0.22.4",
+    "@siteimprove/alfa-dom": "workspace:^0.22.4",
+    "@siteimprove/alfa-http": "workspace:^0.22.4",
+    "@siteimprove/alfa-web": "workspace:^0.22.4",
     "webdriverio": "^7.12.5"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.3"
+    "@siteimprove/alfa-test": "workspace:^0.22.4"
   },
   "publishConfig": {
     "access": "public",
