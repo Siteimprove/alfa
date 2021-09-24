@@ -100,29 +100,34 @@ export namespace Outcomes {
   export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
 }
 
-const heightCache = Cache.empty<Device, Cache<Element, Option<Element>>>();
-
+const verticallyClippingCache = Cache.empty<Device, Cache<Element, boolean>>();
 /**
- * Checks if an element ultimately clips its vertical overflow:
- * * as long as no offset ancestor has a fixed height, elements can grow and
- *   no overflow actually occurs;
- * * once a fixed height ancestor is found, an overflow possibly occurs and we
- *   switch to finding an ancestor that either handles it (scroll bar) or
- *   clips it.
+ * Checks if an element clips its vertical overflow by having an ancestor with
+ * both a fixed height and a clipping overflow (before any scrolling ancestor).
+ *
+ * Note that element with a fixed height will create an overflow anyway, and
+ * that may be clipped by any other ancestor. However, it is a common pattern to
+ * have `overflow: hidden` on the `<body>` element itself, given more than
+ * enough space for these overflowing elements to grow. Hence, we stick to a
+ * strict matching.
  */
 function isVerticallyClipping(device: Device): Predicate<Element> {
-  function fixedHeightAncestor(element: Element): Option<Element> {
-    return heightCache
-      .get(device, Cache.empty)
-      .get(element, () =>
-        hasFixedHeight(device)(element)
-          ? Option.of(element)
-          : getRelevantParent(element, device).flatMap(fixedHeightAncestor)
-      );
-  }
+  return function isClipping(element: Element): boolean {
+    return verticallyClippingCache.get(device, Cache.empty).get(element, () => {
+      if (
+        hasFixedHeight(device)(element) &&
+        overflow(element, device, "y") === Overflow.Clip
+      ) {
+        return true;
+      }
 
-  return (element) =>
-    fixedHeightAncestor(element).some(isClipping(device, "y"));
+      if (overflow(element, device, "y") === Overflow.Handle) {
+        return false;
+      }
+
+      return getRelevantParent(element, device).some(isClipping);
+    });
+  };
 }
 
 /**
@@ -142,27 +147,27 @@ function isHorizontallyClipping(device: Device): Predicate<Element> {
       case Overflow.Handle:
         return false;
       case Overflow.Overflow:
-        return getRelevantParent(element, device).some(isClipping(device, "x"));
+        return getRelevantParent(element, device).some(
+          isHorizontallyClippingOverflow(device)
+        );
     }
   };
 }
 
-const clippingCache = Cache.empty<
+const horizontallyClippingCache = Cache.empty<
   Device,
-  Cache<{ dimension: string }, Cache<Element, boolean>>
+  Cache<Element, boolean>
 >();
-
 /**
  * Checks whether the first offset ancestor that doesn't overflow is
  * clipping.
  */
-function isClipping(device: Device, dimension: "x" | "y"): Predicate<Element> {
+function isHorizontallyClippingOverflow(device: Device): Predicate<Element> {
   return function isClipping(element: Element): boolean {
-    return clippingCache
+    return horizontallyClippingCache
       .get(device, Cache.empty)
-      .get({ dimension }, Cache.empty)
       .get(element, () => {
-        switch (overflow(element, device, dimension)) {
+        switch (overflow(element, device, "x")) {
           case Overflow.Clip:
             return true;
           case Overflow.Handle:
