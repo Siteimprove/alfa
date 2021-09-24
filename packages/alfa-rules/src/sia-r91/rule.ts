@@ -90,7 +90,7 @@ export default Rule.Atomic.of<Page, Element>({
                         )
                       )
                   ),
-                () => Outcomes.GoodText,
+                () => Outcomes.WideEnough,
                 () => Outcomes.Important
               )
           ),

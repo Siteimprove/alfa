@@ -27,7 +27,7 @@ test("evaluate() passes on large enough value", async (t) => {
 
   t.deepEqual(await evaluate(R93, { document }), [
     passed(R93, target, {
-      1: Outcomes.GoodText,
+      1: Outcomes.WideEnough,
     }),
   ]);
 });
@@ -42,7 +42,7 @@ test("evaluate() passes on important cascaded styles", async (t) => {
 
   t.deepEqual(await evaluate(R93, { document }), [
     passed(R93, target, {
-      1: Outcomes.GoodText,
+      1: Outcomes.WideEnough,
     }),
   ]);
 });

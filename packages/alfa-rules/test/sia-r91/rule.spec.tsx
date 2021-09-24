@@ -27,7 +27,7 @@ test("evaluate() passes on large enough value", async (t) => {
 
   t.deepEqual(await evaluate(R91, { document }), [
     passed(R91, target, {
-      1: Outcomes.GoodText,
+      1: Outcomes.WideEnough,
     }),
   ]);
 });
@@ -42,7 +42,7 @@ test("evaluate() passes on important cascaded styles", async (t) => {
   
   t.deepEqual(await evaluate(R91, { document }), [
     passed(R91, target, {
-      1: Outcomes.GoodText,
+      1: Outcomes.WideEnough,
     }),
   ]);
 });
@@ -60,8 +60,8 @@ test(`evaluate() passes elements whose \`letter-spacing\` is overriden`, async (
   const document = h.document([target2]);
   
   t.deepEqual(await evaluate(R91, { document }), [
-    passed(R91, target2, { 1: Outcomes.GoodText }),
-    passed(R91, target1, { 1: Outcomes.GoodText }),
+    passed(R91, target2, { 1: Outcomes.WideEnough }),
+    passed(R91, target1, { 1: Outcomes.WideEnough }),
   ]);
 });
 
@@ -75,7 +75,7 @@ test(`evaluate() passes elements whose \`font-size\` is overriden`, async (t) =>
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R91, { document }), [
-    passed(R91, target, { 1: Outcomes.GoodText }),
+    passed(R91, target, { 1: Outcomes.WideEnough }),
   ]);
 });
 
@@ -89,7 +89,7 @@ test(`evaluate() passes elements with no text`, async (t) => {
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R91, { document }), [
-    passed(R91, target, { 1: Outcomes.GoodText }),
+    passed(R91, target, { 1: Outcomes.WideEnough }),
   ]);
 });
 

@@ -16,7 +16,7 @@ export function TextSpacing(name: Property.Name) {
       Diagnostic.of(`The \`${name}\` property is cascaded from another element`)
     ),
 
-    GoodText: Ok.of(
+    WideEnough: Ok.of(
       Diagnostic.of(
         `All text nodes have their \`${name}\` property either wide-enough or not cascaded from the target`
       )
