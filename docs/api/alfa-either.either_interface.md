@@ -27,5 +27,7 @@ export interface Either<L, R = L> extends Functor<R>, Applicative<R>, Monad<R>, 
 |  [map(mapper)](./alfa-either.either_interface.map_1_methodsignature.md) |  |
 |  [reduce(reducer, accumulator)](./alfa-either.either_interface.reduce_1_methodsignature.md) |  |
 |  [right()](./alfa-either.either_interface.right_1_methodsignature.md) |  |
+|  [teeLeft(callback)](./alfa-either.either_interface.teeleft_1_methodsignature.md) |  |
+|  [teeRight(callback)](./alfa-either.either_interface.teeright_1_methodsignature.md) |  |
 |  [toJSON()](./alfa-either.either_interface.tojson_1_methodsignature.md) |  |
 

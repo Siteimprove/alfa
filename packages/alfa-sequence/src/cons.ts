@@ -674,7 +674,7 @@ export class Cons<T> implements Sequence<T> {
     return Sequence.fromArray(Array.sortWith(this.toArray(), comparer));
   }
 
-  public compare(
+  public compare<T>(
     this: Sequence<Comparable<T>>,
     iterable: Iterable<T>
   ): Comparison {

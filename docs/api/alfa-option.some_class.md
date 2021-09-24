@@ -44,6 +44,7 @@ export declare class Some<T> implements Option<T>
 |  [reject(refinement)](./alfa-option.some_class.reject_1_method.md) |  |  |
 |  [reject(predicate)](./alfa-option.some_class.reject_2_method.md) |  |  |
 |  [some(predicate)](./alfa-option.some_class.some_1_method.md) |  |  |
+|  [tee(callback)](./alfa-option.some_class.tee_1_method.md) |  |  |
 |  [toArray()](./alfa-option.some_class.toarray_1_method.md) |  |  |
 |  [toJSON()](./alfa-option.some_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-option.some_class.tostring_1_method.md) |  |  |

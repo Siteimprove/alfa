@@ -32,6 +32,8 @@ export declare class Right<R> implements Either<never, R>
 |  [of(value)](./alfa-either.right_class.of_1_method.md) | <code>static</code> |  |
 |  [reduce(reducer, accumulator)](./alfa-either.right_class.reduce_1_method.md) |  |  |
 |  [right()](./alfa-either.right_class.right_1_method.md) |  |  |
+|  [teeLeft()](./alfa-either.right_class.teeleft_1_method.md) |  |  |
+|  [teeRight(callback)](./alfa-either.right_class.teeright_1_method.md) |  |  |
 |  [toJSON()](./alfa-either.right_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-either.right_class.tostring_1_method.md) |  |  |
 

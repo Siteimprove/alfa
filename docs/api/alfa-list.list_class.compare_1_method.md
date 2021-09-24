@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-compare(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison;
+compare<T>(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison;
 ```
 
 ## Parameters

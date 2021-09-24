@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<Q, S, C, A>(type: Q, uri: string, message: string, subject: S, context: C): Question<Q, S, C, A>;
+static of<Q, S, C, A, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): Question<Q, S, C, A, A, U>;
 ```
 
 ## Parameters
@@ -15,12 +15,12 @@ static of<Q, S, C, A>(type: Q, uri: string, message: string, subject: S, context
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  type | Q |  |
-|  uri | string |  |
+|  uri | U |  |
 |  message | string |  |
 |  subject | S |  |
 |  context | C |  |
 
 <b>Returns:</b>
 
-[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A&gt;
+[Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, A, U&gt;
 

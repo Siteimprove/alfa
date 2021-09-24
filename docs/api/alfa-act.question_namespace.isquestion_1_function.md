@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isQuestion<Q, S, C, A, T = A>(value: unknown): value is Question<Q, S, C, A, T>;
+function isQuestion<Q, S, C, A, T = A, U extends string = string>(value: unknown): value is Question<Q, S, C, A, T, U>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isQuestion<Q, S, C, A, T = A>(value: unknown): value is Question<Q, S, 
 
 <b>Returns:</b>
 
-value is [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, T&gt;
+value is [Question](./alfa-act.question_class.md)<!-- -->&lt;Q, S, C, A, T, U&gt;
 

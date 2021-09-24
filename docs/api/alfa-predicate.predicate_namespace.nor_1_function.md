@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function nor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
+function nor<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  left | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt; |  |
-|  right | [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt; |  |
+|  predicates | Array&lt;[Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;T, A&gt;&gt; |  |
 
 <b>Returns:</b>
 

@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> 
+export declare class Question<Q, S, C, A, T = A, U extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> 
 ```
 <b>Implements:</b> [Functor](./alfa-functor.functor_interface.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative_interface.md)<!-- -->&lt;T&gt;, [Monad](./alfa-monad.monad_interface.md)<!-- -->&lt;T&gt;, [Serializable](./alfa-json.serializable_interface.md)<!-- -->&lt;[Question.JSON](./alfa-act.question_namespace.json_interface.md)<!-- -->&lt;Q, S, C&gt;&gt;
 
@@ -22,20 +22,31 @@ export declare class Question<Q, S, C, A, T = A> implements Functor<T>, Applicat
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [\_context](./alfa-act.question_class._context_property.md) |  | C |  |
+|  [\_message](./alfa-act.question_class._message_property.md) |  | string |  |
+|  [\_quester](./alfa-act.question_class._quester_property.md) |  | [Mapper](./alfa-mapper.mapper_typealias.md)<!-- -->&lt;A, T&gt; |  |
+|  [\_subject](./alfa-act.question_class._subject_property.md) |  | S |  |
+|  [\_type](./alfa-act.question_class._type_property.md) |  | Q |  |
+|  [\_uri](./alfa-act.question_class._uri_property.md) |  | U |  |
 |  [context](./alfa-act.question_class.context_property.md) |  | C |  |
 |  [message](./alfa-act.question_class.message_property.md) |  | string |  |
 |  [subject](./alfa-act.question_class.subject_property.md) |  | S |  |
 |  [type](./alfa-act.question_class.type_property.md) |  | Q |  |
-|  [uri](./alfa-act.question_class.uri_property.md) |  | string |  |
+|  [uri](./alfa-act.question_class.uri_property.md) |  | U |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [answer(answer)](./alfa-act.question_class.answer_1_method.md) |  |  |
+|  [answerIf(condition, answer)](./alfa-act.question_class.answerif_1_method.md) |  |  |
+|  [answerIf(predicate, answer)](./alfa-act.question_class.answerif_2_method.md) |  |  |
+|  [answerIf(answer)](./alfa-act.question_class.answerif_3_method.md) |  |  |
+|  [answerIf(answer)](./alfa-act.question_class.answerif_4_method.md) |  |  |
 |  [apply(mapper)](./alfa-act.question_class.apply_1_method.md) |  |  |
 |  [flatMap(mapper)](./alfa-act.question_class.flatmap_1_method.md) |  |  |
 |  [flatten(this)](./alfa-act.question_class.flatten_1_method.md) |  |  |
+|  [isRhetorical()](./alfa-act.question_class.isrhetorical_1_method.md) |  |  |
 |  [map(mapper)](./alfa-act.question_class.map_1_method.md) |  |  |
 |  [of(type, uri, message, subject, context)](./alfa-act.question_class.of_1_method.md) | <code>static</code> |  |
 |  [toJSON()](./alfa-act.question_class.tojson_1_method.md) |  |  |

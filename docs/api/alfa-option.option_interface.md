@@ -21,25 +21,29 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
 |  [apply(mapper)](./alfa-option.option_interface.apply_1_methodsignature.md) |  |
 |  [compare(this, option)](./alfa-option.option_interface.compare_1_methodsignature.md) |  |
 |  [compareWith(option, comparer)](./alfa-option.option_interface.comparewith_1_methodsignature.md) |  |
-|  [every(predicate)](./alfa-option.option_interface.every_1_methodsignature.md) |  |
+|  [every(refinement)](./alfa-option.option_interface.every_1_methodsignature.md) |  |
+|  [every(predicate)](./alfa-option.option_interface.every_2_methodsignature.md) |  |
 |  [filter(refinement)](./alfa-option.option_interface.filter_1_methodsignature.md) |  |
 |  [filter(predicate)](./alfa-option.option_interface.filter_2_methodsignature.md) |  |
 |  [flatMap(mapper)](./alfa-option.option_interface.flatmap_1_methodsignature.md) |  |
 |  [flatten(this)](./alfa-option.option_interface.flatten_1_methodsignature.md) |  |
-|  [get()](./alfa-option.option_interface.get_1_methodsignature.md) |  |
+|  [get(message)](./alfa-option.option_interface.get_1_methodsignature.md) |  |
 |  [getOr(value)](./alfa-option.option_interface.getor_1_methodsignature.md) |  |
 |  [getOrElse(value)](./alfa-option.option_interface.getorelse_1_methodsignature.md) |  |
 |  [includes(value)](./alfa-option.option_interface.includes_1_methodsignature.md) |  |
 |  [isNone()](./alfa-option.option_interface.isnone_1_methodsignature.md) |  |
 |  [isSome()](./alfa-option.option_interface.issome_1_methodsignature.md) |  |
 |  [map(mapper)](./alfa-option.option_interface.map_1_methodsignature.md) |  |
-|  [none(predicate)](./alfa-option.option_interface.none_1_methodsignature.md) |  |
+|  [none(refinement)](./alfa-option.option_interface.none_1_methodsignature.md) |  |
+|  [none(predicate)](./alfa-option.option_interface.none_2_methodsignature.md) |  |
 |  [or(option)](./alfa-option.option_interface.or_1_methodsignature.md) |  |
 |  [orElse(option)](./alfa-option.option_interface.orelse_1_methodsignature.md) |  |
 |  [reduce(reducer, accumulator)](./alfa-option.option_interface.reduce_1_methodsignature.md) |  |
 |  [reject(refinement)](./alfa-option.option_interface.reject_1_methodsignature.md) |  |
 |  [reject(predicate)](./alfa-option.option_interface.reject_2_methodsignature.md) |  |
-|  [some(predicate)](./alfa-option.option_interface.some_1_methodsignature.md) |  |
+|  [some(refinement)](./alfa-option.option_interface.some_1_methodsignature.md) |  |
+|  [some(predicate)](./alfa-option.option_interface.some_2_methodsignature.md) |  |
+|  [tee(callback)](./alfa-option.option_interface.tee_1_methodsignature.md) |  |
 |  [toArray()](./alfa-option.option_interface.toarray_1_methodsignature.md) |  |
 |  [toJSON()](./alfa-option.option_interface.tojson_1_methodsignature.md) |  |
 

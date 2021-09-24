@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -66,6 +67,15 @@ export class Right<R> implements Either<never, R> {
 
   public right(): Option<R> {
     return Option.of(this._value);
+  }
+
+  public teeLeft(): Right<R> {
+    return this;
+  }
+
+  public teeRight(callback: Callback<R>): Right<R> {
+    callback(this._value);
+    return this;
   }
 
   public equals<R>(value: Right<R>): boolean;

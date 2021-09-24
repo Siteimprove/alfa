@@ -21,6 +21,60 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.22.5](../../compare/v0.22.4...v0.22.5) (2021-09-23)
+
+## [0.22.4](../../compare/v0.22.3...v0.22.4) (2021-09-23)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now does not consider that fixed height element can be clipped by an ancestor. ([#928](../pull/928))
+
+## [0.22.3](../../compare/v0.22.2...v0.22.3) (2021-09-20)
+
+## [0.22.2](../../compare/v0.22.1...v0.22.2) (2021-09-20)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly separate detection of horizontal and vertical overflows, correctly considers interposed elements that handle overflow, and correctly restrict text overflow to text nodes parent. ([#908](../issues/908), [#921](../issues/921), [#922](../issues/922), [#924](../pull/924))   
+
+## [0.22.1](../../compare/v0.22.0...v0.22.1) (2021-09-17)
+
+### Fixed
+
+- [@siteimprove/alfa-collection](packages/alfa-collection): The `Indexed#compare()` method is now correctly typed and no longer double wraps its `T` as `Comparable<Comparable<T>>`.
+
+- [@siteimprove/alfa-option](packages/alfa-option), [@siteimprove/alfa-result](packages/alfa-result): The existential methods on `Option<T>` and `Result<T, E>`, such as `#includes()`, `#some()`, and `#every()`, now correctly narrow types.
+
+## [0.22.0](../../compare/v0.21.2...v0.22.0) (2021-09-13)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Implementations of SIA-R60, SIA-R70, SIA-R76, SIA-R79, and SIA-R109 are now available. ([#869](../../pull/869), [#870](../../pull/870), [#874](../../pull/874), [#901](../../pull/901), [#910](../../pull/910))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The style system now supports the `text-align` CSS property. ([#899](../../pull/899))
+
+- [@siteimprove/alfa-act](packages/alfa-act): A type for rhetorical questions, whose answer is contained in the question, is added, together with `Question.answerIf` to conditionally answer questions. ([#903](../../pull/903))
+
+- [@siteimprove/alfa-tuple](packages/alfa-tuple): A package for handling heterogeneous array is now available. ([#894](../../pull/894))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts differences in `text-align` as a distinguishing feature. ([#823](../../issues/823), [#900](../../pull/900))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R10 now isn't applicable on `on`/`off` `autocomplete` attribute; and doesn't check whether the `autocomplete` tokens are appropriate for the `<input>` type. ([#891](../../issues/891), [#911](../../pull/911))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R87 now returns `cantTell` instead of failing automatically when it cannot determine whether the first focusable element is visible on focus. ([#757](../../issues/757), [#902](../../pull/902))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R7 now ignores `lang` attributes that only affect whitespace. ([#892](../../issues/892), [#905](../../pull/905))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now return `cantTell` when detecting a non-ancestral background that is asolutely positioned. ([#758](../../issues/758), [#907](../../pull/907))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `value` attribute of `<input>` element is now correctly mapped to `aria-valuenow`. ([#909](../../issues/909), [#913](../../pull/913))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R49 now accepts native `<audio>` and `<video>` control as correct sound control mechanisms. ([#920](../../pull/920))
+
 ## [0.21.2](../../compare/v0.21.1...v0.21.2) (2021-08-23)
 
 ### Fixed

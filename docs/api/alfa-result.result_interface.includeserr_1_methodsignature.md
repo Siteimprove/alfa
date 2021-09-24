@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-includesErr(error: E): boolean;
+includesErr(error: E): this is Err<E>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ includesErr(error: E): boolean;
 
 <b>Returns:</b>
 
-boolean
+this is [Err](./alfa-result.err_class.md)<!-- -->&lt;E&gt;
 
