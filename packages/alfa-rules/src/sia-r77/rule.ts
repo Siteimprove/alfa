@@ -4,7 +4,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Table, Cell } from "@siteimprove/alfa-table";
-import { Criterion, Technique } from "@siteimprove/alfa-wcag";
+import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
@@ -65,11 +65,11 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const [dataCell] = data.get(target)!;
+        const [cell] = data.get(target)!;
 
         return {
           1: expectation(
-            dataCell.headers.isEmpty(),
+            cell.headers.isEmpty(),
             () => Outcomes.IsNotAssignedToHeaderCell,
             () => Outcomes.IsAssignedToHeaderCell
           ),
