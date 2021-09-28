@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { isRendered, isVisible, hasAttribute } from "../common/predicate";
 
-const { or, not, equals, test } = Predicate;
+const { equals } = Predicate;
 const { hasName, isElement } = Element;
 const { isText } = Text;
 const { and } = Refinement;
