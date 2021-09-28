@@ -65,7 +65,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const [cell] = data.get(target)!;
+        const cell = data.get(target).get();
 
         return {
           1: expectation(
