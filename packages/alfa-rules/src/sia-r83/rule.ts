@@ -161,12 +161,23 @@ const horizontallyClippingCache = Cache.empty<
 /**
  * Checks whether the first offset ancestor that doesn't overflow is
  * clipping.
+ *
+ * When encountering an ancestor which is a wrapping flex container, we assume
+ * that this ancestor is correctly wrapping all its children and that no
+ * individual child overflows enough to overflow the parent (when alone on a
+ * line). This is not fully correct (since an individual child might overflow
+ * enough that it would overflow the flex-wrapping ancestor even if alone on a
+ * line); but this seems to be a frequent use case.
  */
 function isHorizontallyClippingOverflow(device: Device): Predicate<Element> {
   return function isClipping(element: Element): boolean {
     return horizontallyClippingCache
       .get(device, Cache.empty)
       .get(element, () => {
+        if (isWrappingFlexContainer(device)(element)) {
+          // The element handles overflow by wrapping its flex descendants
+          return false;
+        }
         switch (overflow(element, device, "x")) {
           case Overflow.Clip:
             return true;
@@ -251,4 +262,21 @@ function getRelevantParent(element: Element, device: Device): Option<Element> {
   return isPositioned(device, "static")(element)
     ? element.parent({ flattened: true }).filter(isElement)
     : getOffsetParent(element, device);
+}
+
+function isWrappingFlexContainer(device: Device): Predicate<Element> {
+  return (element) => {
+    const style = Style.from(element, device);
+    const {
+      value: { values: display },
+    } = style.computed("display");
+
+    if (display[1]?.value === "flex") {
+      // The element is a flex container
+      const { value: flexWrap } = style.computed("flex-wrap");
+      return flexWrap.value !== "nowrap";
+    }
+
+    return false;
+  };
 }
