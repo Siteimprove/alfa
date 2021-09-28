@@ -391,3 +391,30 @@ test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
     passed(R83, target2, { 1: Outcomes.WrapsText }),
   ]);
 });
+
+test(`evaluate() passes texts in a wrapping flex container`, async (t) => {
+  const target1 = h.text("Hello");
+  const target2 = h.text("World");
+
+  const document = h.document(
+    [
+      <div class="clip">
+        <div class="flex">
+          <span>{target1}</span> <span>{target2}</span>
+        </div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", { whiteSpace: "nowrap" }),
+        h.rule.style(".clip", { overflowX: "hidden" }),
+        h.rule.style(".flex", { display: "flex", flexWrap: "wrap" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target1, { 1: Outcomes.WrapsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
+  ]);
+});
