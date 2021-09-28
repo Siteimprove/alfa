@@ -1,9 +1,11 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
 import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Set } from "@siteimprove/alfa-set";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -88,12 +90,12 @@ export function parsePropertiesList(
   separator: Array<string>,
   equal: Array<string>
 ): Map<string, string> {
-  const valueMap = new Map<string, string>();
+  let valueMap = Map.empty<string, string>();
 
-  const sepSet = new Set(separator);
-  const allSpecial = new Set([...ignored, ...separator, ...equal]);
-  const separatorAndEqual = new Set([...separator, ...equal]);
-  const notSeparator = new Set([...ignored, ...equal]);
+  const sepSet = Set.from(separator);
+  const allSpecial = Set.of(...ignored, ...separator, ...equal);
+  const separatorAndEqual = Set.of(...separator, ...equal);
+  const notSeparator = Set.of(...ignored, ...equal);
 
   const { length } = propertiesList;
   let i = 0;
@@ -138,7 +140,7 @@ export function parsePropertiesList(
       value = propertiesList.substring(start, i);
 
       if (value.length > 0) {
-        valueMap.set(name, value);
+        valueMap = valueMap.set(name, value);
       }
     }
   }
@@ -155,32 +157,31 @@ export function parsePropertiesList(
  * This seems to be the iOS/Safari algorithm and other browsers might handle it
  * in unknown ways.
  */
-export function parseMaximumScale(scale: string | undefined): Option<number> {
-  switch (scale) {
-    case undefined:
-      return None;
+export function parseMaximumScale(scale: Option<string>): Option<number> {
+  return scale.flatMap((scale) => {
+    switch (scale) {
+      case "yes":
+        return Option.of(1);
 
-    case "yes":
-      return Option.of(1);
+      case "device-width":
+      case "device-height":
+        return Option.of(10);
 
-    case "device-width":
-    case "device-height":
-      return Option.of(10);
+      case "no":
+        return Option.of(0.1);
 
-    case "no":
-      return Option.of(0.1);
+      default:
+        const scaleValue = Number(scale);
 
-    default:
-      const scaleValue = Number(scale);
+        if (scaleValue < 0) {
+          return None;
+        }
 
-      if (scaleValue < 0) {
-        return None;
-      }
-
-      return Option.of(
-        isNaN(scaleValue) ? 0.1 : Real.clamp(scaleValue, 0.1, 10)
-      );
-  }
+        return Option.of(
+          isNaN(scaleValue) ? 0.1 : Real.clamp(scaleValue, 0.1, 10)
+        );
+    }
+  });
 }
 
 /**
@@ -193,25 +194,22 @@ export function parseMaximumScale(scale: string | undefined): Option<number> {
  * in unknown ways.
  */
 export function parseUserScalable(
-  scalable: string | undefined
+  scalable: Option<string>
 ): Option<"zoom" | "fixed"> {
-  switch (scalable) {
-    case undefined:
-      return None;
+  return scalable.map((scalable) => {
+    switch (scalable) {
+      case "yes":
+      case "device-width":
+      case "device-height":
+        return "zoom";
 
-    case "yes":
-    case "device-width":
-    case "device-height":
-      return Option.of("zoom");
+      case "no":
+        return "fixed";
 
-    case "no":
-      return Option.of("fixed");
+      default:
+        const scalableValue = Number(scalable);
 
-    default:
-      const scalableValue = Number(scalable);
-
-      return Option.of(
-        scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed"
-      );
-  }
+        return scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed";
+    }
+  });
 }

@@ -124,7 +124,11 @@ export class Scraper {
           ),
         ]);
       } catch (err) {
-        return Err.of(err.message);
+        if (err instanceof Error) {
+          return Err.of(err.message);
+        } else {
+          return Err.of(`${err}`);
+        }
       }
 
       await page.setViewport({

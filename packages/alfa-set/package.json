@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-set",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.1",
+  "version": "0.22.5",
   "license": "MIT",
   "description": "An implementation of an immutable set structure, based on a hash array mapped trie",
   "repository": {
@@ -18,21 +18,21 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^0.22.1",
-    "@siteimprove/alfa-callback": "workspace:^0.22.1",
-    "@siteimprove/alfa-collection": "workspace:^0.22.1",
-    "@siteimprove/alfa-hash": "workspace:^0.22.1",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.1",
-    "@siteimprove/alfa-json": "workspace:^0.22.1",
-    "@siteimprove/alfa-map": "workspace:^0.22.1",
-    "@siteimprove/alfa-mapper": "workspace:^0.22.1",
-    "@siteimprove/alfa-option": "workspace:^0.22.1",
-    "@siteimprove/alfa-predicate": "workspace:^0.22.1",
-    "@siteimprove/alfa-reducer": "workspace:^0.22.1",
-    "@siteimprove/alfa-refinement": "workspace:^0.22.1"
+    "@siteimprove/alfa-array": "workspace:^0.22.5",
+    "@siteimprove/alfa-callback": "workspace:^0.22.5",
+    "@siteimprove/alfa-collection": "workspace:^0.22.5",
+    "@siteimprove/alfa-hash": "workspace:^0.22.5",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.5",
+    "@siteimprove/alfa-json": "workspace:^0.22.5",
+    "@siteimprove/alfa-map": "workspace:^0.22.5",
+    "@siteimprove/alfa-mapper": "workspace:^0.22.5",
+    "@siteimprove/alfa-option": "workspace:^0.22.5",
+    "@siteimprove/alfa-predicate": "workspace:^0.22.5",
+    "@siteimprove/alfa-reducer": "workspace:^0.22.5",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.5"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.1"
+    "@siteimprove/alfa-test": "workspace:^0.22.5"
   },
   "publishConfig": {
     "access": "public",

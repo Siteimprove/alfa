@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-trampoline",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.1",
+  "version": "0.22.5",
   "license": "MIT",
   "description": "An implementation of a trampoline structure, which is used for achieving tail-recursive function calls without relying on built-in language support",
   "repository": {
@@ -18,19 +18,19 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-applicative": "workspace:^0.22.1",
-    "@siteimprove/alfa-array": "workspace:^0.22.1",
-    "@siteimprove/alfa-callback": "workspace:^0.22.1",
-    "@siteimprove/alfa-foldable": "workspace:^0.22.1",
-    "@siteimprove/alfa-functor": "workspace:^0.22.1",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.1",
-    "@siteimprove/alfa-mapper": "workspace:^0.22.1",
-    "@siteimprove/alfa-monad": "workspace:^0.22.1",
-    "@siteimprove/alfa-reducer": "workspace:^0.22.1",
-    "@siteimprove/alfa-thunk": "workspace:^0.22.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.22.5",
+    "@siteimprove/alfa-array": "workspace:^0.22.5",
+    "@siteimprove/alfa-callback": "workspace:^0.22.5",
+    "@siteimprove/alfa-foldable": "workspace:^0.22.5",
+    "@siteimprove/alfa-functor": "workspace:^0.22.5",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.5",
+    "@siteimprove/alfa-mapper": "workspace:^0.22.5",
+    "@siteimprove/alfa-monad": "workspace:^0.22.5",
+    "@siteimprove/alfa-reducer": "workspace:^0.22.5",
+    "@siteimprove/alfa-thunk": "workspace:^0.22.5"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.1"
+    "@siteimprove/alfa-test": "workspace:^0.22.5"
   },
   "publishConfig": {
     "access": "public",
