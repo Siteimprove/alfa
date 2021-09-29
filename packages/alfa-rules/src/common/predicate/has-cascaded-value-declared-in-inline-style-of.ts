@@ -16,8 +16,9 @@ export function hasCascadedValueDeclaredInInlineStyleOf(
       source.some((cascaded) =>
         context.style.some((block) =>
           block
-            // We need reference equality here, not .equals as we want to check if the cascaded
-            // value is exactly the declared one, not just a similar one.
+            // We need reference equality here, not .equals as we want to check
+            // if the cascaded value is exactly the declared one, not just a
+            // similar one.
             .declaration((declared) => cascaded === declared)
             .isSome()
         )

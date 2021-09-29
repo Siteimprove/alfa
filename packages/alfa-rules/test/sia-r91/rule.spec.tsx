@@ -39,7 +39,7 @@ test("evaluate() passes on important cascaded styles", async (t) => {
     [target],
     [h.sheet([h.rule.style("div", { letterSpacing: "0.1em !important" })])]
   );
-  
+
   t.deepEqual(await evaluate(R91, { document }), [
     passed(R91, target, {
       1: Outcomes.WideEnough,
@@ -58,7 +58,7 @@ test(`evaluate() passes elements whose \`letter-spacing\` is overriden`, async (
   );
 
   const document = h.document([target2]);
-  
+
   t.deepEqual(await evaluate(R91, { document }), [
     passed(R91, target2, { 1: Outcomes.WideEnough }),
     passed(R91, target1, { 1: Outcomes.WideEnough }),
@@ -114,6 +114,3 @@ test("evaluate() is inapplicable if letter-spacing is not declared in the style"
 
   t.deepEqual(await evaluate(R91, { document }), [inapplicable(R91)]);
 });
-
-
-

@@ -4,7 +4,6 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Style } from "@siteimprove/alfa-style";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
 
@@ -47,7 +46,6 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-
         return {
           1: expectation(
             !isImportant(device, property)(target),
