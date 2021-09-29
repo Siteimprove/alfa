@@ -1,21 +1,27 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Style } from "@siteimprove/alfa-style";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/expectation";
-import { hasCascadedValueDeclaredInInlineStyle } from "../common/predicate/has-cascaded-value-declared-in-inline-style";
 
-import { hasInlineStyleProperty } from "../common/predicate/has-inline-style-property";
-import { isVisible } from "../common/predicate/is-visible";
+import {
+  hasInlineStyleProperty,
+  isVisible,
+  isWhitespace,
+  isImportant,
+  hasCascadedValueDeclaredInInlineStyleOf,
+  isWideEnough,
+} from "../common/predicate";
 
-const { and } = Predicate;
+const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
+const { not, or, test } = Predicate;
+const { isText } = Text;
 
 const property = "word-spacing";
 
@@ -28,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
         return document
           .descendants({ nested: true, flattened: true })
           .filter(
-            Refinement.and(
+            and(
               isElement,
               and(
                 hasNamespace(Namespace.HTML),
@@ -40,32 +46,54 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const style = Style.from(target, device);
-        const wordSpacing = style.computed(property);
-
         return {
           1: expectation(
-            wordSpacing.source.none((declaration) => declaration.important),
+            !isImportant(device, property)(target),
             () => Outcomes.NotImportant,
             () =>
               expectation(
-                wordSpacing.some((wordSpacing) =>
-                  style
-                    .computed("font-size")
-                    .some(
-                      (fontSize) => wordSpacing.value >= 0.16 * fontSize.value
-                    )
-                ),
-                () => Outcomes.AboveMinimum,
-                () =>
-                  expectation(
-                    !hasCascadedValueDeclaredInInlineStyle(
-                      device,
-                      property
-                    )(target),
-                    () => Outcomes.Cascaded,
-                    () => Outcomes.Important
+                // We can't really cache that bit because the context of
+                // hasCascadedValueDeclaredInInlineStyleOf is the test target
+                // and therefore won't be shared between targets.
+                // We could try to cache something like
+                // element => {all elements whose cascaded `letter-spacing` is
+                // declared in the same place} but that is not transitive (e.g.
+                // div > p > div could have both <div> using the same source,
+                // but not the <p>.
+                // In the end, we assume that 1. !important properties in style
+                // attributes are not frequent (few test targets); and 2. this
+                // mostly happens close to the bottom of the tree (few
+                // descendants). So that we can hopefully afford to pay the
+                // price each time.
+                target
+                  .inclusiveDescendants({ flattened: true })
+                  .filter(
+                    and(isText, (text) => test(not(isWhitespace), text.data))
                   )
+                  .every((text) =>
+                    text
+                      .parent({ flattened: true })
+                      .filter(isElement)
+                      .some(
+                        or(
+                          isWideEnough(
+                            device,
+                            property,
+                            (wordSpacing) => (fontSize) =>
+                              wordSpacing.value >= 0.16 * fontSize.value
+                          ),
+                          not(
+                            hasCascadedValueDeclaredInInlineStyleOf(
+                              target,
+                              device,
+                              property
+                            )
+                          )
+                        )
+                      )
+                  ),
+                () => Outcomes.WideEnough,
+                () => Outcomes.Important
               )
           ),
         };
