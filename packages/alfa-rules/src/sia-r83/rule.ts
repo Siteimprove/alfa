@@ -253,12 +253,17 @@ function horizontalTextOverflow(element: Element, device: Device): Overflow {
 }
 
 function hasFixedHeight(device: Device): Predicate<Element> {
+  // Use the cascaded value to avoid lengths being resolved to pixels.
+  // Otherwise, we won't be able to tell if a font relative length was
+  // used.
   return hasCascadedStyle(
     "height",
     (height, source) =>
       height.type === "length" &&
       height.value > 0 &&
       !height.isFontRelative() &&
+      // For heights set via the `style` attribute we assume that its value is
+      // controlled by JavaScript and is adjusted as the content scales.
       source.some((declaration) => declaration.parent.isSome()),
     device
   );
