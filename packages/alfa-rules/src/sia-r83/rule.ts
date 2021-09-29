@@ -7,6 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -24,7 +25,7 @@ import { getOffsetParent } from "../common/expectation/get-offset-parent";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({
@@ -33,7 +34,12 @@ export default Rule.Atomic.of<Page, Text>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return visit(document);
+        return document
+          .inclusiveDescendants({ composed: true, flattened: true })
+          .find(and(isElement, hasName("body")))
+          .map((body) => body.children())
+          .getOr(Sequence.empty())
+          .flatMap((node) => Sequence.from(visit(node)));
 
         function* visit(node: Node, collect: boolean = false): Iterable<Text> {
           if (
