@@ -10,7 +10,11 @@ test("evaluate() passes a text node that truncates overflow using ellipsis", asy
   const target = h.text("Hello world");
 
   const document = h.document(
-    [<div>{target}</div>],
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -35,9 +39,11 @@ test(`evaluates() fails a text node overflowing its parent as text and clipped
 
   const document = h.document(
     [
-      <div>
-        <span>{target}</span>
-      </div>,
+      <body>
+        <div>
+          <span>{target}</span>
+        </div>
+      </body>,
     ],
     [
       h.sheet([
@@ -62,9 +68,11 @@ test(`evaluate() passes a text node that is non-statically positioned with a
 
   const document = h.document(
     [
-      <div class="clipping">
-        <div class="absolute">{target}</div>
-      </div>,
+      <body>
+        <div class="clipping">
+          <div class="absolute">{target}</div>
+        </div>
+      </body>,
     ],
     [
       h.sheet([
@@ -91,7 +99,11 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
   const target = h.text("Hello world");
 
   const document = h.document(
-    [<div>{target}</div>],
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -114,7 +126,11 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
   const target = h.text("Hello world");
 
   const document = h.document(
-    [<div>{target}</div>],
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -137,7 +153,11 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
   const target = h.text("Hello world");
 
   const document = h.document(
-    [<div>{target}</div>],
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -161,9 +181,11 @@ test(`evaluate() fails a text node that is non-statically positioned with a
 
   const document = h.document(
     [
-      <div class="clipping">
-        <div class="absolute">{target}</div>
-      </div>,
+      <body>
+        <div class="clipping">
+          <div class="absolute">{target}</div>
+        </div>
+      </body>,
     ],
     [
       h.sheet([
@@ -188,7 +210,11 @@ test(`evaluate() fails a text node that is non-statically positioned with a
 
 test("evaluate() is inapplicable to a text node that is not visible", async (t) => {
   const document = h.document(
-    [<div hidden>Hello world</div>],
+    [
+      <body>
+        <div hidden>Hello world</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -205,7 +231,11 @@ test("evaluate() is inapplicable to a text node that is not visible", async (t) 
 test(`evaluate() is inapplicable to a text node that is excluded from the
       accessibility tree using the \`aria-hidden\` attribute`, async (t) => {
   const document = h.document(
-    [<div aria-hidden="true">Hello world</div>],
+    [
+      <body>
+        <div aria-hidden="true">Hello world</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -225,13 +255,15 @@ test(`evaluate() passes a text node with a fixed absolute height set
 
   const document = h.document(
     [
-      <div
-        style={{
-          height: "20px",
-        }}
-      >
-        {target}
-      </div>,
+      <body>
+        <div
+          style={{
+            height: "20px",
+          }}
+        >
+          {target}
+        </div>
+      </body>,
     ],
     [
       h.sheet([
@@ -251,7 +283,11 @@ test(`evaluate() passes a text node with a fixed relative height`, async (t) => 
   const target = h.text("Hello world");
 
   const document = h.document(
-    [<div>{target}</div>],
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -274,9 +310,11 @@ test(`evaluate() passes a text node that resets the white-space
 
     const document = h.document(
       [
-        <p>
-          <span>{target}</span>
-        </p>,
+        <body>
+          <p>
+            <span>{target}</span>
+          </p>
+        </body>,
       ],
       [
         h.sheet([
@@ -301,7 +339,11 @@ test(`evaluate() passes a text node that resets the white-space
 test(`evaluate() is inapplicable to a text node that would clip if it was non-
       empty`, async (t) => {
   const document = h.document(
-    [<div> </div>],
+    [
+      <body>
+        <div> </div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -320,9 +362,11 @@ test(`evaluate() passes a text node with a scrolling ancestor inside a clipping 
 
   const document = h.document(
     [
-      <div class="clipping">
-        <div class="scrolling">{target}</div>
-      </div>,
+      <body>
+        <div class="clipping">
+          <div class="scrolling">{target}</div>
+        </div>
+      </body>,
     ],
     [
       h.sheet([
@@ -341,7 +385,11 @@ test(`evaluate() fails a text node that is vertically clipped but horizontally w
   const target = h.text("Hello world");
 
   const document = h.document(
-    [<div>{target}</div>],
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
     [
       h.sheet([
         h.rule.style("div", {
@@ -369,10 +417,12 @@ test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
 
   const document = h.document(
     [
-      <div class="possibly-clipping">
-        {div1}
-        {div2}
-      </div>,
+      <body>
+        <div class="possibly-clipping">
+          {div1}
+          {div2}
+        </div>
+      </body>,
     ],
     [
       h.sheet([
@@ -390,4 +440,51 @@ test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
     failed(R83, target1, { 1: Outcomes.ClipsText }),
     passed(R83, target2, { 1: Outcomes.WrapsText }),
   ]);
+});
+
+test(`evaluate() passes texts in a wrapping flex container`, async (t) => {
+  const target1 = h.text("Hello");
+  const target2 = h.text("World");
+
+  const document = h.document(
+    [
+      <body>
+        <div class="clip">
+          <div class="flex">
+            <span>{target1}</span> <span>{target2}</span>
+          </div>
+        </div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", { whiteSpace: "nowrap" }),
+        h.rule.style(".clip", { overflowX: "hidden" }),
+        h.rule.style(".flex", { display: "flex", flexWrap: "wrap" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target1, { 1: Outcomes.WrapsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
+  const document = h.document(
+    [
+      <body>
+        <div>Hello World</div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("body", { overflow: "hidden" }),
+        h.rule.style("div", { whiteSpace: "nowrap" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
