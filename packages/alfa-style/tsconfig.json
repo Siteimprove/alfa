@@ -87,6 +87,7 @@
     "src/property/clip-path.ts",
     "src/property/color.ts",
     "src/property/display.ts",
+    "src/property/flex-wrap.ts",
     "src/property/font.ts",
     "src/property/font-family.ts",
     "src/property/font-size.ts",
