@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-cascade",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.5",
+  "version": "0.22.6",
   "license": "MIT",
   "description": "Functionality for working with the CSS cascade and scalable selector matching",
   "repository": {
@@ -18,21 +18,21 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-cache": "workspace:^0.22.5",
-    "@siteimprove/alfa-comparable": "workspace:^0.22.5",
-    "@siteimprove/alfa-css": "workspace:^0.22.5",
-    "@siteimprove/alfa-device": "workspace:^0.22.5",
-    "@siteimprove/alfa-dom": "workspace:^0.22.5",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.5",
-    "@siteimprove/alfa-json": "workspace:^0.22.5",
-    "@siteimprove/alfa-media": "workspace:^0.22.5",
-    "@siteimprove/alfa-option": "workspace:^0.22.5",
-    "@siteimprove/alfa-predicate": "workspace:^0.22.5",
-    "@siteimprove/alfa-refinement": "workspace:^0.22.5",
-    "@siteimprove/alfa-selector": "workspace:^0.22.5"
+    "@siteimprove/alfa-cache": "workspace:^0.22.6",
+    "@siteimprove/alfa-comparable": "workspace:^0.22.6",
+    "@siteimprove/alfa-css": "workspace:^0.22.6",
+    "@siteimprove/alfa-device": "workspace:^0.22.6",
+    "@siteimprove/alfa-dom": "workspace:^0.22.6",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.6",
+    "@siteimprove/alfa-json": "workspace:^0.22.6",
+    "@siteimprove/alfa-media": "workspace:^0.22.6",
+    "@siteimprove/alfa-option": "workspace:^0.22.6",
+    "@siteimprove/alfa-predicate": "workspace:^0.22.6",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.6",
+    "@siteimprove/alfa-selector": "workspace:^0.22.6"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.5"
+    "@siteimprove/alfa-test": "workspace:^0.22.6"
   },
   "publishConfig": {
     "access": "public",

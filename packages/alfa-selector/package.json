@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-selector",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.5",
+  "version": "0.22.6",
   "license": "MIT",
   "description": "Functionality for working with CSS selectors and individual selector matching",
   "repository": {
@@ -18,21 +18,21 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^0.22.5",
-    "@siteimprove/alfa-css": "workspace:^0.22.5",
-    "@siteimprove/alfa-dom": "workspace:^0.22.5",
-    "@siteimprove/alfa-equatable": "workspace:^0.22.5",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.5",
-    "@siteimprove/alfa-json": "workspace:^0.22.5",
-    "@siteimprove/alfa-map": "workspace:^0.22.5",
-    "@siteimprove/alfa-option": "workspace:^0.22.5",
-    "@siteimprove/alfa-parser": "workspace:^0.22.5",
-    "@siteimprove/alfa-predicate": "workspace:^0.22.5",
-    "@siteimprove/alfa-result": "workspace:^0.22.5",
-    "@siteimprove/alfa-slice": "workspace:^0.22.5"
+    "@siteimprove/alfa-array": "workspace:^0.22.6",
+    "@siteimprove/alfa-css": "workspace:^0.22.6",
+    "@siteimprove/alfa-dom": "workspace:^0.22.6",
+    "@siteimprove/alfa-equatable": "workspace:^0.22.6",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.6",
+    "@siteimprove/alfa-json": "workspace:^0.22.6",
+    "@siteimprove/alfa-map": "workspace:^0.22.6",
+    "@siteimprove/alfa-option": "workspace:^0.22.6",
+    "@siteimprove/alfa-parser": "workspace:^0.22.6",
+    "@siteimprove/alfa-predicate": "workspace:^0.22.6",
+    "@siteimprove/alfa-result": "workspace:^0.22.6",
+    "@siteimprove/alfa-slice": "workspace:^0.22.6"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.5"
+    "@siteimprove/alfa-test": "workspace:^0.22.6"
   },
   "publishConfig": {
     "access": "public",

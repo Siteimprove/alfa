@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-chai",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.5",
+  "version": "0.22.6",
   "license": "MIT",
   "description": "Assertion integrations for the Chai assertion library",
   "repository": {
@@ -18,15 +18,15 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-act": "workspace:^0.22.5",
-    "@siteimprove/alfa-assert": "workspace:^0.22.5",
-    "@siteimprove/alfa-future": "workspace:^0.22.5",
-    "@siteimprove/alfa-mapper": "workspace:^0.22.5",
+    "@siteimprove/alfa-act": "workspace:^0.22.6",
+    "@siteimprove/alfa-assert": "workspace:^0.22.6",
+    "@siteimprove/alfa-future": "workspace:^0.22.6",
+    "@siteimprove/alfa-mapper": "workspace:^0.22.6",
     "@types/chai": "^4.1.7",
     "chai": "^4.3.4"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.5"
+    "@siteimprove/alfa-test": "workspace:^0.22.6"
   },
   "publishConfig": {
     "access": "public",
