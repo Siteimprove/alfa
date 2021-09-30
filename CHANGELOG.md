@@ -21,6 +21,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.22.7](../../compare/v0.22.6...v0.22.7) (2021-09-30)
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The CSS properties `flex-direction` and `flex-flow` are now supported. ([#934](../pull/934))
+
+### Fixed
+
+- [@siteimprove-alfa-rules](packages/alfa-rules): SIA-R91, SIA-R92, and SIA-R93 now correctly handle change of properties between the element containing the declaration and the text. ([#897](../issues/897), [#917](../pull/917))
+
 ## [0.22.6](../../compare/v0.22.5...v0.22.6) (2021-09-29)
 
 ### Fixed

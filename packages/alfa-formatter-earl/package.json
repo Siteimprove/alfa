@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-formatter-earl",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.6",
+  "version": "0.22.7",
   "license": "MIT",
   "description": "An outcome formatter that outputs EARL",
   "repository": {
@@ -18,11 +18,11 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-earl": "workspace:^0.22.6",
-    "@siteimprove/alfa-formatter": "workspace:^0.22.6"
+    "@siteimprove/alfa-earl": "workspace:^0.22.7",
+    "@siteimprove/alfa-formatter": "workspace:^0.22.7"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.6"
+    "@siteimprove/alfa-test": "workspace:^0.22.7"
   },
   "publishConfig": {
     "access": "public",

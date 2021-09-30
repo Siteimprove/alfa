@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-list",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.6",
+  "version": "0.22.7",
   "license": "MIT",
   "description": "An implementation of an immutable list structure, based on a bit-partitioned vector trie",
   "repository": {
@@ -18,26 +18,26 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^0.22.6",
-    "@siteimprove/alfa-bits": "workspace:^0.22.6",
-    "@siteimprove/alfa-callback": "workspace:^0.22.6",
-    "@siteimprove/alfa-collection": "workspace:^0.22.6",
-    "@siteimprove/alfa-comparable": "workspace:^0.22.6",
-    "@siteimprove/alfa-equatable": "workspace:^0.22.6",
-    "@siteimprove/alfa-functor": "workspace:^0.22.6",
-    "@siteimprove/alfa-hash": "workspace:^0.22.6",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.6",
-    "@siteimprove/alfa-json": "workspace:^0.22.6",
-    "@siteimprove/alfa-map": "workspace:^0.22.6",
-    "@siteimprove/alfa-mapper": "workspace:^0.22.6",
-    "@siteimprove/alfa-option": "workspace:^0.22.6",
-    "@siteimprove/alfa-predicate": "workspace:^0.22.6",
-    "@siteimprove/alfa-reducer": "workspace:^0.22.6",
-    "@siteimprove/alfa-refinement": "workspace:^0.22.6",
-    "@siteimprove/alfa-set": "workspace:^0.22.6"
+    "@siteimprove/alfa-array": "workspace:^0.22.7",
+    "@siteimprove/alfa-bits": "workspace:^0.22.7",
+    "@siteimprove/alfa-callback": "workspace:^0.22.7",
+    "@siteimprove/alfa-collection": "workspace:^0.22.7",
+    "@siteimprove/alfa-comparable": "workspace:^0.22.7",
+    "@siteimprove/alfa-equatable": "workspace:^0.22.7",
+    "@siteimprove/alfa-functor": "workspace:^0.22.7",
+    "@siteimprove/alfa-hash": "workspace:^0.22.7",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.7",
+    "@siteimprove/alfa-json": "workspace:^0.22.7",
+    "@siteimprove/alfa-map": "workspace:^0.22.7",
+    "@siteimprove/alfa-mapper": "workspace:^0.22.7",
+    "@siteimprove/alfa-option": "workspace:^0.22.7",
+    "@siteimprove/alfa-predicate": "workspace:^0.22.7",
+    "@siteimprove/alfa-reducer": "workspace:^0.22.7",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.7",
+    "@siteimprove/alfa-set": "workspace:^0.22.7"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.6"
+    "@siteimprove/alfa-test": "workspace:^0.22.7"
   },
   "publishConfig": {
     "access": "public",
