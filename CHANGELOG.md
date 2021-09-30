@@ -21,6 +21,24 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.22.7](../../compare/v0.22.6...v0.22.7) (2021-09-30)
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The CSS properties `flex-direction` and `flex-flow` are now supported. ([#934](../pull/934))
+
+### Fixed
+
+- [@siteimprove-alfa-rules](packages/alfa-rules): SIA-R91, SIA-R92, and SIA-R93 now correctly handle change of properties between the element containing the declaration and the text. ([#897](../issues/897), [#917](../pull/917))
+
+## [0.22.6](../../compare/v0.22.5...v0.22.6) (2021-09-29)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R21 now targets `role` attributes on elements with no role. ([#895](../issues/895), [#916](../pull/916))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now ignores `overflow` property on `<body>` elements, and consider that containers with `flex-wrap: wrap` definitely handle horizontal overflow. ([#932](../pull/932))
+
 ## [0.22.5](../../compare/v0.22.4...v0.22.5) (2021-09-23)
 
 ## [0.22.4](../../compare/v0.22.3...v0.22.4) (2021-09-23)

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-device",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.22.5",
+  "version": "0.22.7",
   "license": "MIT",
   "description": "Types for modelling device parameters, such as viewport dimensions and pixel density",
   "repository": {
@@ -20,14 +20,14 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.22.5",
-    "@siteimprove/alfa-hash": "workspace:^0.22.5",
-    "@siteimprove/alfa-iterable": "workspace:^0.22.5",
-    "@siteimprove/alfa-json": "workspace:^0.22.5",
-    "@siteimprove/alfa-map": "workspace:^0.22.5"
+    "@siteimprove/alfa-equatable": "workspace:^0.22.7",
+    "@siteimprove/alfa-hash": "workspace:^0.22.7",
+    "@siteimprove/alfa-iterable": "workspace:^0.22.7",
+    "@siteimprove/alfa-json": "workspace:^0.22.7",
+    "@siteimprove/alfa-map": "workspace:^0.22.7"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.22.5"
+    "@siteimprove/alfa-test": "workspace:^0.22.7"
   },
   "publishConfig": {
     "access": "public",
