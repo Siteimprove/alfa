@@ -33,7 +33,7 @@ export const parse = Keyword.parse(
 );
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction}
  * @internal
  */
 export default Property.register(

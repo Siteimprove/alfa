@@ -88,6 +88,7 @@
     "src/property/color.ts",
     "src/property/display.ts",
     "src/property/flex-direction.ts",
+    "src/property/flex-flow.ts",
     "src/property/flex-wrap.ts",
     "src/property/font.ts",
     "src/property/font-family.ts",
