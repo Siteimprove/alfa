@@ -82,6 +82,8 @@ import "./property/clip";
 import "./property/clip-path";
 import "./property/color";
 import "./property/display";
+import "./property/flex-direction";
+import "./property/flex-flow";
 import "./property/flex-wrap";
 import "./property/font";
 import "./property/font-family";
