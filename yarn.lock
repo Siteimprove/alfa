@@ -2249,7 +2249,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-thenable@workspace:packages/alfa-thenable"
   dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.22.7"
     "@siteimprove/alfa-callback": "workspace:^0.22.7"
+    "@siteimprove/alfa-continuation": "workspace:^0.22.7"
+    "@siteimprove/alfa-mapper": "workspace:^0.22.7"
+    "@siteimprove/alfa-refinement": "workspace:^0.22.7"
     "@siteimprove/alfa-test": "workspace:^0.22.7"
   languageName: unknown
   linkType: soft

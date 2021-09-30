@@ -18,7 +18,11 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-callback": "workspace:^0.22.7"
+    "@siteimprove/alfa-array": "workspace:^0.22.7",
+    "@siteimprove/alfa-callback": "workspace:^0.22.7",
+    "@siteimprove/alfa-continuation": "workspace:^0.22.7",
+    "@siteimprove/alfa-mapper": "workspace:^0.22.7",
+    "@siteimprove/alfa-refinement": "workspace:^0.22.7"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.22.7"

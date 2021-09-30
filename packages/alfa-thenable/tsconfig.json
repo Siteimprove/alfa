@@ -4,7 +4,19 @@
   "files": ["src/index.ts", "src/thenable.ts", "test/thenable.spec.ts"],
   "references": [
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-continuation"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-test"
