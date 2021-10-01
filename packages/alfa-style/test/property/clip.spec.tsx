@@ -21,8 +21,8 @@ test("#cascaded() parses `clip: auto`", (t) => {
   });
 });
 
-test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
-  const element = <div style={{ clip: "rect(1px auto 2em auto)" }} />;
+test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
+  const element = <div style={{ clip: "rect(1px, auto, 2em, auto)" }} />;
 
   const style = Style.from(element, device);
 
@@ -58,11 +58,11 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
         value: "border-box",
       },
     },
-    source: h.declaration("clip", "rect(1px auto 2em auto)").toJSON(),
+    source: h.declaration("clip", "rect(1px, auto, 2em, auto)").toJSON(),
   });
 });
 
-test("#computed() parses `clip: rect(1px auto 2em auto)`, position: absolute", (t) => {
+test("#computed() returns a shape for absolutely positioned an element", (t) => {
   const element = (
     <div style={{ clip: "rect(1px auto 2em auto)", position: "absolute" }} />
   );
@@ -105,7 +105,7 @@ test("#computed() parses `clip: rect(1px auto 2em auto)`, position: absolute", (
   });
 });
 
-test("#computed() parses `clip: rect(1px auto 2em auto)`", (t) => {
+test("#computed() returns `auto` for a non-absolutely positioned element", (t) => {
   const element = <div style={{ clip: "rect(1px auto 2em auto)" }} />;
 
   const style = Style.from(element, device);
