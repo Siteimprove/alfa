@@ -61,7 +61,7 @@ test(`isVisible() returns false when an element is hidden by reducing its size
   t.equal(isVisible(element), false);
 });
 
-test(`isVisible() returns false when an element scrolls its overflow and its size is reduced to 0 pixel, thus hidding the scrollbar`, (t) => {
+test(`isVisible() returns false when an element scrolls its overflow and its size is reduced to 0 pixel, thus hiding the scrollbar`, (t) => {
   for (const element of [
     <div style={{ width: "0", overflowX: "scroll" }}>Hello World</div>,
 
