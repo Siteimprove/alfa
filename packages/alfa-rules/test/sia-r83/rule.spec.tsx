@@ -488,3 +488,53 @@ test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
+
+test(`evaluate() fails a relatively positioned node clipped by a static parent`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <div class="relative">
+        <div class="clipping">
+          <span class="relative">{target}</span>
+        </div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".relative", { position: "relative", left: "100px" }),
+        h.rule.style(".clipping", { height: "5px", overflowY: "hidden" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, { 1: Outcomes.ClipsText }),
+  ]);
+});
+
+test(`evaluate() passes a relatively positioned node with a hnadling static parent`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <div class="relative clipping">
+        <div class="handle">
+          <span class="relative content">{target}</span>
+        </div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".relative", { position: "relative" }),
+        h.rule.style(".clipping", { overflowX: "hidden" }),
+        h.rule.style(".handle", { overflowX: "scroll" }),
+        h.rule.style(".content", { whiteSpace: "nowrap" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
