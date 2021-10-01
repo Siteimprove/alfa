@@ -494,11 +494,13 @@ test(`evaluate() fails a relatively positioned node clipped by a static parent`,
 
   const document = h.document(
     [
-      <div class="relative">
-        <div class="clipping">
-          <span class="relative">{target}</span>
+      <body>
+        <div class="relative">
+          <div class="clipping">
+            <span class="relative">{target}</span>
+          </div>
         </div>
-      </div>,
+      </body>,
     ],
     [
       h.sheet([
@@ -513,16 +515,18 @@ test(`evaluate() fails a relatively positioned node clipped by a static parent`,
   ]);
 });
 
-test(`evaluate() passes a relatively positioned node with a hnadling static parent`, async (t) => {
+test(`evaluate() passes a relatively positioned node with a handling static parent`, async (t) => {
   const target = h.text("Hello World");
 
   const document = h.document(
     [
-      <div class="relative clipping">
-        <div class="handle">
-          <span class="relative content">{target}</span>
+      <body>
+        <div class="relative clipping">
+          <div class="handle">
+            <span class="relative content">{target}</span>
+          </div>
         </div>
-      </div>,
+      </body>,
     ],
     [
       h.sheet([
