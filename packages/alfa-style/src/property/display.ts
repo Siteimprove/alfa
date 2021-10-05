@@ -3,10 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-
 import { Property } from "../property";
 import { Tuple } from "./value/tuple";
-
 
 const { map, either } = Parser;
 
@@ -265,12 +263,15 @@ export default Property.register(
     (value, style) =>
       style.computed("position").value.equals(Keyword.of("absolute")) ||
       style.computed("position").value.equals(Keyword.of("fixed")) ||
-      !style.computed("float").value.equals(Keyword.of("none"))
+      !style.computed("float").value.equals(Keyword.of("none")) //4th condition hasn't been implemented because the property doesn't support elements (at the moment)
         ? value.map(displayTable)
         : value
   )
 );
-
+/**
+ * {@link https://drafts.csswg.org/css2/#dis-pos-flo}
+ * @internal
+ */
 export function displayTable(value: Specified): Computed {
   if (value.values.length === 1) {
     return value;
