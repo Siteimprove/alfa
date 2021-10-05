@@ -62,14 +62,16 @@ test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
   });
 });
 
-test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
-  const element = <div style={{ clip: "rect(1px auto 2em auto)" }} />;
+test("#computed() returns a shape for absolutely positioned an element", (t) => {
+  const element = (
+    <div style={{ clip: "rect(1px auto 2em auto)", position: "absolute" }} />
+  );
 
   const style = Style.from(element, device);
 
-  const cascaded = style.cascaded("clip");
+  const computed = style.computed("clip");
 
-  t.deepEqual(cascaded.get().toJSON(), {
+  t.deepEqual(computed.toJSON(), {
     value: {
       type: "shape",
       shape: {
@@ -103,6 +105,22 @@ test("#cascaded() parses `clip: rect(1px auto 2em auto)`", (t) => {
   });
 });
 
+test("#computed() returns `auto` for a non-absolutely positioned element", (t) => {
+  const element = <div style={{ clip: "rect(1px auto 2em auto)" }} />;
+
+  const style = Style.from(element, device);
+
+  const computed = style.computed("clip");
+
+  t.deepEqual(computed.toJSON(), {
+    value: {
+      type: "keyword",
+      value: "auto",
+    },
+    source: null,
+  });
+});
+
 test("#cascaded() fails clip with wrong number of arguments", (t) => {
   const element = <div style={{ clip: "rect(1px auto 2em)" }} />;
 
@@ -118,3 +136,4 @@ test("#cascaded() fails clip mixing comma and whitespace separation", (t) => {
 
   t.deepEqual(style.cascaded("clip").isNone(), true);
 });
+

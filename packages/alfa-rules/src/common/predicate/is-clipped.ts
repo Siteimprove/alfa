@@ -151,10 +151,8 @@ function isClippedByMasking(
     const style = Style.from(element, device, context);
 
     const { value: clip } = style.computed("clip");
-    const { value: position } = style.computed("position");
 
     return (
-      (position.value === "absolute" || position.value === "fixed") &&
       clip.type === "shape" &&
       ((clip.shape.top.type === "length" &&
         clip.shape.top.equals(clip.shape.bottom)) ||
