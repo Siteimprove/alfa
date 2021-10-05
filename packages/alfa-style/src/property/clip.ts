@@ -2,6 +2,7 @@ import { Shape, Keyword, Rectangle } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
+import { Value } from "../value";
 
 const { either, map } = Parser;
 
@@ -43,5 +44,10 @@ export const parse = either(
  */
 export default Property.register(
   "clip",
-  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value) => value)
+  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value, style) =>
+    style.computed("position").value.equals(Keyword.of("absolute")) ||
+    style.computed("position").value.equals(Keyword.of("fixed"))
+      ? value
+      : Value.of(Keyword.of("auto"))
+  )
 );
