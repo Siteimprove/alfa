@@ -270,7 +270,7 @@ function hasFixedHeight(device: Device): Predicate<Element> {
 }
 
 function getRelevantParent(element: Element, device: Device): Option<Element> {
-  return isPositioned(device, "static")(element)
+  return isPositioned(device, "relative", "static", "sticky")(element)
     ? element.parent({ flattened: true }).filter(isElement)
     : getOffsetParent(element, device);
 }
