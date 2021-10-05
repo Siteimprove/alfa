@@ -21,6 +21,18 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.23.0](../../compare/v0.22.7...v0.23.0) (2021-10-04)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R77 is now available. ([#841](../issues/841), [#923](../pull/923))
+
+- [@siteimprove/alfa-thenable](packages/alfa-thenable): The `Thenable` type now provides the same helper functions as `Promise` and `Future`. ([#935](../pull/935))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly finds clipping ancestors of relatively positioned elements. ([#939](../pull/939))
+
 ## [0.22.7](../../compare/v0.22.6...v0.22.7) (2021-09-30)
 
 ### Added
