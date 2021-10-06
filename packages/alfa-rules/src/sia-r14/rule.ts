@@ -17,11 +17,14 @@ import {
   hasRole,
   isFocusable,
   isPerceivable,
+  isVisible,
+  isRendered,
+  isWhitespace,
 } from "../common/predicate";
 
-const { isElement, hasNamespace } = Element;
+const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
-const { and, test } = Predicate;
+const { and, test, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
@@ -85,6 +88,27 @@ function getPerceivableTextContent(element: Element, device: Device): string {
       .map((text) => text.data)
       .join("")
   );
+}
+
+// https://github.com/Siteimprove/sanshikan/blob/6265a8045c1964ec90a62bed8adb6454e138fd77/terms/visible-inner-text.md
+function getVisibleInnerTextFromTextNode(device: Device, text: Text): string {
+  if (isVisible(device)(text)) return text.data;
+
+  if (
+    and(not(isVisible(device)), isRendered(device))(text) &&
+    isWhitespace(text.data)
+  )
+    return " ";
+  else return "";
+}
+
+function getVisibleInnerTextFromElement(
+  device: Device,
+  element: Element
+): string {
+  if (isRendered(device)(element)) return "";
+  if (hasName("br")(element)) return "\n";
+  if (hasName("p")(element)) return "\n"+//start from 3rd: visible text from children;
 }
 
 export namespace Outcomes {
