@@ -1,8 +1,9 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -106,9 +107,49 @@ function getVisibleInnerTextFromElement(
   device: Device,
   element: Element
 ): string {
-  if (isRendered(device)(element)) return "";
-  if (hasName("br")(element)) return "\n";
-  if (hasName("p")(element)) return "\n"+//start from 3rd: visible text from children;
+  if (isRendered(device)(element)) {
+    return "";
+  }
+  if (hasName("br")(element)) {
+    return "\n";
+  }
+  if (hasName("p")(element)) {
+    return "\n" + childrenVisibleText(device, element) + "\n";
+  }
+
+  const display = Style.from(element, device).computed("display").value;
+  const {
+    values: [outside], // this covers both outside and internal specified => a better name?
+  } = display;
+
+  if (outside.value === "block" || outside.value === "table-caption") {
+    return "\n" + childrenVisibleText(device, element) + "\n";
+  }
+
+  if (outside.value === "table-cell" || outside.value === "table-row") {
+    return " " + childrenVisibleText(device, element) + " ";
+  } else {
+    return childrenVisibleText(device, element);
+  }
+}
+
+function childrenVisibleText(device: Device, node: Node): string {
+  const children = node.children({ flattened: true });
+
+  let result = "";
+
+  for (const child of children) {
+    if (isText(child)) {
+      result = result + getVisibleInnerTextFromTextNode(device, child);
+    }
+    if (isElement(child)) {
+      result = result + getVisibleInnerTextFromElement(device, child);
+    }
+
+    result = result + childrenVisibleText(device, child);
+  }
+  //Returning the whole text from its children
+  return result;
 }
 
 export namespace Outcomes {
