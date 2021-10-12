@@ -112,8 +112,8 @@ export class Err<E> implements Result<never, E> {
     return result();
   }
 
-  public get(): never {
-    throw new Error("Attempted to .get() from Err");
+  public get(message = "Attempted to .get() from Err"): never {
+    throw new Error(message);
   }
 
   public getErr(): E {
@@ -176,6 +176,10 @@ export namespace Err {
     type: "err";
     error: Serializable.ToJSON<E>;
   }
+
+  export function isErr<T, E>(value: Iterable<T>): value is Err<E>;
+
+  export function isErr<E>(value: unknown): value is Err<E>;
 
   export function isErr<E>(value: unknown): value is Err<E> {
     return value instanceof Err;

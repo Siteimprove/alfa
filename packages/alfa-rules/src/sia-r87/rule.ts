@@ -1,8 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Context } from "@siteimprove/alfa-selector";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -14,7 +16,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isTabbable } from "../common/predicate/is-tabbable";
 import { isIgnored } from "../common/predicate/is-ignored";
-import { isKeyboardActionable } from "../common/predicate/is-keyboard-actionable";
+import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
@@ -38,29 +40,31 @@ export default Rule.Atomic.of<Page, Document, Question>({
       },
 
       expectations(target) {
-        const element = target.tabOrder().find(isTabbable(device));
+        const firstTabbable = target.tabOrder().find(isTabbable(device));
 
-        const url = element
-          .filter(hasName("a", "area"))
-          .flatMap((element) =>
-            element
+        if (firstTabbable.isNone()) {
+          return { 1: Outcomes.HasNoTabbable };
+        }
+
+        const element = firstTabbable.get();
+
+        const url = hasName("a", "area")(element)
+          ? element
               .attribute("href")
               .flatMap((attribute) =>
                 URL.parse(attribute.value, response.url).ok()
               )
-          );
+          : None;
 
         const reference = url
           .filter(isInternalURL(response.url))
           .flatMap((url) =>
             url.fragment.flatMap((fragment) =>
-              element.flatMap((element) =>
-                element
-                  .root()
-                  .inclusiveDescendants()
-                  .filter(isElement)
-                  .find((element) => element.id.includes(fragment))
-              )
+              element
+                .root()
+                .inclusiveDescendants()
+                .filter(isElement)
+                .find((element) => element.id.includes(fragment))
             )
           );
 
@@ -90,68 +94,75 @@ export default Rule.Atomic.of<Page, Document, Question>({
           target
         );
 
+        const askIsVisible = Question.of(
+          "boolean",
+          "first-tabbable-is-visible",
+          `Is the first tabbable element of the document visible if it's focused?`,
+          target
+        );
+
+        function isAtTheStartOfMain(
+          reference: Option<Node>
+        ): Interview<
+          Question,
+          Document,
+          Document,
+          Option.Maybe<Result<Diagnostic, Diagnostic>>
+        > {
+          return expectation(
+            mains.some((main) => reference.some(isAtTheStart(main, device))),
+            () => Outcomes.FirstTabbableIsLinkToContent,
+            () =>
+              askIsMain.map((isMain) =>
+                expectation(
+                  isMain,
+                  () => Outcomes.FirstTabbableIsLinkToContent,
+                  () => Outcomes.FirstTabbableIsNotLinkToContent
+                )
+              )
+          );
+        }
+
+        function isSkipLink(): Interview<
+          Question,
+          Document,
+          Document,
+          Option.Maybe<Result<Diagnostic>>
+        > {
+          return reference.isSome()
+            ? isAtTheStartOfMain(reference)
+            : askIsInteralLink.map((isInternalLink) =>
+                expectation(
+                  isInternalLink,
+                  () => askReference.map(isAtTheStartOfMain),
+                  () => Outcomes.FirstTabbableIsNotInternalLink
+                )
+              );
+        }
+
         return {
           1: expectation(
-            element.isNone(),
-            () => Outcomes.HasNoTabbable,
+            isIgnored(device)(element),
+            () => Outcomes.FirstTabbableIsIgnored,
             () =>
               expectation(
-                element.some(isIgnored(device)),
-                () => Outcomes.FirstTabbableIsIgnored,
+                hasRole(device, (role) => role.is("link"))(element),
                 () =>
-                  expectation(
-                    element.none(hasRole(device, (role) => role.is("link"))),
-                    () => Outcomes.FirstTabbableIsNotLink,
-                    () =>
+                  // No need to check if element is tabbable because this was
+                  // already checked at the very start of expectation.
+                  askIsVisible
+                    .answerIf(
+                      isVisible(device, Context.focus(element))(element),
+                      true
+                    )
+                    .map((isVisible) =>
                       expectation(
-                        element.none(isKeyboardActionable(device)),
-                        () => Outcomes.FirstTabbableIsNotKeyboardActionable,
-                        () =>
-                          reference.isSome()
-                            ? expectation(
-                                mains.some((main) =>
-                                  reference.some(isAtTheStart(main, device))
-                                ),
-                                () => Outcomes.FirstTabbableIsLinkToContent,
-                                () =>
-                                  askIsMain.map((isMain) =>
-                                    expectation(
-                                      isMain,
-                                      () =>
-                                        Outcomes.FirstTabbableIsLinkToContent,
-                                      () =>
-                                        Outcomes.FirstTabbableIsNotLinkToContent
-                                    )
-                                  )
-                              )
-                            : askIsInteralLink.map((isInternalLink) =>
-                                expectation(
-                                  !isInternalLink,
-                                  () => Outcomes.FirstTabbableIsNotInternalLink,
-                                  () =>
-                                    askReference.map((reference) =>
-                                      expectation(
-                                        reference
-                                          .filter(isElement)
-                                          .some(hasRole(device, "main")),
-                                        () =>
-                                          Outcomes.FirstTabbableIsLinkToContent,
-                                        () =>
-                                          askIsMain.map((isMain) =>
-                                            expectation(
-                                              isMain,
-                                              () =>
-                                                Outcomes.FirstTabbableIsLinkToContent,
-                                              () =>
-                                                Outcomes.FirstTabbableIsNotLinkToContent
-                                            )
-                                          )
-                                      )
-                                    )
-                                )
-                              )
+                        isVisible,
+                        isSkipLink,
+                        () => Outcomes.FirstTabbableIsNotVisible
                       )
-                  )
+                    ),
+                () => Outcomes.FirstTabbableIsNotLink
               )
           ),
         };
@@ -184,9 +195,9 @@ export namespace Outcomes {
     )
   );
 
-  export const FirstTabbableIsNotKeyboardActionable = Err.of(
+  export const FirstTabbableIsNotVisible = Err.of(
     Diagnostic.of(
-      `The first tabbable element in the document is not keyboard actionable`
+      `The first tabbable element in the document is not visible when on focus`
     )
   );
 

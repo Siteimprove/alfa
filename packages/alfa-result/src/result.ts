@@ -10,6 +10,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Err } from "./err";
@@ -36,20 +37,30 @@ export interface Result<T, E = T>
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
-  includes(value: T): boolean;
-  includesErr(error: E): boolean;
-  some(predicate: Predicate<T>): boolean;
-  someErr(predicate: Predicate<E>): boolean;
+  includes(value: T): this is Ok<T>;
+  includesErr(error: E): this is Err<E>;
+  some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
+  some(predicate: Predicate<T>): this is Ok<T>;
+  someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
+  someErr(predicate: Predicate<E>): this is Err<E>;
+  none<U extends T>(
+    refinement: Refinement<T, U>
+  ): this is Result<Exclude<T, U>, E>;
   none(predicate: Predicate<T>): boolean;
+  noneErr<F extends E>(
+    refinement: Refinement<E, F>
+  ): this is Result<T, Exclude<E, F>>;
   noneErr(predicate: Predicate<E>): boolean;
+  every<U extends T>(refinement: Refinement<T, U>): this is Result<U, E>;
   every(predicate: Predicate<T>): boolean;
+  everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, F>;
   everyErr(predicate: Predicate<E>): boolean;
-  and<U>(result: Result<U, E>): Result<U, E>;
-  andThen<U>(result: Mapper<T, Result<U, E>>): Result<U, E>;
-  or<F>(result: Result<T, F>): Result<T, F>;
-  orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
-  get(): T;
-  getErr(): E;
+  and<U, F>(result: Result<U, F>): Result<U, E | F>;
+  andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
+  or<U, F>(result: Result<U, F>): Result<T | U, F>;
+  orElse<U, F>(result: Thunk<Result<U, F>>): Result<T | U, F>;
+  get(message?: string): T;
+  getErr(message?: string): E;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
@@ -65,28 +76,48 @@ export interface Result<T, E = T>
 export namespace Result {
   export type JSON<T, E = T> = Ok.JSON<T> | Err.JSON<E>;
 
+  export function isResult<T, E>(value: Iterable<T>): value is Result<T, E>;
+
+  export function isResult<T, E>(value: unknown): value is Result<T, E>;
+
   export function isResult<T, E>(value: unknown): value is Result<T, E> {
-    return Ok.isOk(value) || Err.isErr(value);
+    return isOk(value) || isErr(value);
+  }
+
+  export function isOk<T>(value: Iterable<T>): value is Ok<T>;
+
+  export function isOk<T>(value: unknown): value is Ok<T>;
+
+  export function isOk<T>(value: unknown): value is Ok<T> {
+    return Ok.isOk(value);
+  }
+
+  export function isErr<T, E>(value: Iterable<T>): value is Err<E>;
+
+  export function isErr<E>(value: unknown): value is Err<E>;
+
+  export function isErr<E>(value: unknown): value is Err<E> {
+    return Err.isErr(value);
   }
 
   export function of<T, E>(value: T): Result<T, E> {
     return Ok.of(value);
   }
 
-  export function from<T>(
+  export function from<T, E = unknown>(
     thunk: Thunk<Promise<T>>
-  ): Promise<Result<T, unknown>>;
+  ): Promise<Result<T, E>>;
 
-  export function from<T>(thunk: Thunk<T>): Result<T, unknown>;
+  export function from<T, E = unknown>(thunk: Thunk<T>): Result<T, E>;
 
-  export function from<T>(
+  export function from<T, E = unknown>(
     thunk: Thunk<T> | Thunk<Promise<T>>
-  ): Result<T, unknown> | Promise<Result<T, unknown>> {
+  ): Result<T, E> | Promise<Result<T, E>> {
     let value: T | Promise<T>;
     try {
       value = thunk();
     } catch (error) {
-      return Err.of(error);
+      return Err.of(error as E);
     }
 
     if (value instanceof Promise) {

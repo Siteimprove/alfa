@@ -32,6 +32,8 @@ export declare class Left<L> implements Either<L, never>
 |  [of(value)](./alfa-either.left_class.of_1_method.md) | <code>static</code> |  |
 |  [reduce(reducer, accumulator)](./alfa-either.left_class.reduce_1_method.md) |  |  |
 |  [right()](./alfa-either.left_class.right_1_method.md) |  |  |
+|  [teeLeft(callback)](./alfa-either.left_class.teeleft_1_method.md) |  |  |
+|  [teeRight()](./alfa-either.left_class.teeright_1_method.md) |  |  |
 |  [toJSON()](./alfa-either.left_class.tojson_1_method.md) |  |  |
 |  [toString()](./alfa-either.left_class.tostring_1_method.md) |  |  |
 

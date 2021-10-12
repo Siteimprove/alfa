@@ -18,6 +18,7 @@ import { None } from '@siteimprove/alfa-option';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
@@ -44,7 +45,7 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     flatten<T, E>(this: Result<never, E>): Result<T, E>;
     // (undocumented)
-    get(): never;
+    get(message?: string): never;
     // (undocumented)
     getErr(): E;
     // (undocumented)
@@ -98,6 +99,8 @@ export class Err<E> implements Result<never, E> {
 // @public (undocumented)
 export namespace Err {
     // (undocumented)
+    export function isErr<T, E>(value: Iterable<T>): value is Err<E>;
+    // (undocumented)
     export function isErr<E>(value: unknown): value is Err<E>;
     // (undocumented)
     export interface JSON<E> {
@@ -135,7 +138,7 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     get(): T;
     // (undocumented)
-    getErr(): never;
+    getErr(message?: string): never;
     // (undocumented)
     getOr(): T;
     // (undocumented)
@@ -187,6 +190,8 @@ export class Ok<T> implements Result<T, never> {
 // @public (undocumented)
 export namespace Ok {
     // (undocumented)
+    export function isOk<T>(value: Iterable<T>): value is Ok<T>;
+    // (undocumented)
     export function isOk<T>(value: unknown): value is Ok<T>;
     // (undocumented)
     export interface JSON<T> {
@@ -202,15 +207,19 @@ export namespace Ok {
 // @public (undocumented)
 export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
     // (undocumented)
-    and<U>(result: Result<U, E>): Result<U, E>;
+    and<U, F>(result: Result<U, F>): Result<U, E | F>;
     // (undocumented)
-    andThen<U>(result: Mapper<T, Result<U, E>>): Result<U, E>;
+    andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
     // (undocumented)
     apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
     // (undocumented)
     err(): Option<E>;
     // (undocumented)
+    every<U extends T>(refinement: Refinement<T, U>): this is Result<U, E>;
+    // (undocumented)
     every(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, F>;
     // (undocumented)
     everyErr(predicate: Predicate<E>): boolean;
     // (undocumented)
@@ -218,17 +227,17 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     // (undocumented)
     flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
     // (undocumented)
-    get(): T;
+    get(message?: string): T;
     // (undocumented)
-    getErr(): E;
+    getErr(message?: string): E;
     // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
     // (undocumented)
-    includes(value: T): boolean;
+    includes(value: T): this is Ok<T>;
     // (undocumented)
-    includesErr(error: E): boolean;
+    includesErr(error: E): this is Err<E>;
     // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)
@@ -240,21 +249,29 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     // (undocumented)
     mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
     // (undocumented)
+    none<U extends T>(refinement: Refinement<T, U>): this is Result<Exclude<T, U>, E>;
+    // (undocumented)
     none(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, Exclude<E, F>>;
     // (undocumented)
     noneErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     ok(): Option<T>;
     // (undocumented)
-    or<F>(result: Result<T, F>): Result<T, F>;
+    or<U, F>(result: Result<U, F>): Result<T | U, F>;
     // (undocumented)
-    orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
+    orElse<U, F>(result: Thunk<Result<U, F>>): Result<T | U, F>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
-    some(predicate: Predicate<T>): boolean;
+    some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
     // (undocumented)
-    someErr(predicate: Predicate<E>): boolean;
+    some(predicate: Predicate<T>): this is Ok<T>;
+    // (undocumented)
+    someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
+    // (undocumented)
+    someErr(predicate: Predicate<E>): this is Err<E>;
     // (undocumented)
     tee(callback: Callback<T>): Result<T, E>;
     // (undocumented)
@@ -266,9 +283,19 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
 // @public (undocumented)
 export namespace Result {
     // (undocumented)
-    export function from<T>(thunk: Thunk<Promise<T>>): Promise<Result<T, unknown>>;
+    export function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
     // (undocumented)
-    export function from<T>(thunk: Thunk<T>): Result<T, unknown>;
+    export function from<T, E = unknown>(thunk: Thunk<T>): Result<T, E>;
+    // (undocumented)
+    export function isErr<T, E>(value: Iterable<T>): value is Err<E>;
+    // (undocumented)
+    export function isErr<E>(value: unknown): value is Err<E>;
+    // (undocumented)
+    export function isOk<T>(value: Iterable<T>): value is Ok<T>;
+    // (undocumented)
+    export function isOk<T>(value: unknown): value is Ok<T>;
+    // (undocumented)
+    export function isResult<T, E>(value: Iterable<T>): value is Result<T, E>;
     // (undocumented)
     export function isResult<T, E>(value: unknown): value is Result<T, E>;
     // (undocumented)

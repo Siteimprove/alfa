@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-includes(value: T): boolean;
+includes(value: T): this is Some<T>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ includes(value: T): boolean;
 
 <b>Returns:</b>
 
-boolean
+this is [Some](./alfa-option.some_class.md)<!-- -->&lt;T&gt;
 

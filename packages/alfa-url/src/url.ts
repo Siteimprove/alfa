@@ -414,7 +414,11 @@ export namespace URL {
         )
       );
     } catch (err) {
-      return Err.of(err.message);
+      if (err instanceof Error) {
+        return Err.of(err.message);
+      } else {
+        return Err.of(`${err}`);
+      }
     }
   }
 

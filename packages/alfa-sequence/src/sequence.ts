@@ -91,7 +91,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   join(separator: string): string;
   sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
   sortWith(comparer: Comparer<T>): Sequence<T>;
-  compare(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
+  compare<T>(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
   compareWith<U = T>(
     iterable: Iterable<U>,
     comparer: Comparer<T, U, [index: number]>
@@ -151,7 +151,7 @@ export namespace Sequence {
     return fromIterable(iterable);
   }
 
-  export function fromArray<T>(array: Array<T>): Sequence<T> {
+  export function fromArray<T>(array: ReadonlyArray<T>): Sequence<T> {
     let i = 0;
 
     const tail = (): Sequence<T> => {

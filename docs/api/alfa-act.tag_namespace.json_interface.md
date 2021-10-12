@@ -7,12 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON 
+interface JSON<T extends string = string> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [type](./alfa-act.tag_namespace.json_interface.type_propertysignature.md) | string |  |
+|  [type](./alfa-act.tag_namespace.json_interface.type_propertysignature.md) | T |  |
 

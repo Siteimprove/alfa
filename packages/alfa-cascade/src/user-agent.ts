@@ -89,6 +89,9 @@ export const UserAgent = h.sheet([
   h.rule.style("big", { fontSize: "larger" }),
   h.rule.style("small", { fontSize: "smaller" }),
 
+  h.rule.style("sub", { verticalAlign: "sub" }),
+  h.rule.style("sup", { verticalAlign: "super" }),
+
   h.rule.style("ruby", { display: "ruby" }),
   h.rule.style("rt", { display: "ruby-text" }),
 

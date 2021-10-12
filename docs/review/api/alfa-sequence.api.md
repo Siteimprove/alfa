@@ -36,7 +36,7 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compare(this: Sequence<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
+    compare<T>(this: Sequence<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
     // (undocumented)
     compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
@@ -211,7 +211,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compare(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
+    compare<T>(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
     // (undocumented)
     compareWith<U = T>(iterable: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
@@ -337,7 +337,7 @@ export namespace Sequence {
     // (undocumented)
     export function from<T>(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)
-    export function fromArray<T>(array: Array_2<T>): Sequence<T>;
+    export function fromArray<T>(array: ReadonlyArray<T>): Sequence<T>;
     // (undocumented)
     export function fromIterable<T>(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)

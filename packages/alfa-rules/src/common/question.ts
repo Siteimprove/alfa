@@ -13,34 +13,35 @@ export interface Question {
   "node[]": Iterable<Node>;
   color: Option<RGB>;
   "color[]": Iterable<RGB>;
+  string: string;
 }
 
 /**
  * @public
  */
 export namespace Question {
-  export function of<Q extends keyof Question, S>(
+  export function of<Q extends keyof Question, S, U extends string = string>(
     type: Q,
-    uri: string,
+    uri: U,
     message: string,
     subject: S
-  ): act.Question<Q, S, S, Question[Q]>;
+  ): act.Question<Q, S, S, Question[Q], Question[Q], U>;
 
-  export function of<Q extends keyof Question, S, C>(
+  export function of<Q extends keyof Question, S, C, U extends string = string>(
     type: Q,
-    uri: string,
+    uri: U,
     message: string,
     subject: S,
     context: C
-  ): act.Question<Q, S, C, Question[Q]>;
+  ): act.Question<Q, S, C, Question[Q], Question[Q], U>;
 
-  export function of<Q extends keyof Question, S>(
+  export function of<Q extends keyof Question, S, U extends string = string>(
     type: Q,
-    uri: string,
+    uri: U,
     message: string,
     subject: S,
     context: S = subject
-  ): act.Question<Q, S, S, Question[Q]> {
+  ): act.Question<Q, S, S, Question[Q], Question[Q], U> {
     return act.Question.of(type, uri, message, subject, context);
   }
 }

@@ -50,16 +50,14 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG/#audio-only-and-video-only-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG/#audio-only-and-video-only-prerecorded",
           level: "A",
         },
       ],
       [
         "2.2",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG22/#audio-only-and-video-only-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG22/#audio-only-and-video-only-prerecorded",
           level: "A",
         },
       ],
@@ -104,16 +102,14 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG/#audio-description-or-media-alternative-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG/#audio-description-or-media-alternative-prerecorded",
           level: "A",
         },
       ],
       [
         "2.2",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG22/#audio-description-or-media-alternative-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG22/#audio-description-or-media-alternative-prerecorded",
           level: "A",
         },
       ],
@@ -210,16 +206,14 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG/#extended-audio-description-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG/#extended-audio-description-prerecorded",
           level: "AAA",
         },
       ],
       [
         "2.2",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG22/#extended-audio-description-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG22/#extended-audio-description-prerecorded",
           level: "AAA",
         },
       ],
@@ -283,8 +277,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#content-structure-separation-programmatic",
+          uri: "https://www.w3.org/TR/WCAG20/#content-structure-separation-programmatic",
           level: "A",
         },
       ],
@@ -310,8 +303,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#content-structure-separation-sequence",
+          uri: "https://www.w3.org/TR/WCAG20/#content-structure-separation-sequence",
           level: "A",
         },
       ],
@@ -337,8 +329,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#content-structure-separation-understanding",
+          uri: "https://www.w3.org/TR/WCAG20/#content-structure-separation-understanding",
           level: "A",
         },
       ],
@@ -364,8 +355,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-without-color",
+          uri: "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-without-color",
           level: "A",
         },
       ],
@@ -469,8 +459,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-text-presentation",
+          uri: "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-text-presentation",
           level: "AA",
         },
       ],
@@ -548,8 +537,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-visual-presentation",
+          uri: "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-visual-presentation",
           level: "AAA",
         },
       ],
@@ -575,8 +563,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-text-images",
+          uri: "https://www.w3.org/TR/WCAG20/#visual-audio-contrast-text-images",
           level: "AAA",
         },
       ],
@@ -602,8 +589,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#keyboard-operation-keyboard-operable",
+          uri: "https://www.w3.org/TR/WCAG20/#keyboard-operation-keyboard-operable",
           level: "A",
         },
       ],
@@ -915,8 +901,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-order",
+          uri: "https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-order",
           level: "A",
         },
       ],
@@ -994,8 +979,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#navigation-mechanisms-descriptive",
+          uri: "https://www.w3.org/TR/WCAG20/#navigation-mechanisms-descriptive",
           level: "AA",
         },
       ],
@@ -1021,8 +1005,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-visible",
+          uri: "https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-visible",
           level: "AA",
         },
       ],
@@ -1282,8 +1265,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#consistent-behavior-receive-focus",
+          uri: "https://www.w3.org/TR/WCAG20/#consistent-behavior-receive-focus",
           level: "A",
         },
       ],
@@ -1309,8 +1291,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#consistent-behavior-unpredictable-change",
+          uri: "https://www.w3.org/TR/WCAG20/#consistent-behavior-unpredictable-change",
           level: "A",
         },
       ],
@@ -1336,8 +1317,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#consistent-behavior-consistent-locations",
+          uri: "https://www.w3.org/TR/WCAG20/#consistent-behavior-consistent-locations",
           level: "AA",
         },
       ],
@@ -1363,8 +1343,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#consistent-behavior-consistent-functionality",
+          uri: "https://www.w3.org/TR/WCAG20/#consistent-behavior-consistent-functionality",
           level: "AA",
         },
       ],
@@ -1390,8 +1369,7 @@ export const Criteria = {
       [
         "2.0",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG20/#consistent-behavior-no-extreme-changes-context",
+          uri: "https://www.w3.org/TR/WCAG20/#consistent-behavior-no-extreme-changes-context",
           level: "AAA",
         },
       ],
@@ -1502,16 +1480,14 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG/#error-prevention-legal-financial-data",
+          uri: "https://www.w3.org/TR/WCAG/#error-prevention-legal-financial-data",
           level: "AA",
         },
       ],
       [
         "2.2",
         {
-          uri:
-            "https://www.w3.org/TR/WCAG22/#error-prevention-legal-financial-data",
+          uri: "https://www.w3.org/TR/WCAG22/#error-prevention-legal-financial-data",
           level: "AA",
         },
       ],
@@ -1900,7 +1876,7 @@ export const Criteria = {
       [
         "2.2",
         {
-          uri: "https://www.w3.org/TR/WCAG22/#target-size",
+          uri: "https://www.w3.org/TR/WCAG22/#target-size-enhanced",
           level: "AAA",
         },
       ],
@@ -1969,60 +1945,60 @@ export const Criteria = {
     ],
   },
   "2.4.13": {
-    title: "Fixed Reference Points",
+    title: "Page Break Navigation",
     versions: [
       [
         "2.2",
         {
-          uri: "https://www.w3.org/TR/WCAG22/#fixed-reference-points",
+          uri: "https://www.w3.org/TR/WCAG22/#page-break-navigation",
           level: "A",
         },
       ],
     ],
   },
   "2.5.7": {
-    title: "Dragging",
+    title: "Dragging Movements",
     versions: [
       [
         "2.2",
         {
-          uri: "https://www.w3.org/TR/WCAG22/#dragging",
+          uri: "https://www.w3.org/TR/WCAG22/#dragging-movements",
           level: "AA",
         },
       ],
     ],
   },
   "2.5.8": {
-    title: "Pointer Target Spacing",
+    title: "Target Size (Minimum)",
     versions: [
       [
         "2.2",
         {
-          uri: "https://www.w3.org/TR/WCAG22/#pointer-target-spacing",
+          uri: "https://www.w3.org/TR/WCAG22/#target-size-minimum",
           level: "AA",
         },
       ],
     ],
   },
   "3.2.6": {
-    title: "Findable Help",
+    title: "Consistent Help",
     versions: [
       [
         "2.2",
         {
-          uri: "https://www.w3.org/TR/WCAG22/#findable-help",
+          uri: "https://www.w3.org/TR/WCAG22/#consistent-help",
           level: "A",
         },
       ],
     ],
   },
   "3.2.7": {
-    title: "Hidden Controls",
+    title: "Visible Controls",
     versions: [
       [
         "2.2",
         {
-          uri: "https://www.w3.org/TR/WCAG22/#hidden-controls",
+          uri: "https://www.w3.org/TR/WCAG22/#visible-controls",
           level: "AA",
         },
       ],

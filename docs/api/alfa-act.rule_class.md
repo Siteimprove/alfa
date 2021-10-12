@@ -37,6 +37,8 @@ export declare abstract class Rule<I = unknown, T = unknown, Q = never, S = T> i
 |  [equals(value)](./alfa-act.rule_class.equals_1_method.md) |  |  |
 |  [equals(value)](./alfa-act.rule_class.equals_2_method.md) |  |  |
 |  [evaluate(input, oracle, outcomes)](./alfa-act.rule_class.evaluate_1_method.md) |  |  |
+|  [hasRequirement(requirement)](./alfa-act.rule_class.hasrequirement_1_method.md) |  |  |
+|  [hasTag(tag)](./alfa-act.rule_class.hastag_1_method.md) |  |  |
 |  [toEARL()](./alfa-act.rule_class.toearl_1_method.md) |  |  |
 |  [toJSON()](./alfa-act.rule_class.tojson_1_method.md) |  |  |
 |  [toSARIF()](./alfa-act.rule_class.tosarif_1_method.md) |  |  |

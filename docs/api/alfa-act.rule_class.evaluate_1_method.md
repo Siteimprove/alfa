@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable<Outcome<I, T, Q, S>>>;
+evaluate(input: I, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable<Outcome<I, T, Q, S>>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  input | Readonly&lt;I&gt; |  |
+|  input | I |  |
 |  oracle | [Oracle](./alfa-act.oracle_typealias.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  outcomes | [Cache](./alfa-act.cache_class.md) |  |
 

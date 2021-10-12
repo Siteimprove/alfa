@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-and<U>(result: Result<U, E>): Result<U, E>;
+and<U, F>(result: Result<U, F>): Result<U, E | F>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  result | [Result](./alfa-result.result_interface.md)<!-- -->&lt;U, E&gt; |  |
+|  result | [Result](./alfa-result.result_interface.md)<!-- -->&lt;U, F&gt; |  |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result_interface.md)<!-- -->&lt;U, E&gt;
+[Result](./alfa-result.result_interface.md)<!-- -->&lt;U, E \| F&gt;
 

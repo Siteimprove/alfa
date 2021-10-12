@@ -7,7 +7,7 @@ const { system } = require("./system");
 exports.documenter = {
   document(root = "packages") {
     const projects = system
-      .readDirectory(root, ["tsconfig.json"])
+      .readDirectory(root, ["tsconfig.json"], ["node_modules"])
       .map(path.dirname);
 
     let code = 0;

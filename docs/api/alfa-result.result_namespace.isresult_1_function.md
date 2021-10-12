@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function isResult<T, E>(value: unknown): value is Result<T, E>;
+function isResult<T, E>(value: Iterable<T>): value is Result<T, E>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
 
 <b>Returns:</b>
 

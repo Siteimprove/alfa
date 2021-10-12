@@ -407,7 +407,10 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.sortWith(this, comparer));
   }
 
-  public compare(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison {
+  public compare<T>(
+    this: List<Comparable<T>>,
+    iterable: Iterable<T>
+  ): Comparison {
     return this.compareWith(iterable, compareComparable);
   }
 
@@ -680,7 +683,7 @@ export namespace List {
     return fromIterable(iterable);
   }
 
-  export function fromArray<T>(array: Array<T>): List<T> {
+  export function fromArray<T>(array: ReadonlyArray<T>): List<T> {
     const size = array.length;
 
     // Fast path: The array fits within the tail.

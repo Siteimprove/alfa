@@ -97,7 +97,7 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compare(this: List<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
+    compare<T>(this: List<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
     // (undocumented)
     compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)
@@ -235,7 +235,7 @@ export namespace List {
     // (undocumented)
     export function from<T>(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
-    export function fromArray<T>(array: Array_2<T>): List<T>;
+    export function fromArray<T>(array: ReadonlyArray<T>): List<T>;
     // (undocumented)
     export function fromIterable<T>(iterable: Iterable_2<T>): List<T>;
     // (undocumented)

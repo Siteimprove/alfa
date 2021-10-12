@@ -1,5 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Table, Cell } from "@siteimprove/alfa-table";
@@ -8,9 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -19,7 +18,7 @@ export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r46",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
   evaluate({ device, document }) {
-    const data = new Map<Element, [cell: Cell, table: Table]>();
+    let data = Map.empty<Element, [cell: Cell, table: Table]>();
 
     return {
       *applicability() {
@@ -53,7 +52,7 @@ export default Rule.Atomic.of<Page, Element>({
             for (const cell of model.cells.find((cell) =>
               cell.element.equals(header)
             )) {
-              data.set(header, [cell, model]);
+              data = data.set(header, [cell, model]);
 
               yield header;
             }
@@ -62,7 +61,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const [header, table] = data.get(target)!;
+        const [header, table] = data.get(target).get();
 
         return {
           1: expectation(

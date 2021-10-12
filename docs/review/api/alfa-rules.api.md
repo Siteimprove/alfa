@@ -20,6 +20,7 @@ import { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
+import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
@@ -179,10 +180,10 @@ const _default_55: Rule.Atomic<Page, Text, never, Text>;
 const _default_56: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
-const _default_57: Rule.Atomic<Page, Document, never, Document>;
+const _default_57: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_58: Rule.Atomic<Page, Element, never, Element>;
+const _default_58: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
 const _default_59: Rule.Atomic<Page, Element, never, Element>;
@@ -194,25 +195,25 @@ const _default_6: Rule.Atomic<Page, Element, never, Element>;
 const _default_60: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_61: Rule.Atomic<Page, Element, Question, Element>;
+const _default_61: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_62: Rule.Atomic<Page, Text, Question, Text>;
+const _default_62: Rule.Atomic<Page, Element, Question, Element>;
 
 // @public (undocumented)
-const _default_63: Rule.Atomic<Page, Element, never, Element>;
+const _default_63: Rule.Atomic<Page, Text, Question, Text>;
 
 // @public (undocumented)
 const _default_64: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_65: Rule.Atomic<Page, Text, Question, Text>;
+const _default_65: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_66: Rule.Atomic<Page, Element, never, Element>;
+const _default_66: Rule.Atomic<Page, Text, Question, Text>;
 
 // @public (undocumented)
-const _default_67: Rule.Atomic<Page, Element, never, Element>;
+const _default_67: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
 const _default_68: Rule.Atomic<Page, Element, never, Element>;
@@ -233,25 +234,25 @@ const _default_71: Rule.Atomic<Page, Element, never, Element>;
 const _default_72: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_73: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
+const _default_73: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_74: Rule.Atomic<Page, Element, Question, Node>;
+const _default_74: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_75: Rule.Atomic<Page, Text, never, Text>;
+const _default_75: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_76: Rule.Atomic<Page, Element, never, Element>;
+const _default_76: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
 
 // @public (undocumented)
-const _default_77: Rule.Atomic<Page, Element, never, Element>;
+const _default_77: Rule.Atomic<Page, Element, Question, Node>;
 
 // @public (undocumented)
-const _default_78: Rule.Atomic<Page, Element, never, Element>;
+const _default_78: Rule.Atomic<Page, Text, never, Text>;
 
 // @public (undocumented)
-const _default_79: Rule.Atomic<Page, Document, Question, Document>;
+const _default_79: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
 const _default_8: Rule.Atomic<Page, Element, never, Element>;
@@ -263,7 +264,7 @@ const _default_80: Rule.Atomic<Page, Element, never, Element>;
 const _default_81: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_82: Rule.Atomic<Page, Element, never, Element>;
+const _default_82: Rule.Atomic<Page, Document, Question, Document>;
 
 // @public (undocumented)
 const _default_83: Rule.Atomic<Page, Element, never, Element>;
@@ -278,12 +279,27 @@ const _default_85: Rule.Atomic<Page, Element, never, Element>;
 const _default_86: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
+const _default_87: Rule.Atomic<Page, Element, never, Element>;
+
+// @public (undocumented)
+const _default_88: Rule.Atomic<Page, Element, never, Element>;
+
+// @public (undocumented)
+const _default_89: Rule.Atomic<Page, Element, never, Element>;
+
+// @public (undocumented)
 const _default_9: Rule.Atomic<Page, Element, never, Element>;
 
-// Warning: (ae-forgotten-export) The symbol "Rules" needs to be exported by the entry point index.d.ts
+// @public (undocumented)
+const _default_90: Rule.Atomic<Page, Document, Question, Document>;
+
+// Warning: (ae-forgotten-export) The symbol "Rule" needs to be exported by the entry point index.d.ts
 //
+// @public (undocumented)
+type Flattened = Sequence<act.Rule<act.Rule.Input<Rule_2>, act.Rule.Target<Rule_2>, act.Rule.Question<Rule_2>, act.Rule.Subject<Rule_2>>>;
+
 // @public
-const Flattened: Sequence<Rule<Rule.Input<Rules_2>, Rule.Target<Rules_2>, Rule.Question<Rules_2>, Rule.Subject<Rules_2>>>;
+const Flattened: Flattened;
 export default Flattened;
 
 // @public (undocumented)
@@ -337,20 +353,50 @@ export interface Question {
     color: Option<RGB>;
     // (undocumented)
     node: Option<Node>;
+    // (undocumented)
+    string: string;
 }
 
 // @public (undocumented)
 export namespace Question {
     // (undocumented)
-    export function of<Q extends keyof Question, S>(type: Q, uri: string, message: string, subject: S): act.Question<Q, S, S, Question[Q]>;
+    export function of<Q extends keyof Question, S, U extends string = string>(type: Q, uri: U, message: string, subject: S): act.Question<Q, S, S, Question[Q], Question[Q], U>;
     // (undocumented)
-    export function of<Q extends keyof Question, S, C>(type: Q, uri: string, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q]>;
+    export function of<Q extends keyof Question, S, C, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q], Question[Q], U>;
 }
+
+// @public (undocumented)
+export type Rules = typeof Rules;
 
 // Warning: (ae-forgotten-export) The symbol "rules" needs to be exported by the entry point index.d.ts
 //
 // @public
 export const Rules: Record_2<typeof rules>;
+
+// @public (undocumented)
+export class Scope<S extends string = string> extends Tag<"scope"> {
+    // (undocumented)
+    equals(value: Scope): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    static of<S extends string>(scope: S): Scope<S>;
+    // (undocumented)
+    toJSON(): Scope.JSON<S>;
+    // (undocumented)
+    get type(): "scope";
+}
+
+// @public (undocumented)
+export namespace Scope {
+    // (undocumented)
+    export interface JSON<S extends string = string> extends Tag.JSON<"scope"> {
+        // (undocumented)
+        scope: S;
+    }
+    const Page: Scope<"page">;
+    const Component: Scope<"component">;
+}
 
 // (No @packageDocumentation comment for this package)
 

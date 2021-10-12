@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-attribute(predicate: string | Predicate<Attribute>): Option<Attribute>;
+attribute(name: string): Option<Attribute>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | string \| [Predicate](./alfa-predicate.predicate_typealias.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute_class.md)<!-- -->&gt; |  |
+|  name | string |  |
 
 <b>Returns:</b>
 

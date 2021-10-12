@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -60,8 +61,16 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     return this._tags;
   }
 
+  public hasRequirement(requirement: Requirement): boolean {
+    return Array.includes(this._requirements, requirement);
+  }
+
+  public hasTag(tag: Tag): boolean {
+    return Array.includes(this._tags, tag);
+  }
+
   public evaluate(
-    input: Readonly<I>,
+    input: I,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
@@ -235,7 +244,7 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: Readonly<I>): {
+      (input: I): {
         applicability(): Iterable<Interview<Q, S, T, Option.Maybe<T>>>;
         expectations(target: T): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
@@ -354,7 +363,7 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: Readonly<I>): {
+      (input: I): {
         expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };

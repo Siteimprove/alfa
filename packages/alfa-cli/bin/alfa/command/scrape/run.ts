@@ -113,7 +113,11 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
         ...parsed.map((header) => Header.of(header.name, header.value))
       );
     } catch (err) {
-      return Err.of(err.message);
+      if (err instanceof Error) {
+        return Err.of(err.message);
+      } else {
+        return Err.of(`${err}`);
+      }
     }
   }
 
@@ -137,7 +141,11 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
         ...parsed.map((cookie) => Cookie.of(cookie.name, cookie.value))
       );
     } catch (err) {
-      return Err.of(err.message);
+      if (err instanceof Error) {
+        return Err.of(err.message);
+      } else {
+        return Err.of(`${err}`);
+      }
     }
   }
 

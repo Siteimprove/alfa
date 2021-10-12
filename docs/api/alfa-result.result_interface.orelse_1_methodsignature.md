@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
+orElse<U, F>(result: Thunk<Result<U, F>>): Result<T | U, F>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  result | [Thunk](./alfa-thunk.thunk_typealias.md)<!-- -->&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;T, F&gt;&gt; |  |
+|  result | [Thunk](./alfa-thunk.thunk_typealias.md)<!-- -->&lt;[Result](./alfa-result.result_interface.md)<!-- -->&lt;U, F&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result_interface.md)<!-- -->&lt;T, F&gt;
+[Result](./alfa-result.result_interface.md)<!-- -->&lt;T \| U, F&gt;
 

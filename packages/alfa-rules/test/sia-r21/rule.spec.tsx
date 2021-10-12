@@ -54,6 +54,19 @@ test("evaluates() fails an element with both a valid and an invalid role", async
   ]);
 });
 
+test("evaluates() fails an element with an invalid role and not included in the accessibility tree by default", async (t) => {
+  const span = <span role="invalid">Foo</span>;
+  const target = span.attribute("role").get();
+
+  const document = h.document([span]);
+
+  t.deepEqual(await evaluate(R21, { document }), [
+    failed(R21, target, {
+      1: Outcomes.HasNoValidRole,
+    }),
+  ]);
+});
+
 test("evaluate() is inapplicable when there is no role attribute", async (t) => {
   const document = h.document([<button />]);
 

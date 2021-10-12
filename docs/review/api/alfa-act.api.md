@@ -5,6 +5,7 @@
 ```ts
 
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -15,6 +16,7 @@ import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Option } from '@siteimprove/alfa-option';
 import { Performance } from '@siteimprove/alfa-performance';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
@@ -383,40 +385,62 @@ export namespace Outcome {
 }
 
 // @public (undocumented)
-export class Question<Q, S, C, A, T = A> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> {
-    protected constructor(type: Q, uri: string, message: string, subject: S, context: C, quester: Mapper<A, T>);
+export class Question<Q, S, C, A, T = A, U extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> {
+    protected constructor(type: Q, uri: U, message: string, subject: S, context: C, quester: Mapper<A, T>);
     // (undocumented)
     answer(answer: A): T;
     // (undocumented)
-    apply<U>(mapper: Question<Q, S, C, A, Mapper<T, U>>): Question<Q, S, C, A, U>;
+    answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T, U>;
+    // (undocumented)
+    answerIf(predicate: Predicate<S, [context: C]>, answer: A): Question<Q, S, C, A, T, U>;
+    // (undocumented)
+    answerIf(answer: Option<A>): Question<Q, S, C, A, T, U>;
+    // (undocumented)
+    answerIf(answer: Result<A, unknown>): Question<Q, S, C, A, T, U>;
+    // (undocumented)
+    apply<V>(mapper: Question<Q, S, C, A, Mapper<T, V>, U>): Question<Q, S, C, A, V, U>;
     // (undocumented)
     get context(): C;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Question<Q, S, C, A, U>>): Question<Q, S, C, A, U>;
+    protected readonly _context: C;
+    // (undocumented)
+    flatMap<V>(mapper: Mapper<T, Question<Q, S, C, A, V, U>>): Question<Q, S, C, A, V, U>;
     // (undocumented)
     flatten<Q, S, C, A, T>(this: Question<Q, S, C, A, Question<Q, S, C, A, T>>): Question<Q, S, C, A, T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Question<Q, S, C, A, U>;
+    isRhetorical(): this is Question.Rhetorical<Q, S, C, A, T>;
+    // (undocumented)
+    map<V>(mapper: Mapper<T, V>): Question<Q, S, C, A, V, U>;
     // (undocumented)
     get message(): string;
     // (undocumented)
-    static of<Q, S, C, A>(type: Q, uri: string, message: string, subject: S, context: C): Question<Q, S, C, A>;
+    protected readonly _message: string;
+    // (undocumented)
+    static of<Q, S, C, A, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): Question<Q, S, C, A, A, U>;
+    // (undocumented)
+    protected readonly _quester: Mapper<A, T>;
     // (undocumented)
     get subject(): S;
     // (undocumented)
-    toJSON(): Question.JSON<Q, S, C>;
+    protected readonly _subject: S;
+    // (undocumented)
+    toJSON(): Question.JSON<Q, S, C, U>;
     // (undocumented)
     get type(): Q;
     // (undocumented)
-    get uri(): string;
+    protected readonly _type: Q;
+    // (undocumented)
+    get uri(): U;
+    // (undocumented)
+    protected readonly _uri: U;
 }
 
 // @public (undocumented)
 export namespace Question {
     // (undocumented)
-    export function isQuestion<Q, S, C, A, T = A>(value: unknown): value is Question<Q, S, C, A, T>;
+    export function isQuestion<Q, S, C, A, T = A, U extends string = string>(value: unknown): value is Question<Q, S, C, A, T, U>;
     // (undocumented)
-    export interface JSON<Q, S, C> {
+    export interface JSON<Q, S, C, U extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
@@ -428,7 +452,15 @@ export namespace Question {
         // (undocumented)
         type: Serializable.ToJSON<Q>;
         // (undocumented)
-        uri: string;
+        uri: U;
+    }
+    // @internal
+    export class Rhetorical<Q, S, C, A, T = A, U extends string = string> extends Question<Q, S, C, A, T, U> {
+        constructor(type: Q, uri: U, message: string, subject: S, context: C, answer: T);
+        // (undocumented)
+        answer(): T;
+        // (undocumented)
+        map<V>(mapper: Mapper<T, V>): Rhetorical<Q, S, C, A, V, U>;
     }
 }
 
@@ -473,23 +505,27 @@ export namespace Requirement {
 
 // @public (undocumented)
 export abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implements Equatable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
-    protected constructor(uri: string, requirements: Array<Requirement>, tags: Array<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
+    protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
     // (undocumented)
     equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: Readonly<I>, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(input: I, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
     // (undocumented)
+    hasRequirement(requirement: Requirement): boolean;
+    // (undocumented)
+    hasTag(tag: Tag): boolean;
+    // (undocumented)
     get requirements(): ReadonlyArray<Requirement>;
     // (undocumented)
-    protected readonly _requirements: Array<Requirement>;
+    protected readonly _requirements: Array_2<Requirement>;
     // (undocumented)
     get tags(): ReadonlyArray<Tag>;
     // (undocumented)
-    protected readonly _tags: Array<Tag>;
+    protected readonly _tags: Array_2<Tag>;
     // (undocumented)
     toEARL(): Rule.EARL;
     // (undocumented)
@@ -521,7 +557,7 @@ export namespace Rule {
         // (undocumented)
         export interface Evaluate<I, T, Q, S> {
             // (undocumented)
-            (input: Readonly<I>): {
+            (input: I): {
                 applicability(): Iterable_2<Interview<Q, S, T, Option.Maybe<T>>>;
                 expectations(target: T): {
                     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
@@ -554,7 +590,7 @@ export namespace Rule {
         // (undocumented)
         export interface Evaluate<I, T, Q, S> {
             // (undocumented)
-            (input: Readonly<I>): {
+            (input: I): {
                 expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
                     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
                 };
@@ -563,7 +599,7 @@ export namespace Rule {
         // (undocumented)
         export interface JSON extends Rule.JSON {
             // (undocumented)
-            composes: Array<Rule.JSON>;
+            composes: Array_2<Rule.JSON>;
             // (undocumented)
             type: "composite";
             // (undocumented)
@@ -583,7 +619,7 @@ export namespace Rule {
         "@type": ["earl:TestCriterion", "earl:TestCase"];
         // (undocumented)
         "dct:isPartOf": {
-            "@set": Array<Requirement.EARL>;
+            "@set": Array_2<Requirement.EARL>;
         };
     }
     // (undocumented)
@@ -608,9 +644,9 @@ export namespace Rule {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        requirements: Array<Requirement.JSON>;
+        requirements: Array_2<Requirement.JSON>;
         // (undocumented)
-        tags: Array<Tag.JSON>;
+        tags: Array_2<Tag.JSON>;
         // (undocumented)
         type: string;
         // (undocumented)
@@ -632,7 +668,7 @@ export abstract class Tag<T extends string = string> implements Equatable, Seria
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    toJSON(): Tag.JSON;
+    toJSON(): Tag.JSON<T>;
     // (undocumented)
     abstract get type(): T;
 }
@@ -642,11 +678,11 @@ export namespace Tag {
     // (undocumented)
     export function isTag<T extends string>(value: unknown, type?: T): value is Tag<T>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        type: string;
+        type: T;
     }
 }
 

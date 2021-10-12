@@ -34,7 +34,7 @@ export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     // (undocumented)
-    compare(this: Slice<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
+    compare<T>(this: Slice<Comparable<T>>, iterable: Iterable_2<T>): Comparison;
     // (undocumented)
     compareWith<U = T>(iterable: Iterable_2<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
     // (undocumented)

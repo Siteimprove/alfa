@@ -20,7 +20,7 @@ export abstract class Tag<T extends string = string>
     return value instanceof Tag && value.type === this.type;
   }
 
-  public toJSON(): Tag.JSON {
+  public toJSON(): Tag.JSON<T> {
     return {
       type: this.type,
     };
@@ -31,9 +31,9 @@ export abstract class Tag<T extends string = string>
  * @public
  */
 export namespace Tag {
-  export interface JSON {
+  export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
-    type: string;
+    type: T;
   }
 
   export function isTag<T extends string>(

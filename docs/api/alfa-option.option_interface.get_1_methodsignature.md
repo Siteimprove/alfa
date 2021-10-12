@@ -7,8 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-get(): T;
+get(message?: string): T;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  message | string |  |
+
 <b>Returns:</b>
 
 T

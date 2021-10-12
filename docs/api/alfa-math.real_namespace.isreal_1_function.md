@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isReal(value: unknown): value is number;
+function isReal(value: number): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | number |  |
 
 <b>Returns:</b>
 
-value is number
+boolean
 

@@ -7,11 +7,14 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { normalize } from "../common/normalize";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasRole } from "../common/predicate/has-role";
-import { isPerceivable } from "../common/predicate/is-perceivable";
-import { isTabbable } from "../common/predicate/is-tabbable";
+import {
+  hasAttribute,
+  hasRole,
+  isPerceivable,
+  isTabbable,
+} from "../common/predicate";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
@@ -31,6 +34,12 @@ export default Rule.Atomic.of<Page, Attribute>({
               hasName("input", "select", "textarea"),
               not(hasInputType("hidden", "button", "submit", "reset")),
               hasAttribute("autocomplete", hasTokens),
+              hasAttribute(
+                "autocomplete",
+                (autocomplete) =>
+                  normalize(autocomplete) !== "on" &&
+                  normalize(autocomplete) !== "off"
+              ),
               or(
                 isTabbable(device),
                 hasRole(device, (role) => role.isWidget())
@@ -70,10 +79,6 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
 
   if (next === undefined) {
     return false;
-  }
-
-  if (next === "on" || next === "off") {
-    return tokens.length === 1;
   }
 
   if (next.startsWith("section-")) {
@@ -162,69 +167,8 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
     return false;
   }
 
-  return autocomplete.owner.some(isAppropriateField(field));
+  return true;
 };
-
-function isAppropriateField(field: string): Predicate<Element> {
-  return (element) => {
-    if (element.name === "textarea" || element.name === "select") {
-      return true;
-    }
-
-    const type = element
-      .attribute("type")
-      .map((attr) => attr.value.toLowerCase())
-      .getOr("text");
-
-    // If "street-address" is specified on an <input> element, it must be
-    // hidden.
-    if (field === "street-address") {
-      return type === "hidden";
-    }
-
-    // The remaining fields are always appropriate for these <input> types.
-    switch (type) {
-      case "hidden":
-      case "text":
-      case "search":
-        return true;
-    }
-
-    // Non-text fields may also have additional <input> types.
-    switch (field) {
-      case "new-password":
-      case "current-password":
-        return type === "password";
-
-      case "cc-exp":
-        return type === "month";
-
-      case "cc-exp-month":
-      case "cc-exp-year":
-      case "transaction-amount":
-      case "bday-day":
-      case "bday-month":
-      case "bday-year":
-        return type === "number";
-
-      case "bday":
-        return type === "date";
-
-      case "url":
-      case "photo":
-      case "impp":
-        return type === "url";
-
-      case "tel":
-        return type === "tel";
-
-      case "email":
-        return type === "email";
-    }
-
-    return false;
-  };
-}
 
 export namespace Outcomes {
   export const HasValidValue = Ok.of(

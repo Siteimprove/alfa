@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-get classes(): Iterable<string>;
+get classes(): Sequence<string>;
 ```

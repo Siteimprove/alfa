@@ -5,8 +5,8 @@
 ```ts
 
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
-import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
 export class Cache<K extends object, V> {
@@ -15,21 +15,20 @@ export class Cache<K extends object, V> {
     // (undocumented)
     get(key: K): Option<V>;
     // (undocumented)
-    get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
+    get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
     // (undocumented)
     has(key: K): boolean;
     // (undocumented)
     merge(iterable: Iterable_2<readonly [K, V]>): this;
     // (undocumented)
     set(key: K, value: V): this;
-    }
+}
 
 // @public (undocumented)
 export namespace Cache {
     // (undocumented)
     export function from<K extends object, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

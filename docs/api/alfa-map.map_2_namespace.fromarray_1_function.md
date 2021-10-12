@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function fromArray<K, V>(array: Array<readonly [K, V]>): Map<K, V>;
+function fromArray<K, V>(array: ReadonlyArray<readonly [K, V]>): Map<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;readonly \[K, V\]&gt; |  |
+|  array | ReadonlyArray&lt;readonly \[K, V\]&gt; |  |
 
 <b>Returns:</b>
 

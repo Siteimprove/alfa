@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-tuple",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.23.0",
+  "license": "MIT",
+  "description": "Functionality for working with heterogeneous arrays, also called tuples",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-tuple"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-array": "workspace:^0.23.0",
+    "@siteimprove/alfa-callback": "workspace:^0.23.0",
+    "@siteimprove/alfa-comparable": "workspace:^0.23.0",
+    "@siteimprove/alfa-hash": "workspace:^0.23.0",
+    "@siteimprove/alfa-mapper": "workspace:^0.23.0",
+    "@siteimprove/alfa-option": "workspace:^0.23.0",
+    "@siteimprove/alfa-predicate": "workspace:^0.23.0",
+    "@siteimprove/alfa-reducer": "workspace:^0.23.0",
+    "@siteimprove/alfa-refinement": "workspace:^0.23.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^0.23.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}

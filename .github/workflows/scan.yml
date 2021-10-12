@@ -8,20 +8,23 @@ on:
       - main
   schedule:
     - cron: "0 21 * * 1"
+concurrency:
+  group: scan-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-node@v2.4.0
+      - uses: actions/setup-node@v2.4.1
         with:
           node-version: 16
           cache: yarn
       - run: yarn install --immutable
       - run: yarn build
-      - uses: github/codeql-action/init@v1.0.12
+      - uses: github/codeql-action/init@v1.0.18
         with:
           languages: javascript
           config-file: .github/codeql/config.yml
-      - uses: github/codeql-action/analyze@v1.0.12
+      - uses: github/codeql-action/analyze@v1.0.18
