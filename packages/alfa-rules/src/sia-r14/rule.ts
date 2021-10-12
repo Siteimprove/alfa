@@ -57,7 +57,9 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const textContent = getPerceivableTextContent(target, device);
+        const textContent = normalize(
+          getVisibleInnerTextFromElement(device, target)
+        );
         let name = "";
 
         const accessibleNameIncludesTextContent = test(
@@ -107,7 +109,7 @@ function getVisibleInnerTextFromElement(
   device: Device,
   element: Element
 ): string {
-  if (isRendered(device)(element)) {
+  if (!isRendered(device)(element)) {
     return "";
   }
   if (hasName("br")(element)) {
@@ -141,12 +143,11 @@ function childrenVisibleText(device: Device, node: Node): string {
   for (const child of children) {
     if (isText(child)) {
       result = result + getVisibleInnerTextFromTextNode(device, child);
-    }
-    if (isElement(child)) {
+    } else if (isElement(child)) {
       result = result + getVisibleInnerTextFromElement(device, child);
+    } else {
+      result = result + childrenVisibleText(device, child);
     }
-
-    result = result + childrenVisibleText(device, child);
   }
   //Returning the whole text from its children
   return result;

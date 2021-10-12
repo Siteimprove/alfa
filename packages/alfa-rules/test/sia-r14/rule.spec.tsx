@@ -60,3 +60,20 @@ test(`evaluate() ignores non-perceivable text content`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluate() computes inner text content`, async (t) => {
+  const target = (
+    <button aria-label="hello world">
+      <div>Hello</div>
+      <div>world</div>
+    </button>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R14, { document }), [
+    passed(R14, target, {
+      1: Outcomes.VisibleIsInName("hello world", "hello world"),
+    }),
+  ]);
+});
