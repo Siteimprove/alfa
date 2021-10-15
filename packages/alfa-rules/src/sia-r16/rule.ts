@@ -12,14 +12,16 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
+import {
+  hasAttribute,
+  hasRole,
+  isFocusable,
+  isIgnored,
+} from "../common/predicate";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isFocusable } from "../common/predicate/is-focusable";
-import { isIgnored } from "../common/predicate/is-ignored";
-
-const { isElement, hasNamespace } = Element;
+const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, property } = Predicate;
+const { and, not, property, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r16",
@@ -79,7 +81,10 @@ function hasRequiredValues(
       if (role.isAttributeRequired(attribute)) {
         required.push(attribute);
 
-        if (node.attribute(attribute).every(property("value", isEmpty))) {
+        if (
+          node.attribute(attribute).every(property("value", isEmpty)) &&
+          !isManagedAttribute(element, role.name, attribute)
+        ) {
           missing.push(attribute);
           result = false;
         }
@@ -194,4 +199,30 @@ export namespace Outcomes {
         `The element does not have all required states and properties`
       )
     );
+}
+
+// Some aria-* attributes are managed by UAs out of the HTML AAM and we
+// incorrectly flagged them as missing
+// See https://github.com/w3c/html-aam/issues/349
+function isManagedAttribute(
+  element: Element,
+  role: aria.Role.Name,
+  attribute: aria.Attribute.Name
+): boolean {
+  if (
+    role === "combobox" &&
+    attribute === "aria-expanded" &&
+    test(
+      and(
+        hasName("input"),
+        hasInputType("email", "search", "tel", "text", "url"),
+        hasAttribute("list")
+      ),
+      element
+    )
+  ) {
+    return true;
+  }
+
+  return false;
 }
