@@ -128,3 +128,26 @@ test("evaluate() is inapplicable to elements that are not exposed", async (t) =>
 
   t.deepEqual(await evaluate(R16, { document }), [inapplicable(R16)]);
 });
+
+test(`evaluate() passes a native \`<input type="text" list="foo">\` combobox`, async (t) => {
+  const target = <input type="text" list="foo" />;
+  const datalist = (
+    <datalist id="foo">
+      <option value="foo">foo</option>
+      <option value="bar">bar</option>
+    </datalist>
+  );
+
+  const document = h.document([target, datalist]);
+
+  t.deepEqual(await evaluate(R16, { document }), [
+    passed(R16, target, {
+      1: Outcomes.HasAllStates(
+        RoleAndRequiredAttributes.of("", "combobox", [
+          "aria-controls",
+          "aria-expanded",
+        ])
+      ),
+    }),
+  ]);
+});
