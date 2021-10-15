@@ -143,10 +143,7 @@ test(`evaluate() passes a native \`<input type="text" list="foo">\` combobox`, a
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of("", "combobox", [
-          "aria-controls",
-          "aria-expanded",
-        ])
+        RoleAndRequiredAttributes.of("", "combobox", ["aria-expanded"], [])
       ),
     }),
   ]);
