@@ -21,6 +21,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.23.1](../../compare/v0.23.0...v0.23.1) (2021-10-15)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now accepts native `<input type="text" list="datalist" />` as valid comboboxes. ([#948](../pull/948))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `clip` property now correctly computes to `auto` for non absolutely positioned elements. ([#847](../issues/847), [#930](../pull/930))
+
 ## [0.23.0](../../compare/v0.22.7...v0.23.0) (2021-10-04)
 
 ### Added
