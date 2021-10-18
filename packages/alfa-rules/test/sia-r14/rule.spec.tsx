@@ -45,14 +45,17 @@ test(`evaluate() fails a <button> element whose perceivable text content
   ]);
 });
 
-test(`evaluate() ignores non-perceivable text content`, async (t) => {
+test(`evaluate() ignores non-visible text content`, async (t) => {
   const target = (
     <button aria-label="Hello">
-      Hello <span aria-hidden="true">world</span>
+      Hello <span>world</span>
     </button>
   );
 
-  const document = h.document([target]);
+  const document = h.document(
+    [target],
+    [h.sheet([h.rule.style("span", { position: "absolute", left: "-9999px" })])]
+  );
 
   t.deepEqual(await evaluate(R14, { document }), [
     passed(R14, target, {
