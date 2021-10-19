@@ -90,6 +90,7 @@
     "src/property/flex-direction.ts",
     "src/property/flex-flow.ts",
     "src/property/flex-wrap.ts",
+    "src/property/float.ts",
     "src/property/font.ts",
     "src/property/font-family.ts",
     "src/property/font-size.ts",
