@@ -263,8 +263,11 @@ export default Property.register(
     (value, style) =>
       style.computed("position").value.equals(Keyword.of("absolute")) ||
       style.computed("position").value.equals(Keyword.of("fixed")) ||
-      !style.computed("float").value.equals(Keyword.of("none")) //4th condition hasn't been implemented because the property doesn't support elements (at the moment)
-        ? value.map(displayTable)
+      !style.computed("float").value.equals(Keyword.of("none"))
+        ? // 4th condition of https://drafts.csswg.org/css2/#dis-pos-flo needs
+          // to know whether the element is the root element, which is not
+          // currently doable at that level.
+          value.map(displayTable)
         : value
   )
 );
@@ -273,6 +276,7 @@ export default Property.register(
  * @internal
  */
 export function displayTable(value: Specified): Computed {
+  // Boxes are not changed by this.
   if (value.values.length === 1) {
     return value;
   }
@@ -282,10 +286,10 @@ export function displayTable(value: Specified): Computed {
   switch (outside.value) {
     case "inline":
       switch (inside.value) {
-        case "table":
+        case "table": // => inline-table
           return Tuple.of(Keyword.of("block"), Keyword.of("table"));
-        case "flow":
-        case "flow-root": //inline block behaves as inline flow-root
+        case "flow": // => inline-flow
+        case "flow-root": // => inline (parses as "inline flow-root")
           return Tuple.of(Keyword.of("block"), Keyword.of("flow"));
         default:
           return value;

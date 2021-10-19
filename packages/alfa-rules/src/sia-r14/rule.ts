@@ -17,7 +17,6 @@ import {
   hasDescendant,
   hasRole,
   isFocusable,
-  isPerceivable,
   isVisible,
   isRendered,
   isWhitespace,
@@ -86,14 +85,18 @@ export default Rule.Atomic.of<Page, Element>({
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
  */
 function getVisibleInnerTextFromTextNode(text: Text, device: Device): string {
-  if (isVisible(device)(text)) return text.data;
+  if (isVisible(device)(text)) {
+    return text.data;
+  }
 
   if (
     and(not(isVisible(device)), isRendered(device))(text) &&
     isWhitespace(text.data)
-  )
+  ) {
     return " ";
-  else return "";
+  }
+
+  return "";
 }
 
 function getVisibleInnerTextFromElement(
@@ -103,16 +106,18 @@ function getVisibleInnerTextFromElement(
   if (!isRendered(device)(element)) {
     return "";
   }
+
   if (hasName("br")(element)) {
     return "\n";
   }
+
   if (hasName("p")(element)) {
     return "\n" + childrenVisibleText(element, device) + "\n";
   }
 
   const display = Style.from(element, device).computed("display").value;
   const {
-    values: [outside], // this covers both outside and internal specified => a better name?
+    values: [outside], // this covers both outside and internal specified.
   } = display;
 
   if (outside.value === "block" || outside.value === "table-caption") {
@@ -121,9 +126,9 @@ function getVisibleInnerTextFromElement(
 
   if (outside.value === "table-cell" || outside.value === "table-row") {
     return " " + childrenVisibleText(element, device) + " ";
-  } else {
-    return childrenVisibleText(element, device);
   }
+
+  return childrenVisibleText(element, device);
 }
 
 function childrenVisibleText(node: Node, device: Device): string {

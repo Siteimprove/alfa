@@ -35,7 +35,7 @@ export default Property.register(
   Property.of<Specified, Computed>(Keyword.of("none"), parse, (value, style) =>
     style.computed("position").value.equals(Keyword.of("absolute")) ||
     style.computed("position").value.equals(Keyword.of("fixed"))
-      ? value
-      : Value.of(Keyword.of("none"))
+      ? Value.of(Keyword.of("none"))
+      : value
   )
 );
