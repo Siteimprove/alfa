@@ -5,10 +5,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
+import { Option } from "@siteimprove/alfa-option";
+import { getOffsetParent } from "@siteimprove/alfa-rules/src/common/expectation/get-offset-parent";
+import { isPositioned } from "./is-positioned";
 
 const { abs } = Math;
 const { isElement } = Element;
-const { or, test } = Predicate;
+const { or, test, not } = Predicate;
 const { and } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
@@ -37,19 +40,26 @@ export function isClipped(
               )
             ),
             // Or its parent is clipped
-            (node: Node) =>
-              node
-                .parent({
-                  flattened: true,
-                  nested: true,
-                })
-                .some(isClipped(device, context))
+            hasRelevantParent(device, isClipped(device, context))
           ),
           node
         )
       );
 }
 
+function hasRelevantParent(
+  device: Device,
+  predicate: Predicate<Node>
+): Predicate<Node> {
+  return (node) =>
+    (and(isElement, not(isPositioned(device, "static")))(node)
+      ? getOffsetParent(node, device)
+      : node.parent({
+          flattened: true,
+          nested: true,
+        })
+    ).some(predicate);
+}
 /**
  * Checks if an element's size is reduced to 0 or 1 pixel, and overflow is
  * somehow hidden.
