@@ -26,12 +26,12 @@ import { Selector } from "@siteimprove/alfa-selector";
  *     +-- b
  *
  * If we assume that we're currently visiting the `<b>` element, the ancestor
- * ancestor filter would contain the `section` and `p` types, the `#content` ID,
+ * filter would contain the `section` and `p` types, the `#content` ID,
  * and the `.highlight` class. Given a selector `main b`, we can therefore
  * reject that the selector would match `<b>` as the ancestor filter does not
  * contain an entry for the type `main`.
  *
- * NB: None of the operations of the ancestor filter are idempontent to avoid
+ * NB: None of the operations of the ancestor filter are idempotent to avoid
  * keeping track of more information than strictly necessary. This is however
  * not a problem when ancestor filters are used during top-down traversal of the
  * DOM, in which case an element is only ever visited once. If used elsewhere
