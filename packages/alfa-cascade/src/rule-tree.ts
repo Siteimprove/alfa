@@ -1,4 +1,5 @@
 import { Declaration, Rule } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Selector } from "@siteimprove/alfa-selector";
