@@ -6,12 +6,13 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "../src/map";
 
 /**
- * In order to do correct property testing on Map (and hash tables), we need:
+ * In order to do correct property based testing on Map (and hash tables), we
+ * need:
  * * a seedable Pseudo-Random Numbers Generator, so we can re-use the seed to
  *   investigate problems;
  * * full control over the hashes of the keys, notably not relying on
- *   Hash.writeObject since the object hash might be "poluted" by previous
- *   state
+ *   Hash.writeObject since the objects list might be "polluted" by previous
+ *   actions
  *
  * The PRNG doesn't need to be very good (i.e. not cryptographic-grade). We also
  * wants the hashes to be both among a relatively small set (so that collisions
@@ -19,14 +20,14 @@ import { Map } from "../src/map";
  * spread over the space so that Sparses are frequent and can be tested.
  *
  * 16 bits entropy seems a nice number since it leaves room for ~65,000 keys. By
- * making runs of 10000 keys, collisions are very likely to happen and there
- * is a relatively small number of iterations so that test don't run forever…
+ * making runs of 1000 keys, collisions are very likely to happen and there
+ * is a relatively small number of iterations so tests don't run forever…
  *
  * We also need to output the failing seed systematically to allow investigation
  * in case of problems…
  *
  * Since #has looks for keys using hashes while Iterable.includes(map.keys())
- * is iterating through the key without using hashes, both are systematically
+ * is iterating through the keys without using hashes, both are systematically
  * used in tests as a way to ensure that no hash somehow becomes unreachable.
  */
 
@@ -121,7 +122,8 @@ test(`#add and #delete behave when used in bulk`, (t) => {
   }
 
   // Removing those elements. Note that the keys array keep them in an order
-  // fairly different from the #keys() enumeration (which depends on hashes).
+  // fairly different from the #keys() enumeration (which is essentially
+  // depth-first order in the Map, hence depends on hashes).
   // Hopefully, this creates enough entropy to test various scenarios.
   for (let i = iterations; i > 0; i--) {
     const key = keys[iterations - i];
