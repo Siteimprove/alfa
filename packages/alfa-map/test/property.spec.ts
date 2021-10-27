@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Hash } from "@siteimprove/alfa-hash";
@@ -19,9 +18,9 @@ import { Map } from "../src/map";
  * are likely and can be tested without huge number of items); and relatively
  * spread over the space so that Sparses are frequent and can be tested.
  *
- * 16 bits entropy seems a nice number since it leaves room for 65,000 keys. By
- * making runs of 10,000 keys, collisions are very likely to happen and there
- * is a relatively small number of iteration so that test don't run forever…
+ * 16 bits entropy seems a nice number since it leaves room for ~65,000 keys. By
+ * making runs of 10000 keys, collisions are very likely to happen and there
+ * is a relatively small number of iterations so that test don't run forever…
  *
  * We also need to output the failing seed systematically to allow investigation
  * in case of problems…
@@ -81,7 +80,7 @@ function randKey(rng: () => number): () => Key {
 }
 
 test(`#add and #delete behave when used in bulk`, (t) => {
-  const iterations = 10000;
+  const iterations = 1000;
   const seed = Math.random();
   const rng = mulberry32(seed);
   const keyGen = randKey(rng);
@@ -126,8 +125,6 @@ test(`#add and #delete behave when used in bulk`, (t) => {
   // Hopefully, this creates enough entropy to test various scenarios.
   for (let i = iterations; i > 0; i--) {
     const key = keys[iterations - i];
-    // console.log(`i: ${i}, key: ${key.id}`);
-
     t.deepEqual(map.size, i, `Pre-delete map.size() fails with seed ${seed}`);
     t.deepEqual(
       map.has(key),
