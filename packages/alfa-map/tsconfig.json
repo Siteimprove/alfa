@@ -6,7 +6,8 @@
     "src/map.ts",
     "src/node.ts",
     "src/status.ts",
-    "test/map.spec.ts"
+    "test/map.spec.ts",
+    "test/property.spec.ts"
   ],
   "references": [
     {
