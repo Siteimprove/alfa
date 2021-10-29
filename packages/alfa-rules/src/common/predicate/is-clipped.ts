@@ -5,7 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
-import { Option } from "@siteimprove/alfa-option";
+
 import { getOffsetParent } from "@siteimprove/alfa-rules/src/common/expectation/get-offset-parent";
 import { isPositioned } from "./is-positioned";
 
@@ -19,12 +19,13 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 /**
  * Checks if a node (or one of its ancestor) is fully clipped
  */
+
 export function isClipped(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
-  return (node) =>
-    cache
+  return function isClippedInternal(node: Node): boolean {
+    return cache
       .get(device, Cache.empty)
       .get(context, Cache.empty)
       .get(node, () =>
@@ -45,6 +46,7 @@ export function isClipped(
           node
         )
       );
+  };
 }
 
 function hasRelevantParent(
