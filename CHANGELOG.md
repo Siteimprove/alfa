@@ -21,6 +21,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.23.2](../../compare/v0.23.1...v0.23.2) (2021-10-27)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now computes visible labels according to the `innerText` algorithm. ([#833](../issues/833), [#938](../pull/938))
+
+- [@siteimprove/alfa-map](packages/alfa-map): Fixed a rare bug when deleting items in a `Map` could result in some other items becoming unreachable; see the Pull Request for details. ([#962](../pull/962))
+
 ## [0.23.1](../../compare/v0.23.0...v0.23.1) (2021-10-15)
 
 ### Fixed
