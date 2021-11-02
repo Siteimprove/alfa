@@ -262,6 +262,7 @@ function isDistinguishable(
     hasDistinguishableBackground(container, device, context),
 
     hasDistinguishableFontWeight(container, device, context),
+    hasDistinguishableFontFamily(container, device, context),
     hasDistinguishableVerticalAlign(container, device, context),
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
@@ -365,6 +366,27 @@ function hasDistinguishableFontWeight(
     context
   );
 }
+/**
+ * Check if an element has a different font family than its container.
+ *
+ * As brittle as font weight check.
+ */
+function hasDistinguishableFontFamily(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const reference = Style.from(container, device, context).computed(
+    "font-family"
+  ).value;
+
+  return hasComputedStyle(
+    "font-family",
+    not((family) => family.equals(reference)),
+    device,
+    context
+  );
+}
 
 function hasDistinguishableVerticalAlign(
   container: Element,
@@ -447,6 +469,7 @@ export namespace ComputedStyles {
         ...border,
         ["color", Serialise.getLonghand(style, "color")] as const,
         ["font-weight", Serialise.getLonghand(style, "font-weight")] as const,
+        ["font-family", Serialise.getLonghand(style, "font-family")] as const,
         [
           "vertical-align",
           Serialise.getLonghand(style, "vertical-align"),

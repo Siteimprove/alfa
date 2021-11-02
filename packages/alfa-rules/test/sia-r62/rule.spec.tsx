@@ -896,3 +896,51 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          fontFamily: "VAGRoundedStd-Light",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["font-family", "VAGRoundedStd-Bold"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [style],
+        [
+          Ok.of(
+            ComputedStyles.of([
+              ["border-width", "0px"],
+              ["color", "rgb(0% 0% 93.33333%)"],
+              ["font-family", "VAGRoundedStd-Bold"],
+              ["outline", "auto"],
+            ])
+          ),
+        ]
+      ),
+    }),
+  ]);
+});
