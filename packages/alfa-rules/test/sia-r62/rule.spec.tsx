@@ -896,3 +896,35 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a box shadow`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "10px 5px 5px red"
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});

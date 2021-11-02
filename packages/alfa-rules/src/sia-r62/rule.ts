@@ -28,6 +28,7 @@ import {
   hasRole,
   hasTextDecoration,
   isVisible,
+  hasBoxShadow,
 } from "../common/predicate";
 
 import { Serialise } from "./serialise";
@@ -269,7 +270,8 @@ function isDistinguishable(
     // should hopefully not happen (too often) in practice. When it does, we
     // risk false negatives.
     hasOutline(device, context),
-    hasBorder(device, context)
+    hasBorder(device, context),
+    hasBoxShadow(device, context) //Checks for color != transparent and spread => 0. What does it mean "check for any difference"?
   );
 }
 
