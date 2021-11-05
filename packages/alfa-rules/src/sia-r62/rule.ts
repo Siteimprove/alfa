@@ -241,7 +241,7 @@ function hasNonLinkText(device: Device): Predicate<Element> {
         children.some(
           and(
             isText,
-            and(isVisible(device), (text) => !isWhitespace(text.data))
+            and<Text>(isVisible(device), (text) => !isWhitespace(text.data))
           )
         )
       ) {
