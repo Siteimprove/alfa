@@ -660,7 +660,7 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["font-weight", "700"],
+      ["font", "700"],
       ["outline", "0px"],
     ])
   );
@@ -675,7 +675,7 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
-              ["font-weight", "700"],
+              ["font", "700"],
               ["outline", "auto"],
             ])
           ),
@@ -896,7 +896,7 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     }),
   ]);
 });
-
+/*
 test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
   const target = <a href="#">Link</a>;
 
@@ -944,3 +944,4 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     }),
   ]);
 });
+*/
