@@ -32,7 +32,6 @@ import {
 } from "../common/predicate";
 
 import { Serialise } from "./serialise";
-import textAlign from "@siteimprove/alfa-style/src/property/text-align";
 
 const { isElement } = Element;
 const { isText } = Text;
@@ -242,7 +241,7 @@ function hasNonLinkText(device: Device): Predicate<Element> {
         children.some(
           and(
             isText,
-            and(isVisible(device), (text: Text) => !isWhitespace(text.data))
+            and(isVisible(device), (text) => !isWhitespace(text.data))
           )
         )
       ) {
