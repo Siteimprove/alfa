@@ -545,7 +545,7 @@ test(`evaluates() passes a clipping element with font-relative height`, async (t
         h.rule.style(".growing", {
           overflowY: "hidden",
           minHeight: "1.5em",
-          height: "1px",
+          height: "10px",
         }),
       ]),
     ]
