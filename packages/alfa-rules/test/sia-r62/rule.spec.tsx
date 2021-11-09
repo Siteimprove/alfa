@@ -896,3 +896,12 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+    no non-link whitespace text content`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document([<p> {target}</p>]);
+
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+});
