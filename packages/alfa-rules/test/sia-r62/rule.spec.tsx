@@ -21,6 +21,7 @@ const defaultProperties: Array<
   [Property.Name | Property.Shorthand.Name, string]
 > = [
   ["border-width", "0px"],
+  ["font", "16px serif"],
   ["color", "rgb(0% 0% 93.33333%)"],
   ["text-decoration", "underline"],
   ["outline", "0px"],
@@ -29,6 +30,7 @@ const focusProperties: Array<
   [Property.Name | Property.Shorthand.Name, string]
 > = [
   ["border-width", "0px"],
+  ["font", "16px serif"],
   ["color", "rgb(0% 0% 93.33333%)"],
   ["outline", "auto"],
   ["text-decoration", "underline"],
@@ -37,6 +39,7 @@ const noDistinguishingProperties: Array<
   [Property.Name | Property.Shorthand.Name, string]
 > = [
   ["border-width", "0px"],
+  ["font", "16px serif"],
   ["color", "rgb(0% 0% 93.33333%)"],
   ["outline", "0px"],
 ];
@@ -44,6 +47,12 @@ const noDistinguishingProperties: Array<
 const defaultStyle = Ok.of(ComputedStyles.of(defaultProperties));
 const focusStyle = Ok.of(ComputedStyles.of(focusProperties));
 const noStyle = Err.of(ComputedStyles.of(noDistinguishingProperties));
+
+/*
+ *
+ *Passing tests
+ *
+ */
 
 test(`evaluate() passes an <a> element with a <p> parent element with non-link
       text content`, async (t) => {
@@ -82,6 +91,328 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
     }),
   ]);
 });
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a bottom border`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          borderBottom: "1px solid #000",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["font", "16px serif"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [style],
+        [
+          Ok.of(
+            ComputedStyles.of([
+              ["color", "rgb(0% 0% 93.33333%)"],
+              ["outline", "auto"],
+              ["font", "16px serif"],
+              ["border-width", "0px 0px 1px"],
+              ["border-style", "none none solid"],
+              ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+            ])
+          ),
+        ]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies an outline`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["font", "16px serif"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "auto"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a background color`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          background: "red",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["font", "16px serif"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["background", "rgb(100% 0% 0%)"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [style],
+        [
+          Ok.of(
+            ComputedStyles.of([
+              ["border-width", "0px"],
+              ["font", "16px serif"],
+              ["color", "rgb(0% 0% 93.33333%)"],
+              ["background", "rgb(100% 0% 0%)"],
+              ["outline", "auto"],
+            ])
+          ),
+        ]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element with a <div role="paragraph"> parent element
+      with non-link text content in a <span> child element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document([
+    <div role="paragraph">
+      <span>Hello</span> {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle],
+        [defaultStyle],
+        [focusStyle]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          fontWeight: "bold",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["font", "700 16px serif"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [style],
+        [
+          Ok.of(
+            ComputedStyles.of([
+              ["border-width", "0px"],
+              ["font", "700 16px serif"],
+              ["color", "rgb(0% 0% 93.33333%)"],
+              ["outline", "auto"],
+            ])
+          ),
+        ]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluates() passes on link with a different background-image than text`, async (t) => {
+  const target = <a href="#">Foo</a>;
+
+  const document = h.document(
+    [<p>Hello world {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          backgroundImage:
+            "linear-gradient(to right, #046B99 50%, transparent 50%)",
+        }),
+        h.rule.style("a:focus", { outline: "none" }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      [
+        "background",
+        "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+      ],
+      ...noDistinguishingProperties,
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          outline: "none",
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["vertical-align", "super"],
+      ...noDistinguishingProperties,
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [style, noStyle],
+        [style, noStyle]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() passes a link with different font than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          font: '16px "some-font"',
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["font", '16px "some-font"'],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [style],
+        [
+          Ok.of(
+            ComputedStyles.of([
+              ["border-width", "0px"],
+              ["color", "rgb(0% 0% 93.33333%)"],
+              ["font", '16px "some-font"'],
+              ["outline", "auto"],
+            ])
+          ),
+        ]
+      ),
+    }),
+  ]);
+});
+
+/*
+ *
+ *Failing tests
+ *
+ */
 
 test(`evaluate() fails an <a> element that removes the default text decoration
       without replacing it with another distinguishing feature`, async (t) => {
@@ -265,84 +596,6 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
   ]);
 });
 
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies an outline`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          outline: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["border-width", "0px"],
-      ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline", "auto"],
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable([style], [style], [style]),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies a bottom border`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          borderBottom: "1px solid #000",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["border-width", "0px 0px 1px"],
-      ["border-style", "none none solid"],
-      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-      ["color", "rgb(0% 0% 93.33333%)"],
-      ["outline", "0px"],
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [style],
-        [
-          Ok.of(
-            ComputedStyles.of([
-              ["color", "rgb(0% 0% 93.33333%)"],
-              ["outline", "auto"],
-              ["border-width", "0px 0px 1px"],
-              ["border-style", "none none solid"],
-              ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-            ])
-          ),
-        ]
-      ),
-    }),
-  ]);
-});
-
 test(`evaluate() fails an <a> element that has no distinguishing features and
       has a transparent bottom border`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -362,6 +615,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   const style = Err.of(
     ComputedStyles.of([
       ["color", "rgb(0% 0% 93.33333%)"],
+      ["font", "16px serif"],
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
@@ -378,6 +632,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
           Ok.of(
             ComputedStyles.of([
               ["color", "rgb(0% 0% 93.33333%)"],
+              ["font", "16px serif"],
               ["border-width", "0px 0px 1px"],
               ["border-style", "none none solid"],
               ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
@@ -409,6 +664,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   const style = Err.of(
     ComputedStyles.of([
       ["color", "rgb(0% 0% 93.33333%)"],
+      ["font", "16px serif"],
       ["border-width", "0px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
@@ -425,55 +681,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
           Ok.of(
             ComputedStyles.of([
               ["color", "rgb(0% 0% 93.33333%)"],
+              ["font", "16px serif"],
               ["outline", "auto"],
               ["border-width", "0px"],
               ["border-style", "none none solid"],
               ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-            ])
-          ),
-        ]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies a background color`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          background: "red",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["border-width", "0px"],
-      ["color", "rgb(0% 0% 93.33333%)"],
-      ["background", "rgb(100% 0% 0%)"],
-      ["outline", "0px"],
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [style],
-        [
-          Ok.of(
-            ComputedStyles.of([
-              ["border-width", "0px"],
-              ["color", "rgb(0% 0% 93.33333%)"],
-              ["background", "rgb(100% 0% 0%)"],
-              ["outline", "auto"],
             ])
           ),
         ]
@@ -511,6 +723,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
+              ["font", "16px serif"],
               ["outline", "auto"],
             ])
           ),
@@ -544,6 +757,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
+      ["font", "16px serif"],
       ["background", "rgb(100% 0% 0%)"],
       ["outline", "0px"],
     ])
@@ -559,6 +773,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
             ComputedStyles.of([
               ["border-width", "0px"],
               ["color", "rgb(0% 0% 93.33333%)"],
+              ["font", "16px serif"],
               ["background", "rgb(100% 0% 0%)"],
               ["outline", "auto"],
             ])
@@ -603,27 +818,6 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
-test(`evaluate() passes an <a> element with a <div role="paragraph"> parent element
-      with non-link text content in a <span> child element`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document([
-    <div role="paragraph">
-      <span>Hello</span> {target}
-    </div>,
-  ]);
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [defaultStyle],
-        [defaultStyle],
-        [focusStyle]
-      ),
-    }),
-  ]);
-});
-
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
       whose role has been changed`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -635,54 +829,6 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
   ]);
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
-});
-
-test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          fontWeight: "bold",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["border-width", "0px"],
-      ["color", "rgb(0% 0% 93.33333%)"],
-      ["font", "700"],
-      ["outline", "0px"],
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [style],
-        [
-          Ok.of(
-            ComputedStyles.of([
-              ["border-width", "0px"],
-              ["color", "rgb(0% 0% 93.33333%)"],
-              ["font", "700"],
-              ["outline", "auto"],
-            ])
-          ),
-        ]
-      ),
-    }),
-  ]);
 });
 
 test(`evaluates() doesn't break when link text is nested`, async (t) => {
@@ -736,7 +882,7 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
     ComputedStyles.of([
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["font-weight", "700"],
+      ["font", "700 16px serif"],
       ["outline", "0px"],
     ])
   );
@@ -753,8 +899,6 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
 });
 
 test(`evaluates() accepts decoration on parents of links`, async (t) => {
-  // Since text-decoration and focus outline is not inherited, the <span> has
-  // effectively no style other than color.
   const target = <a href="#">Link</a>;
 
   const document = h.document(
@@ -780,15 +924,15 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
   const linkStyle = Ok.of(
     ComputedStyles.of([
       ["border-width", "0px"],
+      ["font", "700 16px serif"],
       ["color", "rgb(0% 0% 93.33333%)"],
-      ["font-weight", "700"],
       ["outline", "0px"],
     ])
   );
   const spanStyle = Ok.of(
     ComputedStyles.of([
       ["border-width", "0px"],
-      ["font-weight", "700"],
+      ["font", "700 16px serif"],
       ["outline", "0px"],
     ])
   );
@@ -796,9 +940,9 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
   t.deepEqual(await evaluate(R62, { document }), [
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
-        [linkStyle, spanStyle],
-        [linkStyle, spanStyle],
-        [linkStyle, spanStyle]
+        [spanStyle, linkStyle],
+        [spanStyle, linkStyle],
+        [spanStyle, linkStyle]
       ),
     }),
   ]);
@@ -825,123 +969,3 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
     }),
   ]);
 });
-
-test(`evaluates() passes on link with a different background-image than text`, async (t) => {
-  const target = <a href="#">Foo</a>;
-
-  const document = h.document(
-    [<p>Hello world {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          backgroundImage:
-            "linear-gradient(to right, #046B99 50%, transparent 50%)",
-        }),
-        h.rule.style("a:focus", { outline: "none" }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      [
-        "background",
-        "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-      ],
-      ...noDistinguishingProperties,
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable([style], [style], [style]),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an <a> element in superscript`, async (t) => {
-  const target = (
-    <a href="#">
-      <sup>Link</sup>
-    </a>
-  );
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          outline: "none",
-          textDecoration: "none",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["vertical-align", "super"],
-      ...noDistinguishingProperties,
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style, noStyle],
-        [style, noStyle],
-        [style, noStyle]
-      ),
-    }),
-  ]);
-});
-/*
-test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          fontFamily: "VAGRoundedStd-Light",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["border-width", "0px"],
-      ["color", "rgb(0% 0% 93.33333%)"],
-      ["font-family", "VAGRoundedStd-Bold"],
-      ["outline", "0px"],
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [style],
-        [
-          Ok.of(
-            ComputedStyles.of([
-              ["border-width", "0px"],
-              ["color", "rgb(0% 0% 93.33333%)"],
-              ["font-family", "VAGRoundedStd-Bold"],
-              ["outline", "auto"],
-            ])
-          ),
-        ]
-      ),
-    }),
-  ]);
-});
-*/

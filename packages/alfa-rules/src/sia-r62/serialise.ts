@@ -80,7 +80,7 @@ export namespace Serialise {
     const family = style.computed("font-family");
 
     if (optional !== " ") {
-      // optional properties were changed, need to output the mandatory ones.
+      // Optional properties were changed, need to output the mandatory ones.
       return normalize(`${optional} ${size} ${family}`);
     }
 
@@ -88,12 +88,12 @@ export namespace Serialise {
       size.value.equals(Property.get("font-size").initial.value) &&
       family.value.equals(Property.get("font-family").initial.values[0])
     ) {
-      // Both manatory properties are set to their initial values.
+      // Both mandatory properties are set to their initial values.
       // Since optional properties also are, we can skip `font` altogether.
       return "";
     }
 
-    // Optional propertis were not changed but some mandatory ones are.
+    // Optional properties were not changed but some mandatory ones were.
     return normalize(`${size} ${family}`);
 
   }

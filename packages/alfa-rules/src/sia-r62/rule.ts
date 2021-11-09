@@ -261,8 +261,7 @@ function isDistinguishable(
     hasDistinguishableTextDecoration(container, device, context),
     hasDistinguishableBackground(container, device, context),
 
-    hasDistinguishableFontWeight(container, device, context),
-    hasDistinguishableFontFamily(container, device, context),
+    hasDistinguishableFont(container, device, context),
     hasDistinguishableVerticalAlign(container, device, context),
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
@@ -345,46 +344,35 @@ function hasDistinguishableBackground(
 }
 
 /**
- * Check if an element has a different font weight than its container.
+ * Check if an element has a different font weight and family than its container.
  *
  * This is brittle and imperfect but removes a strong pain point until we find
  * a better solution.
  */
-function hasDistinguishableFontWeight(
+
+function hasDistinguishableFont(
   container: Element,
   device: Device,
   context?: Context
 ): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
-    "font-weight"
-  ).value;
+  const style = Style.from(container, device, context);
 
-  return hasComputedStyle(
-    "font-weight",
-    not((weight) => weight.equals(reference)),
-    device,
-    context
-  );
-}
-/**
- * Check if an element has a different font family than its container.
- *
- * As brittle as font weight check.
- */
-function hasDistinguishableFontFamily(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
-    "font-family"
-  ).value;
+  const referenceWeight = style.computed("font-weight").value;
+  const referenceFamily = style.computed("font-family").value;
 
-  return hasComputedStyle(
-    "font-family",
-    not((family) => family.equals(reference)),
-    device,
-    context
+  return or(
+    hasComputedStyle(
+      "font-weight",
+      not((weight) => weight.equals(referenceWeight)),
+      device,
+      context
+    ),
+    hasComputedStyle(
+      "font-family",
+      not((family) => family.equals(referenceFamily)),
+      device,
+      context
+    )
   );
 }
 
