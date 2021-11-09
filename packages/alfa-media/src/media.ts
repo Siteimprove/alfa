@@ -157,7 +157,8 @@ export namespace Media {
       Matchable,
       Iterable<Feature<T>>,
       Equatable,
-      Serializable<Feature.JSON> {
+      Serializable<Feature.JSON>
+  {
     protected readonly _value: Option<Value<T>>;
 
     protected constructor(value: Option<Value<T>>) {
@@ -742,7 +743,8 @@ export namespace Media {
     }
 
     export class Discrete<T = unknown>
-      implements Value<T>, Serializable<Discrete.JSON<T>> {
+      implements Value<T>, Serializable<Discrete.JSON<T>>
+    {
       public static of<T>(value: T): Discrete<T> {
         return new Discrete(value);
       }
@@ -794,7 +796,8 @@ export namespace Media {
     export const { of: discrete, isDiscrete } = Discrete;
 
     export class Range<T = unknown>
-      implements Value<T>, Serializable<Range.JSON<T>> {
+      implements Value<T>, Serializable<Range.JSON<T>>
+    {
       public static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T> {
         return new Range(Option.of(minimum), Option.of(maximum));
       }
@@ -838,13 +841,17 @@ export namespace Media {
           return false;
         }
 
+        // Since we need to match both bounds, we return false if one is not
+        // matched and keep true for the default return at the end.
         for (const minimum of this._minimum) {
           if (minimum.isInclusive) {
-            if (value.compare(minimum.value) <= 0) {
+            // value is inclusively larger than the minimum if it is not
+            // strictly smaller than it.
+            if (value.compare(minimum.value) < 0) {
               return false;
             }
           } else {
-            if (value.compare(minimum.value) < 0) {
+            if (value.compare(minimum.value) <= 0) {
               return false;
             }
           }
@@ -852,11 +859,11 @@ export namespace Media {
 
         for (const maximum of this._maximum) {
           if (maximum.isInclusive) {
-            if (value.compare(maximum.value) >= 0) {
+            if (value.compare(maximum.value) > 0) {
               return false;
             }
           } else {
-            if (value.compare(maximum.value) > 0) {
+            if (value.compare(maximum.value) >= 0) {
               return false;
             }
           }
@@ -904,7 +911,8 @@ export namespace Media {
     } = Range;
 
     export class Bound<T = unknown>
-      implements Functor<T>, Serializable<Bound.JSON<T>> {
+      implements Functor<T>, Serializable<Bound.JSON<T>>
+    {
       public static of<T>(value: T, isInclusive: boolean): Bound<T> {
         return new Bound(value, isInclusive);
       }
@@ -949,7 +957,8 @@ export namespace Media {
   }
 
   export class And
-    implements Matchable, Iterable<Feature>, Equatable, Serializable<And.JSON> {
+    implements Matchable, Iterable<Feature>, Equatable, Serializable<And.JSON>
+  {
     public static of(
       left: Feature | Condition,
       right: Feature | Condition
@@ -1024,7 +1033,8 @@ export namespace Media {
   export const { of: and, isAnd } = And;
 
   export class Or
-    implements Matchable, Iterable<Feature>, Equatable, Serializable<Or.JSON> {
+    implements Matchable, Iterable<Feature>, Equatable, Serializable<Or.JSON>
+  {
     public static of(
       left: Feature | Condition,
       right: Feature | Condition
@@ -1099,7 +1109,8 @@ export namespace Media {
   export const { of: or, isOr } = Or;
 
   export class Not
-    implements Matchable, Iterable<Feature>, Equatable, Serializable<Not.JSON> {
+    implements Matchable, Iterable<Feature>, Equatable, Serializable<Not.JSON>
+  {
     public static of(condition: Feature | Condition): Not {
       return new Not(condition);
     }
@@ -1387,7 +1398,8 @@ export namespace Media {
    * {@link https://drafts.csswg.org/mediaqueries/#media-query-list}
    */
   export class List
-    implements Matchable, Iterable<Query>, Equatable, Serializable<List.JSON> {
+    implements Matchable, Iterable<Query>, Equatable, Serializable<List.JSON>
+  {
     public static of(queries: Iterable<Query>): List {
       return new List(queries);
     }
