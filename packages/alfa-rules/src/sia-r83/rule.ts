@@ -17,11 +17,10 @@ import { expectation } from "../common/expectation";
 import {
   hasAttribute,
   hasCascadedStyle,
-  isPositioned,
   isVisible,
 } from "../common/predicate";
 
-import { getOffsetParent } from "../common/expectation/get-offset-parent";
+import { getPositioningParent } from "../common/expectation/get-positioning-parent";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -136,7 +135,7 @@ function verticalClippingAncestor(
         return None;
       }
 
-      return getRelevantParent(element, device).flatMap(clippingAncestor);
+      return getPositioningParent(element, device).flatMap(clippingAncestor);
     });
   };
 }
@@ -160,7 +159,7 @@ function horizontallyClipper(
       case Overflow.Handle:
         return None;
       case Overflow.Overflow:
-        return getRelevantParent(element, device).flatMap(
+        return getPositioningParent(element, device).flatMap(
           horizontallyClippingAncestor(device)
         );
     }
@@ -199,7 +198,7 @@ function horizontallyClippingAncestor(
           case Overflow.Handle:
             return None;
           case Overflow.Overflow:
-            return getRelevantParent(element, device).flatMap(clippingAncestor);
+            return getPositioningParent(element, device).flatMap(clippingAncestor);
         }
       });
   };
@@ -276,12 +275,6 @@ function hasFixedHeight(device: Device): Predicate<Element> {
       source.some((declaration) => declaration.parent.isSome()),
     device
   );
-}
-
-function getRelevantParent(element: Element, device: Device): Option<Element> {
-  return isPositioned(device, "relative", "static", "sticky")(element)
-    ? element.parent({ flattened: true }).filter(isElement)
-    : getOffsetParent(element, device);
 }
 
 function isWrappingFlexContainer(device: Device): Predicate<Element> {
