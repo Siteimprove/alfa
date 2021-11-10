@@ -24,7 +24,7 @@ export function isClipped(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
-  return function isClippedInternal(node: Node): boolean {
+  return function isClipped(node: Node): boolean {
     return cache
       .get(device, Cache.empty)
       .get(context, Cache.empty)
@@ -41,7 +41,7 @@ export function isClipped(
               )
             ),
             // Or its parent is clipped
-            hasRelevantParent(device, isClipped(device, context))
+            hasRelevantParent(device, isClipped)
           ),
           node
         )
