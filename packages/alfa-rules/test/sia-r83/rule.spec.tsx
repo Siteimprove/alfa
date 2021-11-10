@@ -530,3 +530,54 @@ test(`evaluate() passes a relatively positioned node with a handling static pare
     passed(R83, target, { 1: Outcomes.WrapsText }),
   ]);
 });
+
+test(`evaluates() passes a clipping element with font-relative height`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <body>
+        <div class="growing">{target}</div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".growing", {
+          overflowY: "hidden",
+          minHeight: "1.5em",
+          height: "10px",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test(`evaluates() passes a clipping element with font-relative width`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <body>
+        <div class="growing">{target}</div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".growing", {
+          overflowX: "hidden",
+          minWidth: "15em",
+          width: "10px",
+          whiteSpace: "nowrap",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});

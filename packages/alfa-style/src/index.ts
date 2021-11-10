@@ -109,6 +109,8 @@ import "./property/inset-inline-start";
 import "./property/left";
 import "./property/letter-spacing";
 import "./property/line-height";
+import "./property/min-height";
+import "./property/min-width";
 import "./property/opacity";
 import "./property/outline";
 import "./property/outline-color";

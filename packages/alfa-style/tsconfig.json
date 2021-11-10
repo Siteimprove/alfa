@@ -114,6 +114,8 @@
     "src/property/left.ts",
     "src/property/letter-spacing.ts",
     "src/property/line-height.ts",
+    "src/property/min-height.ts",
+    "src/property/min-width.ts",
     "src/property/opacity.ts",
     "src/property/outline.ts",
     "src/property/outline-color.ts",
