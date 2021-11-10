@@ -260,7 +260,6 @@ function isDistinguishable(
     // from what the container element might itself set.
     hasDistinguishableTextDecoration(container, device, context),
     hasDistinguishableBackground(container, device, context),
-
     hasDistinguishableFont(container, device, context),
     hasDistinguishableVerticalAlign(container, device, context),
     // We consider the mere presence of borders or outlines on the element as
