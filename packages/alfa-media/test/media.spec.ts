@@ -349,9 +349,10 @@ const smallPortrait /* smartphone */ = Device.of(
   Display.of(300)
 );
 
+const width = 1280; // used for boundary tests
 const largeLandscape /* desktop screen */ = Device.of(
   Device.Type.Screen,
-  Viewport.of(1280, 1080, Viewport.Orientation.Landscape),
+  Viewport.of(width, 1080, Viewport.Orientation.Landscape),
   Display.of(90)
 );
 
@@ -438,4 +439,17 @@ test("#matches() matches ranges", (t) => {
   t.deepEqual(isGoldylocks.matches(smallPortrait), false);
   t.deepEqual(isGoldylocks.matches(goldylocks), true);
   t.deepEqual(isGoldylocks.matches(largeLandscape), false);
+});
+
+test("#matches correctly behave at boundaries", (t) => {
+  // Inclusive bound is matched inclusively
+  const isLarge = parse(`(width >= ${width}px)`).get();
+  // Exclusive bound is matched exclusively
+  const isSmall = parse(`(width < ${width}px)`).get();
+  // min- and max- bounds are matched inclusively
+  const isLargeToo = parse(`(min-width: ${width}px)`).get();
+
+  t.deepEqual(isLarge.matches(largeLandscape), true);
+  t.deepEqual(isSmall.matches(largeLandscape), false);
+  t.deepEqual(isLargeToo.matches(largeLandscape), true);
 });
