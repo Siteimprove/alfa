@@ -10,6 +10,24 @@ import { Status } from "./status";
 const { bit, take, skip, test, set, clear, popCount } = Bits;
 
 /**
+ * Maps are stored as an hash-table of keys.
+ * The hash-table is stored as a tree where each internal node is a partial
+ * match of the hashes of its subtree.
+ *
+ * Nodes in the tree can be:
+ * * empty;
+ * * a Leaf, containing one single key;
+ * * a Collision, containing several keys with the same hash, this is
+ *   effectively a leaf of the tree, even though it actually has several Leaf
+ *   children (but no other kind);
+ * * a Sparse, which is an internal node. Sparses have masks and all hashes in
+ *   this subtree share the same mask (partial hash collision). The matching of
+ *   masks is done with a shift, which essentially take slices of n (=5) bits
+ *   of the hash. The shift is automatically increased when looking down the
+ *   tree, hence the same mask cannot be used at another level of a tree.
+ */
+
+/**
  * @internal
  */
 export interface Node<K, V> extends Functor<V>, Iterable<[K, V]>, Equatable {
@@ -249,6 +267,8 @@ export class Collision<K, V> implements Node<K, V> {
           const nodes = remove(this._nodes, i);
 
           if (nodes.length === 1) {
+            // We just deleted the penultimate Leaf of the Collision, so we can
+            // remove the Collision and only keep the remaining Leaf.
             return Status.deleted(nodes[0]);
           }
 
@@ -379,7 +399,24 @@ export class Sparse<K, V> implements Node<K, V> {
         const nodes = remove(this._nodes, index);
 
         if (nodes.length === 1) {
-          return Status.deleted(nodes[0]);
+          // We deleted the penultimate child of the Sparse, we may be able to
+          // simplify the tree.
+          if (nodes[0].isLeaf() || nodes[0] instanceof Collision) {
+            // The last child is leaf-like, hence hashes will be fully matched
+            // against its key(s) and we can remove the current Sparse
+            return Status.deleted(nodes[0]);
+          }
+
+          // Otherwise, the last child is a Sparse. We can't simply collapse the
+          // tree by removing the current Sparse, since it will cause the child
+          // mask to be tested with the wrong shift (its depth in the tree would
+          // be different).
+          // We could do some further optimisations (e.g., if the child's
+          // children are all leaf-like, we could instead delete the lone child
+          // and connect directly to the grandchildren). This is, however,
+          // getting hairy to make all cases working fine, and we assume this
+          // kind of situation is not too frequent. So we pay the price of
+          // keeping a non-branching Sparse until we need to optimise that.
         }
 
         return Status.deleted(Sparse.of(clear(this._mask, fragment), nodes));

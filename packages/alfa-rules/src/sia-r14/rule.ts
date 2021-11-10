@@ -1,8 +1,9 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -16,12 +17,14 @@ import {
   hasDescendant,
   hasRole,
   isFocusable,
-  isPerceivable,
+  isVisible,
+  isRendered,
+  isWhitespace,
 } from "../common/predicate";
 
-const { isElement, hasNamespace } = Element;
+const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
-const { and, test } = Predicate;
+const { and, test, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
@@ -45,7 +48,7 @@ export default Rule.Atomic.of<Page, Element>({
                 device,
                 (role) => role.isWidget() && role.isNamedBy("contents")
               ),
-              hasDescendant(and(Text.isText, isPerceivable(device)), {
+              hasDescendant(and(Text.isText, isVisible(device)), {
                 flattened: true,
               })
             )
@@ -53,7 +56,9 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const textContent = getPerceivableTextContent(target, device);
+        const textContent = normalize(
+          getVisibleInnerTextFromElement(target, device)
+        );
         let name = "";
 
         const accessibleNameIncludesTextContent = test(
@@ -76,15 +81,72 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-function getPerceivableTextContent(element: Element, device: Device): string {
-  return normalize(
-    element
-      .descendants({ flattened: true })
-      .filter(isText)
-      .filter(isPerceivable(device))
-      .map((text) => text.data)
-      .join("")
-  );
+/**
+ * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
+ */
+function getVisibleInnerTextFromTextNode(text: Text, device: Device): string {
+  if (isVisible(device)(text)) {
+    return text.data;
+  }
+
+  if (
+    and(not(isVisible(device)), isRendered(device))(text) &&
+    isWhitespace(text.data)
+  ) {
+    return " ";
+  }
+
+  return "";
+}
+
+function getVisibleInnerTextFromElement(
+  element: Element,
+  device: Device
+): string {
+  if (!isRendered(device)(element)) {
+    return "";
+  }
+
+  if (hasName("br")(element)) {
+    return "\n";
+  }
+
+  if (hasName("p")(element)) {
+    return "\n" + childrenVisibleText(element, device) + "\n";
+  }
+
+  const display = Style.from(element, device).computed("display").value;
+  const {
+    values: [outside], // this covers both outside and internal specified.
+  } = display;
+
+  if (outside.value === "block" || outside.value === "table-caption") {
+    return "\n" + childrenVisibleText(element, device) + "\n";
+  }
+
+  if (outside.value === "table-cell" || outside.value === "table-row") {
+    return " " + childrenVisibleText(element, device) + " ";
+  }
+
+  return childrenVisibleText(element, device);
+}
+
+function childrenVisibleText(node: Node, device: Device): string {
+  const children = node.children({ flattened: true });
+
+  let result = "";
+
+  for (const child of children) {
+    if (isText(child)) {
+      result = result + getVisibleInnerTextFromTextNode(child, device);
+    } else if (isElement(child)) {
+      result = result + getVisibleInnerTextFromElement(child, device);
+    } else {
+      result = result + childrenVisibleText(child, device);
+    }
+  }
+  //Returning the whole text from its children
+  return result;
 }
 
 export namespace Outcomes {

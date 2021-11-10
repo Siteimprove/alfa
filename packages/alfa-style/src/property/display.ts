@@ -260,6 +260,51 @@ export default Property.register(
   Property.of<Specified, Computed>(
     Tuple.of(Keyword.of("inline"), Keyword.of("flow")),
     parse,
-    (value) => value
+    (value, style) =>
+      style.computed("position").value.equals(Keyword.of("absolute")) ||
+      style.computed("position").value.equals(Keyword.of("fixed")) ||
+      !style.computed("float").value.equals(Keyword.of("none"))
+        ? // 4th condition of https://drafts.csswg.org/css2/#dis-pos-flo needs
+          // to know whether the element is the root element, which is not
+          // currently doable at that level.
+          value.map(displayTable)
+        : value
   )
 );
+/**
+ * {@link https://drafts.csswg.org/css2/#dis-pos-flo}
+ * @internal
+ */
+export function displayTable(value: Specified): Computed {
+  // Boxes are not changed by this.
+  if (value.values.length === 1) {
+    return value;
+  }
+
+  const [outside, inside] = value.values;
+
+  switch (outside.value) {
+    case "inline":
+      switch (inside.value) {
+        case "table": // => inline-table
+          return Tuple.of(Keyword.of("block"), Keyword.of("table"));
+        case "flow": // => inline-flow
+        case "flow-root": // => inline (parses as "inline flow-root")
+          return Tuple.of(Keyword.of("block"), Keyword.of("flow"));
+        default:
+          return value;
+      }
+
+    case "table-row-group":
+    case "table-header-group":
+    case "table-footer-group":
+    case "table-row":
+    case "table-cell":
+    case "table-column-group":
+    case "table-column":
+    case "table-caption":
+      return Tuple.of(Keyword.of("block"), Keyword.of("flow"));
+    default:
+      return value;
+  }
+}
