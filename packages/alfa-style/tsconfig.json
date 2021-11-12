@@ -176,6 +176,7 @@
     "test/property/border-image-width.spec.tsx",
     "test/property/box-shadow.spec.tsx",
     "test/property/clip.spec.tsx",
+    "test/property/cursor.spec.tsx",
     "test/property/display.spec.tsx",
     "test/property/font.spec.tsx",
     "test/property/font-family.spec.tsx",

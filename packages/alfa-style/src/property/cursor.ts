@@ -1,12 +1,19 @@
-import { Keyword, Token } from "@siteimprove/alfa-css";
+import { Keyword, Number, Token, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
+import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
+import parseWhitespace = Token.parseWhitespace;
+import separated = Parser.separated;
+import parseNumber = Token.parseNumber;
+import separatedList = Parser.separatedList;
+import parseComma = Token.parseComma;
+import zeroOrMore = Parser.zeroOrMore;
 
-const { map, either } = Parser;
+const { either, left, map, option, pair, right } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -14,46 +21,52 @@ declare module "../property" {
   }
 }
 
+namespace Specified {
+  export type Builtin =
+    | Keyword<"auto">
+    | Keyword<"default">
+    | Keyword<"none">
+    | Keyword<"context-menu">
+    | Keyword<"help">
+    | Keyword<"pointer">
+    | Keyword<"progress">
+    | Keyword<"wait">
+    | Keyword<"cell">
+    | Keyword<"crosshair">
+    | Keyword<"text">
+    | Keyword<"vertical-text">
+    | Keyword<"alias">
+    | Keyword<"copy">
+    | Keyword<"move">
+    | Keyword<"no-drop">
+    | Keyword<"not-allowed">
+    | Keyword<"grab">
+    | Keyword<"grabbing">
+    | Keyword<"e-resize">
+    | Keyword<"n-resize">
+    | Keyword<"ne-resize">
+    | Keyword<"nw-resize">
+    | Keyword<"s-resize">
+    | Keyword<"se-resize">
+    | Keyword<"sw-resize">
+    | Keyword<"w-resize">
+    | Keyword<"ew-resize">
+    | Keyword<"ns-resize">
+    | Keyword<"nesw-resize">
+    | Keyword<"nwse-resize">
+    | Keyword<"col-resize">
+    | Keyword<"row-resize">
+    | Keyword<"all-scroll">
+    | Keyword<"zoom-in">
+    | Keyword<"zoom-out">;
+
+  export type Custom = URL | Tuple<[URL, Number, Number]>;
+}
+
 /**
  * @internal
  */
-export type Specified =
-  | Keyword<"auto">
-  | Keyword<"default">
-  | Keyword<"none">
-  | Keyword<"context-menu">
-  | Keyword<"help">
-  | Keyword<"pointer">
-  | Keyword<"progress">
-  | Keyword<"wait">
-  | Keyword<"cell">
-  | Keyword<"crosshair">
-  | Keyword<"text">
-  | Keyword<"vertical-text">
-  | Keyword<"alias">
-  | Keyword<"copy">
-  | Keyword<"move">
-  | Keyword<"no-drop">
-  | Keyword<"not-allowed">
-  | Keyword<"grab">
-  | Keyword<"grabbing">
-  | Keyword<"e-resize">
-  | Keyword<"n-resize">
-  | Keyword<"ne-resize">
-  | Keyword<"nw-resize">
-  | Keyword<"s-resize">
-  | Keyword<"se-resize">
-  | Keyword<"sw-resize">
-  | Keyword<"w-resize">
-  | Keyword<"ew-resize">
-  | Keyword<"ns-resize">
-  | Keyword<"nesw-resize">
-  | Keyword<"nwse-resize">
-  | Keyword<"col-resize">
-  | Keyword<"row-resize">
-  | Keyword<"all-scroll">
-  | Keyword<"zoom-in">
-  | Keyword<"zoom-out">;
+export type Specified = Tuple<[List<Specified.Custom>, Specified.Builtin]>;
 
 /**
  * @internal
@@ -99,10 +112,27 @@ const parseBuiltin = Keyword.parse(
   "zoom-out"
 );
 
+const parseCustom = map(
+  pair(
+    URL.parse,
+    option(right(parseWhitespace, separated(Number.parse, parseWhitespace)))
+  ),
+  ([url, coordinates]) =>
+    coordinates.isNone() ? url : Tuple.of(url, ...coordinates.get())
+);
+
+const parseCustomList = map(
+  zeroOrMore(left(parseCustom, pair(parseComma, option(parseWhitespace)))),
+  (list) => List.of(list, ",")
+);
+
 /**
  * @internal
  */
-export const parse = parseBuiltin;
+export const parse = map(
+  separated(parseCustomList, option(parseWhitespace), parseBuiltin),
+  ([custom, fallback]) => Tuple.of(custom, fallback)
+);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor}
@@ -110,5 +140,10 @@ export const parse = parseBuiltin;
  */
 export default Property.register(
   "cursor",
-  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value) => value)
+  Property.of<Specified, Computed>(
+    Tuple.of(List.of([], ","), Keyword.of("auto")),
+    parse,
+    (value) => value,
+    { inherits: true }
+  )
 );
