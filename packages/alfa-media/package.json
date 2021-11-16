@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-media",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.23.2",
+  "version": "0.24.1",
   "license": "MIT",
   "description": "Functionality for working with CSS media queries",
   "repository": {
@@ -18,19 +18,19 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-css": "workspace:^0.23.2",
-    "@siteimprove/alfa-device": "workspace:^0.23.2",
-    "@siteimprove/alfa-equatable": "workspace:^0.23.2",
-    "@siteimprove/alfa-iterable": "workspace:^0.23.2",
-    "@siteimprove/alfa-json": "workspace:^0.23.2",
-    "@siteimprove/alfa-option": "workspace:^0.23.2",
-    "@siteimprove/alfa-parser": "workspace:^0.23.2",
-    "@siteimprove/alfa-predicate": "workspace:^0.23.2",
-    "@siteimprove/alfa-result": "workspace:^0.23.2",
-    "@siteimprove/alfa-slice": "workspace:^0.23.2"
+    "@siteimprove/alfa-css": "workspace:^0.24.1",
+    "@siteimprove/alfa-device": "workspace:^0.24.1",
+    "@siteimprove/alfa-equatable": "workspace:^0.24.1",
+    "@siteimprove/alfa-iterable": "workspace:^0.24.1",
+    "@siteimprove/alfa-json": "workspace:^0.24.1",
+    "@siteimprove/alfa-option": "workspace:^0.24.1",
+    "@siteimprove/alfa-parser": "workspace:^0.24.1",
+    "@siteimprove/alfa-predicate": "workspace:^0.24.1",
+    "@siteimprove/alfa-result": "workspace:^0.24.1",
+    "@siteimprove/alfa-slice": "workspace:^0.24.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.23.2"
+    "@siteimprove/alfa-test": "workspace:^0.24.1"
   },
   "publishConfig": {
     "access": "public",

@@ -1017,3 +1017,84 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
     }),
   ]);
 });
+
+test(`evaluates() passes on link with a different background-image than text`, async (t) => {
+  const target = <a href="#">Foo</a>;
+
+  const document = h.document(
+    [<p>Hello world {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          backgroundImage:
+            "linear-gradient(to right, #046B99 50%, transparent 50%)",
+        }),
+        h.rule.style("a:focus", { outline: "none" }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      [
+        "background",
+        "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+      ],
+      ...noDistinguishingProperties,
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          outline: "none",
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["vertical-align", "super"],
+      ...noDistinguishingProperties,
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [style, noStyle],
+        [style, noStyle]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+    no non-link whitespace text content`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document([<p> {target}</p>]);
+
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+});
+
