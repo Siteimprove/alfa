@@ -21,6 +21,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.24.1](../../compare/v0.24.0...v0.24.1) (2021-11-12)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The extended diagnostic class of SIA-R83 is now `export`ed. ([#981](../pull/981))
+
 ## [0.24.0](../../compare/v0.23.2...v0.24.0) (2021-11-12)
 
 ### Added
