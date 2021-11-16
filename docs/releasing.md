@@ -22,6 +22,7 @@ With the increment applied and the lockfile updated, commit the changes, create 
 ```console
 $ git commit --message <version> --all
 $ git tag --message <version> --annotate <version>
+$ git push
 $ git push origin <version>
 ```
 
