@@ -6,7 +6,6 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-import { hasPositioningParent } from "./has-positioning-parent";
 
 const { abs } = Math;
 const { isElement } = Element;
@@ -23,29 +22,34 @@ export function isClipped(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Node> {
-  return function isClipped(node: Node): boolean {
-    return cache
+  return (node) =>
+    cache
       .get(device, Cache.empty)
       .get(context, Cache.empty)
       .get(node, () =>
         test(
           or(
-            // Either it's a clipped element
+            // Either it a clipped element
             and(
               isElement,
               or(
                 isClippedBySize(device, context),
                 isClippedByIndent(device, context),
-                isClippedByMasking(device, context),
-                // Or its parent is clipped
-                hasPositioningParent(device, isClipped)
+                isClippedByMasking(device, context)
               )
             ),
+            // Or its parent is clipped
+            (node: Node) =>
+              node
+                .parent({
+                  flattened: true,
+                  nested: true,
+                })
+                .some(isClipped(device, context))
           ),
           node
         )
       );
-  };
 }
 
 /**

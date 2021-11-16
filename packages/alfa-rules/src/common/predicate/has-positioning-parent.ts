@@ -1,6 +1,6 @@
 import { Element } from "@siteimprove/alfa-dom";
+import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Device } from "../../../../alfa-device/src";
 
 import { getPositioningParent } from "../expectation/get-positioning-parent";
 
