@@ -1,19 +1,12 @@
 import { Keyword, Number, Token, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
-import parseWhitespace = Token.parseWhitespace;
-import separated = Parser.separated;
-import parseNumber = Token.parseNumber;
-import separatedList = Parser.separatedList;
-import parseComma = Token.parseComma;
-import zeroOrMore = Parser.zeroOrMore;
 
-const { either, left, map, option, pair, right } = Parser;
+const { left, map, option, pair, right, separated, zeroOrMore } = Parser;
+const { parseComma, parseWhitespace } = Token;
 
 declare module "../property" {
   interface Longhands {
