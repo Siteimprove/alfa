@@ -124,6 +124,14 @@ function verticalClippingAncestor(
 ): (element: Element) => Option<Element> {
   return function clippingAncestor(element: Element): Option<Element> {
     return verticallyClippingCache.get(device, Cache.empty).get(element, () => {
+      if (hasFontRelativeValue(device, "height")(element)) {
+        // The element has a font-relative height or min-height and we assume
+        // it will properly grow with the font, without ever clipping it.
+        // This is not fully correct since an ancestor may still clip vertically,
+        // but there may be several elements in between to absorb the growth.
+        return None;
+      }
+
       if (
         hasFixedHeight(device)(element) &&
         overflow(element, device, "y") === Overflow.Clip
@@ -153,6 +161,11 @@ function horizontallyClipper(
   device: Device
 ): (element: Element) => Option<Element> {
   return (element) => {
+    if (hasFontRelativeValue(device, "width")(element)) {
+      // The element grows with its text.
+      return None;
+    }
+
     switch (horizontalTextOverflow(element, device)) {
       case Overflow.Clip:
         return Option.of(element);
@@ -188,6 +201,15 @@ function horizontallyClippingAncestor(
     return horizontallyClippingCache
       .get(device, Cache.empty)
       .get(element, () => {
+        if (hasFontRelativeValue(device, "width")(element)) {
+          // The element grows with its content.
+          // The content might still be clipped by an ancestor, but we
+          // assume this denotes a small component inside a large container
+          // with enough room for the component to grow to 200% or more
+          // before being clipped.
+          return None;
+        }
+
         if (isWrappingFlexContainer(device)(element)) {
           // The element handles overflow by wrapping its flex descendants
           return None;
@@ -269,13 +291,45 @@ function hasFixedHeight(device: Device): Predicate<Element> {
     (height, source) =>
       height.type === "length" &&
       height.value > 0 &&
-      !height.isFontRelative() &&
+      // !height.isFontRelative() &&
       // For heights set via the `style` attribute we assume that its value is
       // controlled by JavaScript and is adjusted as the content scales.
       source.some((declaration) => declaration.parent.isSome()),
     device
   );
 }
+
+//isClipped-doesn't-consider-offset-parents
+
+function hasFontRelativeValue(
+  device: Device,
+  property: "height" | "width"
+): Predicate<Element> {
+  // Use the cascaded value to avoid lengths being resolved to pixels.
+  // Otherwise, we won't be able to tell if a font relative length was
+  // used.
+  return or(
+    hasCascadedStyle(
+      property,
+      (value) =>
+        value.type === "length" && value.value > 0 && value.isFontRelative(),
+      device
+    ),
+    hasCascadedStyle(
+      `min-${property}`,
+      (value) =>
+        value.type === "length" && value.value > 0 && value.isFontRelative(),
+      device
+    )
+  );
+}
+
+function getRelevantParent(element: Element, device: Device): Option<Element> {
+  return isPositioned(device, "relative", "static", "sticky")(element)
+    ? element.parent({ flattened: true }).filter(isElement)
+    : getOffsetParent(element, device);
+}
+
 
 function isWrappingFlexContainer(device: Device): Predicate<Element> {
   return (element) => {
@@ -294,7 +348,7 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
   };
 }
 
-class ClippingAncestors extends Diagnostic {
+export class ClippingAncestors extends Diagnostic {
   public static of(
     message: string,
     horizontal: Option<Element> = None,
@@ -346,7 +400,7 @@ class ClippingAncestors extends Diagnostic {
   }
 }
 
-namespace ClippingAncestors {
+export namespace ClippingAncestors {
   export interface JSON extends Diagnostic.JSON {
     horizontal: Option.JSON<Element>;
     vertical: Option.JSON<Element>;
