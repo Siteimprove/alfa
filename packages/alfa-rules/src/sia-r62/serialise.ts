@@ -86,7 +86,7 @@ export namespace Serialise {
 
     if (
       size.value.equals(Property.get("font-size").initial.value) &&
-      family.value.equals(Property.get("font-family").initial.values[0])
+      family.value.values[0].equals(Property.get("font-family").initial.values[0])
     ) {
       // Both mandatory properties are set to their initial values.
       // Since optional properties also are, we can skip `font` altogether.

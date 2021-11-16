@@ -343,7 +343,7 @@ function hasDistinguishableBackground(
 }
 
 /**
- * Check if an element has a different font weight and family than its container.
+ * Check if an element has a different font weight or family than its container.
  *
  * This is brittle and imperfect but removes a strong pain point until we find
  * a better solution.
