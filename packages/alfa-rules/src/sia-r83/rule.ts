@@ -346,7 +346,7 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
   };
 }
 
-class ClippingAncestors extends Diagnostic {
+export class ClippingAncestors extends Diagnostic {
   public static of(
     message: string,
     horizontal: Option<Element> = None,
@@ -398,7 +398,7 @@ class ClippingAncestors extends Diagnostic {
   }
 }
 
-namespace ClippingAncestors {
+export namespace ClippingAncestors {
   export interface JSON extends Diagnostic.JSON {
     horizontal: Option.JSON<Element>;
     vertical: Option.JSON<Element>;
