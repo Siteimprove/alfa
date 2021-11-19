@@ -81,6 +81,7 @@ import "./property/box-shadow";
 import "./property/clip";
 import "./property/clip-path";
 import "./property/color";
+import "./property/cursor";
 import "./property/display";
 import "./property/flex-direction";
 import "./property/flex-flow";

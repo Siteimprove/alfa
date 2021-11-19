@@ -21,6 +21,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.25.0](../../compare/v0.24.1...v0.25.0) (2021-11-19)
+
+### Added
+
+- [@siteimprove/alfa-styles](packages/alfa-style): The `cursor` CSS property is now supported. ([#844](../issues/844), [#946](../pull/946))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fixed a regression on SIA-R14; it now again consider that non-perceivable text is non-essential and therefore excludes it from labels. ([#983](../pull/983))
+
 ## [0.24.1](../../compare/v0.24.0...v0.24.1) (2021-11-12)
 
 ### Added
