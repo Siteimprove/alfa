@@ -407,54 +407,6 @@ test(`evaluate() passes a link with different font-family than surrounding text`
     }),
   ]);
 });
-/*
-test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          font: '16px serif, "some-font"',
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    ComputedStyles.of([
-      ["border-width", "0px"],
-      ["color", "rgb(0% 0% 93.33333%)"],
-      ["font", '16px "some-other-font"'],
-      ["outline", "0px"],
-    ])
-  );
-
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [style],
-        [
-          Ok.of(
-            ComputedStyles.of([
-              ["border-width", "0px"],
-              ["color", "rgb(0% 0% 93.33333%)"],
-              ["outline", "auto"],
-            ])
-          ),
-        ]
-      ),
-    }),
-  ]);
-});
-*/
 
 /*
  *

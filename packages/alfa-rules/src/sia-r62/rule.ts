@@ -142,7 +142,7 @@ export default Rule.Atomic.of<Page, Element>({
         // The context needs to be set on the *target*, not on its ancestors
         // or descendants
         const isDefaultDistinguishable = hasDistinguishingStyle();
-
+        // Missing: here in hover add an or with the distiguishableCursor on the target element
         const isHoverDistinguishable = hasDistinguishingStyle(
           Context.hover(target)
         );
@@ -365,7 +365,9 @@ function hasDistinguishableFont(
   const style = Style.from(container, device, context);
 
   const referenceWeight = style.computed("font-weight").value;
-  const referenceFamily = style.computed("font-family").value;
+  const referenceFamily = Option.from(
+    style.computed("font-family").value.values[0]
+  );
 
   return or(
     hasComputedStyle(
@@ -376,7 +378,7 @@ function hasDistinguishableFont(
     ),
     hasComputedStyle(
       "font-family",
-      not((family) => family.equals(referenceFamily)),
+      not((family) => Option.from(family.values[0]).equals(referenceFamily)),
       device,
       context
     )
@@ -395,6 +397,30 @@ function hasDistinguishableVerticalAlign(
   return hasComputedStyle(
     "vertical-align",
     not((alignment) => alignment.equals(reference)),
+    device,
+    context
+  );
+}
+
+function hasDistinguishableCursor(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  const referenceTuple = Style.from(container, device, context).computed(
+    "cursor"
+  ).value;
+
+  // Checking if there is a custom cursor, otherwise grabbing the built-in
+
+  const reference =
+    referenceTuple.values[0].values.length !== 0
+      ? referenceTuple.values[0].values[0]
+      : referenceTuple.values[1];
+
+  return hasComputedStyle(
+    "cursor",
+    not((cursor) => cursor.equals(reference)),
     device,
     context
   );
@@ -458,7 +484,7 @@ export namespace ComputedStyles {
     const border = (["color", "style", "width"] as const).map((property) =>
       Serialise.borderShorthand(style, property)
     );
-
+    //Missing: add cursor  property
     return ComputedStyles.of(
       [
         ...border,
