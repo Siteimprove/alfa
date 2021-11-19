@@ -121,15 +121,18 @@ export default Rule.Atomic.of<Page, Element>({
               .takeWhile(and(isElement, not(hasNonLinkText(device))))
           );
 
-        const hasDistinguishingStyle = (context?: Context) =>
+        const hasDistinguishingStyle = (context: Context = Context.empty()) =>
           Set.from(
             linkElements.map((link) =>
               // If the link element is distinguishable from at least one
               // non-link element, this is good enough.
               // Note that ACT rules draft requires the link-element to be
               // distinguishable from *all* non-link elements in order to be good.
-              nonLinkElements.some((container) =>
-                isDistinguishable(container, device, context)(link)
+              nonLinkElements.some(
+                (container) =>
+                  isDistinguishable(container, device, context)(link) ||
+                  (context.isHovered(target) &&
+                    hasDistinguishableCursor(container, device, context)(link))
               )
                 ? Ok.of(ComputedStyles.from(link, device, context))
                 : Err.of(ComputedStyles.from(link, device, context))
@@ -142,7 +145,7 @@ export default Rule.Atomic.of<Page, Element>({
         // The context needs to be set on the *target*, not on its ancestors
         // or descendants
         const isDefaultDistinguishable = hasDistinguishingStyle();
-        // Missing: here in hover add an or with the distiguishableCursor on the target element
+
         const isHoverDistinguishable = hasDistinguishingStyle(
           Context.hover(target)
         );
@@ -407,16 +410,16 @@ function hasDistinguishableCursor(
   device: Device,
   context?: Context
 ): Predicate<Element> {
-  const referenceTuple = Style.from(container, device, context).computed(
+  const cursorStyle = Style.from(container, device, context).computed(
     "cursor"
   ).value;
 
   // Checking if there is a custom cursor, otherwise grabbing the built-in
 
   const reference =
-    referenceTuple.values[0].values.length !== 0
-      ? referenceTuple.values[0].values[0]
-      : referenceTuple.values[1];
+    cursorStyle.values[0].values.length !== 0
+      ? cursorStyle.values[0].values[0]
+      : cursorStyle.values[1];
 
   return hasComputedStyle(
     "cursor",
@@ -484,7 +487,7 @@ export namespace ComputedStyles {
     const border = (["color", "style", "width"] as const).map((property) =>
       Serialise.borderShorthand(style, property)
     );
-    //Missing: add cursor  property
+
     return ComputedStyles.of(
       [
         ...border,
@@ -497,6 +500,7 @@ export namespace ComputedStyles {
         ["background", Serialise.background(style)] as const,
         ["outline", Serialise.outline(style)] as const,
         ["text-decoration", Serialise.textDecoration(style)] as const,
+        ["cursor", Serialise.getLonghand(style, "cursor")] as const,
       ].filter(([_, value]) => value !== "")
     );
   }
