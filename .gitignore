@@ -9,4 +9,3 @@ node_modules
 
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
-.vscode/settings.json
