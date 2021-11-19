@@ -5,7 +5,6 @@ import { Option } from "@siteimprove/alfa-option";
 import { isPositioned } from "../predicate";
 import { getOffsetParent } from "./get-offset-parent";
 
-
 const { isElement } = Element;
 
 export function getPositioningParent(
@@ -14,8 +13,7 @@ export function getPositioningParent(
 ): Option<Element> {
   if (isPositioned(device, "relative", "static", "sticky")(element)) {
     return element.parent({ flattened: true }).filter(isElement);
-  }
-  else{
-     return getOffsetParent(element, device);
+  } else {
+    return getOffsetParent(element, device);
   }
 }

@@ -324,13 +324,6 @@ function hasFontRelativeValue(
   );
 }
 
-function getRelevantParent(element: Element, device: Device): Option<Element> {
-  return isPositioned(device, "relative", "static", "sticky")(element)
-    ? element.parent({ flattened: true }).filter(isElement)
-    : getOffsetParent(element, device);
-}
-
-
 function isWrappingFlexContainer(device: Device): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device);

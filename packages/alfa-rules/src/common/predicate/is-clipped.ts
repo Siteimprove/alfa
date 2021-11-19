@@ -6,7 +6,6 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-
 const { abs } = Math;
 const { isElement } = Element;
 const { or, test } = Predicate;
