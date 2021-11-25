@@ -16,6 +16,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 /**
  * Checks if a node (or one of its ancestor) is fully clipped
  */
+
 export function isClipped(
   device: Device,
   context: Context = Context.empty()
