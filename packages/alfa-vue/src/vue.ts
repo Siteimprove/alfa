@@ -26,13 +26,14 @@ export namespace Vue {
 
     const nodeJSON = dom.Native.fromNode(value.element);
 
-    const deviceJSON = device.Native.fromWindow(window);
+    // const deviceJSON = device.Native.fromWindow(window);
 
     return Page.of(
       Request.empty(),
       Response.empty(),
       Document.of([Node.from(nodeJSON)]),
-      Device.from(deviceJSON)
+      // Device.from(deviceJSON)
+      Device.standard()
     );
   }
 }
