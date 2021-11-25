@@ -486,7 +486,7 @@ const Features: Features = {
         if (test(hasInputType("image"), element)) {
           return Name.fromSteps(
             () => nameFromAttribute(element, "alt"),
-            () => Option.of(Name.of("Submit"))
+            () => Option.of(Name.of("Submit Query")) // https://www.w3.org/TR/html-aam-1.0/#input-type-image-accessible-name-computation
           );
         }
 
