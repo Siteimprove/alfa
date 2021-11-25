@@ -1,4 +1,5 @@
 import "jsdom-global/register";
+import * as device from "@siteimprove/alfa-device/native";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -17,7 +18,18 @@ export const Button = V.extend({
   `,
 });
 
-// const { window } = new JSDOM("");
+// window.matchMedia is not currently implemented by JSDOM, so we need to mock
+// it.
+// For the purpose of this test, we actually don't care about the result (they
+// are not used in a rule or anything else), so we are OK with a mock that
+// always answer `false`.
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+    };
+  };
 
 test(`.toPage() creates an Alfa Page`, (t) => {
   const button = mount(Button);
@@ -26,8 +38,8 @@ test(`.toPage() creates an Alfa Page`, (t) => {
   const expected = Page.of(
     Request.empty(),
     Response.empty(),
-    h.document([h.element("button", { class: "btn" }, [], [])]),
-    Device.standard()
+    h.document([h.element("button", { class: "btn" })]),
+    Device.from(device.Native.fromWindow(window))
   );
 
   t.deepEqual(actual.toJSON(), expected.toJSON());
