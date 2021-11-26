@@ -38,6 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             test(
+              // Rejecting default name
               hasAccessibleName(device, (name) => name.source.length !== 0),
               target
             ),
