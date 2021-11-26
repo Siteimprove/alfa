@@ -6,12 +6,10 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasAccessibleName, isIgnored } from "../common/predicate";
 
 const { isElement, hasInputType, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r28",
@@ -39,9 +37,13 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasNonEmptyAccessibleName(device)(target),
-            () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            test(
+              // Rejecting default name
+              hasAccessibleName(device, (name) => name.source.length !== 0),
+              target
+            ),
+            () => Outcomes.HasAccessibleName,
+            () => Outcomes.HasNoAccessibleName
           ),
         };
       },
@@ -50,15 +52,13 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Ok.of(
-    Diagnostic.of(
-      `The \`<input type="button">\` element has an accessible name`
-    )
+  export const HasAccessibleName = Ok.of(
+    Diagnostic.of(`The \`<input type="image">\` element has an accessible name`)
   );
 
-  export const HasNoName = Err.of(
+  export const HasNoAccessibleName = Err.of(
     Diagnostic.of(
-      `The \`<input type="button">\` element does not have an accessible name`
+      `The \`<input type="image">\` element does not have an accessible name`
     )
   );
 }
