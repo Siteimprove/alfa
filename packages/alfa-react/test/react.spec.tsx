@@ -8,11 +8,11 @@ import { React } from "../src";
 
 import { FunctionComponent } from "react";
 
-test(`.toPage() creates an Alfa page`, (t) => {
-  const Button: FunctionComponent = ({ children }) => (
-    <button className="btn">{children}</button>
-  );
+const Button: FunctionComponent = ({ children }) => (
+  <button className="btn">{children}</button>
+);
 
+test(`.toPage() creates an Alfa page`, (t) => {
   const actual = React.toPage(<Button />);
 
   const expected = Page.of(
