@@ -6,9 +6,7 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-
-import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasAccessibleName, isIgnored } from "../common/predicate";
 
 const { isElement, hasInputType, hasNamespace } = Element;
 const { and, not, test } = Predicate;
@@ -40,10 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             test(
-              hasAccessibleName(
-                device,
-                (accessibleName) => accessibleName.value !== "Submit Query"
-              ),
+              hasAccessibleName(device, (name) => name.source.length !== 0),
               target
             ),
             () => Outcomes.HasAccessibleName,

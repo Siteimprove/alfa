@@ -57,6 +57,18 @@ test(`evaluate() fails an <input> element with \`image\` type and with incorrect
 });
 
 test(`evaluate() fails an <input> element with \`image\` type without an accessible name`, async (t) => {
+  const target = <input type="image" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R28, { document }), [
+    failed(R28, target, {
+      1: Outcomes.HasNoAccessibleName,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <input> element with \`image\` type with an empty \`alt\` attribute`, async (t) => {
   const target = <input type="image" name="Submit" alt="" />;
 
   const document = h.document([target]);
@@ -68,20 +80,8 @@ test(`evaluate() fails an <input> element with \`image\` type without an accessi
   ]);
 });
 
-test(`evaluate() fails an <input> element with \`image\` type without an accessible name`, async (t) => {
-  const target = <input type="image" alt="Submit Query" />;
-
-  const document = h.document([target]);
-
-  t.deepEqual(await evaluate(R28, { document }), [
-    failed(R28, target, {
-      1: Outcomes.HasNoAccessibleName,
-    }),
-  ]);
-});
-
-test(`evaluate() is innaplicable for an <input> element with \`image\` type that is not in the accessibility tree`, async (t) => {
-  const target = <input type="image" style={{display: "none"}}/>;
+test(`evaluate() is inapplicable for an <input> element with \`image\` type that is not in the accessibility tree`, async (t) => {
+  const target = <input type="image" style={{ display: "none" }} />;
 
   const document = h.document([target]);
 
