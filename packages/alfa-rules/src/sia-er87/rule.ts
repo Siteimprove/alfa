@@ -20,16 +20,16 @@ import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 import { isAtTheStart } from "../common/predicate/is-at-the-start";
-import { Experimental } from "../tags/experimental";
+import { Stability } from "../tags/stability";
 
 const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Document, Question>({
+export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
-  tags: [Experimental.Unstable],
+  tags: [Stability.Experimental],
   evaluate({ device, document, response }) {
     return {
       applicability() {
@@ -50,69 +50,37 @@ export default Rule.Atomic.of<Page, Document, Question>({
 
         const element = firstTabbable.get();
 
-        const url = hasName("a", "area")(element)
-          ? element
-              .attribute("href")
-              .flatMap((attribute) =>
-                URL.parse(attribute.value, response.url).ok()
-              )
-          : None;
-
-        const reference = url
-          .filter(isInternalURL(response.url))
-          .flatMap((url) =>
-            url.fragment.flatMap((fragment) =>
-              element
-                .root()
-                .inclusiveDescendants()
-                .filter(isElement)
-                .find((element) => element.id.includes(fragment))
-            )
-          );
-
-        // there can be more than one element with a role of main, going to any of these is OK.
-        const mains = document
-          .inclusiveDescendants({ flattened: true })
-          .filter(and(isElement, hasRole(device, "main")));
-
-        const askIsMain = Question.of(
-          "boolean",
-          "first-tabbable-reference-is-main",
-          `Does the first tabbable element of the document point to the main content?`,
-          target
-        );
-
-        const askIsInteralLink = Question.of(
-          "boolean",
-          "first-tabbable-is-internal-link",
-          `Is the first tabbable element of the document an internal link?`,
-          target
-        );
-
-        const askReference = Question.of(
-          "node",
-          "first-tabbable-reference",
-          `Where in the document does the first tabbable element point?`,
-          target
-        );
-
-        const askIsVisible = Question.of(
-          "boolean",
-          "first-tabbable-is-visible",
-          `Is the first tabbable element of the document visible if it's focused?`,
-          target
-        );
-
         function isAtTheStartOfMain(
-          reference: Option<Node>
+          reference: Node
         ): Interview<
           Question,
-          Document,
+          Document | Element,
           Document,
           Option.Maybe<Result<Diagnostic, Diagnostic>>
         > {
+          const destination = reference
+            .inclusiveAncestors({ flattened: true, nested: true })
+            .find(isElement);
+
+          if (destination.isNone()) {
+            return Outcomes.FirstTabbableIsNotLinkToContent;
+          }
+
+          const askIsMain = Question.of(
+            "boolean",
+            "first-tabbable-reference-is-main",
+            `Does the first tabbable element of the document point to the main content?`,
+            destination.get(),
+            target
+          );
+
+          // there can be more than one element with a role of main, going to any of these is OK.
+          const mains = document
+            .inclusiveDescendants({ flattened: true })
+            .filter(and(isElement, hasRole(device, "main")));
+
           return expectation(
-            mains.some((main) => reference.some(isAtTheStart(main, device))),
+            mains.some((main) => isAtTheStart(main, device)(reference)),
             () => Outcomes.FirstTabbableIsLinkToContent,
             () =>
               askIsMain.map((isMain) =>
@@ -127,45 +95,102 @@ export default Rule.Atomic.of<Page, Document, Question>({
 
         function isSkipLink(): Interview<
           Question,
-          Document,
+          Document | Element,
           Document,
           Option.Maybe<Result<Diagnostic>>
         > {
+          const askIsInteralLink = Question.of(
+            "boolean",
+            "first-tabbable-is-internal-link",
+            `Is the first tabbable element of the document an internal link?`,
+            element,
+            target
+          );
+
+          const askReference = Question.of(
+            "node",
+            "first-tabbable-reference",
+            `Where in the document does the first tabbable element point?`,
+            target
+          );
+
+          const url = hasName("a", "area")(element)
+            ? element
+                .attribute("href")
+                .flatMap((attribute) =>
+                  URL.parse(attribute.value, response.url).ok()
+                )
+            : None;
+
+          const reference = url
+            .filter(isInternalURL(response.url))
+            .flatMap((url) =>
+              url.fragment.flatMap((fragment) =>
+                element
+                  .root()
+                  .inclusiveDescendants()
+                  .filter(isElement)
+                  .find((element) => element.id.includes(fragment))
+              )
+            );
+
           return reference.isSome()
-            ? isAtTheStartOfMain(reference)
+            ? isAtTheStartOfMain(reference.get())
             : askIsInteralLink.map((isInternalLink) =>
                 expectation(
                   isInternalLink,
-                  () => askReference.map(isAtTheStartOfMain),
+                  () =>
+                    askReference.map((ref) =>
+                      expectation(
+                        ref.isSome(),
+                        () => isAtTheStartOfMain(ref.get()),
+                        () => Outcomes.FirstTabbableIsNotInternalLink
+                      )
+                    ),
                   () => Outcomes.FirstTabbableIsNotInternalLink
                 )
               );
         }
 
+        const askIsVisible = Question.of<
+          "boolean",
+          Document | Element,
+          Document,
+          "first-tabbable-is-visible"
+        >(
+          "boolean",
+          "first-tabbable-is-visible",
+          `Is the first tabbable element of the document visible if it's focused?`,
+          element,
+          target
+        );
+
         return {
           1: expectation(
             isIgnored(device)(element),
             () => Outcomes.FirstTabbableIsIgnored,
-            () =>
-              expectation(
+            () => {
+              const foo = askIsVisible
+                .answerIf(
+                  isVisible(device, Context.focus(element))(element),
+                  true
+                )
+                .map((isVisible) =>
+                  expectation(
+                    isVisible,
+                    isSkipLink,
+                    () => Outcomes.FirstTabbableIsNotVisible
+                  )
+                );
+              return expectation(
                 hasRole(device, (role) => role.is("link"))(element),
                 () =>
                   // No need to check if element is tabbable because this was
                   // already checked at the very start of expectation.
-                  askIsVisible
-                    .answerIf(
-                      isVisible(device, Context.focus(element))(element),
-                      true
-                    )
-                    .map((isVisible) =>
-                      expectation(
-                        isVisible,
-                        isSkipLink,
-                        () => Outcomes.FirstTabbableIsNotVisible
-                      )
-                    ),
+                  foo,
                 () => Outcomes.FirstTabbableIsNotLink
-              )
+              );
+            }
           ),
         };
       },
