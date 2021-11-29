@@ -58,7 +58,7 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple"> {
   }
 
   public toString(): string {
-    return this._values.join(" ");
+    return `${this._values.join(" ")}`.trim();
   }
 }
 
