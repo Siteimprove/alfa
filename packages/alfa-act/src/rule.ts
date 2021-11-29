@@ -34,20 +34,17 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     sarif.Serializable<sarif.ReportingDescriptor>
 {
   protected readonly _uri: string;
-  protected readonly _experimental: boolean;
   protected readonly _requirements: Array<Requirement>;
   protected readonly _tags: Array<Tag>;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
 
   protected constructor(
     uri: string,
-    experimental: boolean,
     requirements: Array<Requirement>,
     tags: Array<Tag>,
     evaluator: Rule.Evaluate<I, T, Q, S>
   ) {
     this._uri = uri;
-    this._experimental = experimental;
     this._requirements = requirements;
     this._tags = tags;
     this._evaluate = evaluator;
@@ -55,10 +52,6 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
 
   public get uri(): string {
     return this._uri;
-  }
-
-  public get experimental(): boolean {
-    return this._experimental;
   }
 
   public get requirements(): ReadonlyArray<Requirement> {
@@ -132,7 +125,6 @@ export namespace Rule {
     [key: string]: json.JSON;
     type: string;
     uri: string;
-    experimental: boolean;
     requirements: Array<Requirement.JSON>;
     tags: Array<Tag.JSON>;
   }
@@ -199,14 +191,12 @@ export namespace Rule {
   > {
     public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
-      experimental?: boolean;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
       evaluate: Atomic.Evaluate<I, T, Q, S>;
     }): Atomic<I, T, Q, S> {
       return new Atomic(
         properties.uri,
-        properties.experimental ?? false,
         Array.from(properties.requirements ?? []),
         Array.from(properties.tags ?? []),
         properties.evaluate
@@ -217,7 +207,6 @@ export namespace Rule {
       return {
         type: "atomic",
         uri: this._uri,
-        experimental: this._experimental,
         requirements: this._requirements.map((requirement) =>
           requirement.toJSON()
         ),
@@ -227,12 +216,11 @@ export namespace Rule {
 
     private constructor(
       uri: string,
-      experimental: boolean,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
       evaluate: Atomic.Evaluate<I, T, Q, S>
     ) {
-      super(uri, experimental, requirements, tags, (input, oracle, outcomes) =>
+      super(uri, requirements, tags, (input, oracle, outcomes) =>
         outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
 
@@ -295,7 +283,6 @@ export namespace Rule {
   > extends Rule<I, T, Q, S> {
     public static of<I, T = unknown, Q = never, S = T>(properties: {
       uri: string;
-      experimental?: boolean;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
       composes: Iterable<Rule<I, T, Q, S>>;
@@ -303,7 +290,6 @@ export namespace Rule {
     }): Composite<I, T, Q, S> {
       return new Composite(
         properties.uri,
-        properties.experimental ?? false,
         Array.from(properties.requirements ?? []),
         Array.from(properties.tags ?? []),
         Array.from(properties.composes),
@@ -315,13 +301,12 @@ export namespace Rule {
 
     private constructor(
       uri: string,
-      experimental: boolean,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
       composes: Array<Rule<I, T, Q, S>>,
       evaluate: Composite.Evaluate<I, T, Q, S>
     ) {
-      super(uri, experimental, requirements, tags, (input, oracle, outcomes) =>
+      super(uri, requirements, tags, (input, oracle, outcomes) =>
         outcomes.get(this, () =>
           Future.traverse(this._composes, (rule) =>
             rule.evaluate(input, oracle, outcomes)
@@ -369,7 +354,6 @@ export namespace Rule {
       return {
         type: "composite",
         uri: this._uri,
-        experimental: this._experimental,
         requirements: this._requirements.map((requirement) =>
           requirement.toJSON()
         ),
