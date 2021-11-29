@@ -9,8 +9,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { normalize } from "../common/normalize";
-
 import {
   hasAccessibleName,
   hasAttribute,
@@ -150,6 +148,11 @@ function childrenPerceivableText(node: Node, device: Device): string {
   }
   //Returning the whole text from its children
   return result;
+}
+
+// Includes removing all punctiation (underscore, hypen, brackets, quotation marks, etc)
+function normalize(input: string): string {
+  return input.trim().toLowerCase().replace(/\p{P}/gu, "").replace(/\s+/g, " ");
 }
 
 export namespace Outcomes {
