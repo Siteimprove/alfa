@@ -21,6 +21,40 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.25.0](../../compare/v0.24.1...v0.25.0) (2021-11-19)
+
+### Added
+
+- [@siteimprove/alfa-styles](packages/alfa-style): The `cursor` CSS property is now supported. ([#844](../issues/844), [#946](../pull/946))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fixed a regression on SIA-R14; it now again consider that non-perceivable text is non-essential and therefore excludes it from labels. ([#983](../pull/983))
+
+## [0.24.1](../../compare/v0.24.0...v0.24.1) (2021-11-12)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The extended diagnostic class of SIA-R83 is now `export`ed. ([#981](../pull/981))
+
+## [0.24.0](../../compare/v0.23.2...v0.24.0) (2021-11-12)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now exports the found clipping ancestors in its diagnostic. ([#976](../pull/976))
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `min-height` and `min-width` CSS properties are now supported. ([#977](../pull/977))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now considers that elements with a font-relative `height`, `width`, `min-height` or `min-width` fully handle the corresponding overflow. ([#977](../pull/977))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 row ignores non-link text which is whitespace only. ([#950](../issues/950), [#965](../pull/965))
+
+- [@siteimprove/alfa-media](packages/alfa-media): Fixed a faulty boundary condition causing inclusive ranges to be matched exclusively and reciprocally. ([#978](../pull/978))
+
 ## [0.23.2](../../compare/v0.23.1...v0.23.2) (2021-10-27)
 
 ### Fixed

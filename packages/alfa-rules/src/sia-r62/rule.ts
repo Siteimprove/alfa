@@ -29,6 +29,7 @@ import {
   hasTextDecoration,
   isVisible,
   hasBoxShadow,
+  isWhitespace,
 } from "../common/predicate";
 
 import { Serialise } from "./serialise";
@@ -236,8 +237,15 @@ function hasNonLinkText(device: Device): Predicate<Element> {
         flattened: true,
       });
 
-      // If we've found text, we're done.
-      if (children.some(and(isText, isVisible(device)))) {
+      // If we've found text with more than whitespaces, we're done.
+      if (
+        children.some(
+          and(
+            isText,
+            and<Text>(isVisible(device), (text) => !isWhitespace(text.data))
+          )
+        )
+      ) {
         return true;
       }
 

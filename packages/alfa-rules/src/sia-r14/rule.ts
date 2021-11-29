@@ -15,9 +15,9 @@ import {
   hasAccessibleName,
   hasAttribute,
   hasDescendant,
+  isPerceivable,
   hasRole,
   isFocusable,
-  isVisible,
   isRendered,
   isWhitespace,
 } from "../common/predicate";
@@ -48,7 +48,7 @@ export default Rule.Atomic.of<Page, Element>({
                 device,
                 (role) => role.isWidget() && role.isNamedBy("contents")
               ),
-              hasDescendant(and(Text.isText, isVisible(device)), {
+              hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
               })
             )
@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const textContent = normalize(
-          getVisibleInnerTextFromElement(target, device)
+          getPerceivableInnerTextFromElement(target, device)
         );
         let name = "";
 
@@ -84,13 +84,16 @@ export default Rule.Atomic.of<Page, Element>({
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
  */
-function getVisibleInnerTextFromTextNode(text: Text, device: Device): string {
-  if (isVisible(device)(text)) {
+function getPerceivableInnerTextFromTextNode(
+  text: Text,
+  device: Device
+): string {
+  if (isPerceivable(device)(text)) {
     return text.data;
   }
 
   if (
-    and(not(isVisible(device)), isRendered(device))(text) &&
+    and(not(isPerceivable(device)), isRendered(device))(text) &&
     isWhitespace(text.data)
   ) {
     return " ";
@@ -99,7 +102,7 @@ function getVisibleInnerTextFromTextNode(text: Text, device: Device): string {
   return "";
 }
 
-function getVisibleInnerTextFromElement(
+function getPerceivableInnerTextFromElement(
   element: Element,
   device: Device
 ): string {
@@ -112,7 +115,7 @@ function getVisibleInnerTextFromElement(
   }
 
   if (hasName("p")(element)) {
-    return "\n" + childrenVisibleText(element, device) + "\n";
+    return "\n" + childrenPerceivableText(element, device) + "\n";
   }
 
   const display = Style.from(element, device).computed("display").value;
@@ -121,28 +124,28 @@ function getVisibleInnerTextFromElement(
   } = display;
 
   if (outside.value === "block" || outside.value === "table-caption") {
-    return "\n" + childrenVisibleText(element, device) + "\n";
+    return "\n" + childrenPerceivableText(element, device) + "\n";
   }
 
   if (outside.value === "table-cell" || outside.value === "table-row") {
-    return " " + childrenVisibleText(element, device) + " ";
+    return " " + childrenPerceivableText(element, device) + " ";
   }
 
-  return childrenVisibleText(element, device);
+  return childrenPerceivableText(element, device);
 }
 
-function childrenVisibleText(node: Node, device: Device): string {
+function childrenPerceivableText(node: Node, device: Device): string {
   const children = node.children({ flattened: true });
 
   let result = "";
 
   for (const child of children) {
     if (isText(child)) {
-      result = result + getVisibleInnerTextFromTextNode(child, device);
+      result = result + getPerceivableInnerTextFromTextNode(child, device);
     } else if (isElement(child)) {
-      result = result + getVisibleInnerTextFromElement(child, device);
+      result = result + getPerceivableInnerTextFromElement(child, device);
     } else {
-      result = result + childrenVisibleText(child, device);
+      result = result + childrenPerceivableText(child, device);
     }
   }
   //Returning the whole text from its children

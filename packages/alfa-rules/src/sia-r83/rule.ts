@@ -3,7 +3,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -17,11 +17,10 @@ import { expectation } from "../common/expectation";
 import {
   hasAttribute,
   hasCascadedStyle,
-  isPositioned,
   isVisible,
 } from "../common/predicate";
 
-import { getOffsetParent } from "../common/expectation/get-offset-parent";
+import { getPositioningParent } from "../common/expectation/get-positioning-parent";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -42,6 +41,7 @@ export default Rule.Atomic.of<Page, Text>({
           .flatMap((node) => Sequence.from(visit(node)));
 
         function* visit(node: Node, collect: boolean = false): Iterable<Text> {
+          // aria-hidden content is ignored by the rule.
           if (
             test(
               and(
@@ -57,10 +57,7 @@ export default Rule.Atomic.of<Page, Text>({
             return;
           }
 
-          if (collect && test(and(isText, isVisible(device)), node)) {
-            yield node;
-          }
-
+          // If a potentially clipping ancestor is found, start collecting.
           if (
             isElement(node) &&
             (overflow(node, device, "x") === Overflow.Clip ||
@@ -69,6 +66,12 @@ export default Rule.Atomic.of<Page, Text>({
             collect = true;
           }
 
+          // If we are collecting and a visible text node is found, yield it.
+          if (collect && test(and(isText, isVisible(device)), node)) {
+            yield node;
+          }
+
+          // Recursively visit subtree.
           const children = node.children({ flattened: true, nested: true });
 
           for (const child of children) {
@@ -82,14 +85,19 @@ export default Rule.Atomic.of<Page, Text>({
           .parent({ flattened: true, nested: true })
           .filter(isElement);
 
-        const horizontalClip = parent.every(isHorizontallyClipping(device));
+        const horizontallyClippedBy = parent.flatMap(
+          horizontallyClipper(device)
+        );
 
-        const verticalClip = parent.every(isVerticallyClipping(device));
+        const verticallyClippedBy = parent.flatMap(
+          verticalClippingAncestor(device)
+        );
 
         return {
           1: expectation(
-            horizontalClip || verticalClip,
-            () => Outcomes.ClipsText,
+            horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+            () =>
+              Outcomes.ClipsText(horizontallyClippedBy, verticallyClippedBy),
             () => Outcomes.WrapsText
           ),
         };
@@ -98,40 +106,44 @@ export default Rule.Atomic.of<Page, Text>({
   },
 });
 
-export namespace Outcomes {
-  export const WrapsText = Ok.of(
-    Diagnostic.of(`The text is wrapped without being clipped`)
-  );
-
-  export const ClipsText = Err.of(Diagnostic.of(`The text is clipped`));
-}
-
-const verticallyClippingCache = Cache.empty<Device, Cache<Element, boolean>>();
+const verticallyClippingCache = Cache.empty<
+  Device,
+  Cache<Element, Option<Element>>
+>();
 /**
  * Checks if an element clips its vertical overflow by having an ancestor with
  * both a fixed height and a clipping overflow (before any scrolling ancestor).
  *
  * Note that element with a fixed height will create an overflow anyway, and
- * that may be clipped by any other ancestor. However, it is a common pattern to
- * have `overflow: hidden` on the `<body>` element itself, given more than
- * enough space for these overflowing elements to grow. Hence, we stick to a
- * strict matching.
+ * that may be clipped by any other ancestor. However, there may also be several
+ * elements below that can absorb the vertical overflow. So we only report
+ * when the same element has fixed height and clips.
  */
-function isVerticallyClipping(device: Device): Predicate<Element> {
-  return function isClipping(element: Element): boolean {
+function verticalClippingAncestor(
+  device: Device
+): (element: Element) => Option<Element> {
+  return function clippingAncestor(element: Element): Option<Element> {
     return verticallyClippingCache.get(device, Cache.empty).get(element, () => {
+      if (hasFontRelativeValue(device, "height")(element)) {
+        // The element has a font-relative height or min-height and we assume
+        // it will properly grow with the font, without ever clipping it.
+        // This is not fully correct since an ancestor may still clip vertically,
+        // but there may be several elements in between to absorb the growth.
+        return None;
+      }
+
       if (
         hasFixedHeight(device)(element) &&
         overflow(element, device, "y") === Overflow.Clip
       ) {
-        return true;
+        return Option.of(element);
       }
 
       if (overflow(element, device, "y") === Overflow.Handle) {
-        return false;
+        return None;
       }
 
-      return getRelevantParent(element, device).some(isClipping);
+      return getPositioningParent(element, device).flatMap(clippingAncestor);
     });
   };
 }
@@ -145,16 +157,23 @@ function isVerticallyClipping(device: Device): Predicate<Element> {
  * * if text overflows its parent, it does so as content, so we look for an
  *   ancestor that either handles it (scroll bar) or clips it.
  */
-function isHorizontallyClipping(device: Device): Predicate<Element> {
+function horizontallyClipper(
+  device: Device
+): (element: Element) => Option<Element> {
   return (element) => {
+    if (hasFontRelativeValue(device, "width")(element)) {
+      // The element grows with its text.
+      return None;
+    }
+
     switch (horizontalTextOverflow(element, device)) {
       case Overflow.Clip:
-        return true;
+        return Option.of(element);
       case Overflow.Handle:
-        return false;
+        return None;
       case Overflow.Overflow:
-        return getRelevantParent(element, device).some(
-          isHorizontallyClippingOverflow(device)
+        return getPositioningParent(element, device).flatMap(
+          horizontallyClippingAncestor(device)
         );
     }
   };
@@ -162,7 +181,7 @@ function isHorizontallyClipping(device: Device): Predicate<Element> {
 
 const horizontallyClippingCache = Cache.empty<
   Device,
-  Cache<Element, boolean>
+  Cache<Element, Option<Element>>
 >();
 /**
  * Checks whether the first offset ancestor that doesn't overflow is
@@ -175,22 +194,33 @@ const horizontallyClippingCache = Cache.empty<
  * enough that it would overflow the flex-wrapping ancestor even if alone on a
  * line); but this seems to be a frequent use case.
  */
-function isHorizontallyClippingOverflow(device: Device): Predicate<Element> {
-  return function isClipping(element: Element): boolean {
+function horizontallyClippingAncestor(
+  device: Device
+): (element: Element) => Option<Element> {
+  return function clippingAncestor(element: Element): Option<Element> {
     return horizontallyClippingCache
       .get(device, Cache.empty)
       .get(element, () => {
+        if (hasFontRelativeValue(device, "width")(element)) {
+          // The element grows with its content.
+          // The content might still be clipped by an ancestor, but we
+          // assume this denotes a small component inside a large container
+          // with enough room for the component to grow to 200% or more
+          // before being clipped.
+          return None;
+        }
+
         if (isWrappingFlexContainer(device)(element)) {
           // The element handles overflow by wrapping its flex descendants
-          return false;
+          return None;
         }
         switch (overflow(element, device, "x")) {
           case Overflow.Clip:
-            return true;
+            return Option.of(element);
           case Overflow.Handle:
-            return false;
+            return None;
           case Overflow.Overflow:
-            return getRelevantParent(element, device).some(isClipping);
+            return getPositioningParent(element, device).flatMap(clippingAncestor);
         }
       });
   };
@@ -261,7 +291,7 @@ function hasFixedHeight(device: Device): Predicate<Element> {
     (height, source) =>
       height.type === "length" &&
       height.value > 0 &&
-      !height.isFontRelative() &&
+      // !height.isFontRelative() &&
       // For heights set via the `style` attribute we assume that its value is
       // controlled by JavaScript and is adjusted as the content scales.
       source.some((declaration) => declaration.parent.isSome()),
@@ -269,10 +299,29 @@ function hasFixedHeight(device: Device): Predicate<Element> {
   );
 }
 
-function getRelevantParent(element: Element, device: Device): Option<Element> {
-  return isPositioned(device, "relative", "static", "sticky")(element)
-    ? element.parent({ flattened: true }).filter(isElement)
-    : getOffsetParent(element, device);
+//isClipped-doesn't-consider-offset-parents
+
+function hasFontRelativeValue(
+  device: Device,
+  property: "height" | "width"
+): Predicate<Element> {
+  // Use the cascaded value to avoid lengths being resolved to pixels.
+  // Otherwise, we won't be able to tell if a font relative length was
+  // used.
+  return or(
+    hasCascadedStyle(
+      property,
+      (value) =>
+        value.type === "length" && value.value > 0 && value.isFontRelative(),
+      device
+    ),
+    hasCascadedStyle(
+      `min-${property}`,
+      (value) =>
+        value.type === "length" && value.value > 0 && value.isFontRelative(),
+      device
+    )
+  );
 }
 
 function isWrappingFlexContainer(device: Device): Predicate<Element> {
@@ -290,4 +339,75 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
 
     return false;
   };
+}
+
+export class ClippingAncestors extends Diagnostic {
+  public static of(
+    message: string,
+    horizontal: Option<Element> = None,
+    vertical: Option<Element> = None
+  ): ClippingAncestors {
+    return new ClippingAncestors(message, horizontal, vertical);
+  }
+
+  private readonly _horizontal: Option<Element>;
+  private readonly _vertical: Option<Element>;
+
+  private constructor(
+    message: string,
+    horizontal: Option<Element>,
+    vertical: Option<Element>
+  ) {
+    super(message);
+    this._horizontal = horizontal;
+    this._vertical = vertical;
+  }
+
+  public get horizontal(): Option<Element> {
+    return this._horizontal;
+  }
+
+  public get vertical(): Option<Element> {
+    return this._vertical;
+  }
+
+  public equals(value: ClippingAncestors): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      super.equals(value) &&
+      value instanceof ClippingAncestors &&
+      value._horizontal.equals(this._horizontal) &&
+      value._vertical.equals(this._vertical)
+    );
+  }
+
+  public toJSON(): ClippingAncestors.JSON {
+    return {
+      ...super.toJSON(),
+      horizontal: this._horizontal.toJSON(),
+      vertical: this._vertical.toJSON(),
+    };
+  }
+}
+
+export namespace ClippingAncestors {
+  export interface JSON extends Diagnostic.JSON {
+    horizontal: Option.JSON<Element>;
+    vertical: Option.JSON<Element>;
+  }
+}
+
+export namespace Outcomes {
+  export const WrapsText = Ok.of(
+    ClippingAncestors.of(`The text is wrapped without being clipped`)
+  );
+
+  export const ClipsText = (
+    horizontal: Option<Element>,
+    vertical: Option<Element>
+  ) =>
+    Err.of(ClippingAncestors.of(`The text is clipped`, horizontal, vertical));
 }
