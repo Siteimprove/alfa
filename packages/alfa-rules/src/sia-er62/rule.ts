@@ -30,7 +30,7 @@ import {
   isVisible,
   isWhitespace,
 } from "../common/predicate";
-import { Experimental } from "../tags/experimental";
+import { Stability } from "../tags/stability";
 
 import { Serialise } from "./serialise";
 
@@ -52,7 +52,7 @@ const { and } = Refinement;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
-  tags: [Experimental.Unstable],
+  tags: [Stability.Experimental],
   evaluate({ device, document }) {
     let containers: Map<Element, Element> = Map.empty();
 

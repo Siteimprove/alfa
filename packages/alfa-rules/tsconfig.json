@@ -80,7 +80,7 @@
     "src/experimental.ts",
     "src/index.ts",
     "src/rules.ts",
-    "src/tags/experimental.ts",
+    "src/tags/stability.ts",
     "src/tags/scope.ts",
     "src/sia-er62/rule.ts",
     "src/sia-er62/serialise.ts",
