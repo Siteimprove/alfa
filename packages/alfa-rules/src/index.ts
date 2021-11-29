@@ -3,7 +3,8 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as act from "@siteimprove/alfa-act";
 
-export * from "./scope";
+export * from "./tags/experimental";
+export * from "./tags/scope";
 export * as experimentalRules from "./experimental";
 
 import * as rules from "./rules";
