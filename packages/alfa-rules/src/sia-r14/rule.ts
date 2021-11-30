@@ -8,6 +8,7 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { normalize } from "../common/normalize";
 
 import {
   hasAccessibleName,
@@ -54,14 +55,19 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
+        const perceivableInnerTextFromElement =
+          getPerceivableInnerTextFromElement(target, device);
         const textContent = normalize(
-          getPerceivableInnerTextFromElement(target, device)
+          // Removes all punctiation (underscore, hypen, brackets, quotation marks, etc)
+          perceivableInnerTextFromElement.replace(/\p{P}/gu, "")
         );
         let name = "";
 
         const accessibleNameIncludesTextContent = test(
           hasAccessibleName(device, (accessibleName) => {
-            name = normalize(accessibleName.value);
+            const value = accessibleName.value;
+            // Removes all punctiation (underscore, hypen, brackets, quotation marks, etc)
+            name = normalize(value.replace(/\p{P}/gu, ""));
             return name.includes(textContent);
           }),
           target
@@ -149,12 +155,6 @@ function childrenPerceivableText(node: Node, device: Device): string {
   //Returning the whole text from its children
   return result;
 }
-
-// Includes removing all punctiation (underscore, hypen, brackets, quotation marks, etc)
-function normalize(input: string): string {
-  return input.trim().toLowerCase().replace(/\p{P}/gu, "").replace(/\s+/g, " ");
-}
-
 export namespace Outcomes {
   export const VisibleIsInName = (textContent: string, name: string) =>
     Ok.of(
