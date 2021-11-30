@@ -76,21 +76,17 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
           );
 
           // there can be more than one element with a role of main, going to any of these is OK.
-          const mains = document
+          const isAtSTart = document
             .inclusiveDescendants({ flattened: true })
-            .filter(and(isElement, hasRole(device, "main")));
+            .filter(and(isElement, hasRole(device, "main")))
+            .some((main) => isAtTheStart(main, device)(reference));
 
-          return expectation(
-            mains.some((main) => isAtTheStart(main, device)(reference)),
-            () => Outcomes.FirstTabbableIsLinkToContent,
-            () =>
-              askIsMain.map((isMain) =>
-                expectation(
-                  isMain,
-                  () => Outcomes.FirstTabbableIsLinkToContent,
-                  () => Outcomes.FirstTabbableIsNotLinkToContent
-                )
-              )
+          return askIsMain.answerIf(isAtSTart, true).map((isMain) =>
+            expectation(
+              isMain,
+              () => Outcomes.FirstTabbableIsLinkToContent,
+              () => Outcomes.FirstTabbableIsNotLinkToContent
+            )
           );
         }
 
