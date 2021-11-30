@@ -10,16 +10,16 @@ import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-
-import { hasChild } from "../common/predicate/has-child";
-import { hasRole } from "../common/predicate/has-role";
-import { isDocumentElement } from "../common/predicate/is-document-element";
-import { isTabbable } from "../common/predicate/is-tabbable";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isVisible } from "../common/predicate/is-visible";
-
+import {
+  hasChild,
+  hasRole,
+  isAtTheStart,
+  isDocumentElement,
+  isTabbable,
+  isIgnored,
+  isVisible,
+} from "../common/predicate";
 import { Question } from "../common/question";
-import { isAtTheStart } from "../common/predicate/is-at-the-start";
 import { Stability } from "../tags/stability";
 
 const { hasName, isElement } = Element;
@@ -58,6 +58,7 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
           Document,
           Option.Maybe<Result<Diagnostic, Diagnostic>>
         > {
+          // Find the closest Element ancestor of the reference.
           const destination = reference
             .inclusiveAncestors({ flattened: true, nested: true })
             .find(isElement);
@@ -68,8 +69,8 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
 
           const askIsMain = Question.of(
             "boolean",
-            "first-tabbable-reference-is-main",
-            `Does the first tabbable element of the document point to the main content?`,
+            "is-start-of-main",
+            `Is this element at the start of the main content of the document?`,
             destination.get(),
             target
           );
@@ -101,8 +102,8 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
         > {
           const askIsInteralLink = Question.of(
             "boolean",
-            "first-tabbable-is-internal-link",
-            `Is the first tabbable element of the document an internal link?`,
+            "is-internal-link",
+            `Is this element an internal link?`,
             element,
             target
           );
@@ -156,11 +157,11 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
           "boolean",
           Document | Element,
           Document,
-          "first-tabbable-is-visible"
+          "is-visible-when-focused"
         >(
           "boolean",
-          "first-tabbable-is-visible",
-          `Is the first tabbable element of the document visible if it's focused?`,
+          "is-visible-when-focused",
+          `Is this element visible when it's focused?`,
           element,
           target
         );

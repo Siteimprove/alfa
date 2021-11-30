@@ -43,7 +43,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "first-tabbable-is-internal-link": true,
+        "is-internal-link": true,
         "first-tabbable-reference": Option.of(main),
       })
     ),
@@ -69,7 +69,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "first-tabbable-reference-is-main": true,
+        "is-start-of-main": true,
       })
     ),
     [
@@ -98,9 +98,9 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "first-tabbable-is-internal-link": true,
+        "is-internal-link": true,
         "first-tabbable-reference": Option.of(main),
-        "first-tabbable-reference-is-main": true,
+        "is-start-of-main": true,
       })
     ),
     [
@@ -218,7 +218,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
       ER87,
       { document },
       oracle({
-        "first-tabbable-is-visible": false,
+        "is-visible-when-focused": false,
       })
     ),
     [
@@ -251,7 +251,7 @@ test(`evaluate() passes a document whose first tabbable link is not visible`, as
       ER87,
       { document },
       oracle({
-        "first-tabbable-is-visible": true,
+        "is-visible-when-focused": true,
       })
     ),
     [
