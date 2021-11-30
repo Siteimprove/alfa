@@ -56,11 +56,12 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         // Removes all punctiation (underscore, hypen, brackets, quotation marks, etc)
-        function removePunctuation(input: string): string {
-          return input.replace(/\p{P}/gu, "");
+        // and normalise
+        function removePunctuationAndNormalise(input: string): string {
+          return normalize(input.replace(/\p{P}/gu, ""));
         }
 
-        const perceivableInnerTextFromElement = removePunctuation(
+        const perceivableInnerTextFromElement = removePunctuationAndNormalise(
           getPerceivableInnerTextFromElement(target, device)
         );
         const textContent = normalize(perceivableInnerTextFromElement);
@@ -68,8 +69,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         const accessibleNameIncludesTextContent = test(
           hasAccessibleName(device, (accessibleName) => {
-            const value = removePunctuation(accessibleName.value);
-            name = normalize(value);
+            name = removePunctuationAndNormalise(accessibleName.value);
             return name.includes(textContent);
           }),
           target
