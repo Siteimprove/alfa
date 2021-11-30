@@ -43,7 +43,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "first-tabbable-reference": Option.of(main),
+        "internal-reference": Option.of(main),
       })
     ),
     [
@@ -72,7 +72,7 @@ test(`evaluate() fails a document whose first tabbable link does not
       ER87,
       { document },
       oracle({
-        "first-tabbable-reference": None,
+        "internal-reference": None,
       })
     ),
     [
@@ -126,7 +126,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "first-tabbable-reference": Option.of(main),
+        "internal-reference": Option.of(main),
         "is-start-of-main": true,
       })
     ),

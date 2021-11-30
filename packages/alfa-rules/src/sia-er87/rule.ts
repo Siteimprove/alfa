@@ -98,8 +98,9 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
         > {
           const askReference = Question.of(
             "node",
-            "first-tabbable-reference",
-            `Where in the document does the first tabbable element point?`,
+            "internal-reference",
+            `Where in the document does this element point?`,
+            element,
             target
           );
 
