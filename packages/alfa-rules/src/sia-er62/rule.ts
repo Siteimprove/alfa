@@ -50,7 +50,7 @@ const { and } = Refinement;
  *   so the difference wouldn't be visible.
  */
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r62",
+  uri: "https://alfa.siteimprove.com/rules/sia-r62#experimental",
   requirements: [Criterion.of("1.4.1")],
   tags: [Stability.Experimental],
   evaluate({ device, document }) {

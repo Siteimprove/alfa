@@ -36,7 +36,7 @@ const { and } = Refinement;
  * different than the test target.
  */
 export default Rule.Atomic.of<Page, Document, Question, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r87",
+  uri: "https://alfa.siteimprove.com/rules/sia-r87#experimental",
   requirements: [Technique.of("G1")],
   tags: [Stability.Experimental],
   evaluate({ device, document, response }) {
