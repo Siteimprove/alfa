@@ -908,7 +908,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         h.rule.style("a", {
           textDecoration: "none",
           outline: "none",
-          "box-shadow": "10px 5px 5px red"
+          "box-shadow": "10px 5px 5px red",
         }),
       ]),
     ]
@@ -916,6 +916,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
 
   const style = Ok.of(
     ComputedStyles.of([
+      ["box-shadow", "10px 5px 5px rgb(100% 0% 0%)"],
       ["border-width", "0px"],
       ["color", "rgb(0% 0% 93.33333%)"],
       ["outline", "0px"],

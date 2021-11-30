@@ -1,4 +1,6 @@
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Keyword, Length } from "@siteimprove/alfa-css";
+import { Shadow } from "@siteimprove/alfa-dom";
+import { Property, Style, Value } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
 type Name = Property.Name | Property.Shorthand.Name;
@@ -69,6 +71,30 @@ export namespace Serialise {
         .map((property) => getLonghand(style, `text-decoration-${property}`))
         .join(" ")
     );
+  }
+
+  export function boxShadow(style: Style): string {
+    const boxShadow = style.computed("box-shadow").value;
+
+    if (Keyword.isKeyword(boxShadow)) {
+      return "";
+    }
+
+    const shadows = Array.from(boxShadow.values).map((entry) => {
+      const { vertical, horizontal, blur, spread, isInset, color } = entry;
+      const omitBlur = Length.isZero(spread) && Length.isZero(blur);
+      const omitSpread =
+        Length.isZero(spread) || (Length.isZero(spread) && Length.isZero(blur));
+      const blurToString = omitBlur ? "" : blur.toString();
+      const spreadToString = omitSpread ? "" : spread.toString();
+      const insetToString = !isInset ? "" : "inset";
+      const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
+      return `${vertical.toString()} ${horizontal.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`;
+    });
+
+    return shadows
+      .map(normalize)
+      .join(", ");
   }
 
   // Only background-color and background-image are used for deciding if the

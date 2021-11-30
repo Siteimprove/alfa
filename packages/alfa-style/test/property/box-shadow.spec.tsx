@@ -7,17 +7,17 @@ import { Style } from "../../src/style";
 
 const device = Device.standard();
 
-test("#cascaded() parses `box-shadow: auto`", (t) => {
-  const element = <div style={{ boxShadow: "auto" }} />;
+test("#cascaded() parses `box-shadow: none`", (t) => {
+  const element = <div style={{ boxShadow: "none" }} />;
 
   const style = Style.from(element, device);
 
   t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
     value: {
       type: "keyword",
-      value: "auto",
+      value: "none",
     },
-    source: h.declaration("box-shadow", "auto").toJSON(),
+    source: h.declaration("box-shadow", "none").toJSON(),
   });
 });
 

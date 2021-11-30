@@ -29,13 +29,13 @@ declare module "../property" {
 /**
  * @internal
  */
-export type Specified = Keyword<"auto"> | List<Shadow>;
+export type Specified = Keyword<"none"> | List<Shadow>;
 
 /**
  * @internal
  */
 export type Computed =
-  | Keyword<"auto">
+  | Keyword<"none">
   | List<
       Shadow<
         Length<"px">,
@@ -168,8 +168,8 @@ export const parseList = map(
 export default Property.register(
   "box-shadow",
   Property.of<Specified, Computed>(
-    Keyword.of("auto"),
-    either(Keyword.parse("auto"), parseList),
+    Keyword.of("none"),
+    either(Keyword.parse("none"), parseList),
     (boxShadow, style) =>
       boxShadow.map((value) => {
         switch (value.type) {

@@ -464,6 +464,7 @@ export namespace ComputedStyles {
         ["background", Serialise.background(style)] as const,
         ["outline", Serialise.outline(style)] as const,
         ["text-decoration", Serialise.textDecoration(style)] as const,
+        ["box-shadow", Serialise.boxShadow(style)] as const,
       ].filter(([_, value]) => value !== "")
     );
   }
