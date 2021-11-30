@@ -33,12 +33,12 @@ test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -77,12 +77,12 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -121,12 +121,12 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -165,12 +165,12 @@ test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -209,12 +209,12 @@ test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -253,12 +253,12 @@ test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -298,12 +298,12 @@ test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,
@@ -343,12 +343,12 @@ test("#cascaded() parses `box-shadow: red 1px 2px inset`", (t) => {
       values: [
         {
           type: "shadow",
-          vertical: {
+          horizontal: {
             type: "length",
             unit: "px",
             value: 1,
           },
-          horizontal: {
+          vertical: {
             type: "length",
             unit: "px",
             value: 2,

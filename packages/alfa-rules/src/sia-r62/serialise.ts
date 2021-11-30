@@ -1,6 +1,5 @@
 import { Keyword, Length } from "@siteimprove/alfa-css";
-import { Shadow } from "@siteimprove/alfa-dom";
-import { Property, Style, Value } from "@siteimprove/alfa-style";
+import { Property, Style } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
 type Name = Property.Name | Property.Shorthand.Name;
@@ -89,7 +88,7 @@ export namespace Serialise {
       const spreadToString = omitSpread ? "" : spread.toString();
       const insetToString = !isInset ? "" : "inset";
       const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
-      return `${vertical.toString()} ${horizontal.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`;
+      return `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`;
     });
 
     return shadows

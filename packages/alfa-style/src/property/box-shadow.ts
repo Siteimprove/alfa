@@ -50,8 +50,8 @@ export type Computed =
  * @internal
  */
 export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
-  let vertical: Length | undefined;
   let horizontal: Length | undefined;
+  let vertical: Length | undefined;
   let blur: Length | undefined;
   let spread: Length | undefined;
   let color: Color | undefined;
@@ -66,23 +66,23 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
   while (true) {
     skipWhitespace();
 
-    if (vertical === undefined) {
-      // vertical: <length>
+    if (horizontal === undefined) {
+      // horizontal: <length>
       const result = Length.parse(input);
 
       if (result.isOk()) {
-        [input, vertical] = result.get();
+        [input, horizontal] = result.get();
         skipWhitespace();
 
         {
-          // horizontal: <length>
+          // vertical: <length>
           const result = Length.parse(input);
 
           if (result.isErr()) {
             return result;
           }
 
-          [input, horizontal] = result.get();
+          [input, vertical] = result.get();
           skipWhitespace();
 
           {
@@ -133,15 +133,15 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
     break;
   }
 
-  if (vertical === undefined || horizontal === undefined) {
-    return Err.of("Expected vertical and horizontal offset");
+  if (horizontal === undefined || vertical === undefined) {
+    return Err.of("Expected horizontal and vertical offset");
   }
 
   return Result.of([
     input,
     Shadow.of(
-      vertical,
       horizontal,
+      vertical,
       blur ?? Length.of(0, "px"),
       spread ?? Length.of(0, "px"),
       color ?? Keyword.of("currentcolor"),
@@ -180,8 +180,8 @@ export default Property.register(
             return List.of(
               [...value].map((shadow) =>
                 Shadow.of(
-                  Resolver.length(shadow.vertical, style),
                   Resolver.length(shadow.horizontal, style),
+                  Resolver.length(shadow.vertical, style),
                   Resolver.length(shadow.blur, style),
                   Resolver.length(shadow.spread, style),
                   Resolver.color(shadow.color),
