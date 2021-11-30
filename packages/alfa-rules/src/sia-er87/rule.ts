@@ -26,7 +26,16 @@ const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
+/**
+ * This version of RD87 ask questions whose subject is not the target of the rule.
+ * The context of the question is still the test target (the document), but the
+ * subjects can be various elements (the first focusable element, or its
+ * destination once it's been identified as a link).
+ * This needs changes in Dory, Nemo, and likely databases to be stored;
+ * this needs changes in the Page Report to be able to highlight an element
+ * different than the test target.
+ */
+export default Rule.Atomic.of<Page, Document, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
   tags: [Stability.Experimental],
@@ -54,7 +63,7 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
           reference: Node
         ): Interview<
           Question,
-          Document | Element,
+          Element,
           Document,
           Option.Maybe<Result<Diagnostic, Diagnostic>>
         > {
@@ -92,7 +101,7 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
 
         function isSkipLink(): Interview<
           Question,
-          Document | Element,
+          Element,
           Document,
           Option.Maybe<Result<Diagnostic>>
         > {
@@ -124,23 +133,22 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
               )
             );
 
-          return reference.isSome()
-            ? isAtTheStartOfMain(reference.get())
-            : askReference.map((ref) =>
+          return (
+            askReference
+              // If the reference was automatically found, send it.
+              .answerIf(reference.isSome(), reference)
+              .map((ref) =>
                 expectation(
+                  // Oracle may still answer None to the question.
                   ref.isSome(),
                   () => isAtTheStartOfMain(ref.get()),
                   () => Outcomes.FirstTabbableIsNotInternalLink
                 )
-              );
+              )
+          );
         }
 
-        const askIsVisible = Question.of<
-          "boolean",
-          Document | Element,
-          Document,
-          "is-visible-when-focused"
-        >(
+        const askIsVisible = Question.of(
           "boolean",
           "is-visible-when-focused",
           `Is this element visible when it's focused?`,
@@ -152,28 +160,26 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
           1: expectation(
             isIgnored(device)(element),
             () => Outcomes.FirstTabbableIsIgnored,
-            () => {
-              const foo = askIsVisible
-                .answerIf(
-                  isVisible(device, Context.focus(element))(element),
-                  true
-                )
-                .map((isVisible) =>
-                  expectation(
-                    isVisible,
-                    isSkipLink,
-                    () => Outcomes.FirstTabbableIsNotVisible
-                  )
-                );
-              return expectation(
+            () =>
+              expectation(
                 hasRole(device, (role) => role.is("link"))(element),
                 () =>
                   // No need to check if element is tabbable because this was
                   // already checked at the very start of expectation.
-                  foo,
+                  askIsVisible
+                    .answerIf(
+                      isVisible(device, Context.focus(element))(element),
+                      true
+                    )
+                    .map((isVisible) =>
+                      expectation(
+                        isVisible,
+                        isSkipLink,
+                        () => Outcomes.FirstTabbableIsNotVisible
+                      )
+                    ),
                 () => Outcomes.FirstTabbableIsNotLink
-              );
-            }
+              )
           ),
         };
       },
