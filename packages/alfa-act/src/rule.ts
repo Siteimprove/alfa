@@ -203,17 +203,6 @@ export namespace Rule {
       );
     }
 
-    public toJSON(): Atomic.JSON {
-      return {
-        type: "atomic",
-        uri: this._uri,
-        requirements: this._requirements.map((requirement) =>
-          requirement.toJSON()
-        ),
-        tags: this._tags.map((tag) => tag.toJSON()),
-      };
-    }
-
     private constructor(
       uri: string,
       requirements: Array<Requirement>,
@@ -243,6 +232,17 @@ export namespace Rule {
             });
         })
       );
+    }
+
+    public toJSON(): Atomic.JSON {
+      return {
+        type: "atomic",
+        uri: this._uri,
+        requirements: this._requirements.map((requirement) =>
+          requirement.toJSON()
+        ),
+        tags: this._tags.map((tag) => tag.toJSON()),
+      };
     }
   }
 
