@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 
 import ER87, { Outcomes } from "../../src/sia-er87/rule";
 
@@ -43,13 +43,41 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "is-internal-link": true,
         "first-tabbable-reference": Option.of(main),
       })
     ),
     [
       passed(ER87, document, {
         1: Outcomes.FirstTabbableIsLinkToContent,
+      }),
+    ]
+  );
+});
+
+test(`evaluate() fails a document whose first tabbable link does not
+      reference an element`, async (t) => {
+  const main = <div>Content</div>;
+
+  const document = h.document([
+    <html>
+      <div tabindex="0" role="link">
+        Skip to content
+      </div>
+      {main}
+    </html>,
+  ]);
+
+  t.deepEqual(
+    await evaluate(
+      ER87,
+      { document },
+      oracle({
+        "first-tabbable-reference": None,
+      })
+    ),
+    [
+      failed(ER87, document, {
+        1: Outcomes.FirstTabbableIsNotInternalLink,
       }),
     ]
   );
@@ -98,7 +126,6 @@ test(`evaluate() passes a document whose first tabbable link references an
       ER87,
       { document },
       oracle({
-        "is-internal-link": true,
         "first-tabbable-reference": Option.of(main),
         "is-start-of-main": true,
       })
@@ -229,7 +256,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
   );
 });
 
-test(`evaluate() passes a document whose first tabbable link is not visible`, async (t) => {
+test(`evaluate() passes a document whose first tabbable link is visible`, async (t) => {
   const document = h.document(
     [
       <html>

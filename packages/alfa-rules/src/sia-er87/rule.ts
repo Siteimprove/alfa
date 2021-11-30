@@ -96,14 +96,6 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
           Document,
           Option.Maybe<Result<Diagnostic>>
         > {
-          const askIsInteralLink = Question.of(
-            "boolean",
-            "is-internal-link",
-            `Is this element an internal link?`,
-            element,
-            target
-          );
-
           const askReference = Question.of(
             "node",
             "first-tabbable-reference",
@@ -133,17 +125,10 @@ export default Rule.Atomic.of<Page, Document, Question, Document | Element>({
 
           return reference.isSome()
             ? isAtTheStartOfMain(reference.get())
-            : askIsInteralLink.map((isInternalLink) =>
+            : askReference.map((ref) =>
                 expectation(
-                  isInternalLink,
-                  () =>
-                    askReference.map((ref) =>
-                      expectation(
-                        ref.isSome(),
-                        () => isAtTheStartOfMain(ref.get()),
-                        () => Outcomes.FirstTabbableIsNotInternalLink
-                      )
-                    ),
+                  ref.isSome(),
+                  () => isAtTheStartOfMain(ref.get()),
                   () => Outcomes.FirstTabbableIsNotInternalLink
                 )
               );
