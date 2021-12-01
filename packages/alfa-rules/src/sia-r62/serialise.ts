@@ -79,16 +79,15 @@ export namespace Serialise {
       return "";
     }
 
-    const serializedShadows = [] as Array<string>;
+    const serializedShadows: Array<string> = [];
 
     for (const shadow of boxShadow) {
       const { vertical, horizontal, blur, spread, isInset, color } = shadow;
       const omitBlur = Length.isZero(spread) && Length.isZero(blur);
-      const omitSpread =
-        Length.isZero(spread) || (Length.isZero(spread) && Length.isZero(blur));
+      const omitSpread = Length.isZero(spread);
       const blurToString = omitBlur ? "" : blur.toString();
       const spreadToString = omitSpread ? "" : spread.toString();
-      const insetToString = !isInset ? "" : "inset";
+      const insetToString = isInset ? "inset" : "";
       const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
       const serialized = normalize(
         `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`
