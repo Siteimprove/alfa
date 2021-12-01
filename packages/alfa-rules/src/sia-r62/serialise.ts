@@ -1,5 +1,4 @@
 import { Keyword, Length } from "@siteimprove/alfa-css";
-import { List } from "@siteimprove/alfa-list";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
