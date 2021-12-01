@@ -4,6 +4,7 @@ import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -65,8 +66,15 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     return Array.includes(this._requirements, requirement);
   }
 
-  public hasTag(tag: Tag): boolean {
-    return Array.includes(this._tags, tag);
+  public hasTag(tag: Tag): boolean;
+
+  public hasTag(predicate: Predicate<Tag>): boolean;
+
+  public hasTag(tagOrPredicate: Tag | Predicate<Tag>): boolean {
+    const predicate = Tag.isTag(tagOrPredicate)
+      ? (tag: any) => tagOrPredicate.equals(tag)
+      : tagOrPredicate;
+    return Array.find(this._tags, predicate).isSome();
   }
 
   public evaluate(

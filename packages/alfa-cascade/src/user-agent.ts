@@ -98,7 +98,10 @@ export const UserAgent = h.sheet([
   h.rule.style(":link", { color: "#0000ee" }),
   h.rule.style(":visited", { color: "#551a8b" }),
   h.rule.style(":link:active, :visited:active", { color: "#ff0000" }),
-  h.rule.style(":link, :visited", { textDecoration: "underline" }),
+  h.rule.style(":link, :visited", {
+    textDecoration: "underline",
+    cursor: "pointer",
+  }),
 
   h.rule.style(":focus", { outline: "auto" }),
 
