@@ -8,7 +8,6 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-
 import { normalize } from "../common/normalize";
 
 import {
@@ -56,14 +55,20 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const textContent = normalize(
+        // Removes all punctiation (underscore, hypen, brackets, quotation marks, etc)
+        // and normalise
+        function removePunctuationAndNormalise(input: string): string {
+          return normalize(input.replace(/\p{P}/gu, ""));
+        }
+
+        const textContent = removePunctuationAndNormalise(
           getPerceivableInnerTextFromElement(target, device)
         );
-        let name = "";
 
+        let name = "";
         const accessibleNameIncludesTextContent = test(
           hasAccessibleName(device, (accessibleName) => {
-            name = normalize(accessibleName.value);
+            name = removePunctuationAndNormalise(accessibleName.value);
             return name.includes(textContent);
           }),
           target
@@ -151,7 +156,6 @@ function childrenPerceivableText(node: Node, device: Device): string {
   //Returning the whole text from its children
   return result;
 }
-
 export namespace Outcomes {
   export const VisibleIsInName = (textContent: string, name: string) =>
     Ok.of(
