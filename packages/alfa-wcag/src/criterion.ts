@@ -230,7 +230,7 @@ export namespace Criterion {
     for (const [chapter, value] of Object.entries(Criteria)) {
       for (const version of value.versions) {
         if (version[1].uri === uri) {
-          return Option.of(Criterion.of(chapter as Criterion.Chapter));
+          return Option.of(Criterion.of(chapter as Chapter));
         }
       }
     }
