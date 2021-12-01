@@ -61,12 +61,11 @@ export default Rule.Atomic.of<Page, Element>({
           return normalize(input.replace(/\p{P}/gu, ""));
         }
 
-        const perceivableInnerTextFromElement = removePunctuationAndNormalise(
+        const textContent = removePunctuationAndNormalise(
           getPerceivableInnerTextFromElement(target, device)
         );
-        const textContent = normalize(perceivableInnerTextFromElement);
-        let name = "";
 
+        let name = "";
         const accessibleNameIncludesTextContent = test(
           hasAccessibleName(device, (accessibleName) => {
             name = removePunctuationAndNormalise(accessibleName.value);
