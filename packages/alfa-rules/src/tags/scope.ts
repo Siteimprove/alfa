@@ -19,6 +19,10 @@ export class Scope<S extends string = string> extends Tag<"scope"> {
     return "scope";
   }
 
+  public get scope(): S {
+    return this._scope;
+  }
+
   public equals(value: Scope): boolean;
 
   public equals(value: unknown): value is this;
