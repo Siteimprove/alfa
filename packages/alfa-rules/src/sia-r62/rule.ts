@@ -28,6 +28,7 @@ import {
   hasRole,
   hasTextDecoration,
   isVisible,
+  hasBoxShadow,
   isWhitespace,
 } from "../common/predicate";
 
@@ -277,7 +278,8 @@ function isDistinguishable(
     // should hopefully not happen (too often) in practice. When it does, we
     // risk false negatives.
     hasOutline(device, context),
-    hasBorder(device, context)
+    hasBorder(device, context),
+    hasBoxShadow(device, context) //Checks for color != transparent and spread => 0
   );
 }
 
@@ -462,6 +464,7 @@ export namespace ComputedStyles {
         ["background", Serialise.background(style)] as const,
         ["outline", Serialise.outline(style)] as const,
         ["text-decoration", Serialise.textDecoration(style)] as const,
+        ["box-shadow", Serialise.boxShadow(style)] as const,
       ].filter(([_, value]) => value !== "")
     );
   }

@@ -1,3 +1,4 @@
+import { Keyword, Length } from "@siteimprove/alfa-css";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
@@ -69,6 +70,32 @@ export namespace Serialise {
         .map((property) => getLonghand(style, `text-decoration-${property}`))
         .join(" ")
     );
+  }
+
+  export function boxShadow(style: Style): string {
+    const boxShadow = style.computed("box-shadow").value;
+
+    if (Keyword.isKeyword(boxShadow)) {
+      return "";
+    }
+
+    const serializedShadows: Array<string> = [];
+
+    for (const shadow of boxShadow) {
+      const { vertical, horizontal, blur, spread, isInset, color } = shadow;
+      const omitBlur = Length.isZero(spread) && Length.isZero(blur);
+      const omitSpread = Length.isZero(spread);
+      const blurToString = omitBlur ? "" : blur.toString();
+      const spreadToString = omitSpread ? "" : spread.toString();
+      const insetToString = isInset ? "inset" : "";
+      const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
+      const serialized = normalize(
+        `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`
+      );
+      serializedShadows.push(serialized);
+    }
+
+    return serializedShadows.join(", ");
   }
 
   // Only background-color and background-image are used for deciding if the
