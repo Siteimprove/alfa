@@ -164,6 +164,12 @@ test(`boxShadow() serialises a box-shadow that is not set`, (t) => {
   t.deepEqual(boxShadow(style), "");
 });
 
+test(`boxShadow() serialises a box-shadow that is set to initial`, (t) => {
+  const style = mkStyle([["box-shadow", "initial"]]);
+
+  t.deepEqual(boxShadow(style), "");
+});
+
 test(`boxShadow() serialises a box-shadow with all properties set`, (t) => {
   const style = mkStyle([["box-shadow", "1px 2px 3px 4px red inset"]]);
 
