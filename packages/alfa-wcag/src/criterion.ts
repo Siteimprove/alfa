@@ -1,5 +1,6 @@
 import { Requirement } from "@siteimprove/alfa-act";
 import { Branched } from "@siteimprove/alfa-branched";
+import { None, Option } from "@siteimprove/alfa-option";
 
 import { Criteria } from "./criterion/data";
 
@@ -223,5 +224,17 @@ export namespace Criterion {
 
   export function isCriterion(value: unknown): value is Criterion {
     return value instanceof Criterion;
+  }
+
+  export function fromURI(uri: string): Option<Criterion> {
+    for (const [chapter, value] of Object.entries(Criteria)) {
+      for (const version of value.versions) {
+        if (version[1].uri === uri) {
+          return Option.of(Criterion.of(chapter as Criterion.Chapter));
+        }
+      }
+    }
+
+    return None;
   }
 }
