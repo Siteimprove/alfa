@@ -279,7 +279,7 @@ function isDistinguishable(
     // risk false negatives.
     hasOutline(device, context),
     hasBorder(device, context),
-    hasBoxShadow(device, context) //Checks for color != transparent and spread => 0. What does it mean "check for any difference"?
+    hasBoxShadow(device, context) //Checks for color != transparent and spread => 0
   );
 }
 

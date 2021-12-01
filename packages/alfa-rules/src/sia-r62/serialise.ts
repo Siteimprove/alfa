@@ -1,4 +1,5 @@
 import { Keyword, Length } from "@siteimprove/alfa-css";
+import { List } from "@siteimprove/alfa-list";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
@@ -79,8 +80,10 @@ export namespace Serialise {
       return "";
     }
 
-    const shadows = Array.from(boxShadow.values).map((entry) => {
-      const { vertical, horizontal, blur, spread, isInset, color } = entry;
+    const serializedShadows = [] as Array<string>;
+
+    for (const shadow of boxShadow) {
+      const { vertical, horizontal, blur, spread, isInset, color } = shadow;
       const omitBlur = Length.isZero(spread) && Length.isZero(blur);
       const omitSpread =
         Length.isZero(spread) || (Length.isZero(spread) && Length.isZero(blur));
@@ -88,12 +91,13 @@ export namespace Serialise {
       const spreadToString = omitSpread ? "" : spread.toString();
       const insetToString = !isInset ? "" : "inset";
       const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
-      return `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`;
-    });
+      const serialized = normalize(
+        `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`
+      );
+      serializedShadows.push(serialized);
+    }
 
-    return shadows
-      .map(normalize)
-      .join(", ");
+    return serializedShadows.join(", ");
   }
 
   // Only background-color and background-image are used for deciding if the

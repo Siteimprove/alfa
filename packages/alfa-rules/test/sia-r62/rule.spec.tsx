@@ -930,6 +930,30 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   ]);
 });
 
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration and applies a box shadow with initial value`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
+
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     no non-link whitespace text content`, async (t) => {
   const target = <a href="#">Link</a>;
