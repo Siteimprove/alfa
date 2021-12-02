@@ -8,6 +8,7 @@ import {
   getBackground,
   getForeground,
 } from "../../../src/common/expectation/get-colors";
+import { Context } from "@siteimprove/alfa-selector";
 
 const device = Device.standard();
 
@@ -120,6 +121,70 @@ test("getForeground() handles mix of opacity and transparency", (t) => {
 
   t.deepEqual(
     Iterable.first(getForeground(target, device).get()).get().toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 0.75 },
+      green: { type: "percentage", value: 0.25 },
+      blue: { type: "percentage", value: 0.5 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
+});
+
+test("getForeground() handles hover context", (t) => {
+  const target = <a href="#">Link</a>;
+
+  h.document(
+    [<html>{target}</html>],
+    [
+      h.sheet([
+        h.rule.style("a:hover", {
+          color: "red",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(
+    Iterable.first(getForeground(target, device, Context.hover(target)).get())
+      .get()
+      .toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 1 },
+      green: { type: "percentage", value: 0 },
+      blue: { type: "percentage", value: 0 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
+});
+
+test("getForeground() handles hover context with a mix of opacity and transparency", (t) => {
+  const target = <a href="#">Link</a>;
+
+  h.document(
+    [
+      <html>
+        <div style={{ backgroundColor: "red" }}>{target}</div>
+      </html>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a:hover", {
+          backgroundColor: "blue",
+          color: "rgba(255, 255, 255, .5)",
+          opacity: "0.5",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(
+    Iterable.first(getForeground(target, device, Context.hover(target)).get())
+      .get()
+      .toJSON(),
     {
       type: "color",
       format: "rgb",
