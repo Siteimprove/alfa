@@ -1,7 +1,8 @@
+import { test } from "@siteimprove/alfa-test";
+
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { test } from "@siteimprove/alfa-test";
 import { Page } from "@siteimprove/alfa-web";
 
 import { React } from "../src";
