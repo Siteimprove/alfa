@@ -3,6 +3,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -21,6 +22,8 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/expectation";
+import { contrast } from "../common/expectation/contrast";
+import { getForeground } from "../common/expectation/get-colors";
 import {
   hasBorder,
   hasComputedStyle,
@@ -35,6 +38,7 @@ import { Stability } from "../tags/stability";
 import { Serialise } from "./serialise";
 
 const { isElement } = Element;
+const { flatMap, map } = Iterable;
 const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
@@ -281,17 +285,18 @@ function isDistinguishable(
     // Things like text decoration and backgrounds risk blending with the
     // container element. We therefore need to check if these can be distinguished
     // from what the container element might itself set.
-    hasDistinguishableTextDecoration(container, device, context),
     hasDistinguishableBackground(container, device, context),
+    hasDistinguishableContrast(container, device, context),
     hasDistinguishableFont(container, device, context),
+    hasDistinguishableTextDecoration(container, device, context),
     hasDistinguishableVerticalAlign(container, device, context),
     // We consider the mere presence of borders or outlines on the element as
     // distinguishable features. There's of course a risk of these blending with
     // other features of the container element, such as its background, but this
     // should hopefully not happen (too often) in practice. When it does, we
     // risk false negatives.
+    hasBorder(device, context),
     hasOutline(device, context),
-    hasBorder(device, context)
   );
 }
 
@@ -363,6 +368,32 @@ function hasDistinguishableBackground(
       context
     )
   );
+}
+
+function hasDistinguishableContrast(
+  container: Element,
+  device: Device,
+  context?: Context
+): Predicate<Element> {
+  return (link) =>
+    getForeground(container, device, context).some((containerColors) =>
+      getForeground(link, device, context).some((linkColors) => {
+        const contrastValues = [
+          ...flatMap(containerColors, (containerColor) =>
+            map(linkColors, (linkColor) => {
+              return contrast(containerColor, linkColor);
+            })
+          ),
+        ];
+
+        for (const contrastValue of contrastValues) {
+          if (contrastValue < 3) {
+            return false;
+          }
+        }
+        return true;
+      })
+    );
 }
 
 /**

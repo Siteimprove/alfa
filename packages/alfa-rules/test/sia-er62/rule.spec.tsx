@@ -904,3 +904,44 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
 });
+
+test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 as a distinguishing feature`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          color: "rgb(148, 148, 148)",
+        }),
+
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto"
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["font", "16px serif"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+// Check gradient to non-gradient
+// Check non-gradient to gradient
+// Check gradient to gradient
+// Extended diagnostics for pairwise contrast
