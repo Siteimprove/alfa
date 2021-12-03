@@ -897,6 +897,63 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
   ]);
 });
 
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a box shadow`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "10px 5px 5px red",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["box-shadow", "10px 5px 5px rgb(100% 0% 0%)"],
+      ["border-width", "0px"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+    ])
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration and applies a box shadow with initial value`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
+
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     no non-link whitespace text content`, async (t) => {
   const target = <a href="#">Link</a>;
