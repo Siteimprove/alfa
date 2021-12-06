@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -38,7 +39,6 @@ import { Stability } from "../tags/stability";
 import { Serialise } from "./serialise";
 
 const { isElement } = Element;
-const { flatMap, map } = Iterable;
 const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
@@ -379,19 +379,20 @@ function hasDistinguishableContrast(
     getForeground(container, device, context).some((containerColors) =>
       getForeground(link, device, context).some((linkColors) => {
         const contrastValues = [
-          ...flatMap(containerColors, (containerColor) =>
-            map(linkColors, (linkColor) => {
+          ...Array.flatMap(containerColors, (containerColor) =>
+            Array.map(linkColors, (linkColor) => {
               return contrast(containerColor, linkColor);
             })
           ),
         ];
 
         for (const contrastValue of contrastValues) {
-          if (contrastValue < 3) {
-            return false;
+          // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
+          if (contrastValue >= 3) {
+            return true;
           }
         }
-        return true;
+        return false;
       })
     );
 }

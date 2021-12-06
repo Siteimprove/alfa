@@ -919,7 +919,7 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
         h.rule.style("a", {
           textDecoration: "none",
           outline: "none",
-          cursor: "auto"
+          cursor: "auto",
         }),
       ]),
     ]
@@ -941,7 +941,167 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
   ]);
 });
 
-// Check gradient to non-gradient
-// Check non-gradient to gradient
-// Check gradient to gradient
+test(`evaluate() passes an <a> element that is distinguishable from the <p> parent element as all foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          backgroundImage:
+            "linear-gradient(to right, red 20%, orange 40%, yellow 60%, green 80%, blue 100%)",
+          color: "rgba(255, 255, 255, .5)",
+          opacity: "0.5",
+        }),
+
+        h.rule.style("a, a:hover, a:focus", {
+          backgroundImage:
+            "linear-gradient(to right, red 20%, orange 40%, yellow 60%, green 80%, blue 100%)",
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["font", "16px serif"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+      [
+        "background",
+        "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.70588000000001% 0%) 40%, rgb(100% 100% 0%) 60%, rgb(0% 50.196079999999995% 0%) 80%, rgb(0% 0% 100%) 100%)",
+      ],
+    ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element that is distinguishable from the <p> parent element as some foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          backgroundImage: "linear-gradient(to right, red 50%, blue 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
+
+        h.rule.style("a, a:hover, a:focus", {
+          backgroundImage: "linear-gradient(to right, #F9F9F1 50%, blue 50%)",
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ComputedStyles.of([
+      ["border-width", "0px"],
+      ["font", "16px serif"],
+      ["color", "rgb(0% 0% 93.33333%)"],
+      ["outline", "0px"],
+      [
+        "background",
+        "linear-gradient(to right, rgb(97.64706% 97.64706% 94.5098%) 50%, rgb(0% 0% 100%) 50%)",
+      ],
+    ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([style], [style], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element as none of the foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
+
+        h.rule.style("a, a:hover, a:focus", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const noStyle = Err.of(
+    noDistinguishingProperties.with([
+      "background",
+      "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+    ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element as none of the foregrounds have a contrast of 3:1 in the child element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          color: "blue",
+        }),
+
+        h.rule.style("a, a:hover, a:focus", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const noStyle = Err.of(
+    noDistinguishingProperties.with(
+      [
+        "background",
+        "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+      ],
+      ["color", "rgb(100% 100% 100% / 10%)"]
+    )
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
+
 // Extended diagnostics for pairwise contrast
