@@ -1,7 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/react.ts"],
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  },
+  "files": ["src/index.ts", "src/react.ts", "test/react.spec.tsx"],
   "references": [
     {
       "path": "../alfa-device"

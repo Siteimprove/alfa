@@ -28,7 +28,8 @@
     "vue-template-compiler": "^2.6.14"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.26.0"
+    "@siteimprove/alfa-test": "workspace:^0.26.0",
+    "jsdom-global": "^3.0.2"
   },
   "publishConfig": {
     "access": "public",
