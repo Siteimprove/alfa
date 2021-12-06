@@ -1,7 +1,4 @@
 {
-  "compilerOptions": {
-      "experimentalDecorators": true
-  },
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": ["src/angular.ts", "src/index.ts"],
