@@ -4,6 +4,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 
 export class Contrast extends Diagnostic {
   public static of(
@@ -65,7 +66,7 @@ export namespace Contrast {
     return value instanceof Contrast;
   }
 
-  export class Pairing implements Equatable, Serializable {
+  export class Pairing implements Equatable, Serializable, Hashable {
     public static of(
       foreground: RGB,
       background: RGB,
@@ -82,6 +83,13 @@ export namespace Contrast {
       this._foreground = foreground;
       this._background = background;
       this._contrast = contrast;
+    }
+
+    public hash(hash: Hash): void {
+      hash
+        .writeUnknown(this._foreground)
+        .writeUnknown(this._background)
+        .writeNumber(this._contrast);
     }
 
     public get foreground(): RGB {

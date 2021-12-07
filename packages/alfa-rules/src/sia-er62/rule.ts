@@ -22,6 +22,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Contrast } from "../../src/common/diagnostic/contrast";
 import { expectation } from "../common/expectation";
 import { contrast } from "../common/expectation/contrast";
 import { getForeground } from "../common/expectation/get-colors";
@@ -42,6 +43,11 @@ const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
+
+export type ExtendedDiagnostics = {
+  computedStyles: ComputedStyles;
+  contrastPairings: Contrast.Pairing[];
+};
 
 /**
  * This version of R62 accepts differences in `font-family`, and differences
@@ -137,22 +143,71 @@ export default Rule.Atomic.of<Page, Element>({
               .takeWhile(and(isElement, not(hasNonLinkText(device))))
           );
 
+        function getPairwiseContrast(
+          container: Element,
+          link: Element,
+          device: Device,
+          context?: Context
+        ): Array<Contrast.Pairing> {
+          const containerForegrounds = getForeground(
+            container,
+            device,
+            context
+          ).get();
+          const linkForegrounds = getForeground(link, device, context).get();
+          return [
+            ...Array.flatMap(containerForegrounds, (containerColor) =>
+              Array.map(linkForegrounds, (linkColor) => {
+                return Contrast.Pairing.of(
+                  containerColor,
+                  linkColor,
+                  contrast(containerColor, linkColor)
+                );
+              })
+            ),
+          ];
+        }
+
         const hasDistinguishingStyle = (context: Context = Context.empty()) =>
           Set.from(
-            linkElements.map((link) =>
+            linkElements.map((link) => {
               // If the link element is distinguishable from at least one
               // non-link element, this is good enough.
               // Note that ACT rules draft requires the link-element to be
               // distinguishable from *all* non-link elements in order to be good.
-              nonLinkElements.some(
+              const hasDistinguishableStyle = nonLinkElements.some(
                 (container) =>
                   isDistinguishable(container, device, context)(link) ||
                   (context.isHovered(target) &&
                     hasDistinguishableCursor(container, device, context)(link))
-              )
-                ? Ok.of(ComputedStyles.from(link, device, target, context))
-                : Err.of(ComputedStyles.from(link, device, target, context))
-            )
+              );
+              const distinguishableContrast = Set.from(
+                Array.from(nonLinkElements)
+                  .map((container) =>
+                    getPairwiseContrast(container, link, device, context)
+                  )
+                  .flat(1)
+              ).toArray();
+              return hasDistinguishableStyle
+                ? Ok.of({
+                    computedStyles: ComputedStyles.from(
+                      link,
+                      device,
+                      target,
+                      context
+                    ),
+                    contrastPairings: distinguishableContrast,
+                  })
+                : Err.of({
+                    computedStyles: ComputedStyles.from(
+                      link,
+                      device,
+                      target,
+                      context
+                    ),
+                    contrastPairings: distinguishableContrast,
+                  });
+            })
           )
             .toArray()
             // sort the Ok before the Err, relative order doesn't matter.
@@ -202,9 +257,9 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyles: Iterable<Result<ExtendedDiagnostics>>,
+    hoverStyles: Iterable<Result<ExtendedDiagnostics>>,
+    focusStyles: Iterable<Result<ExtendedDiagnostics>>
   ) =>
     Ok.of(
       DistinguishingStyles.of(
@@ -216,9 +271,9 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyles: Iterable<Result<ExtendedDiagnostics>>,
+    hoverStyles: Iterable<Result<ExtendedDiagnostics>>,
+    focusStyles: Iterable<Result<ExtendedDiagnostics>>
   ) =>
     Err.of(
       DistinguishingStyles.of(
@@ -296,7 +351,7 @@ function isDistinguishable(
     // should hopefully not happen (too often) in practice. When it does, we
     // risk false negatives.
     hasBorder(device, context),
-    hasOutline(device, context),
+    hasOutline(device, context)
   );
 }
 
@@ -568,9 +623,9 @@ export namespace ComputedStyles {
 export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
-    defaultStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    hoverStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    focusStyles: Iterable<Result<ComputedStyles>> = Sequence.empty()
+    defaultStyles: Iterable<Result<ExtendedDiagnostics>> = Sequence.empty(),
+    hoverStyles: Iterable<Result<ExtendedDiagnostics>> = Sequence.empty(),
+    focusStyles: Iterable<Result<ExtendedDiagnostics>> = Sequence.empty()
   ): DistinguishingStyles {
     return new DistinguishingStyles(
       message,
@@ -580,15 +635,15 @@ export class DistinguishingStyles extends Diagnostic {
     );
   }
 
-  private readonly _defaultStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _hoverStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _focusStyles: Sequence<Result<ComputedStyles>>;
+  private readonly _defaultStyles: Sequence<Result<ExtendedDiagnostics>>;
+  private readonly _hoverStyles: Sequence<Result<ExtendedDiagnostics>>;
+  private readonly _focusStyles: Sequence<Result<ExtendedDiagnostics>>;
 
   private constructor(
     message: string,
-    defaultStyles: Sequence<Result<ComputedStyles>>,
-    hoverStyles: Sequence<Result<ComputedStyles>>,
-    focusStyles: Sequence<Result<ComputedStyles>>
+    defaultStyles: Sequence<Result<ExtendedDiagnostics>>,
+    hoverStyles: Sequence<Result<ExtendedDiagnostics>>,
+    focusStyles: Sequence<Result<ExtendedDiagnostics>>
   ) {
     super(message);
     this._defaultStyles = defaultStyles;
@@ -596,15 +651,15 @@ export class DistinguishingStyles extends Diagnostic {
     this._focusStyles = focusStyles;
   }
 
-  public get defaultStyles(): Iterable<Result<ComputedStyles>> {
+  public get defaultStyles(): Iterable<Result<ExtendedDiagnostics>> {
     return this._defaultStyles;
   }
 
-  public get hoverStyles(): Iterable<Result<ComputedStyles>> {
+  public get hoverStyles(): Iterable<Result<ExtendedDiagnostics>> {
     return this._hoverStyles;
   }
 
-  public get focusStyles(): Iterable<Result<ComputedStyles>> {
+  public get focusStyles(): Iterable<Result<ExtendedDiagnostics>> {
     return this._focusStyles;
   }
 
@@ -633,9 +688,9 @@ export class DistinguishingStyles extends Diagnostic {
 
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
-    defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
-    hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
-    focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+    defaultStyle: Sequence.JSON<Result<ExtendedDiagnostics>>;
+    hoverStyle: Sequence.JSON<Result<ExtendedDiagnostics>>;
+    focusStyle: Sequence.JSON<Result<ExtendedDiagnostics>>;
   }
 
   export function isDistinguishingStyles(
