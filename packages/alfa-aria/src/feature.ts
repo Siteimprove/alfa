@@ -459,17 +459,29 @@ const Features: Features = {
             element
           )
         ) {
+          /**
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-url-and-textarea-element}
+           */
           return Name.fromSteps(
             () => nameFromLabel(element, device, state),
+            // The title attribute has poor and varying support, but
+            // the specs give it precedence over placeholder.
+            // This could be a browser-branched value.
             () => nameFromAttribute(element, "title", "placeholder")
           );
         }
 
         if (test(hasInputType("button"), element)) {
+          /**
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
+           */
           return nameFromAttribute(element, "value");
         }
 
         if (test(hasInputType("submit"), element)) {
+          /**
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
+           */
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
             () => Option.of(Name.of("Submit"))
@@ -477,6 +489,9 @@ const Features: Features = {
         }
 
         if (test(hasInputType("reset"), element)) {
+          /**
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
+           */
           return Name.fromSteps(
             () => nameFromAttribute(element, "value"),
             () => Option.of(Name.of("Reset"))
@@ -484,9 +499,14 @@ const Features: Features = {
         }
 
         if (test(hasInputType("image"), element)) {
+          /**
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-image}
+           */
           return Name.fromSteps(
-            () => nameFromAttribute(element, "alt"),
-            // https://www.w3.org/TR/html-aam-1.0/#input-type-image-accessible-name-computation
+            // The title attribute has poor and varying support, but the specs
+            // use it.
+            // This could be a browser-branched value.
+            () => nameFromAttribute(element, "alt", "title"),
             () => Option.of(Name.of("Submit Query"))
           );
         }
