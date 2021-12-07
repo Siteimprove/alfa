@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
@@ -1088,7 +1087,6 @@ test(`.from() determines the name of an \`<input type="image">\` with a
       title attribute.`, (t) => {
   const input = <input type="image" src="foo" title="Search" />;
 
-  // console.dir(Name.from(input, device).toJSON(), { depth: null });
   t.deepEqual(Name.from(input, device).toJSON(), {
     type: "some",
     value: {
