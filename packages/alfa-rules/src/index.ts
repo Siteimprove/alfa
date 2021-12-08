@@ -5,7 +5,8 @@ import * as act from "@siteimprove/alfa-act";
 
 export * from "./tags/stability";
 export * from "./tags/scope";
-export * as experimentalRules from "./experimental";
+import * as experimentalRules from "./experimental";
+export { experimentalRules };
 
 import * as rules from "./rules";
 
