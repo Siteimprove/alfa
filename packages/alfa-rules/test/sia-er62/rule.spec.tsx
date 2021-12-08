@@ -1,18 +1,15 @@
+/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 
-import {
-  ComputedStyles,
-  ExtendedDiagnostics,
-} from "../../src/sia-er62/diagnostics";
-
+import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import { Contrast } from "../../src/common/diagnostic/contrast";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-import { Color, Percentage, RGB } from "@siteimprove/alfa-css";
+import { Percentage, RGB } from "@siteimprove/alfa-css";
 // default styling of links
 // The initial value of border-top is medium, resolving as 3px. However, when
 // computing and border-style is none, this is computed as 0px.
@@ -23,17 +20,6 @@ import { Color, Percentage, RGB } from "@siteimprove/alfa-css";
 // outline-style is not none, so the computed value of outline-width is its
 // initial value. As a consequence, we cannot just override properties since
 // in this case we need to actually *remove* outline-width from the diagnostic!
-const noDistinguishingProperties = ComputedStyles.of([
-  ["border-width", "0px"],
-  ["font", "16px serif"],
-  ["color", "rgb(0% 0% 93.33333%)"],
-  ["outline", "0px"],
-]);
-
-const linkProperties = noDistinguishingProperties.with([
-  "text-decoration",
-  "underline",
-]);
 
 const defaultLinkColor = RGB.of(
   Percentage.of(0),
@@ -49,45 +35,45 @@ const defaultTextColor = RGB.of(
   Percentage.of(1)
 );
 
-function addCursor(
-  style: Result<ExtendedDiagnostics>
-): Result<ExtendedDiagnostics> {
-  return (style.isOk() ? style : Ok.of(style.getErr())).map(
-    ({ computedStyles, contrastPairings }) => {
-      return {
-        computedStyles: computedStyles.with(["cursor", "pointer"]),
-        contrastPairings,
-      };
-    }
-  );
-}
-function addOutline(
-  style: Result<ExtendedDiagnostics>
-): Result<ExtendedDiagnostics> {
-  return (style.isOk() ? style : Ok.of(style.getErr())).map(
-    ({ computedStyles, contrastPairings }) => {
-      return {
-        computedStyles: computedStyles.with(["outline", "auto"]),
-        contrastPairings,
-      };
-    }
-  );
-}
-
 const defaultContrastPairings = [
   Contrast.Pairing.of(defaultTextColor, defaultLinkColor, 2.23),
 ];
-const defaultStyle = Ok.of({
-  computedStyles: linkProperties,
-  contrastPairings: defaultContrastPairings,
-});
+
+const noDistinguishingProperties = ElementDistinguishable.of(
+  [
+    ["border-width", "0px"],
+    ["font", "16px serif"],
+    ["color", "rgb(0% 0% 93.33333%)"],
+    ["outline", "0px"],
+  ],
+  defaultContrastPairings
+);
+
+const linkProperties = noDistinguishingProperties.withStyle([
+  "text-decoration",
+  "underline",
+]);
+
+function addCursor(
+  style: Result<ElementDistinguishable>
+): Result<ElementDistinguishable> {
+  return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
+    props.withStyle(["cursor", "pointer"])
+  );
+}
+function addOutline(
+  style: Result<ElementDistinguishable>
+): Result<ElementDistinguishable> {
+  return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
+    props.withStyle(["outline", "auto"])
+  );
+}
+
+const defaultStyle = Ok.of(linkProperties);
 const hoverStyle = addCursor(defaultStyle);
 const focusStyle = addOutline(defaultStyle);
 
-const noStyle = Err.of({
-  computedStyles: noDistinguishingProperties,
-  contrastPairings: defaultContrastPairings,
-});
+const noStyle = Err.of(noDistinguishingProperties);
 
 /******************************************************************
  *
@@ -140,17 +126,14 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with(
-    ["border-width", "0px 0px 1px"],
-    ["border-style", "none none solid"],
-    ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-    ["outline", "0px"]
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["outline", "0px"]
+    )
   );
-
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -179,17 +162,17 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const computedStyles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["font", "16px serif"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["outline", "auto"],
-  ]);
-
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Ok.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "auto"],
+      ],
+      defaultContrastPairings
+    )
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -214,15 +197,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "background",
-    "rgb(100% 0% 0%)",
-  ]);
-
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -271,15 +248,9 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "font",
-    "700 16px serif",
-  ]);
-
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -308,15 +279,12 @@ test(`evaluates() passes on link with a different background-image than text`, a
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "background",
-    "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-  ]);
-
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle([
+      "background",
+      "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+    ])
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -329,38 +297,38 @@ test(`evaluates() passes on link with a different background-image than text`, a
   ]);
 });
 
-// test(`evaluate() passes an <a> element in superscript`, async (t) => {
-//   const target = (
-//     <a href="#">
-//       <sup>Link</sup>
-//     </a>
-//   );
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
 
-//   const document = h.document(
-//     [<p>Hello {target}</p>],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//         }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
 
-//   const style = Ok.of(
-//     noDistinguishingProperties.with(["vertical-align", "super"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["vertical-align", "super"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style, noStyle],
-//         [addCursor(noStyle), addCursor(style)],
-//         [style, addOutline(noStyle)]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [addCursor(noStyle), addCursor(style)],
+        [style, addOutline(noStyle)]
+      ),
+    }),
+  ]);
+});
 
 test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -381,15 +349,9 @@ test(`evaluate() passes a link with different font-family than surrounding text`
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "font",
-    '16px "some-font", serif',
-  ]);
-
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["font", '16px "some-font", serif'])
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -402,63 +364,63 @@ test(`evaluate() passes a link with different font-family than surrounding text`
   ]);
 });
 
-// test(`evaluates() accepts decoration on children of links`, async (t) => {
-//   const target = (
-//     <a href="#">
-//       <span>Link</span>
-//     </a>
-//   );
+test(`evaluates() accepts decoration on children of links`, async (t) => {
+  const target = (
+    <a href="#">
+      <span>Link</span>
+    </a>
+  );
 
-//   const document = h.document(
-//     [<p>Hello {target}</p>],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//           cursor: "auto",
-//         }),
-//         h.rule.style("a:focus", { outline: "none" }),
-//         h.rule.style("span", { fontWeight: "bold" }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          cursor: "auto",
+        }),
+        h.rule.style("a:focus", { outline: "none" }),
+        h.rule.style("span", { fontWeight: "bold" }),
+      ]),
+    ]
+  );
 
-//   const style = Ok.of(
-//     noDistinguishingProperties.with(["font", "700 16px serif"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style, noStyle],
-//         [style, noStyle],
-//         [style, noStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [style, noStyle],
+        [style, noStyle]
+      ),
+    }),
+  ]);
+});
 
-// test(`evaluates() doesn't break when link text is nested`, async (t) => {
-//   // Since text-decoration and focus outline is not inherited, the <span> has
-//   // effectively no style other than color.
-//   const target = (
-//     <a href="#">
-//       <span>Link</span>
-//     </a>
-//   );
+test(`evaluates() doesn't break when link text is nested`, async (t) => {
+  // Since text-decoration and focus outline is not inherited, the <span> has
+  // effectively no style other than color.
+  const target = (
+    <a href="#">
+      <span>Link</span>
+    </a>
+  );
 
-//   const document = h.document([<p>Hello {target}</p>]);
+  const document = h.document([<p>Hello {target}</p>]);
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [defaultStyle, noStyle],
-//         [addCursor(noStyle), hoverStyle],
-//         [focusStyle, noStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle, noStyle],
+        [addCursor(noStyle), hoverStyle],
+        [focusStyle, noStyle]
+      ),
+    }),
+  ]);
+});
 
 // test(`evaluates() accepts decoration on parents of links`, async (t) => {
 //   const target = <a href="#">Link</a>;
@@ -484,14 +446,17 @@ test(`evaluate() passes a link with different font-family than surrounding text`
 //   );
 
 //   const linkStyle = Ok.of(
-//     noDistinguishingProperties.with(["font", "700 16px serif"])
+//     noDistinguishingProperties.withStyle(["font", "700 16px serif"])
 //   );
 //   const spanStyle = Ok.of(
-//     ComputedStyles.of([
-//       ["border-width", "0px"],
-//       ["font", "700 16px serif"],
-//       ["outline", "0px"],
-//     ])
+//     ElementDistinguishable.of(
+//       [
+//         ["border-width", "0px"],
+//         ["font", "700 16px serif"],
+//         ["outline", "0px"],
+//       ],
+//       defaultContrastPairings
+//     )
 //   );
 
 //   t.deepEqual(await evaluate(ER62, { document }), [
@@ -505,25 +470,25 @@ test(`evaluate() passes a link with different font-family than surrounding text`
 //   ]);
 // });
 
-// test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
-//   const target = (
-//     <a href="#">
-//       <span>click</span> <span>here</span>
-//     </a>
-//   );
+test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
+  const target = (
+    <a href="#">
+      <span>click</span> <span>here</span>
+    </a>
+  );
 
-//   const document = h.document([<p>Hello {target}</p>]);
+  const document = h.document([<p>Hello {target}</p>]);
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [defaultStyle, noStyle],
-//         [addCursor(noStyle), hoverStyle],
-//         [focusStyle, noStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle, noStyle],
+        [addCursor(noStyle), hoverStyle],
+        [focusStyle, noStyle]
+      ),
+    }),
+  ]);
+});
 
 test(`evaluates() passes on link with a different background-image than text`, async (t) => {
   const target = <a href="#">Foo</a>;
@@ -541,14 +506,12 @@ test(`evaluates() passes on link with a different background-image than text`, a
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "background",
-    "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-  ]);
-  const style = Ok.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle([
+      "background",
+      "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+    ])
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -561,38 +524,38 @@ test(`evaluates() passes on link with a different background-image than text`, a
   ]);
 });
 
-// test(`evaluate() passes an <a> element in superscript`, async (t) => {
-//   const target = (
-//     <a href="#">
-//       <sup>Link</sup>
-//     </a>
-//   );
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
 
-//   const document = h.document(
-//     [<p>Hello {target}</p>],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//         }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
 
-//   const style = Ok.of(
-//     noDistinguishingProperties.with(["vertical-align", "super"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["vertical-align", "super"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style, noStyle],
-//         [addCursor(noStyle), addCursor(style)],
-//         [style, addOutline(noStyle)]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [addCursor(noStyle), addCursor(style)],
+        [style, addOutline(noStyle)]
+      ),
+    }),
+  ]);
+});
 
 /******************************************************************
  *
@@ -799,16 +762,13 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with(
-    ["border-width", "0px 0px 1px"],
-    ["border-style", "none none solid"],
-    ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"]
+  const style = Err.of(
+    noDistinguishingProperties.withStyle(
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"]
+    )
   );
-
-  const style = Err.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
 
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
@@ -837,16 +797,13 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with(
-    ["border-width", "0px"],
-    ["border-style", "none none solid"],
-    ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"]
+  const style = Err.of(
+    noDistinguishingProperties.withStyle(
+      ["border-width", "0px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"]
+    )
   );
-
-  const style = Err.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
 
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
@@ -909,15 +866,9 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "background",
-    "rgb(100% 0% 0%)",
-  ]);
-
-  const style = Err.of({
-    computedStyles,
-    contrastPairings: defaultContrastPairings,
-  });
+  const style = Err.of(
+    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
@@ -1011,13 +962,6 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
     ]
   );
 
-  const computedStyles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["font", "16px serif"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["outline", "0px"],
-  ]);
-
   const contrastPairings = [
     Contrast.Pairing.of(
       RGB.of(
@@ -1031,7 +975,17 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
     ),
   ];
 
-  const style = Ok.of({ computedStyles, contrastPairings });
+  const style = Ok.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+      ],
+      contrastPairings
+    )
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -1063,17 +1017,6 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
       ]),
     ]
   );
-
-  const computedStyles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["font", "16px serif"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["outline", "0px"],
-    [
-      "background",
-      "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.70588000000001% 0%) 40%, rgb(100% 100% 0%) 60%, rgb(0% 50.196079999999995% 0%) 100%)",
-    ],
-  ]);
 
   const contrastPairings = [
     Contrast.Pairing.of(
@@ -1118,7 +1061,21 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     ),
   ];
 
-  const style = Ok.of({ computedStyles, contrastPairings });
+  const style = Ok.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+        [
+          "background",
+          "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.70588000000001% 0%) 40%, rgb(100% 100% 0%) 60%, rgb(0% 50.196079999999995% 0%) 100%)",
+        ],
+      ],
+      contrastPairings
+    )
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -1149,17 +1106,6 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     ]
   );
 
-  const computedStyles = ComputedStyles.of([
-    ["border-width", "0px"],
-    ["font", "16px serif"],
-    ["color", "rgb(0% 0% 93.33333%)"],
-    ["outline", "0px"],
-    [
-      "background",
-      "linear-gradient(to right, rgb(97.64706% 97.64706% 94.5098%) 50%, rgb(0% 0% 100%) 50%)",
-    ],
-  ]);
-
   const contrastPairings = [
     Contrast.Pairing.of(
       RGB.of(
@@ -1183,7 +1129,21 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     ),
   ];
 
-  const style = Ok.of({ computedStyles, contrastPairings });
+  const style = Ok.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+        [
+          "background",
+          "linear-gradient(to right, rgb(97.64706% 97.64706% 94.5098%) 50%, rgb(0% 0% 100%) 50%)",
+        ],
+      ],
+      contrastPairings
+    )
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
@@ -1214,11 +1174,6 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     ]
   );
 
-  const computedStyles = noDistinguishingProperties.with([
-    "background",
-    "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
-  ]);
-
   const contrastPairings = [
     Contrast.Pairing.of(
       RGB.of(
@@ -1242,7 +1197,21 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     ),
   ];
 
-  const noStyle = Err.of({ computedStyles, contrastPairings });
+  const noStyle = Err.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+        [
+          "background",
+          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+        ],
+      ],
+      contrastPairings
+    )
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
@@ -1281,14 +1250,6 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     Percentage.of(1)
   );
 
-  const computedStyles = noDistinguishingProperties.with(
-    [
-      "background",
-      "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
-    ],
-    ["color", "rgb(100% 100% 100% / 10%)"]
-  );
-
   const contrastPairings = [
     Contrast.Pairing.of(
       pColor,
@@ -1312,7 +1273,22 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     ),
   ];
 
-  const noStyle = Err.of({ computedStyles, contrastPairings });
+  const noStyle = Err.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+        [
+          "background",
+          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+        ],
+        ["color", "rgb(100% 100% 100% / 10%)"]
+      ],
+      contrastPairings
+    )
+  );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {

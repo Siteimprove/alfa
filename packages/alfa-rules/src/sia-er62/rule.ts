@@ -31,11 +31,7 @@ import {
 } from "../common/predicate";
 import { Stability } from "../tags/stability";
 
-import {
-  ComputedStyles,
-  DistinguishingStyles,
-  ExtendedDiagnostics,
-} from "./diagnostics";
+import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 
 const { isElement } = Element;
 const { isText } = Text;
@@ -195,25 +191,30 @@ export default Rule.Atomic.of<Page, Element>({
                   )
                   .flat(1)
               ).toArray();
+              // console.log(distinguishableContrast)
               return hasDistinguishableStyle
-                ? Ok.of({
-                    computedStyles: ComputedStyles.from(
-                      link,
-                      device,
-                      target,
-                      context
-                    ),
-                    contrastPairings: distinguishableContrast,
-                  })
-                : Err.of({
-                    computedStyles: ComputedStyles.from(
-                      link,
-                      device,
-                      target,
-                      context
-                    ),
-                    contrastPairings: distinguishableContrast,
-                  });
+                ? Ok.of(
+                    ElementDistinguishable.of(
+                      ElementDistinguishable.serialise(
+                        link,
+                        device,
+                        target,
+                        context
+                      ),
+                      distinguishableContrast
+                    )
+                  )
+                : Err.of(
+                    ElementDistinguishable.of(
+                      ElementDistinguishable.serialise(
+                        link,
+                        device,
+                        target,
+                        context
+                      ),
+                      distinguishableContrast
+                    )
+                  );
             })
           )
             .toArray()
@@ -264,9 +265,9 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    defaultStyles: Iterable<Result<ExtendedDiagnostics>>,
-    hoverStyles: Iterable<Result<ExtendedDiagnostics>>,
-    focusStyles: Iterable<Result<ExtendedDiagnostics>>
+    defaultStyles: Iterable<Result<ElementDistinguishable>>,
+    hoverStyles: Iterable<Result<ElementDistinguishable>>,
+    focusStyles: Iterable<Result<ElementDistinguishable>>
   ) =>
     Ok.of(
       DistinguishingStyles.of(
@@ -278,9 +279,9 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
-    defaultStyles: Iterable<Result<ExtendedDiagnostics>>,
-    hoverStyles: Iterable<Result<ExtendedDiagnostics>>,
-    focusStyles: Iterable<Result<ExtendedDiagnostics>>
+    defaultStyles: Iterable<Result<ElementDistinguishable>>,
+    hoverStyles: Iterable<Result<ElementDistinguishable>>,
+    focusStyles: Iterable<Result<ElementDistinguishable>>
   ) =>
     Err.of(
       DistinguishingStyles.of(
