@@ -21,6 +21,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.27.0](../../compare/v0.26.0...v0.27.0) (2021-12-08)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): The order of horizontal and vertical offsets in the `Shadow` value has been swapped, now matching the order in CSS specifications. ([#1004](../pull/1004))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<input typy="image">` elements now accept `title` as a way to provide an accessible name, following specifications and ACT rules test cases. ([#1003](../pull/1003))
+
 ## [0.26.0](../../compare/v0.25.0...v0.26.0) (2021-12-03)
 
 ### Added
