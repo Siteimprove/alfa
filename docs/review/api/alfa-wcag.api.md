@@ -5,6 +5,7 @@
 ```ts
 
 import { Branched } from '@siteimprove/alfa-branched';
+import { Option } from '@siteimprove/alfa-option';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Requirement } from '@siteimprove/alfa-act';
 
@@ -50,6 +51,8 @@ export namespace Criterion {
         "dct:title": string;
     }
     // (undocumented)
+    export function fromURI(uri: string): Option<Criterion>;
+    // (undocumented)
     export function isChapter(value: string): value is Chapter;
     // (undocumented)
     export function isCriterion(value: unknown): value is Criterion;
@@ -71,7 +74,7 @@ export namespace Criterion {
         export type Of<L extends Level, V extends Version = Version.Recommendation> = {
             [C in Chapter]: L extends Level<C, V> ? C : never;
         }[Chapter];
-        {};
+            {};
     }
     export type Title<C extends Chapter = Chapter> = Criteria[C]["title"];
     export type URI<C extends Chapter = Chapter, V extends Version = Version> = Criteria[C]["versions"] extends Iterable<infer T> ? T extends readonly [V, {
@@ -132,7 +135,6 @@ export namespace Technique {
     export type Title<N extends Name = Name> = Techniques[N]["title"];
     export type URI<N extends Name = Name> = Techniques[N]["uri"];
 }
-
 
 // (No @packageDocumentation comment for this package)
 

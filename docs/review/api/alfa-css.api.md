@@ -1968,7 +1968,7 @@ export namespace Scale {
 }
 
 // @public (undocumented)
-export class Shadow<V extends Length = Length, H extends Length = V, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow"> {
+export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow"> {
     // (undocumented)
     get blur(): B;
     // (undocumented)
@@ -1982,7 +1982,7 @@ export class Shadow<V extends Length = Length, H extends Length = V, B extends L
     // (undocumented)
     get isInset(): boolean;
     // (undocumented)
-    static of<V extends Length = Length, H extends Length = V, B extends Length = Length, S extends Length = Length, C extends Color = Color>(vertical: V, horizontal: H, blur: B, spread: S, color: C, isInset: boolean): Shadow<V, H, B, S, C>;
+    static of<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
     // (undocumented)
     get spread(): S;
     // (undocumented)
