@@ -1,13 +1,13 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import ER62, {
+import ER62, { Outcomes } from "../../src/sia-er62/rule";
+
+import {
   ComputedStyles,
   ExtendedDiagnostics,
-  Outcomes,
-} from "../../src/sia-er62/rule";
+} from "../../src/sia-er62/diagnostics";
 
 import { Contrast } from "../../src/common/diagnostic/contrast";
 import { evaluate } from "../common/evaluate";
