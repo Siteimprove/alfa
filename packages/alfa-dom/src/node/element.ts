@@ -372,7 +372,9 @@ export namespace Element {
           Attribute.fromAttribute(attribute).run()
         ),
         children,
-        Option.from(json.style).map(Block.from)
+        json.style?.length === 0
+          ? None
+          : Option.from(json.style).map(Block.from)
       );
 
       if (json.shadow !== null) {

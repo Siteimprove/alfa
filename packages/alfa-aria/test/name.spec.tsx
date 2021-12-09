@@ -1083,6 +1083,19 @@ test(`.from() determines the name of an <input> element with a placeholder
   });
 });
 
+test(`.from() determines the name of an \`<input type="image">\` with a
+      title attribute.`, (t) => {
+  const input = <input type="image" src="foo" title="Search" />;
+
+  t.deepEqual(Name.from(input, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Search",
+      sources: [{ type: "label", attribute: "/input[1]/@title" }],
+    },
+  });
+});
+
 test(`.from() determines the name of an <input type="button"> element with a
       value attribute`, (t) => {
   const input = <input type="button" value="Hello world" />;
@@ -1167,7 +1180,7 @@ test(`.from() determines the name of an <input type="image"> element`, (t) => {
   t.deepEqual(Name.from(input, device).toJSON(), {
     type: "some",
     value: {
-      value: "Submit",
+      value: "Submit Query",
       sources: [],
     },
   });

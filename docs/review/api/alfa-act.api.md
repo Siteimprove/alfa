@@ -519,6 +519,8 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implement
     // (undocumented)
     hasTag(tag: Tag): boolean;
     // (undocumented)
+    hasTag(predicate: Predicate<Tag>): boolean;
+    // (undocumented)
     get requirements(): ReadonlyArray<Requirement>;
     // (undocumented)
     protected readonly _requirements: Array_2<Requirement>;

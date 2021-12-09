@@ -21,6 +21,40 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.27.0](../../compare/v0.26.0...v0.27.0) (2021-12-08)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): The order of horizontal and vertical offsets in the `Shadow` value has been swapped, now matching the order in CSS specifications. ([#1004](../pull/1004))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<input typy="image">` elements now accept `title` as a way to provide an accessible name, following specifications and ACT rules test cases. ([#1003](../pull/1003))
+
+## [0.26.0](../../compare/v0.25.0...v0.26.0) (2021-12-03)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): A family of `Stability` tags has been added, rules tagged with `Stability.Experimental` uses newer features and are subject to change without notice. ([#994])(../pull/994)
+
+- [@siteimprove/alfa-wcag](packages/alfa-wcag): A `fromURI` function is now available to retrieve a Success Criterion from its URI. ([#996](../pull/996))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Experimental rules ER62 and ER87 have been added. ([#994](../pull/994))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R28 now rejects the default name of "Submit Query" on `<input type="image">` elements. ([#973](../issues/973), [#989](../pull/989))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `isClipped` predicate, part of `isVisible`, now correctly jumps to offset parents. ([#887](../issues/887), [#964](../pull/964))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now correctly ignores punctuation. ([#972](../issues/972), [#991](../pull/991))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts differences in `box-shadow` as a distinguishing factor. ([#888](../issues/888), [#967](../pull/967))
+
+- [@siteimprove/alfa-style](packages/alfa-style): Fixed several issues in parsing of `box-shadow`. ([#967](../pull/967))
+
 ## [0.25.0](../../compare/v0.24.1...v0.25.0) (2021-11-19)
 
 ### Added
