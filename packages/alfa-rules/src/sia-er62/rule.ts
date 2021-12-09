@@ -161,14 +161,10 @@ export default Rule.Atomic.of<Page, Element>({
               );
               const distinguishableContrast = Set.from(
                 Array.from(nonLinkElements)
-                  .map(
-                    (container) => {
-                      const pairings = pairwiseContrastCache.get(
-                        container,
-                        Cache.empty
-                      ).get(link, () => []);
-                      return pairings;
-                    }
+                  .map((container) =>
+                    pairwiseContrastCache
+                      .get(container, Cache.empty)
+                      .get(link, () => [])
                   )
                   .flat(1)
               ).toArray();
@@ -433,10 +429,11 @@ namespace Distinguishable {
             ),
           ];
 
-          pairwiseContrastCache.get(
+          const containerCache = pairwiseContrastCache.get(
             container,
             Cache.empty
-          ).get(link, () => contrastPairings);
+          );
+          containerCache.set(link, contrastPairings);
 
           for (const contrastPairing of contrastPairings) {
             // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
