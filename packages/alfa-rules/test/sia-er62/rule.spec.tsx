@@ -462,9 +462,9 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
-        [spanStyle, linkStyle],
-        [spanStyle, linkStyle],
-        [spanStyle, linkStyle]
+        [linkStyle, spanStyle],
+        [linkStyle, spanStyle],
+        [linkStyle, spanStyle]
       ),
     }),
   ]);
