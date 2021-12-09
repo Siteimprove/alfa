@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
@@ -422,53 +421,54 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
   ]);
 });
 
-// test(`evaluates() accepts decoration on parents of links`, async (t) => {
-//   const target = <a href="#">Link</a>;
+test(`evaluates() accepts decoration on parents of links`, async (t) => {
+  const target = <a href="#">Link</a>;
 
-//   const document = h.document(
-//     [
-//       <p>
-//         Hello <span>{target}</span>
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//           cursor: "auto",
-//         }),
-//         h.rule.style("a:focus", {
-//           outline: "none",
-//         }),
-//         h.rule.style("span", { fontWeight: "bold" }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [
+      <p>
+        Hello <span>{target}</span>
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          cursor: "auto",
+        }),
+        h.rule.style("a:focus", {
+          outline: "none",
+        }),
+        h.rule.style("span", { fontWeight: "bold" }),
+      ]),
+    ]
+  );
 
-//   const linkStyle = Ok.of(
-//     noDistinguishingProperties.withStyle(["font", "700 16px serif"])
-//   );
-//   const spanStyle = Ok.of(
-//     ElementDistinguishable.of(
-//       [
-//         ["border-width", "0px"],
-//         ["font", "700 16px serif"],
-//         ["outline", "0px"],
-//       ],
-//       defaultContrastPairings
-//     )
-//   );
+  const linkStyle = Ok.of(
+    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [spanStyle, linkStyle],
-//         [spanStyle, linkStyle],
-//         [spanStyle, linkStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  const spanStyle = Ok.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "700 16px serif"],
+        ["outline", "0px"],
+      ],
+      [Contrast.Pairing.of(defaultTextColor, defaultTextColor, 1)]
+    )
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [spanStyle, linkStyle],
+        [spanStyle, linkStyle],
+        [spanStyle, linkStyle]
+      ),
+    }),
+  ]);
+});
 
 test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
   const target = (

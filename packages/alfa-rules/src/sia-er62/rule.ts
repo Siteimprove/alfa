@@ -191,7 +191,7 @@ export default Rule.Atomic.of<Page, Element>({
                   )
                   .flat(1)
               ).toArray();
-              // console.log(distinguishableContrast)
+
               return hasDistinguishableStyle
                 ? Ok.of(
                     ElementDistinguishable.of(
