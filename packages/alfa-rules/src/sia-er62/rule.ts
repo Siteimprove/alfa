@@ -40,8 +40,11 @@ const { or, not, test } = Predicate;
 const { and } = Refinement;
 
 const pairwiseContrastCache = Cache.empty<
-  Element,
-  Cache<Element, ReadonlyArray<Contrast.Pairing>>
+  Device,
+  Cache<
+    Context,
+    Cache<Element, Cache<Element, ReadonlyArray<Contrast.Pairing>>>
+  >
 >();
 
 /**
@@ -164,6 +167,8 @@ export default Rule.Atomic.of<Page, Element>({
                 nonLinkElements.flatMap((container) =>
                   Sequence.from(
                     pairwiseContrastCache
+                      .get(device, Cache.empty)
+                      .get(context, Cache.empty)
                       .get(container, Cache.empty)
                       .get(link, () =>
                         Distinguishable.getPairwiseContrast(
@@ -447,10 +452,12 @@ namespace Distinguishable {
   function hasDistinguishableContrast(
     container: Element,
     device: Device,
-    context?: Context
+    context: Context = Context.empty()
   ): Predicate<Element> {
     return (link) => {
       const contrastPairings = pairwiseContrastCache
+        .get(device, Cache.empty)
+        .get(context, Cache.empty)
         .get(container, Cache.empty)
         .get(link, () => getPairwiseContrast(container, link, device, context));
       for (const contrastPairing of contrastPairings) {
