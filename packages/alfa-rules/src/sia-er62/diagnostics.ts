@@ -117,7 +117,6 @@ export namespace ElementDistinguishable {
       ["background", Serialise.background(style)] as const,
       ["outline", Serialise.outline(style)] as const,
       ["text-decoration", Serialise.textDecoration(style)] as const,
-      // ["cursor", Serialise.getLonghand(style, "cursor")] as const,
     ].filter(([_, value]) => value !== "");
   }
 }

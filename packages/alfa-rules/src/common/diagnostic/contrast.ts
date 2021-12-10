@@ -87,8 +87,8 @@ export namespace Contrast {
 
     public hash(hash: Hash): void {
       hash
-        .writeUnknown(this._foreground)
-        .writeUnknown(this._background)
+        .writeHashable(this._foreground)
+        .writeHashable(this._background)
         .writeNumber(this._contrast);
     }
 

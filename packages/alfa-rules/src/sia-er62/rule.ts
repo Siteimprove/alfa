@@ -11,6 +11,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -38,10 +39,9 @@ const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
 
-const hasNonLinkTextCache = Cache.empty<Element, boolean>();
 const pairwiseContrastCache = Cache.empty<
   Element,
-  Cache<Element, Contrast.Pairing[]>
+  Cache<Element, ReadonlyArray<Contrast.Pairing>>
 >();
 
 /**
@@ -159,14 +159,22 @@ export default Rule.Atomic.of<Page, Element>({
                       context
                     )(link))
               );
+
               const distinguishableContrast = Set.from(
-                Array.from(nonLinkElements)
-                  .map((container) =>
+                nonLinkElements.flatMap((container) =>
+                  Sequence.from(
                     pairwiseContrastCache
                       .get(container, Cache.empty)
-                      .get(link, () => [])
+                      .get(link, () =>
+                        Distinguishable.getPairwiseContrast(
+                          container,
+                          link,
+                          device,
+                          context
+                        )
+                      )
                   )
-                  .flat(1)
+                )
               ).toArray();
 
               return hasDistinguishableStyle
@@ -270,6 +278,8 @@ export namespace Outcomes {
     );
 }
 
+const hasNonLinkTextCache = Cache.empty<Element, boolean>();
+
 function hasNonLinkText(device: Device): Predicate<Element> {
   return function hasNonLinkText(element) {
     return hasNonLinkTextCache.get(element, () => {
@@ -324,8 +334,8 @@ namespace Distinguishable {
       // Things like text decoration and backgrounds risk blending with the
       // container element. We therefore need to check if these can be distinguished
       // from what the container element might itself set.
-      hasDistinguishableContrast(container, device, context),
       hasDistinguishableBackground(container, device, context),
+      hasDistinguishableContrast(container, device, context),
       hasDistinguishableFont(container, device, context),
       hasDistinguishableTextDecoration(container, device, context),
       hasDistinguishableVerticalAlign(container, device, context),
@@ -409,16 +419,17 @@ namespace Distinguishable {
     );
   }
 
-  function hasDistinguishableContrast(
+  export function getPairwiseContrast(
     container: Element,
+    link: Element,
     device: Device,
     context?: Context
-  ): Predicate<Element> {
-    return (link) =>
-      getForeground(container, device, context).some((containerColors) =>
-        getForeground(link, device, context).some((linkColors) => {
-          const contrastPairings: Contrast.Pairing[] = [
-            ...Array.flatMap(containerColors, (containerColor) =>
+  ): ReadonlyArray<Contrast.Pairing> {
+    return getForeground(container, device, context)
+      .map((containerColors) => [
+        ...Array.flatMap(containerColors, (containerColor) =>
+          getForeground(link, device, context)
+            .map((linkColors) =>
               Array.map(linkColors, (linkColor) => {
                 return Contrast.Pairing.of(
                   containerColor,
@@ -426,24 +437,30 @@ namespace Distinguishable {
                   contrast(containerColor, linkColor)
                 );
               })
-            ),
-          ];
+            )
+            .getOr([])
+        ),
+      ])
+      .getOr([]);
+  }
 
-          const containerCache = pairwiseContrastCache.get(
-            container,
-            Cache.empty
-          );
-          containerCache.set(link, contrastPairings);
-
-          for (const contrastPairing of contrastPairings) {
-            // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
-            if (contrastPairing.contrast >= 3) {
-              return true;
-            }
-          }
-          return false;
-        })
-      );
+  function hasDistinguishableContrast(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    return (link) => {
+      const contrastPairings = pairwiseContrastCache
+        .get(container, Cache.empty)
+        .get(link, () => getPairwiseContrast(container, link, device, context));
+      for (const contrastPairing of contrastPairings) {
+        // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
+        if (contrastPairing.contrast >= 3) {
+          return true;
+        }
+      }
+      return false;
+    };
   }
 
   /**
