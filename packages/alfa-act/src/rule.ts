@@ -62,8 +62,17 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     return this._tags;
   }
 
-  public hasRequirement(requirement: Requirement): boolean {
-    return Array.includes(this._requirements, requirement);
+  public hasRequirement(requirement: Requirement): boolean;
+
+  public hasRequirement(predicate: Predicate<Requirement>): boolean;
+
+  public hasRequirement(
+    requirementOrPredicate: Requirement | Predicate<Requirement>
+  ): boolean {
+    const predicate = Requirement.isRequirement(requirementOrPredicate)
+      ? (requirement: unknown) => requirementOrPredicate.equals(requirement)
+      : requirementOrPredicate;
+    return Array.some(this._requirements, predicate);
   }
 
   public hasTag(tag: Tag): boolean;
@@ -72,9 +81,10 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
 
   public hasTag(tagOrPredicate: Tag | Predicate<Tag>): boolean {
     const predicate = Tag.isTag(tagOrPredicate)
-      ? (tag: any) => tagOrPredicate.equals(tag)
+      ? (tag: unknown) => tagOrPredicate.equals(tag)
       : tagOrPredicate;
-    return Array.find(this._tags, predicate).isSome();
+
+    return Array.some(this._tags, predicate);
   }
 
   public evaluate(
