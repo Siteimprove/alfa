@@ -1,11 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,13 +13,14 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as json from "@siteimprove/alfa-json";
-
+import { Contrast } from "../../src/common/diagnostic/contrast";
 import { expectation } from "../common/expectation";
+import { contrast } from "../common/expectation/contrast";
+import { getForeground } from "../common/expectation/get-colors";
 import {
   hasBorder,
   hasComputedStyle,
@@ -32,12 +32,20 @@ import {
 } from "../common/predicate";
 import { Stability } from "../tags/stability";
 
-import { Serialise } from "./serialise";
+import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 
 const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
+
+const pairwiseContrastCache = Cache.empty<
+  Device,
+  Cache<
+    Context,
+    Cache<Element, Cache<Element, ReadonlyArray<Contrast.Pairing>>>
+  >
+>();
 
 /**
  * This version of R62 accepts differences in `font-family`, and differences
@@ -135,20 +143,65 @@ export default Rule.Atomic.of<Page, Element>({
 
         const hasDistinguishingStyle = (context: Context = Context.empty()) =>
           Set.from(
-            linkElements.map((link) =>
+            linkElements.map((link) => {
               // If the link element is distinguishable from at least one
               // non-link element, this is good enough.
               // Note that ACT rules draft requires the link-element to be
               // distinguishable from *all* non-link elements in order to be good.
-              nonLinkElements.some(
+              const hasDistinguishableStyle = nonLinkElements.some(
                 (container) =>
-                  isDistinguishable(container, device, context)(link) ||
+                  Distinguishable.isDistinguishable(
+                    container,
+                    device,
+                    context
+                  )(link) ||
                   (context.isHovered(target) &&
-                    hasDistinguishableCursor(container, device, context)(link))
-              )
-                ? Ok.of(ComputedStyles.from(link, device, target, context))
-                : Err.of(ComputedStyles.from(link, device, target, context))
-            )
+                    Distinguishable.hasDistinguishableCursor(
+                      container,
+                      device,
+                      context
+                    )(link))
+              );
+
+              const distinguishableContrast = Set.from(
+                nonLinkElements.flatMap((container) =>
+                  Sequence.from(
+                    pairwiseContrastCache
+                      .get(device, Cache.empty)
+                      .get(context, Cache.empty)
+                      .get(container, Cache.empty)
+                      .get(link, () =>
+                        Distinguishable.getPairwiseContrast(
+                          container,
+                          link,
+                          device,
+                          context
+                        )
+                      )
+                  )
+                )
+              );
+
+              return hasDistinguishableStyle
+                ? Ok.of(
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
+                      distinguishableContrast
+                    )
+                  )
+                : Err.of(
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
+                      distinguishableContrast
+                    )
+                  );
+            })
           )
             .toArray()
             // sort the Ok before the Err, relative order doesn't matter.
@@ -198,9 +251,9 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyles: Iterable<Result<ElementDistinguishable>>,
+    hoverStyles: Iterable<Result<ElementDistinguishable>>,
+    focusStyles: Iterable<Result<ElementDistinguishable>>
   ) =>
     Ok.of(
       DistinguishingStyles.of(
@@ -212,9 +265,9 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyles: Iterable<Result<ElementDistinguishable>>,
+    hoverStyles: Iterable<Result<ElementDistinguishable>>,
+    focusStyles: Iterable<Result<ElementDistinguishable>>
   ) =>
     Err.of(
       DistinguishingStyles.of(
@@ -272,343 +325,225 @@ function hasNonLinkText(device: Device): Predicate<Element> {
   };
 }
 
-function isDistinguishable(
-  container: Element,
-  device: Device,
-  context: Context = Context.empty()
-): Predicate<Element> {
-  return or(
-    // Things like text decoration and backgrounds risk blending with the
-    // container element. We therefore need to check if these can be distinguished
-    // from what the container element might itself set.
-    hasDistinguishableTextDecoration(container, device, context),
-    hasDistinguishableBackground(container, device, context),
-    hasDistinguishableFont(container, device, context),
-    hasDistinguishableVerticalAlign(container, device, context),
-    // We consider the mere presence of borders or outlines on the element as
-    // distinguishable features. There's of course a risk of these blending with
-    // other features of the container element, such as its background, but this
-    // should hopefully not happen (too often) in practice. When it does, we
-    // risk false negatives.
-    hasOutline(device, context),
-    hasBorder(device, context)
-  );
-}
-
-function hasDistinguishableTextDecoration(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  return (element) =>
-    test(not(hasTextDecoration(device, context)), container) &&
-    test(hasTextDecoration(device, context), element);
-}
-
-/**
- * Check if an element has a distinguishable background from the given container
- * element.
- *
- * @remarks
- * This predicate currently only considers `background-color` and
- * `background-image` as a possibly distinguishable background. Other
- * `background-*` properties should ideally also be considered.
- *
- * Additionally, this predicate do not handle transparency in the topmost layer.
- * The exact same (partly transparent) `background-color` or `background-image`
- * could be on top of a different (opaque) background and thus creates a
- * difference. However, in these cases the (lower layer) distinguishing
- * background would be on an ancestor of the link but of no non-link text (in
- * order to be distinguishing), so should be found when looking at the ancestors
- * of the link.
- *
- * Lastly, this does not account for absolutely positioned backgrounds from
- * random nodes in the DOM. Using these to push an image below links in
- * paragraph sounds so crazy (from a sheer code maintenance point of view) that
- * this hopefully won't be a problem.
- */
-function hasDistinguishableBackground(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const colorReference = Style.from(container, device, context).computed(
-    "background-color"
-  ).value;
-
-  const imageReference = Style.from(container, device, context).computed(
-    "background-image"
-  ).value;
-
-  return or(
-    hasComputedStyle(
-      "background-color",
-      not(
-        // If the background is fully transparent, we assume it will end up
-        // being the same as the container. Intermediate backgrounds may change
-        // that, but these would need to be set on ancestor of the link and of
-        // no non-link text, so will be caught in one of the other comparisons.
-        (color) => Color.isTransparent(color) || color.equals(colorReference)
-      ),
-      device,
-      context
-    ),
-    // Any difference in `background-image` is considered enough. If different
-    // `background-image` ultimately yield the same background (e.g. the same
-    // image at two different URLs), this creates false negatives.
-    hasComputedStyle(
-      "background-image",
-      not((image) => image.equals(imageReference)),
-      device,
-      context
-    )
-  );
-}
-
-/**
- * Check if an element has a different font weight or family than its container.
- *
- * This is brittle and imperfect but removes a strong pain point until we find
- * a better solution.
- */
-
-function hasDistinguishableFont(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const style = Style.from(container, device, context);
-
-  const referenceWeight = style.computed("font-weight").value;
-  const referenceFamily = Option.from(
-    style.computed("font-family").value.values[0]
-  );
-
-  return or(
-    hasComputedStyle(
-      "font-weight",
-      not((weight) => weight.equals(referenceWeight)),
-      device,
-      context
-    ),
-    hasComputedStyle(
-      "font-family",
-      not((family) => Option.from(family.values[0]).equals(referenceFamily)),
-      device,
-      context
-    )
-  );
-}
-
-function hasDistinguishableVerticalAlign(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
-    "vertical-align"
-  ).value;
-
-  return hasComputedStyle(
-    "vertical-align",
-    not((alignment) => alignment.equals(reference)),
-    device,
-    context
-  );
-}
-
-function hasDistinguishableCursor(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  // Checking if there is a custom cursor, otherwise grabbing the built-in
-  function getFirstCursor(style: Style.Computed<"cursor">) {
-    return style.values[0].values.length !== 0
-      ? style.values[0].values[0]
-      : style.values[1];
-  }
-  const containerCursorStyle = Style.from(container, device, context).computed(
-    "cursor"
-  ).value;
-
-  // We assume that the first custom cursor, if any, will never fail to load
-  // and thus don't try to default further.
-  const reference = getFirstCursor(containerCursorStyle);
-
-  return hasComputedStyle(
-    "cursor",
-    not((cursor) => getFirstCursor(cursor).equals(reference)),
-    device,
-    context
-  );
-}
-
-type Name = Property.Name | Property.Shorthand.Name;
-
-export class ComputedStyles implements Equatable, Hashable, Serializable {
-  public static of(
-    style: Iterable<readonly [Name, string]> = []
-  ): ComputedStyles {
-    return new ComputedStyles(Map.from(style));
-  }
-
-  private readonly _style: Map<Name, string>;
-
-  private constructor(style: Map<Name, string>) {
-    this._style = style;
-  }
-
-  public get style(): Map<Name, string> {
-    return this._style;
-  }
-
-  public with(
-    ...styles: ReadonlyArray<readonly [Name, string]>
-  ): ComputedStyles {
-    return ComputedStyles.of([...this._style, ...styles]);
-  }
-
-  public equals(value: ComputedStyles): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return value instanceof ComputedStyles && value._style.equals(this._style);
-  }
-
-  public hash(hash: Hash): void {
-    this._style.hash(hash);
-  }
-
-  public toJSON(): ComputedStyles.JSON {
-    return {
-      style: this._style.toJSON(),
-    };
-  }
-}
-
-export namespace ComputedStyles {
-  export interface JSON {
-    [key: string]: json.JSON;
-    style: Map.JSON<Name, string>;
-  }
-
-  export function isComputedStyles(value: unknown): value is ComputedStyles {
-    return value instanceof ComputedStyles;
-  }
-
-  export function from(
-    element: Element,
+namespace Distinguishable {
+  export function isDistinguishable(
+    container: Element,
     device: Device,
-    target: Element,
     context: Context = Context.empty()
-  ): ComputedStyles {
-    const style = Style.from(element, device, context);
-
-    const border = (["color", "style", "width"] as const).map((property) =>
-      Serialise.borderShorthand(style, property)
-    );
-
-    const cursor = context.isHovered(target)
-      ? [["cursor", Serialise.getLonghand(style, "cursor")] as const]
-      : [];
-
-    return ComputedStyles.of(
-      [
-        ...border,
-        ...cursor,
-        ["color", Serialise.getLonghand(style, "color")] as const,
-        ["font", Serialise.font(style)] as const,
-        [
-          "vertical-align",
-          Serialise.getLonghand(style, "vertical-align"),
-        ] as const,
-        ["background", Serialise.background(style)] as const,
-        ["outline", Serialise.outline(style)] as const,
-        ["text-decoration", Serialise.textDecoration(style)] as const,
-        // ["cursor", Serialise.getLonghand(style, "cursor")] as const,
-      ].filter(([_, value]) => value !== "")
-    );
-  }
-}
-
-export class DistinguishingStyles extends Diagnostic {
-  public static of(
-    message: string,
-    defaultStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    hoverStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    focusStyles: Iterable<Result<ComputedStyles>> = Sequence.empty()
-  ): DistinguishingStyles {
-    return new DistinguishingStyles(
-      message,
-      Sequence.from(defaultStyles),
-      Sequence.from(hoverStyles),
-      Sequence.from(focusStyles)
+  ): Predicate<Element> {
+    return or(
+      // Things like text decoration and backgrounds risk blending with the
+      // container element. We therefore need to check if these can be distinguished
+      // from what the container element might itself set.
+      hasDistinguishableBackground(container, device, context),
+      hasDistinguishableContrast(container, device, context),
+      hasDistinguishableFont(container, device, context),
+      hasDistinguishableTextDecoration(container, device, context),
+      hasDistinguishableVerticalAlign(container, device, context),
+      // We consider the mere presence of borders or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      hasBorder(device, context),
+      hasOutline(device, context)
     );
   }
 
-  private readonly _defaultStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _hoverStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _focusStyles: Sequence<Result<ComputedStyles>>;
-
-  private constructor(
-    message: string,
-    defaultStyles: Sequence<Result<ComputedStyles>>,
-    hoverStyles: Sequence<Result<ComputedStyles>>,
-    focusStyles: Sequence<Result<ComputedStyles>>
-  ) {
-    super(message);
-    this._defaultStyles = defaultStyles;
-    this._hoverStyles = hoverStyles;
-    this._focusStyles = focusStyles;
+  function hasDistinguishableTextDecoration(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    return (element) =>
+      test(not(hasTextDecoration(device, context)), container) &&
+      test(hasTextDecoration(device, context), element);
   }
 
-  public get defaultStyles(): Iterable<Result<ComputedStyles>> {
-    return this._defaultStyles;
-  }
+  /**
+   * Check if an element has a distinguishable background from the given container
+   * element.
+   *
+   * @remarks
+   * This predicate currently only considers `background-color` and
+   * `background-image` as a possibly distinguishable background. Other
+   * `background-*` properties should ideally also be considered.
+   *
+   * Additionally, this predicate do not handle transparency in the topmost layer.
+   * The exact same (partly transparent) `background-color` or `background-image`
+   * could be on top of a different (opaque) background and thus creates a
+   * difference. However, in these cases the (lower layer) distinguishing
+   * background would be on an ancestor of the link but of no non-link text (in
+   * order to be distinguishing), so should be found when looking at the ancestors
+   * of the link.
+   *
+   * Lastly, this does not account for absolutely positioned backgrounds from
+   * random nodes in the DOM. Using these to push an image below links in
+   * paragraph sounds so crazy (from a sheer code maintenance point of view) that
+   * this hopefully won't be a problem.
+   */
+  function hasDistinguishableBackground(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    const colorReference = Style.from(container, device, context).computed(
+      "background-color"
+    ).value;
 
-  public get hoverStyles(): Iterable<Result<ComputedStyles>> {
-    return this._hoverStyles;
-  }
+    const imageReference = Style.from(container, device, context).computed(
+      "background-image"
+    ).value;
 
-  public get focusStyles(): Iterable<Result<ComputedStyles>> {
-    return this._focusStyles;
-  }
-
-  public equals(value: DistinguishingStyles): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return (
-      value instanceof DistinguishingStyles &&
-      value._defaultStyles.equals(this._defaultStyles) &&
-      value._hoverStyles.equals(this._hoverStyles) &&
-      value._focusStyles.equals(this._focusStyles)
+    return or(
+      hasComputedStyle(
+        "background-color",
+        not(
+          // If the background is fully transparent, we assume it will end up
+          // being the same as the container. Intermediate backgrounds may change
+          // that, but these would need to be set on ancestor of the link and of
+          // no non-link text, so will be caught in one of the other comparisons.
+          (color) => Color.isTransparent(color) || color.equals(colorReference)
+        ),
+        device,
+        context
+      ),
+      // Any difference in `background-image` is considered enough. If different
+      // `background-image` ultimately yield the same background (e.g. the same
+      // image at two different URLs), this creates false negatives.
+      hasComputedStyle(
+        "background-image",
+        not((image) => image.equals(imageReference)),
+        device,
+        context
+      )
     );
   }
 
-  public toJSON(): DistinguishingStyles.JSON {
-    return {
-      ...super.toJSON(),
-      defaultStyle: this._defaultStyles.toJSON(),
-      hoverStyle: this._hoverStyles.toJSON(),
-      focusStyle: this._focusStyles.toJSON(),
+  export function getPairwiseContrast(
+    container: Element,
+    link: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): ReadonlyArray<Contrast.Pairing> {
+    return getForeground(container, device, context)
+      .map((containerColors) => [
+        ...Array.flatMap(containerColors, (containerColor) =>
+          getForeground(link, device, context)
+            .map((linkColors) =>
+              Array.map(linkColors, (linkColor) => {
+                return Contrast.Pairing.of(
+                  containerColor,
+                  linkColor,
+                  contrast(containerColor, linkColor)
+                );
+              })
+            )
+            .getOr([])
+        ),
+      ])
+      .getOr([]);
+  }
+
+  function hasDistinguishableContrast(
+    container: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): Predicate<Element> {
+    return (link) => {
+      const contrastPairings = pairwiseContrastCache
+        .get(device, Cache.empty)
+        .get(context, Cache.empty)
+        .get(container, Cache.empty)
+        .get(link, () => getPairwiseContrast(container, link, device, context));
+      for (const contrastPairing of contrastPairings) {
+        // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
+        if (contrastPairing.contrast >= 3) {
+          return true;
+        }
+      }
+      return false;
     };
   }
-}
 
-export namespace DistinguishingStyles {
-  export interface JSON extends Diagnostic.JSON {
-    defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
-    hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
-    focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+  /**
+   * Check if an element has a different font weight or family than its container.
+   *
+   * This is brittle and imperfect but removes a strong pain point until we find
+   * a better solution.
+   */
+
+  function hasDistinguishableFont(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    const style = Style.from(container, device, context);
+
+    const referenceWeight = style.computed("font-weight").value;
+    const referenceFamily = Option.from(
+      style.computed("font-family").value.values[0]
+    );
+
+    return or(
+      hasComputedStyle(
+        "font-weight",
+        not((weight) => weight.equals(referenceWeight)),
+        device,
+        context
+      ),
+      hasComputedStyle(
+        "font-family",
+        not((family) => Option.from(family.values[0]).equals(referenceFamily)),
+        device,
+        context
+      )
+    );
   }
 
-  export function isDistinguishingStyles(
-    value: unknown
-  ): value is DistinguishingStyles {
-    return value instanceof DistinguishingStyles;
+  function hasDistinguishableVerticalAlign(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    const reference = Style.from(container, device, context).computed(
+      "vertical-align"
+    ).value;
+
+    return hasComputedStyle(
+      "vertical-align",
+      not((alignment) => alignment.equals(reference)),
+      device,
+      context
+    );
+  }
+
+  export function hasDistinguishableCursor(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    // Checking if there is a custom cursor, otherwise grabbing the built-in
+    function getFirstCursor(style: Style.Computed<"cursor">) {
+      return style.values[0].values.length !== 0
+        ? style.values[0].values[0]
+        : style.values[1];
+    }
+    const containerCursorStyle = Style.from(
+      container,
+      device,
+      context
+    ).computed("cursor").value;
+
+    // We assume that the first custom cursor, if any, will never fail to load
+    // and thus don't try to default further.
+    const reference = getFirstCursor(containerCursorStyle);
+
+    return hasComputedStyle(
+      "cursor",
+      not((cursor) => getFirstCursor(cursor).equals(reference)),
+      device,
+      context
+    );
   }
 }
