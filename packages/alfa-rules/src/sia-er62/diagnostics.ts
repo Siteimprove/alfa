@@ -49,7 +49,7 @@ export class ElementDistinguishable
   }
 
   public withStyle(
-    styles: Iterable<readonly [Name, string]>
+    ...styles: ReadonlyArray<readonly [Name, string]>
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
       [...this._style, ...styles],
