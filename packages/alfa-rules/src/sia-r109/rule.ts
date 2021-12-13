@@ -11,13 +11,20 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { hasAttribute, hasChild, isDocumentElement } from "../common/predicate";
 import { Question } from "../common/question";
+import { Stability } from "../tags/stability";
 
 const { fold } = Predicate;
 const { and } = Refinement;
 
+/**
+ * This rule always asks for the language of the page, and compares it with
+ * the `lang` attribute. This is not a nice experience for the end user and
+ * shouldn't be used until backend can automatically determine the answer.
+ */
 export default Rule.Atomic.of<Page, Document, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r109",
   requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
+  tags: [Stability.Experimental],
   evaluate({ device, document }) {
     let programmaticLanguage: Language;
 
