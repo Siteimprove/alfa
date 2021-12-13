@@ -57,12 +57,10 @@ export default Rule.Atomic.of<Page, Element>({
           .collect((text) => text.parent().filter(isElement))
           .every(
             or(
-              not((parent) =>
-                Style.from(parent, device).specified("font-size").source.equals(
-                  // Applicability guarantees there is a cascaded value
-                  Style.from(target, device).cascaded("font-size").get().source
-                )
-              ),
+              (parent) =>
+                Style.from(parent, device).specified("font-size").source !==
+                // Applicability guarantees there is a cascaded value
+                Style.from(target, device).cascaded("font-size").get().source,
               (parent) =>
                 Style.from(parent, device).computed("font-size").value.value >=
                 9
