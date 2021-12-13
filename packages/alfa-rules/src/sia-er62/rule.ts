@@ -428,7 +428,7 @@ namespace Distinguishable {
     container: Element,
     link: Element,
     device: Device,
-    context?: Context
+    context: Context = Context.empty()
   ): ReadonlyArray<Contrast.Pairing> {
     return getForeground(container, device, context)
       .map((containerColors) => [

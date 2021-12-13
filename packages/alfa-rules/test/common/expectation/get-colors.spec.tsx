@@ -2,12 +2,12 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Context } from "@siteimprove/alfa-selector";
 
 import {
   getBackground,
   getForeground,
 } from "../../../src/common/expectation/get-colors";
-import { Context } from "@siteimprove/alfa-selector";
 
 const device = Device.standard();
 
