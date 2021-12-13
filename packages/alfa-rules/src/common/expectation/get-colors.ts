@@ -3,6 +3,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 import { hasInterposedDescendant, isPositioned } from "../predicate";
@@ -123,9 +124,10 @@ namespace Layer {
 function getLayers(
   element: Element,
   device: Device,
-  opacity?: number
+  context: Context = Context.empty(),
+  opacity?: number,
 ): Result<Array<Layer>, Layer.Error> {
-  const style = Style.from(element, device);
+  const style = Style.from(element, device, context);
 
   const color = Color.resolve(style.computed("background-color").value, style);
 
@@ -214,7 +216,7 @@ function getLayers(
     .filter(Element.isElement)) {
     // The opacity override only applies to the last layer, so it is not
     // used in the recursive calls
-    return getLayers(parent, device).map((parentLayers) =>
+    return getLayers(parent, device, context).map((parentLayers) =>
       parentLayers.concat(layers)
     );
   }
@@ -232,9 +234,10 @@ export namespace Foreground {
 
 export function getForeground(
   element: Element,
-  device: Device
+  device: Device,
+  context: Context = Context.empty(),
 ): Result<Foreground, Layer.Error | Foreground.Error | Background.Error> {
-  const style = Style.from(element, device);
+  const style = Style.from(element, device, context);
 
   const color = Color.resolve(style.computed("color").value, style);
 
@@ -261,7 +264,7 @@ export function getForeground(
   // an alpha channel, independently from its opacity, and this alpha channel
   // needs to be taken into account (as well as the alpha/opacity of all the
   // previous layers).
-  const colors = getBackground(element, device, 1).map((background) =>
+  const colors = getBackground(element, device, context, 1).map((background) =>
     background.map((backdrop) => Color.composite(color.get(), backdrop, 1))
   );
 
@@ -274,7 +277,7 @@ export function getForeground(
     // For this, we need the background colors of the parent (assuming that DOM
     // reflects layout).
     return colors.flatMap((colors) =>
-      getBackground(parent, device).map((background) =>
+      getBackground(parent, device, context).map((background) =>
         colors.flatMap((color) =>
           background.map((backdrop) =>
             Color.composite(color, backdrop, opacity.value)
@@ -298,11 +301,12 @@ export namespace Background {
 export function getBackground(
   element: Element,
   device: Device,
+  context: Context = Context.empty(),
   opacity?: number
 ): Result<Background, Layer.Error | Background.Error> {
   // If the element has a text-shadow, we don't try to guess how it looks.
   if (
-    Style.from(element, device).computed("text-shadow").value.type !== "keyword"
+    Style.from(element, device, context).computed("text-shadow").value.type !== "keyword"
   ) {
     return Err.of(Background.Error.HasTextShadow);
   }
@@ -311,7 +315,7 @@ export function getBackground(
     return Err.of(Layer.Error.HasInterposedDescendant);
   }
 
-  return getLayers(element, device, opacity).map((layers) =>
+  return getLayers(element, device, context, opacity).map((layers) =>
     layers.reduce(
       (backdrops, layer) =>
         layer.colors.reduce(
