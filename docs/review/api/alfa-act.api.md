@@ -517,6 +517,8 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implement
     // (undocumented)
     hasRequirement(requirement: Requirement): boolean;
     // (undocumented)
+    hasRequirement(predicate: Predicate<Requirement>): boolean;
+    // (undocumented)
     hasTag(tag: Tag): boolean;
     // (undocumented)
     hasTag(predicate: Predicate<Tag>): boolean;
