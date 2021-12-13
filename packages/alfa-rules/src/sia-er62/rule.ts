@@ -180,28 +180,24 @@ export default Rule.Atomic.of<Page, Element>({
                       )
                   )
                 )
-              ).toArray();
+              );
 
               return hasDistinguishableStyle
                 ? Ok.of(
-                    ElementDistinguishable.of(
-                      ElementDistinguishable.serialise(
-                        link,
-                        device,
-                        target,
-                        context
-                      ),
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
                       distinguishableContrast
                     )
                   )
                 : Err.of(
-                    ElementDistinguishable.of(
-                      ElementDistinguishable.serialise(
-                        link,
-                        device,
-                        target,
-                        context
-                      ),
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
                       distinguishableContrast
                     )
                   );

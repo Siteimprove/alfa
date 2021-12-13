@@ -24,9 +24,9 @@ export class ElementDistinguishable
 {
   public static of(
     style: Iterable<readonly [Name, string]> = [],
-    pairings: ReadonlyArray<Contrast.Pairing> = []
+    pairings: Iterable<Contrast.Pairing> = []
   ): ElementDistinguishable {
-    return new ElementDistinguishable(Map.from(style), pairings);
+    return new ElementDistinguishable(Map.from(style), Array.from(pairings));
   }
 
   private readonly _style: Map<Name, string>;
@@ -49,7 +49,7 @@ export class ElementDistinguishable
   }
 
   public withStyle(
-    ...styles: ReadonlyArray<readonly [Name, string]>
+    styles: Iterable<readonly [Name, string]>
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
       [...this._style, ...styles],
@@ -89,12 +89,13 @@ export namespace ElementDistinguishable {
     pairings: Array<Contrast.Pairing.JSON>;
   }
 
-  export function serialise(
+  export function from(
     element: Element,
     device: Device,
     target: Element,
-    context: Context = Context.empty()
-  ): Iterable<readonly [Name, string]> {
+    context: Context = Context.empty(),
+    pairings: Iterable<Contrast.Pairing>
+  ): ElementDistinguishable {
     const style = Style.from(element, device, context);
 
     const border = (["color", "style", "width"] as const).map((property) =>
@@ -105,19 +106,22 @@ export namespace ElementDistinguishable {
       ? [["cursor", Serialise.getLonghand(style, "cursor")] as const]
       : [];
 
-    return [
-      ...border,
-      ...cursor,
-      ["color", Serialise.getLonghand(style, "color")] as const,
-      ["font", Serialise.font(style)] as const,
+    return ElementDistinguishable.of(
       [
-        "vertical-align",
-        Serialise.getLonghand(style, "vertical-align"),
-      ] as const,
-      ["background", Serialise.background(style)] as const,
-      ["outline", Serialise.outline(style)] as const,
-      ["text-decoration", Serialise.textDecoration(style)] as const,
-    ].filter(([_, value]) => value !== "");
+        ...border,
+        ...cursor,
+        ["color", Serialise.getLonghand(style, "color")] as const,
+        ["font", Serialise.font(style)] as const,
+        [
+          "vertical-align",
+          Serialise.getLonghand(style, "vertical-align"),
+        ] as const,
+        ["background", Serialise.background(style)] as const,
+        ["outline", Serialise.outline(style)] as const,
+        ["text-decoration", Serialise.textDecoration(style)] as const,
+      ].filter(([_, value]) => value !== ""),
+      pairings
+    );
   }
 }
 

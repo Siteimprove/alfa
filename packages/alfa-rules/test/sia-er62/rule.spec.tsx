@@ -1,14 +1,14 @@
+import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-
-import ER62, { Outcomes } from "../../src/sia-er62/rule";
-
-import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import { Contrast } from "../../src/common/diagnostic/contrast";
+import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
+import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
-import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { failed, inapplicable, passed } from "../common/outcome";
+
+
 // default styling of links
 // The initial value of border-top is medium, resolving as 3px. However, when
 // computing and border-style is none, this is computed as 0px.
@@ -48,23 +48,23 @@ const noDistinguishingProperties = ElementDistinguishable.of(
   defaultContrastPairings
 );
 
-const linkProperties = noDistinguishingProperties.withStyle([
+const linkProperties = noDistinguishingProperties.withStyle([[
   "text-decoration",
   "underline",
-]);
+]]);
 
 function addCursor(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
   return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
-    props.withStyle(["cursor", "pointer"])
+    props.withStyle([["cursor", "pointer"]])
   );
 }
 function addOutline(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
   return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
-    props.withStyle(["outline", "auto"])
+    props.withStyle([["outline", "auto"]])
   );
 }
 
@@ -126,12 +126,12 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(
+    noDistinguishingProperties.withStyle([
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
       ["outline", "0px"]
-    )
+    ])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -197,7 +197,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+    noDistinguishingProperties.withStyle([["background", "rgb(100% 0% 0%)"]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -248,7 +248,7 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
+    noDistinguishingProperties.withStyle([["font", "700 16px serif"]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -279,10 +279,10 @@ test(`evaluates() passes on link with a different background-image than text`, a
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle([
+    noDistinguishingProperties.withStyle([[
       "background",
       "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-    ])
+    ]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -315,7 +315,7 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["vertical-align", "super"])
+    noDistinguishingProperties.withStyle([["vertical-align", "super"]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -349,7 +349,7 @@ test(`evaluate() passes a link with different font-family than surrounding text`
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["font", '16px "some-font", serif'])
+    noDistinguishingProperties.withStyle([["font", '16px "some-font", serif']])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -385,7 +385,7 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
+    noDistinguishingProperties.withStyle([["font", "700 16px serif"]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -445,7 +445,7 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
   );
 
   const linkStyle = Ok.of(
-    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
+    noDistinguishingProperties.withStyle([["font", "700 16px serif"]])
   );
 
   const spanStyle = Ok.of(
@@ -507,10 +507,10 @@ test(`evaluates() passes on link with a different background-image than text`, a
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle([
+    noDistinguishingProperties.withStyle([[
       "background",
       "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-    ])
+    ]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -543,7 +543,7 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["vertical-align", "super"])
+    noDistinguishingProperties.withStyle([["vertical-align", "super"]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -763,11 +763,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   );
 
   const style = Err.of(
-    noDistinguishingProperties.withStyle(
+    noDistinguishingProperties.withStyle([
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"]
-    )
+    ])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -798,11 +798,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   );
 
   const style = Err.of(
-    noDistinguishingProperties.withStyle(
+    noDistinguishingProperties.withStyle([
       ["border-width", "0px"],
       ["border-style", "none none solid"],
       ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"]
-    )
+    ])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -867,7 +867,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   );
 
   const style = Err.of(
-    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+    noDistinguishingProperties.withStyle([["background", "rgb(100% 0% 0%)"]])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
