@@ -21,6 +21,26 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.28.0](../../compare/v0.27.0...v0.28.0) (2021-12-14)
+
+### Added
+
+- [@siteimprove/alfa-act](packages/alfa-act): `hasRequirement` now also accepts a predicate as argument. ([#1009](../pull/1009))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): All rules now have a tag of either `Scope.Component` or `Scope.Page`. ([#993](../issues/993), [#1010](../pull/1010))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER62 now considers that a 3:1 contrast ratio between link text and surrounding text is a distinguishing factor. ([#796](../issues/796), [#998](../pull/998))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R109 is now considered as experimental. ([#1006](../pull/1006))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R76 and SIA-R77 are now correctly exported. ([#1006](../pull/1006))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 now correctly compares style declarations with reference rather than structural equality. ([#1006](../pull/1006))
+
 ## [0.27.0](../../compare/v0.26.0...v0.27.0) (2021-12-08)
 
 ### Breaking
@@ -35,7 +55,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Added
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): A family of `Stability` tags has been added, rules tagged with `Stability.Experimental` uses newer features and are subject to change without notice. ([#994])(../pull/994)
+- [@siteimprove/alfa-rules](packages/alfa-rules): A family of `Stability` tags has been added, rules tagged with `Stability.Experimental` uses newer features and are subject to change without notice. ([#994](../pull/994))
 
 - [@siteimprove/alfa-wcag](packages/alfa-wcag): A `fromURI` function is now available to retrieve a Success Criterion from its URI. ([#996](../pull/996))
 

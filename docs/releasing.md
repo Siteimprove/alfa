@@ -17,7 +17,9 @@ When finished, inspect the file created at `.yarn/versions/<hash>.yml` to verify
 $ yarn version apply --all
 ```
 
-With the increment applied and the lockfile updated, commit the changes, create a new release tag, and push:
+With the increment applied and the lockfile updated, edit the [changelog](../CHANGELOG.md).
+
+Then, commit the changes, create a new release tag, and push:
 
 ```console
 $ git commit --message <version> --all
