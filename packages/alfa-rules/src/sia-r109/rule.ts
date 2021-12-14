@@ -11,7 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { hasAttribute, hasChild, isDocumentElement } from "../common/predicate";
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 import { Stability } from "../tags/stability";
 
 const { fold } = Predicate;

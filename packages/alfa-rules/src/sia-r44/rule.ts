@@ -16,7 +16,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { isVisible } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { abs, acos, PI } = Math;
 const { some } = Iterable;

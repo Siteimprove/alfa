@@ -20,15 +20,14 @@ import {
   isVisible,
 } from "../common/predicate";
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
-import { Stability } from "../tags/stability";
+import { Scope, Stability } from "../tags";
 
 const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
 /**
- * This version of RD87 ask questions whose subject is not the target of the rule.
+ * This version of R87 ask questions whose subject is not the target of the rule.
  * The context of the question is still the test target (the document), but the
  * subjects can be various elements (the first focusable element, or its
  * destination once it's been identified as a link).

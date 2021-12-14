@@ -18,7 +18,7 @@ import {
   isFocusable,
   isIgnored,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;

@@ -12,7 +12,7 @@ import { Question } from "../common/question";
 
 import R48 from "../sia-r48/rule";
 import R49 from "../sia-r49/rule";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r50",

@@ -12,7 +12,7 @@ import { normalize } from "../common/normalize";
 
 import { hasRole, isIgnored } from "../common/predicate";
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;

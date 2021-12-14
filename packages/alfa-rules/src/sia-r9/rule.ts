@@ -7,7 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 import { getRefreshTime } from "../common/expectation/get-refresh-time";
 import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";

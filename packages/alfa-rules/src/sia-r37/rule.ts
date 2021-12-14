@@ -13,7 +13,7 @@ import { Question } from "../common/question";
 import R25 from "../sia-r25/rule";
 import R31 from "../sia-r31/rule";
 import R36 from "../sia-r36/rule";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r37",

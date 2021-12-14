@@ -10,7 +10,7 @@ import { getRefreshTime } from "../common/expectation/get-refresh-time";
 import { hasAttribute } from "../common/predicate";
 
 import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;

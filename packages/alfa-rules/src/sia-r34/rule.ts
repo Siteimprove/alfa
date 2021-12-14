@@ -8,7 +8,7 @@ import { video } from "../common/applicability/video";
 import { videoDescriptionTrackAccurate } from "../common/expectation/video-description-track-accurate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r34",

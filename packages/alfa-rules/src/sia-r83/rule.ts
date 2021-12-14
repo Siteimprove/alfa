@@ -17,7 +17,7 @@ import { expectation } from "../common/expectation";
 import { hasAttribute, hasCascadedStyle, isVisible } from "../common/predicate";
 
 import { getPositioningParent } from "../common/expectation/get-positioning-parent";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;

@@ -17,7 +17,7 @@ import {
   hasCascadedValueDeclaredInInlineStyleOf,
   isWideEnough,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { not, or, test } = Predicate;
 const { and } = Refinement;

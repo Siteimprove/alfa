@@ -9,7 +9,7 @@ import { video } from "../common/applicability/video";
 import { expectation } from "../common/expectation";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r32",

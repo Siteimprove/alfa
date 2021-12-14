@@ -17,7 +17,7 @@ import {
 } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { or, nor, equals } = Predicate;

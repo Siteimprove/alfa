@@ -13,7 +13,7 @@ import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
 
 import { hasRole, isIgnored } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;

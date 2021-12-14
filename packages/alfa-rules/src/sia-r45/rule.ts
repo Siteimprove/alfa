@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute, hasRole, isPerceivable } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasId, hasName, hasNamespace } = Element;
 const { and, equals, not } = Predicate;

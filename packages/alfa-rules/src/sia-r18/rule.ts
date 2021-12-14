@@ -13,7 +13,7 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/expectation";
 
 import { hasRole, isIgnored } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { test, property } = Predicate;
 const { isElement } = Element;

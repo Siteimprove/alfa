@@ -30,8 +30,7 @@ import {
   isVisible,
   isWhitespace,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
-import { Stability } from "../tags/stability";
+import { Scope, Stability } from "../tags";
 
 import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 

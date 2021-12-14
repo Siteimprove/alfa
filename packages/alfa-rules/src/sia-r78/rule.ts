@@ -16,7 +16,7 @@ import {
   isIgnored,
   isPerceivable,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { hasNamespace, isElement } = Element;
 const { not } = Predicate;

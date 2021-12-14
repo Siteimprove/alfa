@@ -7,7 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasChild, hasRole, isDocumentElement } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;

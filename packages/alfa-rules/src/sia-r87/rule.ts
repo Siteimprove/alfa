@@ -22,7 +22,7 @@ import {
 } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { hasName, isElement } = Element;
 const { fold } = Predicate;

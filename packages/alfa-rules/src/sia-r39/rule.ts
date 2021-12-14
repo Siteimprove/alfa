@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 import { hasAccessibleName, isIgnored } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not, test } = Predicate;

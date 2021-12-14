@@ -12,7 +12,7 @@ import {
   hasExplicitRole,
   isIgnored,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { and, not } = Predicate;
 const { hasName } = Role;

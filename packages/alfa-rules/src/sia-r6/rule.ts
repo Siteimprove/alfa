@@ -10,7 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute, isDocumentElement } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;

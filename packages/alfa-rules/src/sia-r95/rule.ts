@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { isVisible, isTabbable } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace, hasTabIndex } = Element;
 const { and } = Predicate;

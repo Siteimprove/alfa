@@ -12,7 +12,7 @@ import {
   hasTextContent,
   isDocumentElement,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, fold } = Predicate;

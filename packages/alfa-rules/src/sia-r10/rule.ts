@@ -15,7 +15,7 @@ import {
   isPerceivable,
   isTabbable,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;

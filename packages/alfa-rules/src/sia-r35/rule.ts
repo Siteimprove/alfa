@@ -14,7 +14,7 @@ import R26 from "../sia-r26/rule";
 import R32 from "../sia-r32/rule";
 import R33 from "../sia-r33/rule";
 import R34 from "../sia-r34/rule";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r35",

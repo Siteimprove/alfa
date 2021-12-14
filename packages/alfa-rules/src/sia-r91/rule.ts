@@ -15,7 +15,7 @@ import {
   hasCascadedValueDeclaredInInlineStyleOf,
   isWideEnough,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;

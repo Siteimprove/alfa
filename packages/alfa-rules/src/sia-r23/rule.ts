@@ -12,7 +12,7 @@ import { expectation } from "../common/expectation";
 import { isPerceivable } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { and } = Predicate;
 

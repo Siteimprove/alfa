@@ -31,7 +31,7 @@ import {
   hasBoxShadow,
   isWhitespace,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 import { Serialise } from "./serialise";
 

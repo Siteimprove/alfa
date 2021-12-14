@@ -7,7 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { isIgnored } from "../common/predicate";
 import { expectation } from "../common/expectation";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { and, not } = Predicate;
 const { isElement } = Element;

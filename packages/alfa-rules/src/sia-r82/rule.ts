@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { hasRole, isPerceivable } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;

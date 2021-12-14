@@ -14,7 +14,7 @@ import {
   isDocumentElement,
   isWhitespace,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
 const { nor } = Predicate;

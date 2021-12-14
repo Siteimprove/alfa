@@ -18,7 +18,7 @@ import {
 import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;

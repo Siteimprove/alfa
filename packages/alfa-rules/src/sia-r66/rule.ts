@@ -22,7 +22,7 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 import { Question } from "../common/question";
 
 import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { flatMap, map } = Iterable;
 const { or, not } = Predicate;

@@ -13,7 +13,7 @@ import {
   hasInclusiveDescendant,
   isTabbable,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { not, equals } = Predicate;
 const { and } = Refinement;

@@ -20,7 +20,7 @@ import {
 } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;

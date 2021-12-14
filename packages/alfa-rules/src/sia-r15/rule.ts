@@ -13,7 +13,7 @@ import {
   isIgnored,
   referenceSameResource,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 import { Group } from "../common/group";
 import { normalize } from "../common/normalize";

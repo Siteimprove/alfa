@@ -14,7 +14,7 @@ import {
   isDocumentElement,
   isIgnored,
 } from "../common/predicate";
-import { Scope } from "../tags/scope";
+import { Scope } from "../tags";
 
 const { isElement } = Element;
 const { equals, not } = Predicate;
