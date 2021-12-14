@@ -9,12 +9,15 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasChild } from "../common/predicate/has-child";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import {
+  hasNonEmptyAccessibleName,
+  hasAttribute,
+  hasChild,
+  isPerceivable,
+} from "../common/predicate";
 
 import { Question } from "../common/question";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { or, nor, equals } = Predicate;
@@ -23,6 +26,7 @@ const { and } = Refinement;
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
   requirements: [Technique.of("G170")],
+  tags: [Scope.Component],
   evaluate({ document, device }) {
     return {
       applicability() {

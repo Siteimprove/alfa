@@ -8,6 +8,7 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasRole, isVisible } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement } = Element;
 const { and } = Predicate;
@@ -15,6 +16,7 @@ const { and } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r73",
   requirements: [Criterion.of("1.4.8")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

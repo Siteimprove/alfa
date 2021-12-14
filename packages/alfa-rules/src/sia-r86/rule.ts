@@ -5,13 +5,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
+import { isIgnored, isMarkedDecorative } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r86",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

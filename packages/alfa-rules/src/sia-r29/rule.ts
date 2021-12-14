@@ -7,9 +7,11 @@ import { audio } from "../common/applicability/audio";
 import { audioTextAlternative } from "../common/expectation/media-text-alternative";
 
 import { Question } from "../common/question";
+import { Scope } from "../tags/scope";
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r29",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

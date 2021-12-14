@@ -22,6 +22,7 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 import { Question } from "../common/question";
 
 import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
+import { Scope } from "../tags/scope";
 
 const { flatMap, map } = Iterable;
 const { or, not } = Predicate;
@@ -33,6 +34,7 @@ const { isText } = Text;
 export default Rule.Atomic.of<Page, Text, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r66",
   requirements: [Criterion.of("1.4.6")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

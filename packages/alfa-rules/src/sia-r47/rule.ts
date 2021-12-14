@@ -11,7 +11,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
+import { hasAttribute } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
@@ -19,6 +20,7 @@ const { and, equals } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r47",
   requirements: [Criterion.of("1.4.4"), Criterion.of("1.4.10")],
+  tags: [Scope.Page],
   evaluate({ document }) {
     return {
       applicability() {

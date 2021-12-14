@@ -18,6 +18,7 @@ import {
 import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
 import { Question } from "../common/question";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -25,6 +26,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r41",
   requirements: [Criterion.of("2.4.9")],
+  tags: [Scope.Component],
   evaluate({ device, document, response }) {
     return {
       applicability() {

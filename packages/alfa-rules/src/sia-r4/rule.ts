@@ -8,9 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isDocumentElement } from "../common/predicate/is-document-element";
-import { isWhitespace } from "../common/predicate/is-whitespace";
+import {
+  hasAttribute,
+  isDocumentElement,
+  isWhitespace,
+} from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isEmpty } = Iterable;
 const { nor } = Predicate;
@@ -18,6 +21,7 @@ const { nor } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r4",
   requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
+  tags: [Scope.Page],
   evaluate({ document }) {
     return {
       applicability() {

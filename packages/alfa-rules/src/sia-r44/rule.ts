@@ -15,7 +15,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { isVisible } from "../common/predicate/is-visible";
+import { isVisible } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { abs, acos, PI } = Math;
 const { some } = Iterable;
@@ -25,6 +26,7 @@ const { isElement } = Element;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r44",
   requirements: [Criterion.of("1.3.4")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     let landscape: Device;
     let portrait: Device;
@@ -67,11 +69,9 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const rotation = getRelativeRotation(
-          target,
-          landscape,
-          portrait
-        ).map((rotation) => Real.round(rotation));
+        const rotation = getRelativeRotation(target, landscape, portrait).map(
+          (rotation) => Real.round(rotation)
+        );
 
         return {
           1: expectation(

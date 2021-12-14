@@ -14,6 +14,7 @@ import {
   isTabbable,
   isWhitespace,
 } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
@@ -22,6 +23,7 @@ const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r57",
+  tags: [Scope.Page],
   evaluate({ document, device }) {
     const firstTabbable = document
       .tabOrder()

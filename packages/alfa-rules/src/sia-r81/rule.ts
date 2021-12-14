@@ -22,6 +22,7 @@ import {
 import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
 import { Question } from "../common/question";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasName, hasNamespace, hasId } = Element;
 const { and, not, equals } = Predicate;
@@ -29,6 +30,7 @@ const { and, not, equals } = Predicate;
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r81",
   requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9")],
+  tags: [Scope.Component],
   evaluate({ device, document, response }) {
     return {
       applicability() {

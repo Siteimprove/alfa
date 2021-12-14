@@ -11,6 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { hasAttribute, hasChild, isDocumentElement } from "../common/predicate";
 import { Question } from "../common/question";
+import { Scope } from "../tags/scope";
 import { Stability } from "../tags/stability";
 
 const { fold } = Predicate;
@@ -24,8 +25,8 @@ const { and } = Refinement;
 export default Rule.Atomic.of<Page, Document, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r109",
   requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
-  tags: [Stability.Experimental],
-  evaluate({ device, document }) {
+  tags: [Scope.Page, Stability.Experimental],
+  evaluate({ document }) {
     let programmaticLanguage: Language;
 
     return {

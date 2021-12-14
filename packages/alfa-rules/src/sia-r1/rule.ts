@@ -7,9 +7,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasChild } from "../common/predicate/has-child";
-import { hasTextContent } from "../common/predicate/has-text-content";
-import { isDocumentElement } from "../common/predicate/is-document-element";
+import {
+  hasChild,
+  hasTextContent,
+  isDocumentElement,
+} from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, fold } = Predicate;
@@ -21,6 +24,7 @@ export default Rule.Atomic.of<Page, Document>({
     Technique.of("G88"),
     Technique.of("H25"),
   ],
+  tags: [Scope.Page],
   evaluate({ document }) {
     return {
       applicability() {

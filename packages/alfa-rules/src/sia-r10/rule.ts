@@ -15,6 +15,7 @@ import {
   isPerceivable,
   isTabbable,
 } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
@@ -22,6 +23,7 @@ const { and, or, not } = Predicate;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r10",
   requirements: [Criterion.of("1.3.5")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

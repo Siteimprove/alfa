@@ -7,11 +7,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasChild } from "../common/predicate/has-child";
-import { hasHeadingLevel } from "../common/predicate/has-heading-level";
-import { hasRole } from "../common/predicate/has-role";
-import { isDocumentElement } from "../common/predicate/is-document-element";
-import { isIgnored } from "../common/predicate/is-ignored";
+import {
+  hasChild,
+  hasHeadingLevel,
+  hasRole,
+  isDocumentElement,
+  isIgnored,
+} from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement } = Element;
 const { equals, not } = Predicate;
@@ -19,6 +22,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r61",
+  tags: [Scope.Page],
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants({ flattened: true })

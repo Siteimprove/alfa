@@ -8,8 +8,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasId } from "../common/predicate/has-id";
-import { hasUniqueId } from "../common/predicate/has-unique-id";
+import { hasId, hasUniqueId } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;
@@ -18,6 +18,7 @@ const { isElement } = Element;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r3",
   requirements: [Criterion.of("4.1.1"), Technique.of("H93")],
+  tags: [Scope.Component],
   evaluate({ document }) {
     return {
       applicability() {

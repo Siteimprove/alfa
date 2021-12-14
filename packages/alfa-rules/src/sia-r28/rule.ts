@@ -7,6 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { hasAccessibleName, isIgnored } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasInputType, hasNamespace } = Element;
 const { and, not, test } = Predicate;
@@ -19,6 +20,7 @@ export default Rule.Atomic.of<Page, Element>({
     Technique.of("G94"),
     Technique.of("G95"),
   ],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -12,8 +12,8 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasRole, isIgnored } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { test, property } = Predicate;
 const { isElement } = Element;
@@ -21,6 +21,7 @@ const { isElement } = Element;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
   requirements: [Technique.of("ARIA5")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").attributes);
 

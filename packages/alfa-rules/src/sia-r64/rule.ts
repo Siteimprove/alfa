@@ -7,9 +7,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import {
+  hasNonEmptyAccessibleName,
+  hasRole,
+  isIgnored,
+} from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -21,6 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("2.4.6"),
     Technique.of("H42"),
   ],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

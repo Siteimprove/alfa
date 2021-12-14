@@ -13,6 +13,7 @@ import { Question } from "../common/question";
 import R25 from "../sia-r25/rule";
 import R31 from "../sia-r31/rule";
 import R36 from "../sia-r36/rule";
+import { Scope } from "../tags/scope";
 
 export default Rule.Composite.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r37",
@@ -23,6 +24,7 @@ export default Rule.Composite.of<Page, Element, Question>({
     Technique.of("G173"),
     Technique.of("H96"),
   ],
+  tags: [Scope.Component],
   composes: [R25, R31, R36],
   evaluate() {
     return {

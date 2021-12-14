@@ -7,9 +7,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { hasExplicitRole } from "../common/predicate/has-explicit-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import {
+  hasNonEmptyAccessibleName,
+  hasExplicitRole,
+  isIgnored,
+} from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { and, not } = Predicate;
 const { hasName } = Role;
@@ -17,6 +20,7 @@ const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r40",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

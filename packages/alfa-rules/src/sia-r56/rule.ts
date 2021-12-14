@@ -13,12 +13,14 @@ import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
 
 import { hasRole, isIgnored } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
   uri: "https://alfa.siteimprove.com/rules/sia-r56",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

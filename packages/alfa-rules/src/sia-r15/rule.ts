@@ -8,9 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { referenceSameResource } from "../common/predicate/reference-same-resource";
+import {
+  hasNonEmptyAccessibleName,
+  isIgnored,
+  referenceSameResource,
+} from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
@@ -22,6 +25,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Group<Element>, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
+  tags: [Scope.Component],
   evaluate({ device, document, response }) {
     return {
       applicability() {

@@ -18,6 +18,7 @@ import {
   isFocusable,
   isIgnored,
 } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
@@ -26,6 +27,7 @@ const { and, not, property, test } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r16",
   requirements: [Criterion.of("4.1.2"), Technique.of("ARIA5")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

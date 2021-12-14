@@ -20,6 +20,7 @@ import {
   isRendered,
   isWhitespace,
 } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
@@ -28,6 +29,7 @@ const { and, test, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
   requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

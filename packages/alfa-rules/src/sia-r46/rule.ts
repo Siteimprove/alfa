@@ -10,6 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -17,6 +18,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r46",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     let data = Map.empty<Element, [cell: Cell, table: Table]>();
 

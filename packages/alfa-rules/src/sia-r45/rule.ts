@@ -8,9 +8,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasRole } from "../common/predicate/has-role";
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import { hasAttribute, hasRole, isPerceivable } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasId, hasName, hasNamespace } = Element;
 const { and, equals, not } = Predicate;
@@ -18,6 +17,7 @@ const { and, equals, not } = Predicate;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r45",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     const headers = document
       .descendants()

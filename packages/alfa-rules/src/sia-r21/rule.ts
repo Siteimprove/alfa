@@ -9,6 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute, isProgrammaticallyHidden } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -20,6 +21,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     Technique.of("ARIA4"),
     Technique.of("G108"),
   ],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

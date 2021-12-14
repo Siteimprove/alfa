@@ -14,13 +14,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import {
-  hasAttribute,
-  hasCascadedStyle,
-  isVisible,
-} from "../common/predicate";
+import { hasAttribute, hasCascadedStyle, isVisible } from "../common/predicate";
 
 import { getPositioningParent } from "../common/expectation/get-positioning-parent";
+import { Scope } from "../tags/scope";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -30,6 +27,7 @@ const { isText } = Text;
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -220,7 +218,9 @@ function horizontallyClippingAncestor(
           case Overflow.Handle:
             return None;
           case Overflow.Overflow:
-            return getPositioningParent(element, device).flatMap(clippingAncestor);
+            return getPositioningParent(element, device).flatMap(
+              clippingAncestor
+            );
         }
       });
   };

@@ -6,15 +6,15 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasHeadingLevel } from "../common/predicate/has-heading-level";
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasHeadingLevel, hasRole, isIgnored } from "../common/predicate";
+import { Scope } from "../tags/scope";
 
 const { equals } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r53",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     const headings = document
       .descendants({ flattened: true })

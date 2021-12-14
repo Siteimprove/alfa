@@ -20,6 +20,7 @@ import {
   isVisible,
 } from "../common/predicate";
 import { Question } from "../common/question";
+import { Scope } from "../tags/scope";
 import { Stability } from "../tags/stability";
 
 const { hasName, isElement } = Element;
@@ -38,7 +39,7 @@ const { and } = Refinement;
 export default Rule.Atomic.of<Page, Document, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87#experimental",
   requirements: [Technique.of("G1")],
-  tags: [Stability.Experimental],
+  tags: [Scope.Page, Stability.Experimental],
   evaluate({ device, document, response }) {
     return {
       applicability() {
