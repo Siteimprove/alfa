@@ -8,6 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { hasChild, isRendered, isDocumentElement } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, test } = Predicate;
@@ -45,6 +46,7 @@ const isDeprecated = hasName(
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r70",
+  tags: [Scope.Page],
   evaluate({ device, document }) {
     return {
       applicability() {

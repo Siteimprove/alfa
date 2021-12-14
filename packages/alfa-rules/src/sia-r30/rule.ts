@@ -12,10 +12,12 @@ import { Question } from "../common/question";
 
 import R23 from "../sia-r23/rule";
 import R29 from "../sia-r29/rule";
+import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r30",
   requirements: [Criterion.of("1.2.1"), Technique.of("G158")],
+  tags: [Scope.Component],
   composes: [R23, R29],
   evaluate() {
     return {

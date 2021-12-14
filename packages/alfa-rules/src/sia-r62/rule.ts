@@ -31,6 +31,7 @@ import {
   hasBoxShadow,
   isWhitespace,
 } from "../common/predicate";
+import { Scope } from "../tags";
 
 import { Serialise } from "./serialise";
 
@@ -42,6 +43,7 @@ const { and } = Refinement;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     let containers: Map<Element, Element> = Map.empty();
 

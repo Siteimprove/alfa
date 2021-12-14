@@ -10,9 +10,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasInclusiveDescendant } from "../common/predicate/has-inclusive-descendant";
-import { isVisible } from "../common/predicate/is-visible";
-import { isTabbable } from "../common/predicate/is-tabbable";
+import {
+  hasInclusiveDescendant,
+  isVisible,
+  isTabbable,
+} from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and } = Refinement;
@@ -24,6 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("2.1.3"),
     Technique.of("G202"),
   ],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -11,8 +11,8 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasRole, isIgnored } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -20,6 +20,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r42",
   requirements: [Criterion.of("1.3.1")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

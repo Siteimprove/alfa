@@ -20,6 +20,7 @@ import {
 } from "../common/predicate";
 
 import { Question } from "../common/question";
+import { Scope } from "../tags";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
@@ -28,6 +29,7 @@ const { or, test, xor } = Predicate;
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",
   requirements: [Criterion.of("2.4.7")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

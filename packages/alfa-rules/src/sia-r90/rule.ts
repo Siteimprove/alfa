@@ -7,9 +7,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasRole } from "../common/predicate/has-role";
-import { hasDescendant } from "../common/predicate/has-descendant";
-import { isTabbable } from "../common/predicate/is-tabbable";
+import { hasRole, hasDescendant, isTabbable } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, not } = Refinement;
@@ -17,6 +16,7 @@ const { and, not } = Refinement;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r90",
   requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

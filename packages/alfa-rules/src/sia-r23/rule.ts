@@ -9,14 +9,16 @@ import { audio } from "../common/applicability/audio";
 
 import { expectation } from "../common/expectation";
 
-import { isPerceivable } from "../common/predicate/is-perceivable";
+import { isPerceivable } from "../common/predicate";
 
 import { Question } from "../common/question";
+import { Scope } from "../tags";
 
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r23",
+  tags: [Scope.Component],
   evaluate({ document, device }) {
     return {
       applicability() {

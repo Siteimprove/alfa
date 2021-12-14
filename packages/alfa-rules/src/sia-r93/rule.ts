@@ -17,6 +17,7 @@ import {
   hasCascadedValueDeclaredInInlineStyleOf,
   isWideEnough,
 } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { not, or, test } = Predicate;
 const { and } = Refinement;
@@ -28,6 +29,7 @@ const property = "line-height";
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r93",
   requirements: [Criterion.of("1.4.12")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

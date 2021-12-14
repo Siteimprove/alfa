@@ -7,7 +7,8 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isMarkedDecorative } from "../common/predicate/is-marked-decorative";
+import { isMarkedDecorative } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
@@ -15,6 +16,7 @@ const { and, or, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r67",
   requirements: [Criterion.of("1.1.1")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

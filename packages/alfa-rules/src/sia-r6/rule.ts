@@ -9,8 +9,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isDocumentElement } from "../common/predicate/is-document-element";
+import { hasAttribute, isDocumentElement } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
@@ -18,6 +18,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r6",
   requirements: [Criterion.of("3.1.1")],
+  tags: [Scope.Page],
   evaluate({ document }) {
     return {
       applicability() {

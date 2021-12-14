@@ -8,6 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { not } = Predicate;
@@ -16,6 +17,7 @@ const { and, test } = Refinement;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r76",
   requirements: [Criterion.of("1.3.1")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

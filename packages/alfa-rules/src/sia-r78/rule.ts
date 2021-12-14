@@ -16,6 +16,7 @@ import {
   isIgnored,
   isPerceivable,
 } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { hasNamespace, isElement } = Element;
 const { not } = Predicate;
@@ -23,6 +24,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r78",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     let headings: Sequence<Element>;
 

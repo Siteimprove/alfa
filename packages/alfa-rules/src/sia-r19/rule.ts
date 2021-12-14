@@ -10,13 +10,16 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
+import { Scope } from "../tags";
+
 const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
-  evaluate({ document, device }) {
+  tags: [Scope.Component],
+  evaluate({ document }) {
     return {
       applicability() {
         return document

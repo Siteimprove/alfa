@@ -6,15 +6,15 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasChild } from "../common/predicate/has-child";
-import { hasRole } from "../common/predicate/has-role";
-import { isDocumentElement } from "../common/predicate/is-document-element";
+import { hasChild, hasRole, isDocumentElement } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r59",
+  tags: [Scope.Page],
   evaluate({ device, document }) {
     return {
       applicability() {

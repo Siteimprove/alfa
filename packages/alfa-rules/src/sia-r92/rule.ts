@@ -17,6 +17,7 @@ import {
   hasCascadedValueDeclaredInInlineStyleOf,
   isWideEnough,
 } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
@@ -28,6 +29,7 @@ const property = "word-spacing";
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r92",
   requirements: [Criterion.of("1.4.12")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

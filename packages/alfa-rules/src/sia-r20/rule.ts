@@ -7,11 +7,13 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
+import { Scope } from "../tags";
 
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r20",
+  tags: [Scope.Component],
   evaluate({ document }) {
     return {
       applicability() {

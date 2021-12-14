@@ -7,15 +7,16 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasTextContent } from "../common/predicate/has-text-content";
-import { isVisible } from "../common/predicate/is-visible";
+import { hasTextContent, isVisible } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { isText } = Text;
-const { and, or, not } = Predicate;
+const { and, or } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

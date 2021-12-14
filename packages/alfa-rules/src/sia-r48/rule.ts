@@ -9,10 +9,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasChild } from "../common/predicate/has-child";
+import { hasAttribute, hasChild } from "../common/predicate";
 
 import { Question } from "../common/question";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { or, nor } = Predicate;
@@ -21,6 +21,7 @@ const { and } = Refinement;
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r48",
   requirements: [Technique.of("G60")],
+  tags: [Scope.Component],
   evaluate({ document }) {
     return {
       applicability() {

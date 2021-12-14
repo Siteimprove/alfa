@@ -15,6 +15,7 @@ import {
   hasCascadedValueDeclaredInInlineStyleOf,
   isWideEnough,
 } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;
@@ -26,6 +27,7 @@ const property = "letter-spacing";
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r91",
   requirements: [Criterion.of("1.4.12")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

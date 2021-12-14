@@ -7,12 +7,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { isIgnored } from "../common/predicate";
 import { expectation } from "../common/expectation";
+import { Scope } from "../tags";
 
 const { and, not } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r54",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -10,6 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -17,6 +18,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r77",
   requirements: [Criterion.of("1.3.1")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     let data = Map.empty<Element, Cell>();
 
@@ -32,10 +34,10 @@ export default Rule.Atomic.of<Page, Element>({
               not(isIgnored(device))
             )
           );
-          
+
         for (const table of tables) {
           const model = Table.from(table);
-          
+
           if (model.cells.find((cell) => cell.isHeader()).isNone()) {
             continue;
           }
@@ -51,7 +53,7 @@ export default Rule.Atomic.of<Page, Element>({
                 isPerceivable(device)
               )
             );
-            
+
           for (const dataCell of dataCells) {
             for (const cell of model.cells.find((cell) =>
               cell.element.equals(dataCell)

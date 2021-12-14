@@ -7,9 +7,11 @@ import { video } from "../common/applicability/video";
 import { videoTextAlternative } from "../common/expectation/media-text-alternative";
 
 import { Question } from "../common/question";
+import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://alfa.siteimprove.com/rules/sia-r31",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

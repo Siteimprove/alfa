@@ -7,8 +7,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNonEmptyAccessibleName } from "../common/predicate/has-non-empty-accessible-name";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { hasNonEmptyAccessibleName, isIgnored } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -16,6 +16,7 @@ const { and, not } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r13",
   requirements: [Criterion.of("4.1.2")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

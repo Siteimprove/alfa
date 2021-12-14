@@ -17,10 +17,14 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isIgnored, isWhitespace } from "../common/predicate";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { isVisible } from "../common/predicate/is-visible";
+import {
+  hasAttribute,
+  isIgnored,
+  isWhitespace,
+  isVisible,
+} from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
@@ -31,6 +35,7 @@ const { isText } = Text;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r7",
   requirements: [Criterion.of("3.1.2"), Technique.of("H58")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

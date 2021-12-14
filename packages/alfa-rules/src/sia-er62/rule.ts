@@ -30,7 +30,7 @@ import {
   isVisible,
   isWhitespace,
 } from "../common/predicate";
-import { Stability } from "../tags/stability";
+import { Scope, Stability } from "../tags";
 
 import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 
@@ -60,7 +60,7 @@ const pairwiseContrastCache = Cache.empty<
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62#experimental",
   requirements: [Criterion.of("1.4.1")],
-  tags: [Stability.Experimental],
+  tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     let containers: Map<Element, Element> = Map.empty();
 

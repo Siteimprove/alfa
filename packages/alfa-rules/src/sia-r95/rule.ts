@@ -6,8 +6,9 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { isVisible } from "../common/predicate/is-visible";
-import { isTabbable } from "../common/predicate/is-tabbable";
+
+import { isVisible, isTabbable } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace, hasTabIndex } = Element;
 const { and } = Predicate;
@@ -15,6 +16,7 @@ const { and } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r95",
   requirements: [Criterion.of("2.1.1")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

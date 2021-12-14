@@ -8,9 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasInclusiveDescendant } from "../common/predicate/has-inclusive-descendant";
-import { isTabbable } from "../common/predicate/is-tabbable";
+import {
+  hasAttribute,
+  hasInclusiveDescendant,
+  isTabbable,
+} from "../common/predicate";
+import { Scope } from "../tags";
 
 const { not, equals } = Predicate;
 const { and } = Refinement;
@@ -19,6 +22,7 @@ const { isElement } = Element;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r17",
   requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

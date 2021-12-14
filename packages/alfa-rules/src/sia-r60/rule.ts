@@ -14,6 +14,7 @@ import {
   hasRole,
   isIgnored,
 } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { not } = Predicate;
@@ -21,6 +22,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r60",
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {

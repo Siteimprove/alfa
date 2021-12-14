@@ -10,6 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole, hasTextContent, isVisible } from "../common/predicate";
+import { Scope } from "../tags";
 
 const { isElement } = Element;
 const { and } = Predicate;
@@ -17,6 +18,7 @@ const { and } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r80",
   requirements: [Criterion.of("1.4.8")],
+  tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {
