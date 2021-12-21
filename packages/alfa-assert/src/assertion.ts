@@ -50,24 +50,43 @@ export class Assertion<I, T, Q, S> {
   }
 
   public accessible(): Future<Result<string>> {
-    const { filter = () => true, oracle = () => Future.now(None) } = {
+    const {
+      // default: report all Failed outcome
+      filter = () => true,
+      // default: report no CantTell outcome
+      filterCantTell = () => false,
+      oracle = () => Future.now(None),
+    } = {
       ...this._options,
     };
 
     return Audit.of<I, T, Q, S>(this._input, this._rules, oracle)
       .evaluate()
       .flatMap((outcomes) => {
+        // handling failures
         const failures = [...outcomes].filter(
           (outcome) => Outcome.isFailed(outcome) && filter(outcome)
         );
 
-        const count = failures.length;
+        const failuresCount = failures.length;
+        const failuresOutcome =
+          failuresCount === 1 ? "outcome was" : "outcomes were";
+        const failuresMessage = `${failuresCount} failed ${failuresOutcome} found.`;
 
-        const outcome = count === 1 ? "outcome was" : "outcomes were";
+        // handling cantTell
+        const cantTell = [...outcomes].filter(
+          (outcome) => Outcome.isCantTell(outcome) && filterCantTell(outcome)
+        );
 
-        const message = `${count} failed ${outcome} found`;
+        const cantTellCount = cantTell.length;
+        const cantTellOutcome =
+          cantTellCount === 1 ? "outcome was" : "outcomes were";
+        const cantTellMessage = `${cantTellCount} "can't Tell" ${cantTellOutcome} found.`;
 
-        if (count === 0) {
+        // Building final message
+        const message = failuresMessage + " " + cantTellMessage;
+
+        if (failuresCount + cantTellCount === 0) {
           return Future.now(Result.of(message));
         }
 
@@ -101,10 +120,20 @@ export class Assertion<I, T, Q, S> {
 export namespace Assertion {
   export interface Options<I, T, Q, S> {
     /**
-     * Predicate for filtering out outcomes that should not count towards an
-     * assertion failure.
+     * Predicate for filtering out outcomes that should count towards an
+     * assertion failure.; only failed outcomes matching this filter will be
+     * reported.
+     * If left unset, all failed outcomes will be reported
      */
     readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
+    /**
+     * Filter cantTell outcome.
+     * If left unset, no cantTell outcome will be reported.
+     */
+    readonly filterCantTell?: Predicate<Outcome.CantTell<I, T, Q, S>>;
+    /**
+     * Passing an oracle to the rules evaluation.
+     */
     readonly oracle?: Oracle<I, T, Q, S>;
   }
 }
