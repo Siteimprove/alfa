@@ -3,8 +3,11 @@ import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Handler } from "./handler";
+
+const { or } = Predicate;
 
 /**
  * @public
@@ -63,22 +66,29 @@ export class Assertion<I, T, Q, S> {
     return Audit.of<I, T, Q, S>(this._input, this._rules, oracle)
       .evaluate()
       .flatMap((outcomes) => {
+        // Since we need to go through `outcomes` twice, we can't keep it As
+        // an Iterable which self-destruct on reading.
+        // We also assume there will be few suspicious outcomes and therefore
+        // filtering them once likely save time
+        const suspicious = Sequence.from(outcomes).filter(
+          or(Outcome.isFailed, Outcome.isCantTell)
+        );
         // handling failures
-        const failures = [...outcomes].filter(
+        const failures = suspicious.filter(
           (outcome) => Outcome.isFailed(outcome) && filter(outcome)
         );
 
-        const failuresCount = failures.length;
+        const failuresCount = failures.size;
         const failuresOutcome =
           failuresCount === 1 ? "outcome was" : "outcomes were";
         const failuresMessage = `${failuresCount} failed ${failuresOutcome} found.`;
 
         // handling cantTell
-        const cantTell = [...outcomes].filter(
+        const cantTell = suspicious.filter(
           (outcome) => Outcome.isCantTell(outcome) && filterCantTell(outcome)
         );
 
-        const cantTellCount = cantTell.length;
+        const cantTellCount = cantTell.size;
         const cantTellOutcome =
           cantTellCount === 1 ? "outcome was" : "outcomes were";
         const cantTellMessage = `${cantTellCount} "can't Tell" ${cantTellOutcome} found.`;
