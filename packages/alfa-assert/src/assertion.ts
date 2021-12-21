@@ -1,5 +1,6 @@
-import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
+import { Audit, Oracle, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
+import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
 
@@ -49,9 +50,11 @@ export class Assertion<I, T, Q, S> {
   }
 
   public accessible(): Future<Result<string>> {
-    const { filter = () => true } = { ...this._options };
+    const { filter = () => true, oracle = () => Future.now(None) } = {
+      ...this._options,
+    };
 
-    return Audit.of<I, T, Q, S>(this._input, this._rules)
+    return Audit.of<I, T, Q, S>(this._input, this._rules, oracle)
       .evaluate()
       .flatMap((outcomes) => {
         const failures = [...outcomes].filter(
@@ -102,5 +105,6 @@ export namespace Assertion {
      * assertion failure.
      */
     readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
+    readonly oracle?: Oracle<I, T, Q, S>;
   }
 }
