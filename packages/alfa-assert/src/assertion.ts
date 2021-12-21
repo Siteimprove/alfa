@@ -66,10 +66,10 @@ export class Assertion<I, T, Q, S> {
     return Audit.of<I, T, Q, S>(this._input, this._rules, oracle)
       .evaluate()
       .flatMap((outcomes) => {
-        // Since we need to go through `outcomes` twice, we can't keep it As
+        // Since we need to go through `outcomes` twice, we can't keep it as
         // an Iterable which self-destruct on reading.
         // We also assume there will be few suspicious outcomes and therefore
-        // filtering them once likely save time
+        // filtering them once likely saves time
         const suspicious = Sequence.from(outcomes).filter(
           or(Outcome.isFailed, Outcome.isCantTell)
         );
@@ -130,14 +130,13 @@ export class Assertion<I, T, Q, S> {
 export namespace Assertion {
   export interface Options<I, T, Q, S> {
     /**
-     * Predicate for filtering out outcomes that should count towards an
-     * assertion failure.; only failed outcomes matching this filter will be
-     * reported.
+     * Predicate for filtering outcomes that should count towards an assertion
+     * failure.; only failed outcomes matching this filter will be reported.
      * If left unset, all failed outcomes will be reported
      */
     readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
     /**
-     * Filter cantTell outcome.
+     * Predicate for filtering cantTell outcome.
      * If left unset, no cantTell outcome will be reported.
      */
     readonly filterCantTell?: Predicate<Outcome.CantTell<I, T, Q, S>>;

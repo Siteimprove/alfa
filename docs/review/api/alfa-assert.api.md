@@ -5,6 +5,7 @@
 ```ts
 
 import { Future } from '@siteimprove/alfa-future';
+import { Oracle } from '@siteimprove/alfa-act';
 import { Outcome } from '@siteimprove/alfa-act';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Result } from '@siteimprove/alfa-result';
@@ -42,6 +43,8 @@ export namespace Assertion {
     // (undocumented)
     export interface Options<I, T, Q, S> {
         readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
+        readonly filterCantTell?: Predicate<Outcome.CantTell<I, T, Q, S>>;
+        readonly oracle?: Oracle<I, T, Q, S>;
     }
 }
 
