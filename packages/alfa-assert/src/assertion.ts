@@ -1,9 +1,13 @@
-import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
+import { Audit, Oracle, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
+import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Handler } from "./handler";
+
+const { or } = Predicate;
 
 /**
  * @public
@@ -49,22 +53,50 @@ export class Assertion<I, T, Q, S> {
   }
 
   public accessible(): Future<Result<string>> {
-    const { filter = () => true } = { ...this._options };
+    const {
+      // default: report all Failed outcome
+      filter = () => true,
+      // default: report no CantTell outcome
+      filterCantTell = () => false,
+      oracle = () => Future.now(None),
+    } = {
+      ...this._options,
+    };
 
-    return Audit.of<I, T, Q, S>(this._input, this._rules)
+    return Audit.of<I, T, Q, S>(this._input, this._rules, oracle)
       .evaluate()
       .flatMap((outcomes) => {
-        const failures = [...outcomes].filter(
+        // Since we need to go through `outcomes` twice, we can't keep it as
+        // an Iterable which self-destruct on reading.
+        // We also assume there will be few suspicious outcomes and therefore
+        // filtering them once likely saves time
+        const suspicious = Sequence.from(outcomes).filter(
+          or(Outcome.isFailed, Outcome.isCantTell)
+        );
+        // handling failures
+        const failures = suspicious.filter(
           (outcome) => Outcome.isFailed(outcome) && filter(outcome)
         );
 
-        const count = failures.length;
+        const failuresCount = failures.size;
+        const failuresOutcome =
+          failuresCount === 1 ? "outcome was" : "outcomes were";
+        const failuresMessage = `${failuresCount} failed ${failuresOutcome} found.`;
 
-        const outcome = count === 1 ? "outcome was" : "outcomes were";
+        // handling cantTell
+        const cantTell = suspicious.filter(
+          (outcome) => Outcome.isCantTell(outcome) && filterCantTell(outcome)
+        );
 
-        const message = `${count} failed ${outcome} found`;
+        const cantTellCount = cantTell.size;
+        const cantTellOutcome =
+          cantTellCount === 1 ? "outcome was" : "outcomes were";
+        const cantTellMessage = `${cantTellCount} "can't Tell" ${cantTellOutcome} found.`;
 
-        if (count === 0) {
+        // Building final message
+        const message = failuresMessage + " " + cantTellMessage;
+
+        if (failuresCount + cantTellCount === 0) {
           return Future.now(Result.of(message));
         }
 
@@ -98,9 +130,19 @@ export class Assertion<I, T, Q, S> {
 export namespace Assertion {
   export interface Options<I, T, Q, S> {
     /**
-     * Predicate for filtering out outcomes that should not count towards an
-     * assertion failure.
+     * Predicate for filtering outcomes that should count towards an assertion
+     * failure.; only failed outcomes matching this filter will be reported.
+     * If left unset, all failed outcomes will be reported
      */
     readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
+    /**
+     * Predicate for filtering cantTell outcome.
+     * If left unset, no cantTell outcome will be reported.
+     */
+    readonly filterCantTell?: Predicate<Outcome.CantTell<I, T, Q, S>>;
+    /**
+     * Passing an oracle to the rules evaluation.
+     */
+    readonly oracle?: Oracle<I, T, Q, S>;
   }
 }
