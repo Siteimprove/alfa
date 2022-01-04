@@ -21,6 +21,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.29.0](../../compare/v0.28.0...v0.29.0) (2022-01-04)
+
+### Added
+
+- [@siteimprove/alfa-assert](packages/alfa-assert): `Assertion.Options` now accepts an `Oracle` to answer questions, and a predicate to filter `cantTell` result (default is to remove all of them). ([#1012](../issues/1012), [#1013](../pull/1013))
+
 ## [0.28.0](../../compare/v0.27.0...v0.28.0) (2021-12-14)
 
 ### Added
