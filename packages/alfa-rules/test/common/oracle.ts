@@ -1,4 +1,4 @@
-import { Oracle } from "@siteimprove/alfa-act";
+import * as act from "@siteimprove/alfa-act";
 import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
@@ -8,37 +8,55 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Question } from "../../src/common/question";
 
+const { isIterable } = Iterable;
+const { isOption } = Option;
+const { isBoolean, isString } = Refinement;
+
+function wrapper<A, T>(
+  question: act.Question<unknown, unknown, unknown, A, T, string>,
+  answer: A
+): Future<Option<T>> {
+  return Future.now(Option.of(question.answer(answer)));
+}
+
+const dontKnow = Future.now(None);
+
 export function oracle<I, T, S>(answers: {
-  [uri: string]:
-    | boolean
-    | Option<Node>
-    | Iterable<Node>
-    | Option<RGB>
-    | Iterable<RGB>;
-}): Oracle<I, T, Question, S> {
+  [uri: string]: Question[keyof Question];
+}): act.Oracle<I, T, Question, S> {
   return (rule, question) => {
     const answer = answers[question.uri];
 
-    if (question.type === "boolean" && Refinement.isBoolean(answer)) {
-      return Future.now(Option.of(question.answer(answer)));
-    }
+    // * We use a switch with no default case to ensure exhaustive matching at
+    //   the type level.
+    // * We need to check the type of `answer` because there is no link between
+    //   URI and type, so `answers` cannot be better typed that with the union
+    //   of all possible types.
+    // * We can't pre-compute `wrapper` because narrowing the type of `answer`
+    //   won't narrow the type of the wrapped answer.
+    // * We could have a better wrapper, taking the refinement as an argument,
+    //   and doing all the work. However, `isOption<Node>` is not callable as
+    //   is; `isOption` is not narrowing enough; and eta-expanding it breaks
+    //   the narrowing. So we'd need a new refinement to only be an
+    //   eta-expanded `isOption<Node>`, which is a bit overkill.
+    switch (question.type) {
+      case "boolean":
+        return isBoolean(answer) ? wrapper(question, answer) : dontKnow;
 
-    if (question.type === "node" && Option.isOption<Node>(answer)) {
-      return Future.now(Option.of(question.answer(answer)));
-    }
+      case "node":
+        return isOption<Node>(answer) ? wrapper(question, answer) : dontKnow;
 
-    if (question.type === "node[]" && Iterable.isIterable<Node>(answer)) {
-      return Future.now(Option.of(question.answer(answer)));
-    }
+      case "node[]":
+        return isIterable<Node>(answer) ? wrapper(question, answer) : dontKnow;
 
-    if (question.type === "color" && Option.isOption<RGB>(answer)) {
-      return Future.now(Option.of(question.answer(answer)));
-    }
+      case "color":
+        return isOption<RGB>(answer) ? wrapper(question, answer) : dontKnow;
 
-    if (question.type === "color[]" && Iterable.isIterable<RGB>(answer)) {
-      return Future.now(Option.of(question.answer(answer)));
-    }
+      case "color[]":
+        return isIterable<RGB>(answer) ? wrapper(question, answer) : dontKnow;
 
-    return Future.now(None);
+      case "string":
+        return isString(answer) ? wrapper(question, answer) : dontKnow;
+    }
   };
 }
