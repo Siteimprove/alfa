@@ -20,28 +20,70 @@ export interface Question {
  * @public
  */
 export namespace Question {
-  export function of<Q extends keyof Question, S, U extends string = string>(
-    type: Q,
+  export function of<S, U extends URI = URI>(
     uri: U,
     message: string,
     subject: S
-  ): act.Question<Q, S, S, Question[Q], Question[Q], U>;
+  ): act.Question<
+    DATA[U]["type"],
+    S,
+    S,
+    Question[DATA[U]["type"]],
+    Question[DATA[U]["type"]],
+    U
+  >;
 
-  export function of<Q extends keyof Question, S, C, U extends string = string>(
-    type: Q,
+  export function of<S, C, U extends URI = URI>(
     uri: U,
     message: string,
     subject: S,
     context: C
-  ): act.Question<Q, S, C, Question[Q], Question[Q], U>;
+  ): act.Question<
+    DATA[U]["type"],
+    S,
+    C,
+    Question[DATA[U]["type"]],
+    Question[DATA[U]["type"]],
+    U
+  >;
 
-  export function of<Q extends keyof Question, S, U extends string = string>(
-    type: Q,
+  export function of<S, U extends URI = URI>(
     uri: U,
     message: string,
     subject: S,
     context: S = subject
-  ): act.Question<Q, S, S, Question[Q], Question[Q], U> {
-    return act.Question.of(type, uri, message, subject, context);
+  ): act.Question<
+    DATA[U]["type"],
+    S,
+    S,
+    Question[DATA[U]["type"]],
+    Question[DATA[U]["type"]],
+    U
+  > {
+    return act.Question.of(
+      QuestionData[uri].type,
+      uri,
+      message,
+      subject,
+      context
+    );
   }
+
+  type QuestionInfo = {
+    readonly type: keyof Question;
+    readonly message: string;
+  };
+
+  // If a question data is poorly filled, the intersection reduces to never
+  // and `of` doesn't type correctly.
+  type DATA = typeof QuestionData & Record<URI, QuestionInfo>;
+
+  type URI = "first-tabbable-reference-is-main";
+
+  const QuestionData = {
+    "first-tabbable-reference-is-main": {
+      type: "boolean",
+      message: `Does the first tabbable element of the document point to the main content?`,
+    },
+  } as const;
 }
