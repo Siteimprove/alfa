@@ -23,7 +23,7 @@ import { Scope } from "../tags";
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question.Type>({
   uri: "https://alfa.siteimprove.com/rules/sia-r41",
   requirements: [Criterion.of("2.4.9")],
   tags: [Scope.Component],

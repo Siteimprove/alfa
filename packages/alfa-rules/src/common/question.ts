@@ -7,19 +7,33 @@ import * as act from "@siteimprove/alfa-act";
 /**
  * @public
  */
-export interface Question {
-  boolean: boolean;
-  node: Option<Node>;
-  "node[]": Iterable<Node>;
-  color: Option<RGB>;
-  "color[]": Iterable<RGB>;
-  string: string;
-}
-
-/**
- * @public
- */
 export namespace Question {
+  /**
+   * @public
+   * Maps the `type` parameter of question to the expected type of the answer.
+   */
+  export interface Type {
+    boolean: boolean;
+    node: Option<Node>;
+    "node[]": Iterable<Node>;
+    color: Option<RGB>;
+    "color[]": Iterable<RGB>;
+    string: string;
+  }
+
+  // If a question data is poorly filled, the intersection reduces to never
+  // and `of` doesn't type correctly.
+  type Data = typeof Data &
+    Record<
+      Uri,
+      {
+        readonly type: keyof Type;
+        readonly message: string;
+      }
+    >;
+
+  type Uri = keyof typeof Data;
+
   export function of<S, U extends Uri = Uri>(
     uri: U,
     subject: S,
@@ -28,8 +42,8 @@ export namespace Question {
     Data[U]["type"],
     S,
     S,
-    Question[Data[U]["type"]],
-    Question[Data[U]["type"]],
+    Type[Data[U]["type"]],
+    Type[Data[U]["type"]],
     U
   >;
 
@@ -42,8 +56,8 @@ export namespace Question {
     Data[U]["type"],
     S,
     C,
-    Question[Data[U]["type"]],
-    Question[Data[U]["type"]],
+    Type[Data[U]["type"]],
+    Type[Data[U]["type"]],
     U
   >;
 
@@ -56,8 +70,8 @@ export namespace Question {
     Data[U]["type"],
     S,
     S,
-    Question[Data[U]["type"]],
-    Question[Data[U]["type"]],
+    Type[Data[U]["type"]],
+    Type[Data[U]["type"]],
     U
   > {
     let context: S = subject;
@@ -74,17 +88,6 @@ export namespace Question {
     }
     return act.Question.of(Data[uri].type, uri, message, subject, context);
   }
-
-  type QuestionInfo = {
-    readonly type: keyof Question;
-    readonly message: string;
-  };
-
-  // If a question data is poorly filled, the intersection reduces to never
-  // and `of` doesn't type correctly.
-  export type Data = typeof Data & Record<Uri, QuestionInfo>;
-
-  export type Uri = keyof typeof Data;
 
   const Data = {
     // R15, R41, R81

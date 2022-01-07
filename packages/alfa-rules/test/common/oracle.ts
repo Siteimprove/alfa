@@ -22,8 +22,8 @@ function wrapper<A, T>(
 const dontKnow = Future.now(None);
 
 export function oracle<I, T, S>(answers: {
-  [uri: string]: Question[keyof Question];
-}): act.Oracle<I, T, Question, S> {
+  [uri: string]: Question.Type[keyof Question.Type];
+}): act.Oracle<I, T, Question.Type, S> {
   return (rule, question) => {
     const answer = answers[question.uri];
 

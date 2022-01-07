@@ -32,7 +32,7 @@ const { max } = Math;
 const { isElement } = Element;
 const { isText } = Text;
 
-export default Rule.Atomic.of<Page, Text, Question>({
+export default Rule.Atomic.of<Page, Text, Question.Type>({
   uri: "https://alfa.siteimprove.com/rules/sia-r69",
   requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
   tags: [Scope.Component],

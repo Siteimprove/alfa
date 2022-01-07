@@ -16,7 +16,7 @@ import { Scope } from "../tags";
 
 const { and } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Type>({
   uri: "https://alfa.siteimprove.com/rules/sia-r23",
   tags: [Scope.Component],
   evaluate({ document, device }) {

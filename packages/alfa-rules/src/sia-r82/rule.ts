@@ -24,7 +24,7 @@ const { and, test } = Predicate;
  * this needs changes in the Page Report to be able to highlight an element
  * different from the test target.
  */
-export default Rule.Atomic.of<Page, Element, Question, Node>({
+export default Rule.Atomic.of<Page, Element, Question.Type, Node>({
   uri: "https://alfa.siteimprove.com/rules/sia-r82",
   requirements: [Criterion.of("3.3.1")],
   tags: [Scope.Component, Stability.Experimental],
@@ -143,7 +143,7 @@ function identifiesTarget(
   indicators: Array<Node>,
   error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Element, Result<Diagnostic>> {
+): Interview<Question.Type, Node, Element, Result<Diagnostic>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {
@@ -172,7 +172,7 @@ function describesResolution(
   indicators: Array<Node>,
   error: Err<Diagnostic>,
   device: Device
-): Interview<Question, Node, Element, Result<Diagnostic>> {
+): Interview<Question.Type, Node, Element, Result<Diagnostic>> {
   const indicator = indicators[0];
 
   if (indicator === undefined) {

@@ -23,7 +23,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { or, nor, equals } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Type>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
   requirements: [Technique.of("G170")],
   tags: [Scope.Component],

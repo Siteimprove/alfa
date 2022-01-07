@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { Question } from "../common/question";
 import { Scope } from "../tags";
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Type>({
   uri: "https://alfa.siteimprove.com/rules/sia-r25",
   requirements: [Technique.of("G8"), Technique.of("G78"), Technique.of("G173")],
   tags: [Scope.Component],
