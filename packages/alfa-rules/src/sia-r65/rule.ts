@@ -46,12 +46,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
       },
 
       expectations(target) {
-        const askFocusIndicator = Question.of(
-          "boolean",
-          "has-focus-indicator",
-          `Does the element have a visible focus indicator?`,
-          target
-        );
+        const askFocusIndicator = Question.of("has-focus-indicator", target);
 
         return {
           1: askFocusIndicator

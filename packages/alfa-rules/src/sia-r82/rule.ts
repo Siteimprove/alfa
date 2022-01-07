@@ -11,15 +11,23 @@ import { expectation } from "../common/expectation";
 import { hasRole, isPerceivable } from "../common/predicate";
 
 import { Question } from "../common/question";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;
 
+/**
+ * R82 ask questions whose subject is not the target of the rule.
+ * The context of the question is still the test target, but the
+ * subjects can be various other elements.
+ * This needs changes in Dory, Nemo, and likely databases to be stored;
+ * this needs changes in the Page Report to be able to highlight an element
+ * different from the test target.
+ */
 export default Rule.Atomic.of<Page, Element, Question, Node>({
   uri: "https://alfa.siteimprove.com/rules/sia-r82",
   requirements: [Criterion.of("3.3.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -48,12 +56,9 @@ export default Rule.Atomic.of<Page, Element, Question, Node>({
       },
 
       expectations(target) {
-        const indicators = Question.of(
-          "node[]",
-          "error-indicators",
-          `Where are the error indicators, if any, for the form field?`,
-          target
-        ).map((indicators) => [...indicators]);
+        const indicators = Question.of("error-indicators", target).map(
+          (indicators) => [...indicators]
+        );
 
         return {
           1: indicators.map((indicators) =>
@@ -146,9 +151,7 @@ function identifiesTarget(
   }
 
   return Question.of(
-    "boolean",
     "error-indicator-identifies-form-field",
-    "Does the error indicator identify, in text, the form field it relates to?",
     indicator,
     target
   ).map((isIdentified) => {
@@ -177,10 +180,7 @@ function describesResolution(
   }
 
   return Question.of(
-    "boolean",
     "error-indicator-describes-resolution",
-    `Does the error indicator describe, in text, the cause of the error or how
-    to resolve it?`,
     indicator,
     target
   ).map((isDescribed) => {

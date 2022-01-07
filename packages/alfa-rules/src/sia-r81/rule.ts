@@ -76,10 +76,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             () => Outcomes.ResolveSameResource,
             () =>
               Question.of(
-                "boolean",
                 "reference-equivalent-resources",
-                `Do the links resolve to equivalent resources?`,
-                target
+                target,
+                `Do the links resolve to equivalent resources?`
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

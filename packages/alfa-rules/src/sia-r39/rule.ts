@@ -54,11 +54,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
       expectations(target) {
         return {
           1: Question.of(
-            "boolean",
             "name-describes-purpose",
+            target,
             `Does the accessible name of the \`<${target.name}>\` element
-            describe its purpose?`,
-            target
+            describe its purpose?`
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,

@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { RGB } from "@siteimprove/alfa-css";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -70,19 +71,9 @@ export default Rule.Atomic.of<Page, Text, Question>({
       },
 
       expectations(target) {
-        const foregrounds = Question.of(
-          "color[]",
-          "foreground-colors",
-          "What are the foreground colors of the text node?",
-          target
-        );
+        const foregrounds = Question.of("foreground-colors", target);
 
-        const backgrounds = Question.of(
-          "color[]",
-          "background-colors",
-          "What are the background colors of the text node?",
-          target
-        );
+        const backgrounds = Question.of("background-colors", target);
 
         const result = foregrounds.map((foregrounds) =>
           backgrounds.map((backgrounds) => {

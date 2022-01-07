@@ -28,18 +28,16 @@ export default Rule.Atomic.of<Page, Element, Question>({
       expectations(target) {
         return {
           1: Question.of(
-            "node",
             "transcript",
-            `Where is the transcript of the \`<audio>\` element?`,
-            target
+            target,
+            `Where is the transcript of the \`<audio>\` element?`
           ).map((transcript) => {
             if (transcript.isNone()) {
               return Question.of(
-                "node",
                 "transcript-link",
+                target,
                 `Where is the link pointing to the transcript of the \`<audio>\`
-                element?`,
-                target
+                element?`
               ).map((transcriptLink) => {
                 if (transcriptLink.isNone()) {
                   return Option.of(Outcomes.HasNoTranscript);
@@ -54,10 +52,9 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 }
 
                 return Question.of(
-                  "boolean",
                   "transcript-perceivable",
-                  `Is the transcript of the \`<audio>\` element perceivable?`,
-                  target
+                  target,
+                  `Is the transcript of the \`<audio>\` element perceivable?`
                 ).map((isPerceivable) =>
                   expectation(
                     isPerceivable,

@@ -51,12 +51,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
 
       expectations(target) {
         return {
-          1: Question.of(
-            "string",
-            "document-language",
-            "What is the main language of the document?",
-            target
-          ).map((language) =>
+          1: Question.of("document-language", target).map((language) =>
             Language.parse(language).mapOrElse(
               (naturalLanguage) =>
                 expectation(

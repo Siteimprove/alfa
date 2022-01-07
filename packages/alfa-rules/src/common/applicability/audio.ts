@@ -28,29 +28,13 @@ export function audio(
       )
     )
     .map((element) =>
-      Question.of(
-        "boolean",
-        "is-audio-streaming",
-        `Is the \`<audio>\` element streaming?`,
-        element
-      ).map((isStreaming) =>
+      Question.of("is-audio-streaming", element).map((isStreaming) =>
         isStreaming
           ? None
-          : Question.of(
-              "boolean",
-              "is-playing",
-              `Is the \`<audio>\` element currently playing?`,
-              element
-            ).map((isPlaying) =>
+          : Question.of("is-playing", element).map((isPlaying) =>
               isPlaying
                 ? Option.of(element)
-                : Question.of(
-                    "node",
-                    "play-button",
-                    `Where is the button that controls playback of the \`<audio>\`
-                    element?`,
-                    element
-                  ).map((playButton) =>
+                : Question.of("play-button", element).map((playButton) =>
                     playButton.some(
                       and(Element.isElement, isPerceivable(device))
                     )

@@ -33,7 +33,7 @@ const { and } = Refinement;
  * destination once it's been identified as a link).
  * This needs changes in Dory, Nemo, and likely databases to be stored;
  * this needs changes in the Page Report to be able to highlight an element
- * different than the test target.
+ * different from the test target.
  */
 export default Rule.Atomic.of<Page, Document, Question, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87#experimental",
@@ -77,9 +77,7 @@ export default Rule.Atomic.of<Page, Document, Question, Element>({
           }
 
           const askIsMain = Question.of(
-            "boolean",
             "is-start-of-main",
-            `Is this element at the start of the main content of the document?`,
             destination.get(),
             target
           );
@@ -106,9 +104,7 @@ export default Rule.Atomic.of<Page, Document, Question, Element>({
           Option.Maybe<Result<Diagnostic>>
         > {
           const askReference = Question.of(
-            "node",
             "internal-reference",
-            `Where in the document does this element point?`,
             element,
             target
           );
@@ -149,9 +145,7 @@ export default Rule.Atomic.of<Page, Document, Question, Element>({
         }
 
         const askIsVisible = Question.of(
-          "boolean",
           "is-visible-when-focused",
-          `Is this element visible when it's focused?`,
           element,
           target
         );

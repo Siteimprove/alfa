@@ -64,10 +64,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
-                "boolean",
                 "reference-equivalent-resources",
-                "Do the <iframe> elements embed equivalent resources?",
-                target
+                target,
+                "Do the <iframe> elements embed equivalent resources?"
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

@@ -24,20 +24,18 @@ export default Rule.Atomic.of<Page, Element, Question>({
       expectations(target) {
         return {
           1: Question.of(
-            "node",
             "transcript",
-            `Where is the transcript of the \`<video>\` element?`,
-            target
+            target,
+            `Where is the transcript of the \`<video>\` element?`
           ).map((transcript) =>
             expectation(
               transcript.isSome(),
               () => Outcomes.HasTranscript,
               () =>
                 Question.of(
-                  "node",
                   "transcript-link",
-                  `Where is the link pointing to the transcript of the \`<video>\` element?`,
-                  target
+                  target,
+                  `Where is the link pointing to the transcript of the \`<video>\` element?`
                 ).map((transcriptLink) =>
                   expectation(
                     transcriptLink.isSome(),
