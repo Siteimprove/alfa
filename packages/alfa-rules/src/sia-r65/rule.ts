@@ -26,7 +26,7 @@ const { isElement } = Element;
 const { isKeyword } = Keyword;
 const { or, test, xor } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question.Type>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",
   requirements: [Criterion.of("2.4.7")],
   tags: [Scope.Component],

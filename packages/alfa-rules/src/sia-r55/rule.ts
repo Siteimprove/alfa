@@ -17,7 +17,7 @@ import { Scope } from "../tags";
 const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question.Type>({
+export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r55",
   tags: [Scope.Component],
   evaluate({ device, document }) {

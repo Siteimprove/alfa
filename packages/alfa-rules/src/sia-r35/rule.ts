@@ -16,7 +16,7 @@ import R33 from "../sia-r33/rule";
 import R34 from "../sia-r34/rule";
 import { Scope } from "../tags";
 
-export default Rule.Composite.of<Page, Element, Question.Type>({
+export default Rule.Composite.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r35",
   requirements: [
     Criterion.of("1.2.1"),

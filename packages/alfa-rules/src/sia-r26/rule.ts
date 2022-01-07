@@ -9,7 +9,7 @@ import { videoTextAlternative } from "../common/expectation/media-text-alternati
 import { Question } from "../common/question";
 import { Scope } from "../tags";
 
-export default Rule.Atomic.of<Page, Element, Question.Type>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r26",
   tags: [Scope.Component],
   evaluate({ device, document }) {

@@ -40,7 +40,7 @@ export const Fail = (uri: string) =>
   });
 
 export const CantTell = (uri: string) =>
-  Rule.Atomic.of<string, string, { boolean: boolean }>({
+  Rule.Atomic.of<string, string, { "is-passed": ["boolean", boolean] }>({
     uri,
 
     evaluate(input) {
@@ -50,13 +50,13 @@ export const CantTell = (uri: string) =>
         },
 
         expectations(target) {
-          const isPassed = Question.of<"boolean", string, string, boolean>(
+          const isPassed = Question.of<
             "boolean",
-            "is-passed",
-            "Does the rule pass?",
-            target,
-            target
-          );
+            string,
+            string,
+            boolean,
+            "is-passed"
+          >("boolean", "is-passed", "Does the rule pass?", target, target);
           return {
             1: isPassed.map((passed) =>
               passed

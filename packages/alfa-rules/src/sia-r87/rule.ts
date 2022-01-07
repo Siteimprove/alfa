@@ -28,7 +28,7 @@ const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Document, Question.Type>({
+export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
   tags: [Scope.Page],
@@ -94,7 +94,7 @@ export default Rule.Atomic.of<Page, Document, Question.Type>({
         function isAtTheStartOfMain(
           reference: Option<Node>
         ): Interview<
-          Question.Type,
+          Question.Metadata,
           Document,
           Document,
           Option.Maybe<Result<Diagnostic, Diagnostic>>
@@ -114,7 +114,7 @@ export default Rule.Atomic.of<Page, Document, Question.Type>({
         }
 
         function isSkipLink(): Interview<
-          Question.Type,
+          Question.Metadata,
           Document,
           Document,
           Option.Maybe<Result<Diagnostic>>

@@ -15,7 +15,7 @@ export function video(
   document: Document,
   device: Device,
   options: video.Options = {}
-): Iterable<Interview<Question.Type, Element, Element, Option<Element>>> {
+): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   const { audio, track } = options;
 
   return document

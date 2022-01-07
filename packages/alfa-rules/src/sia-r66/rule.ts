@@ -31,7 +31,7 @@ const { max } = Math;
 const { isElement } = Element;
 const { isText } = Text;
 
-export default Rule.Atomic.of<Page, Text, Question.Type>({
+export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r66",
   requirements: [Criterion.of("1.4.6")],
   tags: [Scope.Component],

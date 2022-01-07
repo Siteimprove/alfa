@@ -21,7 +21,7 @@ const { and } = Refinement;
  * the `lang` attribute. This is not a nice experience for the end user and
  * shouldn't be used until backend can automatically determine the answer.
  */
-export default Rule.Atomic.of<Page, Document, Question.Type>({
+export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r109",
   requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
   tags: [Scope.Page, Stability.Experimental],

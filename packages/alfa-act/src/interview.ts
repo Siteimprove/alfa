@@ -18,17 +18,26 @@ type Depths = [-1, 0, 1, 2];
 /**
  * @public
  */
-export type Interview<Q, S, C, A, D extends number = 3> =
-  | A
+export type Interview<
+  QUESTION,
+  SUBJECT,
+  CONTEXT,
+  ANSWER,
+  D extends number = 3
+> =
+  | ANSWER
   | {
-      [K in keyof Q]: Question<
-        K,
-        S,
-        C,
-        Q[K],
-        D extends -1 ? A : Interview<Q, S, C, A, Depths[D]>
+      [URI in keyof QUESTION]: Question<
+        QUESTION[URI] extends [infer T, any] ? T : never,
+        SUBJECT,
+        CONTEXT,
+        QUESTION[URI] extends [any, infer A] ? A : never,
+        D extends -1
+          ? ANSWER
+          : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>,
+        URI extends string ? URI : never
       >;
-    }[keyof Q];
+    }[keyof QUESTION];
 
 /**
  * @public

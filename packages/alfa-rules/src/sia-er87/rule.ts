@@ -35,7 +35,7 @@ const { and } = Refinement;
  * this needs changes in the Page Report to be able to highlight an element
  * different from the test target.
  */
-export default Rule.Atomic.of<Page, Document, Question.Type, Element>({
+export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87#experimental",
   requirements: [Technique.of("G1")],
   tags: [Scope.Page, Stability.Experimental],
@@ -62,7 +62,7 @@ export default Rule.Atomic.of<Page, Document, Question.Type, Element>({
         function isAtTheStartOfMain(
           reference: Node
         ): Interview<
-          Question.Type,
+          Question.Metadata,
           Element,
           Document,
           Option.Maybe<Result<Diagnostic, Diagnostic>>
@@ -98,7 +98,7 @@ export default Rule.Atomic.of<Page, Document, Question.Type, Element>({
         }
 
         function isSkipLink(): Interview<
-          Question.Type,
+          Question.Metadata,
           Element,
           Document,
           Option.Maybe<Result<Diagnostic>>

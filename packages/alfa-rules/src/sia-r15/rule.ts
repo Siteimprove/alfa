@@ -22,7 +22,7 @@ import { Question } from "../common/question";
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question.Type>({
+export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
   tags: [Scope.Component],

@@ -29,8 +29,8 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
         transcript: None,
         "transcript-link": None,
         "has-description": true,
-        "text-alternative": false,
-        label: false,
+        "text-alternative": None,
+        label: None,
         "track-describes-video": true,
       })
     ),

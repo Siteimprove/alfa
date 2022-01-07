@@ -15,7 +15,7 @@ import { Scope } from "../tags";
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not, test } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question.Type>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r39",
   requirements: [
     Criterion.of("1.1.1"),

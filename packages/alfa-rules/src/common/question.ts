@@ -9,14 +9,12 @@ import * as act from "@siteimprove/alfa-act";
  */
 export namespace Question {
   /**
-   * @public
    * Maps the `type` parameter of questions to the expected type of the answer.
    */
-  export interface Type {
+  interface Type {
     boolean: boolean;
     node: Option<Node>;
     "node[]": Iterable<Node>;
-    color: Option<RGB>;
     "color[]": Iterable<RGB>;
     string: string;
   }
@@ -49,16 +47,6 @@ export namespace Question {
    * The list of all registered URIs.
    */
   type Uri = keyof typeof Data;
-
-  // function foo<U extends Uri = Uri>(
-  //   uri: U,
-  //   type: Metadata[U][0],
-  //   answer: Metadata[U][1]
-  // ): void {}
-  //
-  // foo("has-audio", "boolean", true);
-  // foo("has-audio", "boolean", "true");
-  // foo("has-audio", "node", "true");
 
   export function of<S, U extends Uri = Uri>(
     uri: U,
