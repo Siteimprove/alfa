@@ -21,6 +21,8 @@ function wrapper<A, T>(
 
 const dontKnow = Future.now(None);
 
+type Uri = keyof Question.Metadata;
+
 export function oracle<I, T, S>(answers: {
   [uri: string]: Question.Type[keyof Question.Type];
 }): act.Oracle<I, T, Question.Type, S> {

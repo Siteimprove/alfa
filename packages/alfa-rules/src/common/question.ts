@@ -10,7 +10,7 @@ import * as act from "@siteimprove/alfa-act";
 export namespace Question {
   /**
    * @public
-   * Maps the `type` parameter of question to the expected type of the answer.
+   * Maps the `type` parameter of questions to the expected type of the answer.
    */
   export interface Type {
     boolean: boolean;
@@ -21,8 +21,21 @@ export namespace Question {
     string: string;
   }
 
-  // If a question data is poorly filled, the intersection reduces to never
-  // and `of` doesn't type correctly.
+  /**
+   * @public
+   * Maps the `uri` parameter of questions to their `type` parameter and the
+   * expected type of answers.
+   */
+  export type Metadata = {
+    [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
+  };
+
+  /**
+   * Since Data is declared `as const`, `typeof Data` is a readonly type with the
+   * actual keys as string literal types (rather than the generic string).
+   * The intersection with the generic Record ensures that if Data is not
+   * correctly filled, Question.of won't properly type.
+   */
   type Data = typeof Data &
     Record<
       Uri,
@@ -32,7 +45,20 @@ export namespace Question {
       }
     >;
 
+  /**
+   * The list of all registered URIs.
+   */
   type Uri = keyof typeof Data;
+
+  // function foo<U extends Uri = Uri>(
+  //   uri: U,
+  //   type: Metadata[U][0],
+  //   answer: Metadata[U][1]
+  // ): void {}
+  //
+  // foo("has-audio", "boolean", true);
+  // foo("has-audio", "boolean", "true");
+  // foo("has-audio", "node", "true");
 
   export function of<S, U extends Uri = Uri>(
     uri: U,

@@ -14,6 +14,10 @@ import { Rule } from "./rule";
 
 /**
  * @public
+ * I: type of Input for the associated rule
+ * T: type of the rule's test target
+ * Q: questions' metadata type
+ * S: possible types of questions' subject.
  */
 export abstract class Outcome<I, T, Q = never, S = T>
   implements
