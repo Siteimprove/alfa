@@ -27,19 +27,19 @@ import { Text } from '@siteimprove/alfa-dom';
 const _default: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_10: Rule.Atomic<Page, Attribute, never, Attribute>;
+const _default_10: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_11: Rule.Atomic<Page, Element, never, Element>;
+const _default_11: Rule.Atomic<Page, Attribute, never, Attribute>;
 
 // @public (undocumented)
 const _default_12: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_13: Rule.Atomic<Page, Attribute, never, Attribute>;
+const _default_13: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_14: Rule.Atomic<Page, Element, never, Element>;
+const _default_14: Rule.Atomic<Page, Attribute, never, Attribute>;
 
 // @public (undocumented)
 const _default_15: Rule.Atomic<Page, Element, never, Element>;
@@ -51,19 +51,19 @@ const _default_16: Rule.Atomic<Page, Element, never, Element>;
 const _default_17: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_18: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
+const _default_18: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_19: Rule.Atomic<Page, Element, never, Element>;
+const _default_19: Rule.Atomic<Page, Group<Element>, Question.Metadata, Group<Element>>;
 
 // @public (undocumented)
-const _default_2: Rule.Atomic<Page, Document, Question, Element>;
+const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element>;
 
 // @public (undocumented)
 const _default_20: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_21: Rule.Atomic<Page, Attribute, never, Attribute>;
+const _default_21: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
 const _default_22: Rule.Atomic<Page, Attribute, never, Attribute>;
@@ -75,73 +75,73 @@ const _default_23: Rule.Atomic<Page, Attribute, never, Attribute>;
 const _default_24: Rule.Atomic<Page, Attribute, never, Attribute>;
 
 // @public (undocumented)
-const _default_25: Rule.Atomic<Page, Element, Question, Element>;
+const _default_25: Rule.Atomic<Page, Attribute, never, Attribute>;
 
 // @public (undocumented)
-const _default_26: Rule.Atomic<Page, Element, Question, Element>;
+const _default_26: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_27: Rule.Atomic<Page, Element, Question, Element>;
+const _default_27: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_28: Rule.Atomic<Page, Element, Question, Element>;
+const _default_28: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_29: Rule.Atomic<Page, Element, Question, Element>;
+const _default_29: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_3: Rule.Atomic<Page, Document, Question, Document>;
+const _default_3: Rule.Atomic<Page, Element, Question.Metadata, Node>;
 
 // @public (undocumented)
-const _default_30: Rule.Composite<Page, Element, Question, Element>;
+const _default_30: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_31: Rule.Atomic<Page, Element, never, Element>;
+const _default_31: Rule.Composite<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_32: Rule.Atomic<Page, Element, Question, Element>;
+const _default_32: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_33: Rule.Composite<Page, Element, Question, Element>;
+const _default_33: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_34: Rule.Atomic<Page, Element, Question, Element>;
+const _default_34: Rule.Composite<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_35: Rule.Atomic<Page, Element, Question, Element>;
+const _default_35: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_36: Rule.Atomic<Page, Element, Question, Element>;
+const _default_36: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_37: Rule.Atomic<Page, Element, Question, Element>;
+const _default_37: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_38: Rule.Composite<Page, Element, Question, Element>;
+const _default_38: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_39: Rule.Atomic<Page, Element, Question, Element>;
+const _default_39: Rule.Composite<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_4: Rule.Atomic<Page, Document, never, Document>;
+const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public (undocumented)
-const _default_40: Rule.Composite<Page, Element, Question, Element>;
+const _default_40: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_41: Rule.Composite<Page, Element, Question, Element>;
+const _default_41: Rule.Composite<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_42: Rule.Atomic<Page, Element, Question, Element>;
+const _default_42: Rule.Composite<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_43: Rule.Atomic<Page, Element, never, Element>;
+const _default_43: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_44: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
+const _default_44: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_45: Rule.Atomic<Page, Element, never, Element>;
+const _default_45: Rule.Atomic<Page, Group<Element>, Question.Metadata, Group<Element>>;
 
 // @public (undocumented)
 const _default_46: Rule.Atomic<Page, Element, never, Element>;
@@ -150,55 +150,55 @@ const _default_46: Rule.Atomic<Page, Element, never, Element>;
 const _default_47: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_48: Rule.Atomic<Page, Attribute, never, Attribute>;
+const _default_48: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_49: Rule.Atomic<Page, Element, never, Element>;
+const _default_49: Rule.Atomic<Page, Attribute, never, Attribute>;
 
 // @public (undocumented)
-const _default_5: Rule.Atomic<Page, Element, never, Element>;
+const _default_5: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
 const _default_50: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_51: Rule.Atomic<Page, Element, Question, Element>;
+const _default_51: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_52: Rule.Atomic<Page, Element, Question, Element>;
+const _default_52: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_53: Rule.Composite<Page, Element, Question, Element>;
+const _default_53: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_54: Rule.Atomic<Page, Element, never, Element>;
+const _default_54: Rule.Composite<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
 const _default_55: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_56: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
+const _default_56: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_57: Rule.Atomic<Page, Group<Element>, never, Group<Element>>;
+const _default_57: Rule.Atomic<Page, Group<Element>, Question.Metadata, Group<Element>>;
 
 // @public (undocumented)
-const _default_58: Rule.Atomic<Page, Text, never, Text>;
+const _default_58: Rule.Atomic<Page, Group<Element>, never, Group<Element>>;
 
 // @public (undocumented)
-const _default_59: Rule.Atomic<Page, Document, never, Document>;
+const _default_59: Rule.Atomic<Page, Text, never, Text>;
 
 // @public (undocumented)
 const _default_6: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_60: Rule.Atomic<Page, Element, never, Element>;
+const _default_60: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
-const _default_61: Rule.Atomic<Page, Document, never, Document>;
+const _default_61: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_62: Rule.Atomic<Page, Element, never, Element>;
+const _default_62: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
 const _default_63: Rule.Atomic<Page, Element, never, Element>;
@@ -207,28 +207,28 @@ const _default_63: Rule.Atomic<Page, Element, never, Element>;
 const _default_64: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_65: Rule.Atomic<Page, Element, Question, Element>;
+const _default_65: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_66: Rule.Atomic<Page, Text, Question, Text>;
+const _default_66: Rule.Atomic<Page, Element, Question.Metadata, Element>;
 
 // @public (undocumented)
-const _default_67: Rule.Atomic<Page, Element, never, Element>;
+const _default_67: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public (undocumented)
 const _default_68: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_69: Rule.Atomic<Page, Text, Question, Text>;
+const _default_69: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
 const _default_7: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_70: Rule.Atomic<Page, Document, never, Document>;
+const _default_70: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public (undocumented)
-const _default_71: Rule.Atomic<Page, Element, never, Element>;
+const _default_71: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
 const _default_72: Rule.Atomic<Page, Element, never, Element>;
@@ -255,16 +255,16 @@ const _default_78: Rule.Atomic<Page, Element, never, Element>;
 const _default_79: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_8: Rule.Atomic<Page, Attribute, never, Attribute>;
+const _default_8: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
 const _default_80: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_81: Rule.Atomic<Page, Group<Element>, Question, Group<Element>>;
+const _default_81: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_82: Rule.Atomic<Page, Element, Question, Node>;
+const _default_82: Rule.Atomic<Page, Group<Element>, Question.Metadata, Group<Element>>;
 
 // @public (undocumented)
 const _default_83: Rule.Atomic<Page, Text, never, Text>;
@@ -279,7 +279,7 @@ const _default_85: Rule.Atomic<Page, Element, never, Element>;
 const _default_86: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_87: Rule.Atomic<Page, Document, Question, Document>;
+const _default_87: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public (undocumented)
 const _default_88: Rule.Atomic<Page, Element, never, Element>;
@@ -288,7 +288,7 @@ const _default_88: Rule.Atomic<Page, Element, never, Element>;
 const _default_89: Rule.Atomic<Page, Element, never, Element>;
 
 // @public (undocumented)
-const _default_9: Rule.Atomic<Page, Element, never, Element>;
+const _default_9: Rule.Atomic<Page, Attribute, never, Attribute>;
 
 // @public (undocumented)
 const _default_90: Rule.Atomic<Page, Element, never, Element>;
@@ -309,7 +309,8 @@ declare namespace experimentalRules {
     export {
         _default as ER62,
         _default_2 as ER87,
-        _default_3 as R109
+        _default_3 as R82,
+        _default_4 as R109
     }
 }
 export { experimentalRules }
@@ -363,27 +364,171 @@ export namespace Group {
 }
 
 // @public (undocumented)
-export interface Question {
-    // (undocumented)
-    "color[]": Iterable<RGB>;
-    // (undocumented)
-    "node[]": Iterable<Node>;
-    // (undocumented)
-    boolean: boolean;
-    // (undocumented)
-    color: Option<RGB>;
-    // (undocumented)
-    node: Option<Node>;
-    // (undocumented)
-    string: string;
-}
-
-// @public (undocumented)
 export namespace Question {
+    export type Data = typeof Data & Record<Uri, {
+        readonly type: keyof Type;
+        readonly message: string;
+    }>;
+    export type Metadata = {
+        [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
+    };
     // (undocumented)
-    export function of<Q extends keyof Question, S, U extends string = string>(type: Q, uri: U, message: string, subject: S): act.Question<Q, S, S, Question[Q], Question[Q], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     // (undocumented)
-    export function of<Q extends keyof Question, S, C, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): act.Question<Q, S, C, Question[Q], Question[Q], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export interface Type {
+        // (undocumented)
+        "color[]": Iterable<RGB>;
+        // (undocumented)
+        "node[]": Iterable<Node>;
+        // (undocumented)
+        boolean: boolean;
+        // (undocumented)
+        node: Option<Node>;
+        // (undocumented)
+        string: string;
+    }
+    export type Uri = keyof typeof Data;
+    const // (undocumented)
+    Data: {
+        readonly "reference-equivalent-resources": {
+            readonly type: "boolean";
+            readonly message: "Do the [links/iframe] [resolve to/reference] equivalent resources?";
+        };
+        readonly "has-audio": {
+            readonly type: "boolean";
+            readonly message: "Does the `<video>` element have audio?";
+        };
+        readonly "has-audio-track": {
+            readonly type: "boolean";
+            readonly message: "Does the `<video>` element have an audio track that describes its\n            visual information?";
+        };
+        readonly "has-captions": {
+            readonly type: "boolean";
+            readonly message: "Does the `<video>` element have captions?";
+        };
+        readonly "has-description": {
+            readonly type: "boolean";
+            readonly message: "Is the visual information of the [audio/video] available through its\n            audio or a separate audio description track?";
+        };
+        readonly "is-audio-streaming": {
+            readonly type: "boolean";
+            readonly message: "Is the `<audio>` element streaming?";
+        };
+        readonly "is-playing": {
+            readonly type: "boolean";
+            readonly message: "Is the `<audio>` element currently playing?";
+        };
+        readonly "is-video-streaming": {
+            readonly type: "boolean";
+            readonly message: "Is the `<video>` element streaming?";
+        };
+        readonly label: {
+            readonly type: "node";
+            readonly message: "Where is the text that labels the [audio/video] element as a video alternative?";
+        };
+        readonly "play-button": {
+            readonly type: "node";
+            readonly message: "Where is the button that controls playback of the `<audio>`\n                    element?";
+        };
+        readonly "text-alternative": {
+            readonly type: "node";
+            readonly message: "Where is the text alternative of the [audio/video] element?";
+        };
+        readonly "track-describes-video": {
+            readonly type: "boolean";
+            readonly message: "Does at least 1 track describe the visual information of the `<video>`\n      element, either in the language of the `<video>` element or the language\n      of the page?";
+        };
+        readonly transcript: {
+            readonly type: "node";
+            readonly message: "Where is the transcript of the [audio/video] element?";
+        };
+        readonly "transcript-link": {
+            readonly type: "node";
+            readonly message: "Where is the link pointing to the transcript of the [audio/video]\n                  element?";
+        };
+        readonly "transcript-perceivable": {
+            readonly type: "boolean";
+            readonly message: "Is the transcript of the [audio/video] element perceivable?";
+        };
+        readonly "name-describes-purpose": {
+            readonly type: "boolean";
+            readonly message: "Does the accessible name of the `<(target.name]>` element\n            describe its purpose?";
+        };
+        readonly "audio-control-mechanism": {
+            readonly type: "node";
+            readonly message: "Where is the mechanism that can pause or stop the audio of the\n            `<[target.name]>` element?";
+        };
+        readonly "is-above-duration-threshold": {
+            readonly type: "boolean";
+            readonly message: "Does the `<[element.name]>` element have a duration of more\n              than 3 seconds?";
+        };
+        readonly "is-below-audio-duration-threshold": {
+            readonly type: "boolean";
+            readonly message: "Does the `<[target.name]>` element have a total audio duration\n            of less than 3 seconds?";
+        };
+        readonly "is-content-equivalent": {
+            readonly type: "boolean";
+            readonly message: "Do these [role] landmarks have the same or equivalent content?";
+        };
+        readonly "has-focus-indicator": {
+            readonly type: "boolean";
+            readonly message: "Does the element have a visible focus indicator?";
+        };
+        readonly "background-colors": {
+            readonly type: "color[]";
+            readonly message: "What are the background colors of the text node?";
+        };
+        readonly "foreground-colors": {
+            readonly type: "color[]";
+            readonly message: "What are the foreground colors of the text node?";
+        };
+        readonly "first-tabbable-is-internal-link": {
+            readonly type: "boolean";
+            readonly message: "Is the first tabbable element of the document an internal link?";
+        };
+        readonly "first-tabbable-is-visible": {
+            readonly type: "boolean";
+            readonly message: "Is the first tabbable element of the document visible if it's focused?";
+        };
+        readonly "first-tabbable-reference": {
+            readonly type: "node";
+            readonly message: "Where in the document does the first tabbable element point?";
+        };
+        readonly "first-tabbable-reference-is-main": {
+            readonly type: "boolean";
+            readonly message: "Does the first tabbable element of the document point to the main content?";
+        };
+        readonly "error-indicators": {
+            readonly type: "node[]";
+            readonly message: "Where are the error indicators, if any, for the form field?";
+        };
+        readonly "error-indicator-describes-resolution": {
+            readonly type: "boolean";
+            readonly message: "Does the error indicator describe, in text, the cause of the error or how\n      to resolve it?";
+        };
+        readonly "error-indicator-identifies-form-field": {
+            readonly type: "boolean";
+            readonly message: "Does the error indicator identify, in text, the form field it relates to?";
+        };
+        readonly "internal-reference": {
+            readonly type: "node";
+            readonly message: "Where in the document does this element point?";
+        };
+        readonly "is-start-of-main": {
+            readonly type: "boolean";
+            readonly message: "Is this element at the start of the main content of the document?";
+        };
+        readonly "is-visible-when-focused": {
+            readonly type: "boolean";
+            readonly message: "Is this element visible when it's focused?";
+        };
+        readonly "document-language": {
+            readonly type: "string";
+            readonly message: "What is the main language of the document?";
+        };
+    };
+        {};
 }
 
 // @public (undocumented)
