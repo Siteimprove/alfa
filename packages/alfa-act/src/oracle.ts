@@ -15,7 +15,7 @@ import { Rule } from "./rule";
  *               "q2": ["number?", number | undefined],
  *             \}
  */
-export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = <ANSWER>(
+export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = (
   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
   question: {
     [URI in keyof QUESTION]: Question<
@@ -23,8 +23,10 @@ export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = <ANSWER>(
       SUBJECT,
       TARGET,
       QUESTION[URI] extends [any, infer A] ? A : never,
-      ANSWER,
+      unknown,
       URI extends string ? URI : never
     >;
   }[keyof QUESTION]
-) => Future<Option<ANSWER>>;
+) => Future<
+  Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>
+>;

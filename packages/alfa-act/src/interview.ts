@@ -75,7 +75,9 @@ export namespace Interview {
       if (interview.isRhetorical()) {
         answer = Future.now(Option.of(interview.answer()));
       } else {
-        answer = oracle(rule, interview);
+        answer = oracle(rule, interview).map((option) =>
+          option.map((answer) => interview.answer(answer))
+        );
       }
 
       return answer.flatMap((answer) =>
