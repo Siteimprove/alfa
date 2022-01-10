@@ -17,6 +17,13 @@ type Depths = [-1, 0, 1, 2];
 
 /**
  * @public
+ *
+ * An Interview is either a direct ANSWER, or a question whose ultimately going
+ * to produce one, possibly through more questions (aka, an Interview).
+ *
+ * The QUESTION type maps questions' URI to the expected type of answer, both as
+ * a JavaScript manipulable representation (T), and an actual type (A).
+ * The SUBJECT and CONTEXT types are the subject and context of the question.
  */
 export type Interview<
   QUESTION,
@@ -41,15 +48,29 @@ export type Interview<
 
 /**
  * @public
+ *
+ * To conduct an interview:
+ * * if it is an answer, just send it back;
+ * * if it is a rhetorical question, fetch its answer and recursively conduct
+ *   an interview on it;
+ * * if it is a true question, ask it to the oracle and recursively conduct an
+ *   interview on the result.
+ *
+ * Oracles must return Options, to have the possibility to not answer a given
+ * question (by returning None).
+ * Oracles must return Futures, because the full interview process is essentially
+ * async (e.g., asking through a CLI).
  */
 export namespace Interview {
-  export function conduct<I, T, Q, S, A>(
-    interview: Interview<Q, S, T, A>,
-    rule: Rule<I, T, Q, S>,
-    oracle: Oracle<I, T, Q, S>
-  ): Future<Option<A>> {
+  export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(
+    // Questions' contexts are guaranteed to be (potential) test target of
+    // the rule.
+    interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,
+    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+    oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>
+  ): Future<Option<ANSWER>> {
     if (interview instanceof Question) {
-      let answer: Future<Option<Interview<Q, S, T, A>>>;
+      let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
       if (interview.isRhetorical()) {
         answer = Future.now(Option.of(interview.answer()));

@@ -112,6 +112,7 @@ export namespace Question {
     // media rules (R27 [R22, R31], R30 [R23, R29], R35 [R26, R32, R33, R34],
     //              R37 [R25, R31, R36], R38 [R24, R25, R31, R36], R50 [R48, R49])
     "has-audio": {
+      // Also used in R50 [R48, R49]
       type: "boolean",
       message: `Does the \`<video>\` element have audio?`,
     },

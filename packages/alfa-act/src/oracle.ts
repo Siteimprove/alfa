@@ -6,8 +6,6 @@ import { Rule } from "./rule";
 
 /**
  * @public
- * * INPUT: type of Input for rules
- * * TARGET: possible types of test targets
  * * QUESTION: questions' metadata type; has the shape \{ URI: [T, A] \} where
  *             URI is the question URI, T a representation of the expected return
  *             type, and A the actual return type.
@@ -16,8 +14,6 @@ import { Rule } from "./rule";
  *               "q1": ["boolean", boolean],
  *               "q2": ["number?", number | undefined],
  *             \}
- * * SUBJECT: possible types of questions' subject.
- * * ANSWER: transformed type of questions' answer.
  */
 export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = <ANSWER>(
   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
