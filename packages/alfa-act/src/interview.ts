@@ -18,7 +18,7 @@ type Depths = [-1, 0, 1, 2];
 /**
  * @public
  *
- * An Interview is either a direct ANSWER, or a question whose ultimately going
+ * An Interview is either a direct ANSWER; or a question who is ultimately going
  * to produce one, possibly through more questions (aka, an Interview).
  *
  * The QUESTION type maps questions' URI to the expected type of answer, both as
@@ -48,20 +48,19 @@ export type Interview<
 
 /**
  * @public
- *
- * To conduct an interview:
- * * if it is an answer, just send it back;
- * * if it is a rhetorical question, fetch its answer and recursively conduct
- *   an interview on it;
- * * if it is a true question, ask it to the oracle and recursively conduct an
- *   interview on the result.
- *
- * Oracles must return Options, to have the possibility to not answer a given
- * question (by returning None).
- * Oracles must return Futures, because the full interview process is essentially
- * async (e.g., asking through a CLI).
  */
 export namespace Interview {
+  //   To conduct an interview:
+  // * if it is an answer, just send it back;
+  // * if it is a rhetorical question, fetch its answer and recursively conduct
+  //   an interview on it;
+  // * if it is a true question, ask it to the oracle and recursively conduct an
+  //   interview on the result.
+  //
+  // Oracles must return Options, to have the possibility to not answer a given
+  // question (by returning None).
+  // Oracles must return Futures, because the full interview process is essentially
+  // async (e.g., asking through a CLI).
   export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(
     // Questions' contexts are guaranteed to be (potential) test target of
     // the rule.
@@ -76,7 +75,8 @@ export namespace Interview {
         answer = Future.now(Option.of(interview.answer()));
       } else {
         answer = oracle(rule, interview).map((option) =>
-          option.map((answer) => interview.answer(answer))
+          // need to bind due to eta-contraction losing `this`.
+          option.map(interview.answer.bind(interview))
         );
       }
 

@@ -114,7 +114,7 @@ export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> 
     [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
 }[keyof QUESTION];
 
-// @public
+// @public (undocumented)
 export namespace Interview {
     // (undocumented)
     export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Option<ANSWER>>;

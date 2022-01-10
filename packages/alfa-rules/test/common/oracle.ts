@@ -4,7 +4,14 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import { Question } from "../../src/common/question";
 
-function wrapper<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI extends string>(
+function wrapper<
+  TYPE,
+  SUBJECT,
+  CONTEXT,
+  ANSWER,
+  T,
+  URI extends keyof Question.Metadata
+>(
   question: act.Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>,
   answer: ANSWER
 ): Future<Option<ANSWER>> {

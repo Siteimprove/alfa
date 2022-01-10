@@ -28,12 +28,10 @@ export namespace Question {
     [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
   };
 
-  /**
-   * Since Data is declared `as const`, `typeof Data` is a readonly type with the
-   * actual keys as string literal types (rather than the generic string).
-   * The intersection with the generic Record ensures that if Data is not
-   * correctly filled, Question.of won't properly type.
-   */
+  // Since Data is declared `as const`, `typeof Data` is a readonly type with the
+  // actual keys as string literal types (rather than the generic string).
+  // The intersection with the generic Record ensures that if Data is not
+  // correctly filled, Question.of won't properly type.
   type Data = typeof Data &
     Record<
       Uri,
@@ -43,9 +41,10 @@ export namespace Question {
       }
     >;
 
-  /**
-   * The list of all registered URIs.
-   */
+  // The list of all registered URIs.
+  // It is needed to have it as a separate type to break circularity in building
+  // the type Data; but it shouldn't be exported and `keyof Metadata` should be
+  // preferred, to keep `Metadata` as the only source of question knowledge.
   type Uri = keyof typeof Data;
 
   export function of<S, U extends Uri = Uri>(

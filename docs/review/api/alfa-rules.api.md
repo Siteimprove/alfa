@@ -365,6 +365,7 @@ export namespace Group {
 
 // @public (undocumented)
 export namespace Question {
+    // (undocumented)
     export type Data = typeof Data & Record<Uri, {
         readonly type: keyof Type;
         readonly message: string;
@@ -388,6 +389,7 @@ export namespace Question {
         // (undocumented)
         string: string;
     }
+    // (undocumented)
     export type Uri = keyof typeof Data;
     const // (undocumented)
     Data: {
