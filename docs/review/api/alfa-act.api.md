@@ -109,21 +109,21 @@ export namespace Diagnostic {
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
 //
-// @public (undocumented)
+// @public
 export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> = ANSWER | {
     [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
 }[keyof QUESTION];
 
-// @public (undocumented)
+// @public
 export namespace Interview {
     // (undocumented)
-    export function conduct<I, T, Q, S, A>(interview: Interview<Q, S, T, A>, rule: Rule<I, T, Q, S>, oracle: Oracle<I, T, Q, S>): Future<Option<A>>;
+    export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Option<ANSWER>>;
 }
 
 // @public
-export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = <ANSWER>(rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
-    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, TARGET, QUESTION[URI] extends [any, infer A] ? A : never, ANSWER, URI extends string ? URI : never>;
-}[keyof QUESTION]) => Future<Option<ANSWER>>;
+export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
+    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, TARGET, QUESTION[URI] extends [any, infer A] ? A : never, unknown, URI extends string ? URI : never>;
+}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>>;
 
 // @public
 export abstract class Outcome<I, T, Q = never, S = T> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
