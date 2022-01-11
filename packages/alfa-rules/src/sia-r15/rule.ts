@@ -22,7 +22,7 @@ import { Question } from "../common/question";
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
   tags: [Scope.Component],
@@ -64,10 +64,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
             () => Outcomes.EmbedSameResources,
             () =>
               Question.of(
-                "boolean",
                 "reference-equivalent-resources",
-                "Do the <iframe> elements embed equivalent resources?",
-                target
+                target,
+                "Do the <iframe> elements embed equivalent resources?"
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

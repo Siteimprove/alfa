@@ -44,7 +44,7 @@ test("#expect() allows to reject cantTell outcomes", async (t) => {
 
 test("#expect() accepts an oracle", async (t) => {
   const { expect } = Asserter.of([Pass("pass"), CantTell("maybe")], [], {
-    oracle: (_, question) => Future.now(Option.of(question.answer(true))),
+    oracle: (_, question) => Future.now(Option.of(true)),
   });
 
   const result = await expect("foo").to.be.accessible();

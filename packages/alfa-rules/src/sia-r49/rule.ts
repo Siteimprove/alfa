@@ -23,7 +23,7 @@ const { isElement, hasName, hasNamespace } = Element;
 const { or, nor, equals } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
   requirements: [Technique.of("G170")],
   tags: [Scope.Component],
@@ -47,11 +47,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
           )
           .map((element) => {
             const isAboveDurationThreshold = Question.of(
-              "boolean",
               "is-above-duration-threshold",
+              element,
               `Does the \`<${element.name}>\` element have a duration of more
-              than 3 seconds?`,
-              element
+              than 3 seconds?`
             ).map((isAboveDurationThreshold) =>
               isAboveDurationThreshold ? Option.of(element) : None
             );
@@ -60,10 +59,9 @@ export default Rule.Atomic.of<Page, Element, Question>({
               return isAboveDurationThreshold;
             } else {
               return Question.of(
-                "boolean",
                 "has-audio",
-                `Does the \`<${element.name}>\` element contain audio?`,
-                element
+                element,
+                `Does the \`<${element.name}>\` element contain audio?`
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -72,11 +70,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
       expectations(target) {
         return {
           1: Question.of(
-            "node",
             "audio-control-mechanism",
+            target,
             `Where is the mechanism that can pause or stop the audio of the
-            \`<${target.name}>\` element?`,
-            target
+            \`<${target.name}>\` element?`
           )
             // If the applicable <video> or <audio> element uses native controls
             // we assume that the mechanism is the element itself.

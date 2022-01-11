@@ -21,7 +21,7 @@ const { and } = Refinement;
  * the `lang` attribute. This is not a nice experience for the end user and
  * shouldn't be used until backend can automatically determine the answer.
  */
-export default Rule.Atomic.of<Page, Document, Question>({
+export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r109",
   requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
   tags: [Scope.Page, Stability.Experimental],
@@ -51,12 +51,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
 
       expectations(target) {
         return {
-          1: Question.of(
-            "string",
-            "document-language",
-            "What is the main language of the document?",
-            target
-          ).map((language) =>
+          1: Question.of("document-language", target).map((language) =>
             Language.parse(language).mapOrElse(
               (naturalLanguage) =>
                 expectation(

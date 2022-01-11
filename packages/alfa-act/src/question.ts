@@ -15,21 +15,39 @@ const { isBoolean, isFunction } = Refinement;
 
 /**
  * @public
+ * * TYPE is a (JavaScript manipulable) representation of the expected type of
+ *   answers. It allows oracles and such to act on it. It can be an Enum, an ID,
+ *   a union of string literals, …
+ * * SUBJECT is the subject of the question.
+ * * CONTEXT is the context, some extra info added to help the subject make sense.
+ *   By convention, the context is *always* the test target (or potential test
+ *   target when questions are asked in Applicability).
+ * * ANSWER is the expected type of the answer.
+ * * T is the final result of the question, after transformation. This gives a
+ *   monadic structure to the question and allow manipulation of the answer
+ *   without breaking the Question structure.
+ * * URI is a unique identifier for the question.
  */
-export class Question<Q, S, C, A, T = A, U extends string = string>
-  implements
+export class Question<
+  TYPE,
+  SUBJECT,
+  CONTEXT,
+  ANSWER,
+  T = ANSWER,
+  URI extends string = string
+> implements
     Functor<T>,
     Applicative<T>,
     Monad<T>,
-    Serializable<Question.JSON<Q, S, C>>
+    Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, URI>>
 {
-  public static of<Q, S, C, A, U extends string = string>(
-    type: Q,
-    uri: U,
+  public static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
+    type: TYPE,
+    uri: URI,
     message: string,
-    subject: S,
-    context: C
-  ): Question<Q, S, C, A, A, U> {
+    subject: SUBJECT,
+    context: CONTEXT
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI> {
     return new Question(
       type,
       uri,
@@ -40,20 +58,20 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
     );
   }
 
-  protected readonly _type: Q;
-  protected readonly _uri: U;
+  protected readonly _type: TYPE;
+  protected readonly _uri: URI;
   protected readonly _message: string;
-  protected readonly _subject: S;
-  protected readonly _context: C;
-  protected readonly _quester: Mapper<A, T>;
+  protected readonly _subject: SUBJECT;
+  protected readonly _context: CONTEXT;
+  protected readonly _quester: Mapper<ANSWER, T>;
 
   protected constructor(
-    type: Q,
-    uri: U,
+    type: TYPE,
+    uri: URI,
     message: string,
-    subject: S,
-    context: C,
-    quester: Mapper<A, T>
+    subject: SUBJECT,
+    context: CONTEXT,
+    quester: Mapper<ANSWER, T>
   ) {
     this._type = type;
     this._uri = uri;
@@ -63,11 +81,11 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
     this._quester = quester;
   }
 
-  public get type(): Q {
+  public get type(): TYPE {
     return this._type;
   }
 
-  public get uri(): U {
+  public get uri(): URI {
     return this._uri;
   }
 
@@ -75,41 +93,54 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
     return this._message;
   }
 
-  public get subject(): S {
+  public get subject(): SUBJECT {
     return this._subject;
   }
 
-  public get context(): C {
+  public get context(): CONTEXT {
     return this._context;
   }
 
-  public isRhetorical(): this is Question.Rhetorical<Q, S, C, A, T> {
+  public isRhetorical(): this is Question.Rhetorical<
+    TYPE,
+    SUBJECT,
+    CONTEXT,
+    ANSWER,
+    T
+  > {
     return this instanceof Question.Rhetorical;
   }
 
-  public answer(answer: A): T {
+  public answer(answer: ANSWER): T {
     return this._quester(answer);
   }
 
-  public answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T, U>;
+  public answerIf(
+    condition: boolean,
+    answer: ANSWER
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
-    predicate: Predicate<S, [context: C]>,
-    answer: A
-  ): Question<Q, S, C, A, T, U>;
+    predicate: Predicate<SUBJECT, [context: CONTEXT]>,
+    answer: ANSWER
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
-  public answerIf(answer: Option<A>): Question<Q, S, C, A, T, U>;
+  public answerIf(
+    answer: Option<ANSWER>
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
-  public answerIf(answer: Result<A, unknown>): Question<Q, S, C, A, T, U>;
+  public answerIf(
+    answer: Result<ANSWER, unknown>
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
     conditionOrPredicateOrAnswer:
       | boolean
-      | Predicate<S, [context: C]>
-      | Option<A>
-      | Result<A, unknown>,
-    answer?: A
-  ): Question<Q, S, C, A, T, U> {
+      | Predicate<SUBJECT, [context: CONTEXT]>
+      | Option<ANSWER>
+      | Result<ANSWER, unknown>,
+    answer?: ANSWER
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     let condition: boolean;
 
     if (isBoolean(conditionOrPredicateOrAnswer)) {
@@ -143,7 +174,9 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
       : this;
   }
 
-  public map<V>(mapper: Mapper<T, V>): Question<Q, S, C, A, V, U> {
+  public map<U>(
+    mapper: Mapper<T, U>
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
     return new Question(
       this._type,
       this._uri,
@@ -154,15 +187,15 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
     );
   }
 
-  public apply<V>(
-    mapper: Question<Q, S, C, A, Mapper<T, V>, U>
-  ): Question<Q, S, C, A, V, U> {
+  public apply<U>(
+    mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
     return mapper.flatMap((mapper) => this.map(mapper));
   }
 
-  public flatMap<V>(
-    mapper: Mapper<T, Question<Q, S, C, A, V, U>>
-  ): Question<Q, S, C, A, V, U> {
+  public flatMap<U>(
+    mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
     return new Question(
       this._type,
       this._uri,
@@ -173,9 +206,15 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
     );
   }
 
-  public flatten<Q, S, C, A, T>(
-    this: Question<Q, S, C, A, Question<Q, S, C, A, T>>
-  ): Question<Q, S, C, A, T> {
+  public flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(
+    this: Question<
+      TYPE,
+      SUBJECT,
+      CONTEXT,
+      ANSWER,
+      Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>
+    >
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T> {
     return new Question(
       this._type,
       this._uri,
@@ -186,7 +225,7 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
     );
   }
 
-  public toJSON(): Question.JSON<Q, S, C, U> {
+  public toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, URI> {
     return {
       type: Serializable.toJSON(this._type),
       uri: this._uri,
@@ -201,18 +240,23 @@ export class Question<Q, S, C, A, T = A, U extends string = string>
  * @public
  */
 export namespace Question {
-  export interface JSON<Q, S, C, U extends string = string> {
+  export interface JSON<TYPE, SUBJECT, CONTEXT, URI extends string = string> {
     [key: string]: json.JSON;
-    type: Serializable.ToJSON<Q>;
-    uri: U;
+    type: Serializable.ToJSON<TYPE>;
+    uri: URI;
     message: string;
-    subject: Serializable.ToJSON<S>;
-    context: Serializable.ToJSON<C>;
+    subject: Serializable.ToJSON<SUBJECT>;
+    context: Serializable.ToJSON<CONTEXT>;
   }
 
-  export function isQuestion<Q, S, C, A, T = A, U extends string = string>(
-    value: unknown
-  ): value is Question<Q, S, C, A, T, U> {
+  export function isQuestion<
+    TYPE,
+    SUBJECT,
+    CONTEXT,
+    ANSWER,
+    T = ANSWER,
+    URI extends string = string
+  >(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     return value instanceof Question;
   }
 
@@ -226,21 +270,21 @@ export namespace Question {
    * @internal
    */
   export class Rhetorical<
-    Q,
-    S,
-    C,
-    A,
-    T = A,
-    U extends string = string
-  > extends Question<Q, S, C, A, T, U> {
+    TYPE,
+    SUBJECT,
+    CONTEXT,
+    ANSWER,
+    T = ANSWER,
+    URI extends string = string
+  > extends Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     private readonly _answer: T;
 
     public constructor(
-      type: Q,
-      uri: U,
+      type: TYPE,
+      uri: URI,
       message: string,
-      subject: S,
-      context: C,
+      subject: SUBJECT,
+      context: CONTEXT,
       answer: T
     ) {
       super(type, uri, message, subject, context, () => answer);
@@ -256,7 +300,9 @@ export namespace Question {
      * Overriding {@link (Question:class).map} ensures that the answer to a
      * rhetorical question is not lost as the question is transformed.
      */
-    public map<V>(mapper: Mapper<T, V>): Rhetorical<Q, S, C, A, V, U> {
+    public map<U>(
+      mapper: Mapper<T, U>
+    ): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
       return new Rhetorical(
         this._type,
         this._uri,

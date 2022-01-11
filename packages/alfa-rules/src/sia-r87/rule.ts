@@ -28,7 +28,7 @@ const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Document, Question>({
+export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
   tags: [Scope.Page],
@@ -78,37 +78,23 @@ export default Rule.Atomic.of<Page, Document, Question>({
           .filter(and(isElement, hasRole(device, "main")));
 
         const askIsMain = Question.of(
-          "boolean",
           "first-tabbable-reference-is-main",
-          `Does the first tabbable element of the document point to the main content?`,
           target
         );
 
         const askIsInteralLink = Question.of(
-          "boolean",
           "first-tabbable-is-internal-link",
-          `Is the first tabbable element of the document an internal link?`,
           target
         );
 
-        const askReference = Question.of(
-          "node",
-          "first-tabbable-reference",
-          `Where in the document does the first tabbable element point?`,
-          target
-        );
+        const askReference = Question.of("first-tabbable-reference", target);
 
-        const askIsVisible = Question.of(
-          "boolean",
-          "first-tabbable-is-visible",
-          `Is the first tabbable element of the document visible if it's focused?`,
-          target
-        );
+        const askIsVisible = Question.of("first-tabbable-is-visible", target);
 
         function isAtTheStartOfMain(
           reference: Option<Node>
         ): Interview<
-          Question,
+          Question.Metadata,
           Document,
           Document,
           Option.Maybe<Result<Diagnostic, Diagnostic>>
@@ -128,7 +114,7 @@ export default Rule.Atomic.of<Page, Document, Question>({
         }
 
         function isSkipLink(): Interview<
-          Question,
+          Question.Metadata,
           Document,
           Document,
           Option.Maybe<Result<Diagnostic>>

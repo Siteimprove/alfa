@@ -24,7 +24,7 @@ import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
-// @public (undocumented)
+// @public
 export class Audit<I, T = unknown, Q = never, S = T> {
     // (undocumented)
     evaluate(performance?: Performance<Audit.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
@@ -35,28 +35,28 @@ export class Audit<I, T = unknown, Q = never, S = T> {
 // @public (undocumented)
 export namespace Audit {
     // (undocumented)
-    export class Event<I, T, Q, S> implements Serializable<Event.JSON> {
+    export class Event<I, T, Q, S, N extends Event.Name = Event.Name> implements Serializable<Event.JSON<N>> {
         // (undocumented)
-        static end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S>;
+        static end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end">;
         // (undocumented)
-        get name(): Event.Name;
+        get name(): N;
         // (undocumented)
-        static of<I, T, Q, S>(name: Event.Name, rule: Rule<I, T, Q, S>): Event<I, T, Q, S>;
+        static of<I, T, Q, S, N extends Event.Name>(name: N, rule: Rule<I, T, Q, S>): Event<I, T, Q, S, N>;
         // (undocumented)
         get rule(): Rule<I, T, Q, S>;
         // (undocumented)
-        static start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S>;
+        static start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start">;
         // (undocumented)
-        toJSON(): Event.JSON;
+        toJSON(): Event.JSON<N>;
     }
     // (undocumented)
     export namespace Event {
         // (undocumented)
-        export interface JSON {
+        export interface JSON<N extends Name = Name> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            name: Name;
+            name: N;
             // (undocumented)
             rule: Rule.JSON;
         }
@@ -109,23 +109,23 @@ export namespace Diagnostic {
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
 //
-// @public (undocumented)
-export type Interview<Q, S, C, A, D extends number = 3> = A | {
-    [K in keyof Q]: Question<K, S, C, Q[K], D extends -1 ? A : Interview<Q, S, C, A, Depths[D]>>;
-}[keyof Q];
+// @public
+export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> = ANSWER | {
+    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
+}[keyof QUESTION];
 
 // @public (undocumented)
 export namespace Interview {
     // (undocumented)
-    export function conduct<I, T, Q, S, A>(interview: Interview<Q, S, T, A>, rule: Rule<I, T, Q, S>, oracle: Oracle<I, T, Q, S>): Future<Option<A>>;
+    export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Option<ANSWER>>;
 }
 
-// @public (undocumented)
-export type Oracle<I, T, Q, S> = <A>(rule: Rule<I, T, Q, S>, question: {
-    [K in keyof Q]: Question<K, S, T, Q[K], A>;
-}[keyof Q]) => Future<Option<A>>;
+// @public
+export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
+    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, TARGET, QUESTION[URI] extends [any, infer A] ? A : never, unknown, URI extends string ? URI : never>;
+}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>>;
 
-// @public (undocumented)
+// @public
 export abstract class Outcome<I, T, Q = never, S = T> implements Equatable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
     protected constructor(rule: Rule<I, T, Q, S>);
     // (undocumented)
@@ -384,83 +384,83 @@ export namespace Outcome {
     }
 }
 
-// @public (undocumented)
-export class Question<Q, S, C, A, T = A, U extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<Q, S, C>> {
-    protected constructor(type: Q, uri: U, message: string, subject: S, context: C, quester: Mapper<A, T>);
+// @public
+export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, URI>> {
+    protected constructor(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
     // (undocumented)
-    answer(answer: A): T;
+    answer(answer: ANSWER): T;
     // (undocumented)
-    answerIf(condition: boolean, answer: A): Question<Q, S, C, A, T, U>;
+    answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
     // (undocumented)
-    answerIf(predicate: Predicate<S, [context: C]>, answer: A): Question<Q, S, C, A, T, U>;
+    answerIf(predicate: Predicate<SUBJECT, [context: CONTEXT]>, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
     // (undocumented)
-    answerIf(answer: Option<A>): Question<Q, S, C, A, T, U>;
+    answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
     // (undocumented)
-    answerIf(answer: Result<A, unknown>): Question<Q, S, C, A, T, U>;
+    answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
     // (undocumented)
-    apply<V>(mapper: Question<Q, S, C, A, Mapper<T, V>, U>): Question<Q, S, C, A, V, U>;
+    apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
     // (undocumented)
-    get context(): C;
+    get context(): CONTEXT;
     // (undocumented)
-    protected readonly _context: C;
+    protected readonly _context: CONTEXT;
     // (undocumented)
-    flatMap<V>(mapper: Mapper<T, Question<Q, S, C, A, V, U>>): Question<Q, S, C, A, V, U>;
+    flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
     // (undocumented)
-    flatten<Q, S, C, A, T>(this: Question<Q, S, C, A, Question<Q, S, C, A, T>>): Question<Q, S, C, A, T>;
+    flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
     // (undocumented)
-    isRhetorical(): this is Question.Rhetorical<Q, S, C, A, T>;
+    isRhetorical(): this is Question.Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
     // (undocumented)
-    map<V>(mapper: Mapper<T, V>): Question<Q, S, C, A, V, U>;
+    map<U>(mapper: Mapper<T, U>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
     // (undocumented)
     get message(): string;
     // (undocumented)
     protected readonly _message: string;
     // (undocumented)
-    static of<Q, S, C, A, U extends string = string>(type: Q, uri: U, message: string, subject: S, context: C): Question<Q, S, C, A, A, U>;
+    static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
     // (undocumented)
-    protected readonly _quester: Mapper<A, T>;
+    protected readonly _quester: Mapper<ANSWER, T>;
     // (undocumented)
-    get subject(): S;
+    get subject(): SUBJECT;
     // (undocumented)
-    protected readonly _subject: S;
+    protected readonly _subject: SUBJECT;
     // (undocumented)
-    toJSON(): Question.JSON<Q, S, C, U>;
+    toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, URI>;
     // (undocumented)
-    get type(): Q;
+    get type(): TYPE;
     // (undocumented)
-    protected readonly _type: Q;
+    protected readonly _type: TYPE;
     // (undocumented)
-    get uri(): U;
+    get uri(): URI;
     // (undocumented)
-    protected readonly _uri: U;
+    protected readonly _uri: URI;
 }
 
 // @public (undocumented)
 export namespace Question {
     // (undocumented)
-    export function isQuestion<Q, S, C, A, T = A, U extends string = string>(value: unknown): value is Question<Q, S, C, A, T, U>;
+    export function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
     // (undocumented)
-    export interface JSON<Q, S, C, U extends string = string> {
+    export interface JSON<TYPE, SUBJECT, CONTEXT, URI extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        context: Serializable.ToJSON<C>;
+        context: Serializable.ToJSON<CONTEXT>;
         // (undocumented)
         message: string;
         // (undocumented)
-        subject: Serializable.ToJSON<S>;
+        subject: Serializable.ToJSON<SUBJECT>;
         // (undocumented)
-        type: Serializable.ToJSON<Q>;
+        type: Serializable.ToJSON<TYPE>;
         // (undocumented)
-        uri: U;
+        uri: URI;
     }
     // @internal
-    export class Rhetorical<Q, S, C, A, T = A, U extends string = string> extends Question<Q, S, C, A, T, U> {
-        constructor(type: Q, uri: U, message: string, subject: S, context: C, answer: T);
+    export class Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> extends Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
+        constructor(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, answer: T);
         // (undocumented)
         answer(): T;
         // (undocumented)
-        map<V>(mapper: Mapper<T, V>): Rhetorical<Q, S, C, A, V, U>;
+        map<U>(mapper: Mapper<T, U>): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
     }
 }
 
@@ -503,7 +503,7 @@ export namespace Requirement {
     }
 }
 
-// @public (undocumented)
+// @public
 export abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implements Equatable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
     protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
     // (undocumented)

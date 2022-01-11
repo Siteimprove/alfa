@@ -10,7 +10,7 @@ import { videoDescriptionTrackAccurate } from "../common/expectation/video-descr
 import { Question } from "../common/question";
 import { Scope } from "../tags";
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r34",
   requirements: [Technique.of("H96")],
   tags: [Scope.Component],

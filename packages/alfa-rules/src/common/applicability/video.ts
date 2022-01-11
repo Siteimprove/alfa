@@ -15,7 +15,7 @@ export function video(
   document: Document,
   device: Device,
   options: video.Options = {}
-): Iterable<Interview<Question, Element, Element, Option<Element>>> {
+): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   const { audio, track } = options;
 
   return document
@@ -57,23 +57,13 @@ export function video(
       )
     )
     .map((element) =>
-      Question.of(
-        "boolean",
-        "is-video-streaming",
-        `Is the \`<video>\` element streaming?`,
-        element
-      ).map((isStreaming) => {
+      Question.of("is-video-streaming", element).map((isStreaming) => {
         if (isStreaming) {
           return None;
         }
 
         if (audio !== undefined) {
-          return Question.of(
-            "boolean",
-            "has-audio",
-            `Does the \`<video>\` element have audio?`,
-            element
-          ).map((hasAudio) =>
+          return Question.of("has-audio", element).map((hasAudio) =>
             audio.has === hasAudio ? Option.of(element) : None
           );
         }

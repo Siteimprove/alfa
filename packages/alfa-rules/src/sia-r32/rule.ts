@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { Question } from "../common/question";
 import { Scope } from "../tags";
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r32",
   requirements: [Technique.of("G166")],
   tags: [Scope.Component],
@@ -23,13 +23,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
       expectations(target) {
         return {
-          1: Question.of(
-            "boolean",
-            "has-audio-track",
-            `Does the \`<video>\` element have an audio track that describes its
-            visual information?`,
-            target
-          ).map((hasAudioTrack) =>
+          1: Question.of("has-audio-track", target).map((hasAudioTrack) =>
             expectation(
               hasAudioTrack,
               () => Outcomes.HasDescriptiveAudio,

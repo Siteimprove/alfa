@@ -17,7 +17,7 @@ import { Scope } from "../tags";
 const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
-export default Rule.Atomic.of<Page, Group<Element>, Question>({
+export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r55",
   tags: [Scope.Component],
   evaluate({ device, document }) {
@@ -61,10 +61,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question>({
           .name;
 
         const sameResource = Question.of(
-          "boolean",
           "is-content-equivalent",
-          `Do these ${role} landmarks have the same or equivalent content?`,
-          target
+          target,
+          `Do these ${role} landmarks have the same or equivalent content?`
         );
 
         return {

@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { Question } from "../common/question";
 import { Scope } from "../tags";
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r22",
   requirements: [Technique.of("G87"), Technique.of("G93"), Technique.of("H95")],
   tags: [Scope.Component],
@@ -23,12 +23,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
       expectations(target) {
         return {
-          1: Question.of(
-            "boolean",
-            "has-captions",
-            `Does the \`<video>\` element have captions?`,
-            target
-          ).map((hasCaptions) =>
+          1: Question.of("has-captions", target).map((hasCaptions) =>
             expectation(
               hasCaptions,
               () => Outcomes.HasCaptions,

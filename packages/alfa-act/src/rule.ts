@@ -25,6 +25,10 @@ const { flatMap, flatten, reduce } = Iterable;
 
 /**
  * @public
+ * * I: type of Input for the rule
+ * * T: type of the test targets
+ * * Q: questions' metadata type
+ * * S: possible types of questions' subject.
  */
 export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   implements

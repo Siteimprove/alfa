@@ -17,35 +17,67 @@ type Depths = [-1, 0, 1, 2];
 
 /**
  * @public
+ *
+ * An Interview is either a direct ANSWER; or a question who is ultimately going
+ * to produce one, possibly through more questions (aka, an Interview).
+ *
+ * The QUESTION type maps questions' URI to the expected type of answer, both as
+ * a JavaScript manipulable representation (T), and an actual type (A).
+ * The SUBJECT and CONTEXT types are the subject and context of the question.
  */
-export type Interview<Q, S, C, A, D extends number = 3> =
-  | A
+export type Interview<
+  QUESTION,
+  SUBJECT,
+  CONTEXT,
+  ANSWER,
+  D extends number = 3
+> =
+  | ANSWER
   | {
-      [K in keyof Q]: Question<
-        K,
-        S,
-        C,
-        Q[K],
-        D extends -1 ? A : Interview<Q, S, C, A, Depths[D]>
+      [URI in keyof QUESTION]: Question<
+        QUESTION[URI] extends [infer T, any] ? T : never,
+        SUBJECT,
+        CONTEXT,
+        QUESTION[URI] extends [any, infer A] ? A : never,
+        D extends -1
+          ? ANSWER
+          : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>,
+        URI extends string ? URI : never
       >;
-    }[keyof Q];
+    }[keyof QUESTION];
 
 /**
  * @public
  */
 export namespace Interview {
-  export function conduct<I, T, Q, S, A>(
-    interview: Interview<Q, S, T, A>,
-    rule: Rule<I, T, Q, S>,
-    oracle: Oracle<I, T, Q, S>
-  ): Future<Option<A>> {
+  //   To conduct an interview:
+  // * if it is an answer, just send it back;
+  // * if it is a rhetorical question, fetch its answer and recursively conduct
+  //   an interview on it;
+  // * if it is a true question, ask it to the oracle and recursively conduct an
+  //   interview on the result.
+  //
+  // Oracles must return Options, to have the possibility to not answer a given
+  // question (by returning None).
+  // Oracles must return Futures, because the full interview process is essentially
+  // async (e.g., asking through a CLI).
+  export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(
+    // Questions' contexts are guaranteed to be (potential) test target of
+    // the rule.
+    interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,
+    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+    oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>
+  ): Future<Option<ANSWER>> {
     if (interview instanceof Question) {
-      let answer: Future<Option<Interview<Q, S, T, A>>>;
+      let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
       if (interview.isRhetorical()) {
         answer = Future.now(Option.of(interview.answer()));
       } else {
-        answer = oracle(rule, interview);
+        answer = oracle(rule, interview).map((option) =>
+          // need to bind due to eta-contraction losing `this`.
+          option.map(interview.answer.bind(interview))
+        );
       }
 
       return answer.flatMap((answer) =>

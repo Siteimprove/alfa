@@ -14,6 +14,10 @@ import { Rule } from "./rule";
 
 /**
  * @public
+ * * I: type of Input for rules
+ * * T: possible types of test targets
+ * * Q: questions' metadata type
+ * * S: possible types of questions' subject.
  */
 export class Audit<I, T = unknown, Q = never, S = T> {
   public static of<I, T = unknown, Q = never, S = T>(
@@ -62,31 +66,37 @@ export class Audit<I, T = unknown, Q = never, S = T> {
  * @public
  */
 export namespace Audit {
-  export class Event<I, T, Q, S> implements Serializable<Event.JSON> {
-    public static of<I, T, Q, S>(
-      name: Event.Name,
+  export class Event<I, T, Q, S, N extends Event.Name = Event.Name>
+    implements Serializable<Event.JSON<N>>
+  {
+    public static of<I, T, Q, S, N extends Event.Name>(
+      name: N,
       rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S> {
+    ): Event<I, T, Q, S, N> {
       return new Event(name, rule);
     }
 
-    public static start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S> {
+    public static start<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start"> {
       return new Event("start", rule);
     }
 
-    public static end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S> {
+    public static end<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end"> {
       return new Event("end", rule);
     }
 
-    private readonly _name: Event.Name;
+    private readonly _name: N;
     private readonly _rule: Rule<I, T, Q, S>;
 
-    private constructor(event: Event.Name, rule: Rule<I, T, Q, S>) {
+    private constructor(event: N, rule: Rule<I, T, Q, S>) {
       this._name = event;
       this._rule = rule;
     }
 
-    public get name(): Event.Name {
+    public get name(): N {
       return this._name;
     }
 
@@ -94,7 +104,7 @@ export namespace Audit {
       return this._rule;
     }
 
-    public toJSON(): Event.JSON {
+    public toJSON(): Event.JSON<N> {
       return {
         name: this._name,
         rule: this._rule.toJSON(),
@@ -105,9 +115,9 @@ export namespace Audit {
   export namespace Event {
     export type Name = "start" | "end";
 
-    export interface JSON {
+    export interface JSON<N extends Name = Name> {
       [key: string]: json.JSON;
-      name: Name;
+      name: N;
       rule: Rule.JSON;
     }
   }

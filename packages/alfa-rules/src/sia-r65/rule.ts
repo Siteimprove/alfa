@@ -26,7 +26,7 @@ const { isElement } = Element;
 const { isKeyword } = Keyword;
 const { or, test, xor } = Predicate;
 
-export default Rule.Atomic.of<Page, Element, Question>({
+export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",
   requirements: [Criterion.of("2.4.7")],
   tags: [Scope.Component],
@@ -46,12 +46,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
       },
 
       expectations(target) {
-        const askFocusIndicator = Question.of(
-          "boolean",
-          "has-focus-indicator",
-          `Does the element have a visible focus indicator?`,
-          target
-        );
+        const askFocusIndicator = Question.of("has-focus-indicator", target);
 
         return {
           1: askFocusIndicator
