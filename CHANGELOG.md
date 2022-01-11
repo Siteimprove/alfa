@@ -21,6 +21,23 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.30.0](../../compare/v0.29.0...v0.30.0) (2022-01-11)
+
+### Breaking
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): `Rule`, and associated `alfa-act` types, now use their `QUESTION` type variable to link questions' URI to the expected answer type (instead of just linking the type representation to the type); see the associated Pull Request for details. ([#1018](../issues/1018), [#1020](../pull/1020))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Questions now need to be pre-registered by their URI. The parameters of `Question.of` have changed (`type` is not needed, `message` is optional and moved to last). ([#1020](../pull/1020))
+
+- [@siteimprove/alfa-act](packages/alfa-act): Oracles should not anymore wrap their results in `question.answer`; `Interview.conduct` is now doing it automatically. ([#1020](../pull/1020))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `color` type of questions, which was not used, has been removed. ([#1020](../pull/1020))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R82 is now marked as experimental. ([#1020](../pull/1020))
+
+
 ## [0.29.0](../../compare/v0.28.0...v0.29.0) (2022-01-04)
 
 ### Added
@@ -55,7 +72,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): `<input typy="image">` elements now accept `title` as a way to provide an accessible name, following specifications and ACT rules test cases. ([#1003](../pull/1003))
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<input type="image">` elements now accept `title` as a way to provide an accessible name, following specifications and ACT rules test cases. ([#1003](../pull/1003))
 
 ## [0.26.0](../../compare/v0.25.0...v0.26.0) (2021-12-03)
 
