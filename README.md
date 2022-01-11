@@ -37,7 +37,15 @@ $ npm install @siteimprove/alfa-<package-name>
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
-At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). More often than not, your only interaction with Alfa will look similar to this:
+At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). 
+
+### Examples
+
+A list of curated examples of usage can be found in the [Alfa examples](https://github.com/Siteimprove/alfa-examples) repository.
+
+Here is an overview of some basic Alfa usage. Please note that these are TypeScript snippets that needs to be built into JavaScript code before being run. 
+
+Your first interaction with Alfa will likely be similar to this:
 
 ```ts
 import { Audit, Rule } from "@siteimprove/alfa-act";
@@ -48,7 +56,7 @@ const rules: Iterable<Rule<I, T, Q>>;
 const outcomes = await Audit.of(input, rules).evaluate();
 ```
 
-Alfa is completely pluggable with regards to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/):
+Alfa is completely pluggable in regard to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Check the [Alfa hub](https://alfa.sitemiprove.com) for details of this rules. They can simply be used as:
 
 ```ts
 import { Audit } from "@siteimprove/alfa-act";
@@ -94,6 +102,8 @@ Crawler.with(async (crawler) => {
   }
 });
 ```
+
+For more complex use cases, please check the [Alfa examples](https://github.com/Siteimprove/alfa-examples) repository. It shows how to use Alfa to test components or full web pages; how to filter outcomes based on conformance level, WCAG version, or more; how to interact with pages (e.g. open a menu) before running an audit; how to answer questions asked by Alfa (`cantTell` outcomes); or how to add custom rules to the default rule set.
 
 ## Integrations
 
