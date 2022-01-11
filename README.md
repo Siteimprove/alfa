@@ -56,7 +56,7 @@ const rules: Iterable<Rule<I, T, Q>>;
 const outcomes = await Audit.of(input, rules).evaluate();
 ```
 
-Alfa is completely pluggable in regard to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Check the [Alfa hub](https://alfa.sitemiprove.com) for details of this rules. They can simply be used as:
+Alfa is completely pluggable in regard to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). Check the [Alfa hub](https://alfa.sitemiprove.com) for details of these rules. They can simply be used as:
 
 ```ts
 import { Audit } from "@siteimprove/alfa-act";
