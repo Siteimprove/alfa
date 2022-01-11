@@ -48,12 +48,18 @@ const pairwiseContrastCache = Cache.empty<
 >();
 
 /**
- * This version of R62 accepts differences in `font-family`, and differences
- * in `cursor` (in the `hover` state).
+ * This version of R62 accepts differences in `font-family`, differences
+ * in `cursor` (in the `hover` state), and 3:1 or more contrast with surrounding
+ * text.
+ *
  * These cannot be easily displayed in the current Page report:
  * * `cursor` only shows on hovering, we could have a `a:link` and `a:hover`
  *   states that look similar, but the first one is bad and the second good,
  *   resulting in confusing info;
+ * * contrast with surrounding text is not shown as only link text is shown in
+ *   the decorator. Additionally, we could have similar looking states but with
+ *   different colors, one being good and the other bad, with little way to
+ *   understand the difference.
  * * `font-family` may depend on a font that for some reason can't be loaded,
  *   so the difference wouldn't be visible.
  */
