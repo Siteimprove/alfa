@@ -44,6 +44,7 @@ test(`evaluate() fails video without descriptive audio`, async (t) => {
     [failed(R25, target, { 1: Outcomes.HasNoInformativeAudio })]
   );
 });
+
 test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
   const target = <video src="foo.mp4" />;
 
