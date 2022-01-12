@@ -368,7 +368,9 @@ export namespace Element {
   /**
    * @internal
    */
-  export function fromElement(json: JSON): Trampoline<Element> {
+  export function fromElement<N extends string = string>(
+    json: JSON<N>
+  ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),

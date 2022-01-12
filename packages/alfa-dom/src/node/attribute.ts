@@ -191,7 +191,9 @@ export namespace Attribute {
   /**
    * @internal
    */
-  export function fromAttribute(attribute: JSON): Trampoline<Attribute> {
+  export function fromAttribute<N extends string = string>(
+    attribute: JSON<N>
+  ): Trampoline<Attribute<N>> {
     return Trampoline.done(
       Attribute.of(
         Option.from(attribute.namespace as Namespace | null),

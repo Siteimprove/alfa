@@ -79,7 +79,9 @@ export namespace Type {
   /**
    * @internal
    */
-  export function fromType(json: JSON): Trampoline<Type> {
+  export function fromType<N extends string = string>(
+    json: JSON<N>
+  ): Trampoline<Type<N>> {
     return Trampoline.done(
       Type.of(json.name, Option.from(json.publicId), Option.from(json.systemId))
     );
