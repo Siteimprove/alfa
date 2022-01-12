@@ -16,26 +16,26 @@ const { equals, not } = Predicate;
 /**
  * @public
  */
-export class Attribute extends Node {
-  public static of(
+export class Attribute<N extends string = string> extends Node {
+  public static of<N extends string = string>(
     namespace: Option<Namespace>,
     prefix: Option<string>,
-    name: string,
+    name: N,
     value: string
-  ): Attribute {
+  ): Attribute<N> {
     return new Attribute(namespace, prefix, name, value);
   }
 
   private readonly _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
-  private readonly _name: string;
+  private readonly _name: N;
   private readonly _value: string;
   private _owner: Option<Element> = None;
 
   private constructor(
     namespace: Option<Namespace>,
     prefix: Option<string>,
-    name: string,
+    name: N,
     value: string
   ) {
     super([]);
@@ -54,12 +54,12 @@ export class Attribute extends Node {
     return this._prefix;
   }
 
-  public get name(): string {
+  public get name(): N | Lowercase<N> {
     return Attribute.foldCase(this._name, this._owner);
   }
 
   public get qualifiedName(): string {
-    return this._prefix.reduce(
+    return this._prefix.reduce<string>(
       (name, prefix) => `${prefix}:${name}`,
       this._name
     );
@@ -129,7 +129,7 @@ export class Attribute extends Node {
       : None;
   }
 
-  public toJSON(): Attribute.JSON {
+  public toJSON(): Attribute.JSON<N> {
     return {
       type: "attribute",
       path: this.path(),
@@ -176,10 +176,11 @@ export class Attribute extends Node {
  * @public
  */
 export namespace Attribute {
-  export interface JSON extends Node.JSON<"attribute"> {
+  export interface JSON<N extends string = string>
+    extends Node.JSON<"attribute"> {
     namespace: string | null;
     prefix: string | null;
-    name: string;
+    name: N;
     value: string;
   }
 
@@ -207,9 +208,12 @@ export namespace Attribute {
    *
    * @internal
    */
-  export function foldCase(name: string, owner: Option<Element>): string {
+  export function foldCase<N extends string = string>(
+    name: N,
+    owner: Option<Element>
+  ): N | Lowercase<N> {
     return owner.some((owner) => owner.namespace.some(equals(Namespace.HTML)))
-      ? name.toLowerCase()
+      ? (name.toLowerCase() as Lowercase<N>)
       : name;
   }
 

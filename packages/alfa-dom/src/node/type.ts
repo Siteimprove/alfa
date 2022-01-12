@@ -6,12 +6,12 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Type extends Node {
-  public static of(
-    name: string,
+export class Type<N extends string = string> extends Node {
+  public static of<N extends string = string>(
+    name: N,
     publicId: Option<string> = None,
     systemId: Option<string> = None
-  ): Type {
+  ): Type<N> {
     return new Type(name, publicId, systemId);
   }
 
@@ -19,12 +19,12 @@ export class Type extends Node {
     return new Type("html", None, None);
   }
 
-  private readonly _name: string;
+  private readonly _name: N;
   private readonly _publicId: Option<string>;
   private readonly _systemId: Option<string>;
 
   private constructor(
-    name: string,
+    name: N,
     publicId: Option<string>,
     systemId: Option<string>
   ) {
@@ -35,7 +35,7 @@ export class Type extends Node {
     this._systemId = systemId;
   }
 
-  public get name(): string {
+  public get name(): N {
     return this._name;
   }
 
@@ -47,7 +47,7 @@ export class Type extends Node {
     return this._systemId;
   }
 
-  public toJSON(): Type.JSON {
+  public toJSON(): Type.JSON<N> {
     return {
       type: "type",
       path: this.path(),
@@ -66,8 +66,8 @@ export class Type extends Node {
  * @public
  */
 export namespace Type {
-  export interface JSON extends Node.JSON<"type"> {
-    name: string;
+  export interface JSON<N extends string = string> extends Node.JSON<"type"> {
+    name: N;
     publicId: string | null;
     systemId: string | null;
   }

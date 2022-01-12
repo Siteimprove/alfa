@@ -1,4 +1,5 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Element } from "../../element";
 
@@ -7,15 +8,17 @@ const { equals } = Predicate;
 /**
  * @public
  */
-export function hasName(predicate: Predicate<string>): Predicate<Element>;
+export function hasName<N extends string = string>(
+  predicate: Refinement<string, N>
+): Refinement<Element, Element<N>>;
 
 /**
  * @public
  */
-export function hasName(
-  name: string,
-  ...rest: Array<string>
-): Predicate<Element>;
+export function hasName<N extends string = string>(
+  name: N,
+  ...rest: Array<N>
+): Refinement<Element, Element<N>>;
 
 export function hasName(
   nameOrPredicate: string | Predicate<string>,
