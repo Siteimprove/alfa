@@ -4,13 +4,12 @@ import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isIgnored } from "../predicate/is-ignored";
-import { isPerceivable } from "../predicate/is-perceivable";
+import { isPerceivable, isRendered } from "../predicate";
 
 import { Question } from "../question";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export function audio(
   document: Document,
@@ -21,11 +20,8 @@ export function audio(
     .descendants({ flattened: true, nested: true })
     .filter(isElement)
     .filter(
-      and(
-        hasNamespace(Namespace.HTML),
-        hasName("audio"),
-        not(isIgnored(device))
-      )
+      // Non-rendered <audio> are not playing
+      and(hasNamespace(Namespace.HTML), hasName("audio"), isRendered(device))
     )
     .map((element) =>
       Question.of("is-audio-streaming", element).map((isStreaming) =>
