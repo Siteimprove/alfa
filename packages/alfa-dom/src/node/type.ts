@@ -50,6 +50,7 @@ export class Type extends Node {
   public toJSON(): Type.JSON {
     return {
       type: "type",
+      path: this.path(),
       name: this._name,
       publicId: this._publicId.getOr(null),
       systemId: this._systemId.getOr(null),
@@ -65,8 +66,7 @@ export class Type extends Node {
  * @public
  */
 export namespace Type {
-  export interface JSON extends Node.JSON {
-    type: "type";
+  export interface JSON extends Node.JSON<"type"> {
     name: string;
     publicId: string | null;
     systemId: string | null;

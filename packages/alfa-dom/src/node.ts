@@ -464,9 +464,10 @@ export abstract class Node
  * @public
  */
 export namespace Node {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: string;
+  export interface JSON<T extends string = string> {
+    [key: string]: json.JSON | undefined;
+    type: T;
+    path?: string;
   }
 
   export interface EARL extends earl.EARL {

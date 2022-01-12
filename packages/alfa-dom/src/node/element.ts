@@ -273,6 +273,7 @@ export class Element extends Node implements Slot, Slotable {
   public toJSON(): Element.JSON {
     return {
       type: "element",
+      path: this.path(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
@@ -343,8 +344,7 @@ export class Element extends Node implements Slot, Slotable {
  * @public
  */
 export namespace Element {
-  export interface JSON extends Node.JSON {
-    type: "element";
+  export interface JSON extends Node.JSON<"element"> {
     namespace: string | null;
     prefix: string | null;
     name: string;

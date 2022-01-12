@@ -132,6 +132,7 @@ export class Attribute extends Node {
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
+      path: this.path(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
@@ -175,8 +176,7 @@ export class Attribute extends Node {
  * @public
  */
 export namespace Attribute {
-  export interface JSON extends Node.JSON {
-    type: "attribute";
+  export interface JSON extends Node.JSON<"attribute"> {
     namespace: string | null;
     prefix: string | null;
     name: string;
