@@ -66,7 +66,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                "Do the <iframe> elements embed equivalent resources?"
+                Diagnostic.of(
+                  "Do the <iframe> elements embed equivalent resources?"
+                )
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

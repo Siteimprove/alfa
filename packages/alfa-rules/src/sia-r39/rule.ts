@@ -56,8 +56,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "name-describes-purpose",
             target,
-            `Does the accessible name of the \`<${target.name}>\` element
-            describe its purpose?`
+            Diagnostic.of(
+              `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`
+            )
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,

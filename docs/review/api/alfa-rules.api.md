@@ -7,6 +7,7 @@
 import * as act from '@siteimprove/alfa-act';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Attribute } from '@siteimprove/alfa-dom';
+import { Diagnostic } from '@siteimprove/alfa-act';
 import { Document } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Element } from '@siteimprove/alfa-dom';
@@ -374,9 +375,9 @@ export namespace Question {
         [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
     };
     // (undocumented)
-    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     // (undocumented)
-    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     export interface Type {
         // (undocumented)
         "color[]": Iterable<RGB>;
@@ -403,7 +404,7 @@ export namespace Question {
         };
         readonly "has-audio-track": {
             readonly type: "boolean";
-            readonly message: "Does the `<video>` element have an audio track that describes its\n            visual information?";
+            readonly message: "Does the `<video>` element have an audio track that describes its visual information?";
         };
         readonly "has-captions": {
             readonly type: "boolean";
@@ -411,7 +412,7 @@ export namespace Question {
         };
         readonly "has-description": {
             readonly type: "boolean";
-            readonly message: "Is the visual information of the [audio/video] available through its\n            audio or a separate audio description track?";
+            readonly message: "Is the visual information of the [audio/video] available through its audio or a separate audio description track?";
         };
         readonly "is-audio-streaming": {
             readonly type: "boolean";
@@ -431,7 +432,7 @@ export namespace Question {
         };
         readonly "play-button": {
             readonly type: "node";
-            readonly message: "Where is the button that controls playback of the `<audio>`\n                    element?";
+            readonly message: "Where is the button that controls playback of the `<audio>` element?";
         };
         readonly "text-alternative": {
             readonly type: "node";
@@ -439,7 +440,7 @@ export namespace Question {
         };
         readonly "track-describes-video": {
             readonly type: "boolean";
-            readonly message: "Does at least 1 track describe the visual information of the `<video>`\n      element, either in the language of the `<video>` element or the language\n      of the page?";
+            readonly message: "Does at least 1 track describe the visual information of the `<video>` element, either in the language of the `<video>` element or the language of the page?";
         };
         readonly transcript: {
             readonly type: "node";
@@ -455,19 +456,19 @@ export namespace Question {
         };
         readonly "name-describes-purpose": {
             readonly type: "boolean";
-            readonly message: "Does the accessible name of the `<(target.name]>` element\n            describe its purpose?";
+            readonly message: "Does the accessible name of the `<(target.name]>` element describe its purpose?";
         };
         readonly "audio-control-mechanism": {
             readonly type: "node";
-            readonly message: "Where is the mechanism that can pause or stop the audio of the\n            `<[target.name]>` element?";
+            readonly message: "Where is the mechanism that can pause or stop the audio of the `<[target.name]>` element?";
         };
         readonly "is-above-duration-threshold": {
             readonly type: "boolean";
-            readonly message: "Does the `<[element.name]>` element have a duration of more\n              than 3 seconds?";
+            readonly message: "Does the `<[element.name]>` element have a duration of more than 3 seconds?";
         };
         readonly "is-below-audio-duration-threshold": {
             readonly type: "boolean";
-            readonly message: "Does the `<[target.name]>` element have a total audio duration\n            of less than 3 seconds?";
+            readonly message: "Does the `<[target.name]>` element have a total audio duration of less than 3 seconds?";
         };
         readonly "is-content-equivalent": {
             readonly type: "boolean";
@@ -507,7 +508,7 @@ export namespace Question {
         };
         readonly "error-indicator-describes-resolution": {
             readonly type: "boolean";
-            readonly message: "Does the error indicator describe, in text, the cause of the error or how\n      to resolve it?";
+            readonly message: "Does the error indicator describe, in text, the cause of the error or how to resolve it?";
         };
         readonly "error-indicator-identifies-form-field": {
             readonly type: "boolean";

@@ -65,13 +65,15 @@ export function audioTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
     "text-alternative",
     target,
-    `Where is the text alternative of the \`<audio>\` element?`
+    Diagnostic.of(`Where is the text alternative of the \`<audio>\` element?`)
   );
 
   const label = Question.of(
     "label",
     target,
-    `Where is the text that labels the \`<audio>\` element as a video alternative?`
+    Diagnostic.of(
+      `Where is the text that labels the \`<audio>\` element as a video alternative?`
+    )
   );
 
   return mediaTextAlternative(alt, label, device, "<video>");
@@ -81,13 +83,15 @@ export function videoTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
     "text-alternative",
     target,
-    `Where is the text alternative of the \`<video>\` element?`
+    Diagnostic.of(`Where is the text alternative of the \`<video>\` element?`)
   );
 
   const label = Question.of(
     "label",
     target,
-    `Where is the text that labels the \`<video>\` element as a video alternative?`
+    Diagnostic.of(
+      `Where is the text that labels the \`<video>\` element as a video alternative?`
+    )
   );
 
   return mediaTextAlternative(alt, label, device, "<video>");
