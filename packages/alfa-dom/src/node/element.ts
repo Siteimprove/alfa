@@ -21,15 +21,18 @@ const { not } = Predicate;
 /**
  * @public
  */
-export class Element extends Node implements Slot, Slotable {
-  public static of(
+export class Element<N extends string = string>
+  extends Node
+  implements Slot, Slotable
+{
+  public static of<N extends string = string>(
     namespace: Option<Namespace>,
     prefix: Option<string>,
-    name: string,
+    name: N,
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
     style: Option<Block> = None
-  ): Element {
+  ): Element<N> {
     return new Element(
       namespace,
       prefix,
@@ -42,7 +45,7 @@ export class Element extends Node implements Slot, Slotable {
 
   private readonly _namespace: Option<Namespace>;
   private readonly _prefix: Option<string>;
-  private readonly _name: string;
+  private readonly _name: N;
   private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
   private _shadow: Option<Shadow> = None;
@@ -53,7 +56,7 @@ export class Element extends Node implements Slot, Slotable {
   private constructor(
     namespace: Option<Namespace>,
     prefix: Option<string>,
-    name: string,
+    name: N,
     attributes: Array<Attribute>,
     children: Array<Node>,
     style: Option<Block>
@@ -85,12 +88,12 @@ export class Element extends Node implements Slot, Slotable {
     return this._prefix;
   }
 
-  public get name(): string {
+  public get name(): N {
     return this._name;
   }
 
   public get qualifiedName(): string {
-    return this._prefix.reduce(
+    return this._prefix.reduce<string>(
       (name, prefix) => `${prefix}:${name}`,
       this._name
     );
@@ -178,9 +181,11 @@ export class Element extends Node implements Slot, Slotable {
     return Sequence.from(children);
   }
 
-  public attribute(name: string): Option<Attribute>;
+  public attribute<A extends string = string>(name: A): Option<Attribute<A>>;
 
-  public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+  public attribute<A extends string = string>(
+    predicate: Predicate<Attribute<A>>
+  ): Option<Attribute<A>>;
 
   public attribute(
     nameOrPredicate: string | Predicate<Attribute>
@@ -270,9 +275,10 @@ export class Element extends Node implements Slot, Slotable {
     return path;
   }
 
-  public toJSON(): Element.JSON {
+  public toJSON(): Element.JSON<N> {
     return {
       type: "element",
+      path: this.path(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
@@ -343,11 +349,11 @@ export class Element extends Node implements Slot, Slotable {
  * @public
  */
 export namespace Element {
-  export interface JSON extends Node.JSON {
-    type: "element";
+  export interface JSON<N extends string = string>
+    extends Node.JSON<"element"> {
     namespace: string | null;
     prefix: string | null;
-    name: string;
+    name: N;
     attributes: Array<Attribute.JSON>;
     style: Block.JSON | null;
     children: Array<Node.JSON>;
@@ -362,7 +368,9 @@ export namespace Element {
   /**
    * @internal
    */
-  export function fromElement(json: JSON): Trampoline<Element> {
+  export function fromElement<N extends string = string>(
+    json: JSON<N>
+  ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),

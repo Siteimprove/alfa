@@ -25,6 +25,7 @@ export class Fragment extends Node {
   public toJSON(): Fragment.JSON {
     return {
       type: "fragment",
+      path: this.path(),
       children: this._children.map((child) => child.toJSON()),
     };
   }
@@ -49,8 +50,7 @@ export class Fragment extends Node {
  * @public
  */
 export namespace Fragment {
-  export interface JSON extends Node.JSON {
-    type: "fragment";
+  export interface JSON extends Node.JSON<"fragment"> {
     children: Array<Node.JSON>;
   }
 

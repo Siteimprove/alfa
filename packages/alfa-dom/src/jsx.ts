@@ -9,11 +9,11 @@ const { entries } = Object;
 /**
  * @public
  */
-export function jsx(
-  name: string,
+export function jsx<N extends string = string>(
+  name: N,
   properties: jsx.Properties | null = null,
   ...children: jsx.Children
-): Element {
+): Element<N> {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
 
@@ -80,7 +80,7 @@ export namespace jsx {
    * as it might provide an opportunity to get rid of this namespace entirely.
    */
   export namespace JSX {
-    export type Element = dom.Element;
+    export type Element<N extends string = string> = dom.Element<N>;
 
     export interface IntrinsicElements {
       [tag: string]: Properties;

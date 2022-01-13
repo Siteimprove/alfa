@@ -17,7 +17,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 
 // @public (undocumented)
-export class Attribute extends Node {
+export class Attribute<N extends string = string> extends Node {
     // @internal (undocumented)
     _attachOwner(owner: Element): boolean;
     // @internal (undocumented)
@@ -29,11 +29,11 @@ export class Attribute extends Node {
     // (undocumented)
     isBoolean(): boolean;
     // (undocumented)
-    get name(): string;
+    get name(): N | Lowercase<N>;
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of(namespace: Option<Namespace>, prefix: Option<string>, name: string, value: string): Attribute;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string): Attribute<N>;
     // (undocumented)
     get owner(): Option<Element>;
     // (undocumented)
@@ -43,7 +43,7 @@ export class Attribute extends Node {
     // (undocumented)
     get qualifiedName(): string;
     // (undocumented)
-    toJSON(): Attribute.JSON;
+    toJSON(): Attribute.JSON<N>;
     // (undocumented)
     tokens(separator?: string | RegExp): Sequence<string>;
     // (undocumented)
@@ -55,21 +55,19 @@ export class Attribute extends Node {
 // @public (undocumented)
 export namespace Attribute {
     // @internal
-    export function foldCase(name: string, owner: Option<Element>): string;
+    export function foldCase<N extends string = string>(name: N, owner: Option<Element>): N | Lowercase<N>;
     // @internal (undocumented)
-    export function fromAttribute(attribute: JSON): Trampoline<Attribute>;
+    export function fromAttribute<N extends string = string>(attribute: JSON<N>): Trampoline<Attribute<N>>;
     // (undocumented)
     export function isAttribute(value: unknown): value is Attribute;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON<N extends string = string> extends Node.JSON<"attribute"> {
         // (undocumented)
-        name: string;
+        name: N;
         // (undocumented)
         namespace: string | null;
         // (undocumented)
         prefix: string | null;
-        // (undocumented)
-        type: "attribute";
         // (undocumented)
         value: string;
     }
@@ -132,11 +130,9 @@ export namespace Comment {
     // (undocumented)
     export function isComment(value: unknown): value is Comment;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Node.JSON<"comment"> {
         // (undocumented)
         data: string;
-        // (undocumented)
-        type: "comment";
     }
 }
 
@@ -234,18 +230,16 @@ export namespace Document {
     // (undocumented)
     export function isDocument(value: unknown): value is Document;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Node.JSON<"document"> {
         // (undocumented)
         children: Array<Node.JSON>;
         // (undocumented)
         style: Array<Sheet.JSON>;
-        // (undocumented)
-        type: "document";
     }
 }
 
 // @public (undocumented)
-export class Element extends Node implements Slot, Slotable {
+export class Element<N extends string = string> extends Node implements Slot, Slotable {
     // (undocumented)
     assignedNodes(): Iterable_2<Slotable>;
     // (undocumented)
@@ -255,9 +249,9 @@ export class Element extends Node implements Slot, Slotable {
     // @internal (undocumented)
     _attachShadow(shadow: Shadow): boolean;
     // (undocumented)
-    attribute(name: string): Option<Attribute>;
+    attribute<A extends string = string>(name: A): Option<Attribute<A>>;
     // (undocumented)
-    attribute(predicate: Predicate<Attribute>): Option<Attribute>;
+    attribute<A extends string = string>(predicate: Predicate<Attribute<A>>): Option<Attribute<A>>;
     // (undocumented)
     get attributes(): Sequence<Attribute>;
     // (undocumented)
@@ -271,11 +265,11 @@ export class Element extends Node implements Slot, Slotable {
     // (undocumented)
     isVoid(): boolean;
     // (undocumented)
-    get name(): string;
+    get name(): N;
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of(namespace: Option<Namespace>, prefix: Option<string>, name: string, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -291,7 +285,7 @@ export class Element extends Node implements Slot, Slotable {
     // (undocumented)
     tabIndex(): Option<number>;
     // (undocumented)
-    toJSON(): Element.JSON;
+    toJSON(): Element.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -299,11 +293,11 @@ export class Element extends Node implements Slot, Slotable {
 // @public (undocumented)
 export namespace Element {
     // @internal (undocumented)
-    export function fromElement(json: JSON): Trampoline<Element>;
+    export function fromElement<N extends string = string>(json: JSON<N>): Trampoline<Element<N>>;
     // (undocumented)
     export function isElement(value: unknown): value is Element;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON<N extends string = string> extends Node.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
         // (undocumented)
@@ -311,7 +305,7 @@ export namespace Element {
         // (undocumented)
         content: Document.JSON | null;
         // (undocumented)
-        name: string;
+        name: N;
         // (undocumented)
         namespace: string | null;
         // (undocumented)
@@ -320,8 +314,6 @@ export namespace Element {
         shadow: Shadow.JSON | null;
         // (undocumented)
         style: Block.JSON | null;
-        // (undocumented)
-        type: "element";
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
@@ -390,11 +382,9 @@ export namespace Fragment {
     // (undocumented)
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Node.JSON<"fragment"> {
         // (undocumented)
         children: Array<Node.JSON>;
-        // (undocumented)
-        type: "fragment";
     }
 }
 
@@ -423,12 +413,12 @@ export namespace GroupingRule {
 }
 
 // @public (undocumented)
-export function h(name: string, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>): Element;
+export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>): Element<N>;
 
 // @public (undocumented)
 export namespace h {
     // (undocumented)
-    export function attribute(name: string, value: string): Attribute;
+    export function attribute<N extends string = string>(name: N, value: string): Attribute<N>;
     // (undocumented)
     export function block(declarations: Array<Declaration> | Record<string, string>): Block;
     // (undocumented)
@@ -436,7 +426,7 @@ export namespace h {
     // (undocumented)
     export function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
     // (undocumented)
-    export function element(name: string, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>): Element;
+    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>): Element<N>;
     // (undocumented)
     export function fragment(children: Array<Node | string>): Fragment;
     // (undocumented)
@@ -465,7 +455,7 @@ export namespace h {
     // (undocumented)
     export function text(data: string): Text;
     // (undocumented)
-    export function type(name: string, publicId?: string, systemId?: string): Type;
+    export function type<N extends string = string>(name: N, publicId?: string, systemId?: string): Type<N>;
 }
 
 // @public (undocumented)
@@ -483,16 +473,16 @@ function hasInputType(predicate: Predicate<InputType>): Predicate<Element>;
 function hasInputType(inputType: InputType, ...rest: Array<InputType>): Predicate<Element>;
 
 // @public (undocumented)
-function hasName(predicate: Predicate<string>): Predicate<Attribute>;
+function hasName<N extends string = string>(predicate: Refinement<string, N>): Refinement<Attribute, Attribute<N>>;
 
 // @public (undocumented)
-function hasName(name: string, ...rest: Array<string>): Predicate<Attribute>;
+function hasName<N extends string = string>(name: N, ...rest: Array<N>): Refinement<Attribute, Attribute<N>>;
 
 // @public (undocumented)
-function hasName_2(predicate: Predicate<string>): Predicate<Element>;
+function hasName_2<N extends string = string>(predicate: Refinement<string, N>): Refinement<Element, Element<N>>;
 
 // @public (undocumented)
-function hasName_2(name: string, ...rest: Array<string>): Predicate<Element>;
+function hasName_2<N extends string = string>(name: N, ...rest: Array<N>): Refinement<Element, Element<N>>;
 
 // @public (undocumented)
 function hasNamespace(predicate: Predicate<Namespace>): Predicate<Element>;
@@ -550,7 +540,7 @@ function isEditingHost(element: Element): boolean;
 function isSuggestedFocusable(element: Element): boolean;
 
 // @public (undocumented)
-export function jsx(name: string, properties?: jsx.Properties | null, ...children: jsx.Children): Element;
+export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): Element<N>;
 
 // @public (undocumented)
 export namespace jsx {
@@ -563,7 +553,7 @@ export namespace jsx {
         // Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
         //
         // (undocumented)
-        export type Element = dom.Element;
+        export type Element<N extends string = string> = dom.Element<N>;
         // (undocumented)
         export interface IntrinsicElements {
             // (undocumented)
@@ -840,11 +830,13 @@ export namespace Node {
     // (undocumented)
     export function isNode(value: unknown): value is Node;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T extends string = string> {
         // (undocumented)
-        [key: string]: json.JSON;
+        [key: string]: json.JSON | undefined;
         // (undocumented)
-        type: string;
+        path?: string;
+        // (undocumented)
+        type: T;
     }
     // (undocumented)
     export interface Traversal {
@@ -1153,28 +1145,26 @@ export namespace Text {
     // (undocumented)
     export function isText(value: unknown): value is Text;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Node.JSON<"text"> {
         // (undocumented)
         data: string;
-        // (undocumented)
-        type: "text";
     }
 }
 
 // @public (undocumented)
-export class Type extends Node {
+export class Type<N extends string = string> extends Node {
     // (undocumented)
     static empty(): Type;
     // (undocumented)
-    get name(): string;
+    get name(): N;
     // (undocumented)
-    static of(name: string, publicId?: Option<string>, systemId?: Option<string>): Type;
+    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>): Type<N>;
     // (undocumented)
     get publicId(): Option<string>;
     // (undocumented)
     get systemId(): Option<string>;
     // (undocumented)
-    toJSON(): Type.JSON;
+    toJSON(): Type.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -1182,19 +1172,17 @@ export class Type extends Node {
 // @public (undocumented)
 export namespace Type {
     // @internal (undocumented)
-    export function fromType(json: JSON): Trampoline<Type>;
+    export function fromType<N extends string = string>(json: JSON<N>): Trampoline<Type<N>>;
     // (undocumented)
     export function isType(value: unknown): value is Type;
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON<N extends string = string> extends Node.JSON<"type"> {
         // (undocumented)
-        name: string;
+        name: N;
         // (undocumented)
         publicId: string | null;
         // (undocumented)
         systemId: string | null;
-        // (undocumented)
-        type: "type";
     }
 }
 
