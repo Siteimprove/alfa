@@ -44,8 +44,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             const isAboveDurationThreshold = Question.of(
               "is-above-duration-threshold",
               element,
-              `Does the \`<${element.name}>\` element have a duration of more
-              than 3 seconds?`
+              Diagnostic.of(
+                `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`
+              )
             ).map((isAboveDurationThreshold) =>
               isAboveDurationThreshold ? Option.of(element) : None
             );
@@ -56,7 +57,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               return Question.of(
                 "has-audio",
                 element,
-                `Does the \`<${element.name}>\` element contain audio?`
+                Diagnostic.of(
+                  `Does the \`<${element.name}>\` element contain audio?`
+                )
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -67,8 +70,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "is-below-audio-duration-threshold",
             target,
-            `Does the \`<${target.name}>\` element have a total audio duration
-            of less than 3 seconds?`
+            Diagnostic.of(
+              `Does the \`<${target.name}>\` element have a total audio duration of less than 3 seconds?`
+            )
           ).map((isBelowAudioDurationThreshold) =>
             expectation(
               isBelowAudioDurationThreshold,

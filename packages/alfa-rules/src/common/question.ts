@@ -113,8 +113,7 @@ export namespace Question {
     },
     "has-audio-track": {
       type: "boolean",
-      message: `Does the \`<video>\` element have an audio track that describes its
-            visual information?`,
+      message: `Does the \`<video>\` element have an audio track that describes its visual information?`,
     },
     "has-captions": {
       type: "boolean",
@@ -122,8 +121,7 @@ export namespace Question {
     },
     "has-description": {
       type: "boolean",
-      message: `Is the visual information of the [audio/video] available through its
-            audio or a separate audio description track?`,
+      message: `Is the visual information of the [audio/video] available through its audio or a separate audio description track?`,
     },
     "is-audio-streaming": {
       type: "boolean",
@@ -143,8 +141,7 @@ export namespace Question {
     },
     "play-button": {
       type: "node",
-      message: `Where is the button that controls playback of the \`<audio>\`
-                    element?`,
+      message: `Where is the button that controls playback of the \`<audio>\` element?`,
     },
     "text-alternative": {
       type: "node",
@@ -152,9 +149,7 @@ export namespace Question {
     },
     "track-describes-video": {
       type: "boolean",
-      message: `Does at least 1 track describe the visual information of the \`<video>\`
-      element, either in the language of the \`<video>\` element or the language
-      of the page?`,
+      message: `Does at least 1 track describe the visual information of the \`<video>\` element, either in the language of the \`<video>\` element or the language of the page?`,
     },
     transcript: {
       type: "node",
@@ -172,24 +167,20 @@ export namespace Question {
     // R39
     "name-describes-purpose": {
       type: "boolean",
-      message: `Does the accessible name of the \`<(target.name]>\` element
-            describe its purpose?`,
+      message: `Does the accessible name of the \`<(target.name]>\` element describe its purpose?`,
     },
     // R50 [R48, R49]
     "audio-control-mechanism": {
       type: "node",
-      message: `Where is the mechanism that can pause or stop the audio of the
-            \`<[target.name]>\` element?`,
+      message: `Where is the mechanism that can pause or stop the audio of the \`<[target.name]>\` element?`,
     },
     "is-above-duration-threshold": {
       type: "boolean",
-      message: `Does the \`<[element.name]>\` element have a duration of more
-              than 3 seconds?`,
+      message: `Does the \`<[element.name]>\` element have a duration of more than 3 seconds?`,
     },
     "is-below-audio-duration-threshold": {
       type: "boolean",
-      message: `Does the \`<[target.name]>\` element have a total audio duration
-            of less than 3 seconds?`,
+      message: `Does the \`<[target.name]>\` element have a total audio duration of less than 3 seconds?`,
     },
     // R55
     "is-content-equivalent": {
@@ -234,8 +225,7 @@ export namespace Question {
     },
     "error-indicator-describes-resolution": {
       type: "boolean",
-      message: `Does the error indicator describe, in text, the cause of the error or how
-      to resolve it?`,
+      message: `Does the error indicator describe, in text, the cause of the error or how to resolve it?`,
     },
     "error-indicator-identifies-form-field": {
       type: "boolean",

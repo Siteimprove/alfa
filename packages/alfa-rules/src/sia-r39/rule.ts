@@ -6,6 +6,7 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
+import { normalize } from "../common/normalize";
 
 import { hasAccessibleName, isIgnored } from "../common/predicate";
 
@@ -56,8 +57,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "name-describes-purpose",
             target,
-            `Does the accessible name of the \`<${target.name}>\` element
-            describe its purpose?`
+            Diagnostic.of(
+              `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`
+            )
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,

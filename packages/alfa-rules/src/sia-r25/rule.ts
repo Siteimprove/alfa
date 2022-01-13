@@ -26,8 +26,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "has-description",
             target,
-            `Is the visual information of the \`<video>\` available through its
-            audio or a separate audio description track?`
+            Diagnostic.of(
+              `Is the visual information of the \`<video>\` available through its audio or a separate audio description track?`
+            )
           ).map((hasAudio) =>
             expectation(
               hasAudio,
