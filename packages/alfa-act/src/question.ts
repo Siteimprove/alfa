@@ -9,6 +9,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
+import { Diagnostic } from "./diagnostic";
 
 const { isOption } = Option;
 const { isBoolean, isFunction } = Refinement;
@@ -44,14 +45,14 @@ export class Question<
   public static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
     type: TYPE,
     uri: URI,
-    message: string,
+    diagnostic: Diagnostic,
     subject: SUBJECT,
     context: CONTEXT
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI> {
     return new Question(
       type,
       uri,
-      message,
+      diagnostic,
       subject,
       context,
       (answer) => answer
@@ -60,7 +61,7 @@ export class Question<
 
   protected readonly _type: TYPE;
   protected readonly _uri: URI;
-  protected readonly _message: string;
+  protected readonly _diagnostic: Diagnostic;
   protected readonly _subject: SUBJECT;
   protected readonly _context: CONTEXT;
   protected readonly _quester: Mapper<ANSWER, T>;
@@ -68,14 +69,14 @@ export class Question<
   protected constructor(
     type: TYPE,
     uri: URI,
-    message: string,
+    diagnostic: Diagnostic,
     subject: SUBJECT,
     context: CONTEXT,
     quester: Mapper<ANSWER, T>
   ) {
     this._type = type;
     this._uri = uri;
-    this._message = normalize(message);
+    this._diagnostic = diagnostic;
     this._subject = subject;
     this._context = context;
     this._quester = quester;
@@ -89,8 +90,8 @@ export class Question<
     return this._uri;
   }
 
-  public get message(): string {
-    return this._message;
+  public get diagnostic(): Diagnostic {
+    return this._diagnostic;
   }
 
   public get subject(): SUBJECT {
@@ -166,7 +167,7 @@ export class Question<
       ? new Question.Rhetorical(
           this._type,
           this._uri,
-          this._message,
+          this._diagnostic,
           this._subject,
           this._context,
           this.answer(answer!)
@@ -180,7 +181,7 @@ export class Question<
     return new Question(
       this._type,
       this._uri,
-      this._message,
+      this._diagnostic,
       this._subject,
       this._context,
       (answer) => mapper(this._quester(answer))
@@ -199,7 +200,7 @@ export class Question<
     return new Question(
       this._type,
       this._uri,
-      this._message,
+      this._diagnostic,
       this._subject,
       this._context,
       (answer) => mapper(this._quester(answer))._quester(answer)
@@ -218,7 +219,7 @@ export class Question<
     return new Question(
       this._type,
       this._uri,
-      this._message,
+      this._diagnostic,
       this._subject,
       this._context,
       (answer) => this._quester(answer)._quester(answer)
@@ -229,7 +230,7 @@ export class Question<
     return {
       type: Serializable.toJSON(this._type),
       uri: this._uri,
-      message: this._message,
+      diagnostic: this._diagnostic.toJSON(),
       subject: Serializable.toJSON(this._subject),
       context: Serializable.toJSON(this._context),
     };
@@ -244,7 +245,7 @@ export namespace Question {
     [key: string]: json.JSON;
     type: Serializable.ToJSON<TYPE>;
     uri: URI;
-    message: string;
+    diagnostic: Diagnostic.JSON;
     subject: Serializable.ToJSON<SUBJECT>;
     context: Serializable.ToJSON<CONTEXT>;
   }
@@ -282,12 +283,12 @@ export namespace Question {
     public constructor(
       type: TYPE,
       uri: URI,
-      message: string,
+      diagnostic: Diagnostic,
       subject: SUBJECT,
       context: CONTEXT,
       answer: T
     ) {
-      super(type, uri, message, subject, context, () => answer);
+      super(type, uri, diagnostic, subject, context, () => answer);
       this._answer = answer;
     }
 
@@ -306,15 +307,11 @@ export namespace Question {
       return new Rhetorical(
         this._type,
         this._uri,
-        this._message,
+        this._diagnostic,
         this._subject,
         this._context,
         mapper(this._answer)
       );
     }
   }
-}
-
-function normalize(string: string): string {
-  return string.replace(/\s+/g, " ").trim();
 }

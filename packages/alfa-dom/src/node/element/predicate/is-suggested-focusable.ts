@@ -39,10 +39,13 @@ export function isSuggestedFocusable(element: Element): boolean {
         .some(
           (parent) =>
             parent.name === "details" &&
+            // Checking that element is the first <summary> child of parent.
             parent
               .children()
               .filter(Element.isElement)
-              .find(Element.hasName("summary"))
+              // Switching on element.name does not narrow the type, so we must
+              // keep it as Element<string>.
+              .find(Element.hasName<string>("summary"))
               .includes(element)
         );
   }

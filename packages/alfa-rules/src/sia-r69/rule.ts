@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { RGB } from "@siteimprove/alfa-css";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";

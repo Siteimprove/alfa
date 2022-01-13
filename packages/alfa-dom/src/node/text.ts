@@ -71,6 +71,7 @@ export class Text extends Node implements Slotable {
   public toJSON(): Text.JSON {
     return {
       type: "text",
+      path: this.path(),
       data: this.data,
     };
   }
@@ -84,8 +85,7 @@ export class Text extends Node implements Slotable {
  * @public
  */
 export namespace Text {
-  export interface JSON extends Node.JSON {
-    type: "text";
+  export interface JSON extends Node.JSON<"text"> {
     data: string;
   }
 

@@ -56,7 +56,13 @@ export const CantTell = (uri: string) =>
             string,
             boolean,
             "is-passed"
-          >("boolean", "is-passed", "Does the rule pass?", target, target);
+          >(
+            "boolean",
+            "is-passed",
+            Diagnostic.of("Does the rule pass?"),
+            target,
+            target
+          );
           return {
             1: isPassed.map((passed) =>
               passed

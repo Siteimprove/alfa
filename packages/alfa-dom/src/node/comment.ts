@@ -44,6 +44,7 @@ export class Comment extends Node {
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
+      path: this.path(),
       data: this._data,
     };
   }
@@ -57,8 +58,7 @@ export class Comment extends Node {
  * @public
  */
 export namespace Comment {
-  export interface JSON extends Node.JSON {
-    type: "comment";
+  export interface JSON extends Node.JSON<"comment"> {
     data: string;
   }
 

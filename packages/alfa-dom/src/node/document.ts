@@ -54,6 +54,7 @@ export class Document extends Node {
   public toJSON(): Document.JSON {
     return {
       type: "document",
+      path: this.path(),
       children: this._children.map((child) => child.toJSON()),
       style: this._style.map((sheet) => sheet.toJSON()),
     };
@@ -93,8 +94,7 @@ export class Document extends Node {
  * @public
  */
 export namespace Document {
-  export interface JSON extends Node.JSON {
-    type: "document";
+  export interface JSON extends Node.JSON<"document"> {
     children: Array<Node.JSON>;
     style: Array<Sheet.JSON>;
   }

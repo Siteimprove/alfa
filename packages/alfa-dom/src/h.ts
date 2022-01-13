@@ -32,12 +32,12 @@ const { nor } = Predicate;
 /**
  * @public
  */
-export function h(
-  name: string,
+export function h<N extends string = string>(
+  name: N,
   attributes?: Array<Attribute> | Record<string, string | boolean>,
   children?: Array<Node | string>,
   style?: Array<Declaration> | Record<string, string>
-): Element {
+): Element<N> {
   return h.element(name, attributes, children, style);
 }
 
@@ -45,12 +45,12 @@ export function h(
  * @public
  */
 export namespace h {
-  export function element(
-    name: string,
+  export function element<N extends string = string>(
+    name: N,
     attributes: Array<Attribute> | Record<string, string | boolean> = [],
     children: Array<Node | string> = [],
     style: Array<Declaration> | Record<string, string> = []
-  ): Element {
+  ): Element<N> {
     attributes = Array.isArray(attributes)
       ? attributes
       : entries(attributes).reduce<Array<Attribute>>(
@@ -105,7 +105,10 @@ export namespace h {
     return element;
   }
 
-  export function attribute(name: string, value: string): Attribute {
+  export function attribute<N extends string = string>(
+    name: N,
+    value: string
+  ): Attribute<N> {
     return Attribute.of(None, None, name, value);
   }
 
@@ -139,11 +142,11 @@ export namespace h {
     );
   }
 
-  export function type(
-    name: string,
+  export function type<N extends string = string>(
+    name: N,
     publicId?: string,
     systemId?: string
-  ): Type {
+  ): Type<N> {
     return Type.of(name, Option.from(publicId), Option.from(systemId));
   }
 
