@@ -1,3 +1,4 @@
+import { Diagnostic } from "@siteimprove/alfa-act";
 import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -50,7 +51,7 @@ export namespace Question {
   export function of<S, U extends Uri = Uri>(
     uri: U,
     subject: S,
-    message?: string
+    diagnostic?: Diagnostic
   ): act.Question<
     Data[U]["type"],
     S,
@@ -64,7 +65,7 @@ export namespace Question {
     uri: U,
     subject: S,
     context: C,
-    message?: string
+    diagnostic?: Diagnostic
   ): act.Question<
     Data[U]["type"],
     S,
@@ -77,8 +78,8 @@ export namespace Question {
   export function of<S, U extends Uri = Uri>(
     uri: U,
     subject: S,
-    contextOrMessage?: S | string,
-    message?: string
+    contextOrDiagnostic?: S | Diagnostic,
+    diagnostic?: Diagnostic
   ): act.Question<
     Data[U]["type"],
     S,
@@ -88,18 +89,13 @@ export namespace Question {
     U
   > {
     let context: S = subject;
-    if (
-      // We assume that no context will be a string.
-      // Since contexts are guaranteed to be test targets, this is OK. They are
-      // more likely to be text nodes that the actual text in it.
-      typeof contextOrMessage === "string"
-    ) {
-      message = contextOrMessage;
+    if (Diagnostic.isDiagnostic(contextOrDiagnostic)) {
+      diagnostic = contextOrDiagnostic;
     } else {
-      context = contextOrMessage ?? subject;
-      message = message ?? Data[uri].message;
+      context = contextOrDiagnostic ?? subject;
+      diagnostic = diagnostic ?? Diagnostic.of(Data[uri].message);
     }
-    return act.Question.of(Data[uri].type, uri, message, subject, context);
+    return act.Question.of(Data[uri].type, uri, diagnostic, subject, context);
   }
 
   const Data = {
