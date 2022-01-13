@@ -6,7 +6,6 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { normalize } from "../common/normalize";
 
 import { hasAccessibleName, isIgnored } from "../common/predicate";
 
