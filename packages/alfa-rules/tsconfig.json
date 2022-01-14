@@ -224,6 +224,7 @@
     "test/sia-r30/rule.spec.tsx",
     "test/sia-r31/rule.spec.tsx",
     "test/sia-r32/rule.spec.tsx",
+    "test/sia-r33/rule.spec.tsx",
     "test/sia-r38/rule.spec.tsx",
     "test/sia-r41/rule.spec.tsx",
     "test/sia-r42/rule.spec.tsx",
