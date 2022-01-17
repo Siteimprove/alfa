@@ -1,29 +1,28 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Namespace } from "./namespace";
-
 import {
-  Node,
   Attribute,
-  Document,
-  Element,
-  Fragment,
-  Text,
-  Type,
   Block,
   Declaration,
+  Document,
+  Element,
   FontFaceRule,
+  Fragment,
   KeyframeRule,
   KeyframesRule,
   MediaRule,
+  Namespace,
   NamespaceRule,
+  Node,
   PageRule,
   Rule,
+  Shadow,
+  Sheet,
   StyleRule,
   SupportsRule,
-  Sheet,
-  Shadow,
+  Text,
+  Type,
 } from ".";
 
 const { entries } = Object;
@@ -49,7 +48,8 @@ export namespace h {
     name: N,
     attributes: Array<Attribute> | Record<string, string | boolean> = [],
     children: Array<Node | string> = [],
-    style: Array<Declaration> | Record<string, string> = []
+    style: Array<Declaration> | Record<string, string> = [],
+    namespace?: Namespace
   ): Element<N> {
     attributes = Array.isArray(attributes)
       ? attributes
@@ -73,12 +73,12 @@ export namespace h {
       attributes = [...attributes, h.attribute("style", block.toString())];
     }
 
-    const namespace = Option.from(
-      attributes.find((attribute) => attribute.name === "xmlns")
-    )
-      .map((attribute) => attribute.value)
-      .filter(Namespace.isNamespace)
-      .getOr(Namespace.HTML);
+    namespace =
+      namespace ??
+      Option.from(attributes.find((attribute) => attribute.name === "xmlns"))
+        .map((attribute) => attribute.value)
+        .filter(Namespace.isNamespace)
+        .getOr(defaultNamespace(name));
 
     const content = children.find(Document.isDocument);
     const shadow = children.find(Shadow.isShadow);
@@ -249,4 +249,70 @@ export namespace h {
 
 function hyphenate(value: string): string {
   return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
+function defaultNamespace(name: string): Namespace {
+  // The <a> element exists both in SVG and HTML namespaces.
+  // It is defaulted in the HTML namespace and must be explicitly built in
+  // the SVG one if needed.
+  const defaultSVG = [
+    "circle",
+    "ellipse",
+    "foreignObject",
+    "g",
+    "image",
+    "line",
+    "mesh",
+    "path",
+    "polygon",
+    "polyline",
+    "rect",
+    "svg",
+    "symbol",
+    "text",
+    "textPath",
+    "use",
+  ];
+  const defaultMath = [
+    "annotation",
+    "annotation-xml",
+    "maction",
+    "math",
+    "merror",
+    "mfrac",
+    "mi",
+    "mmultiscripts",
+    "mn",
+    "mo",
+    "mover",
+    "mpadded",
+    "mphantom",
+    "mprescripts",
+    "mroot",
+    "mrow",
+    "ms",
+    "mspace",
+    "msqrt",
+    "mstyle",
+    "msub",
+    "msubsup",
+    "msup",
+    "mtable",
+    "mtd",
+    "mtext",
+    "mtr",
+    "munder",
+    "munderover",
+    "none",
+    "semantics",
+  ];
+
+  if (defaultSVG.includes(name)) {
+    return Namespace.SVG;
+  }
+  if (defaultMath.includes(name)) {
+    return Namespace.MathML;
+  }
+
+  return Namespace.HTML;
 }
