@@ -2,7 +2,7 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R27, { Outcomes } from "../../src/sia-r27/rule";
+import R35, { Outcomes } from "../../src/sia-r35/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
@@ -15,16 +15,16 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
 
   t.deepEqual(
     await evaluate(
-      R27,
+      R35,
       { document },
       oracle({
         "is-video-streaming": false,
-        "has-audio": true,
-        // R22
-        "has-captions": true,
+        "has-audio": false,
+        // R32
+        "has-audio-track": true,
       })
     ),
-    [passed(R27, target, { 1: Outcomes.HasTextAlternative })]
+    [passed(R35, target, { 1: Outcomes.HasAlternative })]
   );
 });
 
@@ -37,40 +37,44 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
 
   t.deepEqual(
     await evaluate(
-      R27,
+      R35,
       { document },
       oracle({
         "is-video-streaming": false,
-        "has-audio": true,
-        // R31
+        "has-audio": false,
+        // R26
         "text-alternative": Option.of(text),
         label: Option.of(label),
       })
     ),
-    [passed(R27, target, { 1: Outcomes.HasTextAlternative })]
+    [passed(R35, target, { 1: Outcomes.HasAlternative })]
   );
 });
 
-test(`evaluate() fails when all input rules fail`, async (t) => {
+test(`evaluate() fails when no input rule passes`, async (t) => {
   const target = <video src="foo.mp4" />;
+  // R34 inapplicable due to no desriptions track
 
   const document = h.document([target]);
 
   t.deepEqual(
     await evaluate(
-      R27,
+      R35,
       { document },
       oracle({
         "is-video-streaming": false,
-        "has-audio": true,
-        // R22
-        "has-captions": false,
-        // R31
+        "has-audio": false,
+        // R26
         "text-alternative": None,
         label: None,
+        // R32
+        "has-audio-track": false,
+        // R33
+        transcript: None,
+        "transcript-link": None,
       })
     ),
-    [failed(R27, target, { 1: Outcomes.HasNoTextAlternative })]
+    [failed(R35, target, { 1: Outcomes.HasNoAlternative })]
   );
 });
 
@@ -81,11 +85,11 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
 
   t.deepEqual(
     await evaluate(
-      R27,
+      R35,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [cantTell(R27, target)]
+    [cantTell(R35, target)]
   );
 });
 
@@ -96,17 +100,16 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
 
   t.deepEqual(
     await evaluate(
-      R27,
+      R35,
       { document },
       oracle({
         "is-video-streaming": false,
-        "has-audio": true,
-        // R22
-        "has-captions": false,
-        // R31
+        "has-audio": false,
+        // R32
+        "has-audio-track": false,
       })
     ),
-    [cantTell(R27, target)]
+    [cantTell(R35, target)]
   );
 });
 
@@ -115,20 +118,20 @@ test(`evaluate() is inapplicable when Applicability questions are unanswered`, a
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R27, { document }), [inapplicable(R27)]);
+  t.deepEqual(await evaluate(R35, { document }), [inapplicable(R35)]);
 });
 
-test(`evaluate() is inapplicable to videos without audio`, async (t) => {
+test(`evaluate() is inapplicable to videos with audio`, async (t) => {
   const target = <video src="foo.mp4" />;
 
   const document = h.document([target]);
 
   t.deepEqual(
     await evaluate(
-      R27,
+      R35,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": false })
+      oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [inapplicable(R27)]
+    [inapplicable(R35)]
   );
 });
