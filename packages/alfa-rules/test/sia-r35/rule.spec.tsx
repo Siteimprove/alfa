@@ -28,7 +28,7 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
   );
 });
 
-test(`evaluate() passes when some input rule passes`, async (t) => {
+test(`evaluate() passes when R26 passes`, async (t) => {
   const target = <video src="foo.mp4" />;
   const text = <p>Some very long text</p>;
   const label = <span>Watch this content as a video</span>;

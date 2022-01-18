@@ -8,7 +8,7 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
-test(`evaluate() passes when some input rule passes`, async (t) => {
+test(`evaluate() passes when R25 passes`, async (t) => {
   const target = <video src="foo.mp4" />;
 
   const document = h.document([target]);
@@ -28,7 +28,7 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
   );
 });
 
-test(`evaluate() passes when some input rule passes`, async (t) => {
+test(`evaluate() passes when R31 passes`, async (t) => {
   const target = <video src="foo.mp4" />;
   const text = <p>Some very long text</p>;
   const label = <span>Watch this content as a video</span>;

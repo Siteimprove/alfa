@@ -8,7 +8,7 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
-test(`evaluate() passes when some input rule passes`, async (t) => {
+test(`evaluate() passes when R23 passes`, async (t) => {
   const target = <audio src="foo.mp3" />;
   const transcript = <div>Hello</div>;
 
@@ -21,6 +21,7 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
       oracle({
         "is-audio-streaming": false,
         "is-playing": true,
+        // R23
         transcript: Option.of(transcript),
       })
     ),
@@ -28,7 +29,7 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
   );
 });
 
-test(`evaluate() passes when some input rule passes`, async (t) => {
+test(`evaluate() passes when R29 passes`, async (t) => {
   const target = <audio src="foo.mp3" />;
   const text = <p>Some very long text</p>;
   const label = <span>Listen to this content as audio</span>;
@@ -42,6 +43,7 @@ test(`evaluate() passes when some input rule passes`, async (t) => {
       oracle({
         "is-audio-streaming": false,
         "is-playing": true,
+        // R29
         "text-alternative": Option.of(text),
         label: Option.of(label),
       })
