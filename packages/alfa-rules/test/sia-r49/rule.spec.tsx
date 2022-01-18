@@ -185,3 +185,63 @@ test("evaluate() is inapplicable to audio-less videos", async (t) => {
     [inapplicable(R49)]
   );
 });
+
+test("evaluate() is inapplicable to videos that don't autoplay", async (t) => {
+  const target = <video src="foo.mp4" />;
+
+  const controls = <button />;
+
+  const document = h.document([target, controls]);
+
+  t.deepEqual(
+    await evaluate(
+      R49,
+      { document },
+      oracle({
+        "is-above-duration-threshold": true,
+        "has-audio": true,
+      })
+    ),
+    [inapplicable(R49)]
+  );
+});
+
+test("evaluate() is inapplicable to paused videos", async (t) => {
+  const target = <video autoplay paused src="foo.mp4" />;
+
+  const controls = <button />;
+
+  const document = h.document([target, controls]);
+
+  t.deepEqual(
+    await evaluate(
+      R49,
+      { document },
+      oracle({
+        "is-above-duration-threshold": true,
+        "has-audio": true,
+      })
+    ),
+    [inapplicable(R49)]
+  );
+});
+
+test("evaluate() is inapplicable to muted videos", async (t) => {
+  const target = <video autoplay muted src="foo.mp4" />;
+
+  const controls = <button />;
+
+  const document = h.document([target, controls]);
+
+  t.deepEqual(
+    await evaluate(
+      R49,
+      { document },
+      oracle({
+        "is-above-duration-threshold": true,
+        "has-audio": true,
+      })
+    ),
+    [inapplicable(R49)]
+  );
+});
