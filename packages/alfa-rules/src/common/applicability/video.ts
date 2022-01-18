@@ -39,19 +39,20 @@ export function video(
                     trackElement
                       .attribute("kind")
                       // {@link https://html.spec.whatwg.org/multipage/media.html#attr-track-kind}
-                      .map(
-                        (kind) =>
-                          kind
-                            .enumerate(
-                              "subtitles",
-                              "captions",
-                              "descriptions",
-                              "chapters",
-                              "metadata"
-                            )
-                            .getOr("metadata") // invalid value default
+                      .map((kind) =>
+                        kind
+                          .enumerate(
+                            "subtitles",
+                            "captions",
+                            "descriptions",
+                            "chapters",
+                            "metadata"
+                          )
+                          // invalid value default
+                          .getOr("metadata")
                       )
-                      .getOr("subtitles") === track.kind // missing value default
+                      // missing value default
+                      .getOr("subtitles") === track.kind
                 )
               )
       )
