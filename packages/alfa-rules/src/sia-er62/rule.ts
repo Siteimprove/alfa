@@ -39,14 +39,6 @@ const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
 
-const pairwiseContrastCache = Cache.empty<
-  Device,
-  Cache<
-    Context,
-    Cache<Element, Cache<Element, ReadonlyArray<Contrast.Pairing>>>
-  >
->();
-
 /**
  * This version of R62 accepts differences in `font-family`, differences
  * in `cursor` (in the `hover` state), and 3:1 or more contrast with surrounding
@@ -172,18 +164,12 @@ export default Rule.Atomic.of<Page, Element>({
               const distinguishableContrast = Set.from(
                 nonLinkElements.flatMap((container) =>
                   Sequence.from(
-                    pairwiseContrastCache
-                      .get(device, Cache.empty)
-                      .get(context, Cache.empty)
-                      .get(container, Cache.empty)
-                      .get(link, () =>
-                        Distinguishable.getPairwiseContrast(
-                          container,
-                          link,
-                          device,
-                          context
-                        )
-                      )
+                    Distinguishable.getPairwiseContrast(
+                      container,
+                      link,
+                      device,
+                      context
+                    )
                   )
                 )
               );
@@ -457,12 +443,12 @@ namespace Distinguishable {
     context: Context = Context.empty()
   ): Predicate<Element> {
     return (link) => {
-      const contrastPairings = pairwiseContrastCache
-        .get(device, Cache.empty)
-        .get(context, Cache.empty)
-        .get(container, Cache.empty)
-        .get(link, () => getPairwiseContrast(container, link, device, context));
-      for (const contrastPairing of contrastPairings) {
+      for (const contrastPairing of getPairwiseContrast(
+        container,
+        link,
+        device,
+        context
+      )) {
         // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
         if (contrastPairing.contrast >= 3) {
           return true;

@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
@@ -125,7 +126,7 @@ function getLayers(
   element: Element,
   device: Device,
   context: Context = Context.empty(),
-  opacity?: number,
+  opacity?: number
 ): Result<Array<Layer>, Layer.Error> {
   const style = Style.from(element, device, context);
 
@@ -232,10 +233,21 @@ export namespace Foreground {
   }
 }
 
+const foregroundCache = Cache.empty<
+  Device,
+  Cache<
+    Context,
+    Cache<
+      Element,
+      Result<Foreground, Layer.Error | Foreground.Error | Background.Error>
+    >
+  >
+>();
+
 export function getForeground(
   element: Element,
   device: Device,
-  context: Context = Context.empty(),
+  context: Context = Context.empty()
 ): Result<Foreground, Layer.Error | Foreground.Error | Background.Error> {
   const style = Style.from(element, device, context);
 
@@ -257,37 +269,45 @@ export function getForeground(
     return Err.of(Layer.Error.HasInterposedDescendant);
   }
 
-  // First, we mix the color with the element's background according to the
-  // color's alpha channel (only).
-  // For this, we fake the opacity of the element at 1. That way, the
-  // background color is correctly handled. The background color may itself have
-  // an alpha channel, independently from its opacity, and this alpha channel
-  // needs to be taken into account (as well as the alpha/opacity of all the
-  // previous layers).
-  const colors = getBackground(element, device, context, 1).map((background) =>
-    background.map((backdrop) => Color.composite(color.get(), backdrop, 1))
-  );
-
-  for (const parent of element
-    .parent({
-      flattened: true,
-    })
-    .filter(Element.isElement)) {
-    // Next, we handle the opacity of the element.
-    // For this, we need the background colors of the parent (assuming that DOM
-    // reflects layout).
-    return colors.flatMap((colors) =>
-      getBackground(parent, device, context).map((background) =>
-        colors.flatMap((color) =>
+  return foregroundCache
+    .get(device, Cache.empty)
+    .get(context, Cache.empty)
+    .get(element, () => {
+      // First, we mix the color with the element's background according to the
+      // color's alpha channel (only).
+      // For this, we fake the opacity of the element at 1. That way, the
+      // background color is correctly handled. The background color may itself have
+      // an alpha channel, independently from its opacity, and this alpha channel
+      // needs to be taken into account (as well as the alpha/opacity of all the
+      // previous layers).
+      const colors = getBackground(element, device, context, 1).map(
+        (background) =>
           background.map((backdrop) =>
-            Color.composite(color, backdrop, opacity.value)
+            Color.composite(color.get(), backdrop, 1)
           )
-        )
-      )
-    );
-  }
+      );
 
-  return colors;
+      for (const parent of element
+        .parent({
+          flattened: true,
+        })
+        .filter(Element.isElement)) {
+        // Next, we handle the opacity of the element.
+        // For this, we need the background colors of the parent (assuming that DOM
+        // reflects layout).
+        return colors.flatMap((colors) =>
+          getBackground(parent, device, context).map((background) =>
+            colors.flatMap((color) =>
+              background.map((backdrop) =>
+                Color.composite(color, backdrop, opacity.value)
+              )
+            )
+          )
+        );
+      }
+
+      return colors;
+    });
 }
 
 export type Background = Array<Color>;
@@ -298,6 +318,13 @@ export namespace Background {
   }
 }
 
+const backgroundCache = Cache.empty<
+  Device,
+  Cache<
+    Context,
+    Cache<Element, Result<Background, Layer.Error | Background.Error>>
+  >
+>();
 export function getBackground(
   element: Element,
   device: Device,
@@ -306,7 +333,8 @@ export function getBackground(
 ): Result<Background, Layer.Error | Background.Error> {
   // If the element has a text-shadow, we don't try to guess how it looks.
   if (
-    Style.from(element, device, context).computed("text-shadow").value.type !== "keyword"
+    Style.from(element, device, context).computed("text-shadow").value.type !==
+    "keyword"
   ) {
     return Err.of(Background.Error.HasTextShadow);
   }
@@ -315,29 +343,34 @@ export function getBackground(
     return Err.of(Layer.Error.HasInterposedDescendant);
   }
 
-  return getLayers(element, device, context, opacity).map((layers) =>
-    layers.reduce(
-      (backdrops, layer) =>
-        layer.colors.reduce(
-          (layers, color) =>
-            layers.concat(
-              backdrops.map((backdrop) =>
-                Color.composite(color, backdrop, layer.opacity)
-              )
+  return backgroundCache
+    .get(device, Cache.empty)
+    .get(context, Cache.empty)
+    .get(element, () =>
+      getLayers(element, device, context, opacity).map((layers) =>
+        layers.reduce(
+          (backdrops, layer) =>
+            layer.colors.reduce(
+              (layers, color) =>
+                layers.concat(
+                  backdrops.map((backdrop) =>
+                    Color.composite(color, backdrop, layer.opacity)
+                  )
+                ),
+              [] as Array<Color>
             ),
-          [] as Array<Color>
-        ),
-      // We make the initial backdrop solid white as this can be assumed
-      // to be the color of the canvas onto which the other backgrounds
-      // are rendered.
-      [
-        RGB.of(
-          Percentage.of(1),
-          Percentage.of(1),
-          Percentage.of(1),
-          Percentage.of(1)
-        ),
-      ]
-    )
-  );
+          // We make the initial backdrop solid white as this can be assumed
+          // to be the color of the canvas onto which the other backgrounds
+          // are rendered.
+          [
+            RGB.of(
+              Percentage.of(1),
+              Percentage.of(1),
+              Percentage.of(1),
+              Percentage.of(1)
+            ),
+          ]
+        )
+      )
+    );
 }
