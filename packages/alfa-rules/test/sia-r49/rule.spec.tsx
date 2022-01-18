@@ -145,10 +145,7 @@ test("evaluate() can't tell when questions are left unanswered", async (t) => {
     await evaluate(
       R49,
       { document },
-      oracle({
-        "is-above-duration-threshold": true,
-        "has-audio": true,
-      })
+      oracle({ "is-above-duration-threshold": true, "has-audio": true })
     ),
     [cantTell(R49, target)]
   );
@@ -197,10 +194,7 @@ test("evaluate() is inapplicable to videos that don't autoplay", async (t) => {
     await evaluate(
       R49,
       { document },
-      oracle({
-        "is-above-duration-threshold": true,
-        "has-audio": true,
-      })
+      oracle({ "is-above-duration-threshold": true, "has-audio": true })
     ),
     [inapplicable(R49)]
   );
@@ -217,10 +211,7 @@ test("evaluate() is inapplicable to paused videos", async (t) => {
     await evaluate(
       R49,
       { document },
-      oracle({
-        "is-above-duration-threshold": true,
-        "has-audio": true,
-      })
+      oracle({ "is-above-duration-threshold": true, "has-audio": true })
     ),
     [inapplicable(R49)]
   );
@@ -237,10 +228,7 @@ test("evaluate() is inapplicable to muted videos", async (t) => {
     await evaluate(
       R49,
       { document },
-      oracle({
-        "is-above-duration-threshold": true,
-        "has-audio": true,
-      })
+      oracle({ "is-above-duration-threshold": true, "has-audio": true })
     ),
     [inapplicable(R49)]
   );
