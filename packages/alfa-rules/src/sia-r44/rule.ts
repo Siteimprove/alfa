@@ -15,12 +15,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { isVisible } from "../common/predicate";
+import { hasComputedStyle, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { abs, acos, PI } = Math;
 const { some } = Iterable;
-const { not } = Predicate;
+const { or } = Predicate;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -62,9 +62,10 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(isElement)
           .filter(isVisible(device))
           .filter(
-            (element) =>
-              hasConditionalRotation(element, landscape) ||
-              hasConditionalRotation(element, portrait)
+            or(
+              hasConditionalRotation(landscape),
+              hasConditionalRotation(portrait)
+            )
           );
       },
 
@@ -95,44 +96,33 @@ export namespace Outcomes {
   );
 }
 
-function hasConditionalRotation(element: Element, device: Device): boolean {
-  const { value, source } = Style.from(element, device).computed("transform");
+function hasConditionalRotation(device: Device): Predicate<Element> {
+  return hasComputedStyle(
+    "transform",
+    (value, source) => {
+      if (Keyword.isKeyword(value) || source.none(isOrientationConditional)) {
+        return false;
+      }
 
-  if (source.isNone()) {
-    return false;
-  }
-
-  if (Keyword.isKeyword(value) || source.some(not(isOrientationConditional))) {
-    return false;
-  }
-
-  for (const transform of value) {
-    switch (transform.kind) {
-      case "rotate":
-      case "matrix":
-        return true;
-    }
-  }
-
-  return false;
+      return some(
+        value,
+        (transform) =>
+          transform.kind === "rotate" || transform.kind === "matrix"
+      );
+    },
+    device
+  );
 }
 
 function isOrientationConditional(declaration: Declaration): boolean {
-  return some(declaration.ancestors(), (rule) => {
-    if (MediaRule.isMediaRule(rule)) {
-      for (const [, media] of Media.parse(Lexer.lex(rule.condition))) {
-        for (const { condition } of media) {
-          if (condition.isSome()) {
-            if (hasOrientationCondition(condition.get())) {
-              return true;
-            }
-          }
-        }
-      }
-    }
-
-    return false;
-  });
+  return some(
+    declaration.ancestors(),
+    (rule) =>
+      MediaRule.isMediaRule(rule) &&
+      Media.parse(Lexer.lex(rule.condition)).some(([, media]) =>
+        some(media, (query) => query.condition.some(hasOrientationCondition))
+      )
+  );
 }
 
 function hasOrientationCondition(
