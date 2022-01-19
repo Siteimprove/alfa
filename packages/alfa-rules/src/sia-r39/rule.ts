@@ -42,7 +42,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
                       .map((attr) => getFilename(attr.value))
                       .some(
                         (filename) =>
-                          filename === accessibleName.value.toLowerCase().trim()
+                          filename.toLowerCase() ===
+                          accessibleName.value.toLowerCase().trim()
                       )
                   ),
                   element
