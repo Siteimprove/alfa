@@ -252,67 +252,60 @@ function hyphenate(value: string): string {
 }
 
 function defaultNamespace(name: string): Namespace {
-  // The <a> element exists both in SVG and HTML namespaces.
-  // It is defaulted in the HTML namespace and must be explicitly built in
-  // the SVG one if needed.
-  const defaultSVG = [
-    "circle",
-    "ellipse",
-    "foreignObject",
-    "g",
-    "image",
-    "line",
-    "mesh",
-    "path",
-    "polygon",
-    "polyline",
-    "rect",
-    "svg",
-    "symbol",
-    "text",
-    "textPath",
-    "use",
-  ];
-  const defaultMath = [
-    "annotation",
-    "annotation-xml",
-    "maction",
-    "math",
-    "merror",
-    "mfrac",
-    "mi",
-    "mmultiscripts",
-    "mn",
-    "mo",
-    "mover",
-    "mpadded",
-    "mphantom",
-    "mprescripts",
-    "mroot",
-    "mrow",
-    "ms",
-    "mspace",
-    "msqrt",
-    "mstyle",
-    "msub",
-    "msubsup",
-    "msup",
-    "mtable",
-    "mtd",
-    "mtext",
-    "mtr",
-    "munder",
-    "munderover",
-    "none",
-    "semantics",
-  ];
-
-  if (defaultSVG.includes(name)) {
-    return Namespace.SVG;
+  switch (name) {
+    // The <a> element exists both in SVG and HTML namespaces.
+    // It is defaulted in the HTML namespace and must be explicitly built in
+    // the SVG one if needed.
+    case "circle":
+    case "ellipse":
+    case "foreignObject":
+    case "g":
+    case "image":
+    case "line":
+    case "mesh":
+    case "path":
+    case "polygon":
+    case "polyline":
+    case "rect":
+    case "svg":
+    case "symbol":
+    case "text":
+    case "textPath":
+    case "use":
+      return Namespace.SVG;
+    case "annotation":
+    case "annotation-xml":
+    case "maction":
+    case "math":
+    case "merror":
+    case "mfrac":
+    case "mi":
+    case "mmultiscripts":
+    case "mn":
+    case "mo":
+    case "mover":
+    case "mpadded":
+    case "mphantom":
+    case "mprescripts":
+    case "mroot":
+    case "mrow":
+    case "ms":
+    case "mspace":
+    case "msqrt":
+    case "mstyle":
+    case "msub":
+    case "msubsup":
+    case "msup":
+    case "mtable":
+    case "mtd":
+    case "mtext":
+    case "mtr":
+    case "munder":
+    case "munderover":
+    case "none":
+    case "semantics":
+      return Namespace.MathML;
+    default:
+      return Namespace.HTML;
   }
-  if (defaultMath.includes(name)) {
-    return Namespace.MathML;
-  }
-
-  return Namespace.HTML;
 }
