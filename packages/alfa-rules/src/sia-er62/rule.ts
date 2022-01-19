@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -61,35 +62,42 @@ export default Rule.Atomic.of<Page, Element>({
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     let containers: Map<Element, Element> = Map.empty();
+    let links: Map<Element, Element> = Map.empty();
+    let textNodes: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
-        return visit(document, None);
+        gather(document, None);
+        return getApplicableLinks();
 
-        function* visit(
-          node: Node,
-          container: Option<Element>
-        ): Iterable<Element> {
+        function gather(node: Node, container: Option<Element>): void {
           if (isElement(node)) {
-            // If the element is a semantic link, it might be applicable.
-            if (
+            const isLink = (node: Element<string>): boolean =>
               test(
                 hasRole(device, (role) => role.is("link")),
                 node
-              )
+              );
+            if (
+              container.isSome() &&
+              node
+                .descendants({ flattened: true })
+                .some(and(isText, isVisible(device)))
             ) {
-              if (
-                container.isSome() &&
-                node
-                  .descendants({ flattened: true })
-                  .some(and(isText, isVisible(device)))
-              ) {
-                containers = containers.set(node, container.get());
-                return yield node;
+              const isParentLink = node
+                .parent()
+                .some((parent) => isElement(parent) && isLink(parent));
+
+              // For each <p> gather all text nodes descendant of a link
+              if (!isLink(node) && !isParentLink) {
+                textNodes = textNodes.set(node, container.get());
+              }
+              // For each <p> gather all links
+              if (isLink(node)) {
+                links = links.set(node, container.get());
               }
             }
 
-            // Otherwise, if the element is a <p> element with non-link text
+            // If the element is a <p> element with non-link text
             // content then start collecting applicable elements.
             else if (
               test(
@@ -107,7 +115,49 @@ export default Rule.Atomic.of<Page, Element>({
           });
 
           for (const child of children) {
-            yield* visit(child, container);
+            gather(child, container);
+          }
+        }
+
+        function* getApplicableLinks(): Iterable<Element> {
+          for (const [link, parentOfLink] of links) {
+            // Check if foreground is the same with the parent <p> element
+            const hasDifferentForeground = (
+              element1: Element<string>,
+              element2: Element<string>
+            ): boolean =>
+              getForeground(element1, device)
+                .map((linkColors) => [
+                  ...Array.flatMap(linkColors, (linkColor) =>
+                    getForeground(element2, device)
+                      .map((parentColors) =>
+                        Array.map(
+                          parentColors,
+                          (parentColor) =>
+                            contrast(parentColor, linkColor) !== 1
+                        )
+                      )
+                      .getOr([])
+                  ),
+                ])
+                .getOr([])
+                .filter((isDifferent) => isDifferent).length !== 0;
+            // If the colors are different yield the link
+            // otherwise keep looking for siblings with different color
+            if (hasDifferentForeground(link, parentOfLink)) {
+              containers = containers.set(link, parentOfLink);
+              return yield link;
+            } else {
+              for (const [textNode, parentOfText] of textNodes) {
+                if (
+                  parentOfText.equals(parentOfLink) &&
+                  hasDifferentForeground(link, textNode)
+                ) {
+                  containers = containers.set(link, parentOfLink);
+                  return yield link;
+                }
+              }
+            }
           }
         }
       },
