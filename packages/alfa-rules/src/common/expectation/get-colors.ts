@@ -1,3 +1,4 @@
+import { Diagnostic } from "@siteimprove/alfa-act";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
@@ -110,14 +111,171 @@ class Layer {
   }
 }
 
-namespace Layer {
-  export enum Error {
-    HasUnresolvableBackgroundColor = `Could not resolve background-color`,
-    HasUnresolvableGradientStop = `Could not resolve gradient color stop`,
-    HasBackgroundSize = `A background-size was encountered`,
-    HasExternalBackgroundImage = `A background-image with a url() was encountered`,
-    HasNonStaticPosition = `A non-statically positioned element was encountered`,
-    HasInterposedDescendant = `An interposed descendant element was encountered`,
+interface ErrorName {
+  layer:
+    | "unresolvable-background-color"
+    | "unresolvable-gradient"
+    | "background-size"
+    | "background-image"
+    | "non-static"
+    | "interposed-descendant";
+  foreground: "unresolvable-foreground-color";
+  background: "text-shadow";
+}
+
+abstract class ColorError<
+  K extends keyof ErrorName = keyof ErrorName,
+  T extends ErrorName[K] = ErrorName[K]
+> extends Diagnostic {
+  protected readonly _kind: K;
+  protected readonly _type: T;
+
+  protected constructor(kind: K, type: T, message: string) {
+    super(message);
+    this._kind = kind;
+    this._type = type;
+  }
+
+  public get kind(): K {
+    return this._kind;
+  }
+
+  public get type(): T {
+    return this._type;
+  }
+}
+
+namespace ColorError {
+  export class HasUnresolvableBackgroundColor extends ColorError<
+    "layer",
+    "unresolvable-background-color"
+  > {
+    public static of(
+      _: string,
+      element: Element = Element.of(None, None, "dummy")
+    ): HasUnresolvableBackgroundColor {
+      return new HasUnresolvableBackgroundColor(element);
+    }
+
+    private readonly _element: Element;
+
+    constructor(element: Element) {
+      super(
+        "layer",
+        "unresolvable-background-color",
+        `Could not resolve background-color`
+      );
+      this._element = element;
+    }
+
+    public get element(): Element {
+      return this._element;
+    }
+  }
+
+  export class HasUnresolvableGradientStop extends ColorError<
+    "layer",
+    "unresolvable-gradient"
+  > {
+    public static of(): HasUnresolvableGradientStop {
+      return new HasUnresolvableGradientStop();
+    }
+
+    constructor() {
+      super(
+        "layer",
+        "unresolvable-gradient",
+        `Could not resolve gradient color stop`
+      );
+    }
+  }
+
+  export class HasBackgroundSize extends ColorError<
+    "layer",
+    "background-size"
+  > {
+    public static of(): HasBackgroundSize {
+      return new HasBackgroundSize();
+    }
+
+    constructor() {
+      super("layer", "background-size", `A background-size was encountered`);
+    }
+  }
+
+  export class HasExternalBackgroundImage extends ColorError<
+    "layer",
+    "background-image"
+  > {
+    public static of(): HasExternalBackgroundImage {
+      return new HasExternalBackgroundImage();
+    }
+
+    constructor() {
+      super(
+        "layer",
+        "background-image",
+        `A background-image with a url() was encountered`
+      );
+    }
+  }
+
+  export class HasNonStaticPosition extends ColorError<"layer", "non-static"> {
+    public static of(): HasNonStaticPosition {
+      return new HasNonStaticPosition();
+    }
+
+    constructor() {
+      super(
+        "layer",
+        "non-static",
+        `A non-statically positioned element was encountered`
+      );
+    }
+  }
+
+  export class HasInterposedDescendant extends ColorError<
+    "layer",
+    "interposed-descendant"
+  > {
+    public static of(): HasInterposedDescendant {
+      return new HasInterposedDescendant();
+    }
+
+    constructor() {
+      super(
+        "layer",
+        "interposed-descendant",
+        `An interposed descendant element was encountered`
+      );
+    }
+  }
+
+  export class HasUnresolvableForegroundColor extends ColorError<
+    "foreground",
+    "unresolvable-foreground-color"
+  > {
+    public static of(): HasUnresolvableForegroundColor {
+      return new HasUnresolvableForegroundColor();
+    }
+
+    constructor() {
+      super(
+        "foreground",
+        "unresolvable-foreground-color",
+        `Could not resolve gradient color stop`
+      );
+    }
+  }
+
+  export class HasTextShadow extends ColorError<"background", "text-shadow"> {
+    public static of(): HasTextShadow {
+      return new HasTextShadow();
+    }
+
+    constructor() {
+      super("background", "text-shadow", `A text-shadow was encountered`);
+    }
   }
 }
 
@@ -125,8 +283,8 @@ function getLayers(
   element: Element,
   device: Device,
   context: Context = Context.empty(),
-  opacity?: number,
-): Result<Array<Layer>, Layer.Error> {
+  opacity?: number
+): Result<Array<Layer>, ColorError<"layer">> {
   const style = Style.from(element, device, context);
 
   const color = Color.resolve(style.computed("background-color").value, style);
@@ -138,7 +296,7 @@ function getLayers(
   if (color.isSome()) {
     layers.push(Layer.of([color.get()], opacity));
   } else {
-    return Err.of(Layer.Error.HasUnresolvableBackgroundColor);
+    return Err.of(ColorError.HasUnresolvableBackgroundColor.of("", element));
   }
 
   for (const image of style.computed("background-image").value) {
@@ -149,7 +307,7 @@ function getLayers(
     // We currently have no way of extracting colors from images, so we simply
     // bail out if we encounter a background image.
     if (image.image.type === "url") {
-      return Err.of(Layer.Error.HasExternalBackgroundImage);
+      return Err.of(ColorError.HasExternalBackgroundImage.of());
     }
 
     // If there is a background-size, we currently have no way of guessing
@@ -160,7 +318,7 @@ function getLayers(
         .computed("background-size")
         .value.equals(style.initial("background-size").value)
     ) {
-      return Err.of(Layer.Error.HasBackgroundSize);
+      return Err.of(ColorError.HasBackgroundSize.of());
     }
 
     // For each gradient, we extract all color stops into a background layer of
@@ -175,7 +333,7 @@ function getLayers(
         if (color.isSome()) {
           stops.push(color.get());
         } else {
-          return Err.of(Layer.Error.HasUnresolvableGradientStop);
+          return Err.of(ColorError.HasUnresolvableGradientStop.of());
         }
       }
     }
@@ -195,11 +353,11 @@ function getLayers(
   }
 
   if (isPositioned(device, "absolute", "fixed")(element)) {
-    return Err.of(Layer.Error.HasNonStaticPosition);
+    return Err.of(ColorError.HasNonStaticPosition.of());
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(Layer.Error.HasInterposedDescendant);
+    return Err.of(ColorError.HasInterposedDescendant.of());
   }
 
   // If the background layer does not have a lower layer that is fully opaque,
@@ -226,23 +384,17 @@ function getLayers(
 
 export type Foreground = Array<Color>;
 
-export namespace Foreground {
-  export enum Error {
-    HasUnresolvableColor = `Could not resolve color`,
-  }
-}
-
 export function getForeground(
   element: Element,
   device: Device,
-  context: Context = Context.empty(),
-): Result<Foreground, Layer.Error | Foreground.Error | Background.Error> {
+  context: Context = Context.empty()
+): Result<Foreground, ColorError> {
   const style = Style.from(element, device, context);
 
   const color = Color.resolve(style.computed("color").value, style);
 
   if (color.isNone()) {
-    return Err.of(Foreground.Error.HasUnresolvableColor);
+    return Err.of(ColorError.HasUnresolvableForegroundColor.of());
   }
 
   const opacity = style.computed("opacity").value;
@@ -254,7 +406,7 @@ export function getForeground(
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(Layer.Error.HasInterposedDescendant);
+    return Err.of(ColorError.HasInterposedDescendant.of());
   }
 
   // First, we mix the color with the element's background according to the
@@ -292,27 +444,22 @@ export function getForeground(
 
 export type Background = Array<Color>;
 
-export namespace Background {
-  export enum Error {
-    HasTextShadow = `A text-shadow was encountered`,
-  }
-}
-
 export function getBackground(
   element: Element,
   device: Device,
   context: Context = Context.empty(),
   opacity?: number
-): Result<Background, Layer.Error | Background.Error> {
+): Result<Background, ColorError<"background" | "layer">> {
   // If the element has a text-shadow, we don't try to guess how it looks.
   if (
-    Style.from(element, device, context).computed("text-shadow").value.type !== "keyword"
+    Style.from(element, device, context).computed("text-shadow").value.type !==
+    "keyword"
   ) {
-    return Err.of(Background.Error.HasTextShadow);
+    return Err.of(ColorError.HasTextShadow.of());
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(Layer.Error.HasInterposedDescendant);
+    return Err.of(ColorError.HasInterposedDescendant.of());
   }
 
   return getLayers(element, device, context, opacity).map((layers) =>
