@@ -143,9 +143,34 @@ abstract class ColorError<
   public get type(): T {
     return this._type;
   }
+
+  public equals(value: ColorError): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof ColorError &&
+      value._message === this._message &&
+      value._kind === this._kind &&
+      value._type === this._type
+    );
+  }
+
+  public toJSON(): ColorError.JSON<K, T> {
+    return { ...super.toJSON(), kind: this._kind, type: this._type };
+  }
 }
 
 namespace ColorError {
+  export interface JSON<
+    K extends keyof ErrorName = keyof ErrorName,
+    T extends ErrorName[K] = ErrorName[K]
+  > extends Diagnostic.JSON {
+    kind: K;
+    type: T;
+  }
+
   class HasUnresolvableBackgroundColor extends ColorError<
     "layer",
     "unresolvable-background-color"
@@ -167,16 +192,40 @@ namespace ColorError {
     public get element(): Element {
       return this._element;
     }
+
+    public equals(value: HasUnresolvableBackgroundColor): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        super.equals(value) &&
+        value instanceof HasUnresolvableBackgroundColor &&
+        value._element.equals(this._element)
+      );
+    }
+
+    public toJSON(): HasUnresolvableBackgroundColor.JSON {
+      return { ...super.toJSON(), element: this._element.toJSON() };
+    }
   }
 
-  export function unresolvableBackgroundColor(
-    element: Element
-  ): HasUnresolvableBackgroundColor {
-    return HasUnresolvableBackgroundColor.of(
-      `Could not resolve background-color`,
-      element
-    );
+  namespace HasUnresolvableBackgroundColor {
+    export interface JSON
+      extends ColorError.JSON<"layer", "unresolvable-background-color"> {
+      element: Element.JSON;
+    }
+
+    export function from(element: Element): HasUnresolvableBackgroundColor {
+      return HasUnresolvableBackgroundColor.of(
+        `Could not resolve background-color`,
+        element
+      );
+    }
   }
+
+  export const { from: unresolvableBackgroundColor } =
+    HasUnresolvableBackgroundColor;
 
   class HasUnresolvableGradientStop extends ColorError<
     "layer",
@@ -189,13 +238,34 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "layer", "unresolvable-gradient");
     }
+
+    public equals(value: HasUnresolvableGradientStop): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        super.equals(value) && value instanceof HasUnresolvableGradientStop
+      );
+    }
+
+    public toJSON(): HasUnresolvableGradientStop.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function unresolvableGradientStop(): HasUnresolvableGradientStop {
-    return HasUnresolvableGradientStop.of(
-      `Could not resolve gradient color stop`
-    );
+  namespace HasUnresolvableGradientStop {
+    export interface JSON
+      extends ColorError.JSON<"layer", "unresolvable-gradient"> {}
+
+    export function from(): HasUnresolvableGradientStop {
+      return HasUnresolvableGradientStop.of(
+        `Could not resolve gradient color stop`
+      );
+    }
   }
+
+  export const { from: unresolvableGradientStop } = HasUnresolvableGradientStop;
 
   class HasBackgroundSize extends ColorError<"layer", "background-size"> {
     public static of(message: string): HasBackgroundSize {
@@ -205,11 +275,29 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "layer", "background-size");
     }
+
+    public equals(value: HasBackgroundSize): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return super.equals(value) && value instanceof HasBackgroundSize;
+    }
+
+    public toJSON(): HasBackgroundSize.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function backgroundSize(): HasBackgroundSize {
-    return HasBackgroundSize.of(`A background-size was encountered`);
+  namespace HasBackgroundSize {
+    export interface JSON extends ColorError.JSON<"layer", "background-size"> {}
+
+    export function from(): HasBackgroundSize {
+      return HasBackgroundSize.of(`A background-size was encountered`);
+    }
   }
+
+  export const { from: backgroundSize } = HasBackgroundSize;
 
   class HasExternalBackgroundImage extends ColorError<
     "layer",
@@ -222,13 +310,31 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "layer", "background-image");
     }
+    public equals(value: HasExternalBackgroundImage): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return super.equals(value) && value instanceof HasExternalBackgroundImage;
+    }
+
+    public toJSON(): HasExternalBackgroundImage.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function externalBackgroundImage(): HasExternalBackgroundImage {
-    return HasExternalBackgroundImage.of(
-      `A background-image with a url() was encountered`
-    );
+  namespace HasExternalBackgroundImage {
+    export interface JSON
+      extends ColorError.JSON<"layer", "background-image"> {}
+
+    export function from(): HasExternalBackgroundImage {
+      return HasExternalBackgroundImage.of(
+        `A background-image with a url() was encountered`
+      );
+    }
   }
+
+  export const { from: externalBackgroundImage } = HasExternalBackgroundImage;
 
   class HasNonStaticPosition extends ColorError<"layer", "non-static"> {
     public static of(message: string): HasNonStaticPosition {
@@ -238,13 +344,30 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "layer", "non-static");
     }
+    public equals(value: HasNonStaticPosition): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return super.equals(value) && value instanceof HasNonStaticPosition;
+    }
+
+    public toJSON(): HasNonStaticPosition.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function nonStaticPosition(): HasNonStaticPosition {
-    return HasNonStaticPosition.of(
-      `A non-statically positioned element was encountered`
-    );
+  namespace HasNonStaticPosition {
+    export interface JSON extends ColorError.JSON<"layer", "non-static"> {}
+
+    export function from(): HasNonStaticPosition {
+      return HasNonStaticPosition.of(
+        `A non-statically positioned element was encountered`
+      );
+    }
   }
+
+  export const { from: nonStaticPosition } = HasNonStaticPosition;
 
   class HasInterposedDescendant extends ColorError<
     "layer",
@@ -257,13 +380,31 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "layer", "interposed-descendant");
     }
+    public equals(value: HasInterposedDescendant): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return super.equals(value) && value instanceof HasInterposedDescendant;
+    }
+
+    public toJSON(): HasInterposedDescendant.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function interposedDescendant(): HasInterposedDescendant {
-    return HasInterposedDescendant.of(
-      `An interposed descendant element was encountered`
-    );
+  namespace HasInterposedDescendant {
+    export interface JSON
+      extends ColorError.JSON<"layer", "interposed-descendant"> {}
+
+    export function from(): HasInterposedDescendant {
+      return HasInterposedDescendant.of(
+        `An interposed descendant element was encountered`
+      );
+    }
   }
+
+  export const { from: interposedDescendant } = HasInterposedDescendant;
 
   class HasUnresolvableForegroundColor extends ColorError<
     "foreground",
@@ -276,13 +417,34 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "foreground", "unresolvable-foreground-color");
     }
+    public equals(value: HasUnresolvableForegroundColor): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        super.equals(value) && value instanceof HasUnresolvableForegroundColor
+      );
+    }
+
+    public toJSON(): HasUnresolvableForegroundColor.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function unresolvableForegroundColor(): HasUnresolvableForegroundColor {
-    return HasUnresolvableForegroundColor.of(
-      `Could not resolve gradient color stop`
-    );
+  namespace HasUnresolvableForegroundColor {
+    export interface JSON
+      extends ColorError.JSON<"foreground", "unresolvable-foreground-color"> {}
+
+    export function from(): HasUnresolvableForegroundColor {
+      return HasUnresolvableForegroundColor.of(
+        `Could not resolve gradient color stop`
+      );
+    }
   }
+
+  export const { from: unresolvableForegroundColor } =
+    HasUnresolvableForegroundColor;
 
   class HasTextShadow extends ColorError<"background", "text-shadow"> {
     public static of(message: string): HasTextShadow {
@@ -292,11 +454,29 @@ namespace ColorError {
     constructor(message: string) {
       super(message, "background", "text-shadow");
     }
+    public equals(value: HasTextShadow): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return super.equals(value) && value instanceof HasTextShadow;
+    }
+
+    public toJSON(): HasTextShadow.JSON {
+      return { ...super.toJSON() };
+    }
   }
 
-  export function textShadow(): HasTextShadow {
-    return HasTextShadow.of(`A text-shadow was encountered`);
+  namespace HasTextShadow {
+    export interface JSON
+      extends ColorError.JSON<"background", "text-shadow"> {}
+
+    export function from(): HasTextShadow {
+      return HasTextShadow.of(`A text-shadow was encountered`);
+    }
   }
+
+  export const { from: textShadow } = HasTextShadow;
 }
 
 function getLayers(
