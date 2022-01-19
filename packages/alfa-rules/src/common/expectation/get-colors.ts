@@ -130,7 +130,7 @@ abstract class ColorError<
   protected readonly _kind: K;
   protected readonly _type: T;
 
-  protected constructor(kind: K, type: T, message: string) {
+  protected constructor(message: string, kind: K, type: T) {
     super(message);
     this._kind = kind;
     this._type = type;
@@ -146,25 +146,21 @@ abstract class ColorError<
 }
 
 namespace ColorError {
-  export class HasUnresolvableBackgroundColor extends ColorError<
+  class HasUnresolvableBackgroundColor extends ColorError<
     "layer",
     "unresolvable-background-color"
   > {
     public static of(
-      _: string,
+      message: string,
       element: Element = Element.of(None, None, "dummy")
     ): HasUnresolvableBackgroundColor {
-      return new HasUnresolvableBackgroundColor(element);
+      return new HasUnresolvableBackgroundColor(message, element);
     }
 
     private readonly _element: Element;
 
-    constructor(element: Element) {
-      super(
-        "layer",
-        "unresolvable-background-color",
-        `Could not resolve background-color`
-      );
+    constructor(message: string, element: Element) {
+      super(message, "layer", "unresolvable-background-color");
       this._element = element;
     }
 
@@ -173,109 +169,133 @@ namespace ColorError {
     }
   }
 
-  export class HasUnresolvableGradientStop extends ColorError<
+  export function unresolvableBackgroundColor(
+    element: Element
+  ): HasUnresolvableBackgroundColor {
+    return HasUnresolvableBackgroundColor.of(
+      `Could not resolve background-color`,
+      element
+    );
+  }
+
+  class HasUnresolvableGradientStop extends ColorError<
     "layer",
     "unresolvable-gradient"
   > {
-    public static of(): HasUnresolvableGradientStop {
-      return new HasUnresolvableGradientStop();
+    public static of(message: string): HasUnresolvableGradientStop {
+      return new HasUnresolvableGradientStop(message);
     }
 
-    constructor() {
-      super(
-        "layer",
-        "unresolvable-gradient",
-        `Could not resolve gradient color stop`
-      );
+    constructor(message: string) {
+      super(message, "layer", "unresolvable-gradient");
     }
   }
 
-  export class HasBackgroundSize extends ColorError<
-    "layer",
-    "background-size"
-  > {
-    public static of(): HasBackgroundSize {
-      return new HasBackgroundSize();
+  export function unresolvableGradientStop(): HasUnresolvableGradientStop {
+    return HasUnresolvableGradientStop.of(
+      `Could not resolve gradient color stop`
+    );
+  }
+
+  class HasBackgroundSize extends ColorError<"layer", "background-size"> {
+    public static of(message: string): HasBackgroundSize {
+      return new HasBackgroundSize(message);
     }
 
-    constructor() {
-      super("layer", "background-size", `A background-size was encountered`);
+    constructor(message: string) {
+      super(message, "layer", "background-size");
     }
   }
 
-  export class HasExternalBackgroundImage extends ColorError<
+  export function backgroundSize(): HasBackgroundSize {
+    return HasBackgroundSize.of(`A background-size was encountered`);
+  }
+
+  class HasExternalBackgroundImage extends ColorError<
     "layer",
     "background-image"
   > {
-    public static of(): HasExternalBackgroundImage {
-      return new HasExternalBackgroundImage();
+    public static of(message: string): HasExternalBackgroundImage {
+      return new HasExternalBackgroundImage(message);
     }
 
-    constructor() {
-      super(
-        "layer",
-        "background-image",
-        `A background-image with a url() was encountered`
-      );
+    constructor(message: string) {
+      super(message, "layer", "background-image");
     }
   }
 
-  export class HasNonStaticPosition extends ColorError<"layer", "non-static"> {
-    public static of(): HasNonStaticPosition {
-      return new HasNonStaticPosition();
+  export function externalBackgroundImage(): HasExternalBackgroundImage {
+    return HasExternalBackgroundImage.of(
+      `A background-image with a url() was encountered`
+    );
+  }
+
+  class HasNonStaticPosition extends ColorError<"layer", "non-static"> {
+    public static of(message: string): HasNonStaticPosition {
+      return new HasNonStaticPosition(message);
     }
 
-    constructor() {
-      super(
-        "layer",
-        "non-static",
-        `A non-statically positioned element was encountered`
-      );
+    constructor(message: string) {
+      super(message, "layer", "non-static");
     }
   }
 
-  export class HasInterposedDescendant extends ColorError<
+  export function nonStaticPosition(): HasNonStaticPosition {
+    return HasNonStaticPosition.of(
+      `A non-statically positioned element was encountered`
+    );
+  }
+
+  class HasInterposedDescendant extends ColorError<
     "layer",
     "interposed-descendant"
   > {
-    public static of(): HasInterposedDescendant {
-      return new HasInterposedDescendant();
+    public static of(message: string): HasInterposedDescendant {
+      return new HasInterposedDescendant(message);
     }
 
-    constructor() {
-      super(
-        "layer",
-        "interposed-descendant",
-        `An interposed descendant element was encountered`
-      );
+    constructor(message: string) {
+      super(message, "layer", "interposed-descendant");
     }
   }
 
-  export class HasUnresolvableForegroundColor extends ColorError<
+  export function interposedDescendant(): HasInterposedDescendant {
+    return HasInterposedDescendant.of(
+      `An interposed descendant element was encountered`
+    );
+  }
+
+  class HasUnresolvableForegroundColor extends ColorError<
     "foreground",
     "unresolvable-foreground-color"
   > {
-    public static of(): HasUnresolvableForegroundColor {
-      return new HasUnresolvableForegroundColor();
+    public static of(message: string): HasUnresolvableForegroundColor {
+      return new HasUnresolvableForegroundColor(message);
     }
 
-    constructor() {
-      super(
-        "foreground",
-        "unresolvable-foreground-color",
-        `Could not resolve gradient color stop`
-      );
+    constructor(message: string) {
+      super(message, "foreground", "unresolvable-foreground-color");
     }
   }
 
-  export class HasTextShadow extends ColorError<"background", "text-shadow"> {
-    public static of(): HasTextShadow {
-      return new HasTextShadow();
+  export function unresolvableForegroundColor(): HasUnresolvableForegroundColor {
+    return HasUnresolvableForegroundColor.of(
+      `Could not resolve gradient color stop`
+    );
+  }
+
+  class HasTextShadow extends ColorError<"background", "text-shadow"> {
+    public static of(message: string): HasTextShadow {
+      return new HasTextShadow(message);
     }
 
-    constructor() {
-      super("background", "text-shadow", `A text-shadow was encountered`);
+    constructor(message: string) {
+      super(message, "background", "text-shadow");
     }
+  }
+
+  export function textShadow(): HasTextShadow {
+    return HasTextShadow.of(`A text-shadow was encountered`);
   }
 }
 
@@ -296,7 +316,7 @@ function getLayers(
   if (color.isSome()) {
     layers.push(Layer.of([color.get()], opacity));
   } else {
-    return Err.of(ColorError.HasUnresolvableBackgroundColor.of("", element));
+    return Err.of(ColorError.unresolvableBackgroundColor(element));
   }
 
   for (const image of style.computed("background-image").value) {
@@ -307,7 +327,7 @@ function getLayers(
     // We currently have no way of extracting colors from images, so we simply
     // bail out if we encounter a background image.
     if (image.image.type === "url") {
-      return Err.of(ColorError.HasExternalBackgroundImage.of());
+      return Err.of(ColorError.externalBackgroundImage());
     }
 
     // If there is a background-size, we currently have no way of guessing
@@ -318,7 +338,7 @@ function getLayers(
         .computed("background-size")
         .value.equals(style.initial("background-size").value)
     ) {
-      return Err.of(ColorError.HasBackgroundSize.of());
+      return Err.of(ColorError.backgroundSize());
     }
 
     // For each gradient, we extract all color stops into a background layer of
@@ -333,7 +353,7 @@ function getLayers(
         if (color.isSome()) {
           stops.push(color.get());
         } else {
-          return Err.of(ColorError.HasUnresolvableGradientStop.of());
+          return Err.of(ColorError.unresolvableGradientStop());
         }
       }
     }
@@ -353,11 +373,11 @@ function getLayers(
   }
 
   if (isPositioned(device, "absolute", "fixed")(element)) {
-    return Err.of(ColorError.HasNonStaticPosition.of());
+    return Err.of(ColorError.nonStaticPosition());
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(ColorError.HasInterposedDescendant.of());
+    return Err.of(ColorError.interposedDescendant());
   }
 
   // If the background layer does not have a lower layer that is fully opaque,
@@ -394,7 +414,7 @@ export function getForeground(
   const color = Color.resolve(style.computed("color").value, style);
 
   if (color.isNone()) {
-    return Err.of(ColorError.HasUnresolvableForegroundColor.of());
+    return Err.of(ColorError.unresolvableForegroundColor());
   }
 
   const opacity = style.computed("opacity").value;
@@ -406,14 +426,14 @@ export function getForeground(
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(ColorError.HasInterposedDescendant.of());
+    return Err.of(ColorError.interposedDescendant());
   }
 
   // First, we mix the color with the element's background according to the
   // color's alpha channel (only).
   // For this, we fake the opacity of the element at 1. That way, the
   // background color is correctly handled. The background color may itself have
-  // an alpha channel, independently from its opacity, and this alpha channel
+  // an alpha channel, independently of its opacity, and this alpha channel
   // needs to be taken into account (as well as the alpha/opacity of all the
   // previous layers).
   const colors = getBackground(element, device, context, 1).map((background) =>
@@ -455,11 +475,11 @@ export function getBackground(
     Style.from(element, device, context).computed("text-shadow").value.type !==
     "keyword"
   ) {
-    return Err.of(ColorError.HasTextShadow.of());
+    return Err.of(ColorError.textShadow());
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(ColorError.HasInterposedDescendant.of());
+    return Err.of(ColorError.interposedDescendant());
   }
 
   return getLayers(element, device, context, opacity).map((layers) =>
