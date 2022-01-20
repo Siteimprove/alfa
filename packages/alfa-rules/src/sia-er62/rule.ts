@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -98,7 +97,6 @@ export default Rule.Atomic.of<Page, Element>({
                 links = links.set(node, container.get());
                 // For each <a> gather all text descendants
                 const descendants = node.descendants({ flattened: true });
-                // console.log(descendants.toJSON())
                 for (const descendant of descendants) {
                   if (isElement(descendant)) {
                     linkTextNodes = linkTextNodes.set(descendant, node);
