@@ -7,10 +7,10 @@ export import JSX = _jsx.JSX;
 /**
  * @public
  */
-export function jsx(
-  name: string,
+export function jsx<N extends string = string>(
+  name: N,
   properties: _jsx.Properties & { children?: _jsx.Child }
-): Element {
+): Element<N> {
   const { children, ...rest } = properties;
 
   if (children === undefined) {
@@ -23,10 +23,10 @@ export function jsx(
 /**
  * @public
  */
-export function jsxs(
-  name: string,
+export function jsxs<N extends string = string>(
+  name: N,
   properties: _jsx.Properties & { children?: _jsx.Children }
-): Element {
+): Element<N> {
   const { children, ...rest } = properties;
 
   if (children === undefined) {
@@ -39,10 +39,10 @@ export function jsxs(
 /**
  * @public
  */
-export function jsxDEV(
-  name: string,
+export function jsxDEV<N extends string = string>(
+  name: N,
   properties: _jsx.Properties & { children?: _jsx.Child | _jsx.Children }
-): Element {
+): Element<N> {
   const { children, ...rest } = properties;
 
   if (children === undefined) {

@@ -426,7 +426,7 @@ export namespace h {
     // (undocumented)
     export function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
     // (undocumented)
-    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>): Element<N>;
+    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace): Element<N>;
     // (undocumented)
     export function fragment(children: Array<Node | string>): Fragment;
     // (undocumented)

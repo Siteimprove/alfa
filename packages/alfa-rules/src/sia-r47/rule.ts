@@ -56,7 +56,7 @@ export default Rule.Atomic.of<Page, Element>({
             scale.every((scale) => scale >= 2) &&
               scalable.every((scalable) => scalable !== "fixed"),
             () => Outcomes.MetaDoesNotPreventZoom,
-            () => Outcomes.MedatDoesPreventZoom
+            () => Outcomes.MetaDoesPreventZoom
           ),
         };
       },
@@ -71,7 +71,7 @@ export namespace Outcomes {
     )
   );
 
-  export const MedatDoesPreventZoom = Err.of(
+  export const MetaDoesPreventZoom = Err.of(
     Diagnostic.of(`The \`<meta>\` element restricts the ability to zoom`)
   );
 }
@@ -86,7 +86,7 @@ export namespace Outcomes {
  * in unknown ways. The algorithm considers "foo bar =  = === foobar" as a valid
  * string for "foo=foobar"
  */
-export function parsePropertiesList(
+function parsePropertiesList(
   propertiesList: string,
   ignored: Array<string>,
   separator: Array<string>,
@@ -159,7 +159,7 @@ export function parsePropertiesList(
  * This seems to be the iOS/Safari algorithm and other browsers might handle it
  * in unknown ways.
  */
-export function parseMaximumScale(scale: Option<string>): Option<number> {
+function parseMaximumScale(scale: Option<string>): Option<number> {
   return scale.flatMap((scale) => {
     switch (scale) {
       case "yes":
@@ -195,9 +195,7 @@ export function parseMaximumScale(scale: Option<string>): Option<number> {
  * This seems to be the iOS/Safari algorithm and other browsers might handle it
  * in unknown ways.
  */
-export function parseUserScalable(
-  scalable: Option<string>
-): Option<"zoom" | "fixed"> {
+function parseUserScalable(scalable: Option<string>): Option<"zoom" | "fixed"> {
   return scalable.map((scalable) => {
     switch (scalable) {
       case "yes":
