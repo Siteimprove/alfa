@@ -8,7 +8,6 @@ import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";
 
-
 // default styling of links
 // The initial value of border-top is medium, resolving as 3px. However, when
 // computing and border-style is none, this is computed as 0px.
@@ -557,6 +556,37 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
   ]);
 });
 
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a box shadow`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "10px 5px 5px red",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle([
+      "box-shadow",
+      "10px 5px 5px rgb(100% 0% 0%)",
+    ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([style], [addCursor(style)], [style]),
+    }),
+  ]);
+});
+
 /******************************************************************
  *
  * Failing tests
@@ -876,6 +906,34 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
         [style],
         [addCursor(style)],
         [addOutline(style)]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration and applies a box shadow with initial value`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable(
+        [noStyle],
+        [addCursor(noStyle)],
+        [noStyle]
       ),
     }),
   ]);
@@ -1284,7 +1342,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
           "background",
           "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
         ],
-        ["color", "rgb(100% 100% 100% / 10%)"]
+        ["color", "rgb(100% 100% 100% / 10%)"],
       ],
       contrastPairings
     )
