@@ -27,6 +27,7 @@ import {
   hasComputedStyle,
   hasOutline,
   hasRole,
+  hasTextContent,
   hasTextDecoration,
   isVisible,
   isWhitespace,
@@ -62,11 +63,12 @@ export default Rule.Atomic.of<Page, Element>({
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     let containers: Map<Element, Element> = Map.empty();
-    let links: Map<Element, Element> = Map.empty();
-    let textNodes: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
+        let links: Map<Element, Element> = Map.empty();
+        let textNodes: Map<Element, Element> = Map.empty();
+        let linkTextNodes: Map<Element, Element> = Map.empty();
         gather(document, None);
         return getApplicableLinks();
 
@@ -94,6 +96,14 @@ export default Rule.Atomic.of<Page, Element>({
               // For each <p> gather all links
               if (isLink(node)) {
                 links = links.set(node, container.get());
+                // For each <a> gather all text descendants
+                const descendants = node.descendants({ flattened: true });
+                // console.log(descendants.toJSON())
+                for (const descendant of descendants) {
+                  if (isElement(descendant)) {
+                    linkTextNodes = linkTextNodes.set(descendant, node);
+                  }
+                }
               }
             }
 
@@ -120,42 +130,51 @@ export default Rule.Atomic.of<Page, Element>({
         }
 
         function* getApplicableLinks(): Iterable<Element> {
-          for (const [link, parentOfLink] of links) {
-            // Check if foreground is the same with the parent <p> element
-            const hasDifferentForeground = (
-              element1: Element<string>,
-              element2: Element<string>
-            ): boolean =>
-              getForeground(element1, device)
-                .map((linkColors) => [
-                  ...Array.flatMap(linkColors, (linkColor) =>
-                    getForeground(element2, device)
-                      .map((parentColors) =>
-                        Array.map(
-                          parentColors,
-                          (parentColor) =>
-                            contrast(parentColor, linkColor) !== 1
-                        )
+          // Check if foreground is the same with the parent <p> element
+          const hasDifferentForeground = (
+            element1: Element<string>,
+            element2: Element<string>
+          ): boolean =>
+            getForeground(element1, device)
+              .map((linkColors) => [
+                ...Array.flatMap(linkColors, (linkColor) =>
+                  getForeground(element2, device)
+                    .map((parentColors) =>
+                      Array.map(
+                        parentColors,
+                        (parentColor) => contrast(parentColor, linkColor) !== 1
                       )
-                      .getOr([])
-                  ),
-                ])
-                .getOr([])
-                .filter((isDifferent) => isDifferent).length !== 0;
+                    )
+                    .getOr([])
+                ),
+              ])
+              .getOr([])
+              .filter((isDifferent) => isDifferent).length !== 0;
+          for (const [link, parentOfLink] of links) {
             // If the colors are different yield the link
             // otherwise keep looking for siblings with different color
             if (hasDifferentForeground(link, parentOfLink)) {
               containers = containers.set(link, parentOfLink);
               return yield link;
-            } else {
-              for (const [textNode, parentOfText] of textNodes) {
-                if (
-                  parentOfText.equals(parentOfLink) &&
-                  hasDifferentForeground(link, textNode)
-                ) {
-                  containers = containers.set(link, parentOfLink);
-                  return yield link;
-                }
+            }
+
+            for (const [textNode, parentOfText] of textNodes) {
+              if (
+                parentOfText.equals(parentOfLink) &&
+                hasDifferentForeground(link, textNode)
+              ) {
+                containers = containers.set(link, parentOfLink);
+                return yield link;
+              }
+            }
+            
+            for (const [linkTextNode, parentlinkTextNode] of linkTextNodes) {
+              if (
+                parentlinkTextNode.equals(link) &&
+                hasDifferentForeground(link, linkTextNode)
+              ) {
+                containers = containers.set(link, parentOfLink);
+                return yield link;
               }
             }
           }
