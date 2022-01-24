@@ -249,30 +249,33 @@ export function getForeground(
   device: Device,
   context: Context = Context.empty()
 ): Result<Foreground, Layer.Error | Foreground.Error | Background.Error> {
-  const style = Style.from(element, device, context);
-
-  const color = Color.resolve(style.computed("color").value, style);
-
-  if (color.isNone()) {
-    return Err.of(Foreground.Error.HasUnresolvableColor);
-  }
-
-  const opacity = style.computed("opacity").value;
-
-  // If the color is not transparent, and the element is fully opaque,
-  // then we do not need to dig further
-  if (color.get().alpha.value * opacity.value === 1) {
-    return Result.of([color.get()]);
-  }
-
-  if (hasInterposedDescendant(device)(element)) {
-    return Err.of(Layer.Error.HasInterposedDescendant);
-  }
-
   return foregroundCache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
     .get(element, () => {
+      const style = Style.from(element, device, context);
+
+      const color = Color.resolve(style.computed("color").value, style);
+
+      if (color.isNone()) {
+        return Err.of(Foreground.Error.HasUnresolvableColor);
+      }
+
+      const opacity = style.computed("opacity").value;
+
+      // If the color is not transparent, and the element is fully opaque,
+      // then we do not need to dig further
+      if (color.get().alpha.value * opacity.value === 1) {
+        const result: Result<
+          Color[],
+          Layer.Error | Foreground.Error | Background.Error
+        > = Result.of([color.get()]);
+        return result;
+      }
+
+      if (hasInterposedDescendant(device)(element)) {
+        return Err.of(Layer.Error.HasInterposedDescendant);
+      }
       // First, we mix the color with the element's background according to the
       // color's alpha channel (only).
       // For this, we fake the opacity of the element at 1. That way, the
@@ -331,23 +334,22 @@ export function getBackground(
   context: Context = Context.empty(),
   opacity?: number
 ): Result<Background, Layer.Error | Background.Error> {
-  // If the element has a text-shadow, we don't try to guess how it looks.
-  if (
-    Style.from(element, device, context).computed("text-shadow").value.type !==
-    "keyword"
-  ) {
-    return Err.of(Background.Error.HasTextShadow);
-  }
-
-  if (hasInterposedDescendant(device)(element)) {
-    return Err.of(Layer.Error.HasInterposedDescendant);
-  }
-
   return backgroundCache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
-    .get(element, () =>
-      getLayers(element, device, context, opacity).map((layers) =>
+    .get(element, () => {
+      // If the element has a text-shadow, we don't try to guess how it looks.
+      if (
+        Style.from(element, device, context).computed("text-shadow").value
+          .type !== "keyword"
+      ) {
+        return Err.of(Background.Error.HasTextShadow);
+      }
+
+      if (hasInterposedDescendant(device)(element)) {
+        return Err.of(Layer.Error.HasInterposedDescendant);
+      }
+      return getLayers(element, device, context, opacity).map((layers) =>
         layers.reduce(
           (backdrops, layer) =>
             layer.colors.reduce(
@@ -371,6 +373,6 @@ export function getBackground(
             ),
           ]
         )
-      )
-    );
+      );
+    });
 }

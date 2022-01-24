@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -26,7 +27,6 @@ import {
   hasComputedStyle,
   hasOutline,
   hasRole,
-  hasTextContent,
   hasTextDecoration,
   isVisible,
   isWhitespace,
@@ -61,59 +61,61 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [Criterion.of("1.4.1")],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
-    let containers: Map<Element, Element> = Map.empty();
+    let applicableContainers: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
-        let links: Map<Element, Element> = Map.empty();
-        let textNodes: Map<Element, Element> = Map.empty();
-        let linkTextNodes: Map<Element, Element> = Map.empty();
-        gather(document, None);
+        let containers: Map<Element, Element> = Map.empty();
+        let linkText: Map<Element, Set<Element>> = Map.empty();
+        let nonLinkText: Map<Element, Set<Element>> = Map.empty();
+
+        gather(document, None, None);
         return getApplicableLinks();
 
-        function gather(node: Node, container: Option<Element>): void {
+        function gather(
+          node: Node,
+          container: Option<Element>,
+          link: Option<Element>
+        ): void {
           if (isElement(node)) {
-            const isLink = (node: Element<string>): boolean =>
-              test(
-                hasRole(device, (role) => role.is("link")),
-                node
-              );
-            if (
-              container.isSome() &&
-              node
-                .descendants({ flattened: true })
-                .some(and(isText, isVisible(device)))
-            ) {
-              const isParentLink = node
-                .parent()
-                .some((parent) => isElement(parent) && isLink(parent));
+            const isLink = hasRole(device, (role) => role.is("link"));
+            const isParagraph = and(
+              hasRole(device, "paragraph"),
+              hasNonLinkText(device)
+            );
 
-              // For each <p> gather all text nodes descendant of a link
-              if (!isLink(node) && !isParentLink) {
-                textNodes = textNodes.set(node, container.get());
-              }
-              // For each <p> gather all links
-              if (isLink(node)) {
-                links = links.set(node, container.get());
-                // For each <a> gather all text descendants
-                const descendants = node.descendants({ flattened: true });
-                for (const descendant of descendants) {
-                  if (isElement(descendant)) {
-                    linkTextNodes = linkTextNodes.set(descendant, node);
-                  }
-                }
-              }
+            if (container.isSome() && isLink(node)) {
+              containers = containers.set(node, container.get());
+              link = Option.of(node);
             }
 
-            // If the element is a <p> element with non-link text
+            // Otherwise, if the element is a <p> element with non-link text
             // content then start collecting applicable elements.
-            else if (
-              test(
-                and(hasRole(device, "paragraph"), hasNonLinkText(device)),
-                node
-              )
-            ) {
+            if (isParagraph(node)) {
               container = Option.of(node);
+            }
+          }
+
+          const isTextNode = test(and(isText, isVisible(device)), node);
+          if (isTextNode && container.isSome()) {
+            if (link.isSome()) {
+              linkText = linkText.set(
+                link.get(),
+                linkText
+                  .get(link.get())
+                  .getOr(Set.empty<Element>())
+                  .add(node.parent().filter(isElement).get())
+              );
+            }
+
+            if (link.isNone()) {
+              nonLinkText = nonLinkText.set(
+                container.get(),
+                nonLinkText
+                  .get(container.get())
+                  .getOr(Set.empty<Element>())
+                  .add(node.parent().filter(isElement).get())
+              );
             }
           }
 
@@ -123,24 +125,24 @@ export default Rule.Atomic.of<Page, Element>({
           });
 
           for (const child of children) {
-            gather(child, container);
+            gather(child, container, link);
           }
         }
 
         function* getApplicableLinks(): Iterable<Element> {
           // Check if foreground is the same with the parent <p> element
           const hasDifferentForeground = (
-            element1: Element<string>,
-            element2: Element<string>
+            link: Element,
+            container: Element
           ): boolean =>
-            getForeground(element1, device)
+            getForeground(link, device)
               .map((linkColors) => [
                 ...Array.flatMap(linkColors, (linkColor) =>
-                  getForeground(element2, device)
+                  getForeground(container, device)
                     .map((parentColors) =>
                       Array.map(
                         parentColors,
-                        (parentColor) => contrast(parentColor, linkColor) !== 1
+                        (parentColor) => !parentColor.equals(linkColor)
                       )
                     )
                     .getOr([])
@@ -148,31 +150,22 @@ export default Rule.Atomic.of<Page, Element>({
               ])
               .getOr([])
               .filter((isDifferent) => isDifferent).length !== 0;
-          for (const [link, parentOfLink] of links) {
-            // If the colors are different yield the link
-            // otherwise keep looking for siblings with different color
-            if (hasDifferentForeground(link, parentOfLink)) {
-              containers = containers.set(link, parentOfLink);
-              return yield link;
-            }
 
-            for (const [textNode, parentOfText] of textNodes) {
-              if (
-                parentOfText.equals(parentOfLink) &&
-                hasDifferentForeground(link, textNode)
-              ) {
-                containers = containers.set(link, parentOfLink);
-                return yield link;
-              }
-            }
-            
-            for (const [linkTextNode, parentlinkTextNode] of linkTextNodes) {
-              if (
-                parentlinkTextNode.equals(link) &&
-                hasDifferentForeground(link, linkTextNode)
-              ) {
-                containers = containers.set(link, parentOfLink);
-                return yield link;
+          for (const link of linkText.keys()) {
+            const linkTexts = linkText.get(link).get();
+            const nonLinkTexts = nonLinkText
+              .get(containers.get(link).get())
+              .get();
+
+            for (const linkElement of linkTexts) {
+              for (const nonLinkElement of nonLinkTexts) {
+                if (hasDifferentForeground(linkElement, nonLinkElement)) {
+                  applicableContainers = applicableContainers.set(
+                    link,
+                    nonLinkElement
+                  );
+                  return yield link;
+                }
               }
             }
           }
@@ -180,7 +173,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const nonLinkElements = containers
+        const nonLinkElements = applicableContainers
           .get(target)
           .get()
           .inclusiveDescendants({

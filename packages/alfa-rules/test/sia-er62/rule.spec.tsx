@@ -1328,10 +1328,10 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
       <div>
         <p>Hello</p>
         <p>
-          <span>World</span>
-          Hello
-          <p>nested p</p>
-          {target}
+          <span>
+            Hello<span>World</span>
+          </span>
+          ! {target}
         </p>
       </div>,
     ],
@@ -1372,39 +1372,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
           color: "#0000EE",
         }),
 
-        h.rule.style("a, a:hover, a:focus", {
-          textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-  await evaluate(ER62, { document });
-  // t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-  t.deepEqual(true, true);
-});
-
-test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-    when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        Hello
-        {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("p", {
-          background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
-          color: "rgba(255, 255, 255, 0.5)",
-        }),
-
         h.rule.style("a", {
-          color: "rgba(255, 255, 255, 0.5)",
           textDecoration: "none",
           outline: "none",
           cursor: "auto",
@@ -1412,47 +1380,82 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
       ]),
     ]
   );
-  await evaluate(ER62, { document });
-  // t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-  t.deepEqual(true, true);
+
+  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
 });
 
-test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-    when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
-  const target = <a href="#">Link</a>;
+// test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+//     when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
+//   const target = <a href="#">Link</a>;
 
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span>
-        {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("span", {
-          background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
-          color: "rgba(255, 255, 255, 0.5)",
-        }),
+//   const document = h.document(
+//     [
+//       <p>
+//         Hello
+//         {target}
+//       </p>,
+//     ],
+//     [
+//       h.sheet([
+//         h.rule.style("p", {
+//           background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
+//           color: "rgba(255, 255, 255, 0.5)",
+//         }),
 
-        h.rule.style("a", {
-          background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
-          color: "rgba(255, 255, 255, 0.5)",
-          textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-  await evaluate(ER62, { document });
-  // t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-  t.deepEqual(true, true);
-});
+//         h.rule.style("a", {
+//           color: "rgba(255, 255, 255, 0.5)",
+//           textDecoration: "none",
+//           outline: "none",
+//           cursor: "auto",
+//         }),
+//       ]),
+//     ]
+//   );
+
+//   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+// });
+
+// test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+//     when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
+//   const target = <a href="#">Link</a>;
+
+//   const document = h.document(
+//     [
+//       <p>
+//         <span>Hello</span>
+//         {target}
+//       </p>,
+//     ],
+//     [
+//       h.sheet([
+//         h.rule.style("span", {
+//           background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
+//           color: "rgba(255, 255, 255, 0.5)",
+//         }),
+
+//         h.rule.style("a", {
+//           background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
+//           color: "rgba(255, 255, 255, 0.5)",
+//           textDecoration: "none",
+//           outline: "none",
+//           cursor: "auto",
+//         }),
+//       ]),
+//     ]
+//   );
+
+//   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+// });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     when <a> element's text content is wrapped in a span that has the same foreground color as the <p> element`, async (t) => {
-  const target = <a href="#"><span>text descendant</span></a>;
+  const target = (
+    <a href="#">
+      <span>
+        text descendant<span>nested text descendant</span>
+      </span>
+    </a>
+  );
 
   const document = h.document(
     [
@@ -1468,12 +1471,53 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
         }),
 
         h.rule.style("p", {
-          color: "red"
+          color: "red",
         }),
       ]),
     ]
   );
-  await evaluate(ER62, { document });
-  // t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-  t.deepEqual(true, true);
+
+  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
 });
+
+// test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+//     when <a> element's text content is wrapped in a span that has the same foreground color as the <p> element`, async (t) => {
+//   const document = h.document(
+//     [
+//       <p>
+//         Lorem
+//         <a href="#">Link</a>
+//         <span>
+//           hello
+//           <span>ipsum</span>
+//         </span>
+//         <a href="#">
+//           <span>deep link</span>
+//         </a>
+//         <span>dolor</span>
+//         <span>
+//           <a href="#">nested link</a>
+//         </span>
+//         sit
+//         <a href="#">
+//           mixed
+//           <span>deep link2</span>
+//         </a>
+//         amet.
+//       </p>,
+//     ],
+//     [
+//       h.sheet([
+//         h.rule.style("span", {
+//           color: "red",
+//         }),
+
+//         h.rule.style("p", {
+//           color: "red",
+//         }),
+//       ]),
+//     ]
+//   );
+
+//   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+// });
