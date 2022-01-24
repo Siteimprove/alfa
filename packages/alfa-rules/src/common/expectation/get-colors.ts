@@ -363,30 +363,30 @@ interface ErrorName {
 }
 
 abstract class ColorError<
-  K extends keyof ErrorName = keyof ErrorName,
-  T extends ErrorName[K] = ErrorName[K]
+  T extends keyof ErrorName = keyof ErrorName,
+  K extends ErrorName[T] = ErrorName[T]
 > extends Diagnostic {
   protected readonly _element: Element;
-  protected readonly _kind: K;
   protected readonly _type: T;
+  protected readonly _kind: K;
 
-  protected constructor(message: string, element: Element, kind: K, type: T) {
+  protected constructor(message: string, element: Element, type: T, kind: K) {
     super(message);
     this._element = element;
-    this._kind = kind;
     this._type = type;
+    this._kind = kind;
   }
 
   public get element(): Element {
     return this._element;
   }
 
-  public get kind(): K {
-    return this._kind;
-  }
-
   public get type(): T {
     return this._type;
+  }
+
+  public get kind(): K {
+    return this._kind;
   }
 
   public equals(value: ColorError): boolean;
@@ -398,37 +398,37 @@ abstract class ColorError<
       value instanceof ColorError &&
       value._message === this._message &&
       value._element.equals(this._element) &&
-      value._kind === this._kind &&
-      value._type === this._type
+      value._type === this._type &&
+      value._kind === this._kind
     );
   }
 
-  public toJSON(): ColorError.JSON<K, T> {
+  public toJSON(): ColorError.JSON<T, K> {
     return {
       ...super.toJSON(),
       element: this._element.toJSON(),
-      kind: this._kind,
       type: this._type,
+      kind: this._kind,
     };
   }
 }
 
 namespace ColorError {
   export interface JSON<
-    K extends keyof ErrorName = keyof ErrorName,
-    T extends ErrorName[K] = ErrorName[K]
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
   > extends Diagnostic.JSON {
     element: Element.JSON;
-    kind: K;
     type: T;
+    kind: K;
   }
 
   /**
    * Most color error are just about one CSS property.
    */
   class WithProperty<
-    K extends keyof ErrorName,
-    T extends ErrorName[K],
+    T extends keyof ErrorName,
+    K extends ErrorName[T],
     N extends
       | "background-color"
       | "background-image"
@@ -436,12 +436,12 @@ namespace ColorError {
       | "color"
       | "position"
       | "text-shadow"
-  > extends ColorError<K, T> {
+  > extends ColorError<T, K> {
     public static of(message: string): Diagnostic;
 
     public static of<
-      K extends keyof ErrorName,
-      T extends ErrorName[K],
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
       N extends
         | "background-color"
         | "background-image"
@@ -452,17 +452,17 @@ namespace ColorError {
     >(
       message: string,
       diagnostic: {
-        kind: K;
         type: T;
+        kind: K;
         element: Element;
         property: N;
         value: Style.Computed<N>;
       }
-    ): WithProperty<K, T, N>;
+    ): WithProperty<T, K, N>;
 
     public static of<
-      K extends keyof ErrorName,
-      T extends ErrorName[K],
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
       N extends
         | "background-color"
         | "background-image"
@@ -473,8 +473,8 @@ namespace ColorError {
     >(
       message: string,
       diagnostic?: {
-        kind: K;
         type: T;
+        kind: K;
         element: Element;
         property: N;
         value: Style.Computed<N>;
@@ -483,8 +483,8 @@ namespace ColorError {
       return diagnostic !== undefined
         ? new WithProperty(
             message,
-            diagnostic.kind,
             diagnostic.type,
+            diagnostic.kind,
             diagnostic.element,
             diagnostic.property,
             diagnostic.value
@@ -497,13 +497,13 @@ namespace ColorError {
 
     protected constructor(
       message: string,
-      kind: K,
       type: T,
+      kind: K,
       element: Element,
       proprety: N,
       value: Style.Computed<N>
     ) {
-      super(message, element, kind, type);
+      super(message, element, type, kind);
       this._property = proprety;
       this._value = value;
     }
@@ -516,7 +516,7 @@ namespace ColorError {
       return this._value;
     }
 
-    public equals(value: WithProperty<K, T, N>): boolean;
+    public equals(value: WithProperty<T, K, N>): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -529,7 +529,7 @@ namespace ColorError {
       );
     }
 
-    public toJSON(): WithProperty.JSON<K, T, N> {
+    public toJSON(): WithProperty.JSON<T, K, N> {
       return {
         ...super.toJSON(),
         property: this._property,
@@ -540,8 +540,8 @@ namespace ColorError {
 
   namespace WithProperty {
     export interface JSON<
-      K extends keyof ErrorName,
-      T extends ErrorName[K],
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
       N extends
         | "background-color"
         | "background-image"
@@ -549,14 +549,14 @@ namespace ColorError {
         | "color"
         | "position"
         | "text-shadow"
-    > extends ColorError.JSON<K, T> {
+    > extends ColorError.JSON<T, K> {
       property: N;
       value: Serializable.ToJSON<Style.Computed<N>>;
     }
 
     export function from<
-      K extends keyof ErrorName,
-      T extends ErrorName[K],
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
       N extends
         | "background-color"
         | "background-image"
@@ -565,13 +565,13 @@ namespace ColorError {
         | "position"
         | "text-shadow"
     >(
-      kind: K,
       type: T,
+      kind: K,
       property: N,
       message: string
-    ): (element: Element, value: Style.Computed<N>) => WithProperty<K, T, N> {
+    ): (element: Element, value: Style.Computed<N>) => WithProperty<T, K, N> {
       return (element, value) =>
-        WithProperty.of(message, { kind, type, element, property, value });
+        WithProperty.of(message, { type, kind, element, property, value });
     }
   }
 
