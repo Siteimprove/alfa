@@ -24,6 +24,7 @@ import { contrast } from "../common/expectation/contrast";
 import { getForeground } from "../common/expectation/get-colors";
 import {
   hasBorder,
+  hasBoxShadow,
   hasComputedStyle,
   hasOutline,
   hasRole,
@@ -398,6 +399,7 @@ namespace Distinguishable {
       // should hopefully not happen (too often) in practice. When it does, we
       // risk false negatives.
       hasBorder(device, context),
+      hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
       hasOutline(device, context)
     );
   }

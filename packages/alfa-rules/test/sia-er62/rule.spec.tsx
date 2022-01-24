@@ -557,6 +557,37 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
   ]);
 });
 
+test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a box shadow`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "10px 5px 5px red",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle([
+      "box-shadow",
+      "10px 5px 5px rgb(100% 0% 0%)",
+    ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([style], [addCursor(style)], [style]),
+    }),
+  ]);
+});
+
 test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 as a distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
@@ -1093,8 +1124,53 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   ]);
 });
 
-test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element
-      as none of the foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration and applies a box shadow with initial value`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          outline: "none",
+          "box-shadow": "initial",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable(
+        [noStyle],
+        [addCursor(noStyle)],
+        [noStyle]
+      ),
+    }),
+  ]);
+});
+
+/******************************************************************
+ *
+ * Inapplicable tests
+ *
+ ******************************************************************/
+test(`evaluate() is inapplicable to an <a> element with no visible text content`, async (t) => {
+  const target = (
+    <a href="#">
+      <span hidden>Link</span>
+    </a>
+  );
+
+  const document = h.document([<p>Hello {target}</p>]);
+
+  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+});
+
+test(`evaluate() is inapplicable to an <a> element with a <p> parent element
+      no non-link text content`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
