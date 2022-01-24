@@ -1,10 +1,14 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { hasInterposedDescendant, isPositioned } from "../predicate";
@@ -111,374 +115,6 @@ class Layer {
   }
 }
 
-interface ErrorName {
-  layer:
-    | "unresolvable-background-color"
-    | "unresolvable-gradient"
-    | "background-size"
-    | "background-image"
-    | "non-static"
-    | "interposed-descendant";
-  foreground: "unresolvable-foreground-color";
-  background: "text-shadow";
-}
-
-abstract class ColorError<
-  K extends keyof ErrorName = keyof ErrorName,
-  T extends ErrorName[K] = ErrorName[K]
-> extends Diagnostic {
-  protected readonly _kind: K;
-  protected readonly _type: T;
-
-  protected constructor(message: string, kind: K, type: T) {
-    super(message);
-    this._kind = kind;
-    this._type = type;
-  }
-
-  public get kind(): K {
-    return this._kind;
-  }
-
-  public get type(): T {
-    return this._type;
-  }
-
-  public equals(value: ColorError): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return (
-      value instanceof ColorError &&
-      value._message === this._message &&
-      value._kind === this._kind &&
-      value._type === this._type
-    );
-  }
-
-  public toJSON(): ColorError.JSON<K, T> {
-    return { ...super.toJSON(), kind: this._kind, type: this._type };
-  }
-}
-
-namespace ColorError {
-  export interface JSON<
-    K extends keyof ErrorName = keyof ErrorName,
-    T extends ErrorName[K] = ErrorName[K]
-  > extends Diagnostic.JSON {
-    kind: K;
-    type: T;
-  }
-
-  class HasUnresolvableBackgroundColor extends ColorError<
-    "layer",
-    "unresolvable-background-color"
-  > {
-    public static of(
-      message: string,
-      element: Element = Element.of(None, None, "dummy")
-    ): HasUnresolvableBackgroundColor {
-      return new HasUnresolvableBackgroundColor(message, element);
-    }
-
-    private readonly _element: Element;
-
-    constructor(message: string, element: Element) {
-      super(message, "layer", "unresolvable-background-color");
-      this._element = element;
-    }
-
-    public get element(): Element {
-      return this._element;
-    }
-
-    public equals(value: HasUnresolvableBackgroundColor): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return (
-        super.equals(value) &&
-        value instanceof HasUnresolvableBackgroundColor &&
-        value._element.equals(this._element)
-      );
-    }
-
-    public toJSON(): HasUnresolvableBackgroundColor.JSON {
-      return { ...super.toJSON(), element: this._element.toJSON() };
-    }
-  }
-
-  namespace HasUnresolvableBackgroundColor {
-    export interface JSON
-      extends ColorError.JSON<"layer", "unresolvable-background-color"> {
-      element: Element.JSON;
-    }
-
-    export function from(element: Element): HasUnresolvableBackgroundColor {
-      return HasUnresolvableBackgroundColor.of(
-        `Could not resolve background-color`,
-        element
-      );
-    }
-  }
-
-  export const { from: unresolvableBackgroundColor } =
-    HasUnresolvableBackgroundColor;
-
-  class HasUnresolvableGradientStop extends ColorError<
-    "layer",
-    "unresolvable-gradient"
-  > {
-    public static of(message: string): HasUnresolvableGradientStop {
-      return new HasUnresolvableGradientStop(message);
-    }
-
-    constructor(message: string) {
-      super(message, "layer", "unresolvable-gradient");
-    }
-
-    public equals(value: HasUnresolvableGradientStop): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return (
-        super.equals(value) && value instanceof HasUnresolvableGradientStop
-      );
-    }
-
-    public toJSON(): HasUnresolvableGradientStop.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasUnresolvableGradientStop {
-    export interface JSON
-      extends ColorError.JSON<"layer", "unresolvable-gradient"> {}
-
-    export function from(): HasUnresolvableGradientStop {
-      return HasUnresolvableGradientStop.of(
-        `Could not resolve gradient color stop`
-      );
-    }
-  }
-
-  export const { from: unresolvableGradientStop } = HasUnresolvableGradientStop;
-
-  class HasBackgroundSize extends ColorError<"layer", "background-size"> {
-    public static of(message: string): HasBackgroundSize {
-      return new HasBackgroundSize(message);
-    }
-
-    constructor(message: string) {
-      super(message, "layer", "background-size");
-    }
-
-    public equals(value: HasBackgroundSize): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return super.equals(value) && value instanceof HasBackgroundSize;
-    }
-
-    public toJSON(): HasBackgroundSize.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasBackgroundSize {
-    export interface JSON extends ColorError.JSON<"layer", "background-size"> {}
-
-    export function from(): HasBackgroundSize {
-      return HasBackgroundSize.of(`A background-size was encountered`);
-    }
-  }
-
-  export const { from: backgroundSize } = HasBackgroundSize;
-
-  class HasExternalBackgroundImage extends ColorError<
-    "layer",
-    "background-image"
-  > {
-    public static of(message: string): HasExternalBackgroundImage {
-      return new HasExternalBackgroundImage(message);
-    }
-
-    constructor(message: string) {
-      super(message, "layer", "background-image");
-    }
-    public equals(value: HasExternalBackgroundImage): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return super.equals(value) && value instanceof HasExternalBackgroundImage;
-    }
-
-    public toJSON(): HasExternalBackgroundImage.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasExternalBackgroundImage {
-    export interface JSON
-      extends ColorError.JSON<"layer", "background-image"> {}
-
-    export function from(): HasExternalBackgroundImage {
-      return HasExternalBackgroundImage.of(
-        `A background-image with a url() was encountered`
-      );
-    }
-  }
-
-  export const { from: externalBackgroundImage } = HasExternalBackgroundImage;
-
-  class HasNonStaticPosition extends ColorError<"layer", "non-static"> {
-    public static of(message: string): HasNonStaticPosition {
-      return new HasNonStaticPosition(message);
-    }
-
-    constructor(message: string) {
-      super(message, "layer", "non-static");
-    }
-    public equals(value: HasNonStaticPosition): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return super.equals(value) && value instanceof HasNonStaticPosition;
-    }
-
-    public toJSON(): HasNonStaticPosition.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasNonStaticPosition {
-    export interface JSON extends ColorError.JSON<"layer", "non-static"> {}
-
-    export function from(): HasNonStaticPosition {
-      return HasNonStaticPosition.of(
-        `A non-statically positioned element was encountered`
-      );
-    }
-  }
-
-  export const { from: nonStaticPosition } = HasNonStaticPosition;
-
-  class HasInterposedDescendant extends ColorError<
-    "layer",
-    "interposed-descendant"
-  > {
-    public static of(message: string): HasInterposedDescendant {
-      return new HasInterposedDescendant(message);
-    }
-
-    constructor(message: string) {
-      super(message, "layer", "interposed-descendant");
-    }
-    public equals(value: HasInterposedDescendant): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return super.equals(value) && value instanceof HasInterposedDescendant;
-    }
-
-    public toJSON(): HasInterposedDescendant.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasInterposedDescendant {
-    export interface JSON
-      extends ColorError.JSON<"layer", "interposed-descendant"> {}
-
-    export function from(): HasInterposedDescendant {
-      return HasInterposedDescendant.of(
-        `An interposed descendant element was encountered`
-      );
-    }
-  }
-
-  export const { from: interposedDescendant } = HasInterposedDescendant;
-
-  class HasUnresolvableForegroundColor extends ColorError<
-    "foreground",
-    "unresolvable-foreground-color"
-  > {
-    public static of(message: string): HasUnresolvableForegroundColor {
-      return new HasUnresolvableForegroundColor(message);
-    }
-
-    constructor(message: string) {
-      super(message, "foreground", "unresolvable-foreground-color");
-    }
-    public equals(value: HasUnresolvableForegroundColor): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return (
-        super.equals(value) && value instanceof HasUnresolvableForegroundColor
-      );
-    }
-
-    public toJSON(): HasUnresolvableForegroundColor.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasUnresolvableForegroundColor {
-    export interface JSON
-      extends ColorError.JSON<"foreground", "unresolvable-foreground-color"> {}
-
-    export function from(): HasUnresolvableForegroundColor {
-      return HasUnresolvableForegroundColor.of(
-        `Could not resolve gradient color stop`
-      );
-    }
-  }
-
-  export const { from: unresolvableForegroundColor } =
-    HasUnresolvableForegroundColor;
-
-  class HasTextShadow extends ColorError<"background", "text-shadow"> {
-    public static of(message: string): HasTextShadow {
-      return new HasTextShadow(message);
-    }
-
-    constructor(message: string) {
-      super(message, "background", "text-shadow");
-    }
-    public equals(value: HasTextShadow): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return super.equals(value) && value instanceof HasTextShadow;
-    }
-
-    public toJSON(): HasTextShadow.JSON {
-      return { ...super.toJSON() };
-    }
-  }
-
-  namespace HasTextShadow {
-    export interface JSON
-      extends ColorError.JSON<"background", "text-shadow"> {}
-
-    export function from(): HasTextShadow {
-      return HasTextShadow.of(`A text-shadow was encountered`);
-    }
-  }
-
-  export const { from: textShadow } = HasTextShadow;
-}
-
 function getLayers(
   element: Element,
   device: Device,
@@ -486,8 +122,11 @@ function getLayers(
   opacity?: number
 ): Result<Array<Layer>, ColorError<"layer">> {
   const style = Style.from(element, device, context);
+  const backgroundColor = style.computed("background-color").value;
+  const backgroundImage = style.computed("background-image").value;
+  const backgroundSize = style.computed("background-size").value;
 
-  const color = Color.resolve(style.computed("background-color").value, style);
+  const color = Color.resolve(backgroundColor, style);
 
   opacity = opacity ?? style.computed("opacity").value.value;
 
@@ -496,10 +135,12 @@ function getLayers(
   if (color.isSome()) {
     layers.push(Layer.of([color.get()], opacity));
   } else {
-    return Err.of(ColorError.unresolvableBackgroundColor(element));
+    return Err.of(
+      ColorError.unresolvableBackgroundColor(element, backgroundColor)
+    );
   }
 
-  for (const image of style.computed("background-image").value) {
+  for (const image of backgroundImage) {
     if (image.type === "keyword") {
       continue;
     }
@@ -507,18 +148,16 @@ function getLayers(
     // We currently have no way of extracting colors from images, so we simply
     // bail out if we encounter a background image.
     if (image.image.type === "url") {
-      return Err.of(ColorError.externalBackgroundImage());
+      return Err.of(
+        ColorError.externalBackgroundImage(element, backgroundImage)
+      );
     }
 
     // If there is a background-size, we currently have no way of guessing
     // whether it is large enough to go under the text or not.
     // So we simply bail out.
-    if (
-      !style
-        .computed("background-size")
-        .value.equals(style.initial("background-size").value)
-    ) {
-      return Err.of(ColorError.backgroundSize());
+    if (!backgroundSize.equals(style.initial("background-size").value)) {
+      return Err.of(ColorError.backgroundSize(element, backgroundSize));
     }
 
     // For each gradient, we extract all color stops into a background layer of
@@ -533,7 +172,13 @@ function getLayers(
         if (color.isSome()) {
           stops.push(color.get());
         } else {
-          return Err.of(ColorError.unresolvableGradientStop());
+          return Err.of(
+            ColorError.unresolvableGradientStop(
+              element,
+              backgroundImage,
+              item.color
+            )
+          );
         }
       }
     }
@@ -553,11 +198,16 @@ function getLayers(
   }
 
   if (isPositioned(device, "absolute", "fixed")(element)) {
-    return Err.of(ColorError.nonStaticPosition());
+    return Err.of(
+      ColorError.nonStaticPosition(element, style.computed("position").value)
+    );
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(ColorError.interposedDescendant());
+    const interposedDescendants: Array<Element> = [];
+    return Err.of(
+      ColorError.interposedDescendant(element, interposedDescendants)
+    );
   }
 
   // If the background layer does not have a lower layer that is fully opaque,
@@ -590,11 +240,14 @@ export function getForeground(
   context: Context = Context.empty()
 ): Result<Foreground, ColorError> {
   const style = Style.from(element, device, context);
+  const foregroundColor = style.computed("color").value;
 
-  const color = Color.resolve(style.computed("color").value, style);
+  const color = Color.resolve(foregroundColor, style);
 
   if (color.isNone()) {
-    return Err.of(ColorError.unresolvableForegroundColor());
+    return Err.of(
+      ColorError.unresolvableForegroundColor(element, foregroundColor)
+    );
   }
 
   const opacity = style.computed("opacity").value;
@@ -606,7 +259,10 @@ export function getForeground(
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(ColorError.interposedDescendant());
+    const interposedDescendants: Array<Element> = [];
+    return Err.of(
+      ColorError.interposedDescendant(element, interposedDescendants)
+    );
   }
 
   // First, we mix the color with the element's background according to the
@@ -650,16 +306,19 @@ export function getBackground(
   context: Context = Context.empty(),
   opacity?: number
 ): Result<Background, ColorError<"background" | "layer">> {
+  const textShadow = Style.from(element, device, context).computed(
+    "text-shadow"
+  ).value;
   // If the element has a text-shadow, we don't try to guess how it looks.
-  if (
-    Style.from(element, device, context).computed("text-shadow").value.type !==
-    "keyword"
-  ) {
-    return Err.of(ColorError.textShadow());
+  if (textShadow.type !== "keyword") {
+    return Err.of(ColorError.textShadow(element, textShadow));
   }
 
   if (hasInterposedDescendant(device)(element)) {
-    return Err.of(ColorError.interposedDescendant());
+    const interposedDescendants: Array<Element> = [];
+    return Err.of(
+      ColorError.interposedDescendant(element, interposedDescendants)
+    );
   }
 
   return getLayers(element, device, context, opacity).map((layers) =>
@@ -687,4 +346,430 @@ export function getBackground(
       ]
     )
   );
+}
+
+// Extended diagnostic for getColor
+
+interface ErrorName {
+  layer:
+    | "unresolvable-background-color"
+    | "unresolvable-gradient"
+    | "background-size"
+    | "background-image"
+    | "non-static"
+    | "interposed-descendant";
+  foreground: "unresolvable-foreground-color";
+  background: "text-shadow";
+}
+
+abstract class ColorError<
+  K extends keyof ErrorName = keyof ErrorName,
+  T extends ErrorName[K] = ErrorName[K]
+> extends Diagnostic {
+  protected readonly _element: Element;
+  protected readonly _kind: K;
+  protected readonly _type: T;
+
+  protected constructor(message: string, element: Element, kind: K, type: T) {
+    super(message);
+    this._element = element;
+    this._kind = kind;
+    this._type = type;
+  }
+
+  public get element(): Element {
+    return this._element;
+  }
+
+  public get kind(): K {
+    return this._kind;
+  }
+
+  public get type(): T {
+    return this._type;
+  }
+
+  public equals(value: ColorError): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof ColorError &&
+      value._message === this._message &&
+      value._element.equals(this._element) &&
+      value._kind === this._kind &&
+      value._type === this._type
+    );
+  }
+
+  public toJSON(): ColorError.JSON<K, T> {
+    return {
+      ...super.toJSON(),
+      element: this._element.toJSON(),
+      kind: this._kind,
+      type: this._type,
+    };
+  }
+}
+
+namespace ColorError {
+  export interface JSON<
+    K extends keyof ErrorName = keyof ErrorName,
+    T extends ErrorName[K] = ErrorName[K]
+  > extends Diagnostic.JSON {
+    element: Element.JSON;
+    kind: K;
+    type: T;
+  }
+
+  /**
+   * Most color error are just about one CSS property.
+   */
+  class WithProperty<
+    K extends keyof ErrorName,
+    T extends ErrorName[K],
+    N extends
+      | "background-color"
+      | "background-image"
+      | "background-size"
+      | "color"
+      | "position"
+      | "text-shadow"
+  > extends ColorError<K, T> {
+    public static of(message: string): Diagnostic;
+
+    public static of<
+      K extends keyof ErrorName,
+      T extends ErrorName[K],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    >(
+      message: string,
+      diagnostic: {
+        kind: K;
+        type: T;
+        element: Element;
+        property: N;
+        value: Style.Computed<N>;
+      }
+    ): WithProperty<K, T, N>;
+
+    public static of<
+      K extends keyof ErrorName,
+      T extends ErrorName[K],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    >(
+      message: string,
+      diagnostic?: {
+        kind: K;
+        type: T;
+        element: Element;
+        property: N;
+        value: Style.Computed<N>;
+      }
+    ): Diagnostic {
+      return diagnostic !== undefined
+        ? new WithProperty(
+            message,
+            diagnostic.kind,
+            diagnostic.type,
+            diagnostic.element,
+            diagnostic.property,
+            diagnostic.value
+          )
+        : Diagnostic.of(message);
+    }
+
+    private readonly _property: N;
+    private readonly _value: Style.Computed<N>;
+
+    protected constructor(
+      message: string,
+      kind: K,
+      type: T,
+      element: Element,
+      proprety: N,
+      value: Style.Computed<N>
+    ) {
+      super(message, element, kind, type);
+      this._property = proprety;
+      this._value = value;
+    }
+
+    get property(): N {
+      return this._property;
+    }
+
+    get value(): Style.Computed<N> {
+      return this._value;
+    }
+
+    public equals(value: WithProperty<K, T, N>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        super.equals(value) &&
+        value instanceof WithProperty &&
+        value._property === this._property &&
+        Equatable.equals(value._value, this._value)
+      );
+    }
+
+    public toJSON(): WithProperty.JSON<K, T, N> {
+      return {
+        ...super.toJSON(),
+        property: this._property,
+        value: Serializable.toJSON(this._value),
+      };
+    }
+  }
+
+  namespace WithProperty {
+    export interface JSON<
+      K extends keyof ErrorName,
+      T extends ErrorName[K],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    > extends ColorError.JSON<K, T> {
+      property: N;
+      value: Serializable.ToJSON<Style.Computed<N>>;
+    }
+
+    export function from<
+      K extends keyof ErrorName,
+      T extends ErrorName[K],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    >(
+      kind: K,
+      type: T,
+      property: N,
+      message: string
+    ): (element: Element, value: Style.Computed<N>) => WithProperty<K, T, N> {
+      return (element, value) =>
+        WithProperty.of(message, { kind, type, element, property, value });
+    }
+  }
+
+  export const unresolvableBackgroundColor = WithProperty.from(
+    "layer",
+    "unresolvable-background-color",
+    "background-color",
+    "Could not resolve background-color"
+  );
+
+  export const backgroundSize = WithProperty.from(
+    "layer",
+    "background-size",
+    "background-size",
+    "A background-size was encountered"
+  );
+
+  export const externalBackgroundImage = WithProperty.from(
+    "layer",
+    "background-image",
+    "background-image",
+    "A background-image with a url() was encountered"
+  );
+
+  export const nonStaticPosition = WithProperty.from(
+    "layer",
+    "non-static",
+    "position",
+    "A non-statically positioned element was encountered"
+  );
+
+  export const unresolvableForegroundColor = WithProperty.from(
+    "foreground",
+    "unresolvable-foreground-color",
+    "color",
+    "Could not resolve foreground color"
+  );
+
+  export const textShadow = WithProperty.from(
+    "background",
+    "text-shadow",
+    "text-shadow",
+    "A text-shadow was encountered"
+  );
+
+  /**
+   * We want both the value of background-image and the unresolvable stop
+   */
+  class HasUnresolvableGradientStop extends WithProperty<
+    "layer",
+    "unresolvable-gradient",
+    "background-image"
+  > {
+    public static create(
+      element: Element,
+      value: Style.Computed<"background-image">,
+      color: Color | Current | System
+    ): HasUnresolvableGradientStop {
+      return new HasUnresolvableGradientStop(element, value, color);
+    }
+
+    private readonly _color: Color | Current | System;
+
+    private constructor(
+      element: Element,
+      value: Style.Computed<"background-image">,
+      color: Color | Current | System
+    ) {
+      super(
+        "Could not resolve gradient color stop",
+        "layer",
+        "unresolvable-gradient",
+        element,
+        "background-image",
+        value
+      );
+      this._color = color;
+    }
+
+    public get color(): Color | Current | System {
+      return this._color;
+    }
+
+    public equals(value: HasUnresolvableGradientStop): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        super.equals(value) &&
+        value instanceof HasUnresolvableGradientStop &&
+        value._color.equals(this._color)
+      );
+    }
+
+    public toJSON(): HasUnresolvableGradientStop.JSON {
+      return {
+        ...super.toJSON(),
+        color: this._color.toJSON(),
+      };
+    }
+  }
+
+  namespace HasUnresolvableGradientStop {
+    export interface JSON
+      extends WithProperty.JSON<
+        "layer",
+        "unresolvable-gradient",
+        "background-image"
+      > {
+      color: Serializable.ToJSON<Color | Current | System>;
+    }
+  }
+
+  export const { create: unresolvableGradientStop } =
+    HasUnresolvableGradientStop;
+
+  /**
+   * This one does not depend on a CSS property, but on some other elements
+   */
+  class HasInterposedDescendant extends ColorError<
+    "layer",
+    "interposed-descendant"
+  > {
+    public static of(message: string): Diagnostic;
+
+    public static of(
+      message: string,
+      element: Element,
+      positionDescendants: Iterable<Element>
+    ): HasInterposedDescendant;
+
+    public static of(
+      message: string,
+      element?: Element,
+      positionDescendants?: Iterable<Element>
+    ): Diagnostic {
+      return element !== undefined && positionDescendants !== undefined
+        ? new HasInterposedDescendant(
+            message,
+            element,
+            Sequence.from(positionDescendants)
+          )
+        : Diagnostic.of(message);
+    }
+
+    private readonly _positionedDescendants: Sequence<Element>;
+
+    private constructor(
+      message: string,
+      element: Element,
+      positionedDescendants: Sequence<Element>
+    ) {
+      super(message, element, "layer", "interposed-descendant");
+      this._positionedDescendants = positionedDescendants;
+    }
+
+    public get positionedDescendants(): Iterable<Element> {
+      return this._positionedDescendants;
+    }
+
+    public equals(value: HasInterposedDescendant): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
+      return (
+        super.equals(value) &&
+        value instanceof HasInterposedDescendant &&
+        value._positionedDescendants.equals(this._positionedDescendants)
+      );
+    }
+
+    public toJSON(): HasInterposedDescendant.JSON {
+      return {
+        ...super.toJSON(),
+        positionedDescendants: this._positionedDescendants.toJSON(),
+      };
+    }
+  }
+
+  namespace HasInterposedDescendant {
+    export interface JSON
+      extends ColorError.JSON<"layer", "interposed-descendant"> {
+      positionedDescendants: Sequence.JSON<Element>;
+    }
+
+    export function from(
+      offsetParent: Element,
+      positionedDescendants: Iterable<Element>
+    ): HasInterposedDescendant {
+      return HasInterposedDescendant.of(
+        "An interposed descendant element was encountered",
+        offsetParent,
+        positionedDescendants
+      );
+    }
+  }
+
+  export const { from: interposedDescendant } = HasInterposedDescendant;
 }
