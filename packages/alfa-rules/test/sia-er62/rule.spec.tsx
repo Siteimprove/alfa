@@ -800,6 +800,201 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
   ]);
 });
 
+test(`evaluate() is applicable to an <a> element with a <p> parent element
+    when at least one child textnode of the <p> element has a different foreground color from the <a> element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>
+          Hello
+          <span>World</span>
+        </span>
+        {target}
+        <strong>Differently colored text</strong>
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          color: "#0000EE",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
+    }),
+  ]);
+});
+
+test(`evaluate() is applicable to an <a> element with a <p> parent element
+    when the textnode of the <p> element is deeply nested in spans and has a different foreground color from the <a> element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span class="span-blue">
+          <span class="span-blue">
+            <span class="span-blue">
+              <span class="span-black">World</span>
+            </span>
+          </span>
+        </span>
+        {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span-blue", {
+          color: "#0000EE",
+        }),
+        h.rule.style("span-black", {
+          color: "black",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
+    }),
+  ]);
+});
+
+test(`evaluate() is applicable to an <a> element with a <p> parent element
+    when the textnode of the <p> element is deeply nested in spans and has a different foreground color from the <a> element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span>
+        <span>
+          <span>
+            <span>{target}</span>
+          </span>
+        </span>
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          color: "black",
+        }),
+      ]),
+    ]
+  );
+
+  const spanStyle = Err.of(
+    noDistinguishingProperties
+      .withPairings([
+        Contrast.Pairing.of(defaultTextColor, defaultTextColor, 1),
+      ])
+      .withStyle(["color", "rgb(0% 0% 0%)"])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle, spanStyle],
+        [hoverStyle, spanStyle],
+        [focusStyle, spanStyle]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() is applicable to an <a> element with a <p> parent element
+    when the foreground color of the <p> and <a> are the same
+    but the foreground color of the nested <span> in the <a> is different`, async (t) => {
+  const target = (
+    <a href="#">
+      Link <span>world</span>
+    </a>
+  );
+
+  const document = h.document(
+    [
+      <p>
+        Hello
+        {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          color: "black",
+        }),
+
+        h.rule.style("p", {
+          color: "#0000EE",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    linkProperties.withPairings([
+      Contrast.Pairing.of(defaultLinkColor, defaultLinkColor, 1),
+    ])
+  );
+
+  const spanStyle = noDistinguishingProperties
+    .withPairings([
+      Contrast.Pairing.of(defaultLinkColor, defaultTextColor, 2.23),
+    ])
+    .withStyle(["color", "rgb(0% 0% 0%)"]);
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, Err.of(spanStyle)],
+        [addCursor(Ok.of(spanStyle)), addCursor(style)],
+        [addOutline(style), Err.of(spanStyle)]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() is applicable to an <a> element when there is a <p> parent element
+    with different foreground color`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <div>
+        <p class="p-one">
+          Hello
+          {target}
+        </p>
+        <p class="p-two">
+          Hello
+          {target}
+        </p>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("p-one", {
+          color: "#0000EE",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
+    }),
+  ]);
+});
+
 /******************************************************************
  *
  * Failing tests
@@ -1396,42 +1591,6 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-    when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <div>
-        <p>Hello</p>
-        <p>
-          <span>
-            Hello<span>World</span>
-          </span>
-          ! {target}
-        </p>
-      </div>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          outline: "none",
-          borderWidth: "0",
-        }),
-        h.rule.style("p", {
-          color: "#0000EE",
-        }),
-        h.rule.style("span", {
-          color: "#0000EE",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-});
-
-test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     when the parent element has the text content wrapped in a <span> element and it has the same foreground color as the <a> element`, async (t) => {
   const target = <a href="#">Link</a>;
 
@@ -1447,12 +1606,6 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
         h.rule.style("span", {
           color: "#0000EE",
         }),
-
-        h.rule.style("a", {
-          textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
-        }),
       ]),
     ]
   );
@@ -1460,36 +1613,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
 });
 
-// test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-//     when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
-//   const target = <a href="#">Link</a>;
-
-//   const document = h.document(
-//     [
-//       <p>
-//         Hello
-//         {target}
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("p", {
-//           background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
-//           color: "rgba(255, 255, 255, 0.5)",
-//         }),
-
-//         h.rule.style("a", {
-//           color: "rgba(255, 255, 255, 0.5)",
-//           textDecoration: "none",
-//           outline: "none",
-//           cursor: "auto",
-//         }),
-//       ]),
-//     ]
-//   );
-
-//   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-// });
+// Inapplicable when same linear gradient colors
 
 // test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 //     when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
@@ -1515,81 +1639,6 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 //           textDecoration: "none",
 //           outline: "none",
 //           cursor: "auto",
-//         }),
-//       ]),
-//     ]
-//   );
-
-//   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-// });
-
-test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-    when <a> element's text content is wrapped in a span that has the same foreground color as the <p> element`, async (t) => {
-  const target = (
-    <a href="#">
-      <span>
-        text descendant<span>nested text descendant</span>
-      </span>
-    </a>
-  );
-
-  const document = h.document(
-    [
-      <p>
-        Hello
-        {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("span", {
-          color: "red",
-        }),
-
-        h.rule.style("p", {
-          color: "red",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-});
-
-// test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-//     when <a> element's text content is wrapped in a span that has the same foreground color as the <p> element`, async (t) => {
-//   const document = h.document(
-//     [
-//       <p>
-//         Lorem
-//         <a href="#">Link</a>
-//         <span>
-//           hello
-//           <span>ipsum</span>
-//         </span>
-//         <a href="#">
-//           <span>deep link</span>
-//         </a>
-//         <span>dolor</span>
-//         <span>
-//           <a href="#">nested link</a>
-//         </span>
-//         sit
-//         <a href="#">
-//           mixed
-//           <span>deep link2</span>
-//         </a>
-//         amet.
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("span", {
-//           color: "red",
-//         }),
-
-//         h.rule.style("p", {
-//           color: "red",
 //         }),
 //       ]),
 //     ]

@@ -57,6 +57,12 @@ export class ElementDistinguishable
     );
   }
 
+  public withPairings(
+    pairings: ReadonlyArray<Contrast.Pairing>
+  ): ElementDistinguishable {
+    return ElementDistinguishable.of(this._style, pairings);
+  }
+
   public equals(value: ElementDistinguishable): boolean;
 
   public equals(value: unknown): value is this;
