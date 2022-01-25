@@ -84,10 +84,6 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                     })
                     .every(isInvisible(device, context))
               )
-            ), // Text children from video or audio elements is only displayed within legacy browser and it's invisible otherwise. 
-              // All major browser do support them, thus we are considering the text as invisible 
-            and(isText, (text) =>
-              text.parent().filter(isElement).some(hasName("video", "audio"))
             )
           ),
           node

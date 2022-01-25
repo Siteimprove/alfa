@@ -1,9 +1,11 @@
+/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
 import * as predicate from "../../../src/common/predicate/is-visible";
+import { isRendered } from "../../../src/common/predicate";
 
 const isVisible = predicate.isVisible(Device.standard());
 
@@ -22,6 +24,37 @@ test(`isVisible() returns false when an element is hidden using the \`hidden\`
   h.document([element]);
 
   t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false when a text element is child of a video element with a track`, (t) => {
+  const text = h.text("This text isn't visible");
+  const track = <track kind="description" src="foo" />;
+  const element = (
+    <video src="foo.mp4">
+      {track}
+      {text}
+    </video>
+  );
+
+  h.document([element]);
+
+  t.equal(isVisible(text), false);
+  t.equal(isRendered(Device.standard())(track), true);
+});
+
+test(`isVisible() returns false when a text element is child of a video element with a source and track`, (t) => {
+  const text = h.text("This text isn't visible");
+  const element = (
+    <audio>
+      <source>
+        <track>{text}</track>
+      </source>
+    </audio>
+  );
+
+  h.document([element]);
+
+  t.equal(isVisible(text), false);
 });
 
 test(`isVisible() returns false when an element is hidden using the

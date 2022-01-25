@@ -55,6 +55,7 @@
     "src/common/predicate/is-content.ts",
     "src/common/predicate/is-defined.ts",
     "src/common/predicate/is-document-element.ts",
+    "src/common/predicate/is-fallback.ts",
     "src/common/predicate/is-focusable.ts",
     "src/common/predicate/is-ignored.ts",
     "src/common/predicate/is-important.ts",
