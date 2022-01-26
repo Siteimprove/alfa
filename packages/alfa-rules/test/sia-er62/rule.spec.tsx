@@ -867,7 +867,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
 });
 
 test(`evaluate() is applicable to an <a> element with a <p> parent element
-    when the textnode of the <p> element is deeply nested in spans and has a different foreground color from the <a> element`, async (t) => {
+    when the textnode of the <a> element is deeply nested in spans 
+    and has a different foreground color from the <p> element's textnode`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
