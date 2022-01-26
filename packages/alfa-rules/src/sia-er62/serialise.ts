@@ -1,3 +1,4 @@
+import { Keyword, Length } from "@siteimprove/alfa-css";
 import { Property, Style } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
@@ -71,6 +72,32 @@ export namespace Serialise {
     );
   }
 
+  export function boxShadow(style: Style): string {
+    const boxShadow = style.computed("box-shadow").value;
+
+    if (Keyword.isKeyword(boxShadow)) {
+      return "";
+    }
+
+    const serializedShadows: Array<string> = [];
+
+    for (const shadow of boxShadow) {
+      const { vertical, horizontal, blur, spread, isInset, color } = shadow;
+      const omitBlur = Length.isZero(spread) && Length.isZero(blur);
+      const omitSpread = Length.isZero(spread);
+      const blurToString = omitBlur ? "" : blur.toString();
+      const spreadToString = omitSpread ? "" : spread.toString();
+      const insetToString = isInset ? "inset" : "";
+      const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
+      const serialized = normalize(
+        `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`
+      );
+      serializedShadows.push(serialized);
+    }
+
+    return serializedShadows.join(", ");
+  }
+
   export function font(style: Style): string {
     const optional = (["style", "weight"] as const)
       .map((property) => getLonghand(style, `font-${property}`))
@@ -86,7 +113,9 @@ export namespace Serialise {
 
     if (
       size.value.equals(Property.get("font-size").initial.value) &&
-      family.value.values[0].equals(Property.get("font-family").initial.values[0])
+      family.value.values[0].equals(
+        Property.get("font-family").initial.values[0]
+      )
     ) {
       // Both mandatory properties are set to their initial values.
       // Since optional properties also are, we can skip `font` altogether.
@@ -95,7 +124,6 @@ export namespace Serialise {
 
     // Optional properties were not changed but some mandatory ones were.
     return normalize(`${size} ${family}`);
-
   }
 
   // Only background-color and background-image are used for deciding if the
