@@ -342,65 +342,49 @@ export function getBackground(
   context: Context = Context.empty(),
   opacity?: number
 ): Result<Background, Layer.Error | Background.Error> {
-  function getBackgroundFromCache(
-    cache: Cache<
-      Device,
-      Cache<
-        Context,
-        Cache<Element, Result<Background, Layer.Error | Background.Error>>
-      >
-    >,
-    element: Element,
-    device: Device,
-    context: Context = Context.empty(),
-    opacity?: number
-  ): Result<Background, Layer.Error | Background.Error> {
-    return cache
-      .get(device, Cache.empty)
-      .get(context, Cache.empty)
-      .get(element, () => {
-        // If the element has a text-shadow, we don't try to guess how it looks.
-        if (
-          Style.from(element, device, context).computed("text-shadow").value
-            .type !== "keyword"
-        ) {
-          return Err.of(Background.Error.HasTextShadow);
-        }
-
-        if (hasInterposedDescendant(device)(element)) {
-          return Err.of(Layer.Error.HasInterposedDescendant);
-        }
-        return getLayers(element, device, context, opacity).map((layers) =>
-          layers.reduce(
-            (backdrops, layer) =>
-              layer.colors.reduce(
-                (layers, color) =>
-                  layers.concat(
-                    backdrops.map((backdrop) =>
-                      Color.composite(color, backdrop, layer.opacity)
-                    )
-                  ),
-                [] as Array<Color>
-              ),
-            // We make the initial backdrop solid white as this can be assumed
-            // to be the color of the canvas onto which the other backgrounds
-            // are rendered.
-            [
-              RGB.of(
-                Percentage.of(1),
-                Percentage.of(1),
-                Percentage.of(1),
-                Percentage.of(1)
-              ),
-            ]
-          )
-        );
-      });
-  }
-
   const cache =
     opacity === 1
       ? backgroundCacheWithFakeOpacity
       : backgroundCacheWithDefaultOpacity;
-  return getBackgroundFromCache(cache, element, device, context);
+  return cache
+    .get(device, Cache.empty)
+    .get(context, Cache.empty)
+    .get(element, () => {
+      // If the element has a text-shadow, we don't try to guess how it looks.
+      if (
+        Style.from(element, device, context).computed("text-shadow").value
+          .type !== "keyword"
+      ) {
+        return Err.of(Background.Error.HasTextShadow);
+      }
+
+      if (hasInterposedDescendant(device)(element)) {
+        return Err.of(Layer.Error.HasInterposedDescendant);
+      }
+      return getLayers(element, device, context, opacity).map((layers) =>
+        layers.reduce(
+          (backdrops, layer) =>
+            layer.colors.reduce(
+              (layers, color) =>
+                layers.concat(
+                  backdrops.map((backdrop) =>
+                    Color.composite(color, backdrop, layer.opacity)
+                  )
+                ),
+              [] as Array<Color>
+            ),
+          // We make the initial backdrop solid white as this can be assumed
+          // to be the color of the canvas onto which the other backgrounds
+          // are rendered.
+          [
+            RGB.of(
+              Percentage.of(1),
+              Percentage.of(1),
+              Percentage.of(1),
+              Percentage.of(1)
+            ),
+          ]
+        )
+      );
+    });
 }
