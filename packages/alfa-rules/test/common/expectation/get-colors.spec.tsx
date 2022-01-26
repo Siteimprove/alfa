@@ -568,4 +568,39 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
   });
 });
 
-// interposed element
+test("getBackgroundColor() gives up in case of interposed elements", (t) => {
+  const target = <span>Hello</span>;
+  const wrapper = (
+    <p>
+      <div>
+        {/* Text needed to make element visible.
+            Should be removed once https://github.com/Siteimprove/alfa/issues/985 is fixed
+            */}
+        Foo
+      </div>
+      {target}
+    </p>
+  );
+
+  h.document(
+    [wrapper],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          backgroundColor: "blue",
+          position: "absolute",
+          top: "1px",
+        }),
+        h.rule.style("p", { position: "relative" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "An interposed descendant element was encountered",
+    type: "layer",
+    kind: "interposed-descendant",
+    element: wrapper.toJSON(),
+    positionedDescendants: [],
+  });
+});
