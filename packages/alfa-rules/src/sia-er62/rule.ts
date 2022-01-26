@@ -143,8 +143,8 @@ export default Rule.Atomic.of<Page, Element>({
             container: Element
           ): boolean =>
             getForeground(link, device).some((linkColors) => {
-              // If the link or the container have transparent foreground with background gradient color
-              // then the rule is applicable
+              // If the link or the container have a foreground with the alpha channel less than 1 and background gradient color
+              // then the rule is applicable as we can't tell for sure if the two have the same color
               if (linkColors.length !== 1) {
                 return true;
               }
