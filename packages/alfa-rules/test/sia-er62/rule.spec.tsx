@@ -995,6 +995,72 @@ test(`evaluate() is applicable to an <a> element when there is a <p> parent elem
   ]);
 });
 
+test(`evaluate() is applicable to an <a> element with a <p> parent element that has the text content wrapped in a span
+    when both have the same linear gradient foreground color`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span>
+        {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          background: "linear-gradient(to right, black 50%, #0000EE 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
+
+        h.rule.style("a", {
+          background: "linear-gradient(to right, black 50%, #0000EE 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
+      ]),
+    ]
+  );
+
+  const foregroundFromBlack = RGB.of(
+    Percentage.of(0.1),
+    Percentage.of(0.1),
+    Percentage.of(0.1),
+    Percentage.of(1)
+  );
+  const foregroundFromBlue = RGB.of(
+    Percentage.of(0.1),
+    Percentage.of(0.1),
+    Percentage.of(0.94),
+    Percentage.of(1)
+  );
+  const style = Ok.of(
+    linkProperties
+      .withStyle(
+        [
+          "background",
+          "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%) 0% 0%",
+        ],
+        ["color", "rgb(100% 100% 100% / 10%)"]
+      )
+      .withPairings([
+        Contrast.Pairing.of(foregroundFromBlack, foregroundFromBlue, 2.03),
+        Contrast.Pairing.of(foregroundFromBlue, foregroundFromBlack, 2.03),
+        Contrast.Pairing.of(foregroundFromBlack, foregroundFromBlack, 1),
+        Contrast.Pairing.of(foregroundFromBlue, foregroundFromBlue, 1),
+      ])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
+      ),
+    }),
+  ]);
+});
+
 /******************************************************************
  *
  * Failing tests
@@ -1347,6 +1413,151 @@ test(`evaluate() fails an applicable <a> element that removes the default text
   ]);
 });
 
+test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element as none of the foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
+
+        h.rule.style("a, a:hover, a:focus", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const contrastPairings = [
+    Contrast.Pairing.of(
+      RGB.of(
+        Percentage.of(0.1),
+        Percentage.of(0.1),
+        Percentage.of(0.837647),
+        Percentage.of(1)
+      ),
+      defaultLinkColor,
+      1.04
+    ),
+    Contrast.Pairing.of(
+      RGB.of(
+        Percentage.of(0.1),
+        Percentage.of(0.1),
+        Percentage.of(0.3329412),
+        Percentage.of(1)
+      ),
+      defaultLinkColor,
+      1.7
+    ),
+  ];
+
+  const noStyle = Err.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+        [
+          "background",
+          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+        ],
+      ],
+      contrastPairings
+    )
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element as none of the foregrounds have a contrast of 3:1 in the child element`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          color: "blue",
+        }),
+
+        h.rule.style("a, a:hover, a:focus", {
+          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+          textDecoration: "none",
+          outline: "none",
+          cursor: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const pColor = RGB.of(
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(1),
+    Percentage.of(1)
+  );
+
+  const contrastPairings = [
+    Contrast.Pairing.of(
+      pColor,
+      RGB.of(
+        Percentage.of(0.1),
+        Percentage.of(0.1),
+        Percentage.of(0.837647),
+        Percentage.of(1)
+      ),
+      1.14
+    ),
+    Contrast.Pairing.of(
+      pColor,
+      RGB.of(
+        Percentage.of(0.1),
+        Percentage.of(0.1),
+        Percentage.of(0.3329412),
+        Percentage.of(1)
+      ),
+      1.86
+    ),
+  ];
+
+  const noStyle = Err.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "0px"],
+        [
+          "background",
+          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+        ],
+        ["color", "rgb(100% 100% 100% / 10%)"],
+      ],
+      contrastPairings
+    )
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    }),
+  ]);
+});
+
 /******************************************************************
  *
  * Inapplicable tests
@@ -1612,37 +1823,3 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
 });
-
-// Inapplicable when same linear gradient colors
-
-// test(`evaluate() is inapplicable to an <a> element with a <p> parent element
-//     when both have the same foreground color and <a> element's sibling elements also have the same foreground color`, async (t) => {
-//   const target = <a href="#">Link</a>;
-
-//   const document = h.document(
-//     [
-//       <p>
-//         <span>Hello</span>
-//         {target}
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("span", {
-//           background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
-//           color: "rgba(255, 255, 255, 0.5)",
-//         }),
-
-//         h.rule.style("a", {
-//           background: "linear-gradient(to right, #0000D1 50%, #0000FF 50%)",
-//           color: "rgba(255, 255, 255, 0.5)",
-//           textDecoration: "none",
-//           outline: "none",
-//           cursor: "auto",
-//         }),
-//       ]),
-//     ]
-//   );
-
-//   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
-// });

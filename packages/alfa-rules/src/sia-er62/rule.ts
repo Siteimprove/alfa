@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -62,12 +61,16 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [Criterion.of("1.4.1")],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
+    // This is shared with the expectation and contains all applicable link - container pairs
     let applicableContainers: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
+        // Contains links (key) and their containing paragraph (value)
         let containers: Map<Element, Element> = Map.empty();
+        // Contains links (key) and the parents of the textnodes the links contain (value)
         let linkText: Map<Element, Set<Element>> = Map.empty();
+        // Contains containers (key) without link descendants and the parents of the textnodes the containers have (value)
         let nonLinkText: Map<Element, Set<Element>> = Map.empty();
 
         gather(document, None, None);
@@ -86,6 +89,7 @@ export default Rule.Atomic.of<Page, Element>({
             );
 
             if (container.isSome() && isLink(node)) {
+              // For each link, know store its containing paragraph
               containers = containers.set(node, container.get());
               link = Option.of(node);
             }
@@ -99,6 +103,7 @@ export default Rule.Atomic.of<Page, Element>({
 
           const isTextNode = test(and(isText, isVisible(device)), node);
           if (isTextNode && container.isSome()) {
+            // For each link, store the parent of the text nodes it contains
             if (link.isSome()) {
               linkText = linkText.set(
                 link.get(),
@@ -109,6 +114,7 @@ export default Rule.Atomic.of<Page, Element>({
               );
             }
 
+            // For each container, store the parent of the text nodes it contains
             if (link.isNone()) {
               nonLinkText = nonLinkText.set(
                 container.get(),
@@ -136,21 +142,22 @@ export default Rule.Atomic.of<Page, Element>({
             link: Element,
             container: Element
           ): boolean =>
-            getForeground(link, device)
-              .map((linkColors) => [
-                ...Array.flatMap(linkColors, (linkColor) =>
-                  getForeground(container, device)
-                    .map((parentColors) =>
-                      Array.map(
-                        parentColors,
-                        (parentColor) => !parentColor.equals(linkColor)
-                      )
-                    )
-                    .getOr([])
-                ),
-              ])
-              .getOr([])
-              .filter((isDifferent) => isDifferent).length !== 0;
+            getForeground(link, device).some((linkColors) => {
+              // If the link or the container have transparent foreground with background gradient color
+              // then the rule is applicable
+              if (linkColors.length !== 1) {
+                return true;
+              }
+              return getForeground(container, device).some(
+                (containerColors) => {
+                  //
+                  if (containerColors.length !== 1) {
+                    return true;
+                  }
+                  return !linkColors[0].equals(containerColors[0]);
+                }
+              );
+            });
 
           for (const link of linkText.keys()) {
             const linkTexts = linkText.get(link).get();
@@ -485,13 +492,13 @@ namespace Distinguishable {
         ...Array.flatMap(containerColors, (containerColor) =>
           getForeground(link, device, context)
             .map((linkColors) =>
-              Array.map(linkColors, (linkColor) => {
-                return Contrast.Pairing.of(
+              Array.map(linkColors, (linkColor) =>
+                Contrast.Pairing.of(
                   containerColor,
                   linkColor,
                   contrast(containerColor, linkColor)
-                );
-              })
+                )
+              )
             )
             .getOr([])
         ),
