@@ -26,36 +26,37 @@ test(`isVisible() returns false when an element is hidden using the \`hidden\`
   t.equal(isVisible(element), false);
 });
 
-test(`isVisible() returns false when a text element is child of a video element with a track`, (t) => {
+test(`isVisible() returns false when a text element is child of a video element`, (t) => {
   const text = h.text("This text isn't visible");
-  const track = <track kind="description" src="foo" />;
-  const element = (
-    <video src="foo.mp4">
-      {track}
-      {text}
-    </video>
-  );
+  const element = <video src="foo.mp4">{text}</video>;
 
   h.document([element]);
 
   t.equal(isVisible(text), false);
+});
+
+test(`isVisible() returns true when a track element is a child of video`, (t) => {
+  const track = <track kind="description" />;
+  const element = <video src="foo.mp4">
+                    {track}
+                  </video>;
+
+  h.document([element]);
+
   t.equal(isRendered(Device.standard())(track), true);
-});
 
-test(`isVisible() returns false when a text element is child of a video element with a source and track`, (t) => {
-  const text = h.text("This text isn't visible");
-  const element = (
-    <audio>
-      <source>
-        <track>{text}</track>
-      </source>
-    </audio>
-  );
+});
+/*
+test(`isVisible() returns false when a ?? element is child of an iframe element`, (t) => {
+ 
+  const element = <iframe srcdoc="Hello World!" />;
 
   h.document([element]);
 
-  t.equal(isVisible(text), false);
+  t.equal(isVisible(element), false);
+
 });
+*/
 
 test(`isVisible() returns false when an element is hidden using the
       \`visibility: hidden\` property`, (t) => {

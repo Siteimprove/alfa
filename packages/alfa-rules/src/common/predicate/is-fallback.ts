@@ -7,8 +7,8 @@ const { and } = Refinement;
 const { isElement, hasName } = Element;
 
 /**
- * https://html.spec.whatwg.org/multipage/#the-video-element
- * https://html.spec.whatwg.org/multipage/#the-audio-element
+ * {@link https://html.spec.whatwg.org/multipage/#the-video-element}
+ * {@link https://html.spec.whatwg.org/multipage/#the-audio-element}
  */
 
 // Children of <iframe>, <audio>, <video> elements act as fallback content in legacy user
