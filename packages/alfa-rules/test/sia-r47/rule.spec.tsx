@@ -26,6 +26,16 @@ test("evaluate() passes meta-viewport elements who let users zoom", async (t) =>
   ]);
 });
 
+test("evaluate() passes meta-viewport elements with a mixed-case content", async (t) => {
+  const target = <meta name="viewport" content="USER-scalable=YES" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R47, { document }), [
+    passed(R47, target, { 1: Outcomes.MetaDoesNotPreventZoom }),
+  ]);
+});
+
 test("evaluate() passes meta-viewport elements with large enough scale", async (t) => {
   const target = <meta name="viewport" content="maximum-scale=6.0" />;
 

@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Element>({
         const separator = [",", ";"];
         const equal = ["="];
         const properties = parsePropertiesList(
-          target.attribute("content").get().value,
+          target.attribute("content").get().value.toLowerCase(),
           whitespace,
           separator,
           equal
