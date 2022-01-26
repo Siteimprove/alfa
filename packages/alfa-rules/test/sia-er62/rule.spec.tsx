@@ -964,18 +964,19 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
 
 test(`evaluate() is applicable to an <a> element when there is a <p> parent element
     with different foreground color`, async (t) => {
-  const target = <a href="#">Link</a>;
+  const target1 = <a href="#">Link</a>;
+  const target2 = <a href="#">Link</a>;
 
   const document = h.document(
     [
       <div>
         <p class="p-one">
           Hello
-          {target}
+          {target1}
         </p>
         <p class="p-two">
           Hello
-          {target}
+          {target2}
         </p>
       </div>,
     ],
@@ -989,7 +990,7 @@ test(`evaluate() is applicable to an <a> element when there is a <p> parent elem
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+    passed(ER62, target2, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);

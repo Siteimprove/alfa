@@ -94,7 +94,7 @@ export default Rule.Atomic.of<Page, Element>({
               link = Option.of(node);
             }
 
-            // Otherwise, if the element is a <p> element with non-link text
+            // Otherwise, if the element is a paragraph element with non-link text
             // content then start collecting applicable elements.
             if (isParagraph(node)) {
               container = Option.of(node);
@@ -102,7 +102,8 @@ export default Rule.Atomic.of<Page, Element>({
           }
 
           const isTextNode = test(and(isText, isVisible(device)), node);
-          if (isTextNode && container.isSome()) {
+          const parent = node.parent();
+          if (isTextNode && container.isSome() && parent.isSome()) {
             // For each link, store the parent of the text nodes it contains
             if (link.isSome()) {
               linkText = linkText.set(
@@ -110,18 +111,18 @@ export default Rule.Atomic.of<Page, Element>({
                 linkText
                   .get(link.get())
                   .getOr(Set.empty<Element>())
-                  .add(node.parent().filter(isElement).get())
+                  .add(parent.filter(isElement).get())
               );
             }
 
             // For each container, store the parent of the text nodes it contains
-            if (link.isNone()) {
+            else {
               nonLinkText = nonLinkText.set(
                 container.get(),
                 nonLinkText
                   .get(container.get())
                   .getOr(Set.empty<Element>())
-                  .add(node.parent().filter(isElement).get())
+                  .add(parent.filter(isElement).get())
               );
             }
           }
@@ -142,26 +143,21 @@ export default Rule.Atomic.of<Page, Element>({
             link: Element,
             container: Element
           ): boolean =>
-            getForeground(link, device).some((linkColors) => {
-              // If the link has a foreground with the alpha channel less than 1 and background gradient color
-              // then the rule is applicable as we can't tell for sure if it ever has the same foreground with a link
-              // that might have the same foreground and gradien background, but with different gradient type or spread
-              if (linkColors.length !== 1) {
-                return true;
-              }
-              return getForeground(container, device).some(
-                (containerColors) => {
-                  // Similalry to the link, we assume it's applicable if the container has different foreground colors
-                  if (containerColors.length !== 1) {
-                    return true;
-                  }
-                  return !linkColors[0].equals(containerColors[0]);
-                }
-              );
-            });
+            getForeground(link, device).some(
+              (linkColors) =>
+                // If the link has a foreground with the alpha channel less than 1 and background gradient color
+                // then the rule is applicable as we can't tell for sure if it ever has the same foreground with a link
+                // that might have the same foreground and gradien background, but with different gradient type or spread
+                linkColors.length !== 1 ||
+                getForeground(container, device).none(
+                  (containerColors) =>
+                    // Similalry to the link, we assume it's applicable if the container has different foreground colors
+                    containerColors.length === 1 &&
+                    linkColors[0].equals(containerColors[0])
+                )
+            );
 
-          for (const link of linkText.keys()) {
-            const linkTexts = linkText.get(link).get();
+          for (const [link, linkTexts] of linkText) {
             const nonLinkTexts = nonLinkText
               .get(containers.get(link).get())
               .get();

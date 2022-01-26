@@ -267,7 +267,7 @@ export function getForeground(
       // then we do not need to dig further
       if (color.get().alpha.value * opacity.value === 1) {
         const result: Result<
-          Color[],
+          Foreground,
           Layer.Error | Foreground.Error | Background.Error
         > = Result.of([color.get()]);
         return result;
@@ -361,6 +361,7 @@ export function getBackground(
       if (hasInterposedDescendant(device)(element)) {
         return Err.of(Layer.Error.HasInterposedDescendant);
       }
+
       return getLayers(element, device, context, opacity).map((layers) =>
         layers.reduce(
           (backdrops, layer) =>
