@@ -442,3 +442,86 @@ test(`isVisible() returns false for an element with a fully clipped ancestor`, (
     t.equal(isVisible(target), false);
   }
 });
+
+test("isVisible() return true for an empty element with set dimensions", (t) => {
+  const element = <div></div>;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          background: "red",
+          width: "100px",
+          height: "100px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(element), true);
+});
+
+test("isVisible() return true for an empty absolutely positioned element stretched within its offset parent", (t) => {
+  const element = <div class="stretch"></div>;
+
+  h.document(
+    [<div style={{ position: "relative" }}>{element}Hello world</div>],
+    [
+      h.sheet([
+        h.rule.style(".stretch", {
+          position: "absolute",
+          background: "red",
+          top: "1px",
+          bottom: "1px",
+          left: "1px",
+          right: "1px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(element), true);
+});
+
+test("isVisible() return true for an element stretched horizontally and dimensioned vertically", (t) => {
+  const element = <div class="stretch"></div>;
+
+  h.document(
+    [<div style={{ position: "relative" }}>{element}Hello world</div>],
+    [
+      h.sheet([
+        h.rule.style(".stretch", {
+          position: "absolute",
+          background: "red",
+          height: "100px",
+          left: "1px",
+          right: "1px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(element), true);
+});
+
+test("isVisible() return true for an element stretched vertically and dimensioned horizontally", (t) => {
+  const element = <div class="stretch"></div>;
+
+  h.document(
+    [<div style={{ position: "relative" }}>{element}Hello world</div>],
+    [
+      h.sheet([
+        h.rule.style(".stretch", {
+          position: "absolute",
+          background: "red",
+          top: "1px",
+          bottom: "1px",
+          width: "100px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(element), true);
+});
