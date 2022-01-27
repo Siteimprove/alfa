@@ -31,7 +31,7 @@ import {
   isVisible,
   isWhitespace,
 } from "../common/predicate";
-import { Scope, Stability } from "../tags";
+import { Scope, Stability, Version } from "../tags";
 
 import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 
@@ -65,9 +65,9 @@ const pairwiseContrastCache = Cache.empty<
  *   so the difference wouldn't be visible.
  */
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r62#experimental",
+  uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
-  tags: [Scope.Component, Stability.Experimental],
+  tags: [Scope.Component, Stability.Experimental, Version.of(2)],
   evaluate({ device, document }) {
     let containers: Map<Element, Element> = Map.empty();
 
