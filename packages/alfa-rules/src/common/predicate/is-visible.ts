@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
@@ -40,7 +41,9 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
       .get(node, () =>
         test(
           or(
-            not(isRendered(device, context)),
+            not(
+              isRendered(device, context)
+              ),
             isTransparent(device, context),
             isClipped(device, context),
             isOffscreen(device, context),

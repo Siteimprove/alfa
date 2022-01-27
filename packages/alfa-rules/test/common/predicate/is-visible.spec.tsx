@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
@@ -35,28 +34,31 @@ test(`isVisible() returns false when a text element is child of a video element`
   t.equal(isVisible(text), false);
 });
 
-test(`isVisible() returns true when a track element is a child of video`, (t) => {
+test(`isVisible() returns false when a track element is a child of video`, (t) => {
   const track = <track kind="description" />;
-  const element = <video src="foo.mp4">
-                    {track}
-                  </video>;
+  const element = <video src="foo.mp4">{track}</video>;
 
   h.document([element]);
 
-  t.equal(isRendered(Device.standard())(track), true);
+  //<track> element is rendered in the browser, but isn't rendered by our UA.
+  // Thus it is not visible and this test returns false
 
+  t.equal(isVisible(track), false);
 });
-/*
-test(`isVisible() returns false when a ?? element is child of an iframe element`, (t) => {
- 
-  const element = <iframe srcdoc="Hello World!" />;
 
-  h.document([element]);
+test(`isVisible() returns false when a div element is child of an iframe element`, (t) => {
+  const div = <div>hidden</div>;
 
-  t.equal(isVisible(element), false);
+  const element = (
+    <iframe srcdoc="Hello">
+      {" "}
+      {div}{" "}
+    </iframe>
+  );
+  h.document([div]);
 
+  t.equal(isVisible(div), false);
 });
-*/
 
 test(`isVisible() returns false when an element is hidden using the
       \`visibility: hidden\` property`, (t) => {

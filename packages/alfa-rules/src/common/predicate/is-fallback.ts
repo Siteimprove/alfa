@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
