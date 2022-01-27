@@ -576,7 +576,7 @@ export class Stability<S extends string = string> extends Tag<"stability"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    static of<S extends string>(stabiltiy: S): Stability<S>;
+    static of<S extends string>(stability: S): Stability<S>;
     // (undocumented)
     get stability(): S;
     // (undocumented)

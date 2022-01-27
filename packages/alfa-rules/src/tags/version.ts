@@ -46,4 +46,13 @@ export namespace Version {
   export interface JSON<N extends number = number> extends Tag.JSON<"version"> {
     version: N;
   }
+
+  export function isVersion<T extends string>(
+    value: unknown,
+    type?: T
+  ): value is Version {
+    return (
+      value instanceof Version && (type === undefined || value.type === type)
+    );
+  }
 }
