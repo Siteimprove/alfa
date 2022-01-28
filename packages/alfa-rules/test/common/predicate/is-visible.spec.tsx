@@ -40,7 +40,7 @@ test(`isVisible() returns false when a track element is a child of video`, (t) =
 
   h.document([element]);
 
-  //<track> element is rendered in the browser, but isn't rendered by our UA.
+  //<track> element is rendered in the browser, but isn't rendered by our user agent.
   // Thus it is not visible and this test returns false
 
   t.equal(isVisible(track), false);
