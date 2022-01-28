@@ -3,7 +3,7 @@ import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
-import { Page } from "@siteimprove/alfa-web";
+import { Page } from "@siteimprove/alfa-web"; 
 
 import { expectation } from "../common/expectation";
 
