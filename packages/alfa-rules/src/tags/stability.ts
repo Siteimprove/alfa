@@ -4,8 +4,8 @@ import { Tag } from "@siteimprove/alfa-act";
  * @public
  */
 export class Stability<S extends string = string> extends Tag<"stability"> {
-  public static of<S extends string>(stabiltiy: S): Stability<S> {
-    return new Stability(stabiltiy);
+  public static of<S extends string>(stability: S): Stability<S> {
+    return new Stability(stability);
   }
 
   private readonly _stability: S;
