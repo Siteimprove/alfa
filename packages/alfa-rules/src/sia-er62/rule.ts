@@ -68,7 +68,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         // Contains links (key) and the parents of the textnodes the links contain (value)
         let linkText: Map<Element, Set<Element>> = Map.empty();
-        // Contains containers (key) without link descendants and the parents of the textnodes the containers have (value)
+        // Contains containers (key) and the parents of the text nodes (non included in links) the containers have (value)
         let nonLinkText: Map<Element, Set<Element>> = Map.empty();
 
         gather(document, None, None);
@@ -87,7 +87,7 @@ export default Rule.Atomic.of<Page, Element>({
             );
 
             if (container.isSome() && isLink(node)) {
-              // For each link, know store its containing paragraph
+              // For each link, store its containing paragraph
               containers = containers.set(node, container.get());
               link = Option.of(node);
             }
@@ -100,7 +100,7 @@ export default Rule.Atomic.of<Page, Element>({
           }
 
           const isTextNode = test(and(isText, isVisible(device)), node);
-          const parent = node.parent();
+          const parent = node.parent().filter(isElement);
           if (isTextNode && container.isSome() && parent.isSome()) {
             // For each link, store the parent of the text nodes it contains
             if (link.isSome()) {
@@ -109,10 +109,9 @@ export default Rule.Atomic.of<Page, Element>({
                 linkText
                   .get(link.get())
                   .getOr(Set.empty<Element>())
-                  .add(parent.filter(isElement).get())
+                  .add(parent.get())
               );
             }
-
             // For each container, store the parent of the text nodes it contains
             else {
               nonLinkText = nonLinkText.set(
@@ -120,7 +119,7 @@ export default Rule.Atomic.of<Page, Element>({
                 nonLinkText
                   .get(container.get())
                   .getOr(Set.empty<Element>())
-                  .add(parent.filter(isElement).get())
+                  .add(parent.get())
               );
             }
           }
