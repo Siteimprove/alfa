@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
