@@ -9,7 +9,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 const { and } = Refinement;
 const { isElement } = Element;
 
-import { getOffsetParent } from "../dom/get-offset-parent";
+import { getOffsetParent } from "../expectation/get-offset-parent";
 
 import { isPositioned } from "./is-positioned";
 import { isVisible } from "./is-visible";
@@ -21,30 +21,39 @@ const cache = Cache.empty<
   Cache<Node, Map<Element, Sequence<Element>>>
 >();
 
-export function hasInterposedDescendant(device: Device): Predicate<Element> {
-  return (element) => {
-    const root = element.root({
-      flattened: true,
-    });
+export function getInterposedDescendant(
+  device: Device,
+  element: Element
+): Sequence<Element> {
+  const root = element.root({
+    flattened: true,
+  });
 
-    return cache
-      .get(device, Cache.empty)
-      .get(root, () =>
-        root
-          .inclusiveDescendants({
-            flattened: true,
-          })
-          // Find all absolutely positioned elements.
-          .filter(
-            and(
-              isElement,
-              and(isPositioned(device, "absolute", "fixed"), isVisible(device))
-            )
+  return cache
+    .get(device, Cache.empty)
+    .get(root, () =>
+      root
+        .inclusiveDescendants({
+          flattened: true,
+        })
+        // Find all absolutely positioned elements.
+        .filter(
+          and(
+            isElement,
+            and(isPositioned(device, "absolute", "fixed"), isVisible(device))
           )
-          // And store their offset parents.
-          .collect((element) => getOffsetParent(element, device))
-          .groupBy((element) => getOffsetParent(element, device).get())
-      )
-      .has(element);
-  };
+        )
+        // Only keep the ones who have an offset parent
+        .filter((element) => getOffsetParent(element, device).isSome())
+        // Group the result by the offset parent
+        // getOffsetParent is cached, so this is not expensive.
+        // getOffsetParent is guaranteed to be Some by the previous collect.
+        .groupBy((element) => getOffsetParent(element, device).get())
+    )
+    .get(element)
+    .getOr(Sequence.empty());
+}
+
+export function hasInterposedDescendant(device: Device): Predicate<Element> {
+  return (element) => !getInterposedDescendant(device, element).isEmpty();
 }
