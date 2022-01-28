@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
 import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -43,9 +42,7 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
       .get(node, () =>
         test(
           or(
-            not(
-              isRendered(device, context)
-              ),
+            not(isRendered(device, context)),
             isTransparent(device, context),
             isClipped(device, context),
             isOffscreen(device, context),
@@ -80,7 +77,7 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                 // If the element is replaced, visible when empty, or has set dimensions,
                 // it is assumed to be visible
                 nor(isReplaced, isVisibleWhenEmpty, hasDimensions(device)),
-                // otherwise, the element is invisible if all its children are.
+                // otherwise, the element is invisible iff all its children are.
                 (element) =>
                   element
                     .children({

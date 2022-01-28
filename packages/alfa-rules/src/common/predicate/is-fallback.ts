@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -18,7 +17,7 @@ const { isElement, hasName } = Element;
 export const isFallback = or(
   hasParentName("iframe"),
   and(
-    //<Track> and <source> children of audio and video are allowed by the content model of
+    // <track> and <source> children of audio and video are allowed by the content model of
     // both. Thus, they will be not act as fallback
     hasParentName("audio", "video"),
     not(and(isElement, hasName("track", "source")))

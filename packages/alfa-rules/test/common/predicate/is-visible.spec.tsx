@@ -4,7 +4,6 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 
 import * as predicate from "../../../src/common/predicate/is-visible";
-import { isRendered } from "../../../src/common/predicate";
 
 const isVisible = predicate.isVisible(Device.standard());
 
@@ -40,8 +39,7 @@ test(`isVisible() returns false when a track element is a child of video`, (t) =
 
   h.document([element]);
 
-  //<track> element is rendered in the browser, but isn't rendered by our user agent.
-  // Thus it is not visible and this test returns false
+  // While <track> elements are not fallback, they are nonetheless invisible
 
   t.equal(isVisible(track), false);
 });
@@ -51,8 +49,7 @@ test(`isVisible() returns false when a div element is child of an iframe element
 
   const element = (
     <iframe srcdoc="Hello">
-      {" "}
-      {div}{" "}
+      {div}
     </iframe>
   );
   h.document([div]);
