@@ -61,13 +61,11 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [Criterion.of("1.4.1")],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
-    // This is shared with the expectation and contains all applicable link - container pairs
-    let applicableContainers: Map<Element, Element> = Map.empty();
+    // Contains links (key) and their containing paragraph (value)
+    let containers: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
-        // Contains links (key) and their containing paragraph (value)
-        let containers: Map<Element, Element> = Map.empty();
         // Contains links (key) and the parents of the textnodes the links contain (value)
         let linkText: Map<Element, Set<Element>> = Map.empty();
         // Contains containers (key) without link descendants and the parents of the textnodes the containers have (value)
@@ -143,13 +141,13 @@ export default Rule.Atomic.of<Page, Element>({
             link: Element,
             container: Element
           ): boolean =>
-            getForeground(link, device).some(
+            getForeground(link, device).none(
               (linkColors) =>
                 // If the link has a foreground with the alpha channel less than 1 and background gradient color
                 // then the rule is applicable as we can't tell for sure if it ever has the same foreground with a link
                 // that might have the same foreground and gradien background, but with different gradient type or spread
-                linkColors.length !== 1 ||
-                getForeground(container, device).none(
+                linkColors.length === 1 &&
+                getForeground(container, device).some(
                   (containerColors) =>
                     // Similalry to the link, we assume it's applicable if the container has different foreground colors
                     containerColors.length === 1 &&
@@ -165,10 +163,6 @@ export default Rule.Atomic.of<Page, Element>({
             for (const linkElement of linkTexts) {
               for (const nonLinkElement of nonLinkTexts) {
                 if (hasDifferentForeground(linkElement, nonLinkElement)) {
-                  applicableContainers = applicableContainers.set(
-                    link,
-                    nonLinkElement
-                  );
                   return yield link;
                 }
               }
@@ -178,7 +172,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const nonLinkElements = applicableContainers
+        const nonLinkElements = containers
           .get(target)
           .get()
           .inclusiveDescendants({

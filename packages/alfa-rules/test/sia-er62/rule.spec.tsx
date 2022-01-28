@@ -823,9 +823,20 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
     ]
   );
 
+  const style = Ok.of(
+    linkProperties.withPairings([
+      ...defaultContrastPairings,
+      Contrast.Pairing.of(defaultLinkColor, defaultLinkColor, 1),
+    ])
+  );
+
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
-      1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
+      ),
     }),
   ]);
 });
@@ -1034,6 +1045,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
     Percentage.of(0.94),
     Percentage.of(1)
   );
+
   const style = Ok.of(
     linkProperties
       .withStyle(
@@ -1046,7 +1058,9 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
       .withPairings([
         Contrast.Pairing.of(foregroundFromBlack, foregroundFromBlue, 2.03),
         Contrast.Pairing.of(foregroundFromBlue, foregroundFromBlack, 2.03),
+        Contrast.Pairing.of(defaultTextColor, foregroundFromBlack, 1.2),
         Contrast.Pairing.of(foregroundFromBlack, foregroundFromBlack, 1),
+        Contrast.Pairing.of(defaultTextColor, foregroundFromBlue, 2.44),
         Contrast.Pairing.of(foregroundFromBlue, foregroundFromBlue, 1),
       ])
   );
