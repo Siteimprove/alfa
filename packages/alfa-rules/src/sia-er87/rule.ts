@@ -20,7 +20,7 @@ import {
   isVisible,
 } from "../common/predicate";
 import { Question } from "../common/question";
-import { Scope, Stability } from "../tags";
+import { Scope, Stability, Version } from "../tags";
 
 const { hasName, isElement } = Element;
 const { fold } = Predicate;
@@ -36,9 +36,9 @@ const { and } = Refinement;
  * different from the test target.
  */
 export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r87#experimental",
+  uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
-  tags: [Scope.Page, Stability.Experimental],
+  tags: [Scope.Page, Stability.Experimental, Version.of(2)],
   evaluate({ device, document, response }) {
     return {
       applicability() {
