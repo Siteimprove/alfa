@@ -12,6 +12,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { hasInterposedDescendant, isPositioned } from "../predicate";
+import { getInterposedDescendant } from "../predicate/has-interposed-descendant";
 
 type Color = RGB<Percentage, Percentage>;
 
@@ -203,8 +204,8 @@ function getLayers(
     );
   }
 
-  if (hasInterposedDescendant(device)(element)) {
-    const interposedDescendants: Array<Element> = [];
+  const interposedDescendants = getInterposedDescendant(device, element);
+  if (!interposedDescendants.isEmpty()) {
     return Err.of(
       ColorError.interposedDescendant(element, interposedDescendants)
     );
@@ -258,8 +259,8 @@ export function getForeground(
     return Result.of([color.get()]);
   }
 
-  if (hasInterposedDescendant(device)(element)) {
-    const interposedDescendants: Array<Element> = [];
+  const interposedDescendants = getInterposedDescendant(device, element);
+  if (!interposedDescendants.isEmpty()) {
     return Err.of(
       ColorError.interposedDescendant(element, interposedDescendants)
     );
@@ -314,8 +315,8 @@ export function getBackground(
     return Err.of(ColorError.textShadow(element, textShadow));
   }
 
-  if (hasInterposedDescendant(device)(element)) {
-    const interposedDescendants: Array<Element> = [];
+  const interposedDescendants = getInterposedDescendant(device, element);
+  if (!interposedDescendants.isEmpty()) {
     return Err.of(
       ColorError.interposedDescendant(element, interposedDescendants)
     );

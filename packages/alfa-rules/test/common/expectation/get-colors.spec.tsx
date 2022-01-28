@@ -570,14 +570,17 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
 
 test("getBackgroundColor() gives up in case of interposed elements", (t) => {
   const target = <span>Hello</span>;
+  const interposed = (
+    <div>
+      {/* Text needed to make element visible.
+     Should be removed once https://github.com/Siteimprove/alfa/issues/985 is fixed
+     */}
+      Foo
+    </div>
+  );
   const wrapper = (
     <p>
-      <div>
-        {/* Text needed to make element visible.
-            Should be removed once https://github.com/Siteimprove/alfa/issues/985 is fixed
-            */}
-        Foo
-      </div>
+      {interposed}
       {target}
     </p>
   );
@@ -590,6 +593,9 @@ test("getBackgroundColor() gives up in case of interposed elements", (t) => {
           backgroundColor: "blue",
           position: "absolute",
           top: "1px",
+          bottom: "1px",
+          left: "1px",
+          right: "1px",
         }),
         h.rule.style("p", { position: "relative" }),
       ]),
@@ -601,6 +607,6 @@ test("getBackgroundColor() gives up in case of interposed elements", (t) => {
     type: "layer",
     kind: "interposed-descendant",
     element: wrapper.toJSON(),
-    positionedDescendants: [],
+    positionedDescendants: [interposed.toJSON()],
   });
 });
