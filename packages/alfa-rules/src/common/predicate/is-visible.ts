@@ -1,5 +1,6 @@
 /// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
+import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -11,6 +12,7 @@ import {
   hasComputedStyle,
   isClipped,
   isOffscreen,
+  isPositioned,
   isRendered,
   isReplaced,
   isTransparent,
@@ -102,23 +104,30 @@ const isVisibleWhenEmpty = hasName("textarea");
 
 /**
  * Does the element have set dimensions?
+ *
+ * For each direction, we look if the element either has a set dimension,
+ * or is stretched after being absolutely positioned; stretching only works when
+ * the corresponding dimension is `auto`, but if it is not, then `hasDimension`
+ * is true… (if the dimension is set to 0, isClipped handled the case)
+ *
+ * If an element has dimension in both directions, it is assumed to be visible.
  */
 function hasDimensions(device: Device): Predicate<Element> {
+  const isSet = (value: Keyword | Length | Percentage) =>
+    value.type !== "keyword" && value.value > 0;
+
+  const hasDimension = (dimension: "height" | "width") =>
+    hasComputedStyle(dimension, isSet, device);
+
+  const isStretched = (...sides: ["top", "bottom"] | ["left", "right"]) =>
+    and(
+      isPositioned(device, "absolute"),
+      hasComputedStyle(sides[0], isSet, device),
+      hasComputedStyle(sides[1], isSet, device)
+    );
+
   return and(
-    ...(["width", "height"] as const).map((dimension) =>
-      hasComputedStyle(
-        dimension,
-        (dimension) => {
-          switch (dimension.type) {
-            case "length":
-            case "percentage":
-              return dimension.value > 0;
-            default:
-              return false;
-          }
-        },
-        device
-      )
-    )
+    or(hasDimension("height"), isStretched("top", "bottom")),
+    or(hasDimension("width"), isStretched("left", "right"))
   );
 }
