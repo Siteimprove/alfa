@@ -180,6 +180,7 @@
     "src/tags/index.ts",
     "src/tags/stability.ts",
     "src/tags/scope.ts",
+    "src/tags/version.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
     "test/common/outcome.ts",
