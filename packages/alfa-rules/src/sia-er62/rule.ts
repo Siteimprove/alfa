@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -148,7 +149,6 @@ export default Rule.Atomic.of<Page, Element>({
                 linkColors.length === 1 &&
                 getForeground(container, device).some(
                   (containerColors) =>
-                    // Similalry to the link, we assume it's applicable if the container has different foreground colors
                     containerColors.length === 1 &&
                     linkColors[0].equals(containerColors[0])
                 )
@@ -159,12 +159,14 @@ export default Rule.Atomic.of<Page, Element>({
               .get(containers.get(link).get())
               .get();
 
-            for (const linkElement of linkTexts) {
-              for (const nonLinkElement of nonLinkTexts) {
-                if (hasDifferentForeground(linkElement, nonLinkElement)) {
-                  return yield link;
-                }
-              }
+            if (
+              linkTexts.some((linkElement) =>
+                nonLinkTexts.some((nonLinkElement) =>
+                  hasDifferentForeground(linkElement, nonLinkElement)
+                )
+              )
+            ) {
+              yield link;
             }
           }
         }

@@ -878,7 +878,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
 });
 
 test(`evaluate() is applicable to an <a> element with a <p> parent element
-    when the textnode of the <a> element is deeply nested in spans 
+    when the textnode of the <a> element is deeply nested in spans
     and has a different foreground color from the <p> element's textnode`, async (t) => {
   const target = <a href="#">Link</a>;
 
@@ -993,6 +993,35 @@ test(`evaluate() is applicable to an <a> element when there is a <p> parent elem
     ],
     [
       h.sheet([
+        h.rule.style(".p-one", {
+          color: "#0000EE",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target2, {
+      1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
+    }),
+  ]);
+});
+
+test(`evaluate() is applicable to several <a> elements when there is a <p> parent element
+    with different foreground color`, async (t) => {
+  const target1 = <a href="#">Link</a>;
+  const target2 = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        Hello
+        {target1}
+        {target2}
+      </p>,
+    ],
+    [
+      h.sheet([
         h.rule.style("p-one", {
           color: "#0000EE",
         }),
@@ -1001,6 +1030,9 @@ test(`evaluate() is applicable to an <a> element when there is a <p> parent elem
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target1, {
+      1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
+    }),
     passed(ER62, target2, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
