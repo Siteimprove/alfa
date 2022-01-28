@@ -596,6 +596,33 @@ export namespace Stability {
     const Stable: Stability<"stable">;
 }
 
+// @public (undocumented)
+export class Version<N extends number = number> extends Tag<"version"> {
+    // (undocumented)
+    equals(value: Version): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    static of<N extends number>(version: N): Version<N>;
+    // (undocumented)
+    toJSON(): Version.JSON<N>;
+    // (undocumented)
+    get type(): "version";
+    // (undocumented)
+    get version(): N;
+}
+
+// @public (undocumented)
+export namespace Version {
+    // (undocumented)
+    export function isVersion<T extends string>(value: unknown, type?: T): value is Version;
+    // (undocumented)
+    export interface JSON<N extends number = number> extends Tag.JSON<"version"> {
+        // (undocumented)
+        version: N;
+    }
+}
+
 // (No @packageDocumentation comment for this package)
 
 ```

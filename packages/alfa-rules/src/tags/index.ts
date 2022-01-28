@@ -1,3 +1,3 @@
-export * from "./scope";
-export * from "./stability";
-export * from "./version";
+export { Scope } from "./scope";
+export { Stability } from "./stability";
+export { Version } from "./version";
