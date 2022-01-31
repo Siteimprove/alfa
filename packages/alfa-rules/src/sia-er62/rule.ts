@@ -144,10 +144,11 @@ export default Rule.Atomic.of<Page, Element>({
               (linkColors) =>
                 // If the link has a foreground with the alpha channel less than 1 and background gradient color
                 // then the rule is applicable as we can't tell for sure if it ever has the same foreground with a link
-                // that might have the same foreground and gradien background, but with different gradient type or spread
+                // that might have the same foreground and gradient background, but with different gradient type or spread
                 linkColors.length === 1 &&
                 getForeground(container, device).some(
                   (containerColors) =>
+                    // Similalry to the link, we assume the rule is applicable if the container has more than one foreground color
                     containerColors.length === 1 &&
                     linkColors[0].equals(containerColors[0])
                 )
