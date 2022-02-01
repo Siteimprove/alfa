@@ -118,13 +118,13 @@ class Layer {
 
 const layersCacheWithFakeOpacity = Cache.empty<
   Device,
-  Cache<Context, Cache<Element, Result<Array<Layer>, Layer.Error>>>
-  >();
+  Cache<Context, Cache<Element, Result<Array<Layer>, ColorError<"layer">>>>
+>();
 
 const layersCacheWithDefaultOpacity = Cache.empty<
   Device,
-  Cache<Context, Cache<Element, Result<Array<Layer>, Layer.Error>>>
-  >();
+  Cache<Context, Cache<Element, Result<Array<Layer>, ColorError<"layer">>>>
+>();
 
 function getLayers(
   element: Element,
@@ -140,14 +140,11 @@ function getLayers(
     .get(context, Cache.empty)
     .get(element, () => {
       const style = Style.from(element, device, context);
-  const backgroundColor = style.computed("background-color").value;
-  const backgroundImage = style.computed("background-image").value;
-  const backgroundSize = style.computed("background-size").value;
+      const backgroundColor = style.computed("background-color").value;
+      const backgroundImage = style.computed("background-image").value;
+      const backgroundSize = style.computed("background-size").value;
 
-      const color = Color.resolve(
-        backgroundColor,
-        style
-      );
+      const color = Color.resolve(backgroundColor, style);
 
       opacity = opacity ?? style.computed("opacity").value.value;
 
@@ -157,8 +154,8 @@ function getLayers(
         layers.push(Layer.of([color.get()], opacity));
       } else {
         return Err.of(
-      ColorError.unresolvableBackgroundColor(element, backgroundColor)
-    );
+          ColorError.unresolvableBackgroundColor(element, backgroundColor)
+        );
       }
 
       for (const image of backgroundImage) {
@@ -170,14 +167,14 @@ function getLayers(
         // bail out if we encounter a background image.
         if (image.image.type === "url") {
           return Err.of(
-        ColorError.externalBackgroundImage(element, backgroundImage)
-      );
+            ColorError.externalBackgroundImage(element, backgroundImage)
+          );
         }
 
-    // If there is a background-size, we currently have no way of guessing
-    // whether it is large enough to go under the text or not.
-    // So we simply bail out.
-    if (!backgroundSize.equals(style.initial("background-size").value)) {
+        // If there is a background-size, we currently have no way of guessing
+        // whether it is large enough to go under the text or not.
+        // So we simply bail out.
+        if (!backgroundSize.equals(style.initial("background-size").value)) {
           return Err.of(ColorError.backgroundSize(element, backgroundSize));
         }
 
@@ -194,12 +191,12 @@ function getLayers(
               stops.push(color.get());
             } else {
               return Err.of(
-            ColorError.unresolvableGradientStop(
-              element,
-              backgroundImage,
-              item.color
-            )
-          );
+                ColorError.unresolvableGradientStop(
+                  element,
+                  backgroundImage,
+                  item.color
+                )
+              );
             }
           }
         }
@@ -215,21 +212,24 @@ function getLayers(
             layer.colors.every((color) => color.alpha.value === 1)
         )
       ) {
-        return Result.of<Array<Layer>, Layer.Error>(layers);
+        return Result.of<Array<Layer>, ColorError<"layer">>(layers);
       }
 
       if (isPositioned(device, "absolute", "fixed")(element)) {
         return Err.of(
-      ColorError.nonStaticPosition(element, style.computed("position").value)
-    );
+          ColorError.nonStaticPosition(
+            element,
+            style.computed("position").value
+          )
+        );
       }
 
       const interposedDescendants = getInterposedDescendant(device, element);
-  if (!interposedDescendants.isEmpty()) {
-    return Err.of(
-      ColorError.interposedDescendant(element, interposedDescendants)
-    );
-  }
+      if (!interposedDescendants.isEmpty()) {
+        return Err.of(
+          ColorError.interposedDescendant(element, interposedDescendants)
+        );
+      }
 
       // If the background layer does not have a lower layer that is fully opaque,
       // we need to also locate the background layers sitting behind the current
@@ -250,7 +250,7 @@ function getLayers(
         );
       }
 
-      return Result.of<Array<Layer>, Layer.Error>(layers);
+      return Result.of<Array<Layer>, ColorError<"layer">>(layers);
     });
 }
 
@@ -258,13 +258,7 @@ export type Foreground = Array<Color>;
 
 const foregroundCache = Cache.empty<
   Device,
-  Cache<
-    Context,
-    Cache<
-      Element,
-      Result<Foreground, Layer.Error | Foreground.Error | Background.Error>
-    >
-  >
+  Cache<Context, Cache<Element, Result<Foreground, ColorError>>>
 >();
 
 export function getForeground(
@@ -277,14 +271,14 @@ export function getForeground(
     .get(context, Cache.empty)
     .get(element, () => {
       const style = Style.from(element, device, context);
-  const foregroundColor = style.computed("color").value;
+      const foregroundColor = style.computed("color").value;
 
       const color = Color.resolve(foregroundColor, style);
 
       if (color.isNone()) {
         return Err.of(
-      ColorError.unresolvableForegroundColor(element, foregroundColor)
-    );
+          ColorError.unresolvableForegroundColor(element, foregroundColor)
+        );
       }
 
       const opacity = style.computed("opacity").value;
@@ -292,24 +286,21 @@ export function getForeground(
       // If the color is not transparent, and the element is fully opaque,
       // then we do not need to dig further
       if (color.get().alpha.value * opacity.value === 1) {
-        return Result.of<
-          Foreground,
-          Layer.Error | Foreground.Error | Background.Error
-        >([color.get()]);
+        return Result.of<Foreground, ColorError>([color.get()]);
       }
 
       const interposedDescendants = getInterposedDescendant(device, element);
-  if (!interposedDescendants.isEmpty()) {
-    return Err.of(
-      ColorError.interposedDescendant(element, interposedDescendants)
-    );
-  }
+      if (!interposedDescendants.isEmpty()) {
+        return Err.of(
+          ColorError.interposedDescendant(element, interposedDescendants)
+        );
+      }
 
-  // First, we mix the color with the element's background according to the
-  // color's alpha channel (only).
-  // For this, we fake the opacity of the element at 1. That way, the
-  // background color is correctly handled. The background color may itself have
-  // an alpha channel, independently of its opacity, and this alpha channel
+      // First, we mix the color with the element's background according to the
+      // color's alpha channel (only).
+      // For this, we fake the opacity of the element at 1. That way, the
+      // background color is correctly handled. The background color may itself have
+      // an alpha channel, independently of its opacity, and this alpha channel
       // needs to be taken into account (as well as the alpha/opacity of all the
       // previous layers).
       const colors = getBackground(element, device, context, 1).map(
@@ -348,7 +339,7 @@ const backgroundCacheWithFakeOpacity = Cache.empty<
   Device,
   Cache<
     Context,
-    Cache<Element, Result<Background, Layer.Error | Background.Error>>
+    Cache<Element, Result<Background, ColorError<"background" | "layer">>>
   >
 >();
 
@@ -356,7 +347,7 @@ const backgroundCacheWithDefaultOpacity = Cache.empty<
   Device,
   Cache<
     Context,
-    Cache<Element, Result<Background, Layer.Error | Background.Error>>
+    Cache<Element, Result<Background, ColorError<"background" | "layer">>>
   >
 >();
 
@@ -376,18 +367,18 @@ export function getBackground(
   return cache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
-    .get(element, () => {// If the element has a text-shadow, we don't try to guess how it looks.
-  if (textShadow
-          .type !== "keyword") {
+    .get(element, () => {
+      // If the element has a text-shadow, we don't try to guess how it looks.
+      if (textShadow.type !== "keyword") {
         return Err.of(ColorError.textShadow(element, textShadow));
       }
 
       const interposedDescendants = getInterposedDescendant(device, element);
-  if (!interposedDescendants.isEmpty()) {
-    return Err.of(
-      ColorError.interposedDescendant(element, interposedDescendants)
-    );
-  }
+      if (!interposedDescendants.isEmpty()) {
+        return Err.of(
+          ColorError.interposedDescendant(element, interposedDescendants)
+        );
+      }
 
       return getLayers(element, device, context, opacity).map((layers) =>
         layers.reduce(
