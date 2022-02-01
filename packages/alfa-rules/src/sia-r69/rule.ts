@@ -7,8 +7,8 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { contrast } from "../common/style/contrast";
-import { getBackground, getForeground } from "../common/style/get-colors";
+import { contrast } from "../common/expectation/contrast";
+import { getBackground, getForeground } from "../common/dom/get-colors";
 
 import {
   hasRole,
