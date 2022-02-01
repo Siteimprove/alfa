@@ -6,7 +6,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 import { contrast } from "../common/expectation/contrast";
 import { getBackground, getForeground } from "../common/expectation/get-colors";
 
@@ -19,7 +19,7 @@ import {
 
 import { Contrast as Outcomes } from "../common/outcome/contrast";
 
-import { Question } from "../common/question";
+import { Question } from "../common/act/question";
 
 import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
 import { Scope } from "../tags";

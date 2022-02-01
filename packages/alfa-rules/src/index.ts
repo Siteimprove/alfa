@@ -46,5 +46,5 @@ const Flattened: Flattened = Sequence.from(Rules.values()) as Flattened;
 
 export default Flattened;
 
-export * from "./common/group";
-export * from "./common/question";
+export * from "./common/act/group";
+export * from "./common/act/question";

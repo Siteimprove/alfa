@@ -6,7 +6,7 @@ import R56, { Outcomes } from "../../src/sia-r56/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-import { Group } from "../../src/common/group";
+import { Group } from "../../src/common/act/group";
 
 test("evaluate() passes when same landmarks have different names", async (t) => {
   const author = <aside aria-label="About the author" id="author" />;

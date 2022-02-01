@@ -7,7 +7,7 @@ import { video } from "../common/applicability/video";
 
 import { videoDescriptionTrackAccurate } from "../common/expectation/video-description-track-accurate";
 
-import { Question } from "../common/question";
+import { Question } from "../common/act/question";
 import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({

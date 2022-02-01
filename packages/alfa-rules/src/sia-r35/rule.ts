@@ -5,10 +5,10 @@ import { Trilean } from "@siteimprove/alfa-trilean";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
-import { isPassed } from "../common/expectation/is-passed";
+import { expectation } from "../common/act/expectation";
+import { isPassed } from "../common/act/is-passed";
 
-import { Question } from "../common/question";
+import { Question } from "../common/act/question";
 
 import R26 from "../sia-r26/rule";
 import R32 from "../sia-r32/rule";

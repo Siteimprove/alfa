@@ -5,11 +5,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 
 import * as act from "@siteimprove/alfa-act";
 
-import { expectation } from "../expectation";
+import { expectation } from "../act/expectation";
 
 import { isPerceivable } from "../predicate/is-perceivable";
 
-import { Question } from "../question";
+import { Question } from "../act/question";
 import { Diagnostic } from "@siteimprove/alfa-act";
 
 function mediaTextAlternative(
