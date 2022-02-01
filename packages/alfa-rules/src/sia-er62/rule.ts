@@ -19,8 +19,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { Contrast } from "../../src/common/diagnostic/contrast";
 import { expectation } from "../common/act/expectation";
-import { contrast } from "../common/expectation/contrast";
-import { getForeground } from "../common/expectation/get-colors";
+import { contrast } from "../common/style/contrast";
+import { getForeground } from "../common/style/get-colors";
 import {
   hasBorder,
   hasBoxShadow,
