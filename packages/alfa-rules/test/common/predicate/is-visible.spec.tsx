@@ -24,6 +24,39 @@ test(`isVisible() returns false when an element is hidden using the \`hidden\`
   t.equal(isVisible(element), false);
 });
 
+test(`isVisible() returns false when a text element is child of a video element`, (t) => {
+  const text = h.text("This text isn't visible");
+  const element = <video src="foo.mp4">{text}</video>;
+
+  h.document([element]);
+
+  t.equal(isVisible(text), false);
+});
+
+test(`isVisible() returns false when a track element is a child of video`, (t) => {
+  const track = <track kind="description" />;
+  const element = <video src="foo.mp4">{track}</video>;
+
+  h.document([element]);
+
+  // While <track> elements are not fallback, they are nonetheless invisible
+
+  t.equal(isVisible(track), false);
+});
+
+test(`isVisible() returns false when a div element is child of an iframe element`, (t) => {
+  const div = <div>hidden</div>;
+
+  const element = (
+    <iframe srcdoc="Hello">
+      {div}
+    </iframe>
+  );
+  h.document([element]);
+
+  t.equal(isVisible(div), false);
+});
+
 test(`isVisible() returns false when an element is hidden using the
       \`visibility: hidden\` property`, (t) => {
   const element = <div style={{ visibility: "hidden" }}>Hello World</div>;

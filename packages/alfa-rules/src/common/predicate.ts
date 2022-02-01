@@ -33,6 +33,7 @@ export * from "./predicate/is-inert";
 export * from "./predicate/is-keyboard-actionable";
 export * from "./predicate/is-large-text";
 export * from "./predicate/is-marked-decorative";
+export * from "./predicate/is-fallback";
 export * from "./predicate/is-offscreen";
 export * from "./predicate/is-perceivable";
 export * from "./predicate/is-positioned";

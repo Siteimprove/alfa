@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import R75, { Outcomes } from "../../src/sia-r75/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed } from "../common/outcome";
+import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes an element with a font size not smaller than 9 pixels", async (t) => {
   const target = <html style={{ fontSize: "medium" }}>Hello world</html>;
@@ -112,4 +112,16 @@ test(`evaluate() does not collide same \`font-size\` declarations`, async (t) =>
     passed(R75, problem, { 1: Outcomes.IsSufficient }),
     failed(R75, bad, { 1: Outcomes.IsInsufficient }),
   ]);
+});
+
+test("evaluate() is inapplicable to a <sup> element", async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R75, { document }), [inapplicable(R75)]);
 });
