@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -33,11 +34,15 @@ import {
 } from "../common/predicate";
 import { Scope, Stability, Version } from "../tags";
 
-import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
+import {
+  DistinguishingStyles,
+  ElementDistinguishable,
+  Name,
+} from "./diagnostics";
 
 const { isElement } = Element;
 const { isText } = Text;
-const { or, not, test } = Predicate;
+const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
 
 /**
@@ -208,11 +213,9 @@ export default Rule.Atomic.of<Page, Element>({
               // distinguishable from *all* non-link elements in order to be good.
               const hasDistinguishableStyle = nonLinkElements.some(
                 (container) =>
-                  Distinguishable.isDistinguishable(
-                    container,
-                    device,
-                    context
-                  )(link) ||
+                  Distinguishable.isDistinguishable(container, device, context)
+                    .map((isDistinguishable) => isDistinguishable(link))
+                    .some((distinguishable) => distinguishable) ||
                   (context.isHovered(target) &&
                     Distinguishable.hasDistinguishableCursor(
                       container,
@@ -233,7 +236,15 @@ export default Rule.Atomic.of<Page, Element>({
                   )
                 )
               );
-
+              console.log(
+                ElementDistinguishable.from(
+                  link,
+                  device,
+                  target,
+                  context,
+                  distinguishableContrast
+                ).toJSON()
+              );
               return hasDistinguishableStyle
                 ? Ok.of(
                     ElementDistinguishable.from(
@@ -280,12 +291,14 @@ export default Rule.Atomic.of<Page, Element>({
               isFocusDistinguishable[0].isOk(),
             () =>
               Outcomes.IsDistinguishable(
+                Sequence.empty(),
                 isDefaultDistinguishable,
                 isHoverDistinguishable,
                 isFocusDistinguishable
               ),
             () =>
               Outcomes.IsNotDistinguishable(
+                Sequence.empty(),
                 isDefaultDistinguishable,
                 isHoverDistinguishable,
                 isFocusDistinguishable
@@ -303,6 +316,7 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
+    distinguishingStyles: Iterable<Result<ElementDistinguishable>>,
     defaultStyles: Iterable<Result<ElementDistinguishable>>,
     hoverStyles: Iterable<Result<ElementDistinguishable>>,
     focusStyles: Iterable<Result<ElementDistinguishable>>
@@ -310,6 +324,7 @@ export namespace Outcomes {
     Ok.of(
       DistinguishingStyles.of(
         `The link is distinguishable from the surrounding text`,
+        distinguishingStyles,
         defaultStyles,
         hoverStyles,
         focusStyles
@@ -317,6 +332,7 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
+    distinguishingStyles: Iterable<Result<ElementDistinguishable>>,
     defaultStyles: Iterable<Result<ElementDistinguishable>>,
     hoverStyles: Iterable<Result<ElementDistinguishable>>,
     focusStyles: Iterable<Result<ElementDistinguishable>>
@@ -324,6 +340,7 @@ export namespace Outcomes {
     Err.of(
       DistinguishingStyles.of(
         `The link is not distinguishable from the surrounding text`,
+        distinguishingStyles,
         defaultStyles,
         hoverStyles,
         focusStyles
@@ -382,24 +399,44 @@ namespace Distinguishable {
     container: Element,
     device: Device,
     context: Context = Context.empty()
-  ): Predicate<Element> {
-    return or(
+  ): Predicate<Element>[] {
+    const predicates: ReadonlyArray<
+      readonly [Name | "contrast", Predicate<Element>]
+    > = [
       // Things like text decoration and backgrounds risk blending with the
       // container element. We therefore need to check if these can be distinguished
       // from what the container element might itself set.
-      hasDistinguishableBackground(container, device, context),
-      hasDistinguishableContrast(container, device, context),
-      hasDistinguishableFont(container, device, context),
-      hasDistinguishableTextDecoration(container, device, context),
-      hasDistinguishableVerticalAlign(container, device, context),
-      // We consider the mere presence of borders or outlines on the element as
-      // distinguishable features. There's of course a risk of these blending with
-      // other features of the container element, such as its background, but this
-      // should hopefully not happen (too often) in practice. When it does, we
-      // risk false negatives.
-      hasBorder(device, context),
-      hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
-      hasOutline(device, context)
+      ["background", hasDistinguishableBackground(container, device, context)],
+      ["contrast", hasDistinguishableContrast(container, device, context)],
+      ["font", hasDistinguishableFont(container, device, context)],
+      [
+        "text-decoration",
+        hasDistinguishableTextDecoration(container, device, context),
+      ],
+      [
+        "vertical-align",
+        hasDistinguishableVerticalAlign(container, device, context),
+      ],
+      [
+        "border",
+        // We consider the mere presence of borders or outlines on the element as
+        // distinguishable features. There's of course a risk of these blending with
+        // other features of the container element, such as its background, but this
+        // should hopefully not happen (too often) in practice. When it does, we
+        // risk false negatives.
+        hasBorder(device, context),
+      ],
+      [
+        "box-shadow",
+        hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
+      ],
+      ["outline", hasOutline(device, context)],
+    ];
+    return predicates.map(([name, predicate]) =>
+      tee(predicate, (link, result) => {
+        if (result) {
+        }
+      })
     );
   }
 

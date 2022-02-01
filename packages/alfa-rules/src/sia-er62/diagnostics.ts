@@ -17,7 +17,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 
 import { Serialise } from "./serialise";
 
-type Name = Property.Name | Property.Shorthand.Name;
+export type Name = Property.Name | Property.Shorthand.Name;
 
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
@@ -135,32 +135,45 @@ export namespace ElementDistinguishable {
 export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
+    distinguishingStyles: Iterable<
+      Result<ElementDistinguishable>
+    > = Sequence.empty(),
     defaultStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
     hoverStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
     focusStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty()
   ): DistinguishingStyles {
     return new DistinguishingStyles(
       message,
+      Sequence.from(distinguishingStyles),
       Sequence.from(defaultStyles),
       Sequence.from(hoverStyles),
       Sequence.from(focusStyles)
     );
   }
 
+  private readonly _distinguishingStyles: Sequence<
+    Result<ElementDistinguishable>
+  >;
   private readonly _defaultStyles: Sequence<Result<ElementDistinguishable>>;
   private readonly _hoverStyles: Sequence<Result<ElementDistinguishable>>;
   private readonly _focusStyles: Sequence<Result<ElementDistinguishable>>;
 
   private constructor(
     message: string,
+    distinguishingStyles: Sequence<Result<ElementDistinguishable>>,
     defaultStyles: Sequence<Result<ElementDistinguishable>>,
     hoverStyles: Sequence<Result<ElementDistinguishable>>,
     focusStyles: Sequence<Result<ElementDistinguishable>>
   ) {
     super(message);
+    this._distinguishingStyles = distinguishingStyles;
     this._defaultStyles = defaultStyles;
     this._hoverStyles = hoverStyles;
     this._focusStyles = focusStyles;
+  }
+
+  public get distinguishingStyles(): Iterable<Result<ElementDistinguishable>> {
+    return this._distinguishingStyles;
   }
 
   public get defaultStyles(): Iterable<Result<ElementDistinguishable>> {
@@ -182,6 +195,7 @@ export class DistinguishingStyles extends Diagnostic {
   public equals(value: unknown): boolean {
     return (
       value instanceof DistinguishingStyles &&
+      value._distinguishingStyles.equals(this._distinguishingStyles) &&
       value._defaultStyles.equals(this._defaultStyles) &&
       value._hoverStyles.equals(this._hoverStyles) &&
       value._focusStyles.equals(this._focusStyles)
@@ -191,6 +205,7 @@ export class DistinguishingStyles extends Diagnostic {
   public toJSON(): DistinguishingStyles.JSON {
     return {
       ...super.toJSON(),
+      distinguishingStyles: this._distinguishingStyles.toJSON(),
       defaultStyle: this._defaultStyles.toJSON(),
       hoverStyle: this._hoverStyles.toJSON(),
       focusStyle: this._focusStyles.toJSON(),
@@ -200,6 +215,7 @@ export class DistinguishingStyles extends Diagnostic {
 
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
+    distinguishingStyles: Sequence.JSON<Result<ElementDistinguishable>>;
     defaultStyle: Sequence.JSON<Result<ElementDistinguishable>>;
     hoverStyle: Sequence.JSON<Result<ElementDistinguishable>>;
     focusStyle: Sequence.JSON<Result<ElementDistinguishable>>;
