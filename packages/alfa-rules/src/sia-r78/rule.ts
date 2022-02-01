@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
-import { getNodesBetween } from "../common/expectation/get-nodes-between";
+import { getNodesBetween } from "../common/dom/get-nodes-between";
 import {
   hasHeadingLevel,
   hasRole,
