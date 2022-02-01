@@ -8,6 +8,7 @@ import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -630,6 +631,8 @@ export namespace KeyframesRule {
 export class MediaRule extends ConditionRule {
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
+    // (undocumented)
+    get queries(): Media.List;
     // (undocumented)
     toJSON(): MediaRule.JSON;
     // (undocumented)
