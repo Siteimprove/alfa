@@ -40,14 +40,6 @@ const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
 
-const pairwiseContrastCache = Cache.empty<
-  Device,
-  Cache<
-    Context,
-    Cache<Element, Cache<Element, ReadonlyArray<Contrast.Pairing>>>
-  >
->();
-
 /**
  * This version of R62 accepts differences in `font-family`, differences
  * in `cursor` (in the `hover` state), and 3:1 or more contrast with surrounding
@@ -69,44 +61,66 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [Criterion.of("1.4.1")],
   tags: [Scope.Component, Stability.Experimental, Version.of(2)],
   evaluate({ device, document }) {
+    // Contains links (key) and their containing paragraph (value)
     let containers: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
-        return visit(document, None);
+        // Contains links (key) and the parents of the textnodes the links contain (value)
+        let linkText: Map<Element, Set<Element>> = Map.empty();
+        // Contains containers (key) and the parents of the text nodes (non included in links) the containers have (value)
+        let nonLinkText: Map<Element, Set<Element>> = Map.empty();
 
-        function* visit(
+        gather(document, None, None);
+        return getApplicableLinks();
+
+        function gather(
           node: Node,
-          container: Option<Element>
-        ): Iterable<Element> {
+          container: Option<Element>,
+          link: Option<Element>
+        ): void {
           if (isElement(node)) {
-            // If the element is a semantic link, it might be applicable.
-            if (
-              test(
-                hasRole(device, (role) => role.is("link")),
-                node
-              )
-            ) {
-              if (
-                container.isSome() &&
-                node
-                  .descendants({ flattened: true })
-                  .some(and(isText, isVisible(device)))
-              ) {
-                containers = containers.set(node, container.get());
-                return yield node;
-              }
+            const isLink = hasRole(device, (role) => role.is("link"));
+            const isParagraph = and(
+              hasRole(device, "paragraph"),
+              hasNonLinkText(device)
+            );
+
+            if (container.isSome() && isLink(node)) {
+              // For each link, store its containing paragraph
+              containers = containers.set(node, container.get());
+              link = Option.of(node);
             }
 
-            // Otherwise, if the element is a <p> element with non-link text
+            // Otherwise, if the element is a paragraph element with non-link text
             // content then start collecting applicable elements.
-            else if (
-              test(
-                and(hasRole(device, "paragraph"), hasNonLinkText(device)),
-                node
-              )
-            ) {
+            if (isParagraph(node)) {
               container = Option.of(node);
+            }
+          }
+
+          const isTextNode = test(and(isText, isVisible(device)), node);
+          const parent = node.parent().filter(isElement);
+          if (isTextNode && container.isSome() && parent.isSome()) {
+            // For each link, store the parent of the text nodes it contains
+            if (link.isSome()) {
+              linkText = linkText.set(
+                link.get(),
+                linkText
+                  .get(link.get())
+                  .getOr(Set.empty<Element>())
+                  .add(parent.get())
+              );
+            }
+            // For each container, store the parent of the text nodes it contains
+            else {
+              nonLinkText = nonLinkText.set(
+                container.get(),
+                nonLinkText
+                  .get(container.get())
+                  .getOr(Set.empty<Element>())
+                  .add(parent.get())
+              );
             }
           }
 
@@ -116,7 +130,44 @@ export default Rule.Atomic.of<Page, Element>({
           });
 
           for (const child of children) {
-            yield* visit(child, container);
+            gather(child, container, link);
+          }
+        }
+
+        function* getApplicableLinks(): Iterable<Element> {
+          // Check if foreground is the same with the parent <p> element
+          const hasDifferentForeground = (
+            link: Element,
+            container: Element
+          ): boolean =>
+            getForeground(link, device).none(
+              (linkColors) =>
+                // If the link has a foreground with the alpha channel less than 1 and background gradient color
+                // then the rule is applicable as we can't tell for sure if it ever has the same foreground with a link
+                // that might have the same foreground and gradient background, but with different gradient type or spread
+                linkColors.length === 1 &&
+                getForeground(container, device).some(
+                  (containerColors) =>
+                    // Similalry to the link, we assume the rule is applicable if the container has more than one foreground color
+                    containerColors.length === 1 &&
+                    linkColors[0].equals(containerColors[0])
+                )
+            );
+
+          for (const [link, linkTexts] of linkText) {
+            const nonLinkTexts = nonLinkText
+              .get(containers.get(link).get())
+              .get();
+
+            if (
+              linkTexts.some((linkElement) =>
+                nonLinkTexts.some((nonLinkElement) =>
+                  hasDifferentForeground(linkElement, nonLinkElement)
+                )
+              )
+            ) {
+              yield link;
+            }
           }
         }
       },
@@ -173,18 +224,12 @@ export default Rule.Atomic.of<Page, Element>({
               const distinguishableContrast = Set.from(
                 nonLinkElements.flatMap((container) =>
                   Sequence.from(
-                    pairwiseContrastCache
-                      .get(device, Cache.empty)
-                      .get(context, Cache.empty)
-                      .get(container, Cache.empty)
-                      .get(link, () =>
-                        Distinguishable.getPairwiseContrast(
-                          container,
-                          link,
-                          device,
-                          context
-                        )
-                      )
+                    Distinguishable.getPairwiseContrast(
+                      container,
+                      link,
+                      device,
+                      context
+                    )
                   )
                 )
               );
@@ -439,13 +484,13 @@ namespace Distinguishable {
         ...Array.flatMap(containerColors, (containerColor) =>
           getForeground(link, device, context)
             .map((linkColors) =>
-              Array.map(linkColors, (linkColor) => {
-                return Contrast.Pairing.of(
+              Array.map(linkColors, (linkColor) =>
+                Contrast.Pairing.of(
                   containerColor,
                   linkColor,
                   contrast(containerColor, linkColor)
-                );
-              })
+                )
+              )
             )
             .getOr([])
         ),
@@ -459,12 +504,12 @@ namespace Distinguishable {
     context: Context = Context.empty()
   ): Predicate<Element> {
     return (link) => {
-      const contrastPairings = pairwiseContrastCache
-        .get(device, Cache.empty)
-        .get(context, Cache.empty)
-        .get(container, Cache.empty)
-        .get(link, () => getPairwiseContrast(container, link, device, context));
-      for (const contrastPairing of contrastPairings) {
+      for (const contrastPairing of getPairwiseContrast(
+        container,
+        link,
+        device,
+        context
+      )) {
         // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
         if (contrastPairing.contrast >= 3) {
           return true;
