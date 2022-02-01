@@ -25,158 +25,158 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Breaking
 
-- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): `Rule`, and associated `alfa-act` types, now use their `QUESTION` type variable to link questions' URI to the expected answer type (instead of just linking the type representation to the type); see the associated Pull Request for details. ([#1018](../issues/1018), [#1020](../pull/1020))
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): `Rule`, and associated `alfa-act` types, now use their `QUESTION` type variable to link questions' URI to the expected answer type (instead of just linking the type representation to the type); see the associated Pull Request for details. ([#1018](../../issues/1018), [#1020](../../pull/1020))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): Questions now need to be pre-registered by their URI. The parameters of `Question.of` have changed (`type` is not needed, `message` is optional and moved to last). ([#1020](../pull/1020))
+- [@siteimprove/alfa-rules](packages/alfa-rules): Questions now need to be pre-registered by their URI. The parameters of `Question.of` have changed (`type` is not needed, `message` is optional and moved to last). ([#1020](../../pull/1020))
 
-- [@siteimprove/alfa-act](packages/alfa-act): Oracles should not anymore wrap their results in `question.answer`; `Interview.conduct` is now doing it automatically. ([#1020](../pull/1020))
+- [@siteimprove/alfa-act](packages/alfa-act): Oracles should not anymore wrap their results in `question.answer`; `Interview.conduct` is now doing it automatically. ([#1020](../../pull/1020))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): The `color` type of questions, which was not used, has been removed. ([#1020](../pull/1020))
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `color` type of questions, which was not used, has been removed. ([#1020](../../pull/1020))
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R82 is now marked as experimental. ([#1020](../pull/1020))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R82 is now marked as experimental. ([#1020](../../pull/1020))
 
 
 ## [0.29.0](../../compare/v0.28.0...v0.29.0) (2022-01-04)
 
 ### Added
 
-- [@siteimprove/alfa-assert](packages/alfa-assert): `Assertion.Options` now accepts an `Oracle` to answer questions, and a predicate to filter `cantTell` result (default is to remove all of them). ([#1012](../issues/1012), [#1013](../pull/1013))
+- [@siteimprove/alfa-assert](packages/alfa-assert): `Assertion.Options` now accepts an `Oracle` to answer questions, and a predicate to filter `cantTell` result (default is to remove all of them). ([#1012](../../issues/1012), [#1013](../../pull/1013))
 
 ## [0.28.0](../../compare/v0.27.0...v0.28.0) (2021-12-14)
 
 ### Added
 
-- [@siteimprove/alfa-act](packages/alfa-act): `hasRequirement` now also accepts a predicate as argument. ([#1009](../pull/1009))
+- [@siteimprove/alfa-act](packages/alfa-act): `hasRequirement` now also accepts a predicate as argument. ([#1009](../../pull/1009))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): All rules now have a tag of either `Scope.Component` or `Scope.Page`. ([#993](../issues/993), [#1010](../pull/1010))
+- [@siteimprove/alfa-rules](packages/alfa-rules): All rules now have a tag of either `Scope.Component` or `Scope.Page`. ([#993](../../issues/993), [#1010](../../pull/1010))
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER62 now considers that a 3:1 contrast ratio between link text and surrounding text is a distinguishing factor. ([#796](../issues/796), [#998](../pull/998))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER62 now considers that a 3:1 contrast ratio between link text and surrounding text is a distinguishing factor. ([#796](../../issues/796), [#998](../../pull/998))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R109 is now considered as experimental. ([#1006](../pull/1006))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R109 is now considered as experimental. ([#1006](../../pull/1006))
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R76 and SIA-R77 are now correctly exported. ([#1006](../pull/1006))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R76 and SIA-R77 are now correctly exported. ([#1006](../../pull/1006))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 now correctly compares style declarations with reference rather than structural equality. ([#1006](../pull/1006))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 now correctly compares style declarations with reference rather than structural equality. ([#1006](../../pull/1006))
 
 ## [0.27.0](../../compare/v0.26.0...v0.27.0) (2021-12-08)
 
 ### Breaking
 
-- [@siteimprove/alfa-css](packages/alfa-css): The order of horizontal and vertical offsets in the `Shadow` value has been swapped, now matching the order in CSS specifications. ([#1004](../pull/1004))
+- [@siteimprove/alfa-css](packages/alfa-css): The order of horizontal and vertical offsets in the `Shadow` value has been swapped, now matching the order in CSS specifications. ([#1004](../../pull/1004))
 
 ### Fixed
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): `<input type="image">` elements now accept `title` as a way to provide an accessible name, following specifications and ACT rules test cases. ([#1003](../pull/1003))
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<input type="image">` elements now accept `title` as a way to provide an accessible name, following specifications and ACT rules test cases. ([#1003](../../pull/1003))
 
 ## [0.26.0](../../compare/v0.25.0...v0.26.0) (2021-12-03)
 
 ### Added
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): A family of `Stability` tags has been added, rules tagged with `Stability.Experimental` uses newer features and are subject to change without notice. ([#994](../pull/994))
+- [@siteimprove/alfa-rules](packages/alfa-rules): A family of `Stability` tags has been added, rules tagged with `Stability.Experimental` uses newer features and are subject to change without notice. ([#994](../../pull/994))
 
-- [@siteimprove/alfa-wcag](packages/alfa-wcag): A `fromURI` function is now available to retrieve a Success Criterion from its URI. ([#996](../pull/996))
+- [@siteimprove/alfa-wcag](packages/alfa-wcag): A `fromURI` function is now available to retrieve a Success Criterion from its URI. ([#996](../../pull/996))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): Experimental rules ER62 and ER87 have been added. ([#994](../pull/994))
+- [@siteimprove/alfa-rules](packages/alfa-rules): Experimental rules ER62 and ER87 have been added. ([#994](../../pull/994))
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R28 now rejects the default name of "Submit Query" on `<input type="image">` elements. ([#973](../issues/973), [#989](../pull/989))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R28 now rejects the default name of "Submit Query" on `<input type="image">` elements. ([#973](../../issues/973), [#989](../../pull/989))
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): The `isClipped` predicate, part of `isVisible`, now correctly jumps to offset parents. ([#887](../issues/887), [#964](../pull/964))
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `isClipped` predicate, part of `isVisible`, now correctly jumps to offset parents. ([#887](../../issues/887), [#964](../../pull/964))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now correctly ignores punctuation. ([#972](../issues/972), [#991](../pull/991))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now correctly ignores punctuation. ([#972](../../issues/972), [#991](../../pull/991))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts differences in `box-shadow` as a distinguishing factor. ([#888](../issues/888), [#967](../pull/967))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 now accepts differences in `box-shadow` as a distinguishing factor. ([#888](../../issues/888), [#967](../../pull/967))
 
-- [@siteimprove/alfa-style](packages/alfa-style): Fixed several issues in parsing of `box-shadow`. ([#967](../pull/967))
+- [@siteimprove/alfa-style](packages/alfa-style): Fixed several issues in parsing of `box-shadow`. ([#967](../../pull/967))
 
 ## [0.25.0](../../compare/v0.24.1...v0.25.0) (2021-11-19)
 
 ### Added
 
-- [@siteimprove/alfa-styles](packages/alfa-style): The `cursor` CSS property is now supported. ([#844](../issues/844), [#946](../pull/946))
+- [@siteimprove/alfa-styles](packages/alfa-style): The `cursor` CSS property is now supported. ([#844](../../issues/844), [#946](../../pull/946))
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): Fixed a regression on SIA-R14; it now again consider that non-perceivable text is non-essential and therefore excludes it from labels. ([#983](../pull/983))
+- [@siteimprove/alfa-rules](packages/alfa-rules): Fixed a regression on SIA-R14; it now again consider that non-perceivable text is non-essential and therefore excludes it from labels. ([#983](../../pull/983))
 
 ## [0.24.1](../../compare/v0.24.0...v0.24.1) (2021-11-12)
 
 ### Added
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): The extended diagnostic class of SIA-R83 is now `export`ed. ([#981](../pull/981))
+- [@siteimprove/alfa-rules](packages/alfa-rules): The extended diagnostic class of SIA-R83 is now `export`ed. ([#981](../../pull/981))
 
 ## [0.24.0](../../compare/v0.23.2...v0.24.0) (2021-11-12)
 
 ### Added
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now exports the found clipping ancestors in its diagnostic. ([#976](../pull/976))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now exports the found clipping ancestors in its diagnostic. ([#976](../../pull/976))
 
-- [@siteimprove/alfa-style](packages/alfa-style): The `min-height` and `min-width` CSS properties are now supported. ([#977](../pull/977))
+- [@siteimprove/alfa-style](packages/alfa-style): The `min-height` and `min-width` CSS properties are now supported. ([#977](../../pull/977))
 
 ### Changed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now considers that elements with a font-relative `height`, `width`, `min-height` or `min-width` fully handle the corresponding overflow. ([#977](../pull/977))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now considers that elements with a font-relative `height`, `width`, `min-height` or `min-width` fully handle the corresponding overflow. ([#977](../../pull/977))
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 row ignores non-link text which is whitespace only. ([#950](../issues/950), [#965](../pull/965))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 row ignores non-link text which is whitespace only. ([#950](../../issues/950), [#965](../../pull/965))
 
-- [@siteimprove/alfa-media](packages/alfa-media): Fixed a faulty boundary condition causing inclusive ranges to be matched exclusively and reciprocally. ([#978](../pull/978))
+- [@siteimprove/alfa-media](packages/alfa-media): Fixed a faulty boundary condition causing inclusive ranges to be matched exclusively and reciprocally. ([#978](../../pull/978))
 
 ## [0.23.2](../../compare/v0.23.1...v0.23.2) (2021-10-27)
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now computes visible labels according to the `innerText` algorithm. ([#833](../issues/833), [#938](../pull/938))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now computes visible labels according to the `innerText` algorithm. ([#833](../../issues/833), [#938](../../pull/938))
 
-- [@siteimprove/alfa-map](packages/alfa-map): Fixed a rare bug when deleting items in a `Map` could result in some other items becoming unreachable; see the Pull Request for details. ([#962](../pull/962))
+- [@siteimprove/alfa-map](packages/alfa-map): Fixed a rare bug when deleting items in a `Map` could result in some other items becoming unreachable; see the Pull Request for details. ([#962](../../pull/962))
 
 ## [0.23.1](../../compare/v0.23.0...v0.23.1) (2021-10-15)
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now accepts native `<input type="text" list="datalist" />` as valid comboboxes. ([#948](../pull/948))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now accepts native `<input type="text" list="datalist" />` as valid comboboxes. ([#948](../../pull/948))
 
-- [@siteimprove/alfa-style](packages/alfa-style): The `clip` property now correctly computes to `auto` for non absolutely positioned elements. ([#847](../issues/847), [#930](../pull/930))
+- [@siteimprove/alfa-style](packages/alfa-style): The `clip` property now correctly computes to `auto` for non absolutely positioned elements. ([#847](../../issues/847), [#930](../../pull/930))
 
 ## [0.23.0](../../compare/v0.22.7...v0.23.0) (2021-10-04)
 
 ### Added
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R77 is now available. ([#841](../issues/841), [#923](../pull/923))
+- [@siteimprove/alfa-rules](packages/alfa-rules): An implementation of SIA-R77 is now available. ([#841](../../issues/841), [#923](../../pull/923))
 
-- [@siteimprove/alfa-thenable](packages/alfa-thenable): The `Thenable` type now provides the same helper functions as `Promise` and `Future`. ([#935](../pull/935))
+- [@siteimprove/alfa-thenable](packages/alfa-thenable): The `Thenable` type now provides the same helper functions as `Promise` and `Future`. ([#935](../../pull/935))
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly finds clipping ancestors of relatively positioned elements. ([#939](../pull/939))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly finds clipping ancestors of relatively positioned elements. ([#939](../../pull/939))
 
 ## [0.22.7](../../compare/v0.22.6...v0.22.7) (2021-09-30)
 
 ### Added
 
-- [@siteimprove/alfa-style](packages/alfa-style): The CSS properties `flex-direction` and `flex-flow` are now supported. ([#934](../pull/934))
+- [@siteimprove/alfa-style](packages/alfa-style): The CSS properties `flex-direction` and `flex-flow` are now supported. ([#934](../../pull/934))
 
 ### Fixed
 
-- [@siteimprove-alfa-rules](packages/alfa-rules): SIA-R91, SIA-R92, and SIA-R93 now correctly handle change of properties between the element containing the declaration and the text. ([#897](../issues/897), [#917](../pull/917))
+- [@siteimprove-alfa-rules](packages/alfa-rules): SIA-R91, SIA-R92, and SIA-R93 now correctly handle change of properties between the element containing the declaration and the text. ([#897](../../issues/897), [#917](../../pull/917))
 
 ## [0.22.6](../../compare/v0.22.5...v0.22.6) (2021-09-29)
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R21 now targets `role` attributes on elements with no role. ([#895](../issues/895), [#916](../pull/916))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R21 now targets `role` attributes on elements with no role. ([#895](../../issues/895), [#916](../../pull/916))
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now ignores `overflow` property on `<body>` elements, and consider that containers with `flex-wrap: wrap` definitely handle horizontal overflow. ([#932](../pull/932))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now ignores `overflow` property on `<body>` elements, and consider that containers with `flex-wrap: wrap` definitely handle horizontal overflow. ([#932](../../pull/932))
 
 ## [0.22.5](../../compare/v0.22.4...v0.22.5) (2021-09-23)
 
@@ -184,7 +184,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now does not consider that fixed height element can be clipped by an ancestor. ([#928](../pull/928))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now does not consider that fixed height element can be clipped by an ancestor. ([#928](../../pull/928))
 
 ## [0.22.3](../../compare/v0.22.2...v0.22.3) (2021-09-20)
 
@@ -192,7 +192,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly separate detection of horizontal and vertical overflows, correctly considers interposed elements that handle overflow, and correctly restrict text overflow to text nodes parent. ([#908](../issues/908), [#921](../issues/921), [#922](../issues/922), [#924](../pull/924))   
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly separate detection of horizontal and vertical overflows, correctly considers interposed elements that handle overflow, and correctly restrict text overflow to text nodes parent. ([#908](../../issues/908), [#921](../../issues/921), [#922](../../issues/922), [#924](../../pull/924))   
 
 ## [0.22.1](../../compare/v0.22.0...v0.22.1) (2021-09-17)
 

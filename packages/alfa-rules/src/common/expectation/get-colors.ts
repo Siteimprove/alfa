@@ -1,5 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
@@ -115,150 +116,189 @@ class Layer {
   }
 }
 
+const layersCacheWithFakeOpacity = Cache.empty<
+  Device,
+  Cache<Context, Cache<Element, Result<Array<Layer>, Layer.Error>>>
+  >();
+
+const layersCacheWithDefaultOpacity = Cache.empty<
+  Device,
+  Cache<Context, Cache<Element, Result<Array<Layer>, Layer.Error>>>
+  >();
+
 function getLayers(
   element: Element,
   device: Device,
   context: Context = Context.empty(),
   opacity?: number
 ): Result<Array<Layer>, ColorError<"layer">> {
-  const style = Style.from(element, device, context);
+  const cache =
+    opacity === 1 ? layersCacheWithFakeOpacity : layersCacheWithDefaultOpacity;
+
+  return cache
+    .get(device, Cache.empty)
+    .get(context, Cache.empty)
+    .get(element, () => {
+      const style = Style.from(element, device, context);
   const backgroundColor = style.computed("background-color").value;
   const backgroundImage = style.computed("background-image").value;
   const backgroundSize = style.computed("background-size").value;
 
-  const color = Color.resolve(backgroundColor, style);
+      const color = Color.resolve(
+        backgroundColor,
+        style
+      );
 
-  opacity = opacity ?? style.computed("opacity").value.value;
+      opacity = opacity ?? style.computed("opacity").value.value;
 
-  const layers: Array<Layer> = [];
+      const layers: Array<Layer> = [];
 
-  if (color.isSome()) {
-    layers.push(Layer.of([color.get()], opacity));
-  } else {
-    return Err.of(
+      if (color.isSome()) {
+        layers.push(Layer.of([color.get()], opacity));
+      } else {
+        return Err.of(
       ColorError.unresolvableBackgroundColor(element, backgroundColor)
     );
-  }
+      }
 
-  for (const image of backgroundImage) {
-    if (image.type === "keyword") {
-      continue;
-    }
+      for (const image of backgroundImage) {
+        if (image.type === "keyword") {
+          continue;
+        }
 
-    // We currently have no way of extracting colors from images, so we simply
-    // bail out if we encounter a background image.
-    if (image.image.type === "url") {
-      return Err.of(
+        // We currently have no way of extracting colors from images, so we simply
+        // bail out if we encounter a background image.
+        if (image.image.type === "url") {
+          return Err.of(
         ColorError.externalBackgroundImage(element, backgroundImage)
       );
-    }
+        }
 
     // If there is a background-size, we currently have no way of guessing
     // whether it is large enough to go under the text or not.
     // So we simply bail out.
     if (!backgroundSize.equals(style.initial("background-size").value)) {
-      return Err.of(ColorError.backgroundSize(element, backgroundSize));
-    }
+          return Err.of(ColorError.backgroundSize(element, backgroundSize));
+        }
 
-    // For each gradient, we extract all color stops into a background layer of
-    // their own. As gradients need a start and an end point, there will always
-    // be at least two color stops.
-    const stops: Array<Color> = [];
+        // For each gradient, we extract all color stops into a background layer of
+        // their own. As gradients need a start and an end point, there will always
+        // be at least two color stops.
+        const stops: Array<Color> = [];
 
-    for (const item of image.image.items) {
-      if (item.type === "stop") {
-        const color = Color.resolve(item.color, style);
+        for (const item of image.image.items) {
+          if (item.type === "stop") {
+            const color = Color.resolve(item.color, style);
 
-        if (color.isSome()) {
-          stops.push(color.get());
-        } else {
-          return Err.of(
+            if (color.isSome()) {
+              stops.push(color.get());
+            } else {
+              return Err.of(
             ColorError.unresolvableGradientStop(
               element,
               backgroundImage,
               item.color
             )
           );
+            }
+          }
         }
+
+        layers.push(Layer.of(stops, opacity));
       }
-    }
 
-    layers.push(Layer.of(stops, opacity));
-  }
+      if (
+        layers.length > 0 &&
+        layers.every(
+          (layer) =>
+            layer.opacity === 1 &&
+            layer.colors.every((color) => color.alpha.value === 1)
+        )
+      ) {
+        return Result.of<Array<Layer>, Layer.Error>(layers);
+      }
 
-  if (
-    layers.length > 0 &&
-    layers.every(
-      (layer) =>
-        layer.opacity === 1 &&
-        layer.colors.every((color) => color.alpha.value === 1)
-    )
-  ) {
-    return Result.of(layers);
-  }
-
-  if (isPositioned(device, "absolute", "fixed")(element)) {
-    return Err.of(
+      if (isPositioned(device, "absolute", "fixed")(element)) {
+        return Err.of(
       ColorError.nonStaticPosition(element, style.computed("position").value)
     );
-  }
+      }
 
-  const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendants = getInterposedDescendant(device, element);
   if (!interposedDescendants.isEmpty()) {
     return Err.of(
       ColorError.interposedDescendant(element, interposedDescendants)
     );
   }
 
-  // If the background layer does not have a lower layer that is fully opaque,
-  // we need to also locate the background layers sitting behind the current
-  // layer.
+      // If the background layer does not have a lower layer that is fully opaque,
+      // we need to also locate the background layers sitting behind the current
+      // layer.
 
-  // Only use the background layers from the parent if there is one. If there
-  // isn't, this means we're at the root. In that case, we simply return the
-  // layers we've found so far.
-  for (const parent of element
-    .parent({
-      flattened: true,
-    })
-    .filter(Element.isElement)) {
-    // The opacity override only applies to the last layer, so it is not
-    // used in the recursive calls
-    return getLayers(parent, device, context).map((parentLayers) =>
-      parentLayers.concat(layers)
-    );
-  }
+      // Only use the background layers from the parent if there is one. If there
+      // isn't, this means we're at the root. In that case, we simply return the
+      // layers we've found so far.
+      for (const parent of element
+        .parent({
+          flattened: true,
+        })
+        .filter(Element.isElement)) {
+        // The opacity override only applies to the last layer, so it is not
+        // used in the recursive calls
+        return getLayers(parent, device, context).map((parentLayers) =>
+          parentLayers.concat(layers)
+        );
+      }
 
-  return Result.of(layers);
+      return Result.of<Array<Layer>, Layer.Error>(layers);
+    });
 }
 
 export type Foreground = Array<Color>;
+
+const foregroundCache = Cache.empty<
+  Device,
+  Cache<
+    Context,
+    Cache<
+      Element,
+      Result<Foreground, Layer.Error | Foreground.Error | Background.Error>
+    >
+  >
+>();
 
 export function getForeground(
   element: Element,
   device: Device,
   context: Context = Context.empty()
 ): Result<Foreground, ColorError> {
-  const style = Style.from(element, device, context);
+  return foregroundCache
+    .get(device, Cache.empty)
+    .get(context, Cache.empty)
+    .get(element, () => {
+      const style = Style.from(element, device, context);
   const foregroundColor = style.computed("color").value;
 
-  const color = Color.resolve(foregroundColor, style);
+      const color = Color.resolve(foregroundColor, style);
 
-  if (color.isNone()) {
-    return Err.of(
+      if (color.isNone()) {
+        return Err.of(
       ColorError.unresolvableForegroundColor(element, foregroundColor)
     );
-  }
+      }
 
-  const opacity = style.computed("opacity").value;
+      const opacity = style.computed("opacity").value;
 
-  // If the color is not transparent, and the element is fully opaque,
-  // then we do not need to dig further
-  if (color.get().alpha.value * opacity.value === 1) {
-    return Result.of([color.get()]);
-  }
+      // If the color is not transparent, and the element is fully opaque,
+      // then we do not need to dig further
+      if (color.get().alpha.value * opacity.value === 1) {
+        return Result.of<
+          Foreground,
+          Layer.Error | Foreground.Error | Background.Error
+        >([color.get()]);
+      }
 
-  const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendants = getInterposedDescendant(device, element);
   if (!interposedDescendants.isEmpty()) {
     return Err.of(
       ColorError.interposedDescendant(element, interposedDescendants)
@@ -270,35 +310,55 @@ export function getForeground(
   // For this, we fake the opacity of the element at 1. That way, the
   // background color is correctly handled. The background color may itself have
   // an alpha channel, independently of its opacity, and this alpha channel
-  // needs to be taken into account (as well as the alpha/opacity of all the
-  // previous layers).
-  const colors = getBackground(element, device, context, 1).map((background) =>
-    background.map((backdrop) => Color.composite(color.get(), backdrop, 1))
-  );
-
-  for (const parent of element
-    .parent({
-      flattened: true,
-    })
-    .filter(Element.isElement)) {
-    // Next, we handle the opacity of the element.
-    // For this, we need the background colors of the parent (assuming that DOM
-    // reflects layout).
-    return colors.flatMap((colors) =>
-      getBackground(parent, device, context).map((background) =>
-        colors.flatMap((color) =>
+      // needs to be taken into account (as well as the alpha/opacity of all the
+      // previous layers).
+      const colors = getBackground(element, device, context, 1).map(
+        (background) =>
           background.map((backdrop) =>
-            Color.composite(color, backdrop, opacity.value)
+            Color.composite(color.get(), backdrop, 1)
           )
-        )
-      )
-    );
-  }
+      );
 
-  return colors;
+      for (const parent of element
+        .parent({
+          flattened: true,
+        })
+        .filter(Element.isElement)) {
+        // Next, we handle the opacity of the element.
+        // For this, we need the background colors of the parent (assuming that DOM
+        // reflects layout).
+        return colors.flatMap((colors) =>
+          getBackground(parent, device, context).map((background) =>
+            colors.flatMap((color) =>
+              background.map((backdrop) =>
+                Color.composite(color, backdrop, opacity.value)
+              )
+            )
+          )
+        );
+      }
+
+      return colors;
+    });
 }
 
 export type Background = Array<Color>;
+
+const backgroundCacheWithFakeOpacity = Cache.empty<
+  Device,
+  Cache<
+    Context,
+    Cache<Element, Result<Background, Layer.Error | Background.Error>>
+  >
+>();
+
+const backgroundCacheWithDefaultOpacity = Cache.empty<
+  Device,
+  Cache<
+    Context,
+    Cache<Element, Result<Background, Layer.Error | Background.Error>>
+  >
+>();
 
 export function getBackground(
   element: Element,
@@ -309,43 +369,52 @@ export function getBackground(
   const textShadow = Style.from(element, device, context).computed(
     "text-shadow"
   ).value;
-  // If the element has a text-shadow, we don't try to guess how it looks.
-  if (textShadow.type !== "keyword") {
-    return Err.of(ColorError.textShadow(element, textShadow));
-  }
+  const cache =
+    opacity === 1
+      ? backgroundCacheWithFakeOpacity
+      : backgroundCacheWithDefaultOpacity;
+  return cache
+    .get(device, Cache.empty)
+    .get(context, Cache.empty)
+    .get(element, () => {// If the element has a text-shadow, we don't try to guess how it looks.
+  if (textShadow
+          .type !== "keyword") {
+        return Err.of(ColorError.textShadow(element, textShadow));
+      }
 
-  const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendants = getInterposedDescendant(device, element);
   if (!interposedDescendants.isEmpty()) {
     return Err.of(
       ColorError.interposedDescendant(element, interposedDescendants)
     );
   }
 
-  return getLayers(element, device, context, opacity).map((layers) =>
-    layers.reduce(
-      (backdrops, layer) =>
-        layer.colors.reduce(
-          (layers, color) =>
-            layers.concat(
-              backdrops.map((backdrop) =>
-                Color.composite(color, backdrop, layer.opacity)
-              )
+      return getLayers(element, device, context, opacity).map((layers) =>
+        layers.reduce(
+          (backdrops, layer) =>
+            layer.colors.reduce(
+              (layers, color) =>
+                layers.concat(
+                  backdrops.map((backdrop) =>
+                    Color.composite(color, backdrop, layer.opacity)
+                  )
+                ),
+              [] as Array<Color>
             ),
-          [] as Array<Color>
-        ),
-      // We make the initial backdrop solid white as this can be assumed
-      // to be the color of the canvas onto which the other backgrounds
-      // are rendered.
-      [
-        RGB.of(
-          Percentage.of(1),
-          Percentage.of(1),
-          Percentage.of(1),
-          Percentage.of(1)
-        ),
-      ]
-    )
-  );
+          // We make the initial backdrop solid white as this can be assumed
+          // to be the color of the canvas onto which the other backgrounds
+          // are rendered.
+          [
+            RGB.of(
+              Percentage.of(1),
+              Percentage.of(1),
+              Percentage.of(1),
+              Percentage.of(1)
+            ),
+          ]
+        )
+      );
+    });
 }
 
 // Extended diagnostic for getColor

@@ -5,7 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-const { isElement, hasName } = Element;
+import { isFallback } from "./is-fallback";
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
@@ -21,9 +21,7 @@ export function isRendered(
       .get(device, Cache.empty)
       .get(context, Cache.empty)
       .get(node, () => {
-        // Children of <iframe> elements act as fallback content in legacy user
-        // agents and should therefore never be considered rendered.
-        if (node.parent().filter(isElement).some(hasName("iframe"))) {
+        if (isFallback(node)) {
           return false;
         }
 
