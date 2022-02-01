@@ -7,7 +7,8 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { contrast } from "../common/expectation/contrast";
+import { Question } from "../common/act/question";
+
 import { getBackground, getForeground } from "../common/dom/get-colors";
 
 import {
@@ -17,11 +18,10 @@ import {
   isSemanticallyDisabled,
 } from "../common/predicate";
 
+import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
+import { contrast } from "../common/expectation/contrast";
 import { Contrast as Outcomes } from "../common/outcome/contrast";
 
-import { Question } from "../common/act/question";
-
-import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
 import { Scope } from "../tags";
 
 const { flatMap, map } = Iterable;

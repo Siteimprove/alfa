@@ -7,8 +7,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { video } from "../common/applicability/video";
 
 import { expectation } from "../common/act/expectation";
-
 import { Question } from "../common/act/question";
+
 import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({

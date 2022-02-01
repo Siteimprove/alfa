@@ -7,6 +7,8 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+import { Group } from "../common/act/group";
+import { Question } from "../common/act/question";
 
 import {
   hasNonEmptyAccessibleName,
@@ -15,9 +17,7 @@ import {
 } from "../common/predicate";
 import { Scope } from "../tags";
 
-import { Group } from "../common/act/group";
 import { normalize } from "../common/normalize";
-import { Question } from "../common/act/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;

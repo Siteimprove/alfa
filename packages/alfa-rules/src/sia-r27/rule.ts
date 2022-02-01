@@ -7,11 +7,11 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 import { isPassed } from "../common/act/is-passed";
-
 import { Question } from "../common/act/question";
 
 import R22 from "../sia-r22/rule";
 import R31 from "../sia-r31/rule";
+
 import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question.Metadata>({

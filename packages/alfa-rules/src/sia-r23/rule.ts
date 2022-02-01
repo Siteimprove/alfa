@@ -8,10 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { audio } from "../common/applicability/audio";
 
 import { expectation } from "../common/act/expectation";
+import { Question } from "../common/act/question";
 
 import { isPerceivable } from "../common/predicate";
 
-import { Question } from "../common/act/question";
 import { Scope } from "../tags";
 
 const { and } = Predicate;

@@ -11,6 +11,8 @@ import { Page } from "@siteimprove/alfa-web";
 import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/act/expectation";
+import { Group } from "../common/act/group";
+import { Question } from "../common/act/question";
 
 import {
   hasNonEmptyAccessibleName,
@@ -19,9 +21,8 @@ import {
   referenceSameResource,
 } from "../common/predicate";
 
-import { Group } from "../common/act/group";
 import { normalize } from "../common/normalize";
-import { Question } from "../common/act/question";
+
 import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace, hasId } = Element;

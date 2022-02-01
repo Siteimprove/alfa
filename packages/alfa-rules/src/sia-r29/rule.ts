@@ -7,6 +7,7 @@ import { audio } from "../common/applicability/audio";
 import { audioTextAlternative } from "../common/expectation/media-text-alternative";
 
 import { Question } from "../common/act/question";
+
 import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({

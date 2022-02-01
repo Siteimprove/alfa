@@ -15,8 +15,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { hasAttribute, hasCascadedStyle, isVisible } from "../common/predicate";
-
 import { getPositioningParent } from "../common/dom/get-positioning-parent";
+
 import { Scope } from "../tags";
 
 const { or, not, equals } = Predicate;

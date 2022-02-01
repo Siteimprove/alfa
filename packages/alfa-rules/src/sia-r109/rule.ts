@@ -9,8 +9,10 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { hasAttribute, hasChild, isDocumentElement } from "../common/predicate";
 import { Question } from "../common/act/question";
+
+import { hasAttribute, hasChild, isDocumentElement } from "../common/predicate";
+
 import { Scope, Stability } from "../tags";
 
 const { fold } = Predicate;
