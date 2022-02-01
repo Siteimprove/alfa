@@ -52,7 +52,7 @@ test(`isVisible() returns false when a div element is child of an iframe element
       {div}
     </iframe>
   );
-  h.document([div]);
+  h.document([element]);
 
   t.equal(isVisible(div), false);
 });
