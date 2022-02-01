@@ -192,6 +192,8 @@
     "test/common/predicate/has-role.spec.tsx",
     "test/sia-er62/rule.applicability.spec.tsx",
     "test/sia-er62/rule.expectation.spec.tsx",
+    "test/sia-er62/rule.expectation.contrast.spec.tsx",
+    "test/sia-er62/rule.expectation.textdecoration.spec.tsx",
     "test/sia-er62/serialise.spec.ts",
     "test/sia-er62/common.ts",
     "test/sia-er87/rule.spec.tsx",

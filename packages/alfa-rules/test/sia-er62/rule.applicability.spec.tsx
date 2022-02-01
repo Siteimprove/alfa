@@ -306,6 +306,10 @@ test(`evaluate() is applicable to several <a> elements when there is a <p> paren
   ]);
 });
 
+// If the link and the container have a foreground with the alpha channel less than 1 and the background is gradient
+// then the rule is applicable as we can't tell for sure if they truly have the same foreground color
+// because of the different gradient types and spreads
+
 test(`evaluate() is applicable to an <a> element with a <p> parent element that has the text content wrapped in a span
     when both have the same linear gradient foreground color`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -320,25 +324,28 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
     [
       h.sheet([
         h.rule.style("span", {
-          background: "linear-gradient(to right, black 50%, #0000EE 50%)",
+          background: "linear-gradient(to right, #000000 50%, #0000EE 50%)",
           color: "rgba(255, 255, 255, 0.1)",
         }),
 
         h.rule.style("a", {
-          background: "linear-gradient(to right, black 50%, #0000EE 50%)",
+          background: "linear-gradient(to right, #000000 50%, #0000EE 50%)",
           color: "rgba(255, 255, 255, 0.1)",
         }),
       ]),
     ]
   );
 
-  const foregroundFromBlack = RGB.of(
+  // #000000 mixed with rgba(255, 255, 255, 0.1)
+  const offBlack = RGB.of(
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(1)
   );
-  const foregroundFromBlue = RGB.of(
+
+  // #0000EE mixed with rgba(255, 255, 255, 0.1)
+  const offBlue = RGB.of(
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(0.94),
@@ -355,12 +362,12 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
         ["color", "rgb(100% 100% 100% / 10%)"]
       )
       .withPairings([
-        Contrast.Pairing.of(foregroundFromBlack, foregroundFromBlue, 2.03),
-        Contrast.Pairing.of(foregroundFromBlue, foregroundFromBlack, 2.03),
-        Contrast.Pairing.of(defaultTextColor, foregroundFromBlack, 1.2),
-        Contrast.Pairing.of(foregroundFromBlack, foregroundFromBlack, 1),
-        Contrast.Pairing.of(defaultTextColor, foregroundFromBlue, 2.44),
-        Contrast.Pairing.of(foregroundFromBlue, foregroundFromBlue, 1),
+        Contrast.Pairing.of(offBlack, offBlue, 2.03),
+        Contrast.Pairing.of(offBlue, offBlack, 2.03),
+        Contrast.Pairing.of(defaultTextColor, offBlack, 1.2),
+        Contrast.Pairing.of(offBlack, offBlack, 1),
+        Contrast.Pairing.of(defaultTextColor, offBlue, 2.44),
+        Contrast.Pairing.of(offBlue, offBlue, 1),
       ])
   );
 

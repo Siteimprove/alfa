@@ -1,8 +1,6 @@
-import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { Contrast } from "../../src/common/diagnostic/contrast";
 import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
@@ -12,43 +10,68 @@ import { Defaults, addCursor, addOutline } from "./common";
 const {
   defaultStyle,
   hoverStyle,
-  focusStyle,
   noStyle,
   noDistinguishingProperties,
-  defaultTextColor,
-  defaultLinkColor,
   defaultContrastPairings,
 } = Defaults;
 
 /******************************************************************
  *
- * Passing tests
+ * Background as Distinguishing Feature
  *
  ******************************************************************/
-
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies a bottom border`, async (t) => {
-  const target = <a href="#">Link</a>;
+test(`evaluates() passes on link with a different background-image than text`, async (t) => {
+  const target = <a href="#">Foo</a>;
 
   const document = h.document(
-    [<p>Hello {target}</p>],
+    [<p>Hello world {target}</p>],
     [
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
-          borderBottom: "1px solid #000",
+          backgroundImage:
+            "linear-gradient(to right, #046B99 50%, transparent 50%)",
         }),
       ]),
     ]
   );
 
+  test(`evaluate() passes an applicable <a> element that removes the default text
+      decoration and instead applies a background color`, async (t) => {
+    const target = <a href="#">Link</a>;
+
+    const document = h.document(
+      [<p>Hello {target}</p>],
+      [
+        h.sheet([
+          h.rule.style("a", {
+            textDecoration: "none",
+            background: "red",
+          }),
+        ]),
+      ]
+    );
+
+    const style = Ok.of(
+      noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+    );
+
+    t.deepEqual(await evaluate(ER62, { document }), [
+      passed(ER62, target, {
+        1: Outcomes.IsDistinguishable(
+          [style],
+          [addCursor(style)],
+          [addOutline(style)]
+        ),
+      }),
+    ]);
+  });
+
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(
-      ["border-width", "0px 0px 1px"],
-      ["border-style", "none none solid"],
-      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-      ["outline", "0px"]
-    )
+    noDistinguishingProperties.withStyle([
+      "background",
+      "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+    ])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -62,49 +85,48 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   ]);
 });
 
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies an outline`, async (t) => {
+test(`evaluate() fails an <a> element that has no distinguishing features and is
+ part of a paragraph with a background color`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
+        h.rule.style("p", {
+          background: "red",
+        }),
+
         h.rule.style("a", {
           textDecoration: "none",
-          outline: "auto",
         }),
       ]),
     ]
   );
 
-  const style = Ok.of(
-    ElementDistinguishable.of(
-      [
-        ["border-width", "0px"],
-        ["font", "16px serif"],
-        ["color", "rgb(0% 0% 93.33333%)"],
-        ["outline", "auto"],
-      ],
-      defaultContrastPairings
-    )
-  );
-
   t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable([style], [addCursor(style)], [style]),
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable(
+        [noStyle],
+        [addCursor(noStyle)],
+        [addOutline(noStyle)]
+      ),
     }),
   ]);
 });
 
-test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies a background color`, async (t) => {
+test(`evaluate() fails an <a> element that has no distinguishing features and
+ has a background color equal to that of the paragraph`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
+        h.rule.style("p", {
+          background: "red",
+        }),
+
         h.rule.style("a", {
           textDecoration: "none",
           background: "red",
@@ -113,13 +135,13 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ]
   );
 
-  const style = Ok.of(
+  const style = Err.of(
     noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
         [addOutline(style)]
@@ -128,337 +150,14 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   ]);
 });
 
-test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          fontWeight: "bold",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [addCursor(style)],
-        [addOutline(style)]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluates() passes on link with a different background-image than text`, async (t) => {
-  const target = <a href="#">Foo</a>;
-
-  const document = h.document(
-    [<p>Hello world {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          backgroundImage:
-            "linear-gradient(to right, #046B99 50%, transparent 50%)",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle([
-      "background",
-      "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-    ])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [addCursor(style)],
-        [addOutline(style)]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an <a> element in superscript`, async (t) => {
-  const target = (
-    <a href="#">
-      <sup>Link</sup>
-    </a>
-  );
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle(["vertical-align", "super"])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style, noStyle],
-        [addCursor(noStyle), addCursor(style)],
-        [style, addOutline(noStyle)]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          font: '16px "some-font", serif',
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle(["font", '16px "some-font", serif'])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [addCursor(style)],
-        [addOutline(style)]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluates() accepts decoration on children of links`, async (t) => {
-  const target = (
-    <a href="#">
-      <span>Link</span>
-    </a>
-  );
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-        h.rule.style("a:focus", { outline: "none" }),
-        h.rule.style("span", { fontWeight: "bold" }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style, noStyle],
-        [style, noStyle],
-        [style, noStyle]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluates() doesn't break when link text is nested`, async (t) => {
-  // Since text-decoration and focus outline is not inherited, the <span> has
-  // effectively no style other than color.
-  const target = (
-    <a href="#">
-      <span>Link</span>
-    </a>
-  );
-
-  const document = h.document([<p>Hello {target}</p>]);
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [defaultStyle, noStyle],
-        [addCursor(noStyle), hoverStyle],
-        [focusStyle, noStyle]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluates() accepts decoration on parents of links`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [
-      <p>
-        Hello <span>{target}</span>
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-        h.rule.style("a:focus", {
-          outline: "none",
-        }),
-        h.rule.style("span", { fontWeight: "bold" }),
-      ]),
-    ]
-  );
-
-  const linkStyle = Ok.of(
-    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
-  );
-
-  const spanStyle = Ok.of(
-    ElementDistinguishable.of(
-      [
-        ["border-width", "0px"],
-        ["font", "700 16px serif"],
-        ["outline", "0px"],
-      ],
-      [Contrast.Pairing.of(defaultTextColor, defaultTextColor, 1)]
-    )
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [linkStyle, spanStyle],
-        [linkStyle, spanStyle],
-        [linkStyle, spanStyle]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
-  const target = (
-    <a href="#">
-      <span>click</span> <span>here</span>
-    </a>
-  );
-
-  const document = h.document([<p>Hello {target}</p>]);
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [defaultStyle, noStyle],
-        [addCursor(noStyle), hoverStyle],
-        [focusStyle, noStyle]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluates() passes on link with a different background-image than text`, async (t) => {
-  const target = <a href="#">Foo</a>;
-
-  const document = h.document(
-    [<p>Hello world {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          backgroundImage:
-            "linear-gradient(to right, #046B99 50%, transparent 50%)",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle([
-      "background",
-      "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
-    ])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [addCursor(style)],
-        [addOutline(style)]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an <a> element in superscript`, async (t) => {
-  const target = (
-    <a href="#">
-      <sup>Link</sup>
-    </a>
-  );
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Ok.of(
-    noDistinguishingProperties.withStyle(["vertical-align", "super"])
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style, noStyle],
-        [addCursor(noStyle), addCursor(style)],
-        [style, addOutline(noStyle)]
-      ),
-    }),
-  ]);
-});
+/******************************************************************
+ *
+ * Box-shadow as Distinguishing Feature
+ *
+ ******************************************************************/
 
 test(`evaluate() passes an applicable <a> element that removes the default text
-      decoration and instead applies a box shadow`, async (t) => {
+ decoration and instead applies a box shadow`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
@@ -488,211 +187,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   ]);
 });
 
-test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 as a distinguishing feature`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("p", {
-          color: "rgb(148, 148, 148)",
-        }),
-
-        h.rule.style("a", {
-          textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  const contrastPairings = [
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.5803922),
-        Percentage.of(0.5803922),
-        Percentage.of(0.5803922),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      3.1
-    ),
-  ];
-
-  const style = Ok.of(
-    ElementDistinguishable.of(
-      [
-        ["border-width", "0px"],
-        ["font", "16px serif"],
-        ["color", "rgb(0% 0% 93.33333%)"],
-        ["outline", "0px"],
-      ],
-      contrastPairings
-    )
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable([style], [style], [style]),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an <a> element that is distinguishable from the <p> parent element
-      as all foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("p", {
-          backgroundImage:
-            "linear-gradient(to right, red 20%, orange 40%, yellow 60%, green 100%)",
-          color: "rgba(255, 255, 255, .5)",
-        }),
-
-        h.rule.style("a, a:hover, a:focus", {
-          backgroundImage:
-            "linear-gradient(to right, red 20%, orange 40%, yellow 60%, green 100%)",
-          textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  const contrastPairings = [
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(1),
-        Percentage.of(1),
-        Percentage.of(0.5),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      8.89
-    ),
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(1),
-        Percentage.of(0.8235294),
-        Percentage.of(0.5),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      6.61
-    ),
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(1),
-        Percentage.of(0.5),
-        Percentage.of(0.5),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      3.86
-    ),
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.5),
-        Percentage.of(0.7509804),
-        Percentage.of(0.5),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      4.35
-    ),
-  ];
-
-  const style = Ok.of(
-    noDistinguishingProperties
-      .withStyle([
-        "background",
-        "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.70588000000001% 0%) 40%, rgb(100% 100% 0%) 60%, rgb(0% 50.196079999999995% 0%) 100%)",
-      ])
-      .withPairings(contrastPairings)
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable([style], [style], [style]),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an <a> element that is distinguishable from the <p> parent element
-      as some foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("p", {
-          backgroundImage: "linear-gradient(to right, #F9F9F1 50%, blue 50%)",
-          color: "rgba(255, 255, 255, 0.1)",
-        }),
-
-        h.rule.style("a, a:hover, a:focus", {
-          backgroundImage: "linear-gradient(to right, #F9F9F1 50%, blue 50%)",
-          textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  const contrastPairings = [
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.1),
-        Percentage.of(0.1),
-        Percentage.of(1),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      1.18
-    ),
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.9788235),
-        Percentage.of(0.9788235),
-        Percentage.of(0.9505882),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      8.93
-    ),
-  ];
-
-  const style = Ok.of(
-    noDistinguishingProperties
-      .withStyle([
-        "background",
-        "linear-gradient(to right, rgb(97.64706% 97.64706% 94.5098%) 50%, rgb(0% 0% 100%) 50%)",
-      ])
-      .withPairings(contrastPairings)
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable([style], [style], [style]),
-    }),
-  ]);
-});
-
-/******************************************************************
- *
- * Failing tests
- *
- ******************************************************************/
-test(`evaluate() fails an <a> element that removes the default text decoration
-      without replacing it with another distinguishing feature`, async (t) => {
+test(`evaluate() fails an applicable <a> element that removes the default text
+      decoration and applies a box shadow with initial value`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
@@ -700,165 +196,9 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     [
       h.sheet([
         h.rule.style("a", {
-          outline: "none",
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that removes the default text decoration
-      on hover without replacing it with another distinguishing feature`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a:hover", {
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [focusStyle]),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that removes the default text decoration
-      and focus outline on focus without replacing them with another
-      distinguishing feature`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a:focus", {
-          outline: "none",
-          textDecoration: "none",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([defaultStyle], [hoverStyle], [noStyle]),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that removes the default text decoration
-      and focus outline on hover and focus without replacing them with another
-      distinguishing feature`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a:hover, a:focus", {
           textDecoration: "none",
           outline: "none",
-          cursor: "auto",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [noStyle]),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that applies a text decoration only on
-      hover`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          outline: "none",
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-
-        h.rule.style("a:hover", {
-          textDecoration: "underline",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [defaultStyle], [noStyle]),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that applies a text decoration only on
-      focus`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          outline: "none",
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-
-        h.rule.style("a:focus", {
-          textDecoration: "underline",
-        }),
-      ]),
-    ]
-  );
-
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [defaultStyle]),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that applies a text decoration only on
-      hover and focus`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          outline: "none",
-          textDecoration: "none",
-          cursor: "auto",
-        }),
-
-        h.rule.style("a:hover, a:focus", {
-          textDecoration: "underline",
+          "box-shadow": "initial",
         }),
       ]),
     ]
@@ -868,8 +208,50 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     failed(ER62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
-        [defaultStyle],
-        [defaultStyle]
+        [addCursor(noStyle)],
+        [noStyle]
+      ),
+    }),
+  ]);
+});
+
+/******************************************************************
+ *
+ * Border as Distinguishing Feature
+ *
+ ******************************************************************/
+
+test(`evaluate() passes an applicable <a> element that removes the default text
+ decoration and instead applies a bottom border`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          borderBottom: "1px solid #000",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(
+      ["border-width", "0px 0px 1px"],
+      ["border-style", "none none solid"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["outline", "0px"]
+    )
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
       ),
     }),
   ]);
@@ -945,63 +327,37 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   ]);
 });
 
-test(`evaluate() fails an <a> element that has no distinguishing features and is
-      part of a paragraph with a background color`, async (t) => {
+/******************************************************************
+ *
+ * Font as Distinguishing Feature
+ *
+ ******************************************************************/
+test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [<p>Hello {target}</p>],
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
     [
       h.sheet([
-        h.rule.style("p", {
-          background: "red",
-        }),
-
         h.rule.style("a", {
           textDecoration: "none",
+          fontWeight: "bold",
         }),
       ]),
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable(
-        [noStyle],
-        [addCursor(noStyle)],
-        [addOutline(noStyle)]
-      ),
-    }),
-  ]);
-});
-
-test(`evaluate() fails an <a> element that has no distinguishing features and
-      has a background color equal to that of the paragraph`, async (t) => {
-  const target = <a href="#">Link</a>;
-
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("p", {
-          background: "red",
-        }),
-
-        h.rule.style("a", {
-          textDecoration: "none",
-          background: "red",
-        }),
-      ]),
-    ]
-  );
-
-  const style = Err.of(
-    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["font", "700 16px serif"])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable(
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
         [addOutline(style)]
@@ -1010,8 +366,47 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   ]);
 });
 
-test(`evaluate() fails an applicable <a> element that removes the default text
-      decoration and applies a box shadow with initial value`, async (t) => {
+test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          font: '16px "some-font", serif',
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["font", '16px "some-font", serif'])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
+      ),
+    }),
+  ]);
+});
+
+/******************************************************************
+ *
+ * Outline as Distinguishing Feature
+ *
+ ******************************************************************/
+test(`evaluate() passes an applicable <a> element that removes the default text
+ decoration and instead applies an outline`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
@@ -1020,8 +415,43 @@ test(`evaluate() fails an applicable <a> element that removes the default text
       h.sheet([
         h.rule.style("a", {
           textDecoration: "none",
+          outline: "auto",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    ElementDistinguishable.of(
+      [
+        ["border-width", "0px"],
+        ["font", "16px serif"],
+        ["color", "rgb(0% 0% 93.33333%)"],
+        ["outline", "auto"],
+      ],
+      defaultContrastPairings
+    )
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable([style], [addCursor(style)], [style]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an <a> element that removes the default text decoration
+      and focus outline on focus without replacing them with another
+      distinguishing feature`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a:focus", {
           outline: "none",
-          "box-shadow": "initial",
+          textDecoration: "none",
         }),
       ]),
     ]
@@ -1029,29 +459,21 @@ test(`evaluate() fails an applicable <a> element that removes the default text
 
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable(
-        [noStyle],
-        [addCursor(noStyle)],
-        [noStyle]
-      ),
+      1: Outcomes.IsNotDistinguishable([defaultStyle], [hoverStyle], [noStyle]),
     }),
   ]);
 });
 
-test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element as none of the foregrounds have a contrast of 3:1 in the parent element`, async (t) => {
+test(`evaluate() fails an <a> element that removes the default text decoration
+      and focus outline on hover and focus without replacing them with another
+      distinguishing feature`, async (t) => {
   const target = <a href="#">Link</a>;
 
   const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
-        h.rule.style("p", {
-          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
-          color: "rgba(255, 255, 255, 0.1)",
-        }),
-
-        h.rule.style("a, a:hover, a:focus", {
-          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
+        h.rule.style("a:hover, a:focus", {
           textDecoration: "none",
           outline: "none",
           cursor: "auto",
@@ -1060,105 +482,81 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     ]
   );
 
-  const contrastPairings = [
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.1),
-        Percentage.of(0.1),
-        Percentage.of(0.837647),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      1.04
-    ),
-    Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.1),
-        Percentage.of(0.1),
-        Percentage.of(0.3329412),
-        Percentage.of(1)
-      ),
-      defaultLinkColor,
-      1.7
-    ),
-  ];
-
-  const noStyle = Err.of(
-    noDistinguishingProperties
-      .withStyle([
-        "background",
-        "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
-      ])
-      .withPairings(contrastPairings)
-  );
-
   t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+      1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [noStyle]),
     }),
   ]);
 });
 
-test(`evaluate() fails an <a> element that is not distinguishable from the <p> parent element as none of the foregrounds have a contrast of 3:1 in the child element`, async (t) => {
-  const target = <a href="#">Link</a>;
+/******************************************************************
+ *
+ * Vertical Align as Distinguishing Feature
+ *
+ ******************************************************************/
+
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
 
   const document = h.document(
     [<p>Hello {target}</p>],
     [
       h.sheet([
-        h.rule.style("p", {
-          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
-        }),
-
-        h.rule.style("a, a:hover, a:focus", {
-          background: "linear-gradient(to right, #0000D1 50%, #000042 50%)",
-          color: "rgba(255, 255, 255, 0.1)",
+        h.rule.style("a", {
           textDecoration: "none",
-          outline: "none",
-          cursor: "auto",
         }),
       ]),
     ]
   );
 
-  const contrastPairings = [
-    Contrast.Pairing.of(
-      defaultTextColor,
-      RGB.of(
-        Percentage.of(0.1),
-        Percentage.of(0.1),
-        Percentage.of(0.837647),
-        Percentage.of(1)
-      ),
-      2.15
-    ),
-    Contrast.Pairing.of(
-      defaultTextColor,
-      RGB.of(
-        Percentage.of(0.1),
-        Percentage.of(0.1),
-        Percentage.of(0.3329412),
-        Percentage.of(1)
-      ),
-      1.32
-    ),
-  ];
-
-  const noStyle = Err.of(
-    noDistinguishingProperties
-      .withStyle(
-        [
-          "background",
-          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
-        ],
-        ["color", "rgb(100% 100% 100% / 10%)"]
-      )
-      .withPairings(contrastPairings)
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["vertical-align", "super"])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
-      1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [addCursor(noStyle), addCursor(style)],
+        [style, addOutline(noStyle)]
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  const style = Ok.of(
+    noDistinguishingProperties.withStyle(["vertical-align", "super"])
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [addCursor(noStyle), addCursor(style)],
+        [style, addOutline(noStyle)]
+      ),
     }),
   ]);
 });
