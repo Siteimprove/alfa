@@ -6,7 +6,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 const { and, or, not, test } = Predicate;
 const { hasName, isElement } = Element;
 
-import { isPositioned, isRendered, isRoot } from "../predicate";
+import { isPositioned } from "../predicate/is-positioned";
+import { isRendered } from "../predicate/is-rendered";
+import { isRoot } from "../predicate/is-root";
 
 const isBody = hasName("body");
 const isTabular = hasName("td", "th", "table");

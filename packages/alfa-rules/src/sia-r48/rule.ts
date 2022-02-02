@@ -7,11 +7,11 @@ import { Ok, Err } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Question } from "../common/act/question";
 
 import { hasAttribute, hasChild } from "../common/predicate";
 
-import { Question } from "../common/question";
 import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;

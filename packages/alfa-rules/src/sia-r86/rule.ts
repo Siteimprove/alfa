@@ -3,7 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { isIgnored, isMarkedDecorative } from "../common/predicate";
 import { Scope } from "../tags";

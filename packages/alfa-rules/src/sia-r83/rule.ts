@@ -12,11 +12,11 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasAttribute, hasCascadedStyle, isVisible } from "../common/predicate";
+import { getPositioningParent } from "../common/dom/get-positioning-parent";
 
-import { getPositioningParent } from "../common/expectation/get-positioning-parent";
 import { Scope } from "../tags";
 
 const { or, not, equals } = Predicate;

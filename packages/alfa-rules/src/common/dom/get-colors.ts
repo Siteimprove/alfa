@@ -7,7 +7,8 @@ import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-import { hasInterposedDescendant, isPositioned } from "../predicate";
+import { hasInterposedDescendant } from "../predicate/has-interposed-descendant";
+import { isPositioned } from "../predicate/is-positioned";
 
 type Color = RGB<Percentage, Percentage>;
 

@@ -5,15 +5,15 @@ import { Trilean } from "@siteimprove/alfa-trilean";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
-import { isPassed } from "../common/expectation/is-passed";
-
-import { Question } from "../common/question";
+import { expectation } from "../common/act/expectation";
+import { isPassed } from "../common/act/is-passed";
+import { Question } from "../common/act/question";
 
 import R24 from "../sia-r24/rule";
 import R25 from "../sia-r25/rule";
 import R31 from "../sia-r31/rule";
 import R36 from "../sia-r36/rule";
+
 import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question.Metadata>({
