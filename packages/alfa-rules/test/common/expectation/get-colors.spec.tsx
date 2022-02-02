@@ -570,14 +570,7 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
 
 test("getBackgroundColor() gives up in case of interposed elements", (t) => {
   const target = <span>Hello</span>;
-  const interposed = (
-    <div>
-      {/* Text needed to make element visible.
-     Should be removed once https://github.com/Siteimprove/alfa/issues/985 is fixed
-     */}
-      Foo
-    </div>
-  );
+  const interposed = <div></div>;
   const wrapper = (
     <p>
       {interposed}
