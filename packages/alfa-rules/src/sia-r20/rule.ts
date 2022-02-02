@@ -6,7 +6,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { isElement } = Element;

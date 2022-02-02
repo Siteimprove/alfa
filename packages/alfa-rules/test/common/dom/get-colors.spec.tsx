@@ -7,7 +7,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import {
   getBackground,
   getForeground,
-} from "../../../src/common/expectation/get-colors";
+} from "../../../src/common/dom/get-colors";
 
 const device = Device.standard();
 

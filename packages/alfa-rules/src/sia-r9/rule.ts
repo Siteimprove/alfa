@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasAttribute } from "../common/predicate";
 import { Scope } from "../tags";

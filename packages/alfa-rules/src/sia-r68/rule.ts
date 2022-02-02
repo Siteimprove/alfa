@@ -10,7 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasAttribute, hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";

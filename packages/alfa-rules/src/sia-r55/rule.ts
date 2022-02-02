@@ -6,12 +6,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
-import { Group } from "../common/group";
-import { normalize } from "../common/normalize";
+import { expectation } from "../common/act/expectation";
+import { Group } from "../common/act/group";
+import { Question } from "../common/act/question";
 
+import { normalize } from "../common/normalize";
 import { hasRole, isIgnored } from "../common/predicate";
-import { Question } from "../common/question";
+
 import { Scope } from "../tags";
 
 const { and, equals, not } = Predicate;

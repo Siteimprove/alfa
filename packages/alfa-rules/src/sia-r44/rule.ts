@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
-import { Lexer, Keyword } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -13,7 +13,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasComputedStyle, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
@@ -119,8 +119,8 @@ function isOrientationConditional(declaration: Declaration): boolean {
     declaration.ancestors(),
     (rule) =>
       MediaRule.isMediaRule(rule) &&
-      Media.parse(Lexer.lex(rule.condition)).some(([, media]) =>
-        some(media, (query) => query.condition.some(hasOrientationCondition))
+      some(rule.queries.queries, (query) =>
+        query.condition.some(hasOrientationCondition)
       )
   );
 }

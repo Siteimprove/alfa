@@ -7,7 +7,7 @@ import { Table, Cell } from "@siteimprove/alfa-table";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
 import { Scope } from "../tags";

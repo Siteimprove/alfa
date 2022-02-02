@@ -9,7 +9,7 @@ import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import {
   hasChild,
@@ -21,7 +21,7 @@ import {
   isVisible,
 } from "../common/predicate";
 
-import { Question } from "../common/question";
+import { Question } from "../common/act/question";
 import { Scope } from "../tags";
 
 const { hasName, isElement } = Element;
