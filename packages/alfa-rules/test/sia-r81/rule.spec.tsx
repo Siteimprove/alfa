@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import R81, { Outcomes } from "../../src/sia-r81/rule";
 
-import { Group } from "../../src/common/group";
+import { Group } from "../../src/common/act/group";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

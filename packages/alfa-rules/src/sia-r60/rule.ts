@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Map } from "@siteimprove/alfa-map";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 import {
   hasNonEmptyAccessibleName,
   hasRole,

@@ -1,6 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { getNodesBetween } from "../../../src/common/expectation/get-nodes-between";
+import { getNodesBetween } from "../../../src/common/dom/get-nodes-between";
 
 const hello = h.text("Hello");
 const spanHello = h.element("span", [], [hello]);

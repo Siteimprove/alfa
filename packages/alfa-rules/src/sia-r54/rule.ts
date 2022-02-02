@@ -6,7 +6,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { isIgnored } from "../common/predicate";
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { and, not } = Predicate;
