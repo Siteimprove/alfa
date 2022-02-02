@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -48,7 +47,7 @@ const { and } = Refinement;
 
 let distinguishingProperties: Map<
   Context,
-  Map<Element, Set<DistinguishingProperty>>
+  Map<Element, List<DistinguishingProperty>>
 > = Map.empty();
 
 /**
@@ -219,15 +218,14 @@ export default Rule.Atomic.of<Page, Element>({
               // distinguishable from *all* non-link elements in order to be good.
               const hasDistinguishableStyle = nonLinkElements.some(
                 (container) =>
-                  Distinguishable.isDistinguishable(container, device, context)
+                  Distinguishable.isDistinguishable(
+                    container,
+                    target,
+                    device,
+                    context
+                  )
                     .map((isDistinguishable) => isDistinguishable(link))
-                    .some((distinguishable) => distinguishable) ||
-                  (context.isHovered(target) &&
-                    Distinguishable.hasDistinguishableCursor(
-                      container,
-                      device,
-                      context
-                    )(link))
+                    .some((distinguishable) => distinguishable)
               );
 
               const distinguishableContrast = Set.from(
@@ -245,9 +243,9 @@ export default Rule.Atomic.of<Page, Element>({
 
               const properties = distinguishingProperties
                 .get(context)
-                .getOr(Map.empty<Element, Set<DistinguishingProperty>>())
+                .getOr(Map.empty<Element, List<DistinguishingProperty>>())
                 .get(link)
-                .getOr(Set.empty<DistinguishingProperty>());
+                .getOr(List.empty<DistinguishingProperty>());
 
               return hasDistinguishableStyle
                 ? Ok.of(
@@ -398,10 +396,11 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 namespace Distinguishable {
   export function isDistinguishable(
     container: Element,
+    target: Element,
     device: Device,
     context: Context = Context.empty()
   ): Predicate<Element>[] {
-    const predicates: ReadonlyArray<
+    let predicates: Array<
       readonly [DistinguishingProperty, Predicate<Element>]
     > = [
       // Things like text decoration and backgrounds risk blending with the
@@ -433,17 +432,25 @@ namespace Distinguishable {
       ],
       ["outline", hasOutline(device, context)],
     ];
+
+    if (context.isHovered(target)) {
+      predicates = [
+        ...predicates,
+        ["cursor", hasDistinguishableCursor(container, device, context)],
+      ];
+    }
+
     return predicates.map(([name, predicate]) =>
       tee(predicate, (link, result) => {
         if (result) {
           let linkToProperties = distinguishingProperties
             .get(context)
-            .getOr(Map.empty<Element, Set<DistinguishingProperty>>());
+            .getOr(Map.empty<Element, List<DistinguishingProperty>>());
 
           const properties = linkToProperties
             .get(link)
-            .getOr(Set.empty<DistinguishingProperty>())
-            .add(name);
+            .getOr(List.empty<DistinguishingProperty>())
+            .append(name);
 
           linkToProperties = linkToProperties.set(link, properties);
           distinguishingProperties = distinguishingProperties.set(
@@ -623,7 +630,7 @@ namespace Distinguishable {
     );
   }
 
-  export function hasDistinguishableCursor(
+  function hasDistinguishableCursor(
     container: Element,
     device: Device,
     context?: Context

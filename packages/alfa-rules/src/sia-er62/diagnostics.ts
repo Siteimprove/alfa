@@ -19,7 +19,7 @@ import { Serialise } from "./serialise";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 type Name = Property.Name | Property.Shorthand.Name;
-export type DistinguishingProperty = Name | "contrast";
+export type DistinguishingProperty = Name | "contrast" | "cursor";
 
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
