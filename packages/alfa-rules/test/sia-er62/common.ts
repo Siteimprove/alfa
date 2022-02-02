@@ -7,14 +7,18 @@ export function addCursor(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
   return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
-    props.withStyle(["cursor", "pointer"])
+    props
+      .withStyle(["cursor", "pointer"])
+      .withDistinguishingProperties(["cursor"])
   );
 }
 export function addOutline(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
   return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
-    props.withStyle(["outline", "auto"])
+    props
+      .withStyle(["outline", "auto"])
+      .withDistinguishingProperties(["outline"])
   );
 }
 
@@ -49,6 +53,7 @@ export namespace Defaults {
   ];
 
   export const noDistinguishingProperties = ElementDistinguishable.of(
+    [],
     [
       ["border-width", "0px"],
       ["font", "16px serif"],

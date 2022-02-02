@@ -70,13 +70,14 @@ test(`evaluate() passes an applicable <a> element that removes the default text
   );
 
   const style = Ok.of(
-    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+    noDistinguishingProperties
+      .withStyle(["background", "rgb(100% 0% 0%)"])
+      .withDistinguishingProperties(["background"])
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
-        [],
         [style],
         [addCursor(style)],
         [addOutline(style)]

@@ -6,6 +6,7 @@ import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -37,13 +38,18 @@ import { Scope, Stability, Version } from "../tags";
 import {
   DistinguishingStyles,
   ElementDistinguishable,
-  Name,
+  DistinguishingProperty,
 } from "./diagnostics";
 
 const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
+
+let distinguishingProperties: Map<
+  Context,
+  Map<Element, Set<DistinguishingProperty>>
+> = Map.empty();
 
 /**
  * This version of R62 accepts differences in `font-family`, differences
@@ -236,15 +242,13 @@ export default Rule.Atomic.of<Page, Element>({
                   )
                 )
               );
-              console.log(
-                ElementDistinguishable.from(
-                  link,
-                  device,
-                  target,
-                  context,
-                  distinguishableContrast
-                ).toJSON()
-              );
+
+              const properties = distinguishingProperties
+                .get(context)
+                .getOr(Map.empty<Element, Set<DistinguishingProperty>>())
+                .get(link)
+                .getOr(Set.empty<DistinguishingProperty>());
+
               return hasDistinguishableStyle
                 ? Ok.of(
                     ElementDistinguishable.from(
@@ -252,7 +256,8 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
-                      distinguishableContrast
+                      distinguishableContrast,
+                      properties
                     )
                   )
                 : Err.of(
@@ -261,7 +266,8 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
-                      distinguishableContrast
+                      distinguishableContrast,
+                      properties
                     )
                   );
             })
@@ -272,6 +278,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         // The context needs to be set on the *target*, not on its ancestors
         // or descendants
+
         const isDefaultDistinguishable = hasDistinguishingStyle();
 
         const isHoverDistinguishable = hasDistinguishingStyle(
@@ -291,14 +298,12 @@ export default Rule.Atomic.of<Page, Element>({
               isFocusDistinguishable[0].isOk(),
             () =>
               Outcomes.IsDistinguishable(
-                Sequence.empty(),
                 isDefaultDistinguishable,
                 isHoverDistinguishable,
                 isFocusDistinguishable
               ),
             () =>
               Outcomes.IsNotDistinguishable(
-                Sequence.empty(),
                 isDefaultDistinguishable,
                 isHoverDistinguishable,
                 isFocusDistinguishable
@@ -316,7 +321,6 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    distinguishingStyles: Iterable<Result<ElementDistinguishable>>,
     defaultStyles: Iterable<Result<ElementDistinguishable>>,
     hoverStyles: Iterable<Result<ElementDistinguishable>>,
     focusStyles: Iterable<Result<ElementDistinguishable>>
@@ -324,7 +328,6 @@ export namespace Outcomes {
     Ok.of(
       DistinguishingStyles.of(
         `The link is distinguishable from the surrounding text`,
-        distinguishingStyles,
         defaultStyles,
         hoverStyles,
         focusStyles
@@ -332,7 +335,6 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
-    distinguishingStyles: Iterable<Result<ElementDistinguishable>>,
     defaultStyles: Iterable<Result<ElementDistinguishable>>,
     hoverStyles: Iterable<Result<ElementDistinguishable>>,
     focusStyles: Iterable<Result<ElementDistinguishable>>
@@ -340,7 +342,6 @@ export namespace Outcomes {
     Err.of(
       DistinguishingStyles.of(
         `The link is not distinguishable from the surrounding text`,
-        distinguishingStyles,
         defaultStyles,
         hoverStyles,
         focusStyles
@@ -401,7 +402,7 @@ namespace Distinguishable {
     context: Context = Context.empty()
   ): Predicate<Element>[] {
     const predicates: ReadonlyArray<
-      readonly [Name | "contrast", Predicate<Element>]
+      readonly [DistinguishingProperty, Predicate<Element>]
     > = [
       // Things like text decoration and backgrounds risk blending with the
       // container element. We therefore need to check if these can be distinguished
@@ -435,6 +436,20 @@ namespace Distinguishable {
     return predicates.map(([name, predicate]) =>
       tee(predicate, (link, result) => {
         if (result) {
+          let linkToProperties = distinguishingProperties
+            .get(context)
+            .getOr(Map.empty<Element, Set<DistinguishingProperty>>());
+
+          const properties = linkToProperties
+            .get(link)
+            .getOr(Set.empty<DistinguishingProperty>())
+            .add(name);
+
+          linkToProperties = linkToProperties.set(link, properties);
+          distinguishingProperties = distinguishingProperties.set(
+            context,
+            linkToProperties
+          );
         }
       })
     );
