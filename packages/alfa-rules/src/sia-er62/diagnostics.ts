@@ -137,7 +137,7 @@ export namespace ElementDistinguishable {
     target: Element,
     context: Context = Context.empty(),
     pairings: Iterable<Contrast.Pairing>,
-    distinguishingProperties: Iterable<DistinguishingProperty>
+    distinguishingProperties: Iterable<DistinguishingProperty> = []
   ): ElementDistinguishable {
     const style = Style.from(element, device, context);
 

@@ -63,10 +63,9 @@ export namespace Defaults {
     defaultContrastPairings
   );
 
-  export const linkProperties = noDistinguishingProperties.withStyle([
-    "text-decoration",
-    "underline",
-  ]);
+  export const linkProperties = noDistinguishingProperties
+    .withStyle(["text-decoration", "underline"])
+    .withDistinguishingProperties(["text-decoration"]);
 
   export const defaultStyle = Ok.of(linkProperties);
   export const hoverStyle = addCursor(defaultStyle);

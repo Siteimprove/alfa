@@ -264,8 +264,7 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
-                      distinguishableContrast,
-                      properties
+                      distinguishableContrast
                     )
                   );
             })
