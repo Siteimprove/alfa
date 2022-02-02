@@ -2411,7 +2411,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@microsoft/api-documenter": ^7.13.29
+    "@microsoft/api-documenter": ^7.15.1
     "@microsoft/api-extractor": ^7.18.0
     "@types/async": ^3.2.5
     "@types/node": ^14.14.31
