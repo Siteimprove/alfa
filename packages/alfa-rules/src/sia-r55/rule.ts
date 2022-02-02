@@ -64,9 +64,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
         const sameResource = Question.of(
           "is-content-equivalent",
           target,
-          Diagnostic.of(
-            `Do these ${role} landmarks have the same or equivalent content?`
-          )
+          `Do these ${role} landmarks have the same or equivalent content?`
         );
 
         return {

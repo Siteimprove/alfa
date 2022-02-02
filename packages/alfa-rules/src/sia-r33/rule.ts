@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "transcript",
             target,
-            Diagnostic.of(`Where is the transcript of the \`<video>\` element?`)
+            `Where is the transcript of the \`<video>\` element?`
           ).map((transcript) =>
             expectation(
               transcript.isSome(),
@@ -35,9 +35,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
                 Question.of(
                   "transcript-link",
                   target,
-                  Diagnostic.of(
-                    `Where is the link pointing to the transcript of the \`<video>\` element?`
-                  )
+                  `Where is the link pointing to the transcript of the \`<video>\` element?`
                 ).map((transcriptLink) =>
                   expectation(
                     transcriptLink.isSome(),
