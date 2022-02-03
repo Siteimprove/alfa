@@ -6,7 +6,9 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Group } from "../common/act/group";
+import { Question } from "../common/act/question";
 
 import {
   hasNonEmptyAccessibleName,
@@ -15,9 +17,7 @@ import {
 } from "../common/predicate";
 import { Scope } from "../tags";
 
-import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
-import { Question } from "../common/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
@@ -66,9 +66,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                Diagnostic.of(
-                  "Do the <iframe> elements embed equivalent resources?"
-                )
+                "Do the <iframe> elements embed equivalent resources?"
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

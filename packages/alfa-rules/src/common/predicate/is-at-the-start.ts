@@ -2,7 +2,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { getNodesBetween } from "../expectation/get-nodes-between";
+import { getNodesBetween } from "../dom/get-nodes-between";
 import { isContent } from "./is-content";
 import { isPerceivable } from "./is-perceivable";
 

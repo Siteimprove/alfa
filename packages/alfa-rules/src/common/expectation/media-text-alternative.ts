@@ -1,3 +1,4 @@
+import { Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -5,12 +6,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 
 import * as act from "@siteimprove/alfa-act";
 
-import { expectation } from "../expectation";
+import { expectation } from "../act/expectation";
+import { Question } from "../act/question";
 
 import { isPerceivable } from "../predicate/is-perceivable";
-
-import { Question } from "../question";
-import { Diagnostic } from "@siteimprove/alfa-act";
 
 function mediaTextAlternative(
   alt: act.Question<
@@ -65,15 +64,13 @@ export function audioTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
     "text-alternative",
     target,
-    Diagnostic.of(`Where is the text alternative of the \`<audio>\` element?`)
+    `Where is the text alternative of the \`<audio>\` element?`
   );
 
   const label = Question.of(
     "label",
     target,
-    Diagnostic.of(
-      `Where is the text that labels the \`<audio>\` element as an audio alternative?`
-    )
+    `Where is the text that labels the \`<audio>\` element as an audio alternative?`
   );
 
   return mediaTextAlternative(alt, label, device, "<audio>");
@@ -83,15 +80,13 @@ export function videoTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
     "text-alternative",
     target,
-    Diagnostic.of(`Where is the text alternative of the \`<video>\` element?`)
+    `Where is the text alternative of the \`<video>\` element?`
   );
 
   const label = Question.of(
     "label",
     target,
-    Diagnostic.of(
-      `Where is the text that labels the \`<video>\` element as a video alternative?`
-    )
+    `Where is the text that labels the \`<video>\` element as a video alternative?`
   );
 
   return mediaTextAlternative(alt, label, device, "<video>");

@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
-import { lowestCommonAncestor } from "../../../src/common/expectation/lowest-common-ancestor";
+import { lowestCommonAncestor } from "../../../src/common/dom/lowest-common-ancestor";
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {
   const node1 = <span>Hello</span>;

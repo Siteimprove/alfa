@@ -6,7 +6,7 @@ import { URL } from "@siteimprove/alfa-url";
 
 import R15, { Outcomes } from "../../src/sia-r15/rule";
 
-import { Group } from "../../src/common/group";
+import { Group } from "../../src/common/act/group";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

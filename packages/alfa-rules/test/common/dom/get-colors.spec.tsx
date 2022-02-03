@@ -7,7 +7,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import {
   getBackground,
   getForeground,
-} from "../../../src/common/expectation/get-colors";
+} from "../../../src/common/dom/get-colors";
 
 const device = Device.standard();
 
@@ -270,27 +270,21 @@ test("getForeground() handles a mix of opacity and transparency and a linear gra
     ]
   );
 
-  t.deepEqual(
-    getForeground(target, device).get()[0].toJSON(),
-    {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 0.5 },
-      green: { type: "percentage", value: 0.25 },
-      blue: { type: "percentage", value: 0.75 },
-      alpha: { type: "percentage", value: 1 },
-    }
-  );
+  t.deepEqual(getForeground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0.5 },
+    green: { type: "percentage", value: 0.25 },
+    blue: { type: "percentage", value: 0.75 },
+    alpha: { type: "percentage", value: 1 },
+  });
 
-  t.deepEqual(
-    getForeground(target, device).get()[4].toJSON(),
-    {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 0.25 },
-      green: { type: "percentage", value: 0.25 },
-      blue: { type: "percentage", value: 1 },
-      alpha: { type: "percentage", value: 1 },
-    }
-  );
+  t.deepEqual(getForeground(target, device).get()[4].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0.25 },
+    green: { type: "percentage", value: 0.25 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
 });

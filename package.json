@@ -11,7 +11,7 @@
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "build": "node --max-old-space-size=4096 scripts/build.js --pretty",
+    "build": "node --max-old-space-size=8192 scripts/build.js --pretty",
     "clean": "node scripts/clean.js --pretty",
     "test": "node scripts/test.js --pretty",
     "watch": "node scripts/watch.js --pretty",
@@ -21,7 +21,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.29",
+    "@microsoft/api-documenter": "^7.15.1",
     "@microsoft/api-extractor": "^7.18.0",
     "@types/async": "^3.2.5",
     "@types/node": "^14.14.31",

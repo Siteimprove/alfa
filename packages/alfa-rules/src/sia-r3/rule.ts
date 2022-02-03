@@ -6,7 +6,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasId, hasUniqueId } from "../common/predicate";
 import { Scope } from "../tags";

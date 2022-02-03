@@ -5,11 +5,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Question } from "../common/act/question";
 
 import { hasAccessibleName, isIgnored } from "../common/predicate";
 
-import { Question } from "../common/question";
 import { Scope } from "../tags";
 
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
@@ -57,9 +57,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "name-describes-purpose",
             target,
-            Diagnostic.of(
-              `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`
-            )
+            `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,
