@@ -386,7 +386,7 @@ export namespace Outcome {
 
 // @public
 export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, URI>> {
-    protected constructor(type: TYPE, uri: URI, diagnostic: Diagnostic, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
+    protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnostic, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
     // (undocumented)
     answer(answer: ANSWER): T;
     // (undocumented)
@@ -416,7 +416,11 @@ export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends st
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
     // (undocumented)
-    static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, diagnostic: Diagnostic, subject: SUBJECT, context: CONTEXT): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
+    get message(): string;
+    // (undocumented)
+    protected readonly _message: string;
+    // (undocumented)
+    static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, diagnostic?: Diagnostic): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
     // (undocumented)
     protected readonly _quester: Mapper<ANSWER, T>;
     // (undocumented)
@@ -448,6 +452,8 @@ export namespace Question {
         // (undocumented)
         diagnostic: Diagnostic.JSON;
         // (undocumented)
+        message: string;
+        // (undocumented)
         subject: Serializable.ToJSON<SUBJECT>;
         // (undocumented)
         type: Serializable.ToJSON<TYPE>;
@@ -456,7 +462,7 @@ export namespace Question {
     }
     // @internal
     export class Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> extends Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
-        constructor(type: TYPE, uri: URI, diagnostic: Diagnostic, subject: SUBJECT, context: CONTEXT, answer: T);
+        constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnostic, subject: SUBJECT, context: CONTEXT, answer: T);
         // (undocumented)
         answer(): T;
         // (undocumented)

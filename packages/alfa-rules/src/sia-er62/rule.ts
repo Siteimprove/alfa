@@ -5,6 +5,7 @@ import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -36,12 +37,21 @@ import {
 
 import { Scope, Stability, Version } from "../tags";
 
-import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
+import {
+  DistinguishingStyles,
+  ElementDistinguishable,
+  DistinguishingProperty,
+} from "./diagnostics";
 
 const { isElement } = Element;
 const { isText } = Text;
-const { or, not, test } = Predicate;
+const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
+
+let distinguishingProperties: Map<
+  Context,
+  Map<Element, List<DistinguishingProperty>>
+> = Map.empty();
 
 /**
  * This version of R62 accepts differences in `font-family`, differences
@@ -213,15 +223,12 @@ export default Rule.Atomic.of<Page, Element>({
                 (container) =>
                   Distinguishable.isDistinguishable(
                     container,
+                    target,
                     device,
                     context
-                  )(link) ||
-                  (context.isHovered(target) &&
-                    Distinguishable.hasDistinguishableCursor(
-                      container,
-                      device,
-                      context
-                    )(link))
+                  )
+                    .map((isDistinguishable) => isDistinguishable(link))
+                    .some((distinguishable) => distinguishable)
               );
 
               const distinguishableContrast = Set.from(
@@ -237,6 +244,12 @@ export default Rule.Atomic.of<Page, Element>({
                 )
               );
 
+              const properties: List<DistinguishingProperty> =
+                distinguishingProperties
+                  .get(context)
+                  .flatMap((elementMap) => elementMap.get(link))
+                  .getOrElse(() => List.empty());
+
               return hasDistinguishableStyle
                 ? Ok.of(
                     ElementDistinguishable.from(
@@ -244,6 +257,7 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
+                      properties,
                       distinguishableContrast
                     )
                   )
@@ -253,6 +267,7 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
+                      properties,
                       distinguishableContrast
                     )
                   );
@@ -383,26 +398,65 @@ function hasNonLinkText(device: Device): Predicate<Element> {
 namespace Distinguishable {
   export function isDistinguishable(
     container: Element,
+    target: Element,
     device: Device,
     context: Context = Context.empty()
-  ): Predicate<Element> {
-    return or(
+  ): Array<Predicate<Element>> {
+    let predicates: Array<
+      readonly [DistinguishingProperty, Predicate<Element>]
+    > = [
       // Things like text decoration and backgrounds risk blending with the
       // container element. We therefore need to check if these can be distinguished
       // from what the container element might itself set.
-      hasDistinguishableBackground(container, device, context),
-      hasDistinguishableContrast(container, device, context),
-      hasDistinguishableFont(container, device, context),
-      hasDistinguishableTextDecoration(container, device, context),
-      hasDistinguishableVerticalAlign(container, device, context),
-      // We consider the mere presence of borders or outlines on the element as
+      ["background", hasDistinguishableBackground(container, device, context)],
+      ["contrast", hasDistinguishableContrast(container, device, context)],
+      ["font", hasDistinguishableFont(container, device, context)],
+      [
+        "text-decoration",
+        hasDistinguishableTextDecoration(container, device, context),
+      ],
+      [
+        "vertical-align",
+        hasDistinguishableVerticalAlign(container, device, context),
+      ],
+      // We consider the mere presence of borders, box-shadows or outlines on the element as
       // distinguishable features. There's of course a risk of these blending with
       // other features of the container element, such as its background, but this
       // should hopefully not happen (too often) in practice. When it does, we
       // risk false negatives.
-      hasBorder(device, context),
-      hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
-      hasOutline(device, context)
+      ["border", hasBorder(device, context)],
+      [
+        "box-shadow",
+        hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
+      ],
+      ["outline", hasOutline(device, context)],
+    ];
+
+    if (context.isHovered(target)) {
+      predicates = [
+        ...predicates,
+        ["cursor", hasDistinguishableCursor(container, device, context)],
+      ];
+    }
+
+    return predicates.map(([name, predicate]) =>
+      tee(predicate, (link, result) => {
+        if (result) {
+          let linkToProperties = distinguishingProperties
+            .get(context)
+            .getOr(Map.empty<Element, List<DistinguishingProperty>>());
+
+          const properties = linkToProperties
+            .get(link)
+            .getOr(List.empty<DistinguishingProperty>())
+            .append(name);
+
+          distinguishingProperties = distinguishingProperties.set(
+            context,
+            linkToProperties.set(link, properties)
+          );
+        }
+      })
     );
   }
 
@@ -574,7 +628,7 @@ namespace Distinguishable {
     );
   }
 
-  export function hasDistinguishableCursor(
+  function hasDistinguishableCursor(
     container: Element,
     device: Device,
     context?: Context

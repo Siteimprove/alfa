@@ -18,26 +18,39 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { Serialise } from "./serialise";
 
 type Name = Property.Name | Property.Shorthand.Name;
+export type DistinguishingProperty = Name | "contrast";
 
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
 {
   public static of(
+    distinguishingProperties: Iterable<DistinguishingProperty> = [],
     style: Iterable<readonly [Name, string]> = [],
     pairings: Iterable<Contrast.Pairing> = []
   ): ElementDistinguishable {
-    return new ElementDistinguishable(Map.from(style), Array.from(pairings));
+    return new ElementDistinguishable(
+      Array.from(distinguishingProperties),
+      Map.from(style),
+      Array.from(pairings)
+    );
   }
 
+  private readonly _distinguishingProperties: ReadonlyArray<DistinguishingProperty>;
   private readonly _style: Map<Name, string>;
   private readonly _pairings: ReadonlyArray<Contrast.Pairing>;
 
   private constructor(
+    distinguishingProperties: ReadonlyArray<DistinguishingProperty>,
     style: Map<Name, string>,
     pairings: ReadonlyArray<Contrast.Pairing>
   ) {
+    this._distinguishingProperties = distinguishingProperties;
     this._style = style;
     this._pairings = pairings;
+  }
+
+  public get distinguishingProperties(): ReadonlyArray<DistinguishingProperty> {
+    return this._distinguishingProperties;
   }
 
   public get style(): Map<Name, string> {
@@ -48,10 +61,21 @@ export class ElementDistinguishable
     return this._pairings;
   }
 
+  public withDistinguishingProperties(
+    distinguishingProperties: ReadonlyArray<DistinguishingProperty>
+  ): ElementDistinguishable {
+    return ElementDistinguishable.of(
+      [...this._distinguishingProperties, ...distinguishingProperties],
+      this._style,
+      this._pairings
+    );
+  }
+
   public withStyle(
     ...styles: ReadonlyArray<readonly [Name, string]>
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
+      this._distinguishingProperties,
       [...this._style, ...styles],
       this._pairings
     );
@@ -60,7 +84,11 @@ export class ElementDistinguishable
   public withPairings(
     pairings: ReadonlyArray<Contrast.Pairing>
   ): ElementDistinguishable {
-    return ElementDistinguishable.of(this._style, pairings);
+    return ElementDistinguishable.of(
+      this._distinguishingProperties,
+      this._style,
+      pairings
+    );
   }
 
   public equals(value: ElementDistinguishable): boolean;
@@ -71,17 +99,23 @@ export class ElementDistinguishable
     return (
       value instanceof ElementDistinguishable &&
       value._style.equals(this._style) &&
-      Array.equals(value._pairings, this._pairings)
+      Array.equals(value._pairings, this._pairings) &&
+      Array.equals(
+        value._distinguishingProperties,
+        this._distinguishingProperties
+      )
     );
   }
 
   public hash(hash: Hash): void {
+    Array.hash(this._distinguishingProperties, hash);
     this._style.hash(hash);
     Array.hash(this._pairings, hash);
   }
 
   public toJSON(): ElementDistinguishable.JSON {
     return {
+      distinguishingProperties: Array.toJSON(this._distinguishingProperties),
       style: this._style.toJSON(),
       pairings: Array.toJSON(this._pairings),
     };
@@ -91,6 +125,7 @@ export class ElementDistinguishable
 export namespace ElementDistinguishable {
   export interface JSON {
     [key: string]: json.JSON;
+    distinguishingProperties: Array<DistinguishingProperty>;
     style: Map.JSON<Name, string>;
     pairings: Array<Contrast.Pairing.JSON>;
   }
@@ -100,6 +135,7 @@ export namespace ElementDistinguishable {
     device: Device,
     target: Element,
     context: Context = Context.empty(),
+    distinguishingProperties: Iterable<DistinguishingProperty>,
     pairings: Iterable<Contrast.Pairing>
   ): ElementDistinguishable {
     const style = Style.from(element, device, context);
@@ -113,6 +149,7 @@ export namespace ElementDistinguishable {
       : [];
 
     return ElementDistinguishable.of(
+      distinguishingProperties,
       [
         ...border,
         ...cursor,
