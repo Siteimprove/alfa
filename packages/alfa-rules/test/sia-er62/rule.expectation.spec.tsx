@@ -532,8 +532,8 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
-        [addCursor(noStyle), addCursor(style)],
-        [addOutline(noStyle), style]
+        [addCursor(style), addCursor(noStyle)],
+        [style, addOutline(noStyle)]
       ),
     }),
   ]);
@@ -570,9 +570,9 @@ test(`evaluate() passes an <a> element with a <p> parent element when
       .withStyle(["text-decoration", "underline"])
       .withDistinguishingProperties([
         "background",
-        "box-shadow",
         "font",
         "text-decoration",
+        "box-shadow",
       ])
   );
 

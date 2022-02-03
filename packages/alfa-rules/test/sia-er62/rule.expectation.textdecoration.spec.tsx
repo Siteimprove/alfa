@@ -76,7 +76,7 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
-        [addCursor(noStyle), hoverStyle],
+        [hoverStyle, addCursor(noStyle)],
         [focusStyle, noStyle]
       ),
     }),
@@ -127,9 +127,9 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
-        [linkStyle, spanStyle],
-        [linkStyle, spanStyle],
-        [linkStyle, spanStyle]
+        [spanStyle, linkStyle],
+        [spanStyle, linkStyle],
+        [spanStyle, linkStyle]
       ),
     }),
   ]);
@@ -148,7 +148,7 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
-        [addCursor(noStyle), hoverStyle],
+        [hoverStyle, addCursor(noStyle)],
         [focusStyle, noStyle]
       ),
     }),

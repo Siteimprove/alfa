@@ -244,11 +244,11 @@ export default Rule.Atomic.of<Page, Element>({
                 )
               );
 
-              const properties = distinguishingProperties
-                .get(context)
-                .getOr(Map.empty<Element, List<DistinguishingProperty>>())
-                .get(link)
-                .getOr(List.empty<DistinguishingProperty>());
+              const properties: List<DistinguishingProperty> =
+                distinguishingProperties
+                  .get(context)
+                  .flatMap((elementMap) => elementMap.get(link))
+                  .getOrElse(() => List.empty());
 
               return hasDistinguishableStyle
                 ? Ok.of(
@@ -257,8 +257,8 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
-                      distinguishableContrast,
-                      properties
+                      properties,
+                      distinguishableContrast
                     )
                   )
                 : Err.of(
@@ -267,6 +267,7 @@ export default Rule.Atomic.of<Page, Element>({
                       device,
                       target,
                       context,
+                      properties,
                       distinguishableContrast
                     )
                   );
@@ -400,7 +401,7 @@ namespace Distinguishable {
     target: Element,
     device: Device,
     context: Context = Context.empty()
-  ): Predicate<Element>[] {
+  ): Array<Predicate<Element>> {
     let predicates: Array<
       readonly [DistinguishingProperty, Predicate<Element>]
     > = [
@@ -408,6 +409,16 @@ namespace Distinguishable {
       // container element. We therefore need to check if these can be distinguished
       // from what the container element might itself set.
       ["background", hasDistinguishableBackground(container, device, context)],
+      ["contrast", hasDistinguishableContrast(container, device, context)],
+      ["font", hasDistinguishableFont(container, device, context)],
+      [
+        "text-decoration",
+        hasDistinguishableTextDecoration(container, device, context),
+      ],
+      [
+        "vertical-align",
+        hasDistinguishableVerticalAlign(container, device, context),
+      ],
       [
         "border",
         // We consider the mere presence of borders or outlines on the element as
@@ -420,16 +431,6 @@ namespace Distinguishable {
       [
         "box-shadow",
         hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
-      ],
-      ["contrast", hasDistinguishableContrast(container, device, context)],
-      ["font", hasDistinguishableFont(container, device, context)],
-      [
-        "text-decoration",
-        hasDistinguishableTextDecoration(container, device, context),
-      ],
-      [
-        "vertical-align",
-        hasDistinguishableVerticalAlign(container, device, context),
       ],
       ["outline", hasOutline(device, context)],
     ];

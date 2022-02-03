@@ -18,7 +18,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { Serialise } from "./serialise";
 
 type Name = Property.Name | Property.Shorthand.Name;
-export type DistinguishingProperty = Name | "contrast" | "cursor";
+export type DistinguishingProperty = Name | "contrast";
 
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
@@ -61,6 +61,16 @@ export class ElementDistinguishable
     return this._pairings;
   }
 
+  public withDistinguishingProperties(
+    distinguishingProperties: ReadonlyArray<DistinguishingProperty>
+  ): ElementDistinguishable {
+    return ElementDistinguishable.of(
+      [...this._distinguishingProperties, ...distinguishingProperties],
+      this._style,
+      this._pairings
+    );
+  }
+
   public withStyle(
     ...styles: ReadonlyArray<readonly [Name, string]>
   ): ElementDistinguishable {
@@ -81,16 +91,6 @@ export class ElementDistinguishable
     );
   }
 
-  public withDistinguishingProperties(
-    distinguishingProperties: ReadonlyArray<DistinguishingProperty>
-  ): ElementDistinguishable {
-    return ElementDistinguishable.of(
-      [...this._distinguishingProperties, ...distinguishingProperties],
-      this._style,
-      this._pairings
-    );
-  }
-
   public equals(value: ElementDistinguishable): boolean;
 
   public equals(value: unknown): value is this;
@@ -108,9 +108,9 @@ export class ElementDistinguishable
   }
 
   public hash(hash: Hash): void {
+    Array.hash(this._distinguishingProperties, hash);
     this._style.hash(hash);
     Array.hash(this._pairings, hash);
-    Array.hash(this._distinguishingProperties, hash);
   }
 
   public toJSON(): ElementDistinguishable.JSON {
@@ -135,8 +135,8 @@ export namespace ElementDistinguishable {
     device: Device,
     target: Element,
     context: Context = Context.empty(),
-    pairings: Iterable<Contrast.Pairing>,
-    distinguishingProperties: Iterable<DistinguishingProperty> = []
+    distinguishingProperties: Iterable<DistinguishingProperty>,
+    pairings: Iterable<Contrast.Pairing>
   ): ElementDistinguishable {
     const style = Style.from(element, device, context);
 
