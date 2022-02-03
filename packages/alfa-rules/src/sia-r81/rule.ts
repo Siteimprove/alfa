@@ -79,7 +79,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                Diagnostic.of(`Do the links resolve to equivalent resources?`)
+                `Do the links resolve to equivalent resources?`
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
