@@ -406,16 +406,6 @@ namespace Distinguishable {
       // container element. We therefore need to check if these can be distinguished
       // from what the container element might itself set.
       ["background", hasDistinguishableBackground(container, device, context)],
-      ["contrast", hasDistinguishableContrast(container, device, context)],
-      ["font", hasDistinguishableFont(container, device, context)],
-      [
-        "text-decoration",
-        hasDistinguishableTextDecoration(container, device, context),
-      ],
-      [
-        "vertical-align",
-        hasDistinguishableVerticalAlign(container, device, context),
-      ],
       [
         "border",
         // We consider the mere presence of borders or outlines on the element as
@@ -428,6 +418,16 @@ namespace Distinguishable {
       [
         "box-shadow",
         hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
+      ],
+      ["contrast", hasDistinguishableContrast(container, device, context)],
+      ["font", hasDistinguishableFont(container, device, context)],
+      [
+        "text-decoration",
+        hasDistinguishableTextDecoration(container, device, context),
+      ],
+      [
+        "vertical-align",
+        hasDistinguishableVerticalAlign(container, device, context),
       ],
       ["outline", hasOutline(device, context)],
     ];

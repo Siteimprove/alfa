@@ -310,78 +310,79 @@ test(`evaluate() is applicable to several <a> elements when there is a <p> paren
 // then the rule is applicable as we can't tell for sure if they truly have the same foreground color
 // because of the different gradient types and spreads
 
-// test(`evaluate() is applicable to an <a> element with a <p> parent element that has the text content wrapped in a span
-//     when both have the same linear gradient foreground color`, async (t) => {
-//   const target = <a href="#">Link</a>;
+test(`evaluate() is applicable to an <a> element with a <p> parent element that has the text content wrapped in a span
+    when both have the same linear gradient foreground color`, async (t) => {
+  const target = <a href="#">Link</a>;
 
-//   const document = h.document(
-//     [
-//       <p>
-//         <span>Hello</span>
-//         {target}
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("span", {
-//           background: "linear-gradient(to right, #000000 50%, #0000EE 50%)",
-//           color: "rgba(255, 255, 255, 0.1)",
-//         }),
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span>
+        {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          background: "linear-gradient(to right, #000000 50%, #0000EE 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
 
-//         h.rule.style("a", {
-//           background: "linear-gradient(to right, #000000 50%, #0000EE 50%)",
-//           color: "rgba(255, 255, 255, 0.1)",
-//         }),
-//       ]),
-//     ]
-//   );
+        h.rule.style("a", {
+          background: "linear-gradient(to right, #000000 50%, #0000EE 50%)",
+          color: "rgba(255, 255, 255, 0.1)",
+        }),
+      ]),
+    ]
+  );
 
-//   // #000000 mixed with rgba(255, 255, 255, 0.1)
-//   const offBlack = RGB.of(
-//     Percentage.of(0.1),
-//     Percentage.of(0.1),
-//     Percentage.of(0.1),
-//     Percentage.of(1)
-//   );
+  // #000000 mixed with rgba(255, 255, 255, 0.1)
+  const offBlack = RGB.of(
+    Percentage.of(0.1),
+    Percentage.of(0.1),
+    Percentage.of(0.1),
+    Percentage.of(1)
+  );
 
-//   // #0000EE mixed with rgba(255, 255, 255, 0.1)
-//   const offBlue = RGB.of(
-//     Percentage.of(0.1),
-//     Percentage.of(0.1),
-//     Percentage.of(0.94),
-//     Percentage.of(1)
-//   );
+  // #0000EE mixed with rgba(255, 255, 255, 0.1)
+  const offBlue = RGB.of(
+    Percentage.of(0.1),
+    Percentage.of(0.1),
+    Percentage.of(0.94),
+    Percentage.of(1)
+  );
 
-//   const style = Ok.of(
-//     linkProperties
-//       .withStyle(
-//         [
-//           "background",
-//           "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%) 0% 0%",
-//         ],
-//         ["color", "rgb(100% 100% 100% / 10%)"]
-//       )
-//       .withPairings([
-//         Contrast.Pairing.of(offBlack, offBlue, 2.03),
-//         Contrast.Pairing.of(offBlue, offBlack, 2.03),
-//         Contrast.Pairing.of(defaultTextColor, offBlack, 1.2),
-//         Contrast.Pairing.of(offBlack, offBlack, 1),
-//         Contrast.Pairing.of(defaultTextColor, offBlue, 2.44),
-//         Contrast.Pairing.of(offBlue, offBlue, 1),
-//       ])
-//       .withDistinguishingProperties(["background"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties
+      .withStyle(
+        [
+          "background",
+          "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%) 0% 0%",
+        ],
+        ["color", "rgb(100% 100% 100% / 10%)"],
+        ["text-decoration", "underline"]
+      )
+      .withPairings([
+        Contrast.Pairing.of(offBlack, offBlue, 2.03),
+        Contrast.Pairing.of(offBlue, offBlack, 2.03),
+        Contrast.Pairing.of(defaultTextColor, offBlack, 1.2),
+        Contrast.Pairing.of(offBlack, offBlack, 1),
+        Contrast.Pairing.of(defaultTextColor, offBlue, 2.44),
+        Contrast.Pairing.of(offBlue, offBlue, 1),
+      ])
+      .withDistinguishingProperties(["background", "text-decoration"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style],
-//         [addCursor(style)],
-//         [addOutline(style)]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
+      ),
+    }),
+  ]);
+});
 
 test(`evaluate() is inapplicable to an <a> element with no visible text content`, async (t) => {
   const target = (
