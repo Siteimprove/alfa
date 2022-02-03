@@ -21,6 +21,32 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.31.0](../../compare/v0.30.0...v0.31.0) (2022-02-03)
+
+### Added
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): The `Question` type now accepts a `Diagnostic` to provide extra information why Alfa is asking; the `Question.of` helper accepts an optional `Diagnostic` argument. ([#1027](../../pull/1027), [#1056](../../pull/1056))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The JSON serialization of nodes now includes a `path` field. ([#1025](../../pull/1025))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `MediaRule` now pre-parse their media queries and expose them as `MediaRule#queries`. ([#1051](../../pull/1051))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Rules now accept a `Version` tag, to track breaking changes. Experimental version of existing rules are tagged with version 2. ([#1043](../../issues/1043), [#1047](../../pull/1047))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 now ignores `font-size` of `<sub>` and `<sup>` elements. ([#971](../../issues/971), [#1050](../../pull/1050))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R47 now correctly parses the value of the `<meta>` `content` attribute case-insensitively. ([#969](../../issues/969), [#1040](../../pull/1040))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER62 now only applies to link whose text color is different from the surrounding text. ([#951](../../issues/951), [#1031](../../pull/1031))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Elements which are stretched (by absolute positioning and setting both `top`/`bottom` and `left`/`right`) are now considered as visible. ([#985](../../issues/985), [#1045](../../pull/1045))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Descendants of media elements that are used as fallback content for legacy browsers are now considered as not rendered. ([#1017](../../issues/1017), [#1041](../../pull/1041))
+
 ## [0.30.0](../../compare/v0.29.0...v0.30.0) (2022-01-11)
 
 ### Breaking
