@@ -6,11 +6,11 @@ import { Result, Ok, Err } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Question } from "../common/act/question";
 
 import { hasRole, isPerceivable } from "../common/predicate";
 
-import { Question } from "../common/question";
 import { Scope, Stability } from "../tags";
 
 const { isElement, hasNamespace } = Element;

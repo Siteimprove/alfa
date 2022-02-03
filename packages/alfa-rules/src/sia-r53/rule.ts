@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 
 import { hasHeadingLevel, hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";

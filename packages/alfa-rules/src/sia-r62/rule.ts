@@ -20,7 +20,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 import {
   hasBorder,
   hasComputedStyle,

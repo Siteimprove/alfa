@@ -18,10 +18,12 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/act/expectation";
+
 import { Contrast } from "../../src/common/diagnostic/contrast";
-import { expectation } from "../common/expectation";
 import { contrast } from "../common/expectation/contrast";
-import { getForeground } from "../common/expectation/get-colors";
+
+import { getForeground } from "../common/dom/get-colors";
 import {
   hasBorder,
   hasBoxShadow,
@@ -32,6 +34,7 @@ import {
   isVisible,
   isWhitespace,
 } from "../common/predicate";
+
 import { Scope, Stability, Version } from "../tags";
 
 import {

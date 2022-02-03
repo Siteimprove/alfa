@@ -7,7 +7,7 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable, cantTell } from "../common/outcome";
 
-import { Group } from "../../src/common/group";
+import { Group } from "../../src/common/act/group";
 
 test("evaluate() cannot tell when same landmarks have same names", async (t) => {
   const aside1 = <aside aria-label="More information" id="author" />;

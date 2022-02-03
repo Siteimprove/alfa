@@ -3,7 +3,6 @@ import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 import { Contrast } from "../../src/common/diagnostic/contrast";
-import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";

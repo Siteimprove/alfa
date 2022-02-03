@@ -6,7 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { isVisible } from "../predicate/is-visible";
 
-import { Question } from "../question";
+import { Question } from "../act/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;

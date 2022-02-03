@@ -7,7 +7,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 const { and } = Refinement;
 const { isElement } = Element;
 
-import { getOffsetParent } from "../expectation/get-offset-parent";
+import { getOffsetParent } from "../dom/get-offset-parent";
 
 import { isPositioned } from "./is-positioned";
 import { isVisible } from "./is-visible";

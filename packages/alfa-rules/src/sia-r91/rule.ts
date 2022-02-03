@@ -6,7 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
 import {
   hasInlineStyleProperty,
   isVisible,

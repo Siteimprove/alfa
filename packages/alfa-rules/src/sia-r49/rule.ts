@@ -7,7 +7,8 @@ import { Ok, Err } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Question } from "../common/act/question";
 
 import {
   hasNonEmptyAccessibleName,
@@ -16,7 +17,6 @@ import {
   isPerceivable,
 } from "../common/predicate";
 
-import { Question } from "../common/question";
 import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace } = Element;
@@ -49,9 +49,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             const isAboveDurationThreshold = Question.of(
               "is-above-duration-threshold",
               element,
-              Diagnostic.of(
-                `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`
-              )
+              `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`
             ).map((isAboveDurationThreshold) =>
               isAboveDurationThreshold ? Option.of(element) : None
             );
@@ -62,9 +60,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               return Question.of(
                 "has-audio",
                 element,
-                Diagnostic.of(
-                  `Does the \`<${element.name}>\` element contain audio?`
-                )
+                `Does the \`<${element.name}>\` element contain audio?`
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -75,9 +71,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "audio-control-mechanism",
             target,
-            Diagnostic.of(
-              `Where is the mechanism that can pause or stop the audio of the \`<${target.name}>\` element?`
-            )
+            `Where is the mechanism that can pause or stop the audio of the \`<${target.name}>\` element?`
           )
             // If the applicable <video> or <audio> element uses native controls
             // we assume that the mechanism is the element itself.

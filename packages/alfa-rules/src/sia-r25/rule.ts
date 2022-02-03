@@ -6,9 +6,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Question } from "../common/act/question";
 
-import { Question } from "../common/question";
 import { Scope } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
@@ -26,9 +26,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "has-description",
             target,
-            Diagnostic.of(
-              `Is the visual information of the \`<video>\` available through its audio or a separate audio description track?`
-            )
+            `Is the visual information of the \`<video>\` available through its audio or a separate audio description track?`
           ).map((hasAudio) =>
             expectation(
               hasAudio,

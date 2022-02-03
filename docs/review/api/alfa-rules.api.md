@@ -375,9 +375,9 @@ export namespace Question {
         [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
     };
     // (undocumented)
-    export function of<S, U extends Uri = Uri>(uri: U, subject: S, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     // (undocumented)
-    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     export interface Type {
         // (undocumented)
         "color[]": Iterable<RGB>;

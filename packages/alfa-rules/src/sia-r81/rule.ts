@@ -10,7 +10,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/expectation";
+import { expectation } from "../common/act/expectation";
+import { Group } from "../common/act/group";
+import { Question } from "../common/act/question";
 
 import {
   hasNonEmptyAccessibleName,
@@ -19,9 +21,8 @@ import {
   referenceSameResource,
 } from "../common/predicate";
 
-import { Group } from "../common/group";
 import { normalize } from "../common/normalize";
-import { Question } from "../common/question";
+
 import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace, hasId } = Element;
@@ -78,7 +79,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                Diagnostic.of(`Do the links resolve to equivalent resources?`)
+                `Do the links resolve to equivalent resources?`
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
