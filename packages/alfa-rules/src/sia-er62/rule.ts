@@ -419,15 +419,12 @@ namespace Distinguishable {
         "vertical-align",
         hasDistinguishableVerticalAlign(container, device, context),
       ],
-      [
-        "border",
-        // We consider the mere presence of borders or outlines on the element as
-        // distinguishable features. There's of course a risk of these blending with
-        // other features of the container element, such as its background, but this
-        // should hopefully not happen (too often) in practice. When it does, we
-        // risk false negatives.
-        hasBorder(device, context),
-      ],
+      // We consider the mere presence of borders, box-shadows or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      ["border", hasBorder(device, context)],
       [
         "box-shadow",
         hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
