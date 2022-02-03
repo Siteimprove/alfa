@@ -275,7 +275,6 @@ export default Rule.Atomic.of<Page, Element>({
 
         // The context needs to be set on the *target*, not on its ancestors
         // or descendants
-
         const isDefaultDistinguishable = hasDistinguishingStyle();
 
         const isHoverDistinguishable = hasDistinguishingStyle(
@@ -451,10 +450,9 @@ namespace Distinguishable {
             .getOr(List.empty<DistinguishingProperty>())
             .append(name);
 
-          linkToProperties = linkToProperties.set(link, properties);
           distinguishingProperties = distinguishingProperties.set(
             context,
-            linkToProperties
+            linkToProperties.set(link, properties)
           );
         }
       })

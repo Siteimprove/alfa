@@ -16,7 +16,6 @@ import * as json from "@siteimprove/alfa-json";
 import { Contrast } from "../../src/common/diagnostic/contrast";
 
 import { Serialise } from "./serialise";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 type Name = Property.Name | Property.Shorthand.Name;
 export type DistinguishingProperty = Name | "contrast" | "cursor";
@@ -101,7 +100,7 @@ export class ElementDistinguishable
       value instanceof ElementDistinguishable &&
       value._style.equals(this._style) &&
       Array.equals(value._pairings, this._pairings) &&
-      Iterable.equals(
+      Array.equals(
         value._distinguishingProperties,
         this._distinguishingProperties
       )
