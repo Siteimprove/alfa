@@ -44,7 +44,7 @@ export class Comment extends Node {
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
-      path: this.path(),
+      // path: this.path(),
       data: this._data,
     };
   }
