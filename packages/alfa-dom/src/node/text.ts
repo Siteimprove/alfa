@@ -71,7 +71,7 @@ export class Text extends Node implements Slotable {
   public toJSON(): Text.JSON {
     return {
       type: "text",
-      path: this.path(),
+      // path: this.path(),
       data: this.data,
     };
   }

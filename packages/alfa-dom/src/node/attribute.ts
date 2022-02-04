@@ -132,7 +132,7 @@ export class Attribute<N extends string = string> extends Node {
   public toJSON(): Attribute.JSON<N> {
     return {
       type: "attribute",
-      path: this.path(),
+      // path: this.path(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
