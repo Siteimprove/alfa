@@ -140,6 +140,11 @@ export class Question<
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
+    answer: Result<ANSWER, Diagnostic>,
+    merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>
+  ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+
+  public answerIf(
     answer: Result<ANSWER, unknown>
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
@@ -149,9 +154,11 @@ export class Question<
       | Predicate<SUBJECT, [context: CONTEXT]>
       | Option<ANSWER>
       | Result<ANSWER, unknown>,
-    answer?: ANSWER
+    answerOrMerger?: ANSWER | Mapper<Diagnostic, Diagnostic, [Diagnostic]>
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     let condition: boolean;
+    let answer: ANSWER;
+    let diagnostic = this._diagnostic;
 
     if (isBoolean(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer;
@@ -169,6 +176,18 @@ export class Question<
 
       if (condition) {
         answer = conditionOrPredicateOrAnswer.get();
+      } else {
+        const error = conditionOrPredicateOrAnswer.getErr();
+
+        if (Diagnostic.isDiagnostic(error)) {
+          // Type is enforced by overload.
+          const merger =
+            (answerOrMerger as Mapper<Diagnostic, Diagnostic, [Diagnostic]>) ??
+            // Default is to overwrite the old diagnostic
+            ((old: Diagnostic, cur: Diagnostic) => cur);
+
+          diagnostic = merger(diagnostic, error);
+        }
       }
     }
 
@@ -182,7 +201,15 @@ export class Question<
           this._context,
           this.answer(answer!)
         )
-      : this;
+      : new Question(
+          this._type,
+          this._uri,
+          this._message,
+          diagnostic,
+          this._subject,
+          this._context,
+          this._quester
+        );
   }
 
   public map<U>(
