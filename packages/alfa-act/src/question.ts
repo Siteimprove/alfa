@@ -162,8 +162,12 @@ export class Question<
 
     if (isBoolean(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer;
+      // Type is enforced by overload.
+      answer = answerOrMerger as ANSWER;
     } else if (isFunction(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer(this._subject, this._context);
+      // Type is enforced by overload.
+      answer = answerOrMerger as ANSWER;
     } else if (isOption(conditionOrPredicateOrAnswer)) {
       condition = conditionOrPredicateOrAnswer.isSome();
 
