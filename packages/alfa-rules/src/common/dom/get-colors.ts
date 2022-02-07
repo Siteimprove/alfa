@@ -12,7 +12,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { getInterposedDescendant } from "../predicate/has-interposed-descendant";
+import { getInterposedDescendant } from "./get-interposed-descendant";
 import { isPositioned } from "../predicate/is-positioned";
 
 type Color = RGB<Percentage, Percentage>;
