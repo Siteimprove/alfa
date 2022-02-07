@@ -228,7 +228,7 @@ function getLayers(
       const interposedDescendants = getInterposedDescendant(device, element);
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendant(element, interposedDescendants)
+          ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
 
@@ -293,7 +293,7 @@ export function getForeground(
       const interposedDescendants = getInterposedDescendant(device, element);
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendant(element, interposedDescendants)
+          ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
 
@@ -377,7 +377,7 @@ export function getBackground(
       const interposedDescendants = getInterposedDescendant(device, element);
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendant(element, interposedDescendants)
+          ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
 
@@ -753,7 +753,7 @@ namespace ColorError {
   /**
    * This one does not depend on a CSS property, but on some other elements
    */
-  class HasInterposedDescendant extends ColorError<
+  class HasInterposedDescendants extends ColorError<
     "layer",
     "interposed-descendant"
   > {
@@ -763,7 +763,7 @@ namespace ColorError {
       message: string,
       element: Element,
       positionDescendants: Iterable<Element>
-    ): HasInterposedDescendant;
+    ): HasInterposedDescendants;
 
     public static of(
       message: string,
@@ -771,7 +771,7 @@ namespace ColorError {
       positionDescendants?: Iterable<Element>
     ): Diagnostic {
       return element !== undefined && positionDescendants !== undefined
-        ? new HasInterposedDescendant(
+        ? new HasInterposedDescendants(
             message,
             element,
             Sequence.from(positionDescendants)
@@ -794,19 +794,19 @@ namespace ColorError {
       return this._positionedDescendants;
     }
 
-    public equals(value: HasInterposedDescendant): boolean;
+    public equals(value: HasInterposedDescendants): boolean;
 
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
       return (
         super.equals(value) &&
-        value instanceof HasInterposedDescendant &&
+        value instanceof HasInterposedDescendants &&
         value._positionedDescendants.equals(this._positionedDescendants)
       );
     }
 
-    public toJSON(): HasInterposedDescendant.JSON {
+    public toJSON(): HasInterposedDescendants.JSON {
       return {
         ...super.toJSON(),
         positionedDescendants: this._positionedDescendants.toJSON(),
@@ -814,7 +814,7 @@ namespace ColorError {
     }
   }
 
-  namespace HasInterposedDescendant {
+  namespace HasInterposedDescendants {
     export interface JSON
       extends ColorError.JSON<"layer", "interposed-descendant"> {
       positionedDescendants: Sequence.JSON<Element>;
@@ -823,8 +823,8 @@ namespace ColorError {
     export function from(
       offsetParent: Element,
       positionedDescendants: Iterable<Element>
-    ): HasInterposedDescendant {
-      return HasInterposedDescendant.of(
+    ): HasInterposedDescendants {
+      return HasInterposedDescendants.of(
         "An interposed descendant element was encountered",
         offsetParent,
         positionedDescendants
@@ -832,5 +832,5 @@ namespace ColorError {
     }
   }
 
-  export const { from: interposedDescendant } = HasInterposedDescendant;
+  export const { from: interposedDescendants } = HasInterposedDescendants;
 }

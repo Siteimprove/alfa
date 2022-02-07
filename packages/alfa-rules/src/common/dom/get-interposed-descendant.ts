@@ -14,7 +14,13 @@ const { and } = Refinement;
 const { isElement } = Element;
 
 // For each device and document's root, we store a map from the offset parents
-// to its interposed descendants
+// to its interposed descendants.
+// Due to the definition of offset parent, searching a subtree rooted at element
+// can easily find interposed descendants of *other* elements. In order to not
+// waste the time spent to find them, it is simpler to fill the cache for a full
+// document tree at once.
+// Since offset parents stay within the same document, there is no need to
+// escape document boundaries.
 const cache = Cache.empty<
   Device,
   Cache<Node, Map<Element, Sequence<Element>>>
@@ -46,7 +52,7 @@ export function getInterposedDescendant(
         .filter((element) => getOffsetParent(element, device).isSome())
         // Group the result by the offset parent
         // getOffsetParent is cached, so this is not expensive.
-        // getOffsetParent is guaranteed to be Some by the previous collect.
+        // getOffsetParent is guaranteed to be Some by the previous filter.
         .groupBy((element) => getOffsetParent(element, device).get())
     )
     .get(element)
