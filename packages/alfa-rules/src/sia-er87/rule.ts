@@ -85,12 +85,12 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           );
 
           // there can be more than one element with a role of main, going to any of these is OK.
-          const isAtSTart = document
+          const isAtStart = document
             .inclusiveDescendants({ flattened: true })
             .filter(and(isElement, hasRole(device, "main")))
             .some((main) => isAtTheStart(main, device)(reference));
 
-          return askIsMain.answerIf(isAtSTart, true).map((isMain) =>
+          return askIsMain.answerIf(isAtStart, true).map((isMain) =>
             expectation(
               isMain,
               () => Outcomes.FirstTabbableIsLinkToContent,
