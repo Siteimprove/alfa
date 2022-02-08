@@ -48,35 +48,27 @@ export default Rule.Atomic.of<Page, Attribute>({
             lang = node.attribute("lang");
           }
           if (lang.isSome()) {
-            if (
-              test(
-                and(
-                  isText,
-                  and(
-                    or(isVisible(device), not(isIgnored(device))),
-                    (text: Text) => !isWhitespace(text.data)
-                  )
-                ),
-                node
+            const isVisibleText = and(
+              isText,
+              and(
+                or(isVisible(device), not(isIgnored(device))),
+                (text: Text) => !isWhitespace(text.data)
               )
-            ) {
+            );
+
+            const isElementWithAccessibleName = and(
+              isElement,
+              hasAccessibleName(
+                device,
+                (accessibleName) => !isWhitespace(accessibleName.value)
+              )
+            );
+
+            if (test(or(isVisibleText, isElementWithAccessibleName), node)) {
               yield* lang;
             }
-            if (
-              test(
-                and(
-                  isElement,
-                  hasAccessibleName(
-                    device,
-                    (accessibleName) => !isWhitespace(accessibleName.value)
-                  )
-                ),
-                node
-              )
-            ) {
-              yield * lang;
-            }
           }
+
           const children = node.children({ flattened: true });
 
           for (const child of children) {
