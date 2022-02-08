@@ -23,6 +23,7 @@ import {
   isIgnored,
   isWhitespace,
   isVisible,
+  hasAccessibleName,
 } from "../common/predicate";
 import { Scope } from "../tags";
 
@@ -46,22 +47,36 @@ export default Rule.Atomic.of<Page, Attribute>({
           if (test(and(isElement, hasAttribute("lang", not(isEmpty))), node)) {
             lang = node.attribute("lang");
           }
-
-          if (
-            test(
-              and(
-                isText,
+          if (lang.isSome()) {
+            if (
+              test(
                 and(
-                  or(isVisible(device), not(isIgnored(device))),
-                  (text: Text) => !isWhitespace(text.data)
-                )
-              ),
-              node
-            )
-          ) {
-            yield* lang;
+                  isText,
+                  and(
+                    or(isVisible(device), not(isIgnored(device))),
+                    (text: Text) => !isWhitespace(text.data)
+                  )
+                ),
+                node
+              )
+            ) {
+              yield* lang;
+            }
+            if (
+              test(
+                and(
+                  isElement,
+                  hasAccessibleName(
+                    device,
+                    (accessibleName) => !isWhitespace(accessibleName.value)
+                  )
+                ),
+                node
+              )
+            ) {
+              yield * lang;
+            }
           }
-
           const children = node.children({ flattened: true });
 
           for (const child of children) {
