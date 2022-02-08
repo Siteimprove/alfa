@@ -90,6 +90,23 @@ test(`evaluate() passes a span with a lang attribute within <body>  when the ele
 });
 
 test("evaluate() fails an element with a lang attribute within <body> with an invalid value", async (t) => {
+  const element = (
+    <span lang="invalid">
+      <img src="/test-assets/shared/fireworks.jpg" alt="Fireworks over Paris" />
+    </span>
+  );
+  const target = element.attribute("lang").get()!;
+
+  const document = h.document([<body>{element}</body>]);
+
+  t.deepEqual(await evaluate(R7, { document }), [
+    failed(R7, target, {
+      1: Outcomes.HasNoValidLanguage,
+    }),
+  ]);
+});
+
+test("evaluate() fails a text element with a lang attribute within <body> with an invalid value", async (t) => {
   const element = <span lang="invalid">Hello World</span>;
   const target = element.attribute("lang").get()!;
 
