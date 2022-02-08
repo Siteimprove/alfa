@@ -121,7 +121,7 @@ test(`evaluate() is inapplicable to an element that restricts its width while
   t.deepEqual(await evaluate(R84, { document }), [inapplicable(R84)]);
 });
 
-test("evaluate() is inapplicable to a document with an <iframe> element", async (t) => {
+test("evaluate() is inapplicable to a browsing context container", async (t) => {
   const target = <iframe srcdoc="Hello World!" />;
 
   const document = h.document([target]);
