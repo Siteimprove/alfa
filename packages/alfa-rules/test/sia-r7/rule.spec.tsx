@@ -102,7 +102,7 @@ test("evaluate() fails a text element with a lang attribute within <body> with a
   ]);
 });
 
-test("evaluate() fails an element with a lang attribute within <body> with an invalid value", async (t) => {
+test("evaluate() fails an element with an invalid lang attribute controlling an accessible name", async (t) => {
   const element = (
     <span lang="invalid">
       <img src="/test-assets/shared/fireworks.jpg" alt="Fireworks over Paris" />
