@@ -288,3 +288,318 @@ test("getForeground() handles a mix of opacity and transparency and a linear gra
     alpha: { type: "percentage", value: 1 },
   });
 });
+
+test("getColor() can't resolve most system colors", (t) => {
+  const target = <span>Hello</span>;
+  const wrapper = <div>{target}</div>;
+
+  h.document(
+    [wrapper],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          color: "visitedtext",
+        }),
+        h.rule.style("div", {
+          backgroundColor: "buttonface",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "Could not resolve background-color",
+    type: "layer",
+    kind: "unresolvable-background-color",
+    element: wrapper.toJSON(),
+    property: "background-color",
+    value: { type: "keyword", value: "buttonface" },
+  });
+
+  t.deepEqual(getForeground(target, device).getErr().toJSON(), {
+    message: "Could not resolve foreground color",
+    type: "foreground",
+    kind: "unresolvable-foreground-color",
+    element: target.toJSON(),
+    property: "color",
+    value: { type: "keyword", value: "visitedtext" },
+  });
+});
+
+test("getBackgroundColor() gives up in case of external background image", (t) => {
+  const target = <div>Hello</div>;
+
+  h.document(
+    [target],
+    [h.sheet([h.rule.style("div", { backgroundImage: "url(foo.jpg)" })])]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "A background-image with a url() was encountered",
+    type: "layer",
+    kind: "background-image",
+    element: target.toJSON(),
+    property: "background-image",
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          image: {
+            type: "url",
+            url: "foo.jpg",
+          },
+          type: "image",
+        },
+      ],
+    },
+  });
+});
+
+test("getBackgroundColor() gives up in case of sized background image", (t) => {
+  const target = <div id="debug">Hello</div>;
+
+  h.document(
+    [target],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          backgroundImage: "linear-gradient(to right, red, blue)",
+          backgroundSize: "100% 2px",
+          backgroundRepeat: "no-repeat",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "A background-size was encountered",
+    type: "layer",
+    kind: "background-size",
+    element: target.toJSON(),
+    property: "background-size",
+    value: {
+      separator: ", ",
+      type: "list",
+      values: [
+        {
+          type: "tuple",
+          values: [
+            {
+              type: "percentage",
+              value: 1,
+            },
+            {
+              type: "length",
+              unit: "px",
+              value: 2,
+            },
+          ],
+        },
+      ],
+    },
+  });
+});
+
+test("getBackgroundColor() gives up in case of text shadow", (t) => {
+  const target = <div>Hello</div>;
+
+  h.document(
+    [target],
+    [h.sheet([h.rule.style("div", { textShadow: "1px 1px 2px pink" })])]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "A text-shadow was encountered",
+    type: "background",
+    kind: "text-shadow",
+    element: target.toJSON(),
+    property: "text-shadow",
+    value: {
+      blur: {
+        type: "length",
+        unit: "px",
+        value: 2,
+      },
+      color: {
+        alpha: {
+          type: "percentage",
+          value: 1,
+        },
+        blue: {
+          type: "percentage",
+          value: 0.7960784,
+        },
+        format: "rgb",
+        green: {
+          type: "percentage",
+          value: 0.7529412,
+        },
+        red: {
+          type: "percentage",
+          value: 1,
+        },
+        type: "color",
+      },
+      horizontal: {
+        type: "length",
+        unit: "px",
+        value: 1,
+      },
+      isInset: false,
+      spread: {
+        type: "length",
+        unit: "px",
+        value: 0,
+      },
+      type: "shadow",
+      vertical: {
+        type: "length",
+        unit: "px",
+        value: 1,
+      },
+    },
+  });
+});
+
+test("getBackgroundColor() cannot handle positioned elements", (t) => {
+  const target = <span>Hello</span>;
+  const wrapper = (
+    <p>
+      <div></div>
+      {target}
+    </p>
+  );
+
+  h.document(
+    [wrapper],
+    [
+      h.sheet([
+        h.rule.style("div", { backgroundColor: "blue" }),
+        h.rule.style("span", { position: "absolute", top: "1px" }),
+        h.rule.style("p", { position: "relative" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "A non-statically positioned element was encountered",
+    type: "layer",
+    kind: "non-static",
+    element: target.toJSON(),
+    property: "position",
+    value: { type: "keyword", value: "absolute" },
+  });
+});
+
+test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
+  const target = <div id="debug">Hello</div>;
+
+  h.document(
+    [target],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          backgroundImage: "linear-gradient(red, highlight)",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "Could not resolve gradient color stop",
+    type: "layer",
+    kind: "unresolvable-gradient",
+    element: target.toJSON(),
+    property: "background-image",
+    value: {
+      separator: ", ",
+      type: "list",
+      values: [
+        {
+          image: {
+            direction: {
+              side: "bottom",
+              type: "side",
+            },
+            items: [
+              {
+                color: {
+                  alpha: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  blue: {
+                    type: "percentage",
+                    value: 0,
+                  },
+                  format: "rgb",
+                  green: {
+                    type: "percentage",
+                    value: 0,
+                  },
+                  red: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  type: "color",
+                },
+                position: null,
+                type: "stop",
+              },
+              {
+                color: {
+                  type: "keyword",
+                  value: "highlight",
+                },
+                position: null,
+                type: "stop",
+              },
+            ],
+            kind: "linear",
+            repeats: false,
+            type: "gradient",
+          },
+          type: "image",
+        },
+      ],
+    },
+    color: { type: "keyword", value: "highlight" },
+  });
+});
+
+test("getBackgroundColor() gives up in case of interposed elements", (t) => {
+  const target = <span>Hello</span>;
+  const interposed = <div></div>;
+  const wrapper = (
+    <p>
+      {interposed}
+      {target}
+    </p>
+  );
+
+  h.document(
+    [wrapper],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          backgroundColor: "blue",
+          position: "absolute",
+          top: "1px",
+          bottom: "1px",
+          left: "1px",
+          right: "1px",
+        }),
+        h.rule.style("p", { position: "relative" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getBackground(target, device).getErr().toJSON(), {
+    message: "An interposed descendant element was encountered",
+    type: "layer",
+    kind: "interposed-descendant",
+    element: wrapper.toJSON(),
+    positionedDescendants: [interposed.toJSON()],
+  });
+});
