@@ -230,8 +230,10 @@ export class Element<N extends string = string>
    */
   public tabIndex(): Option<number> {
     for (const tabIndex of this.attribute("tabindex")) {
-      const number = Number(tabIndex.value);
 
+      const number = parseInt(tabIndex.value, 10);
+      
+      //Checking if tabindex isn't NaN and undefined
       if (number === number && number === (number | 0)) {
         return Some.of(number);
       }
