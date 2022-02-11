@@ -4,6 +4,10 @@ test("#tabIndex() returns the tab index explicitly assigned to an element", (t) 
   t.equal((<div tabindex="42" />).tabIndex().get(), 42);
 });
 
+test("#tabIndex() returns the non-valid integer tab index as parsed integer", (t) => {
+  t.equal((<div tabindex="-1-toRemove" />).tabIndex().get(), -1);
+});
+
 test("#tabIndex() returns 0 for an <a> element with an href attribute", (t) => {
   t.equal((<a href="#" />).tabIndex().get(), 0);
 });
