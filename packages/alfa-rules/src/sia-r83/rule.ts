@@ -55,6 +55,20 @@ export default Rule.Atomic.of<Page, Text>({
             return;
           }
 
+          if (
+            test(
+              and(
+                isElement,
+                or(
+                  and(hasName("select"), hasAttribute(("size"), equals("1"))),
+                )
+              ),
+              node
+            )
+          ) {
+            return;
+          }
+
           // If a potentially clipping ancestor is found, start collecting.
           if (
             isElement(node) &&
@@ -103,6 +117,15 @@ export default Rule.Atomic.of<Page, Text>({
     };
   },
 });
+
+function hasDisplaySize(element: Element): number{
+  const isMenuSize = element.attribute("size").get().value
+  if(isMenuSize){
+    return parseInt(isMenuSize)
+  }
+  
+
+}
 
 const verticallyClippingCache = Cache.empty<
   Device,
