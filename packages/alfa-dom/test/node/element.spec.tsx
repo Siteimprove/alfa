@@ -16,6 +16,10 @@ test("#tabIndex() returns None for an <a> element without an href attribute", (t
   t.equal((<a />).tabIndex().isNone(), true);
 });
 
+test("#tabIndex() returns None for a <div> element with tabindex null", (t) => {
+  t.equal((<div tabindex="null" />).tabIndex().isNone(), true);
+});
+
 test("#tabIndex() returns 0 for a <button> element", (t) => {
   t.equal((<button />).tabIndex().get(), 0);
 });
