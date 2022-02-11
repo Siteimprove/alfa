@@ -2,7 +2,8 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R23, { Outcomes } from "../../src/sia-r23/rule";
+import R23 from "../../src/sia-r23/rule";
+import { Outcomes } from "../../src/common/expectation/media-transcript";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable, cantTell } from "../common/outcome";
@@ -24,7 +25,7 @@ test(`evaluate() passes an audio with perceivable transcript`, async (t) => {
         transcript: Option.of(transcript),
       })
     ),
-    [passed(R23, target, { 1: Outcomes.HasPerceivableTranscript })]
+    [passed(R23, target, { 1: Outcomes.HasPerceivableTranscript("<audio>") })]
   );
 });
 
@@ -46,7 +47,7 @@ test(`evaluate() passes an audio with a link to a transcript`, async (t) => {
         "transcript-perceivable": true,
       })
     ),
-    [passed(R23, target, { 1: Outcomes.HasPerceivableTranscript })]
+    [passed(R23, target, { 1: Outcomes.HasPerceivableTranscript("<audio>") })]
   );
 });
 
@@ -66,7 +67,7 @@ test(`evaluate() fails an audio with no transcript`, async (t) => {
         "transcript-link": None,
       })
     ),
-    [failed(R23, target, { 1: Outcomes.HasNoTranscript })]
+    [failed(R23, target, { 1: Outcomes.HasNoTranscriptLink("<audio>") })]
   );
 });
 
@@ -86,7 +87,11 @@ test(`evaluates() fails an audio with non-perceivable transcript`, async (t) => 
         transcript: Option.of(transcript),
       })
     ),
-    [failed(R23, target, { 1: Outcomes.HasNonPerceivableTranscript })]
+    [
+      failed(R23, target, {
+        1: Outcomes.HasNonPerceivableTranscript("<audio>"),
+      }),
+    ]
   );
 });
 
@@ -108,7 +113,11 @@ test(`evaluate fails an audio with link to non-perceivable transcript`, async (t
         "transcript-perceivable": false,
       })
     ),
-    [failed(R23, target, { 1: Outcomes.HasNonPerceivableTranscript })]
+    [
+      failed(R23, target, {
+        1: Outcomes.HasNonPerceivableTranscript("<audio>"),
+      }),
+    ]
   );
 });
 
@@ -133,7 +142,11 @@ test(`evaluate fails an audio with non-perceivable link to transcript`, async (t
         "transcript-link": Option.of(transcript),
       })
     ),
-    [failed(R23, target, { 1: Outcomes.HasNonPerceivableTranscriptLink })]
+    [
+      failed(R23, target, {
+        1: Outcomes.HasNonPerceivableLink("<audio>"),
+      }),
+    ]
   );
 });
 
