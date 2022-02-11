@@ -47,7 +47,7 @@ test(`evaluate() passes an audio with a link to a transcript`, async (t) => {
         "transcript-perceivable": true,
       })
     ),
-    [passed(R23, target, { 1: Outcomes.HasPerceivableTranscript("<audio>") })]
+    [passed(R23, target, { 1: Outcomes.HasPerceivableLink("<audio>") })]
   );
 });
 
@@ -109,13 +109,12 @@ test(`evaluate fails an audio with link to non-perceivable transcript`, async (t
         "is-audio-streaming": false,
         "is-playing": true,
         transcript: None,
-        "transcript-link": Option.of(transcript),
-        "transcript-perceivable": false,
+        "transcript-link": Option.of(transcript)
       })
     ),
     [
-      failed(R23, target, {
-        1: Outcomes.HasNonPerceivableTranscript("<audio>"),
+      passed(R23, target, {
+        1: Outcomes.HasPerceivableLink("<audio>"),
       }),
     ]
   );
