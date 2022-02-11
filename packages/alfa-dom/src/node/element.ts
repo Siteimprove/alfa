@@ -233,7 +233,7 @@ export class Element<N extends string = string>
 
       const number = parseInt(tabIndex.value, 10);
       
-      //Checking if tabindex isn't NaN and undefined
+      //Checking if tabindex isn't NaN, undefined, null, Infinity
       if (number === number && number === (number | 0)) {
         return Some.of(number);
       }
