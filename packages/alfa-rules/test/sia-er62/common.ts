@@ -22,6 +22,14 @@ export function addOutline(
   );
 }
 
+export function getContainerColor(color: RGB): Contrast.Color {
+  return Contrast.Color.of("container", color);
+}
+
+export function getLinkColor(color: RGB): Contrast.Color {
+  return Contrast.Color.of("link", color);
+}
+
 export namespace Defaults {
   // default styling of links
   // The initial value of border-top is medium, resolving as 3px. However, when
@@ -49,7 +57,11 @@ export namespace Defaults {
   );
 
   export const defaultContrastPairings = [
-    Contrast.Pairing.of(defaultTextColor, defaultLinkColor, 2.23),
+    Contrast.Pairing.of(
+      getContainerColor(defaultTextColor),
+      getLinkColor(defaultLinkColor),
+      2.23
+    ),
   ];
 
   export const noDistinguishingProperties = ElementDistinguishable.of(

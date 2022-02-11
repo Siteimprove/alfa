@@ -6,7 +6,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import { Defaults } from "./common";
+import { Defaults, getContainerColor, getLinkColor } from "./common";
 
 const { noDistinguishingProperties, defaultTextColor, defaultLinkColor } =
   Defaults;
@@ -63,13 +63,15 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
 
   const contrastPairings = [
     Contrast.Pairing.of(
-      RGB.of(
-        Percentage.of(0.5803922),
-        Percentage.of(0.5803922),
-        Percentage.of(0.5803922),
-        Percentage.of(1)
+      getContainerColor(
+        RGB.of(
+          Percentage.of(0.5803922),
+          Percentage.of(0.5803922),
+          Percentage.of(0.5803922),
+          Percentage.of(1)
+        )
       ),
-      defaultLinkColor,
+      getLinkColor(defaultLinkColor),
       3.1
     ),
   ];
@@ -137,9 +139,21 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
   );
 
   const contrastPairings = [
-    Contrast.Pairing.of(offRed, defaultLinkColor, 8.89),
-    Contrast.Pairing.of(offOrange, defaultLinkColor, 6.61),
-    Contrast.Pairing.of(offYellow, defaultLinkColor, 3.86),
+    Contrast.Pairing.of(
+      getContainerColor(offOrange),
+      getLinkColor(defaultLinkColor),
+      6.61
+    ),
+    Contrast.Pairing.of(
+      getContainerColor(offYellow),
+      getLinkColor(defaultLinkColor),
+      3.86
+    ),
+    Contrast.Pairing.of(
+      getContainerColor(offRed),
+      getLinkColor(defaultLinkColor),
+      8.89
+    ),
   ];
 
   const style = Ok.of(
@@ -185,8 +199,16 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
   );
 
   const contrastPairings = [
-    Contrast.Pairing.of(offBlue, defaultLinkColor, 1.04),
-    Contrast.Pairing.of(offWhite, defaultLinkColor, 8.93),
+    Contrast.Pairing.of(
+      getContainerColor(offBlue),
+      getLinkColor(defaultLinkColor),
+      1.04
+    ),
+    Contrast.Pairing.of(
+      getContainerColor(offWhite),
+      getLinkColor(defaultLinkColor),
+      8.93
+    ),
   ];
 
   const style = Ok.of(
@@ -229,8 +251,16 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
   );
 
   const contrastPairings = [
-    Contrast.Pairing.of(offBlue, defaultLinkColor, 1.04),
-    Contrast.Pairing.of(offPurple, defaultLinkColor, 1.7),
+    Contrast.Pairing.of(
+      getContainerColor(offPurple),
+      getLinkColor(defaultLinkColor),
+      1.7
+    ),
+    Contrast.Pairing.of(
+      getContainerColor(offBlue),
+      getLinkColor(defaultLinkColor),
+      1.04
+    ),
   ];
 
   const noStyle = Err.of(
@@ -272,8 +302,16 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
   );
 
   const contrastPairings = [
-    Contrast.Pairing.of(defaultTextColor, offBlue, 2.15),
-    Contrast.Pairing.of(defaultTextColor, offPurple, 1.32),
+    Contrast.Pairing.of(
+      getContainerColor(defaultTextColor),
+      getLinkColor(offBlue),
+      2.15
+    ),
+    Contrast.Pairing.of(
+      getContainerColor(defaultTextColor),
+      getLinkColor(offPurple),
+      1.32
+    ),
   ];
 
   const noStyle = Err.of(

@@ -6,7 +6,7 @@ import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import { Defaults, addCursor } from "./common";
+import { Defaults, addCursor, getContainerColor, getLinkColor } from "./common";
 
 const {
   defaultStyle,
@@ -120,7 +120,13 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
         ["font", "700 16px serif"],
         ["outline", "0px"],
       ],
-      [Contrast.Pairing.of(defaultTextColor, defaultTextColor, 1)]
+      [
+        Contrast.Pairing.of(
+          getContainerColor(defaultTextColor),
+          getLinkColor(defaultTextColor),
+          1
+        ),
+      ]
     )
   );
 

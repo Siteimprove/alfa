@@ -37,7 +37,11 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
-        Diagnostic.Pairing.of(rgb(1, 1, 1), rgb(0, 0, 0), 21),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          21
+        ),
       ]),
     }),
   ]);
@@ -74,12 +78,20 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target1, {
       1: Outcomes.HasSufficientContrast(15.08, 4.5, [
-        Diagnostic.Pairing.of(rgb(1, 1, 1), rgb(0.15, 0.15, 0.15), 15.08),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
+          Diagnostic.Color.of("background", rgb(0.15, 0.15, 0.15)),
+          15.08
+        ),
       ]),
     }),
     failed(R69, target2, {
       1: Outcomes.HasInsufficientContrast(3.98, 4.5, [
-        Diagnostic.Pairing.of(rgb(1, 1, 1), rgb(0.5, 0.5, 0.5), 3.98),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
+          Diagnostic.Color.of("background", rgb(0.5, 0.5, 0.5)),
+          3.98
+        ),
       ]),
     }),
   ]);
@@ -115,12 +127,20 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target1, {
       1: Outcomes.HasSufficientContrast(14.84, 4.5, [
-        Diagnostic.Pairing.of(rgb(0.85, 0.85, 0.85), rgb(0, 0, 0), 14.84),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0.85, 0.85, 0.85)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          14.84
+        ),
       ]),
     }),
     failed(R69, target2, {
       1: Outcomes.HasInsufficientContrast(3.66, 4.5, [
-        Diagnostic.Pairing.of(rgb(0.4, 0.4, 0.4), rgb(0, 0, 0), 3.66),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0.4, 0.4, 0.4)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          3.66
+        ),
       ]),
     }),
   ]);
@@ -145,8 +165,11 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(3.34, 3, [
         Diagnostic.Pairing.of(
-          rgb(0.3764706, 0.3764706, 0.3764706),
-          rgb(0, 0, 0),
+          Diagnostic.Color.of(
+            "foreground",
+            rgb(0.3764706, 0.3764706, 0.3764706)
+          ),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
           3.34
         ),
       ]),
@@ -174,8 +197,11 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(3.34, 3, [
         Diagnostic.Pairing.of(
-          rgb(0.3764706, 0.3764706, 0.3764706),
-          rgb(0, 0, 0),
+          Diagnostic.Color.of(
+            "foreground",
+            rgb(0.3764706, 0.3764706, 0.3764706)
+          ),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
           3.34
         ),
       ]),
@@ -191,7 +217,11 @@ test("evaluate() passes a text node using the user agent default styles", async 
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
-        Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+          Diagnostic.Color.of("background", rgb(1, 1, 1)),
+          21
+        ),
       ]),
     }),
   ]);
@@ -214,7 +244,11 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
-        Diagnostic.Pairing.of(rgb(1, 1, 1), rgb(1, 1, 1), 1),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
+          Diagnostic.Color.of("background", rgb(1, 1, 1)),
+          1
+        ),
       ]),
     }),
   ]);
@@ -236,7 +270,11 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
-        Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          1
+        ),
       ]),
     }),
   ]);
@@ -305,7 +343,11 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
     [
       passed(R69, target, {
         1: Outcomes.HasSufficientContrast(21, 4.5, [
-          Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
+          Diagnostic.Pairing.of(
+            Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+            Diagnostic.Color.of("background", rgb(1, 1, 1)),
+            21
+          ),
         ]),
       }),
     ]
@@ -337,7 +379,11 @@ test("evaluate() fails when a background color with insufficient contrast is inp
     [
       failed(R69, target, {
         1: Outcomes.HasInsufficientContrast(1, 4.5, [
-          Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+          Diagnostic.Pairing.of(
+            Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+            Diagnostic.Color.of("background", rgb(0, 0, 0)),
+            1
+          ),
         ]),
       }),
     ]
@@ -362,8 +408,16 @@ test("evaluate() passes when a linear gradient has sufficient contrast in the be
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
-        Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
-        Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+          Diagnostic.Color.of("background", rgb(1, 1, 1)),
+          21
+        ),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          1
+        ),
       ]),
     }),
   ]);
@@ -387,8 +441,16 @@ test("evaluate() fails when a linear gradient has insufficient contrast in the b
   t.deepEqual(await evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
-        Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
-        Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(0, 0, 0), 1),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          1
+        ),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          1
+        ),
       ]),
     }),
   ]);
@@ -412,7 +474,11 @@ test(`evaluate() correctly merges semi-transparent background layers against a
   t.deepEqual(await evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(10.41, 4.5, [
-        Diagnostic.Pairing.of(rgb(1, 1, 1), rgb(0.25, 0.25, 0.25), 10.41),
+        Diagnostic.Pairing.of(
+          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
+          Diagnostic.Color.of("background", rgb(0.25, 0.25, 0.25)),
+          10.41
+        ),
       ]),
     }),
   ]);
@@ -532,7 +598,11 @@ test(`evaluate() cannot tell when encountering an absolutely positioned parent
     t.deepEqual(await evaluate(R69, { document }), [
       passed(R69, target, {
         1: Outcomes.HasSufficientContrast(21, 4.5, [
-          Diagnostic.Pairing.of(rgb(0, 0, 0), rgb(1, 1, 1), 21),
+          Diagnostic.Pairing.of(
+            Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
+            Diagnostic.Color.of("background", rgb(1, 1, 1)),
+            21
+          ),
         ]),
       }),
     ]);

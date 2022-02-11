@@ -80,8 +80,8 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
               ...flatMap(foregrounds, (foreground) =>
                 map(backgrounds, (background) =>
                   Diagnostic.Pairing.of(
-                    foreground,
-                    background,
+                    Diagnostic.Color.of("foreground", foreground),
+                    Diagnostic.Color.of("background", background),
                     contrast(foreground, background)
                   )
                 )

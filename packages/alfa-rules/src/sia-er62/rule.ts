@@ -543,8 +543,8 @@ namespace Distinguishable {
             .map((linkColors) =>
               Array.map(linkColors, (linkColor) =>
                 Contrast.Pairing.of(
-                  containerColor,
-                  linkColor,
+                  Contrast.Color.of("container", containerColor),
+                  Contrast.Color.of("link", linkColor),
                   contrast(containerColor, linkColor)
                 )
               )

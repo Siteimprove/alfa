@@ -65,39 +65,34 @@ export namespace Contrast {
   export function isContrast(value: unknown): value is Contrast {
     return value instanceof Contrast;
   }
-
   export class Pairing implements Equatable, Serializable, Hashable {
-    public static of(
-      foreground: RGB,
-      background: RGB,
-      contrast: number
-    ): Pairing {
-      return new Pairing(foreground, background, contrast);
+    public static of(color1: Color, color2: Color, contrast: number): Pairing {
+      return new Pairing(color1, color2, contrast);
     }
 
-    private readonly _foreground: RGB;
-    private readonly _background: RGB;
+    private readonly _color1: Color;
+    private readonly _color2: Color;
     private readonly _contrast: number;
 
-    private constructor(foreground: RGB, background: RGB, contrast: number) {
-      this._foreground = foreground;
-      this._background = background;
+    private constructor(color1: Color, color2: Color, contrast: number) {
+      this._color1 = color1;
+      this._color2 = color2;
       this._contrast = contrast;
     }
 
     public hash(hash: Hash): void {
       hash
-        .writeHashable(this._foreground)
-        .writeHashable(this._background)
+        .writeObject(this._color1)
+        .writeObject(this._color2)
         .writeNumber(this._contrast);
     }
 
-    public get foreground(): RGB {
-      return this._foreground;
+    public get color1(): Color {
+      return this._color1;
     }
 
-    public get background(): RGB {
-      return this._background;
+    public get color2(): Color {
+      return this._color2;
     }
 
     public get contrast(): number {
@@ -107,16 +102,16 @@ export namespace Contrast {
     public equals(value: unknown): value is this {
       return (
         value instanceof Pairing &&
-        value._foreground.equals(this._foreground) &&
-        value._background.equals(this._background) &&
+        value._color1.equals(this._color1) &&
+        value._color2.equals(this._color2) &&
         value._contrast === this._contrast
       );
     }
 
     public toJSON(): Pairing.JSON {
       return {
-        foreground: this._foreground.toJSON(),
-        background: this._background.toJSON(),
+        color1: this._color1.toJSON(),
+        color2: this._color2.toJSON(),
         contrast: this._contrast,
       };
     }
@@ -125,9 +120,58 @@ export namespace Contrast {
   export namespace Pairing {
     export interface JSON {
       [key: string]: json.JSON;
-      foreground: RGB.JSON;
-      background: RGB.JSON;
+      color1: Color.JSON;
+      color2: Color.JSON;
       contrast: number;
+    }
+  }
+
+  type Name = "container" | "link" | "foreground" | "background";
+  export class Color implements Equatable, Serializable, Hashable {
+    public static of(name: string, value: RGB): Color {
+      return new Color(name, value);
+    }
+
+    private readonly _name: string;
+    private readonly _value: RGB;
+
+    private constructor(name: string, value: RGB) {
+      this._name = name;
+      this._value = value;
+    }
+
+    public hash(hash: Hash): void {
+      hash.writeString(this._name).writeHashable(this._value);
+    }
+
+    public get name(): string {
+      return this._name;
+    }
+
+    public get value(): RGB {
+      return this._value;
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Color &&
+        value._name === this._name &&
+        value._value.equals(this._value)
+      );
+    }
+
+    public toJSON(): Color.JSON {
+      return {
+        name: this._name,
+        value: this._value.toJSON(),
+      };
+    }
+  }
+  namespace Color {
+    export interface JSON {
+      [key: string]: json.JSON;
+      name: json.JSON;
+      value: RGB.JSON;
     }
   }
 }
