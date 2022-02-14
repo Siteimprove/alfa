@@ -90,13 +90,15 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
             .filter(and(isElement, hasRole(device, "main")))
             .some((main) => isAtTheStart(main, device)(reference));
 
-          return askIsMain.answerIf(isAtStart, true).map((isMain) =>
-            expectation(
+          function isMain(isMain: boolean): Option<Result<Diagnostic>> {
+            return expectation(
               isMain,
               () => Outcomes.FirstTabbableIsLinkToContent,
               () => Outcomes.FirstTabbableIsNotLinkToContent
-            )
-          );
+            );
+          }
+
+          return askIsMain.answerIf(isAtStart, true).map(isMain);
         }
 
         function isSkipLink(): Interview<
@@ -131,19 +133,23 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
               )
             );
 
-          return (
-            askReference
-              // If the reference was automatically found, send it.
-              .answerIf(reference.isSome(), reference)
-              .map((ref) =>
-                expectation(
-                  // Oracle may still answer None to the question.
-                  ref.isSome(),
-                  () => isAtTheStartOfMain(ref.get()),
-                  () => Outcomes.FirstTabbableIsNotInternalLink
-                )
+          const foo = askReference
+            .answerIf(reference.isSome, reference)
+            .map((ref) =>
+              expectation(
+                // Oracle may still answer None to the question.
+                ref.isSome(),
+                () => isAtTheStartOfMain(ref.get()),
+                () => Outcomes.FirstTabbableIsNotInternalLink
               )
-          );
+            );
+
+          return foo;
+
+          // return (
+          //   // If the reference was automatically found, send it.
+          //   foo
+          // );
         }
 
         const askIsVisible = Question.of(
@@ -151,6 +157,13 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           element,
           target
         );
+
+        const visible = (isVisible: boolean) =>
+          expectation(
+            isVisible,
+            isSkipLink,
+            () => Outcomes.FirstTabbableIsNotVisible
+          );
 
         return {
           1: expectation(
@@ -167,13 +180,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
                       isVisible(device, Context.focus(element))(element),
                       true
                     )
-                    .map((isVisible) =>
-                      expectation(
-                        isVisible,
-                        isSkipLink,
-                        () => Outcomes.FirstTabbableIsNotVisible
-                      )
-                    ),
+                    .map(visible),
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),
