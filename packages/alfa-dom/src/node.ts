@@ -467,7 +467,6 @@ export namespace Node {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON | undefined;
     type: T;
-    path?: string;
   }
 
   export interface EARL extends earl.EARL {

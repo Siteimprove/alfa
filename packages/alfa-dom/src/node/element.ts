@@ -278,7 +278,6 @@ export class Element<N extends string = string>
   public toJSON(): Element.JSON<N> {
     return {
       type: "element",
-      path: this.path(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,

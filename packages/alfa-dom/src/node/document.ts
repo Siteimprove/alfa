@@ -54,7 +54,6 @@ export class Document extends Node {
   public toJSON(): Document.JSON {
     return {
       type: "document",
-      path: this.path(),
       children: this._children.map((child) => child.toJSON()),
       style: this._style.map((sheet) => sheet.toJSON()),
     };
