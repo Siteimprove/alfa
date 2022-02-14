@@ -25,7 +25,6 @@ export class Fragment extends Node {
   public toJSON(): Fragment.JSON {
     return {
       type: "fragment",
-      // path: this.path(),
       children: this._children.map((child) => child.toJSON()),
     };
   }

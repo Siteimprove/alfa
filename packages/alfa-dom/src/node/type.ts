@@ -50,7 +50,6 @@ export class Type<N extends string = string> extends Node {
   public toJSON(): Type.JSON<N> {
     return {
       type: "type",
-      // path: this.path(),
       name: this._name,
       publicId: this._publicId.getOr(null),
       systemId: this._systemId.getOr(null),
