@@ -6,6 +6,14 @@ import { Trilean } from "@siteimprove/alfa-trilean";
 
 type Path<Q, S, C> = Interview<Q, S, C, Option.Maybe<Result<Diagnostic>>>;
 
+// function toExpectation<Q, S, C>(
+//   path: Option.Maybe<Result<Diagnostic>>
+// ): Option<Result<Diagnostic>>;
+//
+// function toExpectation<Q, S, C>(
+//   path: Path<Q, S, C>
+// ): Interview<Q, S, C, Option<Result<Diagnostic>>>;
+
 function toExpectation<Q, S, C>(
   path: Path<Q, S, C>
 ): Interview<Q, S, C, Option<Result<Diagnostic>>> {
@@ -19,6 +27,20 @@ function toExpectation<Q, S, C>(
 
   return Some.of(path);
 }
+
+export function expectation<Q, S, C>(
+  test: Trilean,
+  ifTrue: Thunk<Option.Maybe<Result<Diagnostic>>>,
+  ifFalse: Thunk<Option.Maybe<Result<Diagnostic>>>,
+  ifUnknown?: Thunk<Option.Maybe<Result<Diagnostic>>>
+): Option<Result<Diagnostic>>;
+
+export function expectation<Q, S, C>(
+  test: Trilean,
+  ifTrue: Thunk<Path<Q, S, C>>,
+  ifFalse: Thunk<Path<Q, S, C>>,
+  ifUnknown?: Thunk<Path<Q, S, C>>
+): Interview<Q, S, C, Option<Result<Diagnostic>>>;
 
 export function expectation<Q, S, C>(
   test: Trilean,
