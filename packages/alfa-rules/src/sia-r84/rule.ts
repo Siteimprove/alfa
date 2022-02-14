@@ -15,10 +15,12 @@ import {
   isVisible,
   isTabbable,
 } from "../common/predicate";
+
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { and } = Refinement;
+const { not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r84",
@@ -38,7 +40,8 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(Namespace.HTML),
               isVisible(device),
-              isPossiblyScrollable(device)
+              isPossiblyScrollable(device),
+              not(Element.isBrowsingContextContainer)
             )
           );
       },
