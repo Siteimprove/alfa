@@ -8,7 +8,7 @@ import { Element } from "./element";
 /**
  * @public
  */
-export class Shadow extends Node {
+export class Shadow extends Node<"shadow"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
@@ -30,7 +30,7 @@ export class Shadow extends Node {
     style: Array<Sheet>,
     mode: Shadow.Mode
   ) {
-    super(children);
+    super(children, "shadow");
 
     this._mode = mode;
     this._style = style;
@@ -73,7 +73,7 @@ export class Shadow extends Node {
 
   public toJSON(): Shadow.JSON {
     return {
-      type: "shadow",
+      ...super.toJSON(),
       children: this._children.map((child) => child.toJSON()),
       mode: this._mode,
       style: this._style.map((sheet) => sheet.toJSON()),

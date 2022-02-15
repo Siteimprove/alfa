@@ -6,7 +6,7 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Type<N extends string = string> extends Node {
+export class Type<N extends string = string> extends Node<"type"> {
   public static of<N extends string = string>(
     name: N,
     publicId: Option<string> = None,
@@ -28,7 +28,7 @@ export class Type<N extends string = string> extends Node {
     publicId: Option<string>,
     systemId: Option<string>
   ) {
-    super([]);
+    super([], "type");
 
     this._name = name;
     this._publicId = publicId;
@@ -49,7 +49,7 @@ export class Type<N extends string = string> extends Node {
 
   public toJSON(): Type.JSON<N> {
     return {
-      type: "type",
+      ...super.toJSON(),
       name: this._name,
       publicId: this._publicId.getOr(null),
       systemId: this._systemId.getOr(null),
