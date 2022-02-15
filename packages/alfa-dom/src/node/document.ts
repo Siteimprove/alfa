@@ -8,7 +8,7 @@ import { Element } from "./element";
 /**
  * @public
  */
-export class Document extends Node {
+export class Document extends Node<"document"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = []
@@ -24,7 +24,7 @@ export class Document extends Node {
   private _frame: Option<Element> = None;
 
   private constructor(children: Array<Node>, style: Iterable<Sheet>) {
-    super(children);
+    super(children, "document");
 
     this._style = Array.from(style);
   }
@@ -53,7 +53,7 @@ export class Document extends Node {
 
   public toJSON(): Document.JSON {
     return {
-      type: "document",
+      ...super.toJSON(),
       children: this._children.map((child) => child.toJSON()),
       style: this._style.map((sheet) => sheet.toJSON()),
     };

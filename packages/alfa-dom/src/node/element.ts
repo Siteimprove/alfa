@@ -22,7 +22,7 @@ const { not } = Predicate;
  * @public
  */
 export class Element<N extends string = string>
-  extends Node
+  extends Node<"element">
   implements Slot, Slotable
 {
   public static of<N extends string = string>(
@@ -61,7 +61,7 @@ export class Element<N extends string = string>
     children: Array<Node>,
     style: Option<Block>
   ) {
-    super(children);
+    super(children, "element");
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -277,7 +277,7 @@ export class Element<N extends string = string>
 
   public toJSON(): Element.JSON<N> {
     return {
-      type: "element",
+      ...super.toJSON(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
