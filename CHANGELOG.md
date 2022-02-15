@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.33.0](../../compare/v0.32.0...v0.33.0) (2022-02-15)
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): Nodes now expose a `#type` getter. ([#1074](../../issues/1074), [#1075](../../pull/1075))
+
 ## [0.32.0](../../compare/v0.31.0...v0.32.0) (2022-02-14)
 
 ### Breaking
