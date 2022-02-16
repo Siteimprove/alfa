@@ -1,12 +1,22 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
+import { URL } from "@siteimprove/alfa-url";
+import { Page } from "@siteimprove/alfa-web";
 import { Contrast } from "../../src/common/diagnostic/contrast";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import { Defaults, getContainerColor, getLinkColor } from "./common";
+import {
+  Defaults,
+  getContainerColor,
+  getLinkColor,
+  sortContrastPairings,
+} from "./common";
 
 const { noDistinguishingProperties, defaultTextColor, defaultLinkColor } =
   Defaults;
@@ -140,14 +150,14 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
 
   const contrastPairings = [
     Contrast.Pairing.of(
-      getContainerColor(offOrange),
-      getLinkColor(defaultLinkColor),
-      6.61
-    ),
-    Contrast.Pairing.of(
       getContainerColor(offYellow),
       getLinkColor(defaultLinkColor),
       3.86
+    ),
+    Contrast.Pairing.of(
+      getContainerColor(offOrange),
+      getLinkColor(defaultLinkColor),
+      6.61
     ),
     Contrast.Pairing.of(
       getContainerColor(offRed),
@@ -166,7 +176,18 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
       .withDistinguishingProperties(["contrast"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
+  const page = Page.of(
+    Request.of("GET", URL.example()),
+    Response.of(URL.example(), 200),
+    document,
+    Device.standard()
+  );
+
+  const actualSortedOutcomes = Array.of(
+    ...sortContrastPairings(await ER62.evaluate(page), target)
+  ).map((outcome) => outcome.toJSON());
+
+  t.deepEqual(actualSortedOutcomes, [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),

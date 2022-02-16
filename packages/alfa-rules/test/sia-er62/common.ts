@@ -1,7 +1,18 @@
+import { Diagnostic, Outcome } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Option } from "@siteimprove/alfa-option";
+import { Record } from "@siteimprove/alfa-record";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
+import ER62 from "../../src/sia-er62/rule";
 import { Contrast } from "../../src/common/diagnostic/contrast";
-import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
+import {
+  DistinguishingStyles,
+  ElementDistinguishable,
+} from "../../src/sia-er62/diagnostics";
 
 export function addCursor(
   style: Result<ElementDistinguishable>
@@ -28,6 +39,91 @@ export function getContainerColor(color: RGB): Contrast.Color {
 
 export function getLinkColor(color: RGB): Contrast.Color {
   return Contrast.Color.of("link", color);
+}
+
+export function sortContrastPairings(
+  outcomes: Iterable<Outcome<Page, Element<string>, never, Element<string>>>,
+  target: Element
+) {
+  return Iterable.map(outcomes, (outcome) => {
+    if (Outcome.Passed.isPassed(outcome) || Outcome.Failed.isFailed(outcome)) {
+      const expectations: Iterable<
+        [string, Option<Result<Diagnostic, Diagnostic>>]
+      > = Iterable.map(outcome.expectations.entries(), ([key, result]) => {
+        return [
+          key,
+          Option.of(
+            result.map((distinguishingStyles) => {
+              if (
+                DistinguishingStyles.isDistinguishingStyles(
+                  distinguishingStyles
+                )
+              ) {
+                function sortByContrast(
+                  pairings: ReadonlyArray<Contrast.Pairing>
+                ): ReadonlyArray<Contrast.Pairing> {
+                  return Array.sortWith([...pairings], (a, b) =>
+                    a.contrast > b.contrast
+                      ? 1
+                      : b.contrast > a.contrast
+                      ? -1
+                      : 0
+                  );
+                }
+                const defaultStyles = Array.of(
+                  ...distinguishingStyles.defaultStyles
+                ).map((defaultStyle) =>
+                  defaultStyle.map(
+                    ({ distinguishingProperties, style, pairings }) =>
+                      ElementDistinguishable.of(
+                        distinguishingProperties,
+                        style,
+                        sortByContrast(pairings)
+                      )
+                  )
+                );
+
+                const hoverStyles = Array.of(
+                  ...distinguishingStyles.hoverStyles
+                ).map((hoverStyle) =>
+                  hoverStyle.map(
+                    ({ distinguishingProperties, style, pairings }) =>
+                      ElementDistinguishable.of(
+                        distinguishingProperties,
+                        style,
+                        sortByContrast(pairings)
+                      )
+                  )
+                );
+
+                const focusStyles = Array.of(
+                  ...distinguishingStyles.focusStyles
+                ).map((focusStyle) =>
+                  focusStyle.map(
+                    ({ distinguishingProperties, style, pairings }) =>
+                      ElementDistinguishable.of(
+                        distinguishingProperties,
+                        style,
+                        sortByContrast(pairings)
+                      )
+                  )
+                );
+                return DistinguishingStyles.of(
+                  distinguishingStyles.message,
+                  defaultStyles,
+                  hoverStyles,
+                  focusStyles
+                );
+              }
+              return distinguishingStyles;
+            })
+          ),
+        ];
+      });
+      return Outcome.from(ER62, target, Record.from(expectations));
+    }
+    return outcome;
+  });
 }
 
 export namespace Defaults {

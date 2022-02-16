@@ -128,14 +128,14 @@ export namespace Contrast {
 
   type Name = "container" | "link" | "foreground" | "background";
   export class Color implements Equatable, Serializable, Hashable {
-    public static of(name: string, value: RGB): Color {
+    public static of(name: Name, value: RGB): Color {
       return new Color(name, value);
     }
 
-    private readonly _name: string;
+    private readonly _name: Name;
     private readonly _value: RGB;
 
-    private constructor(name: string, value: RGB) {
+    private constructor(name: Name, value: RGB) {
       this._name = name;
       this._value = value;
     }
@@ -144,7 +144,7 @@ export namespace Contrast {
       hash.writeString(this._name).writeHashable(this._value);
     }
 
-    public get name(): string {
+    public get name(): Name {
       return this._name;
     }
 
