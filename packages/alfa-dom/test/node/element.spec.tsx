@@ -4,7 +4,7 @@ test("#tabIndex() returns the tab index explicitly assigned to an element", (t) 
   t.equal((<div tabindex="42" />).tabIndex().get(), 42);
 });
 
-test("#tabIndex() returns the non-valid integer tab index as parsed integer", (t) => {
+test("#tabIndex() ignores characters after the first non-digit", (t) => {
   t.equal((<div tabindex="-1-toRemove" />).tabIndex().get(), -1);
 });
 
