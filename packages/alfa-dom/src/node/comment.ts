@@ -5,7 +5,7 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Comment extends Node {
+export class Comment extends Node<"comment"> {
   public static of(data: string): Comment {
     return new Comment(data);
   }
@@ -17,7 +17,7 @@ export class Comment extends Node {
   private readonly _data: string;
 
   private constructor(data: string) {
-    super([]);
+    super([], "comment");
 
     this._data = data;
   }
@@ -43,8 +43,7 @@ export class Comment extends Node {
 
   public toJSON(): Comment.JSON {
     return {
-      type: "comment",
-      path: this.path(),
+      ...super.toJSON(),
       data: this._data,
     };
   }
