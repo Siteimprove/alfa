@@ -1,7 +1,13 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Text,
+  Namespace,
+  Node,
+  Attribute,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -57,12 +63,7 @@ export default Rule.Atomic.of<Page, Text>({
 
           if (
             test(
-              and(
-                isElement,
-                or(
-                  and(hasName("select"), hasAttribute(("size"), equals("1"))),
-                )
-              ),
+              and(isElement, or(and(hasName("select"), hasDisplaySize(1)))),
               node
             )
           ) {
@@ -118,13 +119,36 @@ export default Rule.Atomic.of<Page, Text>({
   },
 });
 
-function hasDisplaySize(element: Element): number{
-  const isMenuSize = element.attribute("size").get().value
-  if(isMenuSize){
-    return parseInt(isMenuSize)
-  }
-  
+function hasDisplaySize(
+  valueOrPredicate: number | Predicate<number>
+  //predicate: Predicate<number>
+  //value: number
+): Predicate<Element> {
+  const predicate =
+    typeof valueOrPredicate === "function"
+      ? valueOrPredicate
+      : (size: number) => valueOrPredicate === size;
 
+  return (element) => {
+    let displaySize = 0;
+    for (const size of element.attribute("size")) {
+      const valueMenuSize = parseInt(size.value, 10);
+      if (
+        valueMenuSize === valueMenuSize &&
+        valueMenuSize === (valueMenuSize | 0)
+      ) {
+        displaySize = valueMenuSize;
+      }
+    }
+
+    if (element.attribute("multiple").isSome()) {
+      displaySize = 4;
+    }
+
+    displaySize = 1;
+
+    return predicate(displaySize);
+  };
 }
 
 const verticallyClippingCache = Cache.empty<
