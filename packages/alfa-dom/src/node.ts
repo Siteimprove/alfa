@@ -26,7 +26,7 @@ const { equals } = Predicate;
 /**
  * @public
  */
-export abstract class Node
+export abstract class Node<T extends string = string>
   implements
     Iterable<Node>,
     Equatable,
@@ -36,6 +36,7 @@ export abstract class Node
 {
   protected readonly _children: Array<Node>;
   protected _parent: Option<Node> = None;
+  protected readonly _type: T;
 
   /**
    * Whether or not the node is frozen.
@@ -50,8 +51,13 @@ export abstract class Node
    */
   protected _frozen: boolean = false;
 
-  protected constructor(children: Array<Node>) {
+  protected constructor(children: Array<Node>, type: T) {
     this._children = children.filter((child) => child._attachParent(this));
+    this._type = type;
+  }
+
+  public get type(): T {
+    return this._type;
   }
 
   public get frozen(): boolean {
@@ -418,7 +424,11 @@ export abstract class Node
     return value === this;
   }
 
-  public abstract toJSON(): Node.JSON;
+  public toJSON(): Node.JSON<T> {
+    return {
+      type: this._type,
+    };
+  }
 
   public toEARL(): Node.EARL {
     return {
@@ -467,7 +477,6 @@ export namespace Node {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON | undefined;
     type: T;
-    path?: string;
   }
 
   export interface EARL extends earl.EARL {

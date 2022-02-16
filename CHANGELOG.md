@@ -19,7 +19,31 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
-## [Unreleased]
+## [0.33.0](../../compare/v0.32.0...v0.33.0) (2022-02-15)
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): Nodes now expose a `#type` getter. ([#1074](../../issues/1074), [#1075](../../pull/1075))
+
+## [0.32.0](../../compare/v0.31.0...v0.32.0) (2022-02-14)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The `.path` field has been removed from DOM serialisation due to performance issues; the `MediaRule#queries` getter has also been removed due to poor design. ([#1061](../../pull/1061)).
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R7 now also considers text in accessible names. ([#893](../../issues/893), [#1063](../../pull/1063))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R84 now correctly ignores browser context containers. ([#979](../../issues/979), [#1065](../../pull/1065))
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The extended diagnostic of SIA-ER62 now tells which of the checked properties are distinguishing. ([#1044](../../issues/1044), [#1053](../../pull/1053))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now include an extended diagnostic in the questions they ask. ([#1033](../../pull/1033))
 
 ## [0.31.0](../../compare/v0.30.0...v0.31.0) (2022-02-03)
 
