@@ -63,7 +63,7 @@ export default Rule.Atomic.of<Page, Text>({
 
           if (
             test(
-              and(isElement, or(and(hasName("select"), hasDisplaySize(1)))),
+              and(isElement, and(hasName("select"), hasDisplaySize(1))),
               node
             )
           ) {
@@ -121,8 +121,6 @@ export default Rule.Atomic.of<Page, Text>({
 
 function hasDisplaySize(
   valueOrPredicate: number | Predicate<number>
-  //predicate: Predicate<number>
-  //value: number
 ): Predicate<Element> {
   const predicate =
     typeof valueOrPredicate === "function"
