@@ -5,7 +5,7 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Fragment extends Node {
+export class Fragment extends Node<"fragment"> {
   public static of(children: Iterable<Node>): Fragment {
     return new Fragment(Array.from(children));
   }
@@ -15,7 +15,7 @@ export class Fragment extends Node {
   }
 
   private constructor(children: Array<Node>) {
-    super(children);
+    super(children, "fragment");
   }
 
   public path(): string {
@@ -24,8 +24,7 @@ export class Fragment extends Node {
 
   public toJSON(): Fragment.JSON {
     return {
-      type: "fragment",
-      path: this.path(),
+      ...super.toJSON(),
       children: this._children.map((child) => child.toJSON()),
     };
   }
