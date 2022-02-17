@@ -336,77 +336,77 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
 //  * Font as Distinguishing Feature
 //  *
 //  ******************************************************************/
-test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
+// test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
+//   const target = <a href="#">Link</a>;
 
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          fontWeight: "bold",
-        }),
-      ]),
-    ]
-  );
+//   const document = h.document(
+//     [
+//       <p>
+//         <span>Hello</span> {target}
+//       </p>,
+//     ],
+//     [
+//       h.sheet([
+//         h.rule.style("a", {
+//           textDecoration: "none",
+//           fontWeight: "bold",
+//         }),
+//       ]),
+//     ]
+//   );
 
-  const style = Ok.of(
-    noDistinguishingProperties
-      .withStyle(["font", "700 16px serif"])
-      .withDistinguishingProperties(["font"])
-  );
+//   const style = Ok.of(
+//     noDistinguishingProperties
+//       .withStyle(["font", "700 16px serif"])
+//       .withDistinguishingProperties(["font"])
+//   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [addCursor(style)],
-        [addOutline(style)]
-      ),
-    }),
-  ]);
-});
+//   t.deepEqual(await evaluate(ER62, { document }), [
+//     passed(ER62, target, {
+//       1: Outcomes.IsDistinguishable(
+//         [style],
+//         [addCursor(style)],
+//         [addOutline(style)]
+//       ),
+//     }),
+//   ]);
+// });
 
-test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
-  const target = <a href="#">Link</a>;
+// test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
+//   const target = <a href="#">Link</a>;
 
-  const document = h.document(
-    [
-      <p>
-        <span>Hello</span> {target}
-      </p>,
-    ],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-          font: '16px "some-font", serif',
-        }),
-      ]),
-    ]
-  );
+//   const document = h.document(
+//     [
+//       <p>
+//         <span>Hello</span> {target}
+//       </p>,
+//     ],
+//     [
+//       h.sheet([
+//         h.rule.style("a", {
+//           textDecoration: "none",
+//           font: '16px "some-font", serif',
+//         }),
+//       ]),
+//     ]
+//   );
 
-  const style = Ok.of(
-    noDistinguishingProperties
-      .withStyle(["font", '16px "some-font", serif'])
-      .withDistinguishingProperties(["font"])
-  );
+//   const style = Ok.of(
+//     noDistinguishingProperties
+//       .withStyle(["font", '16px "some-font", serif'])
+//       .withDistinguishingProperties(["font"])
+//   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style],
-        [addCursor(style)],
-        [addOutline(style)]
-      ),
-    }),
-  ]);
-});
+//   t.deepEqual(await evaluate(ER62, { document }), [
+//     passed(ER62, target, {
+//       1: Outcomes.IsDistinguishable(
+//         [style],
+//         [addCursor(style)],
+//         [addOutline(style)]
+//       ),
+//     }),
+//   ]);
+// });
 
 // /******************************************************************
 //  *
@@ -504,40 +504,40 @@ test(`evaluate() fails an <a> element that removes the default text decoration
  *
  ******************************************************************/
 
-test(`evaluate() passes an <a> element in superscript`, async (t) => {
-  const target = (
-    <a href="#">
-      <sup>Link</sup>
-    </a>
-  );
+// test(`evaluate() passes an <a> element in superscript`, async (t) => {
+//   const target = (
+//     <a href="#">
+//       <sup>Link</sup>
+//     </a>
+//   );
 
-  const document = h.document(
-    [<p>Hello {target}</p>],
-    [
-      h.sheet([
-        h.rule.style("a", {
-          textDecoration: "none",
-        }),
-      ]),
-    ]
-  );
+//   const document = h.document(
+//     [<p>Hello {target}</p>],
+//     [
+//       h.sheet([
+//         h.rule.style("a", {
+//           textDecoration: "none",
+//         }),
+//       ]),
+//     ]
+//   );
 
-  const style = Ok.of(
-    noDistinguishingProperties
-      .withStyle(["vertical-align", "super"])
-      .withDistinguishingProperties(["vertical-align"])
-  );
+//   const style = Ok.of(
+//     noDistinguishingProperties
+//       .withStyle(["vertical-align", "super"])
+//       .withDistinguishingProperties(["vertical-align"])
+//   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
-      1: Outcomes.IsDistinguishable(
-        [style, noStyle],
-        [addCursor(style), addCursor(noStyle)],
-        [style, addOutline(noStyle)]
-      ),
-    }),
-  ]);
-});
+//   t.deepEqual(await evaluate(ER62, { document }), [
+//     passed(ER62, target, {
+//       1: Outcomes.IsDistinguishable(
+//         [style, noStyle],
+//         [addCursor(style), addCursor(noStyle)],
+//         [style, addOutline(noStyle)]
+//       ),
+//     }),
+//   ]);
+// });
 
 /******************************************************************
  *

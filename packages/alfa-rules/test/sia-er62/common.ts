@@ -45,7 +45,7 @@ export function sortContrastPairings(
   outcomes: Iterable<Outcome<Page, Element<string>, never, Element<string>>>,
   target: Element
 ) {
-  return Iterable.map(outcomes, (outcome) => {
+  const sortedOutcomes = Iterable.map(outcomes, (outcome) => {
     if (Outcome.Passed.isPassed(outcome) || Outcome.Failed.isFailed(outcome)) {
       const expectations: Iterable<
         [string, Option<Result<Diagnostic, Diagnostic>>]
@@ -70,43 +70,43 @@ export function sortContrastPairings(
                       : 0
                   );
                 }
-                const defaultStyles = Array.of(
-                  ...distinguishingStyles.defaultStyles
-                ).map((defaultStyle) =>
-                  defaultStyle.map(
-                    ({ distinguishingProperties, style, pairings }) =>
-                      ElementDistinguishable.of(
-                        distinguishingProperties,
-                        style,
-                        sortByContrast(pairings)
-                      )
-                  )
+                const defaultStyles = Iterable.map(
+                  distinguishingStyles.defaultStyles,
+                  (defaultStyle) =>
+                    defaultStyle.map(
+                      ({ distinguishingProperties, style, pairings }) =>
+                        ElementDistinguishable.of(
+                          distinguishingProperties,
+                          style,
+                          sortByContrast(pairings)
+                        )
+                    )
                 );
 
-                const hoverStyles = Array.of(
-                  ...distinguishingStyles.hoverStyles
-                ).map((hoverStyle) =>
-                  hoverStyle.map(
-                    ({ distinguishingProperties, style, pairings }) =>
-                      ElementDistinguishable.of(
-                        distinguishingProperties,
-                        style,
-                        sortByContrast(pairings)
-                      )
-                  )
+                const hoverStyles = Iterable.map(
+                  distinguishingStyles.hoverStyles,
+                  (hoverStyle) =>
+                    hoverStyle.map(
+                      ({ distinguishingProperties, style, pairings }) =>
+                        ElementDistinguishable.of(
+                          distinguishingProperties,
+                          style,
+                          sortByContrast(pairings)
+                        )
+                    )
                 );
 
-                const focusStyles = Array.of(
-                  ...distinguishingStyles.focusStyles
-                ).map((focusStyle) =>
-                  focusStyle.map(
-                    ({ distinguishingProperties, style, pairings }) =>
-                      ElementDistinguishable.of(
-                        distinguishingProperties,
-                        style,
-                        sortByContrast(pairings)
-                      )
-                  )
+                const focusStyles = Iterable.map(
+                  distinguishingStyles.focusStyles,
+                  (focusStyle) =>
+                    focusStyle.map(
+                      ({ distinguishingProperties, style, pairings }) =>
+                        ElementDistinguishable.of(
+                          distinguishingProperties,
+                          style,
+                          sortByContrast(pairings)
+                        )
+                    )
                 );
                 return DistinguishingStyles.of(
                   distinguishingStyles.message,
@@ -124,6 +124,8 @@ export function sortContrastPairings(
     }
     return outcome;
   });
+
+  return Array.of(...sortedOutcomes).map((outcome) => outcome.toJSON());
 }
 
 export namespace Defaults {
