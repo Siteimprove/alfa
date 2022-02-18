@@ -6,7 +6,14 @@ import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import { Defaults, addCursor, getContainerColor, getLinkColor } from "./common";
+import {
+  Defaults,
+  addCursor,
+  getContainerColor,
+  getLinkColor,
+  getPage,
+  sortContrastPairings,
+} from "./common";
 
 const {
   defaultStyle,
@@ -61,27 +68,27 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
   ]);
 });
 
-// test(`evaluates() doesn't break when link text is nested`, async (t) => {
-//   // Since text-decoration and focus outline is not inherited, the <span> has
-//   // effectively no style other than color.
-//   const target = (
-//     <a href="#">
-//       <span>Link</span>
-//     </a>
-//   );
+test(`evaluates() doesn't break when link text is nested`, async (t) => {
+  // Since text-decoration and focus outline is not inherited, the <span> has
+  // effectively no style other than color.
+  const target = (
+    <a href="#">
+      <span>Link</span>
+    </a>
+  );
 
-//   const document = h.document([<p>Hello {target}</p>]);
+  const document = h.document([<p>Hello {target}</p>]);
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [defaultStyle, noStyle],
-//         [hoverStyle, addCursor(noStyle)],
-//         [focusStyle, noStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle, noStyle],
+        [hoverStyle, addCursor(noStyle)],
+        [focusStyle, noStyle]
+      ),
+    }),
+  ]);
+});
 
 // test(`evaluates() accepts decoration on parents of links`, async (t) => {
 //   const target = <a href="#">Link</a>;
@@ -130,6 +137,8 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
 //     )
 //   );
 
+//   const actual = await ER62.evaluate(getPage(document));
+
 //   t.deepEqual(await evaluate(ER62, { document }), [
 //     passed(ER62, target, {
 //       1: Outcomes.IsDistinguishable(
@@ -141,25 +150,25 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
 //   ]);
 // });
 
-// test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
-//   const target = (
-//     <a href="#">
-//       <span>click</span> <span>here</span>
-//     </a>
-//   );
+test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
+  const target = (
+    <a href="#">
+      <span>click</span> <span>here</span>
+    </a>
+  );
 
-//   const document = h.document([<p>Hello {target}</p>]);
+  const document = h.document([<p>Hello {target}</p>]);
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [defaultStyle, noStyle],
-//         [hoverStyle, addCursor(noStyle)],
-//         [focusStyle, noStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [defaultStyle, noStyle],
+        [hoverStyle, addCursor(noStyle)],
+        [focusStyle, noStyle]
+      ),
+    }),
+  ]);
+});
 
 test(`evaluate() fails an <a> element that removes the default text decoration
    without replacing it with another distinguishing feature`, async (t) => {

@@ -336,77 +336,77 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
 //  * Font as Distinguishing Feature
 //  *
 //  ******************************************************************/
-// test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
-//   const target = <a href="#">Link</a>;
+test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
 
-//   const document = h.document(
-//     [
-//       <p>
-//         <span>Hello</span> {target}
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//           fontWeight: "bold",
-//         }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          fontWeight: "bold",
+        }),
+      ]),
+    ]
+  );
 
-//   const style = Ok.of(
-//     noDistinguishingProperties
-//       .withStyle(["font", "700 16px serif"])
-//       .withDistinguishingProperties(["font"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties
+      .withStyle(["font", "700 16px serif"])
+      .withDistinguishingProperties(["font"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style],
-//         [addCursor(style)],
-//         [addOutline(style)]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
+      ),
+    }),
+  ]);
+});
 
-// test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
-//   const target = <a href="#">Link</a>;
+test(`evaluate() passes a link with different font-family than surrounding text`, async (t) => {
+  const target = <a href="#">Link</a>;
 
-//   const document = h.document(
-//     [
-//       <p>
-//         <span>Hello</span> {target}
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//           font: '16px "some-font", serif',
-//         }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [
+      <p>
+        <span>Hello</span> {target}
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          font: '16px "some-font", serif',
+        }),
+      ]),
+    ]
+  );
 
-//   const style = Ok.of(
-//     noDistinguishingProperties
-//       .withStyle(["font", '16px "some-font", serif'])
-//       .withDistinguishingProperties(["font"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties
+      .withStyle(["font", '16px "some-font", serif'])
+      .withDistinguishingProperties(["font"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style],
-//         [addCursor(style)],
-//         [addOutline(style)]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style],
+        [addCursor(style)],
+        [addOutline(style)]
+      ),
+    }),
+  ]);
+});
 
 // /******************************************************************
 //  *
