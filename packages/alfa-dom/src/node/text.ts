@@ -10,7 +10,7 @@ import { Slotable } from "./slotable";
 /**
  * @public
  */
-export class Text extends Node implements Slotable {
+export class Text extends Node<"text"> implements Slotable {
   public static of(data: string): Text {
     return new Text(data);
   }
@@ -22,7 +22,7 @@ export class Text extends Node implements Slotable {
   private readonly _data: string;
 
   private constructor(data: string) {
-    super([]);
+    super([], "text");
 
     this._data = data;
   }
@@ -70,8 +70,7 @@ export class Text extends Node implements Slotable {
 
   public toJSON(): Text.JSON {
     return {
-      type: "text",
-      path: this.path(),
+      ...super.toJSON(),
       data: this.data,
     };
   }
