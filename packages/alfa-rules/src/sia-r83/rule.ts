@@ -52,18 +52,10 @@ export default Rule.Atomic.of<Page, Text>({
                 isElement,
                 or(
                   hasAttribute("aria-hidden", equals("true")),
-                  not(hasNamespace(Namespace.HTML))
+                  not(hasNamespace(Namespace.HTML)),
+                  and(hasName("select"), hasDisplaySize(1))
                 )
               ),
-              node
-            )
-          ) {
-            return;
-          }
-
-          if (
-            test(
-              and(isElement, and(hasName("select"), hasDisplaySize(1))),
               node
             )
           ) {
