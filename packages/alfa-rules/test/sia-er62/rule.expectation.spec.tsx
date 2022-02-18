@@ -504,40 +504,40 @@ test(`evaluate() fails an <a> element that removes the default text decoration
  *
  ******************************************************************/
 
-// test(`evaluate() passes an <a> element in superscript`, async (t) => {
-//   const target = (
-//     <a href="#">
-//       <sup>Link</sup>
-//     </a>
-//   );
+test(`evaluate() passes an <a> element in superscript`, async (t) => {
+  const target = (
+    <a href="#">
+      <sup>Link</sup>
+    </a>
+  );
 
-//   const document = h.document(
-//     [<p>Hello {target}</p>],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//         }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
 
-//   const style = Ok.of(
-//     noDistinguishingProperties
-//       .withStyle(["vertical-align", "super"])
-//       .withDistinguishingProperties(["vertical-align"])
-//   );
+  const style = Ok.of(
+    noDistinguishingProperties
+      .withStyle(["vertical-align", "super"])
+      .withDistinguishingProperties(["vertical-align"])
+  );
 
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [style, noStyle],
-//         [addCursor(style), addCursor(noStyle)],
-//         [style, addOutline(noStyle)]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [style, noStyle],
+        [addCursor(style), addCursor(noStyle)],
+        [addOutline(noStyle), style]
+      ),
+    }),
+  ]);
+});
 
 /******************************************************************
  *

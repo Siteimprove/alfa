@@ -5,6 +5,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 export class Contrast extends Diagnostic {
   public static of(
@@ -65,7 +66,9 @@ export namespace Contrast {
   export function isContrast(value: unknown): value is Contrast {
     return value instanceof Contrast;
   }
-  export class Pairing implements Equatable, Serializable, Hashable {
+  export class Pairing
+    implements Equatable, Serializable, Hashable, Comparable<Pairing>
+  {
     public static of(color1: Color, color2: Color, contrast: number): Pairing {
       return new Pairing(color1, color2, contrast);
     }
@@ -106,6 +109,18 @@ export namespace Contrast {
         value._color2.equals(this._color2) &&
         value._contrast === this._contrast
       );
+    }
+
+    public compare(value: Pairing): Comparison {
+      if (this._contrast < value.contrast) {
+        return Comparison.Greater;
+      }
+
+      if (this._contrast > value.contrast) {
+        return Comparison.Less;
+      }
+
+      return Comparison.Equal;
     }
 
     public toJSON(): Pairing.JSON {

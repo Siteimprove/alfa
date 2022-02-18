@@ -6,13 +6,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import {
-  Defaults,
-  getContainerColor,
-  getLinkColor,
-  getPage,
-  sortContrastPairings,
-} from "./common";
+import { Defaults, getContainerColor, getLinkColor } from "./common";
 
 const { noDistinguishingProperties, defaultTextColor, defaultLinkColor } =
   Defaults;
@@ -172,9 +166,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
       .withDistinguishingProperties(["contrast"])
   );
 
-  const actual = await ER62.evaluate(getPage(document));
-
-  t.deepEqual(sortContrastPairings(actual, target), [
+  t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
@@ -229,9 +221,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
       .withDistinguishingProperties(["contrast"])
   );
 
-  const actual = await ER62.evaluate(getPage(document));
-
-  t.deepEqual(sortContrastPairings(actual, target), [
+  t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
@@ -282,9 +272,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
       .withPairings(contrastPairings)
   );
 
-  const actual = await ER62.evaluate(getPage(document));
-
-  t.deepEqual(sortContrastPairings(actual, target), [
+  t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),
@@ -338,9 +326,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
       .withPairings(contrastPairings)
   );
 
-  const actual = await ER62.evaluate(getPage(document));
-
-  t.deepEqual(sortContrastPairings(actual, target), [
+  t.deepEqual(await evaluate(ER62, { document }), [
     failed(ER62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),

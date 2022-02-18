@@ -6,14 +6,7 @@ import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import {
-  Defaults,
-  addCursor,
-  getContainerColor,
-  getLinkColor,
-  getPage,
-  sortContrastPairings,
-} from "./common";
+import { Defaults, addCursor, getContainerColor, getLinkColor } from "./common";
 
 const {
   defaultStyle,
@@ -90,65 +83,63 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
   ]);
 });
 
-// test(`evaluates() accepts decoration on parents of links`, async (t) => {
-//   const target = <a href="#">Link</a>;
+test(`evaluates() accepts decoration on parents of links`, async (t) => {
+  const target = <a href="#">Link</a>;
 
-//   const document = h.document(
-//     [
-//       <p>
-//         Hello <span>{target}</span>
-//       </p>,
-//     ],
-//     [
-//       h.sheet([
-//         h.rule.style("a", {
-//           textDecoration: "none",
-//           cursor: "auto",
-//         }),
-//         h.rule.style("a:focus", {
-//           outline: "none",
-//         }),
-//         h.rule.style("span", { fontWeight: "bold" }),
-//       ]),
-//     ]
-//   );
+  const document = h.document(
+    [
+      <p>
+        Hello <span>{target}</span>
+      </p>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("a", {
+          textDecoration: "none",
+          cursor: "auto",
+        }),
+        h.rule.style("a:focus", {
+          outline: "none",
+        }),
+        h.rule.style("span", { fontWeight: "bold" }),
+      ]),
+    ]
+  );
 
-//   const linkStyle = Ok.of(
-//     noDistinguishingProperties
-//       .withStyle(["font", "700 16px serif"])
-//       .withDistinguishingProperties(["font"])
-//   );
+  const linkStyle = Ok.of(
+    noDistinguishingProperties
+      .withStyle(["font", "700 16px serif"])
+      .withDistinguishingProperties(["font"])
+  );
 
-//   const spanStyle = Ok.of(
-//     ElementDistinguishable.of(
-//       ["font"],
-//       [
-//         ["border-width", "0px"],
-//         ["font", "700 16px serif"],
-//         ["outline", "0px"],
-//       ],
-//       [
-//         Contrast.Pairing.of(
-//           getContainerColor(defaultTextColor),
-//           getLinkColor(defaultTextColor),
-//           1
-//         ),
-//       ]
-//     )
-//   );
+  const spanStyle = Ok.of(
+    ElementDistinguishable.of(
+      ["font"],
+      [
+        ["border-width", "0px"],
+        ["font", "700 16px serif"],
+        ["outline", "0px"],
+      ],
+      [
+        Contrast.Pairing.of(
+          getContainerColor(defaultTextColor),
+          getLinkColor(defaultTextColor),
+          1
+        ),
+      ]
+    )
+  );
 
-//   const actual = await ER62.evaluate(getPage(document));
-
-//   t.deepEqual(await evaluate(ER62, { document }), [
-//     passed(ER62, target, {
-//       1: Outcomes.IsDistinguishable(
-//         [spanStyle, linkStyle],
-//         [spanStyle, linkStyle],
-//         [spanStyle, linkStyle]
-//       ),
-//     }),
-//   ]);
-// });
+  t.deepEqual(await evaluate(ER62, { document }), [
+    passed(ER62, target, {
+      1: Outcomes.IsDistinguishable(
+        [linkStyle, spanStyle],
+        [linkStyle, spanStyle],
+        [linkStyle, spanStyle]
+      ),
+    }),
+  ]);
+});
 
 test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
   const target = (

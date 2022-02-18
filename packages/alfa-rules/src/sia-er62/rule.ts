@@ -244,6 +244,11 @@ export default Rule.Atomic.of<Page, Element>({
                 )
               );
 
+              const sortedDistinguishableContrast = Array.sortWith(
+                [...distinguishableContrast],
+                (a, b) => a.compare(b)
+              );
+
               const properties: List<DistinguishingProperty> =
                 distinguishingProperties
                   .get(context)
@@ -258,7 +263,7 @@ export default Rule.Atomic.of<Page, Element>({
                       target,
                       context,
                       properties,
-                      distinguishableContrast
+                      sortedDistinguishableContrast
                     )
                   )
                 : Err.of(
@@ -268,7 +273,7 @@ export default Rule.Atomic.of<Page, Element>({
                       target,
                       context,
                       properties,
-                      distinguishableContrast
+                      sortedDistinguishableContrast
                     )
                   );
             })

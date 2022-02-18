@@ -12,8 +12,6 @@ import {
   addOutline,
   getContainerColor,
   getLinkColor,
-  sortContrastPairings,
-  getPage,
 } from "./common";
 
 const {
@@ -109,9 +107,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
     ])
   );
 
-  const actual = await ER62.evaluate(getPage(document));
-
-  t.deepEqual(sortContrastPairings(actual, target), [
+  t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
@@ -423,9 +419,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
       .withDistinguishingProperties(["background", "text-decoration"])
   );
 
-  const actual = await ER62.evaluate(getPage(document));
-
-  t.deepEqual(sortContrastPairings(actual, target), [
+  t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
         [style],

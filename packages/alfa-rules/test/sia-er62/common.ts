@@ -1,14 +1,11 @@
 import { Diagnostic, Outcome } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Percentage, RGB } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Request, Response } from "@siteimprove/alfa-http";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 import ER62 from "../../src/sia-er62/rule";
 import { Contrast } from "../../src/common/diagnostic/contrast";
@@ -33,15 +30,6 @@ export function addOutline(
     props
       .withStyle(["outline", "auto"])
       .withDistinguishingProperties(["outline"])
-  );
-}
-
-export function getPage(document: Document): Page {
-  return Page.of(
-    Request.of("GET", URL.example()),
-    Response.of(URL.example(), 200),
-    document,
-    Device.standard()
   );
 }
 
