@@ -239,6 +239,32 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
+test(`evaluate() is inapplicable to a single line <select> element`, async (t) => {
+  const document = h.document(
+    [
+      <body>
+        <select size="1">
+          <option value="Foo">First</option>
+          <option value="Bar">Second</option>
+          <option value="Baz">
+            Super long text, I want that to be really huge
+          </option>
+        </select>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("select", {
+          width: "20px",
+          overflow: "hidden",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+});
+
 test(`evaluate() passes a text node with a fixed absolute height set
       via the style attribute`, async (t) => {
   const target = h.text("Hello world");
