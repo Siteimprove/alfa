@@ -542,7 +542,7 @@ namespace Distinguishable {
           getForeground(link, device, context)
             .map((linkColors) =>
               Array.map(linkColors, (linkColor) =>
-                Contrast.Pairing.of(
+                Contrast.Pairing.of<["container", "link"]>(
                   ["container", containerColor],
                   ["link", linkColor],
                   contrast(containerColor, linkColor)

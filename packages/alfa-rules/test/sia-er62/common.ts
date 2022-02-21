@@ -3,8 +3,6 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Contrast } from "../../src/common/diagnostic/contrast";
 import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 
-const { Pairing } = Contrast;
-
 export function addCursor(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
@@ -24,8 +22,16 @@ export function addOutline(
   );
 }
 
-export function makePairing(container: RGB, link: RGB, contrast: number) {
-  return Pairing.of(["container", container], ["link", link], contrast);
+export function makePairing(
+  container: RGB,
+  link: RGB,
+  contrast: number
+): Contrast.Pairing<["container", "link"]> {
+  return Contrast.Pairing.of<["container", "link"]>(
+    ["container", container],
+    ["link", link],
+    contrast
+  );
 }
 export namespace Defaults {
   // default styling of links
