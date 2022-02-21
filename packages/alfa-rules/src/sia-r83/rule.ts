@@ -6,7 +6,6 @@ import {
   Text,
   Namespace,
   Node,
-  Attribute,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
