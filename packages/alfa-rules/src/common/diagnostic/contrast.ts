@@ -7,22 +7,23 @@ import * as json from "@siteimprove/alfa-json";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
+type Name = ["container", "link"] | ["foreground", "background"];
 export class Contrast extends Diagnostic {
   public static of(
     message: string,
     threshold: number = 4.5,
-    pairings: Iterable<Contrast.Pairing> = []
+    pairings: Iterable<Contrast.Pairing<Name>> = []
   ): Contrast {
     return new Contrast(message, threshold, Array.from(pairings));
   }
 
   private readonly _threshold: number;
-  private readonly _pairings: Array<Contrast.Pairing>;
+  private readonly _pairings: Array<Contrast.Pairing<Name>>;
 
   private constructor(
     message: string,
     threshold: number,
-    pairings: Array<Contrast.Pairing>
+    pairings: Array<Contrast.Pairing<Name>>
   ) {
     super(message);
 
@@ -34,7 +35,7 @@ export class Contrast extends Diagnostic {
     return this._threshold;
   }
 
-  public get pairings(): Iterable<Contrast.Pairing> {
+  public get pairings(): Iterable<Contrast.Pairing<Name>> {
     return this._pairings;
   }
 
@@ -66,11 +67,15 @@ export namespace Contrast {
   export function isContrast(value: unknown): value is Contrast {
     return value instanceof Contrast;
   }
-  export class Pairing
-    implements Equatable, Serializable, Hashable, Comparable<Pairing>
+  export class Pairing<N extends Name>
+    implements Equatable, Serializable, Hashable, Comparable<Pairing<N>>
   {
-    public static of(color1: Color, color2: Color, contrast: number): Pairing {
-      return new Pairing(color1, color2, contrast);
+    public static of<N extends Name>(
+      color1: [N[0], RGB],
+      color2: [N[1], RGB],
+      contrast: number
+    ): Pairing<N> {
+      return new Pairing(Color.of(...color1), Color.of(...color2), contrast);
     }
 
     private readonly _color1: Color;
@@ -111,7 +116,7 @@ export namespace Contrast {
       );
     }
 
-    public compare(value: Pairing): Comparison {
+    public compare(value: Pairing<N>): Comparison {
       if (this._contrast < value.contrast) {
         return Comparison.Greater;
       }
@@ -141,16 +146,20 @@ export namespace Contrast {
     }
   }
 
-  type Name = "container" | "link" | "foreground" | "background";
-  export class Color implements Equatable, Serializable, Hashable {
-    public static of(name: Name, value: RGB): Color {
+  class Color<N extends Name = Name>
+    implements Equatable, Serializable, Hashable
+  {
+    public static of<N extends Name = Name>(
+      name: N[0] | N[1],
+      value: RGB
+    ): Color {
       return new Color(name, value);
     }
 
-    private readonly _name: Name;
+    private readonly _name: N[0] | N[1];
     private readonly _value: RGB;
 
-    private constructor(name: Name, value: RGB) {
+    private constructor(name: N[0] | N[1], value: RGB) {
       this._name = name;
       this._value = value;
     }
@@ -159,7 +168,7 @@ export namespace Contrast {
       hash.writeString(this._name).writeHashable(this._value);
     }
 
-    public get name(): Name {
+    public get name(): N[0] | N[1] {
       return this._name;
     }
 

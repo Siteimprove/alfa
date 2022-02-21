@@ -3,6 +3,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Contrast } from "../../src/common/diagnostic/contrast";
 import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 
+const { Pairing } = Contrast;
+
 export function addCursor(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
@@ -22,12 +24,8 @@ export function addOutline(
   );
 }
 
-export function getContainerColor(color: RGB): Contrast.Color {
-  return Contrast.Color.of("container", color);
-}
-
-export function getLinkColor(color: RGB): Contrast.Color {
-  return Contrast.Color.of("link", color);
+export function makePairing(container: RGB, link: RGB, contrast: number) {
+  return Pairing.of(["container", container], ["link", link], contrast);
 }
 export namespace Defaults {
   // default styling of links
@@ -56,11 +54,7 @@ export namespace Defaults {
   );
 
   export const defaultContrastPairings = [
-    Contrast.Pairing.of(
-      getContainerColor(defaultTextColor),
-      getLinkColor(defaultLinkColor),
-      2.23
-    ),
+    makePairing(defaultTextColor, defaultLinkColor, 2.23),
   ];
 
   export const noDistinguishingProperties = ElementDistinguishable.of(

@@ -31,8 +31,8 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
     passed(R66, target, {
       1: Outcomes.HasSufficientContrast(21, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(1, 1, 1)],
+          ["background", rgb(0, 0, 0)],
           21
         ),
       ]),
@@ -59,8 +59,8 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
     passed(R66, target1, {
       1: Outcomes.HasSufficientContrast(15.08, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
-          Diagnostic.Color.of("background", rgb(0.15, 0.15, 0.15)),
+          ["foreground", rgb(1, 1, 1)],
+          ["background", rgb(0.15, 0.15, 0.15)],
           15.08
         ),
       ]),
@@ -68,8 +68,8 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
     failed(R66, target2, {
       1: Outcomes.HasInsufficientContrast(5.74, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
-          Diagnostic.Color.of("background", rgb(0.4, 0.4, 0.4)),
+          ["foreground", rgb(1, 1, 1)],
+          ["background", rgb(0.4, 0.4, 0.4)],
           5.74
         ),
       ]),
@@ -92,8 +92,8 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
     passed(R66, target1, {
       1: Outcomes.HasSufficientContrast(14.84, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0.85, 0.85, 0.85)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0.85, 0.85, 0.85)],
+          ["background", rgb(0, 0, 0)],
           14.84
         ),
       ]),
@@ -101,8 +101,8 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
     failed(R66, target2, {
       1: Outcomes.HasInsufficientContrast(5.28, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0.5, 0.5, 0.5)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0.5, 0.5, 0.5)],
+          ["background", rgb(0, 0, 0)],
           5.28
         ),
       ]),
@@ -125,11 +125,8 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
     passed(R66, target, {
       1: Outcomes.HasSufficientContrast(5.32, 4.5, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of(
-            "foreground",
-            rgb(0.5019608, 0.5019608, 0.5019608)
-          ),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0.5019608, 0.5019608, 0.5019608)],
+          ["background", rgb(0, 0, 0)],
           5.32
         ),
       ]),
@@ -157,11 +154,8 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
     passed(R66, target, {
       1: Outcomes.HasSufficientContrast(5.32, 4.5, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of(
-            "foreground",
-            rgb(0.5019608, 0.5019608, 0.5019608)
-          ),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0.5019608, 0.5019608, 0.5019608)],
+          ["background", rgb(0, 0, 0)],
           5.32
         ),
       ]),
@@ -178,8 +172,8 @@ test("evaluate() passes a text node using the user agent default styles", async 
     passed(R66, target, {
       1: Outcomes.HasSufficientContrast(21, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-          Diagnostic.Color.of("background", rgb(1, 1, 1)),
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
           21
         ),
       ]),
@@ -200,8 +194,8 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
     failed(R66, target, {
       1: Outcomes.HasInsufficientContrast(1, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
-          Diagnostic.Color.of("background", rgb(1, 1, 1)),
+          ["foreground", rgb(1, 1, 1)],
+          ["background", rgb(1, 1, 1)],
           1
         ),
       ]),
@@ -220,8 +214,8 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
     failed(R66, target, {
       1: Outcomes.HasInsufficientContrast(1, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(0, 0, 0)],
           1
         ),
       ]),
@@ -282,8 +276,8 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
       passed(R66, target, {
         1: Outcomes.HasSufficientContrast(21, 7, [
           Diagnostic.Pairing.of(
-            Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-            Diagnostic.Color.of("background", rgb(1, 1, 1)),
+            ["foreground", rgb(0, 0, 0)],
+            ["background", rgb(1, 1, 1)],
             21
           ),
         ]),
@@ -313,8 +307,8 @@ test("evaluate() fails when a background color with insufficient contrast is inp
       failed(R66, target, {
         1: Outcomes.HasInsufficientContrast(1, 7, [
           Diagnostic.Pairing.of(
-            Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-            Diagnostic.Color.of("background", rgb(0, 0, 0)),
+            ["foreground", rgb(0, 0, 0)],
+            ["background", rgb(0, 0, 0)],
             1
           ),
         ]),
@@ -342,13 +336,13 @@ test("evaluate() passes when a linear gradient has sufficient contrast in the be
     passed(R66, target, {
       1: Outcomes.HasSufficientContrast(21, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-          Diagnostic.Color.of("background", rgb(1, 1, 1)),
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
           21
         ),
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(0, 0, 0)],
           1
         ),
       ]),
@@ -375,13 +369,13 @@ test("evaluate() fails when a linear gradient has insufficient contrast in the b
     failed(R66, target, {
       1: Outcomes.HasInsufficientContrast(1, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(0, 0, 0)],
           1
         ),
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(0, 0, 0)),
-          Diagnostic.Color.of("background", rgb(0, 0, 0)),
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(0, 0, 0)],
           1
         ),
       ]),
@@ -408,8 +402,8 @@ test(`evaluate() correctly merges semi-transparent background layers against a
     passed(R66, target, {
       1: Outcomes.HasSufficientContrast(10.41, 7, [
         Diagnostic.Pairing.of(
-          Diagnostic.Color.of("foreground", rgb(1, 1, 1)),
-          Diagnostic.Color.of("background", rgb(0.25, 0.25, 0.25)),
+          ["foreground", rgb(1, 1, 1)],
+          ["background", rgb(0.25, 0.25, 0.25)],
           10.41
         ),
       ]),

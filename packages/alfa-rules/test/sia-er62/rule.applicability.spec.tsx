@@ -2,17 +2,10 @@ import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { Contrast } from "../../src/common/diagnostic/contrast";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { inapplicable, passed } from "../common/outcome";
-import {
-  Defaults,
-  addCursor,
-  addOutline,
-  getContainerColor,
-  getLinkColor,
-} from "./common";
+import { Defaults, addCursor, addOutline, makePairing } from "./common";
 
 const {
   defaultStyle,
@@ -99,11 +92,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
   const style = Ok.of(
     linkProperties.withPairings([
       ...defaultContrastPairings,
-      Contrast.Pairing.of(
-        getContainerColor(defaultLinkColor),
-        getLinkColor(defaultLinkColor),
-        1
-      ),
+      makePairing(defaultLinkColor, defaultLinkColor, 1),
     ])
   );
 
@@ -181,13 +170,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
 
   const spanStyle = Err.of(
     noDistinguishingProperties
-      .withPairings([
-        Contrast.Pairing.of(
-          getContainerColor(defaultTextColor),
-          getLinkColor(defaultTextColor),
-          1
-        ),
-      ])
+      .withPairings([makePairing(defaultTextColor, defaultTextColor, 1)])
       .withStyle(["color", "rgb(0% 0% 0%)"])
   );
 
@@ -233,22 +216,12 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
 
   const style = Ok.of(
     linkProperties.withPairings([
-      Contrast.Pairing.of(
-        getContainerColor(defaultLinkColor),
-        getLinkColor(defaultLinkColor),
-        1
-      ),
+      makePairing(defaultLinkColor, defaultLinkColor, 1),
     ])
   );
 
   const spanStyle = noDistinguishingProperties
-    .withPairings([
-      Contrast.Pairing.of(
-        getContainerColor(defaultLinkColor),
-        getLinkColor(defaultTextColor),
-        2.23
-      ),
-    ])
+    .withPairings([makePairing(defaultLinkColor, defaultTextColor, 2.23)])
     .withStyle(["color", "rgb(0% 0% 0%)"]);
 
   t.deepEqual(await evaluate(ER62, { document }), [
@@ -385,36 +358,12 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
         ["text-decoration", "underline"]
       )
       .withPairings([
-        Contrast.Pairing.of(
-          getContainerColor(defaultTextColor),
-          getLinkColor(offBlue),
-          2.44
-        ),
-        Contrast.Pairing.of(
-          getContainerColor(offBlack),
-          getLinkColor(offBlue),
-          2.03
-        ),
-        Contrast.Pairing.of(
-          getContainerColor(offBlue),
-          getLinkColor(offBlack),
-          2.03
-        ),
-        Contrast.Pairing.of(
-          getContainerColor(defaultTextColor),
-          getLinkColor(offBlack),
-          1.2
-        ),
-        Contrast.Pairing.of(
-          getContainerColor(offBlue),
-          getLinkColor(offBlue),
-          1
-        ),
-        Contrast.Pairing.of(
-          getContainerColor(offBlack),
-          getLinkColor(offBlack),
-          1
-        ),
+        makePairing(defaultTextColor, offBlue, 2.44),
+        makePairing(offBlack, offBlue, 2.03),
+        makePairing(offBlue, offBlack, 2.03),
+        makePairing(defaultTextColor, offBlack, 1.2),
+        makePairing(offBlue, offBlue, 1),
+        makePairing(offBlack, offBlack, 1),
       ])
       .withDistinguishingProperties(["background", "text-decoration"])
   );

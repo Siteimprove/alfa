@@ -244,11 +244,6 @@ export default Rule.Atomic.of<Page, Element>({
                 )
               );
 
-              const sortedDistinguishableContrast = Array.sortWith(
-                [...distinguishableContrast],
-                (a, b) => a.compare(b)
-              );
-
               const properties: List<DistinguishingProperty> =
                 distinguishingProperties
                   .get(context)
@@ -263,7 +258,7 @@ export default Rule.Atomic.of<Page, Element>({
                       target,
                       context,
                       properties,
-                      sortedDistinguishableContrast
+                      distinguishableContrast
                     )
                   )
                 : Err.of(
@@ -273,7 +268,7 @@ export default Rule.Atomic.of<Page, Element>({
                       target,
                       context,
                       properties,
-                      sortedDistinguishableContrast
+                      distinguishableContrast
                     )
                   );
             })
@@ -540,7 +535,7 @@ namespace Distinguishable {
     link: Element,
     device: Device,
     context: Context = Context.empty()
-  ): ReadonlyArray<Contrast.Pairing> {
+  ): ReadonlyArray<Contrast.Pairing<["container", "link"]>> {
     return getForeground(container, device, context)
       .map((containerColors) => [
         ...Array.flatMap(containerColors, (containerColor) =>
@@ -548,8 +543,8 @@ namespace Distinguishable {
             .map((linkColors) =>
               Array.map(linkColors, (linkColor) =>
                 Contrast.Pairing.of(
-                  Contrast.Color.of("container", containerColor),
-                  Contrast.Color.of("link", linkColor),
+                  ["container", containerColor],
+                  ["link", linkColor],
                   contrast(containerColor, linkColor)
                 )
               )
