@@ -8,6 +8,7 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 type Name = ["container", "link"] | ["foreground", "background"];
+
 export class Contrast extends Diagnostic {
   public static of(
     message: string,
