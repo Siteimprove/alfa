@@ -8,23 +8,25 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 type Name = ["container", "link"] | ["foreground", "background"];
+type FirstColor<N extends Name> = N[0];
+type SecondColor<N extends Name> = N[1];
 
-export class Contrast extends Diagnostic {
-  public static of(
+export class Contrast<N extends Name> extends Diagnostic {
+  public static of<N extends Name>(
     message: string,
     threshold: number = 4.5,
-    pairings: Iterable<Contrast.Pairing<Name>> = []
-  ): Contrast {
+    pairings: Iterable<Contrast.Pairing<N>> = []
+  ): Contrast<N> {
     return new Contrast(message, threshold, Array.from(pairings));
   }
 
   private readonly _threshold: number;
-  private readonly _pairings: Array<Contrast.Pairing<Name>>;
+  private readonly _pairings: Array<Contrast.Pairing<N>>;
 
   private constructor(
     message: string,
     threshold: number,
-    pairings: Array<Contrast.Pairing<Name>>
+    pairings: Array<Contrast.Pairing<N>>
   ) {
     super(message);
 
@@ -36,7 +38,7 @@ export class Contrast extends Diagnostic {
     return this._threshold;
   }
 
-  public get pairings(): Iterable<Contrast.Pairing<Name>> {
+  public get pairings(): Iterable<Contrast.Pairing<N>> {
     return this._pairings;
   }
 
@@ -65,7 +67,7 @@ export namespace Contrast {
     pairings: Array<Pairing.JSON>;
   }
 
-  export function isContrast(value: unknown): value is Contrast {
+  export function isContrast(value: unknown): value is Contrast<Name> {
     return value instanceof Contrast;
   }
   export class Pairing<N extends Name>
@@ -79,11 +81,15 @@ export namespace Contrast {
       return new Pairing(Color.of(...color1), Color.of(...color2), contrast);
     }
 
-    private readonly _color1: Color;
-    private readonly _color2: Color;
+    private readonly _color1: Color<FirstColor<N>>;
+    private readonly _color2: Color<SecondColor<N>>;
     private readonly _contrast: number;
 
-    private constructor(color1: Color, color2: Color, contrast: number) {
+    private constructor(
+      color1: Color<FirstColor<N>>,
+      color2: Color<SecondColor<N>>,
+      contrast: number
+    ) {
       this._color1 = color1;
       this._color2 = color2;
       this._contrast = contrast;
@@ -96,11 +102,11 @@ export namespace Contrast {
         .writeNumber(this._contrast);
     }
 
-    public get color1(): Color {
+    public get color1(): Color<FirstColor<N>> {
       return this._color1;
     }
 
-    public get color2(): Color {
+    public get color2(): Color<SecondColor<N>> {
       return this._color2;
     }
 
@@ -146,21 +152,20 @@ export namespace Contrast {
       contrast: number;
     }
   }
-
-  class Color<N extends Name = Name>
+  class Color<N extends FirstColor<Name> | SecondColor<Name>>
     implements Equatable, Serializable, Hashable
   {
-    public static of<N extends Name = Name>(
-      name: N[0] | N[1],
+    public static of<N extends FirstColor<Name> | SecondColor<Name>>(
+      name: N,
       value: RGB
-    ): Color {
+    ): Color<N> {
       return new Color(name, value);
     }
 
-    private readonly _name: N[0] | N[1];
+    private readonly _name: N;
     private readonly _value: RGB;
 
-    private constructor(name: N[0] | N[1], value: RGB) {
+    private constructor(name: N, value: RGB) {
       this._name = name;
       this._value = value;
     }
@@ -169,7 +174,7 @@ export namespace Contrast {
       hash.writeString(this._name).writeHashable(this._value);
     }
 
-    public get name(): N[0] | N[1] {
+    public get name(): N {
       return this._name;
     }
 
