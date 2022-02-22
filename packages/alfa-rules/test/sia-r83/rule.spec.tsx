@@ -319,6 +319,68 @@ test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
   ]);
 });
 
+test(`evaluate() passes text in <option> into a non-single <select> element`, async (t) => {
+  const target1 = h.text("First");
+  const target2 = h.text("Second");
+  const target3 = h.text("Super long text, I want that to be really huge");
+  const document = h.document(
+    [
+      <body>
+        <select size="3">
+          <option value="Foo">{target1}</option>
+          <option value="Bar">{target2}</option>
+          <option value="Baz">{target3}</option>
+        </select>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("select", {
+          width: "20px",
+          overflow: "hidden",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target1, { 1: Outcomes.WrapsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
+    passed(R83, target3, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test(`evaluate() passes text in <option> with multiple <select> element`, async (t) => {
+  const target1 = h.text("First");
+  const target2 = h.text("Second");
+  const target3 = h.text("Super long text, I want that to be really huge");
+  const document = h.document(
+    [
+      <body>
+        <select multiple>
+          <option value="Foo">{target1}</option>
+          <option value="Bar">{target2}</option>
+          <option value="Baz">{target3}</option>
+        </select>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("select", {
+          width: "20px",
+          overflow: "hidden",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target1, { 1: Outcomes.WrapsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
+    passed(R83, target3, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
 test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`white-space\` property`, async (t) => {
   const target = h.text("Hello world");
@@ -607,4 +669,3 @@ test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
-

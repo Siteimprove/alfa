@@ -1,12 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Element,
-  Text,
-  Namespace,
-  Node,
-} from "@siteimprove/alfa-dom";
+import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -119,22 +114,22 @@ function hasDisplaySize(
       : (size: number) => valueOrPredicate === size;
 
   return (element) => {
-    let displaySize = 0;
-    for (const size of element.attribute("size")) {
-      const valueMenuSize = parseInt(size.value, 10);
-      if (
-        valueMenuSize === valueMenuSize &&
-        valueMenuSize === (valueMenuSize | 0)
-      ) {
-        displaySize = valueMenuSize;
-      }
-    }
-
-    if (element.attribute("multiple").isSome()) {
-      displaySize = 4;
-    }
-
-    displaySize = 1;
+    const displaySize = element
+      .attribute("size")
+      .flatMap((size) => {
+        const sizeValue = parseInt(size.value, 10);
+        if (sizeValue === sizeValue && sizeValue === (sizeValue | 0)) {
+          return Option.of(sizeValue);
+        } else {
+          return None;
+        }
+      })
+      .getOrElse(() =>
+        element
+          .attribute("multiple")
+          .map(() => 4)
+          .getOr(1)
+      );
 
     return predicate(displaySize);
   };
