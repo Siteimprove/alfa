@@ -319,7 +319,7 @@ test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
   ]);
 });
 
-test(`evaluate() passes text in <option> into a non-single <select> element`, async (t) => {
+test(`evaluate() passes text in <option> within a multi-line <select> element`, async (t) => {
   const target1 = h.text("First");
   const target2 = h.text("Second");
   const target3 = h.text("Super long text, I want that to be really huge");
