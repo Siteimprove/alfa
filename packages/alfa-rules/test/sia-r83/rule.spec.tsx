@@ -350,7 +350,7 @@ test(`evaluate() passes text in <option> within a multi-line <select> element`, 
   ]);
 });
 
-test(`evaluate() passes text in <option> with multiple <select> element`, async (t) => {
+test(`evaluate() passes text in <option> within a <select> with a \`multiple\` attribute`, async (t) => {
   const target1 = h.text("First");
   const target2 = h.text("Second");
   const target3 = h.text("Super long text, I want that to be really huge");
