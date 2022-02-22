@@ -66,6 +66,9 @@ export class Event<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Event {
   export type Type = "start" | "end";
 
