@@ -5,7 +5,7 @@ export namespace Contrast {
   export const HasSufficientContrast = (
     highest: number,
     threshold: number,
-    pairings: Array<Diagnostic.Pairing>
+    pairings: Array<Diagnostic.Pairing<["foreground", "background"]>>
   ) =>
     Ok.of(
       Diagnostic.of(
@@ -19,7 +19,7 @@ export namespace Contrast {
   export const HasInsufficientContrast = (
     highest: number,
     threshold: number,
-    pairings: Array<Diagnostic.Pairing>
+    pairings: Array<Diagnostic.Pairing<["foreground", "background"]>>
   ) =>
     Err.of(
       Diagnostic.of(
