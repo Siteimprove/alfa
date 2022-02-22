@@ -9,6 +9,7 @@ import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Length } from '@siteimprove/alfa-css';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
@@ -258,7 +259,7 @@ export namespace Media {
         toString(): string;
         // (undocumented)
         get type(): Option<Type>;
-        }
+    }
     // (undocumented)
     export namespace Query {
         // (undocumented)
@@ -323,6 +324,8 @@ export namespace Media {
         // (undocumented)
         export class Bound<T = unknown> implements Functor<T>, Serializable<Bound.JSON<T>> {
             // (undocumented)
+            hasValue<U extends T>(refinement: Refinement<T, U>): this is Bound<U>;
+            // (undocumented)
             get isInclusive(): boolean;
             // (undocumented)
             map<U>(mapper: Mapper<T, U>): Bound<U>;
@@ -332,7 +335,7 @@ export namespace Media {
             toJSON(): Bound.JSON<T>;
             // (undocumented)
             get value(): T;
-            }
+        }
         // (undocumented)
         export namespace Bound {
             // (undocumented)
@@ -359,7 +362,7 @@ export namespace Media {
             toJSON(): Discrete.JSON<T>;
             // (undocumented)
             get value(): T;
-            }
+        }
         const // (undocumented)
         discrete: typeof Discrete.of, // (undocumented)
         isDiscrete: typeof Discrete.isDiscrete;
@@ -409,6 +412,8 @@ export namespace Media {
             static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T>;
             // (undocumented)
             toJSON(): Range.JSON<T>;
+            // (undocumented)
+            toLength(): Range<T | Length<"px">>;
         }
         // (undocumented)
         export namespace Range {
@@ -434,9 +439,8 @@ export namespace Media {
     isList: typeof List.isList;
     const // (undocumented)
     parse: Parser<Slice<Token>, List, string, []>;
-    {};
+        {};
 }
-
 
 // (No @packageDocumentation comment for this package)
 
