@@ -57,6 +57,32 @@ export default Rule.Atomic.of<Page, Attribute>({
   },
 });
 
+function ariaHtmlAllowed(element: Element, role: Role): boolean {
+  switch (element.name) {
+    case "body":
+      if (
+        element.parent.name === "body" &&
+        Role.of("document").isAttributeSupported(
+          element.name as aria.Attribute.Name
+        )
+      ) {
+        return true;
+      }
+    case "video":
+      if (
+        element.parent.name === "video" &&
+        Role.of("application").isAttributeSupported(
+          element.name as aria.Attribute.Name
+        )
+      ) {
+        return true;
+      }
+  }
+  {
+    return false;
+  }
+}
+
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
     Diagnostic.of(
