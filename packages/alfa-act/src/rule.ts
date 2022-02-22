@@ -233,7 +233,22 @@ export namespace Rule {
         outcomes.get(this, () => {
           const startRule = performance?.mark(Event.start(this)).start;
 
-          const { applicability, expectations } = evaluate(input);
+          // In the evaluate function in Atomic.of, "this" is not yet build.
+          // So we need a helper to wrap it…
+          const rulePerformance =
+            performance !== undefined
+              ? {
+                  mark: (name: string) =>
+                    performance?.mark(Event.start(this, name)),
+                  measure: (name: string, start?: number) =>
+                    performance?.measure(Event.end(this, name), start),
+                }
+              : undefined;
+
+          const { applicability, expectations } = evaluate(
+            input,
+            rulePerformance
+          );
 
           const startApplicability = performance?.mark(
             Event.startApplicability(this)
@@ -296,7 +311,16 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: I): {
+      (
+        input: I,
+        performance?: {
+          mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
+          measure: (
+            name: string,
+            start?: number
+          ) => Performance.Measure<Event<I, T, Q, S>>;
+        }
+      ): {
         applicability(): Iterable<Interview<Q, S, T, Option.Maybe<T>>>;
         expectations(target: T): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
@@ -354,6 +378,18 @@ export namespace Rule {
         outcomes.get(this, () => {
           const startRule = performance?.mark(Event.start(this)).start;
 
+          // In the evaluate function in Atomic.of, "this" is not yet build.
+          // So we need a helper to wrap it…
+          const rulePerformance =
+            performance !== undefined
+              ? {
+                  mark: (name: string) =>
+                    performance?.mark(Event.start(this, name)),
+                  measure: (name: string, start?: number) =>
+                    performance?.measure(Event.end(this, name), start),
+                }
+              : undefined;
+
           return Future.traverse(this._composes, (rule) =>
             rule.evaluate(input, oracle, outcomes, performance)
           )
@@ -373,7 +409,7 @@ export namespace Rule {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
 
-              const { expectations } = evaluate(input);
+              const { expectations } = evaluate(input, rulePerformance);
 
               return Future.traverse(
                 targets.groupBy((outcome) => outcome.target),
@@ -420,7 +456,16 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: I): {
+      (
+        input: I,
+        performance?: {
+          mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
+          measure: (
+            name: string,
+            start?: number
+          ) => Performance.Measure<Event<I, T, Q, S>>;
+        }
+      ): {
         expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
