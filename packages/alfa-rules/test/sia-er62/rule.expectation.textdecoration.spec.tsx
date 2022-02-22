@@ -1,12 +1,11 @@
 import { h } from "@siteimprove/alfa-dom";
 import { Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { Contrast } from "../../src/common/diagnostic/contrast";
 import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
 import ER62, { Outcomes } from "../../src/sia-er62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
-import { Defaults, addCursor } from "./common";
+import { Defaults, addCursor, makePairing } from "./common";
 
 const {
   defaultStyle,
@@ -120,16 +119,16 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
         ["font", "700 16px serif"],
         ["outline", "0px"],
       ],
-      [Contrast.Pairing.of(defaultTextColor, defaultTextColor, 1)]
+      [makePairing(defaultTextColor, defaultTextColor, 1)]
     )
   );
 
   t.deepEqual(await evaluate(ER62, { document }), [
     passed(ER62, target, {
       1: Outcomes.IsDistinguishable(
-        [spanStyle, linkStyle],
-        [spanStyle, linkStyle],
-        [spanStyle, linkStyle]
+        [linkStyle, spanStyle],
+        [linkStyle, spanStyle],
+        [linkStyle, spanStyle]
       ),
     }),
   ]);

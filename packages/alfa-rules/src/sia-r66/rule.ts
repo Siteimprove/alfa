@@ -79,9 +79,9 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
             const pairings = [
               ...flatMap(foregrounds, (foreground) =>
                 map(backgrounds, (background) =>
-                  Diagnostic.Pairing.of(
-                    foreground,
-                    background,
+                  Diagnostic.Pairing.of<["foreground", "background"]>(
+                    ["foreground", foreground],
+                    ["background", background],
                     contrast(foreground, background)
                   )
                 )
