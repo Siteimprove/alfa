@@ -27,9 +27,9 @@ export class Performance<T> implements AsyncIterable<Performance.Entry<T>>, Seri
     // (undocumented)
     static of<T = string>(): Performance<T>;
     // (undocumented)
-    off(listener: Callback<Performance.Entry<T>>): void;
+    off(listener: Callback<Performance.Entry<T>>): this;
     // (undocumented)
-    on(listener: Callback<Performance.Entry<T>>): void;
+    on(listener: Callback<Performance.Entry<T>>): this;
     // (undocumented)
     once(): Promise<Performance.Entry<T>>;
     // (undocumented)
@@ -123,7 +123,6 @@ export namespace Performance {
     measure: typeof Measure.of, // (undocumented)
     isMeasure: typeof Measure.isMeasure;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
