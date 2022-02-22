@@ -4,12 +4,20 @@ test("#tabIndex() returns the tab index explicitly assigned to an element", (t) 
   t.equal((<div tabindex="42" />).tabIndex().get(), 42);
 });
 
+test("#tabIndex() ignores characters after the first non-digit", (t) => {
+  t.equal((<div tabindex="-1-toRemove" />).tabIndex().get(), -1);
+});
+
 test("#tabIndex() returns 0 for an <a> element with an href attribute", (t) => {
   t.equal((<a href="#" />).tabIndex().get(), 0);
 });
 
 test("#tabIndex() returns None for an <a> element without an href attribute", (t) => {
   t.equal((<a />).tabIndex().isNone(), true);
+});
+
+test("#tabIndex() returns None for a <div> element with tabindex null", (t) => {
+  t.equal((<div tabindex="null" />).tabIndex().isNone(), true);
 });
 
 test("#tabIndex() returns 0 for a <button> element", (t) => {
