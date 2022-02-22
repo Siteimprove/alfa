@@ -26,7 +26,7 @@ export class ElementDistinguishable
   public static of(
     distinguishingProperties: Iterable<DistinguishingProperty> = [],
     style: Iterable<readonly [Name, string]> = [],
-    pairings: Iterable<Contrast.Pairing> = []
+    pairings: Iterable<Contrast.Pairing<["container", "link"]>> = []
   ): ElementDistinguishable {
     return new ElementDistinguishable(
       Array.from(distinguishingProperties),
@@ -37,12 +37,14 @@ export class ElementDistinguishable
 
   private readonly _distinguishingProperties: ReadonlyArray<DistinguishingProperty>;
   private readonly _style: Map<Name, string>;
-  private readonly _pairings: ReadonlyArray<Contrast.Pairing>;
+  private readonly _pairings: ReadonlyArray<
+    Contrast.Pairing<["container", "link"]>
+  >;
 
   private constructor(
     distinguishingProperties: ReadonlyArray<DistinguishingProperty>,
     style: Map<Name, string>,
-    pairings: ReadonlyArray<Contrast.Pairing>
+    pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>
   ) {
     this._distinguishingProperties = distinguishingProperties;
     this._style = style;
@@ -57,7 +59,9 @@ export class ElementDistinguishable
     return this._style;
   }
 
-  public get pairings(): ReadonlyArray<Contrast.Pairing> {
+  public get pairings(): ReadonlyArray<
+    Contrast.Pairing<["container", "link"]>
+  > {
     return this._pairings;
   }
 
@@ -82,7 +86,7 @@ export class ElementDistinguishable
   }
 
   public withPairings(
-    pairings: ReadonlyArray<Contrast.Pairing>
+    pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
       this._distinguishingProperties,
@@ -136,7 +140,7 @@ export namespace ElementDistinguishable {
     target: Element,
     context: Context = Context.empty(),
     distinguishingProperties: Iterable<DistinguishingProperty>,
-    pairings: Iterable<Contrast.Pairing>
+    pairings: Iterable<Contrast.Pairing<["container", "link"]>>
   ): ElementDistinguishable {
     const style = Style.from(element, device, context);
 
@@ -164,7 +168,7 @@ export namespace ElementDistinguishable {
         ["text-decoration", Serialise.textDecoration(style)] as const,
         ["box-shadow", Serialise.boxShadow(style)] as const,
       ].filter(([_, value]) => value !== ""),
-      pairings
+      Array.sortWith([...pairings], (a, b) => a.compare(b))
     );
   }
 }
