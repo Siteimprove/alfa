@@ -52,7 +52,9 @@ export class Audit<I, T = unknown, Q = never, S = T> {
         .tee(() => {
           start = performance?.mark(Event.start(rule)).start;
         })
-        .flatMap(() => rule.evaluate(this._input, this._oracle, outcomes))
+        .flatMap(() =>
+          rule.evaluate(this._input, this._oracle, outcomes, performance)
+        )
         .tee(() => {
           performance?.measure(Event.end(rule), start);
         });

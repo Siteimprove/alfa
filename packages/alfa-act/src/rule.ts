@@ -4,6 +4,7 @@ import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
@@ -15,6 +16,7 @@ import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
+import { Event } from "./event";
 import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
@@ -94,9 +96,10 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   public evaluate(
     input: I,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None),
-    outcomes: Cache = Cache.empty()
+    outcomes: Cache = Cache.empty(),
+    performance?: Performance<Event<I, T, Q, S>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
-    return this._evaluate(input, oracle, outcomes);
+    return this._evaluate(input, oracle, outcomes, performance);
   }
 
   public equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
@@ -192,9 +195,12 @@ export namespace Rule {
    * rule evaluation procedures.
    */
   export interface Evaluate<I, T, Q, S> {
-    (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
-      Iterable<Outcome<I, T, Q, S>>
-    >;
+    (
+      input: Readonly<I>,
+      oracle: Oracle<I, T, Q, S>,
+      outcomes: Cache,
+      performance?: Performance<Event<I, T, Q, S>>
+    ): Future<Iterable<Outcome<I, T, Q, S>>>;
   }
 
   export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
@@ -223,9 +229,14 @@ export namespace Rule {
       tags: Array<Tag>,
       evaluate: Atomic.Evaluate<I, T, Q, S>
     ) {
-      super(uri, requirements, tags, (input, oracle, outcomes) =>
+      super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
         outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
+
+          const startApplicability: number | undefined = performance?.mark(
+            Event.startApplicability(this)
+          ).start;
+          let startExpectation: number | undefined;
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
@@ -235,6 +246,15 @@ export namespace Rule {
             )
           )
             .map((targets) => Sequence.from(flatten<T>(targets)))
+            .tee(() => {
+              performance?.measure(
+                Event.endApplicability(this),
+                startApplicability
+              );
+              startExpectation = performance?.mark(
+                Event.startExpectation(this)
+              ).start;
+            })
             .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
@@ -242,7 +262,12 @@ export namespace Rule {
 
               return Future.traverse(targets, (target) =>
                 resolve(target, Record.of(expectations(target)), this, oracle)
-              );
+              ).tee(() => {
+                performance?.measure(
+                  Event.endExpectation(this),
+                  startExpectation
+                );
+              });
             });
         })
       );
