@@ -605,7 +605,7 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
 });
 
-test(`evaluate() ignores text in <option> into a single line <select> element`, async (t) => {
+test(`evaluate() is inapplicable to text in <option> within a single line <select> element`, async (t) => {
   const document = h.document(
     [
       <body>
