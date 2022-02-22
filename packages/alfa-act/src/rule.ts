@@ -231,9 +231,11 @@ export namespace Rule {
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
         outcomes.get(this, () => {
+          const startRule = performance?.mark(Event.start(this)).start;
+
           const { applicability, expectations } = evaluate(input);
 
-          const startApplicability: number | undefined = performance?.mark(
+          const startApplicability = performance?.mark(
             Event.startApplicability(this)
           ).start;
           let startExpectation: number | undefined;
@@ -268,6 +270,9 @@ export namespace Rule {
                   startExpectation
                 );
               });
+            })
+            .tee(() => {
+              performance?.measure(Event.end(this), startRule);
             });
         })
       );
@@ -345,10 +350,12 @@ export namespace Rule {
       composes: Array<Rule<I, T, Q, S>>,
       evaluate: Composite.Evaluate<I, T, Q, S>
     ) {
-      super(uri, requirements, tags, (input, oracle, outcomes) =>
-        outcomes.get(this, () =>
-          Future.traverse(this._composes, (rule) =>
-            rule.evaluate(input, oracle, outcomes)
+      super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
+        outcomes.get(this, () => {
+          const startRule = performance?.mark(Event.start(this)).start;
+
+          return Future.traverse(this._composes, (rule) =>
+            rule.evaluate(input, oracle, outcomes, performance)
           )
             .map((outcomes) =>
               Sequence.from(
@@ -379,7 +386,10 @@ export namespace Rule {
                   )
               );
             })
-        )
+            .tee(() => {
+              performance?.measure(Event.end(this), startRule);
+            });
+        })
       );
 
       this._composes = composes;

@@ -89,16 +89,36 @@ export namespace Event {
     return value instanceof Event;
   }
 
+  export function start<I, T, Q, S, N extends string = string>(
+    rule: Rule<I, T, Q, S>,
+    name: N
+  ): Event<I, T, Q, S, "start", N>;
+
   export function start<I, T, Q, S>(
     rule: Rule<I, T, Q, S>
-  ): Event<I, T, Q, S, "start", "rule"> {
-    return Event.of("start", rule, "rule");
+  ): Event<I, T, Q, S, "start", "rule">;
+
+  export function start<I, T, Q, S>(
+    rule: Rule<I, T, Q, S>,
+    name: string = "rule"
+  ): Event<I, T, Q, S, "start"> {
+    return Event.of("start", rule, name);
   }
+
+  export function end<I, T, Q, S, N extends string = string>(
+    rule: Rule<I, T, Q, S>,
+    name: N
+  ): Event<I, T, Q, S, "end", N>;
 
   export function end<I, T, Q, S>(
     rule: Rule<I, T, Q, S>
-  ): Event<I, T, Q, S, "end", "rule"> {
-    return Event.of("end", rule, "rule");
+  ): Event<I, T, Q, S, "end", "rule">;
+
+  export function end<I, T, Q, S>(
+    rule: Rule<I, T, Q, S>,
+    name: string = "rule"
+  ): Event<I, T, Q, S, "end"> {
+    return Event.of("end", rule, name);
   }
 
   export function startApplicability<I, T, Q, S>(

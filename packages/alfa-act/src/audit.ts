@@ -45,19 +45,8 @@ export class Audit<I, T = unknown, Q = never, S = T> {
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 
-    return Future.traverse(this._rules, (rule) => {
-      let start: number | undefined;
-
-      return Future.empty()
-        .tee(() => {
-          start = performance?.mark(Event.start(rule)).start;
-        })
-        .flatMap(() =>
-          rule.evaluate(this._input, this._oracle, outcomes, performance)
-        )
-        .tee(() => {
-          performance?.measure(Event.end(rule), start);
-        });
-    }).map(Iterable.flatten);
+    return Future.traverse(this._rules, (rule) =>
+      rule.evaluate(this._input, this._oracle, outcomes, performance)
+    ).map(Iterable.flatten);
   }
 }
