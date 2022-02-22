@@ -13,7 +13,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r24",
   requirements: [Criterion.of("1.2.8"), Technique.of("G69")],
   tags: [Scope.Component],
-  evaluate: ({ device, document }) => {
+  evaluate({ device, document }) {
     return {
       applicability() {
         return video(document, device, { audio: { has: true } });
