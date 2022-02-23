@@ -5,7 +5,6 @@ import { None } from "@siteimprove/alfa-option";
 import { Performance } from "@siteimprove/alfa-performance";
 
 import { Cache } from "./cache";
-import { Event } from "./event";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
@@ -41,7 +40,7 @@ export class Audit<I, T = unknown, Q = never, S = T> {
   }
 
   public evaluate(
-    performance?: Performance<Event<I, T, Q, S>>
+    performance?: Performance<Rule.Event<I, T, Q, S>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 

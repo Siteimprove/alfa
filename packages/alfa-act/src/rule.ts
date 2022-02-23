@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Performance } from "@siteimprove/alfa-performance";
@@ -16,7 +17,6 @@ import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
-import { Event } from "./event";
 import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
@@ -97,7 +97,7 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
     input: I,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty(),
-    performance?: Performance<Event<I, T, Q, S>>
+    performance?: Performance<Rule.Event<I, T, Q, S>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
     return this._evaluate(input, oracle, outcomes, performance);
   }
@@ -327,21 +327,23 @@ export namespace Rule {
         };
       };
     }
+
+    export function isAtomic<I, T, Q, S>(
+      value: Rule<I, T, Q, S>
+    ): value is Atomic<I, T, Q, S>;
+
+    export function isAtomic<I, T, Q, S>(
+      value: unknown
+    ): value is Atomic<I, T, Q, S>;
+
+    export function isAtomic<I, T, Q, S>(
+      value: unknown
+    ): value is Atomic<I, T, Q, S> {
+      return value instanceof Atomic;
+    }
   }
 
-  export function isAtomic<I, T, Q, S>(
-    value: Rule<I, T, Q, S>
-  ): value is Atomic<I, T, Q, S>;
-
-  export function isAtomic<I, T, Q, S>(
-    value: unknown
-  ): value is Atomic<I, T, Q, S>;
-
-  export function isAtomic<I, T, Q, S>(
-    value: unknown
-  ): value is Atomic<I, T, Q, S> {
-    return value instanceof Atomic;
-  }
+  export const { isAtomic } = Atomic;
 
   export class Composite<
     I = unknown,
@@ -471,20 +473,166 @@ export namespace Rule {
         };
       };
     }
+    export function isComposite<I, T, Q>(
+      value: Rule<I, T, Q>
+    ): value is Composite<I, T, Q>;
+
+    export function isComposite<I, T, Q>(
+      value: unknown
+    ): value is Composite<I, T, Q>;
+
+    export function isComposite<I, T, Q>(
+      value: unknown
+    ): value is Composite<I, T, Q> {
+      return value instanceof Composite;
+    }
   }
 
-  export function isComposite<I, T, Q>(
-    value: Rule<I, T, Q>
-  ): value is Composite<I, T, Q>;
+  export const { isComposite } = Composite;
 
-  export function isComposite<I, T, Q>(
-    value: unknown
-  ): value is Composite<I, T, Q>;
+  /**
+   * @public
+   */
+  export class Event<
+    INPUT,
+    TARGET,
+    QUESTION,
+    SUBJECT,
+    TYPE extends Event.Type = Event.Type,
+    NAME extends string = string
+  > implements Serializable<Event.JSON<TYPE, NAME>>
+  {
+    public static of<
+      INPUT,
+      TARGET,
+      QUESTION,
+      SUBJECT,
+      TYPE extends Event.Type,
+      NAME extends string
+    >(
+      type: TYPE,
+      rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+      name: NAME
+    ): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME> {
+      return new Event(type, rule, name);
+    }
 
-  export function isComposite<I, T, Q>(
-    value: unknown
-  ): value is Composite<I, T, Q> {
-    return value instanceof Composite;
+    private readonly _type: TYPE;
+    private readonly _rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>;
+    private readonly _name: NAME;
+
+    constructor(
+      type: TYPE,
+      rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+      name: NAME
+    ) {
+      this._type = type;
+      this._rule = rule;
+      this._name = name;
+    }
+
+    public get type(): TYPE {
+      return this._type;
+    }
+
+    public get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT> {
+      return this._rule;
+    }
+
+    public get name(): NAME {
+      return this._name;
+    }
+
+    public toJSON(): Event.JSON<TYPE, NAME> {
+      return {
+        type: this._type,
+        rule: this._rule.toJSON(),
+        name: this._name,
+      };
+    }
+  }
+
+  /**
+   * @public
+   */
+  export namespace Event {
+    export type Type = "start" | "end";
+
+    export interface JSON<T extends Type = Type, N extends string = string> {
+      [key: string]: json.JSON;
+      type: T;
+      rule: Rule.JSON;
+      name: N;
+    }
+
+    export function isEvent<
+      INPUT,
+      TARGET,
+      QUESTION,
+      SUBJECT,
+      TYPE extends Event.Type = Event.Type,
+      NAME extends string = string
+    >(
+      value: unknown
+    ): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME> {
+      return value instanceof Event;
+    }
+
+    export function start<I, T, Q, S, N extends string = string>(
+      rule: Rule<I, T, Q, S>,
+      name: N
+    ): Event<I, T, Q, S, "start", N>;
+
+    export function start<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start", "rule">;
+
+    export function start<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
+      name: string = "rule"
+    ): Event<I, T, Q, S, "start"> {
+      return Event.of("start", rule, name);
+    }
+
+    export function end<I, T, Q, S, N extends string = string>(
+      rule: Rule<I, T, Q, S>,
+      name: N
+    ): Event<I, T, Q, S, "end", N>;
+
+    export function end<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end", "rule">;
+
+    export function end<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
+      name: string = "rule"
+    ): Event<I, T, Q, S, "end"> {
+      return Event.of("end", rule, name);
+    }
+
+    export function startApplicability<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start", "applicability"> {
+      return Event.of("start", rule, "applicability");
+    }
+
+    export function endApplicability<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end", "applicability"> {
+      return Event.of("end", rule, "applicability");
+    }
+
+    export function startExpectation<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start", "expectation"> {
+      return Event.of("start", rule, "expectation");
+    }
+
+    export function endExpectation<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end", "expectation"> {
+      return Event.of("end", rule, "expectation");
+    }
   }
 }
 
