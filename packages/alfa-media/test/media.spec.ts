@@ -9,7 +9,7 @@ function parse(input: string) {
   return Media.parse(Lexer.lex(input)).map(([, query]) => query);
 }
 
-test(".parse() parses a simple query", (t) => {
+test(".parse() parses a simple query for an orientation feature", (t) => {
   t.deepEqual(parse("(orientation: portrait)").get().toJSON(), [
     {
       modifier: null,
@@ -23,6 +23,32 @@ test(".parse() parses a simple query", (t) => {
             type: "keyword",
             value: "portrait",
           },
+        },
+      },
+    },
+  ]);
+});
+
+
+test(".parse() parses a simple query for a length feature", (t) => {
+  t.deepEqual(parse("(min-width: 0)").get().toJSON(), [
+    {
+      modifier: null,
+      type: null,
+      condition: {
+        type: "feature",
+        name: "width",
+        value: {
+          type: "range",
+          minimum: {
+            value: {
+              type: "length",
+              value: 0,
+              unit: "px",
+            },
+            isInclusive: true,
+          },
+          maximum: null,
         },
       },
     },
@@ -311,6 +337,31 @@ test(".parse() parses a feature > value range", (t) => {
   ]);
 });
 
+test(".parse() parses a length feature > 0 as a dimensional bound", (t) => {
+  t.deepEqual(parse("(width > 0)").get().toJSON(), [
+    {
+      modifier: null,
+      type: null,
+      condition: {
+        type: "feature",
+        name: "width",
+        value: {
+          type: "range",
+          minimum: {
+            value: {
+              type: "length",
+              value: 0,
+              unit: "px",
+            },
+            isInclusive: false,
+          },
+          maximum: null,
+        },
+      },
+    },
+  ]);
+});
+
 test(".parse() parses a value < feature < value range", (t) => {
   t.deepEqual(parse("(100px < width < 500px)").get().toJSON(), [
     {
@@ -325,6 +376,38 @@ test(".parse() parses a value < feature < value range", (t) => {
             value: {
               type: "length",
               value: 100,
+              unit: "px",
+            },
+            isInclusive: false,
+          },
+          maximum: {
+            value: {
+              type: "length",
+              value: 500,
+              unit: "px",
+            },
+            isInclusive: false,
+          },
+        },
+      },
+    },
+  ]);
+});
+
+test(".parse() parses 0 in a length range as a dimensional bound", (t) => {
+  t.deepEqual(parse("(0 < height < 500px)").get().toJSON(), [
+    {
+      modifier: null,
+      type: null,
+      condition: {
+        type: "feature",
+        name: "height",
+        value: {
+          type: "range",
+          minimum: {
+            value: {
+              type: "length",
+              value: 0,
               unit: "px",
             },
             isInclusive: false,
