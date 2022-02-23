@@ -6,6 +6,22 @@ import R18, { Outcomes } from "../../src/sia-r18/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
+test(`evaluate() passes input with type password field, textbox role and aria-required state`, async (t) => {
+  const target = (
+    <input type="password" role="textbox" aria-required="true">
+      My password
+    </input>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R18, { document }), [
+    passed(R18, target.attribute("aria-required").get(), {
+      1: Outcomes.IsAllowed,
+    }),
+  ]);
+});
+
 test(`evaluate() passes a button with aria-pressed state`, async (t) => {
   const target = <button aria-pressed="false">My button</button>;
 

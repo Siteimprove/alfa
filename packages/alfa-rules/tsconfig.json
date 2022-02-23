@@ -37,6 +37,7 @@
     "src/common/predicate/has-child.ts",
     "src/common/predicate/has-computed-style.ts",
     "src/common/predicate/has-descendant.ts",
+    "src/common/predicate/has-display-size.ts",
     "src/common/predicate/has-explicit-role.ts",
     "src/common/predicate/has-heading-level.ts",
     "src/common/predicate/has-id.ts",

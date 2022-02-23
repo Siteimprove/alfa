@@ -12,11 +12,16 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, isIgnored } from "../common/predicate";
+import {
+  hasRole,
+  isIgnored,
+  hasDisplaySize,
+  hasAttribute,
+} from "../common/predicate";
 import { Scope } from "../tags";
 
-const { test, property } = Predicate;
-const { isElement } = Element;
+const { test, property, and, not } = Predicate;
+const { isElement, hasInputType } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
@@ -47,7 +52,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                   role.isAttributeSupported(target.name as aria.Attribute.Name)
                 ),
                 target.owner.get()
-              ),
+              ) ||
+              ariaHtmlAllowed(target),
             () => Outcomes.IsAllowed,
             () => Outcomes.IsNotAllowed
           ),
@@ -57,29 +63,43 @@ export default Rule.Atomic.of<Page, Attribute>({
   },
 });
 
-function ariaHtmlAllowed(element: Element, role: Role): boolean {
-  switch (element.name) {
+function ariaHtmlAllowed(target: Attribute): boolean {
+  switch (target.owner.get().name) {
     case "body":
-      if (
-        element.parent.name === "body" &&
+      return Role.of("document").isAttributeSupported(
+        target.name as aria.Attribute.Name
+      );
+    case "input":
+      return (
+        hasInputType(
+          "date",
+          "datetime-local",
+          "email",
+          "month",
+          "password",
+          "time",
+          "week"
+        )(target.owner.get()) &&
         Role.of("document").isAttributeSupported(
-          element.name as aria.Attribute.Name
+          target.name as aria.Attribute.Name
         )
-      ) {
-        return true;
-      }
+      );
+    case "select":
+      return (
+        and(hasDisplaySize((size: Number) => size !== 1), not(hasAttribute("multiple")))(target.owner.get()) &&
+        Role.of("combobox").isAttributeSupported(
+          target.name as aria.Attribute.Name
+        ) ||
+        Role.of("menu").isAttributeSupported(target.name as aria.Attribute.Name)
+      );
+
     case "video":
-      if (
-        element.parent.name === "video" &&
-        Role.of("application").isAttributeSupported(
-          element.name as aria.Attribute.Name
-        )
-      ) {
-        return true;
-      }
-  }
-  {
-    return false;
+      return Role.of("application").isAttributeSupported(
+        target.name as aria.Attribute.Name
+      );
+      default:
+        
+      return false;
   }
 }
 
