@@ -1,12 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
-
-import { expectation } from "../common/act/expectation";
+import { videoTranscript } from "../common/expectation/media-transcript";
 import { Question } from "../common/act/question";
 
 import { Scope } from "../tags";
@@ -22,41 +20,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       },
 
       expectations(target) {
-        return {
-          1: Question.of(
-            "transcript",
-            target,
-            `Where is the transcript of the \`<video>\` element?`
-          ).map((transcript) =>
-            expectation(
-              transcript.isSome(),
-              () => Outcomes.HasTranscript,
-              () =>
-                Question.of(
-                  "transcript-link",
-                  target,
-                  `Where is the link pointing to the transcript of the \`<video>\` element?`
-                ).map((transcriptLink) =>
-                  expectation(
-                    transcriptLink.isSome(),
-                    () => Outcomes.HasTranscript,
-                    () => Outcomes.HasNoTranscript
-                  )
-                )
-            )
-          ),
-        };
+        return videoTranscript(target, device);
       },
     };
   },
 });
-
-export namespace Outcomes {
-  export const HasTranscript = Ok.of(
-    Diagnostic.of(`The \`<video>\` element has a transcript`)
-  );
-
-  export const HasNoTranscript = Err.of(
-    Diagnostic.of(`The \`<video>\` element does not have a transcript`)
-  );
-}
