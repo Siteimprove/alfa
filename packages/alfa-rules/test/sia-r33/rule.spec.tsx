@@ -3,7 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option, None } from "@siteimprove/alfa-option";
 
-import R33, { Outcomes } from "../../src/sia-r33/rule";
+import R33 from "../../src/sia-r33/rule";
+import { Outcomes } from "../../src/common/expectation/media-transcript";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
@@ -26,7 +27,7 @@ test(`evaluate() passes when non-streaming video-only elements have all visual i
         transcript: Option.of(transcript),
       })
     ),
-    [passed(R33, target, { 1: Outcomes.HasTranscript })]
+    [passed(R33, target, { 1: Outcomes.HasPerceivableTranscript("<video>") })]
   );
 });
 
@@ -46,7 +47,7 @@ test(`evaluate() fails when non-streaming video-only elements have no visual inf
         "transcript-link": None,
       })
     ),
-    [failed(R33, target, { 1: Outcomes.HasNoTranscript })]
+    [failed(R33, target, { 1: Outcomes.HasNoTranscriptLink("<video>") })]
   );
 });
 
