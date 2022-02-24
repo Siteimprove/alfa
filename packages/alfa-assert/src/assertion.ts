@@ -1,6 +1,7 @@
 import { Audit, Oracle, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
+import { Performance } from "@siteimprove/alfa-performance/src/performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -58,13 +59,16 @@ export class Assertion<I, T, Q, S> {
       filter = () => true,
       // default: report no CantTell outcome
       filterCantTell = () => false,
+      // default: answer no question
       oracle = () => Future.now(None),
+      // default: no performance listener
+      performance,
     } = {
       ...this._options,
     };
 
     return Audit.of<I, T, Q, S>(this._input, this._rules, oracle)
-      .evaluate()
+      .evaluate(performance)
       .flatMap((outcomes) => {
         // Since we need to go through `outcomes` twice, we can't keep it as
         // an Iterable which self-destruct on reading.
@@ -144,5 +148,9 @@ export namespace Assertion {
      * Passing an oracle to the rules evaluation.
      */
     readonly oracle?: Oracle<I, T, Q, S>;
+    /**
+     * Passing a performance listener.
+     */
+    readonly performance?: Performance<Rule.Event<I, T, Q, S>>;
   }
 }
