@@ -269,12 +269,15 @@ export namespace Media {
     namespace Width {
       export function tryFrom(value: Option<Value>): Result<Width, string> {
         return value
+          .map((value) =>
+            Value.Range.isRange(value) ? value.toLength() : value
+          )
           .map((value) => {
             if (value.hasValue(Length.isLength)) {
               return Ok.of(Width.of(value));
-            } else {
-              return Err.of(`Invalid value`);
             }
+
+            return Err.of(`Invalid value`);
           })
           .getOrElse(() => Ok.of(Width.boolean()));
       }
@@ -312,18 +315,19 @@ export namespace Media {
           : value.every((value) => value.matches(Length.of(0, "px")));
       }
     }
-
+    
     namespace Height {
-      export function tryFrom(
-        value: Option<Value<any>>
-      ): Result<Height, string> {
+      export function tryFrom(value: Option<Value>): Result<Height, string> {
         return value
+          .map((value) =>
+            Value.Range.isRange(value) ? value.toLength() : value
+          )
           .map((value) => {
             if (value.hasValue(Length.isLength)) {
               return Ok.of(Height.of(value));
-            } else {
-              return Err.of(`Invalid value`);
             }
+
+            return Err.of(`Invalid value`);
           })
           .getOrElse(() => Ok.of(Height.boolean()));
       }
@@ -836,6 +840,14 @@ export namespace Media {
         );
       }
 
+      public toLength(): Range<T | Length<"px">> {
+        return this.map((bound) =>
+          Refinement.and(Number.isNumber, (value) => value.value === 0)(bound)
+            ? Length.of(0, "px")
+            : bound
+        );
+      }
+
       public matches(value: T): boolean {
         if (!Comparable.isComparable<T>(value)) {
           return false;
@@ -935,6 +947,12 @@ export namespace Media {
 
       public map<U>(mapper: Mapper<T, U>): Bound<U> {
         return new Bound(mapper(this._value), this._isInclusive);
+      }
+
+      public hasValue<U extends T>(
+        refinement: Refinement<T, U>
+      ): this is Bound<U> {
+        return refinement(this._value);
       }
 
       public toJSON(): Bound.JSON<T> {

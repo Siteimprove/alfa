@@ -3,7 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option, None } from "@siteimprove/alfa-option";
 
-import R24, { Outcomes } from "../../src/sia-r24/rule";
+import R24 from "../../src/sia-r24/rule";
+import { Outcomes } from "../../src/common/expectation/media-transcript";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
@@ -34,7 +35,7 @@ test(`evaluate() passes when non-streaming video elements have all audio and
     ),
     [
       passed(R24, target, {
-        1: Outcomes.HasTranscript,
+        1: Outcomes.HasPerceivableTranscript("<video>"),
       }),
     ]
   );
@@ -64,7 +65,7 @@ test(`evaluate() fails when non-streaming video elements have no audio and
     ),
     [
       failed(R24, target, {
-        1: Outcomes.HasNoTranscript,
+        1: Outcomes.HasNoTranscriptLink("<video>"),
       }),
     ]
   );

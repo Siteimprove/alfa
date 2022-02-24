@@ -7,7 +7,7 @@ import R54, { Outcomes } from "../../src/sia-r54/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test("evaluate() passes an assertive and atomic element", async (t) => {
+test("evaluate() passes an assertive and lower-cased atomic element", async (t) => {
   const target = (
     <div aria-live="assertive" aria-atomic="true">
       Some words
@@ -23,6 +23,21 @@ test("evaluate() passes an assertive and atomic element", async (t) => {
   ]);
 });
 
+test("evaluate() passes an assertive and mixed-cased atomic element", async (t) => {
+  const target = (
+    <div aria-live="assertive" aria-atomic="TRUe">
+      Some words
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R54, { document }), [
+    passed(R54, target, {
+      1: Outcomes.IsAtomic,
+    }),
+  ]);
+});
 test("evaluate() fails an element which is assertive but not atomic", async (t) => {
   const target = <div aria-live="assertive"> Some words </div>;
 

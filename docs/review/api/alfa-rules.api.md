@@ -91,7 +91,7 @@ const _default_28: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 const _default_29: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node>;
+const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string>>;
 
 // @public (undocumented)
 const _default_30: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
