@@ -1,7 +1,7 @@
 import { Audit, Oracle, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
-import { Performance } from "@siteimprove/alfa-performance/src/performance";
+import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
