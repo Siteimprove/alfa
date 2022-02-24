@@ -7,7 +7,7 @@
 import { Future } from '@siteimprove/alfa-future';
 import { Oracle } from '@siteimprove/alfa-act';
 import { Outcome } from '@siteimprove/alfa-act';
-import { Performance } from '@siteimprove/alfa-performance/src/performance';
+import { Performance } from '@siteimprove/alfa-performance';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
