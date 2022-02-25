@@ -7,6 +7,7 @@
 import { Future } from '@siteimprove/alfa-future';
 import { Oracle } from '@siteimprove/alfa-act';
 import { Outcome } from '@siteimprove/alfa-act';
+import { Performance } from '@siteimprove/alfa-performance';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
@@ -45,6 +46,7 @@ export namespace Assertion {
         readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
         readonly filterCantTell?: Predicate<Outcome.CantTell<I, T, Q, S>>;
         readonly oracle?: Oracle<I, T, Q, S>;
+        readonly performance?: Performance<Rule.Event<I, T, Q, S>>;
     }
 }
 

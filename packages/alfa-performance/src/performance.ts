@@ -12,7 +12,8 @@ import { now } from "./now";
 export class Performance<T>
   implements
     AsyncIterable<Performance.Entry<T>>,
-    Serializable<Performance.JSON> {
+    Serializable<Performance.JSON>
+{
   public static of<T = string>(): Performance<T> {
     return new Performance();
   }
@@ -61,8 +62,9 @@ export class Performance<T>
     return this._emit(Performance.measure(data, start, end - start));
   }
 
-  public on(listener: Callback<Performance.Entry<T>>): void {
+  public on(listener: Callback<Performance.Entry<T>>): this {
     this._emitter.on(listener);
+    return this;
   }
 
   public once(): Promise<Performance.Entry<T>>;
@@ -80,8 +82,9 @@ export class Performance<T>
     }
   }
 
-  public off(listener: Callback<Performance.Entry<T>>): void {
+  public off(listener: Callback<Performance.Entry<T>>): this {
     this._emitter.off(listener);
+    return this;
   }
 
   public asyncIterator(): AsyncIterator<Performance.Entry<T>> {
