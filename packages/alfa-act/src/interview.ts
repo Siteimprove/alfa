@@ -1,5 +1,7 @@
 import { Future } from "@siteimprove/alfa-future";
+import { Either } from "@siteimprove/alfa-either";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Diagnostic } from ".";
 
 import { Oracle } from "./oracle";
 import { Question } from "./question";
@@ -61,13 +63,14 @@ export namespace Interview {
   // question (by returning None).
   // Oracles must return Futures, because the full interview process is essentially
   // async (e.g., asking through a CLI).
+
   export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(
     // Questions' contexts are guaranteed to be (potential) test target of
     // the rule.
     interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
     oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>
-  ): Future<Option<ANSWER>> {
+  ): Future<Either<ANSWER, Diagnostic>> {
     if (interview instanceof Question) {
       let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
@@ -83,10 +86,10 @@ export namespace Interview {
       return answer.flatMap((answer) =>
         answer
           .map((answer) => conduct(answer, rule, oracle))
-          .getOrElse(() => Future.now(None))
+          .getOrElse(() => Future.now(Either.right(interview.diagnostic)))
       );
     }
 
-    return Future.now(Option.of(interview));
+    return Future.now(Either.left(interview));
   }
 }

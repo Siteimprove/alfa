@@ -37,5 +37,5 @@ export function cantTell<T, Q, S>(
   rule: Rule<Page, T, Q, S>,
   target: T
 ): Outcome.CantTell.JSON<T> {
-  return Outcome.CantTell.of(rule, target).toJSON();
+  return Outcome.CantTell.of(rule, target, Diagnostic.dummyDiagnostic).toJSON();
 }
