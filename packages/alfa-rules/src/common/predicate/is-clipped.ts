@@ -158,7 +158,7 @@ function isClippedByMasking(
       ((clip.shape.top.type === "length" &&
         clip.shape.top.equals(clip.shape.bottom)) ||
         (clip.shape.left.type === "length" &&
-          clip.shape.top.equals(clip.shape.right)))
+          clip.shape.left.equals(clip.shape.right)))
     );
   };
 }
