@@ -2,6 +2,7 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { isClipped } from "../../../src/common/predicate/is-clipped";
 
 import * as predicate from "../../../src/common/predicate/is-visible";
 
@@ -47,11 +48,7 @@ test(`isVisible() returns false when a track element is a child of video`, (t) =
 test(`isVisible() returns false when a div element is child of an iframe element`, (t) => {
   const div = <div>hidden</div>;
 
-  const element = (
-    <iframe srcdoc="Hello">
-      {div}
-    </iframe>
-  );
+  const element = <iframe srcdoc="Hello">{div}</iframe>;
   h.document([element]);
 
   t.equal(isVisible(div), false);
@@ -495,7 +492,7 @@ test("isVisible() return true for an empty element with set dimensions", (t) => 
   t.equal(isVisible(element), true);
 });
 
-test("isVisible() return true for an empty absolutely positioned element stretched within its offset parent", (t) => {
+test("isVisible() returns true for an empty absolutely positioned element stretched within its offset parent", (t) => {
   const element = <div class="stretch"></div>;
 
   h.document(
@@ -517,7 +514,7 @@ test("isVisible() return true for an empty absolutely positioned element stretch
   t.equal(isVisible(element), true);
 });
 
-test("isVisible() return true for an element stretched horizontally and dimensioned vertically", (t) => {
+test("isVisible() returns true for an element stretched horizontally and dimensioned vertically", (t) => {
   const element = <div class="stretch"></div>;
 
   h.document(
@@ -538,19 +535,22 @@ test("isVisible() return true for an element stretched horizontally and dimensio
   t.equal(isVisible(element), true);
 });
 
-test("isVisible() return true for an element stretched vertically and dimensioned horizontally", (t) => {
-  const element = <div class="stretch"></div>;
+test("isVisible() returns true for an absolutely positioned element with a clipping ancestor before its offset parent ", (t) => {
+  const element = <div class="absolute">Hello world</div>;
 
   h.document(
-    [<div style={{ position: "relative" }}>{element}Hello world</div>],
+    [
+      <div style={{ position: "relative" }}>
+        <div class="clip">{element}</div>
+      </div>,
+    ],
     [
       h.sheet([
-        h.rule.style(".stretch", {
-          position: "absolute",
-          background: "red",
-          top: "1px",
-          bottom: "1px",
-          width: "100px",
+        h.rule.style(".absolute", { position: "absolute" }),
+        h.rule.style(".clip", {
+          overflow: "hidden",
+          height: "0px",
+          width: "0px",
         }),
       ]),
     ]
