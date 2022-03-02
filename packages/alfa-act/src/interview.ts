@@ -1,6 +1,6 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Either } from "@siteimprove/alfa-either";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Diagnostic } from ".";
 
 import { Oracle } from "./oracle";
