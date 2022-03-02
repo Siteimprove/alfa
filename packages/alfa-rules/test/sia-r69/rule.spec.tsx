@@ -13,7 +13,6 @@ import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 import { oracle } from "../common/oracle";
 import { ColorError } from "../../src/common/dom/get-colors";
 import { Style } from "@siteimprove/alfa-style";
-import { Context } from "@siteimprove/alfa-selector";
 import { Device } from "@siteimprove/alfa-device";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
@@ -524,8 +523,9 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   const div = <div style={{ textShadow: "1px 1px" }}>{target}</div>;
   const document = h.document([div]);
 
-  const style = Style.from(div, Device.standard(), Context.empty());
-  const textShadow = style.computed("text-shadow").value;
+  const textShadow = Style.from(div, Device.standard()).computed(
+    "text-shadow"
+  ).value;
   const diagnostic = ColorError.textShadow(div, textShadow);
 
   t.deepEqual(await evaluate(R69, { document }), [
@@ -611,10 +611,9 @@ test(`evaluate() cannot tell when encountering an absolutely positioned parent
     );
     const document = h.document([div]);
 
-    const style = Style.from(div, Device.standard(), Context.empty());
     const diagnostic = ColorError.nonStaticPosition(
       div,
-      style.computed("position").value
+      Keyword.of("absolute")
     );
 
     t.deepEqual(await evaluate(R69, { document }), [

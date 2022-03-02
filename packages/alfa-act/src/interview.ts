@@ -63,7 +63,6 @@ export namespace Interview {
   // question (by returning None).
   // Oracles must return Futures, because the full interview process is essentially
   // async (e.g., asking through a CLI).
-
   export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(
     // Questions' contexts are guaranteed to be (potential) test target of
     // the rule.
