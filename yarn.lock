@@ -1032,6 +1032,7 @@ __metadata:
     "@siteimprove/alfa-act": "workspace:^0.33.0"
     "@siteimprove/alfa-future": "workspace:^0.33.0"
     "@siteimprove/alfa-mapper": "workspace:^0.33.0"
+    "@siteimprove/alfa-performance": "workspace:^0.33.0"
     "@siteimprove/alfa-result": "workspace:^0.33.0"
     "@siteimprove/alfa-test": "workspace:^0.33.0"
   languageName: unknown
