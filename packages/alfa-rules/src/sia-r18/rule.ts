@@ -65,47 +65,36 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 function ariaHtmlAllowed(target: Attribute): boolean {
   const attributeName = target.name as aria.Attribute.Name;
-  switch (target.owner.get().name) {
-    case "body":
-      return Role.of("document").isAttributeSupported(
-        attributeName
-      );
+  for (const element of target.owner) {
+    switch (element.name) {
+      case "body":
+        return Role.of("document").isAttributeSupported(attributeName);
 
-    case "input":
-      return (
-        hasInputType(
-          "date",
-          "datetime-local",
-          "email",
-          "month",
-          "password",
-          "time",
-          "week"
-        )(target.owner.get()) &&
-        Role.of("textbox").isAttributeSupported(
-          attributeName
-        )
-      );
+      case "input":
+        return (
+          hasInputType(
+            "date",
+            "datetime-local",
+            "email",
+            "month",
+            "password",
+            "time",
+            "week"
+          ) && Role.of("textbox").isAttributeSupported(attributeName)
+        );
 
-    case "select":
-      return (
-        (and(hasDisplaySize((size: Number) => size !== 1))(
-          target.owner.get()
-        ) &&
-          Role.of("combobox").isAttributeSupported(
-            attributeName
-          )) ||
-        Role.of("menu").isAttributeSupported(attributeName)
-      );
+      case "select":
+        return (
+          (hasDisplaySize((size: Number) => size !== 1) &&
+            Role.of("combobox").isAttributeSupported(attributeName)) ||
+          Role.of("menu").isAttributeSupported(attributeName)
+        );
 
-    case "video":
-      return Role.of("application").isAttributeSupported(
-        attributeName
-      );
-
-    default:
-      return false;
+      case "video":
+        return Role.of("application").isAttributeSupported(attributeName);
+    }
   }
+  return false;
 }
 
 export namespace Outcomes {
