@@ -1,13 +1,4 @@
-/// <reference lib="dom" />
-import {
-  Block,
-  Declaration,
-  Element,
-  h,
-  Namespace,
-  Text,
-  Node,
-} from "@siteimprove/alfa-dom";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
@@ -20,7 +11,6 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
-import { None, Some } from "@siteimprove/alfa-option";
 import { ColorError } from "../../src/common/dom/get-colors";
 import { Style } from "@siteimprove/alfa-style";
 import { Context } from "@siteimprove/alfa-selector";
@@ -502,18 +492,26 @@ test(`evaluate() correctly merges semi-transparent background layers against a
 
 test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
   const target = h.text("Hello World");
-  const style = {
-    backgroundImage:
-      "linear-gradient(to right,rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%)",
-    backgroundRepeat: "repeat-x",
-    backgroundPosition: "0px 100%",
-    backgroundSize: "100% 2px",
-  };
-  const div = <div style={style}>{target}</div>;
+
+  const div = (
+    <div
+      style={{
+        backgroundImage:
+          "linear-gradient(to right,rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%)",
+        backgroundRepeat: "repeat-x",
+        backgroundPosition: "0px 100%",
+        backgroundSize: "100% 2px",
+      }}
+    >
+      {target}
+    </div>
+  );
   const document = h.document([div]);
 
-  const computedStyle = Style.from(div, Device.standard(), Context.empty());
-  const backgroundSize = computedStyle.computed("background-size").value;
+  const backgroundSize = Style.from(div, Device.standard()).computed(
+    "background-size"
+  ).value;
+
   const diagnostic = ColorError.backgroundSize(div, backgroundSize);
 
   t.deepEqual(await evaluate(R69, { document }), [

@@ -4,7 +4,7 @@ import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
