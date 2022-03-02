@@ -85,9 +85,9 @@ function ariaHtmlAllowed(target: Attribute): boolean {
 
       case "select":
         return (
-          (hasDisplaySize((size: Number) => size !== 1) &&
-            Role.of("combobox").isAttributeSupported(attributeName)) ||
-          Role.of("menu").isAttributeSupported(attributeName)
+          (hasDisplaySize((size: Number) => size !== 1)(element) &&
+            (Role.of("combobox").isAttributeSupported(attributeName)) ||
+          Role.of("menu").isAttributeSupported(attributeName))
         );
 
       case "video":
