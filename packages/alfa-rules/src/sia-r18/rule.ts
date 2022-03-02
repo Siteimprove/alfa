@@ -80,7 +80,7 @@ function ariaHtmlAllowed(target: Attribute): boolean {
             "password",
             "time",
             "week"
-          ) && Role.of("textbox").isAttributeSupported(attributeName)
+          )(element) && Role.of("textbox").isAttributeSupported(attributeName)
         );
 
       case "select":
