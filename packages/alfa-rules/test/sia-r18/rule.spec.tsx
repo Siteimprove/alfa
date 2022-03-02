@@ -6,9 +6,9 @@ import R18, { Outcomes } from "../../src/sia-r18/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test(`evaluate() passes input with type password field, textbox role and aria-required state`, async (t) => {
+test(`evaluate() passes input with type password field and aria-required state`, async (t) => {
   const target = (
-    <input type="password" role="textbox" aria-required="true">
+    <input type="password" aria-required="true">
       My password
     </input>
   );

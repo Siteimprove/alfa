@@ -64,11 +64,13 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 function ariaHtmlAllowed(target: Attribute): boolean {
+  const attributeName = target.name as aria.Attribute.Name;
   switch (target.owner.get().name) {
     case "body":
       return Role.of("document").isAttributeSupported(
-        target.name as aria.Attribute.Name
+        attributeName
       );
+
     case "input":
       return (
         hasInputType(
@@ -80,25 +82,28 @@ function ariaHtmlAllowed(target: Attribute): boolean {
           "time",
           "week"
         )(target.owner.get()) &&
-        Role.of("document").isAttributeSupported(
-          target.name as aria.Attribute.Name
+        Role.of("textbox").isAttributeSupported(
+          attributeName
         )
       );
+
     case "select":
       return (
-        and(hasDisplaySize((size: Number) => size !== 1), not(hasAttribute("multiple")))(target.owner.get()) &&
-        Role.of("combobox").isAttributeSupported(
-          target.name as aria.Attribute.Name
-        ) ||
-        Role.of("menu").isAttributeSupported(target.name as aria.Attribute.Name)
+        (and(hasDisplaySize((size: Number) => size !== 1))(
+          target.owner.get()
+        ) &&
+          Role.of("combobox").isAttributeSupported(
+            attributeName
+          )) ||
+        Role.of("menu").isAttributeSupported(attributeName)
       );
 
     case "video":
       return Role.of("application").isAttributeSupported(
-        target.name as aria.Attribute.Name
+        attributeName
       );
-      default:
-        
+
+    default:
       return false;
   }
 }
