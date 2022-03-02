@@ -661,7 +661,7 @@ export namespace Outcome {
             ])
           )
         ),
-      () => CantTell.of(rule, target, Diagnostic.of("dummy")),
+      () => CantTell.of(rule, target, Diagnostic.defaultDiagnostic),
       expectations.values()
     );
   }

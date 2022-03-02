@@ -423,7 +423,7 @@ interface ErrorName {
   background: "text-shadow";
 }
 
-abstract class ColorError<
+export abstract class ColorError<
   T extends keyof ErrorName = keyof ErrorName,
   K extends ErrorName[T] = ErrorName[T]
 > extends Diagnostic {
@@ -474,7 +474,7 @@ abstract class ColorError<
   }
 }
 
-namespace ColorError {
+export namespace ColorError {
   export interface JSON<
     T extends keyof ErrorName = keyof ErrorName,
     K extends ErrorName[T] = ErrorName[T]

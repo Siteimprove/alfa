@@ -49,7 +49,7 @@ export namespace Diagnostic {
     return value instanceof Diagnostic;
   }
 
-  export const dummyDiagnostic = Diagnostic.of("dummy");
+  export const defaultDiagnostic = Diagnostic.of("No extra information");
 }
 
 function normalize(input: string): string {

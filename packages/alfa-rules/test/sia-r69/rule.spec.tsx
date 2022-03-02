@@ -1,7 +1,16 @@
-import { h } from "@siteimprove/alfa-dom";
+/// <reference lib="dom" />
+import {
+  Block,
+  Declaration,
+  Element,
+  h,
+  Namespace,
+  Text,
+  Node,
+} from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { RGB, Percentage } from "@siteimprove/alfa-css";
+import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
 
 import R69 from "../../src/sia-r69/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
@@ -11,6 +20,11 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
+import { None, Some } from "@siteimprove/alfa-option";
+import { ColorError } from "../../src/common/dom/get-colors";
+import { Style } from "@siteimprove/alfa-style";
+import { Context } from "@siteimprove/alfa-selector";
+import { Device } from "@siteimprove/alfa-device";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(
@@ -223,7 +237,6 @@ test("evaluate() passes a text node using the user agent default styles", async 
 
 test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
   const target = h.text("Hello world");
-
   const document = h.document([
     <html
       style={{
@@ -276,18 +289,27 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
 
 test("evaluate() correctly handles circular `currentcolor` references", async (t) => {
   const target = h.text("Hello world");
-
-  const document = h.document([
+  const color = "currentcolor";
+  const html = (
     <html
       style={{
-        color: "currentcolor",
+        color: color,
       }}
     >
       {target}
-    </html>,
-  ]);
+    </html>
+  );
 
-  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+  const document = h.document([html]);
+
+  const diagnostic = ColorError.unresolvableForegroundColor(
+    html,
+    Keyword.of(color)
+  );
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    cantTell(R69, target, diagnostic),
+  ]);
 });
 
 test("evaluate() is inapplicable to text nodes in widgets", async (t) => {
@@ -480,81 +502,99 @@ test(`evaluate() correctly merges semi-transparent background layers against a
 
 test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
   const target = h.text("Hello World");
-
-  const div = (
-    <div
-      style={{
-        backgroundImage:
-          "linear-gradient(to right,rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%)",
-        backgroundRepeat: "repeat-x",
-        backgroundPosition: "0px 100%",
-        backgroundSize: "100% 2px",
-      }}
-    >
-      {target}
-    </div>
-  );
+  const style = {
+    backgroundImage:
+      "linear-gradient(to right,rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%)",
+    backgroundRepeat: "repeat-x",
+    backgroundPosition: "0px 100%",
+    backgroundSize: "100% 2px",
+  };
+  const div = <div style={style}>{target}</div>;
   const document = h.document([div]);
 
-  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+  const computedStyle = Style.from(div, Device.standard(), Context.empty());
+  const backgroundSize = computedStyle.computed("background-size").value;
+  const diagnostic = ColorError.backgroundSize(div, backgroundSize);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    cantTell(R69, target, diagnostic),
+  ]);
 });
 
 test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   const target = h.text("Hello World");
+  const div = <div style={{ textShadow: "1px 1px" }}>{target}</div>;
+  const document = h.document([div]);
 
-  const document = h.document([
-    <div style={{ textShadow: "1px 1px" }}>{target}</div>,
+  const style = Style.from(div, Device.standard(), Context.empty());
+  const textShadow = style.computed("text-shadow").value;
+  const diagnostic = ColorError.textShadow(div, textShadow);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    cantTell(R69, target, diagnostic),
   ]);
-
-  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
 });
 
 test(`evaluate() cannot tell when encountering an interposed parent before
       encountering an opaque background`, async (t) => {
   {
     const target = h.text("Hello World");
+    const interposed = (
+      <span
+        style={{
+          position: "absolute",
+          backgroundColor: "#000",
+          width: "100%",
+          height: "100%",
+        }}
+      />
+    );
 
-    const document = h.document([
+    const body = (
       <body>
-        <span
-          style={{
-            position: "absolute",
-            backgroundColor: "#000",
-            width: "100%",
-            height: "100%",
-          }}
-        />
+        {interposed}
         {target}
-      </body>,
-    ]);
+      </body>
+    );
 
-    t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+    const document = h.document([body]);
+
+    const diagnostic = ColorError.interposedDescendants(body, [interposed]);
+
+    t.deepEqual(await evaluate(R69, { document }), [
+      cantTell(R69, target, diagnostic),
+    ]);
   }
   {
     const target = h.text("Hello World");
+    const interposed = (
+      <span
+        style={{
+          position: "absolute",
+          backgroundColor: "#000",
+          width: "100%",
+          height: "100%",
+        }}
+      />
+    );
+    const div = (
+      <div
+        style={{
+          position: "relative",
+          backgroundColor: "#fff",
+        }}
+      >
+        {interposed}
+        {target}
+      </div>
+    );
+    const document = h.document([<body>{div}</body>]);
 
-    const document = h.document([
-      <body>
-        <div
-          style={{
-            position: "relative",
-            backgroundColor: "#fff",
-          }}
-        >
-          <span
-            style={{
-              position: "absolute",
-              backgroundColor: "#000",
-              width: "100%",
-              height: "100%",
-            }}
-          />
-          {target}
-        </div>
-      </body>,
+    const diagnostic = ColorError.interposedDescendants(div, [interposed]);
+
+    t.deepEqual(await evaluate(R69, { document }), [
+      cantTell(R69, target, diagnostic),
     ]);
-
-    t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
   }
 });
 
@@ -562,18 +602,26 @@ test(`evaluate() cannot tell when encountering an absolutely positioned parent
       before encountering an opaque background`, async (t) => {
   {
     const target = h.text("Hello World");
-
-    const document = h.document([
+    const div = (
       <div
         style={{
           position: "absolute",
         }}
       >
         {target}
-      </div>,
-    ]);
+      </div>
+    );
+    const document = h.document([div]);
 
-    t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+    const style = Style.from(div, Device.standard(), Context.empty());
+    const diagnostic = ColorError.nonStaticPosition(
+      div,
+      style.computed("position").value
+    );
+
+    t.deepEqual(await evaluate(R69, { document }), [
+      cantTell(R69, target, diagnostic),
+    ]);
   }
   {
     const target = h.text("Hello World");
