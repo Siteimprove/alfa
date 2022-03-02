@@ -9,7 +9,7 @@ import { hasPositioningParent } from "./has-positioning-parent";
 
 const { abs } = Math;
 const { isElement } = Element;
-const { or, test } = Predicate;
+const { not, or, test } = Predicate;
 const { and } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
@@ -41,13 +41,14 @@ export function isClipped(
               )
             ),
             // Or (it's not an element) and its parent is clipped
-            (node: Node) =>
+            and(not(isElement), (node: Node) =>
               node
                 .parent({
                   flattened: true,
                   nested: true,
                 })
                 .some(isClipped(device, context))
+            )
           ),
           node
         )
