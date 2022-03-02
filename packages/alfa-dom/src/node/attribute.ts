@@ -16,7 +16,7 @@ const { equals, not } = Predicate;
 /**
  * @public
  */
-export class Attribute<N extends string = string> extends Node {
+export class Attribute<N extends string = string> extends Node<"attribute"> {
   public static of<N extends string = string>(
     namespace: Option<Namespace>,
     prefix: Option<string>,
@@ -38,7 +38,7 @@ export class Attribute<N extends string = string> extends Node {
     name: N,
     value: string
   ) {
-    super([]);
+    super([], "attribute");
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -131,8 +131,7 @@ export class Attribute<N extends string = string> extends Node {
 
   public toJSON(): Attribute.JSON<N> {
     return {
-      type: "attribute",
-      path: this.path(),
+      ...super.toJSON(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,

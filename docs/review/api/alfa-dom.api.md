@@ -8,7 +8,6 @@ import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -18,7 +17,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 
 // @public (undocumented)
-export class Attribute<N extends string = string> extends Node {
+export class Attribute<N extends string = string> extends Node<"attribute"> {
     // @internal (undocumented)
     _attachOwner(owner: Element): boolean;
     // @internal (undocumented)
@@ -109,7 +108,7 @@ export namespace Block {
 }
 
 // @public (undocumented)
-export class Comment extends Node {
+export class Comment extends Node<"comment"> {
     // (undocumented)
     get data(): string;
     // (undocumented)
@@ -201,7 +200,7 @@ export namespace Declaration {
 }
 
 // @public (undocumented)
-export class Document extends Node {
+export class Document extends Node<"document"> {
     // @internal (undocumented)
     _attachFrame(frame: Element): boolean;
     // @internal (undocumented)
@@ -240,7 +239,7 @@ export namespace Document {
 }
 
 // @public (undocumented)
-export class Element<N extends string = string> extends Node implements Slot, Slotable {
+export class Element<N extends string = string> extends Node<"element"> implements Slot, Slotable {
     // (undocumented)
     assignedNodes(): Iterable_2<Slotable>;
     // (undocumented)
@@ -361,7 +360,7 @@ export namespace FontFaceRule {
 }
 
 // @public (undocumented)
-export class Fragment extends Node {
+export class Fragment extends Node<"fragment"> {
     // @internal (undocumented)
     _attachParent(): boolean;
     // (undocumented)
@@ -632,8 +631,6 @@ export class MediaRule extends ConditionRule {
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
     // (undocumented)
-    get queries(): Media.List;
-    // (undocumented)
     toJSON(): MediaRule.JSON;
     // (undocumented)
     toString(): string;
@@ -706,10 +703,10 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node implements Iterable<Node>, Equatable, json.Serializable<Node.JSON>, earl.Serializable<Node.EARL>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> implements Iterable<Node>, Equatable, json.Serializable<Node.JSON>, earl.Serializable<Node.EARL>, sarif.Serializable<sarif.Location> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node>;
-    protected constructor(children: Array<Node>);
+    protected constructor(children: Array<Node>, type: T);
     // (undocumented)
     ancestors(options?: Node.Traversal): Sequence<Node>;
     // @internal (undocumented)
@@ -785,9 +782,13 @@ export abstract class Node implements Iterable<Node>, Equatable, json.Serializab
     // (undocumented)
     toEARL(): Node.EARL;
     // (undocumented)
-    abstract toJSON(): Node.JSON;
+    toJSON(): Node.JSON<T>;
     // (undocumented)
     toSARIF(): sarif.Location;
+    // (undocumented)
+    get type(): T;
+    // (undocumented)
+    protected readonly _type: T;
 }
 
 // @public (undocumented)
@@ -836,8 +837,6 @@ export namespace Node {
     export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON | undefined;
-        // (undocumented)
-        path?: string;
         // (undocumented)
         type: T;
     }
@@ -941,7 +940,7 @@ export namespace Rule {
 }
 
 // @public (undocumented)
-export class Shadow extends Node {
+export class Shadow extends Node<"shadow"> {
     // @internal (undocumented)
     _attachHost(host: Element): boolean;
     // @internal (undocumented)
@@ -1122,7 +1121,7 @@ export namespace SupportsRule {
 }
 
 // @public (undocumented)
-export class Text extends Node implements Slotable {
+export class Text extends Node<"text"> implements Slotable {
     // (undocumented)
     assignedSlot(): Option<Slot>;
     // (undocumented)
@@ -1155,7 +1154,7 @@ export namespace Text {
 }
 
 // @public (undocumented)
-export class Type<N extends string = string> extends Node {
+export class Type<N extends string = string> extends Node<"type"> {
     // (undocumented)
     static empty(): Type;
     // (undocumented)

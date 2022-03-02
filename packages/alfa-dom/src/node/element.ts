@@ -22,7 +22,7 @@ const { not } = Predicate;
  * @public
  */
 export class Element<N extends string = string>
-  extends Node
+  extends Node<"element">
   implements Slot, Slotable
 {
   public static of<N extends string = string>(
@@ -61,7 +61,7 @@ export class Element<N extends string = string>
     children: Array<Node>,
     style: Option<Block>
   ) {
-    super(children);
+    super(children, "element");
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -230,8 +230,10 @@ export class Element<N extends string = string>
    */
   public tabIndex(): Option<number> {
     for (const tabIndex of this.attribute("tabindex")) {
-      const number = Number(tabIndex.value);
 
+      const number = parseInt(tabIndex.value, 10);
+      
+      //Checking if tabindex isn't NaN, undefined, null, Infinity
       if (number === number && number === (number | 0)) {
         return Some.of(number);
       }
@@ -277,8 +279,7 @@ export class Element<N extends string = string>
 
   public toJSON(): Element.JSON<N> {
     return {
-      type: "element",
-      path: this.path(),
+      ...super.toJSON(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
