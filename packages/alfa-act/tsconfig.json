@@ -22,6 +22,9 @@
       "path": "../alfa-earl"
     },
     {
+      "path": "../alfa-either"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {

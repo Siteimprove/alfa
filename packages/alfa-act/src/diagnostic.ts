@@ -48,6 +48,8 @@ export namespace Diagnostic {
   export function isDiagnostic(value: unknown): value is Diagnostic {
     return value instanceof Diagnostic;
   }
+
+  export const empty = Diagnostic.of("No extra information");
 }
 
 function normalize(input: string): string {
