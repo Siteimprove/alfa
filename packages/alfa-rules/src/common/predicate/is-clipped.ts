@@ -5,10 +5,11 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
+import { hasPositioningParent } from "./has-positioning-parent";
 
 const { abs } = Math;
 const { isElement } = Element;
-const { or, test } = Predicate;
+const { not, or, test } = Predicate;
 const { and } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
@@ -28,23 +29,26 @@ export function isClipped(
       .get(node, () =>
         test(
           or(
-            // Either it a clipped element
+            // Either it is a clipped element
             and(
               isElement,
               or(
                 isClippedBySize(device, context),
                 isClippedByIndent(device, context),
-                isClippedByMasking(device, context)
+                isClippedByMasking(device, context),
+                // Or it is an element whose positioning parent is clipped
+                hasPositioningParent(device, isClipped(device, context))
               )
             ),
-            // Or its parent is clipped
-            (node: Node) =>
+            // Or (it's not an element) and its parent is clipped
+            and(not(isElement), (node: Node) =>
               node
                 .parent({
                   flattened: true,
                   nested: true,
                 })
                 .some(isClipped(device, context))
+            )
           ),
           node
         )
@@ -158,7 +162,7 @@ function isClippedByMasking(
       ((clip.shape.top.type === "length" &&
         clip.shape.top.equals(clip.shape.bottom)) ||
         (clip.shape.left.type === "length" &&
-          clip.shape.top.equals(clip.shape.right)))
+          clip.shape.left.equals(clip.shape.right)))
     );
   };
 }
