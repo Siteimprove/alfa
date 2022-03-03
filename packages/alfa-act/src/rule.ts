@@ -260,7 +260,10 @@ export namespace Rule {
             Interview.conduct(interview, this, oracle).map((target) =>
               target
                 .left()
-                // In case of a question we will drop that
+                // If questions are left unanswered in Applicability,
+                // we return an Inapplicable outcome; hence we can
+                // just drop any Right that stays after conducting the
+                // interview.
                 .flatMap((t) => (Option.isOption(t) ? t : Option.of(t)))
             )
           )
@@ -638,6 +641,35 @@ export namespace Rule {
   }
 }
 
+type Expectation<T> = Either<T, Diagnostic>;
+
+// Processes the expectations of the results of an interview.
+// When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
+// When we encounter the first Diagnostic result of a cantTell (Right),
+// the processing stops and later it is passed to the cantTell Outcome.
+function processExpectation(
+  acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
+  [id, expectation]: readonly [
+    string,
+    Expectation<Option.Maybe<Result<Diagnostic>>>
+  ]
+): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
+  return expectation.either(
+    (result) =>
+      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
+        (accumulator) =>
+          Left.of(
+            accumulator.append([
+              id,
+              Option.isOption(result) ? result : Option.of(result),
+            ])
+          ),
+        (diagnostic) => Right.of(diagnostic)
+      ),
+    (diagnostic) => Right.of(diagnostic)
+  );
+}
+
 function resolve<I, T, Q, S>(
   target: T,
   expectations: Record<{
@@ -646,48 +678,16 @@ function resolve<I, T, Q, S>(
   rule: Rule<I, T, Q, S>,
   oracle: Oracle<I, T, Q, S>
 ): Future<Outcome.Applicable<I, T, Q, S>> {
-  function processExpectation(
-    acc: Either<List<[string, Option<Result<Diagnostic>>]>, Diagnostic>,
-    [id, expectation]: readonly [
-      string,
-      Either<Option.Maybe<Result<Diagnostic, Diagnostic>>, Diagnostic>
-    ]
-  ): Either<List<[string, Option<Result<Diagnostic>>]>, Diagnostic> {
-    return expectation.either(
-      (result) =>
-        acc.either<
-          Either<List<[string, Option<Result<Diagnostic>>]>, Diagnostic>
-        >(
-          (accumulator) =>
-            Left.of(
-              accumulator.append([
-                id,
-                Option.isOption(result) ? result : Option.of(result),
-              ])
-            ),
-          (diagnostic) => Right.of(diagnostic)
-        ),
-      (diagnostic) => Right.of(diagnostic)
-    );
-  }
-
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(
       (expectation) => [id, expectation] as const
     )
   )
     .map((expectations) =>
-      reduce(
-        expectations,
-        (
-          acc: Either<List<[string, Option<Result<Diagnostic>>]>, Diagnostic>,
-          expectation
-        ) => processExpectation(acc, expectation),
-        Left.of(List.empty<[string, Option<Result<Diagnostic>>]>())
-      )
+      reduce(expectations, processExpectation, Left.of(List.empty()))
     )
-    .map((left) =>
-      left.either(
+    .map((expectation) =>
+      expectation.either(
         (expectations) => Outcome.from(rule, target, Record.from(expectations)),
         (diagnostic) => Outcome.CantTell.of(rule, target, diagnostic)
       )

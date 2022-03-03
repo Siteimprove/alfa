@@ -7,6 +7,7 @@
 import { Applicative } from '@siteimprove/alfa-applicative';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as earl from '@siteimprove/alfa-earl';
+import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Future } from '@siteimprove/alfa-future';
@@ -68,6 +69,8 @@ export namespace Diagnostic {
         // (undocumented)
         message: string;
     }
+    const // (undocumented)
+    defaultDiagnostic: Diagnostic;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
@@ -80,7 +83,7 @@ export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> 
 // @public (undocumented)
 export namespace Interview {
     // (undocumented)
-    export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Option<ANSWER>>;
+    export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Either<ANSWER, Diagnostic>>;
 }
 
 // @public
@@ -123,11 +126,13 @@ export namespace Outcome {
     // (undocumented)
     export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
         // (undocumented)
+        get diagnostic(): Diagnostic;
+        // (undocumented)
         equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T): CantTell<I, T, Q, S>;
+        static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic): CantTell<I, T, Q, S>;
         // (undocumented)
         get target(): T;
         // (undocumented)
@@ -158,6 +163,8 @@ export namespace Outcome {
         export interface JSON<T> extends Outcome.JSON {
             // (undocumented)
             [key: string]: json.JSON;
+            // (undocumented)
+            diagnostic: json.Serializable.ToJSON<Diagnostic>;
             // (undocumented)
             outcome: "cantTell";
             // (undocumented)
