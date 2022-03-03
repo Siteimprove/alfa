@@ -2,7 +2,6 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { isClipped } from "../../../src/common/predicate/is-clipped";
 
 import * as predicate from "../../../src/common/predicate/is-visible";
 
