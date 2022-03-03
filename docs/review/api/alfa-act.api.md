@@ -70,7 +70,7 @@ export namespace Diagnostic {
         message: string;
     }
     const // (undocumented)
-    defaultDiagnostic: Diagnostic;
+    empty: Diagnostic;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts

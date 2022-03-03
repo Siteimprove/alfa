@@ -36,7 +36,7 @@ export function inapplicable<T, Q, S>(
 export function cantTell<T, Q, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
-  diagnostic: Diagnostic = Diagnostic.defaultDiagnostic
+  diagnostic: Diagnostic = Diagnostic.empty
 ): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target, diagnostic).toJSON();
 }

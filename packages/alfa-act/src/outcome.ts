@@ -661,7 +661,7 @@ export namespace Outcome {
             ])
           )
         ),
-      () => CantTell.of(rule, target, Diagnostic.defaultDiagnostic),
+      () => CantTell.of(rule, target, Diagnostic.empty),
       expectations.values()
     );
   }

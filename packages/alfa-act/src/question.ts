@@ -48,7 +48,7 @@ export class Question<
     message: string,
     subject: SUBJECT,
     context: CONTEXT,
-    diagnostic: Diagnostic = Diagnostic.defaultDiagnostic
+    diagnostic: Diagnostic = Diagnostic.empty
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI> {
     return new Question(
       type,
