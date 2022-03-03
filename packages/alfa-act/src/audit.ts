@@ -1,11 +1,8 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None } from "@siteimprove/alfa-option";
 import { Performance } from "@siteimprove/alfa-performance";
-
-import * as json from "@siteimprove/alfa-json";
 
 import { Cache } from "./cache";
 import { Oracle } from "./oracle";
@@ -43,84 +40,12 @@ export class Audit<I, T = unknown, Q = never, S = T> {
   }
 
   public evaluate(
-    performance?: Performance<Audit.Event<I, T, Q, S>>
+    performance?: Performance<Rule.Event<I, T, Q, S>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 
-    return Future.traverse(this._rules, (rule) => {
-      let start: number | undefined;
-
-      return Future.empty()
-        .tee(() => {
-          start = performance?.mark(Audit.start(rule)).start;
-        })
-        .flatMap(() => rule.evaluate(this._input, this._oracle, outcomes))
-        .tee(() => {
-          performance?.measure(Audit.end(rule), start);
-        });
-    }).map(Iterable.flatten);
+    return Future.traverse(this._rules, (rule) =>
+      rule.evaluate(this._input, this._oracle, outcomes, performance)
+    ).map(Iterable.flatten);
   }
-}
-
-/**
- * @public
- */
-export namespace Audit {
-  export class Event<I, T, Q, S, N extends Event.Name = Event.Name>
-    implements Serializable<Event.JSON<N>>
-  {
-    public static of<I, T, Q, S, N extends Event.Name>(
-      name: N,
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, N> {
-      return new Event(name, rule);
-    }
-
-    public static start<I, T, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "start"> {
-      return new Event("start", rule);
-    }
-
-    public static end<I, T, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "end"> {
-      return new Event("end", rule);
-    }
-
-    private readonly _name: N;
-    private readonly _rule: Rule<I, T, Q, S>;
-
-    private constructor(event: N, rule: Rule<I, T, Q, S>) {
-      this._name = event;
-      this._rule = rule;
-    }
-
-    public get name(): N {
-      return this._name;
-    }
-
-    public get rule(): Rule<I, T, Q, S> {
-      return this._rule;
-    }
-
-    public toJSON(): Event.JSON<N> {
-      return {
-        name: this._name,
-        rule: this._rule.toJSON(),
-      };
-    }
-  }
-
-  export namespace Event {
-    export type Name = "start" | "end";
-
-    export interface JSON<N extends Name = Name> {
-      [key: string]: json.JSON;
-      name: N;
-      rule: Rule.JSON;
-    }
-  }
-
-  export const { of: event, start, end } = Event;
 }
