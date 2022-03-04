@@ -1,39 +1,30 @@
-import { Diagnostic, Interview, Question } from "@siteimprove/alfa-act";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Diagnostic, Interview } from "@siteimprove/alfa-act";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-type Path<Q, S, C> = Interview<Q, S, C, Option.Maybe<Result<Diagnostic>>>;
-
-function toExpectation<Q, S, C>(
-  path: Path<Q, S, C>
-): Interview<Q, S, C, Option<Result<Diagnostic>>> {
-  if (path instanceof Question) {
-    return path.map(toExpectation);
-  }
-
-  if (Option.isOption(path)) {
-    return path;
-  }
-
-  return Some.of(path);
-}
+type Expectation<Q, S, C> = Interview<
+  Q,
+  S,
+  C,
+  Option.Maybe<Result<Diagnostic>>
+>;
 
 export function expectation<Q, S, C>(
   test: Trilean,
-  ifTrue: Thunk<Path<Q, S, C>>,
-  ifFalse: Thunk<Path<Q, S, C>>,
-  ifUnknown: Thunk<Path<Q, S, C>> = Thunk.of(None)
-): Interview<Q, S, C, Option<Result<Diagnostic>>> {
+  ifTrue: Thunk<Expectation<Q, S, C>>,
+  ifFalse: Thunk<Expectation<Q, S, C>>,
+  ifUnknown: Thunk<Expectation<Q, S, C>> = Thunk.of(None)
+): Expectation<Q, S, C> {
   switch (test) {
     case true:
-      return toExpectation(ifTrue());
+      return ifTrue();
 
     case false:
-      return toExpectation(ifFalse());
+      return ifFalse();
 
     default:
-      return toExpectation(ifUnknown());
+      return ifUnknown();
   }
 }
