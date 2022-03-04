@@ -20,6 +20,7 @@
   "dependencies": {
     "@siteimprove/alfa-applicative": "workspace:^0.33.0",
     "@siteimprove/alfa-earl": "workspace:^0.33.0",
+    "@siteimprove/alfa-either": "workspace:^0.33.0",
     "@siteimprove/alfa-equatable": "workspace:^0.33.0",
     "@siteimprove/alfa-functor": "workspace:^0.33.0",
     "@siteimprove/alfa-future": "workspace:^0.33.0",
