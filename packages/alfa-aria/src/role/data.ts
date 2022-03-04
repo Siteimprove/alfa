@@ -588,7 +588,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
@@ -676,7 +676,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
@@ -1085,7 +1085,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
@@ -1119,7 +1119,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
@@ -1882,7 +1882,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
@@ -1977,21 +1977,7 @@ export const Roles = {
         },
       ],
       [
-        "aria-disabled",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
         "aria-dropeffect",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-errormessage",
         {
           required: false,
           value: null,
@@ -2012,21 +1998,7 @@ export const Roles = {
         },
       ],
       [
-        "aria-haspopup",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
         "aria-hidden",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-invalid",
         {
           required: false,
           value: null,
@@ -2343,7 +2315,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author", "contents"],
+      from: [],
     },
     parent: {
       required: [],
@@ -2368,7 +2340,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
@@ -3131,6 +3103,13 @@ export const Roles = {
           value: null,
         },
       ],
+      [
+        "aria-level",
+        {
+          required: false,
+          value: null,
+        },
+      ],
     ],
     name: {
       required: true,
@@ -3177,7 +3156,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: ["author"],
+      from: [],
     },
     parent: {
       required: [],
