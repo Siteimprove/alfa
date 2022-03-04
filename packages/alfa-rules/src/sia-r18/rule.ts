@@ -12,11 +12,16 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, isIgnored } from "../common/predicate";
+import {
+  hasRole,
+  isIgnored,
+  hasDisplaySize,
+  hasAttribute,
+} from "../common/predicate";
 import { Scope } from "../tags";
 
-const { test, property } = Predicate;
-const { isElement } = Element;
+const { test, property, and, not } = Predicate;
+const { isElement, hasInputType } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
@@ -47,7 +52,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                   role.isAttributeSupported(target.name as aria.Attribute.Name)
                 ),
                 target.owner.get()
-              ),
+              ) ||
+              ariaHtmlAllowed(target),
             () => Outcomes.IsAllowed,
             () => Outcomes.IsNotAllowed
           ),
@@ -56,6 +62,40 @@ export default Rule.Atomic.of<Page, Attribute>({
     };
   },
 });
+
+function ariaHtmlAllowed(target: Attribute): boolean {
+  const attributeName = target.name as aria.Attribute.Name;
+  for (const element of target.owner) {
+    switch (element.name) {
+      case "body":
+        return Role.of("document").isAttributeSupported(attributeName);
+
+      case "input":
+        return (
+          hasInputType(
+            "date",
+            "datetime-local",
+            "email",
+            "month",
+            "password",
+            "time",
+            "week"
+          )(element) && Role.of("textbox").isAttributeSupported(attributeName)
+        );
+
+      case "select":
+        return (
+          (hasDisplaySize((size: Number) => size !== 1)(element) &&
+            (Role.of("combobox").isAttributeSupported(attributeName)) ||
+          Role.of("menu").isAttributeSupported(attributeName))
+        );
+
+      case "video":
+        return Role.of("application").isAttributeSupported(attributeName);
+    }
+  }
+  return false;
+}
 
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
