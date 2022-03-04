@@ -19,6 +19,34 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.34.0](../../compare/v0.33.0...v0.34.0) (2022-03-04)
+
+### Breaking
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): The `cantTell` outcomes now contain diagnostics ([#1034](../../issues/1034), [#1098](../../pull/1098))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `Contrast.Pairing` fields describing colors are no longer `RGB` type, instead they are now encapsulated in a new `Color` interface ([#1066](../../issues/1066), [#1078](../../pull/1078))
+
+### Changed
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-assert](packages/alfa-assert), [@siteimprove/alfa-performance](packages/alfa-performance), [@siteimprove/alfa-rules](packages/alfa-rules): There is now improved performance management in `alfa-act` ([#1086](../../pull/1086))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R23, SIA-R24 and SIA-R33 now only ask for the `transcript-link` ([#1059](../../issues/1059), [#1068](../../pull/1068))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Simplification of the expectation helper by removing `toExpectation` ([#1099](../../pull/1099))
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `tabindex` is now parsed according to the HTML specification ([#813](../../issues/813), [#1067](../../pull/1067))
+
+- [@siteimprove/alfa-media](packages/alfa-media): Range media queries now accept `0` as `0px` ([#986](../../issues/986), [#1084](../../pull/1084))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R54 now parses `aria-atomic` case insensitively ([#1083](../../pull/1083))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now ignores text in `<option>` in single-line `<select>` ([#984](../../issues/984), [#1077](../../pull/1077))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isClipped` recurses to offset parent and fix masking comparison ([#887](../../issues/887), [#1095](../../pull/1095))
+
 ## [0.33.0](../../compare/v0.32.0...v0.33.0) (2022-02-15)
 
 ### Added
@@ -86,7 +114,6 @@ Items that are related, such as breaking changes, new features, or changes to ex
 ### Changed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R82 is now marked as experimental. ([#1020](../../pull/1020))
-
 
 ## [0.29.0](../../compare/v0.28.0...v0.29.0) (2022-01-04)
 
@@ -242,7 +269,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly separate detection of horizontal and vertical overflows, correctly considers interposed elements that handle overflow, and correctly restrict text overflow to text nodes parent. ([#908](../../issues/908), [#921](../../issues/921), [#922](../../issues/922), [#924](../../pull/924))   
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now correctly separate detection of horizontal and vertical overflows, correctly considers interposed elements that handle overflow, and correctly restrict text overflow to text nodes parent. ([#908](../../issues/908), [#921](../../issues/921), [#922](../../issues/922), [#924](../../pull/924))
 
 ## [0.22.1](../../compare/v0.22.0...v0.22.1) (2021-09-17)
 
