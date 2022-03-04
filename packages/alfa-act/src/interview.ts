@@ -1,5 +1,7 @@
 import { Future } from "@siteimprove/alfa-future";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Either } from "@siteimprove/alfa-either";
+import { Option } from "@siteimprove/alfa-option";
+import { Diagnostic } from ".";
 
 import { Oracle } from "./oracle";
 import { Question } from "./question";
@@ -67,7 +69,7 @@ export namespace Interview {
     interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
     oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>
-  ): Future<Option<ANSWER>> {
+  ): Future<Either<ANSWER, Diagnostic>> {
     if (interview instanceof Question) {
       let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
@@ -83,10 +85,10 @@ export namespace Interview {
       return answer.flatMap((answer) =>
         answer
           .map((answer) => conduct(answer, rule, oracle))
-          .getOrElse(() => Future.now(None))
+          .getOrElse(() => Future.now(Either.right(interview.diagnostic)))
       );
     }
 
-    return Future.now(Option.of(interview));
+    return Future.now(Either.left(interview));
   }
 }

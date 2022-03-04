@@ -388,21 +388,32 @@ export namespace Outcome {
   export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
     public static of<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
-      target: T
+      target: T,
+      diagnostic: Diagnostic
     ): CantTell<I, T, Q, S> {
-      return new CantTell(rule, target);
+      return new CantTell(rule, target, diagnostic);
     }
 
     private readonly _target: T;
+    private readonly _diagnostic: Diagnostic;
 
-    private constructor(rule: Rule<I, T, Q, S>, target: T) {
+    private constructor(
+      rule: Rule<I, T, Q, S>,
+      target: T,
+      diagnostic: Diagnostic
+    ) {
       super(rule);
 
       this._target = target;
+      this._diagnostic = diagnostic;
     }
 
     public get target(): T {
       return this._target;
+    }
+
+    public get diagnostic(): Diagnostic {
+      return this._diagnostic;
     }
 
     public equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
@@ -413,7 +424,8 @@ export namespace Outcome {
       return (
         value instanceof CantTell &&
         value._rule.equals(this._rule) &&
-        Equatable.equals(value._target, this._target)
+        Equatable.equals(value._target, this._target) &&
+        value._diagnostic.equals(this._diagnostic)
       );
     }
 
@@ -422,6 +434,7 @@ export namespace Outcome {
         outcome: "cantTell",
         rule: this._rule.toJSON(),
         target: json.Serializable.toJSON(this._target),
+        diagnostic: this._diagnostic.toJSON(),
       };
     }
 
@@ -471,6 +484,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "cantTell";
       target: json.Serializable.ToJSON<T>;
+      diagnostic: json.Serializable.ToJSON<Diagnostic>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -647,7 +661,7 @@ export namespace Outcome {
             ])
           )
         ),
-      () => CantTell.of(rule, target),
+      () => CantTell.of(rule, target, Diagnostic.empty),
       expectations.values()
     );
   }
