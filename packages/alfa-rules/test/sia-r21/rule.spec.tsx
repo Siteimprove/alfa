@@ -67,7 +67,7 @@ test("evaluates() fails an element with an invalid role and not included in the 
   ]);
 });
 
-test("evaluates() is inapplicable to an element with hidden role", async (t) => {
+test("evaluates() is inapplicable to a hidden element", async (t) => {
   const button = (
     <button hidden role="invalid">
       Hello
