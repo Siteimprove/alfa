@@ -22,6 +22,7 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 
 const { flatMap, flatten, reduce } = Iterable;
 
@@ -257,9 +258,13 @@ export namespace Rule {
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
-              target.flatMap((target) =>
-                Option.isOption(target) ? target : Option.of(target)
-              )
+              target
+                .left()
+                // If questions are left unanswered in Applicability,
+                // we return an Inapplicable outcome; hence we can
+                // just drop any Right that stays after conducting the
+                // interview.
+                .flatMap((t) => (Option.isOption(t) ? t : Option.of(t)))
             )
           )
             .map((targets) => Sequence.from(flatten<T>(targets)))
@@ -636,6 +641,35 @@ export namespace Rule {
   }
 }
 
+type Expectation<T> = Either<T, Diagnostic>;
+
+// Processes the expectations of the results of an interview.
+// When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
+// When we encounter the first Diagnostic result of a cantTell (Right),
+// the processing stops and later it is passed to the cantTell Outcome.
+function processExpectation(
+  acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
+  [id, expectation]: readonly [
+    string,
+    Expectation<Option.Maybe<Result<Diagnostic>>>
+  ]
+): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
+  return expectation.either(
+    (result) =>
+      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
+        (accumulator) =>
+          Left.of(
+            accumulator.append([
+              id,
+              Option.isOption(result) ? result : Option.of(result),
+            ])
+          ),
+        (diagnostic) => Right.of(diagnostic)
+      ),
+    (diagnostic) => Right.of(diagnostic)
+  );
+}
+
 function resolve<I, T, Q, S>(
   target: T,
   expectations: Record<{
@@ -648,27 +682,14 @@ function resolve<I, T, Q, S>(
     Interview.conduct(interview, rule, oracle).map(
       (expectation) => [id, expectation] as const
     )
-  ).map((expectations) =>
-    reduce(
-      expectations,
-      (expectations, [id, expectation]) =>
-        expectations.flatMap((expectations) =>
-          expectation.map((expectation) =>
-            expectations.append([
-              id,
-              Option.isOption(expectation)
-                ? expectation
-                : Option.of(expectation),
-            ])
-          )
-        ),
-      Option.of(List.empty<[string, Option<Result<Diagnostic>>]>())
+  )
+    .map((expectations) =>
+      reduce(expectations, processExpectation, Left.of(List.empty()))
     )
-      .map((expectations) => {
-        return Outcome.from(rule, target, Record.from(expectations));
-      })
-      .getOrElse(() => {
-        return Outcome.CantTell.of(rule, target);
-      })
-  );
+    .map((expectation) =>
+      expectation.either(
+        (expectations) => Outcome.from(rule, target, Record.from(expectations)),
+        (diagnostic) => Outcome.CantTell.of(rule, target, diagnostic)
+      )
+    );
 }
