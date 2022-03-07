@@ -32,6 +32,6 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "packageDependencyGraph": {
-    "group": "Integration tests"
+    "group": "Integrations with test frameworks"
   }
 }

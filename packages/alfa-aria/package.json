@@ -52,6 +52,6 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "packageDependencyGraph": {
-    "group": "Accessibility"
+    "group": "Understanding the web"
   }
 }

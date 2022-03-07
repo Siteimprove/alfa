@@ -48,6 +48,6 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "packageDependencyGraph": {
-    "group": "Accessibility"
+    "group": "Accessibility Conformance Testing"
   }
 }

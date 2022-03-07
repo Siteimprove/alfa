@@ -33,6 +33,6 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "packageDependencyGraph": {
-    "group": "Integrations web"
+    "group": "Integrations with web frameworks"
   }
 }
