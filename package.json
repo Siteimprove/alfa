@@ -15,7 +15,8 @@
     "clean": "node scripts/clean.js --pretty",
     "test": "node scripts/test.js --pretty",
     "watch": "node scripts/watch.js --pretty",
-    "document": "node scripts/document.js --pretty"
+    "document": "node scripts/document.js --pretty",
+    "dependency-graph": "package-dependency-graph --exclude-node_modules --graphviz --png docs/dependency-graph.png"
   },
   "workspaces": [
     "packages/*"
