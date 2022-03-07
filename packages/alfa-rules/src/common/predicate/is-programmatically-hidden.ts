@@ -43,7 +43,6 @@ function hasHiddenAncestors(
             and(
               isElement,
               or(
-                hasAttribute("hidden"),
                 hasComputedStyle(
                   "display",
                   ({ values: [outside] }) => outside.value === "none",
