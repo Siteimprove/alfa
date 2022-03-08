@@ -1,8 +1,8 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasExplicitRole, hasAccessibleName, hasRole } from "../predicate";
+import { hasExplicitRole, hasAccessibleName } from "../predicate";
 
 const { hasName } = Element;
 const { and, not } = Predicate;

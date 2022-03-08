@@ -20,7 +20,7 @@ import {
 
 import { Scope } from "../tags";
 
-const { and, equals, not, or } = Predicate;
+const { and, equals, not } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
