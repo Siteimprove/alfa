@@ -39,6 +39,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
               hasRole(device, (role) => role.is("landmark"))
             )
           )
+            // circumventing https://github.com/Siteimprove/alfa/issues/298
           .reject(hasRoleDependingOnName(device))
           .groupBy((landmark) => Node.from(landmark, device).role.get())
           .filter((elements) => elements.size > 1)
