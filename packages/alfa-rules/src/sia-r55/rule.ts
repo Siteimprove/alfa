@@ -14,7 +14,7 @@ import { normalize } from "../common/normalize";
 import {
   hasRole,
   isIgnored,
-  hasRoleDependingOnName,
+  hasIncorrectRoleWithoutName,
 } from "../common/predicate";
 
 import { Scope } from "../tags";
@@ -40,7 +40,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               )
             )
             // circumventing https://github.com/Siteimprove/alfa/issues/298
-            .reject(hasRoleDependingOnName(device))
+            .reject(hasIncorrectRoleWithoutName(device))
             // We first group by name, under the assumption that duplicated
             // names are less frequent than duplicated roles.
             .groupBy((landmark) =>

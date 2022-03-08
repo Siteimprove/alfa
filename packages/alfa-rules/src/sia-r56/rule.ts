@@ -15,7 +15,7 @@ import { normalize } from "../common/normalize";
 import {
   hasRole,
   isIgnored,
-  hasRoleDependingOnName,
+  hasIncorrectRoleWithoutName,
 } from "../common/predicate";
 
 import { Scope } from "../tags";
@@ -29,22 +29,24 @@ export default Rule.Atomic.of<Page, Group<Element>>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(Element.isElement)
-          .filter(
-            and(
-              hasNamespace(equals(Namespace.HTML)),
-              not(isIgnored(device)),
-              hasRole(device, (role) => role.is("landmark"))
+        return (
+          document
+            .descendants({ flattened: true, nested: true })
+            .filter(Element.isElement)
+            .filter(
+              and(
+                hasNamespace(equals(Namespace.HTML)),
+                not(isIgnored(device)),
+                hasRole(device, (role) => role.is("landmark"))
+              )
             )
-          )
             // circumventing https://github.com/Siteimprove/alfa/issues/298
-          .reject(hasRoleDependingOnName(device))
-          .groupBy((landmark) => Node.from(landmark, device).role.get())
-          .filter((elements) => elements.size > 1)
-          .map(Group.of)
-          .values();
+            .reject(hasIncorrectRoleWithoutName(device))
+            .groupBy((landmark) => Node.from(landmark, device).role.get())
+            .filter((elements) => elements.size > 1)
+            .map(Group.of)
+            .values()
+        );
       },
 
       expectations(target) {

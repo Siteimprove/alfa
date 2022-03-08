@@ -8,8 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import {
+  hasIncorrectRoleWithoutName,
   hasNonEmptyAccessibleName,
-  hasExplicitRole,
+  hasRole,
   isIgnored,
 } from "../common/predicate";
 import { Scope } from "../tags";
@@ -28,21 +29,14 @@ export default Rule.Atomic.of<Page, Element>({
           document
             .descendants({ flattened: true, nested: true })
             .filter(isElement)
-            // The only elements with an implicit role of region are <section>
-            // with an accessible name.
-            // Alfa currently gives a role of region to all <section> because
-            // it computes accessible names at a later step.
-            // see https://github.com/Siteimprove/alfa/issues/298
-            // Since those implicit region necessarily have an accessible name,
-            // they pass the rule and are ignored here.
-            // <section> without a name are incorrectly assigned a role of region
-            // and would therefore incorrectly fail the rule.
-            //
-            // Therefore, the rule is restricted to explicit role of region
-            // until #298 is solved.
             .filter(
-              and(hasExplicitRole(hasName("region")), not(isIgnored(device)))
+              and(
+                hasRole(device, (role) => role.is("region")),
+                not(isIgnored(device))
+              )
             )
+            // circumventing https://github.com/Siteimprove/alfa/issues/298
+            .reject(hasIncorrectRoleWithoutName(device))
         );
       },
 
