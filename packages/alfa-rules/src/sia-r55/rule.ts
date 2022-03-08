@@ -39,6 +39,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 hasRole(device, (role) => role.is("landmark"))
               )
             )
+            // circumventing https://github.com/Siteimprove/alfa/issues/298
             .reject(hasRoleDependingOnName(device))
             // We first group by name, under the assumption that duplicated
             // names are less frequent than duplicated roles.
