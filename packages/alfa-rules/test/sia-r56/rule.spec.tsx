@@ -32,6 +32,18 @@ test("evaluate() fails when same landmarks have same names", async (t) => {
   ]);
 });
 
+test("evaluate() fails when same forms have same names", async (t) => {
+  const form1 = <form aria-label="More information" />;
+  const form2 = <form aria-label="More information" />;
+
+  const document = h.document([form1, form2]);
+  const target = Group.of([form1, form2]);
+
+  t.deepEqual(await evaluate(R56, { document }), [
+    failed(R56, target, { 1: Outcomes.sameNames("form", [target]) }),
+  ]);
+});
+
 test("evaluate() fails when same landmarks have no names", async (t) => {
   const aside1 = <aside id="author" />;
   const aside2 = <aside id="book" />;
@@ -49,6 +61,14 @@ test("evaluate() is inapplicable when only different landmarks exist", async (t)
   const nav = <nav />;
 
   const document = h.document([aside, nav]);
+
+  t.deepEqual(await evaluate(R56, { document }), [inapplicable(R56)]);
+});
+
+test("evaluate() is inapplicable to form without accessible name and role", async (t) => {
+  const form = <form />;
+
+  const document = h.document([form]);
 
   t.deepEqual(await evaluate(R56, { document }), [inapplicable(R56)]);
 });

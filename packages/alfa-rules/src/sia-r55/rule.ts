@@ -11,11 +11,15 @@ import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 
 import { normalize } from "../common/normalize";
-import { hasRole, isIgnored } from "../common/predicate";
+import {
+  hasRole,
+  isIgnored,
+  hasRoleDependingOnName,
+} from "../common/predicate";
 
 import { Scope } from "../tags";
 
-const { and, equals, not } = Predicate;
+const { and, equals, not, or } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
@@ -35,6 +39,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 hasRole(device, (role) => role.is("landmark"))
               )
             )
+            .reject(hasRoleDependingOnName(device))
             // We first group by name, under the assumption that duplicated
             // names are less frequent than duplicated roles.
             .groupBy((landmark) =>

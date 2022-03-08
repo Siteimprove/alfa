@@ -12,11 +12,15 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 
 import { normalize } from "../common/normalize";
-import { hasRole, isIgnored } from "../common/predicate";
+import {
+  hasRole,
+  isIgnored,
+  hasRoleDependingOnName,
+} from "../common/predicate";
 
 import { Scope } from "../tags";
 
-const { and, equals, not } = Predicate;
+const { and, equals, not, or } = Predicate;
 const { hasNamespace } = Element;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
@@ -35,6 +39,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
               hasRole(device, (role) => role.is("landmark"))
             )
           )
+          .reject(hasRoleDependingOnName(device))
           .groupBy((landmark) => Node.from(landmark, device).role.get())
           .filter((elements) => elements.size > 1)
           .map(Group.of)
