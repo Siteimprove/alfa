@@ -4,11 +4,12 @@ import { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-type Expectation<Q, S, C> = Interview<
+type Expectation<Q, S, C, D extends number = 3> = Interview<
   Q,
   S,
   C,
-  Option.Maybe<Result<Diagnostic>>
+  Option.Maybe<Result<Diagnostic>>,
+  D
 >;
 
 export function expectation<Q, S, C>(
@@ -16,21 +17,21 @@ export function expectation<Q, S, C>(
   ifTrue: Thunk<Option.Maybe<Result<Diagnostic>>>,
   ifFalse: Thunk<Option.Maybe<Result<Diagnostic>>>,
   ifUnknown?: Thunk<Option.Maybe<Result<Diagnostic>>>
-): Option<Result<Diagnostic>>;
+): Option.Maybe<Result<Diagnostic>>;
 
-export function expectation<Q, S, C>(
+export function expectation<Q, S, C, D extends number>(
   test: Trilean,
-  ifTrue: Thunk<Expectation<Q, S, C>>,
-  ifFalse: Thunk<Expectation<Q, S, C>>,
-  ifUnknown?: Thunk<Expectation<Q, S, C>>
-): Interview<Q, S, C, Option<Result<Diagnostic>>>;
+  ifTrue: Thunk<Expectation<Q, S, C, D>>,
+  ifFalse: Thunk<Expectation<Q, S, C, D>>,
+  ifUnknown?: Thunk<Expectation<Q, S, C, D>>
+): Expectation<Q, S, C, D>;
 
-export function expectation<Q, S, C>(
+export function expectation<Q, S, C, D extends number = 3>(
   test: Trilean,
-  ifTrue: Thunk<Expectation<Q, S, C>>,
-  ifFalse: Thunk<Expectation<Q, S, C>>,
-  ifUnknown: Thunk<Expectation<Q, S, C>> = Thunk.of(None)
-): Expectation<Q, S, C> {
+  ifTrue: Thunk<Expectation<Q, S, C, D>>,
+  ifFalse: Thunk<Expectation<Q, S, C, D>>,
+  ifUnknown: Thunk<Expectation<Q, S, C, D>> = Thunk.of(None)
+): Expectation<Q, S, C, D> {
   switch (test) {
     case true:
       return ifTrue();
