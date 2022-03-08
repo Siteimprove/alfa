@@ -40,7 +40,7 @@ test(`evaluate() fails a link with no name`, async (t) => {
   ]);
 });
 
-test(`evaluate() fails an 'a' element, which inherits semantically a link role from role, with no accessible name`, async (t) => {
+test(`evaluate() fails an 'a' element, which inherits semantically a link role, with no accessible name`, async (t) => {
   const target = (
     <a href="#" role="I am giving a link role">
       <img src="Foo.jpg" alt="" />
