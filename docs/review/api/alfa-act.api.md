@@ -7,6 +7,7 @@
 import { Applicative } from '@siteimprove/alfa-applicative';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as earl from '@siteimprove/alfa-earl';
+import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Future } from '@siteimprove/alfa-future';
@@ -27,46 +28,9 @@ import { Thunk } from '@siteimprove/alfa-thunk';
 // @public
 export class Audit<I, T = unknown, Q = never, S = T> {
     // (undocumented)
-    evaluate(performance?: Performance<Audit.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     static of<I, T = unknown, Q = never, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
-}
-
-// @public (undocumented)
-export namespace Audit {
-    // (undocumented)
-    export class Event<I, T, Q, S, N extends Event.Name = Event.Name> implements Serializable<Event.JSON<N>> {
-        // (undocumented)
-        static end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end">;
-        // (undocumented)
-        get name(): N;
-        // (undocumented)
-        static of<I, T, Q, S, N extends Event.Name>(name: N, rule: Rule<I, T, Q, S>): Event<I, T, Q, S, N>;
-        // (undocumented)
-        get rule(): Rule<I, T, Q, S>;
-        // (undocumented)
-        static start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start">;
-        // (undocumented)
-        toJSON(): Event.JSON<N>;
-    }
-    // (undocumented)
-    export namespace Event {
-        // (undocumented)
-        export interface JSON<N extends Name = Name> {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            name: N;
-            // (undocumented)
-            rule: Rule.JSON;
-        }
-        // (undocumented)
-        export type Name = "start" | "end";
-    }
-    const // (undocumented)
-    event: typeof Event.of, // (undocumented)
-    start: typeof Event.start, // (undocumented)
-    end: typeof Event.end;
 }
 
 // @public (undocumented)
@@ -105,6 +69,8 @@ export namespace Diagnostic {
         // (undocumented)
         message: string;
     }
+    const // (undocumented)
+    empty: Diagnostic;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
@@ -117,7 +83,7 @@ export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> 
 // @public (undocumented)
 export namespace Interview {
     // (undocumented)
-    export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Option<ANSWER>>;
+    export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Either<ANSWER, Diagnostic>>;
 }
 
 // @public
@@ -160,11 +126,13 @@ export namespace Outcome {
     // (undocumented)
     export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
         // (undocumented)
+        get diagnostic(): Diagnostic;
+        // (undocumented)
         equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T): CantTell<I, T, Q, S>;
+        static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic): CantTell<I, T, Q, S>;
         // (undocumented)
         get target(): T;
         // (undocumented)
@@ -195,6 +163,8 @@ export namespace Outcome {
         export interface JSON<T> extends Outcome.JSON {
             // (undocumented)
             [key: string]: json.JSON;
+            // (undocumented)
+            diagnostic: json.Serializable.ToJSON<Diagnostic>;
             // (undocumented)
             outcome: "cantTell";
             // (undocumented)
@@ -519,7 +489,7 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T> implement
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: I, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(input: I, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache, performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
     // (undocumented)
@@ -569,13 +539,20 @@ export namespace Rule {
         // (undocumented)
         export interface Evaluate<I, T, Q, S> {
             // (undocumented)
-            (input: I): {
+            (input: I, performance?: {
+                mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
+                measure: (name: string, start?: number) => Performance.Measure<Event<I, T, Q, S>>;
+            }): {
                 applicability(): Iterable_2<Interview<Q, S, T, Option.Maybe<T>>>;
                 expectations(target: T): {
                     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
                 };
             };
         }
+        // (undocumented)
+        export function isAtomic<I, T, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
+        // (undocumented)
+        export function isAtomic<I, T, Q, S>(value: unknown): value is Atomic<I, T, Q, S>;
         // (undocumented)
         export interface JSON extends Rule.JSON {
             // (undocumented)
@@ -602,12 +579,19 @@ export namespace Rule {
         // (undocumented)
         export interface Evaluate<I, T, Q, S> {
             // (undocumented)
-            (input: I): {
+            (input: I, performance?: {
+                mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
+                measure: (name: string, start?: number) => Performance.Measure<Event<I, T, Q, S>>;
+            }): {
                 expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
                     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
                 };
             };
         }
+        // (undocumented)
+        export function isComposite<I, T, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
+        // (undocumented)
+        export function isComposite<I, T, Q>(value: unknown): value is Composite<I, T, Q>;
         // (undocumented)
         export interface JSON extends Rule.JSON {
             // (undocumented)
@@ -637,20 +621,62 @@ export namespace Rule {
     // (undocumented)
     export interface Evaluate<I, T, Q, S> {
         // (undocumented)
-        (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+        (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache, performance?: Performance<Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    }
+    // (undocumented)
+    export class Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string> implements Serializable<Event.JSON<TYPE, NAME>> {
+        constructor(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME);
+        // (undocumented)
+        get name(): NAME;
+        // (undocumented)
+        static of<INPUT, TARGET, QUESTION, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+        // (undocumented)
+        get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT>;
+        // (undocumented)
+        toJSON(): Event.JSON<TYPE, NAME>;
+        // (undocumented)
+        get type(): TYPE;
+    }
+    // (undocumented)
+    export namespace Event {
+        // (undocumented)
+        export function end<I, T, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
+        // (undocumented)
+        export function end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "rule">;
+        // (undocumented)
+        export function endApplicability<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability">;
+        // (undocumented)
+        export function endExpectation<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation">;
+        // (undocumented)
+        export function isEvent<INPUT, TARGET, QUESTION, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string>(value: unknown): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+        // (undocumented)
+        export interface JSON<T extends Type = Type, N extends string = string> {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            name: N;
+            // (undocumented)
+            rule: Rule.JSON;
+            // (undocumented)
+            type: T;
+        }
+        // (undocumented)
+        export function start<I, T, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
+        // (undocumented)
+        export function start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "rule">;
+        // (undocumented)
+        export function startApplicability<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability">;
+        // (undocumented)
+        export function startExpectation<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
+        // (undocumented)
+        export type Type = "start" | "end";
     }
     // (undocumented)
     export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
     // (undocumented)
-    export function isAtomic<I, T, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
-    // (undocumented)
-    export function isAtomic<I, T, Q, S>(value: unknown): value is Atomic<I, T, Q, S>;
-    // (undocumented)
-    export function isComposite<I, T, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
-    // (undocumented)
-    export function isComposite<I, T, Q>(value: unknown): value is Composite<I, T, Q>;
-    // (undocumented)
     export function isRule<I, T, Q, S>(value: unknown): value is Rule<I, T, Q, S>;
+    const // (undocumented)
+    isAtomic: typeof Atomic.isAtomic;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -666,6 +692,8 @@ export namespace Rule {
     }
     // (undocumented)
     export type Question<R> = R extends Rule<any, any, infer Q, any> ? Q : never;
+    const // (undocumented)
+    isComposite: typeof Composite.isComposite;
     // (undocumented)
     export type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
     // (undocumented)

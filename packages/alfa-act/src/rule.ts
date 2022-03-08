@@ -2,8 +2,10 @@ import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
@@ -20,6 +22,7 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 
 const { flatMap, flatten, reduce } = Iterable;
 
@@ -94,9 +97,10 @@ export abstract class Rule<I = unknown, T = unknown, Q = never, S = T>
   public evaluate(
     input: I,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None),
-    outcomes: Cache = Cache.empty()
+    outcomes: Cache = Cache.empty(),
+    performance?: Performance<Rule.Event<I, T, Q, S>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
-    return this._evaluate(input, oracle, outcomes);
+    return this._evaluate(input, oracle, outcomes, performance);
   }
 
   public equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
@@ -192,9 +196,12 @@ export namespace Rule {
    * rule evaluation procedures.
    */
   export interface Evaluate<I, T, Q, S> {
-    (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache): Future<
-      Iterable<Outcome<I, T, Q, S>>
-    >;
+    (
+      input: Readonly<I>,
+      oracle: Oracle<I, T, Q, S>,
+      outcomes: Cache,
+      performance?: Performance<Event<I, T, Q, S>>
+    ): Future<Iterable<Outcome<I, T, Q, S>>>;
   }
 
   export class Atomic<I = unknown, T = unknown, Q = never, S = T> extends Rule<
@@ -223,18 +230,53 @@ export namespace Rule {
       tags: Array<Tag>,
       evaluate: Atomic.Evaluate<I, T, Q, S>
     ) {
-      super(uri, requirements, tags, (input, oracle, outcomes) =>
+      super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
         outcomes.get(this, () => {
-          const { applicability, expectations } = evaluate(input);
+          const startRule = performance?.mark(Event.start(this)).start;
+
+          // In the evaluate function in Atomic.of, "this" is not yet build.
+          // So we need a helper to wrap it…
+          const rulePerformance =
+            performance !== undefined
+              ? {
+                  mark: (name: string) =>
+                    performance?.mark(Event.start(this, name)),
+                  measure: (name: string, start?: number) =>
+                    performance?.measure(Event.end(this, name), start),
+                }
+              : undefined;
+
+          const { applicability, expectations } = evaluate(
+            input,
+            rulePerformance
+          );
+
+          const startApplicability = performance?.mark(
+            Event.startApplicability(this)
+          ).start;
+          let startExpectation: number | undefined;
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
-              target.flatMap((target) =>
-                Option.isOption(target) ? target : Option.of(target)
-              )
+              target
+                .left()
+                // If questions are left unanswered in Applicability,
+                // we return an Inapplicable outcome; hence we can
+                // just drop any Right that stays after conducting the
+                // interview.
+                .flatMap((t) => (Option.isOption(t) ? t : Option.of(t)))
             )
           )
             .map((targets) => Sequence.from(flatten<T>(targets)))
+            .tee(() => {
+              performance?.measure(
+                Event.endApplicability(this),
+                startApplicability
+              );
+              startExpectation = performance?.mark(
+                Event.startExpectation(this)
+              ).start;
+            })
             .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
@@ -242,7 +284,15 @@ export namespace Rule {
 
               return Future.traverse(targets, (target) =>
                 resolve(target, Record.of(expectations(target)), this, oracle)
-              );
+              ).tee(() => {
+                performance?.measure(
+                  Event.endExpectation(this),
+                  startExpectation
+                );
+              });
+            })
+            .tee(() => {
+              performance?.measure(Event.end(this), startRule);
             });
         })
       );
@@ -266,28 +316,39 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: I): {
+      (
+        input: I,
+        performance?: {
+          mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
+          measure: (
+            name: string,
+            start?: number
+          ) => Performance.Measure<Event<I, T, Q, S>>;
+        }
+      ): {
         applicability(): Iterable<Interview<Q, S, T, Option.Maybe<T>>>;
         expectations(target: T): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
       };
     }
+
+    export function isAtomic<I, T, Q, S>(
+      value: Rule<I, T, Q, S>
+    ): value is Atomic<I, T, Q, S>;
+
+    export function isAtomic<I, T, Q, S>(
+      value: unknown
+    ): value is Atomic<I, T, Q, S>;
+
+    export function isAtomic<I, T, Q, S>(
+      value: unknown
+    ): value is Atomic<I, T, Q, S> {
+      return value instanceof Atomic;
+    }
   }
 
-  export function isAtomic<I, T, Q, S>(
-    value: Rule<I, T, Q, S>
-  ): value is Atomic<I, T, Q, S>;
-
-  export function isAtomic<I, T, Q, S>(
-    value: unknown
-  ): value is Atomic<I, T, Q, S>;
-
-  export function isAtomic<I, T, Q, S>(
-    value: unknown
-  ): value is Atomic<I, T, Q, S> {
-    return value instanceof Atomic;
-  }
+  export const { isAtomic } = Atomic;
 
   export class Composite<
     I = unknown,
@@ -320,10 +381,24 @@ export namespace Rule {
       composes: Array<Rule<I, T, Q, S>>,
       evaluate: Composite.Evaluate<I, T, Q, S>
     ) {
-      super(uri, requirements, tags, (input, oracle, outcomes) =>
-        outcomes.get(this, () =>
-          Future.traverse(this._composes, (rule) =>
-            rule.evaluate(input, oracle, outcomes)
+      super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
+        outcomes.get(this, () => {
+          const startRule = performance?.mark(Event.start(this)).start;
+
+          // In the evaluate function in Atomic.of, "this" is not yet build.
+          // So we need a helper to wrap it…
+          const rulePerformance =
+            performance !== undefined
+              ? {
+                  mark: (name: string) =>
+                    performance?.mark(Event.start(this, name)),
+                  measure: (name: string, start?: number) =>
+                    performance?.measure(Event.end(this, name), start),
+                }
+              : undefined;
+
+          return Future.traverse(this._composes, (rule) =>
+            rule.evaluate(input, oracle, outcomes, performance)
           )
             .map((outcomes) =>
               Sequence.from(
@@ -341,7 +416,7 @@ export namespace Rule {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
 
-              const { expectations } = evaluate(input);
+              const { expectations } = evaluate(input, rulePerformance);
 
               return Future.traverse(
                 targets.groupBy((outcome) => outcome.target),
@@ -354,7 +429,10 @@ export namespace Rule {
                   )
               );
             })
-        )
+            .tee(() => {
+              performance?.measure(Event.end(this), startRule);
+            });
+        })
       );
 
       this._composes = composes;
@@ -385,27 +463,211 @@ export namespace Rule {
     }
 
     export interface Evaluate<I, T, Q, S> {
-      (input: I): {
+      (
+        input: I,
+        performance?: {
+          mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
+          measure: (
+            name: string,
+            start?: number
+          ) => Performance.Measure<Event<I, T, Q, S>>;
+        }
+      ): {
         expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
           [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
         };
       };
     }
+    export function isComposite<I, T, Q>(
+      value: Rule<I, T, Q>
+    ): value is Composite<I, T, Q>;
+
+    export function isComposite<I, T, Q>(
+      value: unknown
+    ): value is Composite<I, T, Q>;
+
+    export function isComposite<I, T, Q>(
+      value: unknown
+    ): value is Composite<I, T, Q> {
+      return value instanceof Composite;
+    }
   }
 
-  export function isComposite<I, T, Q>(
-    value: Rule<I, T, Q>
-  ): value is Composite<I, T, Q>;
+  export const { isComposite } = Composite;
 
-  export function isComposite<I, T, Q>(
-    value: unknown
-  ): value is Composite<I, T, Q>;
+  /**
+   * @public
+   */
+  export class Event<
+    INPUT,
+    TARGET,
+    QUESTION,
+    SUBJECT,
+    TYPE extends Event.Type = Event.Type,
+    NAME extends string = string
+  > implements Serializable<Event.JSON<TYPE, NAME>>
+  {
+    public static of<
+      INPUT,
+      TARGET,
+      QUESTION,
+      SUBJECT,
+      TYPE extends Event.Type,
+      NAME extends string
+    >(
+      type: TYPE,
+      rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+      name: NAME
+    ): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME> {
+      return new Event(type, rule, name);
+    }
 
-  export function isComposite<I, T, Q>(
-    value: unknown
-  ): value is Composite<I, T, Q> {
-    return value instanceof Composite;
+    private readonly _type: TYPE;
+    private readonly _rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>;
+    private readonly _name: NAME;
+
+    constructor(
+      type: TYPE,
+      rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+      name: NAME
+    ) {
+      this._type = type;
+      this._rule = rule;
+      this._name = name;
+    }
+
+    public get type(): TYPE {
+      return this._type;
+    }
+
+    public get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT> {
+      return this._rule;
+    }
+
+    public get name(): NAME {
+      return this._name;
+    }
+
+    public toJSON(): Event.JSON<TYPE, NAME> {
+      return {
+        type: this._type,
+        rule: this._rule.toJSON(),
+        name: this._name,
+      };
+    }
   }
+
+  /**
+   * @public
+   */
+  export namespace Event {
+    export type Type = "start" | "end";
+
+    export interface JSON<T extends Type = Type, N extends string = string> {
+      [key: string]: json.JSON;
+      type: T;
+      rule: Rule.JSON;
+      name: N;
+    }
+
+    export function isEvent<
+      INPUT,
+      TARGET,
+      QUESTION,
+      SUBJECT,
+      TYPE extends Event.Type = Event.Type,
+      NAME extends string = string
+    >(
+      value: unknown
+    ): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME> {
+      return value instanceof Event;
+    }
+
+    export function start<I, T, Q, S, N extends string = string>(
+      rule: Rule<I, T, Q, S>,
+      name: N
+    ): Event<I, T, Q, S, "start", N>;
+
+    export function start<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start", "rule">;
+
+    export function start<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
+      name: string = "rule"
+    ): Event<I, T, Q, S, "start"> {
+      return Event.of("start", rule, name);
+    }
+
+    export function end<I, T, Q, S, N extends string = string>(
+      rule: Rule<I, T, Q, S>,
+      name: N
+    ): Event<I, T, Q, S, "end", N>;
+
+    export function end<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end", "rule">;
+
+    export function end<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>,
+      name: string = "rule"
+    ): Event<I, T, Q, S, "end"> {
+      return Event.of("end", rule, name);
+    }
+
+    export function startApplicability<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start", "applicability"> {
+      return Event.of("start", rule, "applicability");
+    }
+
+    export function endApplicability<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end", "applicability"> {
+      return Event.of("end", rule, "applicability");
+    }
+
+    export function startExpectation<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "start", "expectation"> {
+      return Event.of("start", rule, "expectation");
+    }
+
+    export function endExpectation<I, T, Q, S>(
+      rule: Rule<I, T, Q, S>
+    ): Event<I, T, Q, S, "end", "expectation"> {
+      return Event.of("end", rule, "expectation");
+    }
+  }
+}
+
+type Expectation<T> = Either<T, Diagnostic>;
+
+// Processes the expectations of the results of an interview.
+// When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
+// When we encounter the first Diagnostic result of a cantTell (Right),
+// the processing stops and later it is passed to the cantTell Outcome.
+function processExpectation(
+  acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
+  [id, expectation]: readonly [
+    string,
+    Expectation<Option.Maybe<Result<Diagnostic>>>
+  ]
+): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
+  return expectation.either(
+    (result) =>
+      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
+        (accumulator) =>
+          Left.of(
+            accumulator.append([
+              id,
+              Option.isOption(result) ? result : Option.of(result),
+            ])
+          ),
+        (diagnostic) => Right.of(diagnostic)
+      ),
+    (diagnostic) => Right.of(diagnostic)
+  );
 }
 
 function resolve<I, T, Q, S>(
@@ -420,27 +682,14 @@ function resolve<I, T, Q, S>(
     Interview.conduct(interview, rule, oracle).map(
       (expectation) => [id, expectation] as const
     )
-  ).map((expectations) =>
-    reduce(
-      expectations,
-      (expectations, [id, expectation]) =>
-        expectations.flatMap((expectations) =>
-          expectation.map((expectation) =>
-            expectations.append([
-              id,
-              Option.isOption(expectation)
-                ? expectation
-                : Option.of(expectation),
-            ])
-          )
-        ),
-      Option.of(List.empty<[string, Option<Result<Diagnostic>>]>())
+  )
+    .map((expectations) =>
+      reduce(expectations, processExpectation, Left.of(List.empty()))
     )
-      .map((expectations) => {
-        return Outcome.from(rule, target, Record.from(expectations));
-      })
-      .getOrElse(() => {
-        return Outcome.CantTell.of(rule, target);
-      })
-  );
+    .map((expectation) =>
+      expectation.either(
+        (expectations) => Outcome.from(rule, target, Record.from(expectations)),
+        (diagnostic) => Outcome.CantTell.of(rule, target, diagnostic)
+      )
+    );
 }

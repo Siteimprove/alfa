@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { RGB, Percentage } from "@siteimprove/alfa-css";
+import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
 
 import R66 from "../../src/sia-r66/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
@@ -11,6 +11,7 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
+import { ColorError } from "../../src/common/dom/get-colors";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(
@@ -225,12 +226,18 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
 
 test("evaluate() correctly handles circular `currentcolor` references", async (t) => {
   const target = h.text("Hello world");
+  const color = "currentcolor";
+  const html = <html style={{ color: color }}>{target}</html>;
 
-  const document = h.document([
-    <html style={{ color: "currentcolor" }}>{target}</html>,
+  const document = h.document([html]);
+  const diagnostic = ColorError.unresolvableForegroundColor(
+    html,
+    Keyword.of(color)
+  );
+
+  t.deepEqual(await evaluate(R66, { document }), [
+    cantTell(R66, target, diagnostic),
   ]);
-
-  t.deepEqual(await evaluate(R66, { document }), [cantTell(R66, target)]);
 });
 
 test("evaluate() is inapplicable to text nodes in widgets", async (t) => {
